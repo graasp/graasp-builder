@@ -22,7 +22,7 @@ const Items = ({ items }) => {
 };
 
 Items.propTypes = {
-  items: PropTypes.arrayOf().isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default Items;
