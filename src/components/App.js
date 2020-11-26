@@ -42,6 +42,7 @@ function App() {
             <Route path="/" exact>
               <Redirect to="/items" />
             </Route>
+            <Redirect to="/items" />
           </Switch>
         </main>
       </div>

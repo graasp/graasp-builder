@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Cookies from 'js-cookie'
 import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +9,8 @@ import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import { Alert } from '@material-ui/lab';
 import { REGISTER_PATH } from '../config/paths';
-import { createItem, getOwnItems, signIn } from '../api/authentication';
+import { signIn, signOut } from '../api/authentication';
+import { isSignedIn } from '../utils/common';
 
 const styles = (theme) => ({
   fullScreen: {
@@ -47,23 +47,12 @@ class SignIn extends Component {
   state = {
     isSuccess: null,
     email: '',
+    isAuthenticated: false,
   };
 
-  componentDidUpdate() {
-    //this.isSignedIn()
-  }
-
-  async componentDidMount() {
-    this.isSignedIn()
-    console.log(await createItem())
-  }
-
-  async isSignedIn() {
-    await fetch("http://ielsrv7.epfl.ch/auth?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4N2M0OTQwZS1mNzY0LTRkODYtODExNC0xZWRkOWVmZjJlZTAiLCJpYXQiOjE2MDU3NzYxMTEsImV4cCI6MTYwNTc3NzkxMX0.g9Kb2hauJyv25nX-Y-vtFHwsCglKXueo_Y-C4IvoG-M", {
-      credentials: "include",
-
-    })
-   // getOwnItems()
+  componentDidMount() {
+    const isAuthenticated = isSignedIn();
+    this.setState({ isAuthenticated });
   }
 
   handleOnRegister = () => {
@@ -79,6 +68,11 @@ class SignIn extends Component {
     this.setState({ isSuccess });
   };
 
+  signOut = async () => {
+    const isSuccess = await signOut();
+    this.setState({ isSuccess });
+  };
+
   handleOnChange = (e) => {
     this.setState({ email: e.target.value });
   };
@@ -86,9 +80,7 @@ class SignIn extends Component {
   renderMessage = () => {
     const { isSuccess } = this.state;
     if (isSuccess) {
-      return (
-        <Alert severity="success">An email was sent with the login link!</Alert>
-      );
+      return <Alert severity="success">Success!</Alert>;
     }
     // is not triggered for null (initial case)
     if (isSuccess === false) {
@@ -97,16 +89,22 @@ class SignIn extends Component {
     return null;
   };
 
-  render() {
-    const { classes } = this.props;
-    const { email } = this.state;
-
+  renderSignOutButton = () => {
     return (
-      <div className={classes.fullScreen}>
-        {this.renderMessage()}
-        <Typography variant="h2" component="h2">
-          Sign In
-        </Typography>
+      <>
+        <Typography variant="subtitle1">You are already signed in.</Typography>
+        <Button variant="text" color="primary" onClick={this.signOut}>
+          Click here to sign out
+        </Button>
+      </>
+    );
+  };
+
+  renderSignInForm = () => {
+    const { email } = this.state;
+    const { classes } = this.props;
+    return (
+      <>
         <FormControl>
           <TextField
             className={classes.input}
@@ -125,6 +123,22 @@ class SignIn extends Component {
         <Button variant="text" color="primary" onClick={this.handleOnRegister}>
           Not registered? Click here to register
         </Button>
+      </>
+    );
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { isAuthenticated } = this.state;
+
+    return (
+      <div className={classes.fullScreen}>
+        {this.renderMessage()}
+        <Typography variant="h2" component="h2">
+          Sign In
+        </Typography>
+        {!isAuthenticated && this.renderSignInForm()}
+        {isAuthenticated && this.renderSignOutButton()}
       </div>
     );
   }
