@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
@@ -18,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     height: '48px',
     marginRight: theme.spacing(2),
   },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
+  },
 }));
 
 const Header = () => {
@@ -26,12 +31,14 @@ const Header = () => {
     <header>
       <AppBar position="static">
         <Toolbar className={classes.header}>
-          <div className={classes.headerLeft}>
-            <GraaspLogo className={classes.logo} />
-            <Typography variant="h6" color="inherit">
-              Graasp
-            </Typography>
-          </div>
+          <Link to="/items" className={classes.link}>
+            <div className={classes.headerLeft}>
+              <GraaspLogo className={classes.logo} />
+              <Typography variant="h6" color="inherit">
+                Graasp
+              </Typography>
+            </div>
+          </Link>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
