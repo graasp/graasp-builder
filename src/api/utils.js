@@ -8,3 +8,8 @@ export const DEFAULT_POST = {
   credentials: 'include',
   headers: { 'Content-Type': 'application/json' },
 };
+
+export const DEFAULT_DELETE = {
+  method: 'DELETE',
+  credentials: 'include',
+};

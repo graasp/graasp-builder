@@ -12,6 +12,7 @@ import items from '../data/sample';
 import SignUp from './SignUp';
 import { SIGN_UP_PATH, SIGN_IN_PATH } from '../config/paths';
 import SignIn from './SignIn';
+import { ItemProvider } from './context/item';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,29 +24,31 @@ function App() {
   const classes = useStyles();
   return (
     <Router>
-      <div>
-        <Header />
-        <main className={classes.root}>
-          <Switch>
-            <Route path="/items" exact>
-              <Items items={items} />
-            </Route>
-            <Route path="/items/:itemId">
-              <Items items={items} />
-            </Route>
-            <Route path={SIGN_IN_PATH} exact>
-              <SignIn />
-            </Route>
-            <Route path={SIGN_UP_PATH} exact>
-              <SignUp />
-            </Route>
-            <Route path="/" exact>
+      <ItemProvider>
+        <div>
+          <Header />
+          <main className={classes.root}>
+            <Switch>
+              <Route path="/items" exact>
+                <Items />
+              </Route>
+              <Route path="/items/:itemId">
+                <Items items={items} />
+              </Route>
+              <Route path={SIGN_IN_PATH} exact>
+                <SignIn />
+              </Route>
+              <Route path={SIGN_UP_PATH} exact>
+                <SignUp />
+              </Route>
+              <Route path="/" exact>
+                <Redirect to="/items" />
+              </Route>
               <Redirect to="/items" />
-            </Route>
-            <Redirect to="/items" />
-          </Switch>
-        </main>
-      </div>
+            </Switch>
+          </main>
+        </div>
+      </ItemProvider>
     </Router>
   );
 }
