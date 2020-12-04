@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ItemMenu from './ItemMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,9 +49,7 @@ const CustomCardHeader = ({ id, creator, title, type }) => {
           </Typography>
         </div>
       </div>
-      <IconButton>
-        <MoreVertIcon />
-      </IconButton>
+      <ItemMenu />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getOwnItems, deleteItem } from '../../api/item';
+import { getOwnItems, deleteItem, getChildren, getItem } from '../../api/item';
 import sampleItems from '../../data/sample';
 
 const ItemContext = React.createContext();
@@ -42,12 +42,36 @@ class ItemProvider extends Component {
     });
   };
 
+  getChildren = async (id) => {
+    if (!id) {
+      return getOwnItems();
+    }
+    return getChildren(id);
+  };
+
+  getNavigation = async (itemId) => {
+    if (!itemId) {
+      return [];
+    }
+    const navigation = [];
+    let currentParentId = itemId;
+    while (currentParentId) {
+      // eslint-disable-next-line no-await-in-loop
+      const parent = await getItem(currentParentId);
+      navigation.push(parent);
+      currentParentId = parent.parentId;
+    }
+    return navigation;
+  };
+
   buildValue = () => {
     const { items } = this.state;
     return {
       items,
       addItem: this.addItem,
       deleteItem: this.deleteItem,
+      getChildren: this.getChildren,
+      getNavigation: this.getNavigation,
     };
   };
 

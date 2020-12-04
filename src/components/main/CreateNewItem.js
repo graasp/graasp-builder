@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -26,7 +27,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateNewItem = ({ open, handleClose }) => {
+const CreateNewItem = ({
+  open,
+  handleClose,
+  match: {
+    params: { itemId },
+  },
+}) => {
   const classes = useStyles();
   const itemContext = useContext(ItemContext);
   const [itemName, setItemName] = useState('');
@@ -52,7 +59,9 @@ const CreateNewItem = ({ open, handleClose }) => {
 
   const submitNewItem = async () => {
     const { addItem } = itemContext;
+
     const newItem = await createItem({
+      parentId: itemId,
       name: itemName,
       type: itemType,
       description: itemDescription,
@@ -144,10 +153,16 @@ const CreateNewItem = ({ open, handleClose }) => {
 CreateNewItem.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      itemId: PropTypes.string,
+    }).isRequired,
+  }),
 };
 
 CreateNewItem.defaultProps = {
   open: false,
+  match: { params: { itemId: '' } },
 };
 
-export default CreateNewItem;
+export default withRouter(CreateNewItem);

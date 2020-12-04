@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import Info from '@material-ui/icons/Info';
+import Navigation from '../layout/Navigation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ const ItemsHeader = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Typography variant="h5">Items</Typography>
+      <Navigation />
       <Tooltip title="These are your items" placement="left">
         <Info color="primary" fontSize="small" />
       </Tooltip>

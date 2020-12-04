@@ -10,7 +10,12 @@ import Header from './layout/Header';
 import Items from './main/Items';
 import items from '../data/sample';
 import SignUp from './SignUp';
-import { SIGN_UP_PATH, SIGN_IN_PATH } from '../config/paths';
+import {
+  SIGN_UP_PATH,
+  SIGN_IN_PATH,
+  HOME_PATH,
+  ITEMS_PATH,
+} from '../config/paths';
 import SignIn from './SignIn';
 import { ItemProvider } from './context/item';
 
@@ -29,7 +34,7 @@ function App() {
           <Header />
           <main className={classes.root}>
             <Switch>
-              <Route path="/items" exact>
+              <Route path={HOME_PATH} exact>
                 <Items />
               </Route>
               <Route path="/items/:itemId">
@@ -41,10 +46,10 @@ function App() {
               <Route path={SIGN_UP_PATH} exact>
                 <SignUp />
               </Route>
-              <Route path="/" exact>
-                <Redirect to="/items" />
+              <Route path={ITEMS_PATH} exact>
+                <Items />
               </Route>
-              <Redirect to="/items" />
+              <Redirect to={HOME_PATH} />
             </Switch>
           </main>
         </div>
