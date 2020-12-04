@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import { Alert } from '@material-ui/lab';
-import { REGISTER_PATH } from '../config/paths';
+import { SIGN_UP_PATH } from '../config/paths';
 import { signIn, signOut } from '../api/authentication';
 import { isSignedIn } from '../utils/common';
 
@@ -59,7 +59,7 @@ class SignIn extends Component {
     const {
       history: { push },
     } = this.props;
-    push(REGISTER_PATH);
+    push(SIGN_UP_PATH);
   };
 
   signIn = async () => {

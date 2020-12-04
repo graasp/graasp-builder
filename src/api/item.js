@@ -1,11 +1,10 @@
 import { API_HOST } from '../config/constants';
+import { DEFAULT_GET, DEFAULT_POST } from './utils';
 
 // payload = {email}
 export const getOwnItems = async () => {
   const req = await fetch(`${API_HOST}/own`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
+    ...DEFAULT_GET,
   });
   // eslint-disable-next-line no-console
   console.log(req);
@@ -14,10 +13,8 @@ export const getOwnItems = async () => {
 // payload = {email}
 export const createItem = async () => {
   const req = await fetch(`${API_HOST}/items`, {
-    method: 'POST',
-    credentials: 'include',
+    ...DEFAULT_POST,
     body: JSON.stringify({ name: 'myitem' }),
-    headers: { 'Content-Type': 'application/json' },
   });
   // eslint-disable-next-line no-console
   console.log(await req.json());

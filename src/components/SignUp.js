@@ -9,7 +9,8 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { Alert } from '@material-ui/lab';
 import { SIGN_IN_PATH } from '../config/paths';
-import { register } from '../api/authentication';
+import { signUp } from '../api/authentication';
+import { isSignedIn } from '../utils/common';
 
 const styles = (theme) => ({
   fullScreen: {
@@ -29,7 +30,7 @@ const styles = (theme) => ({
   },
 });
 
-class Register extends Component {
+class SignUp extends Component {
   static propTypes = {
     classes: PropTypes.shape({
       fullScreen: PropTypes.string.isRequired,
@@ -47,7 +48,13 @@ class Register extends Component {
     email: '',
     name: '',
     isSuccess: null,
+    isAuthenticated: false,
   };
+
+  componentDidMount() {
+    const isAuthenticated = isSignedIn();
+    this.setState({ isAuthenticated });
+  }
 
   handleOnSignIn = () => {
     const {
@@ -56,7 +63,7 @@ class Register extends Component {
     push(SIGN_IN_PATH);
   };
 
-  handleemailOnChange = (e) => {
+  handleEmailOnChange = (e) => {
     this.setState({ email: e.target.value });
   };
 
@@ -66,7 +73,7 @@ class Register extends Component {
 
   register = async () => {
     const { email, name } = this.state;
-    const isSuccess = await register({ name, email });
+    const isSuccess = await signUp({ name, email });
     this.setState({ isSuccess });
   };
 
@@ -86,9 +93,56 @@ class Register extends Component {
     return null;
   };
 
+  renderForm = () => {
+    const { classes } = this.props;
+    const { email, name } = this.state;
+
+    return (
+      <>
+        <Grid item xs={12}>
+          <TextField
+            className={classes.input}
+            required
+            label="Name"
+            variant="outlined"
+            value={name}
+            onChange={this.handleNameOnChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            className={classes.input}
+            required
+            label="email"
+            variant="outlined"
+            value={email}
+            onChange={this.handleEmailOnChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" onClick={this.register}>
+            Sign Up
+          </Button>
+        </Grid>
+        <Divider variant="middle" className={classes.divider} />
+        <Button variant="text" color="primary" onClick={this.handleOnSignIn}>
+          Already have an account? Click here to sign in
+        </Button>
+      </>
+    );
+  };
+
+  renderIsAuthenticatedMessage = () => {
+    return (
+      <Grid item xs={12}>
+        <Typography variant="subtitle1">You are already signed in.</Typography>
+      </Grid>
+    );
+  };
+
   render() {
     const { classes } = this.props;
-    const { email, name, isRequestSent } = this.state;
+    const { isRequestSent, isAuthenticated } = this.state;
 
     if (isRequestSent) {
       return <div>You will receive a email with your cookie!</div>;
@@ -98,45 +152,17 @@ class Register extends Component {
       <div className={classes.fullScreen}>
         {this.renderMessage()}
         <Typography variant="h2" component="h2">
-          Register
+          Sign Up
         </Typography>
         <Grid container className={classes.form}>
-          <Grid item xs={12}>
-            <TextField
-              className={classes.input}
-              required
-              label="Name"
-              variant="outlined"
-              value={name}
-              onChange={this.handleNameOnChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              className={classes.input}
-              required
-              label="email"
-              variant="outlined"
-              value={email}
-              onChange={this.handleemailOnChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" onClick={this.register}>
-              Register
-            </Button>
-          </Grid>
+          {isAuthenticated && this.renderIsAuthenticatedMessage()}
+          {!isAuthenticated && this.renderForm()}
         </Grid>
-
-        <Divider variant="middle" className={classes.divider} />
-        <Button variant="text" color="primary" onClick={this.handleOnSignIn}>
-          Already have an account? Click here to sign in
-        </Button>
       </div>
     );
   }
 }
 
-const StyledComponent = withStyles(styles, { withTheme: true })(Register);
+const StyledComponent = withStyles(styles, { withTheme: true })(SignUp);
 
 export default withRouter(StyledComponent);

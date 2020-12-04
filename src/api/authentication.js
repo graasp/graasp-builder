@@ -1,29 +1,25 @@
 import { API_HOST } from '../config/constants';
+import { DEFAULT_GET, DEFAULT_POST } from './utils';
 
 // payload = {email}
 export const signIn = async (payload) => {
   const req = await fetch(`${API_HOST}/login`, {
-    method: 'POST',
+    ...DEFAULT_POST,
     body: JSON.stringify(payload),
-    headers: { 'Content-Type': 'application/json' },
   });
   return req.status === 204;
 };
 
 export const signOut = async () => {
-  const req = await fetch(`${API_HOST}/logout`, {
-    credentials: 'include',
-    method: 'GET',
-  });
+  const req = await fetch(`${API_HOST}/logout`, DEFAULT_GET);
   return req.status === 204;
 };
 
 // payload = {name, mail}
-export const register = async (payload) => {
+export const signUp = async (payload) => {
   const req = await fetch(`${API_HOST}/register`, {
-    method: 'POST',
+    ...DEFAULT_POST,
     body: JSON.stringify(payload),
-    headers: { 'Content-Type': 'application/json' },
   });
   return req.status === 204;
 };

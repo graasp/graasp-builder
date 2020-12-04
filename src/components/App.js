@@ -9,8 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from './layout/Header';
 import Items from './main/Items';
 import items from '../data/sample';
-import Register from './Register';
-import { REGISTER_PATH, SIGN_IN_PATH } from '../config/paths';
+import SignUp from './SignUp';
+import { SIGN_UP_PATH, SIGN_IN_PATH } from '../config/paths';
 import SignIn from './SignIn';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,8 +36,8 @@ function App() {
             <Route path={SIGN_IN_PATH} exact>
               <SignIn />
             </Route>
-            <Route path={REGISTER_PATH} exact>
-              <Register />
+            <Route path={SIGN_UP_PATH} exact>
+              <SignUp />
             </Route>
             <Route path="/" exact>
               <Redirect to="/items" />
