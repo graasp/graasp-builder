@@ -1,87 +1,32 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { List } from 'immutable';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
-import { HOME_PATH } from '../../config/paths';
-import { ItemContext } from '../context/item';
+import { Link } from 'react-router-dom';
+import { HOME_PATH, buildItemPath } from '../../config/paths';
 
-function handleClick(event) {
-  event.preventDefault();
-}
-
+// eslint-disable-next-line react/prefer-stateless-function
 class Navigation extends Component {
-  static contextType = ItemContext;
-
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        itemId: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-  };
-
-  state = {
-    navigation: [],
-  };
-
-  async componentDidMount() {
-    this.updateNavigation();
-  }
-
-  async componentDidUpdate({
-    match: {
-      params: { itemId: prevItemId },
-    },
-  }) {
-    const {
-      match: {
-        params: { itemId },
-      },
-    } = this.props;
-
-    if (prevItemId !== itemId) {
-      this.updateNavigation();
-    }
-  }
-
-  updateNavigation = async () => {
-    const { getNavigation } = this.context;
-    const {
-      match: {
-        params: { itemId },
-      },
-    } = this.props;
-
-    this.setState({ navigation: await getNavigation(itemId) });
-  };
-
-  goHome = (event) => {
-    const {
-      history: { push },
-    } = this.props;
-    event.preventDefault();
-    push(HOME_PATH);
+    navigation: PropTypes.instanceOf(List).isRequired,
   };
 
   render() {
-    const { navigation } = this.state;
+    const { navigation } = this.props;
     return (
       <Breadcrumbs aria-label="breadcrumb">
-        <Link color="inherit" href="/" onClick={this.goHome}>
+        <Link color="inherit" href="/" to={HOME_PATH}>
           Owned Items
         </Link>
         {navigation.map(({ name, id }) => (
-          <Link
-            key={id}
-            color="inherit"
-            href="/getting-started/installation/"
-            onClick={handleClick}
-          >
-            {name}
+          <Link key={id} to={buildItemPath(id)}>
+            <Typography>{name}</Typography>
           </Link>
         ))}
       </Breadcrumbs>
@@ -89,4 +34,10 @@ class Navigation extends Component {
   }
 }
 
-export default withRouter(Navigation);
+const mapStateToProps = ({ item }) => ({
+  navigation: item.getIn(['parents']),
+});
+
+const ConnectedComponent = connect(mapStateToProps)(Navigation);
+
+export default withRouter(ConnectedComponent);

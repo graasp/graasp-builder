@@ -1,37 +1,32 @@
 import React, { Component } from 'react';
+import List from 'immutable';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ItemsHeader from './ItemsHeader';
 import CreateNewItemButton from './CreateNewItemButton';
 import Item from './Item';
-import { ItemContext } from '../context/item';
+import { getItem, getItems } from '../../actions/item';
 
 class Items extends Component {
-  static contextType = ItemContext;
-
   static propTypes = {
+    items: PropTypes.instanceOf(List).isRequired,
+    dispatchGetItems: PropTypes.func.isRequired,
+    dispatchGetItem: PropTypes.func.isRequired,
     match: PropTypes.shape({
-      params: PropTypes.shape({
-        itemId: PropTypes.string,
-      }).isRequired,
-    }),
+      params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
+    }).isRequired,
   };
 
-  static defaultProps = {
-    match: { params: { itemId: '' } },
-  };
-
-  state = { items: [] };
-
-  async componentDidMount() {
-    this.updateItems();
+  componentDidMount() {
+    this.updateItem();
   }
 
-  async componentDidUpdate({
+  componentDidUpdate({
     match: {
-      params: { itemId: prevItemId },
+      params: { itemId: prevId },
     },
   }) {
     const {
@@ -40,28 +35,30 @@ class Items extends Component {
       },
     } = this.props;
 
-    if (prevItemId !== itemId) {
-      this.updateItems();
+    if (itemId !== prevId) {
+      this.updateItem();
     }
   }
 
-  updateItems = async () => {
+  updateItem = () => {
     const {
       match: {
         params: { itemId },
       },
+      dispatchGetItems,
+      dispatchGetItem,
     } = this.props;
 
-    const { getChildren } = this.context;
-    return this.setState({
-      items: await getChildren(itemId),
-    });
+    if (itemId) {
+      return dispatchGetItem(itemId);
+    }
+
+    return dispatchGetItems(itemId);
   };
 
   renderItems = () => {
-    const { items } = this.state;
-
-    if (!items.length) {
+    const { items } = this.props;
+    if (!items.size) {
       return (
         <Typography variant="h3" align="center" display="block">
           No Item Here
@@ -89,4 +86,15 @@ class Items extends Component {
   }
 }
 
-export default withRouter(Items);
+const mapStateToProps = ({ item }) => ({
+  items: item.getIn(['children']) || [],
+});
+
+const mapDispatchToProps = {
+  dispatchGetItems: getItems,
+  dispatchGetItem: getItem,
+};
+
+const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Items);
+
+export default withRouter(ConnectedComponent);

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import { buildItemPath } from '../../config/paths';
 import ItemMenu from './ItemMenu';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +42,7 @@ const CustomCardHeader = ({ id, creator, title, type }) => {
       <div className={classes.header}>
         <Avatar src={creator.avatar} className={classes.avatar} />
         <div>
-          <Link to={`/items/${id}`} className={classes.link}>
+          <Link to={buildItemPath(id)} className={classes.link}>
             <Typography className={classes.title}>{title}</Typography>
           </Link>
           <Typography className={classes.subtitle}>

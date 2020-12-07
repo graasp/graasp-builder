@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -11,7 +12,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
 import CustomCardHeader from './CustomCardHeader';
-import { ItemContext } from '../context/item';
+import { deleteItem } from '../../actions/item';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,9 +24,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Item = ({ item }) => {
+const Item = ({ item, dispatchDeleteItem }) => {
   const classes = useStyles();
-  const { deleteItem } = useContext(ItemContext);
   const { id, name, description, creator, type, extra } = item;
 
   return (
@@ -46,7 +46,7 @@ const Item = ({ item }) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton aria-label="delete" onClick={() => deleteItem(id)}>
+        <IconButton aria-label="delete" onClick={() => dispatchDeleteItem(id)}>
           <DeleteIcon />
         </IconButton>
       </CardActions>
@@ -65,6 +65,13 @@ Item.propTypes = {
       image: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  dispatchDeleteItem: PropTypes.func.isRequired,
 };
 
-export default Item;
+const mapDispatchToProps = {
+  dispatchDeleteItem: deleteItem,
+};
+
+const ConnectedComponent = connect(null, mapDispatchToProps)(Item);
+
+export default ConnectedComponent;

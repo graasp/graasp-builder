@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { withRouter } from 'react-router';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,8 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { createItem } from '../../api/item';
-import { ItemContext } from '../context/item';
+import { createItem } from '../../actions/item';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -27,15 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateNewItem = ({
-  open,
-  handleClose,
-  match: {
-    params: { itemId },
-  },
-}) => {
+const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
   const classes = useStyles();
-  const itemContext = useContext(ItemContext);
   const [itemName, setItemName] = useState('');
   const [itemType, setItemType] = useState('');
   const [itemDescription, setItemDescription] = useState('');
@@ -58,17 +50,13 @@ const CreateNewItem = ({
   };
 
   const submitNewItem = async () => {
-    const { addItem } = itemContext;
-
-    const newItem = await createItem({
-      parentId: itemId,
+    dispatchCreateItem({
+      parentId,
       name: itemName,
       type: itemType,
       description: itemDescription,
       extra: { image: itemImageUrl },
     });
-
-    addItem(newItem);
   };
 
   return (
@@ -153,16 +141,25 @@ const CreateNewItem = ({
 CreateNewItem.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      itemId: PropTypes.string,
-    }).isRequired,
-  }),
+  parentId: PropTypes.string.isRequired,
+  dispatchCreateItem: PropTypes.func.isRequired,
 };
 
 CreateNewItem.defaultProps = {
   open: false,
-  match: { params: { itemId: '' } },
 };
 
-export default withRouter(CreateNewItem);
+const mapStateToProps = ({ item }) => ({
+  parentId: item.getIn(['item', 'id']),
+});
+
+const mapDispatchToProps = {
+  dispatchCreateItem: createItem,
+};
+
+const ConnectedComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CreateNewItem);
+
+export default ConnectedComponent;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { List } from 'immutable';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -8,8 +10,6 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button } from '@material-ui/core';
-import { ItemContext } from '../context/item';
-import { getItemTree } from '../../api/item';
 
 const styles = () => ({
   root: {
@@ -26,19 +26,8 @@ class MoveItemModal extends Component {
     classes: PropTypes.shape({
       root: PropTypes.string.isRequired,
     }).isRequired,
+    items: PropTypes.instanceOf(List).isRequired,
   };
-
-  static contextType = ItemContext;
-
-  state = {
-    items: [],
-  };
-
-  async componentDidMount() {
-    const { items } = this.context;
-    const tree = await getItemTree(items);
-    this.setState({ items: tree });
-  }
 
   handleClose = () => {
     const { onClose } = this.props;
@@ -48,7 +37,6 @@ class MoveItemModal extends Component {
   onConfirm = () => {
     const { onClose } = this.props;
     // eslint-disable-next-line no-console
-    console.log('I choosed');
     onClose();
   };
 
@@ -66,7 +54,7 @@ class MoveItemModal extends Component {
   };
 
   render() {
-    const { items } = this.state;
+    const { items } = this.props;
     const { open, classes } = this.props;
     return (
       <Dialog
@@ -93,4 +81,15 @@ class MoveItemModal extends Component {
   }
 }
 
-export default withStyles(styles)(MoveItemModal);
+const mapStateToProps = ({ item }) => ({
+  items: item.getIn(['items']),
+});
+
+const mapDispatchToProps = {};
+
+const ConnectedComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MoveItemModal);
+
+export default withStyles(styles)(ConnectedComponent);
