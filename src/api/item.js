@@ -36,6 +36,11 @@ export const createItem = async ({
     ...DEFAULT_POST,
     body: JSON.stringify({ name, type, description, extra }),
   });
+
+  if (req.status !== 200) {
+    return null;
+  }
+
   return req.json();
 };
 

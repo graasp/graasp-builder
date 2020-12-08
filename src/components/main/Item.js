@@ -32,7 +32,7 @@ const Item = ({ item, dispatchDeleteItem }) => {
   return (
     <Card className={classes.root}>
       <CustomCardHeader id={id} creator={creator} title={name} type={type} />
-      <CardMedia className={classes.media} image={extra.image} title={name} />
+      <CardMedia className={classes.media} image={extra?.image} title={name} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {/* Line below is to limit how much description text is displayed, to create consistent card displays

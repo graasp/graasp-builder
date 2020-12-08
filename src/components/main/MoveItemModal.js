@@ -10,6 +10,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button } from '@material-ui/core';
+import * as API from '../../api/item';
 
 const styles = () => ({
   root: {
@@ -19,6 +20,18 @@ const styles = () => ({
   },
 });
 
+const FetchingTreeItem = ({ id }) => (
+  <TreeItem
+    key={`fetching-${id}`}
+    nodeId={`fetching-${id}`}
+    label="fetching children..."
+  />
+);
+
+FetchingTreeItem.propTypes = {
+  id: PropTypes.string.isRequired,
+};
+
 class MoveItemModal extends Component {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
@@ -26,8 +39,10 @@ class MoveItemModal extends Component {
     classes: PropTypes.shape({
       root: PropTypes.string.isRequired,
     }).isRequired,
-    items: PropTypes.instanceOf(List).isRequired,
+    ownedItems: PropTypes.instanceOf(List).isRequired,
   };
+
+  state = {};
 
   handleClose = () => {
     const { onClose } = this.props;
@@ -45,17 +60,39 @@ class MoveItemModal extends Component {
     console.log(value);
   };
 
+  fetchChildren = async ({ id }) => {
+    const { tree } = this.state;
+    const children = await API.getChildren(id);
+
+    this.setState({ tree: tree.concat(children) });
+  };
+
   renderItemTreeItem = (items) => {
-    return items?.map(({ id, name, children }) => (
-      <TreeItem key={id} nodeId={id} label={name}>
-        {this.renderItemTreeItem(children)}
-      </TreeItem>
-    ));
+    return items?.map((item) => {
+      const { id: itemId, name } = item;
+
+      // const children = await this.fetchChildren(itemId);
+
+      // if (children?.length) {
+      //   fetchedChildren = children.map((id) => {
+      //     const child = tree.find(({ id: childId }) => id === childId);
+      //     return child ? null : <FetchingTreeItem id={id} />;
+      //   });
+      // }
+
+      return (
+        <TreeItem
+          key={itemId}
+          nodeId={itemId}
+          label={name}
+          onClick={() => this.fetchChildren(item)}
+        />
+      );
+    });
   };
 
   render() {
-    const { items } = this.props;
-    const { open, classes } = this.props;
+    const { open, classes, ownedItems } = this.props;
     return (
       <Dialog
         onClose={this.handleClose}
@@ -71,7 +108,7 @@ class MoveItemModal extends Component {
           defaultExpandIcon={<ChevronRightIcon />}
           onNodeSelect={this.onSelect}
         >
-          {this.renderItemTreeItem(items)}
+          {this.renderItemTreeItem(ownedItems)}
         </TreeView>
         <Button onClick={this.onConfirm} color="primary" variant="contained">
           Confirm
@@ -83,6 +120,7 @@ class MoveItemModal extends Component {
 
 const mapStateToProps = ({ item }) => ({
   items: item.getIn(['items']),
+  ownedItems: item.getIn(['own']),
 });
 
 const mapDispatchToProps = {};

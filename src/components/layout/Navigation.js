@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
-import { clearItem } from '../../actions/item';
+import { clearItem, getItem } from '../../actions/item';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Navigation extends Component {
@@ -15,8 +16,10 @@ class Navigation extends Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    navigation: PropTypes.instanceOf(List).isRequired,
+    parents: PropTypes.instanceOf(List).isRequired,
+    items: PropTypes.instanceOf(List).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
+    dispatchGetItem: PropTypes.func.isRequired,
   };
 
   clearItem = () => {
@@ -25,13 +28,27 @@ class Navigation extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { parents, dispatchGetItem, items } = this.props;
+
+    // todo: avoid rendering by using state
+    const navEls = parents?.map((id) => {
+      const el = items.find(({ id: thisId }) => thisId === id);
+      if (!el) {
+        dispatchGetItem(id);
+      }
+      return el;
+    });
+
+    if (!navEls?.every(Boolean)) {
+      return <CircularProgress color="primary" />;
+    }
+
     return (
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
           Owned Items
         </Link>
-        {navigation.map(({ name, id }) => (
+        {navEls.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
             <Typography>{name}</Typography>
           </Link>
@@ -42,11 +59,13 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = ({ item }) => ({
-  navigation: item.getIn(['parents']),
+  parents: item.getIn(['item', 'parents']),
+  items: item.get('items'),
 });
 
 const mapDispatchToProps = {
   dispatchClearItem: clearItem,
+  dispatchGetItem: getItem,
 };
 
 const ConnectedComponent = connect(

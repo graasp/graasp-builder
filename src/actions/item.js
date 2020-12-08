@@ -1,30 +1,51 @@
 import * as API from '../api/item';
 import {
-  GET_NAVIGATION_SUCCESS,
-  GET_CHILDREN_SUCCESS,
   CREATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
   GET_OWN_ITEMS_SUCCESS,
-  GET_ITEM_SUCCESS,
+  SET_ITEM_SUCCESS,
   CLEAR_ITEM_SUCCESS,
+  GET_ITEM_SUCCESS,
 } from '../types/item';
 import sampleItems from '../data/sample';
+import { getParentsIdsFromPath } from '../utils/item';
 
 const buildParentsLine = (path) => {
-  const parents = path.split('.').map((id) => {
-    const itemId = id.replaceAll('_', '-');
-    return API.getItem(itemId);
+  const parents = getParentsIdsFromPath(path).map((id) => {
+    return API.getItem(id);
   });
   return Promise.all(parents);
 };
 
+export const setItem = (id) => async (dispatch, getState) => {
+  const items = getState().item.get('items');
+
+  // use saved item when possible
+  const item =
+    items.find(({ id: thisId }) => id === thisId) || (await API.getItem(id));
+  const { children, parents } = item;
+  let newChildren = [];
+  if (!children) {
+    newChildren = await API.getChildren(id);
+    item.children = newChildren.map(({ id: childId }) => childId);
+  }
+
+  let newParents = [];
+  if (!parents) {
+    newParents = await buildParentsLine(item.path);
+    item.parents = newParents.map(({ id: parentId }) => parentId);
+  }
+  dispatch({
+    type: SET_ITEM_SUCCESS,
+    payload: { item, parents: newParents, children: newChildren },
+  });
+};
+
 export const getItem = (id) => async (dispatch) => {
   const item = await API.getItem(id);
-  const children = await API.getChildren(id);
-  const parents = await buildParentsLine(item.path);
   dispatch({
     type: GET_ITEM_SUCCESS,
-    payload: { item, parents, children },
+    payload: item,
   });
 };
 
@@ -38,7 +59,10 @@ export const getOwnItems = () => async (dispatch) => {
 
 export const createItem = (props) => async (dispatch) => {
   const newItem = await API.createItem(props);
-  dispatch({
+  if (!newItem) {
+    return console.error('Error while creating a new item');
+  }
+  return dispatch({
     type: CREATE_ITEM_SUCCESS,
     payload: newItem,
   });
@@ -58,28 +82,5 @@ export const deleteItem = (id) => async (dispatch) => {
 export const clearItem = () => (dispatch) => {
   dispatch({
     type: CLEAR_ITEM_SUCCESS,
-  });
-};
-
-export const getChildren = (id) => async (dispatch) => {
-  let children = [];
-  if (!id) {
-    children = await API.getOwnItems();
-  }
-  children = await API.getChildren(id);
-  dispatch({
-    type: GET_CHILDREN_SUCCESS,
-    payload: children,
-  });
-};
-
-export const getNavigation = (itemId) => async (dispatch) => {
-  if (!itemId) {
-    return [];
-  }
-  const navigation = await buildParentsLine(itemId);
-  return dispatch({
-    type: GET_NAVIGATION_SUCCESS,
-    payload: navigation,
   });
 };
