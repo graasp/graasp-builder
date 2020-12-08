@@ -4,8 +4,9 @@ import {
   GET_CHILDREN_SUCCESS,
   CREATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
-  GET_ITEMS_SUCCESS,
+  GET_OWN_ITEMS_SUCCESS,
   GET_ITEM_SUCCESS,
+  CLEAR_ITEM_SUCCESS,
 } from '../types/item';
 import sampleItems from '../data/sample';
 
@@ -27,10 +28,10 @@ export const getItem = (id) => async (dispatch) => {
   });
 };
 
-export const getItems = () => async (dispatch) => {
+export const getOwnItems = () => async (dispatch) => {
   const ownedItems = (await API.getOwnItems()) || sampleItems;
   dispatch({
-    type: GET_ITEMS_SUCCESS,
+    type: GET_OWN_ITEMS_SUCCESS,
     payload: ownedItems,
   });
 };
@@ -51,6 +52,12 @@ export const deleteItem = (id) => async (dispatch) => {
   return dispatch({
     type: DELETE_ITEM_SUCCESS,
     payload: id,
+  });
+};
+
+export const clearItem = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_ITEM_SUCCESS,
   });
 };
 

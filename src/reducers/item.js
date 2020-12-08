@@ -4,23 +4,27 @@ import {
   CREATE_ITEM_SUCCESS,
   GET_ITEM_SUCCESS,
   GET_NAVIGATION_SUCCESS,
-  GET_ITEMS_SUCCESS,
+  GET_OWN_ITEMS_SUCCESS,
   DELETE_ITEM_SUCCESS,
+  CLEAR_ITEM_SUCCESS,
 } from '../types/item';
 
 const INITIAL_STATE = Map({
-  item: null,
+  item: Map(),
   parents: List(),
   children: List(),
+  own: List(),
 });
 
 export default (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-    case GET_ITEMS_SUCCESS:
+    case CLEAR_ITEM_SUCCESS:
       return state
-        .setIn(['children'], List(payload))
         .setIn(['item'], Map())
-        .setIn(['parents'], List());
+        .setIn(['parents'], List())
+        .setIn(['children'], List());
+    case GET_OWN_ITEMS_SUCCESS:
+      return state.setIn(['own'], List(payload));
     case GET_ITEM_SUCCESS:
       return state
         .setIn(['item'], Map(payload.item))

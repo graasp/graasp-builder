@@ -13,6 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
 import CustomCardHeader from './CustomCardHeader';
 import { deleteItem } from '../../actions/item';
+import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,9 +35,12 @@ const Item = ({ item, dispatchDeleteItem }) => {
       <CardMedia className={classes.media} image={extra.image} title={name} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {/* Line below is to limit how much description text is dispalyed, to create consistent card displays
+          {/* Line below is to limit how much description text is displayed, to create consistent card displays
           But fix: There must be a better way of doing it */}
-          {`${description?.split(' ').slice(0, 30).join(' ')}...`}
+          {`${description
+            ?.split(' ')
+            .slice(0, DESCRIPTION_MAX_LENGTH)
+            .join(' ')}...`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

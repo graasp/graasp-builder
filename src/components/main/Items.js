@@ -8,12 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import ItemsHeader from './ItemsHeader';
 import CreateNewItemButton from './CreateNewItemButton';
 import Item from './Item';
-import { getItem, getItems } from '../../actions/item';
+import { getItem, getOwnItems } from '../../actions/item';
 
 class Items extends Component {
   static propTypes = {
-    items: PropTypes.instanceOf(List).isRequired,
-    dispatchGetItems: PropTypes.func.isRequired,
+    children: PropTypes.instanceOf(List).isRequired,
+    ownItems: PropTypes.instanceOf(List).isRequired,
+    dispatchGetOwnItems: PropTypes.func.isRequired,
     dispatchGetItem: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
@@ -45,7 +46,7 @@ class Items extends Component {
       match: {
         params: { itemId },
       },
-      dispatchGetItems,
+      dispatchGetOwnItems,
       dispatchGetItem,
     } = this.props;
 
@@ -53,11 +54,10 @@ class Items extends Component {
       return dispatchGetItem(itemId);
     }
 
-    return dispatchGetItems(itemId);
+    return dispatchGetOwnItems(itemId);
   };
 
-  renderItems = () => {
-    const { items } = this.props;
+  renderItems = (items) => {
     if (!items.size) {
       return (
         <Typography variant="h3" align="center" display="block">
@@ -74,12 +74,20 @@ class Items extends Component {
   };
 
   render() {
+    const {
+      children,
+      ownItems,
+      match: {
+        params: { itemId },
+      },
+    } = this.props;
     return (
       <div>
         <ItemsHeader />
         <CreateNewItemButton />
         <Grid container spacing={1}>
-          {this.renderItems()}
+          {itemId && this.renderItems(children)}
+          {!itemId && this.renderItems(ownItems)}
         </Grid>
       </div>
     );
@@ -87,11 +95,12 @@ class Items extends Component {
 }
 
 const mapStateToProps = ({ item }) => ({
-  items: item.getIn(['children']) || [],
+  children: item.getIn(['children']) || List(),
+  ownItems: item.getIn(['own']) || List(),
 });
 
 const mapDispatchToProps = {
-  dispatchGetItems: getItems,
+  dispatchGetOwnItems: getOwnItems,
   dispatchGetItem: getItem,
 };
 
