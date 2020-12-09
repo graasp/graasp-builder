@@ -5,6 +5,8 @@ import { withTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Item from './Item';
+import MoveItemModal from './MoveItemModal';
+import CopyItemModal from './CopyItemModal';
 
 class ItemsGrid extends Component {
   static propTypes = {
@@ -34,9 +36,14 @@ class ItemsGrid extends Component {
 
   render() {
     return (
-      <Grid container spacing={1}>
-        {this.renderItems()}
-      </Grid>
+      <>
+        <Grid container spacing={1}>
+          {this.renderItems()}
+        </Grid>
+
+        <MoveItemModal />
+        <CopyItemModal />
+      </>
     );
   }
 }

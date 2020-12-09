@@ -6,6 +6,9 @@ import {
   SET_ITEM_SUCCESS,
   CLEAR_ITEM_SUCCESS,
   GET_ITEM_SUCCESS,
+  MOVE_ITEM_SUCCESS,
+  COPY_ITEM_SUCCESS,
+  GET_CHILDREN_SUCCESS,
 } from '../types/item';
 import sampleItems from '../data/sample';
 import { getParentsIdsFromPath } from '../utils/item';
@@ -20,9 +23,9 @@ const buildParentsLine = (path) => {
 
 export const setItem = (id) => async (dispatch, getState) => {
   try {
-    const item = getCachedItem(getState, id) || (await Api.getItem(id));
-
     // use saved item when possible
+    const items = getState().item.get('items');
+    const item = getCachedItem(items, id) || (await Api.getItem(id));
     const { children, parents } = item;
 
     // get children
@@ -60,12 +63,27 @@ export const getItem = (id) => async (dispatch) => {
   }
 };
 
+// todo: remove sampleItems
 export const getOwnItems = () => async (dispatch) => {
   try {
     const ownedItems = (await Api.getOwnItems()) || sampleItems;
+
+    let childrenItems = [];
+    for (const item of ownedItems) {
+      const { children, id } = item;
+      // get children
+      let newChildren = [];
+      if (!children) {
+        // eslint-disable-next-line no-await-in-loop
+        newChildren = await Api.getChildren(id);
+        childrenItems = childrenItems.concat(newChildren);
+        item.children = newChildren.map(({ id: childId }) => childId);
+      }
+    }
+
     dispatch({
       type: GET_OWN_ITEMS_SUCCESS,
-      payload: ownedItems,
+      payload: [...ownedItems, ...childrenItems],
     });
   } catch (e) {
     console.error(e);
@@ -104,6 +122,44 @@ export const clearItem = () => (dispatch) => {
   try {
     dispatch({
       type: CLEAR_ITEM_SUCCESS,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const moveItem = (payload) => async (dispatch, getState) => {
+  try {
+    await Api.moveItem(payload);
+    // get current displayed item
+    const from = getState().item.getIn(['item', 'id']);
+    dispatch({
+      type: MOVE_ITEM_SUCCESS,
+      payload: { ...payload, from },
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const copyItem = (payload) => async (dispatch) => {
+  try {
+    const newItem = await Api.copyItem(payload);
+    dispatch({
+      type: COPY_ITEM_SUCCESS,
+      payload: { ...payload, item: newItem },
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getChildren = (id) => async (dispatch) => {
+  try {
+    const children = await Api.getChildren(id);
+    dispatch({
+      type: GET_CHILDREN_SUCCESS,
+      payload: { id, children },
     });
   } catch (e) {
     console.error(e);

@@ -9,7 +9,7 @@ import ItemsGrid from './ItemsGrid';
 
 class Home extends Component {
   static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     dispatchGetOwnItems: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
@@ -26,20 +26,33 @@ class Home extends Component {
     return dispatchGetOwnItems(itemId);
   }
 
+  componentDidUpdate() {
+    const {
+      match: {
+        params: { itemId },
+      },
+      dispatchGetOwnItems,
+      rootItems,
+    } = this.props;
+    if (rootItems.some(({ dirty }) => dirty)) {
+      dispatchGetOwnItems(itemId);
+    }
+  }
+
   render() {
-    const { items } = this.props;
+    const { rootItems } = this.props;
     return (
       <>
         <ItemsHeader />
         <NewItemButton />
-        <ItemsGrid items={items} />
+        <ItemsGrid items={rootItems} />
       </>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  items: item.getIn(['root']).toJS(),
+  rootItems: item.getIn(['root']).toJS(),
 });
 
 const mapDispatchToProps = {

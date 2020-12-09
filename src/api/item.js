@@ -1,4 +1,4 @@
-import { API_HOST } from '../config/constants';
+import { API_HOST, ROOT_ID } from '../config/constants';
 import {
   buildDeleteItemRoute,
   buildGetChildrenRoute,
@@ -68,5 +68,37 @@ export const getChildren = async (id) => {
   if (!req.ok) {
     throw new Error((await req.json()).message);
   }
+  return req.json();
+};
+
+export const moveItem = async ({ id, to }) => {
+  const body = {};
+  // send parentId only for non-root item
+  if (to !== ROOT_ID) {
+    body.parentId = to;
+  }
+  const req = await fetch(`${API_HOST}/items/${id}/move`, {
+    ...DEFAULT_POST,
+    body: JSON.stringify(body),
+  });
+
+  return req.ok;
+};
+
+export const copyItem = async ({ id, to }) => {
+  const body = {};
+  // send parentId only for non-root item
+  if (to !== ROOT_ID) {
+    body.parentId = to;
+  }
+  const req = await fetch(`${API_HOST}/items/${id}/copy`, {
+    ...DEFAULT_POST,
+    body: JSON.stringify(body),
+  });
+
+  if (!req.ok) {
+    throw new Error((await req.json()).message);
+  }
+
   return req.json();
 };

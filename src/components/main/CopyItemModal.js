@@ -3,16 +3,15 @@ import { Map } from 'immutable';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { moveItem } from '../../actions/item';
+import { copyItem } from '../../actions/item';
 import TreeModal from './TreeModal';
-import { TREE_PREVENT_SELECTION } from '../../config/constants';
-import { setMoveModalSettings } from '../../actions/layout';
+import { setCopyModalSettings } from '../../actions/layout';
 
-class MoveItemModal extends Component {
+class CopyItemModal extends Component {
   static propTypes = {
-    dispatchMoveItem: PropTypes.func.isRequired,
+    dispatchCopyItem: PropTypes.func.isRequired,
     settings: PropTypes.instanceOf(Map).isRequired,
-    dispatchSetMoveModalSettings: PropTypes.func.isRequired,
+    dispatchSetCopyModalSettings: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
 
@@ -25,13 +24,13 @@ class MoveItemModal extends Component {
   }
 
   onConfirm = (payload) => {
-    const { dispatchMoveItem } = this.props;
-    dispatchMoveItem(payload);
+    const { dispatchCopyItem } = this.props;
+    dispatchCopyItem(payload);
   };
 
   onClose = (payload) => {
-    const { dispatchSetMoveModalSettings } = this.props;
-    dispatchSetMoveModalSettings(payload);
+    const { dispatchSetCopyModalSettings } = this.props;
+    dispatchSetCopyModalSettings(payload);
   };
 
   render() {
@@ -39,27 +38,27 @@ class MoveItemModal extends Component {
     return (
       <TreeModal
         onClose={this.onClose}
-        prevent={TREE_PREVENT_SELECTION.SELF_AND_CHILDREN}
         settings={settings}
         onConfirm={this.onConfirm}
-        title={t('Where do you want to move the item?')}
+        title={t('Where do you want to copy this item?')}
       />
     );
   }
 }
+
 const mapStateToProps = ({ layout }) => ({
-  settings: layout.getIn(['moveModal']),
+  settings: layout.getIn(['copyModal']),
 });
 
 const mapDispatchToProps = {
-  dispatchMoveItem: moveItem,
-  dispatchSetMoveModalSettings: setMoveModalSettings,
+  dispatchCopyItem: copyItem,
+  dispatchSetCopyModalSettings: setCopyModalSettings,
 };
 
 const ConnectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MoveItemModal);
+)(CopyItemModal);
 
 const TranslatedComponent = withTranslation()(ConnectedComponent);
 

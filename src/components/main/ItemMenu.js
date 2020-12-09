@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { useTranslation } from 'react-i18next';
-import MoveItemModal from './MoveItemModal';
+import {
+  setMoveModalSettings,
+  setCopyModalSettings,
+} from '../../actions/layout';
 
-const ItemMenu = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
+const ItemMenu = ({
+  itemId,
+  dispatchSetMoveModalSettings,
+  dispatchSetCopyModalSettings,
+}) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
 
   const handleClick = (event) => {
@@ -20,12 +28,13 @@ const ItemMenu = () => {
   };
 
   const handleMove = () => {
-    setIsMoveModalOpen(true);
+    dispatchSetMoveModalSettings({ open: true, itemId });
     handleClose();
   };
 
-  const onModalClose = () => {
-    setIsMoveModalOpen(false);
+  const handleCopy = () => {
+    dispatchSetCopyModalSettings({ open: true, itemId });
+    handleClose();
   };
 
   // todo: only display one modal for the whole page
@@ -43,10 +52,23 @@ const ItemMenu = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleMove}>{t('Move')}</MenuItem>
+        <MenuItem onClick={handleCopy}>{t('Copy')}</MenuItem>
       </Menu>
-      <MoveItemModal onClose={onModalClose} open={isMoveModalOpen} />
     </>
   );
 };
 
-export default ItemMenu;
+ItemMenu.propTypes = {
+  itemId: PropTypes.string.isRequired,
+  dispatchSetMoveModalSettings: PropTypes.func.isRequired,
+  dispatchSetCopyModalSettings: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  dispatchSetMoveModalSettings: setMoveModalSettings,
+  dispatchSetCopyModalSettings: setCopyModalSettings,
+};
+
+const ConnectedComponent = connect(null, mapDispatchToProps)(ItemMenu);
+
+export default ConnectedComponent;

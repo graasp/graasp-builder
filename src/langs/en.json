@@ -27,6 +27,9 @@
     "You will receive a email with your cookie": "You will receive a email with your cookie",
     "Owned Items": "Owned Items",
     "Type by author": "{{type}} by {{author}}",
-    "Unknown": "Unknown"
+    "Unknown": "Unknown",
+    "Add item": "Add item",
+    "Copy": "Copy",
+    "Where do you want to copy this item?": "Where do you want to copy this item?"
   }
 }

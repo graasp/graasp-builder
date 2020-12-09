@@ -11,6 +11,7 @@ import NewItemButton from './NewItemButton';
 import { clearItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
+import { getCachedItem } from '../../config/cache';
 
 class ItemScreen extends Component {
   static propTypes = {
@@ -78,9 +79,7 @@ class ItemScreen extends Component {
     }
 
     // get complete elements from id
-    const completeItems = children.map((id) =>
-      items.find(({ id: thisId }) => id === thisId),
-    );
+    const completeItems = children.map((id) => getCachedItem(items, id));
 
     // wait until all children are available
     if (!completeItems.every(Boolean)) {
