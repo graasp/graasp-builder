@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
+  buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
   buildMoveItemRoute,
@@ -179,4 +180,20 @@ export const mockCopyItem = (items, shouldThrowError) => {
       });
     },
   ).as('copyItem');
+};
+
+export const mockEditItem = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: 'PATCH',
+      url: new RegExp(`${API_HOST}/${buildEditItemRoute(ID_FORMAT)}`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: ERROR_CODE });
+      }
+
+      return reply(body);
+    },
+  ).as('editItem');
 };

@@ -33,11 +33,11 @@ const useStyles = makeStyles(() => ({
 
 const Item = ({ item, dispatchDeleteItem }) => {
   const classes = useStyles();
-  const { id, name, description, creator, type, extra } = item;
+  const { id, name, description, extra } = item;
 
   return (
     <Card className={classes.root} id={buildItemCard(id)}>
-      <CustomCardHeader id={id} creator={creator} title={name} type={type} />
+      <CustomCardHeader item={item} />
       <CardMedia
         className={classes.media}
         image={extra?.image || DEFAULT_IMAGE_SRC}

@@ -2,13 +2,19 @@ import { API_HOST, ROOT_ID } from '../config/constants';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
+  buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
   buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
 } from './routes';
-import { DEFAULT_DELETE, DEFAULT_GET, DEFAULT_POST } from './utils';
+import {
+  DEFAULT_DELETE,
+  DEFAULT_GET,
+  DEFAULT_POST,
+  DEFAULT_PATCH,
+} from './utils';
 import * as CacheOperations from '../config/cache';
 
 export const getItem = async (id) => {
@@ -80,6 +86,26 @@ export const deleteItem = async (id) => {
   return res.json();
 };
 
+// payload = {name, type, description, extra}
+// querystring = {parentId}
+export const editItem = async (item) => {
+  const req = await fetch(`${API_HOST}/${buildEditItemRoute(item.id)}`, {
+    ...DEFAULT_PATCH,
+    body: JSON.stringify(item),
+  });
+
+  if (!req.ok) {
+    throw new Error((await req.json()).message);
+  }
+
+  const newItem = await req.json();
+
+  await CacheOperations.saveItem(newItem);
+
+  return newItem;
+};
+
+// we need this function for navigation purposes: when you click on an item, you want to see its 'immediate' children
 export const getChildren = async (id) => {
   const res = await fetch(
     `${API_HOST}/${buildGetChildrenRoute(id)}`,

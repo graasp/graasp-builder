@@ -11,6 +11,7 @@ import {
   mockGetOwnItems,
   mockMoveItem,
   mockPostItem,
+  mockEditItem,
 } from './server';
 
 Cypress.Commands.add(
@@ -22,6 +23,7 @@ Cypress.Commands.add(
     moveItemError = false,
     copyItemError = false,
     getItemError = false,
+    editItemError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
 
@@ -38,6 +40,8 @@ Cypress.Commands.add(
     mockMoveItem(cachedItems, moveItemError);
 
     mockCopyItem(cachedItems, copyItemError);
+
+    mockEditItem(cachedItems, editItemError);
   },
 );
 

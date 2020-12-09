@@ -18,7 +18,9 @@ import {
   FLAG_GETTING_ITEMS,
   FLAG_MOVING_ITEM,
   FLAG_COPYING_ITEM,
+  EDIT_ITEM_SUCCESS,
   FLAG_SETTING_ITEM,
+  FLAG_EDITING_ITEM,
 } from '../types/item';
 import { getParentsIdsFromPath } from '../utils/item';
 import { createFlag } from './utils';
@@ -207,5 +209,20 @@ export const getChildren = (id) => async (dispatch) => {
     console.error(e);
   } finally {
     dispatch(createFlag(FLAG_GETTING_CHILDREN, false));
+  }
+};
+
+export const editItem = (item) => async (dispatch) => {
+  try {
+    dispatch(createFlag(FLAG_EDITING_ITEM, true));
+    const editedItem = await Api.editItem(item);
+    dispatch({
+      type: EDIT_ITEM_SUCCESS,
+      payload: editedItem,
+    });
+  } catch (e) {
+    console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_EDITING_ITEM, false));
   }
 };

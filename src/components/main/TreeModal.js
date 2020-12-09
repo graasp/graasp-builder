@@ -77,35 +77,43 @@ class TreeModal extends Component {
   componentDidMount() {
     const { dispatchGetOwnItems } = this.props;
     dispatchGetOwnItems();
-  }
 
-  shouldComponentUpdate({ settings }) {
-    // update only when opened or on close
-    const { settings: prevSettings } = this.props;
-    const prevItemId = prevSettings.get('itemId');
-    const open = settings.get('open');
-    return open || (!open && Boolean(prevItemId));
+    this.updateExpandedElements();
   }
 
   componentDidUpdate({ settings: prevSettings, items: prevItems }) {
     const { dispatchGetItems, settings, items } = this.props;
-    const { expandedItems } = this.state;
-
+    const prevOpen = prevSettings.get('open');
     // expand tree until current item
     const itemId = settings.get('itemId');
+    const open = settings.get('open');
     const item = getItemById(items, itemId);
     const prevItem = prevItems.find(({ id }) => id === itemId);
-    if (!areItemsEqual(item, prevItem)) {
-      const parentIds = getParentsIdsFromPath(item.path) || [];
-      const newExpandedItems = [...expandedItems, ...parentIds];
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ expandedItems: newExpandedItems });
+    if (!areItemsEqual(item, prevItem) || (!prevOpen && open)) {
+      this.updateExpandedElements();
     }
 
     if (settings.get('open') && !prevSettings.get('open')) {
       dispatchGetItems();
     }
   }
+
+  updateExpandedElements = () => {
+    const { settings, items } = this.props;
+    const { expandedItems } = this.state;
+    const itemId = settings.get('itemId');
+    const item = getItemById(items, itemId);
+    if (item) {
+      const parentIds = getParentsIdsFromPath(item.path) || [];
+      // eslint-disable-next-line no-console
+      console.log('parentIds: ', parentIds);
+      const newExpandedItems = [...expandedItems, ...parentIds];
+      // eslint-disable-next-line no-console
+      console.log('newExpandedItems: ', newExpandedItems);
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ expandedItems: newExpandedItems });
+    }
+  };
 
   handleClose = () => {
     const { onClose } = this.props;

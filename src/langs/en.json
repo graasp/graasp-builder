@@ -31,6 +31,8 @@
     "Add item": "Add item",
     "Copy": "Copy",
     "Where do you want to copy this item?": "Where do you want to copy this item?",
-    "Home":"Home"
+    "Home":"Home",
+    "Edit Item": "Edit Item",
+    "Edit": "Edit"
   }
 }
