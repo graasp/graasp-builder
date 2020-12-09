@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import List from 'immutable';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -8,10 +7,9 @@ import CreateNewItemButton from './CreateNewItemButton';
 import { setItem, getOwnItems } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 
-class Items extends Component {
+class Home extends Component {
   static propTypes = {
-    items: PropTypes.instanceOf(List).isRequired,
-    ownItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     dispatchGetOwnItems: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
@@ -19,17 +17,6 @@ class Items extends Component {
   };
 
   componentDidMount() {
-    this.updateItem();
-  }
-
-  componentDidUpdate({ items: prevItems }) {
-    const { items } = this.props;
-    if (items !== prevItems) {
-      this.updateItem();
-    }
-  }
-
-  updateItem = () => {
     const {
       match: {
         params: { itemId },
@@ -37,23 +24,22 @@ class Items extends Component {
       dispatchGetOwnItems,
     } = this.props;
     return dispatchGetOwnItems(itemId);
-  };
+  }
 
   render() {
-    const { ownItems } = this.props;
+    const { items } = this.props;
     return (
       <div>
         <ItemsHeader />
         <CreateNewItemButton />
-        <ItemsGrid items={ownItems} />
+        <ItemsGrid items={items} />
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  ownItems: item.getIn(['own']).toJS(),
-  items: item.getIn(['items']),
+  items: item.getIn(['root']).toJS(),
 });
 
 const mapDispatchToProps = {
@@ -61,6 +47,6 @@ const mapDispatchToProps = {
   dispatchSetItem: setItem,
 };
 
-const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Items);
+const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Home);
 
 export default withRouter(ConnectedComponent);

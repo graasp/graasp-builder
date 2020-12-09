@@ -16,16 +16,20 @@ const DEFAULT_ITEM = Map({
 
 const INITIAL_STATE = Map({
   item: DEFAULT_ITEM,
-  own: List(), // items
   items: List(), // items
+  root: List(), // ids
 });
 
 const updateItems = (items, fetchedItems) => {
   let newItems = items;
   // eslint-disable-next-line no-restricted-syntax
   for (const item of fetchedItems) {
-    const found = newItems.find(({ id }) => item.id === id);
-    if (!found) {
+    const idx = newItems.findIndex(({ id }) => item.id === id);
+    // update existing element
+    if (idx >= 0) {
+      newItems = newItems.set(idx, item);
+    } else {
+      // add new elem
       newItems = newItems.push(item);
     }
   }
@@ -51,7 +55,7 @@ const removeItemInItems = (items, id) => {
       ({ id: thisId }) => thisId === directParentId,
     );
     if (directParent) {
-      directParent.children = directParent.children.filter(
+      directParent.children = directParent.children?.filter(
         (child) => child !== id,
       );
     }
@@ -59,18 +63,30 @@ const removeItemInItems = (items, id) => {
   return newItems;
 };
 
+const updateRootItems = (items) => {
+  return items.filter(({ path }) => !path.includes('.'));
+};
+
 export default (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
     case CLEAR_ITEM_SUCCESS:
       return state.setIn(['item'], DEFAULT_ITEM);
-    case GET_ITEM_SUCCESS:
-      return state.updateIn(['items'], (items) =>
+    case GET_ITEM_SUCCESS: {
+      const newState = state.updateIn(['items'], (items) =>
         updateItems(items, [payload]),
       );
-    case GET_OWN_ITEMS_SUCCESS:
-      return state
-        .setIn(['own'], List(payload))
-        .updateIn(['items'], (items) => updateItems(items, payload));
+      return newState.updateIn(['root'], () =>
+        updateRootItems(newState.get('items')),
+      );
+    }
+    case GET_OWN_ITEMS_SUCCESS: {
+      const newState = state.updateIn(['items'], (items) =>
+        updateItems(items, payload),
+      );
+      return newState.updateIn(['root'], () =>
+        updateRootItems(newState.get('items')),
+      );
+    }
     case SET_ITEM_SUCCESS:
       return state
         .setIn(['item'], Map(payload.item))
@@ -81,19 +97,27 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             ...payload.children,
           ]),
         );
-    case CREATE_ITEM_SUCCESS:
-      return state
+    case CREATE_ITEM_SUCCESS: {
+      const newState = state
         .updateIn(['item', 'children'], (children) => {
           children.push(payload.id);
           return children;
         })
         .updateIn(['items'], (items) => updateItems(items, [payload]));
-    case DELETE_ITEM_SUCCESS:
-      return state
+      return newState.updateIn(['root'], () =>
+        updateRootItems(newState.get('items')),
+      );
+    }
+    case DELETE_ITEM_SUCCESS: {
+      const newState = state
         .updateIn(['item', 'children'], (children) =>
           children.filter((id) => id !== payload),
         )
         .updateIn(['items'], (items) => removeItemInItems(items, payload));
+      return newState.updateIn(['root'], () =>
+        updateRootItems(newState.get('items')),
+      );
+    }
     default:
       return state;
   }

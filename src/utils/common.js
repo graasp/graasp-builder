@@ -7,3 +7,5 @@ export const isSignedIn = () => {
   const value = Cookies.get('session');
   return Boolean(value);
 };
+
+export const getOwnFromItems = (items) => items.filter(({ own }) => own);

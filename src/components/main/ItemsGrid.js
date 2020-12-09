@@ -7,7 +7,7 @@ import Item from './Item';
 
 class ItemsGrid extends Component {
   static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.string).isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,

@@ -75,7 +75,7 @@ class ItemScreen extends Component {
 
 const mapStateToProps = ({ item }) => ({
   items: item.getIn(['items']),
-  children: item.getIn(['item', 'children']),
+  children: item.getIn(['item', 'children']) || [],
 });
 
 const mapDispatchToProps = {

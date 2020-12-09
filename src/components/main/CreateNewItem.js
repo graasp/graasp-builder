@@ -141,12 +141,13 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
 CreateNewItem.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
-  parentId: PropTypes.string.isRequired,
   dispatchCreateItem: PropTypes.func.isRequired,
+  parentId: PropTypes.string,
 };
 
 CreateNewItem.defaultProps = {
   open: false,
+  parentId: null,
 };
 
 const mapStateToProps = ({ item }) => ({

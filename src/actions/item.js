@@ -18,69 +18,94 @@ const buildParentsLine = (path) => {
 };
 
 export const setItem = (id) => async (dispatch, getState) => {
-  const items = getState().item.get('items');
+  try {
+    const items = getState().item.get('items');
 
-  // use saved item when possible
-  const item =
-    items.find(({ id: thisId }) => id === thisId) || (await API.getItem(id));
-  const { children, parents } = item;
-  let newChildren = [];
-  if (!children) {
-    newChildren = await API.getChildren(id);
-    item.children = newChildren.map(({ id: childId }) => childId);
-  }
+    // use saved item when possible
+    const item =
+      items.find(({ id: thisId }) => id === thisId) || (await API.getItem(id));
+    const { children, parents } = item;
 
-  let newParents = [];
-  if (!parents) {
-    newParents = await buildParentsLine(item.path);
-    item.parents = newParents.map(({ id: parentId }) => parentId);
+    // get children
+    let newChildren = [];
+    if (!children) {
+      newChildren = await API.getChildren(id);
+      item.children = newChildren.map(({ id: childId }) => childId);
+    }
+
+    // get parents
+    let newParents = [];
+    if (!parents) {
+      newParents = await buildParentsLine(item.path);
+      item.parents = newParents.map(({ id: parentId }) => parentId);
+    }
+
+    dispatch({
+      type: SET_ITEM_SUCCESS,
+      payload: { item, parents: newParents, children: newChildren },
+    });
+  } catch (e) {
+    console.error(e);
   }
-  dispatch({
-    type: SET_ITEM_SUCCESS,
-    payload: { item, parents: newParents, children: newChildren },
-  });
 };
 
 export const getItem = (id) => async (dispatch) => {
-  const item = await API.getItem(id);
-  dispatch({
-    type: GET_ITEM_SUCCESS,
-    payload: item,
-  });
+  try {
+    const item = await API.getItem(id);
+    dispatch({
+      type: GET_ITEM_SUCCESS,
+      payload: item,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const getOwnItems = () => async (dispatch) => {
-  const ownedItems = (await API.getOwnItems()) || sampleItems;
-  dispatch({
-    type: GET_OWN_ITEMS_SUCCESS,
-    payload: ownedItems,
-  });
+  try {
+    const ownedItems = (await API.getOwnItems()) || sampleItems;
+    dispatch({
+      type: GET_OWN_ITEMS_SUCCESS,
+      payload: ownedItems,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const createItem = (props) => async (dispatch) => {
-  const newItem = await API.createItem(props);
-  if (!newItem) {
-    return console.error('Error while creating a new item');
+  try {
+    const newItem = await API.createItem(props);
+    if (!newItem) {
+      return console.error('Error while creating a new item');
+    }
+    return dispatch({
+      type: CREATE_ITEM_SUCCESS,
+      payload: newItem,
+    });
+  } catch (e) {
+    return console.error(e);
   }
-  return dispatch({
-    type: CREATE_ITEM_SUCCESS,
-    payload: newItem,
-  });
 };
 
 export const deleteItem = (id) => async (dispatch) => {
-  const deletedItem = await API.deleteItem(id);
-  if (deletedItem.status === 404) {
-    return console.error(`Couldn't delete item ${id}`);
+  try {
+    await API.deleteItem(id);
+    dispatch({
+      type: DELETE_ITEM_SUCCESS,
+      payload: id,
+    });
+  } catch (e) {
+    console.error(e);
   }
-  return dispatch({
-    type: DELETE_ITEM_SUCCESS,
-    payload: id,
-  });
 };
 
 export const clearItem = () => (dispatch) => {
-  dispatch({
-    type: CLEAR_ITEM_SUCCESS,
-  });
+  try {
+    dispatch({
+      type: CLEAR_ITEM_SUCCESS,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
