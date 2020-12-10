@@ -8,7 +8,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
-import { clearItem, setItem } from '../../actions/item';
+import {
+  clearItem,
+  getOwnItems,
+  setItem,
+  getSharedItems,
+} from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 import { areItemsEqual } from '../../utils/item';
@@ -23,6 +28,8 @@ class ItemScreen extends Component {
     t: PropTypes.func.isRequired,
     activity: PropTypes.bool,
     item: PropTypes.instanceOf(Map),
+    dispatchGetSharedItems: PropTypes.func.isRequired,
+    dispatchGetOwnItems: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -39,6 +46,12 @@ class ItemScreen extends Component {
       dispatchSetItem,
     } = props;
     dispatchSetItem(itemId);
+  }
+
+  componentDidMount() {
+    const { dispatchGetOwnItems, dispatchGetSharedItems } = this.props;
+    dispatchGetOwnItems();
+    dispatchGetSharedItems();
   }
 
   shouldComponentUpdate({
@@ -125,6 +138,8 @@ const mapStateToProps = ({ item }) => ({
 const mapDispatchToProps = {
   dispatchSetItem: setItem,
   dispatchClearItem: clearItem,
+  dispatchGetOwnItems: getOwnItems,
+  dispatchGetSharedItems: getSharedItems,
 };
 
 const ConnectedComponent = connect(

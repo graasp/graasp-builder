@@ -52,7 +52,7 @@ const Item = ({ item, dispatchDeleteItem }) => {
         <IconButton
           className={ITEM_DELETE_BUTTON_CLASS}
           aria-label="delete"
-          onClick={() => dispatchDeleteItem(id)}
+          onClick={() => dispatchDeleteItem(item)}
         >
           <DeleteIcon />
         </IconButton>

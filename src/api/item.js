@@ -8,6 +8,7 @@ import {
   buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
+  SHARE_ITEM_WITH_ROUTE,
 } from './routes';
 import {
   DEFAULT_DELETE,
@@ -160,4 +161,16 @@ export const copyItem = async ({ id, to }) => {
   await CacheOperations.saveItem(newItem);
 
   return newItem;
+};
+
+export const getSharedItems = async () => {
+  const req = await fetch(`${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`, {
+    ...DEFAULT_GET,
+  });
+
+  if (req.status !== 200) {
+    throw new Error(req);
+  }
+
+  return req.json();
 };

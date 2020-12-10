@@ -23,6 +23,11 @@ export const EDITED_FIELDS = {
   description: 'new description',
 };
 
+export const MEMBERS = {
+  ANNA: { id: 'anna-id', name: 'anna', email: 'anna@email.com' },
+  BOB: { id: 'bob-id', name: 'bob', email: 'bob@email.com' },
+};
+
 export const SIMPLE_ITEMS = [
   {
     ...DEFAULT_ITEM,

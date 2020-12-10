@@ -8,6 +8,8 @@ import {
   buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
+  buildShareItemWithRoute,
+  MEMBERS_ROUTE,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -21,6 +23,7 @@ import {
   ID_FORMAT,
   parseStringToRegExp,
   SUCCESS_CODE,
+  EMAIL_FORMAT,
 } from './utils';
 import {
   DEFAULT_PATCH,
@@ -202,4 +205,47 @@ export const mockEditItem = (items, shouldThrowError) => {
       return reply(body);
     },
   ).as('editItem');
+};
+
+export const mockShareItem = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildShareItemWithRoute(ID_FORMAT),
+        )}`,
+      ),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: ERROR_CODE });
+      }
+
+      return reply(body);
+    },
+  ).as('shareItem');
+};
+
+export const mockGetMember = (members, shouldThrowError) => {
+  const emailReg = new RegExp(EMAIL_FORMAT);
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      pathname: MEMBERS_ROUTE,
+      query: {
+        email: emailReg,
+      },
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: ERROR_CODE });
+      }
+
+      const mail = emailReg.exec(url)[0];
+      const member = members.find(({ email }) => email === mail);
+
+      return reply([member]);
+    },
+  ).as('getMember');
 };

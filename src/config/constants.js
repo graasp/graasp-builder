@@ -23,3 +23,15 @@ export const ITEM_TYPES = {
   APPLICATION: 'Application',
   EXERCISE: 'Exercise',
 };
+export const DRAWER_WIDTH = 300;
+export const LOCALE_FORMAT = 'en-US';
+
+export const PERMISSION_LEVELS = {
+  WRITE: 'write',
+  READ: 'read',
+  ADMIN: 'admin',
+};
+
+export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.WRITE;
+
+export const DEFAULT_CREATOR = '87c4940e-f764-4d86-8114-1edd9eff2ee0';

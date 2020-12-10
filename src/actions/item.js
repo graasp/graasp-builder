@@ -21,6 +21,7 @@ import {
   EDIT_ITEM_SUCCESS,
   FLAG_SETTING_ITEM,
   FLAG_EDITING_ITEM,
+  GET_SHARED_ITEMS_SUCCESS,
 } from '../types/item';
 import { getParentsIdsFromPath } from '../utils/item';
 import { createFlag } from './utils';
@@ -40,19 +41,15 @@ export const setItem = (id) => async (dispatch) => {
     const item = await Api.getItem(id);
 
     const { children, parents } = item;
-
-    // get children
     let newChildren = [];
     if (!children) {
       newChildren = await Api.getChildren(id);
     }
 
-    // get parents
     let newParents = [];
     if (!parents) {
       newParents = await buildParentsLine(item.path);
     }
-
     dispatch({
       type: SET_ITEM_SUCCESS,
       payload: { item, children: newChildren, parents: newParents },
@@ -132,14 +129,13 @@ export const createItem = (props) => async (dispatch) => {
   }
 };
 
-export const deleteItem = (id) => async (dispatch) => {
+export const deleteItem = (item) => async (dispatch) => {
   try {
     dispatch(createFlag(FLAG_DELETING_ITEM, true));
-    await Api.deleteItem(id);
-
+    await Api.deleteItem(item.id);
     dispatch({
       type: DELETE_ITEM_SUCCESS,
-      payload: id,
+      payload: item,
     });
   } catch (e) {
     console.error(e);
@@ -168,7 +164,7 @@ export const moveItem = (payload) => async (dispatch, getState) => {
 
     dispatch({
       type: MOVE_ITEM_SUCCESS,
-      payload: payload.id,
+      payload,
     });
   } catch (e) {
     console.error(e);
@@ -224,5 +220,31 @@ export const editItem = (item) => async (dispatch) => {
     console.error(e);
   } finally {
     dispatch(createFlag(FLAG_EDITING_ITEM, false));
+  }
+};
+
+export const getSharedItems = () => async (dispatch) => {
+  try {
+    const sharedItems = await Api.getSharedItems();
+
+    let childrenItems = [];
+    for (const item of sharedItems) {
+      const { children, id } = item;
+      // get children
+      let newChildren = [];
+      if (!children) {
+        // eslint-disable-next-line no-await-in-loop
+        newChildren = await Api.getChildren(id);
+        childrenItems = childrenItems.concat(newChildren);
+        item.children = newChildren.map(({ id: childId }) => childId);
+      }
+    }
+
+    dispatch({
+      type: GET_SHARED_ITEMS_SUCCESS,
+      payload: [...sharedItems, ...childrenItems],
+    });
+  } catch (e) {
+    console.error(e);
   }
 };
