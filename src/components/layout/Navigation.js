@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
 import { clearItem, getItem } from '../../actions/item';
@@ -16,7 +15,7 @@ class Navigation extends Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    parents: PropTypes.instanceOf(List).isRequired,
+    item: PropTypes.instanceOf(Map).isRequired,
     items: PropTypes.instanceOf(List).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
     dispatchGetItem: PropTypes.func.isRequired,
@@ -28,10 +27,12 @@ class Navigation extends Component {
   };
 
   render() {
-    const { parents, dispatchGetItem, items } = this.props;
+    const { item, dispatchGetItem, items } = this.props;
+    const itemName = item.get('name');
+    const itemId = item.get('id');
 
     // todo: avoid rendering by using state
-    const navEls = parents?.map((id) => {
+    const navEls = item.get('parents')?.map((id) => {
       const el = items.find(({ id: thisId }) => thisId === id);
       if (!el) {
         dispatchGetItem(id);
@@ -39,27 +40,28 @@ class Navigation extends Component {
       return el;
     });
 
-    if (!navEls?.every(Boolean)) {
-      return <CircularProgress color="primary" />;
-    }
-
     return (
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
           Owned Items
         </Link>
-        {navEls.map(({ name, id }) => (
+        {navEls?.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
             <Typography>{name}</Typography>
           </Link>
         ))}
+        {itemName && (
+          <Link key={itemId} to={buildItemPath(itemId)}>
+            {itemName}
+          </Link>
+        )}
       </Breadcrumbs>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  parents: item.getIn(['item', 'parents']),
+  item: item.getIn(['item']),
   items: item.get('items'),
 });
 

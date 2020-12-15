@@ -1,4 +1,5 @@
 import { Map, List } from 'immutable';
+import { ROOT_ID } from '../config/constants';
 import {
   CREATE_ITEM_SUCCESS,
   SET_ITEM_SUCCESS,
@@ -10,8 +11,9 @@ import {
 import { getParentsIdsFromPath } from '../utils/item';
 
 const DEFAULT_ITEM = Map({
-  parents: List(), // ids
-  children: List(), // ids
+  id: ROOT_ID,
+  parents: [],
+  children: [],
 });
 
 const INITIAL_STATE = Map({
@@ -63,8 +65,52 @@ const removeItemInItems = (items, id) => {
   return newItems;
 };
 
+const addChildInItem = ({ items, id, to }) => {
+  const newItems = items;
+  const toIdx = newItems.findIndex(({ id: thisId }) => thisId === to);
+  return newItems.updateIn([toIdx, 'children'], (children) => {
+    if (children) {
+      children.push(id);
+      return children;
+    }
+    return null;
+  }); // update only if was fetched once
+};
+
+const addItemInItems = (items, { to, item: newItem }) => {
+  // add new item in items
+  let newItems = items.push(newItem);
+
+  // update to's children if not root
+  if (to !== ROOT_ID) {
+    newItems = addChildInItem({ items: newItems, id: newItem.id, to });
+  }
+
+  return newItems;
+};
+
 const updateRootItems = (items) => {
-  return items.filter(({ path }) => !path.includes('.'));
+  const rootItems = items.filter(({ path }) => !path.includes('.'));
+  return rootItems;
+};
+
+const updateState = (state) => {
+  const items = state.get('items');
+
+  // update root: own, shared, etc..
+  let newState = state.updateIn(['root'], () => {
+    return updateRootItems(items);
+  });
+
+  // update current item if exists
+  const currentId = newState.getIn(['item', 'id']);
+  if (currentId) {
+    newState = newState.set(
+      'item',
+      Map(items.find(({ id }) => currentId === id)),
+    );
+  }
+  return newState;
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -75,17 +121,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       const newState = state.updateIn(['items'], (items) =>
         updateItems(items, [payload]),
       );
-      return newState.updateIn(['root'], () =>
-        updateRootItems(newState.get('items')),
-      );
+      return updateState(newState);
     }
     case GET_OWN_ITEMS_SUCCESS: {
       const newState = state.updateIn(['items'], (items) =>
         updateItems(items, payload),
       );
-      return newState.updateIn(['root'], () =>
-        updateRootItems(newState.get('items')),
-      );
+      return updateState(newState);
     }
     case SET_ITEM_SUCCESS:
       return state
@@ -98,25 +140,16 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           ]),
         );
     case CREATE_ITEM_SUCCESS: {
-      const newState = state
-        .updateIn(['item', 'children'], (children) => {
-          children.push(payload.id);
-          return children;
-        })
-        .updateIn(['items'], (items) => updateItems(items, [payload]));
-      return newState.updateIn(['root'], () =>
-        updateRootItems(newState.get('items')),
+      const newState = state.updateIn(['items'], (items) =>
+        addItemInItems(items, payload),
       );
+      return updateState(newState);
     }
     case DELETE_ITEM_SUCCESS: {
-      const newState = state
-        .updateIn(['item', 'children'], (children) =>
-          children.filter((id) => id !== payload),
-        )
-        .updateIn(['items'], (items) => removeItemInItems(items, payload));
-      return newState.updateIn(['root'], () =>
-        updateRootItems(newState.get('items')),
+      const newState = state.updateIn(['items'], (items) =>
+        removeItemInItems(items, payload),
       );
+      return updateState(newState);
     }
     default:
       return state;

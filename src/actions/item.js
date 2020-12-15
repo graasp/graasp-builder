@@ -11,7 +11,9 @@ import sampleItems from '../data/sample';
 import { getParentsIdsFromPath } from '../utils/item';
 
 const buildParentsLine = (path) => {
-  const parents = getParentsIdsFromPath(path).map((id) => {
+  // get parents id without self
+  const parentItems = getParentsIdsFromPath(path).slice(0, -1);
+  const parents = parentItems.map((id) => {
     return API.getItem(id);
   });
   return Promise.all(parents);
@@ -73,15 +75,16 @@ export const getOwnItems = () => async (dispatch) => {
   }
 };
 
-export const createItem = (props) => async (dispatch) => {
+export const createItem = (props) => async (dispatch, getState) => {
   try {
+    const to = getState().item.getIn(['item', 'id']);
     const newItem = await API.createItem(props);
     if (!newItem) {
       return console.error('Error while creating a new item');
     }
     return dispatch({
       type: CREATE_ITEM_SUCCESS,
-      payload: newItem,
+      payload: { to, item: newItem },
     });
   } catch (e) {
     return console.error(e);
