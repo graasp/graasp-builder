@@ -15,6 +15,7 @@ import {
   DEFAULT_IMAGE_SRC,
   DESCRIPTION_MAX_LENGTH,
 } from '../../config/constants';
+import { shortenString } from '../../utils/common';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -40,12 +41,7 @@ const Item = ({ item, dispatchDeleteItem }) => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {/* Line below is to limit how much description text is displayed, to create consistent card displays
-          But fix: There must be a better way of doing it */}
-          {`${description
-            ?.split(' ')
-            .slice(0, DESCRIPTION_MAX_LENGTH)
-            .join(' ')}...`}
+          {shortenString(description, DESCRIPTION_MAX_LENGTH)}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

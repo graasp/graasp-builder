@@ -5,18 +5,23 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
-import CreateNewItemButton from './CreateNewItemButton';
-import { setItem } from '../../actions/item';
+import NewItemButton from './NewItemButton';
+import { clearItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 
 class ItemScreen extends Component {
   static propTypes = {
-    children: PropTypes.arrayOf(PropTypes.string).isRequired,
+    children: PropTypes.arrayOf(PropTypes.string),
     items: PropTypes.instanceOf(List).isRequired,
     dispatchSetItem: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
+    dispatchClearItem: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    children: [],
   };
 
   componentDidMount() {
@@ -37,6 +42,11 @@ class ItemScreen extends Component {
     if (itemId !== prevId) {
       this.updateItem();
     }
+  }
+
+  componentWillUnmount() {
+    const { dispatchClearItem } = this.props;
+    dispatchClearItem();
   }
 
   updateItem = () => {
@@ -64,22 +74,23 @@ class ItemScreen extends Component {
     }
 
     return (
-      <div>
+      <>
         <ItemsHeader />
-        <CreateNewItemButton />
+        <NewItemButton />
         <ItemsGrid items={completeItems} />
-      </div>
+      </>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
   items: item.getIn(['items']),
-  children: item.getIn(['item', 'children']) || [],
+  children: item.getIn(['item', 'children']),
 });
 
 const mapDispatchToProps = {
   dispatchSetItem: setItem,
+  dispatchClearItem: clearItem,
 };
 
 const ConnectedComponent = connect(

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
@@ -6,8 +6,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoveItemModal from './MoveItemModal';
 
 const ItemMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [isMoveModalOpen, setIsMoveModalOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,7 +29,7 @@ const ItemMenu = () => {
   // todo: only display one modal for the whole page
 
   return (
-    <div>
+    <>
       <IconButton onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
@@ -44,7 +44,7 @@ const ItemMenu = () => {
         <MenuItem onClick={handleClose}>Some action...</MenuItem>
       </Menu>
       <MoveItemModal onClose={onModalClose} open={isMoveModalOpen} />
-    </div>
+    </>
   );
 };
 

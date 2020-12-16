@@ -1,4 +1,4 @@
-import * as API from '../api/item';
+import * as Api from '../api/item';
 import {
   CREATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
@@ -9,29 +9,28 @@ import {
 } from '../types/item';
 import sampleItems from '../data/sample';
 import { getParentsIdsFromPath } from '../utils/item';
+import { getCachedItem } from '../config/cache';
 
 const buildParentsLine = (path) => {
   // get parents id without self
   const parentItems = getParentsIdsFromPath(path).slice(0, -1);
   const parents = parentItems.map((id) => {
-    return API.getItem(id);
+    return Api.getItem(id);
   });
   return Promise.all(parents);
 };
 
 export const setItem = (id) => async (dispatch, getState) => {
   try {
-    const items = getState().item.get('items');
+    const item = getCachedItem(getState, id) || (await Api.getItem(id));
 
     // use saved item when possible
-    const item =
-      items.find(({ id: thisId }) => id === thisId) || (await API.getItem(id));
     const { children, parents } = item;
 
     // get children
     let newChildren = [];
     if (!children) {
-      newChildren = await API.getChildren(id);
+      newChildren = await Api.getChildren(id);
       item.children = newChildren.map(({ id: childId }) => childId);
     }
 
@@ -53,7 +52,7 @@ export const setItem = (id) => async (dispatch, getState) => {
 
 export const getItem = (id) => async (dispatch) => {
   try {
-    const item = await API.getItem(id);
+    const item = await Api.getItem(id);
     dispatch({
       type: GET_ITEM_SUCCESS,
       payload: item,
@@ -65,7 +64,7 @@ export const getItem = (id) => async (dispatch) => {
 
 export const getOwnItems = () => async (dispatch) => {
   try {
-    const ownedItems = (await API.getOwnItems()) || sampleItems;
+    const ownedItems = (await Api.getOwnItems()) || sampleItems;
     dispatch({
       type: GET_OWN_ITEMS_SUCCESS,
       payload: ownedItems,
@@ -78,7 +77,7 @@ export const getOwnItems = () => async (dispatch) => {
 export const createItem = (props) => async (dispatch, getState) => {
   try {
     const to = getState().item.getIn(['item', 'id']);
-    const newItem = await API.createItem(props);
+    const newItem = await Api.postItem(props);
     if (!newItem) {
       return console.error('Error while creating a new item');
     }
@@ -93,7 +92,7 @@ export const createItem = (props) => async (dispatch, getState) => {
 
 export const deleteItem = (id) => async (dispatch) => {
   try {
-    await API.deleteItem(id);
+    await Api.deleteItem(id);
     dispatch({
       type: DELETE_ITEM_SUCCESS,
       payload: id,

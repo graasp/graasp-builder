@@ -1,6 +1,7 @@
 export const DEFAULT_GET = {
   credentials: 'include',
   method: 'GET',
+  headers: { 'Content-Type': 'application/json' },
 };
 
 export const DEFAULT_POST = {

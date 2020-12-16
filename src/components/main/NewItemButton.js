@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Tooltip from '@material-ui/core/Tooltip';
-import CreateNewItem from './CreateNewItem';
+import NewItemModal from './NewItemModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateNewItemButton = () => {
+const NewItemButton = () => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
@@ -35,7 +35,7 @@ const CreateNewItemButton = () => {
           onClick={handleClickOpen}
         />
       </Tooltip>
-      <CreateNewItem
+      <NewItemModal
         open={open}
         setOpen={setOpen}
         handleClickOpen={handleClickOpen}
@@ -45,4 +45,4 @@ const CreateNewItemButton = () => {
   );
 };
 
-export default CreateNewItemButton;
+export default NewItemButton;

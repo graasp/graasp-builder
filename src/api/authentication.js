@@ -7,12 +7,12 @@ export const signIn = async (payload) => {
     ...DEFAULT_POST,
     body: JSON.stringify(payload),
   });
-  return req.status === 204;
+  return req.ok;
 };
 
 export const signOut = async () => {
   const req = await fetch(`${API_HOST}/logout`, DEFAULT_GET);
-  return req.status === 204;
+  return req.ok;
 };
 
 // payload = {name, mail}
@@ -21,5 +21,5 @@ export const signUp = async (payload) => {
     ...DEFAULT_POST,
     body: JSON.stringify(payload),
   });
-  return req.status === 204;
+  return req.ok;
 };

@@ -10,7 +10,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button } from '@material-ui/core';
-import * as API from '../../api/item';
+import * as Api from '../../api/item';
 
 const styles = () => ({
   root: {
@@ -62,7 +62,7 @@ class MoveItemModal extends Component {
 
   fetchChildren = async ({ id }) => {
     const { tree } = this.state;
-    const children = await API.getChildren(id);
+    const children = await Api.getChildren(id);
 
     this.setState({ tree: tree.concat(children) });
   };
@@ -70,15 +70,6 @@ class MoveItemModal extends Component {
   renderItemTreeItem = (items) => {
     return items?.map((item) => {
       const { id: itemId, name } = item;
-
-      // const children = await this.fetchChildren(itemId);
-
-      // if (children?.length) {
-      //   fetchedChildren = children.map((id) => {
-      //     const child = tree.find(({ id: childId }) => id === childId);
-      //     return child ? null : <FetchingTreeItem id={id} />;
-      //   });
-      // }
 
       return (
         <TreeItem

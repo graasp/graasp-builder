@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
-import CreateNewItemButton from './CreateNewItemButton';
+import NewItemButton from './NewItemButton';
 import { setItem, getOwnItems } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 
@@ -29,11 +29,11 @@ class Home extends Component {
   render() {
     const { items } = this.props;
     return (
-      <div>
+      <>
         <ItemsHeader />
-        <CreateNewItemButton />
+        <NewItemButton />
         <ItemsGrid items={items} />
-      </div>
+      </>
     );
   }
 }
