@@ -1,25 +1,63 @@
 import { API_HOST } from '../config/constants';
-import { DEFAULT_GET, DEFAULT_POST } from './utils';
+import { DEFAULT_DELETE, DEFAULT_GET, DEFAULT_POST } from './utils';
 
-// payload = {email}
+export const getItem = async (id) => {
+  const req = await fetch(`${API_HOST}/items/${id}`, DEFAULT_GET);
+  if (!req.ok) {
+    throw new Error((await req.json()).message);
+  }
+  return req.json();
+};
+
 export const getOwnItems = async () => {
-  const req = await fetch(`${API_HOST}/own`, {
-    ...DEFAULT_GET,
-  });
-  // eslint-disable-next-line no-console
-  console.log(req);
+  const req = await fetch(`${API_HOST}/items/own`, DEFAULT_GET);
+
+  if (!req.ok) {
+    throw new Error((await req.json()).message);
+  }
+
+  return req.json();
 };
 
-// payload = {email}
-export const createItem = async () => {
-  const req = await fetch(`${API_HOST}/items`, {
+// payload = {name, type, description, extra}
+// querystring = {parentId}
+export const postItem = async ({
+  name,
+  type,
+  description,
+  extra,
+  parentId,
+} = {}) => {
+  let url = `${API_HOST}/items`;
+  if (parentId) {
+    url += `?parentId=${parentId}`;
+  }
+  const req = await fetch(url, {
     ...DEFAULT_POST,
-    body: JSON.stringify({ name: 'myitem' }),
+    body: JSON.stringify({ name, type, description, extra }),
   });
-  // eslint-disable-next-line no-console
-  console.log(await req.json());
+
+  if (!req.ok) {
+    throw new Error((await req.json()).message);
+  }
+
+  return req.json();
 };
 
-// we need this function for navigation purposes: when you click on an item, you want to see its 'immediate' children
-// eslint-disable-next-line import/prefer-default-export
-export const fetchItemImmediateChildren = () => {};
+export const deleteItem = async (id) => {
+  const req = await fetch(`${API_HOST}/items/${id}`, DEFAULT_DELETE);
+
+  if (!req.ok) {
+    throw new Error((await req.json()).message);
+  }
+  return req.json();
+};
+
+export const getChildren = async (id) => {
+  const req = await fetch(`${API_HOST}/items/${id}/children`, DEFAULT_GET);
+
+  if (!req.ok) {
+    throw new Error((await req.json()).message);
+  }
+  return req.json();
+};

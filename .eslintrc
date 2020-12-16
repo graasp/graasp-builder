@@ -46,6 +46,7 @@
         "propTypes": "static public field"
       }
     ],
-    "react/state-in-constructor": ["error", "never"]
+    "react/state-in-constructor": ["error", "never"],
+    "no-console": [2, { "allow": ["error"] }]
   }
 }

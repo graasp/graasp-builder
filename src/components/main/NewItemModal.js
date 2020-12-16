@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { createItem } from '../../actions/item';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateNewItem = ({ open, handleClose }) => {
+const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
   const classes = useStyles();
   const [itemName, setItemName] = useState('');
   const [itemType, setItemType] = useState('');
@@ -47,7 +49,15 @@ const CreateNewItem = ({ open, handleClose }) => {
     setItemImageUrl(event.target.value);
   };
 
-  const submitNewItem = () => {};
+  const submitNewItem = async () => {
+    dispatchCreateItem({
+      parentId,
+      name: itemName,
+      type: itemType,
+      description: itemDescription,
+      extra: { image: itemImageUrl },
+    });
+  };
 
   return (
     <Dialog
@@ -129,8 +139,28 @@ const CreateNewItem = ({ open, handleClose }) => {
 };
 
 CreateNewItem.propTypes = {
-  open: PropTypes.func.isRequired,
+  open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
+  dispatchCreateItem: PropTypes.func.isRequired,
+  parentId: PropTypes.string,
 };
 
-export default CreateNewItem;
+CreateNewItem.defaultProps = {
+  open: false,
+  parentId: null,
+};
+
+const mapStateToProps = ({ item }) => ({
+  parentId: item.getIn(['item', 'id']),
+});
+
+const mapDispatchToProps = {
+  dispatchCreateItem: createItem,
+};
+
+const ConnectedComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CreateNewItem);
+
+export default ConnectedComponent;
