@@ -69,8 +69,8 @@ class MoveItemModal extends Component {
     this.setState({ tree: tree.concat(children) });
   };
 
-  renderItemTreeItem = (items) => {
-    return items?.map((item) => {
+  renderItemTreeItem = (items) =>
+    items?.map((item) => {
       const { id: itemId, name } = item;
 
       return (
@@ -82,7 +82,6 @@ class MoveItemModal extends Component {
         />
       );
     });
-  };
 
   render() {
     const { open, classes, ownedItems, t } = this.props;

@@ -98,9 +98,7 @@ const updateState = (state) => {
   const items = state.get('items');
 
   // update root: own, shared, etc..
-  let newState = state.updateIn(['root'], () => {
-    return updateRootItems(items);
-  });
+  let newState = state.updateIn(['root'], () => updateRootItems(items));
 
   // update current item if exists
   const currentId = newState.getIn(['item', 'id']);

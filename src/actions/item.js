@@ -14,9 +14,7 @@ import { getCachedItem } from '../config/cache';
 const buildParentsLine = (path) => {
   // get parents id without self
   const parentItems = getParentsIdsFromPath(path).slice(0, -1);
-  const parents = parentItems.map((id) => {
-    return Api.getItem(id);
-  });
+  const parents = parentItems.map((id) => Api.getItem(id));
   return Promise.all(parents);
 };
 

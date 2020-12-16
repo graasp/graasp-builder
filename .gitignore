@@ -21,3 +21,6 @@ yarn-error.log*
 # environment files but not encrypted ones
 .env*
 !.env.*.encrypted
+
+# cache
+.eslintcache

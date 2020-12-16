@@ -14,14 +14,12 @@ const theme = createMuiTheme({
 
 const { store } = configureStore();
 
-const Root = () => {
-  return (
-    <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <App />
-      </MuiThemeProvider>
-    </Provider>
-  );
-};
+const Root = () => (
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
+  </Provider>
+);
 
 export default Root;
