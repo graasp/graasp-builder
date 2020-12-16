@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomCardHeader = ({ id, creator, title, type }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -46,7 +48,10 @@ const CustomCardHeader = ({ id, creator, title, type }) => {
             <Typography className={classes.title}>{title}</Typography>
           </Link>
           <Typography className={classes.subtitle}>
-            {`A ${type.toLowerCase()} by ${creator.name}`}
+            {t('Type by author', {
+              type,
+              author: creator.name || t('Unknown'),
+            })}
           </Typography>
         </div>
       </div>

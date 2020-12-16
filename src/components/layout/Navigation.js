@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { List, Map } from 'immutable';
 import { withRouter } from 'react-router';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -19,6 +20,7 @@ class Navigation extends Component {
     items: PropTypes.instanceOf(List).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
     dispatchGetItem: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired,
   };
 
   clearItem = () => {
@@ -27,7 +29,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const { item, dispatchGetItem, items } = this.props;
+    const { item, dispatchGetItem, items, t } = this.props;
     const itemName = item.get('name');
     const itemId = item.get('id');
 
@@ -43,7 +45,7 @@ class Navigation extends Component {
     return (
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
-          Owned Items
+          {t('Owned Items')}
         </Link>
         {navEls?.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
@@ -75,4 +77,5 @@ const ConnectedComponent = connect(
   mapDispatchToProps,
 )(Navigation);
 
-export default withRouter(ConnectedComponent);
+const TranslatedComponent = withTranslation()(ConnectedComponent);
+export default withRouter(TranslatedComponent);

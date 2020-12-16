@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { useTranslation } from 'react-i18next';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -29,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
 const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
   const classes = useStyles();
   const [itemName, setItemName] = useState('');
-  const [itemType, setItemType] = useState('');
+  const [itemType, setItemType] = useState('Space');
   const [itemDescription, setItemDescription] = useState('');
   const [itemImageUrl, setItemImageUrl] = useState('');
+  const { t } = useTranslation();
 
   const handleNameInput = (event) => {
     setItemName(event.target.value);
@@ -69,35 +71,34 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle id="create-new-item-form">Create new item</DialogTitle>
+      <DialogTitle>{t('Create new item')}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <TextField
           autoFocus
           margin="dense"
           id="name"
-          label="Name"
+          label={t('Name')}
           value={itemName}
           onChange={handleNameInput}
           className={classes.shortInputField}
         />
         <InputLabel id="item-type" className={classes.addedMargin}>
-          Type
+          {t('Type')}
         </InputLabel>
         <Select
-          labelId="item-type-select"
           id="item-type-select"
           value={itemType}
           onChange={handleItemSelect}
           className={classes.shortInputField}
         >
-          <MenuItem value="Space">Space</MenuItem>
-          <MenuItem value="Application">Application</MenuItem>
-          <MenuItem value="Exercise">Exercise</MenuItem>
+          <MenuItem value="Space">{t('Space')}</MenuItem>
+          <MenuItem value="Application">{t('Application')}</MenuItem>
+          <MenuItem value="Exercise">{t('Exercise')}</MenuItem>
         </Select>
         <TextField
           margin="dense"
           id="description"
-          label="Description"
+          label={t('Description')}
           value={itemDescription}
           onChange={handleDescriptionInput}
           multiline
@@ -108,7 +109,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
         <TextField
           margin="dense"
           id="imageUrl"
-          label="Image (URL)"
+          label={t('Image (URL)')}
           value={itemImageUrl}
           onChange={handleImageUrlInput}
           fullWidth
@@ -122,7 +123,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
           }}
           color="primary"
         >
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button
           onClick={() => {
@@ -131,7 +132,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
           }}
           color="primary"
         >
-          Add item
+          {t('Add item')}
         </Button>
       </DialogActions>
     </Dialog>

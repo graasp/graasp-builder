@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
@@ -42,6 +43,7 @@ class SignUp extends Component {
       push: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
+    t: PropTypes.func.isRequired,
   };
 
   state = {
@@ -79,22 +81,23 @@ class SignUp extends Component {
 
   renderMessage = () => {
     const { isSuccess } = this.state;
+    const { t } = this.props;
     if (isSuccess) {
       return (
         <Alert severity="success">
-          An email was sent with the register link!
+          {t('An email was sent with the register link!')}
         </Alert>
       );
     }
     // is not triggered for null (initial case)
     if (isSuccess === false) {
-      return <Alert severity="error">An error occured.</Alert>;
+      return <Alert severity="error">{t('An error occured.')}</Alert>;
     }
     return null;
   };
 
   renderForm = () => {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     const { email, name } = this.state;
 
     return (
@@ -103,7 +106,7 @@ class SignUp extends Component {
           <TextField
             className={classes.input}
             required
-            label="Name"
+            label={t('Name')}
             variant="outlined"
             value={name}
             onChange={this.handleNameOnChange}
@@ -113,7 +116,7 @@ class SignUp extends Component {
           <TextField
             className={classes.input}
             required
-            label="email"
+            label={t('Email')}
             variant="outlined"
             value={email}
             onChange={this.handleEmailOnChange}
@@ -121,38 +124,41 @@ class SignUp extends Component {
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary" onClick={this.register}>
-            Sign Up
+            {t('Sign Up')}
           </Button>
         </Grid>
         <Divider variant="middle" className={classes.divider} />
         <Button variant="text" color="primary" onClick={this.handleOnSignIn}>
-          Already have an account? Click here to sign in
+          {t('Already have an account? Click here to sign in')}
         </Button>
       </>
     );
   };
 
   renderIsAuthenticatedMessage = () => {
+    const { t } = this.props;
     return (
       <Grid item xs={12}>
-        <Typography variant="subtitle1">You are already signed in.</Typography>
+        <Typography variant="subtitle1">
+          {t('You are already signed in.')}
+        </Typography>
       </Grid>
     );
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     const { isRequestSent, isAuthenticated } = this.state;
 
     if (isRequestSent) {
-      return <div>You will receive a email with your cookie!</div>;
+      return <div>{t('You will receive a email with your cookie!')}</div>;
     }
 
     return (
       <div className={classes.fullScreen}>
         {this.renderMessage()}
         <Typography variant="h2" component="h2">
-          Sign Up
+          {t('Sign Up')}
         </Typography>
         <Grid container className={classes.form}>
           {isAuthenticated && this.renderIsAuthenticatedMessage()}
@@ -164,5 +170,5 @@ class SignUp extends Component {
 }
 
 const StyledComponent = withStyles(styles, { withTheme: true })(SignUp);
-
-export default withRouter(StyledComponent);
+const TranslatedComponent = withTranslation()(StyledComponent);
+export default withRouter(TranslatedComponent);

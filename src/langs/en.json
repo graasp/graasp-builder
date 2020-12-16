@@ -1,0 +1,32 @@
+{
+  "translations": {
+    "Create new item": "Create new item",
+    "Move": "Move",
+    "No Item Here": "No Item Here",
+    "These are your items": "These are your items",
+    "Where do you want to move the item?": "Where do you want to move the item?",
+    "Confirm": "Confirm",
+    "Type": "Type",
+    "Space": "Space",
+    "Application": "Application",
+    "Exercise": "Exercise",
+    "Description": "Description",
+    "Image (URL)": "Image (URL)",
+    "Cancel": "Cancel",
+    "Success": "Success",
+    "An error occured.": "An error occured.",
+    "You are already signed in.": "You are already signed in.",
+    "Click here to sign out": "Click here to sign out",
+    "Sign In": "Sign In",
+    "Not registered? Click here to register": "Not registered? Click here to register",
+    "Email": "Email",
+    "An email was sent with the register link!": "An email was sent with the register link!",
+    "Already have an account? Click here to sign in": "Already have an account? Click here to sign in",
+    "Name": "Name",
+    "Sign Up": "Sign Up",
+    "You will receive a email with your cookie": "You will receive a email with your cookie",
+    "Owned Items": "Owned Items",
+    "Type by author": "{{type}} by {{author}}",
+    "Unknown": "Unknown"
+  }
+}

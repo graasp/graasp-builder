@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -15,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NewItemButton = () => {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const handleClickOpen = () => {
@@ -27,7 +29,7 @@ const NewItemButton = () => {
 
   return (
     <div className={classes.root}>
-      <Tooltip placement="left" title="Create new item" arrow>
+      <Tooltip placement="left" title={t('Create new item')} arrow>
         <AddCircleIcon
           color="primary"
           fontSize="large"
