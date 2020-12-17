@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { withTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Item from './Item';
@@ -11,14 +12,15 @@ class ItemsGrid extends Component {
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
+    t: PropTypes.func.isRequired,
   };
 
   renderItems = () => {
-    const { items } = this.props;
+    const { items, t } = this.props;
     if (!items?.length) {
       return (
         <Typography variant="h3" align="center" display="block">
-          No Item Here
+          {t('No Item Here')}
         </Typography>
       );
     }
@@ -38,5 +40,5 @@ class ItemsGrid extends Component {
     );
   }
 }
-
-export default withRouter(ItemsGrid);
+const TranslatedComponent = withTranslation()(ItemsGrid);
+export default withRouter(TranslatedComponent);

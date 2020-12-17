@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -42,6 +43,7 @@ class SignIn extends Component {
       push: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
+    t: PropTypes.func.isRequired,
   };
 
   state = {
@@ -78,23 +80,26 @@ class SignIn extends Component {
   };
 
   renderMessage = () => {
-    const { isSuccess } = this.state;
+    const { isSuccess, t } = this.state;
     if (isSuccess) {
-      return <Alert severity="success">Success!</Alert>;
+      return <Alert severity="success">{t('Success')}</Alert>;
     }
     // is not triggered for null (initial case)
     if (isSuccess === false) {
-      return <Alert severity="error">An error occured.</Alert>;
+      return <Alert severity="error">{t('An error occured.')}</Alert>;
     }
     return null;
   };
 
   renderSignOutButton = () => {
+    const { t } = this.props;
     return (
       <>
-        <Typography variant="subtitle1">You are already signed in.</Typography>
+        <Typography variant="subtitle1">
+          {t('You are already signed in.')}
+        </Typography>
         <Button variant="text" color="primary" onClick={this.signOut}>
-          Click here to sign out
+          {t('Click here to sign out')}
         </Button>
       </>
     );
@@ -102,40 +107,40 @@ class SignIn extends Component {
 
   renderSignInForm = () => {
     const { email } = this.state;
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     return (
       <>
         <FormControl>
           <TextField
             className={classes.input}
             required
-            label="email"
+            label={t('Email')}
             variant="outlined"
             value={email}
             onChange={this.handleOnChange}
           />
           <Button variant="contained" color="primary" onClick={this.signIn}>
-            Sign In
+            {t('Sign In')}
           </Button>
         </FormControl>
 
         <Divider variant="middle" className={classes.divider} />
         <Button variant="text" color="primary" onClick={this.handleOnRegister}>
-          Not registered? Click here to register
+          {t('Not registered? Click here to register')}
         </Button>
       </>
     );
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     const { isAuthenticated } = this.state;
 
     return (
       <div className={classes.fullScreen}>
         {this.renderMessage()}
         <Typography variant="h2" component="h2">
-          Sign In
+          {t('Sign In')}
         </Typography>
         {!isAuthenticated && this.renderSignInForm()}
         {isAuthenticated && this.renderSignOutButton()}
@@ -145,5 +150,5 @@ class SignIn extends Component {
 }
 
 const StyledComponent = withStyles(styles, { withTheme: true })(SignIn);
-
-export default withRouter(StyledComponent);
+const TranslatedComponent = withTranslation()(StyledComponent);
+export default withRouter(TranslatedComponent);

@@ -1,0 +1,32 @@
+{
+  "translations": {
+    "Create new item": "Créer un nouvel élément",
+    "Move": "Déplacer",
+    "No Item Here": "Aucun élément ici",
+    "These are your items": "Mes éléments",
+    "Where do you want to move the item?": "Où voulez-vous déplacer cet élément ?",
+    "Confirm": "Confirmer",
+    "Type": "Type",
+    "Space": "Espace",
+    "Application": "Application",
+    "Exercise": "Exercice",
+    "Description": "Description",
+    "Image (URL)": "Image (URL)",
+    "Cancel": "Annuler",
+    "Success": "Succès",
+    "An error occured.": "Une erreur est survenue.",
+    "You are already signed in.": "Vous êtes déjà connecté.",
+    "Click here to sign out": "Cliquez ici pour vous déconnecter",
+    "Sign In": "Se Connecter",
+    "Not registered? Click here to register": "Pas encore enregistré ? Cliquez ici pour vous enregistrer",
+    "Email": "Email",
+    "An email was sent with the register link!": "Un email avec le lien d'enregistrement a été envoyé",
+    "Already have an account? Click here to sign in": "Déjà un compte? Cliquez ici pour vous connecter",
+    "Name": "Nom",
+    "Sign Up": "S'enregistrer",
+    "You will receive a email with your cookie": "Vous allez recevoir un email avec votre cookie",
+    "Owned Items": "Mes Éléments",
+    "Type by author": "{{type}} par {{author}}",
+    "Unknown": "Inconnu"
+  }
+}

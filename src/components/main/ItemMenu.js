@@ -3,11 +3,13 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { useTranslation } from 'react-i18next';
 import MoveItemModal from './MoveItemModal';
 
 const ItemMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,8 +42,7 @@ const ItemMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleMove}>Move</MenuItem>
-        <MenuItem onClick={handleClose}>Some action...</MenuItem>
+        <MenuItem onClick={handleMove}>{t('Move')}</MenuItem>
       </Menu>
       <MoveItemModal onClose={onModalClose} open={isMoveModalOpen} />
     </>

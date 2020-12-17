@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -40,6 +41,7 @@ class MoveItemModal extends Component {
       root: PropTypes.string.isRequired,
     }).isRequired,
     ownedItems: PropTypes.instanceOf(List).isRequired,
+    t: PropTypes.func.isRequired,
   };
 
   state = {};
@@ -67,8 +69,8 @@ class MoveItemModal extends Component {
     this.setState({ tree: tree.concat(children) });
   };
 
-  renderItemTreeItem = (items) => {
-    return items?.map((item) => {
+  renderItemTreeItem = (items) =>
+    items?.map((item) => {
       const { id: itemId, name } = item;
 
       return (
@@ -80,10 +82,9 @@ class MoveItemModal extends Component {
         />
       );
     });
-  };
 
   render() {
-    const { open, classes, ownedItems } = this.props;
+    const { open, classes, ownedItems, t } = this.props;
     return (
       <Dialog
         onClose={this.handleClose}
@@ -91,7 +92,7 @@ class MoveItemModal extends Component {
         open={open}
       >
         <DialogTitle id="simple-dialog-title">
-          Where do you want to move the item?
+          {t('Where do you want to move the item?')}
         </DialogTitle>
         <TreeView
           className={classes.root}
@@ -102,7 +103,7 @@ class MoveItemModal extends Component {
           {this.renderItemTreeItem(ownedItems)}
         </TreeView>
         <Button onClick={this.onConfirm} color="primary" variant="contained">
-          Confirm
+          {t('Confirm')}
         </Button>
       </Dialog>
     );
@@ -120,5 +121,5 @@ const ConnectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(MoveItemModal);
-
-export default withStyles(styles)(ConnectedComponent);
+const TranslatedComponent = withTranslation()(ConnectedComponent);
+export default withStyles(styles)(TranslatedComponent);
