@@ -1,16 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { I18nextProvider } from 'react-i18next';
 import './index.css';
 import Root from './components/Root';
 import * as serviceWorker from './serviceWorker';
-import i18nConfig from './config/i18n';
 
 ReactDOM.render(
   <React.StrictMode>
-    <I18nextProvider i18n={i18nConfig}>
-      <Root />
-    </I18nextProvider>
+    <Root />
   </React.StrictMode>,
   document.getElementById('root'),
 );
