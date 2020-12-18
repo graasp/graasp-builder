@@ -3,6 +3,7 @@ import {
   SET_EDIT_MODAL_SETTINGS,
   SET_MOVE_MODAL_SETTINGS,
   SET_SHARE_MODAL_SETTINGS,
+  SET_MODE_SUCCESS,
 } from '../types/layout';
 
 export const setMoveModalSettings = (payload) => (dispatch) => {
@@ -29,6 +30,13 @@ export const setEditModalSettings = (payload) => (dispatch) => {
 export const setShareModalSettings = (payload) => (dispatch) => {
   dispatch({
     type: SET_SHARE_MODAL_SETTINGS,
+    payload,
+  });
+};
+
+export const setMode = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_MODE_SUCCESS,
     payload,
   });
 };

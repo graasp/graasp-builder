@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
-import NewItemButton from './NewItemButton';
 import { setItem, getOwnItems, getSharedItems } from '../../actions/item';
-import ItemsGrid from './ItemsGrid';
+import Items from './Items';
 
 class Home extends Component {
   static propTypes = {
@@ -55,12 +53,9 @@ class Home extends Component {
     return (
       <>
         <ItemsHeader />
-        <NewItemButton />
-        <Typography variant="h4">{t('My Items')}</Typography>
-        <ItemsGrid items={ownItems} />
+        <Items title={t('My Items')} items={ownItems} />
         <Divider style={{ marginTop: 30, marginBottom: 30 }} />
-        <Typography variant="h4">{t('Items Shared With Me')}</Typography>
-        <ItemsGrid items={sharedItems} />
+        <Items title={t('Items Shared With Me')} items={sharedItems} />
       </>
     );
   }

@@ -44,6 +44,7 @@
     "Created At": "Created At",
     "Updated At": "Updated At",
     "My Items": "My Items",
-    "Items Shared With Me": "Items Shared With Me"
+    "Items Shared With Me": "Items Shared With Me",
+    "nbitem selected":"{{numSelected}} selected"
   }
 }

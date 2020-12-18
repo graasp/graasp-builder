@@ -33,3 +33,17 @@ export const PERMISSION_LEVELS = {
 };
 
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.WRITE;
+
+export const MODES = {
+  CARD: 'card',
+  LIST: 'list',
+};
+
+export const ORDERING = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
+export const TABLE_MIN_WIDTH = 750;
+
+export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
