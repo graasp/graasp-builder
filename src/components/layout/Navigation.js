@@ -9,6 +9,10 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link } from 'react-router-dom';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
 import { clearItem, getItem } from '../../actions/item';
+import {
+  buildNavigationLink,
+  NAVIGATION_HOME_LINK_ID,
+} from '../../config/selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Navigation extends Component {
@@ -45,11 +49,11 @@ class Navigation extends Component {
     return (
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
-          {t('Owned Items')}
+          <Typography id={NAVIGATION_HOME_LINK_ID}>{t('Home')}</Typography>
         </Link>
         {navEls?.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
-            <Typography>{name}</Typography>
+            <Typography id={buildNavigationLink(id)}>{name}</Typography>
           </Link>
         ))}
         {itemName && (

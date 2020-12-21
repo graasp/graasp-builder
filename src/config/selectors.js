@@ -1,0 +1,12 @@
+export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
+export const buildItemCard = (id) => `itemCard-${id}`;
+export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
+export const NEW_ITEM_NAME_INPUT_ID = 'newItemNameInput';
+export const NEW_ITEM_TYPE_SELECT_ID = 'newItemTypeSelect';
+export const NEW_ITEM_DESCRIPTION_INPUT_ID = 'newItemDescriptionInput';
+export const NEW_ITEM_IMAGE_INPUT_ID = 'newItemImageInput';
+export const NEW_ITEM_CONFIRM_BUTTON_ID = 'newItemConfirmButton';
+export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
+export const buildItemLink = (id) => `itemLink-${id}`;
+export const NAVIGATION_HOME_LINK_ID = 'navigationHomeLink';
+export const buildNavigationLink = (id) => `navigationLink-${id}`;

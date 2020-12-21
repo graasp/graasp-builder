@@ -11,7 +11,6 @@ import {
 import { getParentsIdsFromPath } from '../utils/item';
 
 const DEFAULT_ITEM = Map({
-  id: ROOT_ID,
   parents: [],
   children: [],
 });

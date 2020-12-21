@@ -13,6 +13,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { createItem } from '../../actions/item';
+import {
+  NEW_ITEM_CONFIRM_BUTTON_ID,
+  NEW_ITEM_DESCRIPTION_INPUT_ID,
+  NEW_ITEM_IMAGE_INPUT_ID,
+  NEW_ITEM_NAME_INPUT_ID,
+  NEW_ITEM_TYPE_SELECT_ID,
+} from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -76,7 +83,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
         <TextField
           autoFocus
           margin="dense"
-          id="name"
+          id={NEW_ITEM_NAME_INPUT_ID}
           label={t('Name')}
           value={itemName}
           onChange={handleNameInput}
@@ -86,7 +93,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
           {t('Type')}
         </InputLabel>
         <Select
-          id="item-type-select"
+          id={NEW_ITEM_TYPE_SELECT_ID}
           value={itemType}
           onChange={handleItemSelect}
           className={classes.shortInputField}
@@ -97,7 +104,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
         </Select>
         <TextField
           margin="dense"
-          id="description"
+          id={NEW_ITEM_DESCRIPTION_INPUT_ID}
           label={t('Description')}
           value={itemDescription}
           onChange={handleDescriptionInput}
@@ -108,7 +115,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
         />
         <TextField
           margin="dense"
-          id="imageUrl"
+          id={NEW_ITEM_IMAGE_INPUT_ID}
           label={t('Image (URL)')}
           value={itemImageUrl}
           onChange={handleImageUrlInput}
@@ -131,6 +138,7 @@ const CreateNewItem = ({ open, handleClose, dispatchCreateItem, parentId }) => {
             handleClose();
           }}
           color="primary"
+          id={NEW_ITEM_CONFIRM_BUTTON_ID}
         >
           {t('Add item')}
         </Button>

@@ -24,3 +24,7 @@ yarn-error.log*
 
 # cache
 .eslintcache
+
+# test
+cypress/screenshots
+cypress/videos

@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { buildItemPath } from '../../config/paths';
 import ItemMenu from './ItemMenu';
+import { buildItemLink } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +46,9 @@ const CustomCardHeader = ({ id, creator, title, type }) => {
         <Avatar src={creator.avatar} className={classes.avatar} />
         <div>
           <Link to={buildItemPath(id)} className={classes.link}>
-            <Typography className={classes.title}>{title}</Typography>
+            <Typography id={buildItemLink(id)} className={classes.title}>
+              {title}
+            </Typography>
           </Link>
           <Typography className={classes.subtitle}>
             {t('Type by author', {

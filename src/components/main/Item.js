@@ -16,6 +16,10 @@ import {
   DESCRIPTION_MAX_LENGTH,
 } from '../../config/constants';
 import { shortenString } from '../../utils/common';
+import {
+  buildItemCard,
+  ITEM_DELETE_BUTTON_CLASS,
+} from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,7 +36,7 @@ const Item = ({ item, dispatchDeleteItem }) => {
   const { id, name, description, creator, type, extra } = item;
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} id={buildItemCard(id)}>
       <CustomCardHeader id={id} creator={creator} title={name} type={type} />
       <CardMedia
         className={classes.media}
@@ -45,7 +49,11 @@ const Item = ({ item, dispatchDeleteItem }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="delete" onClick={() => dispatchDeleteItem(id)}>
+        <IconButton
+          className={ITEM_DELETE_BUTTON_CLASS}
+          aria-label="delete"
+          onClick={() => dispatchDeleteItem(id)}
+        >
           <DeleteIcon />
         </IconButton>
       </CardActions>

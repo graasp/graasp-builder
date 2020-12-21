@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Tooltip from '@material-ui/core/Tooltip';
 import NewItemModal from './NewItemModal';
+import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,7 @@ const NewItemButton = () => {
     <div className={classes.root}>
       <Tooltip placement="left" title={t('Create new item')} arrow>
         <AddCircleIcon
+          id={CREATE_ITEM_BUTTON_ID}
           color="primary"
           fontSize="large"
           className={classes.createNewButton}

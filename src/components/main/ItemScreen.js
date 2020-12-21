@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import List from 'immutable';
 import PropTypes from 'prop-types';
+import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
 import { clearItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
+import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 
 class ItemScreen extends Component {
   static propTypes = {
@@ -18,10 +21,13 @@ class ItemScreen extends Component {
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
+    id: PropTypes.string,
+    t: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     children: [],
+    id: null,
   };
 
   componentDidMount() {
@@ -61,7 +67,15 @@ class ItemScreen extends Component {
   };
 
   render() {
-    const { children, items } = this.props;
+    const { children, items, id: itemId, t } = this.props;
+
+    if (!itemId) {
+      return (
+        <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
+          {t('An error occured.')}
+        </Alert>
+      );
+    }
 
     // get complete elements from id
     const completeItems = children.map((id) =>
@@ -86,6 +100,7 @@ class ItemScreen extends Component {
 const mapStateToProps = ({ item }) => ({
   items: item.getIn(['items']),
   children: item.getIn(['item', 'children']),
+  id: item.getIn(['item', 'id']),
 });
 
 const mapDispatchToProps = {
@@ -97,5 +112,5 @@ const ConnectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ItemScreen);
-
-export default withRouter(ConnectedComponent);
+const TranslatedComponent = withTranslation()(ConnectedComponent);
+export default withRouter(TranslatedComponent);
