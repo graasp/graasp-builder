@@ -54,9 +54,25 @@ export const setItem = (id) => async (dispatch, getState) => {
 export const getItem = (id) => async (dispatch) => {
   try {
     const item = await Api.getItem(id);
+    const { children, parents } = item;
+
+    // get children
+    let newChildren = [];
+    if (!children) {
+      newChildren = await Api.getChildren(id);
+      item.children = newChildren.map(({ id: childId }) => childId);
+    }
+
+    // get parents
+    let newParents = [];
+    if (!parents) {
+      newParents = await buildParentsLine(item.path);
+      item.parents = newParents.map(({ id: parentId }) => parentId);
+    }
+
     dispatch({
       type: GET_ITEM_SUCCESS,
-      payload: item,
+      payload: { item, parents: newParents, children: newChildren },
     });
   } catch (e) {
     console.error(e);

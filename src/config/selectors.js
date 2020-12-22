@@ -13,3 +13,7 @@ export const buildNavigationLink = (id) => `navigationLink-${id}`;
 export const ITEM_MENU_MOVE_BUTTON_CLASS = 'itemMenuMoveButton';
 export const ITEM_MENU_BUTTON_CLASS = 'itemMenuButton';
 export const ITEM_MENU_COPY_BUTTON_CLASS = 'itemMenuCopyButton';
+export const buildItemMenu = (id) => `itemMenu-${id}`;
+export const TREE_MODAL_TREE_ID = 'treeModalTree';
+export const buildTreeItemClass = (id) => `treeItem-${id}`;
+export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';

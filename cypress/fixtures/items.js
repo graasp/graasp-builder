@@ -4,6 +4,7 @@ const DEFAULT_ITEM = {
   description: '',
   extra: {},
   creator: CURRENT_USER_ID,
+  type: 'Space',
 };
 
 export const CREATED_ITEM = {

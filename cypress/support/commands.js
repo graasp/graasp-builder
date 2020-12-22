@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import {
+  buildCopyItemRoute,
   buildDeleteItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
@@ -19,13 +21,19 @@ Cypress.Commands.add(
     deleteItemError = false,
     postItemError = false,
     moveItemError = false,
+    copyItemError = false,
   } = {}) => {
+    const cachedItems = _.cloneDeep(items);
+
     cy.intercept(
       {
         method: 'GET',
         url: `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`,
       },
-      items.filter(({ path }) => !path.includes('.')),
+      (req) => {
+        const own = cachedItems.filter(({ path }) => !path.includes('.'));
+        req.reply(own);
+      },
     ).as('getOwnItems');
 
     cy.intercept(
@@ -34,7 +42,7 @@ Cypress.Commands.add(
         url: new RegExp(
           `${API_HOST}/${buildPostItemRoute(
             ID_FORMAT,
-          )}|${API_HOST}/${buildPostItemRoute()}`,
+          )}$|${API_HOST}/${buildPostItemRoute()}$`,
         ),
       },
       ({ body, reply }) => {
@@ -62,7 +70,7 @@ Cypress.Commands.add(
         const id = url.slice(API_HOST.length).split('/')[2];
         reply({
           statusCode: deleteItemError ? ERROR_CODE : 200,
-          body: items.find(({ id: thisId }) => id === thisId),
+          body: cachedItems.find(({ id: thisId }) => id === thisId),
         });
       },
     ).as('deleteItem');
@@ -74,7 +82,7 @@ Cypress.Commands.add(
       },
       ({ url, reply }) => {
         const id = url.slice(API_HOST.length).split('/')[2];
-        const item = items.find(({ id: thisId }) => id === thisId);
+        const item = cachedItems.find(({ id: thisId }) => id === thisId);
         reply(item);
       },
     ).as('getItem');
@@ -86,7 +94,7 @@ Cypress.Commands.add(
       },
       ({ url, reply }) => {
         const id = url.slice(API_HOST.length).split('/')[2];
-        const children = items.filter(({ path }) => {
+        const children = cachedItems.filter(({ path }) => {
           const ids = getParentsIdsFromPath(path);
           const found = ids.findIndex((thisId) => thisId === id);
           return found >= 0 && found + 2 === ids.length; // has id as parent and is direct children
@@ -100,13 +108,55 @@ Cypress.Commands.add(
         method: 'POST',
         url: new RegExp(`${API_HOST}/${buildMoveItemRoute(ID_FORMAT)}`),
       },
-      ({ url, reply }) => {
+      ({ url, reply, body }) => {
         const id = url.slice(API_HOST.length).split('/')[2];
+        // actually update cached items
+        if (!moveItemError) {
+          let path = id;
+          if (body.parentId) {
+            const parentItem = cachedItems.find(
+              ({ id: thisId }) => thisId === body.parentId,
+            );
+            path = `${parentItem.path}.${id}`;
+          }
+          cachedItems.find(({ id: thisId }) => thisId === id).path = path;
+          // todo: do for all children
+        }
         reply({
           statusCode: moveItemError ? ERROR_CODE : 200,
-          body: items.find(({ id: thisId }) => id === thisId), // this might not be accurate
+          body: cachedItems.find(({ id: thisId }) => id === thisId), // this might not be accurate
         });
       },
     ).as('moveItem');
+
+    cy.intercept(
+      {
+        method: 'POST',
+        url: new RegExp(`${API_HOST}/${buildCopyItemRoute(ID_FORMAT)}`),
+      },
+      ({ url, reply, body }) => {
+        const id = url.slice(API_HOST.length).split('/')[2];
+        const item = cachedItems.find(({ id: thisId }) => id === thisId);
+        const newId = generateUuidId();
+        let newItem = null;
+        // actually copy
+        let path = newId;
+        if (!copyItemError) {
+          if (body.parentId) {
+            const parentItem = cachedItems.find(
+              ({ id: thisId }) => thisId === body.parentId,
+            );
+            path = `${parentItem.path}.${id}`;
+          }
+          newItem = { ...item, id: newId, path };
+          cachedItems.push(newItem);
+          // todo: do for all children
+        }
+        reply({
+          statusCode: copyItemError ? ERROR_CODE : 200,
+          body: newItem,
+        });
+      },
+    ).as('copyItem');
   },
 );

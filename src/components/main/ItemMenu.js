@@ -11,6 +11,7 @@ import {
   setCopyModalSettings,
 } from '../../actions/layout';
 import {
+  buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
@@ -50,7 +51,7 @@ const ItemMenu = ({
         <MoreVertIcon />
       </IconButton>
       <Menu
-        id="simple-menu"
+        id={buildItemMenu(itemId)}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

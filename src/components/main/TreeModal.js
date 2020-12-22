@@ -27,6 +27,11 @@ import {
 } from '../../config/constants';
 import { getCachedItem } from '../../config/cache';
 import { getParentsIdsFromPath } from '../../utils/item';
+import {
+  buildTreeItemClass,
+  TREE_MODAL_TREE_ID,
+  TREE_MODAL_CONFIRM_BUTTON_ID,
+} from '../../config/selectors';
 
 const styles = (theme) => ({
   root: {
@@ -134,7 +139,7 @@ class TreeModal extends Component {
       const isDisabled = this.isTreeItemDisabled({ previous: disabled, id });
 
       const nodeId = isDisabled ? null : id;
-      const className = clsx({
+      const className = clsx(buildTreeItemClass(id), {
         [classes.disabled]: isDisabled,
       });
 
@@ -168,13 +173,18 @@ class TreeModal extends Component {
       >
         <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
         <TreeView
+          id={TREE_MODAL_TREE_ID}
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
           onNodeSelect={this.onSelect}
           defaultExpanded={[ROOT_ID, ...pathIds]}
         >
-          <TreeItem nodeId={ROOT_ID} label={t('Owned Items')}>
+          <TreeItem
+            nodeId={ROOT_ID}
+            className={buildTreeItemClass(ROOT_ID)}
+            label={t('Owned Items')}
+          >
             {this.renderItemTreeItem({
               id: ROOT_ID,
               children: rootItemIds,
@@ -187,6 +197,7 @@ class TreeModal extends Component {
           color="primary"
           variant="contained"
           disabled={!selectedId}
+          id={TREE_MODAL_CONFIRM_BUTTON_ID}
         >
           {t('Confirm')}
         </Button>

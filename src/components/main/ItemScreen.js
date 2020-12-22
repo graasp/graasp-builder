@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
-import { clearItem, setItem } from '../../actions/item';
+import { clearItem, getItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 import { getCachedItem } from '../../config/cache';
@@ -24,6 +24,7 @@ class ItemScreen extends Component {
     dispatchClearItem: PropTypes.func.isRequired,
     id: PropTypes.string,
     t: PropTypes.func.isRequired,
+    dispatchGetItem: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -68,7 +69,7 @@ class ItemScreen extends Component {
   };
 
   render() {
-    const { children, items, id: itemId, t } = this.props;
+    const { children, items, id: itemId, t, dispatchGetItem } = this.props;
 
     if (!itemId) {
       return (
@@ -79,7 +80,13 @@ class ItemScreen extends Component {
     }
 
     // get complete elements from id
-    const completeItems = children.map((id) => getCachedItem(items, id));
+    const completeItems = children.map((id) => {
+      const item = getCachedItem(items, id);
+      if (!item) {
+        dispatchGetItem(id);
+      }
+      return item;
+    });
 
     // wait until all children are available
     if (!completeItems.every(Boolean)) {
@@ -103,6 +110,7 @@ const mapStateToProps = ({ item }) => ({
 });
 
 const mapDispatchToProps = {
+  dispatchGetItem: getItem,
   dispatchSetItem: setItem,
   dispatchClearItem: clearItem,
 };

@@ -13,7 +13,7 @@ export const getOwnFromItems = (items) => items.filter(({ own }) => own);
 // limit text length
 // But fix: There must be a better way of doing it
 export const shortenString = (string, maxLength) => {
-  if (!string?.length > maxLength) {
+  if (!string || string.length < maxLength) {
     return string;
   }
   return `${string.split(' ').slice(0, maxLength).join(' ')}...`;

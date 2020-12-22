@@ -167,7 +167,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return state.setIn(['item'], DEFAULT_ITEM);
     case GET_ITEM_SUCCESS: {
       const newState = state.updateIn(['items'], (items) =>
-        saveItemInItems(items, [payload]),
+        saveItemInItems(items, [
+          payload.item,
+          ...payload.parents,
+          ...payload.children,
+        ]),
       );
       return updateState(newState);
     }
