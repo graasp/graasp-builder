@@ -18,6 +18,9 @@
 module.exports = (on, config) => ({
   ...config,
   env: {
+    'cypress-react-selector': {
+      root: '#root',
+    },
     API_HOST: process.env.REACT_APP_API_HOST,
   },
 });

@@ -2,6 +2,7 @@ import {
   buildDeleteItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
+  buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
 } from '../../src/api/routes';
@@ -13,7 +14,12 @@ const API_HOST = Cypress.env('API_HOST');
 
 Cypress.Commands.add(
   'setUpApi',
-  ({ items = [], deleteItemError = false, postItemError = false } = {}) => {
+  ({
+    items = [],
+    deleteItemError = false,
+    postItemError = false,
+    moveItemError = false,
+  } = {}) => {
     cy.intercept(
       {
         method: 'GET',
@@ -88,5 +94,19 @@ Cypress.Commands.add(
         reply(children);
       },
     ).as('getChildren');
+
+    cy.intercept(
+      {
+        method: 'POST',
+        url: new RegExp(`${API_HOST}/${buildMoveItemRoute(ID_FORMAT)}`),
+      },
+      ({ url, reply }) => {
+        const id = url.slice(API_HOST.length).split('/')[2];
+        reply({
+          statusCode: moveItemError ? ERROR_CODE : 200,
+          body: items.find(({ id: thisId }) => id === thisId), // this might not be accurate
+        });
+      },
+    ).as('moveItem');
   },
 );

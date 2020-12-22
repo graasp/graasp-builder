@@ -10,6 +10,11 @@ import {
   setMoveModalSettings,
   setCopyModalSettings,
 } from '../../actions/layout';
+import {
+  ITEM_MENU_BUTTON_CLASS,
+  ITEM_MENU_COPY_BUTTON_CLASS,
+  ITEM_MENU_MOVE_BUTTON_CLASS,
+} from '../../config/selectors';
 
 const ItemMenu = ({
   itemId,
@@ -41,7 +46,7 @@ const ItemMenu = ({
 
   return (
     <>
-      <IconButton onClick={handleClick}>
+      <IconButton className={ITEM_MENU_BUTTON_CLASS} onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu
@@ -51,8 +56,12 @@ const ItemMenu = ({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleMove}>{t('Move')}</MenuItem>
-        <MenuItem onClick={handleCopy}>{t('Copy')}</MenuItem>
+        <MenuItem onClick={handleMove} className={ITEM_MENU_MOVE_BUTTON_CLASS}>
+          {t('Move')}
+        </MenuItem>
+        <MenuItem onClick={handleCopy} className={ITEM_MENU_COPY_BUTTON_CLASS}>
+          {t('Copy')}
+        </MenuItem>
       </Menu>
     </>
   );

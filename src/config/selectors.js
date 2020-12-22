@@ -10,3 +10,6 @@ export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
 export const buildItemLink = (id) => `itemLink-${id}`;
 export const NAVIGATION_HOME_LINK_ID = 'navigationHomeLink';
 export const buildNavigationLink = (id) => `navigationLink-${id}`;
+export const ITEM_MENU_MOVE_BUTTON_CLASS = 'itemMenuMoveButton';
+export const ITEM_MENU_BUTTON_CLASS = 'itemMenuButton';
+export const ITEM_MENU_COPY_BUTTON_CLASS = 'itemMenuCopyButton';

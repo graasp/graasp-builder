@@ -1,8 +1,10 @@
 import { API_HOST, ROOT_ID } from '../config/constants';
 import {
+  buildCopyItemRoute,
   buildDeleteItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
+  buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
 } from './routes';
@@ -77,7 +79,7 @@ export const moveItem = async ({ id, to }) => {
   if (to !== ROOT_ID) {
     body.parentId = to;
   }
-  const req = await fetch(`${API_HOST}/items/${id}/move`, {
+  const req = await fetch(`${API_HOST}/${buildMoveItemRoute(id)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify(body),
   });
@@ -91,7 +93,7 @@ export const copyItem = async ({ id, to }) => {
   if (to !== ROOT_ID) {
     body.parentId = to;
   }
-  const req = await fetch(`${API_HOST}/items/${id}/copy`, {
+  const req = await fetch(`${API_HOST}/${buildCopyItemRoute(id)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify(body),
   });
