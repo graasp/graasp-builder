@@ -63,7 +63,6 @@
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
     "cypress": "6.2.0",
-    "cypress-react-selector": "2.2.2",
     "env-cmd": "10.1.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "7.0.0",
