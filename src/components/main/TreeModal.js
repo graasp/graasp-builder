@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { withTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ import {
   TREE_VIEW_HEIGHT,
   TREE_VIEW_MAX_WIDTH,
 } from '../../config/constants';
-import { getCachedItem } from '../../config/cache';
+import * as CachedOperation from '../../config/cache';
 import { getParentsIdsFromPath } from '../../utils/item';
 import {
   buildTreeItemClass,
@@ -53,7 +53,6 @@ class TreeModal extends Component {
       disabled: PropTypes.string.isRequired,
     }).isRequired,
     rootItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-    items: PropTypes.instanceOf(List).isRequired,
     onConfirm: PropTypes.func.isRequired,
     dispatchGetOwnItems: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -98,9 +97,9 @@ class TreeModal extends Component {
   };
 
   onSelect = (e, value) => {
-    const { dispatchGetChildren, items } = this.props;
+    const { dispatchGetChildren } = this.props;
     if (value !== ROOT_ID) {
-      if (!getCachedItem(items, value)?.children) {
+      if (!CachedOperation.getItem(value)?.children) {
         dispatchGetChildren(value);
       }
     }
@@ -122,14 +121,14 @@ class TreeModal extends Component {
   // recursively render tree until children are undefined
   // bug: fetch all items until current item
   renderItemTreeItem = ({ children: tree, disabled }) => {
-    const { classes, items, dispatchGetItem } = this.props;
+    const { classes, dispatchGetItem } = this.props;
     // nothing to display
     if (!tree) {
       return null;
     }
 
     return tree.map((id) => {
-      const item = getCachedItem(items, id);
+      const item = CachedOperation.getItem(id);
       if (!item) {
         // dispatch item if does not exist in cache
         dispatchGetItem(id);

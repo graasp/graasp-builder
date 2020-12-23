@@ -19,6 +19,7 @@ class ItemsGrid extends Component {
 
   renderItems = () => {
     const { items, t } = this.props;
+
     if (!items?.length) {
       return (
         <Typography variant="h3" align="center" display="block">

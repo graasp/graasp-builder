@@ -52,7 +52,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = ({ item }) => ({
-  rootItems: item.getIn(['root']).toJS(),
+  rootItems: item.get('root').toJS(),
 });
 
 const mapDispatchToProps = {

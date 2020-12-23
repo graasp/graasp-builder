@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import List from 'immutable';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
@@ -11,12 +11,11 @@ import NewItemButton from './NewItemButton';
 import { clearItem, getItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
-import { getCachedItem } from '../../config/cache';
+import * as CachedOperation from '../../config/cache';
 
 class ItemScreen extends Component {
   static propTypes = {
     children: PropTypes.arrayOf(PropTypes.string),
-    items: PropTypes.instanceOf(List).isRequired,
     dispatchSetItem: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
@@ -25,30 +24,52 @@ class ItemScreen extends Component {
     id: PropTypes.string,
     t: PropTypes.func.isRequired,
     dispatchGetItem: PropTypes.func.isRequired,
+    activity: PropTypes.bool,
   };
 
   static defaultProps = {
     children: [],
     id: null,
+    activity: true,
+  };
+
+  state = {
+    items: [],
   };
 
   componentDidMount() {
-    this.updateItem();
+    const {
+      match: {
+        params: { itemId },
+      },
+      dispatchSetItem,
+    } = this.props;
+    dispatchSetItem(itemId);
   }
 
   componentDidUpdate({
     match: {
       params: { itemId: prevId },
     },
+    children: prevChildren,
   }) {
     const {
       match: {
         params: { itemId },
       },
+      children,
+      dispatchSetItem,
+      activity,
     } = this.props;
+    const { items } = this.state;
 
-    if (itemId !== prevId) {
-      this.updateItem();
+    if (!activity) {
+      if (itemId !== prevId) {
+        dispatchSetItem(itemId);
+      }
+      if (!_.isEqual(children, prevChildren) || !items.every(Boolean)) {
+        this.updateItems();
+      }
     }
   }
 
@@ -57,19 +78,28 @@ class ItemScreen extends Component {
     dispatchClearItem();
   }
 
-  updateItem = () => {
-    const {
-      match: {
-        params: { itemId },
-      },
-      dispatchSetItem,
-    } = this.props;
-
-    return dispatchSetItem(itemId);
+  updateItems = async () => {
+    const { children, dispatchGetItem } = this.props;
+    const items = await Promise.all(
+      children.map(async (id) => {
+        const item = await CachedOperation.getItem(id);
+        if (!item) {
+          dispatchGetItem(id);
+        }
+        return item;
+      }),
+    );
+    this.setState({ items });
   };
 
   render() {
-    const { children, items, id: itemId, t, dispatchGetItem } = this.props;
+    const { items } = this.state;
+    const { id: itemId, t, activity } = this.props;
+
+    // wait until all children are available
+    if (activity || !items.every(Boolean)) {
+      return <CircularProgress color="primary" />;
+    }
 
     if (!itemId) {
       return (
@@ -79,34 +109,20 @@ class ItemScreen extends Component {
       );
     }
 
-    // get complete elements from id
-    const completeItems = children.map((id) => {
-      const item = getCachedItem(items, id);
-      if (!item) {
-        dispatchGetItem(id);
-      }
-      return item;
-    });
-
-    // wait until all children are available
-    if (!completeItems.every(Boolean)) {
-      return <CircularProgress color="primary" />;
-    }
-
     return (
       <>
         <ItemsHeader />
         <NewItemButton />
-        <ItemsGrid items={completeItems} />
+        <ItemsGrid items={items} />
       </>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  items: item.getIn(['items']),
   children: item.getIn(['item', 'children']),
   id: item.getIn(['item', 'id']),
+  activity: Object.values(item.get('activity').toJS()).flat().length,
 });
 
 const mapDispatchToProps = {
