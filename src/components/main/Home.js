@@ -6,36 +6,34 @@ import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
 import { setItem, getOwnItems } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
+import * as CacheOperations from '../../config/cache';
+import { withCache } from './withCache';
 
 class Home extends Component {
   static propTypes = {
-    rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     dispatchGetOwnItems: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
+    activity: PropTypes.bool.isRequired,
+    rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   };
 
-  componentDidMount() {
-    const {
-      match: {
-        params: { itemId },
-      },
-      dispatchGetOwnItems,
-    } = this.props;
-    return dispatchGetOwnItems(itemId);
+  async componentDidMount() {
+    const { dispatchGetOwnItems } = this.props;
+    dispatchGetOwnItems();
   }
 
-  componentDidUpdate() {
-    const {
-      match: {
-        params: { itemId },
-      },
-      dispatchGetOwnItems,
-      rootItems,
-    } = this.props;
-    if (rootItems.some(({ dirty }) => dirty)) {
-      dispatchGetOwnItems(itemId);
+  async componentDidUpdate() {
+    const { dispatchGetOwnItems, activity } = this.props;
+    const rootItems = await CacheOperations.getRootItems();
+
+    if (!activity) {
+      // in case of changes on own itmes, update them
+      // case ??
+      if (rootItems.some(({ dirty }) => dirty)) {
+        dispatchGetOwnItems();
+      }
     }
   }
 
@@ -52,7 +50,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = ({ item }) => ({
-  rootItems: item.get('root').toJS(),
+  activity: Object.values(item.get('activity').toJS()).flat().length,
 });
 
 const mapDispatchToProps = {
@@ -61,5 +59,5 @@ const mapDispatchToProps = {
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Home);
-
-export default withRouter(ConnectedComponent);
+const CacheComponent = withCache(ConnectedComponent);
+export default withRouter(CacheComponent);

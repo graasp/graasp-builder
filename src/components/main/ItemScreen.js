@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
+// import _ from 'lodash';
 import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
@@ -11,30 +11,28 @@ import NewItemButton from './NewItemButton';
 import { clearItem, getItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
-import * as CachedOperation from '../../config/cache';
+// import * as CachedOperation from '../../config/cache';
+import { withCache } from './withCache';
 
 class ItemScreen extends Component {
   static propTypes = {
-    children: PropTypes.arrayOf(PropTypes.string),
     dispatchSetItem: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
-    id: PropTypes.string,
     t: PropTypes.func.isRequired,
     dispatchGetItem: PropTypes.func.isRequired,
     activity: PropTypes.bool,
+    item: PropTypes.shape({
+      children: PropTypes.arrayOf(PropTypes.shape({})),
+      dirty: PropTypes.bool.isRequired,
+    }),
   };
 
   static defaultProps = {
-    children: [],
-    id: null,
     activity: true,
-  };
-
-  state = {
-    items: [],
+    item: null,
   };
 
   componentDidMount() {
@@ -47,29 +45,35 @@ class ItemScreen extends Component {
     dispatchSetItem(itemId);
   }
 
-  componentDidUpdate({
+  async componentDidUpdate({
     match: {
       params: { itemId: prevId },
     },
-    children: prevChildren,
   }) {
     const {
       match: {
         params: { itemId },
       },
-      children,
       dispatchSetItem,
       activity,
+      dispatchGetItem,
+      item,
     } = this.props;
-    const { items } = this.state;
 
     if (!activity) {
+      // case on navigate
       if (itemId !== prevId) {
         dispatchSetItem(itemId);
       }
-      if (!_.isEqual(children, prevChildren) || !items.every(Boolean)) {
-        this.updateItems();
+      // update when dirty or does not exist
+      // case create item
+      else if (item?.dirty) {
+        dispatchGetItem(itemId);
       }
+      // case after navigation, update on children
+      // else if (items.some(({ dirty }) => dirty)) {
+      //   this.updateItems();
+      // }
     }
   }
 
@@ -78,30 +82,15 @@ class ItemScreen extends Component {
     dispatchClearItem();
   }
 
-  updateItems = async () => {
-    const { children, dispatchGetItem } = this.props;
-    const items = await Promise.all(
-      children.map(async (id) => {
-        const item = await CachedOperation.getItem(id);
-        if (!item) {
-          dispatchGetItem(id);
-        }
-        return item;
-      }),
-    );
-    this.setState({ items });
-  };
-
   render() {
-    const { items } = this.state;
-    const { id: itemId, t, activity } = this.props;
+    const { t, activity, item } = this.props;
 
     // wait until all children are available
-    if (activity || !items.every(Boolean)) {
+    if (activity) {
       return <CircularProgress color="primary" />;
     }
 
-    if (!itemId) {
+    if (!item) {
       return (
         <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
           {t('An error occured.')}
@@ -113,16 +102,15 @@ class ItemScreen extends Component {
       <>
         <ItemsHeader />
         <NewItemButton />
-        <ItemsGrid items={items} />
+        <ItemsGrid items={item.children} />
       </>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  children: item.getIn(['item', 'children']),
-  id: item.getIn(['item', 'id']),
   activity: Object.values(item.get('activity').toJS()).flat().length,
+  itemId: item.getIn(['item', 'id']),
 });
 
 const mapDispatchToProps = {
@@ -136,4 +124,5 @@ const ConnectedComponent = connect(
   mapDispatchToProps,
 )(ItemScreen);
 const TranslatedComponent = withTranslation()(ConnectedComponent);
-export default withRouter(TranslatedComponent);
+const CacheComponent = withCache(TranslatedComponent);
+export default withRouter(CacheComponent);

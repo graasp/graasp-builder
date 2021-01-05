@@ -11,6 +11,9 @@ import {
   COPY_ITEM_SUCCESS,
   GET_CHILDREN_SUCCESS,
   FLAG_GETTING_ITEM,
+  FLAG_CREATING_ITEM,
+  FLAG_GETTING_OWN_ITEMS,
+  FLAG_DELETING_ITEM,
 } from '../types/item';
 // import { getItemById, getParentsIdsFromPath } from '../utils/item';
 
@@ -24,6 +27,9 @@ const INITIAL_STATE = Map({
   root: List(), // items
   activity: Map({
     [FLAG_GETTING_ITEM]: [],
+    [FLAG_CREATING_ITEM]: [],
+    [FLAG_GETTING_OWN_ITEMS]: [],
+    [FLAG_DELETING_ITEM]: [],
   }),
 });
 
@@ -174,6 +180,9 @@ const updateActivity = (payload) => (activity) => {
 export default (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
     case FLAG_GETTING_ITEM:
+    case FLAG_CREATING_ITEM:
+    case FLAG_GETTING_OWN_ITEMS:
+    case FLAG_DELETING_ITEM:
       return state.updateIn(['activity', type], updateActivity(payload));
     case CLEAR_ITEM_SUCCESS:
       return state.setIn(['item'], DEFAULT_ITEM);

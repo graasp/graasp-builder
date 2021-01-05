@@ -10,6 +10,9 @@ import {
   COPY_ITEM_SUCCESS,
   GET_CHILDREN_SUCCESS,
   FLAG_GETTING_ITEM,
+  FLAG_GETTING_OWN_ITEMS,
+  FLAG_CREATING_ITEM,
+  FLAG_DELETING_ITEM,
 } from '../types/item';
 import { getParentsIdsFromPath } from '../utils/item';
 import * as CacheOperations from '../config/cache';
@@ -39,7 +42,7 @@ export const setItem = (id) => async (dispatch) => {
     if (!children) {
       newChildren = await Api.getChildren(id);
       newItems = newItems.concat(newChildren);
-      item.children = newChildren.map(({ id: childId }) => childId);
+      // item.children = newChildren.map(({ id: childId }) => childId);
     }
 
     // get parents
@@ -86,6 +89,7 @@ export const getItem = (id) => async (dispatch) => {
 
 export const getOwnItems = () => async (dispatch) => {
   try {
+    dispatch(createFlag(FLAG_GETTING_OWN_ITEMS, true));
     const ownedItems = await Api.getOwnItems();
 
     await CacheOperations.saveItems(ownedItems);
@@ -96,11 +100,14 @@ export const getOwnItems = () => async (dispatch) => {
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_GETTING_OWN_ITEMS, false));
   }
 };
 
 export const createItem = (props) => async (dispatch, getState) => {
   try {
+    dispatch(createFlag(FLAG_CREATING_ITEM, true));
     const to = getState().item.getIn(['item', 'id']);
     const newItem = await Api.postItem(props);
     if (!newItem) {
@@ -115,11 +122,14 @@ export const createItem = (props) => async (dispatch, getState) => {
     });
   } catch (e) {
     return console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_CREATING_ITEM, false));
   }
 };
 
 export const deleteItem = (id) => async (dispatch) => {
   try {
+    dispatch(createFlag(FLAG_DELETING_ITEM, true));
     await Api.deleteItem(id);
 
     await CacheOperations.deleteItem(id);
@@ -130,6 +140,8 @@ export const deleteItem = (id) => async (dispatch) => {
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_DELETING_ITEM, false));
   }
 };
 

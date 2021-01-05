@@ -1,4 +1,5 @@
 import Dexie from 'dexie';
+import { transformIdForPath, getParentsIdsFromPath } from '../utils/item';
 
 export const cache = new Dexie('cache');
 cache.version(1).stores({
@@ -10,10 +11,7 @@ if (['development', 'test'].includes(process.env.NODE_ENV)) {
   cache.items.clear();
 }
 
-export const getItem = async (id) => {
-  const item = await cache.items.get(id);
-  return item?.dirty ? null : item;
-};
+export const getItem = async (id) => cache.items.get(id);
 
 export const getItems = async () => cache.items.toArray();
 
@@ -42,23 +40,39 @@ export const saveItem = async (item) => {
   });
 };
 
-export const createItem = async ({ item, to }) => {
+export const createItem = async ({ item }) => {
   cache.transaction('rw', cache.items, async () => {
     await cache.items.put(item);
-    await cache.items.update(to, { dirty: true });
   });
 };
 
 export const deleteItem = async (id) => {
-  await cache.items.delete(id);
+  cache.items.delete(id);
 };
 
 export const saveItems = async (items) => {
   items.forEach((item) => saveItem(item));
 };
 
-export const getRootItems = async () => {
-  await cache.items.filter(({ path }) => !path.includes('.'));
+export const getRootItems = async () =>
+  cache.items.filter(({ path }) => !path.includes('.')).toArray();
+
+export const getChildren = async (id) => {
+  if (!id) {
+    console.error(`should not get children for id ${id}`);
+  }
+  const reg = new RegExp(`${transformIdForPath(id)}(?=\\.[^\\.]*$)`);
+  return (await cache.items.filter(({ path }) => path.match(reg))).toArray();
+};
+
+export const getParents = async (id) => {
+  if (!id) {
+    console.error(`should not get parent for id ${id}`);
+  }
+
+  const item = await getItem(id);
+  const parents = getParentsIdsFromPath(item.path);
+  return cache.items.bulkGet(parents);
 };
 
 export default cache;
