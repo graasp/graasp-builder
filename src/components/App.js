@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from './layout/Header';
 import items from '../data/sample';
@@ -18,6 +20,7 @@ import {
 import SignIn from './SignIn';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
+import { getOwnItems } from '../actions/item';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+function App({ dispatchGetOwnItems }) {
+  dispatchGetOwnItems();
   const classes = useStyles();
   return (
     <Router>
@@ -56,4 +60,13 @@ function App() {
   );
 }
 
-export default App;
+App.propTypes = {
+  dispatchGetOwnItems: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  dispatchGetOwnItems: getOwnItems,
+};
+
+const ConnectedComponent = connect(null, mapDispatchToProps)(App);
+export default ConnectedComponent;

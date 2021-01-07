@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import _ from 'lodash';
+import _ from 'lodash';
 import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
@@ -43,6 +43,23 @@ class ItemScreen extends Component {
       dispatchSetItem,
     } = this.props;
     dispatchSetItem(itemId);
+  }
+
+  shouldComponentUpdate({
+    item: nextItem,
+    match: {
+      params: { itemId: nextId },
+    },
+  }) {
+    const {
+      item,
+      match: {
+        params: { itemId },
+      },
+    } = this.props;
+    // todo: might have to change
+    // necessary to avoid render
+    return itemId !== nextId || !_.isEqual(item, nextItem);
   }
 
   async componentDidUpdate({

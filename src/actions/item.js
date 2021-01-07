@@ -13,6 +13,7 @@ import {
   FLAG_GETTING_OWN_ITEMS,
   FLAG_CREATING_ITEM,
   FLAG_DELETING_ITEM,
+  FLAG_GETTING_CHILDREN,
 } from '../types/item';
 import { getParentsIdsFromPath } from '../utils/item';
 import * as CacheOperations from '../config/cache';
@@ -183,12 +184,18 @@ export const copyItem = (payload) => async (dispatch) => {
 
 export const getChildren = (id) => async (dispatch) => {
   try {
+    dispatch(createFlag(FLAG_GETTING_CHILDREN, true));
     const children = await Api.getChildren(id);
+    if (children.length) {
+      await CacheOperations.saveItems(children);
+    }
     dispatch({
       type: GET_CHILDREN_SUCCESS,
       payload: { id, children },
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_GETTING_CHILDREN, false));
   }
 };

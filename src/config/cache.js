@@ -51,7 +51,7 @@ export const deleteItem = async (id) => {
 };
 
 export const saveItems = async (items) => {
-  items.forEach((item) => saveItem(item));
+  items.forEach(async (item) => saveItem(item));
 };
 
 export const getRootItems = async () =>

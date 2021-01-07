@@ -19,11 +19,6 @@ class Home extends Component {
     rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   };
 
-  async componentDidMount() {
-    const { dispatchGetOwnItems } = this.props;
-    dispatchGetOwnItems();
-  }
-
   async componentDidUpdate() {
     const { dispatchGetOwnItems, activity } = this.props;
     const rootItems = await CacheOperations.getRootItems();

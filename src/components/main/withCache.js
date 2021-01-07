@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import cache, * as CacheOperations from '../../config/cache';
+import { transformIdForPath } from '../../utils/item';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -22,27 +23,34 @@ export const withCache = (WrappedComponent) => {
       items: [],
       rootItems: [],
       item: null,
+      callback: null,
     };
 
     componentDidMount() {
-      this.updateItems();
+      const { updateItems } = this;
+      updateItems();
+
+      function callback() {
+        this.onsuccess = updateItems;
+      }
 
       // todo: this actually refresh a bit too often -> subscribe to the reducer changes?
-      cache.items.hook('creating', this.updateItems);
-      cache.items.hook('updating', this.updateItems);
-      cache.items.hook('deleting', this.updateItems);
+      cache.items.hook('creating', callback);
+      cache.items.hook('updating', callback);
+      cache.items.hook('deleting', callback);
+
+      this.setState({ callback });
     }
 
     componentWillUnmount() {
-      cache.items.hook('creating').unsubscribe(this.updateItems);
-      cache.items.hook('updating').unsubscribe(this.updateItems);
-      cache.items.hook('deleting').unsubscribe(this.updateItems);
+      const { callback } = this.state;
+      cache.items.hook('creating').unsubscribe(callback);
+      cache.items.hook('updating').unsubscribe(callback);
+      cache.items.hook('deleting').unsubscribe(callback);
     }
 
     updateItems = async () => {
       const { itemId } = this.props;
-      // eslint-disable-next-line no-console
-      console.log('update in cache');
       const items = await CacheOperations.getItems();
       const rootItems = await CacheOperations.getRootItems();
 
@@ -57,6 +65,18 @@ export const withCache = (WrappedComponent) => {
       this.setState({ items, rootItems, item });
     };
 
+    // sync function used in TreeModal
+    getItemSync = (id) => {
+      const { items } = this.state;
+      return items.find(({ id: thisId }) => thisId === id);
+    };
+
+    getChildrenSync = (id) => {
+      const { items } = this.state;
+      const reg = new RegExp(`${transformIdForPath(id)}(?=\\.[^\\.]*$)`);
+      return items.filter(({ path }) => path.match(reg));
+    };
+
     render() {
       const { items, rootItems, item } = this.state;
       return (
@@ -64,6 +84,8 @@ export const withCache = (WrappedComponent) => {
           items={items}
           rootItems={rootItems}
           item={item}
+          getChildrenSync={this.getChildrenSync}
+          getItemSync={this.getItemSync}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...this.props}
         />

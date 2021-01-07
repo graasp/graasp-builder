@@ -1,9 +1,7 @@
 import { Map, List } from 'immutable';
 // import { ROOT_ID } from '../config/constants';
 import {
-  CREATE_ITEM_SUCCESS,
   SET_ITEM_SUCCESS,
-  GET_OWN_ITEMS_SUCCESS,
   DELETE_ITEM_SUCCESS,
   CLEAR_ITEM_SUCCESS,
   GET_ITEM_SUCCESS,
@@ -14,6 +12,7 @@ import {
   FLAG_CREATING_ITEM,
   FLAG_GETTING_OWN_ITEMS,
   FLAG_DELETING_ITEM,
+  FLAG_GETTING_CHILDREN,
 } from '../types/item';
 // import { getItemById, getParentsIdsFromPath } from '../utils/item';
 
@@ -30,6 +29,7 @@ const INITIAL_STATE = Map({
     [FLAG_CREATING_ITEM]: [],
     [FLAG_GETTING_OWN_ITEMS]: [],
     [FLAG_DELETING_ITEM]: [],
+    [FLAG_GETTING_CHILDREN]: [],
   }),
 });
 
@@ -183,23 +183,15 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case FLAG_CREATING_ITEM:
     case FLAG_GETTING_OWN_ITEMS:
     case FLAG_DELETING_ITEM:
+    case FLAG_GETTING_CHILDREN:
       return state.updateIn(['activity', type], updateActivity(payload));
     case CLEAR_ITEM_SUCCESS:
       return state.setIn(['item'], DEFAULT_ITEM);
     case GET_ITEM_SUCCESS: {
       return state;
     }
-    case GET_OWN_ITEMS_SUCCESS: {
-      return state.set('root', List(payload));
-    }
     case SET_ITEM_SUCCESS:
       return state.setIn(['item'], Map(payload));
-    case CREATE_ITEM_SUCCESS: {
-      return state.updateIn(['item', 'children'], (children) => [
-        ...children,
-        payload.id,
-      ]);
-    }
     case DELETE_ITEM_SUCCESS: {
       return state;
     }

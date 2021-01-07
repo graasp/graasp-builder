@@ -12,6 +12,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button } from '@material-ui/core';
+import { withCache } from './withCache';
 import {
   getChildren,
   getItem,
@@ -25,8 +26,7 @@ import {
   TREE_VIEW_HEIGHT,
   TREE_VIEW_MAX_WIDTH,
 } from '../../config/constants';
-import * as CachedOperation from '../../config/cache';
-import { getParentsIdsFromPath } from '../../utils/item';
+// import { getParentsIdsFromPath } from '../../utils/item';
 import {
   buildTreeItemClass,
   TREE_MODAL_TREE_ID,
@@ -52,9 +52,8 @@ class TreeModal extends Component {
       root: PropTypes.string.isRequired,
       disabled: PropTypes.string.isRequired,
     }).isRequired,
-    rootItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     onConfirm: PropTypes.func.isRequired,
-    dispatchGetOwnItems: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     prevent: PropTypes.oneOf(Object.values(TREE_PREVENT_SELECTION)),
@@ -62,6 +61,8 @@ class TreeModal extends Component {
     dispatchGetItem: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     pathIds: PropTypes.arrayOf(PropTypes.string),
+    getItemSync: PropTypes.func.isRequired,
+    getChildrenSync: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -70,11 +71,6 @@ class TreeModal extends Component {
   };
 
   state = { selectedId: null };
-
-  componentDidMount() {
-    const { dispatchGetOwnItems } = this.props;
-    dispatchGetOwnItems();
-  }
 
   shouldComponentUpdate({ settings }) {
     // update only when opened or on close
@@ -99,9 +95,7 @@ class TreeModal extends Component {
   onSelect = (e, value) => {
     const { dispatchGetChildren } = this.props;
     if (value !== ROOT_ID) {
-      if (!CachedOperation.getItem(value)?.children) {
-        dispatchGetChildren(value);
-      }
+      dispatchGetChildren(value);
     }
     this.setState({ selectedId: value });
   };
@@ -121,20 +115,28 @@ class TreeModal extends Component {
   // recursively render tree until children are undefined
   // bug: fetch all items until current item
   renderItemTreeItem = ({ children: tree, disabled }) => {
-    const { classes, dispatchGetItem } = this.props;
+    const {
+      classes,
+      dispatchGetItem,
+      dispatchGetChildren,
+      getItemSync,
+      getChildrenSync,
+    } = this.props;
     // nothing to display
     if (!tree) {
       return null;
     }
 
-    return tree.map((id) => {
-      const item = CachedOperation.getItem(id);
+    return tree.map(({ id }) => {
+      const item = getItemSync(id);
       if (!item) {
         // dispatch item if does not exist in cache
         dispatchGetItem(id);
+        dispatchGetChildren(id);
         return null;
       }
-      const { name, children } = item;
+      const children = getChildrenSync(id);
+      const { name } = item;
       const isDisabled = this.isTreeItemDisabled({ previous: disabled, id });
 
       const nodeId = isDisabled ? null : id;
@@ -163,7 +165,7 @@ class TreeModal extends Component {
 
   render() {
     const { selectedId } = this.state;
-    const { title, classes, settings, rootItemIds, t, pathIds } = this.props;
+    const { title, classes, settings, rootItems, t, pathIds } = this.props;
     return (
       <Dialog
         onClose={this.handleClose}
@@ -186,7 +188,7 @@ class TreeModal extends Component {
           >
             {this.renderItemTreeItem({
               id: ROOT_ID,
-              children: rootItemIds,
+              children: rootItems,
               disabled: false,
             })}
           </TreeItem>
@@ -205,15 +207,6 @@ class TreeModal extends Component {
   }
 }
 
-const mapStateToProps = ({ item }) => ({
-  items: item.getIn(['items']),
-  pathIds: getParentsIdsFromPath(item.getIn(['item', 'path'], '')),
-  rootItemIds: item
-    .getIn(['root'])
-    .map(({ id }) => id)
-    .toJS(),
-});
-
 const mapDispatchToProps = {
   dispatchGetItem: getItem,
   dispatchMoveItem: moveItem,
@@ -222,11 +215,8 @@ const mapDispatchToProps = {
   dispatchGetChildren: getChildren,
 };
 
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(TreeModal);
+const ConnectedComponent = connect(null, mapDispatchToProps)(TreeModal);
 
 const TranslatedComponent = withTranslation()(ConnectedComponent);
-
-export default withStyles(styles, { withTheme: true })(TranslatedComponent);
+const CacheComponent = withCache(TranslatedComponent);
+export default withStyles(styles, { withTheme: true })(CacheComponent);
