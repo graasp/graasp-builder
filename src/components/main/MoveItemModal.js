@@ -17,7 +17,7 @@ class MoveItemModal extends Component {
   };
 
   shouldComponentUpdate({ settings }) {
-    // update only when opened or on close
+    // update only when is open or on close
     const { settings: prevSettings } = this.props;
     const prevItemId = prevSettings.get('itemId');
     const open = settings.get('open');
@@ -36,6 +36,7 @@ class MoveItemModal extends Component {
 
   render() {
     const { settings, t } = this.props;
+
     return (
       <TreeModal
         onClose={this.onClose}

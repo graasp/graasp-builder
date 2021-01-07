@@ -42,7 +42,7 @@ describe('Delete Item', () => {
     });
   });
 
-  it.only('error while deleting item does not delete in interface', () => {
+  it('error while deleting item does not delete in interface', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS, deleteItemError: true });
     const { id } = SIMPLE_ITEMS[0];
     const { id: idToDelete } = SIMPLE_ITEMS[2];

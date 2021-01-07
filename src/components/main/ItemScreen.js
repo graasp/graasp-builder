@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Alert from '@material-ui/lab/Alert';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
-import { clearItem, getItem, setItem } from '../../actions/item';
+import { clearItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
-// import * as CachedOperation from '../../config/cache';
-import { withCache } from './withCache';
 
 class ItemScreen extends Component {
   static propTypes = {
@@ -22,12 +21,8 @@ class ItemScreen extends Component {
     }).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    dispatchGetItem: PropTypes.func.isRequired,
     activity: PropTypes.bool,
-    item: PropTypes.shape({
-      children: PropTypes.arrayOf(PropTypes.shape({})),
-      dirty: PropTypes.bool.isRequired,
-    }),
+    item: PropTypes.instanceOf(Map),
   };
 
   static defaultProps = {
@@ -35,13 +30,14 @@ class ItemScreen extends Component {
     item: null,
   };
 
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const {
       match: {
         params: { itemId },
       },
       dispatchSetItem,
-    } = this.props;
+    } = props;
     dispatchSetItem(itemId);
   }
 
@@ -56,10 +52,11 @@ class ItemScreen extends Component {
       match: {
         params: { itemId },
       },
+      activity,
     } = this.props;
     // todo: might have to change
     // necessary to avoid render
-    return itemId !== nextId || !_.isEqual(item, nextItem);
+    return activity || itemId !== nextId || !_.isEqual(item, nextItem);
   }
 
   async componentDidUpdate({
@@ -73,7 +70,6 @@ class ItemScreen extends Component {
       },
       dispatchSetItem,
       activity,
-      dispatchGetItem,
       item,
     } = this.props;
 
@@ -85,12 +81,8 @@ class ItemScreen extends Component {
       // update when dirty or does not exist
       // case create item
       else if (item?.dirty) {
-        dispatchGetItem(itemId);
+        dispatchSetItem(itemId);
       }
-      // case after navigation, update on children
-      // else if (items.some(({ dirty }) => dirty)) {
-      //   this.updateItems();
-      // }
     }
   }
 
@@ -107,7 +99,7 @@ class ItemScreen extends Component {
       return <CircularProgress color="primary" />;
     }
 
-    if (!item) {
+    if (!item || !item.get('id')) {
       return (
         <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
           {t('An error occured.')}
@@ -119,19 +111,18 @@ class ItemScreen extends Component {
       <>
         <ItemsHeader />
         <NewItemButton />
-        <ItemsGrid items={item.children} />
+        <ItemsGrid items={item.get('children')} />
       </>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  activity: Object.values(item.get('activity').toJS()).flat().length,
-  itemId: item.getIn(['item', 'id']),
+  activity: Boolean(Object.values(item.get('activity').toJS()).flat().length),
+  item: item.get('item'),
 });
 
 const mapDispatchToProps = {
-  dispatchGetItem: getItem,
   dispatchSetItem: setItem,
   dispatchClearItem: clearItem,
 };
@@ -141,5 +132,4 @@ const ConnectedComponent = connect(
   mapDispatchToProps,
 )(ItemScreen);
 const TranslatedComponent = withTranslation()(ConnectedComponent);
-const CacheComponent = withCache(TranslatedComponent);
-export default withRouter(CacheComponent);
+export default withRouter(TranslatedComponent);

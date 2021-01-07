@@ -17,3 +17,4 @@ export const buildItemMenu = (id) => `itemMenu-${id}`;
 export const TREE_MODAL_TREE_ID = 'treeModalTree';
 export const buildTreeItemClass = (id) => `treeItem-${id}`;
 export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
+export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';

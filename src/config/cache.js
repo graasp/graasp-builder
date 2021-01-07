@@ -1,12 +1,13 @@
 import Dexie from 'dexie';
-import { transformIdForPath, getParentsIdsFromPath } from '../utils/item';
+import { getParentsIdsFromPath, isChild, isRootItem } from '../utils/item';
+import { ROOT_ID } from './constants';
 
 export const cache = new Dexie('cache');
 cache.version(1).stores({
-  items: `id,name,creator`,
+  items: `id,name,creator`, // todo: to complete
 });
 
-// necessary when developing with autoreload
+// this line is necessary when developing with autoreload
 if (['development', 'test'].includes(process.env.NODE_ENV)) {
   cache.items.clear();
 }
@@ -50,24 +51,33 @@ export const deleteItem = async (id) => {
   cache.items.delete(id);
 };
 
+export const moveItem = async ({ id, to, from }) => {
+  await cache.items.update(id, { dirty: true });
+  if (to && to !== ROOT_ID) {
+    cache.items.update(to, { dirty: true });
+  }
+  if (from && from !== ROOT_ID) {
+    cache.items.update(from, { dirty: true });
+  }
+};
+
 export const saveItems = async (items) => {
   items.forEach(async (item) => saveItem(item));
 };
 
 export const getRootItems = async () =>
-  cache.items.filter(({ path }) => !path.includes('.')).toArray();
+  cache.items.filter(isRootItem).toArray();
 
 export const getChildren = async (id) => {
   if (!id) {
-    console.error(`should not get children for id ${id}`);
+    console.error(`cannot not get children for id ${id}`);
   }
-  const reg = new RegExp(`${transformIdForPath(id)}(?=\\.[^\\.]*$)`);
-  return (await cache.items.filter(({ path }) => path.match(reg))).toArray();
+  return (await cache.items.filter(isChild(id))).toArray();
 };
 
 export const getParents = async (id) => {
   if (!id) {
-    console.error(`should not get parent for id ${id}`);
+    console.error(`cannot get parents for id ${id}`);
   }
 
   const item = await getItem(id);

@@ -14,9 +14,15 @@ import {
   FLAG_CREATING_ITEM,
   FLAG_DELETING_ITEM,
   FLAG_GETTING_CHILDREN,
+  GET_ITEMS_SUCCESS,
+  FLAG_GETTING_ITEMS,
+  FLAG_MOVING_ITEM,
+  FLAG_COPYING_ITEM,
+  FLAG_SETTING_ITEM,
 } from '../types/item';
 import { getParentsIdsFromPath } from '../utils/item';
 import * as CacheOperations from '../config/cache';
+import { createFlag } from './utils';
 
 // eslint-disable-next-line no-unused-vars
 const buildParentsLine = (path) => {
@@ -30,10 +36,11 @@ const buildParentsLine = (path) => {
 
 export const setItem = (id) => async (dispatch) => {
   try {
+    dispatch(createFlag(FLAG_SETTING_ITEM, true));
     let newItems = [];
     // use saved item when possible
     let item = await CacheOperations.getItem(id);
-    if (!item) {
+    if (!item || item.dirty) {
       item = await Api.getItem(id);
     }
     const { children, parents } = item;
@@ -43,7 +50,6 @@ export const setItem = (id) => async (dispatch) => {
     if (!children) {
       newChildren = await Api.getChildren(id);
       newItems = newItems.concat(newChildren);
-      // item.children = newChildren.map(({ id: childId }) => childId);
     }
 
     // get parents
@@ -51,24 +57,20 @@ export const setItem = (id) => async (dispatch) => {
     if (!parents) {
       newParents = await buildParentsLine(item.path);
       newItems = newItems.concat(newParents);
-      item.parents = newParents.map(({ id: parentId }) => parentId);
     }
     newItems.push(item);
     await CacheOperations.saveItems(newItems);
 
     dispatch({
       type: SET_ITEM_SUCCESS,
-      payload: item,
+      payload: { item, children: newChildren, parents: newParents },
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_SETTING_ITEM, false));
   }
 };
-
-const createFlag = (type, payload) => ({
-  type,
-  payload,
-});
 
 export const getItem = (id) => async (dispatch) => {
   try {
@@ -85,6 +87,23 @@ export const getItem = (id) => async (dispatch) => {
     console.error(e);
   } finally {
     dispatch(createFlag(FLAG_GETTING_ITEM, false));
+  }
+};
+
+export const getItems = () => async (dispatch) => {
+  try {
+    dispatch(createFlag(FLAG_GETTING_ITEMS, true));
+
+    const items = await CacheOperations.getItems();
+
+    dispatch({
+      type: GET_ITEMS_SUCCESS,
+      payload: items,
+    });
+  } catch (e) {
+    console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_GETTING_ITEMS, false));
   }
 };
 
@@ -158,27 +177,40 @@ export const clearItem = () => (dispatch) => {
 
 export const moveItem = (payload) => async (dispatch, getState) => {
   try {
+    dispatch(createFlag(FLAG_MOVING_ITEM, true));
     await Api.moveItem(payload);
+
     // get current displayed item
     const from = getState().item.getIn(['item', 'id']);
+
+    await CacheOperations.moveItem({ ...payload, from });
+
     dispatch({
       type: MOVE_ITEM_SUCCESS,
-      payload: { ...payload, from },
+      payload: payload.id,
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_MOVING_ITEM, false));
   }
 };
 
 export const copyItem = (payload) => async (dispatch) => {
   try {
+    dispatch(createFlag(FLAG_COPYING_ITEM, true));
     const newItem = await Api.copyItem(payload);
+
+    await CacheOperations.saveItem(newItem);
+
     dispatch({
       type: COPY_ITEM_SUCCESS,
       payload: { ...payload, item: newItem },
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_COPYING_ITEM, false));
   }
 };
 
@@ -188,6 +220,9 @@ export const getChildren = (id) => async (dispatch) => {
     const children = await Api.getChildren(id);
     if (children.length) {
       await CacheOperations.saveItems(children);
+
+      // update items
+      dispatch(getItems());
     }
     dispatch({
       type: GET_CHILDREN_SUCCESS,

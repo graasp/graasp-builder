@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
+import _ from 'lodash';
 import { withTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
@@ -12,26 +13,28 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button } from '@material-ui/core';
-import { withCache } from './withCache';
 import {
   getChildren,
   getItem,
   getOwnItems,
-  moveItem,
+  getItems,
 } from '../../actions/item';
-import { setMoveModalSettings } from '../../actions/layout';
 import {
   ROOT_ID,
   TREE_PREVENT_SELECTION,
   TREE_VIEW_HEIGHT,
   TREE_VIEW_MAX_WIDTH,
 } from '../../config/constants';
-// import { getParentsIdsFromPath } from '../../utils/item';
 import {
   buildTreeItemClass,
   TREE_MODAL_TREE_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
 } from '../../config/selectors';
+import {
+  getItemById,
+  getParentsIdsFromPath,
+  getChildren as getChildrenSync,
+} from '../../utils/item';
 
 const styles = (theme) => ({
   root: {
@@ -52,7 +55,6 @@ class TreeModal extends Component {
       root: PropTypes.string.isRequired,
       disabled: PropTypes.string.isRequired,
     }).isRequired,
-    rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     onConfirm: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
@@ -60,17 +62,22 @@ class TreeModal extends Component {
     dispatchGetChildren: PropTypes.func.isRequired,
     dispatchGetItem: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    pathIds: PropTypes.arrayOf(PropTypes.string),
-    getItemSync: PropTypes.func.isRequired,
-    getChildrenSync: PropTypes.func.isRequired,
+    rootItems: PropTypes.instanceOf(List).isRequired,
+    items: PropTypes.instanceOf(List).isRequired,
+    dispatchGetItems: PropTypes.func.isRequired,
+    dispatchGetOwnItems: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     prevent: TREE_PREVENT_SELECTION.NONE,
-    pathIds: [],
   };
 
-  state = { selectedId: null };
+  state = { selectedId: null, expandedItems: [ROOT_ID] };
+
+  componentDidMount() {
+    const { dispatchGetOwnItems } = this.props;
+    dispatchGetOwnItems();
+  }
 
   shouldComponentUpdate({ settings }) {
     // update only when opened or on close
@@ -78,6 +85,26 @@ class TreeModal extends Component {
     const prevItemId = prevSettings.get('itemId');
     const open = settings.get('open');
     return open || (!open && Boolean(prevItemId));
+  }
+
+  componentDidUpdate({ settings: prevSettings, items: prevItems }) {
+    const { dispatchGetItems, settings, items } = this.props;
+    const { expandedItems } = this.state;
+
+    // expand tree until current item
+    const itemId = settings.get('itemId');
+    const item = getItemById(items, itemId);
+    const prevItem = prevItems.find(({ id }) => id === itemId);
+    if (!_.isEqual(item, prevItem)) {
+      const parentIds = getParentsIdsFromPath(item.path) || [];
+      const newExpandedItems = [...expandedItems, ...parentIds];
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ expandedItems: newExpandedItems });
+    }
+
+    if (settings.get('open') && !prevSettings.get('open')) {
+      dispatchGetItems();
+    }
   }
 
   handleClose = () => {
@@ -93,11 +120,18 @@ class TreeModal extends Component {
   };
 
   onSelect = (e, value) => {
+    const { expandedItems } = this.state;
     const { dispatchGetChildren } = this.props;
     if (value !== ROOT_ID) {
       dispatchGetChildren(value);
     }
-    this.setState({ selectedId: value });
+    // control item expansion
+    const isExpanded = expandedItems.includes(value);
+    const newExpandedItems = isExpanded
+      ? expandedItems.filter((id) => id !== value)
+      : [...expandedItems, value];
+
+    this.setState({ selectedId: value, expandedItems: newExpandedItems });
   };
 
   isTreeItemDisabled = ({ previous, id }) => {
@@ -113,29 +147,22 @@ class TreeModal extends Component {
   };
 
   // recursively render tree until children are undefined
-  // bug: fetch all items until current item
   renderItemTreeItem = ({ children: tree, disabled }) => {
-    const {
-      classes,
-      dispatchGetItem,
-      dispatchGetChildren,
-      getItemSync,
-      getChildrenSync,
-    } = this.props;
+    const { classes, dispatchGetItem, dispatchGetChildren, items } = this.props;
     // nothing to display
     if (!tree) {
       return null;
     }
 
     return tree.map(({ id }) => {
-      const item = getItemSync(id);
-      if (!item) {
+      const item = getItemById(items, id);
+      if (!item || item.dirty) {
         // dispatch item if does not exist in cache
         dispatchGetItem(id);
         dispatchGetChildren(id);
         return null;
       }
-      const children = getChildrenSync(id);
+      const children = getChildrenSync(items, id);
       const { name } = item;
       const isDisabled = this.isTreeItemDisabled({ previous: disabled, id });
 
@@ -145,11 +172,11 @@ class TreeModal extends Component {
       });
 
       // recursive display of children
-      if (children?.length) {
+      if (children?.size) {
         return (
           <TreeItem key={id} nodeId={nodeId} label={name} className={className}>
             {!isDisabled &&
-              children.length &&
+              children.size &&
               this.renderItemTreeItem({
                 children,
                 disabled: isDisabled,
@@ -164,8 +191,33 @@ class TreeModal extends Component {
   };
 
   render() {
-    const { selectedId } = this.state;
-    const { title, classes, settings, rootItems, t, pathIds } = this.props;
+    const { selectedId, expandedItems } = this.state;
+    const { title, classes, settings, rootItems, t } = this.props;
+
+    // compute tree only when the modal is open
+    const tree = !settings.get('open') ? null : (
+      <TreeView
+        id={TREE_MODAL_TREE_ID}
+        className={classes.root}
+        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultExpandIcon={<ChevronRightIcon />}
+        onNodeSelect={this.onSelect}
+        expanded={expandedItems}
+      >
+        <TreeItem
+          nodeId={ROOT_ID}
+          className={buildTreeItemClass(ROOT_ID)}
+          label={t('Owned Items')}
+        >
+          {this.renderItemTreeItem({
+            id: ROOT_ID,
+            children: rootItems,
+            disabled: false,
+          })}
+        </TreeItem>
+      </TreeView>
+    );
+
     return (
       <Dialog
         onClose={this.handleClose}
@@ -173,26 +225,7 @@ class TreeModal extends Component {
         open={settings.get('open')}
       >
         <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
-        <TreeView
-          id={TREE_MODAL_TREE_ID}
-          className={classes.root}
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-          onNodeSelect={this.onSelect}
-          defaultExpanded={[ROOT_ID, ...pathIds]}
-        >
-          <TreeItem
-            nodeId={ROOT_ID}
-            className={buildTreeItemClass(ROOT_ID)}
-            label={t('Owned Items')}
-          >
-            {this.renderItemTreeItem({
-              id: ROOT_ID,
-              children: rootItems,
-              disabled: false,
-            })}
-          </TreeItem>
-        </TreeView>
+        {tree}
         <Button
           onClick={this.onConfirm}
           color="primary"
@@ -207,16 +240,22 @@ class TreeModal extends Component {
   }
 }
 
+const mapStateToProps = ({ item }) => ({
+  items: item.get('items'),
+  rootItems: item.get('rootItems'),
+});
+
 const mapDispatchToProps = {
+  dispatchGetItems: getItems,
   dispatchGetItem: getItem,
-  dispatchMoveItem: moveItem,
   dispatchGetOwnItems: getOwnItems,
-  dispatchSetMoveModalSettings: setMoveModalSettings,
   dispatchGetChildren: getChildren,
 };
 
-const ConnectedComponent = connect(null, mapDispatchToProps)(TreeModal);
+const ConnectedComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TreeModal);
 
 const TranslatedComponent = withTranslation()(ConnectedComponent);
-const CacheComponent = withCache(TranslatedComponent);
-export default withStyles(styles, { withTheme: true })(CacheComponent);
+export default withStyles(styles, { withTheme: true })(TranslatedComponent);

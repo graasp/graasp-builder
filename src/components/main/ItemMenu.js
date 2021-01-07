@@ -43,8 +43,6 @@ const ItemMenu = ({
     handleClose();
   };
 
-  // todo: only display one modal for the whole page
-
   return (
     <>
       <IconButton className={ITEM_MENU_BUTTON_CLASS} onClick={handleClick}>

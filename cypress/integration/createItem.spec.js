@@ -17,6 +17,7 @@ const createItem = ({
   description = '',
 }) => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
+
   cy.get(`#${NEW_ITEM_NAME_INPUT_ID}`).type(name);
 
   cy.get(`#${NEW_ITEM_DESCRIPTION_INPUT_ID}`).type(description);
@@ -38,6 +39,7 @@ describe('Create Item', () => {
 
     cy.wait('@postItem').then(({ response: { body } }) => {
       // check item is created and displayed
+      cy.wait(1000);
       cy.get(`#${buildItemCard(body.id)}`).should('exist');
     });
   });

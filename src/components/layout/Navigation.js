@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Map } from 'immutable';
-// import _ from 'lodash';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link } from 'react-router-dom';
@@ -15,8 +13,6 @@ import {
   buildNavigationLink,
   NAVIGATION_HOME_LINK_ID,
 } from '../../config/selectors';
-// import * as CachedOperation from '../../config/cache';
-import { withCache } from '../main/withCache';
 
 class Navigation extends Component {
   static propTypes = {
@@ -25,44 +21,8 @@ class Navigation extends Component {
     }).isRequired,
     item: PropTypes.instanceOf(Map).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
-    // dispatchGetItem: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    activity: PropTypes.bool.isRequired,
   };
-
-  componentDidMount() {
-    // this.updateItems();
-  }
-
-  // async componentDidUpdate({ item: prevItem }) {
-  //   const { item, activity } = this.props;
-  //   const { items } = this.state;
-  //   const parents = item.get('parents');
-  //   if (!activity) {
-  //     if (
-  //       !_.isEqual(parents, prevItem.get('parents')) ||
-  //       !items.every(Boolean)
-  //     ) {
-  //       this.updateItems();
-  //     }
-  //   }
-  // }
-
-  // updateItems = async () => {
-  //   const { item, dispatchGetItem } = this.props;
-  //   const parents = item.get('parents');
-  //   const items = await Promise.all(
-  //     parents?.map(async (id) => {
-  //       const completeItem = await CachedOperation.getItem(id);
-  //       if (!completeItem) {
-  //         dispatchGetItem(id);
-  //       }
-  //       return completeItem;
-  //     }),
-  //   );
-  //   // eslint-disable-next-line react/no-did-update-set-state
-  //   this.setState({ items });
-  // };
 
   clearItem = () => {
     const { dispatchClearItem } = this.props;
@@ -70,31 +30,33 @@ class Navigation extends Component {
   };
 
   render() {
-    const { item, t, activity } = this.props;
-    const parents = item?.parents;
-
-    // wait until all children are available
-    if (activity) {
-      return <CircularProgress color="primary" />;
-    }
+    const { item, t } = this.props;
+    const parents = item?.get('parents');
 
     return (
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
           <Typography id={NAVIGATION_HOME_LINK_ID}>{t('Home')}</Typography>
         </Link>
-        {parents?.map(({ name, id }) => (
+        {[...parents]?.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
             <Typography id={buildNavigationLink(id)}>{name}</Typography>
           </Link>
         ))}
+        {item.get('id') && (
+          <Link key={item.get('id')} to={buildItemPath(item.get('id'))}>
+            <Typography id={buildNavigationLink(item.get('id'))}>
+              {item.get('name')}
+            </Typography>
+          </Link>
+        )}
       </Breadcrumbs>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  activity: Object.values(item.get('activity').toJS()).flat().length,
+  item: item.get('item'),
 });
 
 const mapDispatchToProps = {
@@ -108,5 +70,4 @@ const ConnectedComponent = connect(
 )(Navigation);
 
 const TranslatedComponent = withTranslation()(ConnectedComponent);
-const CacheComponent = withCache(TranslatedComponent);
-export default withRouter(CacheComponent);
+export default withRouter(TranslatedComponent);

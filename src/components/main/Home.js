@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
-import { setItem, getOwnItems } from '../../actions/item';
+import { getOwnItems } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
-import * as CacheOperations from '../../config/cache';
-import { withCache } from './withCache';
 
 class Home extends Component {
   static propTypes = {
@@ -19,13 +17,16 @@ class Home extends Component {
     rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   };
 
+  async componentDidMount() {
+    const { dispatchGetOwnItems } = this.props;
+    dispatchGetOwnItems();
+  }
+
   async componentDidUpdate() {
-    const { dispatchGetOwnItems, activity } = this.props;
-    const rootItems = await CacheOperations.getRootItems();
+    const { dispatchGetOwnItems, activity, rootItems } = this.props;
 
     if (!activity) {
-      // in case of changes on own itmes, update them
-      // case ??
+      // update dirty items
       if (rootItems.some(({ dirty }) => dirty)) {
         dispatchGetOwnItems();
       }
@@ -46,13 +47,12 @@ class Home extends Component {
 
 const mapStateToProps = ({ item }) => ({
   activity: Object.values(item.get('activity').toJS()).flat().length,
+  rootItems: item.get('rootItems'),
 });
 
 const mapDispatchToProps = {
   dispatchGetOwnItems: getOwnItems,
-  dispatchSetItem: setItem,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Home);
-const CacheComponent = withCache(ConnectedComponent);
-export default withRouter(CacheComponent);
+export default withRouter(ConnectedComponent);

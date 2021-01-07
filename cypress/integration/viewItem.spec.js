@@ -3,6 +3,7 @@ import {
   buildItemCard,
   buildItemLink,
   buildNavigationLink,
+  ITEMS_GRID_NO_ITEM_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
   NAVIGATION_HOME_LINK_ID,
 } from '../../src/config/selectors';
@@ -33,17 +34,20 @@ describe('Create Item', () => {
       }
     });
 
+    // needs to wait for the link to be build
+    cy.wait(500);
+
     // visit child
     const { id: childChildId } = SIMPLE_ITEMS[2];
     cy.get(`#${buildItemLink(childChildId)}`).click();
 
-    // should get children
-    cy.wait('@getChildren').then(({ response: { body } }) => {
-      // check has no children
-      expect(body.length).to.equal(0);
-    });
+    // expect no children
+    cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
 
-    // return parent with navigation
+    // needs to wait for the link to be build
+    cy.wait(500);
+
+    // return parent with navigation and should display children
     cy.get(`#${buildNavigationLink(childId)}`).click();
     // should get children
     cy.wait('@getChildren').then(({ response: { body } }) => {
