@@ -1,8 +1,6 @@
 import { buildItemPath } from '../../src/config/paths';
 import {
   buildItemCard,
-  buildItemLink,
-  buildNavigationLink,
   ITEMS_GRID_NO_ITEM_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
   NAVIGATION_HOME_LINK_ID,
@@ -24,7 +22,7 @@ describe('Create Item', () => {
 
     // visit child
     const { id: childId } = SIMPLE_ITEMS[0];
-    cy.get(`#${buildItemLink(childId)}`).click();
+    cy.goToItem(childId);
 
     // should get children
     cy.wait('@getChildren').then(({ response: { body } }) => {
@@ -34,21 +32,15 @@ describe('Create Item', () => {
       }
     });
 
-    // needs to wait for the link to be build
-    cy.wait(500);
-
     // visit child
     const { id: childChildId } = SIMPLE_ITEMS[2];
-    cy.get(`#${buildItemLink(childChildId)}`).click();
+    cy.goToItem(childChildId);
 
     // expect no children
     cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
 
-    // needs to wait for the link to be build
-    cy.wait(500);
-
     // return parent with navigation and should display children
-    cy.get(`#${buildNavigationLink(childId)}`).click();
+    cy.goToItemWithNavigation(childId);
     // should get children
     cy.wait('@getChildren').then(({ response: { body } }) => {
       // check item is created and displayed

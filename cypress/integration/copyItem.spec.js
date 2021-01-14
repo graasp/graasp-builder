@@ -2,12 +2,10 @@ import { ROOT_ID } from '../../src/config/constants';
 import { buildItemPath } from '../../src/config/paths';
 import {
   buildItemCard,
-  buildItemLink,
   buildItemMenu,
   buildTreeItemClass,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
-  NAVIGATION_HOME_LINK_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
   TREE_MODAL_TREE_ID,
 } from '../../src/config/selectors';
@@ -43,7 +41,7 @@ describe('Copy Item', () => {
       cy.get(`#${buildItemCard(movedItem)}`).should('exist');
 
       // check in new parent
-      cy.get(`#${buildItemLink(toItem)}`).click();
+      cy.goToItem(toItem);
       cy.get(`#${buildItemCard(body.id)}`).should('exist');
     });
   });
@@ -64,7 +62,7 @@ describe('Copy Item', () => {
       cy.get(`#${buildItemCard(movedItem)}`).should('exist');
 
       // check in new parent
-      cy.get(`#${buildItemLink(toItem)}`).click();
+      cy.goToItem(toItem);
       cy.get(`#${buildItemCard(body.id)}`).should('exist');
     });
   });
@@ -85,7 +83,7 @@ describe('Copy Item', () => {
       cy.get(`#${buildItemCard(movedItem)}`).should('exist');
 
       // check in new parent
-      cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
+      cy.goToHome();
       cy.get(`#${buildItemCard(body.id)}`).should('exist');
     });
   });

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import Alert from '@material-ui/lab/Alert';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
@@ -12,6 +11,7 @@ import NewItemButton from './NewItemButton';
 import { clearItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
+import { areItemsEqual } from '../../utils/item';
 
 class ItemScreen extends Component {
   static propTypes = {
@@ -56,7 +56,7 @@ class ItemScreen extends Component {
     } = this.props;
     // todo: might have to change
     // necessary to avoid render
-    return activity || itemId !== nextId || !_.isEqual(item, nextItem);
+    return activity || itemId !== nextId || !areItemsEqual(item, nextItem);
   }
 
   async componentDidUpdate({

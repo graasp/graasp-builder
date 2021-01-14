@@ -2,7 +2,6 @@ import { ROOT_ID } from '../../src/config/constants';
 import { buildItemPath } from '../../src/config/paths';
 import {
   buildItemCard,
-  buildItemLink,
   buildItemMenu,
   buildTreeItemClass,
   ITEM_MENU_BUTTON_CLASS,
@@ -48,7 +47,7 @@ describe('Move Item', () => {
     cy.get(`#${buildItemCard(movedItem)}`).should('not.exist');
 
     // check in new parent
-    cy.get(`#${buildItemLink(toItem)}`).click();
+    cy.goToItem(toItem);
     cy.get(`#${buildItemCard(movedItem)}`).should('exist');
   });
 
@@ -69,7 +68,7 @@ describe('Move Item', () => {
     cy.get(`#${buildItemCard(movedItem)}`).should('not.exist');
 
     // check in new parent
-    cy.get(`#${buildItemLink(toItem)}`).click();
+    cy.goToItem(toItem);
     cy.get(`#${buildItemCard(movedItem)}`).should('exist');
   });
 

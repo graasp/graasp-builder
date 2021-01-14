@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
@@ -17,7 +18,6 @@ import { CURRENT_USER_ID } from '../fixtures/items';
 import {
   ERROR_CODE,
   ID_FORMAT,
-  generateUuidId,
   parseStringToRegExp,
   SUCCESS_CODE,
 } from './utils';
@@ -53,7 +53,7 @@ export const mockPostItem = (items, shouldThrowError) => {
       }
 
       // add necessary properties id, path and creator
-      const id = generateUuidId();
+      const id = uuidv4();
       return reply({
         ...body,
         id,
@@ -162,7 +162,7 @@ export const mockCopyItem = (items, shouldThrowError) => {
 
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
-      const newId = generateUuidId();
+      const newId = uuidv4();
       let newItem = null;
       // actually copy
       let path = transformIdForPath(newId);

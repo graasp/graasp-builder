@@ -4,6 +4,4 @@ export const ID_FORMAT = '[a-z0-9-]*';
 export const ERROR_CODE = 400;
 export const SUCCESS_CODE = 200;
 
-export const generateUuidId = () => `a-${Math.ceil(Math.random() * 100000)}`;
-
 export const parseStringToRegExp = (string) => string.replaceAll('?', '\\?');

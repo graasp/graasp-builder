@@ -68,18 +68,9 @@ export const saveItems = async (items) => {
 export const getRootItems = async () =>
   cache.items.filter(isRootItem).toArray();
 
-export const getChildren = async (id) => {
-  if (!id) {
-    console.error(`cannot not get children for id ${id}`);
-  }
-  return (await cache.items.filter(isChild(id))).toArray();
-};
+export const getChildren = (id) => cache.items.filter(isChild(id)).toArray();
 
 export const getParents = async (id) => {
-  if (!id) {
-    console.error(`cannot get parents for id ${id}`);
-  }
-
   const item = await getItem(id);
   const parents = getParentsIdsFromPath(item.path);
   return cache.items.bulkGet(parents);

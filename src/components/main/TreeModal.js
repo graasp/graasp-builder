@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-import _ from 'lodash';
 import { withTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
@@ -34,6 +33,7 @@ import {
   getItemById,
   getParentsIdsFromPath,
   getChildren as getChildrenSync,
+  areItemsEqual,
 } from '../../utils/item';
 
 const styles = (theme) => ({
@@ -95,7 +95,7 @@ class TreeModal extends Component {
     const itemId = settings.get('itemId');
     const item = getItemById(items, itemId);
     const prevItem = prevItems.find(({ id }) => id === itemId);
-    if (!_.isEqual(item, prevItem)) {
+    if (!areItemsEqual(item, prevItem)) {
       const parentIds = getParentsIdsFromPath(item.path) || [];
       const newExpandedItems = [...expandedItems, ...parentIds];
       // eslint-disable-next-line react/no-did-update-set-state

@@ -19,26 +19,28 @@ export const CREATED_ITEM = {
 export const SIMPLE_ITEMS = [
   {
     ...DEFAULT_ITEM,
-    id: 'item-id-1',
+    id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
     name: 'own_item_name1',
-    path: 'item_id_1',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
   },
   {
     ...DEFAULT_ITEM,
-    id: 'item-id-2',
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
     name: 'own_item_name2',
-    path: 'item_id_2',
+    path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
   },
   {
     ...DEFAULT_ITEM,
-    id: 'item-id-3',
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
     name: 'own_item_name3',
-    path: 'item_id_1.item_id_3',
+    path:
+      'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
   },
   {
     ...DEFAULT_ITEM,
-    id: 'item-id-4',
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
     name: 'own_item_name4',
-    path: 'item_id_1.item_id_4',
+    path:
+      'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
   },
 ];
