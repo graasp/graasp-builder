@@ -1,22 +1,45 @@
-import { API_HOST } from '../config/constants';
+import { API_HOST, ROOT_ID } from '../config/constants';
+import {
+  buildCopyItemRoute,
+  buildDeleteItemRoute,
+  buildGetChildrenRoute,
+  buildGetItemRoute,
+  buildMoveItemRoute,
+  buildPostItemRoute,
+  GET_OWN_ITEMS_ROUTE,
+} from './routes';
 import { DEFAULT_DELETE, DEFAULT_GET, DEFAULT_POST } from './utils';
+import * as CacheOperations from '../config/cache';
 
 export const getItem = async (id) => {
-  const req = await fetch(`${API_HOST}/items/${id}`, DEFAULT_GET);
-  if (!req.ok) {
-    throw new Error((await req.json()).message);
+  const cachedItem = await CacheOperations.getItem(id);
+  if (cachedItem && !cachedItem.dirty) {
+    return cachedItem;
   }
-  return req.json();
+
+  const res = await fetch(`${API_HOST}/${buildGetItemRoute(id)}`, DEFAULT_GET);
+  if (!res.ok) {
+    throw new Error((await res.json()).message);
+  }
+  const item = await res.json();
+  await CacheOperations.saveItem(item);
+  return item;
 };
 
-export const getOwnItems = async () => {
-  const req = await fetch(`${API_HOST}/items/own`, DEFAULT_GET);
+export const getItems = () => CacheOperations.getItems();
 
-  if (!req.ok) {
-    throw new Error((await req.json()).message);
+export const getOwnItems = async () => {
+  const res = await fetch(`${API_HOST}/${GET_OWN_ITEMS_ROUTE}`, DEFAULT_GET);
+
+  if (!res.ok) {
+    throw new Error((await res.json()).message);
   }
 
-  return req.json();
+  const ownItems = await res.json();
+
+  await CacheOperations.saveItems(ownItems);
+
+  return ownItems;
 };
 
 // payload = {name, type, description, extra}
@@ -28,36 +51,87 @@ export const postItem = async ({
   extra,
   parentId,
 } = {}) => {
-  let url = `${API_HOST}/items`;
-  if (parentId) {
-    url += `?parentId=${parentId}`;
-  }
-  const req = await fetch(url, {
+  const res = await fetch(`${API_HOST}/${buildPostItemRoute(parentId)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify({ name, type, description, extra }),
   });
 
-  if (!req.ok) {
-    throw new Error((await req.json()).message);
+  const newItem = await res.json();
+
+  if (!res.ok) {
+    throw new Error(newItem.message);
   }
 
-  return req.json();
+  await CacheOperations.createItem({ item: newItem });
+  return newItem;
 };
 
 export const deleteItem = async (id) => {
-  const req = await fetch(`${API_HOST}/items/${id}`, DEFAULT_DELETE);
+  const res = await fetch(
+    `${API_HOST}/${buildDeleteItemRoute(id)}`,
+    DEFAULT_DELETE,
+  );
 
-  if (!req.ok) {
-    throw new Error((await req.json()).message);
+  if (!res.ok) {
+    throw new Error((await res.json()).message);
   }
-  return req.json();
+  await CacheOperations.deleteItem(id);
+
+  return res.json();
 };
 
 export const getChildren = async (id) => {
-  const req = await fetch(`${API_HOST}/items/${id}/children`, DEFAULT_GET);
+  const res = await fetch(
+    `${API_HOST}/${buildGetChildrenRoute(id)}`,
+    DEFAULT_GET,
+  );
 
-  if (!req.ok) {
-    throw new Error((await req.json()).message);
+  const children = await res.json();
+
+  if (!res.ok) {
+    throw new Error(children.message);
   }
-  return req.json();
+  await CacheOperations.saveItems(children);
+  return children;
+};
+
+export const moveItem = async (payload) => {
+  const { to, id } = payload;
+  const body = {};
+  // send parentId only for non-root item
+  if (to !== ROOT_ID) {
+    body.parentId = to;
+  }
+  const res = await fetch(`${API_HOST}/${buildMoveItemRoute(id)}`, {
+    ...DEFAULT_POST,
+    body: JSON.stringify(body),
+  });
+
+  if (res.ok) {
+    await CacheOperations.moveItem(payload);
+  }
+
+  return res.ok;
+};
+
+export const copyItem = async ({ id, to }) => {
+  const body = {};
+  // send parentId only for non-root item
+  if (to !== ROOT_ID) {
+    body.parentId = to;
+  }
+  const res = await fetch(`${API_HOST}/${buildCopyItemRoute(id)}`, {
+    ...DEFAULT_POST,
+    body: JSON.stringify(body),
+  });
+
+  const newItem = await res.json();
+
+  if (!res.ok) {
+    throw new Error(newItem);
+  }
+
+  await CacheOperations.saveItem(newItem);
+
+  return newItem;
 };

@@ -1,34 +1,65 @@
 import React, { Component } from 'react';
-import List from 'immutable';
 import PropTypes from 'prop-types';
+import Alert from '@material-ui/lab/Alert';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
 import { clearItem, setItem } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
+import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
+import { areItemsEqual } from '../../utils/item';
 
 class ItemScreen extends Component {
   static propTypes = {
-    children: PropTypes.arrayOf(PropTypes.string),
-    items: PropTypes.instanceOf(List).isRequired,
     dispatchSetItem: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired,
+    activity: PropTypes.bool,
+    item: PropTypes.instanceOf(Map),
   };
 
   static defaultProps = {
-    children: [],
+    activity: true,
+    item: null,
   };
 
-  componentDidMount() {
-    this.updateItem();
+  constructor(props) {
+    super(props);
+    const {
+      match: {
+        params: { itemId },
+      },
+      dispatchSetItem,
+    } = props;
+    dispatchSetItem(itemId);
   }
 
-  componentDidUpdate({
+  shouldComponentUpdate({
+    item: nextItem,
+    match: {
+      params: { itemId: nextId },
+    },
+  }) {
+    const {
+      item,
+      match: {
+        params: { itemId },
+      },
+      activity,
+    } = this.props;
+    // todo: might have to change
+    // necessary to avoid render
+    return activity || itemId !== nextId || !areItemsEqual(item, nextItem);
+  }
+
+  async componentDidUpdate({
     match: {
       params: { itemId: prevId },
     },
@@ -37,10 +68,21 @@ class ItemScreen extends Component {
       match: {
         params: { itemId },
       },
+      dispatchSetItem,
+      activity,
+      item,
     } = this.props;
 
-    if (itemId !== prevId) {
-      this.updateItem();
+    if (!activity) {
+      // case on navigate
+      if (itemId !== prevId) {
+        dispatchSetItem(itemId);
+      }
+      // update when dirty or does not exist
+      // case create item
+      else if (item?.dirty) {
+        dispatchSetItem(itemId);
+      }
     }
   }
 
@@ -49,43 +91,35 @@ class ItemScreen extends Component {
     dispatchClearItem();
   }
 
-  updateItem = () => {
-    const {
-      match: {
-        params: { itemId },
-      },
-      dispatchSetItem,
-    } = this.props;
-
-    return dispatchSetItem(itemId);
-  };
-
   render() {
-    const { children, items } = this.props;
-
-    // get complete elements from id
-    const completeItems = children.map((id) =>
-      items.find(({ id: thisId }) => id === thisId),
-    );
+    const { t, activity, item } = this.props;
 
     // wait until all children are available
-    if (!completeItems.every(Boolean)) {
+    if (activity) {
       return <CircularProgress color="primary" />;
+    }
+
+    if (!item || !item.get('id')) {
+      return (
+        <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
+          {t('An error occured.')}
+        </Alert>
+      );
     }
 
     return (
       <>
         <ItemsHeader />
         <NewItemButton />
-        <ItemsGrid items={completeItems} />
+        <ItemsGrid items={item.get('children')} />
       </>
     );
   }
 }
 
 const mapStateToProps = ({ item }) => ({
-  items: item.getIn(['items']),
-  children: item.getIn(['item', 'children']),
+  activity: Boolean(Object.values(item.get('activity').toJS()).flat().length),
+  item: item.get('item'),
 });
 
 const mapDispatchToProps = {
@@ -97,5 +131,5 @@ const ConnectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ItemScreen);
-
-export default withRouter(ConnectedComponent);
+const TranslatedComponent = withTranslation()(ConnectedComponent);
+export default withRouter(TranslatedComponent);

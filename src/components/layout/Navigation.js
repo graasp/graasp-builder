@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -9,17 +9,18 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link } from 'react-router-dom';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
 import { clearItem, getItem } from '../../actions/item';
+import {
+  buildNavigationLink,
+  NAVIGATION_HOME_LINK_ID,
+} from '../../config/selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 class Navigation extends Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
     item: PropTypes.instanceOf(Map).isRequired,
-    items: PropTypes.instanceOf(List).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
-    dispatchGetItem: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
 
@@ -29,32 +30,24 @@ class Navigation extends Component {
   };
 
   render() {
-    const { item, dispatchGetItem, items, t } = this.props;
-    const itemName = item.get('name');
-    const itemId = item.get('id');
-
-    // todo: avoid rendering by using state
-    const navEls = item.get('parents')?.map((id) => {
-      const el = items.find(({ id: thisId }) => thisId === id);
-      if (!el) {
-        dispatchGetItem(id);
-      }
-      return el;
-    });
+    const { item, t } = this.props;
+    const parents = item?.get('parents');
 
     return (
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
-          {t('Owned Items')}
+          <Typography id={NAVIGATION_HOME_LINK_ID}>{t('Home')}</Typography>
         </Link>
-        {navEls?.map(({ name, id }) => (
+        {[...parents]?.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
-            <Typography>{name}</Typography>
+            <Typography id={buildNavigationLink(id)}>{name}</Typography>
           </Link>
         ))}
-        {itemName && (
-          <Link key={itemId} to={buildItemPath(itemId)}>
-            {itemName}
+        {item.get('id') && (
+          <Link key={item.get('id')} to={buildItemPath(item.get('id'))}>
+            <Typography id={buildNavigationLink(item.get('id'))}>
+              {item.get('name')}
+            </Typography>
           </Link>
         )}
       </Breadcrumbs>
@@ -63,8 +56,7 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = ({ item }) => ({
-  item: item.getIn(['item']),
-  items: item.get('items'),
+  item: item.get('item'),
 });
 
 const mapDispatchToProps = {

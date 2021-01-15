@@ -80,7 +80,8 @@ class SignIn extends Component {
   };
 
   renderMessage = () => {
-    const { isSuccess, t } = this.state;
+    const { isSuccess } = this.state;
+    const { t } = this.props;
     if (isSuccess) {
       return <Alert severity="success">{t('Success')}</Alert>;
     }
