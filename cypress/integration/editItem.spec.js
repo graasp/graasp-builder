@@ -44,7 +44,7 @@ describe('Edit Item', () => {
     const newName = 'new name';
     const newDescription = 'new description';
 
-    // create
+    // edit
     editItem({
       ...itemToEdit,
       name: newName,
@@ -57,7 +57,7 @@ describe('Edit Item', () => {
           body: { id, name },
         },
       }) => {
-        // check item is created and displayed
+        // check item is edited and updated
         cy.wait(1000);
         cy.get(`#${buildItemCard(id)}`).should('exist');
         cy.get(`#${buildItemLink(id)}`).contains(name);
@@ -74,7 +74,7 @@ describe('Edit Item', () => {
     const newName = 'new name';
     const newDescription = 'new description';
 
-    // create
+    // edit
     editItem({
       ...itemToEdit,
       name: newName,
@@ -87,7 +87,7 @@ describe('Edit Item', () => {
           body: { id, name },
         },
       }) => {
-        // check item is created and displayed
+        // check item is edited and updated
         cy.wait(1000);
         cy.get(`#${buildItemCard(id)}`).should('exist');
         cy.get(`#${buildItemLink(id)}`).contains(name);
