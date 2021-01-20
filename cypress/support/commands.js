@@ -3,6 +3,7 @@ import {
   buildNavigationLink,
   NAVIGATION_HOME_LINK_ID,
 } from '../../src/config/selectors';
+import { NAVIGATE_PAUSE } from './constants';
 import {
   mockCopyItem,
   mockDeleteItem,
@@ -11,6 +12,7 @@ import {
   mockGetOwnItems,
   mockMoveItem,
   mockPostItem,
+  mockEditItem,
 } from './server';
 
 Cypress.Commands.add(
@@ -22,6 +24,7 @@ Cypress.Commands.add(
     moveItemError = false,
     copyItemError = false,
     getItemError = false,
+    editItemError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
 
@@ -38,20 +41,22 @@ Cypress.Commands.add(
     mockMoveItem(cachedItems, moveItemError);
 
     mockCopyItem(cachedItems, copyItemError);
+
+    mockEditItem(cachedItems, editItemError);
   },
 );
 
 Cypress.Commands.add('goToItem', (id) => {
-  cy.wait(500);
+  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${buildItemLink(id)}`).click();
 });
 
 Cypress.Commands.add('goToHome', () => {
-  cy.wait(500);
+  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
 });
 
 Cypress.Commands.add('goToItemWithNavigation', (id) => {
-  cy.wait(500);
+  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${buildNavigationLink(id)}`).click();
 });

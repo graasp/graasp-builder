@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomCardHeader = ({ id, creator, title, type }) => {
+const CustomCardHeader = ({ item }) => {
+  const { id, creator, name, type } = item;
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -47,7 +48,7 @@ const CustomCardHeader = ({ id, creator, title, type }) => {
         <div>
           <Link to={buildItemPath(id)} className={classes.link}>
             <Typography id={buildItemLink(id)} className={classes.title}>
-              {title}
+              {name}
             </Typography>
           </Link>
           <Typography className={classes.subtitle}>
@@ -58,16 +59,18 @@ const CustomCardHeader = ({ id, creator, title, type }) => {
           </Typography>
         </div>
       </div>
-      <ItemMenu itemId={id} />
+      <ItemMenu item={item} />
     </div>
   );
 };
 
 CustomCardHeader.propTypes = {
-  id: PropTypes.string.isRequired,
-  creator: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  item: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    creator: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default CustomCardHeader;

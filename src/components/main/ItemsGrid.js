@@ -9,6 +9,7 @@ import Item from './Item';
 import MoveItemModal from './MoveItemModal';
 import CopyItemModal from './CopyItemModal';
 import { ITEMS_GRID_NO_ITEM_ID } from '../../config/selectors';
+import EditItemModal from './EditItemModal';
 
 class ItemsGrid extends Component {
   static propTypes = {
@@ -51,6 +52,7 @@ class ItemsGrid extends Component {
 
         <MoveItemModal />
         <CopyItemModal />
+        <EditItemModal />
       </>
     );
   }

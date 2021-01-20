@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
+  buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
   buildMoveItemRoute,
@@ -21,13 +22,19 @@ import {
   parseStringToRegExp,
   SUCCESS_CODE,
 } from './utils';
+import {
+  DEFAULT_PATCH,
+  DEFAULT_GET,
+  DEFAULT_POST,
+  DEFAULT_DELETE,
+} from '../../src/api/utils';
 
 const API_HOST = Cypress.env('API_HOST');
 
 export const mockGetOwnItems = (items) => {
   cy.intercept(
     {
-      method: 'GET',
+      method: DEFAULT_GET.method,
       url: `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`,
     },
     (req) => {
@@ -40,7 +47,7 @@ export const mockGetOwnItems = (items) => {
 export const mockPostItem = (items, shouldThrowError) => {
   cy.intercept(
     {
-      method: 'POST',
+      method: DEFAULT_POST.method,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildPostItemRoute(ID_FORMAT),
@@ -67,7 +74,7 @@ export const mockPostItem = (items, shouldThrowError) => {
 export const mockDeleteItem = (items, shouldThrowError) => {
   cy.intercept(
     {
-      method: 'DELETE',
+      method: DEFAULT_DELETE.method,
       url: new RegExp(`${API_HOST}/${buildDeleteItemRoute(ID_FORMAT)}`),
     },
     ({ url, reply }) => {
@@ -87,7 +94,7 @@ export const mockDeleteItem = (items, shouldThrowError) => {
 export const mockGetItem = (items, shouldThrowError) => {
   cy.intercept(
     {
-      method: 'GET',
+      method: DEFAULT_GET.method,
       url: new RegExp(`${API_HOST}/${buildGetItemRoute(ID_FORMAT)}$`),
     },
     ({ url, reply }) => {
@@ -108,7 +115,7 @@ export const mockGetItem = (items, shouldThrowError) => {
 export const mockGetChildren = (items) => {
   cy.intercept(
     {
-      method: 'GET',
+      method: DEFAULT_GET.method,
       url: new RegExp(`${API_HOST}/${buildGetChildrenRoute(ID_FORMAT)}`),
     },
     ({ url, reply }) => {
@@ -122,7 +129,7 @@ export const mockGetChildren = (items) => {
 export const mockMoveItem = (items, shouldThrowError) => {
   cy.intercept(
     {
-      method: 'POST',
+      method: DEFAULT_POST.method,
       url: new RegExp(`${API_HOST}/${buildMoveItemRoute(ID_FORMAT)}`),
     },
     ({ url, reply, body }) => {
@@ -152,7 +159,7 @@ export const mockMoveItem = (items, shouldThrowError) => {
 export const mockCopyItem = (items, shouldThrowError) => {
   cy.intercept(
     {
-      method: 'POST',
+      method: DEFAULT_POST.method,
       url: new RegExp(`${API_HOST}/${buildCopyItemRoute(ID_FORMAT)}`),
     },
     ({ url, reply, body }) => {
@@ -179,4 +186,20 @@ export const mockCopyItem = (items, shouldThrowError) => {
       });
     },
   ).as('copyItem');
+};
+
+export const mockEditItem = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_PATCH.method,
+      url: new RegExp(`${API_HOST}/${buildEditItemRoute(ID_FORMAT)}`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: ERROR_CODE });
+      }
+
+      return reply(body);
+    },
+  ).as('editItem');
 };

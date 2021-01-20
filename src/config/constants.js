@@ -17,3 +17,9 @@ export const TREE_PREVENT_SELECTION = {
 export const TREE_VIEW_HEIGHT = 200;
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
+
+export const ITEM_TYPES = {
+  SPACE: 'Space',
+  APPLICATION: 'Application',
+  EXERCISE: 'Exercise',
+};

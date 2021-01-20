@@ -9,18 +9,22 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {
   setMoveModalSettings,
   setCopyModalSettings,
+  setEditModalSettings,
 } from '../../actions/layout';
 import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
+  ITEM_MENU_EDIT_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
 } from '../../config/selectors';
+import { editItem } from '../../actions/item';
 
 const ItemMenu = ({
-  itemId,
+  item,
   dispatchSetMoveModalSettings,
   dispatchSetCopyModalSettings,
+  dispatchSetEditModalSettings,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
@@ -34,12 +38,17 @@ const ItemMenu = ({
   };
 
   const handleMove = () => {
-    dispatchSetMoveModalSettings({ open: true, itemId });
+    dispatchSetMoveModalSettings({ open: true, itemId: item.id });
     handleClose();
   };
 
   const handleCopy = () => {
-    dispatchSetCopyModalSettings({ open: true, itemId });
+    dispatchSetCopyModalSettings({ open: true, itemId: item.id });
+    handleClose();
+  };
+
+  const handleEdit = () => {
+    dispatchSetEditModalSettings({ open: true, itemId: item.id });
     handleClose();
   };
 
@@ -49,12 +58,15 @@ const ItemMenu = ({
         <MoreVertIcon />
       </IconButton>
       <Menu
-        id={buildItemMenu(itemId)}
+        id={buildItemMenu(item.id)}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        <MenuItem onClick={handleEdit} className={ITEM_MENU_EDIT_BUTTON_CLASS}>
+          {t('Edit')}
+        </MenuItem>
         <MenuItem onClick={handleMove} className={ITEM_MENU_MOVE_BUTTON_CLASS}>
           {t('Move')}
         </MenuItem>
@@ -67,7 +79,10 @@ const ItemMenu = ({
 };
 
 ItemMenu.propTypes = {
-  itemId: PropTypes.string.isRequired,
+  dispatchSetEditModalSettings: PropTypes.func.isRequired,
+  item: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
   dispatchSetMoveModalSettings: PropTypes.func.isRequired,
   dispatchSetCopyModalSettings: PropTypes.func.isRequired,
 };
@@ -75,6 +90,8 @@ ItemMenu.propTypes = {
 const mapDispatchToProps = {
   dispatchSetMoveModalSettings: setMoveModalSettings,
   dispatchSetCopyModalSettings: setCopyModalSettings,
+  dispatchSetEditModalSettings: setEditModalSettings,
+  dispatchEditItem: editItem,
 };
 
 const ConnectedComponent = connect(null, mapDispatchToProps)(ItemMenu);

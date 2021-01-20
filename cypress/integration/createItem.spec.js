@@ -1,32 +1,34 @@
+import { ITEM_TYPES } from '../../src/config/constants';
 import { buildItemPath } from '../../src/config/paths';
 import {
   buildItemCard,
   CREATE_ITEM_BUTTON_ID,
-  NEW_ITEM_CONFIRM_BUTTON_ID,
-  NEW_ITEM_DESCRIPTION_INPUT_ID,
-  NEW_ITEM_IMAGE_INPUT_ID,
-  NEW_ITEM_NAME_INPUT_ID,
-  NEW_ITEM_TYPE_SELECT_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+  ITEM_FORM_DESCRIPTION_INPUT_ID,
+  ITEM_FORM_IMAGE_INPUT_ID,
+  ITEM_FORM_NAME_INPUT_ID,
+  ITEM_FORM_TYPE_SELECT_ID,
 } from '../../src/config/selectors';
 import { CREATED_ITEM, SIMPLE_ITEMS } from '../fixtures/items';
+import { CREATE_ITEM_PAUSE } from '../support/constants';
 
 const createItem = ({
   name = '',
-  type = 'Space',
+  type = ITEM_TYPES.SPACE,
   extra = {},
   description = '',
 }) => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
 
-  cy.get(`#${NEW_ITEM_NAME_INPUT_ID}`).type(name);
+  cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).type(name);
 
-  cy.get(`#${NEW_ITEM_DESCRIPTION_INPUT_ID}`).type(description);
+  cy.get(`#${ITEM_FORM_DESCRIPTION_INPUT_ID}`).type(description);
 
-  cy.get(`#${NEW_ITEM_TYPE_SELECT_ID}`).click();
+  cy.get(`#${ITEM_FORM_TYPE_SELECT_ID}`).click();
   cy.get(`li[data-value="${type}"]`).click();
-  cy.get(`#${NEW_ITEM_IMAGE_INPUT_ID}`).type(extra.image);
+  cy.get(`#${ITEM_FORM_IMAGE_INPUT_ID}`).type(extra.image);
 
-  cy.get(`#${NEW_ITEM_CONFIRM_BUTTON_ID}`).click();
+  cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
 };
 
 describe('Create Item', () => {
@@ -39,7 +41,7 @@ describe('Create Item', () => {
 
     cy.wait('@postItem').then(({ response: { body } }) => {
       // check item is created and displayed
-      cy.wait(1000);
+      cy.wait(CREATE_ITEM_PAUSE);
       cy.get(`#${buildItemCard(body.id)}`).should('exist');
     });
   });

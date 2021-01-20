@@ -1,6 +1,5 @@
 import { Map, List } from 'immutable';
 import { ROOT_ID } from '../config/constants';
-// import { ROOT_ID } from '../config/constants';
 import {
   SET_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
@@ -21,6 +20,8 @@ import {
   FLAG_MOVING_ITEM,
   FLAG_COPYING_ITEM,
   FLAG_SETTING_ITEM,
+  EDIT_ITEM_SUCCESS,
+  FLAG_EDITING_ITEM,
 } from '../types/item';
 
 const DEFAULT_ITEM = Map({
@@ -42,6 +43,7 @@ const INITIAL_STATE = Map({
     [FLAG_MOVING_ITEM]: [],
     [FLAG_COPYING_ITEM]: [],
     [FLAG_SETTING_ITEM]: [],
+    [FLAG_EDITING_ITEM]: [],
   }),
 });
 
@@ -52,7 +54,25 @@ const updateActivity = (payload) => (activity) => {
   return activity.slice(1);
 };
 
-const addInList = (item) => (list) => list.push(item);
+const updateItemInList = (item, list) => {
+  let idx = list.findIndex(({ id }) => item.id === id);
+  idx = idx < 0 ? list.size : idx;
+  return list.update(idx, () => item);
+};
+
+const updateInList = (els) => (list) => {
+  // add array of items
+  if (Array.isArray(els)) {
+    let newList = list;
+    els.forEach((item) => {
+      newList = updateItemInList(item, newList);
+    });
+    return newList;
+  }
+
+  // add one item
+  return updateItemInList(els, list);
+};
 
 const removeFromList = (deletedItemId) => (list) =>
   list.filter(({ id }) => id !== deletedItemId);
@@ -68,6 +88,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case FLAG_MOVING_ITEM:
     case FLAG_COPYING_ITEM:
     case FLAG_SETTING_ITEM:
+    case FLAG_EDITING_ITEM:
       return state.updateIn(['activity', type], updateActivity(payload));
     case CLEAR_ITEM_SUCCESS:
       return state.setIn(['item'], DEFAULT_ITEM);
@@ -77,18 +98,21 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case GET_ITEMS_SUCCESS: {
       return state.set('items', List(payload));
     }
-    case SET_ITEM_SUCCESS:
+    case SET_ITEM_SUCCESS: {
+      const { item, parents, children } = payload;
       return state
-        .setIn(['item'], Map(payload.item))
-        .setIn(['item', 'children'], List(payload.children))
-        .setIn(['item', 'parents'], List(payload.parents));
+        .setIn(['item'], Map(item))
+        .setIn(['item', 'children'], List(children))
+        .setIn(['item', 'parents'], List(parents))
+        .updateIn(['items'], updateInList([...parents, ...children, item]));
+    }
     case CREATE_ITEM_SUCCESS: {
       const from = state.getIn(['item', 'id']);
       // add item in children or in root items
       if (!from) {
-        return state.update('rootItems', addInList(payload));
+        return state.update('rootItems', updateInList(payload));
       }
-      return state.updateIn(['item', 'children'], addInList(payload));
+      return state.updateIn(['item', 'children'], updateInList(payload));
     }
     case DELETE_ITEM_SUCCESS:
     case MOVE_ITEM_SUCCESS: {
@@ -103,18 +127,29 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       // add new item to current view
       const { to, item } = payload;
       if (to === state.getIn(['item', 'id'])) {
-        return state.updateIn(['item', 'children'], addInList(item));
+        return state.updateIn(['item', 'children'], updateInList(item));
       }
       if (to === ROOT_ID) {
-        return state.updateIn(['rootItems'], addInList(item));
+        return state.updateIn(['rootItems'], updateInList(item));
       }
       return state;
     }
     case GET_CHILDREN_SUCCESS: {
-      return state;
+      return state.updateIn(['items'], updateInList(payload.children));
     }
     case GET_OWN_ITEMS_SUCCESS: {
-      return state.setIn(['rootItems'], List(payload));
+      return state
+        .setIn(['rootItems'], List(payload))
+        .updateIn(['items'], updateInList(payload));
+    }
+    case EDIT_ITEM_SUCCESS: {
+      // update current elements
+      if (state.getIn(['item', 'id'])) {
+        return state.updateIn(['item', 'children'], updateInList(payload));
+      }
+
+      // update home elements
+      return state.updateIn(['rootItems'], updateInList(payload));
     }
     default:
       return state;
