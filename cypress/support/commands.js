@@ -3,6 +3,7 @@ import {
   buildNavigationLink,
   NAVIGATION_HOME_LINK_ID,
 } from '../../src/config/selectors';
+import { NAVIGATE_PAUSE } from './constants';
 import {
   mockCopyItem,
   mockDeleteItem,
@@ -46,16 +47,16 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('goToItem', (id) => {
-  cy.wait(500);
+  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${buildItemLink(id)}`).click();
 });
 
 Cypress.Commands.add('goToHome', () => {
-  cy.wait(500);
+  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
 });
 
 Cypress.Commands.add('goToItemWithNavigation', (id) => {
-  cy.wait(500);
+  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${buildNavigationLink(id)}`).click();
 });

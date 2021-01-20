@@ -13,6 +13,7 @@
     "i18next": "19.8.4",
     "immutable": "4.0.0-rc.12",
     "js-cookie": "2.2.1",
+    "lodash.truncate": "4.4.2",
     "node-fetch": "2.6.1",
     "prop-types": "15.7.2",
     "react": "^17.0.1",

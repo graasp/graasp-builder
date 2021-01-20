@@ -55,11 +55,9 @@ const updateActivity = (payload) => (activity) => {
 };
 
 const updateItemInList = (item, list) => {
-  const idx = list.findIndex(({ id }) => item.id === id);
-  if (idx < 0) {
-    return list.push(item);
-  }
-  return list.set(idx, item);
+  let idx = list.findIndex(({ id }) => item.id === id);
+  idx = idx < 0 ? list.size : idx;
+  return list.update(idx, () => item);
 };
 
 const updateInList = (els) => (list) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import truncate from 'lodash.truncate';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,7 +16,6 @@ import {
   DEFAULT_IMAGE_SRC,
   DESCRIPTION_MAX_LENGTH,
 } from '../../config/constants';
-import { shortenString } from '../../utils/common';
 import {
   buildItemCard,
   ITEM_DELETE_BUTTON_CLASS,
@@ -45,7 +45,7 @@ const Item = ({ item, dispatchDeleteItem }) => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {shortenString(description, DESCRIPTION_MAX_LENGTH)}
+          {truncate(description, { length: DESCRIPTION_MAX_LENGTH })}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

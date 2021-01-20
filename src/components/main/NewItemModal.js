@@ -20,7 +20,7 @@ const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
       onConfirm={submitNewItem}
       open={open}
       handleClose={handleClose}
-      title={t('Add new Item')}
+      title={t('Add New Item')}
       confirmText={t('Add Item')}
     />
   );

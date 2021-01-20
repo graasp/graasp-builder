@@ -28,11 +28,13 @@
     "Owned Items": "Mes Éléments",
     "Type by author": "{{type}} par {{author}}",
     "Unknown": "Inconnu",
-    "Home":"Home",
+    "Home": "Home",
     "Add item": "Ajouter un élément",
     "Copy": "Copier",
     "Where do you want to copy this item?": "Où copier cet élément?",
     "Edit Item": "Modifier l'élément",
-    "Edit": "Modifier"
+    "Edit": "Modifier",
+    "Add New Item": "Ajouter Un Nouvel Elément",
+    "Add Item": "Ajouter Un Elément"
   }
 }

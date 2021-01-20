@@ -105,11 +105,7 @@ class TreeModal extends Component {
     const item = getItemById(items, itemId);
     if (item) {
       const parentIds = getParentsIdsFromPath(item.path) || [];
-      // eslint-disable-next-line no-console
-      console.log('parentIds: ', parentIds);
       const newExpandedItems = [...expandedItems, ...parentIds];
-      // eslint-disable-next-line no-console
-      console.log('newExpandedItems: ', newExpandedItems);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ expandedItems: newExpandedItems });
     }

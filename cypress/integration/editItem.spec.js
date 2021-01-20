@@ -1,3 +1,4 @@
+import { ITEM_TYPES } from '../../src/config/constants';
 import { buildItemPath } from '../../src/config/paths';
 import {
   buildItemCard,
@@ -11,12 +12,13 @@ import {
   ITEM_FORM_NAME_INPUT_ID,
   ITEM_FORM_TYPE_SELECT_ID,
 } from '../../src/config/selectors';
-import { SIMPLE_ITEMS } from '../fixtures/items';
+import { EDITED_FIELDS, SIMPLE_ITEMS } from '../fixtures/items';
+import { EDIT_ITEM_PAUSE } from '../support/constants';
 
 const editItem = ({
   id,
   name = '',
-  type = 'Space',
+  type = ITEM_TYPES.SPACE,
   extra = {},
   description = '',
 }) => {
@@ -41,14 +43,11 @@ describe('Edit Item', () => {
     cy.visit('/');
 
     const itemToEdit = SIMPLE_ITEMS[0];
-    const newName = 'new name';
-    const newDescription = 'new description';
 
     // edit
     editItem({
       ...itemToEdit,
-      name: newName,
-      description: newDescription,
+      ...EDITED_FIELDS,
     });
 
     cy.wait('@editItem').then(
@@ -58,7 +57,7 @@ describe('Edit Item', () => {
         },
       }) => {
         // check item is edited and updated
-        cy.wait(1000);
+        cy.wait(EDIT_ITEM_PAUSE);
         cy.get(`#${buildItemCard(id)}`).should('exist');
         cy.get(`#${buildItemLink(id)}`).contains(name);
       },
@@ -71,14 +70,11 @@ describe('Edit Item', () => {
     cy.visit(buildItemPath(SIMPLE_ITEMS[0].id));
 
     const itemToEdit = SIMPLE_ITEMS[2];
-    const newName = 'new name';
-    const newDescription = 'new description';
 
     // edit
     editItem({
       ...itemToEdit,
-      name: newName,
-      description: newDescription,
+      ...EDITED_FIELDS,
     });
 
     cy.wait('@editItem').then(
@@ -88,7 +84,7 @@ describe('Edit Item', () => {
         },
       }) => {
         // check item is edited and updated
-        cy.wait(1000);
+        cy.wait(EDIT_ITEM_PAUSE);
         cy.get(`#${buildItemCard(id)}`).should('exist');
         cy.get(`#${buildItemLink(id)}`).contains(name);
       },

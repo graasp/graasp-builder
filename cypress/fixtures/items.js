@@ -1,19 +1,26 @@
+import { ITEM_TYPES } from '../../src/config/constants';
+
 export const CURRENT_USER_ID = 'some_creator_id';
 
 const DEFAULT_ITEM = {
   description: '',
   extra: {},
   creator: CURRENT_USER_ID,
-  type: 'Space',
+  type: ITEM_TYPES.SPACE,
 };
 
 export const CREATED_ITEM = {
   name: 'created item',
-  type: 'Space',
+  type: ITEM_TYPES.SPACE,
   description: 'I am a newly created element',
   extra: {
     image: 'someimageurl',
   },
+};
+
+export const EDITED_FIELDS = {
+  name: 'new name',
+  description: 'new description',
 };
 
 export const SIMPLE_ITEMS = [

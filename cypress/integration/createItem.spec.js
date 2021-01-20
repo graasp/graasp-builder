@@ -1,3 +1,4 @@
+import { ITEM_TYPES } from '../../src/config/constants';
 import { buildItemPath } from '../../src/config/paths';
 import {
   buildItemCard,
@@ -9,10 +10,11 @@ import {
   ITEM_FORM_TYPE_SELECT_ID,
 } from '../../src/config/selectors';
 import { CREATED_ITEM, SIMPLE_ITEMS } from '../fixtures/items';
+import { CREATE_ITEM_PAUSE } from '../support/constants';
 
 const createItem = ({
   name = '',
-  type = 'Space',
+  type = ITEM_TYPES.SPACE,
   extra = {},
   description = '',
 }) => {
@@ -39,7 +41,7 @@ describe('Create Item', () => {
 
     cy.wait('@postItem').then(({ response: { body } }) => {
       // check item is created and displayed
-      cy.wait(1000);
+      cy.wait(CREATE_ITEM_PAUSE);
       cy.get(`#${buildItemCard(body.id)}`).should('exist');
     });
   });
