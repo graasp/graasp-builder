@@ -46,4 +46,8 @@ export const ORDERING = {
 
 export const TABLE_MIN_WIDTH = 750;
 
-export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
+export const ROWS_PER_PAGE_OPTIONS = [10, 25];
+
+export const ITEM_DATA_TYPES = {
+  DATE: 'date',
+};

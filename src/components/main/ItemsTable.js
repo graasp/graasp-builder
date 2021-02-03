@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import clsx from 'clsx';
@@ -17,18 +17,20 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
+import ItemMenu from './ItemMenu';
 import { buildItemPath } from '../../config/paths';
 import {
   ORDERING,
   TABLE_MIN_WIDTH,
   ROWS_PER_PAGE_OPTIONS,
+  ITEM_DATA_TYPES,
 } from '../../config/constants';
-import { getComparator, stableSort } from '../../utils/table';
+import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
 import NewItemButton from './NewItemButton';
+import EditButton from '../common/EditButton';
+import ShareButton from '../common/ShareButton';
+import DeleteButton from '../common/DeleteButton';
 
 const EnhancedTableHead = (props) => {
   const {
@@ -61,8 +63,7 @@ const EnhancedTableHead = (props) => {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            align={headCell.align}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -109,12 +110,16 @@ const useToolbarStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  highlight: {
+    background: theme.palette.primary.main,
+    color: 'white',
+  },
 }));
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { t } = useTranslation();
-  const { numSelected, tableTitle } = props;
+  const { numSelected, tableTitle, selected } = props;
 
   return (
     <Toolbar
@@ -144,11 +149,7 @@ const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title={t('Delete')}>
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        <DeleteButton color="secondary" itemIds={selected} />
       ) : null}
     </Toolbar>
   );
@@ -157,6 +158,7 @@ const EnhancedTableToolbar = (props) => {
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   tableTitle: PropTypes.string,
+  selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
 };
 
 EnhancedTableToolbar.defaultProps = {
@@ -188,52 +190,97 @@ const useStyles = makeStyles((theme) => ({
   selected: {
     backgroundColor: `${lighten(theme.palette.primary.main, 0.85)} !important`,
   },
+  hover: {
+    cursor: 'pointer',
+  },
 }));
 
 const ItemsTable = ({ items: rows, tableTitle }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { push } = useHistory();
-  const [order, setOrder] = React.useState(ORDERING.ASC);
+  const [order, setOrder] = React.useState(ORDERING.DESC);
   const [orderBy, setOrderBy] = React.useState('updatedAt');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(
+    ROWS_PER_PAGE_OPTIONS[0],
+  );
+
+  useEffect(() => {
+    // remove deleted rows from selection
+    const newSelected = selected.filter(
+      (id) => rows.findIndex(({ id: thisId }) => thisId === id) >= 0,
+    );
+    if (newSelected.length !== selected.length) {
+      setSelected(newSelected);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows]);
 
   const headCells = [
     {
       id: 'name',
       numeric: false,
-      disablePadding: true,
       label: t('Name'),
+      align: 'left',
     },
     {
       id: 'type',
       numeric: false,
-      disablePadding: true,
       label: t('Type'),
+      align: 'right',
     },
     {
       id: 'createdAt',
       numeric: false,
-      disablePadding: true,
       label: t('Created At'),
+      align: 'right',
+      type: ITEM_DATA_TYPES.DATE,
     },
     {
       id: 'updatedAt',
       numeric: false,
-      disablePadding: true,
       label: t('Updated At'),
+      align: 'right',
+      type: ITEM_DATA_TYPES.DATE,
+    },
+    {
+      id: 'actions',
+      numeric: false,
+      label: t('Actions'),
+      align: 'right',
     },
   ];
 
-  if (!rows.size) {
-    return (
-      <Typography variant="h3" align="center" display="block">
-        {t('No Item Here')}
-      </Typography>
-    );
-  }
+  // display empty rows to maintain the table height
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.size - page * rowsPerPage);
+
+  // order and select rows to display given the current page and the number of entries displayed
+  const rowsToDisplay = getRowsForPage(
+    stableSort(rows, getComparator(order, orderBy)),
+    { page, rowsPerPage },
+  );
+
+  // transform rows' information into displayable information
+  const mappedRows = rowsToDisplay.map(
+    ({ id, name, updatedAt, createdAt, type }) => ({
+      id,
+      name,
+      type,
+      updatedAt,
+      createdAt,
+      actions: (
+        <>
+          <EditButton itemId={id} />
+          <ShareButton itemId={id} />
+          <DeleteButton itemIds={[id]} />
+          <ItemMenu itemId={id} />
+        </>
+      ),
+    }),
+  );
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === ORDERING.ASC;
@@ -242,32 +289,32 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
   };
 
   const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id).toJS();
-      setSelected(newSelecteds);
-      return;
+    const checked =
+      JSON.parse(event.target.dataset.indeterminate) || !event.target.checked;
+    if (!checked) {
+      const newSelecteds = mappedRows.map((n) => n.id).toJS();
+      return setSelected(newSelecteds);
     }
-    setSelected([]);
+    return setSelected([]);
+  };
+
+  const removeItemsFromSelected = (items) => {
+    const newSelected = selected.filter((id) => !items.includes(id));
+    setSelected(newSelected);
+  };
+
+  const addItemsInSelected = (items) => {
+    const newSelected = selected.concat(items);
+    setSelected(newSelected);
   };
 
   const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
+    const checked = selected.indexOf(id) !== -1;
+    if (checked) {
+      removeItemsFromSelected([id]);
+    } else {
+      addItemsInSelected([id]);
     }
-
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -283,19 +330,17 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
     push(buildItemPath(id));
   };
 
+  // format entry data given type
+  const formatRowValue = ({ value, type }) => {
+    switch (type) {
+      case ITEM_DATA_TYPES.DATE:
+        return formatDate(value);
+      default:
+        return value;
+    }
+  };
+
   const isSelected = (id) => selected.indexOf(id) !== -1;
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.size - page * rowsPerPage);
-
-  // transform rows' information into displayable information
-  const mappedRows = rows.map(({ id, name, updatedAt, createdAt, type }) => ({
-    id,
-    name,
-    type,
-    updatedAt: formatDate(updatedAt),
-    createdAt: formatDate(createdAt),
-  }));
 
   return (
     <div className={classes.root}>
@@ -303,6 +348,7 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
         <EnhancedTableToolbar
           tableTitle={tableTitle}
           numSelected={selected.length}
+          selected={selected}
         />
         <TableContainer>
           <Table
@@ -322,47 +368,56 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
               headCells={headCells}
             />
             <TableBody>
-              {stableSort(mappedRows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+              {mappedRows.map((row, index) => {
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
-                      classes={{ selected: classes.selected }}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                          onClick={(event) => handleClick(event, row.id)}
-                          color="primary"
-                        />
-                      </TableCell>
-                      {
-                        // does not render name
-                        headCells.map(({ id: field }) => (
-                          <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                            onClick={() => handleRowOnClick(row.id)}
-                          >
-                            {row[field]}
-                          </TableCell>
-                        ))
-                      }
-                    </TableRow>
-                  );
-                })}
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
+                    classes={{
+                      hover: classes.hover,
+                      selected: classes.selected,
+                    }}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ 'aria-labelledby': labelId }}
+                        onClick={(event) => handleClick(event, row.id)}
+                        color="primary"
+                      />
+                    </TableCell>
+                    {
+                      // does not render name
+                      headCells.map(({ id: field, align, type }, idx) => (
+                        <TableCell
+                          key={field}
+                          align={align}
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                          onClick={() => {
+                            // do not navigate when clicking on actions
+                            const shouldNavigate = idx !== headCells.length - 1;
+                            if (shouldNavigate) {
+                              handleRowOnClick(row.id);
+                            }
+                          }}
+                        >
+                          {formatRowValue({ value: row[field], type })}
+                        </TableCell>
+                      ))
+                    }
+                  </TableRow>
+                );
+              })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
                   <TableCell colSpan={6} />

@@ -22,6 +22,8 @@ import {
   FLAG_SETTING_ITEM,
   FLAG_EDITING_ITEM,
   GET_SHARED_ITEMS_SUCCESS,
+  FLAG_DELETING_ITEMS,
+  DELETE_ITEMS_SUCCESS,
 } from '../types/item';
 import { getParentsIdsFromPath } from '../utils/item';
 import { createFlag } from './utils';
@@ -129,13 +131,35 @@ export const createItem = (props) => async (dispatch) => {
   }
 };
 
-export const deleteItem = (item) => async (dispatch) => {
+export const deleteItem = (itemId) => async (dispatch) => {
   try {
     dispatch(createFlag(FLAG_DELETING_ITEM, true));
-    await Api.deleteItem(item.id);
+    await Api.deleteItem(itemId);
     dispatch({
       type: DELETE_ITEM_SUCCESS,
-      payload: item,
+      payload: { id: itemId },
+    });
+  } catch (e) {
+    console.error(e);
+  } finally {
+    dispatch(createFlag(FLAG_DELETING_ITEM, false));
+  }
+};
+
+export const deleteItems = (itemIds) => async (dispatch) => {
+  try {
+    dispatch(createFlag(FLAG_DELETING_ITEMS, true));
+
+    // choose corresponding call depending on number of items
+    if (itemIds.length === 1) {
+      await Api.deleteItem(itemIds);
+    } else {
+      await Api.deleteItems(itemIds);
+    }
+
+    dispatch({
+      type: DELETE_ITEMS_SUCCESS,
+      payload: itemIds,
     });
   } catch (e) {
     console.error(e);

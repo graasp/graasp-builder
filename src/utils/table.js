@@ -24,3 +24,6 @@ export const stableSort = (array, comparator) => {
   });
   return stabilizedThis.map((el) => el[0]);
 };
+
+export const getRowsForPage = (table, { page, rowsPerPage }) =>
+  table.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);

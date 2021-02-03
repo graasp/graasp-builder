@@ -2,35 +2,37 @@ import React, { Component } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { withTranslation } from 'react-i18next';
-import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import NewItemButton from './NewItemButton';
 import Item from './Item';
-import { ITEMS_GRID_NO_ITEM_ID } from '../../config/selectors';
+import EmptyItem from './EmptyItem';
 
+const styles = (theme) => ({
+  title: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing(1),
+  },
+});
 class ItemsGrid extends Component {
   static propTypes = {
     items: PropTypes.instanceOf(List).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
-    t: PropTypes.func.isRequired,
+    classes: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    }).isRequired,
+    title: PropTypes.string.isRequired,
   };
 
   renderItems = () => {
-    const { items, t } = this.props;
+    const { items } = this.props;
 
     if (!items || !items.size) {
-      return (
-        <Typography
-          id={ITEMS_GRID_NO_ITEM_ID}
-          variant="h3"
-          align="center"
-          display="block"
-        >
-          {t('No Item Here')}
-        </Typography>
-      );
+      return <EmptyItem />;
     }
 
     return items.map((item) => (
@@ -41,8 +43,13 @@ class ItemsGrid extends Component {
   };
 
   render() {
+    const { classes, title } = this.props;
     return (
       <>
+        <Typography className={classes.title} variant="h4">
+          {title}
+          <NewItemButton />
+        </Typography>
         <Grid container spacing={1}>
           {this.renderItems()}
         </Grid>
@@ -50,5 +57,5 @@ class ItemsGrid extends Component {
     );
   }
 }
-const TranslatedComponent = withTranslation()(ItemsGrid);
-export default withRouter(TranslatedComponent);
+const StyledComponent = withStyles(styles)(ItemsGrid);
+export default withRouter(StyledComponent);

@@ -23,6 +23,7 @@ import {
   EDIT_ITEM_SUCCESS,
   FLAG_EDITING_ITEM,
   GET_SHARED_ITEMS_SUCCESS,
+  DELETE_ITEMS_SUCCESS,
 } from '../types/item';
 
 const DEFAULT_ITEM = Map({
@@ -115,6 +116,21 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         return state.update('own', updateInList(payload));
       }
       return state.updateIn(['item', 'children'], updateInList(payload));
+    }
+    case DELETE_ITEMS_SUCCESS: {
+      let newState = state;
+      const from = newState.getIn(['item', 'id']);
+      for (const id of payload) {
+        // delete item in children or in root items
+        if (!from) {
+          newState = newState.update('own', removeFromList({ id }));
+        }
+        newState = newState.updateIn(
+          ['item', 'children'],
+          removeFromList({ id }),
+        );
+      }
+      return newState;
     }
     case DELETE_ITEM_SUCCESS:
     case MOVE_ITEM_SUCCESS: {

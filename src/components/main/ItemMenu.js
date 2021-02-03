@@ -9,25 +9,19 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {
   setMoveModalSettings,
   setCopyModalSettings,
-  setEditModalSettings,
-  setShareModalSettings,
 } from '../../actions/layout';
 import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
-  ITEM_MENU_EDIT_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
-  ITEM_MENU_SHARE_BUTTON_CLASS,
 } from '../../config/selectors';
 import { editItem } from '../../actions/item';
 
 const ItemMenu = ({
-  item,
+  itemId,
   dispatchSetMoveModalSettings,
   dispatchSetCopyModalSettings,
-  dispatchSetEditModalSettings,
-  dispatchSetShareModalSettings,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
@@ -41,22 +35,12 @@ const ItemMenu = ({
   };
 
   const handleMove = () => {
-    dispatchSetMoveModalSettings({ open: true, itemId: item.id });
+    dispatchSetMoveModalSettings({ open: true, itemId });
     handleClose();
   };
 
   const handleCopy = () => {
-    dispatchSetCopyModalSettings({ open: true, itemId: item.id });
-    handleClose();
-  };
-
-  const handleEdit = () => {
-    dispatchSetEditModalSettings({ open: true, itemId: item.id });
-    handleClose();
-  };
-
-  const handleShare = () => {
-    dispatchSetShareModalSettings({ open: true, itemId: item.id });
+    dispatchSetCopyModalSettings({ open: true, itemId });
     handleClose();
   };
 
@@ -66,26 +50,17 @@ const ItemMenu = ({
         <MoreVertIcon />
       </IconButton>
       <Menu
-        id={buildItemMenu(item.id)}
+        id={buildItemMenu(itemId)}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleEdit} className={ITEM_MENU_EDIT_BUTTON_CLASS}>
-          {t('Edit')}
-        </MenuItem>
         <MenuItem onClick={handleMove} className={ITEM_MENU_MOVE_BUTTON_CLASS}>
           {t('Move')}
         </MenuItem>
         <MenuItem onClick={handleCopy} className={ITEM_MENU_COPY_BUTTON_CLASS}>
           {t('Copy')}
-        </MenuItem>
-        <MenuItem
-          onClick={handleShare}
-          className={ITEM_MENU_SHARE_BUTTON_CLASS}
-        >
-          {t('Share')}
         </MenuItem>
       </Menu>
     </>
@@ -93,20 +68,14 @@ const ItemMenu = ({
 };
 
 ItemMenu.propTypes = {
-  dispatchSetEditModalSettings: PropTypes.func.isRequired,
-  item: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
+  itemId: PropTypes.string.isRequired,
   dispatchSetMoveModalSettings: PropTypes.func.isRequired,
   dispatchSetCopyModalSettings: PropTypes.func.isRequired,
-  dispatchSetShareModalSettings: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   dispatchSetMoveModalSettings: setMoveModalSettings,
   dispatchSetCopyModalSettings: setCopyModalSettings,
-  dispatchSetEditModalSettings: setEditModalSettings,
-  dispatchSetShareModalSettings: setShareModalSettings,
   dispatchEditItem: editItem,
 };
 

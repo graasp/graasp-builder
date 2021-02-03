@@ -5,5 +5,5 @@ export const formatDate = (d) => {
   const datetime = new Date(d);
   const time = datetime.toLocaleTimeString(DEFAULT_LOCALE);
   const date = datetime.toLocaleDateString(DEFAULT_LOCALE);
-  return `${time} ${date}`;
+  return `${date} ${time}`;
 };

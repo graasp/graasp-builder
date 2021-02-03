@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import { connect } from 'react-redux';
@@ -15,8 +16,8 @@ class Home extends Component {
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
     activity: PropTypes.bool.isRequired,
-    ownItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    sharedItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    ownItems: PropTypes.instanceOf(List).isRequired,
+    sharedItems: PropTypes.instanceOf(List).isRequired,
     t: PropTypes.func.isRequired,
     dispatchGetSharedItems: PropTypes.func.isRequired,
   };
@@ -62,7 +63,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = ({ item }) => ({
-  activity: Object.values(item.get('activity').toJS()).flat().length,
+  activity: Boolean(Object.values(item.get('activity').toJS()).flat().length),
   ownItems: item.get('own'),
   sharedItems: item.get('shared'),
 });

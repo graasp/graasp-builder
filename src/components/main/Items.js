@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import Typography from '@material-ui/core/Typography';
+import { List } from 'immutable';
 import { withRouter } from 'react-router';
-import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { MODES } from '../../config/constants';
 import ItemsTable from './ItemsTable';
-import NewItemButton from './NewItemButton';
 import ItemsGrid from './ItemsGrid';
-
-const styles = (theme) => ({
-  title: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(1),
-  },
-});
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Items extends Component {
   static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    items: PropTypes.instanceOf(List).isRequired,
     mode: PropTypes.oneOf(Object.values(MODES)).isRequired,
     title: PropTypes.string.isRequired,
     classes: PropTypes.shape({
@@ -30,15 +20,9 @@ class Items extends Component {
   };
 
   render() {
-    const { items, mode, title, classes } = this.props;
+    const { items, mode, title } = this.props;
     return mode === MODES.CARD ? (
-      <>
-        <Typography className={classes.title} variant="h4">
-          {title}
-          <NewItemButton />
-        </Typography>
-        <ItemsGrid items={items} />
-      </>
+      <ItemsGrid title={title} items={items} />
     ) : (
       <ItemsTable tableTitle={title} items={items} />
     );
@@ -50,6 +34,5 @@ const mapStateToProps = ({ layout }) => ({
 });
 
 const ConnectedComponent = connect(mapStateToProps)(Items);
-const StyledComponent = withStyles(styles)(ConnectedComponent);
-const TranslatedComponent = withTranslation()(StyledComponent);
+const TranslatedComponent = withTranslation()(ConnectedComponent);
 export default withRouter(TranslatedComponent);

@@ -8,6 +8,8 @@ export const buildPostItemRoute = (parentId) => {
   return url;
 };
 export const buildDeleteItemRoute = (id) => `items/${id}`;
+export const buildDeleteItemsRoute = (ids) =>
+  `items?${ids.map((id) => `id=${id}`).join('&')}`;
 export const buildGetChildrenRoute = (id) => `items/${id}/children`;
 export const buildGetItemRoute = (id) => `items/${id}`;
 export const buildMoveItemRoute = (id) => `items/${id}/move`;

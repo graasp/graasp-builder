@@ -51,6 +51,10 @@ export const deleteItem = async (id) => {
   cache.items.delete(id);
 };
 
+export const deleteItems = async (ids) => {
+  ids.forEach((id) => deleteItem(id));
+};
+
 export const moveItem = async ({ id, to, from }) => {
   await cache.items.update(id, { dirty: true });
   if (to && to !== ROOT_ID) {
