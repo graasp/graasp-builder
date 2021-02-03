@@ -17,6 +17,6 @@ export const buildShareItemWithRoute = (id) => `item-memberships?itemId=${id}`;
 export const buildGetItemMembershipForItemRoute = (id) =>
   `item-memberships?itemId=${id}`;
 
-export const MEMBERS_ROUTE = `/members`;
+export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email) => `${MEMBERS_ROUTE}?email=${email}`;
 export const buildGetMember = (id) => `${MEMBERS_ROUTE}/${id}`;

@@ -24,7 +24,7 @@ export const ITEM_TYPES = {
   EXERCISE: 'Exercise',
 };
 export const DRAWER_WIDTH = 300;
-export const LOCALE_FORMAT = 'en-US';
+export const DEFAULT_LOCALE = 'en-US';
 
 export const PERMISSION_LEVELS = {
   WRITE: 'write',
@@ -33,5 +33,3 @@ export const PERMISSION_LEVELS = {
 };
 
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.WRITE;
-
-export const DEFAULT_CREATOR = '87c4940e-f764-4d86-8114-1edd9eff2ee0';

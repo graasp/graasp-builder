@@ -28,16 +28,22 @@
     "Owned Items": "Mes Éléments",
     "Type by author": "{{type}} par {{author}}",
     "Unknown": "Inconnu",
-    "Home": "Home",
+    "Home": "Accueil",
     "Add item": "Ajouter un élément",
     "Copy": "Copier",
+    "Add new Item": "Ajouter un nouvel élément",
+    "No Item Selected": "Aucun élément sélectionné",
     "Where do you want to copy this item?": "Où copier cet élément?",
     "Edit Item": "Modifier l'élément",
     "Edit": "Modifier",
     "Add New Item": "Ajouter Un Nouvel Elément",
     "Add Item": "Ajouter Un Elément",
+    "Children": "Enfants",
+    "Extra": "Extra",
+    "Creator": "Créateur",
+    "Created At": "Créé à",
+    "Updated At": "Mis à jour à",
     "My Items": "Mes éléments",
-    "Items Shared With Me": "Eléments partagés avec moi",
-    "Home": "Home"
+    "Items Shared With Me": "Eléments partagés avec moi"
   }
 }

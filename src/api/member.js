@@ -3,7 +3,6 @@ import { API_HOST } from '../config/constants';
 import { DEFAULT_GET } from './utils';
 import { buildGetMemberBy, buildGetMember } from './routes';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getMemberBy = async ({ email }) => {
   const res = await fetch(`${API_HOST}/${buildGetMemberBy(email)}`, {
     ...DEFAULT_GET,

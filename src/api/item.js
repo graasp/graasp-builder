@@ -164,13 +164,13 @@ export const copyItem = async ({ id, to }) => {
 };
 
 export const getSharedItems = async () => {
-  const req = await fetch(`${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`, {
+  const res = await fetch(`${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`, {
     ...DEFAULT_GET,
   });
 
-  if (req.status !== 200) {
-    throw new Error(req);
+  if (!res.ok) {
+    throw new Error(res);
   }
 
-  return req.json();
+  return res.json();
 };
