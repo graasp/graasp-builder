@@ -232,6 +232,10 @@ export const getSharedItems = () => async (dispatch) => {
       const { children, id } = item;
       // get children
       let newChildren = [];
+
+      // an item does not come automatically with children
+      // thus we need to fetch them if no children is specified
+      // we don't need to fetch again if they already exists (cache)
       if (!children) {
         // eslint-disable-next-line no-await-in-loop
         newChildren = await Api.getChildren(id);
