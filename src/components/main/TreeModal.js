@@ -17,6 +17,7 @@ import {
   getItem,
   getOwnItems,
   getItems,
+  getSharedItems,
 } from '../../actions/item';
 import {
   ROOT_ID,
@@ -66,6 +67,7 @@ class TreeModal extends Component {
     items: PropTypes.instanceOf(List).isRequired,
     dispatchGetItems: PropTypes.func.isRequired,
     dispatchGetOwnItems: PropTypes.func.isRequired,
+    dispatchGetSharedItems: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -75,8 +77,9 @@ class TreeModal extends Component {
   state = { selectedId: null, expandedItems: [ROOT_ID] };
 
   componentDidMount() {
-    const { dispatchGetOwnItems } = this.props;
+    const { dispatchGetOwnItems, dispatchGetSharedItems } = this.props;
     dispatchGetOwnItems();
+    dispatchGetSharedItems();
 
     this.updateExpandedElements();
   }
@@ -246,7 +249,7 @@ class TreeModal extends Component {
 
 const mapStateToProps = ({ item }) => ({
   items: item.get('items'),
-  rootItems: item.get('rootItems'),
+  rootItems: item.get('own'),
 });
 
 const mapDispatchToProps = {
@@ -254,6 +257,7 @@ const mapDispatchToProps = {
   dispatchGetItem: getItem,
   dispatchGetOwnItems: getOwnItems,
   dispatchGetChildren: getChildren,
+  dispatchGetSharedItems: getSharedItems,
 };
 
 const ConnectedComponent = connect(

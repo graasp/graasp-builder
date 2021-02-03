@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { StatusCodes } from 'http-status-codes';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
@@ -8,6 +9,8 @@ import {
   buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
+  buildShareItemWithRoute,
+  MEMBERS_ROUTE,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -16,12 +19,7 @@ import {
   transformIdForPath,
 } from '../../src/utils/item';
 import { CURRENT_USER_ID } from '../fixtures/items';
-import {
-  ERROR_CODE,
-  ID_FORMAT,
-  parseStringToRegExp,
-  SUCCESS_CODE,
-} from './utils';
+import { ID_FORMAT, parseStringToRegExp, EMAIL_FORMAT } from './utils';
 import {
   DEFAULT_PATCH,
   DEFAULT_GET,
@@ -56,7 +54,7 @@ export const mockPostItem = (items, shouldThrowError) => {
     },
     ({ body, reply }) => {
       if (shouldThrowError) {
-        return reply({ statusCode: ERROR_CODE });
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
       // add necessary properties id, path and creator
@@ -79,12 +77,12 @@ export const mockDeleteItem = (items, shouldThrowError) => {
     },
     ({ url, reply }) => {
       if (shouldThrowError) {
-        return reply({ statusCode: ERROR_CODE, body: null });
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
       const id = url.slice(API_HOST.length).split('/')[2];
       return reply({
-        statusCode: SUCCESS_CODE,
+        statusCode: StatusCodes.OK,
         body: getItemById(items, id),
       });
     },
@@ -99,14 +97,14 @@ export const mockGetItem = (items, shouldThrowError) => {
     },
     ({ url, reply }) => {
       if (shouldThrowError) {
-        return reply({ statusCode: ERROR_CODE, body: null });
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
       return reply({
         body: item,
-        statusCode: SUCCESS_CODE,
+        statusCode: StatusCodes.OK,
       });
     },
   ).as('getItem');
@@ -134,7 +132,7 @@ export const mockMoveItem = (items, shouldThrowError) => {
     },
     ({ url, reply, body }) => {
       if (shouldThrowError) {
-        return reply({ statusCode: ERROR_CODE, body: null });
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
       const id = url.slice(API_HOST.length).split('/')[2];
@@ -149,7 +147,7 @@ export const mockMoveItem = (items, shouldThrowError) => {
       // todo: do for all children
 
       return reply({
-        statusCode: SUCCESS_CODE,
+        statusCode: StatusCodes.OK,
         body: item, // this might not be accurate
       });
     },
@@ -164,7 +162,7 @@ export const mockCopyItem = (items, shouldThrowError) => {
     },
     ({ url, reply, body }) => {
       if (shouldThrowError) {
-        return reply({ statusCode: ERROR_CODE, body: null });
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
       const id = url.slice(API_HOST.length).split('/')[2];
@@ -181,7 +179,7 @@ export const mockCopyItem = (items, shouldThrowError) => {
       items.push(newItem);
       // todo: do for all children
       return reply({
-        statusCode: SUCCESS_CODE,
+        statusCode: StatusCodes.OK,
         body: newItem,
       });
     },
@@ -196,10 +194,53 @@ export const mockEditItem = (items, shouldThrowError) => {
     },
     ({ reply, body }) => {
       if (shouldThrowError) {
-        return reply({ statusCode: ERROR_CODE });
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
       return reply(body);
     },
   ).as('editItem');
+};
+
+export const mockShareItem = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildShareItemWithRoute(ID_FORMAT),
+        )}`,
+      ),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('shareItem');
+};
+
+export const mockGetMember = (members, shouldThrowError) => {
+  const emailReg = new RegExp(EMAIL_FORMAT);
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      pathname: `/${MEMBERS_ROUTE}`,
+      query: {
+        email: emailReg,
+      },
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const mail = emailReg.exec(url)[0];
+      const member = members.find(({ email }) => email === mail);
+
+      return reply([member]);
+    },
+  ).as('getMember');
 };

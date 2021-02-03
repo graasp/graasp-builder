@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import NewItemButton from './NewItemButton';
-import { getOwnItems } from '../../actions/item';
+import { setItem, getOwnItems, getSharedItems } from '../../actions/item';
 import ItemsGrid from './ItemsGrid';
 
 class Home extends Component {
@@ -14,7 +17,10 @@ class Home extends Component {
       params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
     }).isRequired,
     activity: PropTypes.bool.isRequired,
-    rootItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    ownItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    sharedItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    t: PropTypes.func.isRequired,
+    dispatchGetSharedItems: PropTypes.func.isRequired,
   };
 
   async componentDidMount() {
@@ -23,23 +29,38 @@ class Home extends Component {
   }
 
   async componentDidUpdate() {
-    const { dispatchGetOwnItems, activity, rootItems } = this.props;
+    const {
+      dispatchGetOwnItems,
+      dispatchGetSharedItems,
+      activity,
+      ownItems,
+      sharedItems,
+    } = this.props;
 
     if (!activity) {
       // update dirty items
-      if (rootItems.some(({ dirty }) => dirty)) {
+      if (ownItems.some(({ dirty }) => dirty)) {
         dispatchGetOwnItems();
+      }
+      // update dirty items
+      if (sharedItems.some(({ dirty }) => dirty)) {
+        dispatchGetSharedItems();
       }
     }
   }
 
   render() {
-    const { rootItems } = this.props;
+    const { ownItems, sharedItems, t } = this.props;
+
     return (
       <>
         <ItemsHeader />
         <NewItemButton />
-        <ItemsGrid items={rootItems} />
+        <Typography variant="h4">{t('My Items')}</Typography>
+        <ItemsGrid items={ownItems} />
+        <Divider style={{ marginTop: 30, marginBottom: 30 }} />
+        <Typography variant="h4">{t('Items Shared With Me')}</Typography>
+        <ItemsGrid items={sharedItems} />
       </>
     );
   }
@@ -47,12 +68,16 @@ class Home extends Component {
 
 const mapStateToProps = ({ item }) => ({
   activity: Object.values(item.get('activity').toJS()).flat().length,
-  rootItems: item.get('rootItems'),
+  ownItems: item.get('own'),
+  sharedItems: item.get('shared'),
 });
 
 const mapDispatchToProps = {
   dispatchGetOwnItems: getOwnItems,
+  dispatchSetItem: setItem,
+  dispatchGetSharedItems: getSharedItems,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Home);
-export default withRouter(ConnectedComponent);
+const TranslatedComponent = withTranslation()(ConnectedComponent);
+export default withRouter(TranslatedComponent);

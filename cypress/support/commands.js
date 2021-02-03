@@ -13,20 +13,26 @@ import {
   mockMoveItem,
   mockPostItem,
   mockEditItem,
+  mockShareItem,
+  mockGetMember,
 } from './server';
 
 Cypress.Commands.add(
   'setUpApi',
   ({
     items = [],
+    members = [],
     deleteItemError = false,
     postItemError = false,
     moveItemError = false,
     copyItemError = false,
     getItemError = false,
     editItemError = false,
+    shareItemError = false,
+    getMemberError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
+    const cachedMembers = JSON.parse(JSON.stringify(members));
 
     mockGetOwnItems(cachedItems);
 
@@ -43,6 +49,10 @@ Cypress.Commands.add(
     mockCopyItem(cachedItems, copyItemError);
 
     mockEditItem(cachedItems, editItemError);
+
+    mockShareItem(cachedItems, shareItemError);
+
+    mockGetMember(cachedMembers, getMemberError);
   },
 );
 

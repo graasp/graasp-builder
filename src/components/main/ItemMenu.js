@@ -10,6 +10,7 @@ import {
   setMoveModalSettings,
   setCopyModalSettings,
   setEditModalSettings,
+  setShareModalSettings,
 } from '../../actions/layout';
 import {
   buildItemMenu,
@@ -17,6 +18,7 @@ import {
   ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_EDIT_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  ITEM_MENU_SHARE_BUTTON_CLASS,
 } from '../../config/selectors';
 import { editItem } from '../../actions/item';
 
@@ -25,6 +27,7 @@ const ItemMenu = ({
   dispatchSetMoveModalSettings,
   dispatchSetCopyModalSettings,
   dispatchSetEditModalSettings,
+  dispatchSetShareModalSettings,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
@@ -52,6 +55,11 @@ const ItemMenu = ({
     handleClose();
   };
 
+  const handleShare = () => {
+    dispatchSetShareModalSettings({ open: true, itemId: item.id });
+    handleClose();
+  };
+
   return (
     <>
       <IconButton className={ITEM_MENU_BUTTON_CLASS} onClick={handleClick}>
@@ -73,6 +81,12 @@ const ItemMenu = ({
         <MenuItem onClick={handleCopy} className={ITEM_MENU_COPY_BUTTON_CLASS}>
           {t('Copy')}
         </MenuItem>
+        <MenuItem
+          onClick={handleShare}
+          className={ITEM_MENU_SHARE_BUTTON_CLASS}
+        >
+          {t('Share')}
+        </MenuItem>
       </Menu>
     </>
   );
@@ -85,12 +99,14 @@ ItemMenu.propTypes = {
   }).isRequired,
   dispatchSetMoveModalSettings: PropTypes.func.isRequired,
   dispatchSetCopyModalSettings: PropTypes.func.isRequired,
+  dispatchSetShareModalSettings: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   dispatchSetMoveModalSettings: setMoveModalSettings,
   dispatchSetCopyModalSettings: setCopyModalSettings,
   dispatchSetEditModalSettings: setEditModalSettings,
+  dispatchSetShareModalSettings: setShareModalSettings,
   dispatchEditItem: editItem,
 };
 

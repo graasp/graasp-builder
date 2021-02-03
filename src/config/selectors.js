@@ -19,3 +19,9 @@ export const buildTreeItemClass = (id) => `treeItem-${id}`;
 export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const ITEM_MENU_EDIT_BUTTON_CLASS = 'itemMenuEditButton';
+export const ITEM_MENU_SHARE_BUTTON_CLASS = 'itemMenuShareButton';
+export const SHARE_ITEM_MODAL_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
+export const SHARE_ITEM_MODAL_PERMISSION_SELECT_ID =
+  'shareItemModalPermissionSelect';
+export const buildPermissionOptionId = (id) => `permission-${id}`;
+export const SHARE_ITEM_MODAL_SHARE_BUTTON_ID = 'shareItemModalShareButton';

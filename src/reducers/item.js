@@ -22,6 +22,7 @@ import {
   FLAG_SETTING_ITEM,
   EDIT_ITEM_SUCCESS,
   FLAG_EDITING_ITEM,
+  GET_SHARED_ITEMS_SUCCESS,
 } from '../types/item';
 
 const DEFAULT_ITEM = Map({
@@ -32,7 +33,8 @@ const DEFAULT_ITEM = Map({
 const INITIAL_STATE = Map({
   item: DEFAULT_ITEM,
   items: List(),
-  rootItems: List(), // items
+  shared: List(),
+  own: List(), // items
   activity: Map({
     [FLAG_GETTING_ITEM]: [],
     [FLAG_CREATING_ITEM]: [],
@@ -74,7 +76,7 @@ const updateInList = (els) => (list) => {
   return updateItemInList(els, list);
 };
 
-const removeFromList = (deletedItemId) => (list) =>
+const removeFromList = ({ id: deletedItemId }) => (list) =>
   list.filter(({ id }) => id !== deletedItemId);
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -110,7 +112,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       const from = state.getIn(['item', 'id']);
       // add item in children or in root items
       if (!from) {
-        return state.update('rootItems', updateInList(payload));
+        return state.update('own', updateInList(payload));
       }
       return state.updateIn(['item', 'children'], updateInList(payload));
     }
@@ -119,7 +121,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       const from = state.getIn(['item', 'id']);
       // delete item in children or in root items
       if (!from) {
-        return state.update('rootItems', removeFromList(payload));
+        return state.update('own', removeFromList(payload));
       }
       return state.updateIn(['item', 'children'], removeFromList(payload));
     }
@@ -130,18 +132,22 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         return state.updateIn(['item', 'children'], updateInList(item));
       }
       if (to === ROOT_ID) {
-        return state.updateIn(['rootItems'], updateInList(item));
+        return state.updateIn(['own'], updateInList(item));
       }
       return state;
     }
     case GET_CHILDREN_SUCCESS: {
       return state.updateIn(['items'], updateInList(payload.children));
     }
-    case GET_OWN_ITEMS_SUCCESS: {
+    case GET_SHARED_ITEMS_SUCCESS:
       return state
-        .setIn(['rootItems'], List(payload))
+        .setIn(['shared'], List(payload))
         .updateIn(['items'], updateInList(payload));
-    }
+    case GET_OWN_ITEMS_SUCCESS:
+      return state
+        .setIn(['own'], List(payload))
+        .updateIn(['items'], updateInList(payload));
+
     case EDIT_ITEM_SUCCESS: {
       // update current elements
       if (state.getIn(['item', 'id'])) {
@@ -149,7 +155,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       }
 
       // update home elements
-      return state.updateIn(['rootItems'], updateInList(payload));
+      return state.updateIn(['own'], updateInList(payload));
     }
     default:
       return state;
