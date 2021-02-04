@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
-import { ITEM_MENU_EDIT_BUTTON_CLASS } from '../../config/selectors';
+import { EDIT_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { setEditModalSettings } from '../../actions/layout';
 
 const Item = ({ itemId, dispatchSetEditModalSettings }) => {
@@ -19,7 +19,7 @@ const Item = ({ itemId, dispatchSetEditModalSettings }) => {
     <Tooltip title={t('Edit')}>
       <IconButton
         aria-label="edit"
-        className={ITEM_MENU_EDIT_BUTTON_CLASS}
+        className={EDIT_ITEM_BUTTON_CLASS}
         onClick={handleEdit}
       >
         <EditIcon fontSize="small" />

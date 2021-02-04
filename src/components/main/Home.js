@@ -8,6 +8,7 @@ import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import { setItem, getOwnItems, getSharedItems } from '../../actions/item';
 import Items from './Items';
+import { OWNED_ITEMS_ID, SHARED_ITEMS_ID } from '../../config/selectors';
 
 class Home extends Component {
   static propTypes = {
@@ -54,9 +55,13 @@ class Home extends Component {
     return (
       <>
         <ItemsHeader />
-        <Items title={t('My Items')} items={ownItems} />
+        <Items id={OWNED_ITEMS_ID} title={t('My Items')} items={ownItems} />
         <Divider style={{ marginTop: 30, marginBottom: 30 }} />
-        <Items title={t('Items Shared With Me')} items={sharedItems} />
+        <Items
+          id={SHARED_ITEMS_ID}
+          title={t('Items Shared With Me')}
+          items={sharedItems}
+        />
       </>
     );
   }

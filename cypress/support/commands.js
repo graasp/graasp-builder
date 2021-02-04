@@ -1,9 +1,8 @@
+import { MODES } from '../../src/config/constants';
 import {
-  buildItemLink,
-  buildNavigationLink,
-  NAVIGATION_HOME_LINK_ID,
+  MODE_GRID_BUTTON_ID,
+  MODE_LIST_BUTTON_ID,
 } from '../../src/config/selectors';
-import { NAVIGATE_PAUSE } from './constants';
 import {
   mockCopyItem,
   mockDeleteItem,
@@ -15,7 +14,10 @@ import {
   mockEditItem,
   mockShareItem,
   mockGetMember,
+  mockDeleteItems,
 } from './server';
+import './commands/item';
+import './commands/navigation';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -23,6 +25,7 @@ Cypress.Commands.add(
     items = [],
     members = [],
     deleteItemError = false,
+    deleteItemsError = false,
     postItemError = false,
     moveItemError = false,
     copyItemError = false,
@@ -40,6 +43,8 @@ Cypress.Commands.add(
 
     mockDeleteItem(cachedItems, deleteItemError);
 
+    mockDeleteItems(cachedItems, deleteItemsError);
+
     mockGetItem(cachedItems, getItemError);
 
     mockGetChildren(cachedItems);
@@ -56,17 +61,16 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add('goToItem', (id) => {
-  cy.wait(NAVIGATE_PAUSE);
-  cy.get(`#${buildItemLink(id)}`).click();
-});
-
-Cypress.Commands.add('goToHome', () => {
-  cy.wait(NAVIGATE_PAUSE);
-  cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
-});
-
-Cypress.Commands.add('goToItemWithNavigation', (id) => {
-  cy.wait(NAVIGATE_PAUSE);
-  cy.get(`#${buildNavigationLink(id)}`).click();
+Cypress.Commands.add('switchMode', (mode) => {
+  switch (mode) {
+    case MODES.GRID:
+      cy.get(`#${MODE_GRID_BUTTON_ID}`).click({ force: true });
+      break;
+    case MODES.LIST:
+      cy.get(`#${MODE_LIST_BUTTON_ID}`).click({ force: true });
+      break;
+    default:
+      console.error(`invalid mode ${mode} provided`);
+      break;
+  }
 });

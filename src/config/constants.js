@@ -35,7 +35,7 @@ export const PERMISSION_LEVELS = {
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.WRITE;
 
 export const MODES = {
-  CARD: 'card',
+  GRID: 'grid',
   LIST: 'list',
 };
 

@@ -31,6 +31,12 @@ import NewItemButton from './NewItemButton';
 import EditButton from '../common/EditButton';
 import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
+import {
+  buildItemsTableRowId,
+  ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
+  ITEMS_TABLE_EMPTY_ROW_ID,
+  ITEMS_TABLE_ROW_CHECKBOX_CLASS,
+} from '../../config/selectors';
 
 const EnhancedTableHead = (props) => {
   const {
@@ -149,7 +155,11 @@ const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
-        <DeleteButton color="secondary" itemIds={selected} />
+        <DeleteButton
+          id={ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}
+          color="secondary"
+          itemIds={selected}
+        />
       ) : null}
     </Toolbar>
   );
@@ -195,7 +205,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemsTable = ({ items: rows, tableTitle }) => {
+const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { push } = useHistory();
@@ -352,6 +362,7 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
         />
         <TableContainer>
           <Table
+            id={tableId}
             className={classes.table}
             aria-labelledby="tableTitle"
             size="medium"
@@ -374,6 +385,7 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
 
                 return (
                   <TableRow
+                    id={buildItemsTableRowId(row.id)}
                     hover
                     role="checkbox"
                     aria-checked={isItemSelected}
@@ -387,39 +399,40 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
+                        className={ITEMS_TABLE_ROW_CHECKBOX_CLASS}
                         checked={isItemSelected}
                         inputProps={{ 'aria-labelledby': labelId }}
                         onClick={(event) => handleClick(event, row.id)}
                         color="primary"
                       />
                     </TableCell>
-                    {
-                      // does not render name
-                      headCells.map(({ id: field, align, type }, idx) => (
-                        <TableCell
-                          key={field}
-                          align={align}
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          onClick={() => {
-                            // do not navigate when clicking on actions
-                            const shouldNavigate = idx !== headCells.length - 1;
-                            if (shouldNavigate) {
-                              handleRowOnClick(row.id);
-                            }
-                          }}
-                        >
-                          {formatRowValue({ value: row[field], type })}
-                        </TableCell>
-                      ))
-                    }
+                    {headCells.map(({ id: field, align, type }, idx) => (
+                      <TableCell
+                        key={field}
+                        align={align}
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        onClick={() => {
+                          // do not navigate when clicking on actions
+                          const shouldNavigate = idx !== headCells.length - 1;
+                          if (shouldNavigate) {
+                            handleRowOnClick(row.id);
+                          }
+                        }}
+                      >
+                        {formatRowValue({ value: row[field], type })}
+                      </TableCell>
+                    ))}
                   </TableRow>
                 );
               })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
+                <TableRow
+                  id={ITEMS_TABLE_EMPTY_ROW_ID}
+                  style={{ height: 53 * emptyRows }}
+                >
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
@@ -443,6 +456,11 @@ const ItemsTable = ({ items: rows, tableTitle }) => {
 ItemsTable.propTypes = {
   items: PropTypes.instanceOf(List).isRequired,
   tableTitle: PropTypes.string.isRequired,
+  id: PropTypes.string,
+};
+
+ItemsTable.defaultProps = {
+  id: '',
 };
 
 export default ItemsTable;

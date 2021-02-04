@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
-import { ITEM_MENU_SHARE_BUTTON_CLASS } from '../../config/selectors';
+import { SHARE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { setShareModalSettings } from '../../actions/layout';
 
 const Item = ({ itemId, dispatchSetShareModalSettings }) => {
@@ -19,7 +19,7 @@ const Item = ({ itemId, dispatchSetShareModalSettings }) => {
     <Tooltip title={t('Share')}>
       <IconButton
         aria-label="share"
-        className={ITEM_MENU_SHARE_BUTTON_CLASS}
+        className={SHARE_ITEM_BUTTON_CLASS}
         onClick={handleShare}
       >
         <ShareIcon fontSize="small" />

@@ -45,6 +45,16 @@
     "Updated At": "Updated At",
     "My Items": "My Items",
     "Items Shared With Me": "Items Shared With Me",
-    "nbitem selected":"{{numSelected}} selected"
+    "nbitem selected": "{{numSelected}} selected",
+    "Delete": "Delete",
+    "sorted descending": "sorted descending",
+    "sorted ascending": "sorted ascending",
+    "select all items": "select all items",
+    "Actions": "Actions",
+    "View as Card": "View as Card",
+    "View as List": "View as List",
+    "Share": "Share",
+    "Permission": "Permission",
+    "Share Item": "Share Item"
   }
 }

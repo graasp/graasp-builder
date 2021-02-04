@@ -17,14 +17,19 @@ class Items extends Component {
     classes: PropTypes.shape({
       title: PropTypes.string.isRequired,
     }).isRequired,
+    id: PropTypes.string,
+  };
+
+  static defaultProps = {
+    id: null,
   };
 
   render() {
-    const { items, mode, title } = this.props;
-    return mode === MODES.CARD ? (
-      <ItemsGrid title={title} items={items} />
+    const { items, mode, title, id } = this.props;
+    return mode === MODES.GRID ? (
+      <ItemsGrid id={id} title={title} items={items} />
     ) : (
-      <ItemsTable tableTitle={title} items={items} />
+      <ItemsTable id={id} tableTitle={title} items={items} />
     );
   }
 }

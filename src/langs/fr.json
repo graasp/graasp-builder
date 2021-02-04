@@ -44,6 +44,17 @@
     "Created At": "Créé à",
     "Updated At": "Mis à jour à",
     "My Items": "Mes éléments",
-    "Items Shared With Me": "Eléments partagés avec moi"
+    "Items Shared With Me": "Eléments partagés avec moi",
+    "nbitem selected": "{{numSelected}} sélectionné",
+    "Delete": "Supprimer",
+    "sorted descending": "trié par ordre décroissant",
+    "sorted ascending": "trié par ordre croissant",
+    "select all items": "Sélectioner Tous les Eléments",
+    "Actions": "Actions",
+    "View as Card": "Afficher avec des cartes",
+    "View as List": "Afficher en liste",
+    "Share": "Partager",
+    "Permission": "Permission",
+    "Share Item": "Partager un Elément"
   }
 }

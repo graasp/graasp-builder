@@ -8,6 +8,10 @@ import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import IconButton from '@material-ui/core/IconButton';
 import { MODES } from '../../config/constants';
 import { setMode } from '../../actions/layout';
+import {
+  MODE_GRID_BUTTON_ID,
+  MODE_LIST_BUTTON_ID,
+} from '../../config/selectors';
 
 const ModeButtons = ({ dispatchSetMode, mode }) => {
   const { t } = useTranslation();
@@ -21,6 +25,7 @@ const ModeButtons = ({ dispatchSetMode, mode }) => {
       <Tooltip title={t('View as List')}>
         <span>
           <IconButton
+            id={MODE_LIST_BUTTON_ID}
             disabled={mode === MODES.LIST}
             onClick={() => {
               handleOnClick(MODES.LIST);
@@ -34,10 +39,11 @@ const ModeButtons = ({ dispatchSetMode, mode }) => {
       <Tooltip title={t('View as Card')}>
         <span>
           <IconButton
+            id={MODE_GRID_BUTTON_ID}
             color="primary"
-            disabled={mode === MODES.CARD}
+            disabled={mode === MODES.GRID}
             onClick={() => {
-              handleOnClick(MODES.CARD);
+              handleOnClick(MODES.GRID);
             }}
           >
             <ViewModuleIcon />

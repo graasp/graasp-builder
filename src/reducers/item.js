@@ -24,6 +24,7 @@ import {
   FLAG_EDITING_ITEM,
   GET_SHARED_ITEMS_SUCCESS,
   DELETE_ITEMS_SUCCESS,
+  FLAG_DELETING_ITEMS,
 } from '../types/item';
 
 const DEFAULT_ITEM = Map({
@@ -47,6 +48,7 @@ const INITIAL_STATE = Map({
     [FLAG_COPYING_ITEM]: [],
     [FLAG_SETTING_ITEM]: [],
     [FLAG_EDITING_ITEM]: [],
+    [FLAG_DELETING_ITEMS]: [],
   }),
 });
 
@@ -86,6 +88,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case FLAG_CREATING_ITEM:
     case FLAG_GETTING_OWN_ITEMS:
     case FLAG_DELETING_ITEM:
+    case FLAG_DELETING_ITEMS:
     case FLAG_GETTING_CHILDREN:
     case FLAG_GETTING_ITEMS:
     case FLAG_MOVING_ITEM:

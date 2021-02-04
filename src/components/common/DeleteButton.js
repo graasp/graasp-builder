@@ -8,12 +8,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteItems } from '../../actions/item';
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
 
-const DeleteButton = ({ itemIds, dispatchDeleteItems, color }) => {
+const DeleteButton = ({ itemIds, dispatchDeleteItems, color, id }) => {
   const { t } = useTranslation();
 
   return (
     <Tooltip title={t('Delete')}>
       <IconButton
+        id={id}
         color={color}
         className={ITEM_DELETE_BUTTON_CLASS}
         aria-label="delete"
@@ -29,10 +30,12 @@ DeleteButton.propTypes = {
   itemIds: PropTypes.string.isRequired,
   dispatchDeleteItems: PropTypes.func.isRequired,
   color: PropTypes.string,
+  id: PropTypes.string,
 };
 
 DeleteButton.defaultProps = {
   color: '',
+  id: '',
 };
 
 const mapDispatchToProps = {

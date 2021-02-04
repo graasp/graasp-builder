@@ -66,6 +66,7 @@ class ItemScreen extends Component {
       },
       activity,
     } = this.props;
+
     // todo: might have to change
     // necessary to avoid render
     return activity || itemId !== nextId || !areItemsEqual(item, nextItem);

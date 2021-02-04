@@ -1,3 +1,4 @@
 {
-  "baseUrl": "http://web.graasp.org:3111"
+  "baseUrl": "http://web.graasp.org:3111",
+  "video": false
 }

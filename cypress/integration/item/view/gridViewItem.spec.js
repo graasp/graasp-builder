@@ -1,16 +1,18 @@
-import { buildItemPath } from '../../src/config/paths';
+import { MODES } from '../../../../src/config/constants';
+import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
   ITEMS_GRID_NO_ITEM_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
   NAVIGATION_HOME_LINK_ID,
-} from '../../src/config/selectors';
-import { SIMPLE_ITEMS } from '../fixtures/items';
+} from '../../../../src/config/selectors';
+import { SIMPLE_ITEMS } from '../../../fixtures/items';
 
-describe('Create Item', () => {
+describe('Create Item in Grid', () => {
   it('visit Home', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
-    cy.visit('/');
+    cy.visit(HOME_PATH);
+    cy.switchMode(MODES.GRID);
 
     // should get own items
     cy.wait('@getOwnItems').then(({ response: { body } }) => {
@@ -22,7 +24,7 @@ describe('Create Item', () => {
 
     // visit child
     const { id: childId } = SIMPLE_ITEMS[0];
-    cy.goToItem(childId);
+    cy.goToItemInGrid(childId);
 
     // should get children
     cy.wait('@getChildren').then(({ response: { body } }) => {
@@ -34,7 +36,7 @@ describe('Create Item', () => {
 
     // visit child
     const { id: childChildId } = SIMPLE_ITEMS[2];
-    cy.goToItem(childChildId);
+    cy.goToItemInGrid(childChildId);
 
     // expect no children
     cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
@@ -54,6 +56,7 @@ describe('Create Item', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
     const { id } = SIMPLE_ITEMS[0];
     cy.visit(buildItemPath(id));
+    cy.switchMode(MODES.GRID);
 
     // should get current item
     cy.wait('@getItem');
@@ -78,14 +81,16 @@ describe('Create Item', () => {
     });
   });
 
-  it('visiting non-existing item display no item here', () => {
-    cy.setUpApi({ items: SIMPLE_ITEMS, getItemError: true });
-    const { id } = SIMPLE_ITEMS[0];
-    cy.visit(buildItemPath(id));
+  describe('Errors handling', () => {
+    it('visiting non-existing item display no item here', () => {
+      cy.setUpApi({ items: SIMPLE_ITEMS, getItemError: true });
+      const { id } = SIMPLE_ITEMS[0];
+      cy.visit(buildItemPath(id));
 
-    // should get current item
-    cy.wait('@getItem').then(() => {
-      cy.get(`#${ITEM_SCREEN_ERROR_ALERT_ID}`).should('exist');
+      // should get current item
+      cy.wait('@getItem').then(() => {
+        cy.get(`#${ITEM_SCREEN_ERROR_ALERT_ID}`).should('exist');
+      });
     });
   });
 });

@@ -135,6 +135,8 @@ export const deleteItem = (itemId) => async (dispatch) => {
   try {
     dispatch(createFlag(FLAG_DELETING_ITEM, true));
     await Api.deleteItem(itemId);
+    // eslint-disable-next-line no-console
+    console.log('woiefjksdnm,');
     dispatch({
       type: DELETE_ITEM_SUCCESS,
       payload: { id: itemId },
@@ -153,18 +155,21 @@ export const deleteItems = (itemIds) => async (dispatch) => {
     // choose corresponding call depending on number of items
     if (itemIds.length === 1) {
       await Api.deleteItem(itemIds);
+      dispatch({
+        type: DELETE_ITEM_SUCCESS,
+        payload: { id: itemIds[0] },
+      });
     } else {
       await Api.deleteItems(itemIds);
+      dispatch({
+        type: DELETE_ITEMS_SUCCESS,
+        payload: itemIds,
+      });
     }
-
-    dispatch({
-      type: DELETE_ITEMS_SUCCESS,
-      payload: itemIds,
-    });
   } catch (e) {
     console.error(e);
   } finally {
-    dispatch(createFlag(FLAG_DELETING_ITEM, false));
+    dispatch(createFlag(FLAG_DELETING_ITEMS, false));
   }
 };
 
