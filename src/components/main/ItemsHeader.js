@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Navigation from '../layout/Navigation';
-import ModeButtons from './ModeButtons';
+import ModeButton from './ModeButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ const ItemsHeader = () => {
   return (
     <div className={classes.root}>
       <Navigation />
-      <ModeButtons />
+      <ModeButton />
     </div>
   );
 };
