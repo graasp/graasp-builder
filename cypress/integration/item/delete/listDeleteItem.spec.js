@@ -1,4 +1,4 @@
-import { MODES } from '../../../../src/config/constants';
+import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -14,7 +14,10 @@ describe('Delete Item in List', () => {
   it('delete item on Home', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     const { id } = SIMPLE_ITEMS[0];
 
@@ -34,7 +37,10 @@ describe('Delete Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // delete
     deleteItem(idToDelete);
@@ -53,7 +59,10 @@ describe('Delete Item in List', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.LIST);
+
+      if (DEFAULT_MODE !== MODES.LIST) {
+        cy.switchMode(MODES.LIST);
+      }
 
       // delete
       deleteItem(idToDelete);

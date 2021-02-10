@@ -1,4 +1,4 @@
-import { MODES } from '../../../../src/config/constants';
+import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -12,7 +12,10 @@ describe('Create Item in List', () => {
   it('visit Home', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // should get own items
     cy.wait('@getOwnItems').then(({ response: { body } }) => {
@@ -56,7 +59,10 @@ describe('Create Item in List', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
     const { id } = SIMPLE_ITEMS[0];
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // should get current item
     cy.wait('@getItem');

@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { MODES } from '../config/constants';
+import { DEFAULT_MODE } from '../config/constants';
 import {
   SET_MOVE_MODAL_SETTINGS,
   SET_COPY_MODAL_SETTINGS,
@@ -25,7 +25,7 @@ const INITIAL_STATE = Map({
     open: false,
     itemId: null,
   }),
-  mode: MODES.LIST,
+  mode: DEFAULT_MODE,
 });
 
 export default (state = INITIAL_STATE, { type, payload }) => {

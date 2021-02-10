@@ -26,11 +26,13 @@ class Items extends Component {
 
   render() {
     const { items, mode, title, id } = this.props;
-    return mode === MODES.GRID ? (
-      <ItemsGrid id={id} title={title} items={items} />
-    ) : (
-      <ItemsTable id={id} tableTitle={title} items={items} />
-    );
+    switch (mode) {
+      case MODES.GRID:
+        return <ItemsGrid id={id} title={title} items={items} />;
+      case MODES.LIST:
+      default:
+        return <ItemsTable id={id} tableTitle={title} items={items} />;
+    }
   }
 }
 

@@ -135,8 +135,6 @@ export const deleteItem = (itemId) => async (dispatch) => {
   try {
     dispatch(createFlag(FLAG_DELETING_ITEM, true));
     await Api.deleteItem(itemId);
-    // eslint-disable-next-line no-console
-    console.log('woiefjksdnm,');
     dispatch({
       type: DELETE_ITEM_SUCCESS,
       payload: { id: itemId },

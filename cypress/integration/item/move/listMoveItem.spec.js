@@ -1,4 +1,4 @@
-import { MODES, ROOT_ID } from '../../../../src/config/constants';
+import { MODES, ROOT_ID, DEFAULT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -25,7 +25,10 @@ describe('Move Item in List', () => {
   it('move item on Home', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // move
     const { id: movedItem } = SIMPLE_ITEMS[0];
@@ -47,7 +50,10 @@ describe('Move Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // move
     const { id: movedItem } = SIMPLE_ITEMS[2];
@@ -69,7 +75,10 @@ describe('Move Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // move
     const { id: movedItem } = SIMPLE_ITEMS[2];
@@ -92,7 +101,10 @@ describe('Move Item in List', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.LIST);
+
+      if (DEFAULT_MODE !== MODES.LIST) {
+        cy.switchMode(MODES.LIST);
+      }
 
       // move
       const { id: movedItem } = SIMPLE_ITEMS[2];

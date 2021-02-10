@@ -39,6 +39,8 @@ export const MODES = {
   LIST: 'list',
 };
 
+export const DEFAULT_MODE = MODES.LIST;
+
 export const ORDERING = {
   ASC: 'asc',
   DESC: 'desc',

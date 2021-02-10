@@ -1,4 +1,4 @@
-import { MODES } from '../../../../src/config/constants';
+import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -17,7 +17,10 @@ describe('Create Item in List', () => {
   it('create item on Home', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // create
     createItem(CREATED_ITEM);
@@ -35,7 +38,10 @@ describe('Create Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // create
     createItem(CREATED_ITEM);
@@ -53,7 +59,10 @@ describe('Create Item in List', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.LIST);
+
+      if (DEFAULT_MODE !== MODES.LIST) {
+        cy.switchMode(MODES.LIST);
+      }
 
       // create
       createItem(CREATED_ITEM);

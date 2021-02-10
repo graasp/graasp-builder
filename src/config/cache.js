@@ -12,12 +12,12 @@ if (['development', 'test'].includes(process.env.NODE_ENV)) {
   cache.items.clear();
 }
 
-export const getItem = async (id) => cache.items.get(id);
+export const getItem = (id) => cache.items.get(id);
 
-export const getItems = async () => cache.items.toArray();
+export const getItems = () => cache.items.toArray();
 
-export const saveItem = async (item) => {
-  cache.transaction('rw', cache.items, async () => {
+export const saveItem = (item) => {
+  cache.transaction('rw', cache.items, () => {
     cache.items
       .get(item.id)
       .then((savedItem) => {
@@ -41,18 +41,18 @@ export const saveItem = async (item) => {
   });
 };
 
-export const createItem = async ({ item }) => {
+export const createItem = ({ item }) => {
   cache.transaction('rw', cache.items, async () => {
     await cache.items.put(item);
   });
 };
 
-export const deleteItem = async (id) => {
+export const deleteItem = (id) => {
   cache.items.delete(id);
 };
 
-export const deleteItems = async (ids) => {
-  ids.forEach((id) => deleteItem(id));
+export const deleteItems = (ids) => {
+  ids.forEach(deleteItem);
 };
 
 export const moveItem = async ({ id, to, from }) => {
@@ -65,12 +65,11 @@ export const moveItem = async ({ id, to, from }) => {
   }
 };
 
-export const saveItems = async (items) => {
-  items.forEach(async (item) => saveItem(item));
+export const saveItems = (items) => {
+  items.forEach((item) => saveItem(item));
 };
 
-export const getRootItems = async () =>
-  cache.items.filter(isRootItem).toArray();
+export const getRootItems = () => cache.items.filter(isRootItem).toArray();
 
 export const getChildren = (id) => cache.items.filter(isChild(id)).toArray();
 

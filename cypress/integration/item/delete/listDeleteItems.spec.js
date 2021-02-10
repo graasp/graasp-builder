@@ -1,4 +1,4 @@
-import { MODES } from '../../../../src/config/constants';
+import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -22,7 +22,10 @@ describe('Delete Items in List', () => {
   it('delete 2 items in Home', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // delete
     deleteItems([SIMPLE_ITEMS[0].id, SIMPLE_ITEMS[1].id]);
@@ -40,7 +43,10 @@ describe('Delete Items in List', () => {
   it('delete 2 items in item', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
     cy.visit(buildItemPath(SIMPLE_ITEMS[0].id));
-    cy.switchMode(MODES.LIST);
+
+    if (DEFAULT_MODE !== MODES.LIST) {
+      cy.switchMode(MODES.LIST);
+    }
 
     // delete
     deleteItems([SIMPLE_ITEMS[2].id, SIMPLE_ITEMS[3].id]);
@@ -59,7 +65,10 @@ describe('Delete Items in List', () => {
     it('does not delete items on error', () => {
       cy.setUpApi({ items: SIMPLE_ITEMS, deleteItemsError: true });
       cy.visit(HOME_PATH);
-      cy.switchMode(MODES.LIST);
+
+      if (DEFAULT_MODE !== MODES.LIST) {
+        cy.switchMode(MODES.LIST);
+      }
 
       // delete
       deleteItems([SIMPLE_ITEMS[0].id, SIMPLE_ITEMS[1].id]);
