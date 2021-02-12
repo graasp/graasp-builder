@@ -16,8 +16,8 @@ export const getItem = (id) => cache.items.get(id);
 
 export const getItems = () => cache.items.toArray();
 
-export const saveItem = (item) => {
-  cache.transaction('rw', cache.items, () => {
+export const saveItem = async (item) => {
+  await cache.transaction('rw', cache.items, () => {
     cache.items
       .get(item.id)
       .then((savedItem) => {
@@ -41,32 +41,32 @@ export const saveItem = (item) => {
   });
 };
 
-export const createItem = ({ item }) => {
-  cache.transaction('rw', cache.items, async () => {
-    await cache.items.put(item);
+export const createItem = async ({ item }) => {
+  await cache.transaction('rw', cache.items, () => {
+    cache.items.put(item);
   });
 };
 
-export const deleteItem = (id) => {
-  cache.items.delete(id);
+export const deleteItem = async (id) => {
+  await cache.items.delete(id);
 };
 
-export const deleteItems = (ids) => {
-  ids.forEach(deleteItem);
+export const deleteItems = async (ids) => {
+  await ids.forEach(deleteItem);
 };
 
 export const moveItem = async ({ id, to, from }) => {
   await cache.items.update(id, { dirty: true });
   if (to && to !== ROOT_ID) {
-    cache.items.update(to, { dirty: true });
+    await cache.items.update(to, { dirty: true });
   }
   if (from && from !== ROOT_ID) {
-    cache.items.update(from, { dirty: true });
+    await cache.items.update(from, { dirty: true });
   }
 };
 
-export const saveItems = (items) => {
-  items.forEach((item) => saveItem(item));
+export const saveItems = async (items) => {
+  await items.forEach((item) => saveItem(item));
 };
 
 export const getRootItems = () => cache.items.filter(isRootItem).toArray();
