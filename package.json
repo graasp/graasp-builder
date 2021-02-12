@@ -87,8 +87,7 @@
   },
   "nyc": {
     "exclude": [
-      "src/serviceWorker.js",
-      ""
+      "src/serviceWorker.js"
     ]
   }
 }

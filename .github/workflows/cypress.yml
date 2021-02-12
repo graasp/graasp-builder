@@ -18,6 +18,7 @@ jobs:
           wait-on-timeout: 180
           browser: chrome
           headless: true
+          quiet: true
 
       - name: Coverage Report
         run: npx nyc report --reporter=text-summary
