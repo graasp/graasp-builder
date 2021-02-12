@@ -134,7 +134,7 @@ class ItemForm extends Component {
   };
 
   render() {
-    const { open, title, classes, t, confirmText, id } = this.props;
+    const { open, title, classes, t, confirmText, id, item } = this.props;
     const { itemName, itemType, itemDescription, itemImageUrl } = this.state;
     return (
       <Dialog open={open} onClose={this.onClose} maxWidth="sm" fullWidth>
@@ -177,14 +177,16 @@ class ItemForm extends Component {
             rowsMax={4}
             fullWidth
           />
-          <TextField
-            id={ITEM_FORM_IMAGE_INPUT_ID}
-            margin="dense"
-            label={t('Image (URL)')}
-            value={itemImageUrl}
-            onChange={this.handleImageUrlInput}
-            fullWidth
-          />
+          {ITEM_TYPES.FILE !== item?.type && (
+            <TextField
+              id={ITEM_FORM_IMAGE_INPUT_ID}
+              margin="dense"
+              label={t('Image (URL)')}
+              value={itemImageUrl}
+              onChange={this.handleImageUrlInput}
+              fullWidth
+            />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={this.onClose} color="primary">

@@ -16,6 +16,9 @@ import {
 import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 import { areItemsEqual } from '../../utils/item';
+import { ITEM_TYPES } from '../../config/constants';
+import FileItem from './FileItem';
+import FileUploader from './FileUploader';
 
 class ItemScreen extends Component {
   static propTypes = {
@@ -120,12 +123,29 @@ class ItemScreen extends Component {
       );
     }
 
-    return (
-      <>
-        <ItemsHeader />
-        <Items title={item.get('name')} items={item.get('children')} />
-      </>
-    );
+    switch (item.get('type')) {
+      case ITEM_TYPES.FILE:
+        return (
+          <>
+            <ItemsHeader />
+            <FileItem item={item} />
+          </>
+        );
+      case ITEM_TYPES.SPACE:
+        return (
+          <>
+            <FileUploader />
+            <ItemsHeader />
+            <Items title={item.get('name')} items={item.get('children')} />
+          </>
+        );
+      default:
+        return (
+          <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
+            {t('An error occured.')}
+          </Alert>
+        );
+    }
   }
 }
 

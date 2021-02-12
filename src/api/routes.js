@@ -23,3 +23,8 @@ export const buildGetItemMembershipForItemRoute = (id) =>
 export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email) => `${MEMBERS_ROUTE}?email=${email}`;
 export const buildGetMember = (id) => `${MEMBERS_ROUTE}/${id}`;
+export const buildUploadFilesRoute = (parentId) =>
+  parentId
+    ? `${ITEMS_ROUTE}/upload?parentId=${parentId}`
+    : `${ITEMS_ROUTE}/upload`;
+export const buildDownloadFilesRoute = (id) => `${ITEMS_ROUTE}/${id}/download`;

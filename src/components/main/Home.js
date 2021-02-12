@@ -7,6 +7,7 @@ import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
 import { setItem, getOwnItems } from '../../actions/item';
 import Items from './Items';
+import FileUploader from './FileUploader';
 import { OWNED_ITEMS_ID } from '../../config/selectors';
 
 class Home extends Component {
@@ -41,6 +42,7 @@ class Home extends Component {
 
     return (
       <>
+        <FileUploader />
         <ItemsHeader />
         <Items id={OWNED_ITEMS_ID} title={t('My Items')} items={ownItems} />
       </>

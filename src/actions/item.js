@@ -1,4 +1,5 @@
 import * as Api from '../api/item';
+import { ITEM_TYPES } from '../config/constants';
 import {
   CREATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
@@ -41,17 +42,26 @@ export const setItem = (id) => async (dispatch) => {
     dispatch(createFlag(FLAG_SETTING_ITEM, true));
     // use saved item when possible
     const item = await Api.getItem(id);
-
-    const { children, parents } = item;
-    let newChildren = [];
-    if (!children) {
-      newChildren = await Api.getChildren(id);
-    }
-
     let newParents = [];
-    if (!parents) {
-      newParents = await buildParentsLine(item.path);
+    let newChildren = [];
+
+    const { children, parents, type } = item;
+
+    switch (type) {
+      case ITEM_TYPES.SPACE: {
+        if (!children) {
+          newChildren = await Api.getChildren(id);
+        }
+
+        if (!parents) {
+          newParents = await buildParentsLine(item.path);
+        }
+        break;
+      }
+      default:
+        break;
     }
+
     dispatch({
       type: SET_ITEM_SUCCESS,
       payload: { item, children: newChildren, parents: newParents },

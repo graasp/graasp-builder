@@ -25,6 +25,12 @@ export const ITEM_TYPES = {
   SPACE: 'Space',
   APPLICATION: 'Application',
   EXERCISE: 'Exercise',
+  FILE: 'file',
+};
+export const MIME_TYPES = {
+  IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
+  VIDEO: ['video/mp4'],
+  AUDIO: ['audio/mpeg', 'audio/mp3'],
 };
 export const DRAWER_WIDTH = 300;
 export const DEFAULT_LOCALE = 'en-US';
@@ -59,3 +65,6 @@ export const ITEM_DATA_TYPES = {
 
 export const LEFT_MENU_WIDTH = 250;
 export const HEADER_HEIGHT = 64;
+
+export const FILE_UPLOAD_MAX_FILES = 5;
+export const ITEMS_TABLE_ROW_ICON_COLOR = 'grey';

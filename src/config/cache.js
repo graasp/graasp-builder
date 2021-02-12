@@ -12,9 +12,9 @@ if (['development', 'test'].includes(process.env.NODE_ENV)) {
   cache.items.clear();
 }
 
-export const getItem = (id) => cache.items.get(id);
+export const getItem = async (id) => cache.items.get(id);
 
-export const getItems = () => cache.items.toArray();
+export const getItems = async () => cache.items.toArray();
 
 export const saveItem = async (item) => {
   await cache.transaction('rw', cache.items, () => {
@@ -42,8 +42,8 @@ export const saveItem = async (item) => {
 };
 
 export const createItem = async ({ item }) => {
-  await cache.transaction('rw', cache.items, () => {
-    cache.items.put(item);
+  await cache.transaction('rw', cache.items, async () => {
+    await cache.items.put(item);
   });
 };
 
@@ -69,9 +69,11 @@ export const saveItems = async (items) => {
   await items.forEach((item) => saveItem(item));
 };
 
-export const getRootItems = () => cache.items.filter(isRootItem).toArray();
+export const getRootItems = async () =>
+  cache.items.filter(isRootItem).toArray();
 
-export const getChildren = (id) => cache.items.filter(isChild(id)).toArray();
+export const getChildren = async (id) =>
+  cache.items.filter(isChild(id)).toArray();
 
 export const getParents = async (id) => {
   const item = await getItem(id);

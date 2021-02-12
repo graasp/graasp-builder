@@ -3,6 +3,7 @@ import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
   buildDeleteItemsRoute,
+  buildDownloadFilesRoute,
   buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
@@ -188,4 +189,15 @@ export const getSharedItems = async () => {
   }
 
   return res.json();
+};
+
+export const getFileContent = async ({ id }) => {
+  const response = await fetch(
+    `${API_HOST}/${buildDownloadFilesRoute(id)}`,
+    DEFAULT_GET,
+  );
+
+  // Build a URL from the file
+  const fileURL = URL.createObjectURL(await response.blob());
+  return fileURL;
 };
