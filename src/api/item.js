@@ -2,6 +2,7 @@ import { API_HOST, ROOT_ID } from '../config/constants';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
+  buildDeleteItemsRoute,
   buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
@@ -83,6 +84,20 @@ export const deleteItem = async (id) => {
     throw new Error((await res.json()).message);
   }
   await CacheOperations.deleteItem(id);
+
+  return res.json();
+};
+
+export const deleteItems = async (ids) => {
+  const res = await fetch(
+    `${API_HOST}/${buildDeleteItemsRoute(ids)}`,
+    DEFAULT_DELETE,
+  );
+
+  if (!res.ok) {
+    throw new Error((await res.json()).message);
+  }
+  await CacheOperations.deleteItems(ids);
 
   return res.json();
 };

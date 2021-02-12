@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
+import qs from 'querystring';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
@@ -11,6 +12,7 @@ import {
   GET_OWN_ITEMS_ROUTE,
   buildShareItemWithRoute,
   MEMBERS_ROUTE,
+  ITEMS_ROUTE,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -87,6 +89,28 @@ export const mockDeleteItem = (items, shouldThrowError) => {
       });
     },
   ).as('deleteItem');
+};
+
+export const mockDeleteItems = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      pathname: `/${ITEMS_ROUTE}`,
+      query: { id: ID_FORMAT },
+    },
+    ({ url, reply }) => {
+      const ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
+
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+
+      return reply({
+        statusCode: StatusCodes.OK,
+        body: ids.map((id) => getItemById(items, id)),
+      });
+    },
+  ).as('deleteItems');
 };
 
 export const mockGetItem = (items, shouldThrowError) => {

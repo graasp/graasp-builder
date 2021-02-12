@@ -88,7 +88,11 @@ const ShareItemModal = ({
         label={t('Permission')}
       >
         {Object.values(PERMISSION_LEVELS).map((p) => (
-          <MenuItem id={buildPermissionOptionId(p)} value={p}>
+          <MenuItem
+            key={buildPermissionOptionId(p)}
+            id={buildPermissionOptionId(p)}
+            value={p}
+          >
             {p}
           </MenuItem>
         ))}

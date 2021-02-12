@@ -17,6 +17,7 @@
     "lodash.truncate": "4.4.2",
     "node-fetch": "2.6.1",
     "prop-types": "15.7.2",
+    "qs": "6.9.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-i18next": "11.8.5",

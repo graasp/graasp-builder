@@ -7,14 +7,13 @@ import { withTranslation } from 'react-i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
-import NewItemButton from './NewItemButton';
 import {
   clearItem,
   getOwnItems,
   setItem,
   getSharedItems,
 } from '../../actions/item';
-import ItemsGrid from './ItemsGrid';
+import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 import { areItemsEqual } from '../../utils/item';
 
@@ -67,6 +66,7 @@ class ItemScreen extends Component {
       },
       activity,
     } = this.props;
+
     // todo: might have to change
     // necessary to avoid render
     return activity || itemId !== nextId || !areItemsEqual(item, nextItem);
@@ -123,8 +123,7 @@ class ItemScreen extends Component {
     return (
       <>
         <ItemsHeader />
-        <NewItemButton />
-        <ItemsGrid items={item.get('children')} />
+        <Items title={item.get('name')} items={item.get('children')} />
       </>
     );
   }

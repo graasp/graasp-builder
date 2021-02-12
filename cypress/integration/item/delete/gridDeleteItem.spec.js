@@ -1,18 +1,20 @@
-import { buildItemPath } from '../../src/config/paths';
+import { MODES } from '../../../../src/config/constants';
+import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
   ITEM_DELETE_BUTTON_CLASS,
-} from '../../src/config/selectors';
-import { SIMPLE_ITEMS } from '../fixtures/items';
+} from '../../../../src/config/selectors';
+import { SIMPLE_ITEMS } from '../../../fixtures/items';
 
 const deleteItem = (id) => {
   cy.get(`#${buildItemCard(id)} .${ITEM_DELETE_BUTTON_CLASS}`).click();
 };
 
-describe('Delete Item', () => {
+describe('Delete Item in Grid', () => {
   it('delete item on Home', () => {
     cy.setUpApi({ items: SIMPLE_ITEMS });
-    cy.visit('/');
+    cy.visit(HOME_PATH);
+    cy.switchMode(MODES.GRID);
 
     const { id } = SIMPLE_ITEMS[0];
 
@@ -32,6 +34,7 @@ describe('Delete Item', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
+    cy.switchMode(MODES.GRID);
 
     // delete
     deleteItem(idToDelete);
@@ -42,20 +45,23 @@ describe('Delete Item', () => {
     });
   });
 
-  it('error while deleting item does not delete in interface', () => {
-    cy.setUpApi({ items: SIMPLE_ITEMS, deleteItemError: true });
-    const { id } = SIMPLE_ITEMS[0];
-    const { id: idToDelete } = SIMPLE_ITEMS[2];
+  describe('Errors handling', () => {
+    it('error while deleting item does not delete in interface', () => {
+      cy.setUpApi({ items: SIMPLE_ITEMS, deleteItemError: true });
+      const { id } = SIMPLE_ITEMS[0];
+      const { id: idToDelete } = SIMPLE_ITEMS[2];
 
-    // go to children item
-    cy.visit(buildItemPath(id));
+      // go to children item
+      cy.visit(buildItemPath(id));
+      cy.switchMode(MODES.GRID);
 
-    // delete
-    deleteItem(idToDelete);
+      // delete
+      deleteItem(idToDelete);
 
-    cy.wait('@deleteItem').then(() => {
-      // check item is still displayed
-      cy.get(`#${buildItemCard(idToDelete)}`).should('exist');
+      cy.wait('@deleteItem').then(() => {
+        // check item is still displayed
+        cy.get(`#${buildItemCard(idToDelete)}`).should('exist');
+      });
     });
   });
 });

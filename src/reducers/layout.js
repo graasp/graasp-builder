@@ -1,9 +1,11 @@
 import { Map } from 'immutable';
+import { DEFAULT_MODE } from '../config/constants';
 import {
   SET_MOVE_MODAL_SETTINGS,
   SET_COPY_MODAL_SETTINGS,
   SET_EDIT_MODAL_SETTINGS,
   SET_SHARE_MODAL_SETTINGS,
+  SET_MODE_SUCCESS,
 } from '../types/layout';
 
 const INITIAL_STATE = Map({
@@ -23,6 +25,7 @@ const INITIAL_STATE = Map({
     open: false,
     itemId: null,
   }),
+  mode: DEFAULT_MODE,
 });
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -35,6 +38,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return state.setIn(['editModal'], Map(payload));
     case SET_SHARE_MODAL_SETTINGS:
       return state.setIn(['shareModal'], Map(payload));
+    case SET_MODE_SUCCESS:
+      return state.setIn(['mode'], payload);
     default:
       return state;
   }

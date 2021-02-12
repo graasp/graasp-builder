@@ -1,18 +1,21 @@
-export const GET_OWN_ITEMS_ROUTE = `items/own`;
-export const SHARE_ITEM_WITH_ROUTE = 'items/shared-with';
+export const ITEMS_ROUTE = 'items';
+export const GET_OWN_ITEMS_ROUTE = `${ITEMS_ROUTE}/own`;
+export const SHARE_ITEM_WITH_ROUTE = `${ITEMS_ROUTE}/shared-with`;
 export const buildPostItemRoute = (parentId) => {
-  let url = `items`;
+  let url = ITEMS_ROUTE;
   if (parentId) {
     url += `?parentId=${parentId}`;
   }
   return url;
 };
-export const buildDeleteItemRoute = (id) => `items/${id}`;
-export const buildGetChildrenRoute = (id) => `items/${id}/children`;
-export const buildGetItemRoute = (id) => `items/${id}`;
-export const buildMoveItemRoute = (id) => `items/${id}/move`;
-export const buildCopyItemRoute = (id) => `items/${id}/copy`;
-export const buildEditItemRoute = (id) => `items/${id}`;
+export const buildDeleteItemRoute = (id) => `${ITEMS_ROUTE}/${id}`;
+export const buildDeleteItemsRoute = (ids) =>
+  `${ITEMS_ROUTE}?${ids.map((id) => `id=${id}`).join('&')}`;
+export const buildGetChildrenRoute = (id) => `${ITEMS_ROUTE}/${id}/children`;
+export const buildGetItemRoute = (id) => `${ITEMS_ROUTE}/${id}`;
+export const buildMoveItemRoute = (id) => `${ITEMS_ROUTE}/${id}/move`;
+export const buildCopyItemRoute = (id) => `${ITEMS_ROUTE}/${id}/copy`;
+export const buildEditItemRoute = (id) => `${ITEMS_ROUTE}/${id}`;
 export const buildShareItemWithRoute = (id) => `item-memberships?itemId=${id}`;
 export const buildGetItemMembershipForItemRoute = (id) =>
   `item-memberships?itemId=${id}`;

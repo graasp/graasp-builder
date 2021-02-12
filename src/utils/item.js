@@ -10,6 +10,9 @@ export const getParentsIdsFromPath = (path) =>
 export const getItemById = (items, id) =>
   items.find(({ id: thisId }) => id === thisId);
 
+export const getItemsById = (items, ids) =>
+  items.filter(({ id: thisId }) => ids.includes(thisId));
+
 export const getDirectParentId = (path) => {
   const ids = getParentsIdsFromPath(path);
   const parentIdx = ids.length - 2;
