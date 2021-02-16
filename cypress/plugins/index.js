@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
+
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -15,12 +18,16 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-module.exports = (on, config) => ({
-  ...config,
-  env: {
-    'cypress-react-selector': {
-      root: '#root',
+module.exports = (on, config) => {
+  const newConfig = {
+    ...config,
+    env: {
+      'cypress-react-selector': {
+        root: '#root',
+      },
+      API_HOST: process.env.REACT_APP_API_HOST,
     },
-    API_HOST: process.env.REACT_APP_API_HOST,
-  },
-});
+  };
+  require('@cypress/code-coverage/task')(on, newConfig);
+  return newConfig;
+};

@@ -1,0 +1,24 @@
+name: Cypress tests
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          REACT_APP_API_HOST: ${{ secrets.REACT_APP_API_HOST }}
+        with:
+          config: baseUrl=http://localhost:3000
+          start: yarn start:ci
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 180
+          browser: chrome
+          headless: true
+          quiet: true
+
+      - name: Coverage Report
+        run: npx nyc report --reporter=text-summary
