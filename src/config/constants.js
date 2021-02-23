@@ -53,3 +53,6 @@ export const ROWS_PER_PAGE_OPTIONS = [10, 25];
 export const ITEM_DATA_TYPES = {
   DATE: 'date',
 };
+
+export const LEFT_MENU_WIDTH = 250;
+export const HEADER_HEIGHT = 64;

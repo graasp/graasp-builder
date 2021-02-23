@@ -107,10 +107,6 @@ EnhancedTableHead.propTypes = {
 };
 
 const useToolbarStyles = makeStyles((theme) => ({
-  root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-  },
   title: {
     flex: '1 1 100%',
     display: 'flex',
@@ -129,7 +125,7 @@ const EnhancedTableToolbar = (props) => {
 
   return (
     <Toolbar
-      className={clsx(classes.root, {
+      className={clsx({
         [classes.highlight]: numSelected > 0,
       })}
     >

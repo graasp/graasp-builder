@@ -6,8 +6,6 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
-import Header from './layout/Header';
 import items from '../data/sample';
 import SignUp from './SignUp';
 import {
@@ -15,6 +13,7 @@ import {
   SIGN_IN_PATH,
   HOME_PATH,
   ITEMS_PATH,
+  SHARED_ITEMS_PATH,
 } from '../config/paths';
 import SignIn from './SignIn';
 import Home from './main/Home';
@@ -23,12 +22,9 @@ import MoveItemModal from './main/MoveItemModal';
 import EditItemModal from './main/EditItemModal';
 import CopyItemModal from './main/CopyItemModal';
 import ShareItemModal from './main/ShareItemModal';
+import SharedItems from './SharedItems';
+import Main from './main/Main';
 
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-});
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
   static propTypes = {
@@ -38,7 +34,6 @@ class App extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     return (
       <>
         <MoveItemModal />
@@ -46,35 +41,33 @@ class App extends Component {
         <EditItemModal />
         <ShareItemModal />
         <Router>
-          <div>
-            <Header />
-            <main className={classes.root}>
-              <Switch>
-                <Route path={HOME_PATH} exact>
-                  <Home />
-                </Route>
-                <Route path="/items/:itemId">
-                  <ItemScreen items={items} />
-                </Route>
-                <Route path={SIGN_IN_PATH} exact>
-                  <SignIn />
-                </Route>
-                <Route path={SIGN_UP_PATH} exact>
-                  <SignUp />
-                </Route>
-                <Route path={ITEMS_PATH} exact>
-                  <Home />
-                </Route>
-                <Redirect to={HOME_PATH} />
-              </Switch>
-            </main>
-          </div>
+          <Switch>
+            <Route path={SIGN_IN_PATH} exact>
+              <SignIn />
+            </Route>
+            <Route path={SIGN_UP_PATH} exact>
+              <SignUp />
+            </Route>
+            <Main>
+              <Route path={HOME_PATH} exact>
+                <Home />
+              </Route>
+              <Route path={SHARED_ITEMS_PATH} exact>
+                <SharedItems />
+              </Route>
+              <Route path="/items/:itemId">
+                <ItemScreen items={items} />
+              </Route>
+              <Route path={ITEMS_PATH} exact>
+                <Home />
+              </Route>
+              <Redirect to={HOME_PATH} />
+            </Main>
+          </Switch>
         </Router>
       </>
     );
   }
 }
 
-const StyledComponent = withStyles(styles)(App);
-
-export default StyledComponent;
+export default App;

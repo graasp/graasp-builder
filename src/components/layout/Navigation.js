@@ -22,6 +22,11 @@ class Navigation extends Component {
     item: PropTypes.instanceOf(Map).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
+    rootText: PropTypes.string,
+  };
+
+  static defaultProps = {
+    rootText: null,
   };
 
   clearItem = () => {
@@ -30,13 +35,15 @@ class Navigation extends Component {
   };
 
   render() {
-    const { item, t } = this.props;
+    const { item, t, rootText } = this.props;
     const parents = item?.get('parents');
 
     return (
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
-          <Typography id={NAVIGATION_HOME_LINK_ID}>{t('Home')}</Typography>
+          <Typography id={NAVIGATION_HOME_LINK_ID}>
+            {rootText || t('My Items')}
+          </Typography>
         </Link>
         {[...parents]?.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
