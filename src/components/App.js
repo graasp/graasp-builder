@@ -41,14 +41,14 @@ class App extends Component {
         <EditItemModal />
         <ShareItemModal />
         <Router>
-          <Switch>
-            <Route path={SIGN_IN_PATH} exact>
-              <SignIn />
-            </Route>
-            <Route path={SIGN_UP_PATH} exact>
-              <SignUp />
-            </Route>
-            <Main>
+          <Main>
+            <Switch>
+              <Route path={SIGN_IN_PATH} exact>
+                <SignIn />
+              </Route>
+              <Route path={SIGN_UP_PATH} exact>
+                <SignUp />
+              </Route>
               <Route path={HOME_PATH} exact>
                 <Home />
               </Route>
@@ -62,8 +62,8 @@ class App extends Component {
                 <Home />
               </Route>
               <Redirect to={HOME_PATH} />
-            </Main>
-          </Switch>
+            </Switch>
+          </Main>
         </Router>
       </>
     );
