@@ -28,3 +28,11 @@ export const buildUploadFilesRoute = (parentId) =>
     ? `${ITEMS_ROUTE}/upload?parentId=${parentId}`
     : `${ITEMS_ROUTE}/upload`;
 export const buildDownloadFilesRoute = (id) => `${ITEMS_ROUTE}/${id}/download`;
+export const buildS3UploadFileRoute = (parentId) =>
+  parentId
+    ? `${ITEMS_ROUTE}/s3-upload?parentId=${parentId}`
+    : `${ITEMS_ROUTE}/s3-upload`;
+export const buildGetS3MetadataRoute = (id) =>
+  `${ITEMS_ROUTE}/${id}/s3-metadata`;
+export const buildS3FileUrl = (key) =>
+  `https://graasp-s3-file-items-staging.s3.eu-central-1.amazonaws.com/${key}`;

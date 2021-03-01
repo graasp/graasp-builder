@@ -3,6 +3,8 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import { getFileContent } from '../../api/item';
 import { MIME_TYPES } from '../../config/constants';
+import FileImage from './FileImage';
+import FileVideo from './FileVideo';
 
 const FileItem = ({ item }) => {
   const [url, setUrl] = useState();
@@ -12,31 +14,29 @@ const FileItem = ({ item }) => {
 
   useEffect(() => {
     (async () => {
-      const itemUrl = await getFileContent({ id, mimetype });
-      setUrl(itemUrl);
+      const content = await getFileContent({ id });
+
+      // Build a URL from the file
+      const fileURL = URL.createObjectURL(await content.blob());
+      setUrl(fileURL);
 
       return () => {
         URL.revokeObjectURL(url);
       };
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, mimetype, item]);
+  }, [id]);
 
   if (!url) {
     return null;
   }
 
   if (MIME_TYPES.IMAGE.includes(mimetype)) {
-    return <img src={url} alt={name} />;
+    return <FileImage url={url} alt={name} />;
   }
 
   if (MIME_TYPES.VIDEO.includes(mimetype)) {
-    return (
-      // eslint-disable-next-line jsx-a11y/media-has-caption
-      <video controls>
-        <source src={url} type={mimetype} />
-      </video>
-    );
+    return <FileVideo url={url} type={mimetype} />;
   }
 
   // todo: add more file extension

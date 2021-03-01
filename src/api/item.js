@@ -7,10 +7,12 @@ import {
   buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
+  buildGetS3MetadataRoute,
   buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
+  buildS3FileUrl,
 } from './routes';
 import {
   DEFAULT_DELETE,
@@ -191,13 +193,14 @@ export const getSharedItems = async () => {
   return res.json();
 };
 
-export const getFileContent = async ({ id }) => {
+export const getFileContent = async ({ id }) =>
+  fetch(`${API_HOST}/${buildDownloadFilesRoute(id)}`, DEFAULT_GET);
+
+export const getS3FileUrl = async ({ id }) => {
   const response = await fetch(
-    `${API_HOST}/${buildDownloadFilesRoute(id)}`,
+    `${API_HOST}/${buildGetS3MetadataRoute(id)}`,
     DEFAULT_GET,
   );
-
-  // Build a URL from the file
-  const fileURL = URL.createObjectURL(await response.blob());
-  return fileURL;
+  const { key } = await response.json();
+  return buildS3FileUrl(key);
 };

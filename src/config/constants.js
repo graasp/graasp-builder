@@ -26,6 +26,7 @@ export const ITEM_TYPES = {
   APPLICATION: 'Application',
   EXERCISE: 'Exercise',
   FILE: 'file',
+  S3_FILE: 's3-file',
 };
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
@@ -68,3 +69,7 @@ export const HEADER_HEIGHT = 64;
 
 export const FILE_UPLOAD_MAX_FILES = 5;
 export const ITEMS_TABLE_ROW_ICON_COLOR = 'grey';
+export const UPLOAD_FILES_METHODS = {
+  S3: 's3',
+  DEFAULT: 'default',
+};

@@ -17,8 +17,9 @@ import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 import { areItemsEqual } from '../../utils/item';
 import { ITEM_TYPES } from '../../config/constants';
-import FileItem from './FileItem';
+import FileItem from '../item/FileItem';
 import FileUploader from './FileUploader';
+import S3FileItem from '../item/S3FileItem';
 
 class ItemScreen extends Component {
   static propTypes = {
@@ -129,6 +130,13 @@ class ItemScreen extends Component {
           <>
             <ItemsHeader />
             <FileItem item={item} />
+          </>
+        );
+      case ITEM_TYPES.S3_FILE:
+        return (
+          <>
+            <ItemsHeader />
+            <S3FileItem item={item} />
           </>
         );
       case ITEM_TYPES.SPACE:

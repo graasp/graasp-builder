@@ -147,7 +147,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
   );
 
   const getIconWithNameForItem = ({ name, type, extra }) => {
-    let Icon = null;
+    let Icon = InsertDriveFileIcon;
     switch (type) {
       case ITEM_TYPES.SPACE:
         Icon = FolderIcon;

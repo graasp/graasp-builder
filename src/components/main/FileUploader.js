@@ -11,6 +11,7 @@ import { withTranslation } from 'react-i18next';
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import configureUppy from '../../utils/uppy';
 import { setItem, getOwnItems } from '../../actions/item';
+import { REACT_APP_UPLOAD_METHOD } from '../../config/env';
 
 const styles = (theme) => ({
   wrapper: {
@@ -58,13 +59,8 @@ class FileUploader extends Component {
   };
 
   componentDidMount() {
-    const { itemId } = this.props;
-    this.setState({
-      uppy: configureUppy({
-        itemId,
-        onComplete: this.onComplete,
-      }),
-    });
+    this.setUppy();
+
     window.addEventListener('dragenter', this.handleWindowDragEnter);
     window.addEventListener('mouseout', this.handleDragEnd);
   }
@@ -72,10 +68,7 @@ class FileUploader extends Component {
   componentDidUpdate({ itemId: prevItemId }) {
     const { itemId } = this.props;
     if (itemId !== prevItemId) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        uppy: configureUppy({ itemId, onComplete: this.onComplete }),
-      });
+      this.setUppy();
     }
   }
 
@@ -83,6 +76,17 @@ class FileUploader extends Component {
     window.removeEventListener('dragenter', this.handleWindowDragEnter);
     window.removeEventListener('mouseout', this.handleDragEnd);
   }
+
+  setUppy = () => {
+    const { itemId } = this.props;
+    this.setState({
+      uppy: configureUppy({
+        itemId,
+        onComplete: this.onComplete,
+        method: REACT_APP_UPLOAD_METHOD,
+      }),
+    });
+  };
 
   handleWindowDragEnter = () => {
     this.setState({ isDragging: true });
