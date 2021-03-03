@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import ListItem from '@material-ui/core/ListItem';
@@ -15,6 +15,7 @@ import { HOME_PATH, SHARED_ITEMS_PATH } from '../../config/paths';
 
 const MainMenu = () => {
   const { t } = useTranslation();
+  const [dense] = useState(true);
   const {
     push,
     location: { pathname },
@@ -25,7 +26,7 @@ const MainMenu = () => {
   };
 
   return (
-    <List dense>
+    <List dense={dense}>
       <ListItem
         button
         onClick={() => goTo(HOME_PATH)}
