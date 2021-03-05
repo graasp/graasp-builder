@@ -13,6 +13,9 @@ const theme = createMuiTheme({
     },
     secondary: { main: '#ffffff' },
   },
+  zIndex: {
+    drawer: 1000,
+  },
 });
 
 const { store } = configureStore();

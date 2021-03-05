@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import Divider from '@material-ui/core/Divider';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import ItemsHeader from './ItemsHeader';
-import { setItem, getOwnItems, getSharedItems } from '../../actions/item';
+import { setItem, getOwnItems } from '../../actions/item';
 import Items from './Items';
-import { OWNED_ITEMS_ID, SHARED_ITEMS_ID } from '../../config/selectors';
+import { OWNED_ITEMS_ID } from '../../config/selectors';
 
 class Home extends Component {
   static propTypes = {
@@ -18,9 +17,7 @@ class Home extends Component {
     }).isRequired,
     activity: PropTypes.bool.isRequired,
     ownItems: PropTypes.instanceOf(List).isRequired,
-    sharedItems: PropTypes.instanceOf(List).isRequired,
     t: PropTypes.func.isRequired,
-    dispatchGetSharedItems: PropTypes.func.isRequired,
   };
 
   async componentDidMount() {
@@ -29,39 +26,23 @@ class Home extends Component {
   }
 
   async componentDidUpdate() {
-    const {
-      dispatchGetOwnItems,
-      dispatchGetSharedItems,
-      activity,
-      ownItems,
-      sharedItems,
-    } = this.props;
+    const { dispatchGetOwnItems, activity, ownItems } = this.props;
 
     if (!activity) {
       // update dirty items
       if (ownItems.some(({ dirty }) => dirty)) {
         dispatchGetOwnItems();
       }
-      // update dirty items
-      if (sharedItems.some(({ dirty }) => dirty)) {
-        dispatchGetSharedItems();
-      }
     }
   }
 
   render() {
-    const { ownItems, sharedItems, t } = this.props;
+    const { ownItems, t } = this.props;
 
     return (
       <>
         <ItemsHeader />
         <Items id={OWNED_ITEMS_ID} title={t('My Items')} items={ownItems} />
-        <Divider style={{ marginTop: 30, marginBottom: 30 }} />
-        <Items
-          id={SHARED_ITEMS_ID}
-          title={t('Items Shared With Me')}
-          items={sharedItems}
-        />
       </>
     );
   }
@@ -70,13 +51,11 @@ class Home extends Component {
 const mapStateToProps = ({ item }) => ({
   activity: Boolean(Object.values(item.get('activity').toJS()).flat().length),
   ownItems: item.get('own'),
-  sharedItems: item.get('shared'),
 });
 
 const mapDispatchToProps = {
   dispatchGetOwnItems: getOwnItems,
   dispatchSetItem: setItem,
-  dispatchGetSharedItems: getSharedItems,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Home);
