@@ -13,6 +13,7 @@ import {
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
   buildS3FileUrl,
+  buildS3UploadFileRoute,
 } from './routes';
 import {
   DEFAULT_DELETE,
@@ -195,6 +196,25 @@ export const getSharedItems = async () => {
 
 export const getFileContent = async ({ id }) =>
   fetch(`${API_HOST}/${buildDownloadFilesRoute(id)}`, DEFAULT_GET);
+
+export const s3UploadItem = async ({ itemId, filename, contentType }) => {
+  const response = await fetch(
+    `${API_HOST}/${buildS3UploadFileRoute(itemId)}`,
+    {
+      // Send and receive JSON.
+      ...DEFAULT_POST,
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        filename,
+        contentType,
+      }),
+    },
+  );
+  return response.json();
+};
 
 export const getS3FileUrl = async ({ id }) => {
   const response = await fetch(

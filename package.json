@@ -76,6 +76,7 @@
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "cypress": "6.2.1",
+    "cypress-file-upload": "5.0.2",
     "env-cmd": "10.1.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "7.1.0",

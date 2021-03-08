@@ -13,6 +13,7 @@ import {
   buildShareItemWithRoute,
   MEMBERS_ROUTE,
   ITEMS_ROUTE,
+  buildUploadFilesRoute,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -267,4 +268,24 @@ export const mockGetMember = (members, shouldThrowError) => {
       return reply([member]);
     },
   ).as('getMember');
+};
+
+export const mockDefaultUploadItem = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildUploadFilesRoute(ID_FORMAT),
+        )}$|${API_HOST}/${buildUploadFilesRoute()}$`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(false);
+    },
+  ).as('uploadItem');
 };

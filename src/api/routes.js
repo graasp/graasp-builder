@@ -1,3 +1,5 @@
+import { S3_FILES_HOST } from '../config/constants';
+
 export const ITEMS_ROUTE = 'items';
 export const GET_OWN_ITEMS_ROUTE = `${ITEMS_ROUTE}/own`;
 export const SHARE_ITEM_WITH_ROUTE = `${ITEMS_ROUTE}/shared-with`;
@@ -34,5 +36,4 @@ export const buildS3UploadFileRoute = (parentId) =>
     : `${ITEMS_ROUTE}/s3-upload`;
 export const buildGetS3MetadataRoute = (id) =>
   `${ITEMS_ROUTE}/${id}/s3-metadata`;
-export const buildS3FileUrl = (key) =>
-  `https://graasp-s3-file-items-staging.s3.eu-central-1.amazonaws.com/${key}`;
+export const buildS3FileUrl = (key) => `${S3_FILES_HOST}/${key}`;

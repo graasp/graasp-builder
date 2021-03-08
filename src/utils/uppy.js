@@ -1,19 +1,21 @@
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
 import XHRUpload from '@uppy/xhr-upload';
-import { buildS3UploadFileRoute, buildUploadFilesRoute } from '../api/routes';
+import { buildUploadFilesRoute } from '../api/routes';
 import {
   API_HOST,
   FILE_UPLOAD_MAX_FILES,
   UPLOAD_FILES_METHODS,
 } from '../config/constants';
-import { DEFAULT_POST } from '../api/utils';
+import { s3UploadItem } from '../api/item';
+import { DEFAULT_PUT } from '../api/utils';
 
 const configureUppy = ({
   itemId,
   onComplete,
   onProgress,
   onUpload,
+  onFilesAdded,
   method = UPLOAD_FILES_METHODS.DEFAULT,
 }) => {
   const uppy = new Uppy({
@@ -27,27 +29,15 @@ const configureUppy = ({
       uppy.use(AwsS3, {
         async getUploadParameters(file) {
           // Send a request to s3
-          const response = await fetch(
-            `${API_HOST}/${buildS3UploadFileRoute(itemId)}`,
-            {
-              // Send and receive JSON.
-              ...DEFAULT_POST,
-              headers: {
-                accept: 'application/json',
-                'content-type': 'application/json',
-              },
-              body: JSON.stringify({
-                filename: file.name,
-                contentType: file.type,
-              }),
-            },
-          );
-
-          const data = await response.json();
+          const data = await s3UploadItem({
+            itemId,
+            filename: file.name,
+            contentType: file.type,
+          });
 
           // Return an object in the correct shape.
           return {
-            method: 'put',
+            method: DEFAULT_PUT.method,
             url: data.uploadUrl,
             fields: [],
             // Provide content type header required by S3
@@ -71,11 +61,15 @@ const configureUppy = ({
       break;
   }
 
+  uppy.on('files-added', onFilesAdded);
+
   uppy.on('upload', onUpload);
 
   uppy.on('progress', onProgress);
 
-  uppy.on('complete', onComplete);
+  uppy.on('complete', () => {
+    onComplete?.();
+  });
 
   uppy.on('error', (error) => {
     console.error(error.stack);

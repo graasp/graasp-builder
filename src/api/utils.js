@@ -20,3 +20,8 @@ export const DEFAULT_PATCH = {
   headers: { 'Content-Type': 'application/json' },
   credentials: 'include',
 };
+
+export const DEFAULT_PUT = {
+  method: 'PUT',
+  credentials: 'include',
+};

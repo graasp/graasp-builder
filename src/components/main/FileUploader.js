@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -8,22 +7,26 @@ import { DragDrop } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 import { withTranslation } from 'react-i18next';
-import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
+import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
 import configureUppy from '../../utils/uppy';
 import { setItem, getOwnItems } from '../../actions/item';
 import { REACT_APP_UPLOAD_METHOD } from '../../config/env';
+import { UPLOADER_ID } from '../../config/selectors';
 
 const styles = (theme) => ({
   wrapper: {
     display: 'none',
-    height: '100%',
+    height: '100vh',
     width: '100%',
     boxSizing: 'border-box',
-    position: 'fixed',
+    position: 'absolute',
     top: 0,
-    padding: theme.spacing(2),
+    padding: `${HEADER_HEIGHT + theme.spacing(3)}px ${theme.spacing(
+      3,
+    )}px ${theme.spacing(3)}px`,
     left: 0,
     zIndex: theme.zIndex.drawer + 1,
+    opacity: 0.8,
 
     '& div': {
       width: '100%',
@@ -41,7 +44,7 @@ const styles = (theme) => ({
 
 class FileUploader extends Component {
   static propTypes = {
-    itemId: PropTypes.instanceOf(Map).isRequired,
+    itemId: PropTypes.string,
     dispatchGetOwnItems: PropTypes.func.isRequired,
     dispatchSetItem: PropTypes.func.isRequired,
     classes: PropTypes.shape({
@@ -50,6 +53,10 @@ class FileUploader extends Component {
       wrapper: PropTypes.string.isRequired,
     }).isRequired,
     t: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    itemId: '',
   };
 
   state = {
@@ -77,12 +84,20 @@ class FileUploader extends Component {
     window.removeEventListener('mouseout', this.handleDragEnd);
   }
 
+  closeUploader = () => {
+    const { isDragging } = this.state;
+    if (isDragging) {
+      this.setState({ isDragging: false });
+    }
+  };
+
   setUppy = () => {
     const { itemId } = this.props;
     this.setState({
       uppy: configureUppy({
         itemId,
         onComplete: this.onComplete,
+        onFilesAdded: this.onFilesAdded,
         method: REACT_APP_UPLOAD_METHOD,
       }),
     });
@@ -93,18 +108,15 @@ class FileUploader extends Component {
   };
 
   handleDragEnd = () => {
-    const { isDragging } = this.state;
-    if (isDragging) {
-      this.setState({ isDragging: false });
-    }
+    this.closeUploader();
+  };
+
+  onFilesAdded = () => {
+    this.closeUploader();
   };
 
   onComplete = (result) => {
     const { itemId, dispatchGetOwnItems, dispatchSetItem } = this.props;
-    // eslint-disable-next-line no-console
-    console.log('successful files:', result.successful);
-    // eslint-disable-next-line no-console
-    console.log('failed files:', result.failed);
 
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
@@ -135,8 +147,7 @@ class FileUploader extends Component {
   handleDrop = () => {
     // todo: trigger error that only MAX_FILES was uploaded
     // or cancel drop
-
-    this.setState({ isDragging: false });
+    this.closeUploader();
   };
 
   render() {
@@ -150,6 +161,7 @@ class FileUploader extends Component {
     return (
       <>
         <div
+          id={UPLOADER_ID}
           className={clsx(classes.wrapper, {
             [classes.show]: isDragging,
             [classes.invalid]: !isValid,
@@ -161,7 +173,7 @@ class FileUploader extends Component {
         >
           <DragDrop
             uppy={uppy}
-            note={t('You can upload up to X files at a time', {
+            note={t(`You can upload up to X files at a time`, {
               maxFiles: FILE_UPLOAD_MAX_FILES,
             })}
             locale={{

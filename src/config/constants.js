@@ -4,6 +4,7 @@ export const APP_NAME = 'Graasp';
 
 export const API_HOST =
   API_HOST_ENV || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
+export const S3_FILES_HOST = process.env.S3_FILES_HOST || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 

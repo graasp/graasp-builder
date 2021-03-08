@@ -9,17 +9,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useHistory } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import List from '@material-ui/core/List';
 import { HOME_PATH, SHARED_ITEMS_PATH } from '../../config/paths';
 
 const MainMenu = () => {
   const { t } = useTranslation();
   const [dense] = useState(true);
-  const {
-    push,
-    location: { pathname },
-  } = useHistory();
+  const { push } = useHistory();
+  const { pathname } = useLocation();
 
   const goTo = (path) => {
     push(path);
