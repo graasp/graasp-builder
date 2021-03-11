@@ -1,6 +1,9 @@
+import { API_HOST as API_HOST_ENV } from '../env.json';
+
 export const APP_NAME = 'Graasp';
 
-export const API_HOST = process.env.REACT_APP_API_HOST || 'default';
+export const API_HOST =
+  API_HOST_ENV || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
