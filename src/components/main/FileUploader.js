@@ -7,10 +7,13 @@ import { DragDrop } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 import { withTranslation } from 'react-i18next';
-import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
+import {
+  FILE_UPLOAD_MAX_FILES,
+  HEADER_HEIGHT,
+  UPLOAD_METHOD,
+} from '../../config/constants';
 import configureUppy from '../../utils/uppy';
 import { setItem, getOwnItems } from '../../actions/item';
-import { REACT_APP_UPLOAD_METHOD } from '../../config/env';
 import { UPLOADER_ID } from '../../config/selectors';
 
 const styles = (theme) => ({
@@ -98,7 +101,7 @@ class FileUploader extends Component {
         itemId,
         onComplete: this.onComplete,
         onFilesAdded: this.onFilesAdded,
-        method: REACT_APP_UPLOAD_METHOD,
+        method: UPLOAD_METHOD,
       }),
     });
   };
@@ -120,7 +123,7 @@ class FileUploader extends Component {
 
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
-    if (!result.failed.length) {
+    if (!result?.failed.length) {
       // on Home
       if (!itemId) {
         return dispatchGetOwnItems();

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link } from 'react-router-dom';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
-import { clearItem, getItem } from '../../actions/item';
+import { clearItem } from '../../actions/item';
 import {
   buildNavigationLink,
   NAVIGATION_HOME_LINK_ID,
@@ -62,19 +62,11 @@ class Navigation extends Component {
   }
 }
 
-const mapStateToProps = ({ item }) => ({
-  item: item.get('item'),
-});
-
 const mapDispatchToProps = {
   dispatchClearItem: clearItem,
-  dispatchGetItem: getItem,
 };
 
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Navigation);
+const ConnectedComponent = connect(null, mapDispatchToProps)(Navigation);
 
 const TranslatedComponent = withTranslation()(ConnectedComponent);
 export default withRouter(TranslatedComponent);

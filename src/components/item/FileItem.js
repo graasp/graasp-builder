@@ -5,10 +5,13 @@ import { getFileContent } from '../../api/item';
 import { MIME_TYPES } from '../../config/constants';
 import FileImage from './FileImage';
 import FileVideo from './FileVideo';
+import FilePdf from './FilePdf';
 
 const FileItem = ({ item }) => {
   const [url, setUrl] = useState();
-  const { mimetype } = item.get('extra');
+  const {
+    fileItem: { mimetype },
+  } = item.get('extra');
   const id = item.get('id');
   const name = item.get('name');
 
@@ -32,16 +35,22 @@ const FileItem = ({ item }) => {
   }
 
   if (MIME_TYPES.IMAGE.includes(mimetype)) {
-    return <FileImage url={url} alt={name} />;
+    return <FileImage id={id} url={url} alt={name} />;
   }
 
   if (MIME_TYPES.VIDEO.includes(mimetype)) {
-    return <FileVideo url={url} type={mimetype} />;
+    // eslint-disable-next-line no-console
+    console.log(id);
+    return <FileVideo id={id} url={url} type={mimetype} />;
   }
 
-  // todo: add more file extension
+  if (MIME_TYPES.PDF.includes(mimetype)) {
+    return <FilePdf id={id} url={url} />;
+  }
 
-  return false;
+  // todo: add more file extensions
+
+  return null;
 };
 
 FileItem.propTypes = {

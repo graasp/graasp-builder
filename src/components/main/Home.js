@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import ItemsHeader from './ItemsHeader';
+import ItemHeader from '../item/header/ItemHeader';
 import { setItem, getOwnItems } from '../../actions/item';
 import Items from './Items';
 import FileUploader from './FileUploader';
@@ -43,7 +43,7 @@ class Home extends Component {
     return (
       <>
         <FileUploader />
-        <ItemsHeader />
+        <ItemHeader />
         <Items id={OWNED_ITEMS_ID} title={t('My Items')} items={ownItems} />
       </>
     );

@@ -5,31 +5,51 @@ import { getS3FileUrl } from '../../api/item';
 import { MIME_TYPES } from '../../config/constants';
 import FileImage from './FileImage';
 import FileVideo from './FileVideo';
+import FilePdf from './FilePdf';
 
 const S3FileItem = ({ item }) => {
   const [url, setUrl] = useState();
-  const { contenttype } = item.get('extra');
-  const type = item.get('type');
+  const {
+    s3FileItem: { contenttype },
+  } = item.get('extra');
   const id = item.get('id');
   const name = item.get('name');
 
   useEffect(() => {
     (async () => {
-      const itemUrl = await getS3FileUrl({ id, type });
-      setUrl(itemUrl);
+      const itemUrl = await getS3FileUrl({ id });
+      // eslint-disable-next-line no-console
+      console.log('itemUrl: ', itemUrl);
+
+      const content = await fetch(itemUrl);
+
+      // Build a URL from the file
+      const fileURL = URL.createObjectURL(await content.blob());
+      // eslint-disable-next-line no-console
+      console.log('fileURL: ', fileURL);
+      setUrl(fileURL);
+
+      return () => {
+        URL.revokeObjectURL(url);
+      };
     })();
-  }, [id, type]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   if (!url) {
     return null;
   }
 
   if (MIME_TYPES.IMAGE.includes(contenttype)) {
-    return <FileImage url={url} alt={name} />;
+    return <FileImage id={id} url={url} alt={name} />;
   }
 
   if (MIME_TYPES.VIDEO.includes(contenttype)) {
-    return <FileVideo url={url} type={contenttype} />;
+    return <FileVideo id={id} url={url} type={contenttype} />;
+  }
+
+  if (MIME_TYPES.PDF.includes(contenttype)) {
+    return <FilePdf id={id} url={url} />;
   }
 
   // todo: add more file extension

@@ -7,26 +7,17 @@ import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import FolderIcon from '@material-ui/icons/Folder';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import MovieIcon from '@material-ui/icons/Movie';
-import ImageIcon from '@material-ui/icons/Image';
 import ItemMenu from './ItemMenu';
 import { buildItemPath } from '../../config/paths';
 import {
   ORDERING,
-  TABLE_MIN_WIDTH,
   ROWS_PER_PAGE_OPTIONS,
   ITEM_DATA_TYPES,
-  ITEM_TYPES,
-  ITEMS_TABLE_ROW_ICON_COLOR,
-  MIME_TYPES,
 } from '../../config/constants';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
@@ -40,6 +31,7 @@ import {
 } from '../../config/selectors';
 import TableToolbar from './TableToolbar';
 import TableHead from './TableHead';
+import ItemIcon from './ItemIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
-  },
-  table: {
-    minWidth: TABLE_MIN_WIDTH,
   },
   visuallyHidden: {
     border: 0,
@@ -146,47 +135,24 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
     { page, rowsPerPage },
   );
 
-  const getIconWithNameForItem = ({ name, type, extra }) => {
-    let Icon = InsertDriveFileIcon;
-    switch (type) {
-      case ITEM_TYPES.SPACE:
-        Icon = FolderIcon;
-        break;
-      case ITEM_TYPES.FILE: {
-        if (MIME_TYPES.IMAGE.includes(extra.mimetype)) {
-          Icon = ImageIcon;
-          break;
-        }
-        if (MIME_TYPES.VIDEO.includes(extra.mimetype)) {
-          Icon = MovieIcon;
-          break;
-        }
-        if (MIME_TYPES.AUDIO.includes(extra.mimetype)) {
-          Icon = MusicNoteIcon;
-        }
-
-        Icon = InsertDriveFileIcon;
-        break;
-      }
-      default:
-        break;
-    }
-
-    return (
-      <span className={classes.iconAndName}>
-        <Icon color={ITEMS_TABLE_ROW_ICON_COLOR} />
-        <span className={classes.itemName}>{name}</span>
-      </span>
-    );
-  };
-
   // transform rows' information into displayable information
   const mappedRows = rowsToDisplay.map(
-    // eslint-disable-next-line arrow-body-style
     ({ id, updatedAt, name, createdAt, type, extra }) => {
+      const nameAndIcon = (
+        <span className={classes.iconAndName}>
+          <ItemIcon
+            type={type}
+            mimetype={
+              extra?.fileItem?.mimetype || extra?.s3FileItem?.contenttype
+            }
+          />
+          <span className={classes.itemName}>{name}</span>
+        </span>
+      );
+
       return {
         id,
-        name: getIconWithNameForItem({ name, type, extra }),
+        name: nameAndIcon,
         type,
         updatedAt,
         createdAt,
@@ -273,7 +239,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
         <TableContainer>
           <Table
             id={tableId}
-            className={classes.table}
             aria-labelledby="tableTitle"
             size="medium"
             aria-label="enhanced table"

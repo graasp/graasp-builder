@@ -11,7 +11,6 @@ import Header from '../layout/Header';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    overflowY: 'hidden',
   },
   menuButton: {},
   hide: {
@@ -41,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -LEFT_MENU_WIDTH,
+    height: '100vh',
   },
   contentShift: {
     transition: theme.transitions.create('margin', {

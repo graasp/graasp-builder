@@ -17,7 +17,10 @@ import {
   mockShareItem,
   mockGetMember,
   mockDeleteItems,
-  mockDefaultUploadItem,
+  mockDefaultDownloadFile,
+  mockGetS3Metadata,
+  mockGetS3FileContent,
+  mockUploadItem,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -37,6 +40,9 @@ Cypress.Commands.add(
     shareItemError = false,
     getMemberError = false,
     defaultUploadError = false,
+    defaultDownloadFileError = false,
+    defaultGetS3MetadataError = false,
+    defaultGetS3FileContentError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -63,7 +69,13 @@ Cypress.Commands.add(
 
     mockGetMember(cachedMembers, getMemberError);
 
-    mockDefaultUploadItem(cachedItems, defaultUploadError);
+    mockUploadItem(cachedItems, defaultUploadError);
+
+    mockDefaultDownloadFile(cachedItems, defaultDownloadFileError);
+
+    mockGetS3Metadata(cachedItems, defaultGetS3MetadataError);
+
+    mockGetS3FileContent(defaultGetS3FileContentError);
   },
 );
 

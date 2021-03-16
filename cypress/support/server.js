@@ -14,6 +14,9 @@ import {
   MEMBERS_ROUTE,
   ITEMS_ROUTE,
   buildUploadFilesRoute,
+  buildDownloadFilesRoute,
+  buildGetS3MetadataRoute,
+  buildS3UploadFileRoute,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -31,6 +34,7 @@ import {
 } from '../../src/api/utils';
 
 const API_HOST = Cypress.env('API_HOST');
+const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
 
 export const mockGetOwnItems = (items) => {
   cy.intercept(
@@ -270,14 +274,17 @@ export const mockGetMember = (members, shouldThrowError) => {
   ).as('getMember');
 };
 
-export const mockDefaultUploadItem = (items, shouldThrowError) => {
+// mock upload item for default and s3 upload methods
+export const mockUploadItem = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_POST.method,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildUploadFilesRoute(ID_FORMAT),
-        )}$|${API_HOST}/${buildUploadFilesRoute()}$`,
+        )}$|${API_HOST}/${buildUploadFilesRoute()}$|${API_HOST}/${parseStringToRegExp(
+          buildS3UploadFileRoute(ID_FORMAT),
+        )}$|${API_HOST}/${buildS3UploadFileRoute()}$`,
       ),
     },
     ({ reply }) => {
@@ -288,4 +295,72 @@ export const mockDefaultUploadItem = (items, shouldThrowError) => {
       return reply(false);
     },
   ).as('uploadItem');
+};
+
+export const mockDefaultDownloadFile = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildDownloadFilesRoute(ID_FORMAT),
+        )}$`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
+      const id = url.slice(API_HOST.length).split('/')[2];
+      const { filepath } = items.find(({ id: thisId }) => id === thisId);
+      reply({ fixture: filepath });
+    },
+  ).as('downloadFile');
+};
+
+export const mockGetS3Metadata = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetS3MetadataRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
+      const id = url.slice(API_HOST.length).split('/')[2];
+      const {
+        extra: { s3FileItem },
+      } = items.find(({ id: thisId }) => id === thisId);
+
+      reply(s3FileItem);
+    },
+  ).as('getS3Metadata');
+};
+
+// intercept s3 file link and serve corresponding cypress fixture
+export const mockGetS3FileContent = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${parseStringToRegExp(S3_FILES_HOST, {
+          characters: ['.', '-'],
+        })}/[a-zA-Z0-1\\/]+\\.[a-z0-1]+$`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
+      const filepath = url.slice(S3_FILES_HOST.length);
+      reply({ fixture: filepath });
+    },
+  ).as('getS3FileContent');
 };

@@ -26,6 +26,8 @@ module.exports = (on, config) => {
         root: '#root',
       },
       API_HOST: process.env.REACT_APP_API_HOST,
+      S3_FILES_HOST:
+        process.env.REACT_APP_S3_FILES_HOST || process.env.REACT_APP_API_HOST,
     },
   };
   require('@cypress/code-coverage/task')(on, newConfig);

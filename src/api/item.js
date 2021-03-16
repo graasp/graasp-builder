@@ -194,8 +194,13 @@ export const getSharedItems = async () => {
   return res.json();
 };
 
-export const getFileContent = async ({ id }) =>
-  fetch(`${API_HOST}/${buildDownloadFilesRoute(id)}`, DEFAULT_GET);
+export const getFileContent = async ({ id }) => {
+  const response = await fetch(
+    `${API_HOST}/${buildDownloadFilesRoute(id)}`,
+    DEFAULT_GET,
+  );
+  return response;
+};
 
 export const s3UploadItem = async ({ itemId, filename, contentType }) => {
   const response = await fetch(
