@@ -27,3 +27,7 @@ cypress/screenshots
 cypress/videos
 /.nyc_output
 /coverage
+
+
+# jetbrains
+.idea
