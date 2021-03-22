@@ -27,6 +27,7 @@ const FileItem = ({ item }) => {
         URL.revokeObjectURL(url);
       };
     })();
+    // does not include url to avoid infinite loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -39,8 +40,6 @@ const FileItem = ({ item }) => {
   }
 
   if (MIME_TYPES.VIDEO.includes(mimetype)) {
-    // eslint-disable-next-line no-console
-    console.log(id);
     return <FileVideo id={id} url={url} type={mimetype} />;
   }
 

@@ -7,7 +7,7 @@ import {
   FILE_UPLOAD_MAX_FILES,
   UPLOAD_FILES_METHODS,
 } from '../config/constants';
-import { s3UploadItem } from '../api/item';
+import { uploadItemToS3 } from '../api/item';
 import { DEFAULT_PUT } from '../api/utils';
 
 const configureUppy = ({
@@ -29,7 +29,7 @@ const configureUppy = ({
       uppy.use(AwsS3, {
         async getUploadParameters(file) {
           // Send a request to s3
-          const data = await s3UploadItem({
+          const data = await uploadItemToS3({
             itemId,
             filename: file.name,
             contentType: file.type,

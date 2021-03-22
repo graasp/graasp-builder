@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginRight: 0,
+    // takes the whole screen height minus the header height approximatively
+    // this might have to change
     minHeight: '90vh',
     display: 'flex',
     flexDirection: 'column',

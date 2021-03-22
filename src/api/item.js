@@ -202,7 +202,7 @@ export const getFileContent = async ({ id }) => {
   return response;
 };
 
-export const s3UploadItem = async ({ itemId, filename, contentType }) => {
+export const uploadItemToS3 = async ({ itemId, filename, contentType }) => {
   const response = await fetch(
     `${API_HOST}/${buildS3UploadFileRoute(itemId)}`,
     {

@@ -28,6 +28,7 @@ const styles = (theme) => ({
       3,
     )}px ${theme.spacing(3)}px`,
     left: 0,
+    // show above drawer
     zIndex: theme.zIndex.drawer + 1,
     opacity: 0.8,
 
@@ -124,7 +125,7 @@ class FileUploader extends Component {
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
-      // on Home
+      // when uploading at the root: Home
       if (!itemId) {
         return dispatchGetOwnItems();
       }
@@ -176,9 +177,12 @@ class FileUploader extends Component {
         >
           <DragDrop
             uppy={uppy}
-            note={t(`You can upload up to X files at a time`, {
-              maxFiles: FILE_UPLOAD_MAX_FILES,
-            })}
+            note={t(
+              `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
+              {
+                maxFiles: FILE_UPLOAD_MAX_FILES,
+              },
+            )}
             locale={{
               strings: {
                 // Text to show on the droppable area.

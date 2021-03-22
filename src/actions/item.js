@@ -1,5 +1,4 @@
 import * as Api from '../api/item';
-import { ITEM_TYPES } from '../config/constants';
 import {
   CREATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
@@ -45,21 +44,14 @@ export const setItem = (id) => async (dispatch) => {
     let newParents = [];
     let newChildren = [];
 
-    const { children, parents, type } = item;
+    const { children, parents } = item;
 
-    switch (type) {
-      case ITEM_TYPES.SPACE: {
-        if (!children) {
-          newChildren = await Api.getChildren(id);
-        }
+    if (!children) {
+      newChildren = await Api.getChildren(id);
+    }
 
-        if (!parents) {
-          newParents = await buildParentsLine(item.path);
-        }
-        break;
-      }
-      default:
-        break;
+    if (!parents) {
+      newParents = await buildParentsLine(item.path);
     }
 
     dispatch({

@@ -94,7 +94,7 @@ class ItemPanel extends Component {
           <Table
             id={ITEM_PANEL_TABLE_ID}
             size="small"
-            aria-label="a dense table"
+            aria-label="item panel table"
           >
             <TableBody>
               <TableRow>

@@ -18,21 +18,18 @@ const S3FileItem = ({ item }) => {
   useEffect(() => {
     (async () => {
       const itemUrl = await getS3FileUrl({ id });
-      // eslint-disable-next-line no-console
-      console.log('itemUrl: ', itemUrl);
 
       const content = await fetch(itemUrl);
 
       // Build a URL from the file
       const fileURL = URL.createObjectURL(await content.blob());
-      // eslint-disable-next-line no-console
-      console.log('fileURL: ', fileURL);
       setUrl(fileURL);
 
       return () => {
         URL.revokeObjectURL(url);
       };
     })();
+    // does not include url to avoid infinite loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
