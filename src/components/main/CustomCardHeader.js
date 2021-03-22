@@ -38,13 +38,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CustomCardHeader = ({ item }) => {
-  const { id, creator, name, type } = item;
+  const { id, creator = {}, name, type } = item;
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const { avatar: creatorAvatar, name: creatorName = t('Unknown') } = creator;
+
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Avatar src={creator.avatar} className={classes.avatar} />
+        <Avatar src={creatorAvatar} className={classes.avatar} />
         <div>
           <Link to={buildItemPath(id)} className={classes.link}>
             <Typography id={buildItemLink(id)} className={classes.title}>
@@ -54,7 +57,7 @@ const CustomCardHeader = ({ item }) => {
           <Typography className={classes.subtitle}>
             {t('Type by author', {
               type,
-              author: creator.name || t('Unknown'),
+              author: creatorName,
             })}
           </Typography>
         </div>

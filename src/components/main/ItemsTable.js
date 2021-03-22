@@ -140,12 +140,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
     ({ id, updatedAt, name, createdAt, type, extra }) => {
       const nameAndIcon = (
         <span className={classes.iconAndName}>
-          <ItemIcon
-            type={type}
-            mimetype={
-              extra?.fileItem?.mimetype || extra?.s3FileItem?.contenttype
-            }
-          />
+          <ItemIcon type={type} extra={extra} name={name} />
           <span className={classes.itemName}>{name}</span>
         </span>
       );

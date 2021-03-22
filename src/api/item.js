@@ -1,4 +1,5 @@
-import { API_HOST, ROOT_ID } from '../config/constants';
+import { v4 as uuidv4 } from 'uuid';
+import { API_HOST, ITEM_TYPES, ROOT_ID } from '../config/constants';
 import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
@@ -41,17 +42,44 @@ export const getItem = async (id) => {
 export const getItems = () => CacheOperations.getItems();
 
 export const getOwnItems = async () => {
-  const res = await fetch(`${API_HOST}/${GET_OWN_ITEMS_ROUTE}`, DEFAULT_GET);
+  // -------- TO REMOVE
+  const id = 'c4dea86a-5d7c-4144-b038-20b746793e12';
+  const item = {
+    id,
+    name: 'namename',
+    path: id.replaceAll('-', '_'),
+    type: ITEM_TYPES.LINK,
+    description: 'desc',
+    extra: {
+      embeddedLinkItem: {
+        url: 'https://graasp.eu',
+        html:
+          '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZAzWT8mRoR0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        icons: [
+          'https://graasp.eu/cdn/img/epfl/favicons/favicon-32x32.png?v=yyxJ380oWY',
+        ],
+        thumbnails: ['https://graasp.eu/img/epfl/logo-tile.png'],
+      },
+    },
+  };
+  await CacheOperations.createItem({ item });
+  // eslint-disable-next-line no-console
+  console.log(GET_OWN_ITEMS_ROUTE);
+  return [item];
 
-  if (!res.ok) {
-    throw new Error((await res.json()).message);
-  }
+  // -------- TO REMOVE
 
-  const ownItems = await res.json();
+  // const res = await fetch(`${API_HOST}/${GET_OWN_ITEMS_ROUTE}`, DEFAULT_GET);
 
-  await CacheOperations.saveItems(ownItems);
+  // if (!res.ok) {
+  //   throw new Error((await res.json()).message);
+  // }
 
-  return ownItems;
+  // const ownItems = await res.json();
+
+  // await CacheOperations.saveItems(ownItems);
+
+  // return ownItems;
 };
 
 // payload = {name, type, description, extra}
@@ -63,6 +91,27 @@ export const postItem = async ({
   extra,
   parentId,
 } = {}) => {
+  // -------- TO REMOVE
+  if (type === ITEM_TYPES.LINK) {
+    // eslint-disable-next-line no-console
+    console.log('weiufhskdjn');
+    const newExtra = extra;
+    // newExtra.embeddedLinkItem.html = 'someplayer';
+    newExtra.embeddedLinkItem.thumbnails = ['link'];
+    newExtra.embeddedLinkItem.icons = ['link'];
+    const newItem = {
+      id: uuidv4(),
+      name,
+      type,
+      description,
+      extra: newExtra,
+    };
+    await CacheOperations.createItem({ item: newItem });
+    return newItem;
+  }
+
+  // -------- TO REMOVE
+
   const res = await fetch(`${API_HOST}/${buildPostItemRoute(parentId)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify({ name, type, description, extra }),

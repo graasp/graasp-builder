@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Map, List } from 'immutable';
 import { useTranslation } from 'react-i18next';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editItem } from '../../actions/item';
-import ItemForm from './ItemForm';
+import SpaceForm from '../item/form/SpaceForm';
 import { setEditModalSettings } from '../../actions/layout';
 import { getItemById } from '../../utils/item';
+import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
+import { ITEM_TYPES } from '../../config/constants';
+import BaseItemForm from '../item/form/BaseItemForm';
+
+const useStyles = makeStyles(() => ({
+  dialogContent: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}));
 
 const EditItemModal = ({
   dispatchEditItem,
@@ -15,29 +31,57 @@ const EditItemModal = ({
   items,
 }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
+  const [updatedItem, setUpdatedItem] = useState(null);
 
-  const submitChanges = async (data) => {
-    dispatchEditItem({
-      ...data,
-    });
-  };
+  useEffect(() => {
+    const selectedId = settings.get('itemId');
+    const item = selectedId ? getItemById(items, selectedId) : null;
+    setUpdatedItem(item);
+  }, [settings, items]);
 
-  const handleClose = () => {
+  const onClose = () => {
     dispatchSetEditModalSettings({ open: false, itemId: null });
   };
 
-  const selectedId = settings.get('itemId');
-  const item = selectedId ? getItemById(items, selectedId) : null;
+  const submit = () => {
+    dispatchEditItem(updatedItem);
+    onClose();
+  };
+
+  const renderForm = () => {
+    switch (updatedItem?.type) {
+      case ITEM_TYPES.SPACE:
+        return <SpaceForm onChange={setUpdatedItem} item={updatedItem} />;
+      case ITEM_TYPES.FILE:
+      case ITEM_TYPES.LINK:
+        return <BaseItemForm onChange={setUpdatedItem} item={updatedItem} />;
+      default:
+        return null;
+    }
+  };
+
+  const open = settings.get('open');
 
   return (
-    <ItemForm
-      title={t('Edit Item')}
-      item={item}
-      onConfirm={submitChanges}
-      open={settings.get('open')}
-      handleClose={handleClose}
-      confirmText={t('Edit Item')}
-    />
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogTitle id={settings.get('itemId')}>{t('Edit Item')}</DialogTitle>
+      <DialogContent className={classes.dialogContent}>
+        {renderForm()}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} color="primary">
+          {t('Cancel')}
+        </Button>
+        <Button
+          onClick={submit}
+          color="primary"
+          id={ITEM_FORM_CONFIRM_BUTTON_ID}
+        >
+          {t('Edit Item')}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

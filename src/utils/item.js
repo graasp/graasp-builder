@@ -1,6 +1,10 @@
 // synchronous functions to manage items from redux
 
-import { UUID_LENGTH } from '../config/constants';
+import {
+  DEFAULT_IMAGE_SRC,
+  ITEM_TYPES,
+  UUID_LENGTH,
+} from '../config/constants';
 
 export const transformIdForPath = (id) => id.replaceAll('-', '_');
 
@@ -38,3 +42,35 @@ export const areItemsEqual = (i1, i2) => {
 
   return i1.updatedAt === i2.updatedAt;
 };
+
+export const isValidURL = (str) => {
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ); // fragment locator
+  return pattern.test(str);
+};
+
+export const isItemValid = ({ name, type, extra }) => {
+  const shouldHaveName = Boolean(name);
+  const { embeddedLinkItem } = extra || {};
+
+  let shouldValidTypeProperties = true;
+  if (type === ITEM_TYPES.LINK) {
+    shouldValidTypeProperties =
+      embeddedLinkItem && isValidURL(embeddedLinkItem.url);
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(shouldValidTypeProperties);
+
+  return shouldHaveName && shouldValidTypeProperties;
+};
+
+export const getThumnbail = ({ extra }) =>
+  extra?.image || extra?.embeddedLinkItem?.thumbnails?.[0] || DEFAULT_IMAGE_SRC;

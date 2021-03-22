@@ -113,12 +113,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         .updateIn(['items'], updateInList([...parents, ...children, item]));
     }
     case CREATE_ITEM_SUCCESS: {
-      const from = state.getIn(['item', 'id']);
+      const updatedState = state.updateIn(['items'], updateInList([payload]));
+      const from = updatedState.getIn(['item', 'id']);
       // add item in children or in root items
       if (!from) {
-        return state.update('own', updateInList(payload));
+        return updatedState.update('own', updateInList(payload));
       }
-      return state.updateIn(['item', 'children'], updateInList(payload));
+      return updatedState.updateIn(['item', 'children'], updateInList(payload));
     }
     case DELETE_ITEMS_SUCCESS: {
       let newState = state;
@@ -168,13 +169,17 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         .updateIn(['items'], updateInList(payload));
 
     case EDIT_ITEM_SUCCESS: {
+      const updatedState = state.updateIn(['items'], updateInList([payload]));
       // update current elements
-      if (state.getIn(['item', 'id'])) {
-        return state.updateIn(['item', 'children'], updateInList(payload));
+      if (updatedState.getIn(['item', 'id'])) {
+        return updatedState.updateIn(
+          ['item', 'children'],
+          updateInList(payload),
+        );
       }
 
       // update home elements
-      return state.updateIn(['own'], updateInList(payload));
+      return updatedState.updateIn(['own'], updateInList(payload));
     }
     default:
       return state;

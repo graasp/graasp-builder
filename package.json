@@ -8,6 +8,7 @@
     "@material-ui/lab": "4.0.0-alpha.57",
     "@uppy/aws-s3": "1.7.7",
     "@uppy/core": "1.16.1",
+    "@uppy/dashboard": "1.17.1",
     "@uppy/drag-drop": "1.4.25",
     "@uppy/react": "1.11.3",
     "@uppy/tus": "1.8.5",
