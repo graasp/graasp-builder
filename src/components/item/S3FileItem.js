@@ -23,6 +23,7 @@ const S3FileItem = ({ item }) => {
 
       // Build a URL from the file
       const fileURL = URL.createObjectURL(await content.blob());
+
       setUrl(fileURL);
 
       return () => {

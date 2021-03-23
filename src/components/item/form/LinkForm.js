@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { isValidURL } from '../../../utils/item';
 import BaseForm from './BaseItemForm';
+import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
 
 function LinkForm({ onChange, item }) {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ function LinkForm({ onChange, item }) {
     <>
       <BaseForm onChange={onChange} item={item} />
       <TextField
+        id={ITEM_FORM_LINK_INPUT_ID}
         error={isLinkInvalid}
         autoFocus
         margin="dense"

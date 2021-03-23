@@ -7,6 +7,11 @@ import FolderIcon from '@material-ui/icons/Folder';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ItemTypeButton from './ItemTypeButton';
 import { ITEM_TYPES } from '../../config/constants';
+import {
+  CREATE_ITEM_FILE_ID,
+  CREATE_ITEM_LINK_ID,
+  CREATE_ITEM_SPACE_ID,
+} from '../../config/selectors';
 
 const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
   const { t } = useTranslation();
@@ -17,6 +22,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
     <Grid container spacing={1} alignItems="stretch">
       <Grid item xs={4}>
         <ItemTypeButton
+          id={CREATE_ITEM_SPACE_ID}
           handleClick={handleClick(ITEM_TYPES.SPACE)}
           selected={selectedItemType === ITEM_TYPES.SPACE}
           Icon={FolderIcon}
@@ -25,6 +31,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
       </Grid>
       <Grid item xs={4}>
         <ItemTypeButton
+          id={CREATE_ITEM_FILE_ID}
           handleClick={handleClick(ITEM_TYPES.FILE)}
           selected={selectedItemType === ITEM_TYPES.FILE}
           Icon={FileCopyIcon}
@@ -34,6 +41,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
       </Grid>
       <Grid item xs={4}>
         <ItemTypeButton
+          id={CREATE_ITEM_LINK_ID}
           handleClick={handleClick(ITEM_TYPES.LINK)}
           selected={selectedItemType === ITEM_TYPES.LINK}
           Icon={LinkIcon}

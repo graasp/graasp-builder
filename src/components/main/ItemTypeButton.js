@@ -26,11 +26,13 @@ const ItemTypeButton = ({
   Icon,
   handleClick,
   selected,
+  id,
 }) => {
   const classes = useStyles();
 
   return (
     <Card
+      id={id}
       classes={{ root: classes.card }}
       className={clsx({ [classes.selected]: selected })}
     >
@@ -52,6 +54,7 @@ const ItemTypeButton = ({
 };
 
 ItemTypeButton.propTypes = {
+  id: PropTypes.string,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   // eslint-disable-next-line react/forbid-prop-types
@@ -61,6 +64,7 @@ ItemTypeButton.propTypes = {
 };
 
 ItemTypeButton.defaultProps = {
+  id: null,
   description: '',
 };
 

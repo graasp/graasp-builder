@@ -1,7 +1,7 @@
 import { DEFAULT_MODE, MODES } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { UPLOADER_ID } from '../../../../src/config/selectors';
-import { SIMPLE_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const ICON_FILEPATH = 'files/icon.png';
 const TEXT_FILEPATH = 'files/sometext.txt';
@@ -15,7 +15,7 @@ const dragUploadItem = (filenames) => {
 
 describe('Upload Item in Grid', () => {
   beforeEach(() => {
-    cy.setUpApi({ items: SIMPLE_ITEMS });
+    cy.setUpApi({ items: SAMPLE_ITEMS });
   });
 
   describe('Drag Upload', () => {
@@ -50,7 +50,7 @@ describe('Upload Item in Grid', () => {
       });
     });
     describe('upload item in item', () => {
-      const { id } = SIMPLE_ITEMS[0];
+      const { id } = SAMPLE_ITEMS[0];
 
       beforeEach(() => {
         cy.visit(buildItemPath(id));

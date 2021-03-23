@@ -14,17 +14,19 @@ const useStyles = makeStyles(() => ({
 const LinkItem = ({ item }) => {
   const classes = useStyles();
 
+  const id = item.get('id');
+
   // if available, display specific player
   const html = item.getIn(['extra', 'embeddedLinkItem', 'html']);
   if (html) {
     // eslint-disable-next-line react/no-danger
-    return <div dangerouslySetInnerHTML={{ __html: html }} />;
+    return <div id={id} dangerouslySetInnerHTML={{ __html: html }} />;
   }
 
   // default case is an iframe with given link
   const url = item.getIn(['extra', 'embeddedLinkItem', 'url']);
   const name = item.get('name');
-  return <iframe className={classes.iframe} title={name} src={url} />;
+  return <iframe id={id} className={classes.iframe} title={name} src={url} />;
 };
 
 LinkItem.propTypes = {

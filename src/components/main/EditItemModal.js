@@ -54,6 +54,7 @@ const EditItemModal = ({
       case ITEM_TYPES.SPACE:
         return <SpaceForm onChange={setUpdatedItem} item={updatedItem} />;
       case ITEM_TYPES.FILE:
+      case ITEM_TYPES.S3_FILE:
       case ITEM_TYPES.LINK:
         return <BaseItemForm onChange={setUpdatedItem} item={updatedItem} />;
       default:

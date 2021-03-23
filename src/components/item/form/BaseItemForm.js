@@ -22,8 +22,6 @@ const BaseForm = ({ onChange, item }) => {
 
   const handleNameInput = (event) => {
     onChange({ ...item, name: event.target.value });
-    // eslint-disable-next-line no-console
-    console.log(event.target.value);
   };
 
   const handleDescriptionInput = (event) => {

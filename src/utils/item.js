@@ -66,9 +66,6 @@ export const isItemValid = ({ name, type, extra }) => {
       embeddedLinkItem && isValidURL(embeddedLinkItem.url);
   }
 
-  // eslint-disable-next-line no-console
-  console.log(shouldValidTypeProperties);
-
   return shouldHaveName && shouldValidTypeProperties;
 };
 

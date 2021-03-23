@@ -9,6 +9,7 @@ import { withTranslation } from 'react-i18next';
 import { FILE_UPLOAD_MAX_FILES, UPLOAD_METHOD } from '../../config/constants';
 import configureUppy from '../../utils/uppy';
 import { setItem, getOwnItems } from '../../actions/item';
+import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 
 const styles = () => ({
   //   wrapper: {
@@ -92,7 +93,7 @@ class FileUploader extends Component {
     }
 
     return (
-      <div className={classes.wrapper}>
+      <div className={classes.wrapper} id={DASHBOARD_UPLOADER_ID}>
         <Dashboard
           uppy={uppy}
           height={200}

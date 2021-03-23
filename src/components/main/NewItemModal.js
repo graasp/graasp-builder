@@ -10,7 +10,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { connect } from 'react-redux';
 import { createItem } from '../../actions/item';
 import SpaceForm from '../item/form/SpaceForm';
-import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
+import {
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+  CREATE_ITEM_CLOSE_BUTTON_ID,
+} from '../../config/selectors';
 import ItemTypeButtons from './ItemTypeButtons';
 import { ITEM_TYPES } from '../../config/constants';
 import FileDashboardUploader from './FileDashboardUploader';
@@ -90,7 +93,11 @@ const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
         );
       case ITEM_TYPES.FILE:
         return (
-          <Button onClick={handleClose} color="primary">
+          <Button
+            id={CREATE_ITEM_CLOSE_BUTTON_ID}
+            onClick={handleClose}
+            color="primary"
+          >
             {t('Close')}
           </Button>
         );
