@@ -41,17 +41,19 @@ export const setItem = (id) => async (dispatch) => {
     dispatch(createFlag(FLAG_SETTING_ITEM, true));
     // use saved item when possible
     const item = await Api.getItem(id);
+    let newParents = [];
+    let newChildren = [];
 
     const { children, parents } = item;
-    let newChildren = [];
+
     if (!children) {
       newChildren = await Api.getChildren(id);
     }
 
-    let newParents = [];
     if (!parents) {
       newParents = await buildParentsLine(item.path);
     }
+
     dispatch({
       type: SET_ITEM_SUCCESS,
       payload: { item, children: newChildren, parents: newParents },

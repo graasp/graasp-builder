@@ -3,13 +3,17 @@ import {
   buildCopyItemRoute,
   buildDeleteItemRoute,
   buildDeleteItemsRoute,
+  buildDownloadFilesRoute,
   buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemRoute,
+  buildGetS3MetadataRoute,
   buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
+  buildS3FileUrl,
+  buildS3UploadFileRoute,
 } from './routes';
 import {
   DEFAULT_DELETE,
@@ -188,4 +192,40 @@ export const getSharedItems = async () => {
   }
 
   return res.json();
+};
+
+export const getFileContent = async ({ id }) => {
+  const response = await fetch(
+    `${API_HOST}/${buildDownloadFilesRoute(id)}`,
+    DEFAULT_GET,
+  );
+  return response;
+};
+
+export const uploadItemToS3 = async ({ itemId, filename, contentType }) => {
+  const response = await fetch(
+    `${API_HOST}/${buildS3UploadFileRoute(itemId)}`,
+    {
+      // Send and receive JSON.
+      ...DEFAULT_POST,
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        filename,
+        contentType,
+      }),
+    },
+  );
+  return response.json();
+};
+
+export const getS3FileUrl = async ({ id }) => {
+  const response = await fetch(
+    `${API_HOST}/${buildGetS3MetadataRoute(id)}`,
+    DEFAULT_GET,
+  );
+  const { key } = await response.json();
+  return buildS3FileUrl(key);
 };

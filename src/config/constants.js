@@ -1,9 +1,17 @@
-import { API_HOST as API_HOST_ENV } from '../env.json';
+import env from '../env.json';
+
+const {
+  API_HOST: ENV_API_HOST,
+  S3_FILES_HOST: ENV_S3_FILES_HOST,
+  UPLOAD_METHOD: ENV_UPLOAD_METHOD,
+} = env;
 
 export const APP_NAME = 'Graasp';
 
 export const API_HOST =
-  API_HOST_ENV || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
+  ENV_API_HOST || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
+export const S3_FILES_HOST =
+  ENV_S3_FILES_HOST || process.env.REACT_APP_S3_FILES_HOST || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -25,6 +33,14 @@ export const ITEM_TYPES = {
   SPACE: 'Space',
   APPLICATION: 'Application',
   EXERCISE: 'Exercise',
+  FILE: 'file',
+  S3_FILE: 's3-file',
+};
+export const MIME_TYPES = {
+  IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
+  VIDEO: ['video/mp4'],
+  AUDIO: ['audio/mpeg', 'audio/mp3'],
+  PDF: ['application/pdf'],
 };
 export const DRAWER_WIDTH = 300;
 export const DEFAULT_LOCALE = 'en-US';
@@ -49,8 +65,6 @@ export const ORDERING = {
   DESC: 'desc',
 };
 
-export const TABLE_MIN_WIDTH = 750;
-
 export const ROWS_PER_PAGE_OPTIONS = [10, 25];
 
 export const ITEM_DATA_TYPES = {
@@ -58,4 +72,17 @@ export const ITEM_DATA_TYPES = {
 };
 
 export const LEFT_MENU_WIDTH = 250;
+export const RIGHT_MENU_WIDTH = 300;
 export const HEADER_HEIGHT = 64;
+
+export const FILE_UPLOAD_MAX_FILES = 5;
+export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
+export const UPLOAD_FILES_METHODS = {
+  S3: 's3',
+  DEFAULT: 'default',
+};
+
+export const UPLOAD_METHOD =
+  ENV_UPLOAD_METHOD ||
+  process.env.REACT_APP_UPLOAD_METHOD ||
+  UPLOAD_FILES_METHODS.DEFAULT;

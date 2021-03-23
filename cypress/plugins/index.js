@@ -26,6 +26,10 @@ module.exports = (on, config) => {
         root: '#root',
       },
       API_HOST: process.env.REACT_APP_API_HOST,
+      S3_FILES_HOST:
+        // calls to this host are mocked, but still should be reachable
+        // set an s3 host or fake it by using the same host as the api's
+        process.env.REACT_APP_S3_FILES_HOST || process.env.REACT_APP_API_HOST,
     },
   };
   require('@cypress/code-coverage/task')(on, newConfig);

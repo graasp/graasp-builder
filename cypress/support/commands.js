@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'cypress-file-upload';
 import { MODES } from '../../src/config/constants';
 import {
   MODE_GRID_BUTTON_ID,
@@ -15,6 +17,10 @@ import {
   mockShareItem,
   mockGetMember,
   mockDeleteItems,
+  mockDefaultDownloadFile,
+  mockGetS3Metadata,
+  mockGetS3FileContent,
+  mockUploadItem,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -33,6 +39,10 @@ Cypress.Commands.add(
     editItemError = false,
     shareItemError = false,
     getMemberError = false,
+    defaultUploadError = false,
+    defaultDownloadFileError = false,
+    defaultGetS3MetadataError = false,
+    defaultGetS3FileContentError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -58,6 +68,14 @@ Cypress.Commands.add(
     mockShareItem(cachedItems, shareItemError);
 
     mockGetMember(cachedMembers, getMemberError);
+
+    mockUploadItem(cachedItems, defaultUploadError);
+
+    mockDefaultDownloadFile(cachedItems, defaultDownloadFileError);
+
+    mockGetS3Metadata(cachedItems, defaultGetS3MetadataError);
+
+    mockGetS3FileContent(defaultGetS3FileContentError);
   },
 );
 

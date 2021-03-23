@@ -55,6 +55,11 @@
     "View as List": "Afficher en liste",
     "Share": "Partager",
     "Permission": "Permission",
-    "Share Item": "Partager un Elément"
+    "Share Item": "Partager un Elément",
+    "Drop here or": "Déposer ici ou",
+    "Browse": "Parcourir",
+    "You can upload up to FILE_UPLOAD_MAX_FILES files at a time": "Jusqu'à {{maxFiles}} fichiers peuvent être déposés à la fois",
+    "s3-file": "fichier-s3",
+    "file": "fichier"
   }
 }

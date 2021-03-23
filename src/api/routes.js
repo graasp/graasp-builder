@@ -1,3 +1,5 @@
+import { S3_FILES_HOST } from '../config/constants';
+
 export const ITEMS_ROUTE = 'items';
 export const GET_OWN_ITEMS_ROUTE = `${ITEMS_ROUTE}/own`;
 export const SHARE_ITEM_WITH_ROUTE = `${ITEMS_ROUTE}/shared-with`;
@@ -23,3 +25,15 @@ export const buildGetItemMembershipForItemRoute = (id) =>
 export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email) => `${MEMBERS_ROUTE}?email=${email}`;
 export const buildGetMember = (id) => `${MEMBERS_ROUTE}/${id}`;
+export const buildUploadFilesRoute = (parentId) =>
+  parentId
+    ? `${ITEMS_ROUTE}/upload?parentId=${parentId}`
+    : `${ITEMS_ROUTE}/upload`;
+export const buildDownloadFilesRoute = (id) => `${ITEMS_ROUTE}/${id}/download`;
+export const buildS3UploadFileRoute = (parentId) =>
+  parentId
+    ? `${ITEMS_ROUTE}/s3-upload?parentId=${parentId}`
+    : `${ITEMS_ROUTE}/s3-upload`;
+export const buildGetS3MetadataRoute = (id) =>
+  `${ITEMS_ROUTE}/${id}/s3-metadata`;
+export const buildS3FileUrl = (key) => `${S3_FILES_HOST}/${key}`;

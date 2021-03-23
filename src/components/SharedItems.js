@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { List } from 'immutable';
 import { SHARED_ITEMS_ID } from '../config/selectors';
-import ItemsHeader from './main/ItemsHeader';
+import ItemHeader from './item/header/ItemHeader';
 import Items from './main/Items';
 import { getSharedItems } from '../actions/item';
 
@@ -22,7 +22,7 @@ const SharedItems = ({ activity, sharedItems, dispatchGetSharedItems }) => {
 
   return (
     <>
-      <ItemsHeader navigationRootText={t('Shared')} />
+      <ItemHeader navigationRootText={t('Shared')} />
       <Items
         id={SHARED_ITEMS_ID}
         title={t('Items Shared With Me')}

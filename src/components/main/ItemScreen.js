@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router';
-import ItemsHeader from './ItemsHeader';
+import { withStyles } from '@material-ui/core';
 import {
   clearItem,
   getOwnItems,
@@ -16,6 +16,20 @@ import {
 import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 import { areItemsEqual } from '../../utils/item';
+import { ITEM_TYPES } from '../../config/constants';
+import FileItem from '../item/FileItem';
+import FileUploader from './FileUploader';
+import S3FileItem from '../item/S3FileItem';
+import ItemMain from '../item/ItemMain';
+
+const styles = () => ({
+  fileWrapper: {
+    textAlign: 'center',
+    background: 'lightgrey',
+    height: '80vh',
+    flexGrow: 1,
+  },
+});
 
 class ItemScreen extends Component {
   static propTypes = {
@@ -29,6 +43,9 @@ class ItemScreen extends Component {
     item: PropTypes.instanceOf(Map),
     dispatchGetSharedItems: PropTypes.func.isRequired,
     dispatchGetOwnItems: PropTypes.func.isRequired,
+    classes: PropTypes.shape({
+      fileWrapper: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
@@ -104,6 +121,39 @@ class ItemScreen extends Component {
     dispatchClearItem();
   }
 
+  renderContent = () => {
+    const { item, t, classes } = this.props;
+
+    switch (item.get('type')) {
+      case ITEM_TYPES.FILE:
+        return (
+          <div className={classes.fileWrapper}>
+            <FileItem item={item} />
+          </div>
+        );
+      case ITEM_TYPES.S3_FILE:
+        return (
+          <div className={classes.fileWrapper}>
+            <S3FileItem item={item} />
+          </div>
+        );
+      case ITEM_TYPES.SPACE:
+        // display children
+        return (
+          <>
+            <FileUploader />
+            <Items title={item.get('name')} items={item.get('children')} />
+          </>
+        );
+      default:
+        return (
+          <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
+            {t('An error occured.')}
+          </Alert>
+        );
+    }
+  };
+
   render() {
     const { t, activity, item } = this.props;
 
@@ -120,12 +170,7 @@ class ItemScreen extends Component {
       );
     }
 
-    return (
-      <>
-        <ItemsHeader />
-        <Items title={item.get('name')} items={item.get('children')} />
-      </>
-    );
+    return <ItemMain item={item}>{this.renderContent()}</ItemMain>;
   }
 }
 
@@ -146,4 +191,5 @@ const ConnectedComponent = connect(
   mapDispatchToProps,
 )(ItemScreen);
 const TranslatedComponent = withTranslation()(ConnectedComponent);
-export default withRouter(TranslatedComponent);
+const StyledComponent = withStyles(styles)(TranslatedComponent);
+export default withRouter(StyledComponent);

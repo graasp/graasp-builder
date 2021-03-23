@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import { useHistory } from 'react-router';
@@ -9,167 +8,30 @@ import { useTranslation } from 'react-i18next';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import ItemMenu from './ItemMenu';
 import { buildItemPath } from '../../config/paths';
 import {
   ORDERING,
-  TABLE_MIN_WIDTH,
   ROWS_PER_PAGE_OPTIONS,
   ITEM_DATA_TYPES,
 } from '../../config/constants';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
-import NewItemButton from './NewItemButton';
 import EditButton from '../common/EditButton';
 import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
 import {
   buildItemsTableRowId,
-  ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
   ITEMS_TABLE_EMPTY_ROW_ID,
   ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../config/selectors';
-
-const EnhancedTableHead = (props) => {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-    headCells,
-  } = props;
-  const { t } = useTranslation();
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': t('select all items') }}
-            color="primary"
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.align}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : ORDERING.ASC}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === ORDERING.DESC
-                    ? t('sorted descending')
-                    : t('sorted ascending')}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-};
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.shape({
-    visuallyHidden: PropTypes.string.isRequired,
-  }).isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(Object.values(ORDERING)).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-  headCells: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-};
-
-const useToolbarStyles = makeStyles((theme) => ({
-  title: {
-    flex: '1 1 100%',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  highlight: {
-    background: theme.palette.primary.main,
-    color: 'white',
-  },
-}));
-
-const EnhancedTableToolbar = (props) => {
-  const classes = useToolbarStyles();
-  const { t } = useTranslation();
-  const { numSelected, tableTitle, selected } = props;
-
-  return (
-    <Toolbar
-      className={clsx({
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {t('nbitem selected', { numSelected })}
-        </Typography>
-      ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {tableTitle}
-          <NewItemButton fontSize="small" />
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <DeleteButton
-          id={ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}
-          color="secondary"
-          itemIds={selected}
-        />
-      ) : null}
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  tableTitle: PropTypes.string,
-  selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-};
-
-EnhancedTableToolbar.defaultProps = {
-  tableTitle: 'Items',
-};
+import TableToolbar from './TableToolbar';
+import TableHead from './TableHead';
+import ItemIcon from './ItemIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -178,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
-  },
-  table: {
-    minWidth: TABLE_MIN_WIDTH,
   },
   visuallyHidden: {
     border: 0,
@@ -198,6 +57,13 @@ const useStyles = makeStyles((theme) => ({
   },
   hover: {
     cursor: 'pointer',
+  },
+  iconAndName: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  itemName: {
+    paddingLeft: theme.spacing(1),
   },
 }));
 
@@ -271,21 +137,35 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
 
   // transform rows' information into displayable information
   const mappedRows = rowsToDisplay.map(
-    ({ id, name, updatedAt, createdAt, type }) => ({
-      id,
-      name,
-      type,
-      updatedAt,
-      createdAt,
-      actions: (
-        <>
-          <EditButton itemId={id} />
-          <ShareButton itemId={id} />
-          <DeleteButton itemIds={[id]} />
-          <ItemMenu itemId={id} />
-        </>
-      ),
-    }),
+    ({ id, updatedAt, name, createdAt, type, extra }) => {
+      const nameAndIcon = (
+        <span className={classes.iconAndName}>
+          <ItemIcon
+            type={type}
+            mimetype={
+              extra?.fileItem?.mimetype || extra?.s3FileItem?.contenttype
+            }
+          />
+          <span className={classes.itemName}>{name}</span>
+        </span>
+      );
+
+      return {
+        id,
+        name: nameAndIcon,
+        type,
+        updatedAt,
+        createdAt,
+        actions: (
+          <>
+            <EditButton itemId={id} />
+            <ShareButton itemId={id} />
+            <DeleteButton itemIds={[id]} />
+            <ItemMenu itemId={id} />
+          </>
+        ),
+      };
+    },
   );
 
   const handleRequestSort = (event, property) => {
@@ -351,7 +231,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        <EnhancedTableToolbar
+        <TableToolbar
           tableTitle={tableTitle}
           numSelected={selected.length}
           selected={selected}
@@ -359,12 +239,11 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
         <TableContainer>
           <Table
             id={tableId}
-            className={classes.table}
             aria-labelledby="tableTitle"
             size="medium"
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
+            <TableHead
               classes={classes}
               numSelected={selected.length}
               order={order}
