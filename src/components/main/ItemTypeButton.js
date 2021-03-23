@@ -57,8 +57,7 @@ ItemTypeButton.propTypes = {
   id: PropTypes.string,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
-  Icon: PropTypes.any.isRequired,
+  Icon: PropTypes.elementType.isRequired,
   selected: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired,
 };

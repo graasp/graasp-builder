@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { isValidURL } from '../../../utils/item';
+import { isUrlValid } from '../../../utils/item';
 import BaseForm from './BaseItemForm';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
 
@@ -18,7 +18,7 @@ function LinkForm({ onChange, item }) {
   };
 
   const { url } = item.extra?.embeddedLinkItem || {};
-  const isLinkInvalid = url?.length && !isValidURL(url);
+  const isLinkInvalid = url?.length && !isUrlValid(url);
 
   return (
     <>
@@ -38,7 +38,7 @@ function LinkForm({ onChange, item }) {
 }
 
 LinkForm.propTypes = {
-  onChange: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   item: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,

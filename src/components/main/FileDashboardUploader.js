@@ -98,14 +98,17 @@ class FileUploader extends Component {
           uppy={uppy}
           height={200}
           proudlyDisplayPoweredByUppy={false}
-          note={t(`You can upload up to X files at a time`, {
-            maxFiles: FILE_UPLOAD_MAX_FILES,
-          })}
+          note={t(
+            `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
+            {
+              maxFiles: FILE_UPLOAD_MAX_FILES,
+            },
+          )}
           locale={{
             strings: {
               // Text to show on the droppable area.
               // `%{browse}` is replaced with a link that opens the system file selection dialog.
-              dropHereOr: `${t('Drop here or')} %{browse}`,
+              dropPaste: `${t('Drop here or')} %{browse}`,
               // Used as the label for the link that opens the system file selection dialog.
               browse: t('Browse'),
             },

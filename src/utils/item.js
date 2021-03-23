@@ -43,7 +43,7 @@ export const areItemsEqual = (i1, i2) => {
   return i1.updatedAt === i2.updatedAt;
 };
 
-export const isValidURL = (str) => {
+export const isUrlValid = (str) => {
   const pattern = new RegExp(
     '^(https?:\\/\\/)?' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
@@ -63,11 +63,11 @@ export const isItemValid = ({ name, type, extra }) => {
   let shouldValidTypeProperties = true;
   if (type === ITEM_TYPES.LINK) {
     shouldValidTypeProperties =
-      embeddedLinkItem && isValidURL(embeddedLinkItem.url);
+      embeddedLinkItem && isUrlValid(embeddedLinkItem.url);
   }
 
   return shouldHaveName && shouldValidTypeProperties;
 };
 
-export const getThumnbail = ({ extra }) =>
+export const getThumbnail = ({ extra }) =>
   extra?.image || extra?.embeddedLinkItem?.thumbnails?.[0] || DEFAULT_IMAGE_SRC;

@@ -55,7 +55,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
 
 ItemTypeButtons.propTypes = {
   setSelectedItemType: PropTypes.func.isRequired,
-  selectedItemType: PropTypes.oneOf(Object.entries(ITEM_TYPES)).isRequired,
+  selectedItemType: PropTypes.oneOf(Object.values(ITEM_TYPES)).isRequired,
 };
 
 export default ItemTypeButtons;

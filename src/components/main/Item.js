@@ -13,7 +13,7 @@ import { buildItemCard } from '../../config/selectors';
 import EditButton from '../common/EditButton';
 import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
-import { getThumnbail } from '../../utils/item';
+import { getThumbnail } from '../../utils/item';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,7 +29,7 @@ const Item = ({ item }) => {
   const classes = useStyles();
   const { id, name, description } = item;
 
-  const image = getThumnbail(item);
+  const image = getThumbnail(item);
 
   return (
     <Card className={classes.root} id={buildItemCard(id)}>
