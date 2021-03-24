@@ -39,7 +39,7 @@ class FileDashboardUploader extends Component {
 
   componentWillUnmount() {
     const { uppy } = this.state;
-    uppy.close();
+    uppy?.close();
   }
 
   setUppy = () => {

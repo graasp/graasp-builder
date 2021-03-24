@@ -14,7 +14,13 @@ import {
 } from '../../config/constants';
 import configureUppy from '../../utils/uppy';
 import { setItem, getOwnItems } from '../../actions/item';
+import { uploadFileNotification } from '../../actions/file';
 import { UPLOADER_ID } from '../../config/selectors';
+import {
+  FLAG_UPLOADING_FILE,
+  UPLOAD_FILE_ERROR,
+  UPLOAD_FILE_SUCCESS,
+} from '../../types/item';
 
 const styles = (theme) => ({
   wrapper: {
@@ -51,6 +57,7 @@ class FileUploader extends Component {
     itemId: PropTypes.string,
     dispatchGetOwnItems: PropTypes.func.isRequired,
     dispatchSetItem: PropTypes.func.isRequired,
+    dispatchUploadFileNotification: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       show: PropTypes.string.isRequired,
       invalid: PropTypes.string.isRequired,
@@ -106,6 +113,8 @@ class FileUploader extends Component {
         onComplete: this.onComplete,
         onFilesAdded: this.onFilesAdded,
         method: UPLOAD_METHOD,
+        onError: this.onError,
+        onUpload: this.onUpload,
       }),
     });
   };
@@ -122,12 +131,29 @@ class FileUploader extends Component {
     this.closeUploader();
   };
 
+  onUpload = (payload) => {
+    const { dispatchUploadFileNotification } = this.props;
+    dispatchUploadFileNotification({
+      type: FLAG_UPLOADING_FILE,
+      payload,
+    });
+  };
+
   onComplete = (result) => {
-    const { itemId, dispatchGetOwnItems, dispatchSetItem } = this.props;
+    const {
+      itemId,
+      dispatchGetOwnItems,
+      dispatchSetItem,
+      dispatchUploadFileNotification,
+    } = this.props;
 
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
-    if (!result?.failed.length) {
+    if (result && result.successful.length) {
+      dispatchUploadFileNotification({
+        type: UPLOAD_FILE_SUCCESS,
+        payload: result,
+      });
       // when uploading at the root: Home
       if (!itemId) {
         return dispatchGetOwnItems();
@@ -136,6 +162,14 @@ class FileUploader extends Component {
     }
 
     return false;
+  };
+
+  onError = (e) => {
+    const { dispatchUploadFileNotification } = this.props;
+    dispatchUploadFileNotification({
+      type: UPLOAD_FILE_ERROR,
+      error: JSON.stringify(e),
+    });
   };
 
   handleDragEnter = (event) => {
@@ -209,6 +243,7 @@ const mapStateToProps = ({ item }) => ({
 const mapDispatchToProps = {
   dispatchSetItem: setItem,
   dispatchGetOwnItems: getOwnItems,
+  dispatchUploadFileNotification: uploadFileNotification,
 };
 
 const ConnectedComponent = connect(

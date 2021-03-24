@@ -5,6 +5,6 @@
     "pre-commit": "pretty-quick --staged && yarn lint",
     "post-commit": "git status",
     "post-merge": "yarn install",
-    "pre-push": "yarn lint && yarn build"
+    "pre-push": "yarn lint && yarn build && yarn test:once"
   }
 }

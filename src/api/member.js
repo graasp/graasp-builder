@@ -1,15 +1,12 @@
 import fetch from 'node-fetch';
 import { API_HOST } from '../config/constants';
-import { DEFAULT_GET } from './utils';
+import { checkRequest, DEFAULT_GET } from './utils';
 import { buildGetMemberBy, buildGetMember } from './routes';
 
 export const getMemberBy = async ({ email }) => {
   const res = await fetch(`${API_HOST}/${buildGetMemberBy(email)}`, {
     ...DEFAULT_GET,
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message);
-  }
+  }).then(checkRequest);
 
   return res.json();
 };
@@ -17,9 +14,7 @@ export const getMemberBy = async ({ email }) => {
 export const getMember = async ({ id }) => {
   const res = await fetch(`${API_HOST}/${buildGetMember(id)}`, {
     ...DEFAULT_GET,
-  });
-  if (!res.ok) {
-    throw new Error((await res.json()).message);
-  }
+  }).then(checkRequest);
+
   return res.json();
 };
