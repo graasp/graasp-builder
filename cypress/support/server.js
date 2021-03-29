@@ -17,6 +17,7 @@ import {
   buildDownloadFilesRoute,
   buildGetS3MetadataRoute,
   buildS3UploadFileRoute,
+  GET_CURRENT_MEMBER_ROUTE,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -24,7 +25,7 @@ import {
   isRootItem,
   transformIdForPath,
 } from '../../src/utils/item';
-import { CURRENT_USER_ID } from '../fixtures/items';
+import { CURRENT_USER_ID, MEMBERS } from '../fixtures/items';
 import { ID_FORMAT, parseStringToRegExp, EMAIL_FORMAT } from './utils';
 import {
   DEFAULT_PATCH,
@@ -35,6 +36,24 @@ import {
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
+
+export const mockGetCurrentMember = (members, shouldThrowError = false) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/${GET_CURRENT_MEMBER_ROUTE}`,
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+
+      // avoid sign in redirection
+      const current = MEMBERS.ANNA;
+      return reply(current);
+    },
+  ).as('getCurrentMember');
+};
 
 export const mockGetOwnItems = (items) => {
   cy.intercept(

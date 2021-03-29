@@ -1,25 +1,8 @@
 import { API_HOST } from '../config/constants';
-import { DEFAULT_GET, DEFAULT_POST } from './utils';
+import { DEFAULT_GET, checkRequest } from './utils';
 
-// payload = {email}
-export const signIn = async (payload) => {
-  const req = await fetch(`${API_HOST}/login`, {
-    ...DEFAULT_POST,
-    body: JSON.stringify(payload),
-  });
-  return req.ok;
-};
-
+// eslint-disable-next-line import/prefer-default-export
 export const signOut = async () => {
-  const req = await fetch(`${API_HOST}/logout`, DEFAULT_GET);
-  return req.ok;
-};
-
-// payload = {name, mail}
-export const signUp = async (payload) => {
-  const req = await fetch(`${API_HOST}/register`, {
-    ...DEFAULT_POST,
-    body: JSON.stringify(payload),
-  });
+  const req = await fetch(`${API_HOST}/logout`, DEFAULT_GET).then(checkRequest);
   return req.ok;
 };

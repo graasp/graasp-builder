@@ -21,6 +21,8 @@ import {
   FILE_UPLOAD_INFO_MESSAGE_HEADER,
   SUCCESS_MESSAGE_HEADER,
   ERROR_MESSAGE_HEADER,
+  SIGN_OUT_ERROR_MESSAGE,
+  SIGN_OUT_SUCCESS_MESSAGE,
 } from '../config/messages';
 import {
   COPY_ITEM_ERROR,
@@ -42,8 +44,11 @@ import {
   UPLOAD_FILE_SUCCESS,
   UPLOAD_FILE_ERROR,
   FLAG_UPLOADING_FILE,
-} from '../types/item';
-import { SHARE_ITEM_ERROR, SHARE_ITEM_SUCCESS } from '../types/membership';
+  SHARE_ITEM_ERROR,
+  SHARE_ITEM_SUCCESS,
+  SIGN_OUT_ERROR,
+  SIGN_OUT_SUCCESS,
+} from '../types';
 
 const ToastrMiddleware = () => (next) => (action) => {
   const result = next(action);
@@ -91,6 +96,10 @@ const ToastrMiddleware = () => (next) => (action) => {
       message = UPLOAD_FILES_ERROR_MESSAGE;
       break;
     }
+    case SIGN_OUT_ERROR: {
+      message = SIGN_OUT_ERROR_MESSAGE;
+      break;
+    }
     // success messages
     case CREATE_ITEM_SUCCESS: {
       message = CREATE_ITEM_SUCCESS_MESSAGE;
@@ -119,6 +128,10 @@ const ToastrMiddleware = () => (next) => (action) => {
     }
     case UPLOAD_FILE_SUCCESS: {
       message = UPLOAD_FILES_SUCCESS_MESSAGE;
+      break;
+    }
+    case SIGN_OUT_SUCCESS: {
+      message = SIGN_OUT_SUCCESS_MESSAGE;
       break;
     }
 

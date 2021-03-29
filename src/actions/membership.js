@@ -1,4 +1,4 @@
-import * as Api from '../api/membership';
+import * as Api from '../api';
 import { SHARE_ITEM_ERROR, SHARE_ITEM_SUCCESS } from '../types/membership';
 
 // eslint-disable-next-line import/prefer-default-export

@@ -37,3 +37,9 @@ export const buildS3UploadFileRoute = (parentId) =>
 export const buildGetS3MetadataRoute = (id) =>
   `${ITEMS_ROUTE}/${id}/s3-metadata`;
 export const buildS3FileUrl = (key) => `${S3_FILES_HOST}/${key}`;
+export const GET_CURRENT_MEMBER_ROUTE = `${MEMBERS_ROUTE}/current`;
+export const buildSignInPath = (to) => {
+  const qs = to ? `?to=${to}` : '';
+  return `signin${qs}`;
+};
+export const SIGN_UP_PATH = 'signup';

@@ -15,8 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { shareItemWith } from '../../actions/membership';
-import { setShareModalSettings } from '../../actions/layout';
+import { shareItemWith, setShareModalSettings } from '../../actions';
 import {
   DEFAULT_PERMISSION_LEVEL,
   PERMISSION_LEVELS,

@@ -3,10 +3,12 @@ import { combineReducers } from 'redux';
 import { SHOW_NOTIFICATIONS } from '../config/constants';
 import item from './item';
 import layout from './layout';
+import member from './member';
 
 const reducers = {
   item,
   layout,
+  member,
 };
 
 if (SHOW_NOTIFICATIONS) {

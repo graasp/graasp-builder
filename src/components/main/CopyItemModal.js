@@ -3,9 +3,8 @@ import { Map } from 'immutable';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { copyItem } from '../../actions/item';
 import TreeModal from './TreeModal';
-import { setCopyModalSettings } from '../../actions/layout';
+import { copyItem, setCopyModalSettings } from '../../actions';
 
 class CopyItemModal extends Component {
   static propTypes = {

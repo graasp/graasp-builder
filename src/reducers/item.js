@@ -26,6 +26,7 @@ import {
   DELETE_ITEMS_SUCCESS,
   FLAG_DELETING_ITEMS,
 } from '../types/item';
+import { updateActivity } from './utils';
 
 const DEFAULT_ITEM = Map({
   parents: List(),
@@ -51,13 +52,6 @@ const INITIAL_STATE = Map({
     [FLAG_DELETING_ITEMS]: [],
   }),
 });
-
-const updateActivity = (payload) => (activity) => {
-  if (payload) {
-    return [...activity, payload];
-  }
-  return activity.slice(1);
-};
 
 const updateItemInList = (item, list) => {
   let idx = list.findIndex(({ id }) => item.id === id);

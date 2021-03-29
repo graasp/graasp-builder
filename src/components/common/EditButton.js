@@ -6,7 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { EDIT_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { setEditModalSettings } from '../../actions/layout';
+import { setEditModalSettings } from '../../actions';
 
 const Item = ({ itemId, dispatchSetEditModalSettings }) => {
   const { t } = useTranslation();

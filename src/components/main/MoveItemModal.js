@@ -3,10 +3,9 @@ import { Map } from 'immutable';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { moveItem } from '../../actions/item';
 import TreeModal from './TreeModal';
 import { TREE_PREVENT_SELECTION } from '../../config/constants';
-import { setMoveModalSettings } from '../../actions/layout';
+import { setMoveModalSettings, moveItem } from '../../actions';
 
 class MoveItemModal extends Component {
   static propTypes = {

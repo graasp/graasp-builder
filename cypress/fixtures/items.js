@@ -1,6 +1,11 @@
 import { ITEM_TYPES } from '../../src/config/constants';
 
-export const CURRENT_USER_ID = 'some_creator_id';
+export const MEMBERS = {
+  ANNA: { id: 'anna-id', name: 'anna', email: 'anna@email.com' },
+  BOB: { id: 'bob-id', name: 'bob', email: 'bob@email.com' },
+};
+
+export const CURRENT_USER_ID = MEMBERS.ANNA.id;
 
 const DEFAULT_ITEM = {
   description: '',
@@ -21,11 +26,6 @@ export const CREATED_ITEM = {
 export const EDITED_FIELDS = {
   name: 'new name',
   description: 'new description',
-};
-
-export const MEMBERS = {
-  ANNA: { id: 'anna-id', name: 'anna', email: 'anna@email.com' },
-  BOB: { id: 'bob-id', name: 'bob', email: 'bob@email.com' },
 };
 
 export const SAMPLE_ITEMS = [

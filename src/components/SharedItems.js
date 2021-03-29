@@ -6,10 +6,14 @@ import { List } from 'immutable';
 import { SHARED_ITEMS_ID } from '../config/selectors';
 import ItemHeader from './item/header/ItemHeader';
 import Items from './main/Items';
-import { getSharedItems } from '../actions/item';
+import { getSharedItems } from '../actions';
 
 const SharedItems = ({ activity, sharedItems, dispatchGetSharedItems }) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    dispatchGetSharedItems();
+  }, [dispatchGetSharedItems]);
 
   useEffect(() => {
     if (!activity) {

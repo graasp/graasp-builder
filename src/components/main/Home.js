@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import ItemHeader from '../item/header/ItemHeader';
-import { setItem, getOwnItems } from '../../actions/item';
+import { setItem, getOwnItems } from '../../actions';
 import Items from './Items';
 import FileUploader from './FileUploader';
 import { OWNED_ITEMS_ID } from '../../config/selectors';

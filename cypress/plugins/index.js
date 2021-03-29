@@ -18,6 +18,7 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+
 module.exports = (on, config) => {
   const newConfig = {
     ...config,

@@ -28,3 +28,5 @@ export const UPLOAD_FILES_SUCCESS_MESSAGE =
   'The file(s) were successfully uploaded.';
 export const UPLOAD_FILES_PROGRESS_MESSAGE =
   'The file(s) are in queue for uploading. Please wait a moment.';
+export const SIGN_OUT_ERROR_MESSAGE = 'There was an error while signing out.';
+export const SIGN_OUT_SUCCESS_MESSAGE = 'You successfully signed out.';

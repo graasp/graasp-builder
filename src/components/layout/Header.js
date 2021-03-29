@@ -6,9 +6,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import IconButton from '@material-ui/core/IconButton';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
 import { ReactComponent as GraaspLogo } from '../../resources/graasp-logo.svg';
 import { APP_NAME, HEADER_HEIGHT } from '../../config/constants';
+import SettingsHeader from '../common/SettingsHeader';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -66,9 +66,7 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
             </Typography>
           </Link>
         </div>
-        <IconButton color="inherit">
-          <AccountCircle />
-        </IconButton>
+        <SettingsHeader />
       </Toolbar>
     </AppBar>
   );
