@@ -46,7 +46,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
           selected={selectedItemType === ITEM_TYPES.LINK}
           Icon={LinkIcon}
           title={t('Link')}
-          description={t('Wikipedia, Youtube')}
+          description={t('Wikipedia, YouTube')}
         />
       </Grid>
     </Grid>

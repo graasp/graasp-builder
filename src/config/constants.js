@@ -88,4 +88,4 @@ export const UPLOAD_METHOD =
   process.env.REACT_APP_UPLOAD_METHOD ||
   UPLOAD_FILES_METHODS.DEFAULT;
 
-export const ITEM_ICON_MAX_SIZE = 35;
+export const ITEM_ICON_MAX_SIZE = 25;

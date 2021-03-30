@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '@uppy/core/dist/style.css';
@@ -11,24 +10,11 @@ import configureUppy from '../../utils/uppy';
 import { setItem, getOwnItems } from '../../actions/item';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 
-const styles = () => ({
-  //   wrapper: {
-  //     '& .uppy-Dashboard': {
-  //       height: '300px',
-  //     },
-  //   },
-});
-
-class FileUploader extends Component {
+class FileDashboardUploader extends Component {
   static propTypes = {
     itemId: PropTypes.string,
     dispatchGetOwnItems: PropTypes.func.isRequired,
     dispatchSetItem: PropTypes.func.isRequired,
-    classes: PropTypes.shape({
-      show: PropTypes.string.isRequired,
-      invalid: PropTypes.string.isRequired,
-      wrapper: PropTypes.string.isRequired,
-    }).isRequired,
     t: PropTypes.func.isRequired,
   };
 
@@ -74,10 +60,11 @@ class FileUploader extends Component {
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
-      // on Home
+      // in the Home component
       if (!itemId) {
         return dispatchGetOwnItems();
       }
+      // elsewhere
       return dispatchSetItem(itemId);
     }
 
@@ -86,14 +73,14 @@ class FileUploader extends Component {
 
   render() {
     const { uppy } = this.state;
-    const { t, classes } = this.props;
+    const { t } = this.props;
 
     if (!uppy) {
       return null;
     }
 
     return (
-      <div className={classes.wrapper} id={DASHBOARD_UPLOADER_ID}>
+      <div id={DASHBOARD_UPLOADER_ID}>
         <Dashboard
           uppy={uppy}
           height={200}
@@ -131,7 +118,6 @@ const mapDispatchToProps = {
 const ConnectedComponent = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(FileUploader);
-const StyledComponent = withStyles(styles)(ConnectedComponent);
+)(FileDashboardUploader);
 
-export default withTranslation()(StyledComponent);
+export default withTranslation()(ConnectedComponent);

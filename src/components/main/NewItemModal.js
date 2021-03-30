@@ -48,7 +48,7 @@ const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
 
   const submit = () => {
     if (!isItemValid(newItem)) {
-      // todo: notifiy user
+      // todo: notify user
       return false;
     }
 

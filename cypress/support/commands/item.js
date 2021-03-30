@@ -66,11 +66,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillLinkModal',
-  ({ name = '', extra = {}, description = '' }, { confirm = true } = {}) => {
-    cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).clear().type(name);
-
-    cy.get(`#${ITEM_FORM_DESCRIPTION_INPUT_ID}`).clear().type(description);
-
+  ({ extra = {} }, { confirm = true } = {}) => {
     cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`)
       .clear()
       .type(extra?.embeddedLinkItem?.url);

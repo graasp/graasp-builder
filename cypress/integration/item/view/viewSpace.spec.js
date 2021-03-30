@@ -185,7 +185,7 @@ describe('View Space', () => {
     });
   });
 
-  describe('Errors handling', () => {
+  describe('Error Handling', () => {
     it('visiting non-existing item display no item here', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS, getItemError: true });
       const { id } = SAMPLE_ITEMS[0];

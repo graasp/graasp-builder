@@ -45,7 +45,7 @@ export const areItemsEqual = (i1, i2) => {
 
 export const isUrlValid = (str) => {
   const pattern = new RegExp(
-    '^(https?:\\/\\/)?' + // protocol
+    '^(https?:\\/\\/)+' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
       '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
@@ -53,14 +53,15 @@ export const isUrlValid = (str) => {
       '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
-  return pattern.test(str);
+  return str && pattern.test(str);
 };
 
 export const isItemValid = ({ name, type, extra }) => {
   const shouldHaveName = Boolean(name);
   const { embeddedLinkItem } = extra || {};
 
-  let shouldValidTypeProperties = true;
+  // item should have a type
+  let shouldValidTypeProperties = Object.values(ITEM_TYPES).includes(type);
   if (type === ITEM_TYPES.LINK) {
     shouldValidTypeProperties =
       embeddedLinkItem && isUrlValid(embeddedLinkItem.url);
@@ -69,5 +70,5 @@ export const isItemValid = ({ name, type, extra }) => {
   return shouldHaveName && shouldValidTypeProperties;
 };
 
-export const getThumbnail = ({ extra }) =>
+export const getItemImage = ({ extra }) =>
   extra?.image || extra?.embeddedLinkItem?.thumbnails?.[0] || DEFAULT_IMAGE_SRC;

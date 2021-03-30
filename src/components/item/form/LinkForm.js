@@ -3,16 +3,15 @@ import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { isUrlValid } from '../../../utils/item';
-import BaseForm from './BaseItemForm';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
 
 function LinkForm({ onChange, item }) {
   const { t } = useTranslation();
 
   const handleLinkInput = (event) => {
-    // todo: check url validity
     onChange({
       ...item,
+      name: 'a random name for link', // todo: this is replaced by iframely
       extra: { embeddedLinkItem: { url: event.target.value } },
     });
   };
@@ -22,7 +21,6 @@ function LinkForm({ onChange, item }) {
 
   return (
     <>
-      <BaseForm onChange={onChange} item={item} />
       <TextField
         id={ITEM_FORM_LINK_INPUT_ID}
         error={isLinkInvalid}

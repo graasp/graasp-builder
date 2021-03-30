@@ -7,12 +7,9 @@ import {
   ITEM_FORM_NAME_INPUT_ID,
 } from '../../../config/selectors';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   shortInputField: {
     width: '50%',
-  },
-  addedMargin: {
-    marginTop: theme.spacing(2),
   },
 }));
 

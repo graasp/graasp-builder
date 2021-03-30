@@ -21,6 +21,8 @@ export const createItem = (payload, options) => {
       const { confirm = true } = options;
       const file = [payload?.filepath || payload?.extra?.s3FileItem?.key];
       cy.get(`#${CREATE_ITEM_FILE_ID}`).click();
+
+      // drag-drop a file in the uploader
       cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).attachFile(
         file,
         {
