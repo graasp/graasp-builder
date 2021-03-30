@@ -8,14 +8,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import CustomCardHeader from './CustomCardHeader';
-import {
-  DEFAULT_IMAGE_SRC,
-  DESCRIPTION_MAX_LENGTH,
-} from '../../config/constants';
+import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemCard } from '../../config/selectors';
 import EditButton from '../common/EditButton';
 import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
+import { getItemImage } from '../../utils/item';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,16 +27,14 @@ const useStyles = makeStyles(() => ({
 
 const Item = ({ item }) => {
   const classes = useStyles();
-  const { id, name, description, extra } = item;
+  const { id, name, description } = item;
+
+  const image = getItemImage(item);
 
   return (
     <Card className={classes.root} id={buildItemCard(id)}>
       <CustomCardHeader item={item} />
-      <CardMedia
-        className={classes.media}
-        image={extra?.image || DEFAULT_IMAGE_SRC}
-        title={name}
-      />
+      <CardMedia className={classes.media} image={image} title={name} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {truncate(description, { length: DESCRIPTION_MAX_LENGTH })}

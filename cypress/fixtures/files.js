@@ -1,5 +1,8 @@
 import { ITEM_TYPES, MIME_TYPES } from '../../src/config/constants';
 
+export const ICON_FILEPATH = 'files/icon.png';
+export const TEXT_FILEPATH = 'files/sometext.txt';
+
 export const IMAGE_ITEM_DEFAULT = {
   id: 'bd5519a2-5ba9-4305-b221-185facbe6a99',
   name: 'icon.png',

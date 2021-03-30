@@ -2,17 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import { makeStyles } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import LinkIcon from '@material-ui/icons/Link';
 import MovieIcon from '@material-ui/icons/Movie';
 import ImageIcon from '@material-ui/icons/Image';
 import {
   ITEM_TYPES,
   ITEMS_TABLE_ROW_ICON_COLOR,
   MIME_TYPES,
+  ITEM_ICON_MAX_SIZE,
 } from '../../config/constants';
 
-const ItemIcon = ({ type, mimetype }) => {
+const useStyles = makeStyles({
+  imageIcon: {
+    maxHeight: ITEM_ICON_MAX_SIZE,
+    maxWidth: ITEM_ICON_MAX_SIZE,
+  },
+});
+
+const ItemIcon = ({ name, type, extra }) => {
+  const classes = useStyles();
+
+  const mimetype = extra?.fileItem?.mimetype || extra?.s3FileItem?.contenttype;
+  const icon = extra?.embeddedLinkItem?.icons?.[0];
+
+  if (icon) {
+    return <img className={classes.imageIcon} alt={name} src={icon} />;
+  }
+
   let Icon = InsertDriveFileIcon;
   switch (type) {
     case ITEM_TYPES.SPACE:
@@ -40,6 +59,10 @@ const ItemIcon = ({ type, mimetype }) => {
       Icon = InsertDriveFileIcon;
       break;
     }
+    case ITEM_TYPES.LINK: {
+      Icon = LinkIcon;
+      break;
+    }
     default:
       break;
   }
@@ -48,8 +71,19 @@ const ItemIcon = ({ type, mimetype }) => {
 };
 
 ItemIcon.propTypes = {
+  name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  mimetype: PropTypes.string.isRequired,
+  extra: PropTypes.shape({
+    fileItem: PropTypes.shape({
+      mimetype: PropTypes.string.isRequired,
+    }),
+    s3FileItem: PropTypes.shape({
+      contenttype: PropTypes.string.isRequired,
+    }),
+    embeddedLinkItem: PropTypes.shape({
+      icons: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }).isRequired,
 };
 
 export default ItemIcon;

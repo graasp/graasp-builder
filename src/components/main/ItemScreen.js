@@ -21,6 +21,7 @@ import FileItem from '../item/FileItem';
 import FileUploader from './FileUploader';
 import S3FileItem from '../item/S3FileItem';
 import ItemMain from '../item/ItemMain';
+import LinkItem from '../item/LinkItem';
 
 const styles = () => ({
   fileWrapper: {
@@ -135,6 +136,12 @@ class ItemScreen extends Component {
         return (
           <div className={classes.fileWrapper}>
             <S3FileItem item={item} />
+          </div>
+        );
+      case ITEM_TYPES.LINK:
+        return (
+          <div className={classes.fileWrapper}>
+            <LinkItem item={item} />
           </div>
         );
       case ITEM_TYPES.SPACE:

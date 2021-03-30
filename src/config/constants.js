@@ -35,6 +35,7 @@ export const ITEM_TYPES = {
   EXERCISE: 'Exercise',
   FILE: 'file',
   S3_FILE: 's3-file',
+  LINK: 'embedded-link',
 };
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
@@ -86,3 +87,5 @@ export const UPLOAD_METHOD =
   ENV_UPLOAD_METHOD ||
   process.env.REACT_APP_UPLOAD_METHOD ||
   UPLOAD_FILES_METHODS.DEFAULT;
+
+export const ITEM_ICON_MAX_SIZE = 25;

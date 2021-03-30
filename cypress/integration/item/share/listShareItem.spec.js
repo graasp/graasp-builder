@@ -8,7 +8,7 @@ import {
   buildItemsTableRowId,
   SHARE_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
-import { MEMBERS, SIMPLE_ITEMS } from '../../../fixtures/items';
+import { MEMBERS, SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const shareItem = ({ id, member, permission }) => {
   cy.get(`#${buildItemsTableRowId(id)} .${SHARE_ITEM_BUTTON_CLASS}`).click();
@@ -18,7 +18,7 @@ const shareItem = ({ id, member, permission }) => {
 
 describe('Share Item in List', () => {
   it('share item on Home', () => {
-    cy.setUpApi({ items: SIMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ items: SAMPLE_ITEMS, members: Object.values(MEMBERS) });
     cy.visit(HOME_PATH);
 
     if (DEFAULT_MODE !== MODES.LIST) {
@@ -26,7 +26,7 @@ describe('Share Item in List', () => {
     }
 
     // share
-    const { id } = SIMPLE_ITEMS[0];
+    const { id } = SAMPLE_ITEMS[0];
     const member = MEMBERS.ANNA;
     shareItem({ id, member, permission: PERMISSION_LEVELS.WRITE });
 
@@ -36,17 +36,17 @@ describe('Share Item in List', () => {
   });
 
   it('share item in item', () => {
-    cy.setUpApi({ items: SIMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ items: SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     // go to children item
-    cy.visit(buildItemPath(SIMPLE_ITEMS[0].id));
+    cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
 
     if (DEFAULT_MODE !== MODES.LIST) {
       cy.switchMode(MODES.LIST);
     }
 
     // share
-    const { id } = SIMPLE_ITEMS[2];
+    const { id } = SAMPLE_ITEMS[2];
     const member = MEMBERS.ANNA;
     shareItem({ id, member, permission: PERMISSION_LEVELS.READ });
 

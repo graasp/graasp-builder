@@ -2,19 +2,15 @@ import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
-  CREATE_ITEM_BUTTON_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '../../../../src/config/selectors';
-import { CREATED_ITEM, SIMPLE_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { GRAASP_LINK_ITEM, INVALID_LINK_ITEM } from '../../../fixtures/links';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
+import { createItem } from './utils';
 
-const createItem = (payload) => {
-  cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
-
-  cy.fillItemModal(payload);
-};
-
-describe('Create Item in List', () => {
-  it('create item on Home', () => {
+describe('Create Link', () => {
+  it('create link on Home', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
@@ -23,7 +19,7 @@ describe('Create Item in List', () => {
     }
 
     // create
-    createItem(CREATED_ITEM);
+    createItem(GRAASP_LINK_ITEM, { mode: MODES.LIST });
 
     cy.wait('@postItem').then(({ response: { body } }) => {
       // check item is created and displayed
@@ -32,9 +28,9 @@ describe('Create Item in List', () => {
     });
   });
 
-  it('create item in item', () => {
-    cy.setUpApi({ items: SIMPLE_ITEMS });
-    const { id } = SIMPLE_ITEMS[0];
+  it('create space in item', () => {
+    cy.setUpApi({ items: SAMPLE_ITEMS });
+    const { id } = SAMPLE_ITEMS[0];
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -44,7 +40,7 @@ describe('Create Item in List', () => {
     }
 
     // create
-    createItem(CREATED_ITEM);
+    createItem(GRAASP_LINK_ITEM, { mode: MODES.LIST });
 
     cy.wait('@postItem').then(({ response: { body } }) => {
       // check item is created and displayed
@@ -53,9 +49,9 @@ describe('Create Item in List', () => {
   });
 
   describe('Errors handling', () => {
-    it('error while creating item does not create in interface', () => {
-      cy.setUpApi({ items: SIMPLE_ITEMS, postItemError: true });
-      const { id } = SIMPLE_ITEMS[0];
+    it('cannot add an invalid link', () => {
+      cy.setUpApi({ items: SAMPLE_ITEMS });
+      const { id } = SAMPLE_ITEMS[0];
 
       // go to children item
       cy.visit(buildItemPath(id));
@@ -65,12 +61,13 @@ describe('Create Item in List', () => {
       }
 
       // create
-      createItem(CREATED_ITEM);
+      createItem(INVALID_LINK_ITEM, { mode: MODES.LIST, confirm: false });
 
-      cy.wait('@postItem').then(({ response: { body } }) => {
-        // check item is created and displayed
-        cy.get(`#${buildItemsTableRowId(body.id)}`).should('not.exist');
-      });
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
+        'have.prop',
+        'disabled',
+        true,
+      );
     });
   });
 });

@@ -56,7 +56,7 @@ const MainMenu = () => {
         <ListItemIcon>
           <SchoolIcon />
         </ListItemIcon>
-        <ListItemText primary={t('Student View')} />
+        <ListItemText primary={t('Perform View')} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>

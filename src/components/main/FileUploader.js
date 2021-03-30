@@ -84,8 +84,11 @@ class FileUploader extends Component {
   }
 
   componentWillUnmount() {
+    const { uppy } = this.state;
     window.removeEventListener('dragenter', this.handleWindowDragEnter);
     window.removeEventListener('mouseout', this.handleDragEnd);
+
+    uppy.close();
   }
 
   closeUploader = () => {

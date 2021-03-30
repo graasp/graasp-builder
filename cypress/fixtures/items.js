@@ -28,7 +28,7 @@ export const MEMBERS = {
   BOB: { id: 'bob-id', name: 'bob', email: 'bob@email.com' },
 };
 
-export const SIMPLE_ITEMS = [
+export const SAMPLE_ITEMS = [
   {
     ...DEFAULT_ITEM,
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',

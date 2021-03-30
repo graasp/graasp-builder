@@ -1,4 +1,3 @@
-import { ITEM_TYPES } from '../../../src/config/constants';
 import {
   SHARE_ITEM_MODAL_PERMISSION_SELECT_ID,
   SHARE_ITEM_MODAL_SHARE_BUTTON_ID,
@@ -11,10 +10,9 @@ import {
   ITEM_FORM_DESCRIPTION_INPUT_ID,
   ITEM_FORM_IMAGE_INPUT_ID,
   ITEM_FORM_NAME_INPUT_ID,
-  ITEM_FORM_TYPE_SELECT_ID,
+  ITEM_FORM_LINK_INPUT_ID,
 } from '../../../src/config/selectors';
 
-// eslint-disable-next-line import/prefer-default-export
 Cypress.Commands.add('fillShareModal', ({ member, permission }) => {
   // select permission
   cy.get(`#${SHARE_ITEM_MODAL_PERMISSION_SELECT_ID}`).click();
@@ -39,16 +37,42 @@ Cypress.Commands.add('fillTreeModal', (toItemId) => {
 });
 
 Cypress.Commands.add(
-  'fillItemModal',
-  ({ name = '', type = ITEM_TYPES.SPACE, extra = {}, description = '' }) => {
+  'fillBaseItemModal',
+  ({ name = '', description = '' }, { confirm = true } = {}) => {
     cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).clear().type(name);
 
     cy.get(`#${ITEM_FORM_DESCRIPTION_INPUT_ID}`).clear().type(description);
 
-    cy.get(`#${ITEM_FORM_TYPE_SELECT_ID}`).click();
-    cy.get(`li[data-value="${type}"]`).click();
+    if (confirm) {
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
+    }
+  },
+);
+
+Cypress.Commands.add(
+  'fillSpaceModal',
+  ({ name = '', extra = {}, description = '' }, { confirm = true } = {}) => {
+    cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).clear().type(name);
+
+    cy.get(`#${ITEM_FORM_DESCRIPTION_INPUT_ID}`).clear().type(description);
+
     cy.get(`#${ITEM_FORM_IMAGE_INPUT_ID}`).clear().type(extra.image);
 
-    cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
+    if (confirm) {
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
+    }
+  },
+);
+
+Cypress.Commands.add(
+  'fillLinkModal',
+  ({ extra = {} }, { confirm = true } = {}) => {
+    cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`)
+      .clear()
+      .type(extra?.embeddedLinkItem?.url);
+
+    if (confirm) {
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
+    }
   },
 );
