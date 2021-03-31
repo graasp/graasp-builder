@@ -7,7 +7,11 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link } from 'react-router-dom';
-import { HOME_PATH, buildItemPath } from '../../config/paths';
+import {
+  HOME_PATH,
+  buildItemPath,
+  SHARED_ITEMS_PATH,
+} from '../../config/paths';
 import { clearItem } from '../../actions';
 import {
   buildNavigationLink,
@@ -16,17 +20,13 @@ import {
 
 class Navigation extends Component {
   static propTypes = {
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.func.isRequired,
     }).isRequired,
     item: PropTypes.instanceOf(Map).isRequired,
     dispatchClearItem: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    rootText: PropTypes.string,
-  };
-
-  static defaultProps = {
-    rootText: null,
+    user: PropTypes.instanceOf(Map).isRequired,
   };
 
   clearItem = () => {
@@ -34,17 +34,35 @@ class Navigation extends Component {
     dispatchClearItem();
   };
 
+  renderRootLink = () => {
+    const {
+      t,
+      item,
+      user,
+      location: { pathname },
+    } = this.props;
+
+    // build root depending on user permission or pathname
+    // todo: consider accessing from guest
+    const ownItem =
+      pathname === HOME_PATH || item?.get('creator') === user.get('id');
+    const to = ownItem ? HOME_PATH : SHARED_ITEMS_PATH;
+    const text = ownItem ? t('My Items') : t('Shared Items');
+
+    return (
+      <Link color="inherit" to={to} onClick={this.clearItem}>
+        <Typography id={NAVIGATION_HOME_LINK_ID}>{text}</Typography>
+      </Link>
+    );
+  };
+
   render() {
-    const { item, t, rootText } = this.props;
+    const { item } = this.props;
     const parents = item?.get('parents');
 
     return (
       <Breadcrumbs aria-label="breadcrumb">
-        <Link color="inherit" href="/" to={HOME_PATH} onClick={this.clearItem}>
-          <Typography id={NAVIGATION_HOME_LINK_ID}>
-            {rootText || t('My Items')}
-          </Typography>
-        </Link>
+        {this.renderRootLink()}
         {[...parents]?.map(({ name, id }) => (
           <Link key={id} to={buildItemPath(id)}>
             <Typography id={buildNavigationLink(id)}>{name}</Typography>

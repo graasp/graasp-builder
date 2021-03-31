@@ -10,6 +10,7 @@ import { ReactComponent as GraaspLogo } from '../../resources/graasp-logo.svg';
 import { APP_NAME, HEADER_HEIGHT } from '../../config/constants';
 import SettingsHeader from '../common/SettingsHeader';
 import { HEADER_APP_BAR_ID } from '../../config/selectors';
+import { HOME_PATH } from '../../config/paths';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -60,7 +61,7 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
       <Toolbar className={classes.header}>
         <div className={classes.headerLeft}>
           {renderMenuIcon()}
-          <Link to="/items" className={classes.link}>
+          <Link to={HOME_PATH} className={classes.link}>
             <GraaspLogo className={classes.logo} />
             <Typography variant="h6" color="inherit">
               {APP_NAME}
