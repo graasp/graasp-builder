@@ -149,7 +149,7 @@ class FileUploader extends Component {
 
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
-    if (result && result.successful.length) {
+    if (result?.successful.length) {
       dispatchUploadFileNotification({
         type: UPLOAD_FILE_SUCCESS,
         payload: result,
@@ -168,7 +168,9 @@ class FileUploader extends Component {
     const { dispatchUploadFileNotification } = this.props;
     dispatchUploadFileNotification({
       type: UPLOAD_FILE_ERROR,
-      error: JSON.stringify(e),
+      payload: {
+        error: JSON.stringify(e),
+      },
     });
   };
 

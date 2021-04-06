@@ -74,7 +74,9 @@ export const setItem = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SET_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_SETTING_ITEM, false));
@@ -93,7 +95,9 @@ export const getItem = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_GETTING_ITEM, false));
@@ -113,7 +117,9 @@ export const getItems = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ITEMS_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_GETTING_ITEMS, false));
@@ -132,7 +138,9 @@ export const getOwnItems = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_OWN_ITEMS_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_GETTING_OWN_ITEMS, false));
@@ -154,7 +162,9 @@ export const createItem = (props) => async (dispatch) => {
   } catch (error) {
     return dispatch({
       type: CREATE_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_CREATING_ITEM, false));
@@ -172,7 +182,9 @@ export const deleteItem = (itemId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_DELETING_ITEM, false));
@@ -200,7 +212,9 @@ export const deleteItems = (itemIds) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_ITEMS_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_DELETING_ITEMS, false));
@@ -215,7 +229,9 @@ export const clearItem = () => (dispatch) => {
   } catch (error) {
     dispatch({
       type: CLEAR_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   }
 };
@@ -235,7 +251,9 @@ export const moveItem = (payload) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: MOVE_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_MOVING_ITEM, false));
@@ -254,7 +272,9 @@ export const copyItem = (payload) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: COPY_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_COPYING_ITEM, false));
@@ -276,7 +296,9 @@ export const getChildren = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_CHILDREN_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_GETTING_CHILDREN, false));
@@ -294,7 +316,9 @@ export const editItem = (item) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: EDIT_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   } finally {
     dispatch(createFlag(FLAG_EDITING_ITEM, false));
@@ -329,7 +353,9 @@ export const getSharedItems = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_SHARED_ITEMS_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   }
 };

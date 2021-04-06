@@ -13,7 +13,9 @@ export const shareItemWith = ({ id, email, permission }) => async (
   } catch (error) {
     dispatch({
       type: SHARE_ITEM_ERROR,
-      error,
+      payload: {
+        error,
+      },
     });
   }
 };

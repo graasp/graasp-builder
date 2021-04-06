@@ -1,9 +1,9 @@
 const LoggerMiddleware = () => (next) => (action) => {
   const result = next(action);
-  const { error, type } = result;
+  const { payload, type } = result;
 
-  if (error) {
-    console.error(`${type}: ${error}`);
+  if (payload?.error) {
+    console.error(`${type}: ${payload?.error}`);
   }
 
   return result;

@@ -47,7 +47,7 @@ import { SHARE_ITEM_ERROR, SHARE_ITEM_SUCCESS } from '../types/membership';
 
 const ToastrMiddleware = () => (next) => (action) => {
   const result = next(action);
-  const { type, error } = result;
+  const { type, payload } = result;
 
   let message = null;
   switch (type) {
@@ -135,7 +135,7 @@ const ToastrMiddleware = () => (next) => (action) => {
   }
 
   // error notification
-  if (error && message) {
+  if (payload?.error && message) {
     toastr.error(i18n.t(ERROR_MESSAGE_HEADER), i18n.t(message));
   }
   // success notification
