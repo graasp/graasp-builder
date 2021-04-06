@@ -4,6 +4,7 @@ const {
   API_HOST: ENV_API_HOST,
   S3_FILES_HOST: ENV_S3_FILES_HOST,
   UPLOAD_METHOD: ENV_UPLOAD_METHOD,
+  SHOW_NOTIFICATIONS: ENV_SHOW_NOTIFICATIONS,
 } = env;
 
 export const APP_NAME = 'Graasp';
@@ -12,6 +13,11 @@ export const API_HOST =
   ENV_API_HOST || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
 export const S3_FILES_HOST =
   ENV_S3_FILES_HOST || process.env.REACT_APP_S3_FILES_HOST || 'localhost';
+
+export const SHOW_NOTIFICATIONS =
+  ENV_SHOW_NOTIFICATIONS ||
+  process.env.REACT_APP_SHOW_NOTIFICATIONS === 'true' ||
+  false;
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -25,7 +31,6 @@ export const TREE_PREVENT_SELECTION = {
   SELF_AND_CHILDREN: 'selfAndChildren',
 };
 
-export const TREE_VIEW_HEIGHT = 200;
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
 

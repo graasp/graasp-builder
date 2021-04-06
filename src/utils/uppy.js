@@ -16,6 +16,7 @@ const configureUppy = ({
   onProgress,
   onUpload,
   onFilesAdded,
+  onError,
   method = UPLOAD_FILES_METHODS.DEFAULT,
 }) => {
   const uppy = new Uppy({
@@ -67,12 +68,16 @@ const configureUppy = ({
 
   uppy.on('progress', onProgress);
 
-  uppy.on('complete', () => {
-    onComplete?.();
+  uppy.on('complete', (result) => {
+    onComplete?.(result);
   });
 
   uppy.on('error', (error) => {
-    console.error(error.stack);
+    onError?.(error);
+  });
+
+  uppy.on('upload-error', (error) => {
+    onError?.(error);
   });
 
   return uppy;

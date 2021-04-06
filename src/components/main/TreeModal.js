@@ -9,6 +9,8 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button } from '@material-ui/core';
@@ -20,9 +22,9 @@ import {
   getSharedItems,
 } from '../../actions/item';
 import {
+  ITEM_TYPES,
   ROOT_ID,
   TREE_PREVENT_SELECTION,
-  TREE_VIEW_HEIGHT,
   TREE_VIEW_MAX_WIDTH,
 } from '../../config/constants';
 import {
@@ -39,7 +41,6 @@ import {
 
 const styles = (theme) => ({
   root: {
-    height: TREE_VIEW_HEIGHT,
     flexGrow: 1,
     maxWidth: TREE_VIEW_MAX_WIDTH,
   },
@@ -156,12 +157,16 @@ class TreeModal extends Component {
   // recursively render tree until children are undefined
   renderItemTreeItem = ({ children: tree, disabled }) => {
     const { classes, dispatchGetItem, dispatchGetChildren, items } = this.props;
+
+    // only display spaces
+    const spaces = tree.filter(({ type }) => type === ITEM_TYPES.SPACE);
+
     // nothing to display
-    if (!tree) {
+    if (!spaces) {
       return null;
     }
 
-    return tree.map(({ id }) => {
+    return spaces.map(({ id }) => {
       const item = getItemById(items, id);
       if (!item || item.dirty) {
         // dispatch item if does not exist in cache
@@ -169,7 +174,11 @@ class TreeModal extends Component {
         dispatchGetChildren(id);
         return null;
       }
-      const children = getChildrenSync(items, id);
+
+      // only display spaces
+      const children = getChildrenSync(items, id).filter(
+        ({ type }) => type === ITEM_TYPES.SPACE,
+      );
       const { name } = item;
       const isDisabled = this.isTreeItemDisabled({ previous: disabled, id });
 
@@ -230,18 +239,21 @@ class TreeModal extends Component {
         onClose={this.handleClose}
         aria-labelledby="simple-dialog-title"
         open={settings.get('open')}
+        scroll="paper"
       >
         <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
-        {tree}
-        <Button
-          onClick={this.onConfirm}
-          color="primary"
-          variant="contained"
-          disabled={!selectedId}
-          id={TREE_MODAL_CONFIRM_BUTTON_ID}
-        >
-          {t('Confirm')}
-        </Button>
+        <DialogContent>{tree}</DialogContent>
+        <DialogActions>
+          <Button
+            onClick={this.onConfirm}
+            color="primary"
+            variant="contained"
+            disabled={!selectedId}
+            id={TREE_MODAL_CONFIRM_BUTTON_ID}
+          >
+            {t('Confirm')}
+          </Button>
+        </DialogActions>
       </Dialog>
     );
   }

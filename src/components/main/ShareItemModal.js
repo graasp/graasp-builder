@@ -2,7 +2,7 @@ import React from 'react';
 import { Map } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -54,6 +54,7 @@ const ShareItemModal = ({
   classes,
 }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   // refs
   let email = '';
   let permission = '';
@@ -65,11 +66,13 @@ const ShareItemModal = ({
   const submit = () => {
     // todo: check mail
     const id = settings.get('itemId');
-    shareItemWith({
-      id,
-      email: email.value,
-      permission: permission.value,
-    });
+    dispatch(
+      shareItemWith({
+        id,
+        email: email.value,
+        permission: permission.value,
+      }),
+    );
 
     handleClose();
   };

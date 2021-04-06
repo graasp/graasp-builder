@@ -5,6 +5,8 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import ReduxThunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise';
 import reducers from '../reducers';
+import ToastrMiddleware from '../middlewares/ToastrMiddleware';
+import LoggerMiddleware from '../middlewares/LoggerMiddleware';
 
 /**
  * configures the store and returns it along with the history for the router
@@ -21,7 +23,13 @@ const configure = (state) => {
     connectRouter(history)(reducers),
     state,
     composeWithDevTools(
-      applyMiddleware(ReduxThunk, ReduxPromise, RouterMiddleware),
+      applyMiddleware(
+        ReduxThunk,
+        ReduxPromise,
+        RouterMiddleware,
+        ToastrMiddleware,
+        LoggerMiddleware,
+      ),
     ),
   );
   return {

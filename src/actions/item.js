@@ -24,6 +24,19 @@ import {
   GET_SHARED_ITEMS_SUCCESS,
   FLAG_DELETING_ITEMS,
   DELETE_ITEMS_SUCCESS,
+  GET_OWN_ITEMS_ERROR,
+  CREATE_ITEM_ERROR,
+  DELETE_ITEM_ERROR,
+  DELETE_ITEMS_ERROR,
+  CLEAR_ITEM_ERROR,
+  MOVE_ITEM_ERROR,
+  COPY_ITEM_ERROR,
+  GET_CHILDREN_ERROR,
+  EDIT_ITEM_ERROR,
+  GET_SHARED_ITEMS_ERROR,
+  SET_ITEM_ERROR,
+  GET_ITEM_ERROR,
+  GET_ITEMS_ERROR,
 } from '../types/item';
 import { getParentsIdsFromPath } from '../utils/item';
 import { createFlag } from './utils';
@@ -58,8 +71,13 @@ export const setItem = (id) => async (dispatch) => {
       type: SET_ITEM_SUCCESS,
       payload: { item, children: newChildren, parents: newParents },
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: SET_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_SETTING_ITEM, false));
   }
@@ -74,8 +92,13 @@ export const getItem = (id) => async (dispatch) => {
       type: GET_ITEM_SUCCESS,
       payload: item,
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: GET_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_GETTING_ITEM, false));
   }
@@ -91,8 +114,13 @@ export const getItems = () => async (dispatch) => {
       type: GET_ITEMS_SUCCESS,
       payload: items,
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: GET_ITEMS_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_GETTING_ITEMS, false));
   }
@@ -107,8 +135,13 @@ export const getOwnItems = () => async (dispatch) => {
       type: GET_OWN_ITEMS_SUCCESS,
       payload: ownedItems,
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: GET_OWN_ITEMS_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_GETTING_OWN_ITEMS, false));
   }
@@ -126,8 +159,13 @@ export const createItem = (props) => async (dispatch) => {
       type: CREATE_ITEM_SUCCESS,
       payload: newItem,
     });
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return dispatch({
+      type: CREATE_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_CREATING_ITEM, false));
   }
@@ -141,8 +179,13 @@ export const deleteItem = (itemId) => async (dispatch) => {
       type: DELETE_ITEM_SUCCESS,
       payload: { id: itemId },
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: DELETE_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_DELETING_ITEM, false));
   }
@@ -166,8 +209,13 @@ export const deleteItems = (itemIds) => async (dispatch) => {
         payload: itemIds,
       });
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: DELETE_ITEMS_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_DELETING_ITEMS, false));
   }
@@ -178,8 +226,13 @@ export const clearItem = () => (dispatch) => {
     dispatch({
       type: CLEAR_ITEM_SUCCESS,
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: CLEAR_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   }
 };
 
@@ -195,8 +248,13 @@ export const moveItem = (payload) => async (dispatch, getState) => {
       type: MOVE_ITEM_SUCCESS,
       payload,
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: MOVE_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_MOVING_ITEM, false));
   }
@@ -211,8 +269,13 @@ export const copyItem = (payload) => async (dispatch) => {
       type: COPY_ITEM_SUCCESS,
       payload: { ...payload, item: newItem },
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: COPY_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_COPYING_ITEM, false));
   }
@@ -230,8 +293,13 @@ export const getChildren = (id) => async (dispatch) => {
       type: GET_CHILDREN_SUCCESS,
       payload: { id, children },
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: GET_CHILDREN_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_GETTING_CHILDREN, false));
   }
@@ -245,8 +313,13 @@ export const editItem = (item) => async (dispatch) => {
       type: EDIT_ITEM_SUCCESS,
       payload: editedItem,
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: EDIT_ITEM_ERROR,
+      payload: {
+        error,
+      },
+    });
   } finally {
     dispatch(createFlag(FLAG_EDITING_ITEM, false));
   }
@@ -277,7 +350,12 @@ export const getSharedItems = () => async (dispatch) => {
       type: GET_SHARED_ITEMS_SUCCESS,
       payload: [...sharedItems, ...childrenItems],
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatch({
+      type: GET_SHARED_ITEMS_ERROR,
+      payload: {
+        error,
+      },
+    });
   }
 };
