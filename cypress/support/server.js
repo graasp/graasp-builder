@@ -18,6 +18,8 @@ import {
   buildGetS3MetadataRoute,
   buildS3UploadFileRoute,
   GET_CURRENT_MEMBER_ROUTE,
+  buildSignInPath,
+  SIGN_OUT_ROUTE,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -25,7 +27,7 @@ import {
   isRootItem,
   transformIdForPath,
 } from '../../src/utils/item';
-import { CURRENT_USER_ID, MEMBERS } from '../fixtures/items';
+import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { ID_FORMAT, parseStringToRegExp, EMAIL_FORMAT } from './utils';
 import {
   DEFAULT_PATCH,
@@ -37,7 +39,7 @@ import {
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
 
-export const mockGetCurrentMember = (members, shouldThrowError = false) => {
+export const mockGetCurrentMember = (shouldThrowError = false) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
@@ -89,7 +91,7 @@ export const mockPostItem = (items, shouldThrowError) => {
         ...body,
         id,
         path: transformIdForPath(id),
-        creator: CURRENT_USER_ID,
+        creator: CURRENT_USER.id,
       });
     },
   ).as('postItem');
@@ -382,4 +384,34 @@ export const mockGetS3FileContent = (items, shouldThrowError) => {
       reply({ fixture: filepath });
     },
   ).as('getS3FileContent');
+};
+
+export const mockSignInRedirection = () => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(buildSignInPath()),
+    },
+    ({ reply }) => {
+      reply({
+        headers: { 'content-type': 'text/html' },
+        statusCode: StatusCodes.OK,
+      });
+    },
+  ).as('signInRedirection');
+};
+
+export const mockSignOut = () => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(SIGN_OUT_ROUTE),
+    },
+    ({ reply }) => {
+      reply({
+        headers: { 'content-type': 'text/html' },
+        statusCode: StatusCodes.OK,
+      });
+    },
+  ).as('signOut');
 };

@@ -9,6 +9,7 @@ import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { ReactComponent as GraaspLogo } from '../../resources/graasp-logo.svg';
 import { APP_NAME, HEADER_HEIGHT } from '../../config/constants';
 import SettingsHeader from '../common/SettingsHeader';
+import { HEADER_APP_BAR_ID } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -55,7 +56,7 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" id={HEADER_APP_BAR_ID}>
       <Toolbar className={classes.header}>
         <div className={classes.headerLeft}>
           {renderMenuIcon()}

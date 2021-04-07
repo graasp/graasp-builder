@@ -15,6 +15,10 @@ import {
   USERNAME_MAX_LENGTH,
 } from '../../config/constants';
 import { buildSignInPath } from '../../api/routes';
+import {
+  HEADER_USER_ID,
+  USER_MENU_SIGN_OUT_OPTION_ID,
+} from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -62,7 +66,11 @@ function SettingsHeader() {
       return <MenuItem onClick={handleSignIn}>{t('Sign In')}</MenuItem>;
     }
 
-    return <MenuItem onClick={handleSignOut}>{t('Sign Out')}</MenuItem>;
+    return (
+      <MenuItem onClick={handleSignOut} id={USER_MENU_SIGN_OUT_OPTION_ID}>
+        {t('Sign Out')}
+      </MenuItem>
+    );
   };
 
   const username = user.get('name');
@@ -71,7 +79,11 @@ function SettingsHeader() {
 
   return (
     <>
-      <Box className={classes.wrapper} onClick={handleClick}>
+      <Box
+        className={classes.wrapper}
+        onClick={handleClick}
+        id={HEADER_USER_ID}
+      >
         <Avatar className={classes.avatar} alt={username} src={avatarImage} />
         {username && (
           <Typography variant="subtitle1" className={classes.username}>

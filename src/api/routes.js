@@ -1,3 +1,4 @@
+import qs from 'qs';
 import { S3_FILES_HOST } from '../config/constants';
 
 export const ITEMS_ROUTE = 'items';
@@ -39,7 +40,7 @@ export const buildGetS3MetadataRoute = (id) =>
 export const buildS3FileUrl = (key) => `${S3_FILES_HOST}/${key}`;
 export const GET_CURRENT_MEMBER_ROUTE = `${MEMBERS_ROUTE}/current`;
 export const buildSignInPath = (to) => {
-  const qs = to ? `?to=${to}` : '';
-  return `signin${qs}`;
+  const queryString = qs.stringify({ to }, { addQueryPrefix: true });
+  return `signin${queryString}`;
 };
-export const SIGN_UP_PATH = 'signup';
+export const SIGN_OUT_ROUTE = 'logout';

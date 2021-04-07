@@ -22,6 +22,8 @@ import {
   mockGetS3FileContent,
   mockUploadItem,
   mockGetCurrentMember,
+  mockSignInRedirection,
+  mockSignOut,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -80,6 +82,10 @@ Cypress.Commands.add(
     mockGetS3FileContent(getS3FileContentError);
 
     mockGetCurrentMember(getCurrentMemberError);
+
+    mockSignInRedirection();
+
+    mockSignOut();
   },
 );
 

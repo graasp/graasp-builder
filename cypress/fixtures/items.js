@@ -1,16 +1,10 @@
 import { ITEM_TYPES } from '../../src/config/constants';
-
-export const MEMBERS = {
-  ANNA: { id: 'anna-id', name: 'anna', email: 'anna@email.com' },
-  BOB: { id: 'bob-id', name: 'bob', email: 'bob@email.com' },
-};
-
-export const CURRENT_USER_ID = MEMBERS.ANNA.id;
+import { CURRENT_USER } from './members';
 
 const DEFAULT_ITEM = {
   description: '',
   extra: {},
-  creator: CURRENT_USER_ID,
+  creator: CURRENT_USER.id,
   type: ITEM_TYPES.SPACE,
 };
 
