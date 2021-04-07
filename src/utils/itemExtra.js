@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { ITEM_TYPES } from '../config/constants';
+import { getItemLoginTag } from './tag';
 
 export const getFileExtra = (extra) => extra?.[ITEM_TYPES.FILE];
 
@@ -26,3 +27,32 @@ export const s3FileExtraPropTypes = PropTypes.shape({
 export const linkExtraPropTypes = PropTypes.shape({
   icons: PropTypes.arrayOf(PropTypes.string),
 });
+
+export const buildItemLoginSchemaExtra = (schema) => {
+  if (schema) {
+    return {
+      itemLogin: { loginSchema: schema },
+    };
+  }
+
+  // remove setting
+  return {
+    itemLogin: {},
+  };
+};
+
+export const getItemLoginExtra = (extra) => extra?.itemLogin;
+
+export const getItemLoginSchema = (extra) =>
+  getItemLoginExtra(extra)?.loginSchema;
+
+export const getItemLoginTagFromItem = ({ tags, itemTags }) => {
+  const itemLoginTagId = getItemLoginTag(tags)?.id;
+
+  // the tag setting does not exist
+  if (!itemLoginTagId) {
+    return null;
+  }
+
+  return itemTags?.find(({ tagId }) => tagId === itemLoginTagId);
+};

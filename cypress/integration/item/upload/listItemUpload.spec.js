@@ -16,7 +16,7 @@ const dragUploadItem = (filenames) => {
 
 describe('Upload Item in List', () => {
   beforeEach(() => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
+    cy.setUpApi(SAMPLE_ITEMS);
   });
 
   describe('Drag Upload', () => {
@@ -51,7 +51,7 @@ describe('Upload Item in List', () => {
       });
     });
     describe('upload item in item', () => {
-      const { id } = SAMPLE_ITEMS[0];
+      const { id } = SAMPLE_ITEMS.items[0];
 
       beforeEach(() => {
         cy.visit(buildItemPath(id));

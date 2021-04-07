@@ -12,11 +12,11 @@ const deleteItem = (id) => {
 
 describe('Delete Item in Grid', () => {
   it('delete item on Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
-    const { id } = SAMPLE_ITEMS[0];
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // delete
     deleteItem(id);
@@ -24,9 +24,9 @@ describe('Delete Item in Grid', () => {
   });
 
   it('delete item inside parent', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
-    const { id: idToDelete } = SAMPLE_ITEMS[2];
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
+    const { id: idToDelete } = SAMPLE_ITEMS.items[2];
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -40,11 +40,11 @@ describe('Delete Item in Grid', () => {
     });
   });
 
-  describe('Errors handling', () => {
+  describe('Error handling', () => {
     it('error while deleting item does not delete in interface', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS, deleteItemError: true });
-      const { id } = SAMPLE_ITEMS[0];
-      const { id: idToDelete } = SAMPLE_ITEMS[2];
+      cy.setUpApi({ ...SAMPLE_ITEMS, deleteItemError: true });
+      const { id } = SAMPLE_ITEMS.items[0];
+      const { id: idToDelete } = SAMPLE_ITEMS.items[2];
 
       // go to children item
       cy.visit(buildItemPath(id));

@@ -1,4 +1,5 @@
 import { ITEM_TYPES } from '../../src/config/constants';
+import { CURRENT_USER } from './members';
 import { buildEmbeddedLinkExtra } from '../../src/utils/itemExtra';
 
 export const GRAASP_LINK_ITEM = {
@@ -7,6 +8,7 @@ export const GRAASP_LINK_ITEM = {
   name: 'graasp link',
   description: 'a description for graasp link',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+  creator: CURRENT_USER.id,
   extra: buildEmbeddedLinkExtra({
     url: 'https://graasp.eu',
     thumbnails: ['https://graasp.eu/img/epfl/logo-tile.png'],
@@ -21,6 +23,7 @@ export const YOUTUBE_LINK_ITEM = {
   type: ITEM_TYPES.LINK,
   name: 'graasp youtube link',
   description: 'a description for graasp youtube link',
+  creator: CURRENT_USER.id,
   path: 'gcafbd2a_5688_11eb_ae93_0242ac130002',
   extra: buildEmbeddedLinkExtra({
     url: 'https://www.youtube.com/watch?v=FmiEgBMTPLo',
@@ -33,6 +36,7 @@ export const YOUTUBE_LINK_ITEM = {
 
 export const INVALID_LINK_ITEM = {
   type: ITEM_TYPES.LINK,
+  creator: CURRENT_USER.id,
   name: 'graasp youtube link',
   description: 'a description for graasp youtube link',
   extra: buildEmbeddedLinkExtra({

@@ -25,8 +25,8 @@ describe('Create Folder', () => {
     });
 
     it('create folder in item', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS });
-      const { id } = SAMPLE_ITEMS[0];
+      cy.setUpApi(SAMPLE_ITEMS);
+      const { id } = SAMPLE_ITEMS.items[0];
 
       // go to children item
       cy.visit(buildItemPath(id));
@@ -63,8 +63,8 @@ describe('Create Folder', () => {
     });
 
     it('create folder in item', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS });
-      const { id } = SAMPLE_ITEMS[0];
+      cy.setUpApi(SAMPLE_ITEMS);
+      const { id } = SAMPLE_ITEMS.items[0];
 
       // go to children item
       cy.visit(buildItemPath(id));
@@ -80,10 +80,10 @@ describe('Create Folder', () => {
     });
   });
 
-  describe('Errors handling', () => {
+  describe('Error handling', () => {
     it('error while creating folder does not create in interface', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS, postItemError: true });
-      const { id } = SAMPLE_ITEMS[0];
+      cy.setUpApi({ ...SAMPLE_ITEMS, postItemError: true });
+      const { id } = SAMPLE_ITEMS.items[0];
 
       // go to children item
       cy.visit(buildItemPath(id));

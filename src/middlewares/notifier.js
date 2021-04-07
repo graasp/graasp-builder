@@ -23,6 +23,9 @@ import {
   ERROR_MESSAGE_HEADER,
   SIGN_OUT_ERROR_MESSAGE,
   SIGN_OUT_SUCCESS_MESSAGE,
+  POST_ITEM_TAG_ERROR_MESSAGE,
+  DELETE_ITEM_TAG_ERROR_MESSAGE,
+  ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE,
 } from '../config/messages';
 import {
   COPY_ITEM_ERROR,
@@ -48,7 +51,10 @@ import {
   SHARE_ITEM_SUCCESS,
   SIGN_OUT_ERROR,
   SIGN_OUT_SUCCESS,
+  POST_ITEM_TAG_ERROR,
+  DELETE_ITEM_TAG_ERROR,
 } from '../types';
+import { ITEM_LOGIN_SIGN_IN_ERROR } from '../types/itemLogin';
 
 export default ({ type, payload }) => {
   let message = null;
@@ -95,6 +101,18 @@ export default ({ type, payload }) => {
     }
     case SIGN_OUT_ERROR: {
       message = SIGN_OUT_ERROR_MESSAGE;
+      break;
+    }
+    case POST_ITEM_TAG_ERROR: {
+      message = POST_ITEM_TAG_ERROR_MESSAGE;
+      break;
+    }
+    case DELETE_ITEM_TAG_ERROR: {
+      message = DELETE_ITEM_TAG_ERROR_MESSAGE;
+      break;
+    }
+    case ITEM_LOGIN_SIGN_IN_ERROR: {
+      message = ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE;
       break;
     }
     // success messages

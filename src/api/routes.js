@@ -44,3 +44,14 @@ export const buildSignInPath = (to) => {
   return `signin${queryString}`;
 };
 export const SIGN_OUT_ROUTE = 'logout';
+export const buildGetItemTagsRoute = (id) => `${ITEMS_ROUTE}/${id}/tags`;
+export const buildPostItemTagRoute = (id) => `${ITEMS_ROUTE}/${id}/tags`;
+export const buildPutItemLoginSchema = (id) =>
+  `${ITEMS_ROUTE}/${id}/login-schema`;
+export const buildDeleteItemTagRoute = ({ id, tagId }) =>
+  `${ITEMS_ROUTE}/${id}/tags/${tagId}`;
+export const buildPostItemLoginSignInRoute = (id) =>
+  `${ITEMS_ROUTE}/${id}/login`;
+export const GET_TAGS_ROUTE = `${ITEMS_ROUTE}/tags`;
+export const buildGetItemLoginRoute = (id) =>
+  `${ITEMS_ROUTE}/${id}/login-schema`;

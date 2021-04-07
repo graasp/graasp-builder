@@ -11,7 +11,7 @@ import {
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
   buildShareItemWithRoute,
-  MEMBERS_ROUTE,
+  buildGetMemberBy,
   ITEMS_ROUTE,
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
@@ -20,6 +20,13 @@ import {
   GET_CURRENT_MEMBER_ROUTE,
   buildSignInPath,
   SIGN_OUT_ROUTE,
+  buildPostItemLoginSignInRoute,
+  buildGetItemLoginRoute,
+  buildGetItemMembershipForItemRoute,
+  buildGetItemTagsRoute,
+  GET_TAGS_ROUTE,
+  buildPutItemLoginSchema,
+  buildPostItemTagRoute,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -34,9 +41,17 @@ import {
   DEFAULT_GET,
   DEFAULT_POST,
   DEFAULT_DELETE,
+  DEFAULT_PUT,
 } from '../../src/api/utils';
-import { getS3FileExtra } from '../../src/utils/itemExtra';
+import {
+  getS3FileExtra,
+  getItemLoginExtra,
+  getItemLoginSchema,
+  buildItemLoginSchemaExtra,
+} from '../../src/utils/itemExtra';
 import { REDIRECTION_CONTENT } from './constants';
+import { SETTINGS } from '../../src/config/constants';
+import { ITEM_LOGIN_TAG } from '../fixtures/tags';
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
@@ -47,7 +62,10 @@ export const redirectionReply = {
   body: REDIRECTION_CONTENT,
 };
 
-export const mockGetCurrentMember = (shouldThrowError = false) => {
+export const mockGetCurrentMember = (
+  currentMember = MEMBERS.ANNA,
+  shouldThrowError = false,
+) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
@@ -59,8 +77,7 @@ export const mockGetCurrentMember = (shouldThrowError = false) => {
       }
 
       // avoid sign in redirection
-      const current = MEMBERS.ANNA;
-      return reply(current);
+      return reply(currentMember);
     },
   ).as('getCurrentMember');
 };
@@ -130,7 +147,7 @@ export const mockDeleteItems = (items, shouldThrowError) => {
     {
       method: DEFAULT_DELETE.method,
       pathname: `/${ITEMS_ROUTE}`,
-      query: { id: ID_FORMAT },
+      query: { id: new RegExp(ID_FORMAT) },
     },
     ({ url, reply }) => {
       const ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
@@ -147,19 +164,33 @@ export const mockDeleteItems = (items, shouldThrowError) => {
   ).as('deleteItems');
 };
 
-export const mockGetItem = (items, shouldThrowError) => {
+export const mockGetItem = ({ items, currentMember }, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
       url: new RegExp(`${API_HOST}/${buildGetItemRoute(ID_FORMAT)}$`),
     },
     ({ url, reply }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = getItemById(items, itemId);
+
+      // item does not exist in db
+      if (!item) {
+        return reply({
+          statusCode: StatusCodes.NOT_FOUND,
+        });
       }
 
-      const id = url.slice(API_HOST.length).split('/')[2];
-      const item = getItemById(items, id);
+      // mock membership
+      const creator = item?.creator;
+      const haveMembership =
+        creator === currentMember.id ||
+        item.memberships?.find(({ memberId }) => memberId === currentMember.id);
+
+      if (shouldThrowError || !haveMembership) {
+        return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
+      }
+
       return reply({
         body: item,
         statusCode: StatusCodes.OK,
@@ -281,27 +312,26 @@ export const mockShareItem = (items, shouldThrowError) => {
   ).as('shareItem');
 };
 
-export const mockGetMember = (members, shouldThrowError) => {
-  const emailReg = new RegExp(EMAIL_FORMAT);
+export const mockGetMemberBy = (members, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      pathname: `/${MEMBERS_ROUTE}`,
-      query: {
-        email: emailReg,
-      },
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(buildGetMemberBy(EMAIL_FORMAT))}`,
+      ),
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
+      const emailReg = new RegExp(EMAIL_FORMAT);
       const mail = emailReg.exec(url)[0];
       const member = members.find(({ email }) => email === mail);
 
       return reply([member]);
     },
-  ).as('getMember');
+  ).as('getMemberBy');
 };
 
 // mock upload item for default and s3 upload methods
@@ -331,11 +361,7 @@ export const mockDefaultDownloadFile = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(
-        `${API_HOST}/${parseStringToRegExp(
-          buildDownloadFilesRoute(ID_FORMAT),
-        )}$`,
-      ),
+      url: new RegExp(`${API_HOST}/${buildDownloadFilesRoute(ID_FORMAT)}$`),
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
@@ -415,4 +441,153 @@ export const mockSignOut = () => {
       reply(redirectionReply);
     },
   ).as('signOut');
+};
+
+export const mockPostItemLogin = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${buildPostItemLoginSignInRoute(ID_FORMAT)}$`,
+      ),
+    },
+    ({ reply, url, body }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
+      // check query match item login schema
+      const id = url.slice(API_HOST.length).split('/')[2];
+      const item = getItemById(items, id);
+      const itemLoginSchema = getItemLoginSchema(item.extra);
+
+      // provide either username or member id
+      if (body.username) {
+        expect(body).not.to.have.keys('memberId');
+      } else if (body.memberId) {
+        expect(body).not.to.have.keys('username');
+      }
+
+      // should have password if required
+      if (
+        itemLoginSchema ===
+        SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME_AND_PASSWORD
+      ) {
+        expect(body).to.have.keys('password');
+      }
+
+      reply({
+        headers: { 'content-type': 'text/html' },
+        statusCode: StatusCodes.OK,
+      });
+    },
+  ).as('postItemLogin');
+};
+
+export const mockPutItemLogin = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_PUT.method,
+      url: new RegExp(`${API_HOST}/${buildPutItemLoginSchema(ID_FORMAT)}$`),
+    },
+    ({ reply, url, body }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
+      // check query match item login schema
+      const id = url.slice(API_HOST.length).split('/')[2];
+      const item = getItemById(items, id);
+
+      item.extra = buildItemLoginSchemaExtra(body.loginSchema);
+
+      reply(item);
+    },
+  ).as('putItemLogin');
+};
+
+export const mockGetItemLogin = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetItemLoginRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+      reply(getItemLoginExtra(item?.extra));
+    },
+  ).as('getItemLogin');
+};
+
+export const mockGetItemMembershipsForItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildGetItemMembershipForItemRoute(ID_FORMAT),
+        )}$`,
+      ),
+    },
+    ({ reply, url }) => {
+      const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
+      const result = items.find(({ id }) => id === itemId).memberships || [];
+      reply(result);
+    },
+  ).as('getItemMemberships');
+};
+
+export const mockGetItemTags = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetItemTagsRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const result = items.find(({ id }) => id === itemId).tags || [];
+      reply(result);
+    },
+  ).as('getItemTags');
+};
+
+export const mockGetTags = (tags) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${parseStringToRegExp(GET_TAGS_ROUTE)}$`),
+    },
+    ({ reply }) => {
+      reply(tags);
+    },
+  ).as('getTags');
+};
+
+export const mockPostItemTag = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildPostItemTagRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url, body }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+
+      item.tags = [
+        {
+          tagId: ITEM_LOGIN_TAG.id,
+          itemPath: item.path,
+        },
+      ];
+
+      reply(body);
+    },
+  ).as('postItemTag');
 };

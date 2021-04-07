@@ -27,7 +27,7 @@ const moveItem = (movedItemId, toItemId) => {
 
 describe('Move Item in List', () => {
   it('move item on Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
@@ -35,8 +35,8 @@ describe('Move Item in List', () => {
     }
 
     // move
-    const { id: movedItem } = SAMPLE_ITEMS[0];
-    const { id: toItem } = SAMPLE_ITEMS[1];
+    const { id: movedItem } = SAMPLE_ITEMS.items[0];
+    const { id: toItem } = SAMPLE_ITEMS.items[1];
     moveItem(movedItem, toItem);
 
     cy.wait('@moveItem');
@@ -49,8 +49,8 @@ describe('Move Item in List', () => {
   });
 
   it('move item in item', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -60,8 +60,8 @@ describe('Move Item in List', () => {
     }
 
     // move
-    const { id: movedItem } = SAMPLE_ITEMS[2];
-    const { id: toItem } = SAMPLE_ITEMS[3];
+    const { id: movedItem } = SAMPLE_ITEMS.items[2];
+    const { id: toItem } = SAMPLE_ITEMS.items[3];
     moveItem(movedItem, toItem);
 
     cy.wait('@moveItem');
@@ -74,8 +74,8 @@ describe('Move Item in List', () => {
   });
 
   it('move item to Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -85,7 +85,7 @@ describe('Move Item in List', () => {
     }
 
     // move
-    const { id: movedItem } = SAMPLE_ITEMS[2];
+    const { id: movedItem } = SAMPLE_ITEMS.items[2];
     const toItem = ROOT_ID;
     moveItem(movedItem, toItem);
 
@@ -98,10 +98,10 @@ describe('Move Item in List', () => {
     cy.get(`#${buildItemsTableRowId(movedItem)}`).should('exist');
   });
 
-  describe('Errors handling', () => {
+  describe('Error handling', () => {
     it('error while moving item does not create in interface', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS, moveItemError: true });
-      const { id } = SAMPLE_ITEMS[0];
+      cy.setUpApi({ ...SAMPLE_ITEMS, moveItemError: true });
+      const { id } = SAMPLE_ITEMS.items[0];
 
       // go to children item
       cy.visit(buildItemPath(id));
@@ -111,8 +111,8 @@ describe('Move Item in List', () => {
       }
 
       // move
-      const { id: movedItem } = SAMPLE_ITEMS[2];
-      const { id: toItem } = SAMPLE_ITEMS[3];
+      const { id: movedItem } = SAMPLE_ITEMS.items[2];
+      const { id: toItem } = SAMPLE_ITEMS.items[3];
       moveItem(movedItem, toItem);
 
       cy.wait('@moveItem').then(() => {

@@ -6,17 +6,18 @@ import { List } from 'immutable';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import FileUploader from './FileUploader';
-import { OWNED_ITEMS_ID } from '../../config/selectors';
+import { HOME_ERROR_ALERT_ID, OWNED_ITEMS_ID } from '../../config/selectors';
 import { useOwnItems } from '../../hooks';
 import Loader from '../common/Loader';
+import ErrorAlert from '../common/ErrorAlert';
 
 const Home = () => {
   const { t } = useTranslation();
   // get own items
-  const { data: ownItems, isLoading, isError, error } = useOwnItems();
+  const { data: ownItems, isLoading, isError } = useOwnItems();
 
   if (isError) {
-    return error;
+    return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
   }
 
   if (isLoading) {

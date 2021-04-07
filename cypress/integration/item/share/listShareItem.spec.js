@@ -19,7 +19,7 @@ const shareItem = ({ id, member, permission }) => {
 
 describe('Share Item in List', () => {
   it('share item on Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
     cy.visit(HOME_PATH);
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
@@ -27,7 +27,7 @@ describe('Share Item in List', () => {
     }
 
     // share
-    const { id } = SAMPLE_ITEMS[0];
+    const { id } = SAMPLE_ITEMS.items[0];
     const member = MEMBERS.ANNA;
     shareItem({ id, member, permission: PERMISSION_LEVELS.WRITE });
 
@@ -37,17 +37,17 @@ describe('Share Item in List', () => {
   });
 
   it('share item in item', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     // go to children item
-    cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
+    cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // share
-    const { id } = SAMPLE_ITEMS[2];
+    const { id } = SAMPLE_ITEMS.items[2];
     const member = MEMBERS.ANNA;
     shareItem({ id, member, permission: PERMISSION_LEVELS.READ });
 

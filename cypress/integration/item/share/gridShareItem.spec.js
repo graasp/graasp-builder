@@ -18,12 +18,12 @@ const shareItem = ({ id, member, permission }) => {
 
 describe('Share Item in Grid', () => {
   it('share item on Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
     cy.visit(HOME_PATH);
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // share
-    const { id } = SAMPLE_ITEMS[0];
+    const { id } = SAMPLE_ITEMS.items[0];
     const member = MEMBERS.ANNA;
     shareItem({ id, member, permission: PERMISSION_LEVELS.WRITE });
 
@@ -33,14 +33,14 @@ describe('Share Item in Grid', () => {
   });
 
   it('share item in item', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     // go to children item
-    cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
+    cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // share
-    const { id } = SAMPLE_ITEMS[2];
+    const { id } = SAMPLE_ITEMS.items[2];
     const member = MEMBERS.ANNA;
     shareItem({ id, member, permission: PERMISSION_LEVELS.READ });
 
