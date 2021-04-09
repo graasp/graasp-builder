@@ -1,4 +1,7 @@
-import { DEFAULT_MODE, MODES } from '../../../../src/config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  ITEM_LAYOUT_MODES,
+} from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
 import { buildItemsTableRowId } from '../../../../src/config/selectors';
 import {
@@ -18,8 +21,8 @@ describe('Files', () => {
         items: [IMAGE_ITEM_DEFAULT, VIDEO_ITEM_DEFAULT, PDF_ITEM_DEFAULT],
       });
       cy.visit(HOME_PATH);
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
     });
     it('image', () => {
@@ -56,8 +59,8 @@ describe('Files', () => {
         items: [IMAGE_ITEM_S3, VIDEO_ITEM_S3, PDF_ITEM_S3],
       });
       cy.visit(HOME_PATH);
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
     });
     it('image', () => {

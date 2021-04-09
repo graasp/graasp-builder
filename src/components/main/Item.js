@@ -41,7 +41,7 @@ const Item = ({ item }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <EditButton itemId={id} />
+        <EditButton item={item} />
         <ShareButton itemId={id} />
         <DeleteButton itemIds={[id]} />
       </CardActions>

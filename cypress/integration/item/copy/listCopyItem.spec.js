@@ -1,4 +1,8 @@
-import { DEFAULT_MODE, MODES, ROOT_ID } from '../../../../src/config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  ITEM_LAYOUT_MODES,
+  ROOT_ID,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -21,8 +25,8 @@ describe('Copy Item in List', () => {
   it('copy item on Home', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // copy
@@ -45,8 +49,8 @@ describe('Copy Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // copy
@@ -69,8 +73,8 @@ describe('Copy Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // copy
@@ -94,8 +98,8 @@ describe('Copy Item in List', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // copy

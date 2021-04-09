@@ -66,12 +66,12 @@ export const PERMISSION_LEVELS = {
 
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.WRITE;
 
-export const MODES = {
+export const ITEM_LAYOUT_MODES = {
   GRID: 'grid',
   LIST: 'list',
 };
 
-export const DEFAULT_MODE = MODES.LIST;
+export const DEFAULT_ITEM_LAYOUT_MODE = ITEM_LAYOUT_MODES.LIST;
 
 export const ORDERING = {
   ASC: 'asc',

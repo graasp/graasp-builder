@@ -1,4 +1,7 @@
-import { DEFAULT_MODE, MODES } from '../../../../src/config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  ITEM_LAYOUT_MODES,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -27,7 +30,7 @@ describe('View Space', () => {
 
     it('visit Home', () => {
       cy.visit(HOME_PATH);
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       // should get own items
       cy.wait('@getOwnItems').then(({ response: { body } }) => {
@@ -70,7 +73,7 @@ describe('View Space', () => {
     it('visit item by id', () => {
       const { id } = SAMPLE_ITEMS[0];
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       // should get current item
       cy.wait('@getItem');
@@ -110,8 +113,8 @@ describe('View Space', () => {
     it('visit Home', () => {
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // should get own items
@@ -157,8 +160,8 @@ describe('View Space', () => {
       const { id } = SAMPLE_ITEMS[0];
       cy.visit(buildItemPath(id));
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // should get current item

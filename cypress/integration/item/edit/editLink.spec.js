@@ -1,4 +1,7 @@
-import { DEFAULT_MODE, MODES } from '../../../../src/config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  ITEM_LAYOUT_MODES,
+} from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -19,8 +22,8 @@ describe('Edit Link', () => {
     it('edit link on Home', () => {
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       const itemToEdit = GRAASP_LINK_ITEM;
@@ -31,7 +34,7 @@ describe('Edit Link', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        MODES.LIST,
+        ITEM_LAYOUT_MODES.LIST,
       );
 
       cy.wait('@editItem').then(
@@ -52,7 +55,7 @@ describe('Edit Link', () => {
   describe('Grid', () => {
     it('edit link on Home', () => {
       cy.visit(HOME_PATH);
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       const itemToEdit = GRAASP_LINK_ITEM;
 
@@ -62,7 +65,7 @@ describe('Edit Link', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        MODES.GRID,
+        ITEM_LAYOUT_MODES.GRID,
       );
 
       cy.wait('@editItem').then(

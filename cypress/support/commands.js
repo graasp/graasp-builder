@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'cypress-file-upload';
-import { MODES } from '../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../src/config/constants';
 import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
@@ -91,10 +91,10 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('switchMode', (mode) => {
   switch (mode) {
-    case MODES.GRID:
+    case ITEM_LAYOUT_MODES.GRID:
       cy.get(`#${MODE_GRID_BUTTON_ID}`).click({ force: true });
       break;
-    case MODES.LIST:
+    case ITEM_LAYOUT_MODES.LIST:
       cy.get(`#${MODE_LIST_BUTTON_ID}`).click({ force: true });
       break;
     default:

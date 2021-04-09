@@ -1,30 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {
-  setMoveModalSettings,
-  setCopyModalSettings,
-  editItem,
-} from '../../actions';
-import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
 } from '../../config/selectors';
+import { CopyItemModalContext } from '../context/CopyItemModalContext';
+import { MoveItemModalContext } from '../context/MoveItemModalContext';
 
-const ItemMenu = ({
-  itemId,
-  dispatchSetMoveModalSettings,
-  dispatchSetCopyModalSettings,
-}) => {
+const ItemMenu = ({ itemId }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
+  const { openModal: openCopyModal } = useContext(CopyItemModalContext);
+  const { openModal: openMoveModal } = useContext(MoveItemModalContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -35,12 +29,12 @@ const ItemMenu = ({
   };
 
   const handleMove = () => {
-    dispatchSetMoveModalSettings({ open: true, itemId });
+    openMoveModal(itemId);
     handleClose();
   };
 
   const handleCopy = () => {
-    dispatchSetCopyModalSettings({ open: true, itemId });
+    openCopyModal(itemId);
     handleClose();
   };
 
@@ -69,16 +63,6 @@ const ItemMenu = ({
 
 ItemMenu.propTypes = {
   itemId: PropTypes.string.isRequired,
-  dispatchSetMoveModalSettings: PropTypes.func.isRequired,
-  dispatchSetCopyModalSettings: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  dispatchSetMoveModalSettings: setMoveModalSettings,
-  dispatchSetCopyModalSettings: setCopyModalSettings,
-  dispatchEditItem: editItem,
-};
-
-const ConnectedComponent = connect(null, mapDispatchToProps)(ItemMenu);
-
-export default ConnectedComponent;
+export default ItemMenu;

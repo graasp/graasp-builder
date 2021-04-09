@@ -1,4 +1,7 @@
-import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
+import {
+  ITEM_LAYOUT_MODES,
+  DEFAULT_ITEM_LAYOUT_MODE,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -14,12 +17,12 @@ describe('Create Space', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // create
-      createItem(CREATED_ITEM, MODES.LIST);
+      createItem(CREATED_ITEM, ITEM_LAYOUT_MODES.LIST);
 
       cy.wait('@postItem').then(({ response: { body } }) => {
         // check item is created and displayed
@@ -35,12 +38,12 @@ describe('Create Space', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // create
-      createItem(CREATED_ITEM, MODES.LIST);
+      createItem(CREATED_ITEM, ITEM_LAYOUT_MODES.LIST);
 
       cy.wait('@postItem').then(({ response: { body } }) => {
         // check item is created and displayed
@@ -53,10 +56,10 @@ describe('Create Space', () => {
     it('create space on Home', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       // create
-      createItem(CREATED_ITEM, MODES.GRID);
+      createItem(CREATED_ITEM, ITEM_LAYOUT_MODES.GRID);
 
       cy.wait('@postItem').then(({ response: { body } }) => {
         // check item is created and displayed
@@ -71,10 +74,10 @@ describe('Create Space', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       // create
-      createItem(CREATED_ITEM, MODES.GRID);
+      createItem(CREATED_ITEM, ITEM_LAYOUT_MODES.GRID);
 
       cy.wait('@postItem').then(({ response: { body } }) => {
         // check item is created and displayed
@@ -91,12 +94,12 @@ describe('Create Space', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // create
-      createItem(CREATED_ITEM, MODES.LIST);
+      createItem(CREATED_ITEM, ITEM_LAYOUT_MODES.LIST);
 
       cy.wait('@postItem').then(({ response: { body } }) => {
         // check item is created and displayed

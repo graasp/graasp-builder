@@ -1,4 +1,4 @@
-import { MODES, ROOT_ID } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES, ROOT_ID } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -19,7 +19,7 @@ describe('Copy Item in Grid', () => {
   it('copy item on Home', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS[0];
@@ -41,7 +41,7 @@ describe('Copy Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // move
     const { id: copyItemId } = SAMPLE_ITEMS[2];
@@ -63,7 +63,7 @@ describe('Copy Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // move
     const { id: copyItemId } = SAMPLE_ITEMS[2];
@@ -86,7 +86,7 @@ describe('Copy Item in Grid', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       // move
       const { id: copyItemId } = SAMPLE_ITEMS[2];

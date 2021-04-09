@@ -1,4 +1,7 @@
-import { DEFAULT_MODE, MODES } from '../../../../src/config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  ITEM_LAYOUT_MODES,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { UPLOADER_ID } from '../../../../src/config/selectors';
 import { ICON_FILEPATH, TEXT_FILEPATH } from '../../../fixtures/files';
@@ -20,8 +23,8 @@ describe('Upload Item in List', () => {
     describe('upload item on Home', () => {
       beforeEach(() => {
         cy.visit(HOME_PATH);
-        if (DEFAULT_MODE !== MODES.LIST) {
-          cy.switchMode(MODES.LIST);
+        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+          cy.switchMode(ITEM_LAYOUT_MODES.LIST);
         }
       });
 
@@ -52,8 +55,8 @@ describe('Upload Item in List', () => {
 
       beforeEach(() => {
         cy.visit(buildItemPath(id));
-        if (DEFAULT_MODE !== MODES.LIST) {
-          cy.switchMode(MODES.LIST);
+        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+          cy.switchMode(ITEM_LAYOUT_MODES.LIST);
         }
       });
 

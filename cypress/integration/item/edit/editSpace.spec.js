@@ -1,4 +1,7 @@
-import { DEFAULT_MODE, MODES } from '../../../../src/config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  ITEM_LAYOUT_MODES,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -15,8 +18,8 @@ describe('Edit Space', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       const itemToEdit = SAMPLE_ITEMS[0];
@@ -27,7 +30,7 @@ describe('Edit Space', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        MODES.LIST,
+        ITEM_LAYOUT_MODES.LIST,
       );
 
       cy.wait('@editItem').then(
@@ -49,8 +52,8 @@ describe('Edit Space', () => {
       // go to children item
       cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       const itemToEdit = SAMPLE_ITEMS[2];
@@ -61,7 +64,7 @@ describe('Edit Space', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        MODES.LIST,
+        ITEM_LAYOUT_MODES.LIST,
       );
 
       cy.wait('@editItem').then(
@@ -83,7 +86,7 @@ describe('Edit Space', () => {
     it('edit space on Home', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       cy.visit(HOME_PATH);
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       const itemToEdit = SAMPLE_ITEMS[0];
 
@@ -93,7 +96,7 @@ describe('Edit Space', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        MODES.GRID,
+        ITEM_LAYOUT_MODES.GRID,
       );
 
       cy.wait('@editItem').then(
@@ -114,7 +117,7 @@ describe('Edit Space', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       // go to children item
       cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       const itemToEdit = SAMPLE_ITEMS[2];
 
@@ -124,7 +127,7 @@ describe('Edit Space', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        MODES.GRID,
+        ITEM_LAYOUT_MODES.GRID,
       );
 
       cy.wait('@editItem').then(

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Map, List } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,13 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { editItem } from '../../actions/item';
 import SpaceForm from '../item/form/SpaceForm';
-import { setEditModalSettings, editItem } from '../../actions';
-import { getItemById } from '../../utils/item';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../config/constants';
 import BaseItemForm from '../item/form/BaseItemForm';
+
+const EditItemModalContext = React.createContext();
 
 const useStyles = makeStyles(() => ({
   dialogContent: {
@@ -23,28 +23,31 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const EditItemModal = ({
-  dispatchEditItem,
-  dispatchSetEditModalSettings,
-  settings,
-  items,
-}) => {
+const EditItemModalProvider = ({ children }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const classes = useStyles();
   const [updatedItem, setUpdatedItem] = useState(null);
 
+  const [open, setOpen] = useState(false);
+  const [item, setItem] = useState(null);
+
   useEffect(() => {
-    const selectedId = settings.get('itemId');
-    const item = selectedId ? getItemById(items, selectedId) : null;
     setUpdatedItem(item);
-  }, [settings, items]);
+  }, [item, setUpdatedItem]);
+
+  const openModal = (newItem) => {
+    setOpen(true);
+    setItem(newItem);
+  };
 
   const onClose = () => {
-    dispatchSetEditModalSettings({ open: false, itemId: null });
+    setOpen(false);
+    setItem(null);
   };
 
   const submit = () => {
-    dispatchEditItem(updatedItem);
+    dispatch(editItem(updatedItem));
     onClose();
   };
 
@@ -61,11 +64,9 @@ const EditItemModal = ({
     }
   };
 
-  const open = settings.get('open');
-
-  return (
+  const renderModal = () => (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle id={settings.get('itemId')}>{t('Edit Item')}</DialogTitle>
+      <DialogTitle id={item?.id}>{t('Edit Item')}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         {renderForm()}
       </DialogContent>
@@ -83,29 +84,21 @@ const EditItemModal = ({
       </DialogActions>
     </Dialog>
   );
+
+  return (
+    <EditItemModalContext.Provider value={{ openModal }}>
+      {renderModal()}
+      {children}
+    </EditItemModalContext.Provider>
+  );
 };
 
-EditItemModal.propTypes = {
-  dispatchSetEditModalSettings: PropTypes.func.isRequired,
-  dispatchEditItem: PropTypes.func.isRequired,
-  settings: PropTypes.instanceOf(Map).isRequired,
-  items: PropTypes.instanceOf(List).isRequired,
+EditItemModalProvider.propTypes = {
+  children: PropTypes.node,
 };
 
-const mapStateToProps = ({ item, layout }) => ({
-  parentId: item.getIn(['item', 'id']),
-  settings: layout.get('editModal'),
-  items: item.get('items'),
-});
-
-const mapDispatchToProps = {
-  dispatchEditItem: editItem,
-  dispatchSetEditModalSettings: setEditModalSettings,
+EditItemModalProvider.defaultProps = {
+  children: null,
 };
 
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EditItemModal);
-
-export default ConnectedComponent;
+export { EditItemModalProvider, EditItemModalContext };
