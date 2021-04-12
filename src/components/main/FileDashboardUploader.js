@@ -1,123 +1,83 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
-import { withTranslation } from 'react-i18next';
+import { useRouteMatch } from 'react-router';
+import { useMutation } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import { FILE_UPLOAD_MAX_FILES, UPLOAD_METHOD } from '../../config/constants';
 import configureUppy from '../../utils/uppy';
-import { setItem, getOwnItems } from '../../actions/item';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
+import { buildItemPath } from '../../config/paths';
+import { FILE_UPLOAD_MUTATION_KEY } from '../../config/keys';
 
-class FileDashboardUploader extends Component {
-  static propTypes = {
-    itemId: PropTypes.string,
-    dispatchGetOwnItems: PropTypes.func.isRequired,
-    dispatchSetItem: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired,
-  };
+const FileDashboardUploader = () => {
+  const [uppy, setUppy] = useState(null);
+  const match = useRouteMatch(buildItemPath());
+  const itemId = match?.params?.itemId;
+  const { t } = useTranslation();
+  const { mutate: onFileUploadComplete } = useMutation(
+    FILE_UPLOAD_MUTATION_KEY,
+  );
 
-  static defaultProps = {
-    itemId: '',
-  };
-
-  state = {
-    uppy: null,
-  };
-
-  componentDidMount() {
-    this.setUppy();
-  }
-
-  componentDidUpdate({ itemId: prevItemId }) {
-    const { itemId } = this.props;
-    if (itemId !== prevItemId) {
-      this.setUppy();
-    }
-  }
-
-  componentWillUnmount() {
-    const { uppy } = this.state;
-    uppy?.close();
-  }
-
-  setUppy = () => {
-    const { itemId } = this.props;
-    this.setState({
-      uppy: configureUppy({
-        itemId,
-        onComplete: this.onComplete,
-        onFilesAdded: this.onFilesAdded,
-        method: UPLOAD_METHOD,
-      }),
-    });
-  };
-
-  onComplete = (result) => {
-    const { itemId, dispatchGetOwnItems, dispatchSetItem } = this.props;
-
+  const onComplete = (result) => {
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
-      // in the Home component
-      if (!itemId) {
-        return dispatchGetOwnItems();
-      }
-      // elsewhere
-      return dispatchSetItem(itemId);
+      onFileUploadComplete(itemId);
     }
 
     return false;
   };
 
-  render() {
-    const { uppy } = this.state;
-    const { t } = this.props;
-
-    if (!uppy) {
-      return null;
-    }
-
-    return (
-      <div id={DASHBOARD_UPLOADER_ID}>
-        <Dashboard
-          uppy={uppy}
-          height={200}
-          proudlyDisplayPoweredByUppy={false}
-          note={t(
-            `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
-            {
-              maxFiles: FILE_UPLOAD_MAX_FILES,
-            },
-          )}
-          locale={{
-            strings: {
-              // Text to show on the droppable area.
-              // `%{browse}` is replaced with a link that opens the system file selection dialog.
-              dropPaste: `${t('Drop here or')} %{browse}`,
-              // Used as the label for the link that opens the system file selection dialog.
-              browse: t('Browse'),
-            },
-          }}
-        />
-      </div>
+  const applyUppy = () =>
+    setUppy(
+      configureUppy({
+        itemId,
+        onComplete,
+        method: UPLOAD_METHOD,
+      }),
     );
+
+  useEffect(() => {
+    applyUppy();
+
+    return () => {
+      uppy?.close();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    applyUppy();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemId]);
+
+  if (!uppy) {
+    return null;
   }
-}
 
-const mapStateToProps = ({ item }) => ({
-  itemId: item.getIn(['item', 'id']),
-});
-
-const mapDispatchToProps = {
-  dispatchSetItem: setItem,
-  dispatchGetOwnItems: getOwnItems,
+  return (
+    <div id={DASHBOARD_UPLOADER_ID}>
+      <Dashboard
+        uppy={uppy}
+        height={200}
+        proudlyDisplayPoweredByUppy={false}
+        note={t(`You can upload up to FILE_UPLOAD_MAX_FILES files at a time`, {
+          maxFiles: FILE_UPLOAD_MAX_FILES,
+        })}
+        locale={{
+          strings: {
+            // Text to show on the droppable area.
+            // `%{browse}` is replaced with a link that opens the system file selection dialog.
+            dropPaste: `${t('Drop here or')} %{browse}`,
+            // Used as the label for the link that opens the system file selection dialog.
+            browse: t('Browse'),
+          },
+        }}
+      />
+    </div>
+  );
 };
 
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(FileDashboardUploader);
-
-export default withTranslation()(ConnectedComponent);
+export default FileDashboardUploader;

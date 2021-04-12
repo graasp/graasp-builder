@@ -52,3 +52,4 @@ export const CREATE_ITEM_CLOSE_BUTTON_ID = 'createItemCloseButton';
 export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const HEADER_USER_ID = 'headerUser';
 export const USER_MENU_SIGN_OUT_OPTION_ID = 'userMenuSignOutOption';
+export const NAVIGATION_HIDDEN_PARENTS_ID = 'navigationHiddenParents';

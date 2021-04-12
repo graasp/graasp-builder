@@ -26,11 +26,7 @@ describe('Delete Item in List', () => {
 
     // delete
     deleteItem(id);
-    cy.wait('@deleteItem').then(() => {
-      // check item is deleted, others are still displayed
-      cy.get(`#${buildItemsTableRowId(id)}`).should('not.exist');
-      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[1].id)}`).should('exist');
-    });
+    cy.wait(['@deleteItem', '@getOwnItems']);
   });
 
   it('delete item inside parent', () => {

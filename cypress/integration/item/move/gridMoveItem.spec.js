@@ -86,7 +86,7 @@ describe('Move Item in Grid', () => {
   });
 
   describe('Error handling', () => {
-    it.only('error while moving item does not create in interface', () => {
+    it('error while moving item does not create in interface', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS, moveItemError: true });
       const { id } = SAMPLE_ITEMS[0];
 
@@ -99,9 +99,9 @@ describe('Move Item in Grid', () => {
       const { id: toItem } = SAMPLE_ITEMS[3];
       moveItem(movedItem, toItem);
 
-      cy.wait('@moveItem').then(({ response: { body } }) => {
-        // check item is created and displayed
-        cy.get(`#${buildItemCard(body.id)}`).should('not.exist');
+      cy.wait('@moveItem').then(() => {
+        // check item is still there
+        cy.get(`#${buildItemCard(movedItem)}`).should('exist');
       });
     });
   });

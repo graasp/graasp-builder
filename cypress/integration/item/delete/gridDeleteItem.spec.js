@@ -20,11 +20,7 @@ describe('Delete Item in Grid', () => {
 
     // delete
     deleteItem(id);
-    cy.wait('@deleteItem').then(() => {
-      // check item is deleted, others are still displayed
-      cy.get(`#${buildItemCard(id)}`).should('not.exist');
-      cy.get(`#${buildItemCard(SAMPLE_ITEMS[1].id)}`).should('exist');
-    });
+    cy.wait(['@deleteItem', '@getOwnItems']);
   });
 
   it('delete item inside parent', () => {
@@ -39,9 +35,8 @@ describe('Delete Item in Grid', () => {
     // delete
     deleteItem(idToDelete);
     cy.wait('@deleteItem').then(() => {
-      // check item is deleted, others are still displayed
-      cy.get(`#${buildItemCard(idToDelete)}`).should('not.exist');
-      cy.get(`#${buildItemCard(SAMPLE_ITEMS[3].id)}`).should('exist');
+      // check update
+      cy.wait('@getItem').its('response.url').should('contain', id);
     });
   });
 

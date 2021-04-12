@@ -7,12 +7,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { editItem } from '../../actions/item';
+import { useMutation } from 'react-query';
 import SpaceForm from '../item/form/SpaceForm';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../config/constants';
 import BaseItemForm from '../item/form/BaseItemForm';
+import { EDIT_ITEM_MUTATION_KEY } from '../../config/keys';
 
 const EditItemModalContext = React.createContext();
 
@@ -24,10 +24,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const EditItemModalProvider = ({ children }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const classes = useStyles();
   const [updatedItem, setUpdatedItem] = useState(null);
+  const mutation = useMutation(EDIT_ITEM_MUTATION_KEY);
 
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
@@ -47,7 +47,7 @@ const EditItemModalProvider = ({ children }) => {
   };
 
   const submit = () => {
-    dispatch(editItem(updatedItem));
+    mutation.mutate(updatedItem);
     onClose();
   };
 

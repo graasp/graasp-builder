@@ -1,65 +1,35 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useLocation } from 'react-router';
 import { buildSignInPath } from '../../api/routes';
-import { FLAG_GETTING_CURRENT_MEMBER } from '../../types/member';
 import { AUTHENTICATION_HOST } from '../../config/constants';
-import { getCurrentMember } from '../../actions';
+import { useCurrentMember } from '../../hooks';
+import Loader from './Loader';
 
 const Authorization = () => (ChildComponent) => {
-  class ComposedComponent extends Component {
-    static redirectToSignIn(props) {
-      const { location: { pathname } = {} } = props;
+  const ComposedComponent = (props) => {
+    const { location: { pathname } = {} } = useLocation();
+
+    const redirectToSignIn = () => {
       window.location.href = `${AUTHENTICATION_HOST}/${buildSignInPath(
         `${window.location.origin}${pathname}`,
       )}`;
-    }
-
-    static propTypes = {
-      dispatch: PropTypes.func.isRequired,
-      match: PropTypes.shape({
-        path: PropTypes.string,
-      }).isRequired,
-      isAuthenticated: PropTypes.bool.isRequired,
-      activity: PropTypes.bool.isRequired,
-      dispatchGetCurrentMember: PropTypes.func.isRequired,
     };
 
-    componentDidMount() {
-      const { dispatchGetCurrentMember } = this.props;
-      dispatchGetCurrentMember();
+    const { data: currentMember, isLoading, isError } = useCurrentMember();
+
+    if (isLoading) {
+      return <Loader />;
     }
 
-    componentDidUpdate() {
-      this.checkAuthorization();
+    // check authorization
+    if (isError || !currentMember) {
+      redirectToSignIn();
     }
 
-    checkAuthorization = () => {
-      const { isAuthenticated, activity } = this.props;
-
-      if (!activity && !isAuthenticated) {
-        ComposedComponent.redirectToSignIn(this.props);
-      }
-    };
-
-    render() {
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      return <ChildComponent {...this.props} />;
-    }
-  }
-
-  const mapStateToProps = ({ member }) => ({
-    isAuthenticated: !member.getIn(['current']).isEmpty(),
-    activity: Boolean(
-      member.getIn(['activity', FLAG_GETTING_CURRENT_MEMBER]).length,
-    ),
-  });
-
-  const mapDispatchToProps = {
-    dispatchGetCurrentMember: getCurrentMember,
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    return <ChildComponent {...props} />;
   };
-
-  return connect(mapStateToProps, mapDispatchToProps)(ComposedComponent);
+  return ComposedComponent;
 };
 
 export default Authorization;

@@ -3,18 +3,13 @@ import {
   ITEM_LAYOUT_MODES,
 } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
-import {
-  buildItemCard,
-  buildItemLink,
-  buildItemsTableRowId,
-} from '../../../../src/config/selectors';
 import { EDITED_FIELDS, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editItem } from './utils';
 
-describe('Edit Space', () => {
+describe('Edit Folder', () => {
   describe('List', () => {
-    it('edit space on Home', () => {
+    it('edit folder on Home', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       cy.visit(HOME_PATH);
 
@@ -36,18 +31,20 @@ describe('Edit Space', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name },
+            body: { id, name, description },
           },
         }) => {
           // check item is edited and updated
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
+          expect(description).to.equal(EDITED_FIELDS.description);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
-          cy.get(`#${buildItemsTableRowId(id)}`).contains(name);
+          cy.wait('@getOwnItems');
         },
       );
     });
 
-    it('edit space in item', () => {
+    it('edit folder in item', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       // go to children item
       cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
@@ -70,20 +67,24 @@ describe('Edit Space', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name },
+            body: { id, name, description },
           },
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
-          cy.get(`#${buildItemsTableRowId(id)}`).contains(name);
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
+          expect(description).to.equal(EDITED_FIELDS.description);
+          cy.get('@getItem')
+            .its('response.url')
+            .should('contain', SAMPLE_ITEMS[0].id);
         },
       );
     });
   });
 
   describe('Grid', () => {
-    it('edit space on Home', () => {
+    it('edit folder on Home', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       cy.visit(HOME_PATH);
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
@@ -102,18 +103,20 @@ describe('Edit Space', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name },
+            body: { id, name, description },
           },
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemCard(id)}`).should('exist');
-          cy.get(`#${buildItemLink(id)}`).contains(name);
+          cy.get('@getOwnItems');
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
+          expect(description).to.equal(EDITED_FIELDS.description);
         },
       );
     });
 
-    it('edit space in item', () => {
+    it('edit folder in item', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       // go to children item
       cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
@@ -133,13 +136,17 @@ describe('Edit Space', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name },
+            body: { id, name, description },
           },
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemCard(id)}`).should('exist');
-          cy.get(`#${buildItemLink(id)}`).contains(name);
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
+          expect(description).to.equal(EDITED_FIELDS.description);
+          cy.get('@getItem')
+            .its('response.url')
+            .should('contain', SAMPLE_ITEMS[0].id);
         },
       );
     });

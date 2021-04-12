@@ -1,10 +1,12 @@
 import React from 'react';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useRouteMatch } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import Navigation from '../../layout/Navigation';
 import ItemHeaderActions from './ItemHeaderActions';
+import { useCurrentMember, useItem } from '../../../hooks';
+import { buildItemPath } from '../../../config/paths';
+import Loader from '../../common/Loader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,35 +20,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemHeader = ({ onClick, item, user }) => {
+const ItemHeader = ({ onClick }) => {
+  const match = useRouteMatch(buildItemPath());
+  const itemId = match?.params?.itemId;
+  const { data: user, isLoading: isMemberLoading } = useCurrentMember();
+  const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const classes = useStyles();
+
+  if (isMemberLoading || isItemLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className={classes.root}>
       <Navigation item={item} user={user} />
       <ItemHeaderActions
-        id={item.get('id')}
-        itemType={item.get('type')}
+        id={item?.get('id')}
+        itemType={item?.get('type')}
         onClick={onClick}
       />
     </div>
   );
 };
 
-const mapStateToProps = ({ item, member }) => ({
-  item: item.get('item'),
-  user: member.get('current'),
-});
-
 ItemHeader.propTypes = {
   onClick: PropTypes.func,
-  item: PropTypes.instanceOf(Map).isRequired,
-  user: PropTypes.instanceOf(Map).isRequired,
 };
 
 ItemHeader.defaultProps = {
   onClick: () => {},
 };
 
-const ConnectedComponent = connect(mapStateToProps)(ItemHeader);
-
-export default ConnectedComponent;
+export default ItemHeader;

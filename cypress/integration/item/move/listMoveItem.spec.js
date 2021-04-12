@@ -115,9 +115,9 @@ describe('Move Item in List', () => {
       const { id: toItem } = SAMPLE_ITEMS[3];
       moveItem(movedItem, toItem);
 
-      cy.wait('@moveItem').then(({ response: { body } }) => {
-        // check item is created and displayed
-        cy.get(`#${buildItemsTableRowId(body.id)}`).should('not.exist');
+      cy.wait('@moveItem').then(() => {
+        // check item is still there
+        cy.get(`#${buildItemsTableRowId(movedItem)}`).should('exist');
       });
     });
   });

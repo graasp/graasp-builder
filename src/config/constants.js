@@ -6,9 +6,16 @@ const {
   UPLOAD_METHOD: ENV_UPLOAD_METHOD,
   SHOW_NOTIFICATIONS: ENV_SHOW_NOTIFICATIONS,
   AUTHENTICATION_HOST: ENV_AUTHENTICATION_HOST,
+  NODE_ENV: ENV_NODE_ENV,
 } = env;
 
 export const APP_NAME = 'Graasp';
+
+export const NODE_ENV =
+  ENV_NODE_ENV ||
+  process.env.REACT_APP_NODE_ENV ||
+  process.env.NODE_ENV ||
+  'development';
 
 export const API_HOST =
   ENV_API_HOST || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
@@ -103,3 +110,7 @@ export const ITEM_ICON_MAX_SIZE = 25;
 export const USERNAME_MAX_LENGTH = 30;
 
 export const SHARE_ITEM_MODAL_MIN_WIDTH = 120;
+
+// React Query Configs
+export const STALE_TIME_MILLISECONDS = 1000 * 60 * 60;
+export const CACHE_TIME_MILLISECONDS = 1000 * 60 * 60;

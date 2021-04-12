@@ -10,8 +10,11 @@ import {
 } from '../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../fixtures/items';
 import { CURRENT_USER } from '../fixtures/members';
-
-const PAGE_LOAD_WAITING_TIME = 3000;
+import {
+  REQUEST_FAILURE_LOADING_TIME,
+  PAGE_LOAD_WAITING_PAUSE,
+  REDIRECTION_CONTENT,
+} from '../support/constants';
 
 describe('Authentication', () => {
   describe('Signed Off > Redirect to sign in route', () => {
@@ -20,15 +23,18 @@ describe('Authentication', () => {
     });
     it('Home', () => {
       cy.visit(HOME_PATH);
-      cy.wait('@signInRedirection');
+      cy.wait(REQUEST_FAILURE_LOADING_TIME);
+      cy.get('html').should('contain', REDIRECTION_CONTENT);
     });
     it('Shared Items', () => {
       cy.visit(SHARED_ITEMS_PATH);
-      cy.wait('@signInRedirection');
+      cy.wait(REQUEST_FAILURE_LOADING_TIME);
+      cy.get('html').should('contain', REDIRECTION_CONTENT);
     });
     it('Item', () => {
       cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
-      cy.wait('@signInRedirection');
+      cy.wait(REQUEST_FAILURE_LOADING_TIME);
+      cy.get('html').should('contain', REDIRECTION_CONTENT);
     });
   });
 
@@ -42,23 +48,24 @@ describe('Authentication', () => {
       // user name in header
       cy.get(`#${HEADER_USER_ID}`).click();
       cy.get(`#${USER_MENU_SIGN_OUT_OPTION_ID}`).click();
-      cy.wait('@signInRedirection');
+      cy.wait(REQUEST_FAILURE_LOADING_TIME);
+      cy.get('html').should('contain', REDIRECTION_CONTENT);
     });
 
     describe('Load page correctly', () => {
       it('Home', () => {
         cy.visit(HOME_PATH);
-        cy.wait(PAGE_LOAD_WAITING_TIME);
+        cy.wait(PAGE_LOAD_WAITING_PAUSE);
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
       });
       it('Shared Items', () => {
         cy.visit(SHARED_ITEMS_PATH);
-        cy.wait(PAGE_LOAD_WAITING_TIME);
+        cy.wait(PAGE_LOAD_WAITING_PAUSE);
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
       });
       it('Item', () => {
         cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
-        cy.wait(PAGE_LOAD_WAITING_TIME);
+        cy.wait(PAGE_LOAD_WAITING_PAUSE);
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
       });
     });

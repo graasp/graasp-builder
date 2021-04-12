@@ -23,19 +23,14 @@ import {
   failOnError,
 } from './utils';
 import * as CacheOperations from '../config/cache';
+import { getParentsIdsFromPath } from '../utils/item';
 
 export const getItem = async (id) => {
-  const cachedItem = await CacheOperations.getItem(id);
-  if (cachedItem && !cachedItem.dirty) {
-    return cachedItem;
-  }
-
   const res = await fetch(
     `${API_HOST}/${buildGetItemRoute(id)}`,
     DEFAULT_GET,
   ).then(failOnError);
   const item = await res.json();
-  await CacheOperations.saveItem(item);
   return item;
 };
 
@@ -49,7 +44,7 @@ export const getOwnItems = async () => {
 
   const ownItems = await res.json();
 
-  await CacheOperations.saveItems(ownItems);
+  // await CacheOperations.saveItems(ownItems);
 
   return ownItems;
 };
@@ -70,7 +65,6 @@ export const postItem = async ({
 
   const newItem = await res.json();
 
-  await CacheOperations.createItem({ item: newItem });
   return newItem;
 };
 
@@ -80,8 +74,6 @@ export const deleteItem = async (id) => {
     DEFAULT_DELETE,
   ).then(failOnError);
 
-  await CacheOperations.deleteItem(id);
-
   return res.json();
 };
 
@@ -90,8 +82,6 @@ export const deleteItems = async (ids) => {
     `${API_HOST}/${buildDeleteItemsRoute(ids)}`,
     DEFAULT_DELETE,
   ).then(failOnError);
-
-  await CacheOperations.deleteItems(ids);
 
   return res.json();
 };
@@ -105,11 +95,9 @@ export const editItem = async (item) => {
   }).then(failOnError);
 
   const newItem = await req.json();
-  await CacheOperations.saveItem(newItem);
   return newItem;
 };
 
-// we need this function for navigation purposes: when you click on an item, you want to see its 'immediate' children
 export const getChildren = async (id) => {
   const res = await fetch(
     `${API_HOST}/${buildGetChildrenRoute(id)}`,
@@ -118,8 +106,15 @@ export const getChildren = async (id) => {
 
   const children = await res.json();
 
-  await CacheOperations.saveItems(children);
   return children;
+};
+
+export const getParents = async ({ path }) => {
+  const parentIds = getParentsIdsFromPath(path, { ignoreSelf: true });
+  if (parentIds.length) {
+    return Promise.all(parentIds.map((id) => getItem(id)));
+  }
+  return [];
 };
 
 export const moveItem = async (payload) => {
@@ -133,8 +128,6 @@ export const moveItem = async (payload) => {
     ...DEFAULT_POST,
     body: JSON.stringify(body),
   }).then(failOnError);
-
-  await CacheOperations.moveItem(payload);
 
   return res.ok;
 };
@@ -151,8 +144,6 @@ export const copyItem = async ({ id, to }) => {
   }).then(failOnError);
 
   const newItem = await res.json();
-
-  await CacheOperations.saveItem(newItem);
 
   return newItem;
 };

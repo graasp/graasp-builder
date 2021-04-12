@@ -15,19 +15,19 @@ import {
   TextField,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
 import {
   DEFAULT_PERMISSION_LEVEL,
   PERMISSION_LEVELS,
   SHARE_ITEM_MODAL_MIN_WIDTH,
 } from '../../config/constants';
-import { shareItemWith } from '../../actions/membership';
 import {
   buildPermissionOptionId,
   SHARE_ITEM_MODAL_EMAIL_INPUT_ID,
   SHARE_ITEM_MODAL_PERMISSION_SELECT_ID,
   SHARE_ITEM_MODAL_SHARE_BUTTON_ID,
 } from '../../config/selectors';
+import { SHARE_ITEM_MUTATION_KEY } from '../../config/keys';
 
 const ShareItemModalContext = React.createContext();
 
@@ -52,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ShareItemModalProvider = ({ children }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const classes = useStyles();
+  const mutation = useMutation(SHARE_ITEM_MUTATION_KEY);
 
   // refs
   let email = '';
@@ -74,13 +74,11 @@ const ShareItemModalProvider = ({ children }) => {
   };
 
   const submit = () => {
-    dispatch(
-      shareItemWith({
-        id: itemId,
-        email: email.value,
-        permission: permission.value,
-      }),
-    );
+    mutation.mutate({
+      id: itemId,
+      email: email.value,
+      permission: permission.value,
+    });
     onClose();
   };
 

@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { copyItem } from '../../actions/item';
+import { useMutation } from 'react-query';
 import TreeModal from '../main/TreeModal';
+import { COPY_ITEM_MUTATION_KEY } from '../../config/keys';
 
 const CopyItemModalContext = React.createContext();
 
 const CopyItemModalProvider = ({ children }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-
+  const { mutate: copyItem } = useMutation(COPY_ITEM_MUTATION_KEY);
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(false);
 
@@ -25,19 +24,25 @@ const CopyItemModalProvider = ({ children }) => {
   };
 
   const onConfirm = (payload) => {
-    dispatch(copyItem(payload));
+    copyItem(payload);
     onClose();
   };
 
-  const renderModal = () => (
-    <TreeModal
-      onClose={onClose}
-      open={open}
-      itemId={itemId}
-      onConfirm={onConfirm}
-      title={t('Where do you want to copy this item?')}
-    />
-  );
+  const renderModal = () => {
+    if (!itemId) {
+      return null;
+    }
+
+    return (
+      <TreeModal
+        onClose={onClose}
+        open={open}
+        itemId={itemId}
+        onConfirm={onConfirm}
+        title={t('Where do you want to copy this item?')}
+      />
+    );
+  };
 
   return (
     <CopyItemModalContext.Provider value={{ openModal }}>

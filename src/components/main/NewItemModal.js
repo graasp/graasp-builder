@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useMutation } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -7,8 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { connect } from 'react-redux';
-import { createItem } from '../../actions/item';
+import { useRouteMatch } from 'react-router';
 import SpaceForm from '../item/form/SpaceForm';
 import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
@@ -19,6 +19,8 @@ import { ITEM_TYPES } from '../../config/constants';
 import FileDashboardUploader from './FileDashboardUploader';
 import LinkForm from '../item/form/LinkForm';
 import { isItemValid } from '../../utils/item';
+import { buildItemPath } from '../../config/paths';
+import { POST_ITEM_MUTATION_KEY } from '../../config/keys';
 
 const useStyles = makeStyles(() => ({
   dialogContent: {
@@ -27,11 +29,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
+const NewItemModal = ({ open, handleClose }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
   const [newItem, setNewItem] = useState({});
+  const { mutate: postItem } = useMutation(POST_ITEM_MUTATION_KEY);
+  const match = useRouteMatch(buildItemPath());
+  const parentId = match?.params?.itemId;
 
   useEffect(() => {
     switch (selectedItemType) {
@@ -52,10 +57,7 @@ const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
       return false;
     }
 
-    dispatchCreateItem({
-      parentId,
-      ...newItem,
-    });
+    postItem({ parentId, ...newItem });
     return handleClose();
   };
 
@@ -124,26 +126,10 @@ const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
 NewItemModal.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
-  dispatchCreateItem: PropTypes.func.isRequired,
-  parentId: PropTypes.string,
 };
 
 NewItemModal.defaultProps = {
   open: false,
-  parentId: null,
 };
 
-const mapStateToProps = ({ item }) => ({
-  parentId: item.getIn(['item', 'id']),
-});
-
-const mapDispatchToProps = {
-  dispatchCreateItem: createItem,
-};
-
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(NewItemModal);
-
-export default ConnectedComponent;
+export default NewItemModal;

@@ -1,21 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Alert from '@material-ui/lab/Alert';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { Map, List } from 'immutable';
+import { useTranslation } from 'react-i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withRouter } from 'react-router';
-import { withStyles } from '@material-ui/core';
-import {
-  clearItem,
-  getOwnItems,
-  setItem,
-  getSharedItems,
-} from '../../actions/item';
+import { useParams } from 'react-router';
+import { makeStyles } from '@material-ui/core';
+import { useChildren, useItem } from '../../hooks';
 import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
-import { areItemsEqual } from '../../utils/item';
 import { ITEM_TYPES } from '../../config/constants';
 import FileItem from '../item/FileItem';
 import FileUploader from './FileUploader';
@@ -23,108 +15,29 @@ import S3FileItem from '../item/S3FileItem';
 import ItemMain from '../item/ItemMain';
 import LinkItem from '../item/LinkItem';
 
-const styles = () => ({
+const useStyles = makeStyles(() => ({
   fileWrapper: {
     textAlign: 'center',
     background: 'lightgrey',
     height: '80vh',
     flexGrow: 1,
   },
-});
+}));
 
-class ItemScreen extends Component {
-  static propTypes = {
-    dispatchSetItem: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
-    }).isRequired,
-    dispatchClearItem: PropTypes.func.isRequired,
-    t: PropTypes.func.isRequired,
-    activity: PropTypes.bool,
-    item: PropTypes.instanceOf(Map),
-    dispatchGetSharedItems: PropTypes.func.isRequired,
-    dispatchGetOwnItems: PropTypes.func.isRequired,
-    classes: PropTypes.shape({
-      fileWrapper: PropTypes.string.isRequired,
-    }).isRequired,
-  };
+const ItemScreen = () => {
+  const { t } = useTranslation();
+  const classes = useStyles();
 
-  static defaultProps = {
-    activity: true,
-    item: null,
-  };
+  const { itemId } = useParams();
 
-  constructor(props) {
-    super(props);
-    const {
-      match: {
-        params: { itemId },
-      },
-      dispatchSetItem,
-    } = props;
-    dispatchSetItem(itemId);
-  }
+  const { data, isLoading } = useItem(itemId);
+  const item = Map(data);
 
-  componentDidMount() {
-    const { dispatchGetOwnItems, dispatchGetSharedItems } = this.props;
-    dispatchGetOwnItems();
-    dispatchGetSharedItems();
-  }
+  // display children
+  const { data: childrenRaw } = useChildren(itemId);
+  const children = List(childrenRaw);
 
-  shouldComponentUpdate({
-    item: nextItem,
-    match: {
-      params: { itemId: nextId },
-    },
-  }) {
-    const {
-      item,
-      match: {
-        params: { itemId },
-      },
-      activity,
-    } = this.props;
-
-    // todo: might have to change
-    // necessary to avoid render
-    return activity || itemId !== nextId || !areItemsEqual(item, nextItem);
-  }
-
-  async componentDidUpdate({
-    match: {
-      params: { itemId: prevId },
-    },
-  }) {
-    const {
-      match: {
-        params: { itemId },
-      },
-      dispatchSetItem,
-      activity,
-      item,
-    } = this.props;
-
-    if (!activity) {
-      // case on navigate
-      if (itemId !== prevId) {
-        dispatchSetItem(itemId);
-      }
-      // update when dirty or does not exist
-      // case create item
-      else if (item?.dirty) {
-        dispatchSetItem(itemId);
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    const { dispatchClearItem } = this.props;
-    dispatchClearItem();
-  }
-
-  renderContent = () => {
-    const { item, t, classes } = this.props;
-
+  const renderContent = () => {
     switch (item.get('type')) {
       case ITEM_TYPES.FILE:
         return (
@@ -149,9 +62,10 @@ class ItemScreen extends Component {
         return (
           <>
             <FileUploader />
-            <Items title={item.get('name')} items={item.get('children')} />
+            <Items title={item.get('name')} items={children} />
           </>
         );
+
       default:
         return (
           <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
@@ -161,42 +75,20 @@ class ItemScreen extends Component {
     }
   };
 
-  render() {
-    const { t, activity, item } = this.props;
-
-    // wait until all children are available
-    if (activity) {
-      return <CircularProgress color="primary" />;
-    }
-
-    if (!item || !item.get('id')) {
-      return (
-        <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
-          {t('An error occured.')}
-        </Alert>
-      );
-    }
-
-    return <ItemMain item={item}>{this.renderContent()}</ItemMain>;
+  // wait until all children are available
+  if (isLoading) {
+    return <CircularProgress color="primary" />;
   }
-}
 
-const mapStateToProps = ({ item }) => ({
-  activity: Boolean(Object.values(item.get('activity').toJS()).flat().length),
-  item: item.get('item'),
-});
+  if (!item || !item.get('id')) {
+    return (
+      <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
+        {t('An error occured.')}
+      </Alert>
+    );
+  }
 
-const mapDispatchToProps = {
-  dispatchSetItem: setItem,
-  dispatchClearItem: clearItem,
-  dispatchGetOwnItems: getOwnItems,
-  dispatchGetSharedItems: getSharedItems,
+  return <ItemMain item={item}>{renderContent()}</ItemMain>;
 };
 
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ItemScreen);
-const TranslatedComponent = withTranslation()(ConnectedComponent);
-const StyledComponent = withStyles(styles)(TranslatedComponent);
-export default withRouter(StyledComponent);
+export default ItemScreen;

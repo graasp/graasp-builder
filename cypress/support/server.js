@@ -36,6 +36,7 @@ import {
   DEFAULT_DELETE,
 } from '../../src/api/utils';
 import { getS3FileExtra } from '../../src/utils/itemExtra';
+import { REDIRECTION_CONTENT } from './constants';
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
@@ -43,6 +44,7 @@ const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
 export const redirectionReply = {
   headers: { 'content-type': 'text/html' },
   statusCode: StatusCodes.OK,
+  body: REDIRECTION_CONTENT,
 };
 
 export const mockGetCurrentMember = (shouldThrowError = false) => {
@@ -200,6 +202,7 @@ export const mockMoveItem = (items, shouldThrowError) => {
         path = `${parentItem.path}.${path}`;
       }
       item.path = path;
+
       // todo: do for all children
 
       return reply({

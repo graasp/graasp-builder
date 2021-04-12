@@ -3,11 +3,6 @@ import {
   ITEM_LAYOUT_MODES,
 } from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
-import {
-  buildItemCard,
-  buildItemLink,
-  buildItemsTableRowId,
-} from '../../../../src/config/selectors';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
@@ -40,13 +35,15 @@ describe('Edit File', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name },
+            body: { id, name, description },
           },
         }) => {
           // check item is edited and updated
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
+          expect(description).to.equal(EDITED_FIELDS.description);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
-          cy.get(`#${buildItemsTableRowId(id)}`).contains(name);
+          cy.wait('@getOwnItems');
         },
       );
     });
@@ -71,13 +68,15 @@ describe('Edit File', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name },
+            body: { id, name, description },
           },
         }) => {
           // check item is edited and updated
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
+          expect(description).to.equal(EDITED_FIELDS.description);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemCard(id)}`).should('exist');
-          cy.get(`#${buildItemLink(id)}`).contains(name);
+          cy.wait('@getOwnItems');
         },
       );
     });

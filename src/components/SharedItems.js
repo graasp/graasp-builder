@@ -1,28 +1,23 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { List } from 'immutable';
+import { useTranslation } from 'react-i18next';
 import { SHARED_ITEMS_ID } from '../config/selectors';
 import ItemHeader from './item/header/ItemHeader';
 import Items from './main/Items';
-import { getSharedItems } from '../actions';
+import { useSharedItems } from '../hooks';
+import Loader from './common/Loader';
 
-const SharedItems = ({ activity, sharedItems, dispatchGetSharedItems }) => {
+const SharedItems = () => {
   const { t } = useTranslation();
+  const { data: sharedItems, isLoading, isError, error } = useSharedItems();
 
-  useEffect(() => {
-    dispatchGetSharedItems();
-  }, [dispatchGetSharedItems]);
+  if (isError) {
+    return error;
+  }
 
-  useEffect(() => {
-    if (!activity) {
-      // update dirty items
-      if (sharedItems.some(({ dirty }) => dirty)) {
-        dispatchGetSharedItems();
-      }
-    }
-  }, [activity, sharedItems, dispatchGetSharedItems]);
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -30,25 +25,10 @@ const SharedItems = ({ activity, sharedItems, dispatchGetSharedItems }) => {
       <Items
         id={SHARED_ITEMS_ID}
         title={t('Items Shared With Me')}
-        items={sharedItems}
+        items={List(sharedItems)}
       />
     </>
   );
 };
 
-const mapStateToProps = ({ item }) => ({
-  activity: Boolean(Object.values(item.get('activity').toJS()).flat().length),
-  sharedItems: item.get('shared'),
-});
-
-const mapDispatchToProps = {
-  dispatchGetSharedItems: getSharedItems,
-};
-
-SharedItems.propTypes = {
-  activity: PropTypes.bool.isRequired,
-  dispatchGetSharedItems: PropTypes.func.isRequired,
-  sharedItems: PropTypes.instanceOf(List).isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SharedItems);
+export default SharedItems;
