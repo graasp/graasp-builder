@@ -1,6 +1,6 @@
 import { getMemberBy } from './member';
 import { API_HOST } from '../config/constants';
-import { checkRequest, DEFAULT_GET, DEFAULT_POST } from './utils';
+import { failOnError, DEFAULT_GET, DEFAULT_POST } from './utils';
 import {
   buildShareItemWithRoute,
   buildGetItemMembershipForItemRoute,
@@ -11,7 +11,7 @@ export const getMembershipsForItem = async ({ id }) => {
   const res = await fetch(
     `${API_HOST}/${buildGetItemMembershipForItemRoute(id)}`,
     DEFAULT_GET,
-  ).then(checkRequest);
+  ).then(failOnError);
 
   return res.json();
 };
@@ -24,7 +24,7 @@ export const shareItemWith = async ({ id, email, permission }) => {
   const res = await fetch(`${API_HOST}/${buildShareItemWithRoute(id)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify({ memberId: member[0].id, permission }), // supposed to have only one member for this mail
-  }).then(checkRequest);
+  }).then(failOnError);
 
   return res.ok;
 };

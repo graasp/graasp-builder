@@ -57,13 +57,16 @@ function SettingsHeader() {
     handleClose();
   };
 
-  const handleSignIn = () => {
-    window.location.url = `${AUTHENTICATION_HOST}/${buildSignInPath()}`;
-  };
-
   const renderMenu = () => {
     if (user.isEmpty()) {
-      return <MenuItem onClick={handleSignIn}>{t('Sign In')}</MenuItem>;
+      return (
+        <MenuItem
+          component="a"
+          href={`${AUTHENTICATION_HOST}/${buildSignInPath()}`}
+        >
+          {t('Sign In')}
+        </MenuItem>
+      );
     }
 
     return (

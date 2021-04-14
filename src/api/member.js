@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { checkRequest, DEFAULT_GET } from './utils';
+import { failOnError, DEFAULT_GET } from './utils';
 import { API_HOST } from '../config/constants';
 import {
   buildGetMemberBy,
@@ -10,7 +10,7 @@ import {
 export const getMemberBy = async ({ email }) => {
   const res = await fetch(`${API_HOST}/${buildGetMemberBy(email)}`, {
     ...DEFAULT_GET,
-  }).then(checkRequest);
+  }).then(failOnError);
 
   return res.json();
 };
@@ -18,7 +18,7 @@ export const getMemberBy = async ({ email }) => {
 export const getMember = async ({ id }) => {
   const res = await fetch(`${API_HOST}/${buildGetMember(id)}`, {
     ...DEFAULT_GET,
-  }).then(checkRequest);
+  }).then(failOnError);
 
   return res.json();
 };
@@ -26,7 +26,7 @@ export const getMember = async ({ id }) => {
 export const getCurrentMember = async () => {
   const res = await fetch(`${API_HOST}/${GET_CURRENT_MEMBER_ROUTE}`, {
     ...DEFAULT_GET,
-  }).then(checkRequest);
+  }).then(failOnError);
 
   return res.json();
 };

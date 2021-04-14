@@ -39,6 +39,11 @@ import {
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
 
+export const redirectionReply = {
+  headers: { 'content-type': 'text/html' },
+  statusCode: StatusCodes.OK,
+};
+
 export const mockGetCurrentMember = (shouldThrowError = false) => {
   cy.intercept(
     {
@@ -393,10 +398,7 @@ export const mockSignInRedirection = () => {
       url: new RegExp(buildSignInPath()),
     },
     ({ reply }) => {
-      reply({
-        headers: { 'content-type': 'text/html' },
-        statusCode: StatusCodes.OK,
-      });
+      reply(redirectionReply);
     },
   ).as('signInRedirection');
 };
@@ -408,10 +410,7 @@ export const mockSignOut = () => {
       url: new RegExp(SIGN_OUT_ROUTE),
     },
     ({ reply }) => {
-      reply({
-        headers: { 'content-type': 'text/html' },
-        statusCode: StatusCodes.OK,
-      });
+      reply(redirectionReply);
     },
   ).as('signOut');
 };

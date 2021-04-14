@@ -20,7 +20,7 @@ import {
   DEFAULT_GET,
   DEFAULT_POST,
   DEFAULT_PATCH,
-  checkRequest,
+  failOnError,
 } from './utils';
 import * as CacheOperations from '../config/cache';
 
@@ -33,7 +33,7 @@ export const getItem = async (id) => {
   const res = await fetch(
     `${API_HOST}/${buildGetItemRoute(id)}`,
     DEFAULT_GET,
-  ).then(checkRequest);
+  ).then(failOnError);
   const item = await res.json();
   await CacheOperations.saveItem(item);
   return item;
@@ -45,7 +45,7 @@ export const getOwnItems = async () => {
   const res = await fetch(
     `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`,
     DEFAULT_GET,
-  ).then(checkRequest);
+  ).then(failOnError);
 
   const ownItems = await res.json();
 
@@ -66,7 +66,7 @@ export const postItem = async ({
   const res = await fetch(`${API_HOST}/${buildPostItemRoute(parentId)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify({ name, type, description, extra }),
-  }).then(checkRequest);
+  }).then(failOnError);
 
   const newItem = await res.json();
 
@@ -78,7 +78,7 @@ export const deleteItem = async (id) => {
   const res = await fetch(
     `${API_HOST}/${buildDeleteItemRoute(id)}`,
     DEFAULT_DELETE,
-  ).then(checkRequest);
+  ).then(failOnError);
 
   await CacheOperations.deleteItem(id);
 
@@ -89,7 +89,7 @@ export const deleteItems = async (ids) => {
   const res = await fetch(
     `${API_HOST}/${buildDeleteItemsRoute(ids)}`,
     DEFAULT_DELETE,
-  ).then(checkRequest);
+  ).then(failOnError);
 
   await CacheOperations.deleteItems(ids);
 
@@ -102,7 +102,7 @@ export const editItem = async (item) => {
   const req = await fetch(`${API_HOST}/${buildEditItemRoute(item.id)}`, {
     ...DEFAULT_PATCH,
     body: JSON.stringify(item),
-  }).then(checkRequest);
+  }).then(failOnError);
 
   const newItem = await req.json();
   await CacheOperations.saveItem(newItem);
@@ -114,7 +114,7 @@ export const getChildren = async (id) => {
   const res = await fetch(
     `${API_HOST}/${buildGetChildrenRoute(id)}`,
     DEFAULT_GET,
-  ).then(checkRequest);
+  ).then(failOnError);
 
   const children = await res.json();
 
@@ -132,7 +132,7 @@ export const moveItem = async (payload) => {
   const res = await fetch(`${API_HOST}/${buildMoveItemRoute(id)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify(body),
-  }).then(checkRequest);
+  }).then(failOnError);
 
   await CacheOperations.moveItem(payload);
 
@@ -148,7 +148,7 @@ export const copyItem = async ({ id, to }) => {
   const res = await fetch(`${API_HOST}/${buildCopyItemRoute(id)}`, {
     ...DEFAULT_POST,
     body: JSON.stringify(body),
-  }).then(checkRequest);
+  }).then(failOnError);
 
   const newItem = await res.json();
 
@@ -160,7 +160,7 @@ export const copyItem = async ({ id, to }) => {
 export const getSharedItems = async () => {
   const res = await fetch(`${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`, {
     ...DEFAULT_GET,
-  }).then(checkRequest);
+  }).then(failOnError);
 
   return res.json();
 };
@@ -188,7 +188,7 @@ export const uploadItemToS3 = async ({ itemId, filename, contentType }) => {
         contentType,
       }),
     },
-  ).then(checkRequest);
+  ).then(failOnError);
 
   return response.json();
 };
@@ -197,7 +197,7 @@ export const getS3FileUrl = async ({ id }) => {
   const response = await fetch(
     `${API_HOST}/${buildGetS3MetadataRoute(id)}`,
     DEFAULT_GET,
-  ).then(checkRequest);
+  ).then(failOnError);
 
   const { key } = await response.json();
   return buildS3FileUrl(key);

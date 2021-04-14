@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import ReduxToastr from 'react-redux-toastr';
+import { grey } from '@material-ui/core/colors';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import App from './App';
@@ -19,6 +20,13 @@ const theme = createMuiTheme({
   },
   zIndex: {
     drawer: 1000,
+  },
+  overrides: {
+    MuiAvatar: {
+      colorDefault: {
+        backgroundColor: grey[400],
+      },
+    },
   },
 });
 
