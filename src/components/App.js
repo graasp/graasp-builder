@@ -16,49 +16,29 @@ import ItemScreen from './main/ItemScreen';
 import SharedItems from './SharedItems';
 import Main from './main/Main';
 import Authorization from './common/Authorization';
-import { EditItemModalProvider } from './context/EditItemModalContext';
-import { CopyItemModalProvider } from './context/CopyItemModalContext';
-import { MoveItemModalProvider } from './context/MoveItemModalContext';
-import { ShareItemModalProvider } from './context/ShareItemModalContext';
-import { ItemLayoutModeProvider } from './context/ItemLayoutModeContext';
+import ModalProviders from './context/ModalProviders';
 
 const App = () => (
-  <EditItemModalProvider>
-    <CopyItemModalProvider>
-      <MoveItemModalProvider>
-        <ShareItemModalProvider>
-          <ItemLayoutModeProvider>
-            <Router>
-              <Main>
-                <Switch>
-                  <Route
-                    path={HOME_PATH}
-                    exact
-                    component={Authorization()(Home)}
-                  />
-                  <Route
-                    path={SHARED_ITEMS_PATH}
-                    exact
-                    component={Authorization()(SharedItems)}
-                  />
-                  <Route
-                    path={buildItemPath()}
-                    component={Authorization()(ItemScreen)}
-                  />
-                  <Route
-                    path={ITEMS_PATH}
-                    exact
-                    component={Authorization()(Home)}
-                  />
-                  <Redirect to={HOME_PATH} />
-                </Switch>
-              </Main>
-            </Router>
-          </ItemLayoutModeProvider>
-        </ShareItemModalProvider>
-      </MoveItemModalProvider>
-    </CopyItemModalProvider>
-  </EditItemModalProvider>
+  <ModalProviders>
+    <Router>
+      <Main>
+        <Switch>
+          <Route path={HOME_PATH} exact component={Authorization()(Home)} />
+          <Route
+            path={SHARED_ITEMS_PATH}
+            exact
+            component={Authorization()(SharedItems)}
+          />
+          <Route
+            path={buildItemPath()}
+            component={Authorization()(ItemScreen)}
+          />
+          <Route path={ITEMS_PATH} exact component={Authorization()(Home)} />
+          <Redirect to={HOME_PATH} />
+        </Switch>
+      </Main>
+    </Router>
+  </ModalProviders>
 );
 
 export default App;

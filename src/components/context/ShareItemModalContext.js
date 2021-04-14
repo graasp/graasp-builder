@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import {
   DEFAULT_PERMISSION_LEVEL,
   PERMISSION_LEVELS,
+  SHARE_ITEM_MODAL_MIN_WIDTH,
 } from '../../config/constants';
 import { shareItemWith } from '../../actions/membership';
 import {
@@ -33,7 +34,7 @@ const ShareItemModalContext = React.createContext();
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: SHARE_ITEM_MODAL_MIN_WIDTH,
   },
   dialogContent: {
     display: 'flex',

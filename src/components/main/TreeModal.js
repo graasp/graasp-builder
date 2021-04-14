@@ -77,14 +77,18 @@ class TreeModal extends Component {
   }
 
   componentDidUpdate({ itemId: prevItemId, open: prevOpen, items: prevItems }) {
-    const { dispatchGetItems, items, itemId, open } = this.props;
+    const { items, itemId, open, dispatchGetItems } = this.props;
     // expand tree until current item
     const item = getItemById(items, itemId);
     const prevItem = prevItems.find(({ id }) => id === prevItemId);
+
+    // update tree display (expanded items) on item change when the modal is open
     if (!areItemsEqual(item, prevItem) || (!prevOpen && open)) {
       this.updateExpandedElements();
     }
 
+    // fetch all items from cache when opened
+    // necessary to update content after changes
     if (open && !prevOpen) {
       dispatchGetItems();
     }
@@ -129,12 +133,16 @@ class TreeModal extends Component {
     this.setState({ selectedId: value, expandedItems: newExpandedItems });
   };
 
-  isTreeItemDisabled = ({ previous, id }) => {
+  // compute whether the given id tree item is disabled
+  // it depends on the prevent mode and the previous items
+  isTreeItemDisabled = ({ previousIsDisabled, id }) => {
     const { itemId, prevent } = this.props;
 
     switch (prevent) {
       case TREE_PREVENT_SELECTION.SELF_AND_CHILDREN:
-        return previous || itemId === id;
+        // if the previous item is disabled, its children will be disabled
+        // and prevent selection on self
+        return previousIsDisabled || itemId === id;
       case TREE_PREVENT_SELECTION.NONE:
       default:
         return false;
@@ -167,7 +175,10 @@ class TreeModal extends Component {
         ({ type }) => type === ITEM_TYPES.SPACE,
       );
       const { name } = item;
-      const isDisabled = this.isTreeItemDisabled({ previous: disabled, id });
+      const isDisabled = this.isTreeItemDisabled({
+        previousIsDisabled: disabled,
+        id,
+      });
 
       const nodeId = isDisabled ? null : id;
       const className = clsx(buildTreeItemClass(id), {

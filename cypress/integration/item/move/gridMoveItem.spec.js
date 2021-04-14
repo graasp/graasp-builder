@@ -86,7 +86,7 @@ describe('Move Item in Grid', () => {
   });
 
   describe('Error handling', () => {
-    it('error while moving item does not create in interface', () => {
+    it.only('error while moving item does not create in interface', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS, moveItemError: true });
       const { id } = SAMPLE_ITEMS[0];
 
