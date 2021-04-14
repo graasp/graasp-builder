@@ -7,7 +7,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import IconButton from '@material-ui/core/IconButton';
 import { MODES } from '../../../config/constants';
-import { setMode } from '../../../actions/layout';
+import { setMode } from '../../../actions';
 import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,

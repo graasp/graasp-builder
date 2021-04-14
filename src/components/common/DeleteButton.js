@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteItems } from '../../actions/item';
+import { deleteItems } from '../../actions';
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
 
 const DeleteButton = ({ itemIds, dispatchDeleteItems, color, id }) => {

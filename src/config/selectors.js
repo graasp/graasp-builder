@@ -49,3 +49,6 @@ export const CREATE_ITEM_FILE_ID = 'createItemFile';
 export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';
 export const DASHBOARD_UPLOADER_ID = 'dashboardUploader';
 export const CREATE_ITEM_CLOSE_BUTTON_ID = 'createItemCloseButton';
+export const HEADER_APP_BAR_ID = 'headerAppBar';
+export const HEADER_USER_ID = 'headerUser';
+export const USER_MENU_SIGN_OUT_OPTION_ID = 'userMenuSignOutOption';

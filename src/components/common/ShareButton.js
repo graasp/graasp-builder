@@ -6,7 +6,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { SHARE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { setShareModalSettings } from '../../actions/layout';
+import { setShareModalSettings } from '../../actions';
 
 const Item = ({ itemId, dispatchSetShareModalSettings }) => {
   const { t } = useTranslation();

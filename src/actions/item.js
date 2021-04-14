@@ -1,4 +1,4 @@
-import * as Api from '../api/item';
+import * as Api from '../api';
 import {
   CREATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,

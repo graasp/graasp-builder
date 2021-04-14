@@ -9,14 +9,14 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {
   setMoveModalSettings,
   setCopyModalSettings,
-} from '../../actions/layout';
+  editItem,
+} from '../../actions';
 import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
 } from '../../config/selectors';
-import { editItem } from '../../actions/item';
 
 const ItemMenu = ({
   itemId,

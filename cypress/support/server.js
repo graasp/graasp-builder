@@ -17,6 +17,9 @@ import {
   buildDownloadFilesRoute,
   buildGetS3MetadataRoute,
   buildS3UploadFileRoute,
+  GET_CURRENT_MEMBER_ROUTE,
+  buildSignInPath,
+  SIGN_OUT_ROUTE,
 } from '../../src/api/routes';
 import {
   getItemById,
@@ -24,7 +27,7 @@ import {
   isRootItem,
   transformIdForPath,
 } from '../../src/utils/item';
-import { CURRENT_USER_ID } from '../fixtures/items';
+import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { ID_FORMAT, parseStringToRegExp, EMAIL_FORMAT } from './utils';
 import {
   DEFAULT_PATCH,
@@ -35,6 +38,29 @@ import {
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
+
+export const redirectionReply = {
+  headers: { 'content-type': 'text/html' },
+  statusCode: StatusCodes.OK,
+};
+
+export const mockGetCurrentMember = (shouldThrowError = false) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/${GET_CURRENT_MEMBER_ROUTE}`,
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+
+      // avoid sign in redirection
+      const current = MEMBERS.ANNA;
+      return reply(current);
+    },
+  ).as('getCurrentMember');
+};
 
 export const mockGetOwnItems = (items) => {
   cy.intercept(
@@ -70,7 +96,7 @@ export const mockPostItem = (items, shouldThrowError) => {
         ...body,
         id,
         path: transformIdForPath(id),
-        creator: CURRENT_USER_ID,
+        creator: CURRENT_USER.id,
       });
     },
   ).as('postItem');
@@ -363,4 +389,28 @@ export const mockGetS3FileContent = (items, shouldThrowError) => {
       reply({ fixture: filepath });
     },
   ).as('getS3FileContent');
+};
+
+export const mockSignInRedirection = () => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(buildSignInPath()),
+    },
+    ({ reply }) => {
+      reply(redirectionReply);
+    },
+  ).as('signInRedirection');
+};
+
+export const mockSignOut = () => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(SIGN_OUT_ROUTE),
+    },
+    ({ reply }) => {
+      reply(redirectionReply);
+    },
+  ).as('signOut');
 };

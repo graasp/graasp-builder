@@ -13,7 +13,7 @@ import {
   UPLOAD_METHOD,
 } from '../../config/constants';
 import configureUppy from '../../utils/uppy';
-import { setItem, getOwnItems } from '../../actions/item';
+import { setItem, getOwnItems } from '../../actions';
 import { uploadFileNotification } from '../../actions/file';
 import { UPLOADER_ID } from '../../config/selectors';
 import {
@@ -95,7 +95,7 @@ class FileUploader extends Component {
     window.removeEventListener('dragenter', this.handleWindowDragEnter);
     window.removeEventListener('mouseout', this.handleDragEnd);
 
-    uppy.close();
+    uppy?.close();
   }
 
   closeUploader = () => {

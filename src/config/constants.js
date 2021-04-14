@@ -5,12 +5,14 @@ const {
   S3_FILES_HOST: ENV_S3_FILES_HOST,
   UPLOAD_METHOD: ENV_UPLOAD_METHOD,
   SHOW_NOTIFICATIONS: ENV_SHOW_NOTIFICATIONS,
+  AUTHENTICATION_HOST: ENV_AUTHENTICATION_HOST,
 } = env;
 
 export const APP_NAME = 'Graasp';
 
 export const API_HOST =
   ENV_API_HOST || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
+
 export const S3_FILES_HOST =
   ENV_S3_FILES_HOST || process.env.REACT_APP_S3_FILES_HOST || 'localhost';
 
@@ -18,6 +20,11 @@ export const SHOW_NOTIFICATIONS =
   ENV_SHOW_NOTIFICATIONS ||
   process.env.REACT_APP_SHOW_NOTIFICATIONS === 'true' ||
   false;
+
+export const AUTHENTICATION_HOST =
+  ENV_AUTHENTICATION_HOST ||
+  process.env.REACT_APP_AUTHENTICATION_HOST ||
+  'http://localhost:3111';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -94,3 +101,5 @@ export const UPLOAD_METHOD =
   UPLOAD_FILES_METHODS.DEFAULT;
 
 export const ITEM_ICON_MAX_SIZE = 25;
+
+export const USERNAME_MAX_LENGTH = 30;

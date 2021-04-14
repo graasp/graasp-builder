@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link } from 'react-router-dom';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
-import { clearItem } from '../../actions/item';
+import { clearItem } from '../../actions';
 import {
   buildNavigationLink,
   NAVIGATION_HOME_LINK_ID,

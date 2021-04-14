@@ -4,7 +4,8 @@ import {
   buildItemCard,
   SHARE_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
-import { MEMBERS, SAMPLE_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { MEMBERS } from '../../../fixtures/members';
 
 const shareItem = ({ id, member, permission }) => {
   cy.get(`#${buildItemCard(id)} .${SHARE_ITEM_BUTTON_CLASS}`).click();
