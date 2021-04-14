@@ -1,18 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { SHARE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { setShareModalSettings } from '../../actions';
+import { ShareItemModalContext } from '../context/ShareItemModalContext';
 
-const Item = ({ itemId, dispatchSetShareModalSettings }) => {
+const ShareButton = ({ itemId }) => {
   const { t } = useTranslation();
+  const { openModal } = useContext(ShareItemModalContext);
 
   const handleShare = () => {
-    dispatchSetShareModalSettings({ open: true, itemId });
+    openModal(itemId);
   };
 
   return (
@@ -28,15 +28,8 @@ const Item = ({ itemId, dispatchSetShareModalSettings }) => {
   );
 };
 
-Item.propTypes = {
+ShareButton.propTypes = {
   itemId: PropTypes.string.isRequired,
-  dispatchSetShareModalSettings: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  dispatchSetShareModalSettings: setShareModalSettings,
-};
-
-const ConnectedComponent = connect(null, mapDispatchToProps)(Item);
-
-export default ConnectedComponent;
+export default ShareButton;

@@ -1,4 +1,7 @@
-import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
+import {
+  ITEM_LAYOUT_MODES,
+  DEFAULT_ITEM_LAYOUT_MODE,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -23,8 +26,8 @@ describe('Delete Items in List', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
     cy.visit(HOME_PATH);
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // delete
@@ -44,8 +47,8 @@ describe('Delete Items in List', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
     cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // delete
@@ -66,8 +69,8 @@ describe('Delete Items in List', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS, deleteItemsError: true });
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // delete

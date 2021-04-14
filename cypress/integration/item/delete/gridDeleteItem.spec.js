@@ -1,4 +1,4 @@
-import { MODES } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -14,7 +14,7 @@ describe('Delete Item in Grid', () => {
   it('delete item on Home', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     const { id } = SAMPLE_ITEMS[0];
 
@@ -34,7 +34,7 @@ describe('Delete Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // delete
     deleteItem(idToDelete);
@@ -53,7 +53,7 @@ describe('Delete Item in Grid', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       // delete
       deleteItem(idToDelete);

@@ -1,27 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useContext } from 'react';
 import ListIcon from '@material-ui/icons/List';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import IconButton from '@material-ui/core/IconButton';
-import { MODES } from '../../../config/constants';
-import { setMode } from '../../../actions';
+import { ITEM_LAYOUT_MODES } from '../../../config/constants';
 import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../../config/selectors';
+import { ItemLayoutModeContext } from '../../context/ItemLayoutModeContext';
 
-const ModeButton = ({ dispatchSetMode, mode }) => {
+const ModeButton = () => {
   const { t } = useTranslation();
+  const { mode, setMode } = useContext(ItemLayoutModeContext);
 
   const handleOnClick = (value) => {
-    dispatchSetMode(value);
+    setMode(value);
   };
 
   switch (mode) {
-    case MODES.GRID:
+    case ITEM_LAYOUT_MODES.GRID:
       return (
         <div>
           <Tooltip title={t('View as List')}>
@@ -29,7 +28,7 @@ const ModeButton = ({ dispatchSetMode, mode }) => {
               <IconButton
                 id={MODE_LIST_BUTTON_ID}
                 onClick={() => {
-                  handleOnClick(MODES.LIST);
+                  handleOnClick(ITEM_LAYOUT_MODES.LIST);
                 }}
                 color="primary"
               >
@@ -39,7 +38,7 @@ const ModeButton = ({ dispatchSetMode, mode }) => {
           </Tooltip>
         </div>
       );
-    case MODES.LIST:
+    case ITEM_LAYOUT_MODES.LIST:
       return (
         <div>
           <Tooltip title={t('View as Card')}>
@@ -48,7 +47,7 @@ const ModeButton = ({ dispatchSetMode, mode }) => {
                 id={MODE_GRID_BUTTON_ID}
                 color="primary"
                 onClick={() => {
-                  handleOnClick(MODES.GRID);
+                  handleOnClick(ITEM_LAYOUT_MODES.GRID);
                 }}
               >
                 <ViewModuleIcon />
@@ -62,22 +61,4 @@ const ModeButton = ({ dispatchSetMode, mode }) => {
   }
 };
 
-ModeButton.propTypes = {
-  dispatchSetMode: PropTypes.func.isRequired,
-  mode: PropTypes.oneOf(Object.values(MODES)).isRequired,
-};
-
-const mapStateToProps = ({ layout }) => ({
-  mode: layout.get('mode'),
-});
-
-const mapDispatchToProps = {
-  dispatchSetMode: setMode,
-};
-
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ModeButton);
-
-export default ConnectedComponent;
+export default ModeButton;

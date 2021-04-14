@@ -1,4 +1,7 @@
-import { DEFAULT_MODE, MODES } from '../../../../src/config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  ITEM_LAYOUT_MODES,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { UPLOADER_ID } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -22,8 +25,8 @@ describe('Upload Item in Grid', () => {
     describe('upload item on Home', () => {
       beforeEach(() => {
         cy.visit(HOME_PATH);
-        if (DEFAULT_MODE !== MODES.GRID) {
-          cy.switchMode(MODES.GRID);
+        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
+          cy.switchMode(ITEM_LAYOUT_MODES.GRID);
         }
       });
 
@@ -54,8 +57,8 @@ describe('Upload Item in Grid', () => {
 
       beforeEach(() => {
         cy.visit(buildItemPath(id));
-        if (DEFAULT_MODE !== MODES.GRID) {
-          cy.switchMode(MODES.GRID);
+        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
+          cy.switchMode(ITEM_LAYOUT_MODES.GRID);
         }
       });
 

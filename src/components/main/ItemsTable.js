@@ -136,32 +136,31 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
   );
 
   // transform rows' information into displayable information
-  const mappedRows = rowsToDisplay.map(
-    ({ id, updatedAt, name, createdAt, type, extra }) => {
-      const nameAndIcon = (
-        <span className={classes.iconAndName}>
-          <ItemIcon type={type} extra={extra} name={name} />
-          <span className={classes.itemName}>{name}</span>
-        </span>
-      );
+  const mappedRows = rowsToDisplay.map((item) => {
+    const { id, updatedAt, name, createdAt, type, extra } = item;
+    const nameAndIcon = (
+      <span className={classes.iconAndName}>
+        <ItemIcon type={type} extra={extra} name={name} />
+        <span className={classes.itemName}>{name}</span>
+      </span>
+    );
 
-      return {
-        id,
-        name: nameAndIcon,
-        type,
-        updatedAt,
-        createdAt,
-        actions: (
-          <>
-            <EditButton itemId={id} />
-            <ShareButton itemId={id} />
-            <DeleteButton itemIds={[id]} />
-            <ItemMenu itemId={id} />
-          </>
-        ),
-      };
-    },
-  );
+    return {
+      id,
+      name: nameAndIcon,
+      type,
+      updatedAt,
+      createdAt,
+      actions: (
+        <>
+          <EditButton item={item} />
+          <ShareButton itemId={id} />
+          <DeleteButton itemIds={[id]} />
+          <ItemMenu itemId={id} />
+        </>
+      ),
+    };
+  });
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === ORDERING.ASC;

@@ -1,7 +1,7 @@
 import {
-  MODES,
+  ITEM_LAYOUT_MODES,
   PERMISSION_LEVELS,
-  DEFAULT_MODE,
+  DEFAULT_ITEM_LAYOUT_MODE,
 } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
@@ -22,8 +22,8 @@ describe('Share Item in List', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS, members: Object.values(MEMBERS) });
     cy.visit(HOME_PATH);
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // share
@@ -42,8 +42,8 @@ describe('Share Item in List', () => {
     // go to children item
     cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // share

@@ -1,4 +1,7 @@
-import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
+import {
+  ITEM_LAYOUT_MODES,
+  DEFAULT_ITEM_LAYOUT_MODE,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { IMAGE_ITEM_DEFAULT, IMAGE_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -10,12 +13,12 @@ describe('Create File', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // create
-    createItem(IMAGE_ITEM_DEFAULT, MODES.LIST);
+    createItem(IMAGE_ITEM_DEFAULT, ITEM_LAYOUT_MODES.LIST);
 
     cy.wait('@uploadItem').then(() => {
       // check item is created and displayed
@@ -32,12 +35,12 @@ describe('Create File', () => {
     // go to children item
     cy.visit(buildItemPath(id));
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // create
-    createItem(IMAGE_ITEM_S3, MODES.LIST);
+    createItem(IMAGE_ITEM_S3, ITEM_LAYOUT_MODES.LIST);
 
     cy.wait('@uploadItem').then(() => {
       // should update view

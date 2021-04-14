@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,20 +13,13 @@ import {
 } from '../config/paths';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
-import MoveItemModal from './main/MoveItemModal';
-import EditItemModal from './main/EditItemModal';
-import CopyItemModal from './main/CopyItemModal';
-import ShareItemModal from './main/ShareItemModal';
 import SharedItems from './SharedItems';
 import Main from './main/Main';
 import Authorization from './common/Authorization';
+import ModalProviders from './context/ModalProviders';
 
 const App = () => (
-  <>
-    <MoveItemModal />
-    <CopyItemModal />
-    <EditItemModal />
-    <ShareItemModal />
+  <ModalProviders>
     <Router>
       <Main>
         <Switch>
@@ -46,13 +38,7 @@ const App = () => (
         </Switch>
       </Main>
     </Router>
-  </>
+  </ModalProviders>
 );
-
-App.propTypes = {
-  classes: PropTypes.shape({
-    root: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default App;

@@ -1,4 +1,4 @@
-import { MODES, ROOT_ID } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES, ROOT_ID } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -25,7 +25,7 @@ describe('Move Item in Grid', () => {
   it('move item on Home', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
     cy.visit(HOME_PATH);
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS[0];
@@ -47,7 +47,7 @@ describe('Move Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS[2];
@@ -69,7 +69,7 @@ describe('Move Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(MODES.GRID);
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS[2];
@@ -86,13 +86,13 @@ describe('Move Item in Grid', () => {
   });
 
   describe('Error handling', () => {
-    it('error while moving item does not create in interface', () => {
+    it.only('error while moving item does not create in interface', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS, moveItemError: true });
       const { id } = SAMPLE_ITEMS[0];
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(MODES.GRID);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       // move
       const { id: movedItem } = SAMPLE_ITEMS[2];

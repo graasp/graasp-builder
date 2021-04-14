@@ -66,12 +66,12 @@ export const PERMISSION_LEVELS = {
 
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.WRITE;
 
-export const MODES = {
+export const ITEM_LAYOUT_MODES = {
   GRID: 'grid',
   LIST: 'list',
 };
 
-export const DEFAULT_MODE = MODES.LIST;
+export const DEFAULT_ITEM_LAYOUT_MODE = ITEM_LAYOUT_MODES.LIST;
 
 export const ORDERING = {
   ASC: 'asc',
@@ -103,3 +103,5 @@ export const UPLOAD_METHOD =
 export const ITEM_ICON_MAX_SIZE = 25;
 
 export const USERNAME_MAX_LENGTH = 30;
+
+export const SHARE_ITEM_MODAL_MIN_WIDTH = 120;

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import { grey } from '@material-ui/core/colors';
 import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
 import { useTranslation } from 'react-i18next';
@@ -27,9 +26,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       cursor: 'pointer',
     },
-  },
-  avatar: {
-    backgroundColor: grey[0],
   },
   username: {
     margin: theme.spacing(0, 2),
@@ -87,7 +83,7 @@ function SettingsHeader() {
         onClick={handleClick}
         id={HEADER_USER_ID}
       >
-        <Avatar className={classes.avatar} alt={username} src={avatarImage} />
+        <Avatar alt={username} src={avatarImage} />
         {username && (
           <Typography variant="subtitle1" className={classes.username}>
             {truncate(username, { length: USERNAME_MAX_LENGTH })}

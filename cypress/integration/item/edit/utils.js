@@ -1,7 +1,7 @@
 import {
-  DEFAULT_MODE,
+  DEFAULT_ITEM_LAYOUT_MODE,
   ITEM_TYPES,
-  MODES,
+  ITEM_LAYOUT_MODES,
 } from '../../../../src/config/constants';
 import {
   buildItemCard,
@@ -10,15 +10,15 @@ import {
 } from '../../../../src/config/selectors';
 
 // eslint-disable-next-line import/prefer-default-export
-export const editItem = (payload, mode = DEFAULT_MODE) => {
+export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
   const { id, type } = payload;
   switch (mode) {
-    case MODES.GRID: {
+    case ITEM_LAYOUT_MODES.GRID: {
       const button = `#${buildItemCard(id)} .${EDIT_ITEM_BUTTON_CLASS}`;
       cy.get(button).click();
       break;
     }
-    case MODES.LIST:
+    case ITEM_LAYOUT_MODES.LIST:
     default: {
       cy.get(`#${buildItemsTableRowId(id)} .${EDIT_ITEM_BUTTON_CLASS}`).click();
     }

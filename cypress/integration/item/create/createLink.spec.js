@@ -1,4 +1,7 @@
-import { MODES, DEFAULT_MODE } from '../../../../src/config/constants';
+import {
+  ITEM_LAYOUT_MODES,
+  DEFAULT_ITEM_LAYOUT_MODE,
+} from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
@@ -14,12 +17,12 @@ describe('Create Link', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // create
-    createItem(GRAASP_LINK_ITEM, { mode: MODES.LIST });
+    createItem(GRAASP_LINK_ITEM, { mode: ITEM_LAYOUT_MODES.LIST });
 
     cy.wait('@postItem').then(({ response: { body } }) => {
       // check item is created and displayed
@@ -35,12 +38,12 @@ describe('Create Link', () => {
     // go to children item
     cy.visit(buildItemPath(id));
 
-    if (DEFAULT_MODE !== MODES.LIST) {
-      cy.switchMode(MODES.LIST);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // create
-    createItem(GRAASP_LINK_ITEM, { mode: MODES.LIST });
+    createItem(GRAASP_LINK_ITEM, { mode: ITEM_LAYOUT_MODES.LIST });
 
     cy.wait('@postItem').then(({ response: { body } }) => {
       // check item is created and displayed
@@ -56,12 +59,15 @@ describe('Create Link', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      if (DEFAULT_MODE !== MODES.LIST) {
-        cy.switchMode(MODES.LIST);
+      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // create
-      createItem(INVALID_LINK_ITEM, { mode: MODES.LIST, confirm: false });
+      createItem(INVALID_LINK_ITEM, {
+        mode: ITEM_LAYOUT_MODES.LIST,
+        confirm: false,
+      });
 
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
         'have.prop',

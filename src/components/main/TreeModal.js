@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
+import { List } from 'immutable';
 import { withTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
@@ -14,13 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button } from '@material-ui/core';
-import {
-  getChildren,
-  getItem,
-  getOwnItems,
-  getItems,
-  getSharedItems,
-} from '../../actions';
+import { getChildren, getItem, getItems } from '../../actions';
 import {
   ITEM_TYPES,
   ROOT_ID,
@@ -52,7 +46,6 @@ const styles = (theme) => ({
 
 class TreeModal extends Component {
   static propTypes = {
-    settings: PropTypes.instanceOf(Map).isRequired,
     classes: PropTypes.shape({
       root: PropTypes.string.isRequired,
       disabled: PropTypes.string.isRequired,
@@ -67,10 +60,14 @@ class TreeModal extends Component {
     rootItems: PropTypes.instanceOf(List).isRequired,
     items: PropTypes.instanceOf(List).isRequired,
     dispatchGetItems: PropTypes.func.isRequired,
+    itemId: PropTypes.string,
+    open: PropTypes.bool,
   };
 
   static defaultProps = {
     prevent: TREE_PREVENT_SELECTION.NONE,
+    itemId: null,
+    open: false,
   };
 
   state = { selectedId: null, expandedItems: [ROOT_ID] };
@@ -79,27 +76,27 @@ class TreeModal extends Component {
     this.updateExpandedElements();
   }
 
-  componentDidUpdate({ settings: prevSettings, items: prevItems }) {
-    const { dispatchGetItems, settings, items } = this.props;
-    const prevOpen = prevSettings.get('open');
+  componentDidUpdate({ itemId: prevItemId, open: prevOpen, items: prevItems }) {
+    const { items, itemId, open, dispatchGetItems } = this.props;
     // expand tree until current item
-    const itemId = settings.get('itemId');
-    const open = settings.get('open');
     const item = getItemById(items, itemId);
-    const prevItem = prevItems.find(({ id }) => id === itemId);
+    const prevItem = prevItems.find(({ id }) => id === prevItemId);
+
+    // update tree display (expanded items) on item change when the modal is open
     if (!areItemsEqual(item, prevItem) || (!prevOpen && open)) {
       this.updateExpandedElements();
     }
 
-    if (settings.get('open') && !prevSettings.get('open')) {
+    // fetch all items from cache when opened
+    // necessary to update content after changes
+    if (open && !prevOpen) {
       dispatchGetItems();
     }
   }
 
   updateExpandedElements = () => {
-    const { settings, items } = this.props;
+    const { itemId, items } = this.props;
     const { expandedItems } = this.state;
-    const itemId = settings.get('itemId');
     const item = getItemById(items, itemId);
     if (item) {
       const parentIds = getParentsIdsFromPath(item.path) || [];
@@ -115,9 +112,9 @@ class TreeModal extends Component {
   };
 
   onConfirm = () => {
-    const { settings, onConfirm } = this.props;
+    const { itemId, onConfirm } = this.props;
     const { selectedId } = this.state;
-    onConfirm({ id: settings.get('itemId'), to: selectedId });
+    onConfirm({ id: itemId, to: selectedId });
     this.handleClose();
   };
 
@@ -136,12 +133,16 @@ class TreeModal extends Component {
     this.setState({ selectedId: value, expandedItems: newExpandedItems });
   };
 
-  isTreeItemDisabled = ({ previous, id }) => {
-    const { settings, prevent } = this.props;
+  // compute whether the given id tree item is disabled
+  // it depends on the prevent mode and the previous items
+  isTreeItemDisabled = ({ previousIsDisabled, id }) => {
+    const { itemId, prevent } = this.props;
 
     switch (prevent) {
       case TREE_PREVENT_SELECTION.SELF_AND_CHILDREN:
-        return previous || settings.get('itemId') === id;
+        // if the previous item is disabled, its children will be disabled
+        // and prevent selection on self
+        return previousIsDisabled || itemId === id;
       case TREE_PREVENT_SELECTION.NONE:
       default:
         return false;
@@ -174,7 +175,10 @@ class TreeModal extends Component {
         ({ type }) => type === ITEM_TYPES.SPACE,
       );
       const { name } = item;
-      const isDisabled = this.isTreeItemDisabled({ previous: disabled, id });
+      const isDisabled = this.isTreeItemDisabled({
+        previousIsDisabled: disabled,
+        id,
+      });
 
       const nodeId = isDisabled ? null : id;
       const className = clsx(buildTreeItemClass(id), {
@@ -202,10 +206,10 @@ class TreeModal extends Component {
 
   render() {
     const { selectedId, expandedItems } = this.state;
-    const { title, classes, settings, rootItems, t } = this.props;
+    const { title, classes, open, rootItems, t } = this.props;
 
     // compute tree only when the modal is open
-    const tree = !settings.get('open') ? null : (
+    const tree = !open ? null : (
       <TreeView
         id={TREE_MODAL_TREE_ID}
         className={classes.root}
@@ -232,7 +236,7 @@ class TreeModal extends Component {
       <Dialog
         onClose={this.handleClose}
         aria-labelledby="simple-dialog-title"
-        open={settings.get('open')}
+        open={open}
         scroll="paper"
       >
         <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
@@ -261,9 +265,7 @@ const mapStateToProps = ({ item }) => ({
 const mapDispatchToProps = {
   dispatchGetItems: getItems,
   dispatchGetItem: getItem,
-  dispatchGetOwnItems: getOwnItems,
   dispatchGetChildren: getChildren,
-  dispatchGetSharedItems: getSharedItems,
 };
 
 const ConnectedComponent = connect(

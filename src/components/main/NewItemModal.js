@@ -133,9 +133,8 @@ NewItemModal.defaultProps = {
   parentId: null,
 };
 
-const mapStateToProps = ({ item, layout }) => ({
+const mapStateToProps = ({ item }) => ({
   parentId: item.getIn(['item', 'id']),
-  settings: layout.get('addModal'),
 });
 
 const mapDispatchToProps = {
