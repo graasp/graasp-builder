@@ -43,10 +43,8 @@ export const UUID_LENGTH = 36;
 
 export const ITEM_TYPES = {
   FOLDER: 'folder',
-  APPLICATION: 'Application',
-  EXERCISE: 'Exercise',
   FILE: 'file',
-  S3_FILE: 's3-file',
+  S3_FILE: 's3File',
   LINK: 'embeddedLink',
 };
 export const MIME_TYPES = {

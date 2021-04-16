@@ -8,6 +8,7 @@ import {
   buildEmbeddedLinkExtra,
   getEmbeddedLinkExtra,
 } from '../../../utils/itemExtra';
+import { ITEM_TYPES } from '../../../config/constants';
 
 function LinkForm({ onChange, item }) {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ LinkForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     extra: PropTypes.shape({
-      embeddedLink: PropTypes.shape({
+      [ITEM_TYPES.LINK]: PropTypes.shape({
         url: PropTypes.string,
       }),
     }),

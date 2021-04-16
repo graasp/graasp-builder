@@ -15,9 +15,12 @@ import {
   ITEM_ICON_MAX_SIZE,
 } from '../../config/constants';
 import {
+  fileExtraPropTypes,
   getEmbeddedLinkExtra,
   getFileExtra,
   getS3FileExtra,
+  linkExtraPropTypes,
+  s3FileExtraPropTypes,
 } from '../../utils/itemExtra';
 
 const useStyles = makeStyles({
@@ -79,21 +82,15 @@ const ItemIcon = ({ name, type, extra }) => {
 ItemIcon.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  extra: PropTypes.oneOf([
+  extra: PropTypes.oneOfType([
     PropTypes.shape({
-      file: PropTypes.shape({
-        mimetype: PropTypes.string.isRequired,
-      }),
+      [ITEM_TYPES.FILE]: fileExtraPropTypes,
     }),
     PropTypes.shape({
-      s3File: PropTypes.shape({
-        contenttype: PropTypes.string.isRequired,
-      }),
+      [ITEM_TYPES.S3_FILE]: s3FileExtraPropTypes,
     }),
     PropTypes.shape({
-      embeddedLink: PropTypes.shape({
-        icons: PropTypes.arrayOf(PropTypes.string),
-      }),
+      [ITEM_TYPES.LINK]: linkExtraPropTypes,
     }),
   ]).isRequired,
 };
