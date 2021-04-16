@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { isUrlValid } from '../../../utils/item';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
+import {
+  buildEmbeddedLinkExtra,
+  getEmbeddedLinkExtra,
+} from '../../../utils/itemExtra';
 
 function LinkForm({ onChange, item }) {
   const { t } = useTranslation();
@@ -12,11 +16,11 @@ function LinkForm({ onChange, item }) {
     onChange({
       ...item,
       name: 'a random name for link', // todo: this is replaced by iframely
-      extra: { embeddedLinkItem: { url: event.target.value } },
+      extra: buildEmbeddedLinkExtra({ url: event.target.value }),
     });
   };
 
-  const { url } = item.extra?.embeddedLinkItem || {};
+  const { url } = getEmbeddedLinkExtra(item.extra) || {};
   const isLinkInvalid = url?.length && !isUrlValid(url);
 
   return (
@@ -41,7 +45,7 @@ LinkForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     extra: PropTypes.shape({
-      embeddedLinkItem: PropTypes.shape({
+      embeddedLink: PropTypes.shape({
         url: PropTypes.string,
       }),
     }),

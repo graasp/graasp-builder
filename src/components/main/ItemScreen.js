@@ -144,7 +144,7 @@ class ItemScreen extends Component {
             <LinkItem item={item} />
           </div>
         );
-      case ITEM_TYPES.SPACE:
+      case ITEM_TYPES.FOLDER:
         // display children
         return (
           <>

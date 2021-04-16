@@ -57,7 +57,7 @@ BaseForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     extra: PropTypes.shape({
-      embeddedLinkItem: PropTypes.shape({
+      embeddedLink: PropTypes.shape({
         url: PropTypes.string,
       }),
     }),

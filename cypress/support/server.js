@@ -35,6 +35,7 @@ import {
   DEFAULT_POST,
   DEFAULT_DELETE,
 } from '../../src/api/utils';
+import { getS3FileExtra } from '../../src/utils/itemExtra';
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
@@ -359,11 +360,9 @@ export const mockGetS3Metadata = (items, shouldThrowError) => {
       }
 
       const id = url.slice(API_HOST.length).split('/')[2];
-      const {
-        extra: { s3FileItem },
-      } = items.find(({ id: thisId }) => id === thisId);
+      const { extra } = items.find(({ id: thisId }) => id === thisId);
 
-      reply(s3FileItem);
+      reply(getS3FileExtra(extra));
     },
   ).as('getS3Metadata');
 };

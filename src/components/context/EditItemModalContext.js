@@ -53,7 +53,7 @@ const EditItemModalProvider = ({ children }) => {
 
   const renderForm = () => {
     switch (updatedItem?.type) {
-      case ITEM_TYPES.SPACE:
+      case ITEM_TYPES.FOLDER:
         return <SpaceForm onChange={setUpdatedItem} item={updatedItem} />;
       case ITEM_TYPES.FILE:
       case ITEM_TYPES.S3_FILE:

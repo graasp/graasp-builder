@@ -30,7 +30,7 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
     case ITEM_TYPES.LINK:
       cy.fillBaseItemModal(payload);
       break;
-    case ITEM_TYPES.SPACE:
+    case ITEM_TYPES.FOLDER:
     default:
       cy.fillSpaceModal(payload);
   }

@@ -10,7 +10,7 @@ import { ITEM_TYPES } from '../../config/constants';
 import {
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_LINK_ID,
-  CREATE_ITEM_SPACE_ID,
+  CREATE_ITEM_FOLDER_ID,
 } from '../../config/selectors';
 
 const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
@@ -22,9 +22,9 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
     <Grid container spacing={1} alignItems="stretch">
       <Grid item xs={4}>
         <ItemTypeButton
-          id={CREATE_ITEM_SPACE_ID}
-          handleClick={handleClick(ITEM_TYPES.SPACE)}
-          selected={selectedItemType === ITEM_TYPES.SPACE}
+          id={CREATE_ITEM_FOLDER_ID}
+          handleClick={handleClick(ITEM_TYPES.FOLDER)}
+          selected={selectedItemType === ITEM_TYPES.FOLDER}
           Icon={FolderIcon}
           title={t('Space')}
         />

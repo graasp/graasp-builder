@@ -18,6 +18,7 @@ import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
+import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
 
 const styles = (theme) => ({
   drawer: {
@@ -68,10 +69,10 @@ class ItemPanel extends Component {
     let type = null;
     let size = null;
     if (item.get('type') === ITEM_TYPES.S3_FILE) {
-      const { s3FileItem: extra } = item.get('extra');
+      const extra = getS3FileExtra(item.get('extra'));
       ({ contenttype: type, size } = extra);
     } else if (item.get('type') === ITEM_TYPES.FILE) {
-      const { fileItem: extra } = item.get('extra');
+      const extra = getFileExtra(item.get('extra'));
       ({ mimetype: type, size } = extra);
     } else {
       type = item.get('type');

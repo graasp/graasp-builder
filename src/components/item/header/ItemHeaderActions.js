@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const ItemHeaderActions = ({ onClick, itemType, id }) => {
-  const isFile = itemType && itemType !== ITEM_TYPES.SPACE;
+  const isFile = itemType && itemType !== ITEM_TYPES.FOLDER;
 
   const classes = useStyles();
   return (

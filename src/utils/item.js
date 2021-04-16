@@ -5,6 +5,7 @@ import {
   ITEM_TYPES,
   UUID_LENGTH,
 } from '../config/constants';
+import { getEmbeddedLinkExtra } from './itemExtra';
 
 export const transformIdForPath = (id) => id.replaceAll('-', '_');
 
@@ -58,17 +59,18 @@ export const isUrlValid = (str) => {
 
 export const isItemValid = ({ name, type, extra }) => {
   const shouldHaveName = Boolean(name);
-  const { embeddedLinkItem } = extra || {};
+  const { url } = getEmbeddedLinkExtra(extra) || {};
 
   // item should have a type
   let shouldValidTypeProperties = Object.values(ITEM_TYPES).includes(type);
   if (type === ITEM_TYPES.LINK) {
-    shouldValidTypeProperties =
-      embeddedLinkItem && isUrlValid(embeddedLinkItem.url);
+    shouldValidTypeProperties = isUrlValid(url);
   }
 
   return shouldHaveName && shouldValidTypeProperties;
 };
 
 export const getItemImage = ({ extra }) =>
-  extra?.image || extra?.embeddedLinkItem?.thumbnails?.[0] || DEFAULT_IMAGE_SRC;
+  extra?.image ||
+  getEmbeddedLinkExtra(extra)?.thumbnails?.[0] ||
+  DEFAULT_IMAGE_SRC;

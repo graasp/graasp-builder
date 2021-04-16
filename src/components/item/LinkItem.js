@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 
 const useStyles = makeStyles(() => ({
   iframe: {
@@ -15,16 +16,17 @@ const LinkItem = ({ item }) => {
   const classes = useStyles();
 
   const id = item.get('id');
+  const extra = getEmbeddedLinkExtra(item.get('extra'));
 
   // if available, display specific player
-  const html = item.getIn(['extra', 'embeddedLinkItem', 'html']);
+  const html = extra?.html;
   if (html) {
     // eslint-disable-next-line react/no-danger
     return <div id={id} dangerouslySetInnerHTML={{ __html: html }} />;
   }
 
   // default case is an iframe with given link
-  const url = item.getIn(['extra', 'embeddedLinkItem', 'url']);
+  const url = extra?.url;
   const name = item.get('name');
   return <iframe id={id} className={classes.iframe} title={name} src={url} />;
 };
