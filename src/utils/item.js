@@ -62,12 +62,12 @@ export const isItemValid = ({ name, type, extra }) => {
   const { url } = getEmbeddedLinkExtra(extra) || {};
 
   // item should have a type
-  let shouldValidTypeProperties = Object.values(ITEM_TYPES).includes(type);
+  let hasValidTypeProperties = Object.values(ITEM_TYPES).includes(type);
   if (type === ITEM_TYPES.LINK) {
-    shouldValidTypeProperties = isUrlValid(url);
+    hasValidTypeProperties = isUrlValid(url);
   }
 
-  return shouldHaveName && shouldValidTypeProperties;
+  return shouldHaveName && hasValidTypeProperties;
 };
 
 export const getItemImage = ({ extra }) =>

@@ -6,7 +6,6 @@ import {
   buildGetItemMembershipForItemRoute,
 } from './routes';
 import { MEMBER_NOT_FOUND_ERROR } from '../config/errors';
-import * as CacheOperations from '../config/cache';
 
 export const getMembershipsForItem = async (id) => {
   const res = await fetch(
@@ -14,10 +13,7 @@ export const getMembershipsForItem = async (id) => {
     DEFAULT_GET,
   ).then(failOnError);
 
-  const item = await res.json();
-  await CacheOperations.saveItem(item);
-
-  return item;
+  return res.json();
 };
 
 export const shareItemWith = async ({ id, email, permission }) => {
