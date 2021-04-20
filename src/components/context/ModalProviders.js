@@ -5,13 +5,16 @@ import { CopyItemModalProvider } from './CopyItemModalContext';
 import { MoveItemModalProvider } from './MoveItemModalContext';
 import { ShareItemModalProvider } from './ShareItemModalContext';
 import { ItemLayoutModeProvider } from './ItemLayoutModeContext';
+import { CreateShortcutModalProvider } from './CreateShortcutModalContext';
 
 const ModalProviders = ({ children }) => (
   <EditItemModalProvider>
     <CopyItemModalProvider>
       <MoveItemModalProvider>
         <ShareItemModalProvider>
-          <ItemLayoutModeProvider>{children}</ItemLayoutModeProvider>
+          <CreateShortcutModalProvider>
+            <ItemLayoutModeProvider>{children}</ItemLayoutModeProvider>
+          </CreateShortcutModalProvider>
         </ShareItemModalProvider>
       </MoveItemModalProvider>
     </CopyItemModalProvider>

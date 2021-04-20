@@ -10,15 +10,20 @@ import {
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  ITEM_MENU_SHORTCUT_BUTTON_CLASS,
 } from '../../config/selectors';
 import { CopyItemModalContext } from '../context/CopyItemModalContext';
 import { MoveItemModalContext } from '../context/MoveItemModalContext';
+import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 
-const ItemMenu = ({ itemId }) => {
+const ItemMenu = ({ item }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
   const { openModal: openCopyModal } = useContext(CopyItemModalContext);
   const { openModal: openMoveModal } = useContext(MoveItemModalContext);
+  const { openModal: openCreateShortcutModal } = useContext(
+    CreateShortcutModalContext,
+  );
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,12 +34,17 @@ const ItemMenu = ({ itemId }) => {
   };
 
   const handleMove = () => {
-    openMoveModal(itemId);
+    openMoveModal(item.id);
     handleClose();
   };
 
   const handleCopy = () => {
-    openCopyModal(itemId);
+    openCopyModal(item.id);
+    handleClose();
+  };
+
+  const handleCreateShortcut = () => {
+    openCreateShortcutModal(item);
     handleClose();
   };
 
@@ -44,7 +54,7 @@ const ItemMenu = ({ itemId }) => {
         <MoreVertIcon />
       </IconButton>
       <Menu
-        id={buildItemMenu(itemId)}
+        id={buildItemMenu(item.id)}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -56,13 +66,19 @@ const ItemMenu = ({ itemId }) => {
         <MenuItem onClick={handleCopy} className={ITEM_MENU_COPY_BUTTON_CLASS}>
           {t('Copy')}
         </MenuItem>
+        <MenuItem
+          onClick={handleCreateShortcut}
+          className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+        >
+          {t('Create Shortcut')}
+        </MenuItem>
       </Menu>
     </>
   );
 };
 
 ItemMenu.propTypes = {
-  itemId: PropTypes.string.isRequired,
+  item: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
 };
 
 export default ItemMenu;

@@ -12,13 +12,13 @@ import {
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const copyItem = (id, toItemId) => {
+const copyItem = ({ id, toItemPath }) => {
   const menuSelector = `#${buildItemsTableRowId(
     id,
   )} .${ITEM_MENU_BUTTON_CLASS}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
-  cy.fillTreeModal(toItemId);
+  cy.fillTreeModal(toItemPath);
 };
 
 describe('Copy Item in List', () => {
@@ -31,8 +31,8 @@ describe('Copy Item in List', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[0];
-    const { id: toItem } = SAMPLE_ITEMS.items[1];
-    copyItem(copyItemId, toItem);
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
       cy.get(`#${buildItemsTableRowId(copyItemId)}`).should('exist');
@@ -55,8 +55,8 @@ describe('Copy Item in List', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const { id: toItem } = SAMPLE_ITEMS.items[3];
-    copyItem(copyItemId, toItem);
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
       cy.get(`#${buildItemsTableRowId(copyItemId)}`).should('exist');
@@ -79,8 +79,7 @@ describe('Copy Item in List', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const toItem = ROOT_ID;
-    copyItem(copyItemId, toItem);
+    copyItem({ id: copyItemId, toItemPath: ROOT_ID });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
       cy.get(`#${buildItemsTableRowId(copyItemId)}`).should('exist');
@@ -104,8 +103,8 @@ describe('Copy Item in List', () => {
 
       // copy
       const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-      const { id: toItem } = SAMPLE_ITEMS.items[0];
-      copyItem(copyItemId, toItem);
+      const { path: toItemPath } = SAMPLE_ITEMS.items[0];
+      copyItem({ id: copyItemId, toItemPath });
 
       cy.wait('@copyItem').then(({ response: { body } }) => {
         // check item is still existing in parent

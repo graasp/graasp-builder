@@ -218,3 +218,14 @@ export const ITEM_LOGIN_ITEMS = {
   ],
   tags: DEFAULT_TAGS,
 };
+
+export const SHORTCUT = {
+  ...DEFAULT_ITEM,
+  id: 'gcafbd2a-5688-11eb-ae92-0242ac130002',
+  name: 'shortcut for own_item_name1',
+  path: 'gcafbd2a_5688_11eb_ae92_0242ac130002',
+  type: ITEM_TYPES.SHORTCUT,
+  extra: {
+    image: 'someimageurl',
+  },
+};

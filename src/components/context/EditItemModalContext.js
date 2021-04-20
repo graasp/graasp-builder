@@ -58,6 +58,7 @@ const EditItemModalProvider = ({ children }) => {
       case ITEM_TYPES.FILE:
       case ITEM_TYPES.S3_FILE:
       case ITEM_TYPES.LINK:
+      case ITEM_TYPES.SHORTCUT:
         return <BaseItemForm onChange={setUpdatedItem} item={updatedItem} />;
       default:
         return null;

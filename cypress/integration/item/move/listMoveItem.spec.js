@@ -13,7 +13,7 @@ import {
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const moveItem = (movedItemId, toItemId) => {
+const moveItem = ({ id: movedItemId, toItemPath }) => {
   const menuSelector = `#${buildItemsTableRowId(
     movedItemId,
   )} .${ITEM_MENU_BUTTON_CLASS}`;
@@ -22,7 +22,7 @@ const moveItem = (movedItemId, toItemId) => {
     `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
   ).click();
 
-  cy.fillTreeModal(toItemId);
+  cy.fillTreeModal(toItemPath);
 };
 
 describe('Move Item in List', () => {
@@ -36,8 +36,8 @@ describe('Move Item in List', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[0];
-    const { id: toItem } = SAMPLE_ITEMS.items[1];
-    moveItem(movedItem, toItem);
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    moveItem({ id: movedItem, toItemPath });
 
     cy.wait('@moveItem');
 
@@ -61,8 +61,8 @@ describe('Move Item in List', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const { id: toItem } = SAMPLE_ITEMS.items[3];
-    moveItem(movedItem, toItem);
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    moveItem({ id: movedItem, toItemPath });
 
     cy.wait('@moveItem');
 
@@ -87,7 +87,7 @@ describe('Move Item in List', () => {
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
     const toItem = ROOT_ID;
-    moveItem(movedItem, toItem);
+    moveItem({ id: movedItem, toItemPath: toItem });
 
     cy.wait('@moveItem');
 
@@ -112,8 +112,8 @@ describe('Move Item in List', () => {
 
       // move
       const { id: movedItem } = SAMPLE_ITEMS.items[2];
-      const { id: toItem } = SAMPLE_ITEMS.items[3];
-      moveItem(movedItem, toItem);
+      const { path: toItemPath } = SAMPLE_ITEMS.items[3];
+      moveItem({ id: movedItem, toItemPath });
 
       cy.wait('@moveItem').then(() => {
         // check item is still there
