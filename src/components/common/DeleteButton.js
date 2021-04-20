@@ -27,7 +27,7 @@ const DeleteButton = ({ itemIds, dispatchDeleteItems, color, id }) => {
 };
 
 DeleteButton.propTypes = {
-  itemIds: PropTypes.string.isRequired,
+  itemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatchDeleteItems: PropTypes.func.isRequired,
   color: PropTypes.string,
   id: PropTypes.string,

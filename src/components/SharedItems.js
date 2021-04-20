@@ -26,7 +26,7 @@ const SharedItems = ({ activity, sharedItems, dispatchGetSharedItems }) => {
 
   return (
     <>
-      <ItemHeader navigationRootText={t('Shared')} />
+      <ItemHeader />
       <Items
         id={SHARED_ITEMS_ID}
         title={t('Items Shared With Me')}

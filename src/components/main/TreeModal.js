@@ -154,7 +154,7 @@ class TreeModal extends Component {
     const { classes, dispatchGetItem, dispatchGetChildren, items } = this.props;
 
     // only display spaces
-    const spaces = tree.filter(({ type }) => type === ITEM_TYPES.SPACE);
+    const spaces = tree.filter(({ type }) => type === ITEM_TYPES.FOLDER);
 
     // nothing to display
     if (!spaces) {
@@ -172,7 +172,7 @@ class TreeModal extends Component {
 
       // only display spaces
       const children = getChildrenSync(items, id).filter(
-        ({ type }) => type === ITEM_TYPES.SPACE,
+        ({ type }) => type === ITEM_TYPES.FOLDER,
       );
       const { name } = item;
       const isDisabled = this.isTreeItemDisabled({

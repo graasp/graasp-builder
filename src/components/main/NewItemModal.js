@@ -30,19 +30,19 @@ const useStyles = makeStyles(() => ({
 const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.SPACE);
+  const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
   const [newItem, setNewItem] = useState({});
 
   useEffect(() => {
     switch (selectedItemType) {
-      case ITEM_TYPES.SPACE:
-        setNewItem({ type: ITEM_TYPES.SPACE });
+      case ITEM_TYPES.FOLDER:
+        setNewItem({ type: ITEM_TYPES.FOLDER });
         break;
       case ITEM_TYPES.LINK:
         setNewItem({ type: ITEM_TYPES.LINK });
         break;
       default:
-        setNewItem({ type: ITEM_TYPES.SPACE });
+        setNewItem({ type: ITEM_TYPES.FOLDER });
     }
   }, [selectedItemType]);
 
@@ -61,7 +61,7 @@ const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
 
   const renderContent = () => {
     switch (selectedItemType) {
-      case ITEM_TYPES.SPACE:
+      case ITEM_TYPES.FOLDER:
         return <SpaceForm onChange={setNewItem} item={newItem} />;
       case ITEM_TYPES.FILE:
         return <FileDashboardUploader />;
@@ -74,7 +74,7 @@ const NewItemModal = ({ open, handleClose, dispatchCreateItem, parentId }) => {
 
   const renderActions = () => {
     switch (selectedItemType) {
-      case ITEM_TYPES.SPACE:
+      case ITEM_TYPES.FOLDER:
       case ITEM_TYPES.LINK:
         return (
           <>

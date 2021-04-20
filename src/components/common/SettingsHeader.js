@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
+import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
@@ -83,7 +84,9 @@ function SettingsHeader() {
         onClick={handleClick}
         id={HEADER_USER_ID}
       >
-        <Avatar alt={username} src={avatarImage} />
+        <Tooltip title={username ?? t('You are not signed in.')}>
+          <Avatar className={classes.avatar} alt={username} src={avatarImage} />
+        </Tooltip>
         {username && (
           <Typography variant="subtitle1" className={classes.username}>
             {truncate(username, { length: USERNAME_MAX_LENGTH })}

@@ -14,6 +14,14 @@ import {
   MIME_TYPES,
   ITEM_ICON_MAX_SIZE,
 } from '../../config/constants';
+import {
+  fileExtraPropTypes,
+  getEmbeddedLinkExtra,
+  getFileExtra,
+  getS3FileExtra,
+  linkExtraPropTypes,
+  s3FileExtraPropTypes,
+} from '../../utils/itemExtra';
 
 const useStyles = makeStyles({
   imageIcon: {
@@ -25,8 +33,9 @@ const useStyles = makeStyles({
 const ItemIcon = ({ name, type, extra }) => {
   const classes = useStyles();
 
-  const mimetype = extra?.fileItem?.mimetype || extra?.s3FileItem?.contenttype;
-  const icon = extra?.embeddedLinkItem?.icons?.[0];
+  const mimetype =
+    getFileExtra(extra)?.mimetype || getS3FileExtra(extra)?.contenttype;
+  const icon = getEmbeddedLinkExtra(extra)?.icons?.[0];
 
   if (icon) {
     return <img className={classes.imageIcon} alt={name} src={icon} />;
@@ -34,7 +43,7 @@ const ItemIcon = ({ name, type, extra }) => {
 
   let Icon = InsertDriveFileIcon;
   switch (type) {
-    case ITEM_TYPES.SPACE:
+    case ITEM_TYPES.FOLDER:
       Icon = FolderIcon;
       break;
     case ITEM_TYPES.FILE:
@@ -73,17 +82,17 @@ const ItemIcon = ({ name, type, extra }) => {
 ItemIcon.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  extra: PropTypes.shape({
-    fileItem: PropTypes.shape({
-      mimetype: PropTypes.string.isRequired,
+  extra: PropTypes.oneOfType([
+    PropTypes.shape({
+      [ITEM_TYPES.FILE]: fileExtraPropTypes,
     }),
-    s3FileItem: PropTypes.shape({
-      contenttype: PropTypes.string.isRequired,
+    PropTypes.shape({
+      [ITEM_TYPES.S3_FILE]: s3FileExtraPropTypes,
     }),
-    embeddedLinkItem: PropTypes.shape({
-      icons: PropTypes.arrayOf(PropTypes.string),
+    PropTypes.shape({
+      [ITEM_TYPES.LINK]: linkExtraPropTypes,
     }),
-  }).isRequired,
+  ]).isRequired,
 };
 
 export default ItemIcon;

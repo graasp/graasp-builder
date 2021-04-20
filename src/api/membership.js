@@ -7,7 +7,7 @@ import {
 } from './routes';
 import { MEMBER_NOT_FOUND_ERROR } from '../config/errors';
 
-export const getMembershipsForItem = async ({ id }) => {
+export const getMembershipsForItem = async (id) => {
   const res = await fetch(
     `${API_HOST}/${buildGetItemMembershipForItemRoute(id)}`,
     DEFAULT_GET,

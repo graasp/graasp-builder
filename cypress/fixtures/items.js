@@ -5,12 +5,12 @@ const DEFAULT_ITEM = {
   description: '',
   extra: {},
   creator: CURRENT_USER.id,
-  type: ITEM_TYPES.SPACE,
+  type: ITEM_TYPES.FOLDER,
 };
 
 export const CREATED_ITEM = {
   name: 'created item',
-  type: ITEM_TYPES.SPACE,
+  type: ITEM_TYPES.FOLDER,
   description: 'I am a newly created element',
   extra: {
     image: 'someimageurl',

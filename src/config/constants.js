@@ -42,12 +42,10 @@ export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
 
 export const ITEM_TYPES = {
-  SPACE: 'Space',
-  APPLICATION: 'Application',
-  EXERCISE: 'Exercise',
+  FOLDER: 'folder',
   FILE: 'file',
-  S3_FILE: 's3-file',
-  LINK: 'embedded-link',
+  S3_FILE: 's3File',
+  LINK: 'embeddedLink',
 };
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],

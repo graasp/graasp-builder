@@ -6,6 +6,7 @@ import {
   ITEM_FORM_DESCRIPTION_INPUT_ID,
   ITEM_FORM_NAME_INPUT_ID,
 } from '../../../config/selectors';
+import { ITEM_TYPES } from '../../../config/constants';
 
 const useStyles = makeStyles(() => ({
   shortInputField: {
@@ -57,7 +58,7 @@ BaseForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     extra: PropTypes.shape({
-      embeddedLinkItem: PropTypes.shape({
+      [ITEM_TYPES.LINK]: PropTypes.shape({
         url: PropTypes.string,
       }),
     }),

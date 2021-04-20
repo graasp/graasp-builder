@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemHeader = ({ navigationRootText, onClick, item }) => {
+const ItemHeader = ({ onClick, item, user }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Navigation item={item} rootText={navigationRootText} />
+      <Navigation item={item} user={user} />
       <ItemHeaderActions
         id={item.get('id')}
         itemType={item.get('type')}
@@ -32,18 +32,18 @@ const ItemHeader = ({ navigationRootText, onClick, item }) => {
   );
 };
 
-const mapStateToProps = ({ item }) => ({
+const mapStateToProps = ({ item, member }) => ({
   item: item.get('item'),
+  user: member.get('current'),
 });
 
 ItemHeader.propTypes = {
-  navigationRootText: PropTypes.string,
   onClick: PropTypes.func,
   item: PropTypes.instanceOf(Map).isRequired,
+  user: PropTypes.instanceOf(Map).isRequired,
 };
 
 ItemHeader.defaultProps = {
-  navigationRootText: null,
   onClick: () => {},
 };
 

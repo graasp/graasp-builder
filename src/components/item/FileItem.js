@@ -6,12 +6,11 @@ import { MIME_TYPES } from '../../config/constants';
 import FileImage from './FileImage';
 import FileVideo from './FileVideo';
 import FilePdf from './FilePdf';
+import { getFileExtra } from '../../utils/itemExtra';
 
 const FileItem = ({ item }) => {
   const [url, setUrl] = useState();
-  const {
-    fileItem: { mimetype },
-  } = item.get('extra');
+  const { mimetype } = getFileExtra(item.get('extra'));
   const id = item.get('id');
   const name = item.get('name');
 

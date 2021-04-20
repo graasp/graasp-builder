@@ -43,7 +43,7 @@ export const ITEM_PANEL_TABLE_ID = 'itemPanelTable';
 export const ITEM_PANEL_DESCRIPTION_ID = 'itemPanelDescription';
 export const buildFileVideoId = (id) => `fileVideo-${id}`;
 export const buildFilePdfId = (id) => `filePdf-${id}`;
-export const CREATE_ITEM_SPACE_ID = 'createItemSpace';
+export const CREATE_ITEM_FOLDER_ID = 'createItemSpace';
 export const CREATE_ITEM_LINK_ID = 'createItemLink';
 export const CREATE_ITEM_FILE_ID = 'createItemFile';
 export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';

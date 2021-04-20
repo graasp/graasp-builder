@@ -1,4 +1,5 @@
 import { ITEM_TYPES, MIME_TYPES } from '../../src/config/constants';
+import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
 
 export const ICON_FILEPATH = 'files/icon.png';
 export const TEXT_FILEPATH = 'files/sometext.txt';
@@ -12,15 +13,13 @@ export const IMAGE_ITEM_DEFAULT = {
   creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
-  extra: {
-    fileItem: {
-      name: 'icon.png',
-      path: '9a95/e2e1/2a7b-1615910428274',
-      size: 32439,
-      encoding: '7bit',
-      mimetype: 'image/png',
-    },
-  },
+  extra: buildFileExtra({
+    name: 'icon.png',
+    path: '9a95/e2e1/2a7b-1615910428274',
+    size: 32439,
+    encoding: '7bit',
+    mimetype: 'image/png',
+  }),
   // for testing
   filepath: 'files/icon.png',
 };
@@ -34,15 +33,13 @@ export const VIDEO_ITEM_DEFAULT = {
   creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
-  extra: {
-    fileItem: {
-      name: 'video.mp4',
-      path: '9a95/e2e1/2a7b-1615910428274',
-      size: 52345,
-      encoding: '7bit',
-      mimetype: MIME_TYPES.VIDEO[0],
-    },
-  },
+  extra: buildFileExtra({
+    name: 'video.mp4',
+    path: '9a95/e2e1/2a7b-1615910428274',
+    size: 52345,
+    encoding: '7bit',
+    mimetype: MIME_TYPES.VIDEO[0],
+  }),
   // for testing
   filepath: 'files/video.mp4',
 };
@@ -56,15 +53,13 @@ export const PDF_ITEM_DEFAULT = {
   creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
-  extra: {
-    fileItem: {
-      name: 'doc.pdf',
-      path: '9a95/e2e1/2a7b-1615910428274',
-      size: 54321,
-      encoding: '7bit',
-      mimetype: MIME_TYPES.PDF[0],
-    },
-  },
+  extra: buildFileExtra({
+    name: 'doc.pdf',
+    path: '9a95/e2e1/2a7b-1615910428274',
+    size: 54321,
+    encoding: '7bit',
+    mimetype: MIME_TYPES.PDF[0],
+  }),
   // for testing
   filepath: 'files/doc.pdf',
 };
@@ -78,13 +73,11 @@ export const IMAGE_ITEM_S3 = {
   creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
-  extra: {
-    s3FileItem: {
-      key: 'files/icon.png', // for testing
-      size: 32439,
-      contenttype: 'image/png',
-    },
-  },
+  extra: buildS3FileExtra({
+    key: 'files/icon.png', // for testing
+    size: 32439,
+    contenttype: 'image/png',
+  }),
 };
 
 export const VIDEO_ITEM_S3 = {
@@ -96,13 +89,11 @@ export const VIDEO_ITEM_S3 = {
   creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
-  extra: {
-    s3FileItem: {
-      key: 'files/video.mp4', // for testing
-      size: 52345,
-      contenttype: MIME_TYPES.VIDEO[0],
-    },
-  },
+  extra: buildS3FileExtra({
+    key: 'files/video.mp4', // for testing
+    size: 52345,
+    contenttype: MIME_TYPES.VIDEO[0],
+  }),
 };
 
 export const PDF_ITEM_S3 = {
@@ -114,11 +105,9 @@ export const PDF_ITEM_S3 = {
   creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
-  extra: {
-    s3FileItem: {
-      key: 'files/doc.pdf', // for testing
-      size: 54321,
-      contenttype: MIME_TYPES.PDF[0],
-    },
-  },
+  extra: buildS3FileExtra({
+    key: 'files/doc.pdf', // for testing
+    size: 54321,
+    contenttype: MIME_TYPES.PDF[0],
+  }),
 };

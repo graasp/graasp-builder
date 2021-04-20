@@ -8,6 +8,11 @@ import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../../../src/config/selectors';
+import {
+  getEmbeddedLinkExtra,
+  getFileExtra,
+  getS3FileExtra,
+} from '../../../../src/utils/itemExtra';
 
 export const expectFileViewScreenLayout = ({
   id,
@@ -16,7 +21,8 @@ export const expectFileViewScreenLayout = ({
   creator,
   description,
 }) => {
-  const mimetype = extra?.fileItem?.mimetype || extra?.s3FileItem?.contenttype;
+  const mimetype =
+    getFileExtra(extra)?.mimetype || getS3FileExtra(extra)?.contenttype;
 
   // embedded element
   let selector = null;
@@ -37,7 +43,7 @@ export const expectFileViewScreenLayout = ({
   panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
   panel
     .get(`#${ITEM_PANEL_TABLE_ID}`)
-    .contains(extra?.fileItem?.size || extra?.s3FileItem?.size);
+    .contains(getFileExtra(extra)?.size || getS3FileExtra(extra)?.size);
 };
 
 export const expectLinkViewScreenLayout = ({
@@ -46,7 +52,7 @@ export const expectLinkViewScreenLayout = ({
   extra,
   description,
 }) => {
-  const { url, html } = extra?.embeddedLinkItem;
+  const { url, html } = getEmbeddedLinkExtra(extra);
 
   // embedded element
   if (html) {

@@ -6,12 +6,11 @@ import { MIME_TYPES } from '../../config/constants';
 import FileImage from './FileImage';
 import FileVideo from './FileVideo';
 import FilePdf from './FilePdf';
+import { getS3FileExtra } from '../../utils/itemExtra';
 
 const S3FileItem = ({ item }) => {
   const [url, setUrl] = useState();
-  const {
-    s3FileItem: { contenttype },
-  } = item.get('extra');
+  const { contenttype } = getS3FileExtra(item.get('extra'));
   const id = item.get('id');
   const name = item.get('name');
 

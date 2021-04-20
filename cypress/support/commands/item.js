@@ -12,6 +12,7 @@ import {
   ITEM_FORM_NAME_INPUT_ID,
   ITEM_FORM_LINK_INPUT_ID,
 } from '../../../src/config/selectors';
+import { getEmbeddedLinkExtra } from '../../../src/utils/itemExtra';
 
 Cypress.Commands.add('fillShareModal', ({ member, permission }) => {
   // select permission
@@ -69,7 +70,7 @@ Cypress.Commands.add(
   ({ extra = {} }, { confirm = true } = {}) => {
     cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`)
       .clear()
-      .type(extra?.embeddedLinkItem?.url);
+      .type(getEmbeddedLinkExtra(extra)?.url);
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
