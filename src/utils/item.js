@@ -7,7 +7,8 @@ import {
 } from '../config/constants';
 import { getEmbeddedLinkExtra } from './itemExtra';
 
-export const transformIdForPath = (id) => id.replaceAll('-', '_');
+// eslint-disable-next-line no-useless-escape
+export const transformIdForPath = (id) => id.replace(/\-/g, '_');
 
 export const getParentsIdsFromPath = (path, { ignoreSelf = false } = {}) => {
   if (!path) {
@@ -26,7 +27,7 @@ export const getParentsIdsFromPath = (path, { ignoreSelf = false } = {}) => {
     }
     [p] = els;
   }
-  const ids = p.replaceAll('_', '-').split('.');
+  const ids = p.replace(/_/g, '-').split('.');
   return ids;
 };
 

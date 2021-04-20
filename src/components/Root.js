@@ -10,7 +10,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import App from './App';
 import configureStore from '../store/configure';
 import i18nConfig from '../config/i18n';
-import { SHOW_NOTIFICATIONS, NODE_ENV } from '../config/constants';
+import { SHOW_NOTIFICATIONS, NODE_ENV, ENV } from '../config/constants';
 import queryClient from '../config/queryClient';
 
 const theme = createMuiTheme({
@@ -45,7 +45,7 @@ const Root = () => (
         </MuiThemeProvider>
       </Provider>
     </I18nextProvider>
-    {NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen />}
+    {NODE_ENV === ENV.DEVELOPMENT && <ReactQueryDevtools initialIsOpen />}
   </QueryClientProvider>
 );
 

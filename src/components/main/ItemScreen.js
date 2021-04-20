@@ -2,7 +2,6 @@ import React from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { Map, List } from 'immutable';
 import { useTranslation } from 'react-i18next';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core';
 import { useChildren, useItem } from '../../hooks';
@@ -14,6 +13,7 @@ import FileUploader from './FileUploader';
 import S3FileItem from '../item/S3FileItem';
 import ItemMain from '../item/ItemMain';
 import LinkItem from '../item/LinkItem';
+import Loader from '../common/Loader';
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -77,7 +77,7 @@ const ItemScreen = () => {
 
   // wait until all children are available
   if (isLoading) {
-    return <CircularProgress color="primary" />;
+    return <Loader />;
   }
 
   if (!item || !item.get('id')) {

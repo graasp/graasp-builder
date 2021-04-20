@@ -70,8 +70,8 @@ const FileUploader = () => {
   const onComplete = (result) => {
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
-    if (result?.successful.length) {
-      onFileUploadComplete({ itemId });
+    if (result?.successful?.length) {
+      onFileUploadComplete({ id: itemId });
     }
 
     return false;
@@ -145,38 +145,33 @@ const FileUploader = () => {
   }
 
   return (
-    <>
-      <div
-        id={UPLOADER_ID}
-        className={clsx(classes.wrapper, {
-          [classes.show]: isDragging,
-          [classes.invalid]: !isValid,
+    <div
+      id={UPLOADER_ID}
+      className={clsx(classes.wrapper, {
+        [classes.show]: isDragging,
+        [classes.invalid]: !isValid,
+      })}
+      onDragEnter={(e) => handleDragEnter(e)}
+      onDragEnd={(e) => handleDragEnd(e)}
+      onDragLeave={(e) => handleDragEnd(e)}
+      onDrop={handleDrop}
+    >
+      <DragDrop
+        uppy={uppy}
+        note={t(`You can upload up to FILE_UPLOAD_MAX_FILES files at a time`, {
+          maxFiles: FILE_UPLOAD_MAX_FILES,
         })}
-        onDragEnter={(e) => handleDragEnter(e)}
-        onDragEnd={(e) => handleDragEnd(e)}
-        onDragLeave={(e) => handleDragEnd(e)}
-        onDrop={handleDrop}
-      >
-        <DragDrop
-          uppy={uppy}
-          note={t(
-            `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
-            {
-              maxFiles: FILE_UPLOAD_MAX_FILES,
-            },
-          )}
-          locale={{
-            strings: {
-              // Text to show on the droppable area.
-              // `%{browse}` is replaced with a link that opens the system file selection dialog.
-              dropHereOr: `${t('Drop here or')} %{browse}`,
-              // Used as the label for the link that opens the system file selection dialog.
-              browse: t('Browse'),
-            },
-          }}
-        />
-      </div>
-    </>
+        locale={{
+          strings: {
+            // Text to show on the droppable area.
+            // `%{browse}` is replaced with a link that opens the system file selection dialog.
+            dropHereOr: `${t('Drop here or')} %{browse}`,
+            // Used as the label for the link that opens the system file selection dialog.
+            browse: t('Browse'),
+          },
+        }}
+      />
+    </div>
   );
 };
 

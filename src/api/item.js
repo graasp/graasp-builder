@@ -22,7 +22,6 @@ import {
   DEFAULT_PATCH,
   failOnError,
 } from './utils';
-import * as CacheOperations from '../config/cache';
 import { getParentsIdsFromPath } from '../utils/item';
 
 export const getItem = async (id) => {
@@ -34,19 +33,13 @@ export const getItem = async (id) => {
   return item;
 };
 
-export const getItems = () => CacheOperations.getItems();
-
 export const getOwnItems = async () => {
   const res = await fetch(
     `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`,
     DEFAULT_GET,
   ).then(failOnError);
 
-  const ownItems = await res.json();
-
-  // await CacheOperations.saveItems(ownItems);
-
-  return ownItems;
+  return res.json();
 };
 
 // payload = {name, type, description, extra}

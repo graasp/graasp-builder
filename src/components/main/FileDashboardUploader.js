@@ -24,7 +24,7 @@ const FileDashboardUploader = () => {
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
-      onFileUploadComplete(itemId);
+      onFileUploadComplete({ id: itemId });
     }
 
     return false;
@@ -50,6 +50,7 @@ const FileDashboardUploader = () => {
 
   useEffect(() => {
     applyUppy();
+    // update uppy configuration each time itemId changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 

@@ -12,6 +12,7 @@ jobs:
         env:
           REACT_APP_API_HOST: ${{ secrets.REACT_APP_API_HOST }}
           REACT_APP_AUTHENTICATION_HOST: http://localhost:3000
+          REACT_APP_NODE_ENV: test
         with:
           config: baseUrl=http://localhost:3000
           start: yarn start:ci

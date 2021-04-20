@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SettingsHeader() {
-  const { data: user, isLoading, isError } = useCurrentMember();
+  const { data: user, isLoading } = useCurrentMember();
   const classes = useStyles();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -57,7 +57,7 @@ function SettingsHeader() {
   };
 
   const renderMenu = () => {
-    if (user.isEmpty()) {
+    if (!user || user.isEmpty()) {
       return (
         <MenuItem
           component="a"
@@ -75,15 +75,11 @@ function SettingsHeader() {
     );
   };
 
-  if (isLoading || !user) {
+  if (isLoading) {
     return <Loader />;
   }
 
-  if (isError) {
-    return 'error';
-  }
-
-  const username = user.get('name');
+  const username = user?.get('name');
   // todo: necessary broken image to display a letter
   const avatarImage = 'a missing avatar';
 

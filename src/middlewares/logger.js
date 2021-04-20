@@ -14,16 +14,3 @@ setLogger({
     console.error(e);
   },
 });
-
-// Sentry logger
-// setLogger({
-//   log: (message) => {
-//     Sentry.captureMessage(message);
-//   },
-//   warn: (message) => {
-//     Sentry.captureMessage(message);
-//   },
-//   error: (error) => {
-//     Sentry.captureException(error);
-//   },
-// });

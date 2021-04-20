@@ -317,7 +317,7 @@ export default (queryClient) => {
       notifier({ type: SHARE_ITEM_ERROR, payload: { error } });
     },
     onSettled: ({ id }) => {
-      queryClient.invalidateQueries(buildItemKey(id));
+      onSettledItem({ id });
 
       // invalidate children since membership will also change for them
       queryClient.invalidateQueries(buildItemChildrenKey(id));
@@ -335,7 +335,7 @@ export default (queryClient) => {
       }
     },
     onSettled: ({ id }) => {
-      onSettledParentItem(queryClient, { id });
+      onSettledParentItem({ id });
     },
   });
 };

@@ -17,6 +17,7 @@ import {
 import Loader from '../common/Loader';
 import { useCurrentMember, useItem, useParents } from '../../hooks';
 import { getParentsIdsFromPath } from '../../utils/item';
+import { LOADING_CONTENT } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   parents: {
@@ -81,7 +82,7 @@ const Navigation = () => {
           className={classes.parents}
           onClick={onParentsClick}
         >
-          ...
+          {LOADING_CONTENT}
         </Typography>
       );
     }

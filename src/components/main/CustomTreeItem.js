@@ -3,7 +3,11 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TreeItem from '@material-ui/lab/TreeItem';
-import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../config/constants';
+import {
+  ITEM_TYPES,
+  LOADING_CONTENT,
+  TREE_PREVENT_SELECTION,
+} from '../../config/constants';
 import { buildTreeItemClass } from '../../config/selectors';
 import { useChildren, useItem } from '../../hooks';
 
@@ -13,25 +17,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
 }));
-
-// const ChildrenTreeItems = ({ id, isDisabled, prevent, expandedItems }) => {
-//   const { data: children, isLoading: childrenIsLoading } = useChildren(id);
-
-//   if (childrenIsLoading) {
-//     return '...';
-//   }
-
-//   return children
-//     .filter(({ type }) => type === ITEM_TYPES.FOLDER)
-//     .map(({ id: childId }) => (
-//       <CustomTreeItem
-//         id={childId}
-//         disabled={isDisabled}
-//         prevent={prevent}
-//         expandedItems={expandedItems}
-//       />
-//     ));
-// };
 
 // compute whether the given id tree item is disabled
 // it depends on the prevent mode and the previous items
@@ -76,7 +61,7 @@ const CustomTreeItem = ({
   const showChildren = isExpanded && !isDisabled && children?.size;
 
   if (isLoading) {
-    return <TreeItem key={id} label="..." />;
+    return <TreeItem key={id} label={LOADING_CONTENT} />;
   }
 
   // display only folders
@@ -101,7 +86,7 @@ const CustomTreeItem = ({
     }
 
     if (childrenIsLoading) {
-      return '...';
+      return LOADING_CONTENT;
     }
 
     return folderChildren.map(({ id: childId }) => (
