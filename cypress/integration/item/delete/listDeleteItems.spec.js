@@ -32,20 +32,13 @@ describe('Delete Items in List', () => {
 
     // delete
     deleteItems([SAMPLE_ITEMS[0].id, SAMPLE_ITEMS[1].id]);
-    cy.wait('@deleteItems').then(() => {
-      // check item is deleted, others are still displayed
-      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[1].id)}`).should(
-        'not.exist',
-      );
-      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[1].id)}`).should(
-        'not.exist',
-      );
-    });
+    cy.wait(['@deleteItems', '@getOwnItems']);
   });
 
   it('delete 2 items in item', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
-    cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
+    const { id } = SAMPLE_ITEMS[0];
+    cy.visit(buildItemPath(id));
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
@@ -55,12 +48,7 @@ describe('Delete Items in List', () => {
     deleteItems([SAMPLE_ITEMS[2].id, SAMPLE_ITEMS[3].id]);
     cy.wait('@deleteItems').then(() => {
       // check item is deleted, others are still displayed
-      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[2].id)}`).should(
-        'not.exist',
-      );
-      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[3].id)}`).should(
-        'not.exist',
-      );
+      cy.wait('@getItem').its('response.url').should('contain', id);
     });
   });
 

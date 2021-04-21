@@ -1,28 +1,23 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { DragDrop } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
-import { withTranslation } from 'react-i18next';
+import { useRouteMatch } from 'react-router';
+import { useMutation } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import {
   FILE_UPLOAD_MAX_FILES,
   HEADER_HEIGHT,
   UPLOAD_METHOD,
 } from '../../config/constants';
 import configureUppy from '../../utils/uppy';
-import { setItem, getOwnItems } from '../../actions';
-import { uploadFileNotification } from '../../actions/file';
 import { UPLOADER_ID } from '../../config/selectors';
-import {
-  FLAG_UPLOADING_FILE,
-  UPLOAD_FILE_ERROR,
-  UPLOAD_FILE_SUCCESS,
-} from '../../types/item';
+import { buildItemPath } from '../../config/paths';
+import { FILE_UPLOAD_MUTATION_KEY } from '../../config/keys';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'none',
     height: '100vh',
@@ -50,208 +45,134 @@ const styles = (theme) => ({
       backgroundColor: 'red !important',
     },
   },
-});
+}));
 
-class FileUploader extends Component {
-  static propTypes = {
-    itemId: PropTypes.string,
-    dispatchGetOwnItems: PropTypes.func.isRequired,
-    dispatchSetItem: PropTypes.func.isRequired,
-    dispatchUploadFileNotification: PropTypes.func.isRequired,
-    classes: PropTypes.shape({
-      show: PropTypes.string.isRequired,
-      invalid: PropTypes.string.isRequired,
-      wrapper: PropTypes.string.isRequired,
-    }).isRequired,
-    t: PropTypes.func.isRequired,
+const FileUploader = () => {
+  const classes = useStyles();
+  const match = useRouteMatch(buildItemPath());
+  const itemId = match?.params?.itemId;
+  const [uppy, setUppy] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isValid, setIsValid] = useState(true);
+  const { mutate: onFileUploadComplete } = useMutation(
+    FILE_UPLOAD_MUTATION_KEY,
+  );
+  const { t } = useTranslation();
+
+  const closeUploader = () => {
+    setIsDragging(false);
   };
 
-  static defaultProps = {
-    itemId: '',
+  const onFilesAdded = () => {
+    closeUploader();
   };
 
-  state = {
-    isDragging: false,
-    isValid: true,
-    uppy: null,
-  };
-
-  componentDidMount() {
-    this.setUppy();
-
-    window.addEventListener('dragenter', this.handleWindowDragEnter);
-    window.addEventListener('mouseout', this.handleDragEnd);
-  }
-
-  componentDidUpdate({ itemId: prevItemId }) {
-    const { itemId } = this.props;
-    if (itemId !== prevItemId) {
-      this.setUppy();
-    }
-  }
-
-  componentWillUnmount() {
-    const { uppy } = this.state;
-    window.removeEventListener('dragenter', this.handleWindowDragEnter);
-    window.removeEventListener('mouseout', this.handleDragEnd);
-
-    uppy?.close();
-  }
-
-  closeUploader = () => {
-    const { isDragging } = this.state;
-    if (isDragging) {
-      this.setState({ isDragging: false });
-    }
-  };
-
-  setUppy = () => {
-    const { itemId } = this.props;
-    this.setState({
-      uppy: configureUppy({
-        itemId,
-        onComplete: this.onComplete,
-        onFilesAdded: this.onFilesAdded,
-        method: UPLOAD_METHOD,
-        onError: this.onError,
-        onUpload: this.onUpload,
-      }),
-    });
-  };
-
-  handleWindowDragEnter = () => {
-    this.setState({ isDragging: true });
-  };
-
-  handleDragEnd = () => {
-    this.closeUploader();
-  };
-
-  onFilesAdded = () => {
-    this.closeUploader();
-  };
-
-  onUpload = (payload) => {
-    const { dispatchUploadFileNotification } = this.props;
-    dispatchUploadFileNotification({
-      type: FLAG_UPLOADING_FILE,
-      payload,
-    });
-  };
-
-  onComplete = (result) => {
-    const {
-      itemId,
-      dispatchGetOwnItems,
-      dispatchSetItem,
-      dispatchUploadFileNotification,
-    } = this.props;
-
+  const onComplete = (result) => {
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
-    if (result?.successful.length) {
-      dispatchUploadFileNotification({
-        type: UPLOAD_FILE_SUCCESS,
-        payload: result,
-      });
-      // when uploading at the root: Home
-      if (!itemId) {
-        return dispatchGetOwnItems();
-      }
-      return dispatchSetItem(itemId);
+    if (result?.successful?.length) {
+      onFileUploadComplete({ id: itemId });
     }
 
     return false;
   };
 
-  onError = (e) => {
-    const { dispatchUploadFileNotification } = this.props;
-    dispatchUploadFileNotification({
-      type: UPLOAD_FILE_ERROR,
-      payload: {
-        error: JSON.stringify(e),
-      },
-    });
+  const onError = (error) => {
+    onFileUploadComplete({ id: itemId, error });
   };
 
-  handleDragEnter = (event) => {
+  const applyUppy = () => {
+    setUppy(
+      configureUppy({
+        itemId,
+        onComplete,
+        onFilesAdded,
+        method: UPLOAD_METHOD,
+        onError,
+      }),
+    );
+  };
+
+  const handleWindowDragEnter = () => {
+    setIsDragging(true);
+  };
+
+  const handleDragEnd = () => {
+    closeUploader();
+  };
+
+  const handleDragEnter = (event) => {
     // detect whether the dragged files number exceeds limit
     if (event?.dataTransfer?.items) {
       const nbFiles = event.dataTransfer.items.length;
 
       if (nbFiles > FILE_UPLOAD_MAX_FILES) {
-        return this.setState({ isValid: false });
+        return setIsValid(false);
       }
     }
 
-    return this.setState({ isValid: true });
+    return setIsValid(true);
   };
 
-  handleDrop = () => {
+  useEffect(() => {
+    applyUppy();
+
+    window.addEventListener('dragenter', handleWindowDragEnter);
+    window.addEventListener('mouseout', handleDragEnd);
+
+    return () => {
+      window.removeEventListener('dragenter', handleWindowDragEnter);
+      window.removeEventListener('mouseout', handleDragEnd);
+
+      uppy?.close();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    applyUppy();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemId]);
+
+  const handleDrop = () => {
     // todo: trigger error that only MAX_FILES was uploaded
     // or cancel drop
-    this.closeUploader();
+    closeUploader();
   };
 
-  render() {
-    const { isDragging, isValid, uppy } = this.state;
-    const { t, classes } = this.props;
-
-    if (!uppy) {
-      return null;
-    }
-
-    return (
-      <>
-        <div
-          id={UPLOADER_ID}
-          className={clsx(classes.wrapper, {
-            [classes.show]: isDragging,
-            [classes.invalid]: !isValid,
-          })}
-          onDragEnter={(e) => this.handleDragEnter(e)}
-          onDragEnd={(e) => this.handleDragEnd(e)}
-          onDragLeave={(e) => this.handleDragEnd(e)}
-          onDrop={this.handleDrop}
-        >
-          <DragDrop
-            uppy={uppy}
-            note={t(
-              `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
-              {
-                maxFiles: FILE_UPLOAD_MAX_FILES,
-              },
-            )}
-            locale={{
-              strings: {
-                // Text to show on the droppable area.
-                // `%{browse}` is replaced with a link that opens the system file selection dialog.
-                dropHereOr: `${t('Drop here or')} %{browse}`,
-                // Used as the label for the link that opens the system file selection dialog.
-                browse: t('Browse'),
-              },
-            }}
-          />
-        </div>
-      </>
-    );
+  if (!uppy) {
+    return null;
   }
-}
 
-const mapStateToProps = ({ item }) => ({
-  itemId: item.getIn(['item', 'id']),
-});
-
-const mapDispatchToProps = {
-  dispatchSetItem: setItem,
-  dispatchGetOwnItems: getOwnItems,
-  dispatchUploadFileNotification: uploadFileNotification,
+  return (
+    <div
+      id={UPLOADER_ID}
+      className={clsx(classes.wrapper, {
+        [classes.show]: isDragging,
+        [classes.invalid]: !isValid,
+      })}
+      onDragEnter={(e) => handleDragEnter(e)}
+      onDragEnd={(e) => handleDragEnd(e)}
+      onDragLeave={(e) => handleDragEnd(e)}
+      onDrop={handleDrop}
+    >
+      <DragDrop
+        uppy={uppy}
+        note={t(`You can upload up to FILE_UPLOAD_MAX_FILES files at a time`, {
+          maxFiles: FILE_UPLOAD_MAX_FILES,
+        })}
+        locale={{
+          strings: {
+            // Text to show on the droppable area.
+            // `%{browse}` is replaced with a link that opens the system file selection dialog.
+            dropHereOr: `${t('Drop here or')} %{browse}`,
+            // Used as the label for the link that opens the system file selection dialog.
+            browse: t('Browse'),
+          },
+        }}
+      />
+    </div>
+  );
 };
 
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(FileUploader);
-const StyledComponent = withStyles(styles)(ConnectedComponent);
-
-export default withTranslation()(StyledComponent);
+export default FileUploader;

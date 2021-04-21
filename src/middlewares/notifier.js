@@ -50,10 +50,7 @@ import {
   SIGN_OUT_SUCCESS,
 } from '../types';
 
-const ToastrMiddleware = () => (next) => (action) => {
-  const result = next(action);
-  const { type, payload } = result;
-
+export default ({ type, payload }) => {
   let message = null;
   switch (type) {
     // error messages
@@ -155,8 +152,4 @@ const ToastrMiddleware = () => (next) => (action) => {
   else if (message) {
     toastr.success(i18n.t(SUCCESS_MESSAGE_HEADER), i18n.t(message));
   }
-
-  return result;
 };
-
-export default ToastrMiddleware;

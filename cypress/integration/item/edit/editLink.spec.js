@@ -3,11 +3,6 @@ import {
   ITEM_LAYOUT_MODES,
 } from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
-import {
-  buildItemCard,
-  buildItemLink,
-  buildItemsTableRowId,
-} from '../../../../src/config/selectors';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
@@ -45,8 +40,9 @@ describe('Edit Link', () => {
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
-          cy.get(`#${buildItemsTableRowId(id)}`).contains(name);
+          cy.get('@getOwnItems');
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
         },
       );
     });
@@ -76,8 +72,9 @@ describe('Edit Link', () => {
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get(`#${buildItemCard(id)}`).should('exist');
-          cy.get(`#${buildItemLink(id)}`).contains(name);
+          cy.get('@getOwnItems');
+          expect(id).to.equal(itemToEdit.id);
+          expect(name).to.equal(EDITED_FIELDS.name);
         },
       );
     });

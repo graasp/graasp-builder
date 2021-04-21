@@ -3,10 +3,7 @@ import {
   DEFAULT_ITEM_LAYOUT_MODE,
 } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
-import {
-  buildItemsTableRowId,
-  ITEM_FORM_CONFIRM_BUTTON_ID,
-} from '../../../../src/config/selectors';
+import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, INVALID_LINK_ITEM } from '../../../fixtures/links';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
@@ -24,14 +21,16 @@ describe('Create Link', () => {
     // create
     createItem(GRAASP_LINK_ITEM, { mode: ITEM_LAYOUT_MODES.LIST });
 
-    cy.wait('@postItem').then(({ response: { body } }) => {
+    cy.wait('@postItem').then(() => {
       // check item is created and displayed
       cy.wait(CREATE_ITEM_PAUSE);
-      cy.get(`#${buildItemsTableRowId(body.id)}`).should('exist');
+
+      // expect update
+      cy.wait('@getOwnItems');
     });
   });
 
-  it('create space in item', () => {
+  it('create folder in item', () => {
     cy.setUpApi({ items: SAMPLE_ITEMS });
     const { id } = SAMPLE_ITEMS[0];
 
@@ -45,9 +44,12 @@ describe('Create Link', () => {
     // create
     createItem(GRAASP_LINK_ITEM, { mode: ITEM_LAYOUT_MODES.LIST });
 
-    cy.wait('@postItem').then(({ response: { body } }) => {
+    cy.wait('@postItem').then(() => {
       // check item is created and displayed
-      cy.get(`#${buildItemsTableRowId(body.id)}`).should('exist');
+      cy.wait(CREATE_ITEM_PAUSE);
+
+      // expect update
+      cy.wait('@getItem').its('response.url').should('contain', id);
     });
   });
 

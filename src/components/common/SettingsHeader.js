@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
 import MenuItem from '@material-ui/core/MenuItem';
-import { signOut } from '../../actions';
+import { useCurrentMember } from '../../hooks';
 import {
   AUTHENTICATION_HOST,
   USERNAME_MAX_LENGTH,
@@ -19,6 +19,8 @@ import {
   HEADER_USER_ID,
   USER_MENU_SIGN_OUT_OPTION_ID,
 } from '../../config/selectors';
+import Loader from './Loader';
+import { SIGN_OUT_MUTATION_KEY } from '../../config/keys';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -35,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SettingsHeader() {
-  const user = useSelector(({ member }) => member.getIn(['current']));
+  const { data: user, isLoading } = useCurrentMember();
   const classes = useStyles();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const dispatch = useDispatch();
+  const { mutate: signOut } = useMutation(SIGN_OUT_MUTATION_KEY);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,12 +52,12 @@ function SettingsHeader() {
   };
 
   const handleSignOut = () => {
-    dispatch(signOut());
+    signOut();
     handleClose();
   };
 
   const renderMenu = () => {
-    if (user.isEmpty()) {
+    if (!user || user.isEmpty()) {
       return (
         <MenuItem
           component="a"
@@ -73,7 +75,11 @@ function SettingsHeader() {
     );
   };
 
-  const username = user.get('name');
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const username = user?.get('name');
   // todo: necessary broken image to display a letter
   const avatarImage = 'a missing avatar';
 

@@ -155,7 +155,7 @@ describe('View Space', () => {
       });
     });
 
-    it('visit space by id', () => {
+    it('visit folder by id', () => {
       cy.setUpApi({ items: SAMPLE_ITEMS });
       const { id } = SAMPLE_ITEMS[0];
       cy.visit(buildItemPath(id));
@@ -196,6 +196,8 @@ describe('View Space', () => {
 
       // should get current item
       cy.wait('@getItem').then(() => {
+        // wait for request to fail
+        cy.wait(5000);
         cy.get(`#${ITEM_SCREEN_ERROR_ALERT_ID}`).should('exist');
       });
     });
