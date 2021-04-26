@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { ITEM_TYPES } from '../config/constants';
-import { getItemLoginTag } from './tag';
+import { getItemLoginTag } from './itemTag';
 
 export const getFileExtra = (extra) => extra?.[ITEM_TYPES.FILE];
 

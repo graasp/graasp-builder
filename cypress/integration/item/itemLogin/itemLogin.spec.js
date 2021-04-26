@@ -20,6 +20,7 @@ import {
 import { getItemLoginExtra } from '../../../../src/utils/itemExtra';
 import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
+import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
 
 const changeSignInMode = (mode) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
@@ -89,7 +90,7 @@ describe('Item Login', () => {
       currentMember: MEMBERS.BOB,
     });
     cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[4].id));
-    cy.wait(1000);
+    cy.wait(ITEM_LOGIN_PAUSE);
     cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('exist');
   });
 
@@ -159,7 +160,7 @@ describe('Item Login', () => {
 
       // avoid to detect intermediate screens because of loading
       // to remove when requests loading time is properly managed
-      cy.wait(1000);
+      cy.wait(ITEM_LOGIN_PAUSE);
 
       cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('exist');
     });
@@ -202,7 +203,7 @@ describe('Item Login', () => {
         currentMember: MEMBERS.BOB,
       });
       cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[3].id));
-      cy.wait(1000);
+      cy.wait(ITEM_LOGIN_PAUSE);
     });
   });
 
@@ -223,7 +224,7 @@ describe('Item Login', () => {
         password: 'password',
       });
 
-      cy.wait(1000);
+      cy.wait(ITEM_LOGIN_PAUSE);
 
       cy.get(`#${ITEM_LOGIN_SCREEN_ID}`).should('exist');
     });

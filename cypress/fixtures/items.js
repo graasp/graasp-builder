@@ -5,7 +5,7 @@ import {
 } from '../../src/config/constants';
 import { buildItemLoginSchemaExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER, MEMBERS } from './members';
-import { DEFAULT_TAGS, ITEM_LOGIN_TAG } from './tags';
+import { DEFAULT_TAGS, ITEM_LOGIN_TAG } from './itemTags';
 
 const DEFAULT_ITEM = {
   description: '',

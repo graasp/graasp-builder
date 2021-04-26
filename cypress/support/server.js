@@ -51,7 +51,7 @@ import {
 } from '../../src/utils/itemExtra';
 import { REDIRECTION_CONTENT } from './constants';
 import { SETTINGS } from '../../src/config/constants';
-import { ITEM_LOGIN_TAG } from '../fixtures/tags';
+import { ITEM_LOGIN_TAG } from '../fixtures/itemTags';
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');

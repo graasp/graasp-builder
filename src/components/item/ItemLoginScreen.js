@@ -2,12 +2,14 @@ import React, { useRef, useState } from 'react';
 import {
   Container,
   TextField,
-  Typography,
   makeStyles,
   Button,
   Tooltip,
 } from '@material-ui/core';
 import { useParams } from 'react-router';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 import { useMutation } from 'react-query';
 import InfoIcon from '@material-ui/icons/Info';
 import Select from '@material-ui/core/Select';
@@ -24,14 +26,15 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
-  ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
   ITEM_LOGIN_SIGN_IN_MODE_ID,
   buildItemLoginSignInModeOption,
+  ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
 } from '../../config/selectors';
 import { isMemberIdValid } from '../../utils/member';
 import { useItemLogin } from '../../hooks/item';
 import Loader from '../common/Loader';
 import { ITEM_LOGIN_MUTATION_KEY } from '../../config/keys';
+import MemberIdTextField from './form/MemberIdTextField';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -57,9 +60,15 @@ const useStyles = makeStyles((theme) => ({
   signInWithWrapperLabel: {
     marginRight: theme.spacing(1),
   },
+  memberIdWrapper: {
+    width: '100%',
+  },
+  memberIdLabel: {
+    marginLeft: theme.spacing(2),
+  },
 }));
 
-function ItemLoginSignInScreen() {
+const ItemLoginScreen = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: itemLoginSignIn } = useMutation(ITEM_LOGIN_MUTATION_KEY);
@@ -137,49 +146,59 @@ function ItemLoginSignInScreen() {
     return usernameError || passwordError || memberIdError;
   };
 
-  const renderTextField = () => {
-    switch (signInMode) {
-      case SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.MEMBER_ID: {
-        return (
-          <TextField
-            autoFocus
-            error={memberId?.length && !isMemberIdValid(memberId)}
-            onChange={onMemberIdChange}
-            label={t('Member Id')}
-            placeholder="XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-            color="primary"
-            variant="outlined"
-            fullWidth
-            className={classes.input}
-            id={ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID}
-            value={memberId}
-          />
-        );
-      }
-      case SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME:
-      default: {
-        const isMemberId = isMemberIdValid(username);
-        const error = username?.length && isMemberId;
-        const helperText = isMemberId
-          ? t('This is a member id. You should switch the sign in mode.')
-          : null;
-        return (
-          <TextField
-            error={error}
-            autoFocus
-            onChange={onUsernameChange}
-            label={t('Username')}
-            color="primary"
-            variant="outlined"
-            fullWidth
-            helperText={helperText}
-            className={classes.input}
-            id={ITEM_LOGIN_SIGN_IN_USERNAME_ID}
-            value={username}
-          />
-        );
-      }
+  const renderMemberIdTextField = () => {
+    if (signInMode !== SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.MEMBER_ID) {
+      return null;
     }
+
+    const error = memberId?.length && !isMemberIdValid(memberId);
+
+    return (
+      <FormControl className={classes.memberIdWrapper}>
+        <InputLabel error={error} className={classes.memberIdLabel} shrink>
+          {t('Member Id')}
+        </InputLabel>
+        <OutlinedInput
+          autoFocus
+          error={error}
+          onChange={onMemberIdChange}
+          label={t('Member Id')}
+          inputComponent={MemberIdTextField}
+          color="primary"
+          fullWidth
+          className={classes.input}
+          id={ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID}
+          value={memberId}
+        />
+      </FormControl>
+    );
+  };
+
+  const renderUsernameTextField = () => {
+    if (signInMode !== SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME) {
+      return null;
+    }
+    const isMemberId = isMemberIdValid(username);
+    const error = username?.length && isMemberId;
+    const helperText = isMemberId
+      ? t('This is a member id. You should switch the sign in mode.')
+      : null;
+    return (
+      <TextField
+        error={error}
+        autoFocus
+        onChange={onUsernameChange}
+        label={t('Username')}
+        color="primary"
+        variant="outlined"
+        fullWidth
+        type="text"
+        helperText={helperText}
+        className={classes.input}
+        id={ITEM_LOGIN_SIGN_IN_USERNAME_ID}
+        value={username}
+      />
+    );
   };
 
   const renderUsernameAndMemberIdField = () => {
@@ -219,7 +238,14 @@ function ItemLoginSignInScreen() {
           label={t('Sign In with')}
           labelPlacement="start"
         />
-        <div className={classes.usernameAndMemberId}>{renderTextField()}</div>
+        <div className={classes.usernameAndMemberId}>
+          {/* we actually need to render two text fields to avoid data conflicts
+            using a single function returning one or the other text fields sometimes
+            lead to the previous data being meld into the new textfield
+          */}
+          {renderUsernameTextField()}
+          {renderMemberIdTextField()}
+        </div>
       </>
     );
   };
@@ -230,15 +256,13 @@ function ItemLoginSignInScreen() {
       className={classes.wrapper}
       id={ITEM_LOGIN_SCREEN_ID}
     >
-      <Typography variant="h4">{t('Item Login Sign In')}</Typography>
       {renderUsernameAndMemberIdField()}
       {withPassword && (
         <TextField
           onChange={onPasswordChange}
           label={t('Password')}
           value={password}
-          rows={4}
-          rowsMax={4}
+          type="password"
           color="primary"
           variant="outlined"
           className={classes.input}
@@ -256,6 +280,6 @@ function ItemLoginSignInScreen() {
       </Button>
     </Container>
   );
-}
+};
 
-export default ItemLoginSignInScreen;
+export default ItemLoginScreen;

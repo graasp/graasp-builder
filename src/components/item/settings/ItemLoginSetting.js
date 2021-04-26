@@ -31,7 +31,7 @@ import {
   PUT_ITEM_LOGIN_MUTATION_KEY,
 } from '../../../config/keys';
 import Loader from '../../common/Loader';
-import { getItemLoginTag } from '../../../utils/tag';
+import { getItemLoginTag } from '../../../utils/itemTag';
 
 const ItemLoginSwitch = () => {
   const { t } = useTranslation();

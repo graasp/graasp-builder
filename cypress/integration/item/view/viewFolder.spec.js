@@ -14,6 +14,7 @@ import {
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
+import { REQUEST_FAILURE_TIME } from '../../../support/constants';
 
 describe('View Space', () => {
   describe('Grid', () => {
@@ -197,7 +198,7 @@ describe('View Space', () => {
       // should get current item
       cy.wait('@getItem').then(() => {
         // wait for request to fail
-        cy.wait(2500);
+        cy.wait(REQUEST_FAILURE_TIME);
         cy.get(`#${ITEM_SCREEN_ERROR_ALERT_ID}`).should('exist');
       });
     });

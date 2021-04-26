@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 import { Button, Container, makeStyles, Typography } from '@material-ui/core';
-import ItemLoginSignInScreen from '../item/ItemLoginSignInScreen';
+import ItemLoginScreen from '../item/ItemLoginScreen';
 import ForbiddenText from './ForbiddenText';
 import {
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
@@ -72,7 +72,7 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
 
     // signed out but can sign in with item login
     if ((!user || user.isEmpty()) && itemLogin && !itemLogin.isEmpty()) {
-      return <ItemLoginSignInScreen />;
+      return <ItemLoginScreen />;
     }
 
     // the item could be fetched without errors
