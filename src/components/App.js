@@ -17,6 +17,7 @@ import SharedItems from './SharedItems';
 import Main from './main/Main';
 import Authorization from './common/Authorization';
 import ModalProviders from './context/ModalProviders';
+import ItemLoginAuthorization from './common/ItemLoginAuthorization';
 
 const App = () => (
   <ModalProviders>
@@ -31,7 +32,7 @@ const App = () => (
           />
           <Route
             path={buildItemPath()}
-            component={Authorization()(ItemScreen)}
+            component={ItemLoginAuthorization()(ItemScreen)}
           />
           <Route path={ITEMS_PATH} exact component={Authorization()(Home)} />
           <Redirect to={HOME_PATH} />

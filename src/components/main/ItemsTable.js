@@ -323,13 +323,14 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
 };
 
 ItemsTable.propTypes = {
-  items: PropTypes.instanceOf(List).isRequired,
+  items: PropTypes.instanceOf(List),
   tableTitle: PropTypes.string.isRequired,
   id: PropTypes.string,
 };
 
 ItemsTable.defaultProps = {
   id: '',
+  items: List(),
 };
 
 export default ItemsTable;

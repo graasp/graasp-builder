@@ -23,7 +23,7 @@ const deleteItems = (itemIds) => {
 
 describe('Delete Items in List', () => {
   it('delete 2 items in Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
@@ -31,30 +31,31 @@ describe('Delete Items in List', () => {
     }
 
     // delete
-    deleteItems([SAMPLE_ITEMS[0].id, SAMPLE_ITEMS[1].id]);
+    deleteItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
     cy.wait(['@deleteItems', '@getOwnItems']);
   });
 
   it('delete 2 items in item', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
-    cy.visit(buildItemPath(id));
+    cy.setUpApi(SAMPLE_ITEMS);
+    cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // delete
-    deleteItems([SAMPLE_ITEMS[2].id, SAMPLE_ITEMS[3].id]);
+    deleteItems([SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[3].id]);
     cy.wait('@deleteItems').then(() => {
       // check item is deleted, others are still displayed
-      cy.wait('@getItem').its('response.url').should('contain', id);
+      cy.wait('@getItem')
+        .its('response.url')
+        .should('contain', SAMPLE_ITEMS.items[0].id);
     });
   });
 
-  describe('Errors handling', () => {
+  describe('Error handling', () => {
     it('does not delete items on error', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS, deleteItemsError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, deleteItemsError: true });
       cy.visit(HOME_PATH);
 
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
@@ -62,11 +63,15 @@ describe('Delete Items in List', () => {
       }
 
       // delete
-      deleteItems([SAMPLE_ITEMS[0].id, SAMPLE_ITEMS[1].id]);
+      deleteItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
       cy.wait('@deleteItems').then(() => {
         // check item is deleted, others are still displayed
-        cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[0].id)}`).should('exist');
-        cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[1].id)}`).should('exist');
+        cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS.items[0].id)}`).should(
+          'exist',
+        );
+        cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS.items[1].id)}`).should(
+          'exist',
+        );
       });
     });
   });

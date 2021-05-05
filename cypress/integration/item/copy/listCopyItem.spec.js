@@ -23,15 +23,15 @@ const copyItem = (id, toItemId) => {
 
 describe('Copy Item in List', () => {
   it('copy item on Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS[0];
-    const { id: toItem } = SAMPLE_ITEMS[1];
+    const { id: copyItemId } = SAMPLE_ITEMS.items[0];
+    const { id: toItem } = SAMPLE_ITEMS.items[1];
     copyItem(copyItemId, toItem);
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
@@ -44,8 +44,8 @@ describe('Copy Item in List', () => {
   });
 
   it('copy item in item', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -54,8 +54,8 @@ describe('Copy Item in List', () => {
     }
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS[2];
-    const { id: toItem } = SAMPLE_ITEMS[3];
+    const { id: copyItemId } = SAMPLE_ITEMS.items[2];
+    const { id: toItem } = SAMPLE_ITEMS.items[3];
     copyItem(copyItemId, toItem);
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
@@ -68,8 +68,8 @@ describe('Copy Item in List', () => {
   });
 
   it('copy item to Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -78,7 +78,7 @@ describe('Copy Item in List', () => {
     }
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS[2];
+    const { id: copyItemId } = SAMPLE_ITEMS.items[2];
     const toItem = ROOT_ID;
     copyItem(copyItemId, toItem);
 
@@ -91,10 +91,10 @@ describe('Copy Item in List', () => {
     });
   });
 
-  describe('Errors handling', () => {
+  describe('Error handling', () => {
     it('error while moving item does not create in interface', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS, copyItemError: true });
-      const { id } = SAMPLE_ITEMS[0];
+      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemError: true });
+      const { id } = SAMPLE_ITEMS.items[0];
 
       // go to children item
       cy.visit(buildItemPath(id));
@@ -103,8 +103,8 @@ describe('Copy Item in List', () => {
       }
 
       // copy
-      const { id: copyItemId } = SAMPLE_ITEMS[2];
-      const { id: toItem } = SAMPLE_ITEMS[0];
+      const { id: copyItemId } = SAMPLE_ITEMS.items[2];
+      const { id: toItem } = SAMPLE_ITEMS.items[0];
       copyItem(copyItemId, toItem);
 
       cy.wait('@copyItem').then(({ response: { body } }) => {

@@ -1,7 +1,4 @@
 import React from 'react';
-import Alert from '@material-ui/lab/Alert';
-import { Map, List } from 'immutable';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core';
 import { useChildren, useItem } from '../../hooks';
@@ -14,6 +11,7 @@ import S3FileItem from '../item/S3FileItem';
 import ItemMain from '../item/ItemMain';
 import LinkItem from '../item/LinkItem';
 import Loader from '../common/Loader';
+import ErrorAlert from '../common/ErrorAlert';
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -25,17 +23,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ItemScreen = () => {
-  const { t } = useTranslation();
   const classes = useStyles();
 
   const { itemId } = useParams();
 
-  const { data, isLoading } = useItem(itemId);
-  const item = Map(data);
+  const { data: item, isLoading } = useItem(itemId);
 
   // display children
-  const { data: childrenRaw } = useChildren(itemId);
-  const children = List(childrenRaw);
+  const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
 
   const renderContent = () => {
     switch (item.get('type')) {
@@ -58,6 +53,11 @@ const ItemScreen = () => {
           </div>
         );
       case ITEM_TYPES.FOLDER:
+        // wait until all children are available
+        if (isChildrenLoading) {
+          return <Loader />;
+        }
+
         // display children
         return (
           <>
@@ -67,25 +67,16 @@ const ItemScreen = () => {
         );
 
       default:
-        return (
-          <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
-            {t('An error occured.')}
-          </Alert>
-        );
+        return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
     }
   };
 
-  // wait until all children are available
   if (isLoading) {
     return <Loader />;
   }
 
   if (!item || !item.get('id')) {
-    return (
-      <Alert id={ITEM_SCREEN_ERROR_ALERT_ID} severity="error">
-        {t('An error occured.')}
-      </Alert>
-    );
+    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
   return <ItemMain item={item}>{renderContent()}</ItemMain>;

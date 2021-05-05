@@ -55,7 +55,7 @@ const Navigation = () => {
     // build root depending on user permission or pathname
     // todo: consider accessing from guest
     const ownItem =
-      pathname === HOME_PATH || item?.get('creator') === user.get('id');
+      pathname === HOME_PATH || item?.get('creator') === user?.get('id');
     const to = ownItem ? HOME_PATH : SHARED_ITEMS_PATH;
     const text = ownItem ? t('My Items') : t('Shared Items');
 

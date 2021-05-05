@@ -29,8 +29,8 @@ describe('Create File', () => {
   });
 
   it('create file in item', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // go to children item
     cy.visit(buildItemPath(id));

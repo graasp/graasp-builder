@@ -19,6 +19,7 @@ import {
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
+import ItemSettings from './settings/ItemSettings';
 
 const styles = (theme) => ({
   drawer: {
@@ -155,6 +156,8 @@ class ItemPanel extends Component {
         </IconButton>
         {!selectedChild && this.renderItemContent(item)}
         {selectedChild && this.renderItemContent(selectedChild)}
+
+        <ItemSettings />
       </Drawer>
     );
   }

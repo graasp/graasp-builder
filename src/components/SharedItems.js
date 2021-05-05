@@ -1,18 +1,22 @@
 import React from 'react';
 import { List } from 'immutable';
 import { useTranslation } from 'react-i18next';
-import { SHARED_ITEMS_ID } from '../config/selectors';
+import {
+  SHARED_ITEMS_ERROR_ALERT_ID,
+  SHARED_ITEMS_ID,
+} from '../config/selectors';
 import ItemHeader from './item/header/ItemHeader';
+import ErrorAlert from './common/ErrorAlert';
 import Items from './main/Items';
 import { useSharedItems } from '../hooks';
 import Loader from './common/Loader';
 
 const SharedItems = () => {
   const { t } = useTranslation();
-  const { data: sharedItems, isLoading, isError, error } = useSharedItems();
+  const { data: sharedItems, isLoading, isError } = useSharedItems();
 
   if (isError) {
-    return error;
+    return <ErrorAlert id={SHARED_ITEMS_ERROR_ALERT_ID} />;
   }
 
   if (isLoading) {

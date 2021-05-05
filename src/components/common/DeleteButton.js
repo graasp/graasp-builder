@@ -40,7 +40,7 @@ const DeleteButton = ({ itemIds, color, id }) => {
 };
 
 DeleteButton.propTypes = {
-  itemIds: PropTypes.string.isRequired,
+  itemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   color: PropTypes.string,
   id: PropTypes.string,
 };

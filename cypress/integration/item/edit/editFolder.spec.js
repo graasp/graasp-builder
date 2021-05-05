@@ -10,14 +10,14 @@ import { editItem } from './utils';
 describe('Edit Folder', () => {
   describe('List', () => {
     it('edit folder on Home', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS });
+      cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
 
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
-      const itemToEdit = SAMPLE_ITEMS[0];
+      const itemToEdit = SAMPLE_ITEMS.items[0];
 
       // edit
       editItem(
@@ -45,15 +45,15 @@ describe('Edit Folder', () => {
     });
 
     it('edit folder in item', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS });
+      cy.setUpApi(SAMPLE_ITEMS);
       // go to children item
-      cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
+      cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
 
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
-      const itemToEdit = SAMPLE_ITEMS[2];
+      const itemToEdit = SAMPLE_ITEMS.items[2];
 
       // edit
       editItem(
@@ -77,7 +77,7 @@ describe('Edit Folder', () => {
           expect(description).to.equal(EDITED_FIELDS.description);
           cy.get('@getItem')
             .its('response.url')
-            .should('contain', SAMPLE_ITEMS[0].id);
+            .should('contain', SAMPLE_ITEMS.items[0].id);
         },
       );
     });
@@ -85,11 +85,11 @@ describe('Edit Folder', () => {
 
   describe('Grid', () => {
     it('edit folder on Home', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS });
+      cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
-      const itemToEdit = SAMPLE_ITEMS[0];
+      const itemToEdit = SAMPLE_ITEMS.items[0];
 
       // edit
       editItem(
@@ -117,12 +117,12 @@ describe('Edit Folder', () => {
     });
 
     it('edit folder in item', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS });
+      cy.setUpApi(SAMPLE_ITEMS);
       // go to children item
-      cy.visit(buildItemPath(SAMPLE_ITEMS[0].id));
+      cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
-      const itemToEdit = SAMPLE_ITEMS[2];
+      const itemToEdit = SAMPLE_ITEMS.items[2];
 
       // edit
       editItem(
@@ -146,7 +146,7 @@ describe('Edit Folder', () => {
           expect(description).to.equal(EDITED_FIELDS.description);
           cy.get('@getItem')
             .its('response.url')
-            .should('contain', SAMPLE_ITEMS[0].id);
+            .should('contain', SAMPLE_ITEMS.items[0].id);
         },
       );
     });

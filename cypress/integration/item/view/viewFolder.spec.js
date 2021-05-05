@@ -14,13 +14,14 @@ import {
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
+import { REQUEST_FAILURE_TIME } from '../../../support/constants';
 
 describe('View Space', () => {
   describe('Grid', () => {
     beforeEach(() => {
       cy.setUpApi({
         items: [
-          ...SAMPLE_ITEMS,
+          ...SAMPLE_ITEMS.items,
           GRAASP_LINK_ITEM,
           IMAGE_ITEM_DEFAULT,
           VIDEO_ITEM_S3,
@@ -41,7 +42,7 @@ describe('View Space', () => {
       });
 
       // visit child
-      const { id: childId } = SAMPLE_ITEMS[0];
+      const { id: childId } = SAMPLE_ITEMS.items[0];
       cy.goToItemInGrid(childId);
 
       // should get children
@@ -53,7 +54,7 @@ describe('View Space', () => {
       });
 
       // visit child
-      const { id: childChildId } = SAMPLE_ITEMS[2];
+      const { id: childChildId } = SAMPLE_ITEMS.items[2];
       cy.goToItemInGrid(childChildId);
 
       // expect no children
@@ -71,7 +72,7 @@ describe('View Space', () => {
     });
 
     it('visit item by id', () => {
-      const { id } = SAMPLE_ITEMS[0];
+      const { id } = SAMPLE_ITEMS.items[0];
       cy.visit(buildItemPath(id));
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
@@ -102,7 +103,7 @@ describe('View Space', () => {
     beforeEach(() => {
       cy.setUpApi({
         items: [
-          ...SAMPLE_ITEMS,
+          ...SAMPLE_ITEMS.items,
           GRAASP_LINK_ITEM,
           IMAGE_ITEM_DEFAULT,
           VIDEO_ITEM_S3,
@@ -126,7 +127,7 @@ describe('View Space', () => {
       });
 
       // visit child
-      const { id: childId } = SAMPLE_ITEMS[0];
+      const { id: childId } = SAMPLE_ITEMS.items[0];
       cy.goToItemInList(childId);
 
       // should get children
@@ -138,7 +139,7 @@ describe('View Space', () => {
       });
 
       // visit child
-      const { id: childChildId } = SAMPLE_ITEMS[2];
+      const { id: childChildId } = SAMPLE_ITEMS.items[2];
       cy.goToItemInList(childChildId);
 
       // expect no children
@@ -156,8 +157,8 @@ describe('View Space', () => {
     });
 
     it('visit folder by id', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS });
-      const { id } = SAMPLE_ITEMS[0];
+      cy.setUpApi(SAMPLE_ITEMS);
+      const { id } = SAMPLE_ITEMS.items[0];
       cy.visit(buildItemPath(id));
 
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
@@ -189,15 +190,15 @@ describe('View Space', () => {
   });
 
   describe('Error Handling', () => {
-    it('visiting non-existing item display no item here', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS, getItemError: true });
-      const { id } = SAMPLE_ITEMS[0];
-      cy.visit(buildItemPath(id));
+    // an item might either not exist or not be accessible
+    it.only('visiting non-existing item display error', () => {
+      cy.setUpApi({ ...SAMPLE_ITEMS, getItemError: true });
+      cy.visit(buildItemPath('ecafbd2a-5688-22ac-ae93-0242ac130002'));
 
       // should get current item
       cy.wait('@getItem').then(() => {
         // wait for request to fail
-        cy.wait(5000);
+        cy.wait(REQUEST_FAILURE_TIME);
         cy.get(`#${ITEM_SCREEN_ERROR_ALERT_ID}`).should('exist');
       });
     });

@@ -15,14 +15,14 @@ const deleteItem = (id) => {
 
 describe('Delete Item in List', () => {
   it('delete item on Home', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
-    const { id } = SAMPLE_ITEMS[0];
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // delete
     deleteItem(id);
@@ -30,9 +30,9 @@ describe('Delete Item in List', () => {
   });
 
   it('delete item inside parent', () => {
-    cy.setUpApi({ items: SAMPLE_ITEMS });
-    const { id } = SAMPLE_ITEMS[0];
-    const { id: idToDelete } = SAMPLE_ITEMS[2];
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
+    const { id: idToDelete } = SAMPLE_ITEMS.items[2];
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -46,15 +46,17 @@ describe('Delete Item in List', () => {
     cy.wait('@deleteItem').then(() => {
       // check item is deleted, others are still displayed
       cy.get(`#${buildItemsTableRowId(idToDelete)}`).should('not.exist');
-      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS[3].id)}`).should('exist');
+      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS.items[3].id)}`).should(
+        'exist',
+      );
     });
   });
 
-  describe('Errors handling', () => {
+  describe('Error handling', () => {
     it('error while deleting item does not delete in interface', () => {
-      cy.setUpApi({ items: SAMPLE_ITEMS, deleteItemError: true });
-      const { id } = SAMPLE_ITEMS[0];
-      const { id: idToDelete } = SAMPLE_ITEMS[2];
+      cy.setUpApi({ ...SAMPLE_ITEMS, deleteItemError: true });
+      const { id } = SAMPLE_ITEMS.items[0];
+      const { id: idToDelete } = SAMPLE_ITEMS.items[2];
 
       // go to children item
       cy.visit(buildItemPath(id));

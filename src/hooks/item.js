@@ -5,6 +5,8 @@ import queryClient from '../config/queryClient';
 import {
   buildChildren,
   buildGetItem,
+  buildItemLoginQuery,
+  buildItemMembershipsQuery,
   buildOwnItems,
   buildParents,
   buildSharedItems,
@@ -66,3 +68,15 @@ export const useSharedItems = () =>
 
 export const useItem = (id) =>
   useQuery({ ...buildGetItem(id), enabled: Boolean(id) });
+
+export const useItemMemberships = (id) =>
+  useQuery({
+    ...buildItemMembershipsQuery(id),
+    enabled: Boolean(id),
+  });
+
+export const useItemLogin = (id) =>
+  useQuery({
+    ...buildItemLoginQuery(id),
+    enabled: Boolean(id),
+  });

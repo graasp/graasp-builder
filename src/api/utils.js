@@ -23,6 +23,7 @@ export const DEFAULT_PATCH = {
 
 export const DEFAULT_PUT = {
   method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
   credentials: 'include',
 };
 

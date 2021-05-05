@@ -29,9 +29,16 @@ import {
   MOVE_ITEM_MUTATION_KEY,
   COPY_ITEM_MUTATION_KEY,
   DELETE_ITEMS_MUTATION_KEY,
+  ITEM_LOGIN_MUTATION_KEY,
+  PUT_ITEM_LOGIN_MUTATION_KEY,
+  buildItemLoginKey,
 } from '../config/keys';
 import notifier from '../middlewares/notifier';
 import { buildPath, getDirectParentId } from '../utils/item';
+import {
+  PUT_ITEM_LOGIN_ERROR,
+  PUT_ITEM_LOGIN_SUCCESS,
+} from '../types/itemLogin';
 
 export default (queryClient) => {
   const mutateItem = async ({ id, value }) => {
@@ -336,6 +343,27 @@ export default (queryClient) => {
     },
     onSettled: ({ id }) => {
       onSettledParentItem({ id });
+    },
+  });
+
+  queryClient.setMutationDefaults(ITEM_LOGIN_MUTATION_KEY, {
+    mutationFn: Api.itemLoginSignIn,
+    onSettled: () => {
+      queryClient.resetQueries();
+    },
+  });
+
+  queryClient.setMutationDefaults(PUT_ITEM_LOGIN_MUTATION_KEY, {
+    mutationFn: (payload) =>
+      Api.putItemLoginSchema(payload).then(() => payload),
+    onSuccess: () => {
+      notifier({ type: PUT_ITEM_LOGIN_SUCCESS });
+    },
+    onError: (error) => {
+      notifier({ type: PUT_ITEM_LOGIN_ERROR, payload: { error } });
+    },
+    onSettled: ({ itemId }) => {
+      queryClient.invalidateQueries(buildItemLoginKey(itemId));
     },
   });
 };

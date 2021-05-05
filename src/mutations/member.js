@@ -28,7 +28,8 @@ export default (queryClient) => {
     },
     // Always refetch after error or success:
     onSettled: () => {
-      queryClient.invalidateQueries(CURRENT_MEMBER_KEY);
+      // invalidate all queries
+      queryClient.resetQueries();
     },
   });
 };

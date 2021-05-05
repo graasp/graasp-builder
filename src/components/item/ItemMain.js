@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import ItemHeader from './header/ItemHeader';
 import ItemPanel from './ItemPanel';
+import { ITEM_MAIN_CLASS } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemMain = ({ children, item }) => {
+const ItemMain = ({ id, children, item }) => {
   const classes = useStyles();
   const [metadataMenuOpen, setMetadataMenuOpen] = useState(true);
 
@@ -54,7 +55,7 @@ const ItemMain = ({ children, item }) => {
   };
 
   return (
-    <>
+    <div id={id} className={ITEM_MAIN_CLASS}>
       <ItemPanel item={item} open={metadataMenuOpen} />
       <div
         className={clsx(classes.root, classes.content, {
@@ -65,13 +66,18 @@ const ItemMain = ({ children, item }) => {
 
         {children}
       </div>
-    </>
+    </div>
   );
 };
 
 ItemMain.propTypes = {
   children: PropTypes.node.isRequired,
   item: PropTypes.instanceOf(Map).isRequired,
+  id: PropTypes.string,
+};
+
+ItemMain.defaultProps = {
+  id: null,
 };
 
 export default ItemMain;

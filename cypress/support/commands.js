@@ -15,7 +15,7 @@ import {
   mockPostItem,
   mockEditItem,
   mockShareItem,
-  mockGetMember,
+  mockGetMemberBy,
   mockDeleteItems,
   mockDefaultDownloadFile,
   mockGetS3Metadata,
@@ -24,15 +24,25 @@ import {
   mockGetCurrentMember,
   mockSignInRedirection,
   mockSignOut,
+  mockPostItemLogin,
+  mockGetItemLogin,
+  mockGetItemMembershipsForItem,
+  mockGetItemTags,
+  mockGetTags,
+  mockPostItemTag,
+  mockPutItemLogin,
 } from './server';
 import './commands/item';
 import './commands/navigation';
+import { CURRENT_USER } from '../fixtures/members';
 
 Cypress.Commands.add(
   'setUpApi',
   ({
     items = [],
     members = [],
+    currentMember = CURRENT_USER,
+    tags = [],
     deleteItemError = false,
     deleteItemsError = false,
     postItemError = false,
@@ -47,6 +57,9 @@ Cypress.Commands.add(
     getS3MetadataError = false,
     getS3FileContentError = false,
     getCurrentMemberError = false,
+    postItemTagError = false,
+    postItemLoginError = false,
+    putItemLoginError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -59,7 +72,10 @@ Cypress.Commands.add(
 
     mockDeleteItems(cachedItems, deleteItemsError);
 
-    mockGetItem(cachedItems, getItemError);
+    mockGetItem(
+      { items: cachedItems, currentMember },
+      getItemError || getCurrentMemberError,
+    );
 
     mockGetChildren(cachedItems);
 
@@ -71,7 +87,7 @@ Cypress.Commands.add(
 
     mockShareItem(cachedItems, shareItemError);
 
-    mockGetMember(cachedMembers, getMemberError);
+    mockGetMemberBy(cachedMembers, getMemberError);
 
     mockUploadItem(cachedItems, defaultUploadError);
 
@@ -81,11 +97,25 @@ Cypress.Commands.add(
 
     mockGetS3FileContent(getS3FileContentError);
 
-    mockGetCurrentMember(getCurrentMemberError);
+    mockGetCurrentMember(currentMember, getCurrentMemberError);
 
     mockSignInRedirection();
 
     mockSignOut();
+
+    mockGetItemLogin(items);
+
+    mockPostItemLogin(items, postItemLoginError);
+
+    mockPutItemLogin(items, putItemLoginError);
+
+    mockGetItemMembershipsForItem(items);
+
+    mockGetTags(tags);
+
+    mockGetItemTags(items);
+
+    mockPostItemTag(items, postItemTagError);
   },
 );
 
