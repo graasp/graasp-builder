@@ -13,6 +13,7 @@ import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../config/constants';
 import BaseItemForm from '../item/form/BaseItemForm';
 import { EDIT_ITEM_MUTATION_KEY } from '../../config/keys';
+import DocumentForm from '../item/form/DocumentForm';
 
 const EditItemModalContext = React.createContext();
 
@@ -53,6 +54,8 @@ const EditItemModalProvider = ({ children }) => {
 
   const renderForm = () => {
     switch (updatedItem?.type) {
+      case ITEM_TYPES.DOCUMENT:
+        return <DocumentForm onChange={setUpdatedItem} item={updatedItem} />;
       case ITEM_TYPES.FOLDER:
         return <SpaceForm onChange={setUpdatedItem} item={updatedItem} />;
       case ITEM_TYPES.FILE:

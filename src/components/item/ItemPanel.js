@@ -54,7 +54,6 @@ class ItemPanel extends Component {
       closeButton: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }).isRequired,
-    onClose: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     selectedChild: PropTypes.shape({}),
     open: PropTypes.bool.isRequired,
@@ -137,7 +136,7 @@ class ItemPanel extends Component {
   };
 
   render() {
-    const { classes, onClose, selectedChild, item, open } = this.props;
+    const { classes, selectedChild, item, open } = this.props;
 
     return (
       <Drawer
@@ -151,7 +150,7 @@ class ItemPanel extends Component {
         open={open}
       >
         <Toolbar />
-        <IconButton onClick={onClose} className={classes.closeButton}>
+        <IconButton className={classes.closeButton}>
           <CloseIcon />
         </IconButton>
         {!selectedChild && this.renderItemContent(item)}

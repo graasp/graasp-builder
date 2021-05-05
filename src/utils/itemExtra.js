@@ -63,3 +63,9 @@ export const getItemLoginTagFromItem = ({ tags, itemTags }) => {
 
   return itemTags?.find(({ tagId }) => tagId === itemLoginTagId);
 };
+
+export const buildDocumentExtra = (text) => ({
+  [ITEM_TYPES.DOCUMENT]: text,
+});
+
+export const getDocumentExtra = (extra) => extra?.[ITEM_TYPES.DOCUMENT];

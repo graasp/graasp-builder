@@ -38,9 +38,9 @@ const ItemTypeButton = ({
     >
       <CardActionArea onClick={handleClick} className={classes.cardActionArea}>
         <CardContent>
-          <Icon style={{ fontSize: 50 }} />
+          <Icon style={{ fontSize: 40 }} />
           <div>
-            <Typography variant="h5" component="h2">
+            <Typography variant="h6" component="h2">
               {title}
             </Typography>
             <Typography variant="body2" component="p">

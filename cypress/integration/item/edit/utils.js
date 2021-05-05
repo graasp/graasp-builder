@@ -31,6 +31,9 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
     case ITEM_TYPES.SHORTCUT:
       cy.fillBaseItemModal(payload);
       break;
+    case ITEM_TYPES.DOCUMENT:
+      cy.fillDocumentModal(payload);
+      break;
     case ITEM_TYPES.FOLDER:
     default:
       cy.fillSpaceModal(payload);

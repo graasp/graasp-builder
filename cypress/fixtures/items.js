@@ -7,7 +7,7 @@ import { buildItemLoginSchemaExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER, MEMBERS } from './members';
 import { DEFAULT_TAGS, ITEM_LOGIN_TAG } from './itemTags';
 
-const DEFAULT_ITEM = {
+export const DEFAULT_FOLDER_ITEM = {
   description: '',
   extra: {},
   creator: CURRENT_USER.id,
@@ -31,7 +31,7 @@ export const EDITED_FIELDS = {
 export const SAMPLE_ITEMS = {
   items: [
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
       name: 'own_item_name1',
       path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
@@ -40,7 +40,7 @@ export const SAMPLE_ITEMS = {
       },
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
       name: 'own_item_name2',
       path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
@@ -49,7 +49,7 @@ export const SAMPLE_ITEMS = {
       },
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
       name: 'own_item_name3',
       path:
@@ -59,7 +59,7 @@ export const SAMPLE_ITEMS = {
       },
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
       name: 'own_item_name4',
       path:
@@ -75,7 +75,7 @@ export const SAMPLE_ITEMS = {
 export const ITEM_LOGIN_ITEMS = {
   items: [
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
       name: 'item login with username',
       path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
@@ -103,7 +103,7 @@ export const ITEM_LOGIN_ITEMS = {
       ],
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
       name: 'no item login',
       path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
@@ -119,7 +119,7 @@ export const ITEM_LOGIN_ITEMS = {
       ],
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
       name: 'child of item login with username',
       path:
@@ -137,7 +137,7 @@ export const ITEM_LOGIN_ITEMS = {
       ],
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
       name: 'item login with username and password',
       path:
@@ -169,7 +169,7 @@ export const ITEM_LOGIN_ITEMS = {
       ],
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'egafbd2a-5688-11eb-ae93-0242ac130002',
       name: 'item login with username and password',
       path: 'egafbd2a_5688_11eb_ae93_0242ac130002',
@@ -194,7 +194,7 @@ export const ITEM_LOGIN_ITEMS = {
       ],
     },
     {
-      ...DEFAULT_ITEM,
+      ...DEFAULT_FOLDER_ITEM,
       id: 'bdf09f5a-5688-11eb-ae93-0242ac130004',
       name: 'child of item login with username and password',
       path:
@@ -220,7 +220,7 @@ export const ITEM_LOGIN_ITEMS = {
 };
 
 export const SHORTCUT = {
-  ...DEFAULT_ITEM,
+  ...DEFAULT_FOLDER_ITEM,
   id: 'gcafbd2a-5688-11eb-ae92-0242ac130002',
   name: 'shortcut for own_item_name1',
   path: 'gcafbd2a_5688_11eb_ae92_0242ac130002',

@@ -43,7 +43,6 @@ const BaseForm = ({ onChange, item }) => {
         label={t('Description')}
         value={item?.description}
         onChange={handleDescriptionInput}
-        multiline
         rows={4}
         rowsMax={4}
         fullWidth

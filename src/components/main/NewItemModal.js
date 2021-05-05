@@ -21,6 +21,7 @@ import LinkForm from '../item/form/LinkForm';
 import { isItemValid } from '../../utils/item';
 import { buildItemPath } from '../../config/paths';
 import { POST_ITEM_MUTATION_KEY } from '../../config/keys';
+import DocumentForm from '../item/form/DocumentForm';
 
 const useStyles = makeStyles(() => ({
   dialogContent: {
@@ -46,6 +47,9 @@ const NewItemModal = ({ open, handleClose }) => {
       case ITEM_TYPES.LINK:
         setNewItem({ type: ITEM_TYPES.LINK });
         break;
+      case ITEM_TYPES.DOCUMENT:
+        setNewItem({ type: ITEM_TYPES.DOCUMENT });
+        break;
       default:
         setNewItem({ type: ITEM_TYPES.FOLDER });
     }
@@ -69,6 +73,8 @@ const NewItemModal = ({ open, handleClose }) => {
         return <FileDashboardUploader />;
       case ITEM_TYPES.LINK:
         return <LinkForm onChange={setNewItem} item={newItem} />;
+      case ITEM_TYPES.DOCUMENT:
+        return <DocumentForm onChange={setNewItem} item={newItem} />;
       default:
         return null;
     }
@@ -78,6 +84,7 @@ const NewItemModal = ({ open, handleClose }) => {
     switch (selectedItemType) {
       case ITEM_TYPES.FOLDER:
       case ITEM_TYPES.LINK:
+      case ITEM_TYPES.DOCUMENT:
         return (
           <>
             <Button onClick={handleClose} color="primary">
@@ -109,7 +116,7 @@ const NewItemModal = ({ open, handleClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>{t('Add New Item')}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <ItemTypeButtons
