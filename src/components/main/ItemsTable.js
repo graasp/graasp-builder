@@ -209,14 +209,12 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
     setPage(0);
   };
 
-  const handleRowOnClick = ({ id, type, extra }) => {
+  const handleOnClickRow = ({ id, type, extra }) => {
     let targetId = id;
 
     // redirect to target if shortcut
     if (type === ITEM_TYPES.SHORTCUT) {
       targetId = getShortcutTarget(extra);
-      // eslint-disable-next-line no-console
-      console.log('targetId: ', extra, targetId);
     }
     push(buildItemPath(targetId));
   };
@@ -298,7 +296,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
                           // do not navigate when clicking on actions
                           const shouldNavigate = idx !== headCells.length - 1;
                           if (shouldNavigate) {
-                            handleRowOnClick(row);
+                            handleOnClickRow(row);
                           }
                         }}
                       >
