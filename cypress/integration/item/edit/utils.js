@@ -28,6 +28,7 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
     case ITEM_TYPES.FILE:
     case ITEM_TYPES.S3_FILE:
     case ITEM_TYPES.LINK:
+    case ITEM_TYPES.SHORTCUT:
       cy.fillBaseItemModal(payload);
       break;
     case ITEM_TYPES.FOLDER:

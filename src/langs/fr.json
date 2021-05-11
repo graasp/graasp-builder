@@ -71,6 +71,7 @@
     "Perform View": "Perform View",
     "Trash": "Poubelle",
     "Settings": "Paramètres",
-    "Close": "Fermer"
+    "Close": "Fermer",
+    "Shortcut to name": "Shortcut vers {{name}}"
   }
 }

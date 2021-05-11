@@ -18,6 +18,7 @@ import {
   ORDERING,
   ROWS_PER_PAGE_OPTIONS,
   ITEM_DATA_TYPES,
+  ITEM_TYPES,
 } from '../../config/constants';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
@@ -32,6 +33,7 @@ import {
 import TableToolbar from './TableToolbar';
 import TableHead from './TableHead';
 import ItemIcon from './ItemIcon';
+import { getShortcutTarget } from '../../utils/itemExtra';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -151,12 +153,13 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
       type,
       updatedAt,
       createdAt,
+      extra,
       actions: (
         <>
           <EditButton item={item} />
           <ShareButton itemId={id} />
           <DeleteButton itemIds={[id]} />
-          <ItemMenu itemId={id} />
+          <ItemMenu item={item} />
         </>
       ),
     };
@@ -206,8 +209,14 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
     setPage(0);
   };
 
-  const handleRowOnClick = (id) => {
-    push(buildItemPath(id));
+  const handleOnClickRow = ({ id, type, extra }) => {
+    let targetId = id;
+
+    // redirect to target if shortcut
+    if (type === ITEM_TYPES.SHORTCUT) {
+      targetId = getShortcutTarget(extra);
+    }
+    push(buildItemPath(targetId));
   };
 
   // format entry data given type
@@ -287,7 +296,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
                           // do not navigate when clicking on actions
                           const shouldNavigate = idx !== headCells.length - 1;
                           if (shouldNavigate) {
-                            handleRowOnClick(row.id);
+                            handleOnClickRow(row);
                           }
                         }}
                       >

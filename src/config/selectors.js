@@ -72,3 +72,4 @@ export const buildItemLoginSignInModeOption = (id) =>
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
 export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
+export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';

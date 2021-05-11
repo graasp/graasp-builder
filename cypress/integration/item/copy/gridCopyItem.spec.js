@@ -8,23 +8,23 @@ import {
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const copyItem = (id, toItemId) => {
+const copyItem = ({ id, toItemPath }) => {
   const menuSelector = `#${buildItemCard(id)} .${ITEM_MENU_BUTTON_CLASS}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
-  cy.fillTreeModal(toItemId);
+  cy.fillTreeModal(toItemPath);
 };
 
 describe('Copy Item in Grid', () => {
   it('copy item on Home', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS });
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[0];
-    const { id: toItem } = SAMPLE_ITEMS.items[1];
-    copyItem(copyItemId, toItem);
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
@@ -45,8 +45,8 @@ describe('Copy Item in Grid', () => {
 
     // move
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const { id: toItem } = SAMPLE_ITEMS.items[3];
-    copyItem(copyItemId, toItem);
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
@@ -67,8 +67,8 @@ describe('Copy Item in Grid', () => {
 
     // move
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const toItem = ROOT_ID;
-    copyItem(copyItemId, toItem);
+    const toItemPath = ROOT_ID;
+    copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
@@ -90,8 +90,8 @@ describe('Copy Item in Grid', () => {
 
       // move
       const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-      const { id: toItem } = SAMPLE_ITEMS.items[0];
-      copyItem(copyItemId, toItem);
+      const { path: toItemPath } = SAMPLE_ITEMS.items[0];
+      copyItem({ id: copyItemId, toItemPath });
 
       cy.wait('@copyItem').then(({ response: { body } }) => {
         // check item is still existing in parent

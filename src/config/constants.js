@@ -57,6 +57,7 @@ export const ITEM_TYPES = {
   FILE: 'file',
   S3_FILE: 's3File',
   LINK: 'embeddedLink',
+  SHORTCUT: 'shortcut',
 };
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],

@@ -8,6 +8,7 @@ import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import LinkIcon from '@material-ui/icons/Link';
 import MovieIcon from '@material-ui/icons/Movie';
 import ImageIcon from '@material-ui/icons/Image';
+import ShortcutIcon from '@material-ui/icons/Input';
 import {
   ITEM_TYPES,
   ITEMS_TABLE_ROW_ICON_COLOR,
@@ -45,6 +46,9 @@ const ItemIcon = ({ name, type, extra }) => {
   switch (type) {
     case ITEM_TYPES.FOLDER:
       Icon = FolderIcon;
+      break;
+    case ITEM_TYPES.SHORTCUT:
+      Icon = ShortcutIcon;
       break;
     case ITEM_TYPES.FILE:
     case ITEM_TYPES.S3_FILE: {

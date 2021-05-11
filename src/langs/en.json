@@ -71,6 +71,7 @@
     "Perform View": "Perform View",
     "Trash": "Trash",
     "Settings": "Settings",
-    "Close": "Close"
+    "Close": "Close",
+    "Shortcut to name": "Shortcut to {{name}}"
   }
 }

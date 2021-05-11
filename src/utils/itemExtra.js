@@ -16,6 +16,13 @@ export const buildEmbeddedLinkExtra = (embeddedLink) => ({
   [ITEM_TYPES.LINK]: embeddedLink,
 });
 
+export const buildShortcutExtra = (target) => ({
+  [ITEM_TYPES.SHORTCUT]: { target },
+});
+
+export const getShortcutTarget = (extra) =>
+  extra?.[ITEM_TYPES.SHORTCUT]?.target;
+
 export const fileExtraPropTypes = PropTypes.shape({
   mimetype: PropTypes.string.isRequired,
 });
