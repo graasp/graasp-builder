@@ -92,8 +92,6 @@ export const isItemValid = ({ name, type, extra }) => {
     }
     case ITEM_TYPES.DOCUMENT: {
       const { content } = getDocumentExtra(extra) || {};
-      // eslint-disable-next-line no-console
-      console.log('content: ', content);
       hasValidTypeProperties = content?.length > 0;
       break;
     }
