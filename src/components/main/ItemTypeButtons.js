@@ -13,6 +13,7 @@ import {
   CREATE_ITEM_LINK_ID,
   CREATE_ITEM_FOLDER_ID,
   CREATE_ITEM_DOCUMENT_ID,
+  CREATE_ITEM_APP_ID,
 } from '../../config/selectors';
 
 const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
@@ -22,7 +23,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
 
   return (
     <Grid container spacing={1} alignItems="stretch">
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <ItemTypeButton
           id={CREATE_ITEM_FOLDER_ID}
           handleClick={handleClick(ITEM_TYPES.FOLDER)}
@@ -31,7 +32,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
           title={t('Space')}
         />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <ItemTypeButton
           id={CREATE_ITEM_FILE_ID}
           handleClick={handleClick(ITEM_TYPES.FILE)}
@@ -41,7 +42,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
           description={t('Images, Videos, Audios, Documents')}
         />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <ItemTypeButton
           id={CREATE_ITEM_LINK_ID}
           handleClick={handleClick(ITEM_TYPES.LINK)}
@@ -51,7 +52,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
           description={t('Wikipedia, YouTube')}
         />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <ItemTypeButton
           id={CREATE_ITEM_DOCUMENT_ID}
           handleClick={handleClick(ITEM_TYPES.DOCUMENT)}
@@ -59,6 +60,15 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
           Icon={CreateIcon}
           title={t('Create a Document')}
           description={t('Create a document')}
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <ItemTypeButton
+          id={CREATE_ITEM_APP_ID}
+          handleClick={handleClick(ITEM_TYPES.APP)}
+          selected={selectedItemType === ITEM_TYPES.APP}
+          Icon={LinkIcon}
+          title={t('App')}
         />
       </Grid>
     </Grid>

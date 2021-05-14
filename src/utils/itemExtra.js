@@ -69,3 +69,9 @@ export const buildDocumentExtra = (text) => ({
 });
 
 export const getDocumentExtra = (extra) => extra?.[ITEM_TYPES.DOCUMENT];
+
+export const buildAppExtra = ({ url, settings = {} }) => ({
+  [ITEM_TYPES.APP]: { url, settings },
+});
+
+export const getAppExtra = (extra) => extra?.[ITEM_TYPES.APP];
