@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const FileDocument = () => {
-  const [value, setValue] = useState('hello');
+  const [value, setValue] = useState(null);
 
   return <ReactQuill theme="snow" value={value} onChange={setValue} />;
 };
