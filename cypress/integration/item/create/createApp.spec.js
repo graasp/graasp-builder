@@ -3,13 +3,13 @@ import {
   DEFAULT_ITEM_LAYOUT_MODE,
 } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
-import { GRAASP_DOCUMENT_ITEM } from '../../../fixtures/documents';
+import { GRAASP_APP_ITEM } from '../../../fixtures/apps';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createItem } from './utils';
 
-describe('Create Document', () => {
-  it('create document on Home', () => {
+describe('Create App', () => {
+  it('create app on Home', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
@@ -18,7 +18,7 @@ describe('Create Document', () => {
     }
 
     // create
-    createItem(GRAASP_DOCUMENT_ITEM, ITEM_LAYOUT_MODES.LIST);
+    createItem(GRAASP_APP_ITEM, ITEM_LAYOUT_MODES.LIST);
 
     cy.wait('@postItem').then(() => {
       // check item is created and displayed
@@ -28,7 +28,7 @@ describe('Create Document', () => {
     });
   });
 
-  it('create dcoument in item', () => {
+  it('create app in item', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     const { id } = SAMPLE_ITEMS.items[0];
 
@@ -40,7 +40,7 @@ describe('Create Document', () => {
     }
 
     // create
-    createItem(GRAASP_DOCUMENT_ITEM, ITEM_LAYOUT_MODES.LIST);
+    createItem(GRAASP_APP_ITEM, ITEM_LAYOUT_MODES.LIST);
 
     cy.wait('@postItem').then(() => {
       // expect update

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import BaseItemForm from './BaseItemForm';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
+import { ITEM_FORM_APP_URL_ID } from '../../../config/selectors';
 
 const AppForm = ({ onChange, item }) => {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ const AppForm = ({ onChange, item }) => {
     <>
       <BaseItemForm onChange={onChange} item={item} />
       <TextField
+        id={ITEM_FORM_APP_URL_ID}
         margin="dense"
         label={t('App url')}
         value={url}
