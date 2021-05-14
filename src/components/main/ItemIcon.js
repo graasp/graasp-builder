@@ -7,6 +7,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import LinkIcon from '@material-ui/icons/Link';
 import MovieIcon from '@material-ui/icons/Movie';
+import DescriptionIcon from '@material-ui/icons/Description';
 import ImageIcon from '@material-ui/icons/Image';
 import ShortcutIcon from '@material-ui/icons/Input';
 import {
@@ -50,6 +51,10 @@ const ItemIcon = ({ name, type, extra }) => {
     case ITEM_TYPES.SHORTCUT:
       Icon = ShortcutIcon;
       break;
+    case ITEM_TYPES.DOCUMENT: {
+      Icon = DescriptionIcon;
+      break;
+    }
     case ITEM_TYPES.FILE:
     case ITEM_TYPES.S3_FILE: {
       if (MIME_TYPES.IMAGE.includes(mimetype)) {

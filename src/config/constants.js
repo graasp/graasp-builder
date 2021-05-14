@@ -58,6 +58,7 @@ export const ITEM_TYPES = {
   S3_FILE: 's3File',
   LINK: 'embeddedLink',
   SHORTCUT: 'shortcut',
+  DOCUMENT: 'document',
 };
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
@@ -143,3 +144,18 @@ export const SETTINGS = {
 export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
 export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME;
+
+export const TEXT_EDITOR_TOOLBAR = [
+  [
+    { header: [] },
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    { color: [] }, // default colors depending on theme
+    { background: [] }, // default colors depending on theme
+  ],
+  [{ align: [] }],
+  [{ list: 'ordered' }, { list: 'bullet' }, 'code-block', 'link', 'formula'],
+];
+export const TEXT_EDITOR_MIN_HEIGHT = 250;

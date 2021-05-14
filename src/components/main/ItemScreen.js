@@ -12,6 +12,7 @@ import ItemMain from '../item/ItemMain';
 import LinkItem from '../item/LinkItem';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
+import DocumentItem from '../item/DocumentItem';
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -52,6 +53,8 @@ const ItemScreen = () => {
             <LinkItem item={item} />
           </div>
         );
+      case ITEM_TYPES.DOCUMENT:
+        return <DocumentItem item={item} />;
       case ITEM_TYPES.FOLDER:
         // wait until all children are available
         if (isChildrenLoading) {

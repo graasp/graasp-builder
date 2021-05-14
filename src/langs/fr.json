@@ -72,6 +72,8 @@
     "Trash": "Poubelle",
     "Settings": "Paramètres",
     "Close": "Fermer",
-    "Shortcut to name": "Shortcut vers {{name}}"
+    "Shortcut to name": "Shortcut vers {{name}}",
+    "Create Shortcut": "Créer un Raccourci",
+    "Sign Out": "Déconnexion"
   }
 }

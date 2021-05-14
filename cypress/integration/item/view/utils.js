@@ -3,16 +3,51 @@ import {
   buildFileImageId,
   buildFilePdfId,
   buildFileVideoId,
+  DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_PANEL_DESCRIPTION_ID,
   ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../../../src/config/selectors';
 import {
+  getDocumentExtra,
   getEmbeddedLinkExtra,
   getFileExtra,
   getS3FileExtra,
 } from '../../../../src/utils/itemExtra';
+
+const expectPanelLayout = ({ name, extra, creator, description, mimetype }) => {
+  const panel = cy.get(`#${ITEM_PANEL_ID}`);
+  panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
+  panel.get(`#${ITEM_PANEL_DESCRIPTION_ID}`).contains(description);
+  panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creator);
+
+  if (mimetype) {
+    panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
+
+    panel
+      .get(`#${ITEM_PANEL_TABLE_ID}`)
+      .contains(getFileExtra(extra)?.size || getS3FileExtra(extra)?.size);
+  }
+};
+
+export const expectDocumentViewScreenLayout = ({
+  name,
+  extra,
+  creator,
+  description,
+}) => {
+  cy.get(DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR).then((editor) => {
+    expect(editor.html()).to.contain(getDocumentExtra(extra)?.content);
+  });
+
+  expectPanelLayout({
+    name,
+    extra,
+    creator,
+    description,
+  });
+};
 
 export const expectFileViewScreenLayout = ({
   id,
@@ -36,14 +71,7 @@ export const expectFileViewScreenLayout = ({
   cy.get(selector).should('exist');
 
   // table
-  const panel = cy.get(`#${ITEM_PANEL_ID}`);
-  panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
-  panel.get(`#${ITEM_PANEL_DESCRIPTION_ID}`).contains(description);
-  panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creator);
-  panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
-  panel
-    .get(`#${ITEM_PANEL_TABLE_ID}`)
-    .contains(getFileExtra(extra)?.size || getS3FileExtra(extra)?.size);
+  expectPanelLayout({ name, extra, creator, description, mimetype });
 };
 
 export const expectLinkViewScreenLayout = ({

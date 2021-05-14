@@ -5,12 +5,14 @@ import { useTranslation } from 'react-i18next';
 import LinkIcon from '@material-ui/icons/Link';
 import FolderIcon from '@material-ui/icons/Folder';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+import CreateIcon from '@material-ui/icons/Create';
 import ItemTypeButton from './ItemTypeButton';
 import { ITEM_TYPES } from '../../config/constants';
 import {
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_LINK_ID,
   CREATE_ITEM_FOLDER_ID,
+  CREATE_ITEM_DOCUMENT_ID,
 } from '../../config/selectors';
 
 const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
@@ -20,7 +22,7 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
 
   return (
     <Grid container spacing={1} alignItems="stretch">
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <ItemTypeButton
           id={CREATE_ITEM_FOLDER_ID}
           handleClick={handleClick(ITEM_TYPES.FOLDER)}
@@ -29,17 +31,17 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
           title={t('Space')}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <ItemTypeButton
           id={CREATE_ITEM_FILE_ID}
           handleClick={handleClick(ITEM_TYPES.FILE)}
           selected={selectedItemType === ITEM_TYPES.FILE}
           Icon={FileCopyIcon}
-          title={t('File')}
+          title={t('Upload File')}
           description={t('Images, Videos, Audios, Documents')}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <ItemTypeButton
           id={CREATE_ITEM_LINK_ID}
           handleClick={handleClick(ITEM_TYPES.LINK)}
@@ -47,6 +49,16 @@ const ItemTypeButtons = ({ setSelectedItemType, selectedItemType }) => {
           Icon={LinkIcon}
           title={t('Link')}
           description={t('Wikipedia, YouTube')}
+        />
+      </Grid>
+      <Grid item xs={3}>
+        <ItemTypeButton
+          id={CREATE_ITEM_DOCUMENT_ID}
+          handleClick={handleClick(ITEM_TYPES.DOCUMENT)}
+          selected={selectedItemType === ITEM_TYPES.DOCUMENT}
+          Icon={CreateIcon}
+          title={t('Create a Document')}
+          description={t('Create a document')}
         />
       </Grid>
     </Grid>

@@ -5,7 +5,7 @@ import {
   ITEM_TYPES,
   UUID_LENGTH,
 } from '../config/constants';
-import { getEmbeddedLinkExtra } from './itemExtra';
+import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id) => id.replace(/\-/g, '_');
@@ -81,12 +81,22 @@ export const isUrlValid = (str) => {
 
 export const isItemValid = ({ name, type, extra }) => {
   const shouldHaveName = Boolean(name);
-  const { url } = getEmbeddedLinkExtra(extra) || {};
 
   // item should have a type
   let hasValidTypeProperties = Object.values(ITEM_TYPES).includes(type);
-  if (type === ITEM_TYPES.LINK) {
-    hasValidTypeProperties = isUrlValid(url);
+  switch (type) {
+    case ITEM_TYPES.LINK: {
+      const { url } = getEmbeddedLinkExtra(extra) || {};
+      hasValidTypeProperties = isUrlValid(url);
+      break;
+    }
+    case ITEM_TYPES.DOCUMENT: {
+      const { content } = getDocumentExtra(extra) || {};
+      hasValidTypeProperties = content?.length > 0;
+      break;
+    }
+    default:
+      break;
   }
 
   return shouldHaveName && hasValidTypeProperties;

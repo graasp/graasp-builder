@@ -35,13 +35,14 @@ const ItemHeaderActions = ({ onClick, itemType, id }) => {
 
 ItemHeaderActions.propTypes = {
   onClick: PropTypes.func,
-  itemType: PropTypes.oneOf(Object.values(ITEM_TYPES)).isRequired,
+  itemType: PropTypes.oneOf(Object.values(ITEM_TYPES)),
   id: PropTypes.string,
 };
 
 ItemHeaderActions.defaultProps = {
   onClick: () => {},
   id: null,
+  itemType: null,
 };
 
 export default ItemHeaderActions;

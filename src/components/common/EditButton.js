@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +29,7 @@ const EditButton = ({ item }) => {
 };
 
 EditButton.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.shape({}).isRequired,
 };
 
 export default EditButton;

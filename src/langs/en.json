@@ -72,6 +72,8 @@
     "Trash": "Trash",
     "Settings": "Settings",
     "Close": "Close",
-    "Shortcut to name": "Shortcut to {{name}}"
+    "Shortcut to name": "Shortcut to {{name}}",
+    "Create Shortcut": "Create Shortcut",
+    "Sign Out": "Sign Out"
   }
 }
