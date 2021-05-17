@@ -78,3 +78,5 @@ export const ITEM_FORM_DOCUMENT_TEXT_ID = 'itemFormDocumentText';
 export const ITEM_FORM_DOCUMENT_TEXT_SELECTOR = `#${ITEM_FORM_DOCUMENT_TEXT_ID} .ql-editor`;
 export const DOCUMENT_ITEM_TEXT_EDITOR_ID = 'documentItemTextEditor';
 export const DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR = `#${DOCUMENT_ITEM_TEXT_EDITOR_ID} .ql-editor`;
+export const CREATE_ITEM_APP_ID = 'createItemApp';
+export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';

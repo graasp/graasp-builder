@@ -55,3 +55,5 @@ export const buildPostItemLoginSignInRoute = (id) =>
 export const GET_TAGS_ROUTE = `${ITEMS_ROUTE}/tags`;
 export const buildGetItemLoginRoute = (id) =>
   `${ITEMS_ROUTE}/${id}/login-schema`;
+export const buildItemAppApiAccessTokenRoute = (id) =>
+  `${ITEMS_ROUTE}/${id}/app-api-access-token`;

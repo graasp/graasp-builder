@@ -59,7 +59,9 @@ export const ITEM_TYPES = {
   LINK: 'embeddedLink',
   SHORTCUT: 'shortcut',
   DOCUMENT: 'document',
+  APP: 'app',
 };
+
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
   VIDEO: ['video/mp4'],

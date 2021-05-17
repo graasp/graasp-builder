@@ -13,6 +13,7 @@ import LinkItem from '../item/LinkItem';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import DocumentItem from '../item/DocumentItem';
+import AppItem from '../item/AppItem';
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -55,6 +56,8 @@ const ItemScreen = () => {
         );
       case ITEM_TYPES.DOCUMENT:
         return <DocumentItem item={item} />;
+      case ITEM_TYPES.APP:
+        return <AppItem item={item} />;
       case ITEM_TYPES.FOLDER:
         // wait until all children are available
         if (isChildrenLoading) {
