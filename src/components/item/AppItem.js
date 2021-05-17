@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import { Map } from 'immutable';
 import { getAppExtra } from '../../utils/itemExtra';
 import { requestApiAccessToken } from '../../api/app';
@@ -14,12 +13,6 @@ const AppItem = ({ item }) => {
   const url = getAppExtra(item?.get('extra'))?.url;
   const { data: user, isLoading } = useCurrentMember();
 
-  const completeUrl = `${url}?${qs.stringify({
-    apiHost: API_HOST.substr('http://'.length), // to change
-    userId: user?.get('id'),
-    mode: 'student', // to change
-  })}`;
-
   const channel = new MessageChannel();
   const { port1 } = channel;
 
@@ -28,17 +21,15 @@ const AppItem = ({ item }) => {
   };
 
   const getToken = async ({ app, origin }) => {
-    const body = {
+    // get token from backend
+    const { token } = await requestApiAccessToken({
       id: item.get('id'),
-      origin,
       // the app should provide this (in the message)
       // this id is "manually" added as a "registered" app id.
       // each app that uses the API needs one.
       app,
-    };
-
-    // get token from backend
-    const { token } = await requestApiAccessToken(body);
+      origin,
+    });
 
     return token;
   };
@@ -48,7 +39,7 @@ const AppItem = ({ item }) => {
     const { type, payload } = JSON.parse(data);
 
     // responds only to corresponding app
-    if (!completeUrl.includes(requestOrigin)) {
+    if (!url.includes(requestOrigin)) {
       return;
     }
 
@@ -64,14 +55,21 @@ const AppItem = ({ item }) => {
       iframeRef.current.contentWindow.postMessage(
         {
           type: GET_AUTH_TOKEN_SUCCEEDED,
-          payload: { token, itemId: item.get('id') },
+          payload: {
+            token,
+            itemId: item.get('id'),
+            userId: user?.get('id'),
+            apiHost: API_HOST.substr('http://'.length), // todo: to change
+            mode: 'student', // todo: to change
+          },
         },
         '*',
         [channel.port2],
       );
     }
 
-    // remove
+    // further communication will pass through message channel
+    // so we can stop listening on message
     window.removeEventListener('message', windowOnMessage);
   };
 
@@ -90,7 +88,7 @@ const AppItem = ({ item }) => {
       ref={iframeRef}
       width="100%"
       height={300}
-      src={completeUrl}
+      src={url}
       frameBorder={0}
     />
   );
