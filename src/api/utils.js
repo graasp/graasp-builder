@@ -32,6 +32,5 @@ export const failOnError = (res) => {
     throw new Error(res.statusText);
   }
 
-  // res.status >= 200 && res.status < 300
   return res;
 };

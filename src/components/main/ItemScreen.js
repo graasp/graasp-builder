@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core';
-import { useChildren, useItem } from '../../hooks';
+import { hooks } from '../../config/queryClient';
 import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
@@ -14,6 +14,8 @@ import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import DocumentItem from '../item/DocumentItem';
 import AppItem from '../item/AppItem';
+
+const { useChildren, useItem } = hooks;
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {

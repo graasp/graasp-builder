@@ -10,16 +10,17 @@ import { useParams } from 'react-router';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { useMutation } from 'react-query';
 import InfoIcon from '@material-ui/icons/Info';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useTranslation } from 'react-i18next';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   SETTINGS,
   SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT,
 } from '../../config/constants';
+import { useMutation, hooks } from '../../config/queryClient';
 import ForbiddenText from '../common/ForbiddenText';
 import {
   ITEM_LOGIN_SCREEN_ID,
@@ -31,9 +32,7 @@ import {
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
 } from '../../config/selectors';
 import { isMemberIdValid } from '../../utils/member';
-import { useItemLogin } from '../../hooks/item';
 import Loader from '../common/Loader';
-import { ITEM_LOGIN_MUTATION_KEY } from '../../config/keys';
 import MemberIdTextField from './form/MemberIdTextField';
 
 const useStyles = makeStyles((theme) => ({
@@ -71,7 +70,9 @@ const useStyles = makeStyles((theme) => ({
 const ItemLoginScreen = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { mutate: itemLoginSignIn } = useMutation(ITEM_LOGIN_MUTATION_KEY);
+  const { mutate: itemLoginSignIn } = useMutation(
+    MUTATION_KEYS.POST_ITEM_LOGIN,
+  );
   const loginModeRef = useRef(null);
   const [password, setPassword] = useState(null);
   const [username, setUsername] = useState(null);
@@ -80,7 +81,7 @@ const ItemLoginScreen = () => {
     SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT,
   );
   const { itemId } = useParams();
-  const { data: itemLogin, isLoading } = useItemLogin(itemId);
+  const { data: itemLogin, isLoading } = hooks.useItemLogin(itemId);
   const loginSchema = itemLogin?.get('loginSchema');
 
   if (isLoading) {

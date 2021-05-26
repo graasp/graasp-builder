@@ -92,7 +92,7 @@ describe('Edit App', () => {
     });
   });
 
-  describe.only('Grid', () => {
+  describe('Grid', () => {
     it('edit app on Home', () => {
       cy.setUpApi({ items: GRAASP_APP_ITEMS_FIXTURE });
       cy.visit(HOME_PATH);

@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouteMatch } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
+import { hooks } from '../../../config/queryClient';
 import Navigation from '../../layout/Navigation';
 import ItemHeaderActions from './ItemHeaderActions';
-import { useCurrentMember, useItem } from '../../../hooks';
 import { buildItemPath } from '../../../config/paths';
 import Loader from '../../common/Loader';
+
+const { useCurrentMember, useItem } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -24,7 +24,10 @@ describe('Delete Item in List', () => {
 
     // delete
     deleteItem(id);
-    cy.wait(['@deleteItem', '@getOwnItems']);
+    cy.wait('@deleteItem').then(({ request: { url } }) => {
+      expect(url).to.contain(id);
+    });
+    cy.wait('@getOwnItems');
   });
 
   it('delete item inside parent', () => {
@@ -41,12 +44,8 @@ describe('Delete Item in List', () => {
 
     // delete
     deleteItem(idToDelete);
-    cy.wait('@deleteItem').then(() => {
-      // check item is deleted, others are still displayed
-      cy.get(`#${buildItemsTableRowId(idToDelete)}`).should('not.exist');
-      cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS.items[3].id)}`).should(
-        'exist',
-      );
+    cy.wait('@deleteItem').then(({ request: { url } }) => {
+      expect(url).to.contain(idToDelete);
     });
   });
 

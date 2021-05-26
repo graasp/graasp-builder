@@ -1,4 +1,5 @@
 import { toastr } from 'react-redux-toastr';
+import { routines } from '@graasp/query-client';
 import i18n from '../config/i18n';
 import {
   COPY_ITEM_ERROR_MESSAGE,
@@ -9,8 +10,6 @@ import {
   DELETE_ITEMS_SUCCESS_MESSAGE,
   EDIT_ITEM_ERROR_MESSAGE,
   EDIT_ITEM_SUCCESS_MESSAGE,
-  GET_ITEM_ERROR_MESSAGE,
-  GET_SHARED_ITEMS_ERROR_MESSAGE,
   MOVE_ITEM_ERROR_MESSAGE,
   MOVE_ITEM_SUCCESS_MESSAGE,
   SHARE_ITEM_ERROR_MESSAGE,
@@ -27,132 +26,109 @@ import {
   DELETE_ITEM_TAG_ERROR_MESSAGE,
   ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE,
 } from '../config/messages';
-import {
-  COPY_ITEM_ERROR,
-  COPY_ITEM_SUCCESS,
-  CREATE_ITEM_ERROR,
-  CREATE_ITEM_SUCCESS,
-  DELETE_ITEMS_ERROR,
-  DELETE_ITEMS_SUCCESS,
-  DELETE_ITEM_ERROR,
-  DELETE_ITEM_SUCCESS,
-  EDIT_ITEM_ERROR,
-  EDIT_ITEM_SUCCESS,
-  GET_CHILDREN_ERROR,
-  GET_ITEM_ERROR,
-  GET_OWN_ITEMS_ERROR,
-  GET_SHARED_ITEMS_ERROR,
-  MOVE_ITEM_ERROR,
-  MOVE_ITEM_SUCCESS,
-  UPLOAD_FILE_SUCCESS,
-  UPLOAD_FILE_ERROR,
-  FLAG_UPLOADING_FILE,
-  SHARE_ITEM_ERROR,
-  SHARE_ITEM_SUCCESS,
-  SIGN_OUT_ERROR,
-  SIGN_OUT_SUCCESS,
-  POST_ITEM_TAG_ERROR,
-  DELETE_ITEM_TAG_ERROR,
-} from '../types';
-import { ITEM_LOGIN_SIGN_IN_ERROR } from '../types/itemLogin';
+
+const {
+  createItemRoutine,
+  deleteItemsRoutine,
+  deleteItemRoutine,
+  moveItemRoutine,
+  copyItemRoutine,
+  editItemRoutine,
+  shareItemRoutine,
+  uploadFileRoutine,
+  signOutRoutine,
+  postItemTagRoutine,
+  deleteItemTagRoutine,
+  postItemLoginRoutine,
+} = routines;
 
 export default ({ type, payload }) => {
   let message = null;
   switch (type) {
     // error messages
-    case GET_OWN_ITEMS_ERROR:
-    case GET_CHILDREN_ERROR:
-    case GET_SHARED_ITEMS_ERROR: {
-      message = GET_SHARED_ITEMS_ERROR_MESSAGE;
-      break;
-    }
-    case GET_ITEM_ERROR: {
-      message = GET_ITEM_ERROR_MESSAGE;
-      break;
-    }
-    case CREATE_ITEM_ERROR: {
+    case createItemRoutine.FAILURE: {
       message = CREATE_ITEM_ERROR_MESSAGE;
       break;
     }
-    case DELETE_ITEMS_ERROR:
-    case DELETE_ITEM_ERROR: {
+    case deleteItemsRoutine.FAILURE:
+    case deleteItemRoutine: {
       message = DELETE_ITEMS_ERROR_MESSAGE;
       break;
     }
-    case MOVE_ITEM_ERROR: {
+    case moveItemRoutine.FAILURE: {
       message = MOVE_ITEM_ERROR_MESSAGE;
       break;
     }
-    case COPY_ITEM_ERROR: {
+    case copyItemRoutine.FAILURE: {
       message = COPY_ITEM_ERROR_MESSAGE;
       break;
     }
-    case EDIT_ITEM_ERROR: {
+    case editItemRoutine.FAILURE: {
       message = EDIT_ITEM_ERROR_MESSAGE;
       break;
     }
-    case SHARE_ITEM_ERROR: {
+    case shareItemRoutine.FAILURE: {
       message = SHARE_ITEM_ERROR_MESSAGE;
       break;
     }
-    case UPLOAD_FILE_ERROR: {
+    case uploadFileRoutine.FAILURE: {
       message = UPLOAD_FILES_ERROR_MESSAGE;
       break;
     }
-    case SIGN_OUT_ERROR: {
+    case signOutRoutine.FAILURE: {
       message = SIGN_OUT_ERROR_MESSAGE;
       break;
     }
-    case POST_ITEM_TAG_ERROR: {
+    case postItemTagRoutine.FAILURE: {
       message = POST_ITEM_TAG_ERROR_MESSAGE;
       break;
     }
-    case DELETE_ITEM_TAG_ERROR: {
+    case deleteItemTagRoutine.FAILURE: {
       message = DELETE_ITEM_TAG_ERROR_MESSAGE;
       break;
     }
-    case ITEM_LOGIN_SIGN_IN_ERROR: {
+    case postItemLoginRoutine.FAILURE: {
       message = ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE;
       break;
     }
     // success messages
-    case CREATE_ITEM_SUCCESS: {
+    case createItemRoutine.SUCCESS: {
       message = CREATE_ITEM_SUCCESS_MESSAGE;
       break;
     }
-    case DELETE_ITEMS_SUCCESS:
-    case DELETE_ITEM_SUCCESS: {
+    case deleteItemsRoutine.SUCCESS:
+    case deleteItemRoutine.SUCCESS: {
       message = DELETE_ITEMS_SUCCESS_MESSAGE;
       break;
     }
-    case MOVE_ITEM_SUCCESS: {
+    case moveItemRoutine.SUCCESS: {
       message = MOVE_ITEM_SUCCESS_MESSAGE;
       break;
     }
-    case COPY_ITEM_SUCCESS: {
+    case copyItemRoutine.SUCCESS: {
       message = COPY_ITEM_SUCCESS_MESSAGE;
       break;
     }
-    case EDIT_ITEM_SUCCESS: {
+    case editItemRoutine.SUCCESS: {
       message = EDIT_ITEM_SUCCESS_MESSAGE;
       break;
     }
-    case SHARE_ITEM_SUCCESS: {
+    case shareItemRoutine.SUCCESS: {
       message = SHARE_ITEM_SUCCESS_MESSAGE;
       break;
     }
-    case UPLOAD_FILE_SUCCESS: {
+    case uploadFileRoutine.SUCCESS: {
       message = UPLOAD_FILES_SUCCESS_MESSAGE;
       break;
     }
-    case SIGN_OUT_SUCCESS: {
+    case signOutRoutine.SUCCESS: {
       message = SIGN_OUT_SUCCESS_MESSAGE;
       break;
     }
 
     // progress messages
     // todo: this might be handled differently
-    case FLAG_UPLOADING_FILE: {
+    case uploadFileRoutine.REQUEST: {
       toastr.info(
         i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
         i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE),

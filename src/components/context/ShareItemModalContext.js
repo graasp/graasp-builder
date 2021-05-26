@@ -15,7 +15,8 @@ import {
   TextField,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useMutation } from 'react-query';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { useMutation } from '../../config/queryClient';
 import {
   DEFAULT_PERMISSION_LEVEL,
   SHARE_ITEM_MODAL_MIN_WIDTH,
@@ -27,7 +28,6 @@ import {
   SHARE_ITEM_MODAL_PERMISSION_SELECT_ID,
   SHARE_ITEM_MODAL_SHARE_BUTTON_ID,
 } from '../../config/selectors';
-import { SHARE_ITEM_MUTATION_KEY } from '../../config/keys';
 
 const ShareItemModalContext = React.createContext();
 
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const ShareItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const mutation = useMutation(SHARE_ITEM_MUTATION_KEY);
+  const mutation = useMutation(MUTATION_KEYS.SHARE_ITEM);
 
   // refs
   let email = '';

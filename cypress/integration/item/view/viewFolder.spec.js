@@ -189,7 +189,7 @@ describe('View Space', () => {
 
   describe('Error Handling', () => {
     // an item might either not exist or not be accessible
-    it.only('visiting non-existing item display error', () => {
+    it('visiting non-existing item display error', () => {
       cy.setUpApi({ ...SAMPLE_ITEMS, getItemError: true });
       cy.visit(buildItemPath('ecafbd2a-5688-22ac-ae93-0242ac130002'));
 

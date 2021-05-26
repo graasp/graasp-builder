@@ -6,8 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import ItemLoginSetting from './ItemLoginSetting';
 import { isSettingsEditionAllowedForUser } from '../../../utils/membership';
-import { useCurrentMember, useItemMemberships } from '../../../hooks';
+import { hooks } from '../../../config/queryClient';
 import Loader from '../../common/Loader';
+
+const { useCurrentMember, useItemMemberships } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   title: {

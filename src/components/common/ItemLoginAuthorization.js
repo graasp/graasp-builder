@@ -1,19 +1,17 @@
 import React from 'react';
-import { useMutation } from 'react-query';
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import { Button, Container, makeStyles, Typography } from '@material-ui/core';
+import { useMutation, hooks } from '../../config/queryClient';
 import ItemLoginScreen from '../item/ItemLoginScreen';
 import ForbiddenText from './ForbiddenText';
 import {
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
-import { useCurrentMember } from '../../hooks/member';
-import { useItem, useItemLogin } from '../../hooks/item';
 import Loader from './Loader';
-import { SIGN_OUT_MUTATION_KEY } from '../../config/keys';
 import ErrorAlert from './ErrorAlert';
 
 const useStyles = makeStyles(() => ({
@@ -21,6 +19,8 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
   },
 }));
+
+const { useCurrentMember, useItem, useItemLogin } = hooks;
 
 const ItemLoginAuthorization = () => (ChildComponent) => {
   const ComposedComponent = () => {
@@ -37,7 +37,7 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
       error,
       isError: isItemError,
     } = useItem(itemId);
-    const { mutate: signOut } = useMutation(SIGN_OUT_MUTATION_KEY);
+    const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
 
     const handleSignOut = () => {
       signOut();

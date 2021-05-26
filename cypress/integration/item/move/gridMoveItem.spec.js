@@ -6,7 +6,6 @@ import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
-  NAVIGATION_HOME_LINK_ID,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
@@ -23,7 +22,7 @@ const moveItem = ({ id: movedItemId, toItemPath }) => {
 };
 
 describe('Move Item in Grid', () => {
-  it('move item on Home', () => {
+  it('move item from Home', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
@@ -33,16 +32,13 @@ describe('Move Item in Grid', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     moveItem({ id: movedItem, toItemPath });
 
-    cy.wait('@moveItem');
-
-    cy.get(`#${buildItemCard(movedItem)}`).should('not.exist');
-
-    // check in new parent
-    cy.goToItemInGrid(toItem);
-    cy.get(`#${buildItemCard(movedItem)}`).should('exist');
+    cy.wait('@moveItem').then(({ request: { url, body } }) => {
+      expect(body.parentId).to.equal(toItem);
+      expect(url).to.contain(movedItem);
+    });
   });
 
-  it('move item in item', () => {
+  it('move item from item', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     const { id } = SAMPLE_ITEMS.items[0];
 
@@ -55,13 +51,10 @@ describe('Move Item in Grid', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
     moveItem({ id: movedItem, toItemPath });
 
-    cy.wait('@moveItem');
-
-    cy.get(`#${buildItemCard(movedItem)}`).should('not.exist');
-
-    // check in new parent
-    cy.goToItemInGrid(toItem);
-    cy.get(`#${buildItemCard(movedItem)}`).should('exist');
+    cy.wait('@moveItem').then(({ request: { body, url } }) => {
+      expect(body.parentId).to.equal(toItem);
+      expect(url).to.contain(movedItem);
+    });
   });
 
   it('move item to Home', () => {
@@ -77,13 +70,10 @@ describe('Move Item in Grid', () => {
     const toItem = ROOT_ID;
     moveItem({ id: movedItem, toItemPath: toItem });
 
-    cy.wait('@moveItem');
-
-    cy.get(`#${buildItemCard(movedItem)}`).should('not.exist');
-
-    // check in new parent
-    cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
-    cy.get(`#${buildItemCard(movedItem)}`).should('exist');
+    cy.wait('@moveItem').then(({ request: { body, url } }) => {
+      expect(body.parentId).to.equal(undefined);
+      expect(url).to.contain(movedItem);
+    });
   });
 
   describe('Error handling', () => {

@@ -4,19 +4,19 @@ import { Map } from 'immutable';
 import { getAppExtra } from '../../utils/itemExtra';
 import { requestApiAccessToken } from '../../api/app';
 import {
-  GET_CONTEXT,
   GET_AUTH_TOKEN,
-  GET_CONTEXT_SUCCEEDED,
   GET_AUTH_TOKEN_SUCCEEDED,
+  GET_CONTEXT_SUCCEEDED,
+  GET_CONTEXT,
 } from '../../types/appItem';
-import { useCurrentMember } from '../../hooks';
+import { hooks } from '../../config/queryClient';
 import { API_HOST } from '../../config/constants';
 import Loader from '../common/Loader';
 
 const AppItem = ({ item }) => {
   const iframeRef = useRef();
   const url = getAppExtra(item?.get('extra'))?.url;
-  const { data: user, isLoading } = useCurrentMember();
+  const { data: user, isLoading } = hooks.useCurrentMember();
 
   const channel = new MessageChannel();
   const { port1 } = channel;

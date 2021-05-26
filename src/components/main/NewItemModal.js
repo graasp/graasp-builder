@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -9,18 +8,19 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useRouteMatch } from 'react-router';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import FolderForm from '../item/form/FolderForm';
 import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
   CREATE_ITEM_CLOSE_BUTTON_ID,
 } from '../../config/selectors';
+import { useMutation } from '../../config/queryClient';
 import ItemTypeButtons from './ItemTypeButtons';
 import { ITEM_TYPES } from '../../enums';
 import FileDashboardUploader from './FileDashboardUploader';
 import LinkForm from '../item/form/LinkForm';
 import { isItemValid } from '../../utils/item';
 import { buildItemPath } from '../../config/paths';
-import { POST_ITEM_MUTATION_KEY } from '../../config/keys';
 import DocumentForm from '../item/form/DocumentForm';
 import AppForm from '../item/form/AppForm';
 
@@ -43,7 +43,7 @@ const NewItemModal = ({ open, handleClose }) => {
     [ITEM_TYPES.APP]: { type: ITEM_TYPES.APP },
     [ITEM_TYPES.DOCUMENT]: { type: ITEM_TYPES.DOCUMENT },
   });
-  const { mutate: postItem } = useMutation(POST_ITEM_MUTATION_KEY);
+  const { mutate: postItem } = useMutation(MUTATION_KEYS.POST_ITEM);
   const match = useRouteMatch(buildItemPath());
   const parentId = match?.params?.itemId;
 

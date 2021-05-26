@@ -3,13 +3,13 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
 import { useRouteMatch } from 'react-router';
-import { useMutation } from 'react-query';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import { FILE_UPLOAD_MAX_FILES, UPLOAD_METHOD } from '../../config/constants';
+import { useMutation } from '../../config/queryClient';
 import configureUppy from '../../utils/uppy';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
-import { FILE_UPLOAD_MUTATION_KEY } from '../../config/keys';
 
 const FileDashboardUploader = () => {
   const [uppy, setUppy] = useState(null);
@@ -17,7 +17,7 @@ const FileDashboardUploader = () => {
   const itemId = match?.params?.itemId;
   const { t } = useTranslation();
   const { mutate: onFileUploadComplete } = useMutation(
-    FILE_UPLOAD_MUTATION_KEY,
+    MUTATION_KEYS.FILE_UPLOAD,
   );
 
   const onComplete = (result) => {
