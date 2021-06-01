@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { getAppExtra } from '../../utils/itemExtra';
 import { requestApiAccessToken } from '../../api/app';
-import { GET_AUTH_TOKEN, GET_AUTH_TOKEN_SUCCEEDED } from '../../types/appItem';
+import {
+  GET_CONTEXT,
+  GET_AUTH_TOKEN,
+  GET_CONTEXT_SUCCEEDED,
+  GET_AUTH_TOKEN_SUCCEEDED,
+} from '../../types/appItem';
 import { useCurrentMember } from '../../hooks';
 import { API_HOST } from '../../config/constants';
 import Loader from '../common/Loader';
@@ -15,10 +20,6 @@ const AppItem = ({ item }) => {
 
   const channel = new MessageChannel();
   const { port1 } = channel;
-
-  const onMessage = () => {
-    // receive message from app through MessageChannel
-  };
 
   const getToken = async ({ app, origin }) => {
     // get token from backend
@@ -34,29 +35,44 @@ const AppItem = ({ item }) => {
     return token;
   };
 
-  const windowOnMessage = async (e) => {
+  // receive message from app through MessageChannel
+  const onMessage = async (e) => {
     const { data, origin: requestOrigin } = e;
-    const { type, payload } = JSON.parse(data);
 
     // responds only to corresponding app
     if (!url.includes(requestOrigin)) {
       return;
     }
 
+    const { type, payload } = JSON.parse(data);
     if (type === GET_AUTH_TOKEN) {
+      const token = await getToken(payload);
+      port1.postMessage(
+        JSON.stringify({ type: GET_AUTH_TOKEN_SUCCEEDED, payload: { token } }),
+      );
+    }
+  };
+
+  const windowOnMessage = async (e) => {
+    const { data, origin: requestOrigin } = e;
+    const { type } = JSON.parse(data);
+
+    // responds only to corresponding app
+    if (!url.includes(requestOrigin)) {
+      return;
+    }
+
+    // return context data and message channel port to app
+    if (type === GET_CONTEXT) {
       // Listen for messages on port1
       port1.onmessage = onMessage;
-
-      // get access token for this app
-      const token = await getToken(payload);
 
       // Transfer port2 to the iframe
       // provide port2 to app and item's data
       iframeRef.current.contentWindow.postMessage(
         {
-          type: GET_AUTH_TOKEN_SUCCEEDED,
+          type: GET_CONTEXT_SUCCEEDED,
           payload: {
-            token,
             itemId: item.get('id'),
             userId: user?.get('id'),
             apiHost: API_HOST.substr('http://'.length), // todo: to change
