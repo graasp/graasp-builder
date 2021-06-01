@@ -7,7 +7,7 @@ import Loader from './Loader';
 
 const Authorization = () => (ChildComponent) => {
   const ComposedComponent = (props) => {
-    const { location: { pathname } = {} } = useLocation();
+    const { pathname } = useLocation();
 
     const redirectToSignIn = () => {
       window.location.href = `${AUTHENTICATION_HOST}/${buildSignInPath(
@@ -23,6 +23,7 @@ const Authorization = () => (ChildComponent) => {
 
     // check authorization
     if (isError || !currentMember) {
+      localStorage.setItem('redirectUrl', pathname);
       redirectToSignIn();
     }
 
