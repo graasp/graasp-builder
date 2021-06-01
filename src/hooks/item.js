@@ -24,7 +24,7 @@ export const useOwnItems = () =>
     },
   });
 
-export const useChildren = (itemId) =>
+export const useChildren = (itemId, { enabled = true } = {}) =>
   useQuery({
     ...buildChildren(itemId),
     onSuccess: async (items) => {
@@ -36,7 +36,7 @@ export const useChildren = (itemId) =>
         });
       }
     },
-    enabled: Boolean(itemId),
+    enabled: Boolean(itemId) && enabled,
   });
 
 export const useParents = ({ id, path, enabled }) =>

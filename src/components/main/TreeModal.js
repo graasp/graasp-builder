@@ -75,7 +75,7 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
       selectedId={selectedId}
       initialExpendedItems={buildExpandedItems()}
       items={items}
-      setSelectedId={setSelectedId}
+      onTreeItemSelect={setSelectedId}
       useChildren={useChildren}
       useItem={useItem}
       showCheckbox

@@ -1583,13 +1583,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@graasp/query-client@link:../graasp-ui/ ../graasp-query-client":
-  version "0.0.0"
-  uid ""
-
-"@graasp/ui@link:../graasp-ui":
-  version "0.0.0"
-  uid ""
+"@graasp/ui@https://github.com/graasp/graasp-ui#10/dynamicTreeView":
+  version "0.2.0"
+  resolved "https://github.com/graasp/graasp-ui#8de9beb8715f1917fa914d9af60302a2798b7056"
+  dependencies:
+    clsx "1.1.1"
+    immutable "4.0.0-rc.12"
+    react-loading "2.0.3"
 
 "@hapi/address@2.x.x":
   version "2.1.4"
