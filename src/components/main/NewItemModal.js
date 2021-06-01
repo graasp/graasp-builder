@@ -9,7 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useRouteMatch } from 'react-router';
-import SpaceForm from '../item/form/SpaceForm';
+import FolderForm from '../item/form/FolderForm';
 import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
   CREATE_ITEM_CLOSE_BUTTON_ID,
@@ -35,7 +35,14 @@ const NewItemModal = ({ open, handleClose }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
-  const [newItem, setNewItem] = useState({});
+  const [initialItem] = useState({});
+  const [currentType, setCurrentType] = useState(ITEM_TYPES.FOLDER);
+  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
+    [ITEM_TYPES.FOLDER]: { type: ITEM_TYPES.FOLDER },
+    [ITEM_TYPES.LINK]: { type: ITEM_TYPES.LINK },
+    [ITEM_TYPES.APP]: { type: ITEM_TYPES.APP },
+    [ITEM_TYPES.DOCUMENT]: { type: ITEM_TYPES.DOCUMENT },
+  });
   const { mutate: postItem } = useMutation(POST_ITEM_MUTATION_KEY);
   const match = useRouteMatch(buildItemPath());
   const parentId = match?.params?.itemId;
@@ -43,44 +50,76 @@ const NewItemModal = ({ open, handleClose }) => {
   useEffect(() => {
     switch (selectedItemType) {
       case ITEM_TYPES.FOLDER:
-        setNewItem({ type: ITEM_TYPES.FOLDER });
+        setCurrentType(ITEM_TYPES.FOLDER);
         break;
       case ITEM_TYPES.LINK:
-        setNewItem({ type: ITEM_TYPES.LINK });
+        setCurrentType(ITEM_TYPES.LINK);
         break;
       case ITEM_TYPES.DOCUMENT:
-        setNewItem({ type: ITEM_TYPES.DOCUMENT });
+        setCurrentType(ITEM_TYPES.DOCUMENT);
         break;
       case ITEM_TYPES.APP:
-        setNewItem({ type: ITEM_TYPES.APP });
+        setCurrentType(ITEM_TYPES.APP);
         break;
       default:
-        setNewItem({ type: ITEM_TYPES.FOLDER });
+        setCurrentType(ITEM_TYPES.FOLDER);
     }
   }, [selectedItemType]);
 
   const submit = () => {
-    if (!isItemValid(newItem)) {
+    if (!isItemValid(updatedPropertiesPerType[currentType])) {
       // todo: notify user
       return false;
     }
 
-    postItem({ parentId, ...newItem });
+    postItem({ parentId, ...updatedPropertiesPerType[currentType] });
     return handleClose();
+  };
+
+  const updateItem = (item) => {
+    // update content given current type
+    setUpdatedPropertiesPerType({
+      ...updatedPropertiesPerType,
+      [currentType]: { ...updatedPropertiesPerType[currentType], ...item },
+    });
   };
 
   const renderContent = () => {
     switch (selectedItemType) {
       case ITEM_TYPES.FOLDER:
-        return <SpaceForm onChange={setNewItem} item={newItem} />;
+        return (
+          <FolderForm
+            onChange={updateItem}
+            item={initialItem}
+            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.FOLDER]}
+          />
+        );
       case ITEM_TYPES.FILE:
         return <FileDashboardUploader />;
       case ITEM_TYPES.APP:
-        return <AppForm onChange={setNewItem} item={newItem} />;
+        return (
+          <AppForm
+            onChange={updateItem}
+            item={initialItem}
+            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.APP]}
+          />
+        );
       case ITEM_TYPES.LINK:
-        return <LinkForm onChange={setNewItem} item={newItem} />;
+        return (
+          <LinkForm
+            onChange={updateItem}
+            item={initialItem}
+            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.LINK]}
+          />
+        );
       case ITEM_TYPES.DOCUMENT:
-        return <DocumentForm onChange={setNewItem} item={newItem} />;
+        return (
+          <DocumentForm
+            onChange={updateItem}
+            item={initialItem}
+            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.DOCUMENT]}
+          />
+        );
       default:
         return null;
     }
@@ -101,7 +140,7 @@ const NewItemModal = ({ open, handleClose }) => {
               onClick={submit}
               color="primary"
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
-              disabled={!isItemValid(newItem)}
+              disabled={!isItemValid(updatedPropertiesPerType[currentType])}
             >
               {t('Add')}
             </Button>
