@@ -14,12 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import ItemMenu from './ItemMenu';
 import { buildItemPath } from '../../config/paths';
-import {
-  ORDERING,
-  ROWS_PER_PAGE_OPTIONS,
-  ITEM_DATA_TYPES,
-  ITEM_TYPES,
-} from '../../config/constants';
+import { ORDERING, ITEM_DATA_TYPES, ITEM_TYPES } from '../../config/enum';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
 import EditButton from '../common/EditButton';
@@ -34,6 +29,7 @@ import TableToolbar from './TableToolbar';
 import TableHead from './TableHead';
 import ItemIcon from './ItemIcon';
 import { getShortcutTarget } from '../../utils/itemExtra';
+import { ROWS_PER_PAGE_OPTIONS } from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {

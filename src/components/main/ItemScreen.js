@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { useChildren, useItem } from '../../hooks';
 import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
-import { ITEM_TYPES } from '../../config/constants';
+import { ITEM_TYPES } from '../../config/enum';
 import FileItem from '../item/FileItem';
 import FileUploader from './FileUploader';
 import S3FileItem from '../item/S3FileItem';

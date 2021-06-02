@@ -5,7 +5,8 @@ import { useMutation } from 'react-query';
 import TreeModal from '../main/TreeModal';
 import { POST_ITEM_MUTATION_KEY } from '../../config/keys';
 import { buildShortcutExtra } from '../../utils/itemExtra';
-import { ITEM_TYPES, ROOT_ID } from '../../config/constants';
+import { ITEM_TYPES } from '../../config/enum';
+import { ROOT_ID } from '../../config/constants';
 
 const CreateShortcutModalContext = React.createContext();
 

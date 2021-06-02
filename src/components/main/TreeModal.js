@@ -11,11 +11,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button, makeStyles } from '@material-ui/core';
 import { useItem, useOwnItems } from '../../hooks';
-import {
-  ROOT_ID,
-  TREE_PREVENT_SELECTION,
-  TREE_VIEW_MAX_WIDTH,
-} from '../../config/constants';
+import { ROOT_ID, TREE_VIEW_MAX_WIDTH } from '../../config/constants';
+import { TREE_PREVENT_SELECTION } from '../../config/enum';
 import {
   buildTreeItemClass,
   TREE_MODAL_TREE_ID,

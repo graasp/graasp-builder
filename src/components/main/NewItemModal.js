@@ -15,7 +15,7 @@ import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
 } from '../../config/selectors';
 import ItemTypeButtons from './ItemTypeButtons';
-import { ITEM_TYPES } from '../../config/constants';
+import { ITEM_TYPES } from '../../config/enum';
 import FileDashboardUploader from './FileDashboardUploader';
 import LinkForm from '../item/form/LinkForm';
 import { isItemValid } from '../../utils/item';

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
 import SpaceForm from '../item/form/SpaceForm';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
-import { ITEM_TYPES } from '../../config/constants';
+import { ITEM_TYPES } from '../../config/enum';
 import BaseItemForm from '../item/form/BaseItemForm';
 import { EDIT_ITEM_MUTATION_KEY } from '../../config/keys';
 import DocumentForm from '../item/form/DocumentForm';

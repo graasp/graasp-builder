@@ -11,7 +11,6 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import ImageIcon from '@material-ui/icons/Image';
 import ShortcutIcon from '@material-ui/icons/Input';
 import {
-  ITEM_TYPES,
   ITEMS_TABLE_ROW_ICON_COLOR,
   MIME_TYPES,
   ITEM_ICON_MAX_SIZE,
@@ -24,6 +23,7 @@ import {
   linkExtraPropTypes,
   s3FileExtraPropTypes,
 } from '../../utils/itemExtra';
+import { ITEM_TYPES } from '../../config/enum';
 
 const useStyles = makeStyles({
   imageIcon: {
