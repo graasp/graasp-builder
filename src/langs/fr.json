@@ -72,6 +72,7 @@
     "Trash": "Poubelle",
     "Settings": "Paramètres",
     "Close": "Fermer",
-    "Shortcut to name": "Shortcut vers {{name}}"
+    "Shortcut to name": "Shortcut vers {{name}}",
+    "Click here if you are not automatically redirected": "Cliquez ici si vous n'êtes pas automatiquement redirigé"
   }
 }

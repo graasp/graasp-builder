@@ -72,6 +72,7 @@
     "Trash": "Trash",
     "Settings": "Settings",
     "Close": "Close",
-    "Shortcut to name": "Shortcut to {{name}}"
+    "Shortcut to name": "Shortcut to {{name}}",
+    "Click here if you are not automatically redirected": "Click here if you are not automatically redirected"
   }
 }
