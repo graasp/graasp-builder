@@ -1,7 +1,7 @@
 import {
   ITEM_LAYOUT_MODES,
   PERMISSION_LEVELS,
-} from '../../../../src/config/constants';
+} from '../../../../src/config/enum';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,

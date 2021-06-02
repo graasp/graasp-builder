@@ -1,8 +1,8 @@
 import {
   ITEM_LAYOUT_MODES,
   PERMISSION_LEVELS,
-  DEFAULT_ITEM_LAYOUT_MODE,
-} from '../../../../src/config/constants';
+} from '../../../../src/config/enum';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'cypress-file-upload';
-import { ITEM_LAYOUT_MODES } from '../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../src/config/enum';
 import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,

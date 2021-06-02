@@ -1,7 +1,5 @@
-import {
-  DEFAULT_ITEM_LAYOUT_MODE,
-  ITEM_LAYOUT_MODES,
-} from '../../../../src/config/constants';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../../../src/config/enum';
 import { HOME_PATH } from '../../../../src/config/paths';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { EDITED_FIELDS } from '../../../fixtures/items';

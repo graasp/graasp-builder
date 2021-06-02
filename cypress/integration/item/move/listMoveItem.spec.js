@@ -1,8 +1,8 @@
 import {
-  ITEM_LAYOUT_MODES,
   ROOT_ID,
   DEFAULT_ITEM_LAYOUT_MODE,
 } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../../../src/config/enum';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,

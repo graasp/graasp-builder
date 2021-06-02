@@ -1,7 +1,5 @@
-import {
-  DEFAULT_ITEM_LAYOUT_MODE,
-  ITEM_LAYOUT_MODES,
-} from '../../../../src/config/constants';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../../../src/config/enum';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { UPLOADER_ID } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
