@@ -7,3 +7,5 @@ export const REQUEST_FAILURE_LOADING_TIME = 4000;
 
 export const REDIRECTION_CONTENT = 'hello';
 export const REQUEST_FAILURE_TIME = 2500;
+
+export const REDIRECTION_TIME = 500;
