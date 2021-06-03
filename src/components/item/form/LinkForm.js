@@ -8,7 +8,7 @@ import {
   buildEmbeddedLinkExtra,
   getEmbeddedLinkExtra,
 } from '../../../utils/itemExtra';
-import { ITEM_TYPES } from '../../../config/enum';
+import { ITEM_TYPES } from '../../../enums';
 
 function LinkForm({ onChange, item }) {
   const { t } = useTranslation();

@@ -14,7 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import ItemMenu from './ItemMenu';
 import { buildItemPath } from '../../config/paths';
-import { ORDERING, ITEM_DATA_TYPES, ITEM_TYPES } from '../../config/enum';
+import { ORDERING, ITEM_DATA_TYPES, ITEM_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
 import EditButton from '../common/EditButton';

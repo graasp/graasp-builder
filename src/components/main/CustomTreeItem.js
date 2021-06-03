@@ -6,7 +6,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import { LOADING_CONTENT } from '../../config/constants';
 import { buildTreeItemClass } from '../../config/selectors';
 import { useChildren, useItem } from '../../hooks';
-import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../config/enum';
+import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 
 const useStyles = makeStyles((theme) => ({
   disabled: {

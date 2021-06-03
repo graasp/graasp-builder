@@ -1,5 +1,5 @@
 import qs from 'querystring';
-import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../../../src/config/enum';
+import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../../../src/enums';
 import { ROOT_ID } from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {

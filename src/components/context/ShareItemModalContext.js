@@ -20,7 +20,7 @@ import {
   DEFAULT_PERMISSION_LEVEL,
   SHARE_ITEM_MODAL_MIN_WIDTH,
 } from '../../config/constants';
-import { PERMISSION_LEVELS } from '../../config/enum';
+import { PERMISSION_LEVELS } from '../../enums';
 import {
   buildPermissionOptionId,
   SHARE_ITEM_MODAL_EMAIL_INPUT_ID,

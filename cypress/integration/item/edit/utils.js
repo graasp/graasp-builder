@@ -1,4 +1,4 @@
-import { ITEM_TYPES, ITEM_LAYOUT_MODES } from '../../../../src/config/enum';
+import { ITEM_TYPES, ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import {
   buildItemCard,

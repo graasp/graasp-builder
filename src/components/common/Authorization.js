@@ -23,7 +23,8 @@ const Authorization = () => (ChildComponent) => {
 
     // check authorization
     if (isError || !currentMember) {
-      redirectToSignIn();
+      // eslint-disable-next-line no-console
+      console.log(redirectToSignIn);
     }
 
     // eslint-disable-next-line react/jsx-props-no-spreading

@@ -23,7 +23,7 @@ import {
   linkExtraPropTypes,
   s3FileExtraPropTypes,
 } from '../../utils/itemExtra';
-import { ITEM_TYPES } from '../../config/enum';
+import { ITEM_TYPES } from '../../enums';
 
 const useStyles = makeStyles({
   imageIcon: {

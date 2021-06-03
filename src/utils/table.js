@@ -1,4 +1,4 @@
-import { ORDERING } from '../config/enum';
+import { ORDERING } from '../enums';
 
 /**
  * Custum sorting function depending on a given property name

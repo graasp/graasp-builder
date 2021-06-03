@@ -12,7 +12,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { Button, makeStyles } from '@material-ui/core';
 import { useItem, useOwnItems } from '../../hooks';
 import { ROOT_ID, TREE_VIEW_MAX_WIDTH } from '../../config/constants';
-import { TREE_PREVENT_SELECTION } from '../../config/enum';
+import { TREE_PREVENT_SELECTION } from '../../enums';
 import {
   buildTreeItemClass,
   TREE_MODAL_TREE_ID,

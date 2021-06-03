@@ -1,4 +1,4 @@
-import { ITEM_TYPES } from '../../../../src/config/enum';
+import { ITEM_TYPES } from '../../../../src/enums';
 import {
   CREATE_ITEM_APP_ID,
   CREATE_ITEM_BUTTON_ID,

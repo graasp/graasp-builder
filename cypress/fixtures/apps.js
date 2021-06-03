@@ -1,4 +1,4 @@
-import { ITEM_TYPES } from '../../src/config/enum';
+import { ITEM_TYPES } from '../../src/enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
 

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import { ITEM_LAYOUT_MODES } from '../../config/enum';
+import { ITEM_LAYOUT_MODES } from '../../enums';
 import ItemsTable from './ItemsTable';
 import ItemsGrid from './ItemsGrid';
 import { ItemLayoutModeContext } from '../context/ItemLayoutModeContext';

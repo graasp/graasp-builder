@@ -7,7 +7,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import CreateIcon from '@material-ui/icons/Create';
 import ItemTypeButton from './ItemTypeButton';
-import { ITEM_TYPES } from '../../config/enum';
+import { ITEM_TYPES } from '../../enums';
 import {
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_LINK_ID,

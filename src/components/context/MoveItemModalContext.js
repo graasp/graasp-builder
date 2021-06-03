@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
-import { TREE_PREVENT_SELECTION } from '../../config/enum';
+import { TREE_PREVENT_SELECTION } from '../../enums';
 import TreeModal from '../main/TreeModal';
 import { MOVE_ITEM_MUTATION_KEY } from '../../config/keys';
 

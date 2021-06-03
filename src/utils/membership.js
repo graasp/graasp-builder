@@ -1,5 +1,5 @@
 import { PERMISSIONS_EDITION_ALLOWED } from '../config/constants';
-import { PERMISSION_LEVELS } from '../config/enum';
+import { PERMISSION_LEVELS } from '../enums';
 
 export const isSettingsEditionAllowedForUser = ({ memberships, memberId }) =>
   memberships?.find(

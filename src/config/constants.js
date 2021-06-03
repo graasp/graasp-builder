@@ -3,7 +3,7 @@ import {
   ITEM_LAYOUT_MODES,
   UPLOAD_FILES_METHODS,
   PERMISSION_LEVELS,
-} from './enum';
+} from '../enums';
 
 const {
   API_HOST: ENV_API_HOST,
