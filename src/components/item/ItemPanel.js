@@ -10,7 +10,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import CloseIcon from '@material-ui/icons/Close';
 import TableRow from '@material-ui/core/TableRow';
 import { IconButton, Toolbar, Typography, withStyles } from '@material-ui/core';
-import { ITEM_TYPES, RIGHT_MENU_WIDTH } from '../../config/constants';
+import { RIGHT_MENU_WIDTH } from '../../config/constants';
+import { ITEM_TYPES } from '../../enums';
 import { formatDate } from '../../utils/date';
 import {
   ITEM_PANEL_DESCRIPTION_ID,
@@ -54,7 +55,6 @@ class ItemPanel extends Component {
       closeButton: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }).isRequired,
-    onClose: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     selectedChild: PropTypes.shape({}),
     open: PropTypes.bool.isRequired,
@@ -137,7 +137,7 @@ class ItemPanel extends Component {
   };
 
   render() {
-    const { classes, onClose, selectedChild, item, open } = this.props;
+    const { classes, selectedChild, item, open } = this.props;
 
     return (
       <Drawer
@@ -151,7 +151,7 @@ class ItemPanel extends Component {
         open={open}
       >
         <Toolbar />
-        <IconButton onClick={onClose} className={classes.closeButton}>
+        <IconButton className={classes.closeButton}>
           <CloseIcon />
         </IconButton>
         {!selectedChild && this.renderItemContent(item)}

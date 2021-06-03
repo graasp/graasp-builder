@@ -1,7 +1,9 @@
-import { ITEM_TYPES } from '../../../../src/config/constants';
+import { ITEM_TYPES } from '../../../../src/enums';
 import {
+  CREATE_ITEM_APP_ID,
   CREATE_ITEM_BUTTON_ID,
   CREATE_ITEM_CLOSE_BUTTON_ID,
+  CREATE_ITEM_DOCUMENT_ID,
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_LINK_ID,
   DASHBOARD_UPLOADER_ID,
@@ -35,6 +37,14 @@ export const createItem = (payload, options) => {
       }
       break;
     }
+    case ITEM_TYPES.DOCUMENT:
+      cy.get(`#${CREATE_ITEM_DOCUMENT_ID}`).click();
+      cy.fillDocumentModal(payload, options);
+      break;
+    case ITEM_TYPES.APP:
+      cy.get(`#${CREATE_ITEM_APP_ID}`).click();
+      cy.fillAppModal(payload, options);
+      break;
     case ITEM_TYPES.FOLDER:
     default:
       cy.fillSpaceModal(payload, options);

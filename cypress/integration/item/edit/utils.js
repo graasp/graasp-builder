@@ -1,8 +1,5 @@
-import {
-  DEFAULT_ITEM_LAYOUT_MODE,
-  ITEM_TYPES,
-  ITEM_LAYOUT_MODES,
-} from '../../../../src/config/constants';
+import { ITEM_TYPES, ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import {
   buildItemCard,
   buildItemsTableRowId,
@@ -29,7 +26,11 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
     case ITEM_TYPES.S3_FILE:
     case ITEM_TYPES.LINK:
     case ITEM_TYPES.SHORTCUT:
+    case ITEM_TYPES.APP:
       cy.fillBaseItemModal(payload);
+      break;
+    case ITEM_TYPES.DOCUMENT:
+      cy.fillDocumentModal(payload);
       break;
     case ITEM_TYPES.FOLDER:
     default:

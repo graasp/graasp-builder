@@ -1,4 +1,5 @@
-import { ITEM_LAYOUT_MODES, ROOT_ID } from '../../../../src/config/constants';
+import { ROOT_ID } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,

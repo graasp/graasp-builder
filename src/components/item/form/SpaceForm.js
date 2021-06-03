@@ -1,8 +1,7 @@
 import React from 'react';
-import { useTranslation, withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-import { ITEM_TYPES } from '../../../config/constants';
 import { ITEM_FORM_IMAGE_INPUT_ID } from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 
@@ -16,16 +15,15 @@ const ItemForm = ({ onChange, item }) => {
   return (
     <>
       <BaseItemForm onChange={onChange} item={item} />
-      {ITEM_TYPES.FILE !== item?.type && (
-        <TextField
-          id={ITEM_FORM_IMAGE_INPUT_ID}
-          margin="dense"
-          label={t('Image (URL)')}
-          value={item?.extra?.image}
-          onChange={handleImageUrlInput}
-          fullWidth
-        />
-      )}
+
+      <TextField
+        id={ITEM_FORM_IMAGE_INPUT_ID}
+        margin="dense"
+        label={t('Image (URL)')}
+        value={item?.extra?.image}
+        onChange={handleImageUrlInput}
+        fullWidth
+      />
     </>
   );
 };
@@ -51,5 +49,4 @@ ItemForm.defaultProps = {
   item: {},
 };
 
-const TranslatedComponent = withTranslation()(ItemForm);
-export default TranslatedComponent;
+export default ItemForm;

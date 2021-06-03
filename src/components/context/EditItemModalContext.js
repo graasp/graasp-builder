@@ -10,9 +10,10 @@ import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
 import SpaceForm from '../item/form/SpaceForm';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
-import { ITEM_TYPES } from '../../config/constants';
+import { ITEM_TYPES } from '../../enums';
 import BaseItemForm from '../item/form/BaseItemForm';
 import { EDIT_ITEM_MUTATION_KEY } from '../../config/keys';
+import DocumentForm from '../item/form/DocumentForm';
 
 const EditItemModalContext = React.createContext();
 
@@ -53,12 +54,15 @@ const EditItemModalProvider = ({ children }) => {
 
   const renderForm = () => {
     switch (updatedItem?.type) {
+      case ITEM_TYPES.DOCUMENT:
+        return <DocumentForm onChange={setUpdatedItem} item={updatedItem} />;
       case ITEM_TYPES.FOLDER:
         return <SpaceForm onChange={setUpdatedItem} item={updatedItem} />;
       case ITEM_TYPES.FILE:
       case ITEM_TYPES.S3_FILE:
       case ITEM_TYPES.LINK:
       case ITEM_TYPES.SHORTCUT:
+      case ITEM_TYPES.APP:
         return <BaseItemForm onChange={setUpdatedItem} item={updatedItem} />;
       default:
         return null;

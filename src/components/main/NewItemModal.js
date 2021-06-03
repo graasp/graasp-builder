@@ -15,12 +15,14 @@ import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
 } from '../../config/selectors';
 import ItemTypeButtons from './ItemTypeButtons';
-import { ITEM_TYPES } from '../../config/constants';
+import { ITEM_TYPES } from '../../enums';
 import FileDashboardUploader from './FileDashboardUploader';
 import LinkForm from '../item/form/LinkForm';
 import { isItemValid } from '../../utils/item';
 import { buildItemPath } from '../../config/paths';
 import { POST_ITEM_MUTATION_KEY } from '../../config/keys';
+import DocumentForm from '../item/form/DocumentForm';
+import AppForm from '../item/form/AppForm';
 
 const useStyles = makeStyles(() => ({
   dialogContent: {
@@ -46,6 +48,12 @@ const NewItemModal = ({ open, handleClose }) => {
       case ITEM_TYPES.LINK:
         setNewItem({ type: ITEM_TYPES.LINK });
         break;
+      case ITEM_TYPES.DOCUMENT:
+        setNewItem({ type: ITEM_TYPES.DOCUMENT });
+        break;
+      case ITEM_TYPES.APP:
+        setNewItem({ type: ITEM_TYPES.APP });
+        break;
       default:
         setNewItem({ type: ITEM_TYPES.FOLDER });
     }
@@ -67,8 +75,12 @@ const NewItemModal = ({ open, handleClose }) => {
         return <SpaceForm onChange={setNewItem} item={newItem} />;
       case ITEM_TYPES.FILE:
         return <FileDashboardUploader />;
+      case ITEM_TYPES.APP:
+        return <AppForm onChange={setNewItem} item={newItem} />;
       case ITEM_TYPES.LINK:
         return <LinkForm onChange={setNewItem} item={newItem} />;
+      case ITEM_TYPES.DOCUMENT:
+        return <DocumentForm onChange={setNewItem} item={newItem} />;
       default:
         return null;
     }
@@ -77,7 +89,9 @@ const NewItemModal = ({ open, handleClose }) => {
   const renderActions = () => {
     switch (selectedItemType) {
       case ITEM_TYPES.FOLDER:
+      case ITEM_TYPES.APP:
       case ITEM_TYPES.LINK:
+      case ITEM_TYPES.DOCUMENT:
         return (
           <>
             <Button onClick={handleClose} color="primary">
@@ -109,7 +123,7 @@ const NewItemModal = ({ open, handleClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>{t('Add New Item')}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <ItemTypeButtons

@@ -46,7 +46,7 @@ DeleteButton.propTypes = {
 };
 
 DeleteButton.defaultProps = {
-  color: '',
+  color: 'default',
   id: '',
 };
 

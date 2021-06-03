@@ -2,11 +2,8 @@ import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
 import XHRUpload from '@uppy/xhr-upload';
 import { buildUploadFilesRoute } from '../api/routes';
-import {
-  API_HOST,
-  FILE_UPLOAD_MAX_FILES,
-  UPLOAD_FILES_METHODS,
-} from '../config/constants';
+import { API_HOST, FILE_UPLOAD_MAX_FILES } from '../config/constants';
+import { UPLOAD_FILES_METHODS } from '../enums';
 import { uploadItemToS3 } from '../api/item';
 import { DEFAULT_PUT } from '../api/utils';
 

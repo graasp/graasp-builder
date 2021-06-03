@@ -6,7 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { ORDERING } from '../../config/constants';
+import { ORDERING } from '../../enums';
 
 const CustomTableHead = (props) => {
   const {

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { ITEM_TYPES } from '../config/constants';
+import { ITEM_TYPES } from '../enums';
 import { getItemLoginTag } from './itemTag';
 
 export const getFileExtra = (extra) => extra?.[ITEM_TYPES.FILE];
@@ -63,3 +63,15 @@ export const getItemLoginTagFromItem = ({ tags, itemTags }) => {
 
   return itemTags?.find(({ tagId }) => tagId === itemLoginTagId);
 };
+
+export const buildDocumentExtra = (text) => ({
+  [ITEM_TYPES.DOCUMENT]: text,
+});
+
+export const getDocumentExtra = (extra) => extra?.[ITEM_TYPES.DOCUMENT];
+
+export const buildAppExtra = ({ url, settings = {} }) => ({
+  [ITEM_TYPES.APP]: { url, settings },
+});
+
+export const getAppExtra = (extra) => extra?.[ITEM_TYPES.APP];

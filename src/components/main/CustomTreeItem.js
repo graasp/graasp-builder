@@ -3,13 +3,10 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TreeItem from '@material-ui/lab/TreeItem';
-import {
-  ITEM_TYPES,
-  LOADING_CONTENT,
-  TREE_PREVENT_SELECTION,
-} from '../../config/constants';
+import { LOADING_CONTENT } from '../../config/constants';
 import { buildTreeItemClass } from '../../config/selectors';
 import { useChildren, useItem } from '../../hooks';
+import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 
 const useStyles = makeStyles((theme) => ({
   disabled: {

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import IconButton from '@material-ui/core/IconButton';
-import { ITEM_LAYOUT_MODES } from '../../../config/constants';
+import { ITEM_LAYOUT_MODES } from '../../../enums';
 import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,

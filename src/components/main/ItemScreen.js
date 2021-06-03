@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { useChildren, useItem } from '../../hooks';
 import Items from './Items';
 import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
-import { ITEM_TYPES } from '../../config/constants';
+import { ITEM_TYPES } from '../../enums';
 import FileItem from '../item/FileItem';
 import FileUploader from './FileUploader';
 import S3FileItem from '../item/S3FileItem';
@@ -12,6 +12,8 @@ import ItemMain from '../item/ItemMain';
 import LinkItem from '../item/LinkItem';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
+import DocumentItem from '../item/DocumentItem';
+import AppItem from '../item/AppItem';
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -52,6 +54,10 @@ const ItemScreen = () => {
             <LinkItem item={item} />
           </div>
         );
+      case ITEM_TYPES.DOCUMENT:
+        return <DocumentItem item={item} />;
+      case ITEM_TYPES.APP:
+        return <AppItem item={item} />;
       case ITEM_TYPES.FOLDER:
         // wait until all children are available
         if (isChildrenLoading) {
