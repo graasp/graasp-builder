@@ -1,4 +1,4 @@
-import { ITEM_TYPES } from '../../src/config/constants';
+import { ITEM_TYPES } from '../../src/enums';
 import { buildDocumentExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER } from './members';
 import { DEFAULT_FOLDER_ITEM } from './items';

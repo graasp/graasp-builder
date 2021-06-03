@@ -1,4 +1,9 @@
 import env from '../env.json';
+import {
+  ITEM_LAYOUT_MODES,
+  UPLOAD_FILES_METHODS,
+  PERMISSION_LEVELS,
+} from '../enums';
 
 const {
   API_HOST: ENV_API_HOST,
@@ -44,23 +49,8 @@ export const DEFAULT_IMAGE_SRC =
 
 export const ROOT_ID = 'root-id';
 
-export const TREE_PREVENT_SELECTION = {
-  NONE: 'none',
-  SELF_AND_CHILDREN: 'selfAndChildren',
-};
-
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
-
-export const ITEM_TYPES = {
-  FOLDER: 'folder',
-  FILE: 'file',
-  S3_FILE: 's3File',
-  LINK: 'embeddedLink',
-  SHORTCUT: 'shortcut',
-  DOCUMENT: 'document',
-  APP: 'app',
-};
 
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
@@ -71,12 +61,6 @@ export const MIME_TYPES = {
 export const DRAWER_WIDTH = 300;
 export const DEFAULT_LOCALE = 'en-US';
 
-export const PERMISSION_LEVELS = {
-  WRITE: 'write',
-  READ: 'read',
-  ADMIN: 'admin',
-};
-
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.WRITE;
 
 export const PERMISSIONS_EDITION_ALLOWED = [
@@ -84,23 +68,9 @@ export const PERMISSIONS_EDITION_ALLOWED = [
   PERMISSION_LEVELS.ADMIN,
 ];
 
-export const ITEM_LAYOUT_MODES = {
-  GRID: 'grid',
-  LIST: 'list',
-};
-
 export const DEFAULT_ITEM_LAYOUT_MODE = ITEM_LAYOUT_MODES.LIST;
 
-export const ORDERING = {
-  ASC: 'asc',
-  DESC: 'desc',
-};
-
 export const ROWS_PER_PAGE_OPTIONS = [10, 25];
-
-export const ITEM_DATA_TYPES = {
-  DATE: 'date',
-};
 
 export const LEFT_MENU_WIDTH = 250;
 export const RIGHT_MENU_WIDTH = 300;
@@ -108,10 +78,6 @@ export const HEADER_HEIGHT = 64;
 
 export const FILE_UPLOAD_MAX_FILES = 5;
 export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
-export const UPLOAD_FILES_METHODS = {
-  S3: 's3',
-  DEFAULT: 'default',
-};
 
 export const UPLOAD_METHOD =
   ENV_UPLOAD_METHOD ||

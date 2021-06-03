@@ -1,7 +1,5 @@
-import {
-  ITEM_LAYOUT_MODES,
-  DEFAULT_ITEM_LAYOUT_MODE,
-} from '../../../../src/config/constants';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { GRAASP_DOCUMENT_ITEM } from '../../../fixtures/documents';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';

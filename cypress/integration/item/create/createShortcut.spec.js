@@ -1,9 +1,6 @@
 import qs from 'querystring';
-import {
-  ITEM_LAYOUT_MODES,
-  ITEM_TYPES,
-  ROOT_ID,
-} from '../../../../src/config/constants';
+import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../../../src/enums';
+import { ROOT_ID } from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,

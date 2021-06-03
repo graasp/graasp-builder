@@ -10,7 +10,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import CloseIcon from '@material-ui/icons/Close';
 import TableRow from '@material-ui/core/TableRow';
 import { IconButton, Toolbar, Typography, withStyles } from '@material-ui/core';
-import { ITEM_TYPES, RIGHT_MENU_WIDTH } from '../../config/constants';
+import { RIGHT_MENU_WIDTH } from '../../config/constants';
+import { ITEM_TYPES } from '../../enums';
 import { formatDate } from '../../utils/date';
 import {
   ITEM_PANEL_DESCRIPTION_ID,

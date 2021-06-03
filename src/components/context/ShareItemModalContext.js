@@ -18,9 +18,9 @@ import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
 import {
   DEFAULT_PERMISSION_LEVEL,
-  PERMISSION_LEVELS,
   SHARE_ITEM_MODAL_MIN_WIDTH,
 } from '../../config/constants';
+import { PERMISSION_LEVELS } from '../../enums';
 import {
   buildPermissionOptionId,
   SHARE_ITEM_MODAL_EMAIL_INPUT_ID,

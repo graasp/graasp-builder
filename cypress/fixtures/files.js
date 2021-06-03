@@ -1,4 +1,4 @@
-import { ITEM_TYPES, MIME_TYPES } from '../../src/config/constants';
+import { ITEM_TYPES, MIME_TYPES } from '../../src/enums';
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
 
 export const ICON_FILEPATH = 'files/icon.png';

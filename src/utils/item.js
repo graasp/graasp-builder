@@ -1,10 +1,7 @@
 // synchronous functions to manage items from redux
 
-import {
-  DEFAULT_IMAGE_SRC,
-  ITEM_TYPES,
-  UUID_LENGTH,
-} from '../config/constants';
+import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
+import { ITEM_TYPES } from '../enums';
 import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
 
 // eslint-disable-next-line no-useless-escape
