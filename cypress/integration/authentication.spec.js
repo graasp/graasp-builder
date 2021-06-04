@@ -1,6 +1,8 @@
 import {
   buildItemPath,
   HOME_PATH,
+  ITEMS_PATH,
+  REDIRECT_PATH,
   SHARED_ITEMS_PATH,
 } from '../../src/config/paths';
 import {
@@ -15,7 +17,9 @@ import {
   REQUEST_FAILURE_LOADING_TIME,
   PAGE_LOAD_WAITING_PAUSE,
   REDIRECTION_CONTENT,
+  REDIRECTION_TIME,
 } from '../support/constants';
+import { REDIRECT_URL_LOCAL_STORAGE_KEY } from '../../src/config/constants';
 
 describe('Authentication', () => {
   describe('Signed Off > Redirect to sign in route', () => {
@@ -25,11 +29,19 @@ describe('Authentication', () => {
     it('Home', () => {
       cy.visit(HOME_PATH);
       cy.wait(REQUEST_FAILURE_LOADING_TIME);
+      cy.getLocalStorage(REDIRECT_URL_LOCAL_STORAGE_KEY).should(
+        'equal',
+        HOME_PATH,
+      );
       cy.get('html').should('contain', REDIRECTION_CONTENT);
     });
     it('Shared Items', () => {
       cy.visit(SHARED_ITEMS_PATH);
       cy.wait(REQUEST_FAILURE_LOADING_TIME);
+      cy.getLocalStorage(REDIRECT_URL_LOCAL_STORAGE_KEY).should(
+        'equal',
+        SHARED_ITEMS_PATH,
+      );
       cy.get('html').should('contain', REDIRECTION_CONTENT);
     });
   });
@@ -71,6 +83,39 @@ describe('Authentication', () => {
         cy.visit(HOME_PATH);
         // user name in header
         cy.get(`#${HEADER_USER_ID}`).should('contain', CURRENT_USER.name);
+      });
+    });
+
+    describe('Redirect to URL in local storage', () => {
+      it('Home', () => {
+        cy.setLocalStorage(REDIRECT_URL_LOCAL_STORAGE_KEY, HOME_PATH);
+        cy.visit(REDIRECT_PATH);
+        cy.wait(REDIRECTION_TIME);
+        cy.url().should('include', HOME_PATH);
+      });
+
+      it('Items', () => {
+        cy.setLocalStorage(REDIRECT_URL_LOCAL_STORAGE_KEY, ITEMS_PATH);
+        cy.visit(REDIRECT_PATH);
+        cy.wait(REDIRECTION_TIME);
+        cy.url().should('include', ITEMS_PATH);
+      });
+
+      it('SharedItems', () => {
+        cy.setLocalStorage(REDIRECT_URL_LOCAL_STORAGE_KEY, SHARED_ITEMS_PATH);
+        cy.visit(REDIRECT_PATH);
+        cy.wait(REDIRECTION_TIME);
+        cy.url().should('include', SHARED_ITEMS_PATH);
+      });
+
+      it('Item', () => {
+        cy.setLocalStorage(
+          REDIRECT_URL_LOCAL_STORAGE_KEY,
+          buildItemPath(SAMPLE_ITEMS.items[0].id),
+        );
+        cy.visit(REDIRECT_PATH);
+        cy.wait(REDIRECTION_TIME);
+        cy.url().should('include', buildItemPath(SAMPLE_ITEMS.items[0].id));
       });
     });
   });

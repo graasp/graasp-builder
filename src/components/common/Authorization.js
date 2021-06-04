@@ -1,13 +1,16 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import { buildSignInPath } from '../../api/routes';
-import { AUTHENTICATION_HOST } from '../../config/constants';
+import {
+  AUTHENTICATION_HOST,
+  REDIRECT_URL_LOCAL_STORAGE_KEY,
+} from '../../config/constants';
 import { useCurrentMember } from '../../hooks';
 import Loader from './Loader';
 
 const Authorization = () => (ChildComponent) => {
   const ComposedComponent = (props) => {
-    const { location: { pathname } = {} } = useLocation();
+    const { pathname } = useLocation();
 
     const redirectToSignIn = () => {
       window.location.href = `${AUTHENTICATION_HOST}/${buildSignInPath(
@@ -23,6 +26,8 @@ const Authorization = () => (ChildComponent) => {
 
     // check authorization
     if (isError || !currentMember) {
+      // save current url for later redirection after sign in
+      localStorage.setItem(REDIRECT_URL_LOCAL_STORAGE_KEY, pathname);
       redirectToSignIn();
     }
 
