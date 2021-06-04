@@ -63,9 +63,11 @@ Cypress.Commands.add('fillTreeModal', (toItemPath) => {
 Cypress.Commands.add(
   'fillBaseItemModal',
   ({ name = '', description = '' }, { confirm = true } = {}) => {
-    cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).clear().type(name);
+    cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).type(`{selectall}${name}`);
 
-    cy.get(`#${ITEM_FORM_DESCRIPTION_INPUT_ID}`).clear().type(description);
+    cy.get(`#${ITEM_FORM_DESCRIPTION_INPUT_ID}`).type(
+      `{selectall}${description}`,
+    );
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
@@ -78,7 +80,7 @@ Cypress.Commands.add(
   ({ name = '', extra = {}, description = '' }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name, description }, { confirm: false });
 
-    cy.get(`#${ITEM_FORM_IMAGE_INPUT_ID}`).clear().type(extra.image);
+    cy.get(`#${ITEM_FORM_IMAGE_INPUT_ID}`).type(`{selectall}${extra.image}`);
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
@@ -89,9 +91,9 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'fillLinkModal',
   ({ extra = {} }, { confirm = true } = {}) => {
-    cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`)
-      .clear()
-      .type(getEmbeddedLinkExtra(extra)?.url);
+    cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`).type(
+      `{selectall}${getEmbeddedLinkExtra(extra)?.url}`,
+    );
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
@@ -104,9 +106,9 @@ Cypress.Commands.add(
   ({ name = '', description = '', extra = {} }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name, description }, { confirm: false });
 
-    cy.get(ITEM_FORM_DOCUMENT_TEXT_SELECTOR)
-      .clear()
-      .type(getDocumentExtra(extra)?.content);
+    cy.get(ITEM_FORM_DOCUMENT_TEXT_SELECTOR).type(
+      `{selectall}${getDocumentExtra(extra)?.content}`,
+    );
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
@@ -119,7 +121,9 @@ Cypress.Commands.add(
   ({ name = '', description = '', extra = {} }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name, description }, { confirm: false });
 
-    cy.get(`#${ITEM_FORM_APP_URL_ID}`).clear().type(getAppExtra(extra)?.url);
+    cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(
+      `{selectall}${getAppExtra(extra)?.url}`,
+    );
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();

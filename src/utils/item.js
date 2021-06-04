@@ -76,7 +76,12 @@ export const isUrlValid = (str) => {
   return str && pattern.test(str);
 };
 
-export const isItemValid = ({ name, type, extra }) => {
+export const isItemValid = (item) => {
+  if (!item) {
+    return false;
+  }
+
+  const { name, type, extra } = item;
   const shouldHaveName = Boolean(name);
 
   // item should have a type

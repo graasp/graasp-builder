@@ -5,22 +5,26 @@ import TextField from '@material-ui/core/TextField';
 import { ITEM_FORM_IMAGE_INPUT_ID } from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 
-const ItemForm = ({ onChange, item }) => {
+const FolderForm = ({ onChange, item, updatedProperties }) => {
   const { t } = useTranslation();
 
   const handleImageUrlInput = (event) => {
-    onChange({ ...item, extra: { image: event.target.value } });
+    onChange({ ...updatedProperties, extra: { image: event.target.value } });
   };
 
   return (
     <>
-      <BaseItemForm onChange={onChange} item={item} />
+      <BaseItemForm
+        onChange={onChange}
+        item={item}
+        updatedProperties={updatedProperties}
+      />
 
       <TextField
         id={ITEM_FORM_IMAGE_INPUT_ID}
         margin="dense"
         label={t('Image (URL)')}
-        value={item?.extra?.image}
+        value={updatedProperties?.extra?.image || item?.extra?.image}
         onChange={handleImageUrlInput}
         fullWidth
       />
@@ -28,7 +32,12 @@ const ItemForm = ({ onChange, item }) => {
   );
 };
 
-ItemForm.propTypes = {
+FolderForm.propTypes = {
+  updatedProperties: PropTypes.shape({
+    extra: PropTypes.shape({
+      image: PropTypes.string,
+    }),
+  }),
   onChange: PropTypes.func.isRequired,
   classes: PropTypes.shape({
     shortInputField: PropTypes.string.isRequired,
@@ -45,8 +54,9 @@ ItemForm.propTypes = {
   }),
 };
 
-ItemForm.defaultProps = {
+FolderForm.defaultProps = {
   item: {},
+  updatedProperties: {},
 };
 
-export default ItemForm;
+export default FolderForm;

@@ -14,16 +14,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const BaseForm = ({ onChange, item }) => {
+const BaseForm = ({ onChange, item, updatedProperties }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
   const handleNameInput = (event) => {
-    onChange({ ...item, name: event.target.value });
+    onChange({ ...updatedProperties, name: event.target.value });
   };
 
   const handleDescriptionInput = (event) => {
-    onChange({ ...item, description: event.target.value });
+    onChange({ ...updatedProperties, description: event.target.value });
   };
 
   return (
@@ -33,7 +33,7 @@ const BaseForm = ({ onChange, item }) => {
         margin="dense"
         id={ITEM_FORM_NAME_INPUT_ID}
         label={t('Name')}
-        value={item?.name}
+        value={updatedProperties?.name || item?.name}
         onChange={handleNameInput}
         className={classes.shortInputField}
       />
@@ -41,7 +41,7 @@ const BaseForm = ({ onChange, item }) => {
         id={ITEM_FORM_DESCRIPTION_INPUT_ID}
         margin="dense"
         label={t('Description')}
-        value={item?.description}
+        value={updatedProperties?.description || item?.description}
         onChange={handleDescriptionInput}
         rows={4}
         rowsMax={4}
@@ -52,6 +52,10 @@ const BaseForm = ({ onChange, item }) => {
 };
 
 BaseForm.propTypes = {
+  updatedProperties: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+  }),
   onChange: PropTypes.string.isRequired,
   item: PropTypes.shape({
     name: PropTypes.string,
@@ -62,6 +66,10 @@ BaseForm.propTypes = {
       }),
     }),
   }).isRequired,
+};
+
+BaseForm.defaultProps = {
+  updatedProperties: {},
 };
 
 export default BaseForm;

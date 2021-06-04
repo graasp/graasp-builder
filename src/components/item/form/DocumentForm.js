@@ -12,21 +12,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DocumentForm = ({ onChange, item }) => {
+const DocumentForm = ({ onChange, item, updatedProperties }) => {
   const classes = useStyles();
 
   const handleOnChange = (content) => {
     onChange({
-      ...item,
+      ...updatedProperties,
       extra: buildDocumentExtra({ content }),
     });
   };
 
-  const value = getDocumentExtra(item?.extra)?.content;
+  const value =
+    getDocumentExtra(updatedProperties?.extra)?.content ||
+    getDocumentExtra(item?.extra)?.content;
 
   return (
     <>
-      <BaseForm onChange={onChange} item={item} />
+      <BaseForm
+        onChange={onChange}
+        item={item}
+        updatedProperties={updatedProperties}
+      />
       <div className={classes.textEditorWrapper}>
         <TextEditor
           id={ITEM_FORM_DOCUMENT_TEXT_ID}
@@ -41,6 +47,9 @@ const DocumentForm = ({ onChange, item }) => {
 DocumentForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   item: PropTypes.shape({
+    extra: PropTypes.shape({}),
+  }).isRequired,
+  updatedProperties: PropTypes.shape({
     extra: PropTypes.shape({}),
   }).isRequired,
 };

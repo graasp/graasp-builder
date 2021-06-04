@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
-import SpaceForm from '../item/form/SpaceForm';
+import FolderForm from '../item/form/FolderForm';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
 import BaseItemForm from '../item/form/BaseItemForm';
@@ -27,15 +27,13 @@ const useStyles = makeStyles(() => ({
 const EditItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [updatedItem, setUpdatedItem] = useState(null);
   const mutation = useMutation(EDIT_ITEM_MUTATION_KEY);
 
+  // updated properties are separated from the original item
+  // so only necessary properties are sent when editing
+  const [updatedProperties, setUpdatedItem] = useState({});
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
-
-  useEffect(() => {
-    setUpdatedItem(item);
-  }, [item, setUpdatedItem]);
 
   const openModal = (newItem) => {
     setOpen(true);
@@ -48,22 +46,41 @@ const EditItemModalProvider = ({ children }) => {
   };
 
   const submit = () => {
-    mutation.mutate(updatedItem);
+    // add id to changed properties
+    mutation.mutate({ id: item.id, ...updatedProperties });
     onClose();
   };
 
   const renderForm = () => {
-    switch (updatedItem?.type) {
+    switch (item?.type) {
       case ITEM_TYPES.DOCUMENT:
-        return <DocumentForm onChange={setUpdatedItem} item={updatedItem} />;
+        return (
+          <DocumentForm
+            onChange={setUpdatedItem}
+            item={item}
+            updatedProperties={updatedProperties}
+          />
+        );
       case ITEM_TYPES.FOLDER:
-        return <SpaceForm onChange={setUpdatedItem} item={updatedItem} />;
+        return (
+          <FolderForm
+            onChange={setUpdatedItem}
+            item={item}
+            updatedProperties={updatedProperties}
+          />
+        );
       case ITEM_TYPES.FILE:
       case ITEM_TYPES.S3_FILE:
       case ITEM_TYPES.LINK:
       case ITEM_TYPES.SHORTCUT:
       case ITEM_TYPES.APP:
-        return <BaseItemForm onChange={setUpdatedItem} item={updatedItem} />;
+        return (
+          <BaseItemForm
+            onChange={setUpdatedItem}
+            item={item}
+            updatedProperties={updatedProperties}
+          />
+        );
       default:
         return null;
     }
