@@ -21,6 +21,7 @@ import {
   getEmbeddedLinkExtra,
 } from '../../../src/utils/itemExtra';
 import { getParentsIdsFromPath } from '../../../src/utils/item';
+import { TREE_VIEW_PAUSE } from '../constants';
 
 Cypress.Commands.add('fillShareModal', ({ member, permission }) => {
   // select permission
@@ -36,25 +37,29 @@ Cypress.Commands.add('fillShareModal', ({ member, permission }) => {
 Cypress.Commands.add('fillTreeModal', (toItemPath) => {
   const ids = getParentsIdsFromPath(toItemPath);
 
+  cy.wait(TREE_VIEW_PAUSE);
+
   [ROOT_ID, ...ids].forEach((value, idx, array) => {
-    // do the check twice to be sure the tree item is opened
-    for (let i = 0; i < 2; i += 1) {
-      cy.get(`#${TREE_MODAL_TREE_ID}`).then(($tree) => {
-        // if can't find children click on parent (current value)
-        // or is item to select
-        if (
-          idx === array.length - 1 ||
-          !$tree.find(
-            `.${buildTreeItemClass(array[idx + 1])} .MuiTreeItem-label`,
-          ).length
-        ) {
-          cy.wrap($tree)
-            .get(`.${buildTreeItemClass(value)} .MuiTreeItem-label`)
-            .first()
-            .click();
-        }
-      });
-    }
+    cy.get(`#${TREE_MODAL_TREE_ID}`).then(($tree) => {
+      // click on the element
+      if (idx === array.length - 1) {
+        cy.wrap($tree)
+          .get(`.${buildTreeItemClass(value)} .MuiTreeItem-label input`)
+          .first()
+          .click();
+      }
+      // if can't find children click on parent (current value)
+      if (
+        idx !== array.length - 1 &&
+        !$tree.find(`.${buildTreeItemClass(array[idx + 1])} .MuiTreeItem-label`)
+          .length
+      ) {
+        cy.wrap($tree)
+          .get(`.${buildTreeItemClass(value)} .MuiTreeItem-label`)
+          .first()
+          .click();
+      }
+    });
   });
 
   cy.get(`#${TREE_MODAL_CONFIRM_BUTTON_ID}`).click();

@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useTranslation } from 'react-i18next';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button, makeStyles } from '@material-ui/core';
-import { useItem, useOwnItems } from '../../hooks';
+import { DynamicTreeView, Loader } from '@graasp/ui';
+import { useItem, useOwnItems, useChildren } from '../../hooks';
 import { ROOT_ID, TREE_VIEW_MAX_WIDTH } from '../../config/constants';
-import { TREE_PREVENT_SELECTION } from '../../enums';
+import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import {
   buildTreeItemClass,
   TREE_MODAL_TREE_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
 } from '../../config/selectors';
 import { getParentsIdsFromPath } from '../../utils/item';
-import CustomTreeItem from './CustomTreeItem';
-import Loader from '../common/Loader';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,31 +27,36 @@ const useStyles = makeStyles(() => ({
 const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [expandedItems, setExpandedItems] = useState([ROOT_ID]);
-  const [selectedId, setSelectedId] = useState(null);
   const { data: items, isLoading } = useOwnItems();
-  const { data: item } = useItem(itemId);
+  const [selectedId, setSelectedId] = useState(null);
+  const { data: item, isItemLoading } = useItem(itemId);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const initExpandedElements = () => {
+  const buildExpandedItems = () => {
     if (item) {
       const parentIds = getParentsIdsFromPath(item.get('path')) || [];
-      const newExpandedItems = [...expandedItems, ...parentIds];
-      setExpandedItems(newExpandedItems);
+      const newExpandedItems = [ROOT_ID, ...parentIds];
+      return newExpandedItems;
     }
+    return [ROOT_ID];
   };
 
-  // init expanded items depending on item id and if the modal is open
-  useEffect(() => {
-    if (open && itemId) {
-      initExpandedElements();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, itemId]);
-
-  if (isLoading) {
+  if (isLoading || isItemLoading) {
     return <Loader />;
   }
+
+  // compute whether the given id tree item is disabled
+  // it depends on the prevent mode and the previous items
+  const isTreeItemDisabled = ({ itemId: iId, parentIsDisabled }) => {
+    switch (prevent) {
+      case TREE_PREVENT_SELECTION.SELF_AND_CHILDREN:
+        // if the previous item is disabled, its children will be disabled
+        // and prevent selection on self
+        return parentIsDisabled || itemId === iId;
+      case TREE_PREVENT_SELECTION.NONE:
+      default:
+        return false;
+    }
+  };
 
   const handleClose = () => {
     onClose({ id: null, open: false });
@@ -67,44 +67,34 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
     handleClose();
   };
 
-  const onSelect = (e, value) => {
-    // toggle item expansion
-    const isExpanded = expandedItems.includes(value);
-    const newExpandedItems = isExpanded
-      ? expandedItems.filter((id) => id !== value)
-      : [...expandedItems, value];
-
-    setSelectedId(value);
-    setExpandedItems(newExpandedItems);
+  const onTreeItemSelect = (nodeId) => {
+    if (selectedId === nodeId) {
+      setSelectedId(null);
+    } else {
+      setSelectedId(nodeId);
+    }
   };
 
   // compute tree only when the modal is open
   const tree = !open ? null : (
-    <TreeView
+    <DynamicTreeView
       id={TREE_MODAL_TREE_ID}
       className={classes.root}
-      defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpandIcon={<ChevronRightIcon />}
-      onNodeSelect={onSelect}
-      expanded={expandedItems}
-    >
-      <TreeItem
-        nodeId={ROOT_ID}
-        className={buildTreeItemClass(ROOT_ID)}
-        label={t('Owned Items')}
-      >
-        {items.map(({ id }) => (
-          <CustomTreeItem
-            id={id}
-            disabled={false}
-            prevent={prevent}
-            expandedItems={expandedItems}
-            selectedId={selectedId}
-            targetId={itemId}
-          />
-        ))}
-      </TreeItem>
-    </TreeView>
+      selectedId={selectedId}
+      initialExpendedItems={buildExpandedItems()}
+      items={items}
+      onTreeItemSelect={onTreeItemSelect}
+      useChildren={useChildren}
+      useItem={useItem}
+      showCheckbox
+      rootLabel={t('Owned Items')}
+      rootId={ROOT_ID}
+      rootClassName={buildTreeItemClass(ROOT_ID)}
+      showItemFilter={(i) => i.get('type') === ITEM_TYPES.FOLDER}
+      shouldFetchChildrenForItem={(i) => i.get('type') === ITEM_TYPES.FOLDER}
+      isTreeItemDisabled={isTreeItemDisabled}
+      buildTreeItemClass={buildTreeItemClass}
+    />
   );
 
   return (
