@@ -14,6 +14,8 @@ jobs:
           REACT_APP_AUTHENTICATION_HOST: http://localhost:3000
           REACT_APP_NODE_ENV: test
         with:
+          # network-concurrency 1 is necessary to avoid errors when using github packages
+          install-command: yarn install --network-concurrency 1
           config: baseUrl=http://localhost:3000
           start: yarn start:ci
           wait-on: 'http://localhost:3000'

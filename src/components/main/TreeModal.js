@@ -67,6 +67,14 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
     handleClose();
   };
 
+  const onTreeItemSelect = (nodeId) => {
+    if (selectedId === nodeId) {
+      setSelectedId(null);
+    } else {
+      setSelectedId(nodeId);
+    }
+  };
+
   // compute tree only when the modal is open
   const tree = !open ? null : (
     <DynamicTreeView
@@ -75,7 +83,7 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
       selectedId={selectedId}
       initialExpendedItems={buildExpandedItems()}
       items={items}
-      onTreeItemSelect={setSelectedId}
+      onTreeItemSelect={onTreeItemSelect}
       useChildren={useChildren}
       useItem={useItem}
       showCheckbox
