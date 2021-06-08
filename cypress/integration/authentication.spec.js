@@ -87,10 +87,6 @@ describe('Authentication', () => {
     });
 
     describe('Redirect to URL in local storage', () => {
-      beforeEach(() => {
-        cy.setUpApi(SAMPLE_ITEMS);
-      });
-
       it('Home', () => {
         cy.setLocalStorage(REDIRECT_URL_LOCAL_STORAGE_KEY, HOME_PATH);
         cy.visit(REDIRECT_PATH);
