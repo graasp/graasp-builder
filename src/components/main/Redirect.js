@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { HOME_PATH } from '../../config/paths';
+import { REDIRECT_URL_LOCAL_STORAGE_KEY } from '../../config/constants';
 
 const Redirect = () => {
   const { push } = useHistory();
   const { t } = useTranslation();
 
-  const nextPath = localStorage.getItem('redirectUrl') ?? HOME_PATH;
+  const nextPath =
+    localStorage.getItem(REDIRECT_URL_LOCAL_STORAGE_KEY) ?? HOME_PATH;
 
   push(nextPath);
 

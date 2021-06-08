@@ -7,9 +7,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { Button, makeStyles } from '@material-ui/core';
 import { DynamicTreeView, Loader } from '@graasp/ui';
-import { useItem, useOwnItems, useChildren } from '../../hooks';
 import { ROOT_ID, TREE_VIEW_MAX_WIDTH } from '../../config/constants';
 import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
+import { hooks } from '../../config/queryClient';
 import {
   buildTreeItemClass,
   TREE_MODAL_TREE_ID,
@@ -23,6 +23,8 @@ const useStyles = makeStyles(() => ({
     maxWidth: TREE_VIEW_MAX_WIDTH,
   },
 }));
+
+const { useItem, useOwnItems, useChildren } = hooks;
 
 const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
   const { t } = useTranslation();

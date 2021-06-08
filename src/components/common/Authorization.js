@@ -1,11 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import { buildSignInPath } from '../../api/routes';
+import { API_ROUTES } from '@graasp/query-client';
 import {
   AUTHENTICATION_HOST,
   REDIRECT_URL_LOCAL_STORAGE_KEY,
 } from '../../config/constants';
-import { useCurrentMember } from '../../hooks';
+import { hooks } from '../../config/queryClient';
 import Loader from './Loader';
 
 const Authorization = () => (ChildComponent) => {
@@ -13,12 +13,16 @@ const Authorization = () => (ChildComponent) => {
     const { pathname } = useLocation();
 
     const redirectToSignIn = () => {
-      window.location.href = `${AUTHENTICATION_HOST}/${buildSignInPath(
+      window.location.href = `${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath(
         `${window.location.origin}${pathname}`,
       )}`;
     };
 
-    const { data: currentMember, isLoading, isError } = useCurrentMember();
+    const {
+      data: currentMember,
+      isLoading,
+      isError,
+    } = hooks.useCurrentMember();
 
     if (isLoading) {
       return <Loader />;

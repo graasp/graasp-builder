@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,19 +7,18 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
+import { MUTATION_KEYS, API_ROUTES } from '@graasp/query-client';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useCurrentMember } from '../../hooks';
+import { hooks, useMutation } from '../../config/queryClient';
 import {
   AUTHENTICATION_HOST,
   USERNAME_MAX_LENGTH,
 } from '../../config/constants';
-import { buildSignInPath } from '../../api/routes';
 import {
   HEADER_USER_ID,
   USER_MENU_SIGN_OUT_OPTION_ID,
 } from '../../config/selectors';
 import Loader from './Loader';
-import { SIGN_OUT_MUTATION_KEY } from '../../config/keys';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -37,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SettingsHeader() {
-  const { data: user, isLoading } = useCurrentMember();
+  const { data: user, isLoading } = hooks.useCurrentMember();
   const classes = useStyles();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const { mutate: signOut } = useMutation(SIGN_OUT_MUTATION_KEY);
+  const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -61,7 +59,7 @@ function SettingsHeader() {
       return (
         <MenuItem
           component="a"
-          href={`${AUTHENTICATION_HOST}/${buildSignInPath()}`}
+          href={`${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath()}`}
         >
           {t('Sign In')}
         </MenuItem>

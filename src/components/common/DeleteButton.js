@@ -1,20 +1,19 @@
 import React from 'react';
-import { useMutation } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useMutation } from '../../config/queryClient';
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
-import {
-  DELETE_ITEMS_MUTATION_KEY,
-  DELETE_ITEM_MUTATION_KEY,
-} from '../../config/keys';
+
+const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 
 const DeleteButton = ({ itemIds, color, id }) => {
   const { t } = useTranslation();
-  const { mutate: deleteItems } = useMutation(DELETE_ITEMS_MUTATION_KEY);
-  const { mutate: deleteItem } = useMutation(DELETE_ITEM_MUTATION_KEY);
+  const { mutate: deleteItems } = useMutation(DELETE_ITEMS);
+  const { mutate: deleteItem } = useMutation(DELETE_ITEM);
 
   const onClick = () => {
     if (itemIds.length > 1) {

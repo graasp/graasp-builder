@@ -6,7 +6,6 @@ import ItemsTable from './ItemsTable';
 import ItemsGrid from './ItemsGrid';
 import { ItemLayoutModeContext } from '../context/ItemLayoutModeContext';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const Items = ({ items, title, id }) => {
   const { mode } = useContext(ItemLayoutModeContext);
 

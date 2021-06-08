@@ -15,9 +15,11 @@ import {
   NAVIGATION_HOME_LINK_ID,
 } from '../../config/selectors';
 import Loader from '../common/Loader';
-import { useCurrentMember, useItem, useParents } from '../../hooks';
+import { hooks } from '../../config/queryClient';
 import { getParentsIdsFromPath } from '../../utils/item';
 import { LOADING_CONTENT } from '../../config/constants';
+
+const { useCurrentMember, useItem, useParents } = hooks;
 
 const useStyles = makeStyles(() => ({
   parents: {

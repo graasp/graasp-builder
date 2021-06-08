@@ -1,17 +1,19 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import { QueryClientProvider } from 'react-query';
 import ReduxToastr from 'react-redux-toastr';
 import { grey } from '@material-ui/core/colors';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import App from './App';
+import {
+  QueryClientProvider,
+  queryClient,
+  ReactQueryDevtools,
+} from '../config/queryClient';
 import configureStore from '../store/configure';
 import i18nConfig from '../config/i18n';
 import { SHOW_NOTIFICATIONS, NODE_ENV, ENV } from '../config/constants';
-import queryClient from '../config/queryClient';
 
 const theme = createMuiTheme({
   palette: {

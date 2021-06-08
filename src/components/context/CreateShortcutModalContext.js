@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useMutation } from 'react-query';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { useMutation } from '../../config/queryClient';
 import TreeModal from '../main/TreeModal';
-import { POST_ITEM_MUTATION_KEY } from '../../config/keys';
 import { buildShortcutExtra } from '../../utils/itemExtra';
 import { ITEM_TYPES } from '../../enums';
 import { ROOT_ID } from '../../config/constants';
@@ -12,7 +12,7 @@ const CreateShortcutModalContext = React.createContext();
 
 const CreateShortcutModalProvider = ({ children }) => {
   const { t } = useTranslation();
-  const { mutate: createShortcut } = useMutation(POST_ITEM_MUTATION_KEY);
+  const { mutate: createShortcut } = useMutation(MUTATION_KEYS.POST_ITEM);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(false);
 

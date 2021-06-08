@@ -1,7 +1,33 @@
 import { v4 as uuidv4 } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
 import qs from 'querystring';
+import { API_ROUTES } from '@graasp/query-client';
 import {
+  getItemById,
+  isChild,
+  isRootItem,
+  transformIdForPath,
+} from '../../src/utils/item';
+import { CURRENT_USER, MEMBERS } from '../fixtures/members';
+import { ID_FORMAT, parseStringToRegExp, EMAIL_FORMAT } from './utils';
+import {
+  DEFAULT_PATCH,
+  DEFAULT_GET,
+  DEFAULT_POST,
+  DEFAULT_DELETE,
+  DEFAULT_PUT,
+} from '../../src/api/utils';
+import {
+  getS3FileExtra,
+  getItemLoginExtra,
+  getItemLoginSchema,
+  buildItemLoginSchemaExtra,
+} from '../../src/utils/itemExtra';
+import { REDIRECTION_CONTENT } from './constants';
+import { SETTINGS } from '../../src/config/constants';
+import { ITEM_LOGIN_TAG } from '../fixtures/itemTags';
+
+const {
   buildCopyItemRoute,
   buildDeleteItemRoute,
   buildEditItemRoute,
@@ -27,31 +53,7 @@ import {
   GET_TAGS_ROUTE,
   buildPutItemLoginSchema,
   buildPostItemTagRoute,
-} from '../../src/api/routes';
-import {
-  getItemById,
-  isChild,
-  isRootItem,
-  transformIdForPath,
-} from '../../src/utils/item';
-import { CURRENT_USER, MEMBERS } from '../fixtures/members';
-import { ID_FORMAT, parseStringToRegExp, EMAIL_FORMAT } from './utils';
-import {
-  DEFAULT_PATCH,
-  DEFAULT_GET,
-  DEFAULT_POST,
-  DEFAULT_DELETE,
-  DEFAULT_PUT,
-} from '../../src/api/utils';
-import {
-  getS3FileExtra,
-  getItemLoginExtra,
-  getItemLoginSchema,
-  buildItemLoginSchemaExtra,
-} from '../../src/utils/itemExtra';
-import { REDIRECTION_CONTENT } from './constants';
-import { SETTINGS } from '../../src/config/constants';
-import { ITEM_LOGIN_TAG } from '../fixtures/itemTags';
+} = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
@@ -517,7 +519,7 @@ export const mockGetItemLogin = (items) => {
     ({ reply, url }) => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
-      reply(getItemLoginExtra(item?.extra));
+      reply({ body: getItemLoginExtra(item?.extra), status: StatusCodes.OK });
     },
   ).as('getItemLogin');
 };

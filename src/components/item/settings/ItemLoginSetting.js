@@ -3,15 +3,10 @@ import { useTranslation } from 'react-i18next';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import { useParams } from 'react-router';
-import { useMutation } from 'react-query';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import { FormControlLabel } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
-import {
-  useTags,
-  useItem,
-  useItemTags,
-  useCurrentMember,
-} from '../../../hooks';
+import { useMutation, hooks } from '../../../config/queryClient';
 import {
   SETTINGS,
   SETTINGS_ITEM_LOGIN_DEFAULT,
@@ -25,13 +20,12 @@ import {
   ITEM_LOGIN_SETTING_MODE_SELECT_ID,
   ITEM_LOGIN_SETTING_SWITCH_ID,
 } from '../../../config/selectors';
-import {
-  DELETE_ITEM_TAG_MUTATION_KEY,
-  POST_ITEM_TAG_MUTATION_KEY,
-  PUT_ITEM_LOGIN_MUTATION_KEY,
-} from '../../../config/keys';
 import Loader from '../../common/Loader';
 import { getItemLoginTag } from '../../../utils/itemTag';
+
+const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
+
+const { useTags, useItem, useItemTags, useCurrentMember } = hooks;
 
 const ItemLoginSwitch = () => {
   const { t } = useTranslation();
@@ -44,11 +38,9 @@ const ItemLoginSwitch = () => {
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
 
   // mutations
-  const { mutate: putItemLoginSchema } = useMutation(
-    PUT_ITEM_LOGIN_MUTATION_KEY,
-  );
-  const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG_MUTATION_KEY);
-  const { mutate: postItemTag } = useMutation(POST_ITEM_TAG_MUTATION_KEY);
+  const { mutate: putItemLoginSchema } = useMutation(PUT_ITEM_LOGIN);
+  const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
+  const { mutate: postItemTag } = useMutation(POST_ITEM_TAG);
 
   // item login tag and item extra value
   const { data: tags, isLoading: isTagsLoading } = useTags();

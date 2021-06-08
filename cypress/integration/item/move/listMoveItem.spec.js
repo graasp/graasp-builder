@@ -9,7 +9,6 @@ import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
-  NAVIGATION_HOME_LINK_ID,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
@@ -39,13 +38,10 @@ describe('Move Item in List', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     moveItem({ id: movedItem, toItemPath });
 
-    cy.wait('@moveItem');
-
-    cy.get(`#${buildItemsTableRowId(movedItem)}`).should('not.exist');
-
-    // check in new parent
-    cy.goToItemInList(toItem);
-    cy.get(`#${buildItemsTableRowId(movedItem)}`).should('exist');
+    cy.wait('@moveItem').then(({ request: { url, body } }) => {
+      expect(body.parentId).to.equal(toItem);
+      expect(url).to.contain(movedItem);
+    });
   });
 
   it('move item in item', () => {
@@ -64,13 +60,10 @@ describe('Move Item in List', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
     moveItem({ id: movedItem, toItemPath });
 
-    cy.wait('@moveItem');
-
-    cy.get(`#${buildItemsTableRowId(movedItem)}`).should('not.exist');
-
-    // check in new parent
-    cy.goToItemInList(toItem);
-    cy.get(`#${buildItemsTableRowId(movedItem)}`).should('exist');
+    cy.wait('@moveItem').then(({ request: { body, url } }) => {
+      expect(body.parentId).to.equal(toItem);
+      expect(url).to.contain(movedItem);
+    });
   });
 
   it('move item to Home', () => {
@@ -89,13 +82,10 @@ describe('Move Item in List', () => {
     const toItem = ROOT_ID;
     moveItem({ id: movedItem, toItemPath: toItem });
 
-    cy.wait('@moveItem');
-
-    cy.get(`#${buildItemsTableRowId(movedItem)}`).should('not.exist');
-
-    // check in new parent
-    cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
-    cy.get(`#${buildItemsTableRowId(movedItem)}`).should('exist');
+    cy.wait('@moveItem').then(({ request: { body, url } }) => {
+      expect(body.parentId).to.equal(undefined);
+      expect(url).to.contain(movedItem);
+    });
   });
 
   describe('Error handling', () => {

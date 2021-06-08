@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useMutation } from 'react-query';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import { TREE_PREVENT_SELECTION } from '../../enums';
+import { useMutation } from '../../config/queryClient';
 import TreeModal from '../main/TreeModal';
-import { MOVE_ITEM_MUTATION_KEY } from '../../config/keys';
+import { ROOT_ID } from '../../config/constants';
 
 const MoveItemModalContext = React.createContext();
 
 const MoveItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
-  const { mutate: moveItem } = useMutation(MOVE_ITEM_MUTATION_KEY);
+  const { mutate: moveItem } = useMutation(MUTATION_KEYS.MOVE_ITEM);
 
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(false);
@@ -26,7 +27,12 @@ const MoveItemModalProvider = ({ children }) => {
   };
 
   const onConfirm = (payload) => {
-    moveItem(payload);
+    // change item's root id to null
+    const newPayload = {
+      ...payload,
+      to: payload.to === ROOT_ID ? null : payload.to,
+    };
+    moveItem(newPayload);
     onClose();
   };
 

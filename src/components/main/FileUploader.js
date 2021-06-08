@@ -5,17 +5,20 @@ import { DragDrop } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 import { useRouteMatch } from 'react-router';
-import { useMutation } from 'react-query';
+import { routines, MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import {
   FILE_UPLOAD_MAX_FILES,
   HEADER_HEIGHT,
   UPLOAD_METHOD,
 } from '../../config/constants';
+import { useMutation } from '../../config/queryClient';
 import configureUppy from '../../utils/uppy';
 import { UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
-import { FILE_UPLOAD_MUTATION_KEY } from '../../config/keys';
+import notifier from '../../middlewares/notifier';
+
+const { uploadFileRoutine } = routines;
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -55,7 +58,7 @@ const FileUploader = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const { mutate: onFileUploadComplete } = useMutation(
-    FILE_UPLOAD_MUTATION_KEY,
+    MUTATION_KEYS.FILE_UPLOAD,
   );
   const { t } = useTranslation();
 
@@ -81,6 +84,10 @@ const FileUploader = () => {
     onFileUploadComplete({ id: itemId, error });
   };
 
+  const onUpload = () => {
+    notifier({ type: uploadFileRoutine.REQUEST });
+  };
+
   const applyUppy = () => {
     setUppy(
       configureUppy({
@@ -89,6 +96,7 @@ const FileUploader = () => {
         onFilesAdded,
         method: UPLOAD_METHOD,
         onError,
+        onUpload,
       }),
     );
   };
