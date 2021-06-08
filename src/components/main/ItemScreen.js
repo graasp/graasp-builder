@@ -1,21 +1,25 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core';
+import * as ccc from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
 import Items from './Items';
-import { ITEM_SCREEN_ERROR_ALERT_ID } from '../../config/selectors';
+import {
+  buildFileItemId,
+  buildS3FileItemId,
+  DOCUMENT_ITEM_TEXT_EDITOR_ID,
+  ITEM_SCREEN_ERROR_ALERT_ID,
+} from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
-import FileItem from '../item/FileItem';
 import FileUploader from './FileUploader';
-import S3FileItem from '../item/S3FileItem';
 import ItemMain from '../item/ItemMain';
-import LinkItem from '../item/LinkItem';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
-import DocumentItem from '../item/DocumentItem';
-import AppItem from '../item/AppItem';
+import { API_HOST } from '../../config/constants';
 
-const { useChildren, useItem } = hooks;
+const { FileItem, S3FileItem, DocumentItem, LinkItem, AppItem } = ccc;
+
+const { useChildren, useItem, useFileContent, useS3FileContent } = hooks;
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -36,20 +40,36 @@ const ItemScreen = () => {
   // display children
   const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
 
+  const { data: content } = useFileContent(item?.get('id'), {
+    enabled: item && item.get('type') === ITEM_TYPES.FILE,
+  });
+  const { data: s3Content } = useS3FileContent(item?.get('id'), {
+    enabled: item?.get('type') === ITEM_TYPES.S3_FILE,
+  });
+
   const renderContent = () => {
     switch (item.get('type')) {
       case ITEM_TYPES.FILE:
         return (
           <div className={classes.fileWrapper}>
-            <FileItem item={item} />
+            <FileItem
+              id={buildFileItemId(itemId)}
+              item={item}
+              content={content}
+            />
           </div>
         );
-      case ITEM_TYPES.S3_FILE:
+      case ITEM_TYPES.S3_FILE: {
         return (
           <div className={classes.fileWrapper}>
-            <S3FileItem item={item} />
+            <S3FileItem
+              id={buildS3FileItemId(itemId)}
+              item={item}
+              content={s3Content}
+            />
           </div>
         );
+      }
       case ITEM_TYPES.LINK:
         return (
           <div className={classes.fileWrapper}>
@@ -57,9 +77,14 @@ const ItemScreen = () => {
           </div>
         );
       case ITEM_TYPES.DOCUMENT:
-        return <DocumentItem item={item} />;
+        return <DocumentItem id={DOCUMENT_ITEM_TEXT_EDITOR_ID} item={item} />;
       case ITEM_TYPES.APP:
-        return <AppItem item={item} />;
+        return (
+          <AppItem
+            item={item}
+            apiHost={API_HOST.substr('http://'.length)} // todo: to change
+          />
+        );
       case ITEM_TYPES.FOLDER:
         // wait until all children are available
         if (isChildrenLoading) {

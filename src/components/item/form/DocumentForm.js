@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-import TextEditor from '../../common/TextEditor';
+import { TextEditor } from '@graasp/ui';
 import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
