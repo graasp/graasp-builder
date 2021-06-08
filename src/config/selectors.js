@@ -1,6 +1,7 @@
 const parseStringForId = (string) => string.replaceAll('+', '');
 
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
+export const CONFIRM_DELETE_BUTTON_ID = 'confirmDeleteButton';
 export const buildItemCard = (id) => `itemCard-${id}`;
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
 export const ITEM_FORM_NAME_INPUT_ID = 'newItemNameInput';

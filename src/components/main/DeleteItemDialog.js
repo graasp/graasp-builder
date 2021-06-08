@@ -9,13 +9,14 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import { makeStyles } from '@material-ui/core/styles';
+import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
 import {
   DELETE_ITEM_MUTATION_KEY,
   DELETE_ITEMS_MUTATION_KEY,
 } from '../../config/keys';
 
 const useStyles = makeStyles(() => ({
-  deleteButton: {
+  confirmDeleteButton: {
     color: 'red',
   },
 }));
@@ -57,7 +58,8 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
           {t('Cancel')}
         </Button>
         <Button
-          className={classes.deleteButton}
+          id={CONFIRM_DELETE_BUTTON_ID}
+          className={classes.confirmDeleteButton}
           onClick={onDelete}
           color="secondary"
           autoFocus
