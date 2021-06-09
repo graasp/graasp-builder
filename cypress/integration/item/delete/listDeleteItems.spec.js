@@ -3,6 +3,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
+  CONFIRM_DELETE_BUTTON_ID,
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
   ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../../../src/config/selectors';
@@ -17,6 +18,7 @@ const deleteItems = (itemIds) => {
   });
 
   cy.get(`#${ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}`).click();
+  cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };
 
 describe('Delete Items in List', () => {

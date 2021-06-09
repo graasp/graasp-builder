@@ -75,6 +75,8 @@
     "Shortcut to name": "Shortcut vers {{name}}",
     "Click here if you are not automatically redirected": "Cliquez ici si vous n'êtes pas automatiquement redirigé",
     "Create Shortcut": "Créer un Raccourci",
-    "Sign Out": "Déconnexion"
+    "Sign Out": "Déconnexion",
+    "Confirm deleting item.": "Confirmer la suppression de l'élément",
+    "This item will be deleted permanently.": "Cet élément sera supprimé définitivement."
   }
 }

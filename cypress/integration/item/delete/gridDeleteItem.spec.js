@@ -2,12 +2,14 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
+  CONFIRM_DELETE_BUTTON_ID,
   ITEM_DELETE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const deleteItem = (id) => {
   cy.get(`#${buildItemCard(id)} .${ITEM_DELETE_BUTTON_CLASS}`).click();
+  cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };
 
 describe('Delete Item in Grid', () => {
