@@ -7,13 +7,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
 import { makeStyles } from '@material-ui/core/styles';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { useMutation } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
-import {
-  DELETE_ITEM_MUTATION_KEY,
-  DELETE_ITEMS_MUTATION_KEY,
-} from '../../config/keys';
 
 const useStyles = makeStyles(() => ({
   confirmDeleteButton: {
@@ -21,11 +18,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
+
 const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
   const { t } = useTranslation();
 
-  const { mutate: deleteItems } = useMutation(DELETE_ITEMS_MUTATION_KEY);
-  const { mutate: deleteItem } = useMutation(DELETE_ITEM_MUTATION_KEY);
+  const { mutate: deleteItems } = useMutation(DELETE_ITEMS);
+  const { mutate: deleteItem } = useMutation(DELETE_ITEM);
 
   const classes = useStyles();
 
