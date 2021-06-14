@@ -4,6 +4,8 @@ import {
   buildItemCard,
   buildItemsTableRowId,
   EDIT_ITEM_BUTTON_CLASS,
+  TEXT_EDITOR_CLASS,
+  VIEW_ITEM_EDIT_ITEM_BUTTON_ID,
 } from '../../../../src/config/selectors';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -36,4 +38,9 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
     default:
       cy.fillSpaceModal(payload);
   }
+};
+
+export const editCaptionFromViewPage = ({ caption }) => {
+  cy.get(`#${VIEW_ITEM_EDIT_ITEM_BUTTON_ID}`).click();
+  cy.get(`.${TEXT_EDITOR_CLASS}`).clear().type(caption).blur();
 };

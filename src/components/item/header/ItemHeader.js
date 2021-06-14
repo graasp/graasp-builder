@@ -7,7 +7,6 @@ import Navigation from '../../layout/Navigation';
 import ItemHeaderActions from './ItemHeaderActions';
 import { buildItemPath } from '../../../config/paths';
 import Loader from '../../common/Loader';
-import { ITEM_KEYS } from '../../../enums';
 
 const { useCurrentMember, useItem } = hooks;
 
@@ -37,11 +36,7 @@ const ItemHeader = ({ onClick }) => {
   return (
     <div className={classes.root}>
       <Navigation item={item} user={user} />
-      <ItemHeaderActions
-        id={item?.get(ITEM_KEYS.ID)}
-        itemType={item?.get(ITEM_KEYS.TYPE)}
-        onClick={onClick}
-      />
+      <ItemHeaderActions item={item} onClick={onClick} />
     </div>
   );
 };

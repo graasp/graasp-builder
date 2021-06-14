@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core';
 import {
@@ -8,7 +8,8 @@ import {
   LinkItem,
   AppItem,
 } from '@graasp/ui';
-import { hooks } from '../../config/queryClient';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { hooks, useMutation } from '../../config/queryClient';
 import Items from './Items';
 import {
   buildFileItemId,
@@ -22,13 +23,13 @@ import ItemMain from '../item/ItemMain';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import { API_HOST } from '../../config/constants';
+import { ItemLayoutModeContext } from '../context/ItemLayoutModeContext';
 
 const { useChildren, useItem, useFileContent, useS3FileContent } = hooks;
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
     textAlign: 'center',
-    background: 'lightgrey',
     height: '80vh',
     flexGrow: 1,
   },
@@ -36,14 +37,15 @@ const useStyles = makeStyles(() => ({
 
 const ItemScreen = () => {
   const classes = useStyles();
-
+  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
   const { itemId } = useParams();
+  const { editingItemId, setEditingItemId } = useContext(ItemLayoutModeContext);
 
-  const { data: item, isLoading } = useItem(itemId);
+  const { data: item, isLoading, isError } = useItem(itemId);
+  const itemType = item?.get(ITEM_KEYS.TYPE);
 
   // display children
   const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
-  const itemType = item.get(ITEM_KEYS.TYPE);
   const id = item?.get(ITEM_KEYS.ID);
 
   const { data: content } = useFileContent(id, {
@@ -52,6 +54,15 @@ const ItemScreen = () => {
   const { data: s3Content } = useS3FileContent(id, {
     enabled: itemType === ITEM_TYPES.S3_FILE,
   });
+  const isEditing = editingItemId === itemId;
+
+  const onSaveCaption = (caption) => {
+    // edit item only when description has changed
+    if (caption !== item.get('description')) {
+      editItem({ id: itemId, description: caption });
+    }
+    setEditingItemId(null);
+  };
 
   const renderContent = () => {
     switch (itemType) {
@@ -60,8 +71,10 @@ const ItemScreen = () => {
           <div className={classes.fileWrapper}>
             <FileItem
               id={buildFileItemId(itemId)}
+              editCaption={isEditing}
               item={item}
               content={content}
+              onSaveCaption={onSaveCaption}
             />
           </div>
         );
@@ -78,7 +91,11 @@ const ItemScreen = () => {
       case ITEM_TYPES.LINK:
         return (
           <div className={classes.fileWrapper}>
-            <LinkItem item={item} />
+            <LinkItem
+              item={item}
+              editCaption={isEditing}
+              onSaveCaption={onSaveCaption}
+            />
           </div>
         );
       case ITEM_TYPES.DOCUMENT:
@@ -87,7 +104,9 @@ const ItemScreen = () => {
         return (
           <AppItem
             item={item}
-            apiHost={API_HOST.substr('http://'.length)} // todo: to change
+            apiHost={API_HOST} // todo: to change
+            editCaption={isEditing}
+            onSaveCaption={onSaveCaption}
           />
         );
       case ITEM_TYPES.FOLDER:
@@ -113,7 +132,7 @@ const ItemScreen = () => {
     return <Loader />;
   }
 
-  if (!item || !id) {
+  if (!item || !itemId || isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 

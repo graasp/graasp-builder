@@ -90,10 +90,6 @@ export const USERNAME_MAX_LENGTH = 30;
 
 export const SHARE_ITEM_MODAL_MIN_WIDTH = 120;
 
-// React Query Configs
-export const STALE_TIME_MILLISECONDS = 1000 * 60 * 60;
-export const CACHE_TIME_MILLISECONDS = 1000 * 60 * 60;
-
 export const LOADING_CONTENT = '…';
 export const SETTINGS = {
   ITEM_LOGIN: {

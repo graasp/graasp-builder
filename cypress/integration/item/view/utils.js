@@ -2,10 +2,10 @@ import {
   buildFileItemId,
   buildS3FileItemId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
-  ITEM_PANEL_DESCRIPTION_ID,
   ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
+  TEXT_EDITOR_CLASS,
 } from '../../../../src/config/selectors';
 import { ITEM_TYPES } from '../../../../src/enums';
 import {
@@ -15,10 +15,9 @@ import {
   getS3FileExtra,
 } from '../../../../src/utils/itemExtra';
 
-const expectPanelLayout = ({ name, extra, creator, description, mimetype }) => {
+const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
   const panel = cy.get(`#${ITEM_PANEL_ID}`);
   panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
-  panel.get(`#${ITEM_PANEL_DESCRIPTION_ID}`).contains(description);
   panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creator);
 
   if (mimetype) {
@@ -30,12 +29,7 @@ const expectPanelLayout = ({ name, extra, creator, description, mimetype }) => {
   }
 };
 
-export const expectDocumentViewScreenLayout = ({
-  name,
-  extra,
-  creator,
-  description,
-}) => {
+export const expectDocumentViewScreenLayout = ({ name, extra, creator }) => {
   cy.get(DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR).then((editor) => {
     expect(editor.html()).to.contain(getDocumentExtra(extra)?.content);
   });
@@ -44,7 +38,6 @@ export const expectDocumentViewScreenLayout = ({
     name,
     extra,
     creator,
-    description,
   });
 };
 
@@ -68,14 +61,17 @@ export const expectFileViewScreenLayout = ({
   }
   cy.get(selector).should('exist');
 
+  cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', description);
+
   // table
-  expectPanelLayout({ name, extra, creator, description, mimetype });
+  expectPanelLayout({ name, extra, creator, mimetype });
 };
 
 export const expectLinkViewScreenLayout = ({
   id,
   name,
   extra,
+  creator,
   description,
 }) => {
   const { url, html } = getEmbeddedLinkExtra(extra);
@@ -91,8 +87,10 @@ export const expectLinkViewScreenLayout = ({
     cy.get(`iframe#${id}`).should('have.attr', 'src', url);
   }
 
+  if (description) {
+    cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', description);
+  }
+
   // table
-  const panel = cy.get(`#${ITEM_PANEL_ID}`);
-  panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
-  panel.get(`#${ITEM_PANEL_DESCRIPTION_ID}`).contains(description);
+  expectPanelLayout({ name, extra, creator });
 };

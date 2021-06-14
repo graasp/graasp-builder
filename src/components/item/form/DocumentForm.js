@@ -38,6 +38,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
           id={ITEM_FORM_DOCUMENT_TEXT_ID}
           value={value}
           onChange={handleOnChange}
+          edit
         />
       </div>
     </>

@@ -6,9 +6,12 @@ const ItemLayoutModeContext = React.createContext();
 
 const ItemLayoutModeProvider = ({ children }) => {
   const [mode, setMode] = useState(DEFAULT_ITEM_LAYOUT_MODE);
+  const [editingItemId, setEditingItemId] = useState(null);
 
   return (
-    <ItemLayoutModeContext.Provider value={{ mode, setMode }}>
+    <ItemLayoutModeContext.Provider
+      value={{ mode, setMode, editingItemId, setEditingItemId }}
+    >
       {children}
     </ItemLayoutModeContext.Provider>
   );

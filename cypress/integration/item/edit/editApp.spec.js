@@ -11,7 +11,7 @@ import {
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
-import { editItem } from './utils';
+import { editCaptionFromViewPage, editItem } from './utils';
 
 const url = 'http://localhost:3334';
 const newFields = {
@@ -20,6 +20,20 @@ const newFields = {
 };
 
 describe('Edit App', () => {
+  describe('View Page', () => {
+    it('edit caption', () => {
+      cy.setUpApi({ items: [GRAASP_APP_ITEM] });
+      cy.visit(buildItemPath(GRAASP_APP_ITEM.id));
+      const caption = 'new caption';
+      editCaptionFromViewPage({ caption });
+      cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
+        expect(endpointUrl).to.contain(GRAASP_APP_ITEM.id);
+        // caption content might be wrapped with html tags
+        expect(body?.description).to.contain(caption);
+      });
+    });
+  });
+
   describe('List', () => {
     it('edit app on Home', () => {
       const itemToEdit = GRAASP_APP_ITEM;
@@ -42,13 +56,12 @@ describe('Edit App', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
-          expect(description).to.equal(newFields.description);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.wait('@getOwnItems');
         },
@@ -78,14 +91,13 @@ describe('Edit App', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
-          expect(description).to.equal(newFields.description);
           cy.get('@getItem').its('response.url').should('contain', parent.id);
         },
       );
@@ -112,7 +124,7 @@ describe('Edit App', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
@@ -120,7 +132,6 @@ describe('Edit App', () => {
           cy.get('@getOwnItems');
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
-          expect(description).to.equal(newFields.description);
         },
       );
     });
@@ -146,14 +157,13 @@ describe('Edit App', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
-          expect(description).to.equal(newFields.description);
           cy.get('@getItem').its('response.url').should('contain', parent.id);
         },
       );

@@ -29,13 +29,12 @@ describe('Edit Folder', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
-          expect(description).to.equal(EDITED_FIELDS.description);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.wait('@getOwnItems');
         },
@@ -65,14 +64,13 @@ describe('Edit Folder', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
-          expect(description).to.equal(EDITED_FIELDS.description);
           cy.get('@getItem')
             .its('response.url')
             .should('contain', SAMPLE_ITEMS.items[0].id);
@@ -101,7 +99,7 @@ describe('Edit Folder', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
@@ -109,7 +107,6 @@ describe('Edit Folder', () => {
           cy.get('@getOwnItems');
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
-          expect(description).to.equal(EDITED_FIELDS.description);
         },
       );
     });
@@ -134,14 +131,13 @@ describe('Edit Folder', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
-          expect(description).to.equal(EDITED_FIELDS.description);
           cy.get('@getItem')
             .its('response.url')
             .should('contain', SAMPLE_ITEMS.items[0].id);
