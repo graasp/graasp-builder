@@ -10,6 +10,7 @@ import ErrorAlert from './common/ErrorAlert';
 import Items from './main/Items';
 import { hooks } from '../config/queryClient';
 import Loader from './common/Loader';
+import Main from './main/Main';
 
 const SharedItems = () => {
   const { t } = useTranslation();
@@ -24,14 +25,14 @@ const SharedItems = () => {
   }
 
   return (
-    <>
+    <Main>
       <ItemHeader />
       <Items
         id={SHARED_ITEMS_ID}
         title={t('Items Shared With Me')}
         items={List(sharedItems)}
       />
-    </>
+    </Main>
   );
 };
 

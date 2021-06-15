@@ -23,7 +23,6 @@ import {
   getItemLoginSchema,
   buildItemLoginSchemaExtra,
 } from '../../src/utils/itemExtra';
-import { REDIRECTION_CONTENT } from './constants';
 import { SETTINGS } from '../../src/config/constants';
 import { ITEM_LOGIN_TAG } from '../fixtures/itemTags';
 
@@ -53,15 +52,18 @@ const {
   GET_TAGS_ROUTE,
   buildPutItemLoginSchema,
   buildPostItemTagRoute,
+  buildPatchMember,
+  SHARE_ITEM_WITH_ROUTE,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
+const AUTHENTICATION_HOST = Cypress.env('AUTHENTICATION_HOST');
 
 export const redirectionReply = {
-  headers: { 'content-type': 'text/html' },
+  headers: { 'content-type': 'application/json' },
   statusCode: StatusCodes.OK,
-  body: REDIRECTION_CONTENT,
+  body: null,
 };
 
 export const mockGetCurrentMember = (
@@ -95,6 +97,19 @@ export const mockGetOwnItems = (items) => {
       req.reply(own);
     },
   ).as('getOwnItems');
+};
+
+export const mockGetSharedItems = ({ items, member }) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`,
+    },
+    (req) => {
+      const own = items.filter(({ creator }) => creator !== member.id);
+      req.reply(own);
+    },
+  ).as('getSharedItems');
 };
 
 export const mockPostItem = (items, shouldThrowError) => {
@@ -336,6 +351,22 @@ export const mockGetMemberBy = (members, shouldThrowError) => {
   ).as('getMemberBy');
 };
 
+export const mockEditMember = (members, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_PATCH.method,
+      url: new RegExp(`${API_HOST}/${buildPatchMember(ID_FORMAT)}`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply('edit member');
+    },
+  ).as('editMember');
+};
+
 // mock upload item for default and s3 upload methods
 export const mockUploadItem = (items, shouldThrowError) => {
   cy.intercept(
@@ -425,7 +456,7 @@ export const mockSignInRedirection = () => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(buildSignInPath()),
+      url: `${AUTHENTICATION_HOST}/${buildSignInPath()}`,
     },
     ({ reply }) => {
       reply(redirectionReply);

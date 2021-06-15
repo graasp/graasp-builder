@@ -10,6 +10,7 @@ import FileUploader from './FileUploader';
 import { HOME_ERROR_ALERT_ID, OWNED_ITEMS_ID } from '../../config/selectors';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
+import Main from './Main';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -25,11 +26,11 @@ const Home = () => {
   }
 
   return (
-    <>
+    <Main>
       <FileUploader />
       <ItemHeader />
       <Items id={OWNED_ITEMS_ID} title={t('My Items')} items={List(ownItems)} />
-    </>
+    </Main>
   );
 };
 

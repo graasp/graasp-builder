@@ -9,6 +9,7 @@ import {
   HEADER_APP_BAR_ID,
   HEADER_USER_ID,
   ITEM_MAIN_CLASS,
+  REDIRECTION_CONTENT_ID,
   USER_MENU_SIGN_OUT_OPTION_ID,
 } from '../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../fixtures/items';
@@ -16,7 +17,6 @@ import { CURRENT_USER } from '../fixtures/members';
 import {
   REQUEST_FAILURE_LOADING_TIME,
   PAGE_LOAD_WAITING_PAUSE,
-  REDIRECTION_CONTENT,
   REDIRECTION_TIME,
 } from '../support/constants';
 import { REDIRECT_URL_LOCAL_STORAGE_KEY } from '../../src/config/constants';
@@ -33,7 +33,7 @@ describe('Authentication', () => {
         'equal',
         HOME_PATH,
       );
-      cy.get('html').should('contain', REDIRECTION_CONTENT);
+      cy.get(`#${REDIRECTION_CONTENT_ID}`).should('exist');
     });
     it('Shared Items', () => {
       cy.visit(SHARED_ITEMS_PATH);
@@ -42,7 +42,7 @@ describe('Authentication', () => {
         'equal',
         SHARED_ITEMS_PATH,
       );
-      cy.get('html').should('contain', REDIRECTION_CONTENT);
+      cy.get(`#${REDIRECTION_CONTENT_ID}`).should('exist');
     });
   });
 
@@ -53,11 +53,13 @@ describe('Authentication', () => {
 
     it('Signing Off redirect to sign in route', () => {
       cy.visit(HOME_PATH);
-      // user name in header
       cy.get(`#${HEADER_USER_ID}`).click();
       cy.get(`#${USER_MENU_SIGN_OUT_OPTION_ID}`).click();
       cy.wait(REQUEST_FAILURE_LOADING_TIME);
-      cy.get('html').should('contain', REDIRECTION_CONTENT);
+
+      // should refetch current member just after signing out
+      // this current member will be unauthorized and thus redirect
+      cy.wait(['@signOut', '@getCurrentMember']);
     });
 
     describe('Load page correctly', () => {

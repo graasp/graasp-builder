@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
+import { Loader } from '@graasp/ui';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import { CssBaseline } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { HEADER_HEIGHT, LEFT_MENU_WIDTH } from '../../config/constants';
+import {
+  DEFAULT_LANG,
+  HEADER_HEIGHT,
+  LEFT_MENU_WIDTH,
+} from '../../config/constants';
 import MainMenu from './MainMenu';
 import Header from '../layout/Header';
+import { hooks } from '../../config/queryClient';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,8 +62,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Main = ({ children }) => {
+  const { i18n } = useTranslation();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+
+  const { data: member, isLoading } = hooks.useCurrentMember();
+
+  useEffect(() => {
+    i18n.changeLanguage(member?.get('extra')?.lang || DEFAULT_LANG);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [member?.get('extra')?.lang]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   const toggleDrawer = (isOpen) => {
     setOpen(isOpen);

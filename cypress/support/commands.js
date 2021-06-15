@@ -33,6 +33,8 @@ import {
   mockGetTags,
   mockPostItemTag,
   mockPutItemLogin,
+  mockEditMember,
+  mockGetSharedItems,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -62,11 +64,14 @@ Cypress.Commands.add(
     postItemTagError = false,
     postItemLoginError = false,
     putItemLoginError = false,
+    editMemberError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
 
     mockGetOwnItems(cachedItems);
+
+    mockGetSharedItems({ items: cachedItems, member: currentMember });
 
     mockPostItem(cachedItems, postItemError);
 
@@ -118,6 +123,8 @@ Cypress.Commands.add(
     mockGetItemTags(items);
 
     mockPostItemTag(items, postItemTagError);
+
+    mockEditMember(members, editMemberError);
   },
 );
 

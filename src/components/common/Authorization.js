@@ -4,9 +4,11 @@ import { API_ROUTES } from '@graasp/query-client';
 import {
   AUTHENTICATION_HOST,
   REDIRECT_URL_LOCAL_STORAGE_KEY,
+  NODE_ENV,
 } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
 import Loader from './Loader';
+import RedirectPage from './RedirectionContent';
 
 const Authorization = () => (ChildComponent) => {
   const ComposedComponent = (props) => {
@@ -29,14 +31,26 @@ const Authorization = () => (ChildComponent) => {
     }
 
     // check authorization
-    if (isError || !currentMember) {
-      // save current url for later redirection after sign in
-      localStorage.setItem(REDIRECT_URL_LOCAL_STORAGE_KEY, pathname);
-      redirectToSignIn();
+    if (currentMember && !isError) {
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      return <ChildComponent {...props} />;
     }
 
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    return <ChildComponent {...props} />;
+    // save current url for later redirection after sign in
+    localStorage.setItem(REDIRECT_URL_LOCAL_STORAGE_KEY, pathname);
+
+    // do not redirect in test environment to fully load a page
+    // eslint-disable-next-line no-unused-expressions
+    NODE_ENV !== 'test' && redirectToSignIn();
+
+    // redirect page if redirection is not working
+    return (
+      <RedirectPage
+        link={`${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath(
+          `${window.location.origin}${pathname}`,
+        )}`}
+      />
+    );
   };
   return ComposedComponent;
 };

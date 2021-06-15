@@ -82,3 +82,12 @@ export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
 export const VIEW_ITEM_EDIT_ITEM_BUTTON_ID = 'viewItemEditItemButton';
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id) => `saveButton-${id}`;
+export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';
+export const MEMBER_PROFILE_MEMBER_NAME_ID = 'memberProfileMemberName';
+export const MEMBER_PROFILE_EMAIL_ID = 'memberProfileEmail';
+export const MEMBER_PROFILE_INSCRIPTION_DATE_ID =
+  'memberProfileInscriptionDate';
+export const MEMBER_PROFILE_LANGUAGE_SWITCH_ID = 'memberProfileLanguageSwitch';
+export const MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID =
+  'memberProfileMemberIdCopyButton';
+export const REDIRECTION_CONTENT_ID = 'redirectionContent';

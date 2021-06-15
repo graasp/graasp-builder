@@ -38,3 +38,11 @@ export const POST_ITEM_TAG_ERROR_MESSAGE =
   'There was an error while posting the tag.';
 export const ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE =
   'There was an error while signing in.';
+export const EDIT_MEMBER_ERROR_MESSAGE =
+  'There was an error updating the member';
+export const EDIT_MEMBER_SUCCESS_MESSAGE =
+  'The member was updated successfully';
+export const COPY_MEMBER_ID_TO_CLIPBOARD_SUCCESS_MESSAGE =
+  'Member ID is successfully copied!';
+export const COPY_MEMBER_ID_TO_CLIPBOARD_ERROR_MESSAGE =
+  'An error occured while copying the member ID';

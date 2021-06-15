@@ -5,6 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
+import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
 import { MUTATION_KEYS, API_ROUTES } from '@graasp/query-client';
@@ -19,6 +20,7 @@ import {
   USER_MENU_SIGN_OUT_OPTION_ID,
 } from '../../config/selectors';
 import Loader from './Loader';
+import { MEMBER_PROFILE_PATH } from '../../config/paths';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -34,9 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SettingsHeader() {
+const SettingsHeader = () => {
   const { data: user, isLoading } = hooks.useCurrentMember();
   const classes = useStyles();
+  const { push } = useHistory();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
@@ -54,6 +57,10 @@ function SettingsHeader() {
     handleClose();
   };
 
+  const goToProfile = () => {
+    push(MEMBER_PROFILE_PATH);
+  };
+
   const renderMenu = () => {
     if (!user || user.isEmpty()) {
       return (
@@ -67,9 +74,12 @@ function SettingsHeader() {
     }
 
     return (
-      <MenuItem onClick={handleSignOut} id={USER_MENU_SIGN_OUT_OPTION_ID}>
-        {t('Sign Out')}
-      </MenuItem>
+      <>
+        <MenuItem onClick={goToProfile}>{t('Profile')}</MenuItem>
+        <MenuItem onClick={handleSignOut} id={USER_MENU_SIGN_OUT_OPTION_ID}>
+          {t('Sign Out')}
+        </MenuItem>
+      </>
     );
   };
 
@@ -107,6 +117,6 @@ function SettingsHeader() {
       </Menu>
     </>
   );
-}
+};
 
 export default SettingsHeader;

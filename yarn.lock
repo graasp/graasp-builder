@@ -1583,9 +1583,9 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#5/patchMember":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
   version "0.1.0"
-  resolved "git://github.com/graasp/graasp-query-client.git#5397cd3fbb27d7703c61d57a34c7c2f1083280ff"
+  resolved "git://github.com/graasp/graasp-query-client.git#05bde46fec71ed84aa6ca4ae0e5753ba78c677ae"
   dependencies:
     http-status-codes "2.1.4"
     immutable "4.0.0-rc.12"
@@ -1594,9 +1594,9 @@
     react-query "3.16.0"
     uuid "8.3.2"
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git#14/captions":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#master":
   version "0.2.0"
-  resolved "git://github.com/graasp/graasp-ui.git#e8659334d6fe8a8e28fa4c3f41a467f58de79a69"
+  resolved "git://github.com/graasp/graasp-ui.git#97c65d25464dc8ba944ce35722d2bad5a16d834f"
   dependencies:
     clsx "1.1.1"
     immutable "4.0.0-rc.12"
@@ -2313,9 +2313,9 @@
   integrity sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==
 
 "@types/node@*":
-  version "15.12.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.3.tgz#2817bf5f25bc82f56579018c53f7d41b1830b1af"
-  integrity sha512-SNt65CPCXvGNDZ3bvk1TQ0Qxoe3y1RKH88+wZ2Uf05dduBCqqFQ76ADP9pbT+Cpvj60SkRppMCh2Zo8tDixqjQ==
+  version "15.12.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.4.tgz#e1cf817d70a1e118e81922c4ff6683ce9d422e26"
+  integrity sha512-zrNj1+yqYF4WskCMOHwN+w9iuD12+dGm0rQ35HLl9/Ouuq52cEtd0CH9qMgrdNmi5ejC1/V7vKEXYubB+65DkA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4257,9 +4257,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001219:
-  version "1.0.30001238"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001238.tgz#e6a8b45455c5de601718736d0242feef0ecdda15"
-  integrity sha512-bZGam2MxEt7YNsa2VwshqWQMwrYs5tR5WZQRYSuFxsBQunWjBuXhN4cS9nV5FFb1Z9y+DoQcQ0COyQbv6A+CKw==
+  version "1.0.30001239"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001239.tgz#66e8669985bb2cb84ccb10f68c25ce6dd3e4d2b8"
+  integrity sha512-cyBkXJDMeI4wthy8xJ2FvDU6+0dtcZSJW3voUF8+e9f1bBeuvyZfc3PNbkOETyhbR+dGCPzn9E7MA3iwzusOhQ==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -4963,7 +4963,7 @@ conventional-recommended-bump@6.0.11:
     meow "^8.0.0"
     q "^1.5.1"
 
-convert-source-map@1.7.0, convert-source-map@^1.1.0, convert-source-map@^1.3.0, convert-source-map@^1.4.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
+convert-source-map@1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.7.0.tgz#17a2cb882d7f77d3490585e2ce6c524424a3a442"
   integrity sha512-4FJkXzKXEDB1snCFZlLP4gpC3JILicCpGbzG9f9G7tGqGCzETQ2hWPrcinA9oU4wtf2biUaEH5065UnMeR33oA==
@@ -4974,6 +4974,13 @@ convert-source-map@^0.3.3:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-0.3.5.tgz#f1d802950af7dd2631a1febe0596550c86ab3190"
   integrity sha1-8dgClQr33SYxof6+BZZVDIarMZA=
+
+convert-source-map@^1.1.0, convert-source-map@^1.3.0, convert-source-map@^1.4.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.8.0.tgz#f3373c32d21b4d780dd8004514684fb791ca4369"
+  integrity sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==
+  dependencies:
+    safe-buffer "~5.1.1"
 
 convert-source-map@~1.1.0:
   version "1.1.3"
@@ -5008,17 +5015,17 @@ copy-descriptor@^0.1.0:
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
 core-js-compat@^3.1.1, core-js-compat@^3.14.0, core-js-compat@^3.6.2:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.14.0.tgz#b574dabf29184681d5b16357bd33d104df3d29a5"
-  integrity sha512-R4NS2eupxtiJU+VwgkF9WTpnSfZW4pogwKHd8bclWU2sp93Pr5S1uYJI84cMOubJRou7bcfL0vmwtLslWN5p3A==
+  version "3.15.0"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.15.0.tgz#e14a371123db9d1c5b41206d3f420643d238b8fa"
+  integrity sha512-8X6lWsG+s7IfOKzV93a7fRYfWRZobOfjw5V5rrq43Vh/W+V6qYxl7Akalsvgab4PFT/4L/pjQbdBUEM36NXKrw==
   dependencies:
     browserslist "^4.16.6"
     semver "7.0.0"
 
 core-js-pure@^3.14.0:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.14.0.tgz#72bcfacba74a65ffce04bf94ae91d966e80ee553"
-  integrity sha512-YVh+LN2FgNU0odThzm61BsdkwrbrchumFq3oztnE9vTKC4KS2fvnPmcx8t6jnqAyOTCTF4ZSiuK8Qhh7SNcL4g==
+  version "3.15.0"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.15.0.tgz#c19349ae0be197b8bcf304acf4d91c5e29ae2091"
+  integrity sha512-RO+LFAso8DB6OeBX9BAcEGvyth36QtxYon1OyVsITNVtSKr/Hos0BXZwnsOJ7o+O6KHtK+O+cJIEj9NGg6VwFA==
 
 core-js@^2.4.0:
   version "2.6.12"
@@ -5026,9 +5033,9 @@ core-js@^2.4.0:
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^3.6.1, core-js@^3.6.5:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.14.0.tgz#62322b98c71cc2018b027971a69419e2425c2a6c"
-  integrity sha512-3s+ed8er9ahK+zJpp9ZtuVcDoFzHNiZsPbNAAE4KXgrRHbjSqqNN6xGSXq6bq7TZIbKj4NLrLb6bJ5i+vSVjHA==
+  version "3.15.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.0.tgz#db9554ebce0b6fd90dc9b1f2465c841d2d055044"
+  integrity sha512-GUbtPllXMYRzIgHNZ4dTYTcUemls2cni83Q4Q/TrFONHfhcg9oEGOtaGHfb0cpzec60P96UKPvMkjX1jET8rUw==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -6409,9 +6416,9 @@ eslint-webpack-plugin@^2.1.0:
     schema-utils "^3.0.0"
 
 eslint@^7.11.0:
-  version "7.28.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.28.0.tgz#435aa17a0b82c13bb2be9d51408b617e49c1e820"
-  integrity sha512-UMfH0VSjP0G4p3EWirscJEQ/cHqnT/iuH6oNZOB94nBjWbMnhGEPxsZm1eyIW0C/9jLI0Fow4W5DXLjEI7mn1g==
+  version "7.29.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.29.0.tgz#ee2a7648f2e729485e4d0bd6383ec1deabc8b3c0"
+  integrity sha512-82G/JToB9qIy/ArBzIWG9xvvwL3R86AlCjtGw+A29OMZDqhTybz/MByORSukGxeI+YPCR4coYyITKk8BFH9nDA==
   dependencies:
     "@babel/code-frame" "7.12.11"
     "@eslint/eslintrc" "^0.4.2"
@@ -15365,9 +15372,9 @@ yargs-parser@^18.1.2:
     decamelize "^1.2.0"
 
 yargs-parser@^20.2.2, yargs-parser@^20.2.3:
-  version "20.2.7"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.7.tgz#61df85c113edfb5a7a4e36eb8aa60ef423cbc90a"
-  integrity sha512-FiNkvbeHzB/syOjIUxFDCnhSfzAL8R5vs40MgLFBorXACCOAEaWu0gRZl14vG8MR9AOJIZbmkjhusqBYZ3HTHw==
+  version "20.2.9"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.9.tgz#2eb7dc3b0289718fc295f362753845c41a0c94ee"
+  integrity sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==
 
 yargs@^13.3.2:
   version "13.3.2"
