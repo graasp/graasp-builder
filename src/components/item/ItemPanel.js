@@ -11,7 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import TableRow from '@material-ui/core/TableRow';
 import { IconButton, Toolbar, Typography, withStyles } from '@material-ui/core';
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
-import { ITEM_TYPES } from '../../enums';
+import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import { formatDate } from '../../utils/date';
 import {
   ITEM_PANEL_DESCRIPTION_ID,
@@ -69,14 +69,14 @@ class ItemPanel extends Component {
 
     let type = null;
     let size = null;
-    if (item.get('type') === ITEM_TYPES.S3_FILE) {
+    if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.S3_FILE) {
       const extra = getS3FileExtra(item.get('extra'));
       ({ contenttype: type, size } = extra);
-    } else if (item.get('type') === ITEM_TYPES.FILE) {
+    } else if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.FILE) {
       const extra = getFileExtra(item.get('extra'));
       ({ mimetype: type, size } = extra);
     } else {
-      type = item.get('type');
+      type = item.get(ITEM_KEYS.TYPE);
     }
 
     return (

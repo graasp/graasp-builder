@@ -1,7 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core';
-import * as ccc from '@graasp/ui';
+import {
+  FileItem,
+  S3FileItem,
+  DocumentItem,
+  LinkItem,
+  AppItem,
+} from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
 import Items from './Items';
 import {
@@ -10,14 +16,12 @@ import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
-import { ITEM_TYPES } from '../../enums';
+import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import FileUploader from './FileUploader';
 import ItemMain from '../item/ItemMain';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import { API_HOST } from '../../config/constants';
-
-const { FileItem, S3FileItem, DocumentItem, LinkItem, AppItem } = ccc;
 
 const { useChildren, useItem, useFileContent, useS3FileContent } = hooks;
 
@@ -39,16 +43,18 @@ const ItemScreen = () => {
 
   // display children
   const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
+  const itemType = item.get(ITEM_KEYS.TYPE);
+  const id = item?.get(ITEM_KEYS.ID);
 
-  const { data: content } = useFileContent(item?.get('id'), {
-    enabled: item && item.get('type') === ITEM_TYPES.FILE,
+  const { data: content } = useFileContent(id, {
+    enabled: item && itemType === ITEM_TYPES.FILE,
   });
-  const { data: s3Content } = useS3FileContent(item?.get('id'), {
-    enabled: item?.get('type') === ITEM_TYPES.S3_FILE,
+  const { data: s3Content } = useS3FileContent(id, {
+    enabled: itemType === ITEM_TYPES.S3_FILE,
   });
 
   const renderContent = () => {
-    switch (item.get('type')) {
+    switch (itemType) {
       case ITEM_TYPES.FILE:
         return (
           <div className={classes.fileWrapper}>
@@ -59,7 +65,7 @@ const ItemScreen = () => {
             />
           </div>
         );
-      case ITEM_TYPES.S3_FILE: {
+      case ITEM_TYPES.S3_FILE:
         return (
           <div className={classes.fileWrapper}>
             <S3FileItem
@@ -69,7 +75,6 @@ const ItemScreen = () => {
             />
           </div>
         );
-      }
       case ITEM_TYPES.LINK:
         return (
           <div className={classes.fileWrapper}>
@@ -108,7 +113,7 @@ const ItemScreen = () => {
     return <Loader />;
   }
 
-  if (!item || !item.get('id')) {
+  if (!item || !id) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
