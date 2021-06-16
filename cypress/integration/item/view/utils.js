@@ -1,14 +1,13 @@
-import { MIME_TYPES } from '../../../../src/config/constants';
 import {
-  buildFileImageId,
-  buildFilePdfId,
-  buildFileVideoId,
+  buildFileItemId,
+  buildS3FileItemId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_PANEL_DESCRIPTION_ID,
   ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../../../src/config/selectors';
+import { ITEM_TYPES } from '../../../../src/enums';
 import {
   getDocumentExtra,
   getEmbeddedLinkExtra,
@@ -54,6 +53,7 @@ export const expectFileViewScreenLayout = ({
   name,
   extra,
   creator,
+  type,
   description,
 }) => {
   const mimetype =
@@ -61,12 +61,10 @@ export const expectFileViewScreenLayout = ({
 
   // embedded element
   let selector = null;
-  if (MIME_TYPES.IMAGE.includes(mimetype)) {
-    selector = `#${buildFileImageId(id)}`;
-  } else if (MIME_TYPES.VIDEO.includes(mimetype)) {
-    selector = `#${buildFileVideoId(id)}`;
-  } else if (MIME_TYPES.PDF.includes(mimetype)) {
-    selector = `#${buildFilePdfId(id)}`;
+  if (type === ITEM_TYPES.FILE) {
+    selector = `#${buildFileItemId(id)}`;
+  } else if (type === ITEM_TYPES.S3_FILE) {
+    selector = `#${buildS3FileItemId(id)}`;
   }
   cy.get(selector).should('exist');
 

@@ -8,7 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { Button, makeStyles } from '@material-ui/core';
 import { DynamicTreeView, Loader } from '@graasp/ui';
 import { ROOT_ID, TREE_VIEW_MAX_WIDTH } from '../../config/constants';
-import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
+import { ITEM_KEYS, ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { hooks } from '../../config/queryClient';
 import {
   buildTreeItemClass,
@@ -77,6 +77,8 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
     }
   };
 
+  const isFolder = (i) => i.get(ITEM_KEYS.TYPE) === ITEM_TYPES.FOLDER;
+
   // compute tree only when the modal is open
   const tree = !open ? null : (
     <DynamicTreeView
@@ -92,8 +94,8 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
       rootLabel={t('Owned Items')}
       rootId={ROOT_ID}
       rootClassName={buildTreeItemClass(ROOT_ID)}
-      showItemFilter={(i) => i.get('type') === ITEM_TYPES.FOLDER}
-      shouldFetchChildrenForItem={(i) => i.get('type') === ITEM_TYPES.FOLDER}
+      showItemFilter={isFolder}
+      shouldFetchChildrenForItem={isFolder}
       isTreeItemDisabled={isTreeItemDisabled}
       buildTreeItemClass={buildTreeItemClass}
     />

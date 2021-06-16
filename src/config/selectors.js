@@ -39,13 +39,12 @@ export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
 export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
 export const UPLOADER_ID = 'uploader';
 export const UPLOADER_DROP_ZONE_ITEMS_CLASS = 'uppy-Root';
-export const buildFileImageId = (id) => `fileImage-${id}`;
+export const buildFileItemId = (id) => `file-${id}`;
+export const buildS3FileItemId = (id) => `s3File-${id}`;
 export const ITEM_PANEL_ID = 'itemPanelMetadata';
 export const ITEM_PANEL_NAME_ID = 'itemPanelName';
 export const ITEM_PANEL_TABLE_ID = 'itemPanelTable';
 export const ITEM_PANEL_DESCRIPTION_ID = 'itemPanelDescription';
-export const buildFileVideoId = (id) => `fileVideo-${id}`;
-export const buildFilePdfId = (id) => `filePdf-${id}`;
 export const CREATE_ITEM_FOLDER_ID = 'createItemSpace';
 export const CREATE_ITEM_LINK_ID = 'createItemLink';
 export const CREATE_ITEM_FILE_ID = 'createItemFile';

@@ -114,18 +114,3 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME;
 
 export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
-
-export const TEXT_EDITOR_TOOLBAR = [
-  [
-    { header: [] },
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    { color: [] }, // default colors depending on theme
-    { background: [] }, // default colors depending on theme
-  ],
-  [{ align: [] }],
-  [{ list: 'ordered' }, { list: 'bullet' }, 'code-block', 'link', 'formula'],
-];
-export const TEXT_EDITOR_MIN_HEIGHT = 250;
