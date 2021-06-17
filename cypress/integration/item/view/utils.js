@@ -14,11 +14,16 @@ import {
   getFileExtra,
   getS3FileExtra,
 } from '../../../../src/utils/itemExtra';
+import { getMemberById } from '../../../../src/utils/member';
+import { MEMBERS } from '../../../fixtures/members';
 
 const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
   const panel = cy.get(`#${ITEM_PANEL_ID}`);
   panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
-  panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creator);
+
+  const creatorName = getMemberById(Object.values(MEMBERS), creator).name;
+
+  panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
 
   if (mimetype) {
     panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
@@ -92,5 +97,10 @@ export const expectLinkViewScreenLayout = ({
   }
 
   // table
-  expectPanelLayout({ name, extra, creator });
+  expectPanelLayout({ name, extra, creator});
+};
+
+export const expectFolderViewScreenLayout = ({ name, creator }) => {
+  // table
+  expectPanelLayout({ name, creator });
 };

@@ -8,6 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import { buildItemPath } from '../../config/paths';
 import ItemMenu from './ItemMenu';
 import { buildItemLink } from '../../config/selectors';
+import { hooks } from '../../config/queryClient';
+
+const { useMember } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,16 +41,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CustomCardHeader = ({ item }) => {
-  const { id, creator = {}, name, type } = item;
+  const { id, creator, name, type } = item;
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const { avatar: creatorAvatar, name: creatorName = t('Unknown') } = creator;
+  const { data: member } = useMember(creator);
 
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Avatar src={creatorAvatar} className={classes.avatar} />
+        {/* todo: add avatar for member */}
+        <Avatar src={member?.get('extra')?.avatar} className={classes.avatar} />
         <div>
           <Link to={buildItemPath(id)} className={classes.link}>
             <Typography id={buildItemLink(id)} className={classes.title}>
@@ -57,7 +61,7 @@ const CustomCardHeader = ({ item }) => {
           <Typography className={classes.subtitle}>
             {t('Type by author', {
               type,
-              author: creatorName,
+              author: member?.get('name'),
             })}
           </Typography>
         </div>

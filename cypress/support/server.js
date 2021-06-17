@@ -25,6 +25,7 @@ import {
 } from '../../src/utils/itemExtra';
 import { SETTINGS } from '../../src/config/constants';
 import { ITEM_LOGIN_TAG } from '../fixtures/itemTags';
+import { getMemberById } from '../../src/utils/member';
 
 const {
   buildCopyItemRoute,
@@ -36,6 +37,7 @@ const {
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
   buildShareItemWithRoute,
+  buildGetMember,
   buildGetMemberBy,
   ITEMS_ROUTE,
   buildUploadFilesRoute,
@@ -327,6 +329,31 @@ export const mockShareItem = (items, shouldThrowError) => {
       return reply(body);
     },
   ).as('shareItem');
+};
+
+export const mockGetMember = (members) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetMember(ID_FORMAT)}$`),
+    },
+    ({ url, reply }) => {
+      const memberId = url.slice(API_HOST.length).split('/')[2];
+      const member = getMemberById(members, memberId);
+
+      // member does not exist in db
+      if (!member) {
+        return reply({
+          statusCode: StatusCodes.NOT_FOUND,
+        });
+      }
+
+      return reply({
+        body: member,
+        statusCode: StatusCodes.OK,
+      });
+    },
+  ).as('getMember');
 };
 
 export const mockGetMemberBy = (members, shouldThrowError) => {
