@@ -130,3 +130,33 @@ Cypress.Commands.add(
     }
   },
 );
+
+Cypress.Commands.add('dragAndDrop', (subject, x, y) => {
+  cy.get(subject)
+    .first()
+    // eslint-disable-next-line no-shadow
+    .then((subject) => {
+      const coordsDrag = subject[0].getBoundingClientRect();
+      cy.wrap(subject)
+        .trigger('mousedown', {
+          button: 0,
+          clientX: coordsDrag.x,
+          clientY: coordsDrag.y,
+          force: true,
+        })
+        .trigger('mousemove', {
+          button: 0,
+          clientX: coordsDrag.x + 10,
+          clientY: coordsDrag.y,
+          force: true,
+        });
+      cy.get('body')
+        .trigger('mousemove', {
+          button: 0,
+          clientX: x,
+          clientY: y,
+          force: true,
+        })
+        .trigger('mouseup');
+    });
+});
