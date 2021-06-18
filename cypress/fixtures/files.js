@@ -1,5 +1,6 @@
 import { ITEM_TYPES, MIME_TYPES } from '../../src/enums';
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
+import { CURRENT_USER } from './members';
 
 export const ICON_FILEPATH = 'files/icon.png';
 export const TEXT_FILEPATH = 'files/sometext.txt';
@@ -10,7 +11,7 @@ export const IMAGE_ITEM_DEFAULT = {
   description: 'a default image description',
   type: ITEM_TYPES.FILE,
   path: 'bd5519a2_5ba9_4305_b221_185facbe6a99',
-  creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
+  creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildFileExtra({

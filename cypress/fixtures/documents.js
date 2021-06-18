@@ -3,7 +3,6 @@ import { buildDocumentExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER } from './members';
 import { DEFAULT_FOLDER_ITEM } from './items';
 
-// eslint-disable-next-line import/prefer-default-export
 export const GRAASP_DOCUMENT_ITEM = {
   id: 'ecafbd2a-5688-12eb-ae91-0242ac130002',
   type: ITEM_TYPES.DOCUMENT,

@@ -14,7 +14,6 @@ import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import { formatDate } from '../../utils/date';
 import {
-  ITEM_PANEL_DESCRIPTION_ID,
   ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
@@ -89,9 +88,6 @@ class ItemPanel extends Component {
           {item.get('name')}
         </Typography>
 
-        <Typography variant="subtitle2" id={ITEM_PANEL_DESCRIPTION_ID}>
-          {item.get('description')}
-        </Typography>
         <TableContainer>
           <Table
             id={ITEM_PANEL_TABLE_ID}

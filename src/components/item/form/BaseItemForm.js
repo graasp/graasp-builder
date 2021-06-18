@@ -2,10 +2,7 @@ import React from 'react';
 import { makeStyles, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import {
-  ITEM_FORM_DESCRIPTION_INPUT_ID,
-  ITEM_FORM_NAME_INPUT_ID,
-} from '../../../config/selectors';
+import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 import { ITEM_TYPES } from '../../../enums';
 
 const useStyles = makeStyles(() => ({
@@ -22,10 +19,6 @@ const BaseForm = ({ onChange, item, updatedProperties }) => {
     onChange({ ...updatedProperties, name: event.target.value });
   };
 
-  const handleDescriptionInput = (event) => {
-    onChange({ ...updatedProperties, description: event.target.value });
-  };
-
   return (
     <>
       <TextField
@@ -36,16 +29,6 @@ const BaseForm = ({ onChange, item, updatedProperties }) => {
         value={updatedProperties?.name || item?.name}
         onChange={handleNameInput}
         className={classes.shortInputField}
-      />
-      <TextField
-        id={ITEM_FORM_DESCRIPTION_INPUT_ID}
-        margin="dense"
-        label={t('Description')}
-        value={updatedProperties?.description || item?.description}
-        onChange={handleDescriptionInput}
-        rows={4}
-        rowsMax={4}
-        fullWidth
       />
     </>
   );

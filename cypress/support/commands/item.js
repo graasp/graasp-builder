@@ -8,7 +8,6 @@ import {
   TREE_MODAL_CONFIRM_BUTTON_ID,
   TREE_MODAL_TREE_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
-  ITEM_FORM_DESCRIPTION_INPUT_ID,
   ITEM_FORM_IMAGE_INPUT_ID,
   ITEM_FORM_NAME_INPUT_ID,
   ITEM_FORM_LINK_INPUT_ID,
@@ -67,12 +66,8 @@ Cypress.Commands.add('fillTreeModal', (toItemPath) => {
 
 Cypress.Commands.add(
   'fillBaseItemModal',
-  ({ name = '', description = '' }, { confirm = true } = {}) => {
+  ({ name = '' }, { confirm = true } = {}) => {
     cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).type(`{selectall}${name}`);
-
-    cy.get(`#${ITEM_FORM_DESCRIPTION_INPUT_ID}`).type(
-      `{selectall}${description}`,
-    );
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
@@ -82,8 +77,8 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillSpaceModal',
-  ({ name = '', extra = {}, description = '' }, { confirm = true } = {}) => {
-    cy.fillBaseItemModal({ name, description }, { confirm: false });
+  ({ name = '', extra = {} }, { confirm = true } = {}) => {
+    cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(`#${ITEM_FORM_IMAGE_INPUT_ID}`).type(`{selectall}${extra.image}`);
 
@@ -108,8 +103,8 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillDocumentModal',
-  ({ name = '', description = '', extra = {} }, { confirm = true } = {}) => {
-    cy.fillBaseItemModal({ name, description }, { confirm: false });
+  ({ name = '', extra = {} }, { confirm = true } = {}) => {
+    cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(ITEM_FORM_DOCUMENT_TEXT_SELECTOR).type(
       `{selectall}${getDocumentExtra(extra)?.content}`,
@@ -123,8 +118,8 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillAppModal',
-  ({ name = '', description = '', extra = {} }, { confirm = true } = {}) => {
-    cy.fillBaseItemModal({ name, description }, { confirm: false });
+  ({ name = '', extra = {} }, { confirm = true } = {}) => {
+    cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(
       `{selectall}${getAppExtra(extra)?.url}`,

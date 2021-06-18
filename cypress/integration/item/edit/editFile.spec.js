@@ -1,14 +1,28 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { HOME_PATH } from '../../../../src/config/paths';
+import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
-import { editItem } from './utils';
+import { editCaptionFromViewPage, editItem } from './utils';
 
 describe('Edit File', () => {
   beforeEach(() => {
     cy.setUpApi({ items: [IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3] });
+  });
+
+  describe('View Page', () => {
+    it('edit caption', () => {
+      const { id } = IMAGE_ITEM_DEFAULT;
+      cy.visit(buildItemPath(id));
+      const caption = 'new caption';
+      editCaptionFromViewPage({ id, caption });
+      cy.wait(`@editItem`).then(({ request: { url, body } }) => {
+        expect(url).to.contain(id);
+        // caption content might be wrapped with html tags
+        expect(body?.description).to.contain(caption);
+      });
+    });
   });
 
   describe('List', () => {
@@ -33,13 +47,12 @@ describe('Edit File', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
-          expect(description).to.equal(EDITED_FIELDS.description);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.wait('@getOwnItems');
         },
@@ -66,13 +79,12 @@ describe('Edit File', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name, description },
+            body: { id, name },
           },
         }) => {
           // check item is edited and updated
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
-          expect(description).to.equal(EDITED_FIELDS.description);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.wait('@getOwnItems');
         },

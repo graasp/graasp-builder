@@ -5,7 +5,6 @@ import { CURRENT_USER, MEMBERS } from './members';
 import { DEFAULT_TAGS, ITEM_LOGIN_TAG } from './itemTags';
 
 export const DEFAULT_FOLDER_ITEM = {
-  description: '',
   extra: {},
   creator: CURRENT_USER.id,
   type: ITEM_TYPES.FOLDER,
@@ -14,7 +13,6 @@ export const DEFAULT_FOLDER_ITEM = {
 export const CREATED_ITEM = {
   name: 'created item',
   type: ITEM_TYPES.FOLDER,
-  description: 'I am a newly created element',
   extra: {
     image: 'someimageurl',
   },
@@ -22,7 +20,6 @@ export const CREATED_ITEM = {
 
 export const EDITED_FIELDS = {
   name: 'new name',
-  description: 'new description',
 };
 
 export const SAMPLE_ITEMS = {
