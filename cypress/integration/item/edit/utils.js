@@ -5,8 +5,10 @@ import {
   buildItemsTableRowId,
   EDIT_ITEM_BUTTON_CLASS,
   TEXT_EDITOR_CLASS,
+  buildSaveButtonId,
   VIEW_ITEM_EDIT_ITEM_BUTTON_ID,
 } from '../../../../src/config/selectors';
+import { CAPTION_EDIT_PAUSE } from '../../../support/constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
@@ -40,7 +42,9 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
   }
 };
 
-export const editCaptionFromViewPage = ({ caption }) => {
+export const editCaptionFromViewPage = ({ id, caption }) => {
+  cy.wait(CAPTION_EDIT_PAUSE);
   cy.get(`#${VIEW_ITEM_EDIT_ITEM_BUTTON_ID}`).click();
-  cy.get(`.${TEXT_EDITOR_CLASS}`).clear().type(caption).blur();
+  cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}${caption}`);
+  cy.get(`#${buildSaveButtonId(id)}`).click();
 };

@@ -14,6 +14,7 @@ import Items from './Items';
 import {
   buildFileItemId,
   buildS3FileItemId,
+  buildSaveButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
@@ -64,6 +65,8 @@ const ItemScreen = () => {
     setEditingItemId(null);
   };
 
+  const saveButtonId = buildSaveButtonId(itemId);
+
   const renderContent = () => {
     switch (itemType) {
       case ITEM_TYPES.FILE:
@@ -75,6 +78,7 @@ const ItemScreen = () => {
               item={item}
               content={content}
               onSaveCaption={onSaveCaption}
+              saveButtonId={saveButtonId}
             />
           </div>
         );
@@ -85,6 +89,8 @@ const ItemScreen = () => {
               id={buildS3FileItemId(itemId)}
               item={item}
               content={s3Content}
+              onSaveCaption={onSaveCaption}
+              saveButtonId={saveButtonId}
             />
           </div>
         );
@@ -95,6 +101,7 @@ const ItemScreen = () => {
               item={item}
               editCaption={isEditing}
               onSaveCaption={onSaveCaption}
+              saveButtonId={saveButtonId}
             />
           </div>
         );
@@ -107,6 +114,7 @@ const ItemScreen = () => {
             apiHost={API_HOST} // todo: to change
             editCaption={isEditing}
             onSaveCaption={onSaveCaption}
+            saveButtonId={saveButtonId}
           />
         );
       case ITEM_TYPES.FOLDER:

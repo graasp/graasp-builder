@@ -27,20 +27,22 @@ const ItemHeaderActions = ({ onClick, item }) => {
   const type = item?.get('type');
   const isFile = type && type !== ITEM_TYPES.FOLDER;
   const id = item?.get('id');
-  const { setEditingItemId } = useContext(ItemLayoutModeContext);
+  const { setEditingItemId, editingItemId } = useContext(ItemLayoutModeContext);
 
   const actions = isFile ? (
     <>
       {/* todo: factor edit button */}
-      <IconButton
-        aria-label="edit"
-        onClick={() => {
-          setEditingItemId(id);
-        }}
-        id={VIEW_ITEM_EDIT_ITEM_BUTTON_ID}
-      >
-        <EditIcon fontSize="small" />
-      </IconButton>
+      {!editingItemId && (
+        <IconButton
+          aria-label="edit"
+          onClick={() => {
+            setEditingItemId(id);
+          }}
+          id={VIEW_ITEM_EDIT_ITEM_BUTTON_ID}
+        >
+          <EditIcon fontSize="small" />
+        </IconButton>
+      )}
       <DeleteButton itemIds={[id]} />
     </>
   ) : null;

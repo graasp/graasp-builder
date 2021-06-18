@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import { TextEditor } from '@graasp/ui';
 import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
@@ -14,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DocumentForm = ({ onChange, item, updatedProperties }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const handleOnChange = (content) => {
     onChange({
@@ -39,6 +41,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
           value={value}
           onChange={handleOnChange}
           edit
+          placeholderText={t('Write something...')}
         />
       </div>
     </>

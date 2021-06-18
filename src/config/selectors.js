@@ -81,3 +81,4 @@ export const CREATE_ITEM_APP_ID = 'createItemApp';
 export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
 export const VIEW_ITEM_EDIT_ITEM_BUTTON_ID = 'viewItemEditItemButton';
 export const TEXT_EDITOR_CLASS = 'ql-editor';
+export const buildSaveButtonId = (id) => `saveButton-${id}`;

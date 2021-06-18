@@ -13,11 +13,12 @@ describe('Edit Link', () => {
 
   describe('View Page', () => {
     it('edit caption', () => {
-      cy.visit(buildItemPath(GRAASP_LINK_ITEM.id));
+      const { id } = GRAASP_LINK_ITEM;
+      cy.visit(buildItemPath(id));
       const caption = 'new caption';
-      editCaptionFromViewPage({ caption });
+      editCaptionFromViewPage({ id, caption });
       cy.wait(`@editItem`).then(({ request: { url, body } }) => {
-        expect(url).to.contain(GRAASP_LINK_ITEM.id);
+        expect(url).to.contain(id);
         // caption content might be wrapped with html tags
         expect(body?.description).to.contain(caption);
       });

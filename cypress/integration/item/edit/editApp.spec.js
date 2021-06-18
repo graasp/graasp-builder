@@ -21,13 +21,14 @@ const newFields = {
 
 describe('Edit App', () => {
   describe('View Page', () => {
-    it('edit caption', () => {
+    it.only('edit caption', () => {
+      const { id } = GRAASP_APP_ITEM;
       cy.setUpApi({ items: [GRAASP_APP_ITEM] });
-      cy.visit(buildItemPath(GRAASP_APP_ITEM.id));
+      cy.visit(buildItemPath(id));
       const caption = 'new caption';
-      editCaptionFromViewPage({ caption });
+      editCaptionFromViewPage({ id, caption });
       cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
-        expect(endpointUrl).to.contain(GRAASP_APP_ITEM.id);
+        expect(endpointUrl).to.contain(id);
         // caption content might be wrapped with html tags
         expect(body?.description).to.contain(caption);
       });

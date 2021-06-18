@@ -13,11 +13,12 @@ describe('Edit File', () => {
 
   describe('View Page', () => {
     it('edit caption', () => {
-      cy.visit(buildItemPath(IMAGE_ITEM_DEFAULT.id));
+      const { id } = IMAGE_ITEM_DEFAULT;
+      cy.visit(buildItemPath(id));
       const caption = 'new caption';
-      editCaptionFromViewPage({ caption });
+      editCaptionFromViewPage({ id, caption });
       cy.wait(`@editItem`).then(({ request: { url, body } }) => {
-        expect(url).to.contain(IMAGE_ITEM_DEFAULT.id);
+        expect(url).to.contain(id);
         // caption content might be wrapped with html tags
         expect(body?.description).to.contain(caption);
       });
