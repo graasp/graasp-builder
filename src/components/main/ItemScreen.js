@@ -25,6 +25,7 @@ import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import { API_HOST } from '../../config/constants';
 import { ItemLayoutModeContext } from '../context/ItemLayoutModeContext';
+import Main from './Main';
 
 const { useChildren, useItem, useFileContent, useS3FileContent } = hooks;
 
@@ -144,7 +145,11 @@ const ItemScreen = () => {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
-  return <ItemMain item={item}>{renderContent()}</ItemMain>;
+  return (
+    <Main>
+      <ItemMain item={item}>{renderContent()}</ItemMain>
+    </Main>
+  );
 };
 
 export default ItemScreen;

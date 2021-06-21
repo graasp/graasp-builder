@@ -39,11 +39,6 @@ FolderForm.propTypes = {
     }),
   }),
   onChange: PropTypes.func.isRequired,
-  classes: PropTypes.shape({
-    shortInputField: PropTypes.string.isRequired,
-    dialogContent: PropTypes.string.isRequired,
-    addedMargin: PropTypes.string.isRequired,
-  }).isRequired,
   item: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
