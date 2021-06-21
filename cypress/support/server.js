@@ -193,6 +193,8 @@ export const mockGetItem = ({ items, currentMember }, shouldThrowError) => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, itemId);
 
+      // eslint-disable-next-line no-console
+
       // item does not exist in db
       if (!item) {
         return reply({

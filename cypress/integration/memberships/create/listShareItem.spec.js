@@ -1,23 +1,27 @@
 import { ITEM_LAYOUT_MODES, PERMISSION_LEVELS } from '../../../../src/enums';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemCard,
+  buildItemsTableRowId,
   SHARE_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
 
 const shareItem = ({ id, member, permission }) => {
-  cy.get(`#${buildItemCard(id)} .${SHARE_ITEM_BUTTON_CLASS}`).click();
+  cy.get(`#${buildItemsTableRowId(id)} .${SHARE_ITEM_BUTTON_CLASS}`).click();
 
   cy.fillShareModal({ member, permission });
 };
 
-describe('Share Item in Grid', () => {
+describe('Create Membership in List', () => {
   it('share item on Home', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
     cy.visit(HOME_PATH);
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    }
 
     // share
     const { id } = SAMPLE_ITEMS.items[0];
@@ -25,7 +29,7 @@ describe('Share Item in Grid', () => {
     shareItem({ id, member, permission: PERMISSION_LEVELS.WRITE });
 
     cy.wait('@shareItem').then(() => {
-      cy.get(`#${buildItemCard(id)}`).should('exist');
+      cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
     });
   });
 
@@ -34,7 +38,10 @@ describe('Share Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    }
 
     // share
     const { id } = SAMPLE_ITEMS.items[2];
@@ -42,7 +49,7 @@ describe('Share Item in Grid', () => {
     shareItem({ id, member, permission: PERMISSION_LEVELS.READ });
 
     cy.wait('@shareItem').then(() => {
-      cy.get(`#${buildItemCard(id)}`).should('exist');
+      cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
     });
   });
 

@@ -14,11 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import { formatDate } from '../../utils/date';
-import {
-  ITEM_PANEL_ID,
-  ITEM_PANEL_NAME_ID,
-  ITEM_PANEL_TABLE_ID,
-} from '../../config/selectors';
 import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
 import ItemSettings from './settings/ItemSettings';
 import { hooks } from '../../config/queryClient';

@@ -42,7 +42,8 @@
     "redux-devtools-extension": "2.13.8",
     "redux-promise": "0.6.0",
     "redux-thunk": "2.3.0",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "validator": "13.6.0"
   },
   "scripts": {
     "start": "env-cmd -f ./.env.local react-scripts start",
