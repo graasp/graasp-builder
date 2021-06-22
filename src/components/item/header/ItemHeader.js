@@ -36,7 +36,7 @@ const ItemHeader = ({ onClick }) => {
   return (
     <div className={classes.root}>
       <Navigation item={item} user={user} />
-      <ItemHeaderActions item={item} onClick={onClick} />
+      {item && <ItemHeaderActions item={item} onClick={onClick} />}
     </div>
   );
 };

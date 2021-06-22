@@ -103,6 +103,7 @@ const ItemLoginSwitch = () => {
     >
       {Object.values(SETTINGS.ITEM_LOGIN.OPTIONS).map((value) => (
         <MenuItem
+          key={value}
           value={value}
           id={buildItemLoginSettingModeSelectOption(value)}
         >
