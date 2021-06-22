@@ -9,7 +9,7 @@ import {
   AppItem,
 } from '@graasp/ui';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, useMutation, ws } from '../../config/queryClient';
 import Items from './Items';
 import {
   buildFileItemId,
@@ -47,6 +47,7 @@ const ItemScreen = () => {
 
   // display children
   const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
+  ws.hooks.useChildrenUpdates(itemId);
   const id = item?.get(ITEM_KEYS.ID);
 
   const { data: content } = useFileContent(id, {
