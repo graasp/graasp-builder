@@ -27,7 +27,13 @@ import { API_HOST } from '../../config/constants';
 import { ItemLayoutModeContext } from '../context/ItemLayoutModeContext';
 import Main from './Main';
 
-const { useChildren, useItem, useFileContent, useS3FileContent } = hooks;
+const {
+  useChildren,
+  useItem,
+  useFileContent,
+  useS3FileContent,
+  useCurrentMember,
+} = hooks;
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -42,21 +48,43 @@ const ItemScreen = () => {
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
   const { itemId } = useParams();
   const { editingItemId, setEditingItemId } = useContext(ItemLayoutModeContext);
-
-  const { data: item, isLoading, isError } = useItem(itemId);
+  const { data: item, isLoading: isLoadingItem, isError } = useItem(itemId);
   const itemType = item?.get(ITEM_KEYS.TYPE);
 
+  // provide user to app
+  const { data: user, isLoading: isLoadingUser } = useCurrentMember();
+
   // display children
-  const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
+  const { data: children, isLoading: isLoadingChildren } = useChildren(itemId);
   const id = item?.get(ITEM_KEYS.ID);
 
-  const { data: content } = useFileContent(id, {
-    enabled: item && itemType === ITEM_TYPES.FILE,
-  });
-  const { data: s3Content } = useS3FileContent(id, {
+  const { data: content, isLoading: isLoadingFileContent } = useFileContent(
+    id,
+    {
+      enabled: item && itemType === ITEM_TYPES.FILE,
+    },
+  );
+  const {
+    data: s3Content,
+    isLoading: isLoadingS3FileContent,
+  } = useS3FileContent(id, {
     enabled: itemType === ITEM_TYPES.S3_FILE,
   });
   const isEditing = editingItemId === itemId;
+
+  if (
+    isLoadingItem ||
+    isLoadingFileContent ||
+    isLoadingS3FileContent ||
+    isLoadingUser ||
+    isLoadingChildren
+  ) {
+    return <Loader />;
+  }
+
+  if (!item || !itemId || isError) {
+    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+  }
 
   const onSaveCaption = (caption) => {
     // edit item only when description has changed
@@ -116,15 +144,10 @@ const ItemScreen = () => {
             editCaption={isEditing}
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
+            user={user}
           />
         );
       case ITEM_TYPES.FOLDER:
-        // wait until all children are available
-        if (isChildrenLoading) {
-          return <Loader />;
-        }
-
-        // display children
         return (
           <>
             <FileUploader />
@@ -136,14 +159,6 @@ const ItemScreen = () => {
         return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
     }
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (!item || !itemId || isError) {
-    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
-  }
 
   return (
     <Main>
