@@ -223,3 +223,47 @@ export const SHORTCUT = {
     image: 'someimageurl',
   },
 };
+
+export const ITEM_REORDER_ITEMS = {
+  parent: {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+    name: 'parent',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+    extra: {
+      image: 'someimageurl',
+    },
+  },
+  children: [
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
+      name: 'child1',
+      path:
+        'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
+      extra: {
+        image: 'someimageurl',
+      },
+    },
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
+      name: 'child2',
+      path:
+        'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
+      extra: {
+        image: 'someimageurl',
+      },
+    },
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'fdf09f5a-5688-11eb-ae93-0242ac130005',
+      name: 'child3',
+      path:
+        'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130005',
+      extra: {
+        image: 'someimageurl',
+      },
+    },
+  ],
+};

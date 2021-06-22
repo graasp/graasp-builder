@@ -12,15 +12,15 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getVisibleChildren = (props, isDragging) => {
   if (isDragging) {
-    const result = Array.from(props.children);
-    // eslint-disable-next-line prefer-destructuring
-    result[1] = result[1][0];
-    return result;
+    // On drag, only the checkbox and item name will be shown in the row
+    const checkbox = props.children[0];
+    const name = props.children[1][0];
+    return [checkbox, name];
   }
   return props.children;
 };
 
-const DraggableComponent = (id, index) => (props) => (
+const DraggableTableRow = (id, index) => (props) => (
   <Draggable draggableId={id} index={index}>
     {(provided, snapshot) => (
       <TableRow
@@ -33,11 +33,10 @@ const DraggableComponent = (id, index) => (props) => (
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
       >
-        {/* eslint-disable-next-line react/prop-types */}
         {getVisibleChildren(props, snapshot.isDragging)}
       </TableRow>
     )}
   </Draggable>
 );
 
-export default DraggableComponent;
+export default DraggableTableRow;

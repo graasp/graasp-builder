@@ -2,11 +2,10 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { TableBody } from '@material-ui/core';
 import React from 'react';
 
-const DroppableComponent = (onDragEnd) => (props) => (
+const DroppableTableBody = (onDragEnd) => (props) => (
   <DragDropContext onDragEnd={onDragEnd}>
     <Droppable droppableId="1" direction="vertical">
       {(provided) => (
-        // eslint-disable-next-line react/jsx-props-no-spreading
         <TableBody
           ref={provided.innerRef}
           /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -23,4 +22,4 @@ const DroppableComponent = (onDragEnd) => (props) => (
   </DragDropContext>
 );
 
-export default DroppableComponent;
+export default DroppableTableBody;

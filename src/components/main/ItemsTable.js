@@ -31,9 +31,10 @@ import TableHead from './TableHead';
 import ItemIcon from './ItemIcon';
 import { getShortcutTarget } from '../../utils/itemExtra';
 import { ROWS_PER_PAGE_OPTIONS, USER_ITEM_ORDER } from '../../config/constants';
-import DroppableComponent from '../common/Droppable';
-import DraggableComponent from '../common/Draggable';
+import DroppableTableBody from '../common/DroppableTableBody';
+import DraggableTableRow from '../common/DraggableTableRow';
 import { hooks, useMutation } from '../../config/queryClient';
+import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 
 const { useItem } = hooks;
 
@@ -71,12 +72,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const reorder = (list, startIndex, endIndex) => {
+const computeReorderedIdList = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
-  return result;
+  return result.map((i) => i.id);
 };
 
 const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
@@ -153,7 +154,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
       getComparator(
         order,
         orderBy,
-        parentItem?.get('extra')?.folder?.childrenOrder,
+        getChildrenOrderFromFolderExtra(parentItem),
       ),
     ),
     { page, rowsPerPage },
@@ -254,15 +255,17 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
   const onDragEnd = (result) => {
     if (!result.destination) return;
 
-    const reorderedRows = reorder(
-      rowsToDisplay,
-      result.source.index,
-      result.destination.index,
-    );
-
     mutation.mutate({
       id: itemId,
-      extra: { folder: { childrenOrder: reorderedRows.map((i) => i.id) } },
+      extra: {
+        folder: {
+          childrenOrder: computeReorderedIdList(
+            rowsToDisplay,
+            result.source.index,
+            result.destination.index,
+          ),
+        },
+      },
     });
   };
 
@@ -294,7 +297,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
               headCells={headCells}
             />
             <TableBody
-              component={itemId ? DroppableComponent(onDragEnd) : TableBody}
+              component={itemId ? DroppableTableBody(onDragEnd) : TableBody}
             >
               {mappedRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
@@ -303,7 +306,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
                 return (
                   <TableRow
                     component={
-                      itemId ? DraggableComponent(row.id, index) : TableRow
+                      itemId ? DraggableTableRow(row.id, index) : TableRow
                     }
                     id={buildItemsTableRowId(row.id)}
                     hover

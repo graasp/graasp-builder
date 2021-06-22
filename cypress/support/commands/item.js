@@ -131,6 +131,8 @@ Cypress.Commands.add(
   },
 );
 
+// This command was based on a solution found on github
+// https://github.com/cypress-io/cypress/issues/3942#issuecomment-485648100
 Cypress.Commands.add('dragAndDrop', (subject, x, y) => {
   cy.get(subject)
     .first()
@@ -153,8 +155,8 @@ Cypress.Commands.add('dragAndDrop', (subject, x, y) => {
       cy.get('body')
         .trigger('mousemove', {
           button: 0,
-          clientX: x,
-          clientY: y,
+          clientX: coordsDrag.x + x,
+          clientY: coordsDrag.y + y,
           force: true,
         })
         .trigger('mouseup');
