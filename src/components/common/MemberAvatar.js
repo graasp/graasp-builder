@@ -21,7 +21,7 @@ const MemberAvatar = ({ id }) => {
   }
 
   // broken link to display the first letter when avatar does not exist
-  const brokenLink = 'broken image to diplay';
+  const brokenLink = 'broken image to display';
 
   return (
     <Avatar

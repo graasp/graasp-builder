@@ -51,11 +51,11 @@ const ItemHeaderActions = ({ onClick, item }) => {
       {!isFile && <ModeButton />}
       {id && (
         <>
+          <ShareButton itemId={id} />
+          <DeleteButton itemIds={[id]} />
           <IconButton onClick={onClick} color="primary">
             <InfoIcon color="primary" />
           </IconButton>
-          <ShareButton itemId={id} />
-          <DeleteButton itemIds={[id]} />
         </>
       )}
     </div>
