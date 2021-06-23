@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#9/websockets",
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
