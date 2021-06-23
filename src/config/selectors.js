@@ -91,3 +91,5 @@ export const MEMBER_PROFILE_LANGUAGE_SWITCH_ID = 'memberProfileLanguageSwitch';
 export const MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID =
   'memberProfileMemberIdCopyButton';
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
+export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
+export const buildMemberAvatarClass = (id) => `memberAvatar-${id}`;
