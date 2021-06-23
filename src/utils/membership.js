@@ -12,3 +12,6 @@ export const isItemUpdateAllowedForUser = ({ memberships, memberId }) =>
     ({ memberId: mId, permission }) =>
       mId === memberId && PERMISSIONS_EDITION_ALLOWED.includes(permission),
   );
+
+export const membershipsWithoutUser = (memberships, userId) =>
+  memberships.filter(({ memberId }) => memberId !== userId);

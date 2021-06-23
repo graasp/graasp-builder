@@ -10,6 +10,8 @@ import { ITEM_TYPES } from '../../../enums';
 import DeleteButton from '../../common/DeleteButton';
 import { ItemLayoutModeContext } from '../../context/ItemLayoutModeContext';
 import { VIEW_ITEM_EDIT_ITEM_BUTTON_ID } from '../../../config/selectors';
+import ShareButton from '../../common/ShareButton';
+import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,33 +30,33 @@ const ItemHeaderActions = ({ onClick, item }) => {
   const isFile = type && type !== ITEM_TYPES.FOLDER;
   const id = item?.get('id');
   const { setEditingItemId, editingItemId } = useContext(ItemLayoutModeContext);
+  const hasCaption = ITEM_TYPES_WITH_CAPTIONS.includes(type);
 
-  const actions = isFile ? (
-    <>
-      {/* todo: factor edit button */}
-      {!editingItemId && (
-        <IconButton
-          aria-label="edit"
-          onClick={() => {
-            setEditingItemId(id);
-          }}
-          id={VIEW_ITEM_EDIT_ITEM_BUTTON_ID}
-        >
-          <EditIcon fontSize="small" />
-        </IconButton>
-      )}
-      <DeleteButton itemIds={[id]} />
-    </>
-  ) : null;
+  /* todo: factor edit button */
+  const actions = isFile && !editingItemId && hasCaption && (
+    <IconButton
+      aria-label="edit"
+      onClick={() => {
+        setEditingItemId(id);
+      }}
+      id={VIEW_ITEM_EDIT_ITEM_BUTTON_ID}
+    >
+      <EditIcon fontSize="small" />
+    </IconButton>
+  );
 
   return (
     <div className={classes.buttons}>
       {actions}
       {!isFile && <ModeButton />}
       {id && (
-        <IconButton onClick={onClick} color="primary">
-          <InfoIcon color="primary" />
-        </IconButton>
+        <>
+          <ShareButton itemId={id} />
+          <DeleteButton itemIds={[id]} />
+          <IconButton onClick={onClick} color="primary">
+            <InfoIcon color="primary" />
+          </IconButton>
+        </>
       )}
     </div>
   );

@@ -77,6 +77,11 @@
     "Create Shortcut": "Créer un Raccourci",
     "Sign Out": "Déconnexion",
     "Confirm deleting item.": "Confirmer la suppression de l'élément",
-    "This item will be deleted permanently.": "Cet élément sera supprimé définitivement."
+    "This item will be deleted permanently.": "Cet élément sera supprimé définitivement.",
+    "Language": "Langue",
+    "Storage Used": "Mémoire utilisée",
+    "Member Since": "Membre depuis",
+    "Profile": "Profil",
+    "Member ID": "ID de Membre"
   }
 }

@@ -13,6 +13,7 @@ import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { REQUEST_FAILURE_TIME } from '../../../support/constants';
+import { expectFolderViewScreenLayout } from './utils';
 
 describe('View Space', () => {
   describe('Grid', () => {
@@ -76,6 +77,8 @@ describe('View Space', () => {
 
       // should get current item
       cy.wait('@getItem');
+
+      expectFolderViewScreenLayout(SAMPLE_ITEMS.items[0]);
 
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {
@@ -165,6 +168,8 @@ describe('View Space', () => {
 
       // should get current item
       cy.wait('@getItem');
+
+      expectFolderViewScreenLayout(SAMPLE_ITEMS.items[0]);
 
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {

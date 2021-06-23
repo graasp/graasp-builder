@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git",
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
@@ -42,7 +42,8 @@
     "redux-devtools-extension": "2.13.8",
     "redux-promise": "0.6.0",
     "redux-thunk": "2.3.0",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "validator": "13.6.0"
   },
   "scripts": {
     "start": "env-cmd -f ./.env.local react-scripts start",

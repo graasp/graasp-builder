@@ -25,7 +25,12 @@ import {
   POST_ITEM_TAG_ERROR_MESSAGE,
   DELETE_ITEM_TAG_ERROR_MESSAGE,
   ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE,
+  EDIT_MEMBER_ERROR_MESSAGE,
+  EDIT_MEMBER_SUCCESS_MESSAGE,
+  COPY_MEMBER_ID_TO_CLIPBOARD_SUCCESS_MESSAGE,
+  COPY_MEMBER_ID_TO_CLIPBOARD_ERROR_MESSAGE,
 } from '../config/messages';
+import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../types/clipboard';
 
 const {
   createItemRoutine,
@@ -40,12 +45,21 @@ const {
   postItemTagRoutine,
   deleteItemTagRoutine,
   postItemLoginRoutine,
+  editMemberRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
   let message = null;
   switch (type) {
     // error messages
+    case COPY_MEMBER_ID_TO_CLIPBOARD.FAILURE: {
+      message = COPY_MEMBER_ID_TO_CLIPBOARD_ERROR_MESSAGE;
+      break;
+    }
+    case editMemberRoutine.FAILURE: {
+      message = EDIT_MEMBER_ERROR_MESSAGE;
+      break;
+    }
     case createItemRoutine.FAILURE: {
       message = CREATE_ITEM_ERROR_MESSAGE;
       break;
@@ -92,6 +106,10 @@ export default ({ type, payload }) => {
       break;
     }
     // success messages
+    case editMemberRoutine.SUCCESS: {
+      message = EDIT_MEMBER_SUCCESS_MESSAGE;
+      break;
+    }
     case createItemRoutine.SUCCESS: {
       message = CREATE_ITEM_SUCCESS_MESSAGE;
       break;
@@ -123,6 +141,10 @@ export default ({ type, payload }) => {
     }
     case signOutRoutine.SUCCESS: {
       message = SIGN_OUT_SUCCESS_MESSAGE;
+      break;
+    }
+    case COPY_MEMBER_ID_TO_CLIPBOARD.SUCCESS: {
+      message = COPY_MEMBER_ID_TO_CLIPBOARD_SUCCESS_MESSAGE;
       break;
     }
 

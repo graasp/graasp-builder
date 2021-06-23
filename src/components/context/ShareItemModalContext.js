@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import validator from 'validator';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -28,6 +29,7 @@ import {
   SHARE_ITEM_MODAL_PERMISSION_SELECT_ID,
   SHARE_ITEM_MODAL_SHARE_BUTTON_ID,
 } from '../../config/selectors';
+import ItemMemberships from '../item/ItemMemberships';
 
 const ShareItemModalContext = React.createContext();
 
@@ -48,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   emailInput: {
     width: '100%',
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -62,6 +65,7 @@ const ShareItemModalProvider = ({ children }) => {
 
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(null);
+  const [isErrorMail, setIsErrorMail] = useState(false);
 
   const openModal = (newItemId) => {
     setOpen(true);
@@ -73,13 +77,22 @@ const ShareItemModalProvider = ({ children }) => {
     setItemId(null);
   };
 
+  const checkSubmission = () => {
+    // check mail validity
+    const mailIsValid = validator.isEmail(email.value);
+    setIsErrorMail(!mailIsValid);
+    return mailIsValid;
+  };
+
   const submit = () => {
-    mutation.mutate({
-      id: itemId,
-      email: email.value,
-      permission: permission.value,
-    });
-    onClose();
+    if (checkSubmission()) {
+      mutation.mutate({
+        id: itemId,
+        email: email.value,
+        permission: permission.value,
+      });
+      onClose();
+    }
   };
 
   const labelId = 'permission-label';
@@ -123,10 +136,15 @@ const ShareItemModalProvider = ({ children }) => {
                   email = c;
                 }}
                 label={t('Email')}
+                error={isErrorMail}
+                helperText={isErrorMail && t('The provided email is invalid.')}
               />
             </Grid>
             <Grid item xs={3}>
               {renderPermissionSelect()}
+            </Grid>
+            <Grid item xs={11}>
+              <ItemMemberships id={itemId} maxAvatar={8} />
             </Grid>
           </Grid>
         </DialogContent>
