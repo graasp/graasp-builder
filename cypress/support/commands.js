@@ -17,6 +17,7 @@ import {
   mockPostItem,
   mockEditItem,
   mockShareItem,
+  mockGetMember,
   mockGetMemberBy,
   mockDeleteItems,
   mockDefaultDownloadFile,
@@ -38,13 +39,13 @@ import {
 } from './server';
 import './commands/item';
 import './commands/navigation';
-import { CURRENT_USER } from '../fixtures/members';
+import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 
 Cypress.Commands.add(
   'setUpApi',
   ({
     items = [],
-    members = [],
+    members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     tags = [],
     deleteItemError = false,
@@ -93,6 +94,8 @@ Cypress.Commands.add(
     mockEditItem(cachedItems, editItemError);
 
     mockShareItem(cachedItems, shareItemError);
+
+    mockGetMember(cachedMembers);
 
     mockGetMemberBy(cachedMembers, getMemberError);
 

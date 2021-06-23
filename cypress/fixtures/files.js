@@ -31,7 +31,7 @@ export const VIDEO_ITEM_DEFAULT = {
   description: 'a default video description',
   type: ITEM_TYPES.FILE,
   path: 'qd5519a2_5ba9_4305_b221_185facbe6a99',
-  creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
+  creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildFileExtra({
@@ -51,7 +51,7 @@ export const PDF_ITEM_DEFAULT = {
   description: 'a default pdf description',
   type: ITEM_TYPES.FILE,
   path: 'cd5519a2_5ba9_4305_b221_185facbe6a99',
-  creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
+  creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildFileExtra({
@@ -71,7 +71,7 @@ export const IMAGE_ITEM_S3 = {
   description: 'a default image description',
   type: ITEM_TYPES.S3_FILE,
   path: 'ad5519a2_5ba9_4305_b221_185facbe6a99',
-  creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
+  creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildS3FileExtra({
@@ -87,7 +87,7 @@ export const VIDEO_ITEM_S3 = {
   description: 'a default video description',
   type: ITEM_TYPES.S3_FILE,
   path: 'qd5519a2_5ba9_4305_b221_185facbe6a93',
-  creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
+  creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildS3FileExtra({
@@ -103,7 +103,7 @@ export const PDF_ITEM_S3 = {
   description: 'a default pdf description',
   type: ITEM_TYPES.S3_FILE,
   path: 'bd5519a2_5ba9_4305_b221_185facbe6a99',
-  creator: 'b792fc1b-d533-41de-9706-b98f60a29cdb',
+  creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildS3FileExtra({
