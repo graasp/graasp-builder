@@ -23,6 +23,7 @@ import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
 import {
   buildItemsTableRowId,
+  ITEMS_TABLE_BODY,
   ITEMS_TABLE_EMPTY_ROW_ID,
   ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../config/selectors';
@@ -298,6 +299,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
             />
             <TableBody
               component={itemId ? DroppableTableBody(onDragEnd) : TableBody}
+              id={ITEMS_TABLE_BODY}
             >
               {mappedRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
