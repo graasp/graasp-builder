@@ -1,0 +1,162 @@
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { Map } from 'immutable';
+import { makeStyles } from '@material-ui/core';
+import {
+  FileItem,
+  S3FileItem,
+  DocumentItem,
+  LinkItem,
+  AppItem,
+} from '@graasp/ui';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { hooks, useMutation } from '../../config/queryClient';
+import {
+  buildFileItemId,
+  buildS3FileItemId,
+  buildSaveButtonId,
+  DOCUMENT_ITEM_TEXT_EDITOR_ID,
+  ITEM_SCREEN_ERROR_ALERT_ID,
+} from '../../config/selectors';
+import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
+import Loader from '../common/Loader';
+import ErrorAlert from '../common/ErrorAlert';
+import { API_HOST } from '../../config/constants';
+import { LayoutContext } from '../context/LayoutContext';
+import FileUploader from '../main/FileUploader';
+import Items from '../main/Items';
+
+const {
+  useChildren,
+  useFileContent,
+  useS3FileContent,
+  useCurrentMember,
+} = hooks;
+
+const useStyles = makeStyles(() => ({
+  fileWrapper: {
+    textAlign: 'center',
+    height: '80vh',
+    flexGrow: 1,
+  },
+}));
+
+const ItemContent = ({ item }) => {
+  const classes = useStyles();
+  const itemId = item.get(ITEM_KEYS.ID);
+  const itemType = item?.get(ITEM_KEYS.TYPE);
+  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const { editingItemId, setEditingItemId } = useContext(LayoutContext);
+
+  // provide user to app
+  const { data: user, isLoading: isLoadingUser } = useCurrentMember();
+
+  // display children
+  const { data: children, isLoading: isLoadingChildren } = useChildren(itemId);
+  const id = item?.get(ITEM_KEYS.ID);
+
+  const { data: content, isLoading: isLoadingFileContent } = useFileContent(
+    id,
+    {
+      enabled: item && itemType === ITEM_TYPES.FILE,
+    },
+  );
+  const {
+    data: s3Content,
+    isLoading: isLoadingS3FileContent,
+  } = useS3FileContent(id, {
+    enabled: itemType === ITEM_TYPES.S3_FILE,
+  });
+  const isEditing = editingItemId === itemId;
+
+  if (
+    isLoadingFileContent ||
+    isLoadingS3FileContent ||
+    isLoadingUser ||
+    isLoadingChildren
+  ) {
+    return <Loader />;
+  }
+
+  if (!item || !itemId) {
+    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+  }
+
+  const onSaveCaption = (caption) => {
+    // edit item only when description has changed
+    if (caption !== item.get('description')) {
+      editItem({ id: itemId, description: caption });
+    }
+    setEditingItemId(null);
+  };
+
+  const saveButtonId = buildSaveButtonId(itemId);
+
+  switch (itemType) {
+    case ITEM_TYPES.FILE:
+      return (
+        <div className={classes.fileWrapper}>
+          <FileItem
+            id={buildFileItemId(itemId)}
+            editCaption={isEditing}
+            item={item}
+            content={content}
+            onSaveCaption={onSaveCaption}
+            saveButtonId={saveButtonId}
+          />
+        </div>
+      );
+    case ITEM_TYPES.S3_FILE:
+      return (
+        <div className={classes.fileWrapper}>
+          <S3FileItem
+            id={buildS3FileItemId(itemId)}
+            item={item}
+            content={s3Content}
+            onSaveCaption={onSaveCaption}
+            saveButtonId={saveButtonId}
+          />
+        </div>
+      );
+    case ITEM_TYPES.LINK:
+      return (
+        <div className={classes.fileWrapper}>
+          <LinkItem
+            item={item}
+            editCaption={isEditing}
+            onSaveCaption={onSaveCaption}
+            saveButtonId={saveButtonId}
+          />
+        </div>
+      );
+    case ITEM_TYPES.DOCUMENT:
+      return <DocumentItem id={DOCUMENT_ITEM_TEXT_EDITOR_ID} item={item} />;
+    case ITEM_TYPES.APP:
+      return (
+        <AppItem
+          item={item}
+          apiHost={API_HOST} // todo: to change
+          editCaption={isEditing}
+          onSaveCaption={onSaveCaption}
+          saveButtonId={saveButtonId}
+          user={user}
+        />
+      );
+    case ITEM_TYPES.FOLDER:
+      return (
+        <>
+          <FileUploader />
+          <Items title={item.get('name')} items={children} />
+        </>
+      );
+
+    default:
+      return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+  }
+};
+
+ItemContent.propTypes = {
+  item: PropTypes.instanceOf(Map).isRequired,
+};
+
+export default ItemContent;

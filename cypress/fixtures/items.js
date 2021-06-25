@@ -32,6 +32,13 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      memberships: [
+        {
+          itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
+        },
+      ],
     },
     {
       ...DEFAULT_FOLDER_ITEM,
@@ -41,6 +48,13 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      memberships: [
+        {
+          itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
+        },
+      ],
     },
     {
       ...DEFAULT_FOLDER_ITEM,
@@ -51,6 +65,13 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      memberships: [
+        {
+          itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
+        },
+      ],
     },
     {
       ...DEFAULT_FOLDER_ITEM,
@@ -61,6 +82,13 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      memberships: [
+        {
+          itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
+        },
+      ],
     },
   ],
   memberships: [],

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -7,6 +7,7 @@ import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import ItemHeader from './header/ItemHeader';
 import ItemPanel from './ItemPanel';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
+import { LayoutContext } from '../context/LayoutContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -48,18 +49,20 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemMain = ({ id, children, item }) => {
   const classes = useStyles();
-  const [metadataMenuOpen, setMetadataMenuOpen] = useState(true);
+  const { isItemMetadataMenuOpen, setIsItemMetadataMenuOpen } = useContext(
+    LayoutContext,
+  );
 
   const handleToggleMetadataMenu = () => {
-    setMetadataMenuOpen(!metadataMenuOpen);
+    setIsItemMetadataMenuOpen(!isItemMetadataMenuOpen);
   };
 
   return (
     <div id={id} className={ITEM_MAIN_CLASS}>
-      <ItemPanel item={item} open={metadataMenuOpen} />
+      <ItemPanel item={item} open={isItemMetadataMenuOpen} />
       <div
         className={clsx(classes.root, classes.content, {
-          [classes.contentShift]: metadataMenuOpen,
+          [classes.contentShift]: isItemMetadataMenuOpen,
         })}
       >
         <ItemHeader onClick={handleToggleMetadataMenu} />

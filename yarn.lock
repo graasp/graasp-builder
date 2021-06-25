@@ -1583,9 +1583,9 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#12/patchDeleteMembership":
   version "0.1.0"
-  resolved "git://github.com/graasp/graasp-query-client.git#05bde46fec71ed84aa6ca4ae0e5753ba78c677ae"
+  resolved "git://github.com/graasp/graasp-query-client.git#e9f4d630536609f5f46bff6bf9d4f15cdfdc2cbd"
   dependencies:
     http-status-codes "2.1.4"
     immutable "4.0.0-rc.12"

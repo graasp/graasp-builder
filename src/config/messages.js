@@ -46,3 +46,11 @@ export const COPY_MEMBER_ID_TO_CLIPBOARD_SUCCESS_MESSAGE =
   'Member ID is successfully copied!';
 export const COPY_MEMBER_ID_TO_CLIPBOARD_ERROR_MESSAGE =
   'An error occured while copying the member ID';
+export const EDIT_ITEM_MEMBERSHIP_ERROR_MESSAGE =
+  'There was an error editing the item membership.';
+export const DELETE_ITEM_MEMBERSHIP_ERROR_MESSAGE =
+  'There was an error deleting the item membership.';
+export const EDIT_ITEM_MEMBERSHIP_SUCCESS_MESSAGE =
+  'The item membership was successfully edited.';
+export const DELETE_ITEM_MEMBERSHIP_SUCCESS_MESSAGE =
+  'The item membership was successfully deleted.';

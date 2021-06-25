@@ -56,6 +56,8 @@ const {
   buildPostItemTagRoute,
   buildPatchMember,
   SHARE_ITEM_WITH_ROUTE,
+  buildEditItemMembershipRoute,
+  buildDeleteItemMembershipRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -598,6 +600,40 @@ export const mockGetItemMembershipsForItem = (items) => {
       reply(result);
     },
   ).as('getItemMemberships');
+};
+
+export const mockEditItemMembershipForItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_PATCH.method,
+      url: new RegExp(
+        `${API_HOST}/${buildEditItemMembershipRoute(ID_FORMAT)}$`,
+      ),
+    },
+    ({ reply, url }) => {
+      // eslint-disable-next-line no-console
+      console.log('wiojefk');
+      const mId = url.slice(API_HOST.length).split('/')[2];
+      const result = items.find(({ id }) => id === mId)?.memberships || [];
+      reply(result?.find(({ id }) => id === mId));
+    },
+  ).as('editItemMembership');
+};
+
+export const mockDeleteItemMembershipForItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(
+        `${API_HOST}/${buildDeleteItemMembershipRoute(ID_FORMAT)}$`,
+      ),
+    },
+    ({ reply, url }) => {
+      const mId = url.slice(API_HOST.length).split('/')[2];
+      const result = items.find(({ id }) => id === mId)?.memberships || [];
+      reply(result?.find(({ id }) => id === mId));
+    },
+  ).as('deleteItemMembership');
 };
 
 export const mockGetItemTags = (items) => {

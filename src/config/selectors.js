@@ -22,11 +22,9 @@ export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
-export const SHARE_ITEM_MODAL_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
-export const SHARE_ITEM_MODAL_PERMISSION_SELECT_ID =
-  'shareItemModalPermissionSelect';
+export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
 export const buildPermissionOptionId = (id) => `permission-${id}`;
-export const SHARE_ITEM_MODAL_SHARE_BUTTON_ID = 'shareItemModalShareButton';
+export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 export const MODE_LIST_BUTTON_ID = 'modeListButton';
 
 export const MODE_GRID_BUTTON_ID = 'modeCardButton';
@@ -94,3 +92,11 @@ export const MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID =
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
 export const buildMemberAvatarClass = (id) => `memberAvatar-${id}`;
+export const ITEM_SETTINGS_BUTTON_CLASS = 'itemSettingsButton';
+export const buildItemMembershipRowId = (id) => `itemMembershipRow-${id}`;
+export const ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS =
+  'itemMembershipPermissionSelect';
+export const buildItemMembershipRowDeleteButtonId = (id) =>
+  `itemMembershipRowDeleteButtonId-${id}`;
+export const ITEM_INFORMATION_ICON_IS_OPEN_CLASS = 'itemInformationIconIsOpen';
+export const ITEM_INFORMATION_BUTTON_ID = 'itemInformationButton';
