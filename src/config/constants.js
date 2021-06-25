@@ -113,6 +113,8 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 
 export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
+export const USER_ITEM_ORDER = 'user_order';
+
 export const ITEM_TYPES_WITH_CAPTIONS = [
   ITEM_TYPES.S3_FILE,
   ITEM_TYPES.FILE,

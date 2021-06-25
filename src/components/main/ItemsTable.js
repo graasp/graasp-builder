@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +12,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import ItemMenu from './ItemMenu';
 import { buildItemPath } from '../../config/paths';
 import { ORDERING, ITEM_DATA_TYPES, ITEM_TYPES } from '../../enums';
@@ -22,6 +23,7 @@ import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
 import {
   buildItemsTableRowId,
+  ITEMS_TABLE_BODY,
   ITEMS_TABLE_EMPTY_ROW_ID,
   ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../config/selectors';
@@ -29,7 +31,13 @@ import TableToolbar from './TableToolbar';
 import TableHead from './TableHead';
 import ItemIcon from './ItemIcon';
 import { getShortcutTarget } from '../../utils/itemExtra';
-import { ROWS_PER_PAGE_OPTIONS } from '../../config/constants';
+import { ROWS_PER_PAGE_OPTIONS, USER_ITEM_ORDER } from '../../config/constants';
+import DroppableTableBody from '../common/DroppableTableBody';
+import DraggableTableRow from '../common/DraggableTableRow';
+import { hooks, useMutation } from '../../config/queryClient';
+import { getChildrenOrderFromFolderExtra } from '../../utils/item';
+
+const { useItem } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,17 +73,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const computeReorderedIdList = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result.map((i) => i.id);
+};
+
 const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
+  const { itemId } = useParams();
+  const { data: parentItem } = useItem(itemId);
+
   const classes = useStyles();
   const { t } = useTranslation();
   const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
-  const [orderBy, setOrderBy] = React.useState('updatedAt');
+  const [orderBy, setOrderBy] = React.useState(USER_ITEM_ORDER);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(
     ROWS_PER_PAGE_OPTIONS[0],
   );
+
+  const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
   useEffect(() => {
     // remove deleted rows from selection
@@ -129,7 +150,14 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
 
   // order and select rows to display given the current page and the number of entries displayed
   const rowsToDisplay = getRowsForPage(
-    stableSort(rows, getComparator(order, orderBy)),
+    stableSort(
+      rows,
+      getComparator(
+        order,
+        orderBy,
+        getChildrenOrderFromFolderExtra(parentItem),
+      ),
+    ),
     { page, rowsPerPage },
   );
 
@@ -225,6 +253,23 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
     }
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    mutation.mutate({
+      id: itemId,
+      extra: {
+        folder: {
+          childrenOrder: computeReorderedIdList(
+            rowsToDisplay,
+            result.source.index,
+            result.destination.index,
+          ),
+        },
+      },
+    });
+  };
+
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   return (
@@ -252,13 +297,19 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
               rowCount={rows.size}
               headCells={headCells}
             />
-            <TableBody>
+            <TableBody
+              component={itemId ? DroppableTableBody(onDragEnd) : TableBody}
+              id={ITEMS_TABLE_BODY}
+            >
               {mappedRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
+                    component={
+                      itemId ? DraggableTableRow(row.id, index) : TableRow
+                    }
                     id={buildItemsTableRowId(row.id)}
                     hover
                     role="checkbox"
