@@ -108,3 +108,6 @@ export const getItemImage = ({ extra }) =>
   extra?.image ||
   getEmbeddedLinkExtra(extra)?.thumbnails?.[0] ||
   DEFAULT_IMAGE_SRC;
+
+export const getChildrenOrderFromFolderExtra = (item) =>
+  item?.get('extra').folder?.childrenOrder;

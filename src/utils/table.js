@@ -1,12 +1,17 @@
 import { ORDERING } from '../enums';
+import { USER_ITEM_ORDER } from '../config/constants';
 
 /**
  * Custum sorting function depending on a given property name
  * @param {object} a
  * @param {object} b
  * @param {string} orderBy property name to sort a and b
+ * @param {string[]} idOrder id array based on user order
  */
-export const descendingComparator = (a, b, orderBy) => {
+export const descendingComparator = (a, b, orderBy, idOrder) => {
+  if (orderBy === USER_ITEM_ORDER) {
+    return idOrder.indexOf(a.id) - idOrder.indexOf(b.id);
+  }
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -20,12 +25,13 @@ export const descendingComparator = (a, b, orderBy) => {
  * Return a comparator function depending on the order and the field
  * @param {string} order ascending or descending order
  * @param {string} orderBy property name used when sorting
+ * @param {string[]} idOrder id array based on user order
  * @returns {function(): number}
  */
-export const getComparator = (order, orderBy) =>
+export const getComparator = (order, orderBy, idOrder = []) =>
   order === ORDERING.DESC
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+    ? (a, b) => descendingComparator(a, b, orderBy, idOrder)
+    : (a, b) => -descendingComparator(a, b, orderBy, idOrder);
 
 /**
  * Returns array sorted given a comparator function

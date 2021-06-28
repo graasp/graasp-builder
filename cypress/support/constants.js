@@ -11,3 +11,5 @@ export const REQUEST_FAILURE_TIME = 2500;
 
 export const REDIRECTION_TIME = 500;
 export const CAPTION_EDIT_PAUSE = 2000;
+
+export const ROW_HEIGHT = 93;
