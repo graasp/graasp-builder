@@ -68,7 +68,7 @@ const Main = ({ children }) => {
 
   const { data: member, isLoading } = hooks.useCurrentMember();
 
-  const { isMainmenuOpen, setIsMainmenuOpen } = useContext(LayoutContext);
+  const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);
 
   useEffect(() => {
     i18n.changeLanguage(member?.get('extra')?.lang || DEFAULT_LANG);
@@ -80,17 +80,17 @@ const Main = ({ children }) => {
   }
 
   const toggleDrawer = (isOpen) => {
-    setIsMainmenuOpen(isOpen);
+    setIsMainMenuOpen(isOpen);
   };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Header toggleMenu={toggleDrawer} isMenuOpen={isMainmenuOpen} />
+      <Header toggleMenu={toggleDrawer} isMenuOpen={isMainMenuOpen} />
       <Drawer
         className={classes.drawer}
         variant="persistent"
-        open={isMainmenuOpen}
+        open={isMainMenuOpen}
         classes={{
           paper: classes.drawerPaper,
         }}
@@ -103,7 +103,7 @@ const Main = ({ children }) => {
 
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: isMainmenuOpen,
+          [classes.contentShift]: isMainMenuOpen,
         })}
       >
         <div className={classes.appBarBlank} />

@@ -16,8 +16,6 @@ import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
 import { membershipsWithoutUser } from '../../utils/membership';
 
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
-  // eslint-disable-next-line no-console
-  console.log('id: ', id);
   const { t } = useTranslation();
   const { data: memberships, isLoading, isError } = hooks.useItemMemberships(
     id,

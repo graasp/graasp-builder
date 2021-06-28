@@ -8,7 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ItemMemberships from '../item/ItemMemberships';
-import { SHARE_ITEM_MODAL_MIN_WIDTH } from '../../config/constants';
+import {
+  SHARE_ITEM_MODAL_MIN_WIDTH,
+  SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR,
+} from '../../config/constants';
 import { LayoutContext } from './LayoutContext';
 
 const ShareItemModalContext = React.createContext();
@@ -67,7 +70,7 @@ const ShareItemModalProvider = ({ children }) => {
           <ItemMemberships
             onClick={onClickMemberships}
             id={itemId}
-            maxAvatar={8}
+            maxAvatar={SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR}
           />
         </DialogContent>
         <DialogActions>

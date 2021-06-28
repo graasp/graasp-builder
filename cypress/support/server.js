@@ -611,8 +611,6 @@ export const mockEditItemMembershipForItem = (items) => {
       ),
     },
     ({ reply, url }) => {
-      // eslint-disable-next-line no-console
-      console.log('wiojefk');
       const mId = url.slice(API_HOST.length).split('/')[2];
       const result = items.find(({ id }) => id === mId)?.memberships || [];
       reply(result?.find(({ id }) => id === mId));

@@ -13,7 +13,7 @@ const { useItem } = hooks;
 
 const ItemScreen = () => {
   const { itemId } = useParams();
-  const { data: item, isLoading } = useItem(itemId);
+  const { data: item, isLoading, isError } = useItem(itemId);
 
   const { isItemSettingsOpen } = useContext(LayoutContext);
 
@@ -21,7 +21,7 @@ const ItemScreen = () => {
     return <Loader />;
   }
 
-  if (!itemId || !item) {
+  if (!itemId || !item || isError) {
     return <ErrorAlert />;
   }
 

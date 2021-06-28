@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
+import {
+  DEFAULT_ITEM_LAYOUT_MODE,
+  MIN_SCREEN_WIDTH,
+} from '../../config/constants';
 
 const LayoutContext = React.createContext();
 
@@ -16,10 +19,10 @@ const LayoutContextProvider = ({ children }) => {
   // todo: separate in item specific context
   const [isItemSettingsOpen, setIsItemSettingsOpen] = useState(false);
 
-  const [isMainmenuOpen, setIsMainmenuOpen] = useState(true);
+  const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
 
   // open item panel by default if width allows it
-  const isItemPanelOpen = window.innerWidth > 1000;
+  const isItemPanelOpen = window.innerWidth > MIN_SCREEN_WIDTH;
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(
     isItemPanelOpen,
   );
@@ -31,8 +34,8 @@ const LayoutContextProvider = ({ children }) => {
         setMode,
         editingItemId,
         setEditingItemId,
-        isMainmenuOpen,
-        setIsMainmenuOpen,
+        isMainMenuOpen,
+        setIsMainMenuOpen,
         isItemSettingsOpen,
         setIsItemSettingsOpen,
         isItemMetadataMenuOpen,
