@@ -2,7 +2,11 @@
 
 import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
 import { ITEM_TYPES } from '../enums';
-import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
+import {
+  getAppExtra,
+  getDocumentExtra,
+  getEmbeddedLinkExtra,
+} from './itemExtra';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id) => id.replace(/\-/g, '_');
@@ -89,6 +93,11 @@ export const isItemValid = (item) => {
   switch (type) {
     case ITEM_TYPES.LINK: {
       const { url } = getEmbeddedLinkExtra(extra) || {};
+      hasValidTypeProperties = isUrlValid(url);
+      break;
+    }
+    case ITEM_TYPES.APP: {
+      const { url } = getAppExtra(extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }

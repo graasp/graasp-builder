@@ -2,12 +2,17 @@ import React, { useContext } from 'react';
 import { Loader } from '@graasp/ui';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useTranslation } from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
 import { hooks } from '../../../config/queryClient';
 import { LayoutContext } from '../../context/LayoutContext';
 import { isSettingsEditionAllowedForUser } from '../../../utils/membership';
-import { ITEM_SETTINGS_BUTTON_CLASS } from '../../../config/selectors';
+import {
+  buildSettingsButtonId,
+  ITEM_SETTINGS_BUTTON_CLASS,
+} from '../../../config/selectors';
 
 function ItemSettingsButton({ id }) {
   const { setIsItemSettingsOpen, isItemSettingsOpen } = useContext(
@@ -19,6 +24,7 @@ function ItemSettingsButton({ id }) {
   } = hooks.useItemMemberships(id);
   const { data: user, isLoading: isMemberLoading } = hooks.useCurrentMember();
   const memberId = user?.get('id');
+  const { t } = useTranslation();
 
   if (isMembershipsLoading || isMemberLoading) {
     return <Loader />;
@@ -34,12 +40,15 @@ function ItemSettingsButton({ id }) {
   };
 
   return (
-    <IconButton
-      onClick={onClickSettings}
-      className={ITEM_SETTINGS_BUTTON_CLASS}
-    >
-      {isItemSettingsOpen ? <CloseIcon /> : <SettingsIcon />}
-    </IconButton>
+    <Tooltip title={t('Settings')}>
+      <IconButton
+        onClick={onClickSettings}
+        className={ITEM_SETTINGS_BUTTON_CLASS}
+        id={buildSettingsButtonId(id)}
+      >
+        {isItemSettingsOpen ? <CloseIcon /> : <SettingsIcon />}
+      </IconButton>
+    </Tooltip>
   );
 }
 
