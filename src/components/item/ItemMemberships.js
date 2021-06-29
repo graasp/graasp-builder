@@ -15,7 +15,7 @@ import { PERMISSION_LEVELS } from '../../enums';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
 import { membershipsWithoutUser } from '../../utils/membership';
 
-const ItemMemberships = ({ id, maxAvatar }) => {
+const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   const { t } = useTranslation();
   const { data: memberships, isLoading, isError } = hooks.useItemMemberships(
     id,
@@ -64,7 +64,7 @@ const ItemMemberships = ({ id, maxAvatar }) => {
           )}
           aria-label="shared users"
         >
-          <AvatarGroup max={maxAvatar} spacing={3}>
+          <AvatarGroup max={maxAvatar} spacing={3} onClick={onClick}>
             {filteredMemberships.map(({ memberId, permission }) => {
               const badgeContent =
                 permission === PERMISSION_LEVELS.READ ? (
@@ -97,11 +97,13 @@ const ItemMemberships = ({ id, maxAvatar }) => {
 ItemMemberships.propTypes = {
   maxAvatar: PropTypes.number,
   id: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 ItemMemberships.defaultProps = {
   maxAvatar: 2,
   id: null,
+  onClick: null,
 };
 
 export default ItemMemberships;

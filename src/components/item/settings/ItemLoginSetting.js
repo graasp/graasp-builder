@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import { useParams } from 'react-router';
@@ -25,9 +27,9 @@ import { getItemLoginTag } from '../../../utils/itemTag';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
-const { useTags, useItem, useItemTags, useCurrentMember } = hooks;
+const { useTags, useItemTags, useCurrentMember } = hooks;
 
-const ItemLoginSwitch = () => {
+const ItemLoginSwitch = ({ item }) => {
   const { t } = useTranslation();
 
   // user
@@ -35,7 +37,6 @@ const ItemLoginSwitch = () => {
 
   // current item
   const { itemId } = useParams();
-  const { data: item, isLoading: isItemLoading } = useItem(itemId);
 
   // mutations
   const { mutate: putItemLoginSchema } = useMutation(PUT_ITEM_LOGIN);
@@ -63,7 +64,7 @@ const ItemLoginSwitch = () => {
     );
   }, [tags, itemTags, item]);
 
-  if (isItemLoading || isTagsLoading || isItemTagsLoading || isMemberLoading) {
+  if (isTagsLoading || isItemTagsLoading || isMemberLoading) {
     return <Loader />;
   }
 
@@ -103,6 +104,7 @@ const ItemLoginSwitch = () => {
     >
       {Object.values(SETTINGS.ITEM_LOGIN.OPTIONS).map((value) => (
         <MenuItem
+          key={value}
           value={value}
           id={buildItemLoginSettingModeSelectOption(value)}
         >
@@ -129,6 +131,10 @@ const ItemLoginSwitch = () => {
       {!isSwitchDisabled && isItemLoginEnabled && renderSelect()}
     </>
   );
+};
+
+ItemLoginSwitch.propTypes = {
+  item: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default ItemLoginSwitch;

@@ -20,7 +20,6 @@ import {
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
-import ItemSettings from './settings/ItemSettings';
 import { hooks } from '../../config/queryClient';
 
 const { useMember } = hooks;
@@ -125,7 +124,6 @@ const ItemPanel = ({ item, open }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ItemSettings />
     </Drawer>
   );
 };

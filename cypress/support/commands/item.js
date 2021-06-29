@@ -1,9 +1,9 @@
 import { ROOT_ID } from '../../../src/config/constants';
 import {
-  SHARE_ITEM_MODAL_PERMISSION_SELECT_ID,
-  SHARE_ITEM_MODAL_SHARE_BUTTON_ID,
+  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
+  SHARE_ITEM_SHARE_BUTTON_ID,
   buildPermissionOptionId,
-  SHARE_ITEM_MODAL_EMAIL_INPUT_ID,
+  SHARE_ITEM_EMAIL_INPUT_ID,
   buildTreeItemClass,
   TREE_MODAL_CONFIRM_BUTTON_ID,
   TREE_MODAL_TREE_ID,
@@ -14,6 +14,7 @@ import {
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
   ITEM_FORM_APP_URL_ID,
 } from '../../../src/config/selectors';
+
 import {
   getAppExtra,
   getDocumentExtra,
@@ -22,15 +23,15 @@ import {
 import { getParentsIdsFromPath } from '../../../src/utils/item';
 import { TREE_VIEW_PAUSE } from '../constants';
 
-Cypress.Commands.add('fillShareModal', ({ member, permission }) => {
+Cypress.Commands.add('fillShareForm', ({ member, permission }) => {
   // select permission
-  cy.get(`#${SHARE_ITEM_MODAL_PERMISSION_SELECT_ID}`).click();
+  cy.get(`.${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`).click();
   cy.get(`#${buildPermissionOptionId(permission)}`).click();
 
   // input mail
-  cy.get(`#${SHARE_ITEM_MODAL_EMAIL_INPUT_ID}`).type(member.email);
+  cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).type(member.email);
 
-  cy.get(`#${SHARE_ITEM_MODAL_SHARE_BUTTON_ID}`).click();
+  cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).click('left');
 });
 
 Cypress.Commands.add('fillTreeModal', (toItemPath) => {

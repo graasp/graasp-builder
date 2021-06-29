@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
 import { Loader } from '@graasp/ui';
@@ -14,6 +14,7 @@ import {
 import MainMenu from './MainMenu';
 import Header from '../layout/Header';
 import { hooks } from '../../config/queryClient';
+import { LayoutContext } from '../context/LayoutContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,9 +65,10 @@ const useStyles = makeStyles((theme) => ({
 const Main = ({ children }) => {
   const { i18n } = useTranslation();
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
 
   const { data: member, isLoading } = hooks.useCurrentMember();
+
+  const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);
 
   useEffect(() => {
     i18n.changeLanguage(member?.get('extra')?.lang || DEFAULT_LANG);
@@ -78,17 +80,17 @@ const Main = ({ children }) => {
   }
 
   const toggleDrawer = (isOpen) => {
-    setOpen(isOpen);
+    setIsMainMenuOpen(isOpen);
   };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Header toggleMenu={toggleDrawer} isMenuOpen={open} />
+      <Header toggleMenu={toggleDrawer} isMenuOpen={isMainMenuOpen} />
       <Drawer
         className={classes.drawer}
         variant="persistent"
-        open={open}
+        open={isMainMenuOpen}
         classes={{
           paper: classes.drawerPaper,
         }}
@@ -101,7 +103,7 @@ const Main = ({ children }) => {
 
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open,
+          [classes.contentShift]: isMainMenuOpen,
         })}
       >
         <div className={classes.appBarBlank} />

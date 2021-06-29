@@ -9,11 +9,11 @@ import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../../config/selectors';
-import { ItemLayoutModeContext } from '../../context/ItemLayoutModeContext';
+import { LayoutContext } from '../../context/LayoutContext';
 
 const ModeButton = () => {
   const { t } = useTranslation();
-  const { mode, setMode } = useContext(ItemLayoutModeContext);
+  const { mode, setMode } = useContext(LayoutContext);
 
   const handleOnClick = (value) => {
     setMode(value);

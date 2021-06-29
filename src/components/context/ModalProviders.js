@@ -4,21 +4,23 @@ import { EditItemModalProvider } from './EditItemModalContext';
 import { CopyItemModalProvider } from './CopyItemModalContext';
 import { MoveItemModalProvider } from './MoveItemModalContext';
 import { ShareItemModalProvider } from './ShareItemModalContext';
-import { ItemLayoutModeProvider } from './ItemLayoutModeContext';
+import { LayoutContextProvider } from './LayoutContext';
 import { CreateShortcutModalProvider } from './CreateShortcutModalContext';
 
 const ModalProviders = ({ children }) => (
-  <EditItemModalProvider>
-    <CopyItemModalProvider>
-      <MoveItemModalProvider>
-        <ShareItemModalProvider>
-          <CreateShortcutModalProvider>
-            <ItemLayoutModeProvider>{children}</ItemLayoutModeProvider>
-          </CreateShortcutModalProvider>
-        </ShareItemModalProvider>
-      </MoveItemModalProvider>
-    </CopyItemModalProvider>
-  </EditItemModalProvider>
+  <LayoutContextProvider>
+    <EditItemModalProvider>
+      <CopyItemModalProvider>
+        <MoveItemModalProvider>
+          <ShareItemModalProvider>
+            <CreateShortcutModalProvider>
+              {children}
+            </CreateShortcutModalProvider>
+          </ShareItemModalProvider>
+        </MoveItemModalProvider>
+      </CopyItemModalProvider>
+    </EditItemModalProvider>
+  </LayoutContextProvider>
 );
 
 ModalProviders.propTypes = {

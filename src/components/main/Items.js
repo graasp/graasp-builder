@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { ITEM_LAYOUT_MODES } from '../../enums';
 import ItemsTable from './ItemsTable';
 import ItemsGrid from './ItemsGrid';
-import { ItemLayoutModeContext } from '../context/ItemLayoutModeContext';
+import { LayoutContext } from '../context/LayoutContext';
 
 const Items = ({ items, title, id }) => {
-  const { mode } = useContext(ItemLayoutModeContext);
+  const { mode } = useContext(LayoutContext);
 
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID:

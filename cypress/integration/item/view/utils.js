@@ -2,6 +2,8 @@ import {
   buildFileItemId,
   buildS3FileItemId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
+  ITEM_INFORMATION_BUTTON_ID,
+  ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
   ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
@@ -18,6 +20,12 @@ import { getMemberById } from '../../../../src/utils/member';
 import { MEMBERS } from '../../../fixtures/members';
 
 const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
+  cy.get(`#${ITEM_PANEL_ID}`).then(($itemPanel) => {
+    if (!$itemPanel.hasClass(ITEM_INFORMATION_ICON_IS_OPEN_CLASS)) {
+      cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
+    }
+  });
+
   const panel = cy.get(`#${ITEM_PANEL_ID}`);
   panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
 
@@ -97,7 +105,7 @@ export const expectLinkViewScreenLayout = ({
   }
 
   // table
-  expectPanelLayout({ name, extra, creator});
+  expectPanelLayout({ name, extra, creator });
 };
 
 export const expectFolderViewScreenLayout = ({ name, creator }) => {
