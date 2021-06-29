@@ -1,7 +1,6 @@
 {
   "name": "graasp-compose",
   "version": "0.1.0",
-  "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git",
