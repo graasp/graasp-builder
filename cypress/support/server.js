@@ -49,7 +49,7 @@ const {
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
   buildGetItemLoginRoute,
-  buildGetItemMembershipForItemRoute,
+  buildGetItemMembershipsForItemRoute,
   buildGetItemTagsRoute,
   GET_TAGS_ROUTE,
   buildPutItemLoginSchema,
@@ -590,7 +590,7 @@ export const mockGetItemMembershipsForItem = (items) => {
       method: DEFAULT_GET.method,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
-          buildGetItemMembershipForItemRoute(ID_FORMAT),
+          buildGetItemMembershipsForItemRoute(ID_FORMAT),
         )}$`,
       ),
     },
