@@ -31,9 +31,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+// time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
+const DOUBLE_CLICK_DELAY_MS = 500;
+
 const NewItemModal = ({ open, handleClose }) => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
   const [initialItem] = useState({});
   const [currentType, setCurrentType] = useState(ITEM_TYPES.FOLDER);
@@ -67,12 +71,18 @@ const NewItemModal = ({ open, handleClose }) => {
   }, [selectedItemType]);
 
   const submit = () => {
+    if (isConfirmButtonDisabled) {
+      return false;
+    }
     if (!isItemValid(updatedPropertiesPerType[currentType])) {
       // todo: notify user
       return false;
     }
 
+    setConfirmButtonDisabled(true);
     postItem({ parentId, ...updatedPropertiesPerType[currentType] });
+    // schedule button disable state reset AFTER end of click event handling
+    setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
     return handleClose();
   };
 
@@ -140,7 +150,10 @@ const NewItemModal = ({ open, handleClose }) => {
               onClick={submit}
               color="primary"
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
-              disabled={!isItemValid(updatedPropertiesPerType[currentType])}
+              disabled={
+                isConfirmButtonDisabled ||
+                !isItemValid(updatedPropertiesPerType[currentType])
+              }
             >
               {t('Add')}
             </Button>
