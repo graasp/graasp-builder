@@ -84,6 +84,7 @@
     "@commitlint/config-conventional": "11.0.0",
     "@cypress/code-coverage": "3.9.2",
     "@cypress/instrument-cra": "1.4.0",
+    "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",

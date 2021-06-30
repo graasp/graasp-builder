@@ -8,19 +8,21 @@ import {
 import ItemHeader from './item/header/ItemHeader';
 import ErrorAlert from './common/ErrorAlert';
 import Items from './main/Items';
-import { hooks } from '../config/queryClient';
+import { hooks, ws } from '../config/queryClient';
 import Loader from './common/Loader';
 import Main from './main/Main';
 
 const SharedItems = () => {
   const { t } = useTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
+  const { data: user, isUserLoading } = hooks.useCurrentMember();
+  ws.hooks.useSharedItemsUpdates(user?.get('id'));
 
   if (isError) {
     return <ErrorAlert id={SHARED_ITEMS_ERROR_ALERT_ID} />;
   }
 
-  if (isLoading) {
+  if (isLoading || isUserLoading) {
     return <Loader />;
   }
 

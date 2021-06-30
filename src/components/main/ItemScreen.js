@@ -1,13 +1,13 @@
+import { Loader } from '@graasp/ui';
 import React, { useContext } from 'react';
 import { useParams } from 'react-router';
-import { Loader } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
-import ItemMain from '../item/ItemMain';
-import { LayoutContext } from '../context/LayoutContext';
-import Main from './Main';
-import ItemContent from '../item/ItemContent';
-import ItemSettings from '../item/settings/ItemSettings';
 import ErrorAlert from '../common/ErrorAlert';
+import { LayoutContext } from '../context/LayoutContext';
+import ItemContent from '../item/ItemContent';
+import ItemMain from '../item/ItemMain';
+import ItemSettings from '../item/settings/ItemSettings';
+import Main from './Main';
 
 const { useItem } = hooks;
 
