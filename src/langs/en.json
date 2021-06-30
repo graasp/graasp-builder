@@ -83,6 +83,8 @@
     "Storage Used": "Storage Used",
     "Member Since": "Member Since",
     "Profile": "Profile",
-    "Member ID": "Member ID"
+    "Member ID": "Member ID",
+    "Size": "Size",
+    "Manage Access": "Manage Access"
   }
 }

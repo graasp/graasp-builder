@@ -36,6 +36,8 @@ import {
   mockPutItemLogin,
   mockEditMember,
   mockGetSharedItems,
+  mockEditItemMembershipForItem,
+  mockDeleteItemMembershipForItem,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -128,6 +130,10 @@ Cypress.Commands.add(
     mockPostItemTag(items, postItemTagError);
 
     mockEditMember(members, editMemberError);
+
+    mockEditItemMembershipForItem(items);
+
+    mockDeleteItemMembershipForItem(items);
   },
 );
 

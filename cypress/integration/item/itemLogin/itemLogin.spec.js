@@ -16,6 +16,7 @@ import {
   ITEM_LOGIN_SIGN_IN_MODE_ID,
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
+  ITEM_SETTINGS_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { getItemLoginExtra } from '../../../../src/utils/itemExtra';
 import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
@@ -166,12 +167,14 @@ describe('Item Login', () => {
     });
   });
 
-  describe('Display Item Login Setting', () => {
+  describe.only('Display Item Login Setting', () => {
     it('edit item login setting', () => {
       cy.setUpApi(ITEM_LOGIN_ITEMS);
 
       // check item with item login enabled
       cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[0].id));
+      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+
       checkItemLoginSetting({
         isEnabled: true,
         mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
@@ -179,6 +182,7 @@ describe('Item Login', () => {
 
       // allow item login
       cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[1].id));
+      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
       checkItemLoginSetting({
         isEnabled: false,
         mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
@@ -190,6 +194,7 @@ describe('Item Login', () => {
 
       // disabled at child level
       cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[5].id));
+      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
       checkItemLoginSetting({
         isEnabled: true,
         mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,

@@ -1,15 +1,12 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import { useParams } from 'react-router';
+import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { Divider, makeStyles } from '@material-ui/core';
 import ItemLoginSetting from './ItemLoginSetting';
-import { isSettingsEditionAllowedForUser } from '../../../utils/membership';
-import { hooks } from '../../../config/queryClient';
-import Loader from '../../common/Loader';
-
-const { useCurrentMember, useItemMemberships } = hooks;
+import ItemMembershipsTable from '../ItemMembershipsTable';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -19,36 +16,27 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     marginTop: theme.spacing(2),
   },
+  divider: {
+    margin: theme.spacing(3, 0),
+  },
 }));
 
-const ItemSettings = () => {
+const ItemSettings = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { itemId } = useParams();
-  const {
-    data: memberships,
-    isLoading: isMembershipsLoading,
-  } = useItemMemberships(itemId);
-  const { data: user, isLoading: isMemberLoading } = useCurrentMember();
-  const memberId = user?.get('id');
-
-  if (isMembershipsLoading || isMemberLoading) {
-    return <Loader />;
-  }
-
-  // settings are not available for user without edition membership
-  if (!isSettingsEditionAllowedForUser({ memberships, memberId })) {
-    return null;
-  }
 
   return (
     <Container disableGutters className={classes.wrapper}>
-      <Typography variant="h6" className={classes.title}>
+      <Typography variant="h4" className={classes.title}>
         {t('Settings')}
       </Typography>
-      <ItemLoginSetting />
+      <ItemLoginSetting item={item} />
+      <Divider className={classes.divider} />
+      <ItemMembershipsTable id={item.get('id')} />
     </Container>
   );
 };
-
+ItemSettings.propTypes = {
+  item: PropTypes.instanceOf(Map).isRequired,
+};
 export default ItemSettings;

@@ -47,7 +47,7 @@
       }
     ],
     "react/state-in-constructor": ["error", "never"],
-    "no-console": [2, { "allow": ["error"] }],
+    "no-console": [1, { "allow": ["error"] }],
     "no-restricted-syntax": "off"
   }
 }

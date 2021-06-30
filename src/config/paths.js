@@ -5,3 +5,5 @@ export const ITEMS_PATH = '/items';
 export const buildItemPath = (id = ':itemId') => `${ITEMS_PATH}/${id}`;
 export const REDIRECT_PATH = '/redirect';
 export const MEMBER_PROFILE_PATH = '/profile';
+export const buildItemSettingsPath = (id = ':itemId') =>
+  `${ITEMS_PATH}/${id}/settings`;
