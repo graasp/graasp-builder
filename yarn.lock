@@ -1590,9 +1590,9 @@
   dependencies:
     ajv "^6.12.6"
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#9/websockets":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
   version "0.1.0"
-  resolved "git://github.com/graasp/graasp-query-client.git#197e9c99c61f42cc1a4c3a3ceb986651ecd31141"
+  resolved "git://github.com/graasp/graasp-query-client.git#cb629ca71dcc6fdfc47e0e9c46517336000b977b"
   dependencies:
     http-status-codes "2.1.4"
     immutable "4.0.0-rc.12"
