@@ -58,7 +58,7 @@ const TableToolbar = (props) => {
         </Typography>
       )}
 
-      {itemSearchInput}
+      {numSelected > 0 ? null : itemSearchInput}
 
       {numSelected > 0 ? (
         <DeleteButton
