@@ -1,41 +1,42 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { List } from 'immutable';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import Checkbox from '@material-ui/core/Checkbox';
+import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import { useHistory, useParams } from 'react-router';
-import { useTranslation } from 'react-i18next';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import { MUTATION_KEYS } from '@graasp/query-client';
-import ItemMenu from './ItemMenu';
+import { List } from 'immutable';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory, useParams } from 'react-router';
+import { ROWS_PER_PAGE_OPTIONS, USER_ITEM_ORDER } from '../../config/constants';
 import { buildItemPath } from '../../config/paths';
-import { ORDERING, ITEM_DATA_TYPES, ITEM_TYPES } from '../../enums';
-import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
-import { formatDate } from '../../utils/date';
-import EditButton from '../common/EditButton';
-import ShareButton from '../common/ShareButton';
-import DeleteButton from '../common/DeleteButton';
+import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildItemsTableRowId,
   ITEMS_TABLE_BODY,
   ITEMS_TABLE_EMPTY_ROW_ID,
   ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../config/selectors';
-import TableToolbar from './TableToolbar';
-import TableHead from './TableHead';
-import ItemIcon from './ItemIcon';
-import { getShortcutTarget } from '../../utils/itemExtra';
-import { ROWS_PER_PAGE_OPTIONS, USER_ITEM_ORDER } from '../../config/constants';
-import DroppableTableBody from '../common/DroppableTableBody';
-import DraggableTableRow from '../common/DraggableTableRow';
-import { hooks, useMutation } from '../../config/queryClient';
+import { ITEM_DATA_TYPES, ITEM_TYPES, ORDERING } from '../../enums';
+import { formatDate } from '../../utils/date';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
+import { getShortcutTarget } from '../../utils/itemExtra';
+import { getComparator, getRowsForPage, stableSort } from '../../utils/table';
+import DeleteButton from '../common/DeleteButton';
+import DraggableTableRow from '../common/DraggableTableRow';
+import DroppableTableBody from '../common/DroppableTableBody';
+import EditButton from '../common/EditButton';
+import ShareButton from '../common/ShareButton';
+import { ItemSearchInput } from '../item/ItemSearch';
+import ItemIcon from './ItemIcon';
+import ItemMenu from './ItemMenu';
+import TableHead from './TableHead';
+import TableToolbar from './TableToolbar';
 
 const { useItem } = hooks;
 
@@ -81,7 +82,12 @@ const computeReorderedIdList = (list, startIndex, endIndex) => {
   return result.map((i) => i.id);
 };
 
-const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
+const ItemsTable = ({
+  items: rows,
+  tableTitle,
+  id: tableId,
+  searchInput: itemSearchInput,
+}) => {
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
 
@@ -279,6 +285,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
           tableTitle={tableTitle}
           numSelected={selected.length}
           selected={selected}
+          itemSearchInput={itemSearchInput}
         />
         <TableContainer>
           <Table
@@ -382,11 +389,13 @@ ItemsTable.propTypes = {
   items: PropTypes.instanceOf(List),
   tableTitle: PropTypes.string.isRequired,
   id: PropTypes.string,
+  searchInput: PropTypes.instanceOf(ItemSearchInput),
 };
 
 ItemsTable.defaultProps = {
   id: '',
   items: List(),
+  searchInput: null,
 };
 
 export default ItemsTable;
