@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { ITEM_SEARCH_INPUT_ID } from '../../config/selectors';
 
 const useSearchStyles = makeStyles((theme) => ({
   search: {
@@ -52,6 +53,7 @@ const ItemSearchInput = (props) => {
         <SearchIcon />
       </div>
       <OutlinedInput
+        id={ITEM_SEARCH_INPUT_ID}
         placeholder="Search…"
         classes={{
           root: classes.inputRoot,

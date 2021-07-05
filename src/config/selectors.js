@@ -100,3 +100,4 @@ export const buildItemMembershipRowDeleteButtonId = (id) =>
   `itemMembershipRowDeleteButtonId-${id}`;
 export const ITEM_INFORMATION_ICON_IS_OPEN_CLASS = 'itemInformationIconIsOpen';
 export const ITEM_INFORMATION_BUTTON_ID = 'itemInformationButton';
+export const ITEM_SEARCH_INPUT_ID = 'itemSearchInput';
