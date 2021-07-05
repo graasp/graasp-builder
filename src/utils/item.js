@@ -109,5 +109,18 @@ export const getItemImage = ({ extra }) =>
   getEmbeddedLinkExtra(extra)?.thumbnails?.[0] ||
   DEFAULT_IMAGE_SRC;
 
+export const isItemFavorite = (item, member) =>
+  member?.get('extra')?.favoriteItems?.includes(item.id);
+
+// todo: find other possible solutions
+export const getExistingItems = (items) =>
+  items.filter((item) => !item.statusCode);
+
+export const containsNonExistingItems = (items) =>
+  items.some((item) => item.statusCode);
+
+export const getErrorItemIds = (items) =>
+  items.filter((item) => item.statusCode).map((item) => item.data);
+
 export const getChildrenOrderFromFolderExtra = (item) =>
-  item?.get('extra').folder?.childrenOrder;
+  item?.get('extra')?.folder?.childrenOrder;

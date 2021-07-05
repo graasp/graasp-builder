@@ -7,6 +7,7 @@ import {
   buildItemPath,
   REDIRECT_PATH,
   MEMBER_PROFILE_PATH,
+  FAVORITE_ITEMS_PATH,
 } from '../config/paths';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
@@ -16,6 +17,7 @@ import ModalProviders from './context/ModalProviders';
 import ItemLoginAuthorization from './common/ItemLoginAuthorization';
 import Redirect from './main/Redirect';
 import MemberProfileScreen from './member/MemberProfileScreen';
+import FavoriteItems from './main/FavoriteItems';
 
 const App = () => (
   <ModalProviders>
@@ -26,6 +28,11 @@ const App = () => (
           path={SHARED_ITEMS_PATH}
           exact
           component={Authorization()(SharedItems)}
+        />
+        <Route
+          path={FAVORITE_ITEMS_PATH}
+          exact
+          component={Authorization()(FavoriteItems)}
         />
         <Route
           path={buildItemPath()}

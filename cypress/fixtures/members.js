@@ -44,3 +44,8 @@ export const MEMBERS = {
 };
 
 export const CURRENT_USER = MEMBERS.ANNA;
+
+export const buildMemberWithFavorites = (favoriteItems) => ({
+  ...CURRENT_USER,
+  extra: { ...CURRENT_USER.extra, favoriteItems },
+});
