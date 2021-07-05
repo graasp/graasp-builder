@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { ITEM_TYPES } from '../enums';
-import { getItemLoginTag } from './itemTag';
+import { getItemLoginTag, getItemPublicTag } from './itemTag';
 
 export const getFileExtra = (extra) => extra?.[ITEM_TYPES.FILE];
 
@@ -62,6 +62,17 @@ export const getItemLoginTagFromItem = ({ tags, itemTags }) => {
   }
 
   return itemTags?.find(({ tagId }) => tagId === itemLoginTagId);
+};
+
+export const getItemPublicTagFromItem = ({ tags, itemTags }) => {
+  const itemTagId = getItemPublicTag(tags)?.id;
+
+  // the tag setting does not exist
+  if (!itemTagId) {
+    return null;
+  }
+
+  return itemTags?.find(({ tagId }) => tagId === itemTagId);
 };
 
 export const buildDocumentExtra = (text) => ({

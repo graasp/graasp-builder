@@ -53,15 +53,17 @@ const ItemLoginSwitch = ({ item }) => {
 
   // update state variables depending on fetch values
   useEffect(() => {
-    const tagValue = getItemLoginTagFromItem({ tags, itemTags });
-    setItemLoginTagValueForItem(tagValue);
-    setIsItemLoginEnabled(Boolean(tagValue));
-    // disable setting if it is set on a parent
-    setIsSwitchDisabled(tagValue && tagValue?.itemPath !== item?.get('path'));
-    setSchema(
-      getItemLoginSchema(item?.get('extra')) ||
-        SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
-    );
+    if (tags && itemTags) {
+      const tagValue = getItemLoginTagFromItem({ tags, itemTags });
+      setItemLoginTagValueForItem(tagValue);
+      setIsItemLoginEnabled(Boolean(tagValue));
+      // disable setting if it is set on a parent
+      setIsSwitchDisabled(tagValue && tagValue?.itemPath !== item?.get('path'));
+      setSchema(
+        getItemLoginSchema(item?.get('extra')) ||
+          SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
+      );
+    }
   }, [tags, itemTags, item]);
 
   if (isTagsLoading || isItemTagsLoading || isMemberLoading) {

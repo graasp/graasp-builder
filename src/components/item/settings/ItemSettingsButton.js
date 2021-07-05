@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Loader } from '@graasp/ui';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,6 +25,15 @@ function ItemSettingsButton({ id }) {
   const { data: user, isLoading: isMemberLoading } = hooks.useCurrentMember();
   const memberId = user?.get('id');
   const { t } = useTranslation();
+
+  // on unmount close item settings
+  useEffect(
+    () => () => {
+      setIsItemSettingsOpen(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   if (isMembershipsLoading || isMemberLoading) {
     return <Loader />;
