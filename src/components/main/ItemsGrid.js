@@ -65,7 +65,7 @@ class ItemsGrid extends Component {
     const { title, itemSearch } = this.props;
     return (
       <div>
-        <TableToolbar tableTitle={title} itemSearchInput={itemSearch.input} />
+        <TableToolbar tableTitle={title} itemSearchInput={itemSearch?.input} />
         <Grid container spacing={1}>
           {this.renderItems()}
         </Grid>

@@ -280,7 +280,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
           tableTitle={tableTitle}
           numSelected={selected.length}
           selected={selected}
-          itemSearchInput={itemSearch.input}
+          itemSearchInput={itemSearch?.input}
         />
         <TableContainer>
           <Table
