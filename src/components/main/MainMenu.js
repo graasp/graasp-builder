@@ -11,7 +11,12 @@ import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useLocation, useHistory } from 'react-router';
 import List from '@material-ui/core/List';
-import { HOME_PATH, SHARED_ITEMS_PATH } from '../../config/paths';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import {
+  FAVORITE_ITEMS_PATH,
+  HOME_PATH,
+  SHARED_ITEMS_PATH,
+} from '../../config/paths';
 
 const MainMenu = () => {
   const { t } = useTranslation();
@@ -45,6 +50,16 @@ const MainMenu = () => {
           <FolderSharedIcon />
         </ListItemIcon>
         <ListItemText primary={t('Shared Items')} />
+      </ListItem>
+      <ListItem
+        button
+        onClick={() => goTo(FAVORITE_ITEMS_PATH)}
+        selected={pathname === FAVORITE_ITEMS_PATH}
+      >
+        <ListItemIcon>
+          <FavoriteIcon />
+        </ListItemIcon>
+        <ListItemText primary={t('Favorite Items')} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>

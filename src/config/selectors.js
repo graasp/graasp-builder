@@ -29,6 +29,7 @@ export const MODE_LIST_BUTTON_ID = 'modeListButton';
 
 export const MODE_GRID_BUTTON_ID = 'modeCardButton';
 export const SHARED_ITEMS_ID = 'sharedItems';
+export const FAVORITE_ITEMS_ID = 'favoriteItems';
 export const OWNED_ITEMS_ID = 'ownedItems';
 export const ITEMS_TABLE_BODY = 'itemsTableBody';
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
@@ -70,7 +71,11 @@ export const buildItemLoginSignInModeOption = (id) =>
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
 export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
+export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'favoriteItemsErrorAlert';
+export const DELETED_FAVORITE_ITEMS_ERROR_ALERT_ID =
+  'deletedFavoriteItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
+export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const CREATE_ITEM_DOCUMENT_ID = 'createItemDocument';
 export const ITEM_FORM_DOCUMENT_TEXT_ID = 'itemFormDocumentText';
 export const ITEM_FORM_DOCUMENT_TEXT_SELECTOR = `#${ITEM_FORM_DOCUMENT_TEXT_ID} .ql-editor`;

@@ -8,6 +8,7 @@ import {
   HOME_PATH,
   buildItemPath,
   SHARED_ITEMS_PATH,
+  FAVORITE_ITEMS_PATH,
 } from '../../config/paths';
 import {
   buildNavigationLink,
@@ -19,7 +20,7 @@ import { hooks } from '../../config/queryClient';
 import { getParentsIdsFromPath } from '../../utils/item';
 import { LOADING_CONTENT } from '../../config/constants';
 
-const { useCurrentMember, useItem, useParents } = hooks;
+const { useItem, useParents } = hooks;
 
 const useStyles = makeStyles(() => ({
   parents: {
@@ -35,7 +36,6 @@ const Navigation = () => {
   const { pathname } = useLocation();
   const match = useRouteMatch(buildItemPath());
   const itemId = match?.params?.itemId;
-  const { data: user, isLoading: isUserLoading } = useCurrentMember();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.get('path');
   const [parentsOpen, setParentsOpen] = useState(false);
@@ -45,7 +45,7 @@ const Navigation = () => {
     enabled: parentsOpen,
   });
 
-  if (isUserLoading || isItemLoading) {
+  if (isItemLoading) {
     return <Loader />;
   }
 
@@ -56,10 +56,26 @@ const Navigation = () => {
   const renderRootLink = () => {
     // build root depending on user permission or pathname
     // todo: consider accessing from guest
-    const ownItem =
-      pathname === HOME_PATH || item?.get('creator') === user?.get('id');
-    const to = ownItem ? HOME_PATH : SHARED_ITEMS_PATH;
-    const text = ownItem ? t('My Items') : t('Shared Items');
+
+    let to;
+    let text;
+
+    switch (pathname) {
+      case SHARED_ITEMS_PATH: {
+        to = SHARED_ITEMS_PATH;
+        text = t('Shared Items');
+        break;
+      }
+      case FAVORITE_ITEMS_PATH: {
+        to = FAVORITE_ITEMS_PATH;
+        text = t('Favorite Items');
+        break;
+      }
+      default: {
+        to = HOME_PATH;
+        text = t('My Items');
+      }
+    }
 
     return (
       <Link color="inherit" to={to}>
