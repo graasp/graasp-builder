@@ -4,7 +4,7 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { ItemSearchInput } from '../item/ItemSearch';
+import { ItemSearchInput, NoItemSearchResult } from '../item/ItemSearch';
 import EmptyItem from './EmptyItem';
 import Item from './Item';
 import TableToolbar from './TableToolbar';
@@ -29,18 +29,25 @@ class ItemsGrid extends Component {
       empty: PropTypes.string.isRequired,
     }).isRequired,
     title: PropTypes.string.isRequired,
-    searchInput: PropTypes.instanceOf(ItemSearchInput),
+    itemSearch: PropTypes.shape({
+      text: PropTypes.string,
+      input: PropTypes.instanceOf(ItemSearchInput),
+    }),
   };
 
   static defaultProps = {
-    searchInput: null,
+    itemSearch: null,
   };
 
   renderItems = () => {
-    const { classes, items } = this.props;
+    const { classes, items, itemSearch } = this.props;
 
     if (!items || !items.size) {
-      return (
+      return itemSearch && itemSearch.text ? (
+        <div className={classes.empty}>
+          <NoItemSearchResult />
+        </div>
+      ) : (
         <div className={classes.empty}>
           <EmptyItem />
         </div>
@@ -55,10 +62,10 @@ class ItemsGrid extends Component {
   };
 
   render() {
-    const { title, searchInput } = this.props;
+    const { title, itemSearch } = this.props;
     return (
       <div>
-        <TableToolbar tableTitle={title} itemSearchInput={searchInput} />
+        <TableToolbar tableTitle={title} itemSearchInput={itemSearch.input} />
         <Grid container spacing={1}>
           {this.renderItems()}
         </Grid>

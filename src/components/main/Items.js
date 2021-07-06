@@ -9,7 +9,7 @@ import ItemsTable from './ItemsTable';
 
 const Items = ({ items, title, id }) => {
   const { mode } = useContext(LayoutContext);
-  const { searchResults, itemSearchInput } = useItemSearch(items);
+  const itemSearch = useItemSearch(items);
 
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID:
@@ -17,8 +17,8 @@ const Items = ({ items, title, id }) => {
         <ItemsGrid
           id={id}
           title={title}
-          items={searchResults}
-          searchInput={itemSearchInput}
+          items={itemSearch.results}
+          itemSearch={itemSearch}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -27,8 +27,8 @@ const Items = ({ items, title, id }) => {
         <ItemsTable
           id={id}
           tableTitle={title}
-          items={searchResults}
-          searchInput={itemSearchInput}
+          items={itemSearch.results}
+          itemSearch={itemSearch}
         />
       );
   }

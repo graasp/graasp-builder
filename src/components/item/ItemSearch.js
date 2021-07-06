@@ -1,9 +1,14 @@
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { ITEM_SEARCH_INPUT_ID } from '../../config/selectors';
+import { useTranslation } from 'react-i18next';
+import {
+  ITEMS_GRID_NO_SEARCH_RESULT_ID,
+  ITEM_SEARCH_INPUT_ID,
+} from '../../config/selectors';
 
 const useSearchStyles = makeStyles((theme) => ({
   search: {
@@ -77,6 +82,21 @@ ItemSearchInput.defaultProps = {
   searchTextState: '',
 };
 
+const NoItemSearchResult = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Typography
+      id={ITEMS_GRID_NO_SEARCH_RESULT_ID}
+      variant="subtitle1"
+      align="center"
+      display="block"
+    >
+      {t('No search results found.')}
+    </Typography>
+  );
+};
+
 const useItemSearch = (items) => {
   const [searchText, setSearchText] = useState('');
 
@@ -85,7 +105,7 @@ const useItemSearch = (items) => {
     setSearchText(text.toLowerCase());
   };
 
-  const searchResults = items.filter((it) =>
+  const results = items.filter((it) =>
     it.name.toLowerCase().includes(searchText),
   );
 
@@ -95,7 +115,7 @@ const useItemSearch = (items) => {
       searchTextState={searchText}
     />
   );
-  return { searchResults, itemSearchInput };
+  return { results, text: searchText, input: itemSearchInput };
 };
 
-export { useItemSearch, ItemSearchInput };
+export { useItemSearch, ItemSearchInput, NoItemSearchResult };

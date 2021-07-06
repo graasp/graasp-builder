@@ -1,9 +1,9 @@
-import { buildItemPath } from '../../../src/config/paths';
+import { buildItemPath } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
   ITEM_SEARCH_INPUT_ID,
-} from '../../../src/config/selectors';
-import { SAMPLE_ITEMS } from '../../fixtures/items';
+} from '../../../../src/config/selectors';
+import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 describe('Search Item in Table', () => {
   const { id } = SAMPLE_ITEMS.items[0];
