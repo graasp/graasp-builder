@@ -51,6 +51,7 @@ const useSearchStyles = makeStyles((theme) => ({
 const ItemSearchInput = (props) => {
   const { searchInputHandler, searchTextState } = props;
   const classes = useSearchStyles();
+  const { t } = useTranslation();
 
   return (
     <div className={classes.search}>
@@ -59,7 +60,7 @@ const ItemSearchInput = (props) => {
       </div>
       <OutlinedInput
         id={ITEM_SEARCH_INPUT_ID}
-        placeholder="Search…"
+        placeholder={t('Search…')}
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput,

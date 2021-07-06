@@ -10,7 +10,7 @@ import Item from './Item';
 import TableToolbar from './TableToolbar';
 
 const styles = (theme) => ({
-  empty: { padding: '5px 20px' },
+  empty: { padding: theme.spacing(1, 2.5) },
   title: {
     display: 'flex',
     alignItems: 'center',
