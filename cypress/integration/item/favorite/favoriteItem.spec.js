@@ -22,11 +22,13 @@ const toggleFavoriteButton = (itemId) => {
   favoriteButton.click();
 };
 
+const favoriteItems = [SAMPLE_ITEMS.items[1].id];
+
 describe('Favorite Item', () => {
   beforeEach(() => {
     cy.setUpApi({
       ...SAMPLE_ITEMS,
-      currentMember: buildMemberWithFavorites([SAMPLE_ITEMS.items[1].id]),
+      currentMember: buildMemberWithFavorites(favoriteItems),
     });
     cy.visit(HOME_PATH);
   });
@@ -48,9 +50,9 @@ describe('Favorite Item', () => {
   });
 
   it('remove item from favorites', () => {
-    const item = SAMPLE_ITEMS.items[1];
+    const itemId = favoriteItems[0];
 
-    toggleFavoriteButton(item.id);
+    toggleFavoriteButton(itemId);
 
     cy.wait('@editMember').then(
       ({
@@ -58,7 +60,7 @@ describe('Favorite Item', () => {
           body: { extra },
         },
       }) => {
-        expect(!extra.favoriteItems.includes(item.id));
+        expect(!extra.favoriteItems.includes(itemId));
       },
     );
   });
@@ -66,8 +68,8 @@ describe('Favorite Item', () => {
   it('check favorite items view', () => {
     cy.visit(FAVORITE_ITEMS_PATH);
 
-    const item = SAMPLE_ITEMS.items[1];
+    const itemId = favoriteItems[0];
 
-    cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
+    cy.get(`#${buildItemsTableRowId(itemId)}`).should('exist');
   });
 });

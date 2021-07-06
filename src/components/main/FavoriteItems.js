@@ -17,6 +17,7 @@ import {
   getErrorItemIds,
   getExistingItems,
 } from '../../utils/item';
+import { getFavoriteItems } from '../../utils/member';
 
 const FavoriteItems = () => {
   const { t } = useTranslation();
@@ -29,10 +30,11 @@ const FavoriteItems = () => {
     data: favoriteItems = List(),
     isLoading: isItemsLoading,
     isError: isItemsError,
-  } = hooks.useItems(member.get('extra').favoriteItems);
+  } = hooks.useItems(getFavoriteItems(member.get('extra')));
 
   const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
 
+  // Whenever we have a change in the favorite items, we check for any deleted items and remove them
   useEffect(() => {
     if (!favoriteItems.isEmpty() && containsNonExistingItems(favoriteItems)) {
       const errorIds = getErrorItemIds(favoriteItems);

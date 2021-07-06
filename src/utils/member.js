@@ -6,3 +6,5 @@ export const getMemberById = (members, id) =>
   members.find(({ id: thisId }) => id === thisId);
 
 export const getMemberAvatar = (extra) => extra?.avatar;
+
+export const getFavoriteItems = (extra) => extra?.favoriteItems;
