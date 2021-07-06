@@ -1,0 +1,44 @@
+name: deploy prod build to aws
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    env:
+      # default build directory
+      BUILD_FOLDER: 'build/'
+      VERSION: 'latest'
+
+      REACT_APP_API_HOST: ${{ secrets.PROD_GRAASP_API_HOST }}
+      REACT_APP_UPLOAD_METHOD: default
+      REACT_APP_S3_FILES_HOST: ${{ secrets.PROD_S3_FILES_HOST }}
+      REACT_APP_SHOW_NOTIFICATIONS: true
+      REACT_APP_AUTHENTICATION_HOST: ${{ secrets.PROD_GRAASP_AUTH_HOST }}
+      REACT_APP_GRAASP_PERFORM_HOST: ${{ secrets.PROD_GRAASP_PERFORM_HOST }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: yarn set up
+        uses: actions/setup-node@v2
+
+      - run: yarn install --network-concurrency 1
+      - run: yarn build
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.GRAASP_COMPOSE_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GRAASP_COMPOSE_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.GRAASP_COMPOSE_AWS_REGION }}
+
+      - name: copy files to aws bucket
+        env:
+          COMPOSE_DIR: '${{ secrets.PROD_GRAASP_COMPOSE_BUCKET }}'
+        run: aws s3 sync ${{env.BUILD_FOLDER}} s3://${COMPOSE_DIR} --delete
+
+      - name: invalidate cloudfront distribution
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_GRAASP_COMPOSE_CLOUDFRONT_DISTRIBUTION }} --paths '/*'
