@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { TextEditor } from '@graasp/ui';
+import Typography from '@material-ui/core/Typography';
 import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
@@ -30,6 +31,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
 
   return (
     <>
+      <Typography variant="h6">{t('Create a Document')}</Typography>
       <BaseForm
         onChange={onChange}
         item={item}

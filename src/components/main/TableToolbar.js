@@ -47,15 +47,17 @@ const TableToolbar = (props) => {
           {t('nbitem selected', { numSelected })}
         </Typography>
       ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {tableTitle}
+        <>
+          <Typography
+            className={classes.title}
+            variant="h6"
+            id="tableTitle"
+            component="div"
+          >
+            {tableTitle}
+          </Typography>
           <NewItemButton fontSize="small" />
-        </Typography>
+        </>
       )}
 
       {numSelected > 0 ? (

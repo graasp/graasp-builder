@@ -2,6 +2,7 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import Typography from '@material-ui/core/Typography';
 import { isUrlValid } from '../../../utils/item';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
 import {
@@ -26,6 +27,7 @@ function LinkForm({ onChange, item }) {
 
   return (
     <>
+      <Typography variant="h6">{t('Create a Link')}</Typography>
       <TextField
         id={ITEM_FORM_LINK_INPUT_ID}
         error={isLinkInvalid}
@@ -35,6 +37,7 @@ function LinkForm({ onChange, item }) {
         value={url}
         onChange={handleLinkInput}
         helperText={Boolean(isLinkInvalid) && t('This link is not valid')}
+        fullWidth
       />
     </>
   );
