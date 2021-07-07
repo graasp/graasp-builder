@@ -107,3 +107,7 @@ export const ITEM_INFORMATION_ICON_IS_OPEN_CLASS = 'itemInformationIconIsOpen';
 export const ITEM_INFORMATION_BUTTON_ID = 'itemInformationButton';
 export const ITEM_SEARCH_INPUT_ID = 'itemSearchInput';
 export const ITEMS_GRID_NO_SEARCH_RESULT_ID = 'itemsGridNoSearchResult';
+export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID =
+  'itemsGridItemsPerPageSelect';
+export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID =
+  'itemsGridItemsPerPageSelectLabel';
