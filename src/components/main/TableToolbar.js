@@ -58,15 +58,15 @@ const TableToolbar = (props) => {
         </Typography>
       )}
 
-      {numSelected > 0 ? null : itemSearchInput}
-
       {numSelected > 0 ? (
         <DeleteButton
           id={ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}
           color="secondary"
           itemIds={selected}
         />
-      ) : null}
+      ) : (
+        itemSearchInput
+      )}
     </Toolbar>
   );
 };
