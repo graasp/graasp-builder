@@ -1,20 +1,36 @@
-import React, { useContext } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { ITEM_LAYOUT_MODES } from '../../enums';
-import ItemsTable from './ItemsTable';
-import ItemsGrid from './ItemsGrid';
 import { LayoutContext } from '../context/LayoutContext';
+import { useItemSearch } from '../item/ItemSearch';
+import ItemsGrid from './ItemsGrid';
+import ItemsTable from './ItemsTable';
 
 const Items = ({ items, title, id }) => {
   const { mode } = useContext(LayoutContext);
+  const itemSearch = useItemSearch(items);
 
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID:
-      return <ItemsGrid id={id} title={title} items={items} />;
+      return (
+        <ItemsGrid
+          id={id}
+          title={title}
+          items={itemSearch.results}
+          itemSearch={itemSearch}
+        />
+      );
     case ITEM_LAYOUT_MODES.LIST:
     default:
-      return <ItemsTable id={id} tableTitle={title} items={items} />;
+      return (
+        <ItemsTable
+          id={id}
+          tableTitle={title}
+          items={itemSearch.results}
+          itemSearch={itemSearch}
+        />
+      );
   }
 };
 
