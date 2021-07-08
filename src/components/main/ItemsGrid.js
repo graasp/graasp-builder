@@ -1,14 +1,13 @@
-import { Box } from '@material-ui/core';
-import FormControl from '@material-ui/core/FormControl';
+import { Box, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
 import {
@@ -30,10 +29,15 @@ const styles = (theme) => ({
   },
   paginationControls: {
     padding: theme.spacing(2),
+    alignItems: 'center',
   },
   itemsPerPageSelect: {
     position: 'absolute',
-    left: theme.spacing(1),
+    right: theme.spacing(2),
+    alignItems: 'center',
+  },
+  itemsPerPageLabel: {
+    paddingRight: theme.spacing(1),
   },
   formControl: {
     margin: theme.spacing(1),
@@ -41,51 +45,23 @@ const styles = (theme) => ({
   },
 });
 
-class ItemsGrid extends Component {
-  static propTypes = {
-    items: PropTypes.instanceOf(List).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
-    }).isRequired,
-    classes: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      empty: PropTypes.string.isRequired,
-      paginationControls: PropTypes.string.isRequired,
-      formControl: PropTypes.string.isRequired,
-      itemsPerPageSelect: PropTypes.string.isRequired,
-    }).isRequired,
-    title: PropTypes.string.isRequired,
-    itemSearch: PropTypes.shape({
-      text: PropTypes.string,
-      input: PropTypes.instanceOf(ItemSearchInput),
-    }),
-  };
+const ItemsGrid = (props) => {
+  const { classes, items, title, itemSearch } = props;
 
-  static defaultProps = {
-    itemSearch: null,
-  };
+  const { t } = useTranslation();
+  const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(
+    GRID_ITEMS_PER_PAGE_CHOICES[0],
+  );
 
-  state = {
-    page: 1,
-    itemsPerPage: GRID_ITEMS_PER_PAGE_CHOICES[0],
-  };
+  const pagesCount = Math.ceil(items.size / itemsPerPage);
 
-  handleItemsPerPage = (event) => {
-    this.setState({
-      itemsPerPage: event.target.value,
-    });
-  };
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const itemsInPage = items.slice(start, end);
 
-  handlePagination = (event, value) => {
-    this.setState({
-      page: value,
-    });
-  };
-
-  renderItems = (items) => {
-    const { classes, itemSearch } = this.props;
-
-    if (!items || !items.size) {
+  const renderItems = () => {
+    if (!itemsInPage || !itemsInPage.size) {
       return itemSearch && itemSearch.text ? (
         <div className={classes.empty}>
           <NoItemSearchResult />
@@ -97,63 +73,75 @@ class ItemsGrid extends Component {
       );
     }
 
-    return items.map((item) => (
+    return itemsInPage.map((item) => (
       <Grid key={item.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
         <Item item={item} />
       </Grid>
     ));
   };
 
-  render() {
-    const { classes, items, title, itemSearch } = this.props;
-    const { page, itemsPerPage } = this.state;
-
-    const pagesCount = Math.ceil(items.size / itemsPerPage);
-
-    const start = (page - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    const itemsInPage = items.slice(start, end);
-
-    return (
-      <div>
-        <TableToolbar tableTitle={title} itemSearchInput={itemSearch?.input} />
-        <Grid container spacing={1}>
-          {this.renderItems(itemsInPage)}
-        </Grid>
-        <Box
-          display="flex"
-          justifyContent="center"
-          className={classes.paginationControls}
-        >
-          <Box className={classes.itemsPerPageSelect}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID}>
-                Items per page
-              </InputLabel>
-              <Select
-                labelId={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID}
-                id={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID}
-                value={itemsPerPage}
-                onChange={this.handleItemsPerPage}
-                label="Items per page"
-              >
-                {GRID_ITEMS_PER_PAGE_CHOICES.map((v) => (
-                  <MenuItem value={v}>{v}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Pagination
-            id={ITEMS_GRID_PAGINATION_ID}
-            count={pagesCount}
-            page={page}
-            onChange={this.handlePagination}
-            className={classes.paginationControls}
-          />
+  return (
+    <div>
+      <TableToolbar tableTitle={title} itemSearchInput={itemSearch?.input} />
+      <Grid container spacing={1}>
+        {renderItems()}
+      </Grid>
+      <Box
+        display="flex"
+        justifyContent="center"
+        className={classes.paginationControls}
+      >
+        <Box display="flex" className={classes.itemsPerPageSelect}>
+          <Typography className={classes.itemsPerPageLabel} variant="body2">
+            {t('Items per page')}
+          </Typography>
+          <Select
+            labelId={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID}
+            id={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID}
+            value={itemsPerPage}
+            onChange={(e) => setItemsPerPage(e.target.value)}
+            label="Items per page"
+          >
+            {GRID_ITEMS_PER_PAGE_CHOICES.map((v) => (
+              <MenuItem value={v}>{v}</MenuItem>
+            ))}
+          </Select>
         </Box>
-      </div>
-    );
-  }
-}
+        <Pagination
+          id={ITEMS_GRID_PAGINATION_ID}
+          count={pagesCount}
+          page={page}
+          onChange={(e, v) => setPage(v)}
+          className={classes.paginationControls}
+        />
+      </Box>
+    </div>
+  );
+};
+
+ItemsGrid.propTypes = {
+  items: PropTypes.instanceOf(List).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
+  }).isRequired,
+  classes: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    empty: PropTypes.string.isRequired,
+    paginationControls: PropTypes.string.isRequired,
+    formControl: PropTypes.string.isRequired,
+    itemsPerPageSelect: PropTypes.string.isRequired,
+    itemsPerPageLabel: PropTypes.string.isRequired,
+  }).isRequired,
+  title: PropTypes.string.isRequired,
+  itemSearch: PropTypes.shape({
+    text: PropTypes.string,
+    input: PropTypes.instanceOf(ItemSearchInput),
+  }),
+};
+
+ItemsGrid.defaultProps = {
+  itemSearch: null,
+};
+
 const StyledComponent = withStyles(styles)(ItemsGrid);
 export default withRouter(StyledComponent);
