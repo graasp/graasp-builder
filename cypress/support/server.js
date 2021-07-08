@@ -62,6 +62,8 @@ const {
   SHARE_ITEM_WITH_ROUTE,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
+  buildPostItemFlagRoute,
+  GET_FLAGS_ROUTE,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -795,4 +797,32 @@ export const mockPostItemTag = (items, shouldThrowError) => {
       reply(body);
     },
   ).as('postItemTag');
+};
+
+export const mockGetFlags = (flags) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${parseStringToRegExp(GET_FLAGS_ROUTE)}$`),
+    },
+    ({ reply }) => {
+      reply(flags);
+    },
+  ).as('getFlags');
+};
+
+export const mockPostItemFlag = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildPostItemFlagRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('postItemFlag');
 };
