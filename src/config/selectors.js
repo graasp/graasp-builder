@@ -111,3 +111,4 @@ export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID =
   'itemsGridItemsPerPageSelect';
 export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID =
   'itemsGridItemsPerPageSelectLabel';
+export const ITEMS_GRID_PAGINATION_ID = 'itemsGridPagination';

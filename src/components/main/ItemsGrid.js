@@ -10,18 +10,16 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
 import {
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID,
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID,
+  ITEMS_GRID_PAGINATION_ID,
 } from '../../config/selectors';
 import { ItemSearchInput, NoItemSearchResult } from '../item/ItemSearch';
 import EmptyItem from './EmptyItem';
 import Item from './Item';
 import TableToolbar from './TableToolbar';
-
-/* possible choices for number of items per page in grid,
-   (must be common multiple for possible row counts of 1,2,3,4,6) */
-const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 
 const styles = (theme) => ({
   empty: { padding: theme.spacing(1, 2.5) },
@@ -146,6 +144,7 @@ class ItemsGrid extends Component {
             </FormControl>
           </Box>
           <Pagination
+            id={ITEMS_GRID_PAGINATION_ID}
             count={pagesCount}
             page={page}
             onChange={this.handlePagination}

@@ -1,8 +1,8 @@
 import { SETTINGS } from '../../src/config/constants';
 import { ITEM_TYPES, PERMISSION_LEVELS } from '../../src/enums';
 import { buildItemLoginSchemaExtra } from '../../src/utils/itemExtra';
-import { CURRENT_USER, MEMBERS } from './members';
 import { DEFAULT_TAGS, ITEM_LOGIN_TAG } from './itemTags';
+import { CURRENT_USER, MEMBERS } from './members';
 
 export const DEFAULT_FOLDER_ITEM = {
   extra: {},
@@ -92,6 +92,30 @@ export const SAMPLE_ITEMS = {
     },
   ],
   memberships: [],
+};
+
+export const generateOwnItems = (number) => {
+  const id = (i) => `cafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;
+  const path = (i) => id(i).replaceAll('-', '_');
+
+  return Array(number)
+    .fill(null)
+    .map((_, i) => ({
+      ...DEFAULT_FOLDER_ITEM,
+      id: id(i),
+      name: `item ${i}`,
+      path: path(i),
+      extra: {
+        image: 'someimageurl',
+      },
+      memberships: [
+        {
+          itemPath: path(i),
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
+        },
+      ],
+    }));
 };
 
 export const ITEM_LOGIN_ITEMS = {

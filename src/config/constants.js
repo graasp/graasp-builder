@@ -130,3 +130,7 @@ export const ITEM_TYPES_WITH_CAPTIONS = [
 
 export const MIN_SCREEN_WIDTH = 1000;
 export const SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR = 8;
+
+/* possible choices for number of items per page in grid,
+   (must be common multiple for possible row counts of 1,2,3,4,6) */
+export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
