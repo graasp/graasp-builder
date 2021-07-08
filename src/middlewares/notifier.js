@@ -33,6 +33,8 @@ import {
   DELETE_ITEM_MEMBERSHIP_ERROR_MESSAGE,
   EDIT_ITEM_MEMBERSHIP_SUCCESS_MESSAGE,
   DELETE_ITEM_MEMBERSHIP_SUCCESS_MESSAGE,
+  POST_ITEM_FLAG_ERROR_MESSAGE,
+  POST_ITEM_FLAG_SUCCESS_MESSAGE,
   COPY_ITEM_LINK_TO_CLIPBOARD_SUCCESS_MESSAGE,
   COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE,
 } from '../config/messages';
@@ -57,6 +59,7 @@ const {
   editMemberRoutine,
   editItemMembershipRoutine,
   deleteItemMembershipRoutine,
+  postItemFlagRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -124,6 +127,10 @@ export default ({ type, payload }) => {
       message = ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE;
       break;
     }
+    case postItemFlagRoutine.FAILURE: {
+      message = POST_ITEM_FLAG_ERROR_MESSAGE;
+      break;
+    }
     case COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE: {
       message = COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE;
       break;
@@ -176,6 +183,10 @@ export default ({ type, payload }) => {
     }
     case deleteItemMembershipRoutine.SUCCESS: {
       message = DELETE_ITEM_MEMBERSHIP_SUCCESS_MESSAGE;
+      break;
+    }
+    case postItemFlagRoutine.SUCCESS: {
+      message = POST_ITEM_FLAG_SUCCESS_MESSAGE;
       break;
     }
     case COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS: {
