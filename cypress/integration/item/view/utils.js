@@ -1,7 +1,13 @@
+import { ITEM_TYPES_WITH_CAPTIONS } from '../../../../src/config/constants';
 import {
+  buildEditButtonId,
   buildFileItemId,
+  buildPerformButtonId,
   buildS3FileItemId,
+  buildSettingsButtonId,
+  buildShareButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
+  ITEM_HEADER_ID,
   ITEM_INFORMATION_BUTTON_ID,
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
   ITEM_PANEL_ID,
@@ -42,7 +48,24 @@ const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
   }
 };
 
-export const expectDocumentViewScreenLayout = ({ name, extra, creator }) => {
+export const expectItemHeaderLayout = ({ id, type }) => {
+  const header = cy.get(`#${ITEM_HEADER_ID}`);
+
+  if (ITEM_TYPES_WITH_CAPTIONS.includes(type)) {
+    header.get(`#${buildEditButtonId(id)}`).should('exist');
+  }
+  header.get(`#${buildShareButtonId(id)}`).should('exist');
+  header.get(`#${buildPerformButtonId(id)}`).should('exist');
+  header.get(`#${buildSettingsButtonId(id)}`).should('exist');
+};
+
+export const expectDocumentViewScreenLayout = ({
+  name,
+  extra,
+  creator,
+  type,
+  id,
+}) => {
   cy.get(DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR).then((editor) => {
     expect(editor.html()).to.contain(getDocumentExtra(extra)?.content);
   });
@@ -52,6 +75,8 @@ export const expectDocumentViewScreenLayout = ({ name, extra, creator }) => {
     extra,
     creator,
   });
+
+  expectItemHeaderLayout({ type, id });
 };
 
 export const expectFileViewScreenLayout = ({
@@ -78,6 +103,8 @@ export const expectFileViewScreenLayout = ({
 
   // table
   expectPanelLayout({ name, extra, creator, mimetype });
+
+  expectItemHeaderLayout({ type, id });
 };
 
 export const expectLinkViewScreenLayout = ({
@@ -86,6 +113,7 @@ export const expectLinkViewScreenLayout = ({
   extra,
   creator,
   description,
+  type,
 }) => {
   const { url, html } = getEmbeddedLinkExtra(extra);
 
@@ -106,9 +134,13 @@ export const expectLinkViewScreenLayout = ({
 
   // table
   expectPanelLayout({ name, extra, creator });
+
+  expectItemHeaderLayout({ type, id });
 };
 
-export const expectFolderViewScreenLayout = ({ name, creator }) => {
+export const expectFolderViewScreenLayout = ({ name, creator, id, type }) => {
   // table
   expectPanelLayout({ name, creator });
+
+  expectItemHeaderLayout({ type, id });
 };

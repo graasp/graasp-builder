@@ -83,7 +83,6 @@ export const DOCUMENT_ITEM_TEXT_EDITOR_ID = 'documentItemTextEditor';
 export const DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR = `#${DOCUMENT_ITEM_TEXT_EDITOR_ID} .ql-editor`;
 export const CREATE_ITEM_APP_ID = 'createItemApp';
 export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
-export const VIEW_ITEM_EDIT_ITEM_BUTTON_ID = 'viewItemEditItemButton';
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id) => `saveButton-${id}`;
 export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';
@@ -112,3 +111,8 @@ export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID =
 export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID =
   'itemsGridItemsPerPageSelectLabel';
 export const ITEMS_GRID_PAGINATION_ID = 'itemsGridPagination';
+export const ITEM_HEADER_ID = 'itemHeader';
+export const buildShareButtonId = (id) => `shareButton-${id}`;
+export const buildPerformButtonId = (id) => `performButton-${id}`;
+export const buildEditButtonId = (id) => `editButton-${id}`;
+export const buildSettingsButtonId = (id) => `settingsButton-${id}`;

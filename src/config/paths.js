@@ -1,3 +1,5 @@
+import { GRAASP_PERFORM_HOST } from './constants';
+
 export const HOME_PATH = '/';
 export const SHARED_ITEMS_PATH = '/shared';
 export const FAVORITE_ITEMS_PATH = '/favorite';
@@ -8,3 +10,4 @@ export const REDIRECT_PATH = '/redirect';
 export const MEMBER_PROFILE_PATH = '/profile';
 export const buildItemSettingsPath = (id = ':itemId') =>
   `${ITEMS_PATH}/${id}/settings`;
+export const buildGraaspPerformView = (id) => `${GRAASP_PERFORM_HOST}/${id}`;
