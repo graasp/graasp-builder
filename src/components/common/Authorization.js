@@ -9,15 +9,18 @@ import {
 import { hooks } from '../../config/queryClient';
 import Loader from './Loader';
 import RedirectPage from './RedirectionContent';
+import { redirect } from '../../utils/navigation';
 
 const Authorization = () => (ChildComponent) => {
   const ComposedComponent = (props) => {
     const { pathname } = useLocation();
 
     const redirectToSignIn = () => {
-      window.location.href = `${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath(
-        `${window.location.origin}${pathname}`,
-      )}`;
+      redirect(
+        `${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath(
+          `${window.location.origin}${pathname}`,
+        )}`,
+      );
     };
 
     const {

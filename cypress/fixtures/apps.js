@@ -9,7 +9,7 @@ export const GRAASP_APP_ITEM = {
   description: 'my app description',
   type: ITEM_TYPES.APP,
   extra: {
-    [ITEM_TYPES.APP]: { url: 'http://localhost:3333' },
+    [ITEM_TYPES.APP]: { url: 'http://localhost.com:3333' },
   },
   creator: CURRENT_USER.id,
 };
@@ -32,7 +32,7 @@ export const GRAASP_APP_CHILDREN_ITEM = {
   description: 'my app description',
   type: ITEM_TYPES.APP,
   extra: {
-    [ITEM_TYPES.APP]: { url: 'http://localhost:3333' },
+    [ITEM_TYPES.APP]: { url: 'http://localhost.com:3333' },
   },
   creator: CURRENT_USER.id,
 };

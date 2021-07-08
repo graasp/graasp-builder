@@ -6,7 +6,7 @@ import {
   EDIT_ITEM_BUTTON_CLASS,
   TEXT_EDITOR_CLASS,
   buildSaveButtonId,
-  VIEW_ITEM_EDIT_ITEM_BUTTON_ID,
+  buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { CAPTION_EDIT_PAUSE } from '../../../support/constants';
 
@@ -44,7 +44,7 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
 
 export const editCaptionFromViewPage = ({ id, caption }) => {
   cy.wait(CAPTION_EDIT_PAUSE);
-  cy.get(`#${VIEW_ITEM_EDIT_ITEM_BUTTON_ID}`).click();
+  cy.get(`#${buildEditButtonId(id)}`).click();
   cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}${caption}`);
   cy.get(`#${buildSaveButtonId(id)}`).click();
 };

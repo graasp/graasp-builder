@@ -26,6 +26,7 @@ import {
 import { SETTINGS } from '../../src/config/constants';
 import { ITEM_LOGIN_TAG } from '../fixtures/itemTags';
 import { getMemberById } from '../../src/utils/member';
+import { PERMISSION_LEVELS } from '../../src/enums';
 
 const {
   buildCopyItemRoute,
@@ -596,7 +597,14 @@ export const mockGetItemMembershipsForItem = (items) => {
     },
     ({ reply, url }) => {
       const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
-      const result = items.find(({ id }) => id === itemId).memberships || [];
+      const item = items.find(({ id }) => id === itemId);
+      const result = item.memberships || [
+        {
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: item.creator,
+          itemId: item.id,
+        },
+      ];
       reply(result);
     },
   ).as('getItemMemberships');

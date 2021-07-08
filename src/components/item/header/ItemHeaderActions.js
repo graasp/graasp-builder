@@ -5,18 +5,21 @@ import clsx from 'clsx';
 import EditIcon from '@material-ui/icons/Edit';
 import { Map } from 'immutable';
 import InfoIcon from '@material-ui/icons/Info';
+import Tooltip from '@material-ui/core/Tooltip';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import ModeButton from './ModeButton';
 import { ITEM_TYPES } from '../../../enums';
 import { LayoutContext } from '../../context/LayoutContext';
 import {
+  buildEditButtonId,
   ITEM_INFORMATION_BUTTON_ID,
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
-  VIEW_ITEM_EDIT_ITEM_BUTTON_ID,
 } from '../../../config/selectors';
 import ShareButton from '../../common/ShareButton';
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
+import PerformViewButton from '../../common/PerformViewButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ItemHeaderActions = ({ onClick, item }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const {
     setEditingItemId,
     editingItemId,
@@ -50,17 +54,20 @@ const ItemHeaderActions = ({ onClick, item }) => {
       const activeActions = (
         <>
           {showEditButton && (
-            <IconButton
-              aria-label="edit"
-              onClick={() => {
-                setEditingItemId(id);
-              }}
-              id={VIEW_ITEM_EDIT_ITEM_BUTTON_ID}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
+            <Tooltip title={t('Edit')}>
+              <IconButton
+                aria-label="edit"
+                onClick={() => {
+                  setEditingItemId(id);
+                }}
+                id={buildEditButtonId(id)}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
           )}
           <ShareButton itemId={id} />
+          <PerformViewButton itemId={id} />
         </>
       );
 
