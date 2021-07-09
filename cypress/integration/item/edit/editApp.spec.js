@@ -21,7 +21,7 @@ const newFields = {
 
 describe('Edit App', () => {
   describe('View Page', () => {
-    it.only('edit caption', () => {
+    it('edit caption', () => {
       const { id } = GRAASP_APP_ITEM;
       cy.setUpApi({ items: [GRAASP_APP_ITEM] });
       cy.visit(buildItemPath(id));
