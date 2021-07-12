@@ -56,6 +56,7 @@ const TableToolbar = (props) => {
           >
             {tableTitle}
           </Typography>
+          {itemSearchInput}
           <NewItemButton fontSize="small" />
         </>
       )}
@@ -66,9 +67,7 @@ const TableToolbar = (props) => {
           color="secondary"
           itemIds={selected}
         />
-      ) : (
-        itemSearchInput
-      )}
+      ) : null}
     </Toolbar>
   );
 };

@@ -19,11 +19,11 @@ import {
 const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-    width: 'fit-content',
+    minWidth: 'fit-content',
   },
   wrapper: {
     flexDirection: 'row',
-    justifyContent: 'start',
+    justifyContent: 'flex-end',
   },
   icon: {
     marginBottom: '0 !important',
