@@ -7,8 +7,10 @@ import {
   ITEM_DELETE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItem = (id) => {
+  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${buildItemsTableRowId(id)} .${ITEM_DELETE_BUTTON_CLASS}`).click();
   cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };

@@ -11,11 +11,13 @@ import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const moveItem = ({ id: movedItemId, toItemPath }) => {
   const menuSelector = `#${buildItemsTableRowId(
     movedItemId,
   )} .${ITEM_MENU_BUTTON_CLASS}`;
+  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
   cy.get(
     `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
