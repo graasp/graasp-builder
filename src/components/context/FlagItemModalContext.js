@@ -15,6 +15,7 @@ import {
   buildFlagListItemId,
   FLAG_ITEM_BUTTON_ID,
 } from '../../config/selectors';
+import { FLAG_LIST_MAX_HEIGHT } from '../../config/constants';
 
 const { useFlags } = hooks;
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles(() => ({
   list: {
     width: '100%',
     overflow: 'auto',
-    maxHeight: 250,
+    maxHeight: FLAG_LIST_MAX_HEIGHT,
   },
   listTitle: {
     fontSize: 'small',
