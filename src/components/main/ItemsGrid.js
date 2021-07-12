@@ -56,6 +56,11 @@ const ItemsGrid = (props) => {
 
   const pagesCount = Math.ceil(items.size / itemsPerPage);
 
+  // bugfix: since page state is independent from search, must ensure always within range
+  if (page > pagesCount) {
+    setPage(1);
+  }
+
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const itemsInPage = items.slice(start, end);
