@@ -12,13 +12,13 @@ import {
   ITEM_MENU_COPY_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { MENU_ITEM_RENDER_TIME } from '../../../support/constants';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const copyItem = ({ id, toItemPath }) => {
   const menuSelector = `#${buildItemsTableRowId(
     id,
   )} .${ITEM_MENU_BUTTON_CLASS}`;
-  cy.wait(MENU_ITEM_RENDER_TIME);
+  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
   cy.fillTreeModal(toItemPath);

@@ -8,12 +8,12 @@ import {
   ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { MENU_ITEM_RENDER_TIME } from '../../../support/constants';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItems = (itemIds) => {
   // check selected ids
   itemIds.forEach((id) => {
-    cy.wait(MENU_ITEM_RENDER_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(
       `#${buildItemsTableRowId(id)} .${ITEMS_TABLE_ROW_CHECKBOX_CLASS}`,
     ).click();
