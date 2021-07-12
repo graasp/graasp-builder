@@ -94,6 +94,9 @@
     "No search results found.": "Aucun résultat ne correspond à la recherche.",
     "Items per page": "Eléments par page:",
     "perform view": "vue perform",
-    "Show Perform View": "Montrer la Vue Perform"
+    "Show Perform View": "Montrer la Vue Perform",
+    "Compose": "Compose",
+    "Perform": "Perform",
+    "Copy to Clipboard": "Copier dans le presse-papier"
   }
 }

@@ -121,6 +121,9 @@ export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const USER_ITEM_ORDER = 'user_order';
 
+export const COMPOSE_VIEW_SELECTION = 'composeViewSelection';
+export const PERFORM_VIEW_SELECTION = 'performViewSelection';
+
 export const ITEM_TYPES_WITH_CAPTIONS = [
   ITEM_TYPES.S3_FILE,
   ITEM_TYPES.FILE,
@@ -131,6 +134,9 @@ export const ITEM_TYPES_WITH_CAPTIONS = [
 
 export const MIN_SCREEN_WIDTH = 1000;
 export const SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR = 8;
+
+export const SHARE_LINK_CONTAINER_BACKGROUND_COLOR = 'lightgray';
+export const SHARE_LINK_COLOR = 'black';
 
 /* possible choices for number of items per page in grid,
    (must be common multiple for possible row counts of 1,2,3,4,6) */
