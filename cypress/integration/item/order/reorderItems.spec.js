@@ -4,11 +4,12 @@ import {
   buildItemsTableRowId,
   ITEMS_TABLE_BODY,
 } from '../../../../src/config/selectors';
-import { ROW_HEIGHT } from '../../../support/constants';
+import { MENU_ITEM_RENDER_TIME, ROW_HEIGHT } from '../../../support/constants';
 
 const reorderAndCheckItem = (id, currentPosition, newPosition) => {
   const childEl = `#${buildItemsTableRowId(id)}`;
 
+  cy.wait(MENU_ITEM_RENDER_TIME);
   cy.dragAndDrop(childEl, 0, (newPosition - currentPosition) * ROW_HEIGHT);
 
   cy.wait('@editItem').then(
