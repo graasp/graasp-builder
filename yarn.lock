@@ -1592,7 +1592,7 @@
 
 "@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
   version "0.1.0"
-  resolved "git://github.com/graasp/graasp-query-client.git#cb629ca71dcc6fdfc47e0e9c46517336000b977b"
+  resolved "git://github.com/graasp/graasp-query-client.git#525f2978b04b997d5d4832525bb25b634e487a4a"
   dependencies:
     http-status-codes "2.1.4"
     immutable "4.0.0-rc.12"
