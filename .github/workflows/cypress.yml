@@ -9,7 +9,7 @@ jobs:
 
       - name: Install
         # network-concurrency 1 is necessary to avoid errors when using github packages
-        run: rm yarn.lock && yarn install --network-concurrency 1
+        run: yarn cache clean && rm yarn.lock && yarn install --network-concurrency 1
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
