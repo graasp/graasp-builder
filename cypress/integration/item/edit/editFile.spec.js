@@ -12,8 +12,20 @@ describe('Edit File', () => {
   });
 
   describe('View Page', () => {
-    it('edit caption', () => {
+    it("edit file's caption", () => {
       const { id } = IMAGE_ITEM_DEFAULT;
+      cy.visit(buildItemPath(id));
+      const caption = 'new caption';
+      editCaptionFromViewPage({ id, caption });
+      cy.wait(`@editItem`).then(({ request: { url, body } }) => {
+        expect(url).to.contain(id);
+        // caption content might be wrapped with html tags
+        expect(body?.description).to.contain(caption);
+      });
+    });
+
+    it("edit s3File's caption", () => {
+      const { id } = VIDEO_ITEM_S3;
       cy.visit(buildItemPath(id));
       const caption = 'new caption';
       editCaptionFromViewPage({ id, caption });

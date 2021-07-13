@@ -121,6 +121,7 @@ const ItemContent = ({ item }) => {
         <div className={classes.fileWrapper}>
           <S3FileItem
             id={buildS3FileItemId(itemId)}
+            editCaption={isEditing}
             item={item}
             content={s3Content}
             onSaveCaption={onSaveCaption}

@@ -4,8 +4,8 @@
   "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git",
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main",
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
@@ -52,6 +52,7 @@
     "start:test": "env-cmd -f ./.env.test react-scripts start",
     "start:ci": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
+    "dist": "env-cmd -f ./.env.production react-scripts build",
     "test": "env-cmd -f ./.env.test react-scripts test",
     "test:once": "env-cmd -f ./.env.test react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
