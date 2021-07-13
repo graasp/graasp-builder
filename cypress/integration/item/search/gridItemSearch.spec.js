@@ -1,13 +1,15 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { buildItemPath } from '../../../../src/config/paths';
+import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
+  buildItemsGridPaginationButtonSelected,
   ITEMS_GRID_NO_ITEM_ID,
   ITEMS_GRID_NO_SEARCH_RESULT_ID,
+  ITEMS_GRID_PAGINATION_ID,
   ITEM_SEARCH_INPUT_ID,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { generateOwnItems, SAMPLE_ITEMS } from '../../../fixtures/items';
 
 describe('Search Item in Grid', () => {
   const { id } = SAMPLE_ITEMS.items[0];
@@ -97,5 +99,33 @@ describe('Search Item in Grid', () => {
 
     // should still display empty message
     cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
+  });
+
+  it('resets grid pagination if num results < current page', () => {
+    const items = generateOwnItems(30);
+    cy.setUpApi({ items });
+
+    // visit home
+    cy.visit(HOME_PATH);
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+    }
+
+    // go to page 2
+    cy.get(`#${ITEMS_GRID_PAGINATION_ID} > ul > li`)
+      .eq(2) // leftmost li is "prev" button
+      .click();
+
+    // perform search
+    cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(items[0].name);
+
+    // there should be only a single item
+    cy.get(`#${buildItemCard(items[0].id)}`).should('exist');
+    items.slice(1).forEach((item) => {
+      cy.get(`#${buildItemCard(item.id)}`).should('not.exist');
+    });
+
+    // and page number should be 1 and selected
+    cy.get(buildItemsGridPaginationButtonSelected(1)).should('exist');
   });
 });

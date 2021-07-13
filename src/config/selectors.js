@@ -106,6 +106,15 @@ export const ITEM_INFORMATION_ICON_IS_OPEN_CLASS = 'itemInformationIconIsOpen';
 export const ITEM_INFORMATION_BUTTON_ID = 'itemInformationButton';
 export const ITEM_SEARCH_INPUT_ID = 'itemSearchInput';
 export const ITEMS_GRID_NO_SEARCH_RESULT_ID = 'itemsGridNoSearchResult';
+export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID =
+  'itemsGridItemsPerPageSelect';
+export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID =
+  'itemsGridItemsPerPageSelectLabel';
+export const ITEMS_GRID_PAGINATION_ID = 'itemsGridPagination';
+export const buildItemsGridPaginationButton = (page) =>
+  `button[aria-label="page ${page}"].MuiPaginationItem-page`;
+export const buildItemsGridPaginationButtonSelected = (page) =>
+  `${buildItemsGridPaginationButton(page)}.Mui-selected`;
 export const ITEM_HEADER_ID = 'itemHeader';
 export const buildShareButtonId = (id) => `shareButton-${id}`;
 export const buildPerformButtonId = (id) => `performButton-${id}`;
