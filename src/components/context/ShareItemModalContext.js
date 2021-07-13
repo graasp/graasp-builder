@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
+import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -19,7 +20,9 @@ import {
   PERFORM_VIEW_SELECTION,
   SHARE_ITEM_MODAL_MIN_WIDTH,
   SHARE_LINK_COLOR,
-  SHARE_LINK_CONTAINER_BACKGROUND_COLOR,
+  SHARE_LINK_CONTAINER_BORDER_STYLE,
+  SHARE_LINK_CONTAINER_BORDER_WIDTH,
+  SHARE_LINK_WIDTH,
   SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR,
 } from '../../config/constants';
 import { LayoutContext } from './LayoutContext';
@@ -50,8 +53,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   shareLinkContainer: {
-    backgroundColor: SHARE_LINK_CONTAINER_BACKGROUND_COLOR,
     borderRadius: theme.shape.borderRadius,
+    borderWidth: SHARE_LINK_CONTAINER_BORDER_WIDTH,
+    borderStyle: SHARE_LINK_CONTAINER_BORDER_STYLE,
     padding: theme.spacing(1),
     marginBottom: theme.spacing(1),
     display: 'flex',
@@ -61,6 +65,10 @@ const useStyles = makeStyles((theme) => ({
   shareLink: {
     color: SHARE_LINK_COLOR,
     textDecoration: 'none !important',
+    width: SHARE_LINK_WIDTH,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
   },
   copyButton: {
     padding: theme.spacing(0),
@@ -79,12 +87,12 @@ const ShareItemModalProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(null);
 
-  const [linkSource, setLinkSource] = useState(null);
+  const [linkType, setLinkType] = useState(null);
   const [link, setLink] = useState(null);
 
   useEffect(() => {
     if (itemId) {
-      switch (linkSource) {
+      switch (linkType) {
         case COMPOSE_VIEW_SELECTION: {
           setLink(buildGraaspComposeView(itemId));
           break;
@@ -97,12 +105,12 @@ const ShareItemModalProvider = ({ children }) => {
           break;
       }
     }
-  }, [itemId, linkSource]);
+  }, [itemId, linkType]);
 
   const openModal = (newItemId) => {
     setOpen(true);
     setItemId(newItemId);
-    setLinkSource(COMPOSE_VIEW_SELECTION);
+    setLinkType(COMPOSE_VIEW_SELECTION);
   };
 
   const onClose = () => {
@@ -119,8 +127,8 @@ const ShareItemModalProvider = ({ children }) => {
     navigator.clipboard.writeText(link);
   };
 
-  const handleLinkSourceChange = (event) => {
-    setLinkSource(event.target.value);
+  const handleLinkTypeChange = (event) => {
+    setLinkType(event.target.value);
   };
 
   return (
@@ -128,35 +136,44 @@ const ShareItemModalProvider = ({ children }) => {
       <Dialog open={open} onClose={onClose} maxWidth="md">
         <DialogTitle>{t('Share Item')}</DialogTitle>
         <DialogContent className={classes.dialogContent}>
-          <div className={classes.shareLinkContainer}>
-            <Link className={classes.shareLink} href={link} target="_blank">
-              {link}
-            </Link>
-            <div>
-              <Select
-                className={classes.selector}
-                value={linkSource}
-                onChange={handleLinkSourceChange}
-              >
-                <MenuItem value={COMPOSE_VIEW_SELECTION}>
-                  {t('Compose')}
-                </MenuItem>
-                <MenuItem value={PERFORM_VIEW_SELECTION}>
-                  {t('Perform')}
-                </MenuItem>
-              </Select>
-              <Tooltip title={t('Copy to Clipboard')}>
-                <IconButton onClick={handleCopy} className={classes.copyButton}>
-                  <FileCopyIcon />
-                </IconButton>
-              </Tooltip>
-            </div>
-          </div>
-          <ItemMemberships
-            onClick={onClickMemberships}
-            id={itemId}
-            maxAvatar={SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR}
-          />
+          {itemId ? (
+            <>
+              <div className={classes.shareLinkContainer}>
+                <Link className={classes.shareLink} href={link} target="_blank">
+                  {link}
+                </Link>
+                <div>
+                  <Select
+                    className={classes.selector}
+                    value={linkType}
+                    onChange={handleLinkTypeChange}
+                  >
+                    <MenuItem value={COMPOSE_VIEW_SELECTION}>
+                      {t('Compose')}
+                    </MenuItem>
+                    <MenuItem value={PERFORM_VIEW_SELECTION}>
+                      {t('Perform')}
+                    </MenuItem>
+                  </Select>
+                  <Tooltip title={t('Copy to Clipboard')}>
+                    <IconButton
+                      onClick={handleCopy}
+                      className={classes.copyButton}
+                    >
+                      <FileCopyIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              </div>
+              <ItemMemberships
+                onClick={onClickMemberships}
+                id={itemId}
+                maxAvatar={SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR}
+              />
+            </>
+          ) : (
+            <Typography>{t('Item not specified')}</Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">

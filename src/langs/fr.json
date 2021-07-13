@@ -97,6 +97,7 @@
     "Show Perform View": "Montrer la Vue Perform",
     "Compose": "Compose",
     "Perform": "Perform",
-    "Copy to Clipboard": "Copier dans le presse-papier"
+    "Copy to Clipboard": "Copier dans le presse-papier",
+    "Item not specified": "Elément introuvable"
   }
 }

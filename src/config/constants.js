@@ -135,8 +135,10 @@ export const ITEM_TYPES_WITH_CAPTIONS = [
 export const MIN_SCREEN_WIDTH = 1000;
 export const SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR = 8;
 
-export const SHARE_LINK_CONTAINER_BACKGROUND_COLOR = 'lightgray';
 export const SHARE_LINK_COLOR = 'black';
+export const SHARE_LINK_WIDTH = 300;
+export const SHARE_LINK_CONTAINER_BORDER_WIDTH = 1;
+export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
 
 /* possible choices for number of items per page in grid,
    (must be common multiple for possible row counts of 1,2,3,4,6) */
