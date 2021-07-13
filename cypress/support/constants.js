@@ -5,6 +5,7 @@ export const NAVIGATE_PAUSE = 500;
 export const PAGE_LOAD_WAITING_PAUSE = 3000;
 export const REQUEST_FAILURE_LOADING_TIME = 1500;
 export const TREE_VIEW_PAUSE = 2000;
+export const WEBSOCKETS_DELAY_TIME = 1500;
 
 export const REDIRECTION_CONTENT = 'hello';
 export const REQUEST_FAILURE_TIME = 2500;

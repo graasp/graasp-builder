@@ -2,6 +2,7 @@ import { buildItemPath, SHARED_ITEMS_PATH } from '../../../src/config/paths';
 import { buildItemsTableRowId } from '../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { CURRENT_USER } from '../../fixtures/members';
+import { WEBSOCKETS_DELAY_TIME } from '../../support/constants';
 import { WebSocket } from './mock-ws';
 
 describe('Websocket interactions', () => {
@@ -41,6 +42,8 @@ describe('Websocket interactions', () => {
         });
       });
 
+      cy.wait(WEBSOCKETS_DELAY_TIME);
+
       // assert item is in list
       cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
     });
@@ -69,6 +72,7 @@ describe('Websocket interactions', () => {
         });
       });
 
+      cy.wait(WEBSOCKETS_DELAY_TIME);
       // assert item is not in list anymore
       cy.get(`#${buildItemsTableRowId(item.id)}`).should('not.exist');
     });
@@ -104,6 +108,7 @@ describe('Websocket interactions', () => {
         },
       });
 
+      cy.wait(WEBSOCKETS_DELAY_TIME);
       // assert item is in list
       cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
     });
@@ -124,6 +129,7 @@ describe('Websocket interactions', () => {
         },
       });
 
+      cy.wait(WEBSOCKETS_DELAY_TIME);
       // assert item is not in list
       cy.get(`#${buildItemsTableRowId(item.id)}`).should('not.exist');
     });
