@@ -269,6 +269,40 @@ export const mockGetPublicItem = (items) => {
   ).as('getPublicItem');
 };
 
+export const mockGetItems = ({ items, currentMember }, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items\\?id\\=`),
+    },
+    ({ url, reply }) => {
+      const { id: itemIds } = qs.parse(url.slice(url.indexOf('?') + 1));
+      return reply(
+        itemIds.map((id) => {
+          const item = getItemById(items, id);
+
+          // mock membership
+          const creator = item?.creator;
+          const haveMembership =
+            creator === currentMember.id ||
+            item?.memberships?.find(
+              ({ memberId }) => memberId === currentMember.id,
+            );
+          if (shouldThrowError || !haveMembership) {
+            return { statusCode: StatusCodes.UNAUTHORIZED, body: null };
+          }
+
+          return (
+            item || {
+              statusCode: StatusCodes.NOT_FOUND,
+            }
+          );
+        }),
+      );
+    },
+  ).as('getItems');
+};
+
 export const mockGetChildren = ({ items, currentMember }) => {
   cy.intercept(
     {

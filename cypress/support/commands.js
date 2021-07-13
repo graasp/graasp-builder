@@ -40,6 +40,7 @@ import {
   mockDeleteItemMembershipForItem,
   mockGetPublicItem,
   mockGetPublicChildren,
+  mockGetItems,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -140,6 +141,8 @@ Cypress.Commands.add(
     mockGetPublicItem(items);
 
     mockGetPublicChildren(items);
+
+    mockGetItems({ items, currentMember });
   },
 );
 
