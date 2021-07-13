@@ -25,6 +25,7 @@ import { API_HOST } from '../../config/constants';
 import { LayoutContext } from '../context/LayoutContext';
 import FileUploader from '../main/FileUploader';
 import Items from '../main/Items';
+import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 
 const {
   useChildren,
@@ -91,6 +92,14 @@ const ItemContent = ({ item }) => {
     setEditingItemId(null);
   };
 
+  const onSaveDocument = (text) => {
+    // edit item only when description has changed
+    if (text !== getDocumentExtra(item?.get('extra')).content) {
+      editItem({ id: itemId, extra: buildDocumentExtra({ content: text }) });
+    }
+    setEditingItemId(null);
+  };
+
   const saveButtonId = buildSaveButtonId(itemId);
 
   switch (itemType) {
@@ -112,6 +121,7 @@ const ItemContent = ({ item }) => {
         <div className={classes.fileWrapper}>
           <S3FileItem
             id={buildS3FileItemId(itemId)}
+            editCaption={isEditing}
             item={item}
             content={s3Content}
             onSaveCaption={onSaveCaption}
@@ -131,7 +141,17 @@ const ItemContent = ({ item }) => {
         </div>
       );
     case ITEM_TYPES.DOCUMENT:
-      return <DocumentItem id={DOCUMENT_ITEM_TEXT_EDITOR_ID} item={item} />;
+      return (
+        <div className={classes.fileWrapper}>
+          <DocumentItem
+            id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
+            item={item}
+            edit={editingItemId}
+            onSave={onSaveDocument}
+            saveButtonId={saveButtonId}
+          />
+        </div>
+      );
     case ITEM_TYPES.APP:
       return (
         <AppItem

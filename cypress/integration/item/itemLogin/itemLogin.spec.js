@@ -167,7 +167,7 @@ describe('Item Login', () => {
     });
   });
 
-  describe.only('Display Item Login Setting', () => {
+  describe('Display Item Login Setting', () => {
     it('edit item login setting', () => {
       cy.setUpApi(ITEM_LOGIN_ITEMS);
 

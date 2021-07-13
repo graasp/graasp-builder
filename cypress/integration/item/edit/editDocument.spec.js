@@ -13,8 +13,16 @@ import {
 } from '../../../fixtures/documents';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
-import { EDIT_ITEM_PAUSE } from '../../../support/constants';
+import {
+  CAPTION_EDIT_PAUSE,
+  EDIT_ITEM_PAUSE,
+} from '../../../support/constants';
 import { editItem } from './utils';
+import {
+  buildEditButtonId,
+  buildSaveButtonId,
+  TEXT_EDITOR_CLASS,
+} from '../../../../src/config/selectors';
 
 const content = 'new text';
 const newFields = {
@@ -59,7 +67,7 @@ describe('Edit Document', () => {
       );
     });
 
-    it('edit in item', () => {
+    it('edit in folder', () => {
       cy.setUpApi({ items: GRAASP_DOCUMENT_ITEMS_FIXTURE });
       const parent = GRAASP_DOCUMENT_PARENT_FOLDER;
       // go to children item
@@ -130,7 +138,7 @@ describe('Edit Document', () => {
       );
     });
 
-    it('edit in item', () => {
+    it('edit in folder', () => {
       cy.setUpApi({ items: GRAASP_DOCUMENT_ITEMS_FIXTURE });
       // go to children item
       const parent = GRAASP_DOCUMENT_PARENT_FOLDER;
@@ -162,6 +170,26 @@ describe('Edit Document', () => {
           cy.get('@getItem').its('response.url').should('contain', parent.id);
         },
       );
+    });
+  });
+
+  describe('View Page', () => {
+    it('edit text', () => {
+      const { id } = GRAASP_DOCUMENT_ITEM;
+      cy.setUpApi({ items: [GRAASP_DOCUMENT_ITEM] });
+      cy.visit(buildItemPath(id));
+
+      const caption = 'new text';
+      cy.wait(CAPTION_EDIT_PAUSE);
+      cy.get(`#${buildEditButtonId(id)}`).click();
+      cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}${caption}`);
+      cy.get(`#${buildSaveButtonId(id)}`).click();
+
+      cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
+        expect(endpointUrl).to.contain(id);
+        // caption content might be wrapped with html tags
+        expect(getDocumentExtra(body?.extra)?.content).to.contain(caption);
+      });
     });
   });
 });

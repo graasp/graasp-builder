@@ -1,4 +1,5 @@
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Loader } from '@graasp/ui';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -85,6 +86,7 @@ const computeReorderedIdList = (list, startIndex, endIndex) => {
 const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
+  const { data: member, isLoading: isMemberLoading } = hooks.useCurrentMember();
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -162,6 +164,10 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
     { page, rowsPerPage },
   );
 
+  if (isMemberLoading) {
+    return <Loader />;
+  }
+
   // transform rows' information into displayable information
   const mappedRows = rowsToDisplay.map((item) => {
     const { id, updatedAt, name, createdAt, type, extra } = item;
@@ -184,7 +190,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
           <EditButton item={item} />
           <ShareButton itemId={id} />
           <DeleteButton itemIds={[id]} />
-          <ItemMenu item={item} />
+          <ItemMenu item={item} member={member} />
         </>
       ),
     };

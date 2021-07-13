@@ -55,7 +55,7 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
       </>
     );
 
-    if (isMemberLoading || isItemLoginLoading || isItemLoading) {
+    if (isMemberLoading || (isItemLoading && !item)) {
       // get item login if the user is not authenticated and the item is empty
       return <Loader />;
     }
@@ -72,6 +72,11 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
 
     // signed out but can sign in with item login
     if ((!user || user.isEmpty()) && itemLogin && !itemLogin.isEmpty()) {
+      if (isItemLoginLoading && !itemLogin) {
+        // get item login if the user is not authenticated and the item is empty
+        return <Loader />;
+      }
+
       return <ItemLoginScreen />;
     }
 

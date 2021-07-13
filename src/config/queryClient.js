@@ -14,6 +14,7 @@ const {
   API_HOST,
   notifier,
   enableWebsocket: true,
+  keepPreviousData: true,
 });
 
 export {

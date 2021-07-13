@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { buildItemPath } from '../../config/paths';
-import ItemMenu from './ItemMenu';
-import { buildItemLink } from '../../config/selectors';
 import { hooks } from '../../config/queryClient';
+import { buildItemLink } from '../../config/selectors';
+import ItemMenu from './ItemMenu';
 
 const { useMember } = hooks;
 
@@ -66,7 +66,7 @@ const CustomCardHeader = ({ item }) => {
           </Typography>
         </div>
       </div>
-      <ItemMenu item={item} />
+      <ItemMenu item={item} member={member} />
     </div>
   );
 };

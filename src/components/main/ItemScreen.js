@@ -1,5 +1,4 @@
-import { Loader } from '@graasp/ui';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { hooks } from '../../config/queryClient';
 import ErrorAlert from '../common/ErrorAlert';
@@ -13,13 +12,17 @@ const { useItem } = hooks;
 
 const ItemScreen = () => {
   const { itemId } = useParams();
-  const { data: item, isLoading, isError } = useItem(itemId);
+  const { data: item, isError } = useItem(itemId);
 
-  const { isItemSettingsOpen } = useContext(LayoutContext);
+  const { isItemSettingsOpen, setEditingItemId } = useContext(LayoutContext);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  useEffect(
+    () => () => {
+      setEditingItemId(null);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   if (!itemId || !item || isError) {
     return <ErrorAlert />;

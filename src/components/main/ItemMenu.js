@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useMutation } from '../../config/queryClient';
 import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
@@ -14,18 +16,14 @@ import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
 } from '../../config/selectors';
-import { CopyItemModalContext } from '../context/CopyItemModalContext';
-import { MoveItemModalContext } from '../context/MoveItemModalContext';
-import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
-import { hooks, useMutation } from '../../config/queryClient';
 import { isItemFavorite } from '../../utils/item';
+import { CopyItemModalContext } from '../context/CopyItemModalContext';
+import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
+import { MoveItemModalContext } from '../context/MoveItemModalContext';
 
-const { useCurrentMember } = hooks;
-
-const ItemMenu = ({ item }) => {
+const ItemMenu = ({ item, member }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
-  const { data: member } = useCurrentMember();
   const { openModal: openCopyModal } = useContext(CopyItemModalContext);
   const { openModal: openMoveModal } = useContext(MoveItemModalContext);
   const { openModal: openCreateShortcutModal } = useContext(
@@ -122,6 +120,7 @@ const ItemMenu = ({ item }) => {
 
 ItemMenu.propTypes = {
   item: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
+  member: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default ItemMenu;
