@@ -100,7 +100,7 @@ describe('Search Item in Grid', () => {
     cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
   });
 
-  it.only('resets grid pagination if num results < current page', () => {
+  it('resets grid pagination if num results < current page', () => {
     const items = generateOwnItems(30);
     cy.setUpApi({ items });
 
