@@ -2,6 +2,7 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
+  buildItemsGridPaginationButtonSelected,
   ITEMS_GRID_NO_ITEM_ID,
   ITEMS_GRID_NO_SEARCH_RESULT_ID,
   ITEMS_GRID_PAGINATION_ID,
@@ -125,8 +126,6 @@ describe('Search Item in Grid', () => {
     });
 
     // and page number should be 1 and selected
-    cy.get(
-      `button[aria-label="page 1"].MuiPaginationItem-page.Mui-selected`,
-    ).should('exist');
+    cy.get(buildItemsGridPaginationButtonSelected(1)).should('exist');
   });
 });
