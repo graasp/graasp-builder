@@ -54,3 +54,7 @@ export const EDIT_ITEM_MEMBERSHIP_SUCCESS_MESSAGE =
   'The item membership was successfully edited.';
 export const DELETE_ITEM_MEMBERSHIP_SUCCESS_MESSAGE =
   'The item membership was successfully deleted.';
+export const COPY_ITEM_LINK_TO_CLIPBOARD_SUCCESS_MESSAGE =
+  'Link is successfully copied!';
+export const COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE =
+  'An error occurred while copying the link';

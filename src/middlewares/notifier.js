@@ -33,8 +33,13 @@ import {
   DELETE_ITEM_MEMBERSHIP_ERROR_MESSAGE,
   EDIT_ITEM_MEMBERSHIP_SUCCESS_MESSAGE,
   DELETE_ITEM_MEMBERSHIP_SUCCESS_MESSAGE,
+  COPY_ITEM_LINK_TO_CLIPBOARD_SUCCESS_MESSAGE,
+  COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE,
 } from '../config/messages';
-import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../types/clipboard';
+import {
+  COPY_ITEM_LINK_TO_CLIPBOARD,
+  COPY_MEMBER_ID_TO_CLIPBOARD,
+} from '../types/clipboard';
 
 const {
   createItemRoutine,
@@ -119,6 +124,10 @@ export default ({ type, payload }) => {
       message = ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE;
       break;
     }
+    case COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE: {
+      message = COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE;
+      break;
+    }
     // success messages
     case editMemberRoutine.SUCCESS: {
       message = EDIT_MEMBER_SUCCESS_MESSAGE;
@@ -167,6 +176,10 @@ export default ({ type, payload }) => {
     }
     case deleteItemMembershipRoutine.SUCCESS: {
       message = DELETE_ITEM_MEMBERSHIP_SUCCESS_MESSAGE;
+      break;
+    }
+    case COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS: {
+      message = COPY_ITEM_LINK_TO_CLIPBOARD_SUCCESS_MESSAGE;
       break;
     }
 

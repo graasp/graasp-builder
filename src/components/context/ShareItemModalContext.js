@@ -30,6 +30,9 @@ import {
   buildGraaspComposeView,
   buildGraaspPerformView,
 } from '../../config/paths';
+import { copyToClipboard } from '../../utils/clipboard';
+import notifier from '../../middlewares/notifier';
+import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../types/clipboard';
 
 const ShareItemModalContext = React.createContext();
 
@@ -124,7 +127,14 @@ const ShareItemModalProvider = ({ children }) => {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(link);
+    copyToClipboard(link, {
+      onSuccess: () => {
+        notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS, payload: {} });
+      },
+      onError: () => {
+        notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE, payload: {} });
+      },
+    });
   };
 
   const handleLinkTypeChange = (event) => {
