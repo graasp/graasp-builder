@@ -14,14 +14,19 @@ const ItemScreen = () => {
   const { itemId } = useParams();
   const { data: item, isError } = useItem(itemId);
 
-  const { isItemSettingsOpen, setEditingItemId } = useContext(LayoutContext);
+  const {
+    isItemSettingsOpen,
+    setEditingItemId,
+    setIsItemSettingsOpen,
+  } = useContext(LayoutContext);
 
   useEffect(
-    () => () => {
+    () => {
       setEditingItemId(null);
+      setIsItemSettingsOpen(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [itemId],
   );
 
   if (!itemId || !item || isError) {

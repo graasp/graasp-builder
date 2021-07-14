@@ -137,6 +137,7 @@ const ItemContent = ({ item }) => {
             editCaption={isEditing}
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
+            height={500}
           />
         </div>
       );
