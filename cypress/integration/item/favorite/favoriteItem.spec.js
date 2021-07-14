@@ -68,7 +68,7 @@ describe('Favorite Item', () => {
     });
   });
 
-  describe('Errors handling', () => {
+  describe('Error Handling', () => {
     it('check favorite items view with one deleted item', () => {
       const itemId = 'non existing id';
       cy.setUpApi({

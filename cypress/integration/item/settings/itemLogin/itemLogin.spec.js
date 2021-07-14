@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   SETTINGS,
   SETTINGS_ITEM_LOGIN_DEFAULT,
-} from '../../../../src/config/constants';
-import { buildItemPath } from '../../../../src/config/paths';
+} from '../../../../../src/config/constants';
+import { buildItemPath } from '../../../../../src/config/paths';
 import {
   buildItemLoginSettingModeSelectOption,
   buildItemLoginSignInModeOption,
@@ -17,11 +17,11 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
   ITEM_SETTINGS_BUTTON_CLASS,
-} from '../../../../src/config/selectors';
-import { getItemLoginExtra } from '../../../../src/utils/itemExtra';
-import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
-import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
-import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
+} from '../../../../../src/config/selectors';
+import { getItemLoginExtra } from '../../../../../src/utils/itemExtra';
+import { ITEM_LOGIN_ITEMS } from '../../../../fixtures/items';
+import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../../fixtures/members';
+import { ITEM_LOGIN_PAUSE } from '../../../../support/constants';
 
 const changeSignInMode = (mode) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
