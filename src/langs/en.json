@@ -94,6 +94,10 @@
     "No search results found.": "No search results found.",
     "Items per page": "Items per page:",
     "perform view": "perform view",
-    "Show Perform View": "Show Perform View"
+    "Show Perform View": "Show Perform View",
+    "Compose": "Compose",
+    "Perform": "Perform",
+    "Copy to Clipboard": "Copy to Clipboard",
+    "Item not specified": "Item not specified"
   }
 }

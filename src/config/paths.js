@@ -11,3 +11,5 @@ export const MEMBER_PROFILE_PATH = '/profile';
 export const buildItemSettingsPath = (id = ':itemId') =>
   `${ITEMS_PATH}/${id}/settings`;
 export const buildGraaspPerformView = (id) => `${GRAASP_PERFORM_HOST}/${id}`;
+export const buildGraaspComposeView = (id) =>
+  `${window.location.origin}${buildItemPath(id)}`;
