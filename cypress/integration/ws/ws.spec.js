@@ -1,9 +1,19 @@
+import { WebSocket } from '@graasp/websockets/test/mock-client';
 import { buildItemPath, SHARED_ITEMS_PATH } from '../../../src/config/paths';
 import { buildItemsTableRowId } from '../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { CURRENT_USER } from '../../fixtures/members';
 import { WEBSOCKETS_DELAY_TIME } from '../../support/constants';
-import { WebSocket } from './mock-ws';
+
+// paramaterized before, to be called in each test or in beforeEach
+function beforeWs(visitRoute, sampleData, wsClientStub) {
+  cy.setUpApi(sampleData);
+  cy.visit(visitRoute, {
+    onBeforeLoad: (win) => {
+      cy.stub(win, 'WebSocket', () => wsClientStub);
+    },
+  });
+}
 
 describe('Websocket interactions', () => {
   let client;
@@ -12,19 +22,9 @@ describe('Websocket interactions', () => {
     client = new WebSocket();
   });
 
-  // paramaterized before, to be called in each test or in beforeEach
-  const beforeWs = (visitRoute, sampleData) => {
-    cy.setUpApi(sampleData);
-    cy.visit(visitRoute, {
-      onBeforeLoad: (win) => {
-        cy.stub(win, 'WebSocket', () => client);
-      },
-    });
-  };
-
   describe('sharedWith me items updates', () => {
     it('displays sharedWith create update', () => {
-      beforeWs(SHARED_ITEMS_PATH, { items: [] });
+      beforeWs(SHARED_ITEMS_PATH, { items: [] }, client);
 
       const item = SAMPLE_ITEMS.items[0];
       cy.wait('@getSharedItems').then(() => {
@@ -55,7 +55,7 @@ describe('Websocket interactions', () => {
         creator: 'someoneElse',
       }));
       const item = items[0];
-      beforeWs(SHARED_ITEMS_PATH, { items });
+      beforeWs(SHARED_ITEMS_PATH, { items }, client);
 
       cy.get(`#${buildItemsTableRowId(item.id)}`).then(() => {
         // send mock sharedItem delete update
@@ -82,7 +82,7 @@ describe('Websocket interactions', () => {
     const { id } = SAMPLE_ITEMS.items[0];
 
     beforeEach(() => {
-      beforeWs(buildItemPath(id), SAMPLE_ITEMS);
+      beforeWs(buildItemPath(id), SAMPLE_ITEMS, client);
 
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {

@@ -1613,7 +1613,7 @@
 
 "@graasp/websockets@git://github.com/graasp/graasp-websockets.git#master":
   version "0.1.0"
-  resolved "git://github.com/graasp/graasp-websockets.git#9757a6a57848138c922c9dd9843d0cc611e1f7b8"
+  resolved "git://github.com/graasp/graasp-websockets.git#91f2141ade85edef4a8ca65ddfa79f19f178e4b4"
   dependencies:
     ajv-latest "npm:ajv@^8.6.0"
     dotenv "^9.0.2"
@@ -3075,6 +3075,7 @@ ajv-keywords@^3.1.0, ajv-keywords@^3.4.1, ajv-keywords@^3.5.2:
   integrity sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==
 
 "ajv-latest@npm:ajv@^8.6.0", ajv@^8.0.1:
+  name ajv-latest
   version "8.6.1"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.1.tgz#ae65764bf1edde8cd861281cda5057852364a295"
   integrity sha512-42VLtQUOLefAvKFAQIxIZDaThq6om/PrfP0CYk3/vn+y4BMNkKnbli8ON2QCiHov4KkzOSJ/xSoBJdayiiYvVQ==
