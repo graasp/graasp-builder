@@ -1603,7 +1603,7 @@
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git#master":
   version "0.2.0"
-  resolved "git://github.com/graasp/graasp-ui.git#9dcf7eb17749904d73d9f704222b395846f82dae"
+  resolved "git://github.com/graasp/graasp-ui.git#55baed21c2a057e39b0eabb10bdde1019a1dbbb1"
   dependencies:
     clsx "1.1.1"
     immutable "4.0.0-rc.12"

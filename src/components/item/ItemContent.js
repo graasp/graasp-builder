@@ -18,7 +18,7 @@ import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
-import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
+import { ITEM_KEYS, ITEM_TYPES, APP_MODES } from '../../enums';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import { API_HOST, ITEM_DEFAULT_HEIGHT } from '../../config/constants';
@@ -163,6 +163,7 @@ const ItemContent = ({ item }) => {
           saveButtonId={saveButtonId}
           user={user}
           height={ITEM_DEFAULT_HEIGHT}
+          mode={APP_MODES.TEACHER}
         />
       );
     case ITEM_TYPES.FOLDER:
