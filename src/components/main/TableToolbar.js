@@ -61,13 +61,13 @@ const TableToolbar = (props) => {
         </>
       )}
 
-      {numSelected > 0 ? (
+      {numSelected > 0 && (
         <DeleteButton
           id={ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}
           color="secondary"
           itemIds={selected}
         />
-      ) : null}
+      )}
     </Toolbar>
   );
 };
