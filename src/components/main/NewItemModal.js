@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { useRouteMatch } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import FolderForm from '../item/form/FolderForm';
@@ -15,7 +14,6 @@ import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
 } from '../../config/selectors';
 import { useMutation } from '../../config/queryClient';
-import ItemTypeButtons from './ItemTypeButtons';
 import { ITEM_TYPES } from '../../enums';
 import FileDashboardUploader from './FileDashboardUploader';
 import LinkForm from '../item/form/LinkForm';
@@ -23,11 +21,19 @@ import { isItemValid } from '../../utils/item';
 import { buildItemPath } from '../../config/paths';
 import DocumentForm from '../item/form/DocumentForm';
 import AppForm from '../item/form/AppForm';
+import ItemTypeTabs from './ItemTypeTabs';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   dialogContent: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    flexDirection: 'column',
+    paddingLeft: 0,
+  },
+  form: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    width: '100%',
   },
 }));
 
@@ -40,7 +46,6 @@ const NewItemModal = ({ open, handleClose }) => {
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
   const [initialItem] = useState({});
-  const [currentType, setCurrentType] = useState(ITEM_TYPES.FOLDER);
   const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
     [ITEM_TYPES.FOLDER]: { type: ITEM_TYPES.FOLDER },
     [ITEM_TYPES.LINK]: { type: ITEM_TYPES.LINK },
@@ -51,36 +56,17 @@ const NewItemModal = ({ open, handleClose }) => {
   const match = useRouteMatch(buildItemPath());
   const parentId = match?.params?.itemId;
 
-  useEffect(() => {
-    switch (selectedItemType) {
-      case ITEM_TYPES.FOLDER:
-        setCurrentType(ITEM_TYPES.FOLDER);
-        break;
-      case ITEM_TYPES.LINK:
-        setCurrentType(ITEM_TYPES.LINK);
-        break;
-      case ITEM_TYPES.DOCUMENT:
-        setCurrentType(ITEM_TYPES.DOCUMENT);
-        break;
-      case ITEM_TYPES.APP:
-        setCurrentType(ITEM_TYPES.APP);
-        break;
-      default:
-        setCurrentType(ITEM_TYPES.FOLDER);
-    }
-  }, [selectedItemType]);
-
   const submit = () => {
     if (isConfirmButtonDisabled) {
       return false;
     }
-    if (!isItemValid(updatedPropertiesPerType[currentType])) {
+    if (!isItemValid(updatedPropertiesPerType[selectedItemType])) {
       // todo: notify user
       return false;
     }
 
     setConfirmButtonDisabled(true);
-    postItem({ parentId, ...updatedPropertiesPerType[currentType] });
+    postItem({ parentId, ...updatedPropertiesPerType[selectedItemType] });
     // schedule button disable state reset AFTER end of click event handling
     setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
     return handleClose();
@@ -90,7 +76,10 @@ const NewItemModal = ({ open, handleClose }) => {
     // update content given current type
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,
-      [currentType]: { ...updatedPropertiesPerType[currentType], ...item },
+      [selectedItemType]: {
+        ...updatedPropertiesPerType[selectedItemType],
+        ...item,
+      },
     });
   };
 
@@ -152,7 +141,7 @@ const NewItemModal = ({ open, handleClose }) => {
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
               disabled={
                 isConfirmButtonDisabled ||
-                !isItemValid(updatedPropertiesPerType[currentType])
+                !isItemValid(updatedPropertiesPerType[selectedItemType])
               }
             >
               {t('Add')}
@@ -176,13 +165,9 @@ const NewItemModal = ({ open, handleClose }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogTitle>{t('Add New Item')}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <ItemTypeButtons
-          setSelectedItemType={setSelectedItemType}
-          selectedItemType={selectedItemType}
-        />
-        {renderContent()}
+        <ItemTypeTabs onTypeChange={setSelectedItemType} />
+        <Box className={classes.form}>{renderContent()}</Box>
       </DialogContent>
       <DialogActions>{renderActions()}</DialogActions>
     </Dialog>

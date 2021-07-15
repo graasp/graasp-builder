@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import BaseItemForm from './BaseItemForm';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
 import { ITEM_FORM_APP_URL_ID } from '../../../config/selectors';
@@ -17,6 +18,7 @@ const AppForm = ({ onChange, item }) => {
 
   return (
     <>
+      <Typography variant="h6">{t('Create an App')}</Typography>
       <BaseItemForm onChange={onChange} item={item} />
       <TextField
         id={ITEM_FORM_APP_URL_ID}

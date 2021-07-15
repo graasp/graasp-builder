@@ -47,25 +47,26 @@ const TableToolbar = (props) => {
           {t('nbitem selected', { numSelected })}
         </Typography>
       ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {tableTitle}
+        <>
+          <Typography
+            className={classes.title}
+            variant="h6"
+            id="tableTitle"
+            component="div"
+          >
+            {tableTitle}
+          </Typography>
+          {itemSearchInput}
           <NewItemButton fontSize="small" />
-        </Typography>
+        </>
       )}
 
-      {numSelected > 0 ? (
+      {numSelected > 0 && (
         <DeleteButton
           id={ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}
           color="secondary"
           itemIds={selected}
         />
-      ) : (
-        itemSearchInput
       )}
     </Toolbar>
   );

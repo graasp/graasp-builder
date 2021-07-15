@@ -10,6 +10,7 @@ import MovieIcon from '@material-ui/icons/Movie';
 import DescriptionIcon from '@material-ui/icons/Description';
 import ImageIcon from '@material-ui/icons/Image';
 import ShortcutIcon from '@material-ui/icons/Input';
+import AppsIcon from '@material-ui/icons/Apps';
 import {
   ITEMS_TABLE_ROW_ICON_COLOR,
   MIME_TYPES,
@@ -32,7 +33,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ItemIcon = ({ name, type, extra }) => {
+const ItemIcon = ({ name, type, extra, iconClass }) => {
   const classes = useStyles();
 
   const mimetype =
@@ -81,15 +82,21 @@ const ItemIcon = ({ name, type, extra }) => {
       Icon = LinkIcon;
       break;
     }
+    case ITEM_TYPES.APP: {
+      Icon = AppsIcon;
+      break;
+    }
     default:
       break;
   }
 
-  return <Icon style={{ color: ITEMS_TABLE_ROW_ICON_COLOR }} />;
+  return (
+    <Icon className={iconClass} style={{ color: ITEMS_TABLE_ROW_ICON_COLOR }} />
+  );
 };
 
 ItemIcon.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   type: PropTypes.string.isRequired,
   extra: PropTypes.oneOfType([
     PropTypes.shape({
@@ -102,6 +109,12 @@ ItemIcon.propTypes = {
       [ITEM_TYPES.LINK]: linkExtraPropTypes,
     }),
   ]).isRequired,
+  iconClass: PropTypes.string,
+};
+
+ItemIcon.defaultProps = {
+  iconClass: null,
+  name: '',
 };
 
 export default ItemIcon;

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import NewItemModal from './NewItemModal';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
 
@@ -11,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   createNewButton: {
     cursor: 'pointer',
     margin: theme.spacing(1),
+    flex: 'none',
   },
 }));
 
@@ -30,13 +32,17 @@ const NewItemButton = ({ fontSize }) => {
   return (
     <>
       <Tooltip placement="left" title={t('Create new item')} arrow>
-        <AddCircleIcon
+        <Button
           id={CREATE_ITEM_BUTTON_ID}
           color="primary"
+          variant="contained"
           fontSize={fontSize}
           className={classes.createNewButton}
           onClick={handleClickOpen}
-        />
+        >
+          <AddIcon />
+          {t('New Item')}
+        </Button>
       </Tooltip>
       <NewItemModal
         open={open}

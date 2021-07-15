@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { ITEM_FORM_IMAGE_INPUT_ID } from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 
@@ -14,6 +15,7 @@ const FolderForm = ({ onChange, item, updatedProperties }) => {
 
   return (
     <>
+      <Typography variant="h6">{t('Create a Folder')}</Typography>
       <BaseItemForm
         onChange={onChange}
         item={item}
