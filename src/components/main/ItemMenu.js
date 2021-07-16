@@ -7,6 +7,7 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   buildItemMenu,
+  buildItemMenuButtonId,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
@@ -58,7 +59,11 @@ const ItemMenu = ({ item }) => {
 
   return (
     <>
-      <IconButton className={ITEM_MENU_BUTTON_CLASS} onClick={handleClick}>
+      <IconButton
+        id={buildItemMenuButtonId(item.id)}
+        className={ITEM_MENU_BUTTON_CLASS}
+        onClick={handleClick}
+      >
         <MoreVertIcon />
       </IconButton>
       <Menu

@@ -1,7 +1,7 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { HOME_PATH } from '../../../../src/config/paths';
-import { buildItemsTableRowId } from '../../../../src/config/selectors';
+import { buildItemsTableRowIdAttribute } from '../../../../src/config/selectors';
 import {
   IMAGE_ITEM_DEFAULT,
   IMAGE_ITEM_S3,
@@ -25,7 +25,9 @@ describe('Files', () => {
     });
     it('image', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(IMAGE_ITEM_DEFAULT.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(IMAGE_ITEM_DEFAULT.id)).should(
+        'exist',
+      );
 
       // item metadata
       cy.goToItemInList(IMAGE_ITEM_DEFAULT.id);
@@ -34,7 +36,9 @@ describe('Files', () => {
 
     it('video', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(VIDEO_ITEM_DEFAULT.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(VIDEO_ITEM_DEFAULT.id)).should(
+        'exist',
+      );
 
       // item metadata
       cy.goToItemInList(VIDEO_ITEM_DEFAULT.id);
@@ -43,7 +47,9 @@ describe('Files', () => {
 
     it('pdf', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(PDF_ITEM_DEFAULT.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(PDF_ITEM_DEFAULT.id)).should(
+        'exist',
+      );
 
       // item metadata
       cy.goToItemInList(PDF_ITEM_DEFAULT.id);
@@ -63,7 +69,7 @@ describe('Files', () => {
     });
     it('image', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(IMAGE_ITEM_S3.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(IMAGE_ITEM_S3.id)).should('exist');
 
       // item metadata
       cy.goToItemInList(IMAGE_ITEM_S3.id);
@@ -72,7 +78,7 @@ describe('Files', () => {
 
     it('video', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(VIDEO_ITEM_S3.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(VIDEO_ITEM_S3.id)).should('exist');
 
       // item metadata
       cy.goToItemInList(VIDEO_ITEM_S3.id);
@@ -81,7 +87,7 @@ describe('Files', () => {
 
     it('pdf', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(PDF_ITEM_S3.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(PDF_ITEM_S3.id)).should('exist');
 
       // item metadata
       cy.goToItemInList(PDF_ITEM_S3.id);

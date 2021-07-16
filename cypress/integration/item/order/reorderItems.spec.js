@@ -1,16 +1,13 @@
 import { buildItemPath } from '../../../../src/config/paths';
-import { ITEM_REORDER_ITEMS, ORDERED_ITEMS } from '../../../fixtures/items';
-import {
-  buildItemsTableRowId,
-  ITEMS_TABLE_BODY,
-} from '../../../../src/config/selectors';
+import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
+import { buildRowDraggerId } from '../../../../src/config/selectors';
 import { TABLE_ITEM_RENDER_TIME, ROW_HEIGHT } from '../../../support/constants';
 
 const reorderAndCheckItem = (id, currentPosition, newPosition) => {
-  const childEl = `#${buildItemsTableRowId(id)}`;
+  const dragIcon = `#${buildRowDraggerId(id)}`;
 
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.dragAndDrop(childEl, 0, (newPosition - currentPosition) * ROW_HEIGHT);
+  cy.dragAndDrop(dragIcon, 0, (newPosition - currentPosition) * ROW_HEIGHT);
 
   cy.wait('@editItem').then(
     ({
@@ -57,25 +54,6 @@ describe('Order Items', () => {
       const { id: childId } = ITEM_REORDER_ITEMS.children[currentPosition];
 
       reorderAndCheckItem(childId, currentPosition, newPosition);
-    });
-  });
-
-  describe('Check Order', () => {
-    it('check item order in folder with non-existing item in ordering', () => {
-      cy.setUpApi({
-        items: [ORDERED_ITEMS.parent, ...ORDERED_ITEMS.children],
-      });
-
-      cy.visit(buildItemPath(ORDERED_ITEMS.parent.id));
-
-      const tableBody = `#${ITEMS_TABLE_BODY}`;
-
-      ORDERED_ITEMS.existingChildrenOrder.forEach((id, index) => {
-        cy.get(tableBody)
-          .children()
-          .eq(index)
-          .should('have.id', buildItemsTableRowId(id));
-      });
     });
   });
 });

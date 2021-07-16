@@ -4,13 +4,13 @@ import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
   buildItemMenu,
-  ITEM_MENU_BUTTON_CLASS,
+  buildItemMenuButtonId,
   ITEM_MENU_COPY_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const copyItem = ({ id, toItemPath }) => {
-  const menuSelector = `#${buildItemCard(id)} .${ITEM_MENU_BUTTON_CLASS}`;
+  const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
   cy.fillTreeModal(toItemPath);

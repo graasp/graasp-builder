@@ -6,18 +6,16 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   buildItemMenu,
-  ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
+  buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const copyItem = ({ id, toItemPath }) => {
-  const menuSelector = `#${buildItemsTableRowId(
-    id,
-  )} .${ITEM_MENU_BUTTON_CLASS}`;
+  const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
@@ -38,11 +36,11 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
-      cy.get(`#${buildItemsTableRowId(copyItemId)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
       // check in new parent
       cy.goToItemInList(toItem);
-      cy.get(`#${buildItemsTableRowId(body[0].id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('exist');
     });
   });
 
@@ -62,11 +60,11 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
-      cy.get(`#${buildItemsTableRowId(copyItemId)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
       // check in new parent
       cy.goToItemInList(toItem);
-      cy.get(`#${buildItemsTableRowId(body[0].id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('exist');
     });
   });
 
@@ -85,11 +83,11 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath: ROOT_ID });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
-      cy.get(`#${buildItemsTableRowId(copyItemId)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
       // check in new parent
       cy.goToHome();
-      cy.get(`#${buildItemsTableRowId(body[0].id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('exist');
     });
   });
 
@@ -111,8 +109,8 @@ describe('Copy Item in List', () => {
 
       cy.wait('@copyItems').then(({ response: { body } }) => {
         // check item is still existing in parent
-        cy.get(`#${buildItemsTableRowId(copyItemId)}`).should('exist');
-        cy.get(`#${buildItemsTableRowId(body[0].id)}`).should('not.exist');
+        cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('not.exist');
       });
     });
   });

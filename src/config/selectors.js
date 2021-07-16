@@ -35,7 +35,10 @@ export const SHARED_ITEMS_ID = 'sharedItems';
 export const FAVORITE_ITEMS_ID = 'favoriteItems';
 export const OWNED_ITEMS_ID = 'ownedItems';
 export const ITEMS_TABLE_BODY = 'itemsTableBody';
+export const ITEMS_TABLE_ROW = '.ag-row';
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
+export const buildItemsTableRowIdAttribute = (id) =>
+  `[name="center"] [row-id="${buildItemsTableRowId(id)}"]`;
 export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
 export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
   'itemsTableDeleteSelectedItems';
@@ -122,7 +125,10 @@ export const buildItemsGridPaginationButton = (page) =>
 export const buildItemsGridPaginationButtonSelected = (page) =>
   `${buildItemsGridPaginationButton(page)}.Mui-selected`;
 export const ITEM_HEADER_ID = 'itemHeader';
+export const buildRowDraggerId = (id) => `rowDragger-${id}`;
 export const buildShareButtonId = (id) => `shareButton-${id}`;
+export const buildDeleteButtonId = (id) => `deleteButton-${id}`;
+export const buildItemMenuButtonId = (id) => `itemMenuButton-${id}`;
 export const buildPerformButtonId = (id) => `performButton-${id}`;
 export const buildEditButtonId = (id) => `editButton-${id}`;
 export const buildSettingsButtonId = (id) => `settingsButton-${id}`;

@@ -2,16 +2,16 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildDeleteButtonId,
+  buildItemsTableRowIdAttribute,
   CONFIRM_DELETE_BUTTON_ID,
-  ITEM_DELETE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { DATABASE_WITH_RECYCLE_BIN } from '../../../fixtures/recycleBin';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItem = (id) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(`#${buildItemsTableRowId(id)} .${ITEM_DELETE_BUTTON_CLASS}`).click();
+  cy.get(`#${buildDeleteButtonId(id)}`).click();
   cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };
 
@@ -51,7 +51,7 @@ describe('Delete Item in List', () => {
 
       cy.wait('@deleteItem').then(() => {
         // check item is still displayed
-        cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(id)).should('exist');
       });
     });
   });

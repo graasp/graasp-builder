@@ -3,18 +3,16 @@ import { HOME_PATH } from '../../../../src/config/paths';
 import {
   buildFlagListItemId,
   buildItemMenu,
-  buildItemsTableRowId,
+  buildItemMenuButtonId,
   FLAG_ITEM_BUTTON_ID,
-  ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_FLAGS } from '../../../fixtures/flags';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const openFlagItemModal = (itemId) => {
-  const menuSelector = `#${buildItemsTableRowId(
-    itemId,
-  )} .${ITEM_MENU_BUTTON_CLASS}`;
-
+  const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
+  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
 
   const menuFlagButton = cy.get(

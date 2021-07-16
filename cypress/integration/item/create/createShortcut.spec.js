@@ -3,10 +3,8 @@ import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../../../src/enums';
 import { ROOT_ID } from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemCard,
   buildItemMenu,
-  buildItemsTableRowId,
-  ITEM_MENU_BUTTON_CLASS,
+  buildItemMenuButtonId,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { buildShortcutExtra } from '../../../../src/utils/itemExtra';
@@ -19,15 +17,13 @@ const createShortcut = ({ id, toItemPath }) => {
 };
 
 const createShortcutInGrid = ({ id, toItemPath }) => {
-  const menuSelector = `#${buildItemCard(id)} .${ITEM_MENU_BUTTON_CLASS}`;
+  const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   createShortcut({ id, toItemPath });
 };
 
 const createShortcutInList = ({ id, toItemPath }) => {
-  const menuSelector = `#${buildItemsTableRowId(
-    id,
-  )} .${ITEM_MENU_BUTTON_CLASS}`;
+  const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   createShortcut({ id, toItemPath });
 };

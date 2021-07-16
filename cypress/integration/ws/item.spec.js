@@ -1,6 +1,6 @@
 import { WebSocket } from '@graasp/websockets/test/mock-client';
 import { buildItemPath, SHARED_ITEMS_PATH } from '../../../src/config/paths';
-import { buildItemsTableRowId } from '../../../src/config/selectors';
+import { buildItemsTableRowIdAttribute } from '../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { CURRENT_USER } from '../../fixtures/members';
 import { WEBSOCKETS_DELAY_TIME } from '../../support/constants';
@@ -47,7 +47,7 @@ describe('Websocket interactions', () => {
       cy.wait(WEBSOCKETS_DELAY_TIME);
 
       // assert item is in list
-      cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
     });
 
     it('displays sharedWith delete update', () => {
@@ -59,7 +59,7 @@ describe('Websocket interactions', () => {
       const item = items[0];
       beforeWs(SHARED_ITEMS_PATH, { items }, client);
 
-      cy.get(`#${buildItemsTableRowId(item.id)}`).then(() => {
+      cy.get(buildItemsTableRowIdAttribute(item.id)).then(() => {
         // send mock sharedItem delete update
         client.receive({
           realm: 'notif',
@@ -76,7 +76,7 @@ describe('Websocket interactions', () => {
 
       cy.wait(WEBSOCKETS_DELAY_TIME);
       // assert item is not in list anymore
-      cy.get(`#${buildItemsTableRowId(item.id)}`).should('not.exist');
+      cy.get(buildItemsTableRowIdAttribute(item.id)).should('not.exist');
     });
   });
 
@@ -90,7 +90,7 @@ describe('Websocket interactions', () => {
       cy.wait('@getChildren').then(({ response: { body } }) => {
         // check item is created and displayed
         for (const item of body) {
-          cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
         }
       });
     });
@@ -112,7 +112,7 @@ describe('Websocket interactions', () => {
 
       cy.wait(WEBSOCKETS_DELAY_TIME);
       // assert item is in list
-      cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
     });
 
     it('displays childItem delete update', () => {
@@ -133,7 +133,7 @@ describe('Websocket interactions', () => {
 
       cy.wait(WEBSOCKETS_DELAY_TIME);
       // assert item is not in list
-      cy.get(`#${buildItemsTableRowId(item.id)}`).should('not.exist');
+      cy.get(buildItemsTableRowIdAttribute(item.id)).should('not.exist');
     });
   });
 });
