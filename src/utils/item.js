@@ -132,4 +132,4 @@ export const getErrorItemIds = (items) =>
   items.filter((item) => item.statusCode).map((item) => item.data);
 
 export const getChildrenOrderFromFolderExtra = (item) =>
-  item?.get('extra')?.folder?.childrenOrder;
+  item?.get('extra')?.folder?.childrenOrder ?? [];

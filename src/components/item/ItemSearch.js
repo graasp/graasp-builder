@@ -107,7 +107,7 @@ const useItemSearch = (items) => {
   };
 
   const results = items.filter((it) =>
-    it.name.toLowerCase().includes(searchText),
+    it?.name?.toLowerCase().includes(searchText),
   );
 
   const itemSearchInput = (

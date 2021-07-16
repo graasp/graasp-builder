@@ -16,6 +16,8 @@
     "@uppy/react": "1.11.3",
     "@uppy/tus": "1.8.5",
     "@uppy/xhr-upload": "1.7.0",
+    "ag-grid-community": "25.3.0",
+    "ag-grid-react": "25.3.0",
     "clsx": "1.1.1",
     "connected-react-router": "6.8.0",
     "dexie": "3.0.3",
