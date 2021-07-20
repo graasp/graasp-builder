@@ -14,6 +14,10 @@ import EditButton from '../common/EditButton';
 import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
 import { getItemImage } from '../../utils/item';
+import FavoriteButton from '../common/FavoriteButton';
+import { hooks } from '../../config/queryClient';
+
+const { useCurrentMember } = hooks;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -31,6 +35,8 @@ const Item = ({ item }) => {
 
   const image = getItemImage(item);
 
+  const { data: member } = useCurrentMember();
+
   return (
     <Card className={classes.root} id={buildItemCard(id)}>
       <CustomCardHeader item={item} />
@@ -41,6 +47,7 @@ const Item = ({ item }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        <FavoriteButton member={member} item={item} />
         <EditButton item={item} />
         <ShareButton itemId={id} />
         <DeleteButton itemIds={[id]} />
