@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -14,12 +14,6 @@ const FavoriteButton = ({ item, member }) => {
   const { t } = useTranslation();
   const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
 
-  const [isFavorite, setIsFavorite] = useState(isItemFavorite(item, member));
-
-  useEffect(() => {
-    setIsFavorite(isItemFavorite(item, member));
-  }, [item, member]);
-
   const handleFavorite = () => {
     mutation.mutate({
       id: member.get('id'),
@@ -29,8 +23,6 @@ const FavoriteButton = ({ item, member }) => {
           : [item.id],
       },
     });
-
-    setIsFavorite(true);
   };
 
   const handleUnfavorite = () => {
@@ -42,20 +34,24 @@ const FavoriteButton = ({ item, member }) => {
           .favoriteItems?.filter((id) => id !== item.id),
       },
     });
-
-    setIsFavorite(false);
   };
 
   return (
     <Tooltip
-      title={isFavorite ? t('Remove from Favorites') : t('Add to Favorites')}
+      title={
+        isItemFavorite(item, member)
+          ? t('Remove from Favorites')
+          : t('Add to Favorites')
+      }
     >
       <IconButton
         aria-label="favorite"
         className={FAVORITE_ITEM_BUTTON_CLASS}
-        onClick={isFavorite ? handleUnfavorite : handleFavorite}
+        onClick={
+          isItemFavorite(item, member) ? handleUnfavorite : handleFavorite
+        }
       >
-        {isFavorite ? (
+        {isItemFavorite(item, member) ? (
           <FavoriteIcon fontSize="small" />
         ) : (
           <FavoriteBorderIcon fontSize="small" />
