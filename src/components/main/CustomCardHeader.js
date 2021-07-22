@@ -66,7 +66,7 @@ const CustomCardHeader = ({ item }) => {
           </Typography>
         </div>
       </div>
-      <ItemMenu item={item} member={member} />
+      <ItemMenu item={item} />
     </div>
   );
 };

@@ -38,6 +38,7 @@ import ItemIcon from './ItemIcon';
 import ItemMenu from './ItemMenu';
 import TableHead from './TableHead';
 import TableToolbar from './TableToolbar';
+import FavoriteButton from '../common/FavoriteButton';
 
 const { useItem } = hooks;
 
@@ -187,10 +188,11 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
       extra,
       actions: (
         <>
+          <FavoriteButton item={item} member={member} />
           <EditButton item={item} />
           <ShareButton itemId={id} />
           <DeleteButton itemIds={[id]} />
-          <ItemMenu item={item} member={member} />
+          <ItemMenu item={item} />
         </>
       ),
     };

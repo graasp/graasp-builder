@@ -21,6 +21,7 @@ export const buildTreeItemClass = (id) => `treeItem-${id}`;
 export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
+export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
 export const buildPermissionOptionId = (id) => `permission-${id}`;
@@ -72,10 +73,7 @@ export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
 export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
 export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'favoriteItemsErrorAlert';
-export const DELETED_FAVORITE_ITEMS_ERROR_ALERT_ID =
-  'deletedFavoriteItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
-export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const CREATE_ITEM_DOCUMENT_ID = 'createItemDocument';
 export const ITEM_FORM_DOCUMENT_TEXT_ID = 'itemFormDocumentText';
 export const ITEM_FORM_DOCUMENT_TEXT_SELECTOR = `#${ITEM_FORM_DOCUMENT_TEXT_ID} .ql-editor`;

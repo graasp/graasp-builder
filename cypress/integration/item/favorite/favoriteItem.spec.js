@@ -1,25 +1,17 @@
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { FAVORITE_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemMenu,
   buildItemsTableRowId,
-  ITEM_MENU_BUTTON_CLASS,
-  ITEM_MENU_FAVORITE_BUTTON_CLASS,
+  FAVORITE_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { buildMemberWithFavorites } from '../../../fixtures/members';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const toggleFavoriteButton = (itemId) => {
-  const menuSelector = `#${buildItemsTableRowId(
-    itemId,
-  )} .${ITEM_MENU_BUTTON_CLASS}`;
-
-  cy.get(menuSelector).click();
-
-  const favoriteButton = cy.get(
-    `#${buildItemMenu(itemId)} .${ITEM_MENU_FAVORITE_BUTTON_CLASS}`,
-  );
-
-  favoriteButton.click();
+  cy.wait(TABLE_ITEM_RENDER_TIME);
+  cy.get(
+    `#${buildItemsTableRowId(itemId)} .${FAVORITE_ITEM_BUTTON_CLASS}`,
+  ).click();
 };
 
 const favoriteItems = [SAMPLE_ITEMS.items[1].id];
