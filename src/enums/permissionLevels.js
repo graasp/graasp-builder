@@ -1,6 +1,6 @@
 const PERMISSION_LEVELS = {
-  WRITE: 'write',
   READ: 'read',
+  WRITE: 'write',
   ADMIN: 'admin',
 };
 
