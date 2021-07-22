@@ -14,6 +14,8 @@ const FavoriteButton = ({ item, member }) => {
   const { t } = useTranslation();
   const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
 
+  const isFavorite = isItemFavorite(item, member);
+
   const handleFavorite = () => {
     mutation.mutate({
       id: member.get('id'),
@@ -38,20 +40,14 @@ const FavoriteButton = ({ item, member }) => {
 
   return (
     <Tooltip
-      title={
-        isItemFavorite(item, member)
-          ? t('Remove from Favorites')
-          : t('Add to Favorites')
-      }
+      title={isFavorite ? t('Remove from Favorites') : t('Add to Favorites')}
     >
       <IconButton
         aria-label="favorite"
         className={FAVORITE_ITEM_BUTTON_CLASS}
-        onClick={
-          isItemFavorite(item, member) ? handleUnfavorite : handleFavorite
-        }
+        onClick={isFavorite ? handleUnfavorite : handleFavorite}
       >
-        {isItemFavorite(item, member) ? (
+        {isFavorite ? (
           <FavoriteIcon fontSize="small" />
         ) : (
           <FavoriteBorderIcon fontSize="small" />
