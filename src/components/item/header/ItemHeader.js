@@ -9,7 +9,7 @@ import { buildItemPath } from '../../../config/paths';
 import Loader from '../../common/Loader';
 import { ITEM_HEADER_ID } from '../../../config/selectors';
 
-const { useCurrentMember, useItem } = hooks;
+const { useItem } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,17 +26,16 @@ const useStyles = makeStyles((theme) => ({
 const ItemHeader = ({ onClick }) => {
   const match = useRouteMatch(buildItemPath());
   const itemId = match?.params?.itemId;
-  const { data: user, isLoading: isMemberLoading } = useCurrentMember();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const classes = useStyles();
 
-  if (isMemberLoading || isItemLoading) {
+  if (isItemLoading) {
     return <Loader />;
   }
 
   return (
     <div className={classes.root} id={ITEM_HEADER_ID}>
-      <Navigation item={item} user={user} />
+      <Navigation />
       <ItemHeaderActions item={item} onClick={onClick} />
     </div>
   );

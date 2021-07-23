@@ -27,7 +27,11 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
     const classes = useStyles();
     const { t } = useTranslation();
     const { itemId } = useParams();
-    const { data: user, isLoading: isMemberLoading } = useCurrentMember();
+    const {
+      data: user,
+      isLoading: isMemberLoading,
+      isError: isCurrentMemberError,
+    } = useCurrentMember();
     const { data: itemLogin, isLoading: isItemLoginLoading } = useItemLogin(
       itemId,
     );
@@ -58,6 +62,12 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
     if (isMemberLoading || (isItemLoading && !item)) {
       // get item login if the user is not authenticated and the item is empty
       return <Loader />;
+    }
+
+    // member should never trigger an error
+    // but can be empty
+    if (isCurrentMemberError) {
+      return <ErrorAlert />;
     }
 
     if (

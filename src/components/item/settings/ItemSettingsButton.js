@@ -22,7 +22,11 @@ function ItemSettingsButton({ id }) {
     data: memberships,
     isLoading: isMembershipsLoading,
   } = hooks.useItemMemberships(id);
-  const { data: user, isLoading: isMemberLoading } = hooks.useCurrentMember();
+  const {
+    data: user,
+    isLoading: isMemberLoading,
+    isError,
+  } = hooks.useCurrentMember();
   const memberId = user?.get('id');
   const { t } = useTranslation();
 
@@ -40,7 +44,7 @@ function ItemSettingsButton({ id }) {
   }
 
   // settings are not available for user without edition membership
-  if (!isSettingsEditionAllowedForUser({ memberships, memberId })) {
+  if (isError || !isSettingsEditionAllowedForUser({ memberships, memberId })) {
     return null;
   }
 
