@@ -4,7 +4,7 @@
   "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#36/publicItems",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main",
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
@@ -63,7 +63,7 @@
     "hooks:install": "node node_modules/husky/husky.js install",
     "cypress:open": "env-cmd -f ./.env.test cypress open",
     "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3111 && yarn cypress:run\"",
-    "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome --spec \"cypress/integration/item/edit/*.spec.js\""
+    "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome --spec \"cypress/**/*.spec.js\""
   },
   "eslintConfig": {
     "extends": "react-app"

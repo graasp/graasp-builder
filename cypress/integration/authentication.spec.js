@@ -13,7 +13,7 @@ import {
   USER_MENU_SIGN_OUT_OPTION_ID,
 } from '../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../fixtures/items';
-import { CURRENT_USER } from '../fixtures/members';
+import { CURRENT_USER, SIGNED_OUT_MEMBER } from '../fixtures/members';
 import {
   REQUEST_FAILURE_LOADING_TIME,
   PAGE_LOAD_WAITING_PAUSE,
@@ -24,7 +24,7 @@ import { REDIRECT_URL_LOCAL_STORAGE_KEY } from '../../src/config/constants';
 describe('Authentication', () => {
   describe('Signed Off > Redirect to sign in route', () => {
     beforeEach(() => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, getCurrentMemberError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, currentMember: SIGNED_OUT_MEMBER });
     });
     it('Home', () => {
       cy.visit(HOME_PATH);

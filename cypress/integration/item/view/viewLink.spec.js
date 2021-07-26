@@ -14,7 +14,7 @@ describe('Links', () => {
     // should get current item
     cy.wait('@getItem');
 
-    expectLinkViewScreenLayout(GRAASP_LINK_ITEM);
+    expectLinkViewScreenLayout({ item: GRAASP_LINK_ITEM });
   });
   it('view youtube', () => {
     const { id } = YOUTUBE_LINK_ITEM;
@@ -23,6 +23,6 @@ describe('Links', () => {
     // should get current item
     cy.wait('@getItem');
 
-    expectLinkViewScreenLayout(YOUTUBE_LINK_ITEM);
+    expectLinkViewScreenLayout({ item: YOUTUBE_LINK_ITEM });
   });
 });

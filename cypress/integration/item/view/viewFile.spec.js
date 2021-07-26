@@ -29,7 +29,7 @@ describe('Files', () => {
 
       // item metadata
       cy.goToItemInList(IMAGE_ITEM_DEFAULT.id);
-      expectFileViewScreenLayout(IMAGE_ITEM_DEFAULT);
+      expectFileViewScreenLayout({ item: IMAGE_ITEM_DEFAULT });
     });
 
     it('video', () => {
@@ -38,7 +38,7 @@ describe('Files', () => {
 
       // item metadata
       cy.goToItemInList(VIDEO_ITEM_DEFAULT.id);
-      expectFileViewScreenLayout(VIDEO_ITEM_DEFAULT);
+      expectFileViewScreenLayout({ item: VIDEO_ITEM_DEFAULT });
     });
 
     it('pdf', () => {
@@ -47,7 +47,7 @@ describe('Files', () => {
 
       // item metadata
       cy.goToItemInList(PDF_ITEM_DEFAULT.id);
-      expectFileViewScreenLayout(PDF_ITEM_DEFAULT);
+      expectFileViewScreenLayout({ item: PDF_ITEM_DEFAULT });
     });
   });
 
@@ -67,7 +67,7 @@ describe('Files', () => {
 
       // item metadata
       cy.goToItemInList(IMAGE_ITEM_S3.id);
-      expectFileViewScreenLayout(IMAGE_ITEM_S3);
+      expectFileViewScreenLayout({ item: IMAGE_ITEM_S3 });
     });
 
     it('video', () => {
@@ -76,7 +76,7 @@ describe('Files', () => {
 
       // item metadata
       cy.goToItemInList(VIDEO_ITEM_S3.id);
-      expectFileViewScreenLayout(VIDEO_ITEM_S3);
+      expectFileViewScreenLayout({ item: VIDEO_ITEM_S3 });
     });
 
     it('pdf', () => {
@@ -85,7 +85,7 @@ describe('Files', () => {
 
       // item metadata
       cy.goToItemInList(PDF_ITEM_S3.id);
-      expectFileViewScreenLayout(PDF_ITEM_S3);
+      expectFileViewScreenLayout({ item: PDF_ITEM_S3 });
     });
   });
 });

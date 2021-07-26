@@ -118,3 +118,4 @@ export const buildShareButtonId = (id) => `shareButton-${id}`;
 export const buildPerformButtonId = (id) => `performButton-${id}`;
 export const buildEditButtonId = (id) => `editButton-${id}`;
 export const buildSettingsButtonId = (id) => `settingsButton-${id}`;
+export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';

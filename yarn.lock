@@ -1590,9 +1590,9 @@
   dependencies:
     ajv "^6.12.6"
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#36/publicItems":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#main":
   version "0.1.0"
-  resolved "git://github.com/graasp/graasp-query-client.git#8fa3b0e3f2893ca42846ada56311e5d85bdab059"
+  resolved "git://github.com/graasp/graasp-query-client.git#65837f1098a01e930a0d8e5cd3243e53936f9dc6"
   dependencies:
     http-status-codes "2.1.4"
     immutable "4.0.0-rc.12"

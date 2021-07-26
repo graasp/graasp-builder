@@ -10,6 +10,7 @@ import { useMutation, hooks } from '../../../config/queryClient';
 import { getItemPublicTagFromItem } from '../../../utils/itemExtra';
 import Loader from '../../common/Loader';
 import { getItemPublicTag } from '../../../utils/itemTag';
+import { PUBLIC_SETTING_SWITCH_ID } from '../../../config/selectors';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG } = MUTATION_KEYS;
 
@@ -67,6 +68,7 @@ const PublicSwitch = ({ item }) => {
 
   const control = (
     <Switch
+      id={PUBLIC_SETTING_SWITCH_ID}
       color="primary"
       disabled={isSwitchDisabled}
       checked={isItemPublic}

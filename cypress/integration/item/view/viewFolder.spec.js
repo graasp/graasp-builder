@@ -84,7 +84,7 @@ describe('View Space', () => {
       // should get current item
       cy.wait('@getItem');
 
-      expectFolderViewScreenLayout(SAMPLE_ITEMS.items[0]);
+      expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
 
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {
@@ -241,7 +241,7 @@ describe('View Space', () => {
       // should get current item
       cy.wait('@getItem');
 
-      expectFolderViewScreenLayout(SAMPLE_ITEMS.items[0]);
+      expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
 
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {

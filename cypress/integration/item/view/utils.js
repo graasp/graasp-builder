@@ -23,7 +23,8 @@ import {
   getS3FileExtra,
 } from '../../../../src/utils/itemExtra';
 import { getMemberById } from '../../../../src/utils/member';
-import { MEMBERS } from '../../../fixtures/members';
+import { isSettingsEditionAllowedForUser } from '../../../../src/utils/membership';
+import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
 
 const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
   cy.get(`#${ITEM_PANEL_ID}`).then(($itemPanel) => {
@@ -48,7 +49,10 @@ const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
   }
 };
 
-export const expectItemHeaderLayout = ({ id, type }) => {
+export const expectItemHeaderLayout = ({
+  item: { id, type, memberships },
+  currentMember,
+}) => {
   const header = cy.get(`#${ITEM_HEADER_ID}`);
 
   if (ITEM_TYPES_WITH_CAPTIONS.includes(type)) {
@@ -56,16 +60,21 @@ export const expectItemHeaderLayout = ({ id, type }) => {
   }
   header.get(`#${buildShareButtonId(id)}`).should('exist');
   header.get(`#${buildPerformButtonId(id)}`).should('exist');
-  header.get(`#${buildSettingsButtonId(id)}`).should('exist');
+
+  if (
+    isSettingsEditionAllowedForUser({
+      memberships,
+      memberId: currentMember?.id,
+    })
+  )
+    header.get(`#${buildSettingsButtonId(id)}`).should('exist');
 };
 
 export const expectDocumentViewScreenLayout = ({
-  name,
-  extra,
-  creator,
-  type,
-  id,
+  item,
+  currentMember = CURRENT_USER,
 }) => {
+  const { name, extra, creator } = item;
   cy.get(DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR).then((editor) => {
     expect(editor.html()).to.contain(getDocumentExtra(extra)?.content);
   });
@@ -76,17 +85,14 @@ export const expectDocumentViewScreenLayout = ({
     creator,
   });
 
-  expectItemHeaderLayout({ type, id });
+  expectItemHeaderLayout({ item, currentMember });
 };
 
 export const expectFileViewScreenLayout = ({
-  id,
-  name,
-  extra,
-  creator,
-  type,
-  description,
+  item,
+  currentMember = CURRENT_USER,
 }) => {
+  const { id, name, extra, creator, type, description } = item;
   const mimetype =
     getFileExtra(extra)?.mimetype || getS3FileExtra(extra)?.contenttype;
 
@@ -104,17 +110,14 @@ export const expectFileViewScreenLayout = ({
   // table
   expectPanelLayout({ name, extra, creator, mimetype });
 
-  expectItemHeaderLayout({ type, id });
+  expectItemHeaderLayout({ item, currentMember });
 };
 
 export const expectLinkViewScreenLayout = ({
-  id,
-  name,
-  extra,
-  creator,
-  description,
-  type,
+  item,
+  currentMember = CURRENT_USER,
 }) => {
+  const { id, name, extra, creator, description } = item;
   const { url, html } = getEmbeddedLinkExtra(extra);
 
   // embedded element
@@ -135,12 +138,16 @@ export const expectLinkViewScreenLayout = ({
   // table
   expectPanelLayout({ name, extra, creator });
 
-  expectItemHeaderLayout({ type, id });
+  expectItemHeaderLayout({ item, currentMember });
 };
 
-export const expectFolderViewScreenLayout = ({ name, creator, id, type }) => {
+export const expectFolderViewScreenLayout = ({
+  item,
+  currentMember = CURRENT_USER,
+}) => {
+  const { name, creator } = item;
   // table
   expectPanelLayout({ name, creator });
 
-  expectItemHeaderLayout({ type, id });
+  expectItemHeaderLayout({ item, currentMember });
 };

@@ -23,18 +23,14 @@ const Authorization = () => (ChildComponent) => {
       );
     };
 
-    const {
-      data: currentMember,
-      isLoading,
-      isError,
-    } = hooks.useCurrentMember();
+    const { data: currentMember, isLoading } = hooks.useCurrentMember();
 
     if (isLoading) {
       return <Loader />;
     }
 
-    // check authorization
-    if (currentMember && !isError) {
+    // check authorization: user shouldn't be empty
+    if (currentMember?.size) {
       // eslint-disable-next-line react/jsx-props-no-spreading
       return <ChildComponent {...props} />;
     }
