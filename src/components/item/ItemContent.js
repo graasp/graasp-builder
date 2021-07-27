@@ -21,7 +21,7 @@ import {
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
-import { API_HOST } from '../../config/constants';
+import { API_HOST, ITEM_DEFAULT_HEIGHT } from '../../config/constants';
 import { LayoutContext } from '../context/LayoutContext';
 import FileUploader from '../main/FileUploader';
 import Items from '../main/Items';
@@ -137,6 +137,7 @@ const ItemContent = ({ item }) => {
             editCaption={isEditing}
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
+            height={ITEM_DEFAULT_HEIGHT}
           />
         </div>
       );
@@ -161,6 +162,7 @@ const ItemContent = ({ item }) => {
           onSaveCaption={onSaveCaption}
           saveButtonId={saveButtonId}
           user={user}
+          height={ITEM_DEFAULT_HEIGHT}
         />
       );
     case ITEM_TYPES.FOLDER:

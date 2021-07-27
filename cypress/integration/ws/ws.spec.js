@@ -26,6 +26,8 @@ describe('Websocket interactions', () => {
     it('displays sharedWith create update', () => {
       beforeWs(SHARED_ITEMS_PATH, { items: [] }, client);
 
+      cy.wait(WEBSOCKETS_DELAY_TIME);
+
       const item = SAMPLE_ITEMS.items[0];
       cy.wait('@getSharedItems').then(() => {
         // send mock sharedItem create update

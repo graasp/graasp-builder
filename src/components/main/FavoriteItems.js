@@ -35,6 +35,7 @@ const FavoriteItems = () => {
   const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
 
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them
+  // this effect does not take effect if there is only one (deleted) item
   useEffect(() => {
     if (!favoriteItems.isEmpty() && containsNonExistingItems(favoriteItems)) {
       const errorIds = getErrorItemIds(favoriteItems);
@@ -50,22 +51,27 @@ const FavoriteItems = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favoriteItems]);
 
-  if (isMemberError || isItemsError) {
-    return <ErrorAlert id={FAVORITE_ITEMS_ERROR_ALERT_ID} />;
-  }
+  const renderContent = () => {
+    if (isMemberError || isItemsError) {
+      return <ErrorAlert id={FAVORITE_ITEMS_ERROR_ALERT_ID} />;
+    }
 
-  if (isMemberLoading || isItemsLoading) {
-    return <Loader />;
-  }
-
-  return (
-    <Main>
-      <ItemHeader />
+    if (isMemberLoading || isItemsLoading) {
+      return <Loader />;
+    }
+    return (
       <Items
         id={FAVORITE_ITEMS_ID}
         title={t('Favorite Items')}
         items={getExistingItems(favoriteItems)}
       />
+    );
+  };
+
+  return (
+    <Main>
+      <ItemHeader />
+      {renderContent()}
     </Main>
   );
 };
