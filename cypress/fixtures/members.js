@@ -1,3 +1,5 @@
+export const SIGNED_OUT_MEMBER = {};
+
 export const MEMBERS = {
   ANNA: {
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130002',

@@ -4,6 +4,7 @@ import qs from 'querystring';
 import { API_ROUTES } from '@graasp/query-client';
 import {
   getItemById,
+  getParentsIdsFromPath,
   isChild,
   isRootItem,
   transformIdForPath,
@@ -24,7 +25,7 @@ import {
   buildItemLoginSchemaExtra,
 } from '../../src/utils/itemExtra';
 import { SETTINGS } from '../../src/config/constants';
-import { ITEM_LOGIN_TAG } from '../fixtures/itemTags';
+import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { getMemberById } from '../../src/utils/member';
 import { PERMISSION_LEVELS } from '../../src/enums';
 
@@ -32,7 +33,9 @@ const {
   buildCopyItemRoute,
   buildDeleteItemRoute,
   buildEditItemRoute,
+  buildGetPublicItemRoute,
   buildGetChildrenRoute,
+  buildGetPublicChildrenRoute,
   buildGetItemRoute,
   buildMoveItemRoute,
   buildPostItemRoute,
@@ -65,6 +68,16 @@ const API_HOST = Cypress.env('API_HOST');
 const S3_FILES_HOST = Cypress.env('S3_FILES_HOST');
 const AUTHENTICATION_HOST = Cypress.env('AUTHENTICATION_HOST');
 
+const checkMembership = ({ item, currentMember }) => {
+  // mock membership
+  const creator = item?.creator;
+  const haveMembership =
+    creator === currentMember.id ||
+    item.memberships?.find(({ memberId }) => memberId === currentMember.id);
+
+  return haveMembership;
+};
+
 export const redirectionReply = {
   headers: { 'content-type': 'application/json' },
   statusCode: StatusCodes.OK,
@@ -82,11 +95,14 @@ export const mockGetCurrentMember = (
     },
     ({ reply }) => {
       if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+        return reply({
+          statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+          body: null,
+        });
       }
 
-      // avoid sign in redirection
-      return reply(currentMember);
+      // might reply empty user when signed out
+      return reply({ statusCode: StatusCodes.OK, body: currentMember });
     },
   ).as('getCurrentMember');
 };
@@ -203,13 +219,7 @@ export const mockGetItem = ({ items, currentMember }, shouldThrowError) => {
         });
       }
 
-      // mock membership
-      const creator = item?.creator;
-      const haveMembership =
-        creator === currentMember.id ||
-        item.memberships?.find(({ memberId }) => memberId === currentMember.id);
-
-      if (shouldThrowError || !haveMembership) {
+      if (shouldThrowError || !checkMembership({ item, currentMember })) {
         return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
       }
 
@@ -221,7 +231,45 @@ export const mockGetItem = ({ items, currentMember }, shouldThrowError) => {
   ).as('getItem');
 };
 
-export const mockGetChildren = (items) => {
+export const mockGetPublicItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetPublicItemRoute(ID_FORMAT)}$`),
+    },
+    ({ url, reply }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[3];
+      const item = getItemById(items, itemId);
+
+      // item does not exist in db
+      if (!item) {
+        return reply({
+          statusCode: StatusCodes.NOT_FOUND,
+        });
+      }
+
+      // compute whether the item is public from own and parent's tags
+      const isPublic = getParentsIdsFromPath(item?.path).some((id) => {
+        const i = getItemById(items, id);
+        return Boolean(
+          i.tags?.find(({ tagId }) => tagId === ITEM_PUBLIC_TAG.id),
+        );
+      });
+      if (!isPublic) {
+        return reply({
+          statusCode: StatusCodes.FORBIDDEN,
+        });
+      }
+
+      return reply({
+        body: item,
+        statusCode: StatusCodes.OK,
+      });
+    },
+  ).as('getPublicItem');
+};
+
+export const mockGetChildren = ({ items, currentMember }) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
@@ -229,10 +277,31 @@ export const mockGetChildren = (items) => {
     },
     ({ url, reply }) => {
       const id = url.slice(API_HOST.length).split('/')[2];
+      const item = getItemById(items, id);
+
+      if (!checkMembership({ item, currentMember })) {
+        return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
+      }
+
       const children = items.filter(isChild(id));
-      reply(children);
+      return reply(children);
     },
   ).as('getChildren');
+};
+
+export const mockGetPublicChildren = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetPublicChildrenRoute(ID_FORMAT)}`),
+    },
+    ({ url, reply }) => {
+      const id = url.slice(API_HOST.length).split('/')[2];
+
+      const children = items.filter(isChild(id));
+      return reply(children);
+    },
+  ).as('getPublicChildren');
 };
 
 export const mockMoveItem = (items, shouldThrowError) => {

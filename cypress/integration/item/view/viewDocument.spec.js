@@ -13,7 +13,7 @@ describe('View Space', () => {
     it('visit document', () => {
       cy.visit(buildItemPath(GRAASP_DOCUMENT_ITEM.id));
 
-      expectDocumentViewScreenLayout(GRAASP_DOCUMENT_ITEM);
+      expectDocumentViewScreenLayout({ item: GRAASP_DOCUMENT_ITEM });
     });
   });
 });

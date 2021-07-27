@@ -20,7 +20,7 @@ import {
 } from '../../../../src/config/selectors';
 import { getItemLoginExtra } from '../../../../src/utils/itemExtra';
 import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
-import { MEMBERS } from '../../../fixtures/members';
+import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
 
 const changeSignInMode = (mode) => {
@@ -97,7 +97,7 @@ describe('Item Login', () => {
 
   describe('User is signed out', () => {
     beforeEach(() => {
-      cy.setUpApi({ ...ITEM_LOGIN_ITEMS, getCurrentMemberError: true });
+      cy.setUpApi({ ...ITEM_LOGIN_ITEMS, currentMember: SIGNED_OUT_MEMBER });
     });
 
     describe('Display Item Login Screen', () => {
@@ -217,7 +217,7 @@ describe('Item Login', () => {
       cy.setUpApi({
         ...ITEM_LOGIN_ITEMS,
         postItemLoginError: true,
-        getCurrentMemberError: true,
+        currentMember: SIGNED_OUT_MEMBER,
       });
       const { id } = ITEM_LOGIN_ITEMS.items[4];
 

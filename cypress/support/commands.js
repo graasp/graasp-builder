@@ -38,6 +38,8 @@ import {
   mockGetSharedItems,
   mockEditItemMembershipForItem,
   mockDeleteItemMembershipForItem,
+  mockGetPublicItem,
+  mockGetPublicChildren,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -87,7 +89,7 @@ Cypress.Commands.add(
       getItemError || getCurrentMemberError,
     );
 
-    mockGetChildren(cachedItems);
+    mockGetChildren({ items: cachedItems, currentMember });
 
     mockMoveItem(cachedItems, moveItemError);
 
@@ -134,6 +136,10 @@ Cypress.Commands.add(
     mockEditItemMembershipForItem(items);
 
     mockDeleteItemMembershipForItem(items);
+
+    mockGetPublicItem(items);
+
+    mockGetPublicChildren(items);
   },
 );
 

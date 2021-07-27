@@ -111,6 +111,9 @@ export const SETTINGS = {
       MEMBER_ID: 'memberId',
     },
   },
+  ITEM_PUBLIC: {
+    name: 'public-item',
+  },
 };
 
 export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;

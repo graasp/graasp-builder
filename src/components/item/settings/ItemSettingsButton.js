@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Loader } from '@graasp/ui';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,16 +22,29 @@ function ItemSettingsButton({ id }) {
     data: memberships,
     isLoading: isMembershipsLoading,
   } = hooks.useItemMemberships(id);
-  const { data: user, isLoading: isMemberLoading } = hooks.useCurrentMember();
+  const {
+    data: user,
+    isLoading: isMemberLoading,
+    isError,
+  } = hooks.useCurrentMember();
   const memberId = user?.get('id');
   const { t } = useTranslation();
+
+  // on unmount close item settings
+  useEffect(
+    () => () => {
+      setIsItemSettingsOpen(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   if (isMembershipsLoading || isMemberLoading) {
     return <Loader />;
   }
 
   // settings are not available for user without edition membership
-  if (!isSettingsEditionAllowedForUser({ memberships, memberId })) {
+  if (isError || !isSettingsEditionAllowedForUser({ memberships, memberId })) {
     return null;
   }
 
