@@ -41,10 +41,13 @@ import {
   mockGetPublicItem,
   mockGetPublicChildren,
   mockGetItems,
+  mockGetFlags,
+  mockPostItemFlag,
 } from './server';
 import './commands/item';
 import './commands/navigation';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
+import { SAMPLE_FLAGS } from '../fixtures/flags';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -53,6 +56,7 @@ Cypress.Commands.add(
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     tags = [],
+    flags = SAMPLE_FLAGS,
     deleteItemError = false,
     deleteItemsError = false,
     postItemError = false,
@@ -71,6 +75,7 @@ Cypress.Commands.add(
     postItemLoginError = false,
     putItemLoginError = false,
     editMemberError = false,
+    postItemFlagError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -137,6 +142,10 @@ Cypress.Commands.add(
     mockEditItemMembershipForItem(items);
 
     mockDeleteItemMembershipForItem(items);
+
+    mockGetFlags(flags);
+
+    mockPostItemFlag(items, postItemFlagError);
 
     mockGetPublicItem(items);
 

@@ -6,6 +6,7 @@ import { MoveItemModalProvider } from './MoveItemModalContext';
 import { ShareItemModalProvider } from './ShareItemModalContext';
 import { LayoutContextProvider } from './LayoutContext';
 import { CreateShortcutModalProvider } from './CreateShortcutModalContext';
+import { FlagItemModalProvider } from './FlagItemModalContext';
 
 const ModalProviders = ({ children }) => (
   <LayoutContextProvider>
@@ -14,7 +15,7 @@ const ModalProviders = ({ children }) => (
         <MoveItemModalProvider>
           <ShareItemModalProvider>
             <CreateShortcutModalProvider>
-              {children}
+              <FlagItemModalProvider>{children}</FlagItemModalProvider>
             </CreateShortcutModalProvider>
           </ShareItemModalProvider>
         </MoveItemModalProvider>

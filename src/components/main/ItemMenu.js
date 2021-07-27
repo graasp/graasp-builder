@@ -9,12 +9,14 @@ import {
   buildItemMenu,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
+  ITEM_MENU_FLAG_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
 } from '../../config/selectors';
 import { CopyItemModalContext } from '../context/CopyItemModalContext';
 import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { MoveItemModalContext } from '../context/MoveItemModalContext';
+import { FlagItemModalContext } from '../context/FlagItemModalContext';
 
 const ItemMenu = ({ item }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -24,6 +26,7 @@ const ItemMenu = ({ item }) => {
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
+  const { openModal: openFlagModal } = useContext(FlagItemModalContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,6 +48,11 @@ const ItemMenu = ({ item }) => {
 
   const handleCreateShortcut = () => {
     openCreateShortcutModal(item);
+    handleClose();
+  };
+
+  const handleFlag = () => {
+    openFlagModal(item.id);
     handleClose();
   };
 
@@ -71,6 +79,9 @@ const ItemMenu = ({ item }) => {
           className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
         >
           {t('Create Shortcut')}
+        </MenuItem>
+        <MenuItem onClick={handleFlag} className={ITEM_MENU_FLAG_BUTTON_CLASS}>
+          {t('Flag')}
         </MenuItem>
       </Menu>
     </>
