@@ -18,7 +18,7 @@ import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
-import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
+import { ITEM_KEYS, ITEM_TYPES, APP_MODES } from '../../enums';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import { API_HOST, ITEM_DEFAULT_HEIGHT } from '../../config/constants';
@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemContent = ({ item }) => {
+const ItemContent = ({ item, enableEdition }) => {
   const classes = useStyles();
   const itemId = item.get(ITEM_KEYS.ID);
   const itemType = item?.get(ITEM_KEYS.TYPE);
@@ -69,7 +69,7 @@ const ItemContent = ({ item }) => {
   } = useS3FileContent(id, {
     enabled: itemType === ITEM_TYPES.S3_FILE,
   });
-  const isEditing = editingItemId === itemId;
+  const isEditing = enableEdition && editingItemId === itemId;
 
   if (
     isLoadingFileContent ||
@@ -147,7 +147,7 @@ const ItemContent = ({ item }) => {
           <DocumentItem
             id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
             item={item}
-            edit={editingItemId}
+            edit={isEditing}
             onSave={onSaveDocument}
             saveButtonId={saveButtonId}
           />
@@ -163,6 +163,7 @@ const ItemContent = ({ item }) => {
           saveButtonId={saveButtonId}
           user={user}
           height={ITEM_DEFAULT_HEIGHT}
+          mode={enableEdition ? APP_MODES.TEACHER : APP_MODES.STUDENT}
         />
       );
     case ITEM_TYPES.FOLDER:
@@ -180,6 +181,11 @@ const ItemContent = ({ item }) => {
 
 ItemContent.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
+  enableEdition: PropTypes.bool,
+};
+
+ItemContent.defaultProps = {
+  enableEdition: false,
 };
 
 export default ItemContent;
