@@ -23,6 +23,6 @@ describe('Edit Navigation', () => {
     cy.goToItemWithNavigation(parentItem.id);
     cy.goToItemInList(secondItem.id);
 
-    expectDocumentViewScreenLayout(secondItem);
+    expectDocumentViewScreenLayout({ item: secondItem });
   });
 });
