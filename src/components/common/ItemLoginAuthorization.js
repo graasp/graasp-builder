@@ -80,6 +80,14 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
       return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
     }
 
+    // the item could be fetched without errors
+    // because the user is signed in and has access
+    // or because the item is public
+    if (item && !item.isEmpty()) {
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      return <ChildComponent />;
+    }
+
     // signed out but can sign in with item login
     if ((!user || user.isEmpty()) && itemLogin && !itemLogin.isEmpty()) {
       if (isItemLoginLoading && !itemLogin) {
@@ -88,13 +96,6 @@ const ItemLoginAuthorization = () => (ChildComponent) => {
       }
 
       return <ItemLoginScreen />;
-    }
-
-    // the item could be fetched without errors
-    // because the user is signed in and has access
-    if (item && !item.isEmpty()) {
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      return <ChildComponent />;
     }
 
     // either the item does not allow item login

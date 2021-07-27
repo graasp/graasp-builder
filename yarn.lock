@@ -1601,9 +1601,9 @@
     react-query "3.16.0"
     uuid "8.3.2"
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git#master":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#35/graaspLogo":
   version "0.2.0"
-  resolved "git://github.com/graasp/graasp-ui.git#55baed21c2a057e39b0eabb10bdde1019a1dbbb1"
+  resolved "git://github.com/graasp/graasp-ui.git#6518ec9cee1a170269bce98a9121d1b253c38f75"
   dependencies:
     clsx "1.1.1"
     immutable "4.0.0-rc.12"
