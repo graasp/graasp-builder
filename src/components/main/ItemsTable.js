@@ -17,6 +17,7 @@ import { ITEM_TYPES } from '../../enums';
 import { getShortcutTarget } from '../../utils/itemExtra';
 import { buildItemPath } from '../../config/paths';
 import {
+  ACTION_CELL_WIDTH,
   DRAG_ICON_SIZE,
   ITEMS_TABLE_CONTAINER_HEIGHT,
 } from '../../config/constants';
@@ -219,6 +220,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
             cellRenderer="actions"
             type="rightAligned"
             cellClass={classes.actionCell}
+            width={ACTION_CELL_WIDTH}
           />
         </AgGridReact>
       </div>

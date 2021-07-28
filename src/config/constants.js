@@ -155,3 +155,5 @@ export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
 
 export const DRAG_ICON_SIZE = 18;
+
+export const ACTION_CELL_WIDTH = 230;
