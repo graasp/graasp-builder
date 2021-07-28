@@ -11,6 +11,7 @@ import { hooks } from '../../config/queryClient';
 import ItemMemberships from '../item/ItemMemberships';
 import { hasItemLoginEnabled, isItemPublic } from '../../utils/itemTag';
 import { SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR } from '../../config/constants';
+import { ACCESS_INDICATION_ID } from '../../config/selectors';
 
 const AccessIndication = ({ itemId, onClick }) => {
   const { t } = useTranslation();
@@ -48,7 +49,12 @@ const AccessIndication = ({ itemId, onClick }) => {
 
   if (accessText && tooltipText) {
     return (
-      <Grid container justify="space-between" alignItems="center">
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
+        id={ACCESS_INDICATION_ID}
+      >
         <Grid item>
           <Typography variant="body1">
             {`${t('Access')}: ${accessText}`}

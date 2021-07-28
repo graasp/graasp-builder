@@ -123,3 +123,7 @@ export const buildPerformButtonId = (id) => `performButton-${id}`;
 export const buildEditButtonId = (id) => `editButton-${id}`;
 export const buildSettingsButtonId = (id) => `settingsButton-${id}`;
 export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';
+export const SHARE_ITEM_DIALOG_ID = 'shareItemDialog';
+export const SHARE_ITEM_DIALOG_LINK_ID = 'shareItemDialogLink';
+export const SHARE_ITEM_DIALOG_LINK_SELECT_ID = 'shareItemDialogLinkSelect';
+export const ACCESS_INDICATION_ID = 'accessIndication';

@@ -31,6 +31,11 @@ import { copyToClipboard } from '../../utils/clipboard';
 import notifier from '../../middlewares/notifier';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../types/clipboard';
 import AccessIndication from './AccessIndication';
+import {
+  SHARE_ITEM_DIALOG_ID,
+  SHARE_ITEM_DIALOG_LINK_ID,
+  SHARE_ITEM_DIALOG_LINK_SELECT_ID,
+} from '../../config/selectors';
 
 const ShareItemModalContext = React.createContext();
 
@@ -135,13 +140,23 @@ const ShareItemModalProvider = ({ children }) => {
 
   return (
     <ShareItemModalContext.Provider value={{ openModal }}>
-      <Dialog open={open} onClose={onClose} maxWidth="md">
+      <Dialog
+        open={open}
+        onClose={onClose}
+        maxWidth="md"
+        id={SHARE_ITEM_DIALOG_ID}
+      >
         <DialogTitle>{t('Share Item')}</DialogTitle>
         <DialogContent className={classes.dialogContent}>
           {itemId ? (
             <>
               <div className={classes.shareLinkContainer}>
-                <Link className={classes.shareLink} href={link} target="_blank">
+                <Link
+                  className={classes.shareLink}
+                  href={link}
+                  target="_blank"
+                  id={SHARE_ITEM_DIALOG_LINK_ID}
+                >
                   {link}
                 </Link>
                 <div>
@@ -149,6 +164,7 @@ const ShareItemModalProvider = ({ children }) => {
                     className={classes.selector}
                     value={linkType}
                     onChange={handleLinkTypeChange}
+                    id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
                   >
                     <MenuItem value={COMPOSE_VIEW_SELECTION}>
                       {t('Compose')}

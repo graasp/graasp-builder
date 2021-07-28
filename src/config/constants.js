@@ -47,7 +47,7 @@ export const AUTHENTICATION_HOST =
 export const GRAASP_PERFORM_HOST =
   ENV_GRAASP_PERFORM_HOST ||
   process.env.REACT_APP_GRAASP_PERFORM_HOST ||
-  'http://localhost:3113';
+  'http://localhost:3112';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 

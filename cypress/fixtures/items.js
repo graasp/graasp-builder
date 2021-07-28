@@ -54,6 +54,11 @@ export const SAMPLE_ITEMS = {
           permission: PERMISSION_LEVELS.ADMIN,
           memberId: MEMBERS.ANNA.id,
         },
+        {
+          itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.READ,
+          memberId: MEMBERS.BOB.id,
+        },
       ],
     },
     {
