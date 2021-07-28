@@ -7,7 +7,11 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import IconButton from '@material-ui/core/IconButton';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { GraaspLogo } from '@graasp/ui';
-import { APP_NAME, HEADER_HEIGHT } from '../../config/constants';
+import {
+  APP_NAME,
+  GRAASP_LOGO_HEADER_HEIGHT,
+  HEADER_HEIGHT,
+} from '../../config/constants';
 import SettingsHeader from '../common/SettingsHeader';
 import { HEADER_APP_BAR_ID } from '../../config/selectors';
 import { HOME_PATH } from '../../config/paths';
@@ -27,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     fill: 'white',
   },
   title: {
-    margin: theme.spacing(0, 1.5),
+    margin: theme.spacing(0, 2),
   },
   link: {
     textDecoration: 'none',
@@ -64,7 +68,10 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
         <div className={classes.headerLeft}>
           {renderMenuIcon()}
           <Link to={HOME_PATH} className={classes.link}>
-            <GraaspLogo height={40} className={classes.logo} />
+            <GraaspLogo
+              height={GRAASP_LOGO_HEADER_HEIGHT}
+              className={classes.logo}
+            />
             <Typography variant="h6" color="inherit" className={classes.title}>
               {APP_NAME}
             </Typography>

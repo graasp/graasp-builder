@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main",
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#35/graaspLogo",
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",

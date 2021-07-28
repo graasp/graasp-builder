@@ -148,3 +148,4 @@ export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
 export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 
 export const ITEM_DEFAULT_HEIGHT = 500;
+export const GRAASP_LOGO_HEADER_HEIGHT = 40;
