@@ -4,8 +4,9 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import Switch from '@material-ui/core/Switch';
 import { useParams } from 'react-router';
+import InfoIcon from '@material-ui/icons/Info';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { FormControlLabel } from '@material-ui/core';
+import { FormControlLabel, IconButton, Tooltip } from '@material-ui/core';
 import { useMutation, hooks } from '../../../config/queryClient';
 import { getItemPublicTagFromItem } from '../../../utils/itemExtra';
 import Loader from '../../common/Loader';
@@ -77,7 +78,30 @@ const PublicSwitch = ({ item }) => {
     />
   );
 
-  return <FormControlLabel control={control} label={t('Item is public')} />;
+  const label = (
+    <>
+      {t('Item is public')}
+      {/* display more information if switch is disabled */}
+      {isSwitchDisabled && (
+        <Tooltip
+          title={t(
+            'This item is public because its parent is public. To set this item as private, you need to set its parent as private.',
+          )}
+          placement="right"
+        >
+          <IconButton fontSize="small" aria-label="access information">
+            <InfoIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+    </>
+  );
+
+  return (
+    <>
+      <FormControlLabel control={control} label={label} />
+    </>
+  );
 };
 
 PublicSwitch.propTypes = {

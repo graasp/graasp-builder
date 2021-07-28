@@ -7,7 +7,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID } from '../../config/selectors';
 import DeleteButton from '../common/DeleteButton';
-import { ItemSearchInput } from '../item/ItemSearch';
 import NewItemButton from './NewItemButton';
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -76,7 +75,7 @@ TableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   tableTitle: PropTypes.string,
   selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-  itemSearchInput: PropTypes.instanceOf(ItemSearchInput),
+  itemSearchInput: PropTypes.element,
 };
 
 TableToolbar.defaultProps = {

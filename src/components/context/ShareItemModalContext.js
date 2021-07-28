@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,7 +14,6 @@ import Link from '@material-ui/core/Link';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import ItemMemberships from '../item/ItemMemberships';
 import {
   COMPOSE_VIEW_SELECTION,
   PERFORM_VIEW_SELECTION,
@@ -23,9 +22,7 @@ import {
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
   SHARE_LINK_WIDTH,
-  SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR,
 } from '../../config/constants';
-import { LayoutContext } from './LayoutContext';
 import {
   buildGraaspComposeView,
   buildGraaspPerformView,
@@ -33,6 +30,7 @@ import {
 import { copyToClipboard } from '../../utils/clipboard';
 import notifier from '../../middlewares/notifier';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../types/clipboard';
+import AccessIndication from './AccessIndication';
 
 const ShareItemModalContext = React.createContext();
 
@@ -85,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
 const ShareItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { setIsItemSettingsOpen } = useContext(LayoutContext);
 
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(null);
@@ -119,11 +116,6 @@ const ShareItemModalProvider = ({ children }) => {
   const onClose = () => {
     setOpen(false);
     setItemId(null);
-  };
-
-  const onClickMemberships = () => {
-    onClose();
-    setIsItemSettingsOpen(true);
   };
 
   const handleCopy = () => {
@@ -175,11 +167,7 @@ const ShareItemModalProvider = ({ children }) => {
                   </Tooltip>
                 </div>
               </div>
-              <ItemMemberships
-                onClick={onClickMemberships}
-                id={itemId}
-                maxAvatar={SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR}
-              />
+              <AccessIndication itemId={itemId} onClick={onClose} />
             </>
           ) : (
             <Typography>{t('Item not specified')}</Typography>

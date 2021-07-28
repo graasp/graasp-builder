@@ -110,11 +110,12 @@ const ItemHeaderActions = ({ onClick, item }) => {
 
 ItemHeaderActions.propTypes = {
   onClick: PropTypes.func,
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Map),
 };
 
 ItemHeaderActions.defaultProps = {
   onClick: () => {},
+  item: Map(),
 };
 
 export default ItemHeaderActions;

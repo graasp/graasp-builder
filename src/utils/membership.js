@@ -8,9 +8,11 @@ export const isSettingsEditionAllowedForUser = ({ memberships, memberId }) =>
   );
 
 export const isItemUpdateAllowedForUser = ({ memberships, memberId }) =>
-  memberships?.find(
-    ({ memberId: mId, permission }) =>
-      mId === memberId && PERMISSIONS_EDITION_ALLOWED.includes(permission),
+  Boolean(
+    memberships?.find(
+      ({ memberId: mId, permission }) =>
+        mId === memberId && PERMISSIONS_EDITION_ALLOWED.includes(permission),
+    ),
   );
 
 export const membershipsWithoutUser = (memberships, userId) =>

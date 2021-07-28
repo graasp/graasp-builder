@@ -62,24 +62,38 @@ const SettingsHeader = () => {
   };
 
   const renderMenu = () => {
-    if (!user || user.isEmpty()) {
+    const isSignedOut = !user || user.isEmpty();
+
+    if (isSignedOut) {
       return (
-        <MenuItem
-          component="a"
-          href={`${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath()}`}
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
         >
-          {t('Sign In')}
-        </MenuItem>
+          <MenuItem
+            component="a"
+            href={`${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath()}`}
+          >
+            {t('Sign In')}
+          </MenuItem>
+        </Menu>
       );
     }
 
     return (
-      <>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
         <MenuItem onClick={goToProfile}>{t('Profile')}</MenuItem>
         <MenuItem onClick={handleSignOut} id={USER_MENU_SIGN_OUT_OPTION_ID}>
           {t('Sign Out')}
         </MenuItem>
-      </>
+      </Menu>
     );
   };
 
@@ -107,14 +121,7 @@ const SettingsHeader = () => {
           </Typography>
         )}
       </Box>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {renderMenu()}
-      </Menu>
+      {renderMenu()}
     </>
   );
 };

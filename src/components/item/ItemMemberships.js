@@ -1,5 +1,4 @@
 import React from 'react';
-import { Loader } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -17,20 +16,11 @@ import { membershipsWithoutUser } from '../../utils/membership';
 
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   const { t } = useTranslation();
-  const { data: memberships, isLoading, isError } = hooks.useItemMemberships(
-    id,
-  );
-  const {
-    data: currentUser,
-    isLoading: isLoadingCurrentMember,
-  } = hooks.useCurrentMember();
+  const { data: memberships, isError } = hooks.useItemMemberships(id);
+  const { data: currentUser } = hooks.useCurrentMember();
 
   if (!id) {
     return null;
-  }
-
-  if (isLoading || isLoadingCurrentMember) {
-    return <Loader />;
   }
 
   if (!memberships || memberships.isEmpty() || isError) {
