@@ -2,16 +2,16 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
+  buildDeleteButtonId,
   buildItemsTableRowId,
   CONFIRM_DELETE_BUTTON_ID,
-  ITEM_DELETE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItem = (id) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(`#${buildItemsTableRowId(id)} .${ITEM_DELETE_BUTTON_CLASS}`).click();
+  cy.get(`#${buildDeleteButtonId(id)}`).click();
   cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };
 
@@ -71,7 +71,9 @@ describe('Delete Item in List', () => {
 
       cy.wait('@deleteItem').then(() => {
         // check item is still displayed
-        cy.get(`#${buildItemsTableRowId(idToDelete)}`).should('exist');
+        cy.get(`[ row-id = "${buildItemsTableRowId(idToDelete)}"]`).should(
+          'exist',
+        );
       });
     });
   });

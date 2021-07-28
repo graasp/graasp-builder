@@ -25,7 +25,9 @@ describe('Files', () => {
     });
     it('image', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(IMAGE_ITEM_DEFAULT.id)}`).should('exist');
+      cy.get(
+        `[ row-id = "${buildItemsTableRowId(IMAGE_ITEM_DEFAULT.id)}"]`,
+      ).should('exist');
 
       // item metadata
       cy.goToItemInList(IMAGE_ITEM_DEFAULT.id);
@@ -34,7 +36,9 @@ describe('Files', () => {
 
     it('video', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(VIDEO_ITEM_DEFAULT.id)}`).should('exist');
+      cy.get(
+        `[ row-id = "${buildItemsTableRowId(VIDEO_ITEM_DEFAULT.id)}"]`,
+      ).should('exist');
 
       // item metadata
       cy.goToItemInList(VIDEO_ITEM_DEFAULT.id);
@@ -43,7 +47,9 @@ describe('Files', () => {
 
     it('pdf', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(PDF_ITEM_DEFAULT.id)}`).should('exist');
+      cy.get(
+        `[ row-id = "${buildItemsTableRowId(PDF_ITEM_DEFAULT.id)}"]`,
+      ).should('exist');
 
       // item metadata
       cy.goToItemInList(PDF_ITEM_DEFAULT.id);
@@ -63,7 +69,9 @@ describe('Files', () => {
     });
     it('image', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(IMAGE_ITEM_S3.id)}`).should('exist');
+      cy.get(`[ row-id = "${buildItemsTableRowId(IMAGE_ITEM_S3.id)}"]`).should(
+        'exist',
+      );
 
       // item metadata
       cy.goToItemInList(IMAGE_ITEM_S3.id);
@@ -72,7 +80,9 @@ describe('Files', () => {
 
     it('video', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(VIDEO_ITEM_S3.id)}`).should('exist');
+      cy.get(`[ row-id = "${buildItemsTableRowId(VIDEO_ITEM_S3.id)}"]`).should(
+        'exist',
+      );
 
       // item metadata
       cy.goToItemInList(VIDEO_ITEM_S3.id);
@@ -81,7 +91,9 @@ describe('Files', () => {
 
     it('pdf', () => {
       // item is displayed in table
-      cy.get(`#${buildItemsTableRowId(PDF_ITEM_S3.id)}`).should('exist');
+      cy.get(`[ row-id = "${buildItemsTableRowId(PDF_ITEM_S3.id)}"]`).should(
+        'exist',
+      );
 
       // item metadata
       cy.goToItemInList(PDF_ITEM_S3.id);

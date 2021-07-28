@@ -11,7 +11,7 @@ import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 const toggleFavoriteButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(
-    `#${buildItemsTableRowId(itemId)} .${FAVORITE_ITEM_BUTTON_CLASS}`,
+    `[ row-id = "${buildItemsTableRowId(itemId)}"] .${FAVORITE_ITEM_BUTTON_CLASS}`,
   ).click();
 };
 
@@ -64,7 +64,7 @@ describe('Favorite Item', () => {
 
       const itemId = favoriteItems[0];
 
-      cy.get(`#${buildItemsTableRowId(itemId)}`).should('exist');
+      cy.get(`[ row-id = "${buildItemsTableRowId(itemId)}"]`).should('exist');
     });
   });
 

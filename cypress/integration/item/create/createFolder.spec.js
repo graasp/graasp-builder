@@ -95,7 +95,9 @@ describe('Create Folder', () => {
 
       cy.wait('@postItem').then(({ response: { body } }) => {
         // check item is created and displayed
-        cy.get(`#${buildItemsTableRowId(body.id)}`).should('not.exist');
+        cy.get(`[ row-id = "${buildItemsTableRowId(body.id)}"]`).should(
+          'not.exist',
+        );
       });
     });
   });

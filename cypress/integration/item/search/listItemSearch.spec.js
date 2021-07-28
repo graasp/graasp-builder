@@ -22,7 +22,9 @@ describe('Search Item in Table', () => {
     cy.wait('@getChildren').then(({ response: { body } }) => {
       // check item is created and displayed
       for (const item of body) {
-        cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
+        cy.get(`[ row-id = "${buildItemsTableRowId(item.id)}"]`).should(
+          'exist',
+        );
       }
     });
 
@@ -31,8 +33,12 @@ describe('Search Item in Table', () => {
       .type(child3.name)
       .then(() => {
         // should find child3 but not child4
-        cy.get(`#${buildItemsTableRowId(child3.id)}`).should('exist');
-        cy.get(`#${buildItemsTableRowId(child4.id)}`).should('not.exist');
+        cy.get(`[ row-id = "${buildItemsTableRowId(child3.id)}"]`).should(
+          'exist',
+        );
+        cy.get(`[ row-id = "${buildItemsTableRowId(child4.id)}"]`).should(
+          'not.exist',
+        );
       });
 
     // erase search
@@ -40,8 +46,12 @@ describe('Search Item in Table', () => {
       .clear()
       .then(() => {
         // should find all children again
-        cy.get(`#${buildItemsTableRowId(child3.id)}`).should('exist');
-        cy.get(`#${buildItemsTableRowId(child4.id)}`).should('exist');
+        cy.get(`[ row-id = "${buildItemsTableRowId(child3.id)}"]`).should(
+          'exist',
+        );
+        cy.get(`[ row-id = "${buildItemsTableRowId(child4.id)}"]`).should(
+          'exist',
+        );
       });
   });
 });

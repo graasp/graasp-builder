@@ -3,6 +3,7 @@ import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { DRAG_ICON_SIZE } from '../../config/constants';
+import { buildRowDraggerId } from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
   dragIconContainer: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DragCellRenderer = ({ registerRowDragger }) => {
+const DragCellRenderer = ({ data: item, registerRowDragger }) => {
   const classes = useStyles();
   const dragRef = useRef(null);
 
@@ -23,12 +24,17 @@ const DragCellRenderer = ({ registerRowDragger }) => {
 
   return (
     <div className={classes.dragIconContainer}>
-      <DragIndicatorIcon ref={dragRef} className={classes.dragIcon} />
+      <DragIndicatorIcon
+        id={buildRowDraggerId(item.id)}
+        ref={dragRef}
+        className={classes.dragIcon}
+      />
     </div>
   );
 };
 
 DragCellRenderer.propTypes = {
+  data: PropTypes.shape({}).isRequired,
   registerRowDragger: PropTypes.func.isRequired,
 };
 
