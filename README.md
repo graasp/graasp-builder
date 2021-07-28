@@ -2,7 +2,7 @@
 
 ## Installation
 
-1. Run `yarn` to install the dependencies
+1. Run `yarn` to install the dependencies. You might need to run `YARN_CHECKSUM_BEHAVIOR=update yarn` if you run into checksum errors. This is due to github packages being updated in the midtime and don't match with `yarn.lock` anymore. This error should disappear when using releases or tags (instead of branches).  
 2. Run the API at `localhost:3000`
 3. Set the following environnement variables in `.env.local`
 

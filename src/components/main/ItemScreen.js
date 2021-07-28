@@ -27,14 +27,11 @@ const ItemScreen = () => {
     memberId: currentMember?.get('id'),
   });
 
-  useEffect(
-    () => {
-      setEditingItemId(null);
-      setIsItemSettingsOpen(false);
-    },
+  useEffect(() => {
+    setEditingItemId(null);
+    setIsItemSettingsOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [itemId],
-  );
+  }, [itemId]);
 
   if (!itemId || !item || isError) {
     return <ErrorAlert />;

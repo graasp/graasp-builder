@@ -26,12 +26,7 @@ jobs:
 
       - name: yarn set up
         uses: actions/setup-node@v2
-
-      # as long as github dependencies / dependencies with prepare scripts are needed
-      # this script might encounter trouble when installing
-      # https://github.com/yarnpkg/yarn/issues/6312
-      - run: rm yarn.lock
-      - run: yarn install --network-concurrency 1
+      - run: yarn 
       - run: yarn build
 
       - name: configure aws credentials
