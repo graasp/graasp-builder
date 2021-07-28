@@ -1,5 +1,8 @@
 // eslint-disable-next-line import/prefer-default-export
 export const redirect = (url, { openInNewTab = false } = {}) => {
-  const options = openInNewTab ? '_blank' : null;
-  window.open(url, options);
+  if (openInNewTab) {
+    window.open(url, '_blank');
+  } else {
+    window.location.href = url;
+  }
 };
