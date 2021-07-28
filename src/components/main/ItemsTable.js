@@ -8,10 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useHistory, useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
-import EditButton from '../common/EditButton';
-import ShareButton from '../common/ShareButton';
-import DeleteButton from '../common/DeleteButton';
-import ItemMenu from './ItemMenu';
 import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import TableToolbar from './TableToolbar';
@@ -20,10 +16,16 @@ import { formatDate } from '../../utils/date';
 import { ITEM_TYPES } from '../../enums';
 import { getShortcutTarget } from '../../utils/itemExtra';
 import { buildItemPath } from '../../config/paths';
-import { stableSort, userOrderComparator } from '../../utils/table';
-import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
+import {
+  DRAG_ICON_SIZE,
+  ITEMS_TABLE_CONTAINER_HEIGHT,
+} from '../../config/constants';
+import { buildItemsTableRowId } from '../../config/selectors';
+import NameCellRenderer from '../table/NameCellRenderer';
+import DragCellRenderer from '../table/DragCellRenderer';
+import ActionsCellRenderer from '../table/ActionsCellRenderer';
 
-const { useCurrentMember, useItem } = hooks;
+const { useItem } = hooks;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -31,6 +33,17 @@ const useStyles = makeStyles(() => ({
   },
   row: {
     cursor: 'pointer',
+  },
+  dragCell: {
+    paddingLeft: '0!important',
+    paddingRight: '0!important',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  actionCell: {
+    paddingLeft: '0!important',
+    paddingRight: '0!important',
+    textAlign: 'right',
   },
 }));
 
@@ -40,19 +53,13 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
   const classes = useStyles();
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
-  const { data: member } = useCurrentMember();
 
   const [gridApi, setGridApi] = useState(null);
   const [selected, setSelected] = useState([]);
 
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
-  const rowsToDisplay = stableSort(
-    rows,
-    userOrderComparator(getChildrenOrderFromFolderExtra(parentItem)),
-  );
-
-  const mappedRows = rowsToDisplay.map((item) => {
+  const mappedRows = rows.map((item) => {
     const { id, updatedAt, name, createdAt, type, extra } = item;
     return {
       id,
@@ -65,14 +72,22 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
   });
 
   const isFolder = () => Boolean(itemId);
+  const isSearching = () => Boolean(itemSearch.text);
+  const canDrag = () => isFolder() && !isSearching();
 
   const onGridReady = (params) => {
     setGridApi(params.api);
   };
 
   const onSelectionChanged = () => {
-    setSelected(gridApi.getSelectedRows());
+    setSelected(gridApi?.getSelectedRows().map((r) => r.id) ?? []);
   };
+
+  const onRowDataChanged = () => {
+    onSelectionChanged();
+  };
+
+  const getRowNodeId = (row) => buildItemsTableRowId(row.id);
 
   const onCellClicked = ({ column: { colId }, data: item }) => {
     if (colId !== 'actions') {
@@ -100,7 +115,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
   };
 
   const onDragEnd = () => {
-    if (isFolder() && hasOrderChanged()) {
+    if (canDrag() && hasOrderChanged()) {
       mutation.mutate({
         id: itemId,
         extra: {
@@ -119,18 +134,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
   const textComparator = (text1, text2) =>
     text1.localeCompare(text2, undefined, { sensitivity: 'base' });
 
-  const Actions = ({ data: item }) => (
-    <>
-      <EditButton item={item} />
-      <ShareButton itemId={item.id} />
-      <DeleteButton itemIds={[item.id]} />
-      <ItemMenu item={item} member={member} />
-    </>
-  );
-
-  Actions.propTypes = {
-    data: PropTypes.shape({}).isRequired,
-  };
+  const itemRowDragText = (params) => params.rowNode.data.name;
 
   return (
     <div className={classes.root}>
@@ -150,23 +154,37 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
           rowSelection="multiple"
           suppressRowClickSelection
           suppressCellSelection
-          frameworkComponents={{ actions: Actions }}
-          rowDragManaged={isFolder()}
+          frameworkComponents={{
+            actions: ActionsCellRenderer,
+            nameCellRenderer: NameCellRenderer,
+            dragCellRenderer: DragCellRenderer,
+          }}
+          rowDragManaged
           onRowDragEnd={onDragEnd}
           onGridReady={onGridReady}
           onSelectionChanged={onSelectionChanged}
           onCellClicked={onCellClicked}
           rowClass={classes.row}
+          getRowNodeId={getRowNodeId}
+          onRowDataChanged={onRowDataChanged}
+          applyColumnDefOrder
         >
           <AgGridColumn
-            rowDrag={isFolder()}
+            hide={!canDrag()}
+            cellRenderer="dragCellRenderer"
+            cellClass={classes.dragCell}
+            headerClass={classes.dragCell}
+            rowDragText={itemRowDragText}
+            maxWidth={DRAG_ICON_SIZE}
+          />
+          <AgGridColumn
             checkboxSelection
             headerCheckboxSelection
             headerName={t('Name')}
             field="name"
+            cellRenderer="nameCellRenderer"
             flex={4}
             sortable
-            unSortIcon
             comparator={textComparator}
           />
           <AgGridColumn
@@ -175,7 +193,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
             type="rightAligned"
             flex={2}
             sortable
-            unSortIcon
             comparator={textComparator}
           />
           <AgGridColumn
@@ -186,7 +203,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
             valueFormatter={dateColumnFormatter}
             sortable
             comparator={dateComparator}
-            unSortIcon
           />
           <AgGridColumn
             headerName={t('Updated At')}
@@ -196,14 +212,13 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
             valueFormatter={dateColumnFormatter}
             sortable
             comparator={dateComparator}
-            unSortIcon
           />
           <AgGridColumn
             headerName={t('Actions')}
             colId="actions"
             cellRenderer="actions"
-            pinned="right"
             type="rightAligned"
+            cellClass={classes.actionCell}
           />
         </AgGridReact>
       </div>
@@ -217,6 +232,7 @@ ItemsTable.propTypes = {
   id: PropTypes.string,
   itemSearch: PropTypes.shape({
     input: PropTypes.instanceOf(ItemSearchInput),
+    text: PropTypes.string,
   }),
 };
 

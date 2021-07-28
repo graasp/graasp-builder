@@ -119,6 +119,8 @@ export const buildItemsGridPaginationButtonSelected = (page) =>
   `${buildItemsGridPaginationButton(page)}.Mui-selected`;
 export const ITEM_HEADER_ID = 'itemHeader';
 export const buildShareButtonId = (id) => `shareButton-${id}`;
+export const buildDeleteButtonId = (id) => `deleteButton-${id}`;
+export const buildItemMenuButtonId = (id) => `itemMenuButton-${id}`;
 export const buildPerformButtonId = (id) => `performButton-${id}`;
 export const buildEditButtonId = (id) => `editButton-${id}`;
 export const buildSettingsButtonId = (id) => `settingsButton-${id}`;

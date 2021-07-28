@@ -75,7 +75,7 @@ const TableToolbar = (props) => {
 TableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   tableTitle: PropTypes.string,
-  selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   itemSearchInput: PropTypes.instanceOf(ItemSearchInput),
 };
 

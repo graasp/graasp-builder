@@ -9,7 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import CustomCardHeader from './CustomCardHeader';
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
-import { buildItemCard } from '../../config/selectors';
+import { buildDeleteButtonId, buildItemCard } from '../../config/selectors';
 import EditButton from '../common/EditButton';
 import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
@@ -50,7 +50,7 @@ const Item = ({ item }) => {
         <FavoriteButton member={member} item={item} />
         <EditButton item={item} />
         <ShareButton itemId={id} />
-        <DeleteButton itemIds={[id]} />
+        <DeleteButton itemIds={[id]} id={buildDeleteButtonId(id)} />
       </CardActions>
     </Card>
   );
