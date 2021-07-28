@@ -69,7 +69,7 @@ const NewItemModal = ({ open, handleClose }) => {
     postItem({ parentId, ...updatedPropertiesPerType[selectedItemType] });
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,
-      [selectedItemType]: {},
+      [selectedItemType]: { type: selectedItemType },
     });
     // schedule button disable state reset AFTER end of click event handling
     setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
