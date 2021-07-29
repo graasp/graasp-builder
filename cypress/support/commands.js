@@ -47,6 +47,12 @@ import {
   mockPostItemFlag,
   mockGetItemChat,
   mockPostItemChatMessage,
+  mockGetAppLink,
+  mockAppApiAccessToken,
+  mockGetAppData,
+  mockPostAppData,
+  mockDeleteAppData,
+  mockPatchAppData,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -107,7 +113,7 @@ Cypress.Commands.add(
     mockMoveItem(cachedItems, moveItemError);
 
     mockMoveItems(cachedItems, moveItemsError);
-    
+
     mockCopyItem(cachedItems, copyItemError);
 
     mockCopyItems(cachedItems, copyItemsError);
@@ -167,6 +173,18 @@ Cypress.Commands.add(
     mockGetItemChat({ items }, getItemChatError);
 
     mockPostItemChatMessage();
+
+    mockGetAppLink();
+
+    mockAppApiAccessToken();
+
+    mockGetAppData();
+
+    mockPostAppData();
+
+    mockDeleteAppData();
+
+    mockPatchAppData();
   },
 );
 
@@ -194,4 +212,26 @@ Cypress.Commands.add(
       },
     });
   },
+);
+
+Cypress.Commands.add(
+  'clickElementInIframe',
+  (iframeSelector, elementSelector) =>
+    cy
+      .get(iframeSelector)
+      .then(($iframe) =>
+        cy.wrap($iframe.contents().find(elementSelector)).click(),
+      ),
+);
+
+Cypress.Commands.add(
+  'checkContentInElementInIframe',
+  (iframeSelector, elementSelector, text) =>
+    cy
+      .get(iframeSelector)
+      .then(($iframe) =>
+        cy
+          .wrap($iframe.contents().find(elementSelector))
+          .should('contain', text),
+      ),
 );
