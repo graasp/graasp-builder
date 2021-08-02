@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   username: {
     margin: theme.spacing(0, 2),
-    maxWidth: 100,
+    maxWidth: 120,
   },
 }));
 
@@ -117,7 +117,7 @@ const SettingsHeader = () => {
         </Tooltip>
         {username && (
           <Typography variant="subtitle1" className={classes.username}>
-            {truncate(username, { length: USERNAME_MAX_LENGTH, separator: ' ', omission: '' })}
+            {truncate(username, { length: USERNAME_MAX_LENGTH })}
           </Typography>
         )}
       </Box>
