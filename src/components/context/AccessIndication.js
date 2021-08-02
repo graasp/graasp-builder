@@ -75,7 +75,7 @@ const AccessIndication = ({ itemId, onClick }) => {
     );
   }
 
-  // show memberships when the item is not public and does not allow iten login
+  // show memberships when the item is not public and does not allow item login
   return (
     <ItemMemberships
       onClick={openSettings}

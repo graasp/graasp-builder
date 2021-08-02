@@ -97,11 +97,7 @@ const PublicSwitch = ({ item }) => {
     </>
   );
 
-  return (
-    <>
-      <FormControlLabel control={control} label={label} />
-    </>
-  );
+  return <FormControlLabel control={control} label={label} />;
 };
 
 PublicSwitch.propTypes = {
