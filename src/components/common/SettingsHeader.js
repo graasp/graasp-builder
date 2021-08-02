@@ -117,7 +117,7 @@ const SettingsHeader = () => {
         </Tooltip>
         {username && (
           <Typography variant="subtitle1" className={classes.username}>
-            {truncate(username, { length: USERNAME_MAX_LENGTH })}
+            {truncate(username, { length: USERNAME_MAX_LENGTH, separator: ' ', omission: '' })}
           </Typography>
         )}
       </Box>
