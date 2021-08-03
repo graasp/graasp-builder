@@ -24,7 +24,7 @@ const theme = createMuiTheme({
     secondary: { main: '#ffffff' },
   },
   zIndex: {
-    drawer: 1000,
+    drawer: 950,
   },
   overrides: {
     MuiAvatar: {

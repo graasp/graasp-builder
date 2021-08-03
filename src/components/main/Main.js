@@ -4,10 +4,16 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { HEADER_HEIGHT, LEFT_MENU_WIDTH } from '../../config/constants';
+import Box from '@material-ui/core/Box';
+import {
+  HEADER_HEIGHT,
+  LEFT_GROUP_MENU_WIDTH,
+  LEFT_MENU_WIDTH,
+} from '../../config/constants';
 import MainMenu from './MainMenu';
 import Header from '../layout/Header';
 import { LayoutContext } from '../context/LayoutContext';
+import MainGroupMenu from './MainGroupMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,10 +25,18 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: LEFT_MENU_WIDTH,
+    left: LEFT_MENU_WIDTH,
     flexShrink: 0,
   },
   drawerPaper: {
     width: LEFT_MENU_WIDTH,
+    position: 'relative',
+    zIndex: 1,
+  },
+  groupPanel: {
+    width: LEFT_GROUP_MENU_WIDTH,
+    flexShrink: 0,
+    zIndex: 100,
   },
   drawerHeader: {
     display: 'flex',
@@ -59,38 +73,48 @@ const Main = ({ children }) => {
   const classes = useStyles();
 
   const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);
-
   const toggleDrawer = (isOpen) => {
     setIsMainMenuOpen(isOpen);
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Header toggleMenu={toggleDrawer} isMenuOpen={isMainMenuOpen} />
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        open={isMainMenuOpen}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.appBarBlank} />
-        <div role="presentation" className={classes.list}>
-          <MainMenu />
-        </div>
-      </Drawer>
+    <Box display="flex" bgcolor="background.paper">
+      <Box className={classes.groupPanel} bgcolor="rgb(209 209 218)">
+        <MainGroupMenu />
+      </Box>
+      <Box flexGrow={1}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <Header
+            className={classes.header}
+            toggleMenu={toggleDrawer}
+            isMenuOpen={isMainMenuOpen}
+          />
+          <Drawer
+            className={classes.drawer}
+            variant="persistent"
+            open={isMainMenuOpen}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <div className={classes.appBarBlank} />
+            <div role="presentation" className={classes.list}>
+              <MainMenu />
+            </div>
+          </Drawer>
 
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: isMainMenuOpen,
-        })}
-      >
-        <div className={classes.appBarBlank} />
-        {children}
-      </main>
-    </div>
+          <main
+            className={clsx(classes.content, {
+              [classes.contentShift]: isMainMenuOpen,
+            })}
+          >
+            <div className={classes.appBarBlank} />
+            {children}
+          </main>
+        </div>
+      </Box>
+    </Box>
   );
 };
 

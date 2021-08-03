@@ -7,7 +7,6 @@ import { LayoutContext } from '../context/LayoutContext';
 import ItemContent from '../item/ItemContent';
 import ItemMain from '../item/ItemMain';
 import ItemSettings from '../item/settings/ItemSettings';
-import Main from './Main';
 
 const { useItem, useCurrentMember, useItemMemberships } = hooks;
 
@@ -41,7 +40,7 @@ const ItemScreen = () => {
   }
 
   return (
-    <Main>
+    <>
       <ItemMain item={item}>
         {enableEdition && isItemSettingsOpen ? (
           <ItemSettings item={item} />
@@ -49,7 +48,7 @@ const ItemScreen = () => {
           <ItemContent item={item} enableEdition={enableEdition} />
         )}
       </ItemMain>
-    </Main>
+    </>
   );
 };
 

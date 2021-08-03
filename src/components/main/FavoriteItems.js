@@ -9,7 +9,6 @@ import {
 import { hooks, useMutation } from '../../config/queryClient';
 import ErrorAlert from '../common/ErrorAlert';
 import Loader from '../common/Loader';
-import Main from './Main';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import {
@@ -69,10 +68,10 @@ const FavoriteItems = () => {
   };
 
   return (
-    <Main>
+    <>
       <ItemHeader />
       {renderContent()}
-    </Main>
+    </>
   );
 };
 

@@ -81,6 +81,7 @@ export const DEFAULT_ITEM_LAYOUT_MODE = ITEM_LAYOUT_MODES.LIST;
 export const ROWS_PER_PAGE_OPTIONS = [10, 25];
 
 export const LEFT_MENU_WIDTH = 250;
+export const LEFT_GROUP_MENU_WIDTH = 72;
 export const RIGHT_MENU_WIDTH = 300;
 export const HEADER_HEIGHT = 64;
 

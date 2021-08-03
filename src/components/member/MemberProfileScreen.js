@@ -20,7 +20,6 @@ import {
 } from '../../config/selectors';
 import notifier from '../../middlewares/notifier';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
-import Main from '../main/Main';
 
 const useStyles = makeStyles((theme) => ({
   profileTable: {
@@ -54,7 +53,7 @@ const MemberProfileScreen = () => {
   };
 
   return (
-    <Main>
+    <>
       <Card className={classes.root}>
         <Grid container spacing={3}>
           {/* use the member avatar */}
@@ -135,7 +134,7 @@ const MemberProfileScreen = () => {
           </Grid>
         </Grid>
       </Card>
-    </Main>
+    </>
   );
 };
 

@@ -11,12 +11,18 @@ import {
   APP_NAME,
   GRAASP_LOGO_HEADER_HEIGHT,
   HEADER_HEIGHT,
+  LEFT_GROUP_MENU_WIDTH,
 } from '../../config/constants';
 import SettingsHeader from '../common/SettingsHeader';
 import { HEADER_APP_BAR_ID } from '../../config/selectors';
 import { HOME_PATH } from '../../config/paths';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    left: LEFT_GROUP_MENU_WIDTH,
+    width: 'auto',
+    zIndex: 10,
+  },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -63,7 +69,7 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
   };
 
   return (
-    <AppBar position="fixed" id={HEADER_APP_BAR_ID}>
+    <AppBar className={classes.root} position="fixed" id={HEADER_APP_BAR_ID}>
       <Toolbar className={classes.header}>
         <div className={classes.headerLeft}>
           {renderMenuIcon()}
