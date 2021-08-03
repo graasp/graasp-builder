@@ -4,8 +4,8 @@
   "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main",
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#yarn2",
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#yarn2",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
@@ -94,8 +94,10 @@
     "cypress-file-upload": "5.0.2",
     "cypress-localstorage-commands": "1.4.5",
     "env-cmd": "10.1.0",
+    "eslint": "^7.31.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "7.1.0",
+    "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.22.0",
@@ -113,5 +115,6 @@
     "exclude": [
       "src/serviceWorker.js"
     ]
-  }
+  },
+  "packageManager": "yarn@3.0.1-rc.1"
 }
