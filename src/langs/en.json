@@ -108,6 +108,11 @@
     "Perform": "Perform",
     "Copy to Clipboard": "Copy to Clipboard",
     "Item not specified": "Item not specified",
-    "You are being redirected…": "You are being redirected…"
+    "You are being redirected…": "You are being redirected…",
+    "Public": "Public",
+    "This item is public. Anyone can access this item.": "This item is public. Anyone can access this item.",
+    "Anyone authenticated with the link": "Anyone authenticated with the link",
+    "This item enables item login. New users can access this item when they authenticate using the item login.": "This item enables item login. New users can access this item when they authenticate using the item login.",
+    "Access": "Access"
   }
 }

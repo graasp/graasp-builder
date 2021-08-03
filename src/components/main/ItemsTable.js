@@ -33,7 +33,6 @@ import DraggableTableRow from '../common/DraggableTableRow';
 import DroppableTableBody from '../common/DroppableTableBody';
 import EditButton from '../common/EditButton';
 import ShareButton from '../common/ShareButton';
-import { ItemSearchInput } from '../item/ItemSearch';
 import ItemIcon from './ItemIcon';
 import ItemMenu from './ItemMenu';
 import TableHead from './TableHead';
@@ -393,7 +392,7 @@ ItemsTable.propTypes = {
   tableTitle: PropTypes.string.isRequired,
   id: PropTypes.string,
   itemSearch: PropTypes.shape({
-    input: PropTypes.instanceOf(ItemSearchInput),
+    input: PropTypes.element,
   }),
 };
 
