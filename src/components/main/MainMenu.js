@@ -12,13 +12,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useLocation, useHistory } from 'react-router';
 import List from '@material-ui/core/List';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import PropTypes from 'prop-types';
+import { Loader } from '@graasp/ui';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
+  linkBuilder,
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
+import { hooks } from '../../config/queryClient';
 
-const MainMenu = () => {
+const MainMenu = ({ groupId }) => {
   const { t } = useTranslation();
   const [dense] = useState(true);
   const { push } = useHistory();
@@ -28,33 +32,45 @@ const MainMenu = () => {
     push(path);
   };
 
+  const { data: group, isLoading } = hooks.useGroup(groupId);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <List dense={dense}>
       <ListItem
         button
-        onClick={() => goTo(HOME_PATH)}
-        selected={pathname === HOME_PATH}
+        onClick={() => goTo(linkBuilder({ groupId }).HOME_PATH)}
+        selected={pathname.endsWith(HOME_PATH)}
       >
         <ListItemIcon>
           <FolderIcon />
         </ListItemIcon>
 
-        <ListItemText primary={t('My Items')} />
+        <ListItemText
+          primary={group ? t(`${group.get('name')}'s Items`) : t('My Items')}
+        />
       </ListItem>
       <ListItem
         button
-        onClick={() => goTo(SHARED_ITEMS_PATH)}
-        selected={pathname === SHARED_ITEMS_PATH}
+        onClick={() => goTo(linkBuilder({ groupId }).SHARED_ITEMS_PATH)}
+        selected={pathname.endsWith(SHARED_ITEMS_PATH)}
       >
         <ListItemIcon>
           <FolderSharedIcon />
         </ListItemIcon>
-        <ListItemText primary={t('Shared Items')} />
+        <ListItemText
+          primary={
+            group ? t(`${group.get('name')}'s Shared Items`) : t('Shared Items')
+          }
+        />
       </ListItem>
       <ListItem
         button
-        onClick={() => goTo(FAVORITE_ITEMS_PATH)}
-        selected={pathname === FAVORITE_ITEMS_PATH}
+        onClick={() => goTo(linkBuilder({ groupId }).FAVORITE_ITEMS_PATH)}
+        selected={pathname.endsWith(FAVORITE_ITEMS_PATH)}
       >
         <ListItemIcon>
           <FavoriteIcon />
@@ -89,4 +105,11 @@ const MainMenu = () => {
   );
 };
 
+MainMenu.propTypes = {
+  groupId: PropTypes.string,
+};
+
+MainMenu.defaultProps = {
+  groupId: '',
+};
 export default MainMenu;

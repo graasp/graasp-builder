@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
+import { Loader } from '@graasp/ui';
+import { useLocation } from 'react-router';
 import {
   HEADER_HEIGHT,
   LEFT_GROUP_MENU_WIDTH,
@@ -14,10 +16,12 @@ import MainMenu from './MainMenu';
 import Header from '../layout/Header';
 import { LayoutContext } from '../context/LayoutContext';
 import MainGroupMenu from './MainGroupMenu';
+import { hooks } from '../../config/queryClient';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    marginLeft: LEFT_GROUP_MENU_WIDTH,
   },
   menuButton: {},
   hide: {
@@ -37,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
     width: LEFT_GROUP_MENU_WIDTH,
     flexShrink: 0,
     zIndex: 100,
+    position: 'fixed',
+    height: '100%',
   },
   drawerHeader: {
     display: 'flex',
@@ -76,11 +82,29 @@ const Main = ({ children }) => {
   const toggleDrawer = (isOpen) => {
     setIsMainMenuOpen(isOpen);
   };
+  const {
+    data: rootGroups,
+    isLoading: isRootGroupsLoading,
+  } = hooks.useRootGroups();
+
+  const { pathname } = useLocation();
+
+  const regex = /^\/group\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/;
+  let groupId;
+
+  if (regex.test(pathname)) {
+    const match = pathname.match(regex);
+    groupId = match['1'];
+  }
+
+  if (isRootGroupsLoading) {
+    return <Loader />;
+  }
 
   return (
     <Box display="flex" bgcolor="background.paper">
       <Box className={classes.groupPanel} bgcolor="rgb(209 209 218)">
-        <MainGroupMenu />
+        <MainGroupMenu groups={rootGroups} />
       </Box>
       <Box flexGrow={1}>
         <div className={classes.root}>
@@ -100,7 +124,7 @@ const Main = ({ children }) => {
           >
             <div className={classes.appBarBlank} />
             <div role="presentation" className={classes.list}>
-              <MainMenu />
+              <MainMenu groupId={groupId} />
             </div>
           </Drawer>
 

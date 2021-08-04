@@ -26,6 +26,7 @@
     "i18next": "19.8.4",
     "immutable": "4.0.0-rc.12",
     "katex": "0.13.5",
+    "lodash.pick": "4.4.0",
     "lodash.truncate": "4.4.2",
     "node-fetch": "2.6.1",
     "prop-types": "15.7.2",

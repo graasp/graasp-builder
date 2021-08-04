@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { useParams, withRouter } from 'react-router';
 import { List } from 'immutable';
 import { hooks } from '../../config/queryClient';
 import ItemHeader from '../item/header/ItemHeader';
@@ -13,8 +13,9 @@ import ErrorAlert from '../common/ErrorAlert';
 
 const Home = () => {
   const { t } = useTranslation();
+  const { groupId } = useParams();
   // get own items
-  const { data: ownItems, isLoading, isError } = hooks.useOwnItems();
+  const { data: ownItems, isLoading, isError } = hooks.useOwnItems(groupId);
 
   if (isError) {
     return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;

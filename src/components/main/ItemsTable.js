@@ -15,7 +15,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router';
 import { ROWS_PER_PAGE_OPTIONS, USER_ITEM_ORDER } from '../../config/constants';
-import { buildItemPath } from '../../config/paths';
+import { linkBuilder } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildItemsTableRowId,
@@ -85,7 +85,7 @@ const computeReorderedIdList = (list, startIndex, endIndex) => {
 };
 
 const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
-  const { itemId } = useParams();
+  const { itemId, groupId } = useParams();
   const { data: parentItem } = useItem(itemId);
   const { data: member, isLoading: isMemberLoading } = hooks.useCurrentMember();
 
@@ -249,7 +249,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
     if (type === ITEM_TYPES.SHORTCUT) {
       targetId = getShortcutTarget(extra);
     }
-    push(buildItemPath(targetId));
+    push(linkBuilder({ itemId: targetId, groupId }).buildItemPath);
   };
 
   // format entry data given type

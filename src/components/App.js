@@ -8,6 +8,8 @@ import {
   REDIRECT_PATH,
   MEMBER_PROFILE_PATH,
   FAVORITE_ITEMS_PATH,
+  buildGraaspGroupViewSelector,
+  combinedSelectors,
 } from '../config/paths';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
@@ -27,7 +29,20 @@ const App = () => (
         <Main>
           <Route path={HOME_PATH} exact component={Authorization()(Home)} />
           <Route
+            path={combinedSelectors(buildGraaspGroupViewSelector(), HOME_PATH)}
+            exact
+            component={Authorization()(Home)}
+          />
+          <Route
             path={SHARED_ITEMS_PATH}
+            exact
+            component={Authorization()(SharedItems)}
+          />
+          <Route
+            path={combinedSelectors(
+              buildGraaspGroupViewSelector(),
+              SHARED_ITEMS_PATH,
+            )}
             exact
             component={Authorization()(SharedItems)}
           />
@@ -37,7 +52,22 @@ const App = () => (
             component={Authorization()(FavoriteItems)}
           />
           <Route
+            path={combinedSelectors(
+              buildGraaspGroupViewSelector(),
+              FAVORITE_ITEMS_PATH,
+            )}
+            exact
+            component={Authorization()(FavoriteItems)}
+          />
+          <Route
             path={buildItemPath()}
+            component={ItemLoginAuthorization()(ItemScreen)}
+          />
+          <Route
+            path={combinedSelectors(
+              buildGraaspGroupViewSelector(),
+              buildItemPath(),
+            )}
             component={ItemLoginAuthorization()(ItemScreen)}
           />
           <Route
