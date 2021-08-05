@@ -10,7 +10,7 @@ import {
   AppItem,
 } from '@graasp/ui';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { hooks, useMutation, ws } from '../../config/queryClient';
+import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildFileItemId,
   buildS3FileItemId,
@@ -54,7 +54,6 @@ const ItemContent = ({ item, enableEdition }) => {
 
   // display children
   const { data: children, isLoading: isLoadingChildren } = useChildren(itemId);
-  ws.hooks.useChildrenUpdates(itemId);
   const id = item?.get(ITEM_KEYS.ID);
 
   const { data: content, isLoading: isLoadingFileContent } = useFileContent(

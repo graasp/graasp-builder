@@ -34,12 +34,12 @@ describe('Websocket interactions', () => {
         client.receive({
           realm: 'notif',
           type: 'update',
+          topic: 'item/member',
           channel: CURRENT_USER.id,
           body: {
-            entity: 'member',
-            kind: 'sharedWith',
+            kind: 'shared',
             op: 'create',
-            value: item,
+            item,
           },
         });
       });
@@ -64,12 +64,12 @@ describe('Websocket interactions', () => {
         client.receive({
           realm: 'notif',
           type: 'update',
+          topic: 'item/member',
           channel: CURRENT_USER.id,
           body: {
-            entity: 'member',
-            kind: 'sharedWith',
+            kind: 'shared',
             op: 'delete',
-            value: item,
+            item,
           },
         });
       });
@@ -101,12 +101,12 @@ describe('Websocket interactions', () => {
       client.receive({
         realm: 'notif',
         type: 'update',
+        topic: 'item',
         channel: id,
         body: {
-          entity: 'item',
-          kind: 'childItem',
+          kind: 'child',
           op: 'create',
-          value: item,
+          item,
         },
       });
 
@@ -122,12 +122,12 @@ describe('Websocket interactions', () => {
       client.receive({
         realm: 'notif',
         type: 'update',
+        topic: 'item',
         channel: id,
         body: {
-          entity: 'item',
-          kind: 'childItem',
+          kind: 'child',
           op: 'delete',
-          value: item,
+          item,
         },
       });
 
