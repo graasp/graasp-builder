@@ -2129,19 +2129,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#yarn2":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#32/ws-included-hooks":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=3af4c7c94ef40fe0eb2bf8738c91c8b3e3651bcb"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=7d5ea53a0a6910b183bb305bc83eb10d408a2751"
   dependencies:
     http-status-codes: 2.1.4
     immutable: 4.0.0-rc.12
+    js-cookie: 3.0.0
     node-fetch: 2.6.1
     qs: 6.10.1
     react-query: 3.16.0
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: d78e5e3e68b3e28c17fd6e7de2a5887e8a68821e358b380b73776cefd3a025f317003e4a3060f6d094e4e82d98a34e51cb33fc9f48aa915fd37a1c563a261ee7
+  checksum: e7ae74dd2ceab657da8341ca3b8d244fdb978c3dabf12802ca267d686ab9588995a3b85640386cc39436625b5c2f46285523b0329b0216659e60b1541f490a41
   languageName: node
   linkType: hard
 
@@ -2160,7 +2161,7 @@ __metadata:
     "@material-ui/lab": 4.0.0-alpha.58
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 7fe94117eb987a1bf91a856670d8777442b033ca5cf3873fb02d283eb582dad5ff210a4708a91901805df34fa687a07786ad05252f081f67ae990c1f25ed62c0
+  checksum: d1a15a1dfc93c3839641443336ad98f6482acdb02bfaf470e0bafcd1a3acb626711fff04b2a67dc0f4a838da0f61d54c455a1ad75c752b377eedc8afa1c8d331
   languageName: node
   linkType: hard
 
@@ -10110,7 +10111,7 @@ fsevents@^1.2.7:
     "@commitlint/config-conventional": 11.0.0
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#yarn2"
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#32/ws-included-hooks"
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git#yarn2"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
@@ -12264,6 +12265,13 @@ fsevents@^1.2.7:
   version: 2.6.4
   resolution: "js-base64@npm:2.6.4"
   checksum: 5f4084078d6c46f8529741d110df84b14fac3276b903760c21fa8cc8521370d607325dfe1c1a9fbbeaae1ff8e602665aaeef1362427d8fef704f9e3659472ce8
+  languageName: node
+  linkType: hard
+
+"js-cookie@npm:3.0.0":
+  version: 3.0.0
+  resolution: "js-cookie@npm:3.0.0"
+  checksum: 36575124492d8344e91048075e387834178a5ffedb5d30910e69e88608464e3c5da973b6534ff3cf208e5ebec8760bd28749426a734e690348a3054058c870d8
   languageName: node
   linkType: hard
 
