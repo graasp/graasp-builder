@@ -2146,14 +2146,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git#master":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#41/rollup":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=7191a5654c55601d4e476ba6011d160ac8243cb5"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=e57cbacca08a77b2da7ed1c70ce956c24480000c"
   dependencies:
     clsx: 1.1.1
     immutable: 4.0.0-rc.12
     katex: 0.13.11
-    react-loading: 2.0.3
     react-quill: 1.3.5
   peerDependencies:
     "@material-ui/core": 4.11.0
@@ -2161,7 +2160,7 @@ __metadata:
     "@material-ui/lab": 4.0.0-alpha.58
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 7e1e517057b976f757b77a44db4d2b71c965ac5298c6c16ac4f45c56527798b6a4e179cb4e3ba5cbf8d20cbac3c30cb9889ccd01dce58dfed4d2f43fb254e000
+  checksum: 93418bb4b34eaab44c8ac6aee1e751847c249879682f7b0e92b4c8a600f2cf485c9de0c0144c8ddb99aceb9347809a06bd755210c18b612c237d8383c02ebf77
   languageName: node
   linkType: hard
 
@@ -10112,7 +10111,7 @@ fsevents@^1.2.7:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master"
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#41/rollup"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 4.11.2
@@ -16617,16 +16616,6 @@ fsevents@^1.2.7:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
-  languageName: node
-  linkType: hard
-
-"react-loading@npm:2.0.3":
-  version: 2.0.3
-  resolution: "react-loading@npm:2.0.3"
-  peerDependencies:
-    prop-types: ^15.6.0
-    react: ">=0.14.0"
-  checksum: a2b24b94c1988c1418a3d714c5d95dd13407f43e6ac59f350ae54ad75dd613bfea0abb59c8530900821806b72596e57555a700f9541bd12d9ac88387cce919fa
   languageName: node
   linkType: hard
 
