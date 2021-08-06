@@ -43,6 +43,7 @@ const EditItemModalProvider = ({ children }) => {
   const onClose = () => {
     setOpen(false);
     setItem(null);
+    setUpdatedItem(null);
   };
 
   const submit = () => {
