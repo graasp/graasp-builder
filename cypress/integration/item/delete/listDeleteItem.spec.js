@@ -3,7 +3,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildDeleteButtonId,
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   CONFIRM_DELETE_BUTTON_ID,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -71,9 +71,7 @@ describe('Delete Item in List', () => {
 
       cy.wait('@deleteItem').then(() => {
         // check item is still displayed
-        cy.get(`[ row-id = "${buildItemsTableRowId(idToDelete)}"]`).should(
-          'exist',
-        );
+        cy.get(buildItemsTableRowIdAttribute(idToDelete)).should('exist');
       });
     });
   });

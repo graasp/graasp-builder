@@ -6,7 +6,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   buildItemMenu,
   ITEM_MENU_COPY_BUTTON_CLASS,
   buildItemMenuButtonId,
@@ -36,11 +36,11 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
-      cy.get(`[row-id="${buildItemsTableRowId(copyItemId)}"]`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
       // check in new parent
       cy.goToItemInList(toItem);
-      cy.get(`[ row-id = "${buildItemsTableRowId(body.id)}"]`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(body.id)).should('exist');
     });
   });
 
@@ -60,13 +60,11 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
-      cy.get(`[ row-id = "${buildItemsTableRowId(copyItemId)}"]`).should(
-        'exist',
-      );
+      cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
       // check in new parent
       cy.goToItemInList(toItem);
-      cy.get(`[ row-id = "${buildItemsTableRowId(body.id)}"]`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(body.id)).should('exist');
     });
   });
 
@@ -85,13 +83,11 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath: ROOT_ID });
 
     cy.wait('@copyItem').then(({ response: { body } }) => {
-      cy.get(`[ row-id = "${buildItemsTableRowId(copyItemId)}"]`).should(
-        'exist',
-      );
+      cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
       // check in new parent
       cy.goToHome();
-      cy.get(`[ row-id = "${buildItemsTableRowId(body.id)}"]`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(body.id)).should('exist');
     });
   });
 
@@ -113,12 +109,8 @@ describe('Copy Item in List', () => {
 
       cy.wait('@copyItem').then(({ response: { body } }) => {
         // check item is still existing in parent
-        cy.get(`[ row-id = "${buildItemsTableRowId(copyItemId)}"]`).should(
-          'exist',
-        );
-        cy.get(`[ row-id = "${buildItemsTableRowId(body.id)}"]`).should(
-          'not.exist',
-        );
+        cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(body.id)).should('not.exist');
       });
     });
   });

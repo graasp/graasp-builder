@@ -1,6 +1,6 @@
 import {
   buildItemLink,
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   buildNavigationLink,
   NAVIGATION_HIDDEN_PARENTS_ID,
   NAVIGATION_HOME_LINK_ID,
@@ -14,11 +14,9 @@ Cypress.Commands.add('goToItemInGrid', (id) => {
 
 Cypress.Commands.add('goToItemInList', (id) => {
   cy.wait(NAVIGATE_PAUSE);
-  cy.get(`[ row-id = "${buildItemsTableRowId(id)}"]`, {
+  cy.get(buildItemsTableRowIdAttribute(id), {
     timeout: WAIT_FOR_ITEM_TABLE_ROW_TIME,
-  })
-    .eq(1)
-    .click();
+  }).click();
 });
 
 Cypress.Commands.add('goToHome', () => {

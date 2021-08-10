@@ -53,7 +53,9 @@ const ItemContent = ({ item, enableEdition }) => {
   const { data: user, isLoading: isLoadingUser } = useCurrentMember();
 
   // display children
-  const { data: children, isLoading: isLoadingChildren } = useChildren(itemId);
+  const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {
+    ordered: true,
+  });
   ws.hooks.useChildrenUpdates(itemId);
   const id = item?.get(ITEM_KEYS.ID);
 

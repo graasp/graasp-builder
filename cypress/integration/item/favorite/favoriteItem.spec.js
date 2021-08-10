@@ -1,7 +1,7 @@
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { FAVORITE_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   FAVORITE_ITEM_BUTTON_CLASS,
   FAVORITE_ITEMS_ERROR_ALERT_ID,
 } from '../../../../src/config/selectors';
@@ -11,7 +11,7 @@ import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 const toggleFavoriteButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(
-    `[ row-id = "${buildItemsTableRowId(itemId)}"] .${FAVORITE_ITEM_BUTTON_CLASS}`,
+    `${buildItemsTableRowIdAttribute(itemId)} .${FAVORITE_ITEM_BUTTON_CLASS}`,
   ).click();
 };
 
@@ -64,7 +64,7 @@ describe('Favorite Item', () => {
 
       const itemId = favoriteItems[0];
 
-      cy.get(`[ row-id = "${buildItemsTableRowId(itemId)}"]`).should('exist');
+      cy.get(buildItemsTableRowIdAttribute(itemId)).should('exist');
     });
   });
 

@@ -1,6 +1,6 @@
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   ITEM_SEARCH_INPUT_ID,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -22,9 +22,7 @@ describe('Search Item in Table', () => {
     cy.wait('@getChildren').then(({ response: { body } }) => {
       // check item is created and displayed
       for (const item of body) {
-        cy.get(`[ row-id = "${buildItemsTableRowId(item.id)}"]`).should(
-          'exist',
-        );
+        cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
       }
     });
 
@@ -33,12 +31,8 @@ describe('Search Item in Table', () => {
       .type(child3.name)
       .then(() => {
         // should find child3 but not child4
-        cy.get(`[ row-id = "${buildItemsTableRowId(child3.id)}"]`).should(
-          'exist',
-        );
-        cy.get(`[ row-id = "${buildItemsTableRowId(child4.id)}"]`).should(
-          'not.exist',
-        );
+        cy.get(buildItemsTableRowIdAttribute(child3.id)).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(child4.id)).should('not.exist');
       });
 
     // erase search
@@ -46,12 +40,8 @@ describe('Search Item in Table', () => {
       .clear()
       .then(() => {
         // should find all children again
-        cy.get(`[ row-id = "${buildItemsTableRowId(child3.id)}"]`).should(
-          'exist',
-        );
-        cy.get(`[ row-id = "${buildItemsTableRowId(child4.id)}"]`).should(
-          'exist',
-        );
+        cy.get(buildItemsTableRowIdAttribute(child3.id)).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(child4.id)).should('exist');
       });
   });
 });

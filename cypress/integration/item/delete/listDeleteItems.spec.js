@@ -2,7 +2,7 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   CONFIRM_DELETE_BUTTON_ID,
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
 } from '../../../../src/config/selectors';
@@ -13,9 +13,7 @@ const deleteItems = (itemIds) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.wait(TABLE_ITEM_RENDER_TIME);
-    cy.get(
-      `[row-id = "${buildItemsTableRowId(id)}"] .ag-checkbox-input`,
-    ).click();
+    cy.get(`${buildItemsTableRowIdAttribute(id)} .ag-checkbox-input`).click();
   });
 
   cy.get(`#${ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}`).click();
@@ -67,12 +65,12 @@ describe('Delete Items in List', () => {
       deleteItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
       cy.wait('@deleteItems').then(() => {
         // check item is deleted, others are still displayed
-        cy.get(
-          `[ row-id = "${buildItemsTableRowId(SAMPLE_ITEMS.items[0].id)}"]`,
-        ).should('exist');
-        cy.get(
-          `[ row-id = "${buildItemsTableRowId(SAMPLE_ITEMS.items[1].id)}"]`,
-        ).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(SAMPLE_ITEMS.items[0].id)).should(
+          'exist',
+        );
+        cy.get(buildItemsTableRowIdAttribute(SAMPLE_ITEMS.items[1].id)).should(
+          'exist',
+        );
       });
     });
   });

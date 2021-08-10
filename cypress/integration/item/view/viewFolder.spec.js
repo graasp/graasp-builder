@@ -5,13 +5,14 @@ import {
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID,
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID,
   ITEMS_GRID_NO_ITEM_ID,
   ITEMS_GRID_PAGINATION_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
   NAVIGATION_HOME_LINK_ID,
+  ITEMS_TABLE_ROW,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
@@ -190,13 +191,11 @@ describe('View Space', () => {
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
-      // should get own itemsx
+      // should get own items
       cy.wait('@getOwnItems').then(({ response: { body } }) => {
         // check item is created and displayed
         for (const item of body) {
-          cy.get(`[row-id = "${buildItemsTableRowId(item.id)}"]`).should(
-            'exist',
-          );
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
         }
       });
 
@@ -208,9 +207,7 @@ describe('View Space', () => {
       cy.wait('@getChildren').then(({ response: { body } }) => {
         // check item is created and displayed
         for (const item of body) {
-          cy.get(`[row-id = "${buildItemsTableRowId(item.id)}"]`).should(
-            'exist',
-          );
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
         }
       });
 
@@ -219,7 +216,7 @@ describe('View Space', () => {
       cy.goToItemInList(childChildId);
 
       // expect no children
-      cy.get('.ag-row').should('not.exist');
+      cy.get(ITEMS_TABLE_ROW).should('not.exist');
 
       // return parent with navigation and should display children
       cy.goToItemWithNavigation(childId);
@@ -227,9 +224,7 @@ describe('View Space', () => {
       cy.wait('@getChildren').then(({ response: { body } }) => {
         // check item is created and displayed
         for (const item of body) {
-          cy.get(`[row-id = "${buildItemsTableRowId(item.id)}"]`).should(
-            'exist',
-          );
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
         }
       });
     });
@@ -252,9 +247,7 @@ describe('View Space', () => {
       cy.wait('@getChildren').then(({ response: { body } }) => {
         // check item is created and displayed
         for (const item of body) {
-          cy.get(`[row-id = "${buildItemsTableRowId(item.id)}"]`).should(
-            'exist',
-          );
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
         }
       });
 
@@ -265,9 +258,7 @@ describe('View Space', () => {
       cy.wait('@getOwnItems').then(({ response: { body } }) => {
         // check item is created and displayed
         for (const item of body) {
-          cy.get(`[row-id = "${buildItemsTableRowId(item.id)}"]`).should(
-            'exist',
-          );
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
         }
       });
     });

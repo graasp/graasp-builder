@@ -28,9 +28,12 @@ import ActionsCellRenderer from '../table/ActionsCellRenderer';
 
 const { useItem } = hooks;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    '& .ag-checked::after': {
+      color: `${theme.palette.primary.main}!important`,
+    },
   },
   row: {
     cursor: 'pointer',

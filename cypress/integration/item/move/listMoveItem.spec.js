@@ -5,7 +5,7 @@ import {
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   buildItemMenu,
   ITEM_MENU_MOVE_BUTTON_CLASS,
   buildItemMenuButtonId,
@@ -107,9 +107,7 @@ describe('Move Item in List', () => {
 
       cy.wait('@moveItem').then(() => {
         // check item is still there
-        cy.get(`[ row-id = "${buildItemsTableRowId(movedItem)}"]`).should(
-          'exist',
-        );
+        cy.get(buildItemsTableRowIdAttribute(movedItem)).should('exist');
       });
     });
   });
