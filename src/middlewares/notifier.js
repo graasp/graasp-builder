@@ -4,6 +4,8 @@ import i18n from '../config/i18n';
 import {
   COPY_ITEM_ERROR_MESSAGE,
   COPY_ITEM_SUCCESS_MESSAGE,
+  COPY_ITEMS_ERROR_MESSAGE,
+  COPY_ITEMS_SUCCESS_MESSAGE,
   CREATE_ITEM_ERROR_MESSAGE,
   CREATE_ITEM_SUCCESS_MESSAGE,
   DELETE_ITEMS_ERROR_MESSAGE,
@@ -12,6 +14,8 @@ import {
   EDIT_ITEM_SUCCESS_MESSAGE,
   MOVE_ITEM_ERROR_MESSAGE,
   MOVE_ITEM_SUCCESS_MESSAGE,
+  MOVE_ITEMS_ERROR_MESSAGE,
+  MOVE_ITEMS_SUCCESS_MESSAGE,
   SHARE_ITEM_ERROR_MESSAGE,
   SHARE_ITEM_SUCCESS_MESSAGE,
   UPLOAD_FILES_ERROR_MESSAGE,
@@ -48,7 +52,9 @@ const {
   deleteItemsRoutine,
   deleteItemRoutine,
   moveItemRoutine,
+  moveItemsRoutine,
   copyItemRoutine,
+  copyItemsRoutine,
   editItemRoutine,
   shareItemRoutine,
   uploadFileRoutine,
@@ -95,8 +101,16 @@ export default ({ type, payload }) => {
       message = MOVE_ITEM_ERROR_MESSAGE;
       break;
     }
+    case moveItemsRoutine.FAILURE:{
+      message = MOVE_ITEMS_ERROR_MESSAGE;
+      break;
+    }
     case copyItemRoutine.FAILURE: {
       message = COPY_ITEM_ERROR_MESSAGE;
+      break;
+    }
+    case copyItemsRoutine.FAILURE: {
+      message = COPY_ITEMS_ERROR_MESSAGE;
       break;
     }
     case editItemRoutine.FAILURE: {
@@ -153,8 +167,16 @@ export default ({ type, payload }) => {
       message = MOVE_ITEM_SUCCESS_MESSAGE;
       break;
     }
+    case moveItemsRoutine.SUCCESS: {
+      message = MOVE_ITEMS_SUCCESS_MESSAGE;
+      break;
+    }
     case copyItemRoutine.SUCCESS: {
       message = COPY_ITEM_SUCCESS_MESSAGE;
+      break;
+    }
+    case copyItemsRoutine.SUCCESS: {
+      message = COPY_ITEMS_SUCCESS_MESSAGE;
       break;
     }
     case editItemRoutine.SUCCESS: {
