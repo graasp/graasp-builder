@@ -2148,7 +2148,7 @@ __metadata:
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git#41/rollup":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=e57cbacca08a77b2da7ed1c70ce956c24480000c"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=0e728b04da822265d49378dd21030324e86176bc"
   dependencies:
     clsx: 1.1.1
     immutable: 4.0.0-rc.12
@@ -2160,7 +2160,7 @@ __metadata:
     "@material-ui/lab": 4.0.0-alpha.58
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 93418bb4b34eaab44c8ac6aee1e751847c249879682f7b0e92b4c8a600f2cf485c9de0c0144c8ddb99aceb9347809a06bd755210c18b612c237d8383c02ebf77
+  checksum: 11e77ca7a75623dba27967d6fc154d587680c34a20f89e306eb3d30ed7be05148268d02cbb0a5f2628da668aff17d4ce6cccae252f0b4d181f5b6714ebdcfcd8
   languageName: node
   linkType: hard
 
