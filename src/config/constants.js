@@ -94,7 +94,8 @@ export const UPLOAD_METHOD =
 
 export const ITEM_ICON_MAX_SIZE = 25;
 
-export const USERNAME_MAX_LENGTH = 30;
+export const USERNAME_MAX_LENGTH = 15;
+export const HEADER_USERNAME_MAX_WIDTH = 120;
 
 export const SHARE_ITEM_MODAL_MIN_WIDTH = 120;
 

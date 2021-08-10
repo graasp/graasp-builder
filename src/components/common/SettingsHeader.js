@@ -14,6 +14,7 @@ import { hooks, useMutation } from '../../config/queryClient';
 import {
   AUTHENTICATION_HOST,
   USERNAME_MAX_LENGTH,
+  HEADER_USERNAME_MAX_WIDTH,
 } from '../../config/constants';
 import {
   HEADER_USER_ID,
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   username: {
     margin: theme.spacing(0, 2),
-    maxWidth: 100,
+    maxWidth: HEADER_USERNAME_MAX_WIDTH,
   },
 }));
 
