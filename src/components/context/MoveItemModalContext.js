@@ -11,7 +11,7 @@ const MoveItemModalContext = React.createContext();
 
 const MoveItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
-  const { mutate: moveItem } = useMutation(MUTATION_KEYS.MOVE_ITEM);
+  const { mutate: moveItem } = useMutation(MUTATION_KEYS.MOVE_ITEMS);
 
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(false);

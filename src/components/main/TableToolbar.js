@@ -9,6 +9,7 @@ import { ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID } from '../../config/selectors';
 import DeleteButton from '../common/DeleteButton';
 import NewItemButton from './NewItemButton';
 import CopyButton from './CopyButtons';
+import MoveButton from '../common/MoveButton';
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +62,13 @@ const TableToolbar = (props) => {
         </>
       )}
 
+      {numSelected > 0 && (
+        <MoveButton
+          id="move"
+          color="secondary"
+          itemIds={selected}
+        />
+      )}
       {numSelected > 0 && (
         <CopyButton
           id="copy"

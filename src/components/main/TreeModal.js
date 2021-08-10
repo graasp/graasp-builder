@@ -53,7 +53,7 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
       case TREE_PREVENT_SELECTION.SELF_AND_CHILDREN:
         // if the previous item is disabled, its children will be disabled
         // and prevent selection on self
-        return parentIsDisabled || itemId === iId;
+        return parentIsDisabled || itemId.find(x => x === iId);
       case TREE_PREVENT_SELECTION.NONE:
       default:
         return false;

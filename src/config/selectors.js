@@ -2,6 +2,7 @@ const parseStringForId = (string) => string.replaceAll('+', '');
 
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
+export const ITEM_MOVE_BUTTON_CLASS = 'itemMoveButton';
 export const CONFIRM_DELETE_BUTTON_ID = 'confirmDeleteButton';
 export const buildItemCard = (id) => `itemCard-${id}`;
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
