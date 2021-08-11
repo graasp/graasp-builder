@@ -5,7 +5,11 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID } from '../../config/selectors';
+import { 
+  ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID, 
+  ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID, 
+  ITEMS_TABLE_COPY_SELECTED_ITEMS_ID 
+} from '../../config/selectors';
 import DeleteButton from '../common/DeleteButton';
 import NewItemButton from './NewItemButton';
 import CopyButton from './CopyButtons';
@@ -64,14 +68,14 @@ const TableToolbar = (props) => {
 
       {numSelected > 0 && (
         <MoveButton
-          id="move"
+          id={ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}
           color="secondary"
           itemIds={selected}
         />
       )}
       {numSelected > 0 && (
         <CopyButton
-          id="copy"
+          id={ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}
           color="secondary"
           itemIds={selected}
         />
