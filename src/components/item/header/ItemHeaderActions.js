@@ -6,6 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Map } from 'immutable';
 import InfoIcon from '@material-ui/icons/Info';
 import Tooltip from '@material-ui/core/Tooltip';
+import ForumIcon from '@material-ui/icons/Forum';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import ModeButton from './ModeButton';
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
 }));
-const ItemHeaderActions = ({ onClick, item }) => {
+const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const {
@@ -94,27 +95,34 @@ const ItemHeaderActions = ({ onClick, item }) => {
       {renderItemActions()}
       {renderTableActions()}
       {id && (
-        <IconButton
-          id={ITEM_INFORMATION_BUTTON_ID}
-          onClick={onClick}
-          className={clsx({
-            [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
-          })}
-        >
-          <InfoIcon />
-        </IconButton>
+        <>
+          <IconButton id={ITEM_INFORMATION_BUTTON_ID} onClick={onClickChatbox}>
+            <ForumIcon />
+          </IconButton>
+          <IconButton
+            id={ITEM_INFORMATION_BUTTON_ID}
+            onClick={onClickMetadata}
+            className={clsx({
+              [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
+            })}
+          >
+            <InfoIcon />
+          </IconButton>
+        </>
       )}
     </div>
   );
 };
 
 ItemHeaderActions.propTypes = {
-  onClick: PropTypes.func,
+  onClickMetadata: PropTypes.func,
+  onClickChatbox: PropTypes.func,
   item: PropTypes.instanceOf(Map),
 };
 
 ItemHeaderActions.defaultProps = {
-  onClick: () => {},
+  onClickMetadata: () => {},
+  onClickChatbox: () => {},
   item: Map(),
 };
 
