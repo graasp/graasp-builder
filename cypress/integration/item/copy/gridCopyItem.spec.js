@@ -27,12 +27,12 @@ describe('Copy Item in Grid', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItem').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ response: { body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
 
       // check in new parent
       cy.goToItemInGrid(toItem);
-      cy.get(`#${buildItemCard(body.id)}`).should('exist');
+      cy.get(`#${buildItemCard(body[0].id)}`).should('exist');
     });
   });
 
@@ -49,12 +49,12 @@ describe('Copy Item in Grid', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItem').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ response: { body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
 
       // check in new parent
       cy.goToItemInGrid(toItem);
-      cy.get(`#${buildItemCard(body.id)}`).should('exist');
+      cy.get(`#${buildItemCard(body[0].id)}`).should('exist');
     });
   });
 
@@ -71,12 +71,12 @@ describe('Copy Item in Grid', () => {
     const toItemPath = ROOT_ID;
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItem').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ response: { body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
 
       // check in new parent
       cy.goToHome();
-      cy.get(`#${buildItemCard(body.id)}`).should('exist');
+      cy.get(`#${buildItemCard(body[0].id)}`).should('exist');
     });
   });
 
@@ -94,10 +94,10 @@ describe('Copy Item in Grid', () => {
       const { path: toItemPath } = SAMPLE_ITEMS.items[0];
       copyItem({ id: copyItemId, toItemPath });
 
-      cy.wait('@copyItem').then(({ response: { body } }) => {
+      cy.wait('@copyItems').then(({ response: { body } }) => {
         // check item is still existing in parent
         cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-        cy.get(`#${buildItemCard(body.id)}`).should('not.exist');
+        cy.get(`#${buildItemCard(body[0].id)}`).should('not.exist');
       });
     });
   });
