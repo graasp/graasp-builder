@@ -384,7 +384,7 @@ export const mockMoveItems = (items, shouldThrowError) => {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
-      const ids = url.slice(API_HOST.length).split('=').splice(1);
+      const ids = url.slice(API_HOST.length).split('=').splice(1).map(x => x.replace('&id', ''));
 
       const updated = ids.map(id => getItemById(items, id));
       // actually update cached items

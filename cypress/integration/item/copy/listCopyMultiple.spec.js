@@ -28,7 +28,7 @@ const copyItem = ({ itemIds, toItemPath }) => {
   cy.fillTreeModal(toItemPath);
 }; 
 
- describe('Copy items in List', () => {
+describe('Copy items in List', () => {
   it('Copy items on Home', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
@@ -131,7 +131,7 @@ const copyItem = ({ itemIds, toItemPath }) => {
           cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
         });
         body.forEach(item => {
-          cy.get(`#${buildItemsTableRowId(item.id)}`).should('exist');
+          cy.get(`#${buildItemsTableRowId(item.id)}`).should('not.exist');
         });
       });
     });
