@@ -130,7 +130,7 @@ TreeModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   prevent: PropTypes.oneOf(Object.values(TREE_PREVENT_SELECTION)),
-  itemId: PropTypes.string,
+  itemId: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
   open: PropTypes.bool,
 };
 
