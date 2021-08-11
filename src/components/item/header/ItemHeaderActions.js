@@ -14,6 +14,7 @@ import { ITEM_TYPES } from '../../../enums';
 import { LayoutContext } from '../../context/LayoutContext';
 import {
   buildEditButtonId,
+  ITEM_CHATBOX_BUTTON_ID,
   ITEM_INFORMATION_BUTTON_ID,
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
 } from '../../../config/selectors';
@@ -96,7 +97,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       {renderTableActions()}
       {id && (
         <>
-          <IconButton id={ITEM_INFORMATION_BUTTON_ID} onClick={onClickChatbox}>
+          <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
             <ForumIcon />
           </IconButton>
           <IconButton
