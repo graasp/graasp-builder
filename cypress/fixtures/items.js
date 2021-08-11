@@ -95,6 +95,40 @@ export const SAMPLE_ITEMS = {
         },
       ],
     },
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'fdf09f5a-5688-11eb-ae93-0242ac130005',
+      name: 'own_item_name5',
+      path:
+        'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130005',
+      extra: {
+        image: 'someimageurl',
+      },
+      memberships: [
+        {
+          itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130005',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
+        },
+      ],
+    },
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'ecafbd2a-5688-11eb-ae93-0242ac130006',
+      name: 'own_item_name6',
+      path: 'ecafbd2a_5688_11eb_ae93_0242ac130006',
+      extra: {
+        image: 'someimageurl',
+      },
+      memberships: [
+        {
+          itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130006',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
+        },
+      ],
+    },
+
   ],
   memberships: [],
 };
