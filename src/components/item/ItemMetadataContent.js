@@ -11,7 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formatDate } from '../../utils/date';
 import { hooks } from '../../config/queryClient';
 import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
-import { ITEM_PANEL_TABLE_ID } from '../../config/selectors';
+import {
+  ITEM_PANEL_NAME_ID,
+  ITEM_PANEL_TABLE_ID,
+} from '../../config/selectors';
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 
 const { useMember } = hooks;
@@ -49,7 +52,9 @@ const ItemMetadataContent = ({ item }) => {
 
   return (
     <>
-      <Typography variant="h5">{item.get(ITEM_KEYS.NAME)}</Typography>
+      <Typography variant="h5" id={ITEM_PANEL_NAME_ID}>
+        {item.get(ITEM_KEYS.NAME)}
+      </Typography>
       <TableContainer className={classes.table}>
         <Table
           id={ITEM_PANEL_TABLE_ID}

@@ -21,7 +21,7 @@ import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { REQUEST_FAILURE_TIME } from '../../../support/constants';
 import { expectFolderViewScreenLayout } from './utils';
 
-describe('View Space', () => {
+describe('View Folder', () => {
   describe('Grid', () => {
     beforeEach(() => {
       cy.setUpApi({
