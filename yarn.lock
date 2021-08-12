@@ -2129,9 +2129,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@git://github.com/graasp/graasp-chatbox.git#3/data":
+"@graasp/chatbox@git://github.com/graasp/graasp-chatbox.git#main":
   version: 0.1.0
-  resolution: "@graasp/chatbox@git://github.com/graasp/graasp-chatbox.git#commit=656e04b83c425ca004b36e86ae757aa2aa500302"
+  resolution: "@graasp/chatbox@git://github.com/graasp/graasp-chatbox.git#commit=e3b92925e63c217f9ca4e3a36208be906ebb40a7"
   dependencies:
     clsx: 1.1.1
     i18next: 20.4.0
@@ -2143,7 +2143,7 @@ __metadata:
     "@material-ui/lab": "*"
     react: "*"
     react-dom: "*"
-  checksum: a32cfa55dcd1ef46e9fad11036e24f36aa38191fc642ffebe2a559841f108ee22c6bbb07eab8499f9963d5f95bd94c233ef2a69c037bab50f7b4b49775b6aa8b
+  checksum: 5ebbbc65eedca08764a81df81a1f6d459d1697e63f3b79f26bc4384bdbd7585358567a1e623c3d182a1f0c269a86020fccc713f95182a6d2b4dd77805051c1d8
   languageName: node
   linkType: hard
 
@@ -10128,7 +10128,7 @@ fsevents@^1.2.7:
     "@commitlint/config-conventional": 11.0.0
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
-    "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#3/data"
+    "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main"
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git#41/rollup"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
