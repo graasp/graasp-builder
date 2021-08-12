@@ -64,6 +64,8 @@ const {
   buildDeleteItemMembershipRoute,
   buildPostItemFlagRoute,
   GET_FLAGS_ROUTE,
+  buildGetItemChatRoute,
+  buildPostItemChatMessageRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -825,4 +827,41 @@ export const mockPostItemFlag = (items, shouldThrowError) => {
       return reply(body);
     },
   ).as('postItemFlag');
+};
+
+export const mockGetItemChat = ({ items }, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetItemChatRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+
+      return reply({ id: itemId, messages: item?.chat });
+    },
+  ).as('getItemChat');
+};
+
+export const mockPostItemChatMessage = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${buildPostItemChatMessageRoute(ID_FORMAT)}$`,
+      ),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('postItemChatMessage');
 };

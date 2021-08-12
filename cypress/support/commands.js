@@ -43,6 +43,8 @@ import {
   mockGetItems,
   mockGetFlags,
   mockPostItemFlag,
+  mockGetItemChat,
+  mockPostItemChatMessage,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -76,6 +78,7 @@ Cypress.Commands.add(
     putItemLoginError = false,
     editMemberError = false,
     postItemFlagError = false,
+    getItemChatError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -152,6 +155,10 @@ Cypress.Commands.add(
     mockGetPublicChildren(items);
 
     mockGetItems({ items, currentMember });
+
+    mockGetItemChat({ items }, getItemChatError);
+
+    mockPostItemChatMessage();
   },
 );
 
@@ -168,3 +175,15 @@ Cypress.Commands.add('switchMode', (mode) => {
       break;
   }
 });
+
+Cypress.Commands.add(
+  'visitAndMockWs',
+  (visitRoute, sampleData, wsClientStub) => {
+    cy.setUpApi(sampleData);
+    cy.visit(visitRoute, {
+      onBeforeLoad: (win) => {
+        cy.stub(win, 'WebSocket', () => wsClientStub);
+      },
+    });
+  },
+);

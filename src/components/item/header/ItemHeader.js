@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemHeader = ({ onClick }) => {
+const ItemHeader = ({ onClickMetadata, onClickChatbox }) => {
   const match = useRouteMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
@@ -36,17 +36,23 @@ const ItemHeader = ({ onClick }) => {
   return (
     <div className={classes.root} id={ITEM_HEADER_ID}>
       <Navigation />
-      <ItemHeaderActions item={item} onClick={onClick} />
+      <ItemHeaderActions
+        item={item}
+        onClickChatbox={onClickChatbox}
+        onClickMetadata={onClickMetadata}
+      />
     </div>
   );
 };
 
 ItemHeader.propTypes = {
-  onClick: PropTypes.func,
+  onClickMetadata: PropTypes.func,
+  onClickChatbox: PropTypes.func,
 };
 
 ItemHeader.defaultProps = {
-  onClick: () => {},
+  onClickMetadata: () => {},
+  onClickChatbox: () => {},
 };
 
 export default ItemHeader;

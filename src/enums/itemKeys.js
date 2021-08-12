@@ -1,5 +1,6 @@
 const ITEM_KEYS = {
   ID: 'id',
+  NAME: 'name',
   TYPE: 'type',
 };
 

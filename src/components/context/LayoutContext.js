@@ -26,6 +26,7 @@ const LayoutContextProvider = ({ children }) => {
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(
     isItemPanelOpen,
   );
+  const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(false);
 
   return (
     <LayoutContext.Provider
@@ -40,6 +41,8 @@ const LayoutContextProvider = ({ children }) => {
         setIsItemSettingsOpen,
         isItemMetadataMenuOpen,
         setIsItemMetadataMenuOpen,
+        isChatboxMenuOpen,
+        setIsChatboxMenuOpen,
       }}
     >
       {children}

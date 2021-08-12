@@ -8,10 +8,10 @@ import ItemHeader from './header/ItemHeader';
 import ItemPanel from './ItemPanel';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
+import Chatbox from '../common/Chatbox';
+import ItemMetadataContent from './ItemMetadataContent';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  menuButton: {},
   hide: {
     display: 'none',
   },
@@ -49,23 +49,42 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemMain = ({ id, children, item }) => {
   const classes = useStyles();
-  const { isItemMetadataMenuOpen, setIsItemMetadataMenuOpen } = useContext(
-    LayoutContext,
-  );
+  const {
+    isItemMetadataMenuOpen,
+    setIsItemMetadataMenuOpen,
+    isChatboxMenuOpen,
+    setIsChatboxMenuOpen,
+  } = useContext(LayoutContext);
 
   const handleToggleMetadataMenu = () => {
     setIsItemMetadataMenuOpen(!isItemMetadataMenuOpen);
+    setIsChatboxMenuOpen(false);
+  };
+  const handleToggleChatboxMenu = () => {
+    setIsChatboxMenuOpen(!isChatboxMenuOpen);
+    setIsItemMetadataMenuOpen(false);
   };
 
   return (
     <div id={id} className={ITEM_MAIN_CLASS}>
-      <ItemPanel item={item} open={isItemMetadataMenuOpen} />
+      {isChatboxMenuOpen && (
+        <ItemPanel open={isChatboxMenuOpen}>
+          <Chatbox item={item} />
+        </ItemPanel>
+      )}
+      <ItemPanel open={isItemMetadataMenuOpen}>
+        <ItemMetadataContent item={item} />
+      </ItemPanel>
+
       <div
         className={clsx(classes.root, classes.content, {
-          [classes.contentShift]: isItemMetadataMenuOpen,
+          [classes.contentShift]: isItemMetadataMenuOpen || isChatboxMenuOpen,
         })}
       >
-        <ItemHeader onClick={handleToggleMetadataMenu} />
+        <ItemHeader
+          onClickMetadata={handleToggleMetadataMenu}
+          onClickChatbox={handleToggleChatboxMenu}
+        />
 
         {children}
       </div>
