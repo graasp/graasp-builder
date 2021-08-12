@@ -14,7 +14,7 @@ import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
  
  
-const copyItem = ({ itemIds, toItemPath }) => {
+const copyItems = ({ itemIds, toItemPath }) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.wait(TABLE_ITEM_RENDER_TIME);
@@ -39,7 +39,7 @@ describe('Copy items in List', () => {
 
     const itemIds = [SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[5].id];
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
-    copyItem({ itemIds, toItemPath });
+    copyItems({ itemIds, toItemPath });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
       itemIds.forEach(id =>{
@@ -67,7 +67,7 @@ describe('Copy items in List', () => {
     // copy
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
-    copyItem({ itemIds, toItemPath });
+    copyItems({ itemIds, toItemPath });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
       itemIds.forEach(id => {
@@ -94,7 +94,7 @@ describe('Copy items in List', () => {
 
     // copy
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    copyItem({itemIds, toItemPath: ROOT_ID });
+    copyItems({itemIds, toItemPath: ROOT_ID });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
       itemIds.forEach(id => {
@@ -110,7 +110,7 @@ describe('Copy items in List', () => {
   });
 
   describe('Error handling', () => {
-    it('error while moving item does not create in interface', () => {
+    it('error while copying item does not create in interface', () => {
       cy.setUpApi({ ...SAMPLE_ITEMS, copyItemError: true });
       const { id :start } = SAMPLE_ITEMS.items[0];
 
@@ -123,7 +123,7 @@ describe('Copy items in List', () => {
       // copy
       const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
       const { path: toItemPath } = SAMPLE_ITEMS.items[0];
-      copyItem({ itemIds, toItemPath });
+      copyItems({ itemIds, toItemPath });
 
       cy.wait('@copyItems').then(({ response: { body } }) => {
         // check item is still existing in parent

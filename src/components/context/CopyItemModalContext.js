@@ -10,7 +10,7 @@ const CopyItemModalContext = React.createContext();
 
 const CopyItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
-  const { mutate: copyItem } = useMutation(MUTATION_KEYS.COPY_ITEMS);
+  const { mutate: copyItems } = useMutation(MUTATION_KEYS.COPY_ITEMS);
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(false);
 
@@ -30,7 +30,7 @@ const CopyItemModalProvider = ({ children }) => {
       ...payload,
       to: payload.to === ROOT_ID ? null : payload.to,
     };
-    copyItem(newPayload);
+    copyItems(newPayload);
     onClose();
   };
 

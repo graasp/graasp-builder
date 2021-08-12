@@ -11,7 +11,7 @@ const MoveItemModalContext = React.createContext();
 
 const MoveItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
-  const { mutate: moveItem } = useMutation(MUTATION_KEYS.MOVE_ITEMS);
+  const { mutate: moveItems } = useMutation(MUTATION_KEYS.MOVE_ITEMS);
 
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState(false);
@@ -32,7 +32,7 @@ const MoveItemModalProvider = ({ children }) => {
       ...payload,
       to: payload.to === ROOT_ID ? null : payload.to,
     };
-    moveItem(newPayload);
+    moveItems(newPayload);
     onClose();
   };
 

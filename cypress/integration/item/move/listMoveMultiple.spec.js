@@ -26,7 +26,7 @@ const moveItem = ({ itemIds, toItemPath }) => {
   cy.fillTreeModal(toItemPath);
 };
   
-describe('Move Item in List', () => {
+describe('Move Items in List', () => {
   it('Move items on Home', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);

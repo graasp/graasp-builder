@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { arrayOf } from 'prop-types';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useTranslation } from 'react-i18next';
@@ -130,7 +130,7 @@ TreeModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   prevent: PropTypes.oneOf(Object.values(TREE_PREVENT_SELECTION)),
-  itemId: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
+  itemId: arrayOf(PropTypes.string),
   open: PropTypes.bool,
 };
 

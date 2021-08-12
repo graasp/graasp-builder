@@ -2,8 +2,6 @@ import { toastr } from 'react-redux-toastr';
 import { routines } from '@graasp/query-client';
 import i18n from '../config/i18n';
 import {
-  COPY_ITEM_ERROR_MESSAGE,
-  COPY_ITEM_SUCCESS_MESSAGE,
   COPY_ITEMS_ERROR_MESSAGE,
   COPY_ITEMS_SUCCESS_MESSAGE,
   CREATE_ITEM_ERROR_MESSAGE,
@@ -12,8 +10,6 @@ import {
   DELETE_ITEMS_SUCCESS_MESSAGE,
   EDIT_ITEM_ERROR_MESSAGE,
   EDIT_ITEM_SUCCESS_MESSAGE,
-  MOVE_ITEM_ERROR_MESSAGE,
-  MOVE_ITEM_SUCCESS_MESSAGE,
   MOVE_ITEMS_ERROR_MESSAGE,
   MOVE_ITEMS_SUCCESS_MESSAGE,
   SHARE_ITEM_ERROR_MESSAGE,
@@ -51,9 +47,7 @@ const {
   createItemRoutine,
   deleteItemsRoutine,
   deleteItemRoutine,
-  moveItemRoutine,
   moveItemsRoutine,
-  copyItemRoutine,
   copyItemsRoutine,
   editItemRoutine,
   shareItemRoutine,
@@ -97,16 +91,8 @@ export default ({ type, payload }) => {
       message = DELETE_ITEMS_ERROR_MESSAGE;
       break;
     }
-    case moveItemRoutine.FAILURE: {
-      message = MOVE_ITEM_ERROR_MESSAGE;
-      break;
-    }
     case moveItemsRoutine.FAILURE:{
       message = MOVE_ITEMS_ERROR_MESSAGE;
-      break;
-    }
-    case copyItemRoutine.FAILURE: {
-      message = COPY_ITEM_ERROR_MESSAGE;
       break;
     }
     case copyItemsRoutine.FAILURE: {
@@ -163,16 +149,8 @@ export default ({ type, payload }) => {
       message = DELETE_ITEMS_SUCCESS_MESSAGE;
       break;
     }
-    case moveItemRoutine.SUCCESS: {
-      message = MOVE_ITEM_SUCCESS_MESSAGE;
-      break;
-    }
     case moveItemsRoutine.SUCCESS: {
       message = MOVE_ITEMS_SUCCESS_MESSAGE;
-      break;
-    }
-    case copyItemRoutine.SUCCESS: {
-      message = COPY_ITEM_SUCCESS_MESSAGE;
       break;
     }
     case copyItemsRoutine.SUCCESS: {
