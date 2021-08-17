@@ -4,10 +4,7 @@
   "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
-<<<<<<< HEAD
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main",
-=======
->>>>>>> 8ddac51 (fix: update to latest graasp-query-client)
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main",
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git#41/rollup",
     "@material-ui/core": "4.11.2",
