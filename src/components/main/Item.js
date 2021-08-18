@@ -15,6 +15,7 @@ import DeleteButton from '../common/DeleteButton';
 import { getItemImage } from '../../utils/item';
 import FavoriteButton from '../common/FavoriteButton';
 import { hooks } from '../../config/queryClient';
+import PinButton from '../common/PinButton';
 
 const { useCurrentMember } = hooks;
 
@@ -46,6 +47,7 @@ const Item = ({ item }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        <PinButton member={member} item={item} />
         <FavoriteButton member={member} item={item} />
         <EditButton item={item} />
         <DeleteButton itemIds={[id]} id={buildDeleteButtonId(id)} />
