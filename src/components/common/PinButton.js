@@ -6,21 +6,29 @@ import PushPinIcon from '@material-ui/icons/PushPin';
 import PushPinOutlinedIcon from '@material-ui/icons/PushPinOutlined' 
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { useMutation } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 const PinButton = ({ item, member }) => {
   const { t } = useTranslation();
-  // const mutation = useMutation(MUTATION_KEYS.PIN_ITEM);
+  const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
   console.log(item, member);
 
-  const isPinned = true; // isItemPinned(item, member);
+  const isPinned = item?.isPinned ?? false; // isItemPinned(item, member);
 
   const handlePin = () => {
-
+    mutation.mutate({
+        ...item,
+        isPinned: true
+    });
   };
 
   const handleUnpin = () => {
-
+    mutation.mutate({
+        ...item,
+        isPinned: false
+    });
   };
 
   return (
@@ -43,7 +51,7 @@ const PinButton = ({ item, member }) => {
 };
 
 PinButton.propTypes = {
-  item: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
+  item: PropTypes.shape({ id: PropTypes.string.isRequired, isPinned: PropTypes.bool }).isRequired,
   member: PropTypes.instanceOf(Map).isRequired,
 };
 
