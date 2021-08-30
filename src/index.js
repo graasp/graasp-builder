@@ -4,6 +4,8 @@ import './index.css';
 import Root from './components/Root';
 import * as serviceWorker from './serviceWorker';
 
+import '@graasp/ui/dist/bundle.css';
+
 ReactDOM.render(
   <React.StrictMode>
     <Root />
