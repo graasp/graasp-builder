@@ -12,7 +12,7 @@ import {
   import { SAMPLE_ITEMS } from '../../../fixtures/items';
   import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
   
-const moveItem = ({ itemIds, toItemPath }) => {
+const moveItems = ({ itemIds, toItemPath }) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.wait(TABLE_ITEM_RENDER_TIME);
@@ -38,7 +38,7 @@ describe('Move Items in List', () => {
     // move
     const itemIds = [SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[5].id];
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
-    moveItem({ itemIds, toItemPath });
+    moveItems({ itemIds, toItemPath });
   
     cy.wait('@moveItems').then(({ request: { url, body } }) => {
         expect(body.parentId).to.equal(toItem);
@@ -64,7 +64,7 @@ describe('Move Items in List', () => {
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
-    moveItem({ itemIds, toItemPath });
+    moveItems({ itemIds, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(toItem);
@@ -89,7 +89,7 @@ describe('Move Items in List', () => {
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
     const toItem = ROOT_ID;
-    moveItem({ itemIds, toItemPath: toItem });
+    moveItems({ itemIds, toItemPath: toItem });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);
@@ -116,7 +116,7 @@ describe('Move Items in List', () => {
       // move
       const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
       const { path: toItemPath } = SAMPLE_ITEMS.items[3];
-      moveItem({ itemIds, toItemPath });
+      moveItems({ itemIds, toItemPath });
 
       cy.wait('@moveItems').then(() => {
         // check item is still there

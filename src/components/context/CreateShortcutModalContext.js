@@ -50,7 +50,7 @@ const CreateShortcutModalProvider = ({ children }) => {
       <TreeModal
         onClose={onClose}
         open={open}
-        itemId={[item.id]}
+        itemIds={[item.id]}
         onConfirm={onConfirm}
         title={t('Where do you want to create the shortcut?')}
       />

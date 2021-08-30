@@ -26,12 +26,12 @@ const useStyles = makeStyles(() => ({
 
 const { useItem, useOwnItems, useChildren } = hooks;
 
-const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
+const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { data: items, isLoading } = useOwnItems();
   const [selectedId, setSelectedId] = useState(null);
-  const { data: item, isItemLoading } = useItem(itemId);
+  const { data: item, isItemLoading } = useItem(itemIds);
 
   const buildExpandedItems = () => {
     if (item) {
@@ -53,7 +53,7 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
       case TREE_PREVENT_SELECTION.SELF_AND_CHILDREN:
         // if the previous item is disabled, its children will be disabled
         // and prevent selection on self
-        return parentIsDisabled || itemId.find(x => x === iId);
+        return parentIsDisabled || itemIds.find(x => x === iId);
       case TREE_PREVENT_SELECTION.NONE:
       default:
         return false;
@@ -65,7 +65,7 @@ const TreeModal = ({ itemId, open, title, onClose, onConfirm, prevent }) => {
   };
 
   const onClickConfirm = () => {
-    onConfirm({ id: itemId, to: selectedId });
+    onConfirm({ id: itemIds, to: selectedId });
     handleClose();
   };
 
@@ -130,13 +130,13 @@ TreeModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   prevent: PropTypes.oneOf(Object.values(TREE_PREVENT_SELECTION)),
-  itemId: arrayOf(PropTypes.string),
+  itemIds: arrayOf(PropTypes.string),
   open: PropTypes.bool,
 };
 
 TreeModal.defaultProps = {
   prevent: TREE_PREVENT_SELECTION.NONE,
-  itemId: null,
+  itemIds: null,
   open: false,
 };
 

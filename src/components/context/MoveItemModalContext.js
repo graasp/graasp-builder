@@ -46,7 +46,7 @@ const MoveItemModalProvider = ({ children }) => {
         prevent={TREE_PREVENT_SELECTION.SELF_AND_CHILDREN}
         onClose={onClose}
         open={open}
-        itemId={itemId}
+        itemIds={itemId}
         onConfirm={onConfirm}
         title={t('Where do you want to copy this item?')}
       />
