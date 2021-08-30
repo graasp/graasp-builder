@@ -373,6 +373,41 @@ export const mockMoveItem = (items, shouldThrowError) => {
   ).as('moveItem');
 };
 
+export const mockMoveItems = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/items/move\\?id\\=`),
+    },
+    ({ url, reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+
+      const ids = url.slice(API_HOST.length).split('=').splice(1).map(x => x.replace('&id', ''));
+
+      const updated = ids.map(id => getItemById(items, id));
+      // actually update cached items
+      for(const item of updated){
+        let path = transformIdForPath(item.id);
+        if (body.parentId) {
+          const parentItem = getItemById(items, body.parentId);
+          path = `${parentItem.path}.${path}`;
+        }
+        item.path = path;
+      }
+
+      // todo: do for all children
+
+      return reply({
+        statusCode: StatusCodes.OK,
+        body: updated, // this might not be accurate
+      });
+    },
+  ).as('moveItems');
+};
+
+
 export const mockCopyItem = (items, shouldThrowError) => {
   cy.intercept(
     {
@@ -403,6 +438,40 @@ export const mockCopyItem = (items, shouldThrowError) => {
       });
     },
   ).as('copyItem');
+};
+
+export const mockCopyItems = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/items/copy\\?id\\=`),
+    },
+    ({ url, reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+      const ids = url.slice(API_HOST.length).split('=').splice(1).map(x => x.replace('&id', ''));
+      const original = ids.map(id => getItemById(items, id));
+      const copies = [];
+      for(const item of original){
+        const newId = uuidv4();
+        // actually copy
+        let path = transformIdForPath(newId);
+        if (body.parentId) {
+          const parentItem = getItemById(items, body.parentId);
+          path = `${parentItem.path}.${path}`;
+        }
+        const newItem = { ...item, id: newId, path };
+        items.push(newItem);
+        copies.push(newItem)
+      }
+      // todo: do for all children
+      return reply({
+        statusCode: StatusCodes.OK,
+        body: copies,
+      });
+    },
+  ).as('copyItems');
 };
 
 export const mockEditItem = (items, shouldThrowError) => {

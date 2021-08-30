@@ -1,6 +1,8 @@
 const parseStringForId = (string) => string.replaceAll('+', '');
 
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
+export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
+export const ITEM_MOVE_BUTTON_CLASS = 'itemMoveButton';
 export const CONFIRM_DELETE_BUTTON_ID = 'confirmDeleteButton';
 export const buildItemCard = (id) => `itemCard-${id}`;
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
@@ -37,6 +39,8 @@ export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
 export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
 export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
   'itemsTableDeleteSelectedItems';
+export const ITEMS_TABLE_COPY_SELECTED_ITEMS_ID = 'itemsTableCopySelectedItems'
+export const ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID = 'itemsTableMoveSelectedItems';
 export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
 export const UPLOADER_ID = 'uploader';
 export const UPLOADER_DROP_ZONE_ITEMS_CLASS = 'uppy-Root';

@@ -9,11 +9,13 @@ import {
 } from '../../src/config/selectors';
 import {
   mockCopyItem,
+  mockCopyItems,
   mockDeleteItem,
   mockGetChildren,
   mockGetItem,
   mockGetOwnItems,
   mockMoveItem,
+  mockMoveItems,
   mockPostItem,
   mockEditItem,
   mockShareItem,
@@ -63,7 +65,9 @@ Cypress.Commands.add(
     deleteItemsError = false,
     postItemError = false,
     moveItemError = false,
+    moveItemsError = false,
     copyItemError = false,
+    copyItemsError = false,
     getItemError = false,
     editItemError = false,
     shareItemError = false,
@@ -102,7 +106,11 @@ Cypress.Commands.add(
 
     mockMoveItem(cachedItems, moveItemError);
 
+    mockMoveItems(cachedItems, moveItemsError);
+    
     mockCopyItem(cachedItems, copyItemError);
+
+    mockCopyItems(cachedItems, copyItemsError);
 
     mockEditItem(cachedItems, editItemError);
 

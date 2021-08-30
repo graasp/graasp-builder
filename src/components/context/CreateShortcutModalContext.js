@@ -29,7 +29,7 @@ const CreateShortcutModalProvider = ({ children }) => {
   const onConfirm = ({ id: target, to }) => {
     const shortcut = {
       name: t('Shortcut to name', { name: item.name }),
-      extra: buildShortcutExtra(target),
+      extra: buildShortcutExtra(target[0]),
       type: ITEM_TYPES.SHORTCUT,
     };
     // set parent id if not root
@@ -50,7 +50,7 @@ const CreateShortcutModalProvider = ({ children }) => {
       <TreeModal
         onClose={onClose}
         open={open}
-        itemId={item.id}
+        itemIds={[item.id]}
         onConfirm={onConfirm}
         title={t('Where do you want to create the shortcut?')}
       />

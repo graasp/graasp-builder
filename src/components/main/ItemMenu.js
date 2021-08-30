@@ -37,7 +37,7 @@ const ItemMenu = ({ item }) => {
   };
 
   const handleMove = () => {
-    openMoveModal(item.id);
+    openMoveModal([item.id]);
     handleClose();
   };
 

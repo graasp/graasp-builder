@@ -40,7 +40,7 @@ describe('Move Item in List', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     moveItem({ id: movedItem, toItemPath });
 
-    cy.wait('@moveItem').then(({ request: { url, body } }) => {
+    cy.wait('@moveItems').then(({ request: { url, body } }) => {
       expect(body.parentId).to.equal(toItem);
       expect(url).to.contain(movedItem);
     });
@@ -62,7 +62,7 @@ describe('Move Item in List', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
     moveItem({ id: movedItem, toItemPath });
 
-    cy.wait('@moveItem').then(({ request: { body, url } }) => {
+    cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(toItem);
       expect(url).to.contain(movedItem);
     });
@@ -84,7 +84,7 @@ describe('Move Item in List', () => {
     const toItem = ROOT_ID;
     moveItem({ id: movedItem, toItemPath: toItem });
 
-    cy.wait('@moveItem').then(({ request: { body, url } }) => {
+    cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);
       expect(url).to.contain(movedItem);
     });
@@ -92,7 +92,7 @@ describe('Move Item in List', () => {
 
   describe('Error handling', () => {
     it('error while moving item does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, moveItemError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, moveItemsError: true });
       const { id } = SAMPLE_ITEMS.items[0];
 
       // go to children item
@@ -107,7 +107,7 @@ describe('Move Item in List', () => {
       const { path: toItemPath } = SAMPLE_ITEMS.items[3];
       moveItem({ id: movedItem, toItemPath });
 
-      cy.wait('@moveItem').then(() => {
+      cy.wait('@moveItems').then(() => {
         // check item is still there
         cy.get(`#${buildItemsTableRowId(movedItem)}`).should('exist');
       });
