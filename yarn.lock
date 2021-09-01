@@ -2172,7 +2172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#master":
   version: 0.2.0
   resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=ac52dbaa0b6e79c9aa098e9614632387773d3524"
   dependencies:
@@ -10213,7 +10213,7 @@ fsevents@^1.2.7:
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#main"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 4.11.2
