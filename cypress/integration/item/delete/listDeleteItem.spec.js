@@ -1,12 +1,12 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
   CONFIRM_DELETE_BUTTON_ID,
   ITEM_DELETE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { DATABASE_WITH_RECYCLE_BIN } from '../../../fixtures/recycleBin';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItem = (id) => {
@@ -16,62 +16,42 @@ const deleteItem = (id) => {
 };
 
 describe('Delete Item in List', () => {
-  it('delete item on Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    cy.visit(HOME_PATH);
+  it('delete item', () => {
+    cy.setUpApi(DATABASE_WITH_RECYCLE_BIN);
+    cy.visit(RECYCLE_BIN_PATH);
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = DATABASE_WITH_RECYCLE_BIN.recycledItems[0];
 
     // delete
     deleteItem(id);
     cy.wait('@deleteItem').then(({ request: { url } }) => {
       expect(url).to.contain(id);
     });
-    cy.wait('@getOwnItems');
-  });
-
-  it('delete item inside parent', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
-    const { id: idToDelete } = SAMPLE_ITEMS.items[2];
-
-    // go to children item
-    cy.visit(buildItemPath(id));
-
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
-
-    // delete
-    deleteItem(idToDelete);
-    cy.wait('@deleteItem').then(({ request: { url } }) => {
-      expect(url).to.contain(idToDelete);
-    });
+    cy.wait('@getRecycledItems');
   });
 
   describe('Error handling', () => {
-    it('error while deleting item does not delete in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, deleteItemError: true });
-      const { id } = SAMPLE_ITEMS.items[0];
-      const { id: idToDelete } = SAMPLE_ITEMS.items[2];
+    it.only('error while deleting item does not delete in interface', () => {
+      cy.setUpApi({ ...DATABASE_WITH_RECYCLE_BIN, deleteItemError: true });
+      const { id } = DATABASE_WITH_RECYCLE_BIN.recycledItems[0];
 
       // go to children item
-      cy.visit(buildItemPath(id));
+      cy.visit(RECYCLE_BIN_PATH);
 
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // delete
-      deleteItem(idToDelete);
+      deleteItem(id);
 
       cy.wait('@deleteItem').then(() => {
         // check item is still displayed
-        cy.get(`#${buildItemsTableRowId(idToDelete)}`).should('exist');
+        cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
       });
     });
   });

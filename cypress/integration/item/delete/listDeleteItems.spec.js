@@ -1,13 +1,13 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowId,
   CONFIRM_DELETE_BUTTON_ID,
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
   ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../../../src/config/selectors';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { DATABASE_WITH_RECYCLE_BIN } from '../../../fixtures/recycleBin';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItems = (itemIds) => {
@@ -24,56 +24,47 @@ const deleteItems = (itemIds) => {
 };
 
 describe('Delete Items in List', () => {
-  it('delete 2 items in Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    cy.visit(HOME_PATH);
+  const itemIds = [
+    DATABASE_WITH_RECYCLE_BIN.recycledItems[0].id,
+    DATABASE_WITH_RECYCLE_BIN.recycledItems[1].id,
+  ];
+  it('delete items', () => {
+    cy.setUpApi(DATABASE_WITH_RECYCLE_BIN);
+    cy.visit(RECYCLE_BIN_PATH);
 
     if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
     }
 
     // delete
-    deleteItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
-    cy.wait(['@deleteItems', '@getOwnItems']);
-  });
-
-  it('delete 2 items in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
-
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
-
-    // delete
-    deleteItems([SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[3].id]);
-    cy.wait('@deleteItems').then(() => {
-      // check item is deleted, others are still displayed
-      cy.wait('@getItem')
-        .its('response.url')
-        .should('contain', SAMPLE_ITEMS.items[0].id);
+    deleteItems(itemIds);
+    cy.wait('@deleteItems').then(({ request: { url } }) => {
+      for (const id of itemIds) {
+        expect(url).to.contain(id);
+      }
     });
+    cy.wait('@getRecycledItems');
   });
 
   describe('Error handling', () => {
-    it('does not delete items on error', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, deleteItemsError: true });
-      cy.visit(HOME_PATH);
+    it('error while deleting items does not delete in interface', () => {
+      cy.setUpApi({ ...DATABASE_WITH_RECYCLE_BIN, deleteItemError: true });
+
+      // go to children item
+      cy.visit(RECYCLE_BIN_PATH);
 
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
 
       // delete
-      deleteItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
+      deleteItems(itemIds);
+
       cy.wait('@deleteItems').then(() => {
-        // check item is deleted, others are still displayed
-        cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS.items[0].id)}`).should(
-          'exist',
-        );
-        cy.get(`#${buildItemsTableRowId(SAMPLE_ITEMS.items[1].id)}`).should(
-          'exist',
-        );
+        // check items are still displayed
+        for (const id of itemIds) {
+          cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
+        }
       });
     });
   });
