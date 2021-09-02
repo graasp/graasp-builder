@@ -194,8 +194,6 @@ export const mockDeleteItem = (items, shouldThrowError) => {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
-      console.log('ewfiojdknm');
-
       const id = url.slice(API_HOST.length).split('/')[2];
       return reply({
         statusCode: StatusCodes.OK,
