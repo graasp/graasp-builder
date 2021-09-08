@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import { Map } from 'immutable';
@@ -7,28 +7,51 @@ import PushPinOutlinedIcon from '@material-ui/icons/PushPinOutlined'
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation } from '../../config/queryClient';
+import { useMutation, hooks } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { getItemPinnedTag } from '../../utils/itemTag';
+import { getItemPinnedTagFromItem } from '../../utils/itemExtra'
+
+const { useTags, useItemTags } = hooks;
 
 const PinButton = ({ item, member }) => {
   const { t } = useTranslation();
-  const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
-  console.log(item, member);
+  const { data: tags } = useTags();
 
-  const isPinned = item?.isPinned ?? false; // isItemPinned(item, member);
+  const addPinned = useMutation(MUTATION_KEYS.POST_ITEM_TAG);
+  const deletePinned = useMutation(MUTATION_KEYS.DELETE_ITEM_TAG);
+  const { data: itemTags } = useItemTags(item.id);
+  const [isPinned, setPinned] = useState(false);
+  const [ItemPinnedTagValueForItem, setItemPinnedTagValueForItem] = useState();
+
+  // update state variables depending on fetch values
+  useEffect(() => {
+    if (tags && itemTags) {
+      const tagValue = getItemPinnedTagFromItem({ tags, itemTags });
+      setItemPinnedTagValueForItem(tagValue);
+    }
+  }, [tags, itemTags, item]);
+
+  console.log(member);
 
   const handlePin = () => {
-    mutation.mutate({
-        ...item,
-        isPinned: true
+    addPinned.mutate({
+      id: item.id,
+      // use item login tag id
+      tagId: getItemPinnedTag(tags).id,
     });
+
+    setPinned(true);
   };
 
   const handleUnpin = () => {
-    mutation.mutate({
-        ...item,
-        isPinned: false
+    deletePinned.mutate({
+      id: item.id,
+      // use item login tag id
+      tagId: ItemPinnedTagValueForItem.id,
     });
+
+    setPinned(false);
   };
 
   return (

@@ -1,5 +1,8 @@
 import { SETTINGS } from '../config/constants';
 
+export const getItemPinnedTag = (tags) =>
+  tags?.find(({ name }) => name === SETTINGS.ITEM_PINNED.name);
+
 export const getItemLoginTag = (tags) =>
   tags?.find(({ name }) => name === SETTINGS.ITEM_LOGIN.name);
 
