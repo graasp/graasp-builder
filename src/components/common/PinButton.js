@@ -9,7 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation, hooks } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { getItemPinnedTag } from '../../utils/itemTag';
+import { getItemPinnedTag, isItemPinned } from '../../utils/itemTag';
 import { getItemPinnedTagFromItem } from '../../utils/itemExtra'
 
 const { useTags, useItemTags } = hooks;
@@ -29,6 +29,7 @@ const PinButton = ({ item, member }) => {
     if (tags && itemTags) {
       const tagValue = getItemPinnedTagFromItem({ tags, itemTags });
       setItemPinnedTagValueForItem(tagValue);
+      setPinned(isItemPinned({ tags, itemTags }));
     }
   }, [tags, itemTags, item]);
 
@@ -39,9 +40,9 @@ const PinButton = ({ item, member }) => {
       id: item.id,
       // use item login tag id
       tagId: getItemPinnedTag(tags).id,
-    });
+    }); 
 
-    setPinned(true);
+    setPinned(isItemPinned({ tags, itemTags }));
   };
 
   const handleUnpin = () => {
@@ -51,7 +52,7 @@ const PinButton = ({ item, member }) => {
       tagId: ItemPinnedTagValueForItem.id,
     });
 
-    setPinned(false);
+    setPinned(isItemPinned({ tags, itemTags }));
   };
 
   return (
