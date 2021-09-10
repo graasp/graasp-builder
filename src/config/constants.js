@@ -116,7 +116,7 @@ export const SETTINGS = {
     name: 'public-item',
   },
   ITEM_PINNED: {
-    name: 'pinned',
+    name: 'item-pinned',
   },
 };
 
