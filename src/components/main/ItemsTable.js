@@ -83,7 +83,7 @@ const computeReorderedIdList = (list, startIndex, endIndex) => {
   return result.map((i) => i.id);
 };
 
-const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
+const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch, headerElements }) => {
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
   const { data: member, isLoading: isMemberLoading } = hooks.useCurrentMember();
@@ -288,6 +288,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, itemSearch }) => {
           numSelected={selected.length}
           selected={selected}
           itemSearchInput={itemSearch?.input}
+          headerElements={headerElements}
         />
         <TableContainer>
           <Table
@@ -394,12 +395,14 @@ ItemsTable.propTypes = {
   itemSearch: PropTypes.shape({
     input: PropTypes.element,
   }),
+  headerElements: PropTypes.arrayOf(PropTypes.element)
 };
 
 ItemsTable.defaultProps = {
   id: '',
   items: List(),
   itemSearch: null,
+  headerElements: []
 };
 
 export default ItemsTable;

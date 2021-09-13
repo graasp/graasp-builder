@@ -11,7 +11,6 @@ import {
   ITEMS_TABLE_COPY_SELECTED_ITEMS_ID 
 } from '../../config/selectors';
 import DeleteButton from '../common/DeleteButton';
-import NewItemButton from './NewItemButton';
 import CopyButton from './CopyButtons';
 import MoveButton from '../common/MoveButton';
 
@@ -34,7 +33,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 const TableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { t } = useTranslation();
-  const { numSelected, tableTitle, selected, itemSearchInput } = props;
+  const { numSelected, tableTitle, selected, itemSearchInput, headerElements } = props;
 
   return (
     <Toolbar
@@ -62,7 +61,7 @@ const TableToolbar = (props) => {
             {tableTitle}
           </Typography>
           {itemSearchInput}
-          <NewItemButton fontSize="small" />
+          {headerElements}
         </>
       )}
 
@@ -96,11 +95,13 @@ TableToolbar.propTypes = {
   tableTitle: PropTypes.string,
   selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
   itemSearchInput: PropTypes.element,
+  headerElements: PropTypes.arrayOf(PropTypes.element)
 };
 
 TableToolbar.defaultProps = {
   tableTitle: 'Items',
   itemSearchInput: null,
+  headerElements: []
 };
 
 export default TableToolbar;
