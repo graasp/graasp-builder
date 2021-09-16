@@ -32,7 +32,6 @@ import DeleteButton from '../common/DeleteButton';
 import DraggableTableRow from '../common/DraggableTableRow';
 import DroppableTableBody from '../common/DroppableTableBody';
 import EditButton from '../common/EditButton';
-import ShareButton from '../common/ShareButton';
 import ItemIcon from './ItemIcon';
 import ItemMenu from './ItemMenu';
 import TableHead from './TableHead';
@@ -189,7 +188,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, headerElements }) =>
         <>
           <FavoriteButton item={item} member={member} />
           <EditButton item={item} />
-          <ShareButton itemId={id} />
           <DeleteButton itemIds={[id]} />
           <ItemMenu item={item} />
         </>

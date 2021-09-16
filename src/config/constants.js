@@ -115,6 +115,13 @@ export const SETTINGS = {
   ITEM_PUBLIC: {
     name: 'public-item',
   },
+  ITEM_PUBLISHED: {
+    name: 'published-item',
+  },
+  // this tag doesn't exist but is used if none of the visiblity tag is set
+  ITEM_PRIVATE: {
+    name: 'private-item',
+  },
 };
 
 export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
@@ -152,3 +159,5 @@ export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 
 export const ITEM_DEFAULT_HEIGHT = 500;
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
+
+export const PSEUDONIMIZED_USER_MAIL = '@graasp.org';
