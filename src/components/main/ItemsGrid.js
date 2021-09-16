@@ -87,7 +87,7 @@ const ItemsGrid = (props) => {
 
   return (
     <div>
-      <TableToolbar tableTitle={title} itemSearchInput={itemSearch?.input} headerElements={headerElements} />
+      <TableToolbar tableTitle={title} headerElements={headerElements} />
       <Grid container spacing={1}>
         {renderItems()}
       </Grid>

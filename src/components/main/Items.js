@@ -18,8 +18,9 @@ const Items = ({ items, title, id, headerElements }) => {
           id={id}
           title={title}
           items={itemSearch.results}
+          // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
-          headerElements={headerElements}
+          headerElements={[itemSearch.input, ...headerElements]}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -28,9 +29,8 @@ const Items = ({ items, title, id, headerElements }) => {
         <ItemsTable
           id={id}
           tableTitle={title}
-          items={itemSearch.results}
-          itemSearch={itemSearch}
-          headerElements={headerElements}
+          items={itemSearch.results}  
+          headerElements={[itemSearch.input, ...headerElements]}
         />
       );
   }

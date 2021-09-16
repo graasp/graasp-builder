@@ -33,7 +33,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 const TableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { t } = useTranslation();
-  const { numSelected, tableTitle, selected, itemSearchInput, headerElements } = props;
+  const { numSelected, tableTitle, selected, headerElements } = props;
 
   return (
     <Toolbar
@@ -60,7 +60,7 @@ const TableToolbar = (props) => {
           >
             {tableTitle}
           </Typography>
-          {itemSearchInput}
+
           {headerElements}
         </>
       )}
@@ -94,13 +94,11 @@ TableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   tableTitle: PropTypes.string,
   selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-  itemSearchInput: PropTypes.element,
   headerElements: PropTypes.arrayOf(PropTypes.element)
 };
 
 TableToolbar.defaultProps = {
   tableTitle: 'Items',
-  itemSearchInput: null,
   headerElements: []
 };
 
