@@ -4,6 +4,7 @@ import {
   buildItemsTableRowId,
   FAVORITE_ITEM_BUTTON_CLASS,
   FAVORITE_ITEMS_ERROR_ALERT_ID,
+  CREATE_ITEM_BUTTON_ID,
 } from '../../../../src/config/selectors';
 import { buildMemberWithFavorites } from '../../../fixtures/members';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
@@ -25,6 +26,11 @@ describe('Favorite Item', () => {
         currentMember: buildMemberWithFavorites(favoriteItems),
       });
       cy.visit(HOME_PATH);
+    });
+
+    it('New button doesn\'t exists', () => { 
+      cy.visit(FAVORITE_ITEMS_PATH);
+      cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 
     it('add item to favorites', () => {

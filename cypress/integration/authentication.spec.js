@@ -11,6 +11,7 @@ import {
   ITEM_MAIN_CLASS,
   REDIRECTION_CONTENT_ID,
   USER_MENU_SIGN_OUT_OPTION_ID,
+  CREATE_ITEM_BUTTON_ID,
 } from '../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../fixtures/items';
 import { CURRENT_USER, SIGNED_OUT_MEMBER } from '../fixtures/members';
@@ -72,6 +73,7 @@ describe('Authentication', () => {
         cy.visit(SHARED_ITEMS_PATH);
         cy.wait(PAGE_LOAD_WAITING_PAUSE);
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
+        cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
       });
       it('Item', () => {
         cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
