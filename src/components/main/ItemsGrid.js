@@ -46,7 +46,7 @@ const styles = (theme) => ({
 });
 
 const ItemsGrid = (props) => {
-  const { classes, items, title, itemSearch } = props;
+  const { classes, items, title, itemSearch, headerElements } = props;
 
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
@@ -87,7 +87,7 @@ const ItemsGrid = (props) => {
 
   return (
     <div>
-      <TableToolbar tableTitle={title} itemSearchInput={itemSearch?.input} />
+      <TableToolbar tableTitle={title} headerElements={headerElements} />
       <Grid container spacing={1}>
         {renderItems()}
       </Grid>
@@ -142,10 +142,12 @@ ItemsGrid.propTypes = {
     text: PropTypes.string,
     input: PropTypes.instanceOf(ItemSearchInput),
   }),
+  headerElements: PropTypes.arrayOf(PropTypes.element)
 };
 
 ItemsGrid.defaultProps = {
   itemSearch: null,
+  headerElements: []
 };
 
 const StyledComponent = withStyles(styles)(ItemsGrid);

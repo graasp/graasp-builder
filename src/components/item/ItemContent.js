@@ -26,6 +26,7 @@ import { LayoutContext } from '../context/LayoutContext';
 import FileUploader from '../main/FileUploader';
 import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
+import NewItemButton from '../main/NewItemButton';
 
 const {
   useChildren,
@@ -169,7 +170,7 @@ const ItemContent = ({ item, enableEdition }) => {
       return (
         <>
           <FileUploader />
-          <Items title={item.get('name')} items={children} />
+          <Items title={item.get('name')} items={children} headerElements={[ <NewItemButton fontSize="small" /> ]} /> 
         </>
       );
 
