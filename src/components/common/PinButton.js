@@ -1,58 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
-import { Map } from 'immutable';
 import PushPinIcon from '@material-ui/icons/PushPin';
 import PushPinOutlinedIcon from '@material-ui/icons/PushPinOutlined' 
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation, hooks } from '../../config/queryClient';
+import { useMutation } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { getItemPinnedTag, isItemPinned } from '../../utils/itemTag';
-import { getItemPinnedTagFromItem } from '../../utils/itemExtra'
 
-const { useTags, useItemTags } = hooks;
-
-const PinButton = ({ item, member }) => {
+const PinButton = ({ item }) => {
   const { t } = useTranslation();
-  const { data: tags } = useTags();
 
-  const addPinned = useMutation(MUTATION_KEYS.POST_ITEM_TAG);
-  const deletePinned = useMutation(MUTATION_KEYS.DELETE_ITEM_TAG);
-  const { data: itemTags } = useItemTags(item.id);
-  const [isPinned, setPinned] = useState(false);
-  const [ItemPinnedTagValueForItem, setItemPinnedTagValueForItem] = useState();
-
-  // update state variables depending on fetch values
-  useEffect(() => {
-    if (tags && itemTags) {
-      const tagValue = getItemPinnedTagFromItem({ tags, itemTags });
-      setItemPinnedTagValueForItem(tagValue);
-      setPinned(isItemPinned({ tags, itemTags }));
-    }
-  }, [tags, itemTags, item]);
-
-  console.log(member);
+  const editItem = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const [isPinned, setPinned] = useState(item.settings.isPinned);
 
   const handlePin = () => {
-    addPinned.mutate({
+    const { settings } = item;
+    settings.isPinned = true;
+
+    editItem.mutate({      
       id: item.id,
       // use item login tag id
-      tagId: getItemPinnedTag(tags).id,
+      name: item.name,
+      settings: item.settings,
     }); 
 
-    setPinned(isItemPinned({ tags, itemTags }));
+    setPinned(true);
   };
 
   const handleUnpin = () => {
-    deletePinned.mutate({
+    const { settings } = item;
+    settings.isPinned = false;
+
+    editItem.mutate({
       id: item.id,
       // use item login tag id
-      tagId: ItemPinnedTagValueForItem.id,
+      name: item.name,
+      settings: item.settings,
     });
 
-    setPinned(isItemPinned({ tags, itemTags }));
+    setPinned(false);
   };
 
   return (
@@ -75,8 +63,13 @@ const PinButton = ({ item, member }) => {
 };
 
 PinButton.propTypes = {
-  item: PropTypes.shape({ id: PropTypes.string.isRequired, isPinned: PropTypes.bool }).isRequired,
-  member: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.shape({ 
+    id: PropTypes.string.isRequired, 
+    name: PropTypes.string,
+    settings: PropTypes.shape({
+      isPinned: PropTypes.bool.isRequired
+    }).isRequired
+  }).isRequired,
 };
 
 export default PinButton;
