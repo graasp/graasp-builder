@@ -1,4 +1,4 @@
-import configureQueryClient from '@graasp/query-client';
+import { configureQueryClient } from '@graasp/query-client';
 import notifier from '../middlewares/notifier';
 import { API_HOST } from './constants';
 

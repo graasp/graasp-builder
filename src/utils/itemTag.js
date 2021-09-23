@@ -18,9 +18,10 @@ export const getVisibilityTagAndItemTag = ({ tags, itemTags }) => {
   const visibilityItemTags = itemTags?.filter(({ tagId }) =>
     tagIds.includes(tagId),
   );
-  const bestVisibilityItemTag = visibilityItemTags
-    .sort((a, b) => tagIds.indexOf(a.id) - tagIds.indexOf(b.id))
-    ?.get(0);
+  const sorted = visibilityItemTags.sort(
+    (a, b) => tagIds.indexOf(a.tagId) - tagIds.indexOf(b.tagId),
+  );
+  const bestVisibilityItemTag = sorted?.get(0);
   const visibilityTagValue = tags.find(
     ({ id }) => id === bestVisibilityItemTag?.tagId,
   );

@@ -15,6 +15,7 @@ import {
   getTagByName,
   getVisibilityTagAndItemTag,
 } from '../../../utils/itemTag';
+import { getItemLoginSchema } from '../../../utils/itemExtra';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
@@ -57,9 +58,7 @@ function VisibilitySelect({ item, edit }) {
 
       // disable setting if any visiblity is set on any ancestor items
       setIsDisabled(
-        tagValue &&
-          itemTag?.itemPath &&
-          itemTag?.itemPath !== item?.get('path'),
+        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.get('path'),
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,44 +70,96 @@ function VisibilitySelect({ item, edit }) {
 
   const handleChange = (event) => {
     const newTag = event.target.value;
+    const prevTagName = tagValue?.name;
+    const publicTag = getTagByName(tags, SETTINGS.ITEM_PUBLIC.name);
 
-    // remove previous tag if not private
-    if (itemTagValue) {
-      deleteItemTag({ id: itemId, tagId: itemTagValue?.id });
-    }
-    // delete public tag if the new visibility is not public
-    if (tagValue?.name === SETTINGS.ITEM_PUBLISHED.name) {
-      if (newTag !== SETTINGS.ITEM_PUBLIC.name) {
-        const publicTag = getTagByName(tags, SETTINGS.ITEM_PUBLIC.name);
-        const publicItemTag = itemTags.find(({ id }) => id === publicTag.id);
-        deleteItemTag({ id: itemId, tagId: publicItemTag?.id });
+    // deletes both public and published tags if they exists
+    const deletePublishedAndPublicTags = () => {
+      const publicItemTag = itemTags.find(
+        ({ tagId }) => tagId === publicTag.id,
+      );
+      const publishedTag = getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name);
+      const publishedItemTag = itemTags.find(
+        ({ tagId }) => tagId === publishedTag.id,
+      );
+      if (publishedItemTag) {
+        deleteItemTag({ id: itemId, tagId: publishedItemTag.id });
       }
-      // avoid adding tag if goes from published to public
-      else {
-        return;
+      if (publicItemTag) {
+        deleteItemTag({ id: itemId, tagId: publicItemTag.id });
       }
-    }
+    };
 
-    // add new tag if not private
-    if (newTag !== SETTINGS.ITEM_PRIVATE.name) {
+    // post new visibility tag
+    const newTagId = getTagByName(tags, newTag)?.id;
+    const postNewTag = () =>
       postItemTag({
         id: itemId,
-        // use item login tag id
-        tagId: getTagByName(tags, newTag)?.id,
+        tagId: newTagId,
         itemPath: item?.get('path'),
         creator: user?.get('id'),
       });
-    }
 
-    // set default login schema if the visibility is pseudonymized and has no login schema set
-    if (
-      newTag?.name === SETTINGS.ITEM_LOGIN.name &&
-      !itemLogin?.get('loginSchema')
-    ) {
-      putItemLoginSchema({
-        id: itemId,
-        loginSchema: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
-      });
+    // delete previous visibility tag
+    // it deletes the less restrictive visibility
+    const deletePreviousTag = () => {
+      if (prevTagName && prevTagName !== SETTINGS.ITEM_PRIVATE.name) {
+        deleteItemTag({ id: itemId, tagId: itemTagValue?.id });
+      }
+    };
+
+    switch (newTag) {
+      case SETTINGS.ITEM_PRIVATE.name: {
+        if (prevTagName === SETTINGS.ITEM_PUBLISHED.name) {
+          deletePublishedAndPublicTags();
+        } else {
+          deletePreviousTag();
+        }
+        break;
+      }
+      case SETTINGS.ITEM_LOGIN.name: {
+        if (prevTagName === SETTINGS.ITEM_PUBLISHED.name) {
+          deletePublishedAndPublicTags();
+        } else {
+          deletePreviousTag();
+        }
+        postNewTag();
+        // post login schema if it does not exist
+        if (!getItemLoginSchema(item?.get('extra'))) {
+          putItemLoginSchema({
+            itemId,
+            loginSchema: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
+          });
+        }
+        break;
+      }
+      case SETTINGS.ITEM_PUBLIC.name: {
+        // post the new tag only if it is not published
+        // if it was published, it was already public
+        if (prevTagName !== SETTINGS.ITEM_PUBLISHED.name) {
+          postNewTag();
+        }
+        deletePreviousTag();
+        break;
+      }
+      case SETTINGS.ITEM_PUBLISHED.name: {
+        postNewTag();
+        // if previous is public, not necessary to delete/add the public tag
+        if (prevTagName !== SETTINGS.ITEM_PUBLIC.name) {
+          // post public tag
+          postItemTag({
+            id: itemId,
+            tagId: publicTag.id,
+            itemPath: item?.get('path'),
+            creator: user?.get('id'),
+          });
+          // delete previous tag
+          deletePreviousTag();
+        }
+        break;
+      }
+      default:
+        break;
     }
   };
 
