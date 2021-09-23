@@ -16,6 +16,7 @@ import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
   SHARED_ITEMS_PATH,
+  RECYCLE_BIN_PATH,
 } from '../../config/paths';
 
 const MainMenu = () => {
@@ -61,6 +62,16 @@ const MainMenu = () => {
         </ListItemIcon>
         <ListItemText primary={t('Favorite Items')} />
       </ListItem>
+      <ListItem
+        button
+        onClick={() => goTo(RECYCLE_BIN_PATH)}
+        selected={pathname === RECYCLE_BIN_PATH}
+      >
+        <ListItemIcon>
+          <DeleteIcon />
+        </ListItemIcon>
+        <ListItemText primary={t('Recycle Bin')} />
+      </ListItem>
       <ListItem button>
         <ListItemIcon>
           <PollIcon />
@@ -72,12 +83,6 @@ const MainMenu = () => {
           <SchoolIcon />
         </ListItemIcon>
         <ListItemText primary={t('Perform View')} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <DeleteIcon />
-        </ListItemIcon>
-        <ListItemText primary={t('Trash')} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>

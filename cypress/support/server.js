@@ -71,6 +71,8 @@ const {
   GET_FLAGS_ROUTE,
   buildGetItemChatRoute,
   buildPostItemChatMessageRoute,
+  buildRecycleItemRoute,
+  GET_RECYCLED_ITEMS_ROUTE,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -127,6 +129,18 @@ export const mockGetOwnItems = (items) => {
       req.reply(own);
     },
   ).as('getOwnItems');
+};
+
+export const mockGetRecycledItems = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/${GET_RECYCLED_ITEMS_ROUTE}`,
+    },
+    (req) => {
+      req.reply(items);
+    },
+  ).as('getRecycledItems');
 };
 
 export const mockGetSharedItems = ({ items, member }) => {
@@ -211,6 +225,48 @@ export const mockDeleteItems = (items, shouldThrowError) => {
   ).as('deleteItems');
 };
 
+export const mockRecycleItem = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildRecycleItemRoute(ID_FORMAT)}`),
+    },
+    ({ url, reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+
+      const id = url.slice(API_HOST.length).split('/')[2];
+      return reply({
+        statusCode: StatusCodes.OK,
+        body: getItemById(items, id),
+      });
+    },
+  ).as('recycleItem');
+};
+
+export const mockRecycleItems = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/recycle\\?id\\=`),
+      query: { id: new RegExp(ID_FORMAT) },
+    },
+    ({ url, reply }) => {
+      const ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
+
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+
+      return reply({
+        statusCode: StatusCodes.OK,
+        body: ids.map((id) => getItemById(items, id)),
+      });
+    },
+  ).as('recycleItems');
+};
+
 export const mockGetItem = ({ items, currentMember }, shouldThrowError) => {
   cy.intercept(
     {
@@ -282,7 +338,7 @@ export const mockGetItems = ({ items, currentMember }, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(`${API_HOST}/items\\?id\\=`),
+      url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}\\?id\\=`),
     },
     ({ url, reply }) => {
       const { id: itemIds } = qs.parse(url.slice(url.indexOf('?') + 1));
@@ -382,7 +438,7 @@ export const mockMoveItems = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_POST.method,
-      url: new RegExp(`${API_HOST}/items/move\\?id\\=`),
+      url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/move\\?id\\=`),
     },
     ({ url, reply, body }) => {
       if (shouldThrowError) {

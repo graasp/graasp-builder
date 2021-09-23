@@ -53,6 +53,9 @@ import {
   mockPostAppData,
   mockDeleteAppData,
   mockPatchAppData,
+  mockRecycleItem,
+  mockRecycleItems,
+  mockGetRecycledItems,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -63,6 +66,7 @@ Cypress.Commands.add(
   'setUpApi',
   ({
     items = [],
+    recycledItems = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     tags = [],
@@ -89,9 +93,13 @@ Cypress.Commands.add(
     editMemberError = false,
     postItemFlagError = false,
     getItemChatError = false,
+    recycleItemError = false,
+    recycleItemsError = false,
+    getRecycledItemsError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
+    const allItems = [...cachedItems, ...recycledItems];
 
     mockGetOwnItems(cachedItems);
 
@@ -99,9 +107,9 @@ Cypress.Commands.add(
 
     mockPostItem(cachedItems, postItemError);
 
-    mockDeleteItem(cachedItems, deleteItemError);
+    mockDeleteItem(allItems, deleteItemError);
 
-    mockDeleteItems(cachedItems, deleteItemsError);
+    mockDeleteItems(allItems, deleteItemsError);
 
     mockGetItem(
       { items: cachedItems, currentMember },
@@ -185,6 +193,12 @@ Cypress.Commands.add(
     mockDeleteAppData();
 
     mockPatchAppData();
+    
+    mockRecycleItem(items, recycleItemError);
+
+    mockRecycleItems(items, recycleItemsError);
+
+    mockGetRecycledItems(recycledItems, getRecycledItemsError);
   },
 );
 

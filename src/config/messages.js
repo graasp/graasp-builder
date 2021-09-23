@@ -23,7 +23,8 @@ export const MOVE_ITEM_SUCCESS_MESSAGE = 'The item was successfully moved.';
 export const MOVE_ITEMS_SUCCESS_MESSAGE = 'The items were successfully moved.';
 export const COPY_ITEM_SUCCESS_MESSAGE =
   'The item(s) were successfully copied.';
-export const COPY_ITEMS_SUCCESS_MESSAGE = 'The item(s) were successfully copied.';
+export const COPY_ITEMS_SUCCESS_MESSAGE =
+  'The item(s) were successfully copied.';
 export const EDIT_ITEM_SUCCESS_MESSAGE =
   'The item(s) were successfully edited.';
 export const SHARE_ITEM_SUCCESS_MESSAGE =
@@ -66,3 +67,7 @@ export const COPY_ITEM_LINK_TO_CLIPBOARD_SUCCESS_MESSAGE =
   'Link is successfully copied!';
 export const COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE =
   'An error occurred while copying the link';
+export const RECYCLE_ITEMS_SUCCESS_MESSAGE =
+  'The item(s) were successfully moved to the recycle bin.';
+export const RECYCLE_ITEMS_ERROR_MESSAGE =
+  'An error occurred while moving the item(s) to the recycle bin.';

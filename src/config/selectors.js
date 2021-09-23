@@ -39,7 +39,7 @@ export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
 export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
 export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
   'itemsTableDeleteSelectedItems';
-export const ITEMS_TABLE_COPY_SELECTED_ITEMS_ID = 'itemsTableCopySelectedItems'
+export const ITEMS_TABLE_COPY_SELECTED_ITEMS_ID = 'itemsTableCopySelectedItems';
 export const ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID = 'itemsTableMoveSelectedItems';
 export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
 export const UPLOADER_ID = 'uploader';
@@ -134,3 +134,4 @@ export const ACCESS_INDICATION_ID = 'accessIndication';
 export const ITEM_CHATBOX_BUTTON_ID = 'itemChatboxButton';
 export const CHATBOX_ID = 'chatbox';
 export const CHATBOX_INPUT_BOX_ID = 'chatboxInputBox';
+export const CONFIRM_RECYCLE_BUTTON_ID = 'confirmRecycleButton';

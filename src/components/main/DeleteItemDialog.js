@@ -10,7 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../config/queryClient';
-import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
+import {
+  CONFIRM_DELETE_BUTTON_ID,
+  CONFIRM_RECYCLE_BUTTON_ID,
+} from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
   confirmDeleteButton: {
@@ -18,13 +21,20 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
+const {
+  DELETE_ITEMS,
+  DELETE_ITEM,
+  RECYCLE_ITEMS,
+  RECYCLE_ITEM,
+} = MUTATION_KEYS;
 
 const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
   const { t } = useTranslation();
 
   const { mutate: deleteItems } = useMutation(DELETE_ITEMS);
   const { mutate: deleteItem } = useMutation(DELETE_ITEM);
+  const { mutate: recycleItems } = useMutation(RECYCLE_ITEMS);
+  const { mutate: recycleItem } = useMutation(RECYCLE_ITEM);
 
   const classes = useStyles();
 
@@ -33,6 +43,14 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
       deleteItems(itemIds);
     } else {
       deleteItem(itemIds);
+    }
+    handleClose();
+  };
+  const onRecycle = () => {
+    if (itemIds.length > 1) {
+      recycleItems(itemIds);
+    } else {
+      recycleItem(itemIds);
     }
     handleClose();
   };
@@ -49,7 +67,7 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {t('This item will be deleted permanently.')}
+          {t('Choose one of the following action.')}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -63,7 +81,16 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
           color="secondary"
           autoFocus
         >
-          {t('Delete')}
+          {t('Delete Permanently')}
+        </Button>
+        <Button
+          id={CONFIRM_RECYCLE_BUTTON_ID}
+          onClick={onRecycle}
+          color="primary"
+          autoFocus
+          variant="contained"
+        >
+          {t('Recycle')}
         </Button>
       </DialogActions>
     </Dialog>

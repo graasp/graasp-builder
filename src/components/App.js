@@ -8,6 +8,7 @@ import {
   REDIRECT_PATH,
   MEMBER_PROFILE_PATH,
   FAVORITE_ITEMS_PATH,
+  RECYCLE_BIN_PATH,
 } from '../config/paths';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
@@ -18,6 +19,7 @@ import ItemLoginAuthorization from './common/ItemLoginAuthorization';
 import Redirect from './main/Redirect';
 import MemberProfileScreen from './member/MemberProfileScreen';
 import FavoriteItems from './main/FavoriteItems';
+import RecycleBinScreen from './RecycleBinScreen';
 
 const App = () => (
   <ModalProviders>
@@ -42,6 +44,11 @@ const App = () => (
           path={MEMBER_PROFILE_PATH}
           exact
           component={Authorization()(MemberProfileScreen)}
+        />
+        <Route
+          path={RECYCLE_BIN_PATH}
+          exact
+          component={Authorization()(RecycleBinScreen)}
         />
         <Route path={ITEMS_PATH} exact component={Authorization()(Home)} />
         <Route
