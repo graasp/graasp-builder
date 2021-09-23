@@ -28,6 +28,11 @@ import { SETTINGS } from '../../src/config/constants';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { getMemberById } from '../../src/utils/member';
 import { PERMISSION_LEVELS } from '../../src/enums';
+import {
+  buildAppApiAccessTokenRoute,
+  buildAppItemLinkForTest,
+  buildGetAppData,
+} from '../fixtures/apps';
 
 const {
   buildCopyItemRoute,
@@ -384,11 +389,15 @@ export const mockMoveItems = (items, shouldThrowError) => {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
-      const ids = url.slice(API_HOST.length).split('=').splice(1).map(x => x.replace('&id', ''));
+      const ids = url
+        .slice(API_HOST.length)
+        .split('=')
+        .splice(1)
+        .map((x) => x.replace('&id', ''));
 
-      const updated = ids.map(id => getItemById(items, id));
+      const updated = ids.map((id) => getItemById(items, id));
       // actually update cached items
-      for(const item of updated){
+      for (const item of updated) {
         let path = transformIdForPath(item.id);
         if (body.parentId) {
           const parentItem = getItemById(items, body.parentId);
@@ -406,7 +415,6 @@ export const mockMoveItems = (items, shouldThrowError) => {
     },
   ).as('moveItems');
 };
-
 
 export const mockCopyItem = (items, shouldThrowError) => {
   cy.intercept(
@@ -450,10 +458,14 @@ export const mockCopyItems = (items, shouldThrowError) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
-      const ids = url.slice(API_HOST.length).split('=').splice(1).map(x => x.replace('&id', ''));
-      const original = ids.map(id => getItemById(items, id));
+      const ids = url
+        .slice(API_HOST.length)
+        .split('=')
+        .splice(1)
+        .map((x) => x.replace('&id', ''));
+      const original = ids.map((id) => getItemById(items, id));
       const copies = [];
-      for(const item of original){
+      for (const item of original) {
         const newId = uuidv4();
         // actually copy
         let path = transformIdForPath(newId);
@@ -463,7 +475,7 @@ export const mockCopyItems = (items, shouldThrowError) => {
         }
         const newItem = { ...item, id: newId, path };
         items.push(newItem);
-        copies.push(newItem)
+        copies.push(newItem);
       }
       // todo: do for all children
       return reply({
@@ -898,6 +910,22 @@ export const mockPostItemFlag = (items, shouldThrowError) => {
   ).as('postItemFlag');
 };
 
+export const mockGetAppLink = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildAppItemLinkForTest()}$`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+      const filepath = url.slice(API_HOST.length);
+      return reply({ fixture: filepath });
+    },
+  ).as('getAppLink');
+};
+
 export const mockGetItemChat = ({ items }, shouldThrowError) => {
   cy.intercept(
     {
@@ -929,8 +957,87 @@ export const mockPostItemChatMessage = (shouldThrowError) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
-
       return reply(body);
     },
   ).as('postItemChatMessage');
+};
+
+export const mockAppApiAccessToken = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildAppApiAccessTokenRoute(ID_FORMAT)}$`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ token: 'token' });
+    },
+  ).as('appApiAccessToken');
+};
+
+export const mockGetAppData = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ data: 'get app data' });
+    },
+  ).as('getAppData');
+};
+
+export const mockPostAppData = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ data: 'post app data' });
+    },
+  ).as('postAppData');
+};
+
+export const mockDeleteAppData = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ data: 'delete app data' });
+    },
+  ).as('deleteAppData');
+};
+
+export const mockPatchAppData = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_PATCH.method,
+      url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ data: 'patch app data' });
+    },
+  ).as('patchAppData');
 };
