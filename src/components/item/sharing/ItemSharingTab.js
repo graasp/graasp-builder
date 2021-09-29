@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
@@ -17,6 +17,7 @@ import {
 } from '../../../utils/membership';
 import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
+import { LayoutContext } from '../../context/LayoutContext';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -47,6 +48,15 @@ const ItemSharingTab = ({ item }) => {
     memberships,
     memberId: currentMember?.get('id'),
   });
+  const { setIsItemSharingOpen } = useContext(LayoutContext);
+
+  useEffect(
+    () => () => {
+      setIsItemSharingOpen(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   if (isMembershipsLoading || isLoadingCurrentMember) {
     return <Loader />;

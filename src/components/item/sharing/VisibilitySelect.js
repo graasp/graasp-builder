@@ -16,6 +16,10 @@ import {
   getVisibilityTagAndItemTag,
 } from '../../../utils/itemTag';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
+import {
+  SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
+  SHARE_ITEM_VISIBILITY_SELECT_ID,
+} from '../../../config/selectors';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
@@ -195,6 +199,7 @@ function VisibilitySelect({ item, edit }) {
         }
         onChange={handleLoginSchemaChange}
         disabled={isDisabled}
+        id={SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}
       >
         <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME}>
           {t('Username')}
@@ -232,6 +237,7 @@ function VisibilitySelect({ item, edit }) {
           value={tagValue?.name || SETTINGS.ITEM_PRIVATE.name}
           onChange={handleChange}
           disabled={isDisabled}
+          id={SHARE_ITEM_VISIBILITY_SELECT_ID}
         >
           <MenuItem value={SETTINGS.ITEM_PRIVATE.name}>{t('Private')}</MenuItem>
           <MenuItem value={SETTINGS.ITEM_LOGIN.name}>

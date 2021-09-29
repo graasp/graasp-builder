@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, v4 } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
 import qs from 'querystring';
 import { API_ROUTES } from '@graasp/query-client';
@@ -73,6 +73,7 @@ const {
   buildPostItemChatMessageRoute,
   buildRecycleItemRoute,
   GET_RECYCLED_ITEMS_ROUTE,
+  buildDeleteItemTagRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -187,7 +188,7 @@ export const mockDeleteItem = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_DELETE.method,
-      url: new RegExp(`${API_HOST}/${buildDeleteItemRoute(ID_FORMAT)}`),
+      url: new RegExp(`${API_HOST}/${buildDeleteItemRoute(ID_FORMAT)}$`),
     },
     ({ url, reply }) => {
       if (shouldThrowError) {
@@ -824,7 +825,10 @@ export const mockGetItemLogin = (items) => {
     ({ reply, url }) => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
-      reply({ body: getItemLoginExtra(item?.extra), status: StatusCodes.OK });
+      reply({
+        body: getItemLoginExtra(item?.extra) ?? {},
+        status: StatusCodes.OK,
+      });
     },
   ).as('getItemLogin');
 };
@@ -926,16 +930,39 @@ export const mockPostItemTag = (items, shouldThrowError) => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
 
-      item.tags = [
-        {
-          tagId: ITEM_LOGIN_TAG.id,
-          itemPath: item.path,
-        },
-      ];
-
+      if (!item?.tags) {
+        item.tags = [];
+      }
+      item.tags.push({
+        id: v4(),
+        tagId: ITEM_LOGIN_TAG.id,
+        itemPath: item.path,
+      });
       reply(body);
     },
   ).as('postItemTag');
+};
+
+export const mockDeleteItemTag = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(
+        `${API_HOST}/${buildDeleteItemTagRoute({
+          id: ID_FORMAT,
+          tagId: ID_FORMAT,
+        })}$`,
+      ),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
+      reply(body);
+    },
+  ).as('deleteItemTag');
 };
 
 export const mockGetFlags = (flags) => {

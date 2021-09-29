@@ -2,26 +2,24 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   SETTINGS,
   SETTINGS_ITEM_LOGIN_DEFAULT,
-} from '../../../../../src/config/constants';
-import { buildItemPath } from '../../../../../src/config/paths';
+} from '../../../../src/config/constants';
+import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildItemLoginSettingModeSelectOption,
   buildItemLoginSignInModeOption,
+  buildShareButtonId,
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_LOGIN_SCREEN_ID,
-  ITEM_LOGIN_SETTING_MODE_SELECT_ID,
-  ITEM_LOGIN_SETTING_SWITCH_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
   ITEM_LOGIN_SIGN_IN_MODE_ID,
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
-  ITEM_SETTINGS_BUTTON_CLASS,
-} from '../../../../../src/config/selectors';
-import { getItemLoginExtra } from '../../../../../src/utils/itemExtra';
-import { ITEM_LOGIN_ITEMS } from '../../../../fixtures/items';
-import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../../fixtures/members';
-import { ITEM_LOGIN_PAUSE } from '../../../../support/constants';
+  SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
+} from '../../../../src/config/selectors';
+import { getItemLoginExtra } from '../../../../src/utils/itemExtra';
+import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
+import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
+import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
 
 const changeSignInMode = (mode) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
@@ -57,31 +55,28 @@ const fillItemLoginScreenLayout = ({ username, password, memberId }) => {
 };
 
 const checkItemLoginSetting = ({ isEnabled, mode, disabled = false }) => {
-  const checkedValue = isEnabled ? 'be.checked' : 'not.be.checked';
-  cy.get(`#${ITEM_LOGIN_SETTING_SWITCH_ID}`).should(checkedValue);
   if (isEnabled && !disabled) {
-    cy.get(`#${ITEM_LOGIN_SETTING_MODE_SELECT_ID} + input`).should(
+    cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID} + input`).should(
       'have.value',
       mode,
     );
   }
   if (disabled) {
-    cy.get(`#${ITEM_LOGIN_SETTING_SWITCH_ID}`).should('be.disabled');
+    cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}`).then((el) => {
+      // test classnames are 'disabled'
+      expect(el.parent().html()).to.contain('disabled');
+    });
   }
 };
 
-const editItemLoginSetting = ({ isEnabled, mode }) => {
-  if (isEnabled) {
-    cy.get(`#${ITEM_LOGIN_SETTING_SWITCH_ID}`).check();
-  } else {
-    cy.get(`#${ITEM_LOGIN_SETTING_SWITCH_ID}`).uncheck();
-  }
-  cy.wait('@postItemTag');
-
-  if (isEnabled) {
-    cy.get(`#${ITEM_LOGIN_SETTING_MODE_SELECT_ID}`).click();
-    cy.get(`#${buildItemLoginSettingModeSelectOption(mode)}`).click();
-  }
+const editItemLoginSetting = (mode) => {
+  cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}`).click();
+  cy.get(`li[data-value="${mode}"]`).click();
+  cy.wait('@putItemLogin').then(({ request: { body } }) => {
+    expect(body?.loginSchema).to.equal(
+      SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,
+    );
+  });
 };
 
 describe('Item Login', () => {
@@ -170,31 +165,23 @@ describe('Item Login', () => {
   describe('Display Item Login Setting', () => {
     it('edit item login setting', () => {
       cy.setUpApi(ITEM_LOGIN_ITEMS);
-
+      cy.log('item with item login');
+      const item = ITEM_LOGIN_ITEMS.items[0];
       // check item with item login enabled
-      cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[0].id));
-      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
 
       checkItemLoginSetting({
         isEnabled: true,
         mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
       });
-
-      // allow item login
-      cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[1].id));
-      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
-      checkItemLoginSetting({
-        isEnabled: false,
-        mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
-      });
-      editItemLoginSetting({
-        isEnabled: true,
-        mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,
-      });
+      editItemLoginSetting(SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD);
 
       // disabled at child level
-      cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[5].id));
-      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+      cy.log('child of item with item login');
+      const item2 = ITEM_LOGIN_ITEMS.items[5];
+      cy.visit(buildItemPath(item2.id));
+      cy.get(`#${buildShareButtonId(item2.id)}`).click();
       checkItemLoginSetting({
         isEnabled: true,
         mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,

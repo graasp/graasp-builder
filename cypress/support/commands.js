@@ -56,6 +56,7 @@ import {
   mockRecycleItem,
   mockRecycleItems,
   mockGetRecycledItems,
+  mockDeleteItemTag,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -96,6 +97,7 @@ Cypress.Commands.add(
     recycleItemError = false,
     recycleItemsError = false,
     getRecycledItemsError = false,
+    deleteItemTagError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -162,6 +164,8 @@ Cypress.Commands.add(
 
     mockPostItemTag(items, postItemTagError);
 
+    mockDeleteItemTag(deleteItemTagError);
+
     mockEditMember(members, editMemberError);
 
     mockEditItemMembershipForItem(items);
@@ -193,7 +197,7 @@ Cypress.Commands.add(
     mockDeleteAppData();
 
     mockPatchAppData();
-    
+
     mockRecycleItem(items, recycleItemError);
 
     mockRecycleItems(items, recycleItemsError);
