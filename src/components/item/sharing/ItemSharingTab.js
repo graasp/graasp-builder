@@ -81,9 +81,6 @@ const ItemSharingTab = ({ item }) => {
       ({ email }) => email?.includes(PSEUDONIMIZED_USER_MAIL),
     );
 
-    // TODO this bug
-    // let's use get many users
-
     return (
       <>
         <Divider className={classes.divider} />

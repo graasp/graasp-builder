@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Tooltip from '@material-ui/core/Tooltip';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Badge from '@material-ui/core/Badge';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
@@ -14,8 +14,15 @@ import { PERMISSION_LEVELS } from '../../enums';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
 import { membershipsWithoutUser } from '../../utils/membership';
 
+const useStyles = makeStyles({
+  badge: {
+    border: 'none',
+  },
+});
+
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
   const { data: memberships, isError } = hooks.useItemMemberships(id);
   const { data: currentUser } = hooks.useCurrentMember();
 
@@ -45,9 +52,6 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
       id={ITEM_MEMBERSHIPS_CONTENT_ID}
     >
       <Grid item>
-        <Typography variant="body2">{t('Currently shared with')}</Typography>
-      </Grid>
-      <Grid item>
         <Tooltip
           title={t(
             `This item is shared with ${filteredMemberships.size} users`,
@@ -72,6 +76,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
                     horizontal: 'right',
                   }}
                   badgeContent={badgeContent}
+                  className={classes.badge}
                 >
                   <MemberAvatar id={memberId} />
                 </Badge>

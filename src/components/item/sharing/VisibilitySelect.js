@@ -47,7 +47,9 @@ function VisibilitySelect({ item, edit }) {
 
   // item login tag and item extra value
   const { data: tags, isLoading: isTagsLoading } = useTags();
-  const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(itemId);
+  const { data: itemTags, isLoading: isItemTagsLoading, isError } = useItemTags(
+    itemId,
+  );
   const { data: itemLogin } = useItemLogin(itemId);
   const [itemTagValue, setItemTagValue] = useState(false);
   const [tagValue, setTagValue] = useState(false);
@@ -70,6 +72,12 @@ function VisibilitySelect({ item, edit }) {
 
   if (isTagsLoading || isItemTagsLoading || isMemberLoading) {
     return <Loader />;
+  }
+
+  // hide visibility select if cannot access item tags
+  // this happens when accessing a public item
+  if (isError) {
+    return null;
   }
 
   const handleChange = (event) => {
