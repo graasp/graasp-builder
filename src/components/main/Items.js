@@ -7,7 +7,14 @@ import { useItemSearch } from '../item/ItemSearch';
 import ItemsGrid from './ItemsGrid';
 import ItemsTable from './ItemsTable';
 
-const Items = ({ items, title, id, headerElements }) => {
+const Items = ({
+  items,
+  title,
+  id,
+  headerElements,
+  actions,
+  toolbarActions,
+}) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
 
@@ -29,8 +36,11 @@ const Items = ({ items, title, id, headerElements }) => {
         <ItemsTable
           id={id}
           tableTitle={title}
-          items={itemSearch.results}  
+          items={itemSearch.results}
           headerElements={[itemSearch.input, ...headerElements]}
+          isSearching={Boolean(itemSearch.text)}
+          actions={actions}
+          toolbarActions={toolbarActions}
         />
       );
   }
@@ -41,11 +51,15 @@ Items.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.string,
   headerElements: PropTypes.arrayOf(PropTypes.element),
+  actions: PropTypes.element,
+  toolbarActions: PropTypes.element,
 };
 
 Items.defaultProps = {
   id: null,
-  headerElements: []
+  headerElements: [],
+  actions: null,
+  toolbarActions: null,
 };
 
 export default Items;

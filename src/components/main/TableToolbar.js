@@ -5,14 +5,14 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID, 
-  ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID, 
-  ITEMS_TABLE_COPY_SELECTED_ITEMS_ID 
+import {
+  ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
+  ITEMS_TABLE_COPY_SELECTED_ITEMS_ID,
+  ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID,
 } from '../../config/selectors';
-import DeleteButton from '../common/DeleteButton';
 import CopyButton from './CopyButtons';
 import MoveButton from '../common/MoveButton';
+import RecycleButton from '../common/RecycleButton';
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -30,10 +30,34 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
+const DefaultActions = ({ selectedIds }) => (
+  <>
+    <MoveButton
+      id={ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}
+      color="secondary"
+      itemIds={selectedIds}
+    />
+    <CopyButton
+      id={ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}
+      color="secondary"
+      itemIds={selectedIds}
+    />
+    <RecycleButton
+      id={ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID}
+      color="secondary"
+      itemIds={selectedIds}
+    />
+  </>
+);
+DefaultActions.propTypes = {
+  selectedIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
 const TableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { t } = useTranslation();
-  const { numSelected, tableTitle, selected, headerElements } = props;
+  const { numSelected, tableTitle, selected, headerElements, actions } = props;
+  const renderActions = actions ?? DefaultActions;
 
   return (
     <Toolbar
@@ -65,27 +89,7 @@ const TableToolbar = (props) => {
         </>
       )}
 
-      {numSelected > 0 && (
-        <MoveButton
-          id={ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}
-          color="secondary"
-          itemIds={selected}
-        />
-      )}
-      {numSelected > 0 && (
-        <CopyButton
-          id={ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}
-          color="secondary"
-          itemIds={selected}
-        />
-      )}
-      {numSelected > 0 && (
-        <DeleteButton
-          id={ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}
-          color="secondary"
-          itemIds={selected}
-        />
-      )}
+      {numSelected > 0 && renderActions({ selectedIds: selected })}
     </Toolbar>
   );
 };
@@ -94,12 +98,14 @@ TableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   tableTitle: PropTypes.string,
   selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-  headerElements: PropTypes.arrayOf(PropTypes.element)
+  headerElements: PropTypes.arrayOf(PropTypes.element),
+  actions: PropTypes.element,
 };
 
 TableToolbar.defaultProps = {
   tableTitle: 'Items',
-  headerElements: []
+  headerElements: [],
+  actions: null,
 };
 
 export default TableToolbar;

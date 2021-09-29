@@ -12,7 +12,6 @@ import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
 import TableToolbar from './TableToolbar';
-import { ItemSearchInput } from '../item/ItemSearch';
 import { formatDate } from '../../utils/date';
 import { ITEM_TYPES } from '../../enums';
 import { buildItemPath } from '../../config/paths';
@@ -56,6 +55,9 @@ const ItemsTable = ({
   tableTitle,
   id: tableId,
   headerElements,
+  isSearching,
+  actions,
+  toolbarActions,
 }) => {
   const { t } = useTranslation();
   const { push } = useHistory();
@@ -81,8 +83,7 @@ const ItemsTable = ({
   });
 
   const isFolder = () => Boolean(itemId);
-  const isSearching = () => Boolean(itemSearch.text);
-  const canDrag = () => isFolder() && !isSearching();
+  const canDrag = () => isFolder() && !isSearching;
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -152,6 +153,7 @@ const ItemsTable = ({
         numSelected={selected.length}
         selected={selected}
         headerElements={headerElements}
+        actions={toolbarActions}
       />
       <div
         className="ag-theme-material"
@@ -164,7 +166,7 @@ const ItemsTable = ({
           suppressRowClickSelection
           suppressCellSelection
           frameworkComponents={{
-            actions: ActionsCellRenderer,
+            actions: actions ?? ActionsCellRenderer,
             nameCellRenderer: NameCellRenderer,
             dragCellRenderer: DragCellRenderer,
           }}
@@ -241,16 +243,18 @@ ItemsTable.propTypes = {
   tableTitle: PropTypes.string.isRequired,
   id: PropTypes.string,
   headerElements: PropTypes.arrayOf(PropTypes.element),
-  itemSearch: PropTypes.shape({
-    input: PropTypes.instanceOf(ItemSearchInput),
-    text: PropTypes.string,
-  }),
+  isSearching: PropTypes.bool,
+  actions: PropTypes.element,
+  toolbarActions: PropTypes.element,
 };
 
 ItemsTable.defaultProps = {
   id: '',
   items: List(),
   headerElements: [],
+  isSearching: false,
+  actions: null,
+  toolbarActions: null,
 };
 
 export default ItemsTable;

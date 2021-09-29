@@ -17,6 +17,7 @@ export const buildNavigationLink = (id) => `navigationLink-${id}`;
 export const ITEM_MENU_MOVE_BUTTON_CLASS = 'itemMenuMoveButton';
 export const ITEM_MENU_BUTTON_CLASS = 'itemMenuButton';
 export const ITEM_MENU_COPY_BUTTON_CLASS = 'itemMenuCopyButton';
+export const ITEM_MENU_RECYCLE_BUTTON_CLASS = 'itemMenuRecycleButton';
 export const buildItemMenu = (id) => `itemMenu-${id}`;
 export const TREE_MODAL_TREE_ID = 'treeModalTree';
 export const buildTreeItemClass = (id) => `treeItem-${id}`;
@@ -25,6 +26,7 @@ export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
 export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
+export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
 export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
 export const buildPermissionOptionId = (id) => `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
@@ -41,6 +43,8 @@ export const buildItemsTableRowIdAttribute = (id) =>
   `[name="center"] [row-id="${buildItemsTableRowId(id)}"]`;
 export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
 export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
+  'itemsTableDeleteSelectedItems';
+export const ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID =
   'itemsTableDeleteSelectedItems';
 export const ITEMS_TABLE_COPY_SELECTED_ITEMS_ID = 'itemsTableCopySelectedItems';
 export const ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID = 'itemsTableMoveSelectedItems';
@@ -144,3 +148,4 @@ export const CONFIRM_RECYCLE_BUTTON_ID = 'confirmRecycleButton';
 export const SHARE_ITEM_VISIBILITY_SELECT_ID = 'shareItemVisiblitySelect';
 export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
+export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';

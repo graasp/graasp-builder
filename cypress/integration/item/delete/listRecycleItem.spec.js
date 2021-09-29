@@ -2,17 +2,19 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
-  CONFIRM_RECYCLE_BUTTON_ID,
-  ITEM_DELETE_BUTTON_CLASS,
+  buildItemMenu,
+  buildItemMenuButtonId,
+  buildItemsTableRowIdAttribute,
+  ITEM_MENU_RECYCLE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const recycleItem = (id) => {
+  const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(`#${buildItemsTableRowId(id)} .${ITEM_DELETE_BUTTON_CLASS}`).click();
-  cy.get(`#${CONFIRM_RECYCLE_BUTTON_ID}`).click();
+  cy.get(menuSelector).click();
+  cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_RECYCLE_BUTTON_CLASS}`).click();
 };
 
 describe('Recycle Item in List', () => {
@@ -71,7 +73,7 @@ describe('Recycle Item in List', () => {
 
       cy.wait('@recycleItem').then(() => {
         // check item is still displayed
-        cy.get(`#${buildItemsTableRowId(idToDelete)}`).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(idToDelete)).should('exist');
       });
     });
   });
