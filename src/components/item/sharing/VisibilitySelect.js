@@ -229,6 +229,7 @@ function VisibilitySelect({ item, edit }) {
         return 'This item is private. Only authorized members can access it.';
     }
   };
+
   return (
     <>
       <Typography variant="h6">{t('Visibility')}</Typography>
@@ -250,6 +251,13 @@ function VisibilitySelect({ item, edit }) {
         </Select>
       )}
       {renderVisiblityIndication()}
+      {isDisabled && (
+        <Typography variant="body2">
+          {t(
+            'You cannot modify the visibility because it is defined in one of the parent of this item.',
+          )}
+        </Typography>
+      )}
     </>
   );
 }
