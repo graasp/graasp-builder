@@ -113,6 +113,21 @@
     "This item is public. Anyone can access this item.": "This item is public. Anyone can access this item.",
     "Anyone authenticated with the link": "Anyone authenticated with the link",
     "This item enables item login. New users can access this item when they authenticate using the item login.": "This item enables item login. New users can access this item when they authenticate using the item login.",
-    "Access": "Access"
+    "Access": "Access",
+    "Recycle Bin": "Recycle Bin",
+    "Choose one of the following action.": "Choose one of the following action.",
+    "Recycle": "Recycle",
+    "Delete Permanently": "Delete Permanently",
+    "Private": "Private",
+    "Visibility": "Visibility",
+    "Published": "Published",
+    "Pseudonymized": "Pseudonymized",
+    "Sharing": "Sharing",
+    "No user has access to this item.": "No user has access to this item.",
+    "Authorized Members": "Authorized Members",
+    "Authenticated Members": "Authenticated Members",
+    "Username and Password": "Username and Password",
+    "Username": "Username",
+    "No user has authenticated to this item yet.": "No user has authenticated to this item yet."
   }
 }

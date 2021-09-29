@@ -1,12 +1,12 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
   buildItemMembershipRowDeleteButtonId,
-  ITEM_SETTINGS_BUTTON_CLASS,
+  buildShareButtonId,
 } from '../../../src/config/selectors';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
 
-const deleteItemMembership = (id) => {
-  cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+const deleteItemMembership = ({ id, itemId }) => {
+  cy.get(`#${buildShareButtonId(itemId)}`).click();
   cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).click();
 };
 
@@ -20,7 +20,7 @@ describe('Delete Membership', () => {
 
     // share
     const { id: mId } = memberships[1];
-    deleteItemMembership(mId);
+    deleteItemMembership({ id: mId, itemId: id });
 
     cy.wait('@deleteItemMembership').then(({ request: { url } }) => {
       expect(url).to.contain(mId);

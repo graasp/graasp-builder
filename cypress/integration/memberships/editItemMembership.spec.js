@@ -3,13 +3,13 @@ import { buildItemPath } from '../../../src/config/paths';
 import {
   buildItemMembershipRowId,
   buildPermissionOptionId,
+  buildShareButtonId,
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
-  ITEM_SETTINGS_BUTTON_CLASS,
 } from '../../../src/config/selectors';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
 
-const editItemMembership = ({ id, permission }) => {
-  cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+const editItemMembership = ({ itemId, id, permission }) => {
+  cy.get(`#${buildShareButtonId(itemId)}`).click();
   const select = cy.get(
     `#${buildItemMembershipRowId(
       id,
@@ -30,7 +30,7 @@ describe('Edit Membership', () => {
     // update membership
     const permission = PERMISSION_LEVELS.READ;
     const { id: mId } = memberships[1];
-    editItemMembership({ id: mId, permission });
+    editItemMembership({ itemId: id, id: mId, permission });
 
     cy.wait('@editItemMembership').then(({ request: { url, body } }) => {
       expect(url).to.contain(mId);

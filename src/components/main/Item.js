@@ -11,7 +11,6 @@ import CustomCardHeader from './CustomCardHeader';
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemCard } from '../../config/selectors';
 import EditButton from '../common/EditButton';
-import ShareButton from '../common/ShareButton';
 import DeleteButton from '../common/DeleteButton';
 import { getItemImage } from '../../utils/item';
 import FavoriteButton from '../common/FavoriteButton';
@@ -49,7 +48,6 @@ const Item = ({ item }) => {
       <CardActions disableSpacing>
         <FavoriteButton member={member} item={item} />
         <EditButton item={item} />
-        <ShareButton itemId={id} />
         <DeleteButton itemIds={[id]} />
       </CardActions>
     </Card>

@@ -1,7 +1,12 @@
 import { SETTINGS } from '../../src/config/constants';
 import { ITEM_TYPES, PERMISSION_LEVELS } from '../../src/enums';
 import { buildItemLoginSchemaExtra } from '../../src/utils/itemExtra';
-import { DEFAULT_TAGS, ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from './itemTags';
+import {
+  DEFAULT_TAGS,
+  ITEM_LOGIN_TAG,
+  ITEM_PUBLIC_TAG,
+  ITEM_PUBLISHED_TAG,
+} from './itemTags';
 import { CURRENT_USER, MEMBERS } from './members';
 
 export const DEFAULT_FOLDER_ITEM = {
@@ -128,7 +133,6 @@ export const SAMPLE_ITEMS = {
         },
       ],
     },
-
   ],
   memberships: [],
 };
@@ -316,6 +320,7 @@ export const SAMPLE_PUBLIC_ITEMS = {
       },
       tags: [
         {
+          id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
           tagId: ITEM_PUBLIC_TAG.id,
           itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
         },
@@ -565,5 +570,39 @@ export const ORDERED_ITEMS = {
     'adf09f5a-5688-11eb-ae93-0242ac130005',
     'adf09f5a-5688-11eb-ae93-0242ac130003',
     'adf09f5a-5688-11eb-ae93-0242ac130004',
+  ],
+};
+
+export const PUBLISHED_ITEM = {
+  ...DEFAULT_FOLDER_ITEM,
+  id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+  name: 'parent public item',
+  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+  extra: {
+    image: 'someimageurl',
+  },
+  tags: [
+    {
+      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+      tagId: ITEM_PUBLIC_TAG.id,
+      itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+    },
+    {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+      tagId: ITEM_PUBLISHED_TAG.id,
+      itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+    },
+  ],
+  memberships: [
+    {
+      itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
+      permission: PERMISSION_LEVELS.ADMIN,
+      memberId: MEMBERS.ANNA.id,
+    },
+    {
+      itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
+      permission: PERMISSION_LEVELS.READ,
+      memberId: MEMBERS.BOB.id,
+    },
   ],
 };

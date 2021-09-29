@@ -1,11 +1,11 @@
 import { PERMISSION_LEVELS } from '../../../src/enums';
 import { buildItemPath } from '../../../src/config/paths';
-import { ITEM_SETTINGS_BUTTON_CLASS } from '../../../src/config/selectors';
+import { buildShareButtonId } from '../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
-const shareItem = ({ member, permission }) => {
-  cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+const shareItem = ({ member, permission, id }) => {
+  cy.get(`#${buildShareButtonId(id)}`).click();
 
   cy.fillShareForm({ member, permission });
 };

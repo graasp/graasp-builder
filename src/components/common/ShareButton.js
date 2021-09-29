@@ -1,21 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
 import { useTranslation } from 'react-i18next';
+import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 import {
   buildShareButtonId,
   SHARE_ITEM_BUTTON_CLASS,
 } from '../../config/selectors';
-import { ShareItemModalContext } from '../context/ShareItemModalContext';
+import { LayoutContext } from '../context/LayoutContext';
 
 const ShareButton = ({ itemId }) => {
   const { t } = useTranslation();
-  const { openModal } = useContext(ShareItemModalContext);
+  const { setIsItemSharingOpen, isItemSharingOpen } = useContext(LayoutContext);
 
-  const handleShare = () => {
-    openModal(itemId);
+  // on unmount close sharing screen
+  useEffect(
+    () => () => {
+      setIsItemSharingOpen(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const onClick = () => {
+    setIsItemSharingOpen(!isItemSharingOpen);
   };
 
   return (
@@ -23,10 +33,10 @@ const ShareButton = ({ itemId }) => {
       <IconButton
         aria-label="share"
         className={SHARE_ITEM_BUTTON_CLASS}
-        onClick={handleShare}
+        onClick={onClick}
         id={buildShareButtonId(itemId)}
       >
-        <ShareIcon fontSize="small" />
+        {isItemSharingOpen ? <CloseIcon /> : <ShareIcon fontSize="small" />}
       </IconButton>
     </Tooltip>
   );

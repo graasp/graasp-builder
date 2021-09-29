@@ -18,6 +18,7 @@ const LayoutContextProvider = ({ children }) => {
   // item settings page open
   // todo: separate in item specific context
   const [isItemSettingsOpen, setIsItemSettingsOpen] = useState(false);
+  const [isItemSharingOpen, setIsItemSharingOpen] = useState(false);
 
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
 
@@ -43,6 +44,8 @@ const LayoutContextProvider = ({ children }) => {
         setIsItemMetadataMenuOpen,
         isChatboxMenuOpen,
         setIsChatboxMenuOpen,
+        isItemSharingOpen,
+        setIsItemSharingOpen,
       }}
     >
       {children}

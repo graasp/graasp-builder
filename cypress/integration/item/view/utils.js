@@ -8,8 +8,6 @@ import {
   buildShareButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_HEADER_ID,
-  ITEM_INFORMATION_BUTTON_ID,
-  ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
   ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
@@ -27,11 +25,7 @@ import { isSettingsEditionAllowedForUser } from '../../../../src/utils/membershi
 import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
 
 const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
-  cy.get(`#${ITEM_PANEL_ID}`).then(($itemPanel) => {
-    if (!$itemPanel.hasClass(ITEM_INFORMATION_ICON_IS_OPEN_CLASS)) {
-      cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
-    }
-  });
+  cy.openMetadataPanel();
 
   const panel = cy.get(`#${ITEM_PANEL_ID}`);
   panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -11,11 +11,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formatDate } from '../../utils/date';
 import { hooks } from '../../config/queryClient';
 import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
+import { LayoutContext } from '../context/LayoutContext';
 import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
+import ItemMemberships from './ItemMemberships';
 
 const { useMember } = hooks;
 
@@ -35,8 +37,12 @@ const ItemMetadataContent = ({ item }) => {
   const { t } = useTranslation();
 
   const classes = useStyles();
-
+  const { setIsItemSharingOpen } = useContext(LayoutContext);
   const { data: creator } = useMember(item.get('creator'));
+
+  const onClick = () => {
+    setIsItemSharingOpen(true);
+  };
 
   let type = null;
   let size = null;
@@ -95,6 +101,7 @@ const ItemMetadataContent = ({ item }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <ItemMemberships id={item.get('id')} maxAvatar={5} onClick={onClick} />
     </>
   );
 };

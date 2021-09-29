@@ -170,7 +170,11 @@ const ItemContent = ({ item, enableEdition }) => {
       return (
         <>
           <FileUploader />
-          <Items title={item.get('name')} items={children} headerElements={[ <NewItemButton fontSize="small" /> ]} /> 
+          <Items
+            title={item.get('name')}
+            items={children}
+            headerElements={[<NewItemButton fontSize="small" />]}
+          />
         </>
       );
 

@@ -4,6 +4,9 @@ import 'cypress-file-upload';
 import 'cypress-localstorage-commands';
 import { ITEM_LAYOUT_MODES } from '../../src/enums';
 import {
+  ITEM_INFORMATION_BUTTON_ID,
+  ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
+  ITEM_PANEL_ID,
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../src/config/selectors';
@@ -56,6 +59,7 @@ import {
   mockRecycleItem,
   mockRecycleItems,
   mockGetRecycledItems,
+  mockDeleteItemTag,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -96,6 +100,7 @@ Cypress.Commands.add(
     recycleItemError = false,
     recycleItemsError = false,
     getRecycledItemsError = false,
+    deleteItemTagError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -162,6 +167,8 @@ Cypress.Commands.add(
 
     mockPostItemTag(items, postItemTagError);
 
+    mockDeleteItemTag(deleteItemTagError);
+
     mockEditMember(members, editMemberError);
 
     mockEditItemMembershipForItem(items);
@@ -193,7 +200,7 @@ Cypress.Commands.add(
     mockDeleteAppData();
 
     mockPatchAppData();
-    
+
     mockRecycleItem(items, recycleItemError);
 
     mockRecycleItems(items, recycleItemsError);
@@ -249,3 +256,11 @@ Cypress.Commands.add(
           .should('contain', text),
       ),
 );
+
+Cypress.Commands.add('openMetadataPanel', () => {
+  cy.get(`#${ITEM_PANEL_ID}`).then(($itemPanel) => {
+    if (!$itemPanel.hasClass(ITEM_INFORMATION_ICON_IS_OPEN_CLASS)) {
+      cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
+    }
+  });
+});

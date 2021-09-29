@@ -8,19 +8,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TableContainer from '@material-ui/core/TableContainer';
 import { useTranslation } from 'react-i18next';
+import { List } from 'immutable';
 import TableRow from '@material-ui/core/TableRow';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import IconButton from '@material-ui/core/IconButton';
 import { Loader } from '@graasp/ui';
-import { hooks, useMutation } from '../../config/queryClient';
-import { PERMISSION_LEVELS } from '../../enums';
-import ItemMembershipSelect from './settings/ItemMembershipSelect';
-import CreateItemMembershipForm from './settings/CreateItemMembershipForm';
-import { membershipsWithoutUser } from '../../utils/membership';
+import { hooks, useMutation } from '../../../config/queryClient';
+import { PERMISSION_LEVELS } from '../../../enums';
 import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
-} from '../../config/selectors';
+} from '../../../config/selectors';
+import ItemMembershipSelect from './ItemMembershipSelect';
 
 const ItemMembershipRow = ({ membership, itemId }) => {
   const { data: user, isLoading } = hooks.useMember(membership.memberId);
@@ -93,52 +92,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line no-unused-vars
-const ItemMembershipsTable = ({ id }) => {
+const ItemMembershipsTable = ({ memberships, id, emptyMessage }) => {
   const classes = useStyles();
-  const {
-    data: memberships,
-    isLoading: isMembershipsLoading,
-  } = hooks.useItemMemberships(id);
-  const {
-    data: currentMember,
-    isLoadingCurrentMember,
-  } = hooks.useCurrentMember();
   const { t } = useTranslation();
 
-  if (isMembershipsLoading || isLoadingCurrentMember) {
-    return <Loader />;
-  }
-
-  const membershipWithoutSelf = membershipsWithoutUser(
-    memberships,
-    currentMember.get('id'),
-  );
-
-  const content = membershipWithoutSelf.size ? (
-    membershipWithoutSelf.map((row) => (
-      <ItemMembershipRow membership={row} itemId={id} />
-    ))
+  const content = memberships.size ? (
+    memberships.map((row) => <ItemMembershipRow membership={row} itemId={id} />)
   ) : (
     <Typography align="center" className={classes.emptyText}>
-      {t('No user has access to this item.')}
+      {emptyMessage || t('No user has access to this item.')}
     </Typography>
   );
 
   return (
-    <>
-      <Typography variant="h5">{t('Manage Access')}</Typography>
-      <CreateItemMembershipForm id={id} memberships={memberships} />
-      <TableContainer>
-        <Table size="small">
-          <TableBody>{content}</TableBody>
-        </Table>
-      </TableContainer>
-    </>
+    <TableContainer>
+      <Table size="small">
+        <TableBody>{content}</TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
 ItemMembershipsTable.propTypes = {
   id: PropTypes.string.isRequired,
+  memberships: PropTypes.instanceOf(List).isRequired,
+  emptyMessage: PropTypes.string,
+};
+
+ItemMembershipsTable.defaultProps = {
+  emptyMessage: null,
 };
 
 export default ItemMembershipsTable;
