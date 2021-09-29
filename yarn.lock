@@ -2155,9 +2155,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#71/getItemsByTag":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=8bf2f0819660d2772fa2b88bec7036f921f13397"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=3503b979f5873b66dbc26cc6f49464a7b33dcfd7"
   dependencies:
     axios: 0.21.4
     http-status-codes: 2.1.4
@@ -10205,7 +10205,7 @@ fsevents@^1.2.7:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#71/getItemsByTag"
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2

@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main",
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#71/getItemsByTag",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git",
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "4.11.2",
