@@ -13,6 +13,7 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildFileItemId,
+  buildItemsTableId,
   buildS3FileItemId,
   buildSaveButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
@@ -173,6 +174,7 @@ const ItemContent = ({ item, enableEdition }) => {
         <>
           <FileUploader />
           <Items
+            id={buildItemsTableId(itemId)}
             title={item.get('name')}
             items={children}
             headerElements={[<NewItemButton fontSize="small" />]}

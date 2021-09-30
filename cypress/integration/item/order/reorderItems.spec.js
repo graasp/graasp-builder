@@ -1,6 +1,10 @@
 import { buildItemPath } from '../../../../src/config/paths';
 import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
-import { buildRowDraggerId } from '../../../../src/config/selectors';
+import {
+  buildItemsTableId,
+  buildItemsTableRowId,
+  buildRowDraggerId,
+} from '../../../../src/config/selectors';
 import { TABLE_ITEM_RENDER_TIME, ROW_HEIGHT } from '../../../support/constants';
 
 const reorderAndCheckItem = (id, currentPosition, newPosition) => {
@@ -54,6 +58,27 @@ describe('Order Items', () => {
       const { id: childId } = ITEM_REORDER_ITEMS.children[currentPosition];
 
       reorderAndCheckItem(childId, currentPosition, newPosition);
+    });
+  });
+
+  describe('Check Order', () => {
+    it('check item order in folder with non-existing item in ordering', () => {
+      cy.setUpApi({
+        items: [ITEM_REORDER_ITEMS.parent, ...ITEM_REORDER_ITEMS.children],
+      });
+
+      cy.visit(buildItemPath(ITEM_REORDER_ITEMS.parent.id));
+
+      cy.wait(TABLE_ITEM_RENDER_TIME);
+      const tableBody = `#${buildItemsTableId(ITEM_REORDER_ITEMS.parent.id)}`;
+
+      ITEM_REORDER_ITEMS.children.forEach(({ id }, index) => {
+        // this will find multiple row instances because ag-grid renders several
+        // this should be okay as all of them should have the same row-index
+        cy.get(tableBody)
+          .find(`[row-id=${buildItemsTableRowId(id)}]`)
+          .should('have.attr', 'row-index', index);
+      });
     });
   });
 });

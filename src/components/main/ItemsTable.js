@@ -7,6 +7,7 @@ import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useHistory, useParams } from 'react-router';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
@@ -146,6 +147,8 @@ const ItemsTable = ({
 
   const itemRowDragText = (params) => params.rowNode.data.name;
 
+  const NoRowsComponent = () => <Typography>{t('No items')}</Typography>;
+
   return (
     <div className={classes.root}>
       <TableToolbar
@@ -158,13 +161,14 @@ const ItemsTable = ({
       <div
         className="ag-theme-material"
         style={{ height: ITEMS_TABLE_CONTAINER_HEIGHT, width: '100%' }}
+        id={tableId}
       >
         <AgGridReact
-          id={tableId}
           rowData={mappedRows}
           rowSelection="multiple"
           suppressRowClickSelection
           suppressCellSelection
+          noRowsOverlayComponentFramework={NoRowsComponent}
           frameworkComponents={{
             actions: actions ?? ActionsCellRenderer,
             nameCellRenderer: NameCellRenderer,

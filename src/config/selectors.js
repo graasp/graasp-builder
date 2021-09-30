@@ -7,7 +7,6 @@ export const CONFIRM_DELETE_BUTTON_ID = 'confirmDeleteButton';
 export const buildItemCard = (id) => `itemCard-${id}`;
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
 export const ITEM_FORM_NAME_INPUT_ID = 'newItemNameInput';
-export const ITEM_FORM_DESCRIPTION_INPUT_ID = 'newItemDescriptionInput';
 export const ITEM_FORM_IMAGE_INPUT_ID = 'newItemImageInput';
 export const ITEM_FORM_CONFIRM_BUTTON_ID = 'newItemConfirmButton';
 export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
@@ -149,3 +148,4 @@ export const SHARE_ITEM_VISIBILITY_SELECT_ID = 'shareItemVisiblitySelect';
 export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
+export const buildItemsTableId = (id) => `itemsTable-${id}`;
