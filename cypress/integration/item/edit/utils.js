@@ -1,9 +1,6 @@
 import { ITEM_TYPES, ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import {
-  buildItemCard,
-  buildItemsTableRowId,
-  EDIT_ITEM_BUTTON_CLASS,
   TEXT_EDITOR_CLASS,
   buildSaveButtonId,
   buildEditButtonId,
@@ -15,13 +12,13 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
   const { id, type } = payload;
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID: {
-      const button = `#${buildItemCard(id)} .${EDIT_ITEM_BUTTON_CLASS}`;
+      const button = `#${buildEditButtonId(id)}`;
       cy.get(button).click();
       break;
     }
     case ITEM_LAYOUT_MODES.LIST:
     default: {
-      cy.get(`#${buildItemsTableRowId(id)} .${EDIT_ITEM_BUTTON_CLASS}`).click();
+      cy.get(`#${buildEditButtonId(id)}`).click();
     }
   }
 

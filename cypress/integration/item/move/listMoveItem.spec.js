@@ -5,18 +5,16 @@ import {
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   buildItemMenu,
-  ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const moveItem = ({ id: movedItemId, toItemPath }) => {
-  const menuSelector = `#${buildItemsTableRowId(
-    movedItemId,
-  )} .${ITEM_MENU_BUTTON_CLASS}`;
+  const menuSelector = `#${buildItemMenuButtonId(movedItemId)}`;
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
   cy.get(
@@ -109,7 +107,7 @@ describe('Move Item in List', () => {
 
       cy.wait('@moveItems').then(() => {
         // check item is still there
-        cy.get(`#${buildItemsTableRowId(movedItem)}`).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(movedItem)).should('exist');
       });
     });
   });

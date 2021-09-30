@@ -9,7 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import CustomCardHeader from './CustomCardHeader';
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
-import { buildItemCard } from '../../config/selectors';
+import { buildDeleteButtonId, buildItemCard } from '../../config/selectors';
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
 import { getItemImage } from '../../utils/item';
@@ -48,7 +48,7 @@ const Item = ({ item }) => {
       <CardActions disableSpacing>
         <FavoriteButton member={member} item={item} />
         <EditButton item={item} />
-        <DeleteButton itemIds={[id]} />
+        <DeleteButton itemIds={[id]} id={buildDeleteButtonId(id)} />
       </CardActions>
     </Card>
   );

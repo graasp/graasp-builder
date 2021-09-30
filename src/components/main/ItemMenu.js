@@ -3,24 +3,29 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   buildItemMenu,
+  buildItemMenuButtonId,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  ITEM_MENU_RECYCLE_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
 } from '../../config/selectors';
 import { CopyItemModalContext } from '../context/CopyItemModalContext';
 import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { MoveItemModalContext } from '../context/MoveItemModalContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
+import { useMutation } from '../../config/queryClient';
 
 const ItemMenu = ({ item }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
+  const { mutate: recycleItem } = useMutation(MUTATION_KEYS.RECYCLE_ITEM);
   const { openModal: openCopyModal } = useContext(CopyItemModalContext);
   const { openModal: openMoveModal } = useContext(MoveItemModalContext);
   const { openModal: openCreateShortcutModal } = useContext(
@@ -56,9 +61,18 @@ const ItemMenu = ({ item }) => {
     handleClose();
   };
 
+  const handleRecycle = () => {
+    recycleItem(item.id);
+    handleClose();
+  };
+
   return (
     <>
-      <IconButton className={ITEM_MENU_BUTTON_CLASS} onClick={handleClick}>
+      <IconButton
+        id={buildItemMenuButtonId(item.id)}
+        className={ITEM_MENU_BUTTON_CLASS}
+        onClick={handleClick}
+      >
         <MoreVertIcon />
       </IconButton>
       <Menu
@@ -73,6 +87,12 @@ const ItemMenu = ({ item }) => {
         </MenuItem>
         <MenuItem onClick={handleCopy} className={ITEM_MENU_COPY_BUTTON_CLASS}>
           {t('Copy')}
+        </MenuItem>
+        <MenuItem
+          onClick={handleRecycle}
+          className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
+        >
+          {t('Delete')}
         </MenuItem>
         <MenuItem
           onClick={handleCreateShortcut}

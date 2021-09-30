@@ -2,7 +2,7 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   CONFIRM_DELETE_BUTTON_ID,
   ITEM_DELETE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
@@ -11,7 +11,9 @@ import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItem = (id) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(`#${buildItemsTableRowId(id)} .${ITEM_DELETE_BUTTON_CLASS}`).click();
+  cy.get(
+    `${buildItemsTableRowIdAttribute(id)} .${ITEM_DELETE_BUTTON_CLASS}`,
+  ).click();
   cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };
 
@@ -35,7 +37,7 @@ describe('Delete Item in List', () => {
   });
 
   describe('Error handling', () => {
-    it.only('error while deleting item does not delete in interface', () => {
+    it('error while deleting item does not delete in interface', () => {
       cy.setUpApi({ ...DATABASE_WITH_RECYCLE_BIN, deleteItemError: true });
       const { id } = DATABASE_WITH_RECYCLE_BIN.recycledItems[0];
 
@@ -51,7 +53,7 @@ describe('Delete Item in List', () => {
 
       cy.wait('@deleteItem').then(() => {
         // check item is still displayed
-        cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
+        cy.get(buildItemsTableRowIdAttribute(id)).should('exist');
       });
     });
   });

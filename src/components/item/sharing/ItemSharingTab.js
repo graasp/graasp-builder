@@ -48,6 +48,9 @@ const ItemSharingTab = ({ item }) => {
     memberships,
     memberId: currentMember?.get('id'),
   });
+  const { data: members } = hooks.useMembers(
+    memberships?.map(({ memberId }) => memberId),
+  );
   const { setIsItemSharingOpen } = useContext(LayoutContext);
 
   useEffect(
@@ -74,11 +77,17 @@ const ItemSharingTab = ({ item }) => {
     );
 
     const authorizedMemberships = membershipsWithoutSelf.filter(
-      ({ email }) => !email?.includes(PSEUDONIMIZED_USER_MAIL),
+      ({ memberId }) => {
+        const member = members?.find(({ id: mId }) => mId === memberId);
+        return !member?.email?.includes(PSEUDONIMIZED_USER_MAIL);
+      },
     );
 
     const authenticatedMemberships = membershipsWithoutSelf.filter(
-      ({ email }) => email?.includes(PSEUDONIMIZED_USER_MAIL),
+      ({ memberId }) => {
+        const member = members?.find(({ id: mId }) => mId === memberId);
+        return member?.email?.includes(PSEUDONIMIZED_USER_MAIL);
+      },
     );
 
     return (

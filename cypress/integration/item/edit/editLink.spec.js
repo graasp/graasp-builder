@@ -3,7 +3,10 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
-import { EDIT_ITEM_PAUSE } from '../../../support/constants';
+import {
+  EDIT_ITEM_PAUSE,
+  ITEM_LOADING_PAUSE,
+} from '../../../support/constants';
 import { editCaptionFromViewPage, editItem } from './utils';
 
 describe('Edit Link', () => {
@@ -16,6 +19,7 @@ describe('Edit Link', () => {
       const { id } = GRAASP_LINK_ITEM;
       cy.visit(buildItemPath(id));
       const caption = 'new caption';
+      cy.wait(ITEM_LOADING_PAUSE);
       editCaptionFromViewPage({ id, caption });
       cy.wait(`@editItem`).then(({ request: { url, body } }) => {
         expect(url).to.contain(id);

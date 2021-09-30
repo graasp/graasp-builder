@@ -1,16 +1,17 @@
 import { buildItemPath } from '../../../../src/config/paths';
-import { ITEM_REORDER_ITEMS, ORDERED_ITEMS } from '../../../fixtures/items';
+import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
 import {
+  buildItemsTableId,
   buildItemsTableRowId,
-  ITEMS_TABLE_BODY,
+  buildRowDraggerId,
 } from '../../../../src/config/selectors';
 import { TABLE_ITEM_RENDER_TIME, ROW_HEIGHT } from '../../../support/constants';
 
 const reorderAndCheckItem = (id, currentPosition, newPosition) => {
-  const childEl = `#${buildItemsTableRowId(id)}`;
+  const dragIcon = `#${buildRowDraggerId(id)}`;
 
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.dragAndDrop(childEl, 0, (newPosition - currentPosition) * ROW_HEIGHT);
+  cy.dragAndDrop(dragIcon, 0, (newPosition - currentPosition) * ROW_HEIGHT);
 
   cy.wait('@editItem').then(
     ({
@@ -63,18 +64,20 @@ describe('Order Items', () => {
   describe('Check Order', () => {
     it('check item order in folder with non-existing item in ordering', () => {
       cy.setUpApi({
-        items: [ORDERED_ITEMS.parent, ...ORDERED_ITEMS.children],
+        items: [ITEM_REORDER_ITEMS.parent, ...ITEM_REORDER_ITEMS.children],
       });
 
-      cy.visit(buildItemPath(ORDERED_ITEMS.parent.id));
+      cy.visit(buildItemPath(ITEM_REORDER_ITEMS.parent.id));
 
-      const tableBody = `#${ITEMS_TABLE_BODY}`;
+      cy.wait(TABLE_ITEM_RENDER_TIME);
+      const tableBody = `#${buildItemsTableId(ITEM_REORDER_ITEMS.parent.id)}`;
 
-      ORDERED_ITEMS.existingChildrenOrder.forEach((id, index) => {
+      ITEM_REORDER_ITEMS.children.forEach(({ id }, index) => {
+        // this will find multiple row instances because ag-grid renders several
+        // this should be okay as all of them should have the same row-index
         cy.get(tableBody)
-          .children()
-          .eq(index)
-          .should('have.id', buildItemsTableRowId(id));
+          .find(`[row-id=${buildItemsTableRowId(id)}]`)
+          .should('have.attr', 'row-index', index);
       });
     });
   });

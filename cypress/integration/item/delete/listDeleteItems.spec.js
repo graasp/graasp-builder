@@ -2,10 +2,9 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowId,
+  buildItemsTableRowIdAttribute,
   CONFIRM_DELETE_BUTTON_ID,
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
-  ITEMS_TABLE_ROW_CHECKBOX_CLASS,
 } from '../../../../src/config/selectors';
 import { DATABASE_WITH_RECYCLE_BIN } from '../../../fixtures/recycleBin';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
@@ -14,9 +13,7 @@ const deleteItems = (itemIds) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.wait(TABLE_ITEM_RENDER_TIME);
-    cy.get(
-      `#${buildItemsTableRowId(id)} .${ITEMS_TABLE_ROW_CHECKBOX_CLASS}`,
-    ).click();
+    cy.get(`${buildItemsTableRowIdAttribute(id)} .ag-checkbox-input`).click();
   });
 
   cy.get(`#${ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}`).click();
@@ -63,7 +60,7 @@ describe('Delete Items in List', () => {
       cy.wait('@deleteItems').then(() => {
         // check items are still displayed
         for (const id of itemIds) {
-          cy.get(`#${buildItemsTableRowId(id)}`).should('exist');
+          cy.get(buildItemsTableRowIdAttribute(id)).should('exist');
         }
       });
     });
