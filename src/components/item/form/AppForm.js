@@ -1,11 +1,19 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { InputLabel, Select, MenuItem, FormControl, makeStyles } from '@material-ui/core';
 import BaseItemForm from './BaseItemForm';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
-import { ITEM_FORM_APP_URL_ID } from '../../../config/selectors';
+import { hooks } from '../../../config/queryClient';
+
+const useStyles = makeStyles((theme) => ({
+  img: {
+    verticalAlign: 'middle',
+    margin: theme.spacing(1),
+    height: '30px'
+  },
+}));
 
 const AppForm = ({ onChange, item }) => {
   const { t } = useTranslation();
@@ -14,21 +22,41 @@ const AppForm = ({ onChange, item }) => {
     onChange({ ...item, extra: buildAppExtra({ url: event?.target?.value }) });
   };
 
+  const classes = useStyles()
+  const { useApps } = hooks;
+  const { data } = useApps();
+
+  const entries = data ?
+  data?.map(elt => (
+    <MenuItem value={elt.url}>
+      <img className={classes.img} src={elt.extra.image} alt={elt.name} />
+      {elt.name}
+    </MenuItem>
+  ))
+  :
+  <MenuItem />;
+
+
   const url = getAppExtra(item?.extra)?.url;
 
   return (
-    <>
+    <div>
       <Typography variant="h6">{t('Create an App')}</Typography>
       <BaseItemForm onChange={onChange} item={item} />
-      <TextField
-        id={ITEM_FORM_APP_URL_ID}
-        margin="dense"
-        label={t('App url')}
-        value={url}
-        onChange={handleAppUrlInput}
-        fullWidth
-      />
-    </>
+     
+      <FormControl fullWidth>
+        <InputLabel>{t('App url')}</InputLabel>
+        <Select
+          margin="dense"
+          label={t('App url')}
+          value={url}
+          onChange={handleAppUrlInput}
+          fullWidth
+        >
+          {entries}
+        </Select>
+      </FormControl>
+    </div>
   );
 };
 
