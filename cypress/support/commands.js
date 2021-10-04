@@ -11,6 +11,7 @@ import {
   MODE_LIST_BUTTON_ID,
 } from '../../src/config/selectors';
 import {
+  mockGetAppListRoute,
   mockCopyItem,
   mockCopyItems,
   mockDeleteItem,
@@ -65,6 +66,7 @@ import './commands/item';
 import './commands/navigation';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { SAMPLE_FLAGS } from '../fixtures/flags';
+import { APPS_LIST } from '../fixtures/apps/apps';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -105,6 +107,8 @@ Cypress.Commands.add(
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
     const allItems = [...cachedItems, ...recycledItems];
+
+    mockGetAppListRoute(APPS_LIST);
 
     mockGetOwnItems(cachedItems);
 

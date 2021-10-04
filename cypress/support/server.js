@@ -35,6 +35,7 @@ import {
 } from '../fixtures/apps';
 
 const {
+  buildAppListRoute,
   buildCopyItemRoute,
   buildDeleteItemRoute,
   buildEditItemRoute,
@@ -95,6 +96,19 @@ export const redirectionReply = {
   statusCode: StatusCodes.OK,
   body: null,
 };
+
+export const mockGetAppListRoute = (apps) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/${buildAppListRoute}`,
+    },
+    (req) => {
+      req.reply(apps);
+    },
+  ).as('useApps');
+};
+
 
 export const mockGetCurrentMember = (
   currentMember = MEMBERS.ANNA,

@@ -6,6 +6,7 @@ import { InputLabel, Select, MenuItem, FormControl, makeStyles } from '@material
 import BaseItemForm from './BaseItemForm';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
 import { hooks } from '../../../config/queryClient';
+import { ITEM_FORM_APP_URL_ID } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   img: {
@@ -47,6 +48,7 @@ const AppForm = ({ onChange, item }) => {
       <FormControl fullWidth>
         <InputLabel>{t('App url')}</InputLabel>
         <Select
+          id={ITEM_FORM_APP_URL_ID}
           margin="dense"
           label={t('App url')}
           value={url}
