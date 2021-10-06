@@ -20,6 +20,7 @@ const ItemScreen = () => {
     isItemSettingsOpen,
     setEditingItemId,
     setIsItemSettingsOpen,
+    setIsItemSharingOpen,
     isItemSharingOpen,
   } = useContext(LayoutContext);
   const { data: currentMember } = useCurrentMember();
@@ -32,6 +33,7 @@ const ItemScreen = () => {
   useEffect(() => {
     setEditingItemId(null);
     setIsItemSettingsOpen(false);
+    setIsItemSharingOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
