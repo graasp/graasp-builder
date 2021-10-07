@@ -14,6 +14,7 @@ const Items = ({
   headerElements,
   actions,
   toolbarActions,
+  clickable,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -28,6 +29,7 @@ const Items = ({
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
+          clickable={clickable}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -41,6 +43,7 @@ const Items = ({
           isSearching={Boolean(itemSearch.text)}
           actions={actions}
           toolbarActions={toolbarActions}
+          clickable={clickable}
         />
       );
   }
@@ -53,6 +56,7 @@ Items.propTypes = {
   headerElements: PropTypes.arrayOf(PropTypes.element),
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
+  clickable: PropTypes.bool,
 };
 
 Items.defaultProps = {
@@ -60,6 +64,7 @@ Items.defaultProps = {
   headerElements: [],
   actions: null,
   toolbarActions: null,
+  clickable: true,
 };
 
 export default Items;

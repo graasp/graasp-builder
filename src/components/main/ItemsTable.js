@@ -59,6 +59,7 @@ const ItemsTable = ({
   isSearching,
   actions,
   toolbarActions,
+  clickable,
 }) => {
   const { t } = useTranslation();
   const { push } = useHistory();
@@ -178,8 +179,8 @@ const ItemsTable = ({
           onRowDragEnd={onDragEnd}
           onGridReady={onGridReady}
           onSelectionChanged={onSelectionChanged}
-          onCellClicked={onCellClicked}
-          rowClass={classes.row}
+          onCellClicked={clickable ? onCellClicked : null}
+          rowClass={clickable ? classes.row : null}
           getRowNodeId={getRowNodeId}
           onRowDataChanged={onRowDataChanged}
           applyColumnDefOrder
@@ -250,6 +251,7 @@ ItemsTable.propTypes = {
   isSearching: PropTypes.bool,
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
+  clickable: PropTypes.bool,
 };
 
 ItemsTable.defaultProps = {
@@ -259,6 +261,7 @@ ItemsTable.defaultProps = {
   isSearching: false,
   actions: null,
   toolbarActions: null,
+  clickable: true,
 };
 
 export default ItemsTable;

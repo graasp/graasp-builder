@@ -149,3 +149,5 @@ export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
 export const buildItemsTableId = (id) => `itemsTable-${id}`;
+export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
+  'itemsTableRestoreSelectedItems';
