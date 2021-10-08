@@ -53,6 +53,7 @@
   "scripts": {
     "start": "env-cmd -f ./.env.local react-scripts start",
     "start:test": "env-cmd -f ./.env.test react-scripts start",
+    "start:prod": "env-cmd -f ./.env.production react-scripts start",
     "start:ci": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "dist": "env-cmd -f ./.env.production react-scripts build",

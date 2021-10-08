@@ -102,7 +102,7 @@ const EditItemModalProvider = ({ children }) => {
           color="primary"
           id={ITEM_FORM_CONFIRM_BUTTON_ID}
         >
-          {t('Edit Item')}
+          {t('Save')}
         </Button>
       </DialogActions>
     </Dialog>
