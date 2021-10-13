@@ -115,8 +115,12 @@ export const SETTINGS = {
   ITEM_PUBLIC: {
     name: 'public-item',
   },
-  ITEM_PINNED: {
-    name: 'item-pinned',
+  ITEM_PUBLISHED: {
+    name: 'published-item',
+  },
+  // this tag doesn't exist but is used if none of the visiblity tag is set
+  ITEM_PRIVATE: {
+    name: 'private-item',
   },
 };
 
