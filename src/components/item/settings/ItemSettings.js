@@ -38,7 +38,6 @@ const ItemSettings = ({ item }) => {
 
     editItem.mutate({
       id: item.get('id'),
-      // use item login tag id
       name: item.get('name'),
       settings,
     });
@@ -49,7 +48,6 @@ const ItemSettings = ({ item }) => {
 
     editItem.mutate({
       id: item.get('id'),
-      // use item login tag id
       name: item.get('name'),
       settings,
     });
