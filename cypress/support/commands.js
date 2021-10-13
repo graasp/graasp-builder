@@ -102,7 +102,7 @@ Cypress.Commands.add(
     recycleItemsError = false,
     getRecycledItemsError = false,
     deleteItemTagError = false,
-    restoretItemsError = false,
+    restoreItemsError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -209,7 +209,7 @@ Cypress.Commands.add(
 
     mockGetRecycledItems(recycledItems, getRecycledItemsError);
 
-    mockRestoreItems(recycledItems, restoretItemsError);
+    mockRestoreItems(recycledItems, restoreItemsError);
   },
 );
 
