@@ -149,3 +149,6 @@ export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
 export const buildItemsTableId = (id) => `itemsTable-${id}`;
+
+export const SETTINGS_PINNED_TOGGLE = 'pinned';
+export const SETTINGS_CHATBOX_TOGGLE = 'chatbox';

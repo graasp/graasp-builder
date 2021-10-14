@@ -11,6 +11,10 @@ import {
 } from '@material-ui/core';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
+import {
+  SETTINGS_CHATBOX_TOGGLE,
+  SETTINGS_PINNED_TOGGLE,
+} from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -63,25 +67,23 @@ const ItemSettings = ({ item }) => {
         <FormControlLabel
           label="Pin Item"
           control={
-            (
-              <Switch
-                onChange={handlePinned}
-                checked={settings.isPinned}
-                color="primary"
-              />
-            )
+            <Switch
+              id={SETTINGS_PINNED_TOGGLE}
+              onChange={handlePinned}
+              checked={settings.isPinned}
+              color="primary"
+            />
           }
         />
         <FormControlLabel
           label="Show Chatbox"
           control={
-            (
-              <Switch
-                onChange={handleChatbox}
-                checked={settings.showChatbox}
-                color="primary"
-              />
-            )
+            <Switch
+              id={SETTINGS_CHATBOX_TOGGLE}
+              onChange={handleChatbox}
+              checked={settings.showChatbox}
+              color="primary"
+            />
           }
         />
       </FormGroup>
