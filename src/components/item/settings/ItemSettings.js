@@ -66,25 +66,25 @@ const ItemSettings = ({ item }) => {
       <FormGroup>
         <FormControlLabel
           label="Pin Item"
-          control={
+          control={(
             <Switch
               id={SETTINGS_PINNED_TOGGLE}
               onChange={handlePinned}
               checked={settings.isPinned}
               color="primary"
             />
-          }
+          )}
         />
         <FormControlLabel
           label="Show Chatbox"
-          control={
+          control={(
             <Switch
               id={SETTINGS_CHATBOX_TOGGLE}
               onChange={handleChatbox}
               checked={settings.showChatbox}
               color="primary"
             />
-          }
+          )}
         />
       </FormGroup>
     </Container>
