@@ -13,6 +13,10 @@ export const MOVE_ITEMS_ERROR_MESSAGE = 'There was an error moving the items.';
 export const COPY_ITEM_ERROR_MESSAGE = 'There was an error copying the item.';
 export const COPY_ITEMS_ERROR_MESSAGE = 'There was an error copying the items.';
 export const EDIT_ITEM_ERROR_MESSAGE = 'There was an error editing the item.';
+export const RESTORE_ITEMS_ERROR_MESSAGE =
+  'There was an error restoring the item(s).';
+export const RESTORE_ITEMS_SUCCESS_MESSAGE =
+  'You successfully restore the item(s).';
 export const SHARE_ITEM_ERROR_MESSAGE = 'There was an error sharing the item.';
 export const UPLOAD_FILES_ERROR_MESSAGE =
   'There was an error uploading the file(s).';

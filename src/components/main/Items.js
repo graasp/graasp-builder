@@ -15,6 +15,7 @@ const Items = ({
   actions,
   toolbarActions,
   clickable,
+  defautSortedColumn,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -36,6 +37,7 @@ const Items = ({
     default:
       return (
         <ItemsTable
+          defautSortedColumn={defautSortedColumn}
           id={id}
           tableTitle={title}
           items={itemSearch.results}
@@ -57,6 +59,12 @@ Items.propTypes = {
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
   clickable: PropTypes.bool,
+  defautSortedColumn: PropTypes.shape({
+    updatedAt: PropTypes.string,
+    createdAt: PropTypes.string,
+    type: PropTypes.string,
+    name: PropTypes.string,
+  }),
 };
 
 Items.defaultProps = {
@@ -65,6 +73,7 @@ Items.defaultProps = {
   actions: null,
   toolbarActions: null,
   clickable: true,
+  defautSortedColumn: {},
 };
 
 export default Items;

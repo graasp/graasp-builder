@@ -60,6 +60,7 @@ const ItemsTable = ({
   actions,
   toolbarActions,
   clickable,
+  defautSortedColumn,
 }) => {
   const { t } = useTranslation();
   const { push } = useHistory();
@@ -202,6 +203,7 @@ const ItemsTable = ({
             flex={4}
             sortable
             comparator={textComparator}
+            sort={defautSortedColumn?.name}
           />
           <AgGridColumn
             headerName={t('Type')}
@@ -210,6 +212,7 @@ const ItemsTable = ({
             flex={2}
             sortable
             comparator={textComparator}
+            sort={defautSortedColumn?.type}
           />
           <AgGridColumn
             headerName={t('Created At')}
@@ -219,6 +222,7 @@ const ItemsTable = ({
             valueFormatter={dateColumnFormatter}
             sortable
             comparator={dateComparator}
+            sort={defautSortedColumn?.createdAt}
           />
           <AgGridColumn
             headerName={t('Updated At')}
@@ -228,6 +232,7 @@ const ItemsTable = ({
             valueFormatter={dateColumnFormatter}
             sortable
             comparator={dateComparator}
+            sort={defautSortedColumn?.updatedAt}
           />
           <AgGridColumn
             headerName={t('Actions')}
@@ -252,6 +257,12 @@ ItemsTable.propTypes = {
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
   clickable: PropTypes.bool,
+  defautSortedColumn: PropTypes.shape({
+    updatedAt: PropTypes.string,
+    createdAt: PropTypes.string,
+    type: PropTypes.string,
+    name: PropTypes.string,
+  }),
 };
 
 ItemsTable.defaultProps = {
@@ -262,6 +273,7 @@ ItemsTable.defaultProps = {
   actions: null,
   toolbarActions: null,
   clickable: true,
+  defautSortedColumn: {},
 };
 
 export default ItemsTable;
