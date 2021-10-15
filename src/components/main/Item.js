@@ -47,7 +47,7 @@ const Item = ({ item }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <PinButton member={member} item={item} />
+        <PinButton item={item} />
         <FavoriteButton member={member} item={item} />
         <EditButton item={item} />
         <DeleteButton itemIds={[id]} id={buildDeleteButtonId(id)} />
