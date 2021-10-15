@@ -23,7 +23,6 @@ import {
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
-  SHARE_LINK_WIDTH,
 } from '../../../config/constants';
 import notifier from '../../../middlewares/notifier';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../../types/clipboard';
@@ -58,12 +57,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '80%',
+    position: 'relative',
   },
   shareLink: {
     color: SHARE_LINK_COLOR,
     textDecoration: 'none !important',
-    width: SHARE_LINK_WIDTH,
-    textOverflow: 'ellipsis',
+    width: '70%',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
   },

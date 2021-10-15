@@ -11,7 +11,7 @@ import { HOME_ERROR_ALERT_ID, OWNED_ITEMS_ID } from '../../config/selectors';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import Main from './Main';
-import NewItemButton from "./NewItemButton";
+import NewItemButton from './NewItemButton';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -30,7 +30,13 @@ const Home = () => {
     <Main>
       <FileUploader />
       <ItemHeader />
-      <Items id={OWNED_ITEMS_ID} title={t('My Items')} items={List(ownItems)} headerElements={[ <NewItemButton fontSize="small" /> ]} />
+      <Items
+        defautSortedColumn={{ createdAt: 'desc' }}
+        id={OWNED_ITEMS_ID}
+        title={t('My Items')}
+        items={List(ownItems)}
+        headerElements={[<NewItemButton fontSize="small" />]}
+      />
     </Main>
   );
 };
