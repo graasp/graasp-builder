@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../config/queryClient';
-import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 const PinButton = ({ item }) => {
   const { t } = useTranslation();
@@ -47,7 +47,7 @@ const PinButton = ({ item }) => {
     <Tooltip title={isPinned ? t('Unpin') : t('Pin')}>
       <IconButton
         aria-label="favorite"
-        className={FAVORITE_ITEM_BUTTON_CLASS}
+        className={PIN_ITEM_BUTTON_CLASS}
         onClick={isPinned ? handleUnpin : handlePin}
       >
         {isPinned ? (

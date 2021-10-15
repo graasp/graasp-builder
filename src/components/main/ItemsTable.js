@@ -72,7 +72,7 @@ const ItemsTable = ({
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
   const mappedRows = rows.map((item) => {
-    const { id, updatedAt, name, createdAt, type, extra } = item;
+    const { id, updatedAt, name, createdAt, type, extra, settings } = item;
     return {
       id,
       name,
@@ -80,6 +80,7 @@ const ItemsTable = ({
       updatedAt,
       createdAt,
       extra,
+      settings
     };
   });
 

@@ -24,6 +24,7 @@ export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
 export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
+export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
 export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
