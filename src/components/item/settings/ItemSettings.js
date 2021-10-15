@@ -12,8 +12,8 @@ import {
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import {
-  SETTINGS_CHATBOX_TOGGLE,
-  SETTINGS_PINNED_TOGGLE,
+  SETTINGS_CHATBOX_TOGGLE_ID,
+  SETTINGS_PINNED_TOGGLE_ID,
 } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,7 +68,7 @@ const ItemSettings = ({ item }) => {
           label={t('Pin')}
           control={(
             <Switch
-              id={SETTINGS_PINNED_TOGGLE}
+              id={SETTINGS_PINNED_TOGGLE_ID}
               onChange={handlePinned}
               checked={settings.isPinned}
               color="primary"
@@ -79,7 +79,7 @@ const ItemSettings = ({ item }) => {
           label={t('Show Chat')}
           control={(
             <Switch
-              id={SETTINGS_CHATBOX_TOGGLE}
+              id={SETTINGS_CHATBOX_TOGGLE_ID}
               onChange={handleChatbox}
               checked={settings.showChatbox}
               color="primary"
