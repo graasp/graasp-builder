@@ -106,7 +106,7 @@ export const mockGetAppListRoute = (apps) => {
     (req) => {
       req.reply(apps);
     },
-  ).as('useApps');
+  ).as('getApps');
 };
 
 
