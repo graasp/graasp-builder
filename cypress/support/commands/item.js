@@ -13,6 +13,7 @@ import {
   ITEM_FORM_LINK_INPUT_ID,
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
   ITEM_FORM_APP_URL_ID,
+  buildItemFormAppOptionId
 } from '../../../src/config/selectors';
 
 import {
@@ -119,11 +120,16 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillAppModal',
-  ({ name = '', extra = {} }, { confirm = true } = {}) => {
+  ({ name = '', extra = {} }, { confirm = true, type = false } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(`#${ITEM_FORM_APP_URL_ID}`).click();
-    cy.get(`[data-value="${getAppExtra(extra)?.url}"]`).click();
+
+    if(type){
+      cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
+    }else{
+      cy.get(`#${buildItemFormAppOptionId(getAppExtra(extra)?.url)}`).click();
+    }
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();

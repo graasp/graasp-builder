@@ -7,7 +7,7 @@ import { Autocomplete } from '@material-ui/lab';
 import BaseItemForm from './BaseItemForm';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
 import { hooks } from '../../../config/queryClient';
-import { ITEM_FORM_APP_URL_ID } from '../../../config/selectors';
+import { ITEM_FORM_APP_URL_ID, buildItemFormAppOptionId } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   img: {
@@ -45,10 +45,10 @@ const AppForm = ({ onChange, item }) => {
         onChange={handleAppUrlInput}
         onInputChange={handleAppUrlInput}
         renderOption={(option) => (
-          <>
+          <div id={buildItemFormAppOptionId(option.url)}>
             <img className={classes.img} src={option.extra.image} alt={option.name} />
             {option.name}
-          </>
+          </div>
         )}
         // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(params) => <TextField {...params} label="Combo box" />}
