@@ -65,7 +65,7 @@ const ItemSettings = ({ item }) => {
 
       <FormGroup>
         <FormControlLabel
-          label="Pin Item"
+          label={t('Pin')}
           control={(
             <Switch
               id={SETTINGS_PINNED_TOGGLE}
@@ -76,7 +76,7 @@ const ItemSettings = ({ item }) => {
           )}
         />
         <FormControlLabel
-          label="Show Chatbox"
+          label={t('Show Chat')}
           control={(
             <Switch
               id={SETTINGS_CHATBOX_TOGGLE}

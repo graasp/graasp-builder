@@ -16,39 +16,26 @@ const PinButton = ({ item }) => {
   const [isPinned, setPinned] = useState(item?.settings?.isPinned);
 
   const handlePin = () => {
+    const newState = !isPinned;
+
+    setPinned(newState);
+
     const { settings } = item;
-    settings.isPinned = true;
+    settings.isPinned = newState;
 
     editItem.mutate({
       id: item.id,
-      // use item login tag id
       name: item.name,
       settings: item.settings,
     });
-
-    setPinned(true);
-  };
-
-  const handleUnpin = () => {
-    const { settings } = item;
-    settings.isPinned = false;
-
-    editItem.mutate({
-      id: item.id,
-      // use item login tag id
-      name: item.name,
-      settings: item.settings,
-    });
-
-    setPinned(false);
   };
 
   return (
     <Tooltip title={isPinned ? t('Unpin') : t('Pin')}>
       <IconButton
-        aria-label="favorite"
+        aria-label={isPinned ? t('Unpin') : t('Pin')}
         className={PIN_ITEM_BUTTON_CLASS}
-        onClick={isPinned ? handleUnpin : handlePin}
+        onClick={handlePin}
       >
         {isPinned ? (
           <PushPinIcon fontSize="small" />
