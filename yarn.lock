@@ -2071,8 +2071,13 @@ __metadata:
   linkType: hard
 
 "@cypress/request@npm:^2.88.5":
+<<<<<<< HEAD
   version: 2.88.10
   resolution: "@cypress/request@npm:2.88.10"
+=======
+  version: 2.88.7
+  resolution: "@cypress/request@npm:2.88.7"
+>>>>>>> feat: add thumbnail setting
   dependencies:
     aws-sign2: ~0.7.0
     aws4: ^1.8.0
@@ -2092,7 +2097,11 @@ __metadata:
     tough-cookie: ~2.5.0
     tunnel-agent: ^0.6.0
     uuid: ^8.3.2
+<<<<<<< HEAD
   checksum: 69c3e3b332e9be4866a900f6bcca5d274d8cea6c99707fbcce061de8dbab11c9b1e39f4c017f6e83e6e682717781d4f6106fd6b7cf9546580fcfac353b6676cf
+=======
+  checksum: 21544e555afd0841a8a189d4a4af7695c918bc782db3c636f56cadfed9ea1620c2ef43d94a709de984660c4fe9407dd8446f9f65fbe56f4eafa26a0c05792a64
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -2166,9 +2175,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
   version: 0.1.0
   resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=65fab859e8dc13c0e8cd4906cf91b8d90e7f96fa"
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#85/thumbnails":
+  version: 0.1.0
+<<<<<<< HEAD
+<<<<<<< HEAD
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=c7e430fa32df97b4dfc8d609280c20cb3484c7cc"
+=======
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=e9eda9d3c023cbd31e2848a47c8279c6a3c0464a"
+>>>>>>> 8634e0e (feat: add thumbnail setting)
+=======
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=0554ebb93cee05ece35fcd2cb2febbe3bea7c71b"
+>>>>>>> e28e8ee (refactor: show member avatar in header and grid)
+=======
+"@graasp/query-client@portal:/Users/kim/git/graasp-query-client::locator=graasp-compose%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@graasp/query-client@portal:/Users/kim/git/graasp-query-client::locator=graasp-compose%40workspace%3A."
+>>>>>>> eb4051b (refactor: display thumbnails for member)
+=======
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#85/thumbnails":
+  version: 0.1.0
+<<<<<<< HEAD
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=e6291bbebe693b63b864e6dd545ed4d558295b0e"
+>>>>>>> 9995aa2 (refactor: use graasp-ui)
+=======
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=c7e430fa32df97b4dfc8d609280c20cb3484c7cc"
+>>>>>>> a04b6c7 (test: add tests for thumbnails)
+>>>>>>> feat: add thumbnail setting
   dependencies:
     axios: 0.21.4
     http-status-codes: 2.1.4
@@ -2179,13 +2218,56 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
+<<<<<<< HEAD
   checksum: c6b4b91df05d09acd8e6ea4a5ef75a984f9e375ecdeb5a5a3662a5a63fa3303f62a64b3512462df7e5747cead4413026e3d2b169817fa15a4d9aff4898117216
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  checksum: 4c2315d07f96bd4fa899e62ef08a0f0a3a1cb4902f95b0b4943f32bb0c371dd33ce586be0de00763f01d3c1e557224aecff1834f8ba0f70a1910623b9697ace1
+=======
+  checksum: ffbacfb95f0ced4ffbe4ff26369d8f9f1e65d4f9fce15c5ff9a44a56d6ac72acd938a96f8e9f27d946e97c83caa449d6ebd05f18c91a274f781e2d50d1b73250
+>>>>>>> 8634e0e (feat: add thumbnail setting)
+=======
+  checksum: f487ff819c25095dc18b28f79bdb34fe9d3305de11abf7a73fc45e26434d17c15521d8b0f6f7b155f18c81e2b43c8d516b6bdaf6ed2dd19e8744b3222226c68f
+>>>>>>> e28e8ee (refactor: show member avatar in header and grid)
+=======
+>>>>>>> eb4051b (refactor: display thumbnails for member)
+=======
+  checksum: 57b71ede02ec1cfcec2d92e61ea21c893cbcb6e8d6eabd90f0df08ee69d0cf82c46134cfeea12a5d0bb525580c7d5b7f75de342b16fcf805cca964f773eaa69c
+>>>>>>> 9995aa2 (refactor: use graasp-ui)
+=======
+  checksum: 4c2315d07f96bd4fa899e62ef08a0f0a3a1cb4902f95b0b4943f32bb0c371dd33ce586be0de00763f01d3c1e557224aecff1834f8ba0f70a1910623b9697ace1
+>>>>>>> a04b6c7 (test: add tests for thumbnails)
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 "@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
+<<<<<<< HEAD
   resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=ee92ce94c1f1a63d45a3b13050e6891562d355bb"
+=======
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=c780060af6afcd6955c284911eb958b5a84db5bd"
+=======
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#50/cjs":
+  version: 0.2.0
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=d0234a6afcbe0e4525bddfca0cbb89b63e3db9bc"
+>>>>>>> 5997e31 (feat: allow user to upload avatar)
+=======
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#52/thumbnailAvatar":
+  version: 0.2.0
+<<<<<<< HEAD
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=0d7282046100f0042f2817dfcb16815dd6e2ccb0"
+>>>>>>> 9995aa2 (refactor: use graasp-ui)
+=======
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=96d64d3060aa78fa5b9cfb122daf55b875c6bcc7"
+>>>>>>> a04b6c7 (test: add tests for thumbnails)
+>>>>>>> feat: add thumbnail setting
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2284,19 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
+<<<<<<< HEAD
   checksum: 7a769761e2e01e5c110bf22b4930283039cc96b83e998fcdf01128aa04ac11abda502c29594217814cb2529053b8141e7a0cc86c042345202b56bbfaa254cd56
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  checksum: d92a45efd7324c0753bf76426afd6e3c8563fd556edb19d642f6f4a74056e0e3cebdc4c906e6d9db8cb1a3ceaebfe5c00bcd63c62dfe25ba2301f2e22c01dc24
+=======
+  checksum: 97d106b475c2cf6f78f9bfa90da19b6fc21d9b9c47c87a8cb4d4cc81285ff91e5997273d92345f00c5f9bab7a62523f65c1ad45a691f4395a0dc37f7be816074
+>>>>>>> 9995aa2 (refactor: use graasp-ui)
+=======
+  checksum: c8f37821ae8a7186761b8eb42de3d6843c04fc5396995e57aeeea2839b4c20183c5ad6abad588382d2586f12b1c12f042ee60c5af495c0c93380dbd57f83001c
+>>>>>>> a04b6c7 (test: add tests for thumbnails)
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -3245,9 +3339,15 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
+<<<<<<< HEAD
   version: 16.11.11
   resolution: "@types/node@npm:16.11.11"
   checksum: 1c472bd63f23ca0e4effc96e6e0c693b83b027f613a1f41b6d1bd7791f65ce171a351e0a5c92575cb59e84ad0a930875397bfbbb91a7c925ddbbb558f7461af8
+=======
+  version: 16.11.9
+  resolution: "@types/node@npm:16.11.9"
+  checksum: baec2e6471ee58fd1e9874e6f47ab95a918a0f46b42424392e4c13e3e07f078f8b72b6b48073b0b14f710ed66c5f1b2e497df43f28151000f11f5f299382cfe2
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -3317,13 +3417,22 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:*":
+<<<<<<< HEAD
   version: 17.0.37
   resolution: "@types/react@npm:17.0.37"
+=======
+  version: 17.0.36
+  resolution: "@types/react@npm:17.0.36"
+>>>>>>> feat: add thumbnail setting
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
+<<<<<<< HEAD
   checksum: e68b0d59aa69577fc6a6d654b25d5d8408625498f4c483f160b557fac21e840f6e8807cbde93e9f039949b6d624a019b1990d18499c1d65aecf3605c25e30242
+=======
+  checksum: feeaa484d5d7e354ba6830b06342dec6fd1a2ac87f73d21d3d4f2a3d311459de4090330a1e8af7275c8d1e7737b655a7550c8dd3dbc74ccf34ffd3fc824bbd12
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -5575,7 +5684,11 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "browserslist@npm:^4.0.0, browserslist@npm:^4.12.0, browserslist@npm:^4.17.5, browserslist@npm:^4.18.1, browserslist@npm:^4.6.0, browserslist@npm:^4.6.2, browserslist@npm:^4.6.4":
+=======
+"browserslist@npm:^4.0.0, browserslist@npm:^4.12.0, browserslist@npm:^4.17.5, browserslist@npm:^4.17.6, browserslist@npm:^4.6.0, browserslist@npm:^4.6.2, browserslist@npm:^4.6.4":
+>>>>>>> feat: add thumbnail setting
   version: 4.18.1
   resolution: "browserslist@npm:4.18.1"
   dependencies:
@@ -5893,9 +6006,15 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30000981, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001280":
+<<<<<<< HEAD
   version: 1.0.30001283
   resolution: "caniuse-lite@npm:1.0.30001283"
   checksum: a13916f1b5ea0d75fe34d1ac8b8b841f88da69f98b1fd5178fd350291fdc1794daebcaaf57c3d3bc60f33aa27ecdf8e0909dc1a013475754c5416515f9bc32c2
+=======
+  version: 1.0.30001282
+  resolution: "caniuse-lite@npm:1.0.30001282"
+  checksum: 62797fd756e88bfa01f0f983bea9de7814293b209456e8f0b20596b03d2880246f63dc90f947a1fa63f92806ebefbb86fc7811dbecb7839927886d07996938be
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -6329,6 +6448,15 @@ __metadata:
     color-name: ^1.0.0
     simple-swizzle: ^0.2.2
   checksum: 9b64a58391c3c66342a053a10b0877224a67cc99fea7576259c79ccf7e31f5777ef4512c0d899df03bf6b7bdd9730c7304275a5b275f6adfc10be9e15e451c9e
+  languageName: node
+  linkType: hard
+
+"color-support@npm:^1.1.2":
+  version: 1.1.3
+  resolution: "color-support@npm:1.1.3"
+  bin:
+    color-support: bin.js
+  checksum: 9b7356817670b9a13a26ca5af1c21615463b500783b739b7634a0c2047c16cef4b2865d7576875c31c3cddf9dd621fa19285e628f20198b233a5cfdda6d0793b
   languageName: node
   linkType: hard
 
@@ -6902,8 +7030,13 @@ __metadata:
   linkType: hard
 
 "core-js-compat@npm:^3.1.1, core-js-compat@npm:^3.18.0, core-js-compat@npm:^3.19.1, core-js-compat@npm:^3.6.2":
+<<<<<<< HEAD
   version: 3.19.2
   resolution: "core-js-compat@npm:3.19.2"
+=======
+  version: 3.19.1
+  resolution: "core-js-compat@npm:3.19.1"
+>>>>>>> feat: add thumbnail setting
   dependencies:
     browserslist: ^4.18.1
     semver: 7.0.0
@@ -7586,9 +7719,15 @@ __metadata:
   linkType: hard
 
 "date-fns@npm:^2.16.1":
+<<<<<<< HEAD
   version: 2.27.0
   resolution: "date-fns@npm:2.27.0"
   checksum: db62036b3816eb0322c9532b353beac7f660a91e1a55dbd21c14893c621ebb8509f21c66ba287844dabd34dee0207edd54a9537bce6bb7cab9383dedc6b8bc90
+=======
+  version: 2.26.0
+  resolution: "date-fns@npm:2.26.0"
+  checksum: 49ad59bc788134a6552ef4e4af0d18792001c1ca0070d543de4f36aba5761058b6e6a57b8ca51dd3b0f07f3bd55376b8bc69602bd7940648ba3869c5253c6ae8
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -8217,9 +8356,15 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.564, electron-to-chromium@npm:^1.3.896":
+<<<<<<< HEAD
   version: 1.4.8
   resolution: "electron-to-chromium@npm:1.4.8"
   checksum: 1b7ad23906baae9c01471a3290a93f274425219738432a96bd1961d4ac9f421d70ae31e5c2008c94d5bfe7bae8d31899b5ebe26e03362df586ab4b9f29cb3ee6
+=======
+  version: 1.3.906
+  resolution: "electron-to-chromium@npm:1.3.906"
+  checksum: 087330249a424066cbdb882890164b3cb944f0ea293838a1445274428549e5b6c5edd25c353fed733d20d055ba276d4e3b069554b5e06ebfe511134c4f68cf87
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -9381,8 +9526,13 @@ __metadata:
   linkType: hard
 
 "fastify@npm:^3.18.1":
+<<<<<<< HEAD
   version: 3.24.1
   resolution: "fastify@npm:3.24.1"
+=======
+  version: 3.24.0
+  resolution: "fastify@npm:3.24.0"
+>>>>>>> feat: add thumbnail setting
   dependencies:
     "@fastify/ajv-compiler": ^1.0.0
     abstract-logging: ^2.0.0
@@ -9399,7 +9549,11 @@ __metadata:
     secure-json-parse: ^2.0.0
     semver: ^7.3.2
     tiny-lru: ^7.0.0
+<<<<<<< HEAD
   checksum: d73cd0398989d51df53c892ce5eac3a9e2c194aff7df8b557e8efa95093afca3cf7c9b9cc926249554272d94ff764722272ee0d37dd3f858b728106612a83fe7
+=======
+  checksum: 206e7b74068b7a3a39d1144bd2c453141216527fd9face960d3f20d33edb86a71421afb5d1ee15633712e8b50886db625c6f2d8dfca2b97739c01fa128cb7e8d
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -10290,8 +10444,24 @@ fsevents@^1.2.7:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
+<<<<<<< HEAD
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
+=======
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#85/thumbnails"
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> feat: add thumbnail setting
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
+=======
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master"
+>>>>>>> 8634e0e (feat: add thumbnail setting)
+=======
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#50/cjs"
+>>>>>>> 5997e31 (feat: allow user to upload avatar)
+=======
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#52/thumbnailAvatar"
+>>>>>>> 9995aa2 (refactor: use graasp-ui)
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 5.0.0-beta.4
@@ -11213,8 +11383,13 @@ fsevents@^1.2.7:
   linkType: hard
 
 "ioredis@npm:^4.27.6":
+<<<<<<< HEAD
   version: 4.28.2
   resolution: "ioredis@npm:4.28.2"
+=======
+  version: 4.28.1
+  resolution: "ioredis@npm:4.28.1"
+>>>>>>> feat: add thumbnail setting
   dependencies:
     cluster-key-slot: ^1.1.0
     debug: ^4.3.1
@@ -11227,7 +11402,11 @@ fsevents@^1.2.7:
     redis-errors: ^1.2.0
     redis-parser: ^3.0.0
     standard-as-callback: ^2.1.0
+<<<<<<< HEAD
   checksum: 4d9e5a4707cc918d2c2e161ea430aa06e68d5a513a680e8a315cf2cdea0b65b410a2e7279a04bab6db66aa781af4244acce3df67f560fed198f1f2f1d2c1d609
+=======
+  checksum: aa86fd81e71176bf6e14d5fc20bad18324ed34d70803eac8cd1c6f25cc9f61f98a337a28bf95103f6f4336583e830b735f4049ed91fc36734fed65850947f428
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 
@@ -12474,13 +12653,22 @@ fsevents@^1.2.7:
   linkType: hard
 
 "jest-worker@npm:^27.3.1":
+<<<<<<< HEAD
   version: 27.4.2
   resolution: "jest-worker@npm:27.4.2"
+=======
+  version: 27.3.1
+  resolution: "jest-worker@npm:27.3.1"
+>>>>>>> feat: add thumbnail setting
   dependencies:
     "@types/node": "*"
     merge-stream: ^2.0.0
     supports-color: ^8.0.0
+<<<<<<< HEAD
   checksum: 81516042201b36841cbf657bdd7304ef26e4b99e6ec108fb8eff977f8769f5a26359aa926ab7776d30fe71e0ab9a6df48c4a06ff0973cb60f4fa3e6949c2f470
+=======
+  checksum: 125d46939d894ef8cf1ffbbf6c63cee10f28218698db3949704d5f613a353f56502da50d3425ec722927c7948c5742d0306f63ad5064a432574b8b217b9ceeba
+>>>>>>> feat: add thumbnail setting
   languageName: node
   linkType: hard
 

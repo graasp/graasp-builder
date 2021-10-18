@@ -9,6 +9,7 @@ export const FILE_LOADING_PAUSE = 2000;
 export const TREE_VIEW_PAUSE = 2000;
 export const ITEM_LOADING_PAUSE = 2000;
 export const WEBSOCKETS_DELAY_TIME = 1500;
+export const FILE_LOADING_PAUSE = 2000;
 export const WAIT_FOR_ITEM_TABLE_ROW_TIME = 7000;
 
 export const REDIRECTION_CONTENT = 'hello';
@@ -19,3 +20,5 @@ export const CAPTION_EDIT_PAUSE = 2000;
 
 export const ROW_HEIGHT = 48;
 export const TABLE_ITEM_RENDER_TIME = 2000;
+
+export const FIXTURES_THUMBNAILS_FOLDER = 'thumbnails';
