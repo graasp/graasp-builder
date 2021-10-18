@@ -41,6 +41,10 @@ import {
   RECYCLE_ITEMS_ERROR_MESSAGE,
   RESTORE_ITEMS_ERROR_MESSAGE,
   RESTORE_ITEMS_SUCCESS_MESSAGE,
+  UPLOAD_ITEM_THUMBNAIL_SUCCESS_MESSAGE,
+  UPLOAD_ITEM_THUMBNAIL_FAILURE_MESSAGE,
+  UPLOAD_AVATAR_FAILURE_MESSAGE,
+  UPLOAD_AVATAR_SUCCESS_MESSAGE,
 } from '../config/messages';
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
@@ -66,6 +70,8 @@ const {
   postItemFlagRoutine,
   recycleItemsRoutine,
   restoreItemsRoutine,
+  uploadItemThumbnailRoutine,
+  uploadAvatarRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -149,6 +155,14 @@ export default ({ type, payload }) => {
       message = RESTORE_ITEMS_ERROR_MESSAGE;
       break;
     }
+    case uploadItemThumbnailRoutine.FAILURE: {
+      message = UPLOAD_ITEM_THUMBNAIL_FAILURE_MESSAGE;
+      break;
+    }
+    case uploadAvatarRoutine.FAILURE: {
+      message = UPLOAD_AVATAR_FAILURE_MESSAGE;
+      break;
+    }
     // success messages
     case editMemberRoutine.SUCCESS: {
       message = EDIT_MEMBER_SUCCESS_MESSAGE;
@@ -215,10 +229,25 @@ export default ({ type, payload }) => {
       message = RESTORE_ITEMS_SUCCESS_MESSAGE;
       break;
     }
+    case uploadItemThumbnailRoutine.SUCCESS: {
+      message = UPLOAD_ITEM_THUMBNAIL_SUCCESS_MESSAGE;
+      break;
+    }
+    case uploadAvatarRoutine.SUCCESS: {
+      message = UPLOAD_AVATAR_SUCCESS_MESSAGE;
+      break;
+    }
 
     // progress messages
     // todo: this might be handled differently
     case uploadFileRoutine.REQUEST: {
+      toastr.info(
+        i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
+        i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE),
+      );
+      break;
+    }
+    case uploadItemThumbnailRoutine.REQUEST: {
       toastr.info(
         i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
         i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE),

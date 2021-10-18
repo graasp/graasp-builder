@@ -1,32 +1,52 @@
 import React, { useContext } from 'react';
-import truncate from 'lodash.truncate';
 import PropTypes from 'prop-types';
-import { Card as GraaspCard } from '@graasp/ui';
+import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
+import truncate from 'lodash.truncate';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
+import {
+  DEFAULT_IMAGE_SRC,
+  DESCRIPTION_MAX_LENGTH,
+} from '../../config/constants';
 import EditButton from '../common/EditButton';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
-import { getItemImage, stripHtml } from '../../utils/item';
+import { stripHtml } from '../../utils/item';
 import ItemMenu from './ItemMenu';
 import FavoriteButton from '../common/FavoriteButton';
 import PinButton from '../common/PinButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { buildItemPath } from '../../config/paths';
+import { hooks } from '../../config/queryClient';
 
 const useStyles = makeStyles({
   link: {
     textDecoration: 'none',
     color: 'inherit',
   },
+  thumbnail: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
 });
 
 const Item = ({ item, memberships }) => {
   const classes = useStyles();
-  const { id, name, description } = item;
+  const { id, name, description, extra } = item;
+  const { t } = useTranslation();
 
-  const image = getItemImage(item);
+  const ThumbnailComponent = Thumbnail({
+    id: item.id,
+    extra,
+    // maxWidth: 30,
+    // maxHeight: 30,
+    alt: t('thumbnail'),
+    defaultImage: DEFAULT_IMAGE_SRC,
+    useThumbnail: hooks.useItemThumbnail,
+    className: classes.thumbnail,
+  });
 
   const { data: member } = useContext(CurrentUserContext);
   const enableEdition = isItemUpdateAllowedForUser({
@@ -55,7 +75,7 @@ const Item = ({ item, memberships }) => {
       name={name}
       creator={member?.get('name')}
       ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
-      image={image}
+      Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
       NameWrapper={({ children }) => (
         <Link

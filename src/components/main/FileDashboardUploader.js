@@ -6,9 +6,9 @@ import { useRouteMatch } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
-import { FILE_UPLOAD_MAX_FILES, UPLOAD_METHOD } from '../../config/constants';
+import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
-import configureUppy from '../../utils/uppy';
+import { configureFileUppy } from '../../utils/uppy';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
 
@@ -33,10 +33,9 @@ const FileDashboardUploader = () => {
 
   const applyUppy = () =>
     setUppy(
-      configureUppy({
+      configureFileUppy({
         itemId,
         onComplete,
-        method: UPLOAD_METHOD,
       }),
     );
 

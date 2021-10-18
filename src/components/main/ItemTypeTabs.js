@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles, Tab, Tabs } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { ItemIcon } from '@graasp/ui';
 import { ITEM_TYPES } from '../../enums';
 import {
   CREATE_ITEM_FILE_ID,
@@ -10,7 +11,6 @@ import {
   CREATE_ITEM_DOCUMENT_ID,
   CREATE_ITEM_APP_ID,
 } from '../../config/selectors';
-import ItemIcon from './ItemIcon';
 
 const useStyles = makeStyles((theme) => ({
   tabs: {

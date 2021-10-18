@@ -1,20 +1,10 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { TextEditor } from '@graasp/ui';
-import TextField from '@material-ui/core/TextField';
-import {
-  FOLDER_FORM_DESCRIPTION_ID,
-  ITEM_FORM_IMAGE_INPUT_ID,
-} from '../../../config/selectors';
+import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 
 const FolderForm = ({ onChange, item, updatedProperties }) => {
-  const { t } = useTranslation();
-
-  const handleImageUrlInput = (event) => {
-    onChange({ ...updatedProperties, extra: { image: event.target.value } });
-  };
   const onCaptionChange = (content) => {
     onChange({
       ...updatedProperties,
@@ -36,15 +26,6 @@ const FolderForm = ({ onChange, item, updatedProperties }) => {
         edit
         onChange={onCaptionChange}
         showSaveButton={false}
-      />
-
-      <TextField
-        id={ITEM_FORM_IMAGE_INPUT_ID}
-        margin="dense"
-        label={t('Image (URL)')}
-        value={updatedProperties?.extra?.image || item?.extra?.image}
-        onChange={handleImageUrlInput}
-        fullWidth
       />
     </>
   );

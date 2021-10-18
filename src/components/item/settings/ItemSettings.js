@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import { Map } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import {
   FormControlLabel,
@@ -15,6 +16,7 @@ import {
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_PINNED_TOGGLE_ID,
 } from '../../../config/selectors';
+import ThumbnailSetting from './ThumbnailSetting';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -57,6 +59,30 @@ const ItemSettings = ({ item }) => {
     });
   };
 
+  const renderPinSetting = () => {
+    const control = (
+      <Switch
+        id={SETTINGS_PINNED_TOGGLE_ID}
+        onChange={handlePinned}
+        checked={settings?.isPinned}
+        color="primary"
+      />
+    );
+    return <FormControlLabel label={t('Pin')} control={control} />;
+  };
+
+  const renderChatSetting = () => {
+    const control = (
+      <Switch
+        id={SETTINGS_CHATBOX_TOGGLE_ID}
+        onChange={handleChatbox}
+        checked={settings?.showChatbox}
+        color="primary"
+      />
+    );
+    return <FormControlLabel label={t('Show Chat')} control={control} />;
+  };
+
   return (
     <Container disableGutters className={classes.wrapper}>
       <Typography variant="h4" className={classes.title}>
@@ -64,29 +90,10 @@ const ItemSettings = ({ item }) => {
       </Typography>
 
       <FormGroup>
-        <FormControlLabel
-          label={t('Pin')}
-          control={(
-            <Switch
-              id={SETTINGS_PINNED_TOGGLE_ID}
-              onChange={handlePinned}
-              checked={settings.isPinned}
-              color="primary"
-            />
-          )}
-        />
-        <FormControlLabel
-          label={t('Show Chat')}
-          control={(
-            <Switch
-              id={SETTINGS_CHATBOX_TOGGLE_ID}
-              onChange={handleChatbox}
-              checked={settings.showChatbox}
-              color="primary"
-            />
-          )}
-        />
+        {renderPinSetting()}
+        {renderChatSetting()}
       </FormGroup>
+      <ThumbnailSetting item={item} />
     </Container>
   );
 };

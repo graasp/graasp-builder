@@ -1,10 +1,10 @@
 import React from 'react';
 import { Skeleton } from '@material-ui/lab';
-import { Avatar, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import { Avatar } from '@graasp/ui';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { hooks } from '../../config/queryClient';
-import { getMemberAvatar } from '../../utils/member';
 import { buildMemberAvatarClass } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,14 +20,17 @@ const MemberAvatar = ({ id }) => {
     return <Skeleton variant="circle" width={40} height={40} />;
   }
 
-  // broken link to display the first letter when avatar does not exist
-  const brokenLink = 'broken image to display';
-
   return (
     <Avatar
       className={clsx(classes.avatar, buildMemberAvatarClass(id))}
       alt={member?.get('name')}
-      src={getMemberAvatar(member?.get('extra')) || brokenLink}
+      id={member?.get('id')}
+      extra={member?.get('extra')}
+      useAvatar={hooks.useAvatar}
+      variant="circle"
+      component="avatar"
+      maxWidth={30}
+      maxHeight={30}
     />
   );
 };

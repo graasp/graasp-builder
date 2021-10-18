@@ -17,6 +17,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { generateOwnItems, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
+import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
 import { expectFolderViewScreenLayout } from './utils';
 
 describe('View Folder', () => {
@@ -64,6 +65,7 @@ describe('View Folder', () => {
       cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
 
       // return parent with navigation and should display children
+      cy.wait(NAVIGATION_LOAD_PAUSE);
       cy.goToItemWithNavigation(childId);
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {

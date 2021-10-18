@@ -113,10 +113,21 @@ export const isItemValid = (item) => {
   return shouldHaveName && hasValidTypeProperties;
 };
 
-export const getItemImage = ({ extra }) =>
-  extra?.image ||
-  getEmbeddedLinkExtra(extra)?.thumbnails?.[0] ||
-  DEFAULT_IMAGE_SRC;
+export const getItemImage = ({ url, extra, useDefault = true }) => {
+  if (url) {
+    return url;
+  }
+  const linkThumbnail = getEmbeddedLinkExtra(extra)?.thumbnails?.[0];
+  if (linkThumbnail) {
+    return linkThumbnail;
+  }
+
+  if (useDefault) {
+    return DEFAULT_IMAGE_SRC;
+  }
+
+  return null;
+};
 
 export const isItemFavorite = (item, member) =>
   member?.get('extra')?.favoriteItems?.includes(item.id);

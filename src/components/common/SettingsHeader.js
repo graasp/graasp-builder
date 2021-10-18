@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
+import { Avatar } from '@graasp/ui';
 import { MUTATION_KEYS, API_ROUTES } from '@graasp/query-client';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useMutation } from '../../config/queryClient';
+import { useMutation, hooks } from '../../config/queryClient';
 import {
   AUTHENTICATION_HOST,
   USERNAME_MAX_LENGTH,
@@ -104,8 +104,6 @@ const SettingsHeader = () => {
   }
 
   const username = user?.get('name');
-  // todo: necessary broken image to display a letter
-  const avatarImage = 'a missing avatar';
 
   return (
     <>
@@ -115,7 +113,16 @@ const SettingsHeader = () => {
         id={HEADER_USER_ID}
       >
         <Tooltip title={username ?? t('You are not signed in.')}>
-          <Avatar className={classes.avatar} alt={username} src={avatarImage} />
+          <Avatar
+            id={user?.get('id')}
+            extra={user?.get('extra')}
+            maxWidth={30}
+            maxHeight={30}
+            variant="circle"
+            alt={username}
+            component="avatar"
+            useAvatar={hooks.useAvatar}
+          />
         </Tooltip>
         {username && (
           <Typography variant="subtitle1" className={classes.username}>

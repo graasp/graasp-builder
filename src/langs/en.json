@@ -133,11 +133,18 @@
     "Unpin": "Unpin this item",
     "Show Chat": "Show Chat",
     "Write the folder decription here…": "Write the folder decription here…",
-    "Information": "Information",
-    "Save": "Save",
     "This item is accessible if the visitor provides a ": "This item is accessible if the visitor provides a ",
     "This item is public. Anyone can access it.": "This item is public. Anyone can access it.",
     "This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.": "This element is published. Anyone can access it and is available on Graasp Explore, our public repository of learning ressources.",
-    "This item is private. Only authorized members can access it.": "This item is private. Only authorized members can access it."
+    "This item is private. Only authorized members can access it.": "This item is private. Only authorized members can access it.",
+    "current thumbnail": "current thumbnail",
+    "Crop Image": "Crop Image",
+    "Provide an image to update your thumbnail. You might need to refresh the page to see the changes.": "Provide an image to update your thumbnail. You might need to refresh the page to see the changes.",
+    "Thumbnail": "Thumbnail",
+    "Crop your chosen image to fit the image size requirements.": "Crop your chosen image to fit the image size requirements.",
+    "File Upload": "File Upload",
+    "small thumbnail": "small thumbnail",
+    "Save": "Save",
+    "Information": "Information"
   }
 }

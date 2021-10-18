@@ -35,7 +35,7 @@ const DragCellRenderer = ({ data: item, registerRowDragger }) => {
 
 DragCellRenderer.propTypes = {
   data: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
   }).isRequired,
   registerRowDragger: PropTypes.func.isRequired,
 };

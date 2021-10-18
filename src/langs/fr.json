@@ -64,7 +64,7 @@
     "Add": "Ajouter",
     "File": "Fichier",
     "Images, Videos, Audios, Documents": "Images, Vidéos, Audios, Documents",
-    "Link": "Liens",
+    "Link": "Lien",
     "Wikipedia, YouTube": "Wikipedia, YouTube",
     "Shared Items": "Eléments Partagés",
     "Analytics": "Analytics",
@@ -138,6 +138,13 @@
     "This item is accessible if the visitor provides a ": "Cet élément est accessible si le visiteur se connecte avec un ",
     "This item is public. Anyone can access it.": "Cet élément est public. N'importe qui peut y accéder.",
     "This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.": "Cet élément est publié. N'importe qui peut y accéder et l'élément est répertorié sur Graasp Explorer, notre librarie de ressources d'apprentissage.",
-    "This item is private. Only authorized members can access it.": "Cet élément est privé. Seul les utilisateurs autorisés peuvent y accéder."
+    "This item is private. Only authorized members can access it.": "Cet élément est privé. Seuls les utilisateurs autorisés peuvent y accéder.",
+    "current thumbnail": "icone actuelle",
+    "Crop Image": "Couper l'Image",
+    "Provide an image to update your thumbnail. You might need to refresh the page to see the changes.": "Envoyer une image pour mettre à jour votre icone. Recharger la page pour visualiser les changements.",
+    "Thumbnail": "Icone",
+    "Crop your chosen image to fit the image size requirements.": "Couper l'image choisie pour correspondre aux critères d'image.",
+    "File Upload": "Charger un Fichier",
+    "small thumbnail": "petite icone"
   }
 }

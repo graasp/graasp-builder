@@ -7,13 +7,9 @@ import '@uppy/drag-drop/dist/style.css';
 import { useRouteMatch } from 'react-router';
 import { routines, MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
-import {
-  FILE_UPLOAD_MAX_FILES,
-  HEADER_HEIGHT,
-  UPLOAD_METHOD,
-} from '../../config/constants';
+import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
-import configureUppy from '../../utils/uppy';
+import { configureFileUppy } from '../../utils/uppy';
 import { UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
 import notifier from '../../middlewares/notifier';
@@ -90,11 +86,10 @@ const FileUploader = () => {
 
   const applyUppy = () => {
     setUppy(
-      configureUppy({
+      configureFileUppy({
         itemId,
         onComplete,
         onFilesAdded,
-        method: UPLOAD_METHOD,
         onError,
         onUpload,
       }),
