@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { Loader } from '@graasp/ui';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -18,15 +17,8 @@ function ItemSettingsButton({ id }) {
   const { setIsItemSettingsOpen, isItemSettingsOpen } = useContext(
     LayoutContext,
   );
-  const {
-    data: memberships,
-    isLoading: isMembershipsLoading,
-  } = hooks.useItemMemberships(id);
-  const {
-    data: user,
-    isLoading: isMemberLoading,
-    isError,
-  } = hooks.useCurrentMember();
+  const { data: memberships } = hooks.useItemMemberships(id);
+  const { data: user, isError } = hooks.useCurrentMember();
   const memberId = user?.get('id');
   const { t } = useTranslation();
 
@@ -38,10 +30,6 @@ function ItemSettingsButton({ id }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
-  if (isMembershipsLoading || isMemberLoading) {
-    return <Loader />;
-  }
 
   // settings are not available for user without edition membership
   if (isError || !isSettingsEditionAllowedForUser({ memberships, memberId })) {
