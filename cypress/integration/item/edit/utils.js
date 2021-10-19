@@ -35,7 +35,7 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
       break;
     case ITEM_TYPES.FOLDER:
     default:
-      cy.fillSpaceModal(payload);
+      cy.fillFolderModal(payload);
   }
 };
 

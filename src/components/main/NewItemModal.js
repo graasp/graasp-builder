@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { Box, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -91,11 +92,14 @@ const NewItemModal = ({ open, handleClose }) => {
     switch (selectedItemType) {
       case ITEM_TYPES.FOLDER:
         return (
-          <FolderForm
-            onChange={updateItem}
-            item={initialItem}
-            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.FOLDER]}
-          />
+          <>
+            <Typography variant="h6">{t('Create a Folder')}</Typography>
+            <FolderForm
+              onChange={updateItem}
+              item={initialItem}
+              updatedProperties={updatedPropertiesPerType[ITEM_TYPES.FOLDER]}
+            />
+          </>
         );
       case ITEM_TYPES.FILE:
         return <FileDashboardUploader />;

@@ -6,6 +6,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { TextEditor } from '@graasp/ui';
 import { useHistory, useParams } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,19 +74,6 @@ const ItemsTable = ({
 
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
-  const mappedRows = rows.map((item) => {
-    const { id, updatedAt, name, createdAt, type, extra, settings } = item;
-    return {
-      id,
-      name,
-      type,
-      updatedAt,
-      createdAt,
-      extra,
-      settings
-    };
-  });
-
   const isFolder = () => Boolean(itemId);
   const canDrag = () => isFolder() && !isSearching;
 
@@ -151,7 +139,7 @@ const ItemsTable = ({
   const itemRowDragText = (params) => params.rowNode.data.name;
 
   const NoRowsComponent = () => <Typography>{t('No items')}</Typography>;
-
+  const parentDescription = parentItem?.get('description');
   return (
     <div className={classes.root}>
       <TableToolbar
@@ -161,13 +149,17 @@ const ItemsTable = ({
         headerElements={headerElements}
         actions={toolbarActions}
       />
+
+      {/* description */}
+      {parentDescription && <TextEditor value={parentDescription} />}
+
       <div
         className="ag-theme-material"
         style={{ height: ITEMS_TABLE_CONTAINER_HEIGHT, width: '100%' }}
         id={tableId}
       >
         <AgGridReact
-          rowData={mappedRows}
+          rowData={rows}
           rowSelection="multiple"
           suppressRowClickSelection
           suppressCellSelection

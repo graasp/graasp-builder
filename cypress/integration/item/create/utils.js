@@ -47,7 +47,7 @@ export const createItem = (payload, options) => {
       break;
     case ITEM_TYPES.FOLDER:
     default:
-      cy.fillSpaceModal(payload, options);
+      cy.fillFolderModal(payload, options);
       break;
   }
 };
