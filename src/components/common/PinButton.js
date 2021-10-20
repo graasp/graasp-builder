@@ -16,17 +16,14 @@ const PinButton = ({ item }) => {
   const [isPinned, setPinned] = useState(item?.settings?.isPinned);
 
   const handlePin = () => {
-    const newState = !isPinned;
-
-    setPinned(newState);
-
-    const { settings } = item;
-    settings.isPinned = newState;
-
+    setPinned(!isPinned);
+    
     editItem.mutate({
       id: item.id,
       name: item.name,
-      settings: item.settings,
+      settings: {
+        isPinned: !isPinned
+      },
     });
   };
 

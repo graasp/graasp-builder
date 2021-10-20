@@ -151,5 +151,5 @@ export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
 export const buildItemsTableId = (id) => `itemsTable-${id}`;
 
-export const SETTINGS_PINNED_TOGGLE_ID = 'pinned';
-export const SETTINGS_CHATBOX_TOGGLE_ID = 'chatbox';
+export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
+export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';

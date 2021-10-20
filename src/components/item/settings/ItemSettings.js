@@ -38,22 +38,22 @@ const ItemSettings = ({ item }) => {
   const settings = item.get('settings');
 
   const handleChatbox = (event) => {
-    settings.showChatbox = event.target.checked;
-
     editItem.mutate({
       id: item.get('id'),
       name: item.get('name'),
-      settings,
+      settings: {
+        showChatbox: event.target.checked
+      },
     });
   };
 
   const handlePinned = (event) => {
-    settings.isPinned = event.target.checked;
-
     editItem.mutate({
       id: item.get('id'),
       name: item.get('name'),
-      settings,
+      settings: {
+        isPinned: event.target.checked
+      },
     });
   };
 
