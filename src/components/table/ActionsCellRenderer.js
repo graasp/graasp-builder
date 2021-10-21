@@ -5,17 +5,28 @@ import ItemMenu from '../main/ItemMenu';
 import { hooks } from '../../config/queryClient';
 import FavoriteButton from '../common/FavoriteButton';
 import PinButton from '../common/PinButton';
+import { isItemUpdateAllowedForUser } from '../../utils/membership';
 
-const { useCurrentMember } = hooks;
+const { useCurrentMember, useItemMemberships } = hooks;
 
 const ActionsCellRenderer = ({ data: item }) => {
   const { data: member } = useCurrentMember();
 
+  const { data: memberships } = useItemMemberships(item.id);
+  const canEdit = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: member?.get('id'),
+  });
+
   return (
     <>
-      <PinButton item={item} />
-      <FavoriteButton member={member} item={item} />
-      <EditButton item={item} />
+      {!member.isEmpty() && <FavoriteButton member={member} item={item} />}
+      {canEdit && (
+        <>
+          <EditButton item={item} />
+          <PinButton item={item} />
+        </>
+      )}
       <ItemMenu item={item} member={member} />
     </>
   );

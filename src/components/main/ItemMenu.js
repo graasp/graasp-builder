@@ -1,6 +1,7 @@
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Map } from 'immutable';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -20,9 +21,17 @@ import { CopyItemModalContext } from '../context/CopyItemModalContext';
 import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { MoveItemModalContext } from '../context/MoveItemModalContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
-import { useMutation } from '../../config/queryClient';
+import { useMutation, hooks } from '../../config/queryClient';
+import { isItemUpdateAllowedForUser } from '../../utils/membership';
 
-const ItemMenu = ({ item }) => {
+const { useItemMemberships } = hooks;
+
+const ItemMenu = ({ item, member }) => {
+  const { data: memberships } = useItemMemberships(item.id);
+  const canEdit = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: member?.get('id'),
+  });
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
   const { mutate: recycleItem } = useMutation(MUTATION_KEYS.RECYCLE_ITEM);
@@ -82,18 +91,28 @@ const ItemMenu = ({ item }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleMove} className={ITEM_MENU_MOVE_BUTTON_CLASS}>
-          {t('Move')}
-        </MenuItem>
-        <MenuItem onClick={handleCopy} className={ITEM_MENU_COPY_BUTTON_CLASS}>
-          {t('Copy')}
-        </MenuItem>
-        <MenuItem
-          onClick={handleRecycle}
-          className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
-        >
-          {t('Delete')}
-        </MenuItem>
+        {canEdit && (
+          <>
+            <MenuItem
+              onClick={handleMove}
+              className={ITEM_MENU_MOVE_BUTTON_CLASS}
+            >
+              {t('Move')}
+            </MenuItem>
+            <MenuItem
+              onClick={handleCopy}
+              className={ITEM_MENU_COPY_BUTTON_CLASS}
+            >
+              {t('Copy')}
+            </MenuItem>
+            <MenuItem
+              onClick={handleRecycle}
+              className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
+            >
+              {t('Delete')}
+            </MenuItem>
+          </>
+        )}
         <MenuItem
           onClick={handleCreateShortcut}
           className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
@@ -110,6 +129,7 @@ const ItemMenu = ({ item }) => {
 
 ItemMenu.propTypes = {
   item: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
+  member: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default ItemMenu;

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Map } from 'immutable';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -10,6 +11,7 @@ import { ITEM_MAIN_CLASS } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
 import Chatbox from '../common/Chatbox';
 import ItemMetadataContent from './ItemMetadataContent';
+import ItemPanelHeader from './ItemPanelHeader';
 
 const useStyles = makeStyles((theme) => ({
   hide: {
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemMain = ({ id, children, item }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const {
     isItemMetadataMenuOpen,
     setIsItemMetadataMenuOpen,
@@ -69,10 +72,22 @@ const ItemMain = ({ id, children, item }) => {
     <div id={id} className={ITEM_MAIN_CLASS}>
       {isChatboxMenuOpen && (
         <ItemPanel open={isChatboxMenuOpen}>
+          <ItemPanelHeader
+            title={t('Comments')}
+            onClick={() => {
+              setIsChatboxMenuOpen(false);
+            }}
+          />
           <Chatbox item={item} />
         </ItemPanel>
       )}
       <ItemPanel open={isItemMetadataMenuOpen}>
+        <ItemPanelHeader
+          title={t('Information')}
+          onClick={() => {
+            setIsItemMetadataMenuOpen(false);
+          }}
+        />
         <ItemMetadataContent item={item} />
       </ItemPanel>
 

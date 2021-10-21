@@ -45,7 +45,7 @@ describe('Restore Items in List', () => {
     cy.wait('@getRecycledItems');
   });
 
-  it.only('restore multiple items', () => {
+  it('restore multiple items', () => {
     cy.setUpApi(DATABASE_WITH_RECYCLE_BIN);
     cy.visit(RECYCLE_BIN_PATH);
 

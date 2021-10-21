@@ -869,6 +869,9 @@ export const mockGetItemMembershipsForItem = (items) => {
     ({ reply, url }) => {
       const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
       const item = items.find(({ id }) => id === itemId);
+      if (!item) {
+        return reply([]);
+      }
       const result = item.memberships || [
         {
           permission: PERMISSION_LEVELS.ADMIN,
@@ -876,7 +879,7 @@ export const mockGetItemMembershipsForItem = (items) => {
           itemId: item.id,
         },
       ];
-      reply(result);
+      return reply(result);
     },
   ).as('getItemMemberships');
 };
