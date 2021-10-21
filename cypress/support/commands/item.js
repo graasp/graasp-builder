@@ -13,7 +13,7 @@ import {
   ITEM_FORM_LINK_INPUT_ID,
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
   ITEM_FORM_APP_URL_ID,
-  buildItemFormAppOptionId
+  buildItemFormAppOptionId,
   FOLDER_FORM_DESCRIPTION_ID,
 } from '../../../src/config/selectors';
 
