@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main",
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#78/restore",
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "5.0.0-beta.4",
@@ -53,6 +53,7 @@
   "scripts": {
     "start": "env-cmd -f ./.env.local react-scripts start",
     "start:test": "env-cmd -f ./.env.test react-scripts start",
+    "start:prod": "env-cmd -f ./.env.production react-scripts start",
     "start:ci": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "dist": "env-cmd -f ./.env.production react-scripts build",

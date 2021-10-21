@@ -111,6 +111,9 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
       <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
       <DialogContent>{tree}</DialogContent>
       <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          {t('Cancel')}
+        </Button>
         <Button
           onClick={onClickConfirm}
           color="primary"

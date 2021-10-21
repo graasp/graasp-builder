@@ -106,7 +106,7 @@ const useItemSearch = (items) => {
     setSearchText(text.toLowerCase());
   };
 
-  const results = items.filter((it) =>
+  const results = items?.filter((it) =>
     it?.name?.toLowerCase().includes(searchText),
   );
 

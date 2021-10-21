@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
@@ -14,15 +14,6 @@ import { LayoutContext } from '../context/LayoutContext';
 const ShareButton = ({ itemId }) => {
   const { t } = useTranslation();
   const { setIsItemSharingOpen, isItemSharingOpen } = useContext(LayoutContext);
-
-  // on unmount close sharing screen
-  useEffect(
-    () => () => {
-      setIsItemSharingOpen(false);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   const onClick = () => {
     setIsItemSharingOpen(!isItemSharingOpen);

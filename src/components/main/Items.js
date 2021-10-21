@@ -14,6 +14,8 @@ const Items = ({
   headerElements,
   actions,
   toolbarActions,
+  clickable,
+  defautSortedColumn,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -28,12 +30,14 @@ const Items = ({
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
+          clickable={clickable}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
     default:
       return (
         <ItemsTable
+          defautSortedColumn={defautSortedColumn}
           id={id}
           tableTitle={title}
           items={itemSearch.results}
@@ -41,6 +45,7 @@ const Items = ({
           isSearching={Boolean(itemSearch.text)}
           actions={actions}
           toolbarActions={toolbarActions}
+          clickable={clickable}
         />
       );
   }
@@ -53,6 +58,13 @@ Items.propTypes = {
   headerElements: PropTypes.arrayOf(PropTypes.element),
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
+  clickable: PropTypes.bool,
+  defautSortedColumn: PropTypes.shape({
+    updatedAt: PropTypes.string,
+    createdAt: PropTypes.string,
+    type: PropTypes.string,
+    name: PropTypes.string,
+  }),
 };
 
 Items.defaultProps = {
@@ -60,6 +72,8 @@ Items.defaultProps = {
   headerElements: [],
   actions: null,
   toolbarActions: null,
+  clickable: true,
+  defautSortedColumn: {},
 };
 
 export default Items;

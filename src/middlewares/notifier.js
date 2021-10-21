@@ -39,6 +39,8 @@ import {
   COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE,
   RECYCLE_ITEMS_SUCCESS_MESSAGE,
   RECYCLE_ITEMS_ERROR_MESSAGE,
+  RESTORE_ITEMS_ERROR_MESSAGE,
+  RESTORE_ITEMS_SUCCESS_MESSAGE,
 } from '../config/messages';
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
@@ -63,6 +65,7 @@ const {
   deleteItemMembershipRoutine,
   postItemFlagRoutine,
   recycleItemsRoutine,
+  restoreItemsRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -142,6 +145,10 @@ export default ({ type, payload }) => {
       message = RECYCLE_ITEMS_ERROR_MESSAGE;
       break;
     }
+    case restoreItemsRoutine.FAILURE: {
+      message = RESTORE_ITEMS_ERROR_MESSAGE;
+      break;
+    }
     // success messages
     case editMemberRoutine.SUCCESS: {
       message = EDIT_MEMBER_SUCCESS_MESSAGE;
@@ -202,6 +209,10 @@ export default ({ type, payload }) => {
     }
     case recycleItemsRoutine.SUCCESS: {
       message = RECYCLE_ITEMS_SUCCESS_MESSAGE;
+      break;
+    }
+    case restoreItemsRoutine.SUCCESS: {
+      message = RESTORE_ITEMS_SUCCESS_MESSAGE;
       break;
     }
 

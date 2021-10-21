@@ -153,3 +153,6 @@ export const buildItemsTableId = (id) => `itemsTable-${id}`;
 
 export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
 export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
+
+export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
+  'itemsTableRestoreSelectedItems';

@@ -149,7 +149,6 @@ export const SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR = 8;
 export const FLAG_LIST_MAX_HEIGHT = 250;
 
 export const SHARE_LINK_COLOR = 'black';
-export const SHARE_LINK_WIDTH = 300;
 export const SHARE_LINK_CONTAINER_BORDER_WIDTH = 1;
 export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
 

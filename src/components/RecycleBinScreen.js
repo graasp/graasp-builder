@@ -10,11 +10,14 @@ import Loader from './common/Loader';
 import Main from './main/Main';
 import DeleteButton from './common/DeleteButton';
 import RestoreButton from './common/RestoreButton';
-import { ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID } from '../config/selectors';
+import {
+  ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
+  ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID,
+} from '../config/selectors';
 
 const RowActions = ({ data: item }) => (
   <>
-    <RestoreButton itemId={item.id} />
+    <RestoreButton itemIds={[item.id]} />
     <DeleteButton itemIds={[item.id]} />
   </>
 );
@@ -24,7 +27,11 @@ RowActions.propTypes = {
 
 const ToolbarActions = ({ selectedIds }) => (
   <>
-    <RestoreButton itemIds={selectedIds} color="secondary" />
+    <RestoreButton
+      itemIds={selectedIds}
+      color="secondary"
+      id={ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID}
+    />
     <DeleteButton
       id={ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID}
       itemIds={selectedIds}
@@ -52,6 +59,7 @@ const RecycleBinScreen = () => {
     <Main>
       <ItemHeader />
       <Items
+        clickable={false}
         title={t('Deleted Items')}
         items={List(items)}
         actions={RowActions}
