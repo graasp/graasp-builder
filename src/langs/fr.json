@@ -128,6 +128,9 @@
     "Authenticated Members": "Membres Connectés",
     "Username and Password": "Nom d'utilisateur et Mot de passe",
     "Username": "Nom d'utilisateur",
-    "No user has authenticated to this item yet.": "Aucun utilisateur ne s'est encore connecté à cet élément."
+    "No user has authenticated to this item yet.": "Aucun utilisateur ne s'est encore connecté à cet élément.",
+    "Pin": "Epingler cet élément",
+    "Unpin": "Détacher cet élément",
+    "Show Chat": "Afficher le chat"
   }
 }

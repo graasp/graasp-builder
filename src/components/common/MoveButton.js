@@ -44,4 +44,4 @@ MoveButton.defaultProps = {
   id: '',
 };
 
-export default MoveButton
+export default MoveButton;

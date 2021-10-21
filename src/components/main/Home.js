@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { List } from 'immutable';
 import { hooks } from '../../config/queryClient';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
@@ -34,7 +33,7 @@ const Home = () => {
         defautSortedColumn={{ createdAt: 'desc' }}
         id={OWNED_ITEMS_ID}
         title={t('My Items')}
-        items={List(ownItems)}
+        items={ownItems}
         headerElements={[<NewItemButton fontSize="small" />]}
       />
     </Main>

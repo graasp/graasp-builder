@@ -28,7 +28,7 @@ describe('Favorite Item', () => {
       cy.visit(HOME_PATH);
     });
 
-    it('New button doesn\'t exists', () => { 
+    it("New button doesn't exists", () => {
       cy.visit(FAVORITE_ITEMS_PATH);
       cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
