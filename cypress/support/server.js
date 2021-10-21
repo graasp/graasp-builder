@@ -282,6 +282,29 @@ export const mockRecycleItems = (items, shouldThrowError) => {
   ).as('recycleItems');
 };
 
+export const mockRestoreItems = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/restore\\?id\\=`),
+      query: { id: new RegExp(ID_FORMAT) },
+    },
+    ({ url, reply }) => {
+      let ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
+      if (typeof ids !== 'object') ids = [ids];
+
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+      }
+
+      return reply({
+        statusCode: StatusCodes.OK,
+        body: ids.map((id) => getItemById(items, id)),
+      });
+    },
+  ).as('restoreItems');
+};
+
 export const mockGetItem = ({ items, currentMember }, shouldThrowError) => {
   cy.intercept(
     {
@@ -860,6 +883,9 @@ export const mockGetItemMembershipsForItem = (items) => {
     ({ reply, url }) => {
       const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
       const item = items.find(({ id }) => id === itemId);
+      if (!item) {
+        return reply([]);
+      }
       const result = item.memberships || [
         {
           permission: PERMISSION_LEVELS.ADMIN,
@@ -867,7 +893,7 @@ export const mockGetItemMembershipsForItem = (items) => {
           itemId: item.id,
         },
       ];
-      reply(result);
+      return reply(result);
     },
   ).as('getItemMemberships');
 };

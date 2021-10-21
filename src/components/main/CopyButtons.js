@@ -44,4 +44,4 @@ CopyButton.defaultProps = {
   id: '',
 };
 
-export default CopyButton
+export default CopyButton;

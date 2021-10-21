@@ -6,6 +6,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { TextEditor } from '@graasp/ui';
 import { useHistory, useParams } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -59,6 +60,8 @@ const ItemsTable = ({
   isSearching,
   actions,
   toolbarActions,
+  clickable,
+  defautSortedColumn,
 }) => {
   const { t } = useTranslation();
   const { push } = useHistory();
@@ -70,18 +73,6 @@ const ItemsTable = ({
   const [selected, setSelected] = useState([]);
 
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
-
-  const mappedRows = rows.map((item) => {
-    const { id, updatedAt, name, createdAt, type, extra } = item;
-    return {
-      id,
-      name,
-      type,
-      updatedAt,
-      createdAt,
-      extra,
-    };
-  });
 
   const isFolder = () => Boolean(itemId);
   const canDrag = () => isFolder() && !isSearching;
@@ -148,7 +139,7 @@ const ItemsTable = ({
   const itemRowDragText = (params) => params.rowNode.data.name;
 
   const NoRowsComponent = () => <Typography>{t('No items')}</Typography>;
-
+  const parentDescription = parentItem?.get('description');
   return (
     <div className={classes.root}>
       <TableToolbar
@@ -158,13 +149,17 @@ const ItemsTable = ({
         headerElements={headerElements}
         actions={toolbarActions}
       />
+
+      {/* description */}
+      {parentDescription && <TextEditor value={parentDescription} />}
+
       <div
         className="ag-theme-material"
         style={{ height: ITEMS_TABLE_CONTAINER_HEIGHT, width: '100%' }}
         id={tableId}
       >
         <AgGridReact
-          rowData={mappedRows}
+          rowData={rows}
           rowSelection="multiple"
           suppressRowClickSelection
           suppressCellSelection
@@ -178,8 +173,8 @@ const ItemsTable = ({
           onRowDragEnd={onDragEnd}
           onGridReady={onGridReady}
           onSelectionChanged={onSelectionChanged}
-          onCellClicked={onCellClicked}
-          rowClass={classes.row}
+          onCellClicked={clickable ? onCellClicked : null}
+          rowClass={clickable ? classes.row : null}
           getRowNodeId={getRowNodeId}
           onRowDataChanged={onRowDataChanged}
           applyColumnDefOrder
@@ -201,6 +196,7 @@ const ItemsTable = ({
             flex={4}
             sortable
             comparator={textComparator}
+            sort={defautSortedColumn?.name}
           />
           <AgGridColumn
             headerName={t('Type')}
@@ -209,6 +205,7 @@ const ItemsTable = ({
             flex={2}
             sortable
             comparator={textComparator}
+            sort={defautSortedColumn?.type}
           />
           <AgGridColumn
             headerName={t('Created At')}
@@ -218,6 +215,7 @@ const ItemsTable = ({
             valueFormatter={dateColumnFormatter}
             sortable
             comparator={dateComparator}
+            sort={defautSortedColumn?.createdAt}
           />
           <AgGridColumn
             headerName={t('Updated At')}
@@ -227,6 +225,7 @@ const ItemsTable = ({
             valueFormatter={dateColumnFormatter}
             sortable
             comparator={dateComparator}
+            sort={defautSortedColumn?.updatedAt}
           />
           <AgGridColumn
             headerName={t('Actions')}
@@ -250,6 +249,13 @@ ItemsTable.propTypes = {
   isSearching: PropTypes.bool,
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
+  clickable: PropTypes.bool,
+  defautSortedColumn: PropTypes.shape({
+    updatedAt: PropTypes.string,
+    createdAt: PropTypes.string,
+    type: PropTypes.string,
+    name: PropTypes.string,
+  }),
 };
 
 ItemsTable.defaultProps = {
@@ -259,6 +265,8 @@ ItemsTable.defaultProps = {
   isSearching: false,
   actions: null,
   toolbarActions: null,
+  clickable: true,
+  defautSortedColumn: {},
 };
 
 export default ItemsTable;

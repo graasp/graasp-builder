@@ -15,14 +15,12 @@ const useStyles = makeStyles((theme) => ({
     width: RIGHT_MENU_WIDTH,
     padding: theme.spacing(1),
   },
-  table: {
-    padding: theme.spacing(2),
-  },
-  extra: {
-    wordBreak: 'break-all',
-  },
-  name: {
-    wordBreak: 'break-word',
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
   },
 }));
 

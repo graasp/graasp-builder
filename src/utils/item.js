@@ -133,3 +133,5 @@ export const getErrorItemIds = (items) =>
 
 export const getChildrenOrderFromFolderExtra = (item) =>
   item?.get('extra')?.folder?.childrenOrder ?? [];
+
+export const stripHtml = (str) => str?.replace(/<[^>]*>?/gm, '');

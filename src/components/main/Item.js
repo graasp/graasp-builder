@@ -9,14 +9,15 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import CustomCardHeader from './CustomCardHeader';
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
-import { buildDeleteButtonId, buildItemCard } from '../../config/selectors';
+import { buildItemCard } from '../../config/selectors';
 import EditButton from '../common/EditButton';
-import DeleteButton from '../common/DeleteButton';
-import { getItemImage } from '../../utils/item';
+import { isItemUpdateAllowedForUser } from '../../utils/membership';
+import { getItemImage, stripHtml } from '../../utils/item';
 import FavoriteButton from '../common/FavoriteButton';
 import { hooks } from '../../config/queryClient';
+import PinButton from '../common/PinButton';
 
-const { useCurrentMember } = hooks;
+const { useCurrentMember, useItemMemberships } = hooks;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,6 +36,11 @@ const Item = ({ item }) => {
   const image = getItemImage(item);
 
   const { data: member } = useCurrentMember();
+  const { data: memberships } = useItemMemberships(id);
+  const enableEdition = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: member?.get('id'),
+  });
 
   return (
     <Card className={classes.root} id={buildItemCard(id)}>
@@ -42,13 +48,17 @@ const Item = ({ item }) => {
       <CardMedia className={classes.media} image={image} title={name} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {truncate(description, { length: DESCRIPTION_MAX_LENGTH })}
+          {truncate(stripHtml(description), { length: DESCRIPTION_MAX_LENGTH })}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <FavoriteButton member={member} item={item} />
-        <EditButton item={item} />
-        <DeleteButton itemIds={[id]} id={buildDeleteButtonId(id)} />
+        {!member.isEmpty() && <FavoriteButton member={member} item={item} />}
+        {enableEdition && (
+          <>
+            <EditButton item={item} />
+            <PinButton item={item} />
+          </>
+        )}
       </CardActions>
     </Card>
   );

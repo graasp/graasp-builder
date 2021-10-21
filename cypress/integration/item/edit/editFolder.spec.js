@@ -16,12 +16,13 @@ describe('Edit Folder', () => {
       }
 
       const itemToEdit = SAMPLE_ITEMS.items[0];
-
+      const newDescription = 'new description';
       // edit
       editItem(
         {
           ...itemToEdit,
           ...EDITED_FIELDS,
+          description: newDescription,
         },
         ITEM_LAYOUT_MODES.LIST,
       );
@@ -29,12 +30,13 @@ describe('Edit Folder', () => {
       cy.wait('@editItem').then(
         ({
           response: {
-            body: { id, name },
+            body: { id, name, description },
           },
         }) => {
           // check item is edited and updated
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
+          expect(description).to.contain(newDescription);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.wait('@getOwnItems');
         },

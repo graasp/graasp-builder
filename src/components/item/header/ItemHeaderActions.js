@@ -22,6 +22,8 @@ import ShareButton from '../../common/ShareButton';
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import PerformViewButton from '../../common/PerformViewButton';
+import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import { hooks } from '../../../config/queryClient';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
 }));
+
+const { useCurrentMember, useItemMemberships } = hooks;
+
 const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -46,12 +51,20 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
   const id = item?.get('id');
   const type = item?.get('type');
 
+  const { data: member } = useCurrentMember();
+
+  const { data: memberships } = useItemMemberships(item.get('id'));
+  const canEdit = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: member?.get('id'),
+  });
+
   const renderItemActions = () => {
     // if id is defined, we are looking at an item
     if (id) {
       // show edition only for allowed types
       const showEditButton =
-        !editingItemId && ITEM_TYPES_WITH_CAPTIONS.includes(type);
+        !editingItemId && ITEM_TYPES_WITH_CAPTIONS.includes(type) && canEdit;
 
       const activeActions = (
         <>
@@ -70,6 +83,9 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
           )}
           <ShareButton itemId={id} />
           <PerformViewButton itemId={id} />
+          <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
+            <ForumIcon />
+          </IconButton>
         </>
       );
 
@@ -97,9 +113,6 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       {renderTableActions()}
       {id && (
         <>
-          <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
-            <ForumIcon />
-          </IconButton>
           <IconButton
             id={ITEM_INFORMATION_BUTTON_ID}
             onClick={onClickMetadata}

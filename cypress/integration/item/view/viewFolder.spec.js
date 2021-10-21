@@ -10,7 +10,6 @@ import {
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID,
   ITEMS_GRID_NO_ITEM_ID,
   ITEMS_GRID_PAGINATION_ID,
-  ITEM_SCREEN_ERROR_ALERT_ID,
   NAVIGATION_HOME_LINK_ID,
   ITEMS_TABLE_ROW,
 } from '../../../../src/config/selectors';
@@ -18,7 +17,6 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { generateOwnItems, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
-import { REQUEST_FAILURE_TIME } from '../../../support/constants';
 import { expectFolderViewScreenLayout } from './utils';
 
 describe('View Folder', () => {
@@ -260,21 +258,6 @@ describe('View Folder', () => {
         for (const item of body) {
           cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
         }
-      });
-    });
-  });
-
-  describe('Error Handling', () => {
-    // an item might either not exist or not be accessible
-    it('visiting non-existing item display error', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, getItemError: true });
-      cy.visit(buildItemPath('ecafbd2a-5688-22ac-ae93-0242ac130002'));
-
-      // should get current item
-      cy.wait('@getItem').then(() => {
-        // wait for request to fail
-        cy.wait(REQUEST_FAILURE_TIME);
-        cy.get(`#${ITEM_SCREEN_ERROR_ALERT_ID}`).should('exist');
       });
     });
   });

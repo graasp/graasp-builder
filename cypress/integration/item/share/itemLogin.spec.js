@@ -5,10 +5,8 @@ import {
 } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildItemLoginSignInModeOption,
   buildShareButtonId,
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
-  ITEM_LOGIN_SCREEN_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
   ITEM_LOGIN_SIGN_IN_MODE_ID,
@@ -23,13 +21,12 @@ import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
 
 const changeSignInMode = (mode) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
-  cy.get(`#${buildItemLoginSignInModeOption(mode)}`).click();
+  cy.get(`li[data-value="${mode}"]`).click();
 };
 
 const checkItemLoginScreenLayout = (
   itemLoginSchema = SETTINGS_ITEM_LOGIN_DEFAULT,
 ) => {
-  cy.get(`#${ITEM_LOGIN_SCREEN_ID}`).should('exist');
   cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).should('exist');
   if (itemLoginSchema === SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD) {
     cy.get(`#${ITEM_LOGIN_SIGN_IN_PASSWORD_ID}`).should('exist');
@@ -38,10 +35,8 @@ const checkItemLoginScreenLayout = (
 };
 
 const fillItemLoginScreenLayout = ({ username, password, memberId }) => {
-  cy.get(`#${ITEM_LOGIN_SCREEN_ID}`).should('exist');
-
   if (!memberId) {
-    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME);
+    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYME);
     cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).clear().type(username);
   } else {
     changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.MEMBER_ID);
@@ -218,7 +213,7 @@ describe('Item Login', () => {
 
       cy.wait(ITEM_LOGIN_PAUSE);
 
-      cy.get(`#${ITEM_LOGIN_SCREEN_ID}`).should('exist');
+      cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).should('exist');
     });
   });
 });

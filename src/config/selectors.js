@@ -1,5 +1,3 @@
-const parseStringForId = (string) => string.replaceAll('+', '');
-
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
 export const ITEM_MOVE_BUTTON_CLASS = 'itemMoveButton';
@@ -24,6 +22,7 @@ export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
 export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
+export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
 export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
@@ -71,14 +70,8 @@ export const ITEM_LOGIN_SIGN_IN_PASSWORD_ID = 'itemLoginSignInPassword';
 export const ITEM_LOGIN_SIGN_IN_BUTTON_ID = 'itemLoginSignInButton';
 export const ITEM_SCREEN_MAIN_ID = 'itemScreenMain';
 export const ITEM_LOGIN_SCREEN_FORBIDDEN_ID = 'itemLoginScreenForbidden';
-export const ITEM_LOGIN_SETTING_SWITCH_ID = 'itemLoginSettingSwitch';
-export const ITEM_LOGIN_SETTING_MODE_SELECT_ID = 'itemLoginSettingModeSelect';
-export const buildItemLoginSettingModeSelectOption = (id) =>
-  `itemLoginSettingModeSelectOptions-${parseStringForId(id)}`;
 export const ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID = 'itemLoginSignInMemberId';
 export const ITEM_LOGIN_SIGN_IN_MODE_ID = 'itemLoginSignInMode';
-export const buildItemLoginSignInModeOption = (id) =>
-  `itemLoginSignInModeOption-${id}`;
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
 export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
@@ -150,3 +143,10 @@ export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
 export const buildItemsTableId = (id) => `itemsTable-${id}`;
+
+export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
+export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
+
+export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
+  'itemsTableRestoreSelectedItems';
+export const FOLDER_FORM_DESCRIPTION_ID = 'folderFormDescription';

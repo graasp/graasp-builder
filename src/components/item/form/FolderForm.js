@@ -1,9 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { TextEditor } from '@graasp/ui';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import { ITEM_FORM_IMAGE_INPUT_ID } from '../../../config/selectors';
+import {
+  FOLDER_FORM_DESCRIPTION_ID,
+  ITEM_FORM_IMAGE_INPUT_ID,
+} from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 
 const FolderForm = ({ onChange, item, updatedProperties }) => {
@@ -12,14 +15,27 @@ const FolderForm = ({ onChange, item, updatedProperties }) => {
   const handleImageUrlInput = (event) => {
     onChange({ ...updatedProperties, extra: { image: event.target.value } });
   };
+  const onCaptionChange = (content) => {
+    onChange({
+      ...updatedProperties,
+      description: content,
+    });
+  };
 
   return (
     <>
-      <Typography variant="h6">{t('Create a Folder')}</Typography>
       <BaseItemForm
         onChange={onChange}
         item={item}
         updatedProperties={updatedProperties}
+      />
+
+      <TextEditor
+        id={FOLDER_FORM_DESCRIPTION_ID}
+        value={updatedProperties?.description || item?.description}
+        edit
+        onChange={onCaptionChange}
+        showSaveButton={false}
       />
 
       <TextField
@@ -39,6 +55,7 @@ FolderForm.propTypes = {
     extra: PropTypes.shape({
       image: PropTypes.string,
     }),
+    description: PropTypes.string,
   }),
   onChange: PropTypes.func.isRequired,
   item: PropTypes.shape({

@@ -142,12 +142,12 @@ ItemsGrid.propTypes = {
     text: PropTypes.string,
     input: PropTypes.instanceOf(ItemSearchInput),
   }),
-  headerElements: PropTypes.arrayOf(PropTypes.element)
+  headerElements: PropTypes.arrayOf(PropTypes.element),
 };
 
 ItemsGrid.defaultProps = {
   itemSearch: null,
-  headerElements: []
+  headerElements: [],
 };
 
 const StyledComponent = withStyles(styles)(ItemsGrid);
