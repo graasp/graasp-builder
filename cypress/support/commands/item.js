@@ -13,6 +13,7 @@ import {
   ITEM_FORM_LINK_INPUT_ID,
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
   ITEM_FORM_APP_URL_ID,
+  FOLDER_FORM_DESCRIPTION_ID,
 } from '../../../src/config/selectors';
 
 import {
@@ -77,11 +78,13 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add(
-  'fillSpaceModal',
-  ({ name = '', extra = {} }, { confirm = true } = {}) => {
+  'fillFolderModal',
+  ({ name = '', extra = {}, description = '' }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(`#${ITEM_FORM_IMAGE_INPUT_ID}`).type(`{selectall}${extra.image}`);
+
+    cy.get(`#${FOLDER_FORM_DESCRIPTION_ID}`).type(`{selectall}${description}`);
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
