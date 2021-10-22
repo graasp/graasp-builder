@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: memberships, isError } = hooks.useItemMemberships(id);
+  const { data: memberships, isError } = hooks.useItemMemberships([id]);
   const { data: currentUser } = useContext(CurrentUserContext);
 
   if (!id) {
@@ -36,12 +36,12 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   }
 
   const filteredMemberships = membershipsWithoutUser(
-    memberships,
+    memberships?.get(0),
     currentUser?.get('id'),
   );
 
   // display only if has more than 2 memberships
-  if (filteredMemberships.isEmpty()) {
+  if (!filteredMemberships.length) {
     return null;
   }
 

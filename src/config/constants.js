@@ -136,6 +136,7 @@ export const COMPOSE_VIEW_SELECTION = 'composeViewSelection';
 export const PERFORM_VIEW_SELECTION = 'performViewSelection';
 
 export const ITEM_TYPES_WITH_CAPTIONS = [
+  ITEM_TYPES.FOLDER,
   ITEM_TYPES.S3_FILE,
   ITEM_TYPES.FILE,
   ITEM_TYPES.APP,

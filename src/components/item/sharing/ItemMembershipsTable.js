@@ -8,7 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TableContainer from '@material-ui/core/TableContainer';
 import { useTranslation } from 'react-i18next';
-import { List } from 'immutable';
 import TableRow from '@material-ui/core/TableRow';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import IconButton from '@material-ui/core/IconButton';
@@ -96,7 +95,7 @@ const ItemMembershipsTable = ({ memberships, id, emptyMessage }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const content = memberships.size ? (
+  const content = memberships.length ? (
     memberships.map((row) => <ItemMembershipRow membership={row} itemId={id} />)
   ) : (
     <Typography align="center" className={classes.emptyText}>
@@ -115,7 +114,7 @@ const ItemMembershipsTable = ({ memberships, id, emptyMessage }) => {
 
 ItemMembershipsTable.propTypes = {
   id: PropTypes.string.isRequired,
-  memberships: PropTypes.instanceOf(List).isRequired,
+  memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   emptyMessage: PropTypes.string,
 };
 

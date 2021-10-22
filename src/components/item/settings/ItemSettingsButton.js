@@ -5,22 +5,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
-import { hooks } from '../../../config/queryClient';
 import { LayoutContext } from '../../context/LayoutContext';
-import { isSettingsEditionAllowedForUser } from '../../../utils/membership';
 import {
   buildSettingsButtonId,
   ITEM_SETTINGS_BUTTON_CLASS,
 } from '../../../config/selectors';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 function ItemSettingsButton({ id }) {
   const { setIsItemSettingsOpen, isItemSettingsOpen } = useContext(
     LayoutContext,
   );
-  const { data: memberships } = hooks.useItemMemberships(id);
-  const { data: user, isError } = useContext(CurrentUserContext);
-  const memberId = user?.get('id');
   const { t } = useTranslation();
 
   // on unmount close item settings
@@ -31,11 +25,6 @@ function ItemSettingsButton({ id }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
-  // settings are not available for user without edition membership
-  if (isError || !isSettingsEditionAllowedForUser({ memberships, memberId })) {
-    return null;
-  }
 
   const onClickSettings = () => {
     setIsItemSettingsOpen(!isItemSettingsOpen);

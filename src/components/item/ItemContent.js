@@ -175,6 +175,8 @@ const ItemContent = ({ item, enableEdition }) => {
             id={buildItemsTableId(itemId)}
             title={item.get('name')}
             items={children}
+            isEditing={isEditing}
+            onSaveCaption={onSaveCaption}
             headerElements={
               enableEdition ? [<NewItemButton fontSize="small" />] : undefined
             }

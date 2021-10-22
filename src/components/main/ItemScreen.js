@@ -25,9 +25,9 @@ const ItemScreen = () => {
     isItemSharingOpen,
   } = useContext(LayoutContext);
   const { data: currentMember } = useContext(CurrentUserContext);
-  const { data: memberships } = useItemMemberships(itemId);
+  const { data: memberships } = useItemMemberships([itemId]);
   const enableEdition = isItemUpdateAllowedForUser({
-    memberships,
+    memberships: memberships?.get(0),
     memberId: currentMember?.get('id'),
   });
 
@@ -47,7 +47,7 @@ const ItemScreen = () => {
       return <ItemSettings item={item} />;
     }
     if (isItemSharingOpen) {
-      return <ItemSharingTab item={item} />;
+      return <ItemSharingTab item={item} memberships={memberships?.get(0)} />;
     }
     return <ItemContent item={item} enableEdition={enableEdition} />;
   })();

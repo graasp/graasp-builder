@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
-import { Map } from 'immutable';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { useTranslation } from 'react-i18next';
@@ -10,8 +9,10 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { useMutation } from '../../config/queryClient';
 import { isItemFavorite } from '../../utils/item';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const FavoriteButton = ({ item, member }) => {
+const FavoriteButton = ({ item }) => {
+  const { data: member } = useContext(CurrentUserContext);
   const { t } = useTranslation();
   const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
 
@@ -60,7 +61,6 @@ const FavoriteButton = ({ item, member }) => {
 
 FavoriteButton.propTypes = {
   item: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
-  member: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default FavoriteButton;

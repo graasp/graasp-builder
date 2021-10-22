@@ -54,9 +54,9 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
 
   const { data: member } = useContext(CurrentUserContext);
 
-  const { data: memberships } = useItemMemberships(item.get('id'));
+  const { data: memberships } = useItemMemberships([id]);
   const canEdit = isItemUpdateAllowedForUser({
-    memberships,
+    memberships: memberships?.get(0),
     memberId: member?.get('id'),
   });
 
@@ -93,7 +93,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       return (
         <>
           {!isItemSettingsOpen && activeActions}
-          <ItemSettingsButton id={id} />
+          {canEdit && <ItemSettingsButton id={id} />}
         </>
       );
     }

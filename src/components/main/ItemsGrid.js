@@ -15,6 +15,7 @@ import {
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID,
   ITEMS_GRID_PAGINATION_ID,
 } from '../../config/selectors';
+import { getMembershipsForItem } from '../../utils/membership';
 import { ItemSearchInput, NoItemSearchResult } from '../item/ItemSearch';
 import EmptyItem from './EmptyItem';
 import Item from './Item';
@@ -46,7 +47,14 @@ const styles = (theme) => ({
 });
 
 const ItemsGrid = (props) => {
-  const { classes, items, title, itemSearch, headerElements } = props;
+  const {
+    classes,
+    items,
+    title,
+    itemSearch,
+    headerElements,
+    memberships,
+  } = props;
 
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
@@ -80,7 +88,10 @@ const ItemsGrid = (props) => {
 
     return itemsInPage.map((item) => (
       <Grid key={item.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-        <Item item={item} />
+        <Item
+          item={item}
+          memberships={getMembershipsForItem({ items, memberships, item })}
+        />
       </Grid>
     ));
   };
@@ -126,6 +137,7 @@ const ItemsGrid = (props) => {
 
 ItemsGrid.propTypes = {
   items: PropTypes.instanceOf(List).isRequired,
+  memberships: PropTypes.instanceOf(List).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
   }).isRequired,

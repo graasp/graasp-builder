@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomCardHeader = ({ item }) => {
+const CustomCardHeader = ({ item, canEdit }) => {
   const { id, creator, name, type } = item;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -66,7 +66,7 @@ const CustomCardHeader = ({ item }) => {
           </Typography>
         </div>
       </div>
-      <ItemMenu item={item} member={member} />
+      <ItemMenu item={item} canEdit={canEdit} />
     </div>
   );
 };
@@ -78,6 +78,7 @@ CustomCardHeader.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
+  canEdit: PropTypes.bool.isRequired,
 };
 
 export default CustomCardHeader;

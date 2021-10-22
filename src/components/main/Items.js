@@ -1,11 +1,15 @@
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
+import { Loader } from '@graasp/ui';
 import React, { useContext } from 'react';
 import { ITEM_LAYOUT_MODES } from '../../enums';
 import { LayoutContext } from '../context/LayoutContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ItemsGrid from './ItemsGrid';
+import { hooks } from '../../config/queryClient';
 import ItemsTable from './ItemsTable';
+
+const { useItemMemberships } = hooks;
 
 const Items = ({
   items,
@@ -16,9 +20,21 @@ const Items = ({
   toolbarActions,
   clickable,
   defautSortedColumn,
+  isEditing,
+  onSaveCaption,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
+  const {
+    data: memberships,
+    isLoading: isMembershipsLoading,
+  } = useItemMemberships(
+    itemSearch?.results?.map(({ id: itemId }) => itemId).toJS(),
+  );
+
+  if (isMembershipsLoading) {
+    return <Loader />;
+  }
 
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID:
@@ -27,6 +43,7 @@ const Items = ({
           id={id}
           title={title}
           items={itemSearch.results}
+          memberships={memberships}
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
@@ -41,11 +58,14 @@ const Items = ({
           id={id}
           tableTitle={title}
           items={itemSearch.results}
+          memberships={memberships}
           headerElements={[itemSearch.input, ...headerElements]}
           isSearching={Boolean(itemSearch.text)}
           actions={actions}
           toolbarActions={toolbarActions}
           clickable={clickable}
+          isEditing={isEditing}
+          onSaveCaption={onSaveCaption}
         />
       );
   }
@@ -65,6 +85,8 @@ Items.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
   }),
+  isEditing: PropTypes.bool.isRequired,
+  onSaveCaption: PropTypes.func.isRequired,
 };
 
 Items.defaultProps = {

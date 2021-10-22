@@ -17,3 +17,8 @@ export const isItemUpdateAllowedForUser = ({ memberships, memberId }) =>
 
 export const membershipsWithoutUser = (memberships, userId) =>
   memberships.filter(({ memberId }) => memberId !== userId);
+
+export const getMembershipsForItem = ({ item, memberships, items }) => {
+  const index = items.findKey(({ id }) => id === item.id);
+  return memberships.get(index);
+};

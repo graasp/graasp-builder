@@ -62,6 +62,7 @@ import {
   mockGetRecycledItems,
   mockDeleteItemTag,
   mockRestoreItems,
+  mockGetMembers,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -143,6 +144,8 @@ Cypress.Commands.add(
 
     mockGetMember(cachedMembers);
 
+    mockGetMembers(cachedMembers);
+
     mockGetMemberBy(cachedMembers, getMemberError);
 
     mockUploadItem(cachedItems, defaultUploadError);
@@ -179,7 +182,7 @@ Cypress.Commands.add(
 
     mockEditItemMembershipForItem(items);
 
-    mockDeleteItemMembershipForItem(items);
+    mockDeleteItemMembershipForItem();
 
     mockGetFlags(flags);
 

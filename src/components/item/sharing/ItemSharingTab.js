@@ -33,14 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemSharingTab = ({ item }) => {
+const ItemSharingTab = ({ item, memberships }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const id = item.get('id');
-  const {
-    data: memberships,
-    isLoading: isMembershipsLoading,
-  } = hooks.useItemMemberships(id);
   const { data: currentMember, isLoadingCurrentMember } = useContext(
     CurrentUserContext,
   );
@@ -61,7 +56,7 @@ const ItemSharingTab = ({ item }) => {
     [],
   );
 
-  if (isMembershipsLoading || isLoadingCurrentMember) {
+  if (isLoadingCurrentMember) {
     return <Loader />;
   }
 
@@ -75,7 +70,6 @@ const ItemSharingTab = ({ item }) => {
       memberships,
       currentMember.get('id'),
     );
-
     const authorizedMemberships = membershipsWithoutSelf.filter(
       ({ memberId }) => {
         const member = members?.find(({ id: mId }) => mId === memberId);
@@ -140,5 +134,6 @@ const ItemSharingTab = ({ item }) => {
 };
 ItemSharingTab.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
+  memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 export default ItemSharingTab;
