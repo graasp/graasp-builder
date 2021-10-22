@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { List } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -18,6 +18,7 @@ import {
   getExistingItems,
 } from '../../utils/item';
 import { getFavoriteItems } from '../../utils/member';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const FavoriteItems = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const FavoriteItems = () => {
     data: member,
     isLoading: isMemberLoading,
     isError: isMemberError,
-  } = hooks.useCurrentMember();
+  } = useContext(CurrentUserContext);
   const {
     data: favoriteItems = List(),
     isLoading: isItemsLoading,

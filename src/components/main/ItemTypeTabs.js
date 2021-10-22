@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemTypeTabs = ({ onTypeChange }) => {
+const ItemTypeTabs = ({ onTypeChange, initialValue }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const [value, setValue] = React.useState(ITEM_TYPES.FOLDER);
+  const [value, setValue] = React.useState(initialValue ?? ITEM_TYPES.FOLDER);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -87,6 +87,11 @@ const ItemTypeTabs = ({ onTypeChange }) => {
 
 ItemTypeTabs.propTypes = {
   onTypeChange: PropTypes.func.isRequired,
+  initialValue: PropTypes.oneOf(Object.values(ITEM_TYPES)),
+};
+
+ItemTypeTabs.defaultProps = {
+  initialValue: null,
 };
 
 export default ItemTypeTabs;

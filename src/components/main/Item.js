@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import truncate from 'lodash.truncate';
@@ -16,8 +16,9 @@ import { getItemImage, stripHtml } from '../../utils/item';
 import FavoriteButton from '../common/FavoriteButton';
 import { hooks } from '../../config/queryClient';
 import PinButton from '../common/PinButton';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const { useCurrentMember, useItemMemberships } = hooks;
+const { useItemMemberships } = hooks;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,7 +36,7 @@ const Item = ({ item }) => {
 
   const image = getItemImage(item);
 
-  const { data: member } = useCurrentMember();
+  const { data: member } = useContext(CurrentUserContext);
   const { data: memberships } = useItemMemberships(id);
   const enableEdition = isItemUpdateAllowedForUser({
     memberships,

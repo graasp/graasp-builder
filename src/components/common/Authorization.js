@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router';
 import { API_ROUTES } from '@graasp/query-client';
 import {
@@ -6,10 +6,10 @@ import {
   REDIRECT_URL_LOCAL_STORAGE_KEY,
   NODE_ENV,
 } from '../../config/constants';
-import { hooks } from '../../config/queryClient';
 import Loader from './Loader';
 import RedirectPage from './RedirectionContent';
 import { redirect } from '../../utils/navigation';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const Authorization = () => (ChildComponent) => {
   const ComposedComponent = (props) => {
@@ -23,7 +23,7 @@ const Authorization = () => (ChildComponent) => {
       );
     };
 
-    const { data: currentMember, isLoading } = hooks.useCurrentMember();
+    const { data: currentMember, isLoading } = useContext(CurrentUserContext);
 
     if (isLoading) {
       return <Loader />;

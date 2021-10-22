@@ -12,13 +12,14 @@ import {
   buildSettingsButtonId,
   ITEM_SETTINGS_BUTTON_CLASS,
 } from '../../../config/selectors';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 function ItemSettingsButton({ id }) {
   const { setIsItemSettingsOpen, isItemSettingsOpen } = useContext(
     LayoutContext,
   );
   const { data: memberships } = hooks.useItemMemberships(id);
-  const { data: user, isError } = hooks.useCurrentMember();
+  const { data: user, isError } = useContext(CurrentUserContext);
   const memberId = user?.get('id');
   const { t } = useTranslation();
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -20,10 +20,11 @@ import {
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../config/selectors';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
-const { useTags, useItemTags, useCurrentMember, useItemLogin } = hooks;
+const { useTags, useItemTags, useItemLogin } = hooks;
 
 const useStyles = makeStyles({
   loginSchemaText: {
@@ -35,7 +36,9 @@ function VisibilitySelect({ item, edit }) {
   const { t } = useTranslation();
   const classes = useStyles();
   // user
-  const { data: user, isLoading: isMemberLoading } = useCurrentMember();
+  const { data: user, isLoading: isMemberLoading } = useContext(
+    CurrentUserContext,
+  );
 
   // current item
   const { itemId } = useParams();

@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { hooks } from '../../config/queryClient';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 import { LayoutContext } from '../context/LayoutContext';
 import ItemContent from '../item/ItemContent';
 import ItemMain from '../item/ItemMain';
@@ -10,7 +11,7 @@ import ItemSettings from '../item/settings/ItemSettings';
 import ItemSharingTab from '../item/sharing/ItemSharingTab';
 import Main from './Main';
 
-const { useItem, useCurrentMember, useItemMemberships } = hooks;
+const { useItem, useItemMemberships } = hooks;
 
 const ItemScreen = () => {
   const { itemId } = useParams();
@@ -23,7 +24,7 @@ const ItemScreen = () => {
     setIsItemSharingOpen,
     isItemSharingOpen,
   } = useContext(LayoutContext);
-  const { data: currentMember } = useCurrentMember();
+  const { data: currentMember } = useContext(CurrentUserContext);
   const { data: memberships } = useItemMemberships(itemId);
   const enableEdition = isItemUpdateAllowedForUser({
     memberships,

@@ -24,6 +24,7 @@ import ItemSettingsButton from '../settings/ItemSettingsButton';
 import PerformViewButton from '../../common/PerformViewButton';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { hooks } from '../../../config/queryClient';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const { useCurrentMember, useItemMemberships } = hooks;
+const { useItemMemberships } = hooks;
 
 const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
   const classes = useStyles();
@@ -51,7 +52,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
   const id = item?.get('id');
   const type = item?.get('type');
 
-  const { data: member } = useCurrentMember();
+  const { data: member } = useContext(CurrentUserContext);
 
   const { data: memberships } = useItemMemberships(item.get('id'));
   const canEdit = isItemUpdateAllowedForUser({

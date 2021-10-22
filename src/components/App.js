@@ -35,6 +35,7 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../config/selectors';
+import { CurrentUserContextProvider } from './context/CurrentUserContext';
 
 const App = () => {
   const { useCurrentMember, useItem, useItemLogin } = hooks;
@@ -63,39 +64,41 @@ const App = () => {
 
   return (
     <ModalProviders>
-      <Router>
-        <Switch>
-          <Route path={HOME_PATH} exact component={Authorization()(Home)} />
-          <Route
-            path={SHARED_ITEMS_PATH}
-            exact
-            component={Authorization()(SharedItems)}
-          />
-          <Route
-            path={FAVORITE_ITEMS_PATH}
-            exact
-            component={Authorization()(FavoriteItems)}
-          />
-          <Route path={buildItemPath()} render={renderItemScreen} />
-          <Route
-            path={MEMBER_PROFILE_PATH}
-            exact
-            component={Authorization()(MemberProfileScreen)}
-          />
-          <Route
-            path={RECYCLE_BIN_PATH}
-            exact
-            component={Authorization()(RecycleBinScreen)}
-          />
-          <Route path={ITEMS_PATH} exact component={Authorization()(Home)} />
-          <Route
-            path={REDIRECT_PATH}
-            exact
-            component={Authorization()(Redirect)}
-          />
-          <Redirect to={HOME_PATH} />
-        </Switch>
-      </Router>
+      <CurrentUserContextProvider>
+        <Router>
+          <Switch>
+            <Route path={HOME_PATH} exact component={Authorization()(Home)} />
+            <Route
+              path={SHARED_ITEMS_PATH}
+              exact
+              component={Authorization()(SharedItems)}
+            />
+            <Route
+              path={FAVORITE_ITEMS_PATH}
+              exact
+              component={Authorization()(FavoriteItems)}
+            />
+            <Route path={buildItemPath()} render={renderItemScreen} />
+            <Route
+              path={MEMBER_PROFILE_PATH}
+              exact
+              component={Authorization()(MemberProfileScreen)}
+            />
+            <Route
+              path={RECYCLE_BIN_PATH}
+              exact
+              component={Authorization()(RecycleBinScreen)}
+            />
+            <Route path={ITEMS_PATH} exact component={Authorization()(Home)} />
+            <Route
+              path={REDIRECT_PATH}
+              exact
+              component={Authorization()(Redirect)}
+            />
+            <Redirect to={HOME_PATH} />
+          </Switch>
+        </Router>
+      </CurrentUserContextProvider>
     </ModalProviders>
   );
 };

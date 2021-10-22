@@ -28,13 +28,9 @@ import FileUploader from '../main/FileUploader';
 import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const {
-  useChildren,
-  useFileContent,
-  useS3FileContent,
-  useCurrentMember,
-} = hooks;
+const { useChildren, useFileContent, useS3FileContent } = hooks;
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -52,7 +48,9 @@ const ItemContent = ({ item, enableEdition }) => {
   const { editingItemId, setEditingItemId } = useContext(LayoutContext);
 
   // provide user to app
-  const { data: user, isLoading: isLoadingUser } = useCurrentMember();
+  const { data: user, isLoading: isLoadingUser } = useContext(
+    CurrentUserContext,
+  );
 
   // display children
   const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {

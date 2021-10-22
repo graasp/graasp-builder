@@ -18,6 +18,7 @@ import {
 import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -40,10 +41,9 @@ const ItemSharingTab = ({ item }) => {
     data: memberships,
     isLoading: isMembershipsLoading,
   } = hooks.useItemMemberships(id);
-  const {
-    data: currentMember,
-    isLoadingCurrentMember,
-  } = hooks.useCurrentMember();
+  const { data: currentMember, isLoadingCurrentMember } = useContext(
+    CurrentUserContext,
+  );
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
     memberId: currentMember?.get('id'),

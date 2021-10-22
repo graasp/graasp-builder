@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import { Loader } from '@graasp/ui';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Card from '@material-ui/core/Card';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as GraaspLogo } from '../../resources/graasp-logo.svg';
-import { hooks } from '../../config/queryClient';
 import LanguageSwitch from './LanguageSwitch';
 import { formatDate } from '../../utils/date';
 import { DEFAULT_LANG } from '../../config/constants';
@@ -21,6 +20,7 @@ import {
 import notifier from '../../middlewares/notifier';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import Main from '../main/Main';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const useStyles = makeStyles((theme) => ({
   profileTable: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const MemberProfileScreen = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: member, isLoading } = hooks.useCurrentMember();
+  const { data: member, isLoading } = useContext(CurrentUserContext);
 
   if (isLoading) {
     return <Loader />;
