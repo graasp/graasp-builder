@@ -17,12 +17,12 @@ const PinButton = ({ item }) => {
 
   const handlePin = () => {
     setPinned(!isPinned);
-    
+
     editItem.mutate({
       id: item.id,
       name: item.name,
       settings: {
-        isPinned: !isPinned
+        isPinned: !isPinned,
       },
     });
   };

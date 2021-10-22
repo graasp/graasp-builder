@@ -131,7 +131,7 @@ Cypress.Commands.add(
     if(type){
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
     }else{
-      cy.get(`#${buildItemFormAppOptionId(getAppExtra(extra)?.url)}`).click();
+      cy.get(`#${buildItemFormAppOptionId(getAppExtra(extra)?.name)}`).click();
     }
 
     if (confirm) {

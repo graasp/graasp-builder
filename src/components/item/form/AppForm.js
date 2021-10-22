@@ -7,13 +7,16 @@ import { Autocomplete } from '@material-ui/lab';
 import BaseItemForm from './BaseItemForm';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
 import { hooks } from '../../../config/queryClient';
-import { ITEM_FORM_APP_URL_ID, buildItemFormAppOptionId } from '../../../config/selectors';
+import {
+  ITEM_FORM_APP_URL_ID,
+  buildItemFormAppOptionId,
+} from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   img: {
     verticalAlign: 'middle',
     margin: theme.spacing(1),
-    height: '30px'
+    height: '30px',
   },
 }));
 
@@ -25,7 +28,7 @@ const AppForm = ({ onChange, item }) => {
     onChange({ ...item, extra: buildAppExtra({ url }) });
   };
 
-  const classes = useStyles()
+  const classes = useStyles();
   const { useApps } = hooks;
   const { data } = useApps();
 
@@ -35,7 +38,7 @@ const AppForm = ({ onChange, item }) => {
     <div>
       <Typography variant="h6">{t('Create an App')}</Typography>
       <BaseItemForm onChange={onChange} item={item} />
-     
+
       <Autocomplete
         id={ITEM_FORM_APP_URL_ID}
         freeSolo
@@ -46,7 +49,11 @@ const AppForm = ({ onChange, item }) => {
         onInputChange={handleAppUrlInput}
         renderOption={(option) => (
           <div id={buildItemFormAppOptionId(option.name)}>
-            <img className={classes.img} src={option.extra.image} alt={option.name} />
+            <img
+              className={classes.img}
+              src={option.extra.image}
+              alt={option.name}
+            />
             {option.name}
           </div>
         )}
