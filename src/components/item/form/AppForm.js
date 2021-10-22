@@ -45,13 +45,13 @@ const AppForm = ({ onChange, item }) => {
         onChange={handleAppUrlInput}
         onInputChange={handleAppUrlInput}
         renderOption={(option) => (
-          <div id={buildItemFormAppOptionId(option.url)}>
+          <div id={buildItemFormAppOptionId(option.name)}>
             <img className={classes.img} src={option.extra.image} alt={option.name} />
             {option.name}
           </div>
         )}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="Combo box" />}
+        renderInput={(params) => <TextField {...params} label={t('App url')} />}
       />
     </div>
   );

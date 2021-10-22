@@ -88,7 +88,7 @@ export const DOCUMENT_ITEM_TEXT_EDITOR_ID = 'documentItemTextEditor';
 export const DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR = `#${DOCUMENT_ITEM_TEXT_EDITOR_ID} .ql-editor`;
 export const CREATE_ITEM_APP_ID = 'createItemApp';
 export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
-export const buildItemFormAppOptionId = (url) => `${url.replaceAll(/[.:/]/g, '')}`;
+export const buildItemFormAppOptionId = (name) => `${name.replaceAll(/\s/g, '-')}`;
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id) => `saveButton-${id}`;
 export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';
