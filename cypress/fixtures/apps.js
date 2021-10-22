@@ -1,3 +1,4 @@
+import { APP_NAME } from './apps/apps';
 import { ITEM_TYPES } from '../../src/enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
@@ -16,7 +17,7 @@ export const GRAASP_APP_ITEM = {
   description: 'my app description',
   type: ITEM_TYPES.APP,
   extra: {
-    [ITEM_TYPES.APP]: { url: 'http://localhost.com:3333' },
+    [ITEM_TYPES.APP]: { url: 'http://localhost.com:3333', name: APP_NAME },
   },
   creator: CURRENT_USER.id,
 };
@@ -28,6 +29,7 @@ export const GRAASP_APP_PARENT_FOLDER = {
   path: 'bdf09f5a_5688_11eb_ae93_0242ac130002',
   extra: {
     image: 'someimageurl',
+    name: APP_NAME
   },
 };
 
@@ -39,7 +41,10 @@ export const GRAASP_APP_CHILDREN_ITEM = {
   description: 'my app description',
   type: ITEM_TYPES.APP,
   extra: {
-    [ITEM_TYPES.APP]: { url: 'http://localhost.com:3333' },
+    [ITEM_TYPES.APP]: { 
+      url: 'http://localhost.com:3333',
+      name: APP_NAME 
+    },
   },
   creator: CURRENT_USER.id,
 };
@@ -53,6 +58,7 @@ export const APP_USING_CONTEXT_ITEM = {
   extra: {
     [ITEM_TYPES.APP]: {
       url: `${API_HOST}/${buildAppItemLinkForTest('app.html')}`,
+      name: APP_NAME
     },
   },
   creator: CURRENT_USER.id,

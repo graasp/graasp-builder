@@ -42,7 +42,7 @@ const ItemSettings = ({ item }) => {
       id: item.get('id'),
       name: item.get('name'),
       settings: {
-        showChatbox: event.target.checked
+        showChatbox: event.target.checked,
       },
     });
   };
@@ -52,7 +52,7 @@ const ItemSettings = ({ item }) => {
       id: item.get('id'),
       name: item.get('name'),
       settings: {
-        isPinned: event.target.checked
+        isPinned: event.target.checked,
       },
     });
   };
