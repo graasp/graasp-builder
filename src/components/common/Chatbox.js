@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import GraaspChatbox from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -7,15 +7,18 @@ import { Loader } from '@graasp/ui';
 import { hooks, useMutation } from '../../config/queryClient';
 import { HEADER_HEIGHT } from '../../config/constants';
 import { CHATBOX_INPUT_BOX_ID, CHATBOX_ID } from '../../config/selectors';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const { useItemChat, useCurrentMember, useMembers } = hooks;
+const { useItemChat, useMembers } = hooks;
 
 const Chatbox = ({ item }) => {
   const { data: chat, isLoading: isChatLoading } = useItemChat(item.get('id'));
   const { data: members, isLoading: isMembersLoading } = useMembers([
     ...new Set(chat?.get('messages').map(({ creator }) => creator)),
   ]);
-  const { data: currentMember, isLoadingCurrentMember } = useCurrentMember();
+  const { data: currentMember, isLoadingCurrentMember } = useContext(
+    CurrentUserContext,
+  );
   const { mutate: sendMessage } = useMutation(
     MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE,
   );

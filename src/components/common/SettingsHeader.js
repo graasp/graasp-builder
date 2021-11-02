@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
 import { MUTATION_KEYS, API_ROUTES } from '@graasp/query-client';
 import MenuItem from '@material-ui/core/MenuItem';
-import { hooks, useMutation } from '../../config/queryClient';
+import { useMutation } from '../../config/queryClient';
 import {
   AUTHENTICATION_HOST,
   USERNAME_MAX_LENGTH,
@@ -22,6 +22,7 @@ import {
 } from '../../config/selectors';
 import Loader from './Loader';
 import { MEMBER_PROFILE_PATH } from '../../config/paths';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SettingsHeader = () => {
-  const { data: user, isLoading } = hooks.useCurrentMember();
+  const { data: user, isLoading } = useContext(CurrentUserContext);
   const classes = useStyles();
   const { push } = useHistory();
   const { t } = useTranslation();

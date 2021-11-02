@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import truncate from 'lodash.truncate';
@@ -14,10 +14,8 @@ import EditButton from '../common/EditButton';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import { getItemImage, stripHtml } from '../../utils/item';
 import FavoriteButton from '../common/FavoriteButton';
-import { hooks } from '../../config/queryClient';
 import PinButton from '../common/PinButton';
-
-const { useCurrentMember, useItemMemberships } = hooks;
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,14 +27,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Item = ({ item }) => {
+const Item = ({ item, memberships }) => {
   const classes = useStyles();
   const { id, name, description } = item;
 
   const image = getItemImage(item);
 
-  const { data: member } = useCurrentMember();
-  const { data: memberships } = useItemMemberships(id);
+  const { data: member } = useContext(CurrentUserContext);
   const enableEdition = isItemUpdateAllowedForUser({
     memberships,
     memberId: member?.get('id'),
@@ -44,7 +41,7 @@ const Item = ({ item }) => {
 
   return (
     <Card className={classes.root} id={buildItemCard(id)}>
-      <CustomCardHeader item={item} />
+      <CustomCardHeader item={item} canEdit={enableEdition} />
       <CardMedia className={classes.media} image={image} title={name} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -75,6 +72,7 @@ Item.propTypes = {
       image: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default Item;

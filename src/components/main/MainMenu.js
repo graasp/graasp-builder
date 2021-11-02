@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import ListItem from '@material-ui/core/ListItem';
 import PollIcon from '@material-ui/icons/Poll';
@@ -10,20 +10,20 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useLocation, useHistory } from 'react-router';
 import List from '@material-ui/core/List';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { hooks } from '../../config/queryClient';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
   SHARED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
 } from '../../config/paths';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const MainMenu = () => {
   const { t } = useTranslation();
   const [dense] = useState(true);
   const { push } = useHistory();
   const { pathname } = useLocation();
-  const { data: member } = hooks.useCurrentMember();
+  const { data: member } = useContext(CurrentUserContext);
 
   const goTo = (path) => {
     push(path);

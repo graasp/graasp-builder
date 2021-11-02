@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
@@ -26,6 +26,7 @@ import { buildItemsTableRowId } from '../../config/selectors';
 import NameCellRenderer from '../table/NameCellRenderer';
 import DragCellRenderer from '../table/DragCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItem } = hooks;
 
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemsTable = ({
   items: rows,
+  memberships,
   tableTitle,
   id: tableId,
   headerElements,
@@ -68,6 +70,7 @@ const ItemsTable = ({
   const classes = useStyles();
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
+  const { data: member } = useContext(CurrentUserContext);
 
   const [gridApi, setGridApi] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -140,6 +143,11 @@ const ItemsTable = ({
 
   const NoRowsComponent = () => <Typography>{t('No items')}</Typography>;
   const parentDescription = parentItem?.get('description');
+  const ActionComponent = ActionsCellRenderer({
+    memberships,
+    items: rows,
+    member,
+  });
   return (
     <div className={classes.root}>
       <TableToolbar
@@ -165,7 +173,7 @@ const ItemsTable = ({
           suppressCellSelection
           noRowsOverlayComponentFramework={NoRowsComponent}
           frameworkComponents={{
-            actions: actions ?? ActionsCellRenderer,
+            actions: actions ?? ActionComponent,
             nameCellRenderer: NameCellRenderer,
             dragCellRenderer: DragCellRenderer,
           }}
@@ -243,6 +251,7 @@ const ItemsTable = ({
 
 ItemsTable.propTypes = {
   items: PropTypes.instanceOf(List),
+  memberships: PropTypes.instanceOf(List),
   tableTitle: PropTypes.string.isRequired,
   id: PropTypes.string,
   headerElements: PropTypes.arrayOf(PropTypes.element),
@@ -261,6 +270,7 @@ ItemsTable.propTypes = {
 ItemsTable.defaultProps = {
   id: '',
   items: List(),
+  memberships: List(),
   headerElements: [],
   isSearching: false,
   actions: null,

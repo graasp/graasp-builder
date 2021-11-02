@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import Skeleton from '@material-ui/lab/Skeleton';
 import BaseItemForm from './BaseItemForm';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
 import { hooks } from '../../../config/queryClient';
@@ -30,7 +31,7 @@ const AppForm = ({ onChange, item }) => {
 
   const classes = useStyles();
   const { useApps } = hooks;
-  const { data } = useApps();
+  const { data, isLoading: isAppsLoading } = useApps();
 
   const url = getAppExtra(item?.extra)?.url;
 
@@ -39,27 +40,33 @@ const AppForm = ({ onChange, item }) => {
       <Typography variant="h6">{t('Create an App')}</Typography>
       <BaseItemForm onChange={onChange} item={item} />
 
-      <Autocomplete
-        id={ITEM_FORM_APP_URL_ID}
-        freeSolo
-        options={data?.toArray()}
-        getOptionLabel={(option) => option.name ?? option}
-        value={url}
-        onChange={handleAppUrlInput}
-        onInputChange={handleAppUrlInput}
-        renderOption={(option) => (
-          <div id={buildItemFormAppOptionId(option.name)}>
-            <img
-              className={classes.img}
-              src={option.extra.image}
-              alt={option.name}
-            />
-            {option.name}
-          </div>
-        )}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label={t('App url')} />}
-      />
+      {isAppsLoading ? (
+        <Skeleton height={60} />
+      ) : (
+        <Autocomplete
+          id={ITEM_FORM_APP_URL_ID}
+          freeSolo
+          options={data?.toArray()}
+          getOptionLabel={(option) => option.name ?? option}
+          value={url}
+          onChange={handleAppUrlInput}
+          onInputChange={handleAppUrlInput}
+          renderOption={(option) => (
+            <div id={buildItemFormAppOptionId(option.name)}>
+              <img
+                className={classes.img}
+                src={option.extra.image}
+                alt={option.name}
+              />
+              {option.name}
+            </div>
+          )}
+          renderInput={(params) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <TextField {...params} label={t('App url')} />
+          )}
+        />
+      )}
     </div>
   );
 };

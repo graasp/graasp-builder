@@ -49,9 +49,6 @@ export const expectItemHeaderLayout = ({
 }) => {
   const header = cy.get(`#${ITEM_HEADER_ID}`);
 
-  if (ITEM_TYPES_WITH_CAPTIONS.includes(type)) {
-    header.get(`#${buildEditButtonId(id)}`).should('exist');
-  }
   header.get(`#${buildShareButtonId(id)}`).should('exist');
   header.get(`#${buildPerformButtonId(id)}`).should('exist');
 
@@ -60,8 +57,12 @@ export const expectItemHeaderLayout = ({
       memberships,
       memberId: currentMember?.id,
     })
-  )
+  ) {
+    if (ITEM_TYPES_WITH_CAPTIONS.includes(type)) {
+      header.get(`#${buildEditButtonId(id)}`).should('exist');
+    }
     header.get(`#${buildSettingsButtonId(id)}`).should('exist');
+  }
 };
 
 export const expectDocumentViewScreenLayout = ({

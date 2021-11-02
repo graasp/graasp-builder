@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import EditIcon from '@material-ui/icons/Edit';
@@ -13,6 +13,7 @@ import MemberAvatar from '../common/MemberAvatar';
 import { PERMISSION_LEVELS } from '../../enums';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
 import { membershipsWithoutUser } from '../../utils/membership';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const useStyles = makeStyles({
   badge: {
@@ -23,8 +24,8 @@ const useStyles = makeStyles({
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: memberships, isError } = hooks.useItemMemberships(id);
-  const { data: currentUser } = hooks.useCurrentMember();
+  const { data: memberships, isError } = hooks.useItemMemberships([id]);
+  const { data: currentUser } = useContext(CurrentUserContext);
 
   if (!id) {
     return null;
@@ -35,12 +36,12 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   }
 
   const filteredMemberships = membershipsWithoutUser(
-    memberships,
+    memberships?.get(0),
     currentUser?.get('id'),
   );
 
   // display only if has more than 2 memberships
-  if (filteredMemberships.isEmpty()) {
+  if (!filteredMemberships.length) {
     return null;
   }
 

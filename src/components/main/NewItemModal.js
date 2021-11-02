@@ -174,7 +174,10 @@ const NewItemModal = ({ open, handleClose }) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogContent className={classes.dialogContent}>
-        <ItemTypeTabs onTypeChange={setSelectedItemType} />
+        <ItemTypeTabs
+          onTypeChange={setSelectedItemType}
+          initialValue={selectedItemType}
+        />
         <Box className={classes.form}>{renderContent()}</Box>
       </DialogContent>
       <DialogActions>{renderActions()}</DialogActions>

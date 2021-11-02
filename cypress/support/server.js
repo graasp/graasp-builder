@@ -59,7 +59,7 @@ const {
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
   buildGetItemLoginRoute,
-  buildGetItemMembershipsForItemRoute,
+  buildGetItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
   GET_TAGS_ROUTE,
   buildPutItemLoginSchema,
@@ -75,6 +75,8 @@ const {
   buildRecycleItemRoute,
   GET_RECYCLED_ITEMS_ROUTE,
   buildDeleteItemTagRoute,
+  buildDeleteItemsRoute,
+  buildGetMembersRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -108,7 +110,6 @@ export const mockGetAppListRoute = (apps) => {
     },
   ).as('getApps');
 };
-
 
 export const mockGetCurrentMember = (
   currentMember = MEMBERS.ANNA,
@@ -222,8 +223,7 @@ export const mockDeleteItems = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_DELETE.method,
-      pathname: `/${ITEMS_ROUTE}`,
-      query: { id: new RegExp(ID_FORMAT) },
+      url: new RegExp(`${API_HOST}/${buildDeleteItemsRoute([])}`),
     },
     ({ url, reply }) => {
       const ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
@@ -640,6 +640,32 @@ export const mockGetMember = (members) => {
     },
   ).as('getMember');
 };
+export const mockGetMembers = (members) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/${buildGetMembersRoute([''])}`,
+    },
+    ({ url, reply }) => {
+      let { id: memberIds } = qs.parse(url.slice(url.indexOf('?') + 1));
+      if (typeof memberIds === 'string') {
+        memberIds = [memberIds];
+      }
+      const allMembers = memberIds?.map((id) => getMemberById(members, id));
+      // member does not exist in db
+      if (!allMembers) {
+        return reply({
+          statusCode: StatusCodes.NOT_FOUND,
+        });
+      }
+
+      return reply({
+        body: allMembers,
+        statusCode: StatusCodes.OK,
+      });
+    },
+  ).as('getMembers');
+};
 
 export const mockGetMemberBy = (members, shouldThrowError) => {
   cy.intercept(
@@ -876,29 +902,29 @@ export const mockGetItemMembershipsForItem = (items) => {
       method: DEFAULT_GET.method,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
-          buildGetItemMembershipsForItemRoute(ID_FORMAT),
-        )}$`,
+          buildGetItemMembershipsForItemsRoute([]),
+        )}`,
       ),
     },
     ({ reply, url }) => {
       const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
-      const item = items.find(({ id }) => id === itemId);
-      if (!item) {
-        return reply([]);
-      }
-      const result = item.memberships || [
-        {
-          permission: PERMISSION_LEVELS.ADMIN,
-          memberId: item.creator,
-          itemId: item.id,
-        },
-      ];
-      return reply(result);
+      const selectedItems = items.filter(({ id }) => itemId.includes(id));
+      const allMemberships = selectedItems.map(
+        ({ creator, id, memberships }) =>
+          memberships || [
+            {
+              permission: PERMISSION_LEVELS.ADMIN,
+              memberId: creator,
+              itemId: id,
+            },
+          ],
+      );
+      reply(allMemberships);
     },
   ).as('getItemMemberships');
 };
 
-export const mockEditItemMembershipForItem = (items) => {
+export const mockEditItemMembershipForItem = () => {
   cy.intercept(
     {
       method: DEFAULT_PATCH.method,
@@ -906,15 +932,14 @@ export const mockEditItemMembershipForItem = (items) => {
         `${API_HOST}/${buildEditItemMembershipRoute(ID_FORMAT)}$`,
       ),
     },
-    ({ reply, url }) => {
-      const mId = url.slice(API_HOST.length).split('/')[2];
-      const result = items.find(({ id }) => id === mId)?.memberships || [];
-      reply(result?.find(({ id }) => id === mId));
+    ({ reply }) => {
+      // this mock intercept does nothing
+      reply(true);
     },
   ).as('editItemMembership');
 };
 
-export const mockDeleteItemMembershipForItem = (items) => {
+export const mockDeleteItemMembershipForItem = () => {
   cy.intercept(
     {
       method: DEFAULT_DELETE.method,
@@ -922,10 +947,9 @@ export const mockDeleteItemMembershipForItem = (items) => {
         `${API_HOST}/${buildDeleteItemMembershipRoute(ID_FORMAT)}$`,
       ),
     },
-    ({ reply, url }) => {
-      const mId = url.slice(API_HOST.length).split('/')[2];
-      const result = items.find(({ id }) => id === mId)?.memberships || [];
-      reply(result?.find(({ id }) => id === mId));
+    ({ reply }) => {
+      // this mock intercept does nothing
+      reply(true);
     },
   ).as('deleteItemMembership');
 };

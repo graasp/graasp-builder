@@ -8,7 +8,7 @@ import { createItem } from './utils';
 
 describe('Create App', () => {
   describe('create app on Home', () => {
-    it('Create app on Home with dropdown', () =>{
+    it('Create app on Home with dropdown', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
 
@@ -27,7 +27,7 @@ describe('Create App', () => {
       });
     });
 
-    it('Create app on Home by typing', () =>{
+    it('Create app on Home by typing', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
 
@@ -51,37 +51,37 @@ describe('Create App', () => {
     it('Create app with dropdown', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       const { id } = SAMPLE_ITEMS.items[0];
-  
+
       // go to children item
       cy.visit(buildItemPath(id));
-  
+
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
-  
+
       // create
       createItem(GRAASP_APP_ITEM, ITEM_LAYOUT_MODES.LIST);
-  
+
       cy.wait('@postItem').then(() => {
         // expect update
         cy.wait('@getItem').its('response.url').should('contain', id);
       });
     });
-  
+
     it('Create app by typing', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       const { id } = SAMPLE_ITEMS.items[0];
-  
+
       // go to children item
       cy.visit(buildItemPath(id));
-  
+
       if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
       }
-  
+
       // create
       createItem(GRAASP_APP_ITEM, { type: true });
-  
+
       cy.wait('@postItem').then(() => {
         // expect update
         cy.wait('@getItem').its('response.url').should('contain', id);

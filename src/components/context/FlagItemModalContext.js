@@ -76,6 +76,7 @@ const FlagItemModalProvider = ({ children }) => {
           <List component="nav" className={classes.list}>
             {flags?.map((flag) => (
               <ListItem
+                key={flag.id}
                 id={buildFlagListItemId(flag.id)}
                 button
                 selected={selectedFlag.id === flag.id}

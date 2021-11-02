@@ -1,7 +1,6 @@
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Map } from 'immutable';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -21,17 +20,9 @@ import { CopyItemModalContext } from '../context/CopyItemModalContext';
 import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { MoveItemModalContext } from '../context/MoveItemModalContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
-import { useMutation, hooks } from '../../config/queryClient';
-import { isItemUpdateAllowedForUser } from '../../utils/membership';
+import { useMutation } from '../../config/queryClient';
 
-const { useItemMemberships } = hooks;
-
-const ItemMenu = ({ item, member }) => {
-  const { data: memberships } = useItemMemberships(item.id);
-  const canEdit = isItemUpdateAllowedForUser({
-    memberships,
-    memberId: member?.get('id'),
-  });
+const ItemMenu = ({ item, canEdit }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
   const { mutate: recycleItem } = useMutation(MUTATION_KEYS.RECYCLE_ITEM);
@@ -129,7 +120,11 @@ const ItemMenu = ({ item, member }) => {
 
 ItemMenu.propTypes = {
   item: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
-  member: PropTypes.instanceOf(Map).isRequired,
+  canEdit: PropTypes.bool,
+};
+
+ItemMenu.defaultProps = {
+  canEdit: false,
 };
 
 export default ItemMenu;
