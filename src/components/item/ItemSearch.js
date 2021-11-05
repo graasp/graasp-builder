@@ -112,6 +112,7 @@ const useItemSearch = (items) => {
 
   const itemSearchInput = (
     <ItemSearchInput
+      key="searchInput"
       searchInputHandler={handleSearchInput}
       searchTextState={searchText}
     />

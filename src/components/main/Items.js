@@ -21,7 +21,6 @@ const Items = ({
   clickable,
   defautSortedColumn,
   isEditing,
-  onSaveCaption,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -65,7 +64,6 @@ const Items = ({
           toolbarActions={toolbarActions}
           clickable={clickable}
           isEditing={isEditing}
-          onSaveCaption={onSaveCaption}
         />
       );
   }
@@ -85,8 +83,7 @@ Items.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
   }),
-  isEditing: PropTypes.bool.isRequired,
-  onSaveCaption: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool,
 };
 
 Items.defaultProps = {
@@ -96,6 +93,7 @@ Items.defaultProps = {
   toolbarActions: null,
   clickable: true,
   defautSortedColumn: {},
+  isEditing: false,
 };
 
 export default Items;

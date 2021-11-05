@@ -12,7 +12,7 @@ import { hooks } from '../../config/queryClient';
 import MemberAvatar from '../common/MemberAvatar';
 import { PERMISSION_LEVELS } from '../../enums';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
-import { membershipsWithoutUser } from '../../utils/membership';
+import { getMembership, membershipsWithoutUser } from '../../utils/membership';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const useStyles = makeStyles({
@@ -36,12 +36,12 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   }
 
   const filteredMemberships = membershipsWithoutUser(
-    memberships?.get(0),
+    getMembership(memberships),
     currentUser?.get('id'),
   );
 
   // display only if has more than 2 memberships
-  if (!filteredMemberships.length) {
+  if (!filteredMemberships?.length) {
     return null;
   }
 

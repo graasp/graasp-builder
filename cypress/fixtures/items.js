@@ -415,13 +415,6 @@ export const SAMPLE_PUBLIC_ITEMS = {
           itemPath: 'egafbd2a_5688_11eb_ae93_0242ac130002',
         },
       ],
-      memberships: [
-        {
-          itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
-          permission: PERMISSION_LEVELS.ADMIN,
-          memberId: MEMBERS.ANNA.id,
-        },
-      ],
     },
     {
       ...DEFAULT_FOLDER_ITEM,

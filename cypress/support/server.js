@@ -896,7 +896,7 @@ export const mockGetItemLogin = (items) => {
   ).as('getItemLogin');
 };
 
-export const mockGetItemMembershipsForItem = (items) => {
+export const mockGetItemMembershipsForItem = (items, currentMember) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
@@ -910,14 +910,31 @@ export const mockGetItemMembershipsForItem = (items) => {
       const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
       const selectedItems = items.filter(({ id }) => itemId.includes(id));
       const allMemberships = selectedItems.map(
-        ({ creator, id, memberships }) =>
-          memberships || [
-            {
-              permission: PERMISSION_LEVELS.ADMIN,
-              memberId: creator,
-              itemId: id,
-            },
-          ],
+        ({ creator, id, memberships }) => {
+          // build default membership depending on current member
+          // if the current member is the creator, it has membership
+          // otherwise it should return an error
+          const defaultMembership =
+            creator === currentMember?.id
+              ? [
+                  {
+                    permission: PERMISSION_LEVELS.ADMIN,
+                    memberId: creator,
+                    itemId: id,
+                  },
+                ]
+              : { statusCode: StatusCodes.UNAUTHORIZED };
+
+          // if the defined memberships does not contain currentMember, it should throw
+          const currentMemberHasMembership = memberships?.find(
+            ({ memberId }) => memberId === currentMember?.id,
+          );
+          if (!currentMemberHasMembership) {
+            return defaultMembership;
+          }
+
+          return memberships || defaultMembership;
+        },
       );
       reply(allMemberships);
     },
