@@ -3,10 +3,31 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { EDITED_FIELDS, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
-import { editItem } from './utils';
+import { editItem, editCaptionFromViewPage } from './utils';
 
 describe('Edit Folder', () => {
   describe('List', () => {
+    describe('View Page', () => {
+      it('edit caption', () => {
+        const item = SAMPLE_ITEMS.items[0];
+        const { id } = item;
+        cy.setUpApi({ items: [item] });
+        cy.visit(buildItemPath(id));
+
+        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+          cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+        }
+
+        const caption = 'new caption';
+        editCaptionFromViewPage({ id, caption });
+        cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
+          expect(endpointUrl).to.contain(id);
+          // caption content might be wrapped with html tags
+          expect(body?.description).to.contain(caption);
+        });
+      });
+    });
+
     it('edit folder on Home', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
@@ -82,6 +103,27 @@ describe('Edit Folder', () => {
   });
 
   describe('Grid', () => {
+    describe('View Page', () => {
+      it('edit caption', () => {
+        const item = SAMPLE_ITEMS.items[0];
+        const { id } = item;
+        cy.setUpApi({ items: [item] });
+        cy.visit(buildItemPath(id));
+
+        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
+          cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+        }
+
+        const caption = 'new caption';
+        editCaptionFromViewPage({ id, caption });
+        cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
+          expect(endpointUrl).to.contain(id);
+          // caption content might be wrapped with html tags
+          expect(body?.description).to.contain(caption);
+        });
+      });
+    });
+
     it('edit folder on Home', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);

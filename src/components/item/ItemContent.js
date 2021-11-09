@@ -172,6 +172,7 @@ const ItemContent = ({ item, enableEdition }) => {
         <>
           <FileUploader />
           <Items
+            parentId={itemId}
             id={buildItemsTableId(itemId)}
             title={item.get('name')}
             items={children}

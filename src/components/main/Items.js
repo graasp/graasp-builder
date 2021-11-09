@@ -21,6 +21,7 @@ const Items = ({
   clickable,
   defautSortedColumn,
   isEditing,
+  parentId,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -40,6 +41,7 @@ const Items = ({
       return (
         <ItemsGrid
           id={id}
+          parentId={parentId}
           title={title}
           items={itemSearch.results}
           memberships={memberships}
@@ -47,6 +49,7 @@ const Items = ({
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
           clickable={clickable}
+          isEditing={isEditing}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -84,6 +87,7 @@ Items.propTypes = {
     name: PropTypes.string,
   }),
   isEditing: PropTypes.bool,
+  parentId: PropTypes.string,
 };
 
 Items.defaultProps = {
@@ -94,6 +98,7 @@ Items.defaultProps = {
   clickable: true,
   defautSortedColumn: {},
   isEditing: false,
+  parentId: null,
 };
 
 export default Items;
