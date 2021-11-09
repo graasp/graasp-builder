@@ -1,6 +1,6 @@
+import React, { useContext, useState, useEffect } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
@@ -27,6 +27,7 @@ import NameCellRenderer from '../table/NameCellRenderer';
 import DragCellRenderer from '../table/DragCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import { LayoutContext } from '../context/LayoutContext';
 
 const { useItem } = hooks;
 
@@ -70,10 +71,28 @@ const ItemsTable = ({
   const classes = useStyles();
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
+  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
   const { data: member } = useContext(CurrentUserContext);
+  const { editingItemId, setEditingItemId } = useContext(LayoutContext);
+  const isEditing = editingItemId === itemId;
 
   const [gridApi, setGridApi] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [description, setDescription] = useState(
+    parentItem?.get('description'),
+  );
+
+  useEffect(() => {
+    const value = parentItem?.get('description');
+    if (value) {
+      setDescription(value);
+    }
+  }, [parentItem]);
+
+  const onDescriptionSave = (str) => {
+    editItem({ id: itemId, description: str });
+    setEditingItemId(null);
+  };
 
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
@@ -159,7 +178,16 @@ const ItemsTable = ({
       />
 
       {/* description */}
-      {parentDescription && <TextEditor value={parentDescription} />}
+      {(parentDescription || isEditing) && (
+        <TextEditor
+          value={description}
+          edit={isEditing}
+          // onChange={(str) => setDecription(str)}
+          placeholderText={t('Write the folder decription here...')}
+          showSaveButton
+          onSave={onDescriptionSave}
+        />
+      )}
 
       <div
         className="ag-theme-material"
