@@ -25,7 +25,12 @@ const NameCellRenderer = ({ data: item }) => {
 };
 
 NameCellRenderer.propTypes = {
-  data: PropTypes.shape({}).isRequired,
+  data: PropTypes.shape({
+    type: PropTypes.string,
+    id: PropTypes.string,
+    name: PropTypes.string,
+    extra: PropTypes.shape({}),
+  }).isRequired,
 };
 
 export default NameCellRenderer;

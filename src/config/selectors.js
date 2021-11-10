@@ -140,6 +140,8 @@ export const CHATBOX_ID = 'chatbox';
 export const CHATBOX_INPUT_BOX_ID = 'chatboxInputBox';
 export const CONFIRM_RECYCLE_BUTTON_ID = 'confirmRecycleButton';
 export const SHARE_ITEM_VISIBILITY_SELECT_ID = 'shareItemVisiblitySelect';
+export const SHARE_ITEM_CATEGORY_AGE = 'shareItemCategoryAge';
+export const SHARE_ITEM_CATEGORY_DISCIPLINE = 'shareItemCategoryDiscipline';
 export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
