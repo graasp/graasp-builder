@@ -3,7 +3,6 @@ import { FAVORITE_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowIdAttribute,
   FAVORITE_ITEM_BUTTON_CLASS,
-  FAVORITE_ITEMS_ERROR_ALERT_ID,
   CREATE_ITEM_BUTTON_ID,
 } from '../../../../src/config/selectors';
 import { buildMemberWithFavorites } from '../../../fixtures/members';
@@ -75,17 +74,6 @@ describe('Favorite Item', () => {
   });
 
   describe('Error Handling', () => {
-    it('check favorite items view with one deleted item', () => {
-      const itemId = 'non existing id';
-      cy.setUpApi({
-        ...SAMPLE_ITEMS,
-        currentMember: buildMemberWithFavorites([itemId]),
-      });
-      cy.visit(FAVORITE_ITEMS_PATH);
-
-      cy.get(`#${FAVORITE_ITEMS_ERROR_ALERT_ID}`).should('exist');
-    });
-
     it('check favorite items view with multiple deleted item', () => {
       const itemId = 'ecafbd2a-5688-11eb-ae93-2212bc437002';
       cy.setUpApi({

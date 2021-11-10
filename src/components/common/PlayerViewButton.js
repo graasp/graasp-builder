@@ -5,22 +5,22 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { redirect } from '../../utils/navigation';
-import { buildGraaspPerformView } from '../../config/paths';
-import { buildPerformButtonId } from '../../config/selectors';
+import { buildGraaspPlayerView } from '../../config/paths';
+import { buildPlayerButtonId } from '../../config/selectors';
 
-const PerformViewButton = ({ itemId }) => {
+const PlayerViewButton = ({ itemId }) => {
   const { t } = useTranslation();
 
-  const onClickPerformView = () => {
-    redirect(buildGraaspPerformView(itemId), { openInNewTab: true });
+  const onClick = () => {
+    redirect(buildGraaspPlayerView(itemId), { openInNewTab: true });
   };
 
   return (
-    <Tooltip title={t('Show Perform View')}>
+    <Tooltip title={t('Show Player View')}>
       <IconButton
-        aria-label={t('perform view')}
-        onClick={onClickPerformView}
-        id={buildPerformButtonId(itemId)}
+        aria-label={t('player view')}
+        onClick={onClick}
+        id={buildPlayerButtonId(itemId)}
       >
         <PlayCircleFilledIcon fontSize="small" />
       </IconButton>
@@ -28,8 +28,8 @@ const PerformViewButton = ({ itemId }) => {
   );
 };
 
-PerformViewButton.propTypes = {
+PlayerViewButton.propTypes = {
   itemId: PropTypes.string.isRequired,
 };
 
-export default PerformViewButton;
+export default PlayerViewButton;

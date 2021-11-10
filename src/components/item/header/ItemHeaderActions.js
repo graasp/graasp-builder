@@ -21,8 +21,11 @@ import {
 import ShareButton from '../../common/ShareButton';
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
-import PerformViewButton from '../../common/PerformViewButton';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import PlayerViewButton from '../../common/PlayerViewButton';
+import {
+  getMembership,
+  isItemUpdateAllowedForUser,
+} from '../../../utils/membership';
 import { hooks } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
@@ -56,7 +59,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
 
   const { data: memberships } = useItemMemberships([id]);
   const canEdit = isItemUpdateAllowedForUser({
-    memberships: memberships?.get(0),
+    memberships: getMembership(memberships),
     memberId: member?.get('id'),
   });
 
@@ -83,7 +86,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
             </Tooltip>
           )}
           <ShareButton itemId={id} />
-          <PerformViewButton itemId={id} />
+          <PlayerViewButton itemId={id} />
           <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
             <ForumIcon />
           </IconButton>

@@ -19,6 +19,7 @@ import { getMembershipsForItem } from '../../utils/membership';
 import { ItemSearchInput, NoItemSearchResult } from '../item/ItemSearch';
 import EmptyItem from './EmptyItem';
 import Item from './Item';
+import FolderDescription from '../item/FolderDescription';
 import TableToolbar from './TableToolbar';
 
 const styles = (theme) => ({
@@ -54,6 +55,8 @@ const ItemsGrid = (props) => {
     itemSearch,
     headerElements,
     memberships,
+    isEditing,
+    parentId,
   } = props;
 
   const { t } = useTranslation();
@@ -99,6 +102,7 @@ const ItemsGrid = (props) => {
   return (
     <div>
       <TableToolbar tableTitle={title} headerElements={headerElements} />
+      <FolderDescription itemId={parentId} isEditing={isEditing} />
       <Grid container spacing={1}>
         {renderItems()}
       </Grid>
@@ -155,11 +159,15 @@ ItemsGrid.propTypes = {
     input: PropTypes.instanceOf(ItemSearchInput),
   }),
   headerElements: PropTypes.arrayOf(PropTypes.element),
+  parentId: PropTypes.string,
+  isEditing: PropTypes.bool,
 };
 
 ItemsGrid.defaultProps = {
   itemSearch: null,
   headerElements: [],
+  isEditing: false,
+  parentId: null,
 };
 
 const StyledComponent = withStyles(styles)(ItemsGrid);

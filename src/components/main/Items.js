@@ -21,7 +21,7 @@ const Items = ({
   clickable,
   defautSortedColumn,
   isEditing,
-  onSaveCaption,
+  parentId,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -41,6 +41,7 @@ const Items = ({
       return (
         <ItemsGrid
           id={id}
+          parentId={parentId}
           title={title}
           items={itemSearch.results}
           memberships={memberships}
@@ -48,6 +49,7 @@ const Items = ({
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
           clickable={clickable}
+          isEditing={isEditing}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -65,7 +67,6 @@ const Items = ({
           toolbarActions={toolbarActions}
           clickable={clickable}
           isEditing={isEditing}
-          onSaveCaption={onSaveCaption}
         />
       );
   }
@@ -85,8 +86,8 @@ Items.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
   }),
-  isEditing: PropTypes.bool.isRequired,
-  onSaveCaption: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool,
+  parentId: PropTypes.string,
 };
 
 Items.defaultProps = {
@@ -96,6 +97,8 @@ Items.defaultProps = {
   toolbarActions: null,
   clickable: true,
   defautSortedColumn: {},
+  isEditing: false,
+  parentId: null,
 };
 
 export default Items;

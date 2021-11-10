@@ -6,8 +6,8 @@ import {
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../../src/config/selectors';
 import {
-  buildGraaspComposeView,
-  buildGraaspPerformView,
+  buildGraaspBuilderView,
+  buildGraaspPlayerView,
   buildItemPath,
 } from '../../../../src/config/paths';
 import {
@@ -16,10 +16,7 @@ import {
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
-import {
-  PERFORM_VIEW_SELECTION,
-  SETTINGS,
-} from '../../../../src/config/constants';
+import { SETTINGS, SHARING_LINK_TYPES } from '../../../../src/config/constants';
 import {
   DEFAULT_TAGS,
   ITEM_LOGIN_TAG,
@@ -38,7 +35,7 @@ export const changeVisibility = (value) => {
 };
 
 describe('Share Item', () => {
-  it('Default Private Item', () => {
+  it.only('Default Private Item', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, tags: DEFAULT_TAGS });
     const item = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(item.id));
@@ -47,13 +44,13 @@ describe('Share Item', () => {
     // sharing link
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'contain',
-      `${buildGraaspComposeView(item.id)}`,
+      `${buildGraaspBuilderView(item.id)}`,
     );
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_SELECT_ID}`).click();
-    cy.get(`li[data-value="${PERFORM_VIEW_SELECTION}"]`).click();
+    cy.get(`li[data-value="${SHARING_LINK_TYPES.PLAYER}"]`).click();
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'have.text',
-      `${buildGraaspPerformView(item.id)}`,
+      `${buildGraaspPlayerView(item.id)}`,
     );
 
     const visiblitySelect = cy.get(

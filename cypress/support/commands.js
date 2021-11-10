@@ -168,7 +168,7 @@ Cypress.Commands.add(
 
     mockPutItemLogin(items, putItemLoginError);
 
-    mockGetItemMembershipsForItem(items);
+    mockGetItemMembershipsForItem(items, currentMember);
 
     mockGetTags(tags);
 

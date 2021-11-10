@@ -1,7 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { hooks } from '../../config/queryClient';
-import { isItemUpdateAllowedForUser } from '../../utils/membership';
+import {
+  getMembership,
+  isItemUpdateAllowedForUser,
+} from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { LayoutContext } from '../context/LayoutContext';
@@ -26,10 +29,6 @@ const ItemScreen = () => {
   } = useContext(LayoutContext);
   const { data: currentMember } = useContext(CurrentUserContext);
   const { data: memberships } = useItemMemberships([itemId]);
-  const enableEdition = isItemUpdateAllowedForUser({
-    memberships: memberships?.get(0),
-    memberId: currentMember?.get('id'),
-  });
 
   useEffect(() => {
     setEditingItemId(null);
@@ -42,12 +41,19 @@ const ItemScreen = () => {
     return <ErrorAlert />;
   }
 
+  const enableEdition = isItemUpdateAllowedForUser({
+    memberships: getMembership(memberships),
+    memberId: currentMember?.get('id'),
+  });
+
   const content = (() => {
     if (enableEdition && isItemSettingsOpen) {
       return <ItemSettings item={item} />;
     }
     if (isItemSharingOpen) {
-      return <ItemSharingTab item={item} memberships={memberships?.get(0)} />;
+      return (
+        <ItemSharingTab item={item} memberships={getMembership(memberships)} />
+      );
     }
     return <ItemContent item={item} enableEdition={enableEdition} />;
   })();

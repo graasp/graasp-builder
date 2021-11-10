@@ -68,7 +68,7 @@
     "Wikipedia, YouTube": "Wikipedia, YouTube",
     "Shared Items": "Eléments Partagés",
     "Analytics": "Analytics",
-    "Perform View": "Perform View",
+    "Player View": "Vue Player",
     "Trash": "Poubelle",
     "Settings": "Paramètres",
     "Close": "Fermer",
@@ -102,10 +102,10 @@
     "Flag": "Signaler",
     "Select reason for flagging this item": "Sélectionner la raison du signalement de cet élément",
     "Items per page": "Eléments par page:",
-    "perform view": "vue perform",
-    "Show Perform View": "Montrer la Vue Perform",
-    "Compose": "Compose",
-    "Perform": "Perform",
+    "player view": "vue player",
+    "Show Player View": "Montrer la Vue Player",
+    "Builder": "Builder",
+    "Player": "Player",
     "Copy to Clipboard": "Copier dans le presse-papier",
     "Item not specified": "Elément introuvable",
     "You are being redirected…": "Redirection en cours…",
@@ -131,6 +131,13 @@
     "No user has authenticated to this item yet.": "Aucun utilisateur ne s'est encore connecté à cet élément.",
     "Pin": "Epingler cet élément",
     "Unpin": "Détacher cet élément",
-    "Show Chat": "Afficher le chat"
+    "Show Chat": "Afficher le chat",
+    "Write the folder decription here…": "Entrer la description du dossier ici…",
+    "Information": "Informations",
+    "Save": "Sauvegarder",
+    "This item is accessible if the visitor provides a ": "Cet élément est accessible si le visiteur se connecte avec un ",
+    "This item is public. Anyone can access it.": "Cet élément est public. N'importe qui peut y accéder.",
+    "This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.": "Cet élément est publié. N'importe qui peut y accéder et l'élément est répertorié sur Graasp Explorer, notre librarie de ressources d'apprentissage.",
+    "This item is private. Only authorized members can access it.": "Cet élément est privé. Seul les utilisateurs autorisés peuvent y accéder."
   }
 }

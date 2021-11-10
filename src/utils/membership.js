@@ -1,6 +1,9 @@
 import { PERMISSIONS_EDITION_ALLOWED } from '../config/constants';
 import { PERMISSION_LEVELS } from '../enums';
 
+// todo: better check with typescript
+export const isError = (memberships) => memberships?.statusCode;
+
 export const isSettingsEditionAllowedForUser = ({ memberships, memberId }) =>
   memberships?.find(
     ({ memberId: mId, permission }) =>
@@ -16,9 +19,23 @@ export const isItemUpdateAllowedForUser = ({ memberships, memberId }) =>
   );
 
 export const membershipsWithoutUser = (memberships, userId) =>
-  memberships.filter(({ memberId }) => memberId !== userId);
+  memberships?.filter(({ memberId }) => memberId !== userId);
+
+// util function to get the first membership from useMemberships
+// this is necessary to detect errors
+export const getMembership = (memberships) => {
+  if (isError(memberships?.get(0))) {
+    return undefined;
+  }
+
+  return memberships?.get(0);
+};
 
 export const getMembershipsForItem = ({ item, memberships, items }) => {
   const index = items.findKey(({ id }) => id === item.id);
-  return memberships.get(index);
+  const m = memberships.get(index);
+  if (isError(m)) {
+    return undefined;
+  }
+  return m;
 };

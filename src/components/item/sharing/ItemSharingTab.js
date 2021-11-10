@@ -39,14 +39,15 @@ const ItemSharingTab = ({ item, memberships }) => {
   const { data: currentMember, isLoadingCurrentMember } = useContext(
     CurrentUserContext,
   );
-  const canEdit = isItemUpdateAllowedForUser({
-    memberships,
-    memberId: currentMember?.get('id'),
-  });
   const { data: members } = hooks.useMembers(
     memberships?.map(({ memberId }) => memberId),
   );
   const { setIsItemSharingOpen } = useContext(LayoutContext);
+
+  const canEdit = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: currentMember?.get('id'),
+  });
 
   useEffect(
     () => () => {
@@ -70,14 +71,14 @@ const ItemSharingTab = ({ item, memberships }) => {
       memberships,
       currentMember.get('id'),
     );
-    const authorizedMemberships = membershipsWithoutSelf.filter(
+    const authorizedMemberships = membershipsWithoutSelf?.filter(
       ({ memberId }) => {
         const member = members?.find(({ id: mId }) => mId === memberId);
         return !member?.email?.includes(PSEUDONIMIZED_USER_MAIL);
       },
     );
 
-    const authenticatedMemberships = membershipsWithoutSelf.filter(
+    const authenticatedMemberships = membershipsWithoutSelf?.filter(
       ({ memberId }) => {
         const member = members?.find(({ id: mId }) => mId === memberId);
         return member?.email?.includes(PSEUDONIMIZED_USER_MAIL);

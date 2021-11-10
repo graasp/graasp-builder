@@ -1,12 +1,11 @@
+import React, { useContext, useState } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { TextEditor } from '@graasp/ui';
 import { useHistory, useParams } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,6 +26,7 @@ import NameCellRenderer from '../table/NameCellRenderer';
 import DragCellRenderer from '../table/DragCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import FolderDescription from '../item/FolderDescription';
 
 const { useItem } = hooks;
 
@@ -64,6 +64,7 @@ const ItemsTable = ({
   toolbarActions,
   clickable,
   defautSortedColumn,
+  isEditing,
 }) => {
   const { t } = useTranslation();
   const { push } = useHistory();
@@ -142,7 +143,6 @@ const ItemsTable = ({
   const itemRowDragText = (params) => params.rowNode.data.name;
 
   const NoRowsComponent = () => <Typography>{t('No items')}</Typography>;
-  const parentDescription = parentItem?.get('description');
   const ActionComponent = ActionsCellRenderer({
     memberships,
     items: rows,
@@ -158,8 +158,7 @@ const ItemsTable = ({
         actions={toolbarActions}
       />
 
-      {/* description */}
-      {parentDescription && <TextEditor value={parentDescription} />}
+      <FolderDescription isEditing={isEditing} itemId={itemId} />
 
       <div
         className="ag-theme-material"
@@ -265,6 +264,7 @@ ItemsTable.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
   }),
+  isEditing: PropTypes.bool,
 };
 
 ItemsTable.defaultProps = {
@@ -277,6 +277,7 @@ ItemsTable.defaultProps = {
   toolbarActions: null,
   clickable: true,
   defautSortedColumn: {},
+  isEditing: false,
 };
 
 export default ItemsTable;

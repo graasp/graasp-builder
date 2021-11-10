@@ -34,7 +34,7 @@ const Home = () => {
         id={OWNED_ITEMS_ID}
         title={t('My Items')}
         items={ownItems}
-        headerElements={[<NewItemButton fontSize="small" />]}
+        headerElements={[<NewItemButton key="newButton" fontSize="small" />]}
       />
     </Main>
   );

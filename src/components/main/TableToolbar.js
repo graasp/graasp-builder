@@ -53,10 +53,15 @@ DefaultActions.propTypes = {
   selectedIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-const TableToolbar = (props) => {
+const TableToolbar = ({
+  numSelected,
+  tableTitle,
+  selected,
+  headerElements,
+  actions,
+}) => {
   const classes = useToolbarStyles();
   const { t } = useTranslation();
-  const { numSelected, tableTitle, selected, headerElements, actions } = props;
   const renderActions = actions ?? DefaultActions;
 
   return (
