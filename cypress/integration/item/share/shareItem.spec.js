@@ -6,8 +6,8 @@ import {
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../../src/config/selectors';
 import {
-  buildGraaspComposeView,
-  buildGraaspPerformView,
+  buildGraaspBuilderView,
+  buildGraaspPlayerView,
   buildItemPath,
 } from '../../../../src/config/paths';
 import {
@@ -47,13 +47,13 @@ describe('Share Item', () => {
     // sharing link
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'contain',
-      `${buildGraaspComposeView(item.id)}`,
+      `${buildGraaspBuilderView(item.id)}`,
     );
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_SELECT_ID}`).click();
     cy.get(`li[data-value="${PERFORM_VIEW_SELECTION}"]`).click();
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'have.text',
-      `${buildGraaspPerformView(item.id)}`,
+      `${buildGraaspPlayerView(item.id)}`,
     );
 
     const visiblitySelect = cy.get(

@@ -127,7 +127,7 @@ export const buildRowDraggerId = (id) => `rowDragger-${id}`;
 export const buildShareButtonId = (id) => `shareButton-${id}`;
 export const buildDeleteButtonId = (id) => `deleteButton-${id}`;
 export const buildItemMenuButtonId = (id) => `itemMenuButton-${id}`;
-export const buildPerformButtonId = (id) => `performButton-${id}`;
+export const buildPlayerButtonId = (id) => `playerButton-${id}`;
 export const buildEditButtonId = (id) => `editButton-${id}`;
 export const buildSettingsButtonId = (id) => `settingsButton-${id}`;
 export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';

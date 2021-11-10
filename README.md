@@ -1,4 +1,4 @@
-# Graasp Compose
+# Graasp Builder
 
 ## Installation
 

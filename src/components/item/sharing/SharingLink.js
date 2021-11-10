@@ -13,16 +13,15 @@ import {
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
 } from '../../../config/selectors';
 import {
-  buildGraaspComposeView,
-  buildGraaspPerformView,
+  buildGraaspBuilderView,
+  buildGraaspPlayerView,
 } from '../../../config/paths';
 import {
-  COMPOSE_VIEW_SELECTION,
-  PERFORM_VIEW_SELECTION,
   SHARE_ITEM_MODAL_MIN_WIDTH,
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
+  SHARING_LINK_TYPES,
 } from '../../../config/constants';
 import notifier from '../../../middlewares/notifier';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../../types/clipboard';
@@ -85,16 +84,16 @@ const SharingLink = ({ itemId }) => {
   useEffect(() => {
     if (itemId) {
       switch (linkType) {
-        case COMPOSE_VIEW_SELECTION: {
-          setLink(buildGraaspComposeView(itemId));
+        case SHARING_LINK_TYPES.BUILDER: {
+          setLink(buildGraaspBuilderView(itemId));
           break;
         }
-        case PERFORM_VIEW_SELECTION: {
-          setLink(buildGraaspPerformView(itemId));
+        case SHARING_LINK_TYPES.PLAYER: {
+          setLink(buildGraaspPlayerView(itemId));
           break;
         }
         default:
-          setLinkType(COMPOSE_VIEW_SELECTION);
+          setLinkType(SHARING_LINK_TYPES.BUILDER);
           break;
       }
     }
@@ -133,8 +132,8 @@ const SharingLink = ({ itemId }) => {
           onChange={handleLinkTypeChange}
           id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
         >
-          <MenuItem value={COMPOSE_VIEW_SELECTION}>{t('Compose')}</MenuItem>
-          <MenuItem value={PERFORM_VIEW_SELECTION}>{t('Perform')}</MenuItem>
+          <MenuItem value={SHARING_LINK_TYPES.BUILDER}>{t('Builder')}</MenuItem>
+          <MenuItem value={SHARING_LINK_TYPES.PLAYER}>{t('Player')}</MenuItem>
         </Select>
         <Tooltip title={t('Copy to Clipboard')}>
           <IconButton onClick={handleCopy} className={classes.copyButton}>

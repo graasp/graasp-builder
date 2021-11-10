@@ -227,17 +227,21 @@ function VisibilitySelect({ item, edit }) {
       case SETTINGS.ITEM_LOGIN.name:
         return (
           <>
-            {'This item is accessible if the visitor provides a '}
+            {t('This item is accessible if the visitor provides a ')}
             {renderLoginSchemaSelect()}
           </>
         );
       case SETTINGS.ITEM_PUBLIC.name:
-        return 'This item is public. Anyone can access it.';
+        return t('This item is public. Anyone can access it.');
       case SETTINGS.ITEM_PUBLISHED.name:
-        return 'This element is published. Anyone can access it and is available on Graasp Explore, our public repository of learning ressources.';
+        return t(
+          'This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.',
+        );
       case SETTINGS.ITEM_PRIVATE.name:
       default:
-        return 'This item is private. Only authorized members can access it.';
+        return t(
+          'This item is private. Only authorized members can access it.',
+        );
     }
   };
 

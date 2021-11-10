@@ -2,7 +2,7 @@ import { ITEM_TYPES_WITH_CAPTIONS } from '../../../../src/config/constants';
 import {
   buildEditButtonId,
   buildFileItemId,
-  buildPerformButtonId,
+  buildPlayerButtonId,
   buildS3FileItemId,
   buildSettingsButtonId,
   buildShareButtonId,
@@ -50,7 +50,7 @@ export const expectItemHeaderLayout = ({
   const header = cy.get(`#${ITEM_HEADER_ID}`);
 
   header.get(`#${buildShareButtonId(id)}`).should('exist');
-  header.get(`#${buildPerformButtonId(id)}`).should('exist');
+  header.get(`#${buildPlayerButtonId(id)}`).should('exist');
 
   if (
     isSettingsEditionAllowedForUser({

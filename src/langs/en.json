@@ -68,7 +68,7 @@
     "Wikipedia, YouTube": "Wikipedia, YouTube",
     "Shared Items": "Shared Items",
     "Analytics": "Analytics",
-    "Perform View": "Perform View",
+    "Player View": "Player View",
     "Trash": "Trash",
     "Settings": "Settings",
     "Close": "Close",
@@ -102,10 +102,10 @@
     "Flag": "Flag",
     "Select reason for flagging this item": "Select reason for flagging this item",
     "Items per page": "Items per page:",
-    "perform view": "perform view",
-    "Show Perform View": "Show Perform View",
-    "Compose": "Compose",
-    "Perform": "Perform",
+    "player view": "player view",
+    "Show Player View": "Show Player View",
+    "Builder": "Builder",
+    "Player": "Player",
     "Copy to Clipboard": "Copy to Clipboard",
     "Item not specified": "Item not specified",
     "You are being redirected…": "You are being redirected…",
@@ -131,6 +131,13 @@
     "No user has authenticated to this item yet.": "No user has authenticated to this item yet.",
     "Pin": "Pin this item",
     "Unpin": "Unpin this item",
-    "Show Chat": "Show Chat"
+    "Show Chat": "Show Chat",
+    "Write the folder decription here…": "Write the folder decription here…",
+    "Information": "Information",
+    "Save": "Save",
+    "This item is accessible if the visitor provides a ": "This item is accessible if the visitor provides a ",
+    "This item is public. Anyone can access it.": "This item is public. Anyone can access it.",
+    "This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.": "This element is published. Anyone can access it and is available on Graasp Explore, our public repository of learning ressources.",
+    "This item is private. Only authorized members can access it.": "This item is private. Only authorized members can access it."
   }
 }

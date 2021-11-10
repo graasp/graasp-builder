@@ -132,8 +132,10 @@ export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const USER_ITEM_ORDER = 'user_order';
 
-export const COMPOSE_VIEW_SELECTION = 'composeViewSelection';
-export const PERFORM_VIEW_SELECTION = 'performViewSelection';
+export const SHARING_LINK_TYPES = {
+  BUILDER: 'builder',
+  PLAYER: 'player',
+};
 
 export const ITEM_TYPES_WITH_CAPTIONS = [
   ITEM_TYPES.FOLDER,
