@@ -2184,9 +2184,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git#master":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#55/itemCard":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=11cba0f355ec7efc763b7568dc44ea43904d5edd"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=06a39be28993f95124316932e3d0bee1adbd2b08"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2203,7 +2203,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: f8721bf93f81c328cf199e92d1196a035aac0205ae0312e7e8b1b69cee08dedd0d9d815816465ef2c52a8b7ab832b6f964458fe5a6d31011978e11a7ee171322
+  checksum: e001b4ecf8a6c81bd2876e5ceebb6f0d5d9a809a39efd75620a482e5e4a750f1ae70d4b45eb2d462eb0a5b9ca038cbff9fc7312843fd8220fc5788bc353bd851
   languageName: node
   linkType: hard
 
@@ -10253,7 +10253,7 @@ fsevents@^1.2.7:
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#82/updateDeleteItemsRoute"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master"
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#55/itemCard"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 5.0.0-beta.4
