@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  DEFAULT_ITEM_LAYOUT_MODE,
-  MIN_SCREEN_WIDTH,
-} from '../../config/constants';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
 
 const LayoutContext = React.createContext();
 
@@ -22,11 +19,7 @@ const LayoutContextProvider = ({ children }) => {
 
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
 
-  // open item panel by default if width allows it
-  const isItemPanelOpen = window.innerWidth > MIN_SCREEN_WIDTH;
-  const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(
-    isItemPanelOpen,
-  );
+  const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
   const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(false);
 
   return (
