@@ -119,8 +119,5 @@
       "src/serviceWorker.js"
     ]
   },
-  "packageManager": "yarn@3.0.1-rc.1",
-  "resolutions": {
-    "@graasp/query-client": "portal:/home/louise/Desktop/graasp/graasp-query-client"
-  }
+  "packageManager": "yarn@3.0.1-rc.1"
 }

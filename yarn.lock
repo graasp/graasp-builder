@@ -2166,9 +2166,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@portal:/home/louise/Desktop/graasp/graasp-query-client::locator=graasp-compose%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@graasp/query-client@portal:/home/louise/Desktop/graasp/graasp-query-client::locator=graasp-compose%40workspace%3A."
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#89/category":
+  version: 0.1.0
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=aa6abf69ba00ab82b77dd087edded20ef11b8da5"
   dependencies:
     axios: 0.21.4
     http-status-codes: 2.1.4
@@ -2179,8 +2179,9 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
+  checksum: ce6401b07be00dc1ab7325dd5db300c8b5f40dbef61220ff33bfa0b2018e14f88adefb4938bdf46e1caf77788af114fb7cb8288c572c34d3be8749ccecda3910
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git#50/cjs":
   version: 0.2.0
