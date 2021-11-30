@@ -45,7 +45,10 @@ const Item = ({ item, memberships }) => {
     alt: t('thumbnail'),
     defaultImage: DEFAULT_IMAGE_SRC,
     useThumbnail: hooks.useItemThumbnail,
+<<<<<<< HEAD
     className: classes.thumbnail,
+=======
+>>>>>>> refactor: use thumbnail in card
   });
 
   const { data: member } = useContext(CurrentUserContext);
