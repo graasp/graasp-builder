@@ -2167,26 +2167,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#82/updateDeleteItemsRoute":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#85/thumbnails":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=3a5a27349848341bf7745497c8ce89532dcadcfa"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=c7e430fa32df97b4dfc8d609280c20cb3484c7cc"
   dependencies:
     axios: 0.21.4
     http-status-codes: 2.1.4
     immutable: 4.0.0-rc.12
     js-cookie: 3.0.0
     qs: 6.10.1
-    react-query: 3.16.0
+    react-query: 3.31.0
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 841ba7e9ab4e90ba7534f23ed572eec4c4b85e282aaf438ad0fefa4f279c4e42fac32e60c1f669c88a7d64bf7b28992a694b12e4c70fd01ad3aae5601fb41ded
+  checksum: 4c2315d07f96bd4fa899e62ef08a0f0a3a1cb4902f95b0b4943f32bb0c371dd33ce586be0de00763f01d3c1e557224aecff1834f8ba0f70a1910623b9697ace1
   languageName: node
   linkType: hard
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git#master":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=11cba0f355ec7efc763b7568dc44ea43904d5edd"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=c780060af6afcd6955c284911eb958b5a84db5bd"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2203,7 +2203,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: f8721bf93f81c328cf199e92d1196a035aac0205ae0312e7e8b1b69cee08dedd0d9d815816465ef2c52a8b7ab832b6f964458fe5a6d31011978e11a7ee171322
+  checksum: d92a45efd7324c0753bf76426afd6e3c8563fd556edb19d642f6f4a74056e0e3cebdc4c906e6d9db8cb1a3ceaebfe5c00bcd63c62dfe25ba2301f2e22c01dc24
   languageName: node
   linkType: hard
 
@@ -10252,8 +10252,8 @@ fsevents@^1.2.7:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#82/updateDeleteItemsRoute"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master"
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#85/thumbnails"
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 5.0.0-beta.4
@@ -16863,6 +16863,24 @@ fsevents@^1.2.7:
     react-native:
       optional: true
   checksum: d2d62777fdec0b575b465f0875e421ecbbd8ed8cc911eb14fef18138fb59ad481aac2618d46febab8d8feb0de673af0e866854cfc7def103198622dcb37d33fe
+  languageName: node
+  linkType: hard
+
+"react-query@npm:3.31.0":
+  version: 3.31.0
+  resolution: "react-query@npm:3.31.0"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    broadcast-channel: ^3.4.1
+    match-sorter: ^6.0.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: a00e05ea485f61a63686b98e7bd591112f321c732dc313e43ba4787ae9d767666e2cfff3da0dc2a3626fe229b87b3e5433d32c5d45f3647a031f24366678f586
   languageName: node
   linkType: hard
 

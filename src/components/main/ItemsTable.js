@@ -215,16 +215,6 @@ const ItemsTable = ({
             sort={defautSortedColumn?.type}
           />
           <AgGridColumn
-            headerName={t('Created At')}
-            field="createdAt"
-            flex={3}
-            type="rightAligned"
-            valueFormatter={dateColumnFormatter}
-            sortable
-            comparator={dateComparator}
-            sort={defautSortedColumn?.createdAt}
-          />
-          <AgGridColumn
             headerName={t('Updated At')}
             field="updatedAt"
             flex={3}

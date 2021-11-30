@@ -5,8 +5,8 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main",
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#82/updateDeleteItemsRoute",
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#master",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#85/thumbnails",
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "5.0.0-beta.4",
     "@material-ui/lab": "4.0.0-alpha.57",
@@ -56,6 +56,7 @@
     "start:ci": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "dist": "env-cmd -f ./.env.production react-scripts build",
+    "dist:dev": "env-cmd -f ./.env.development react-scripts build",
     "test": "env-cmd -f ./.env.test react-scripts test",
     "test:once": "env-cmd -f ./.env.test react-scripts test --watchAll=false",
     "eject": "react-scripts eject",

@@ -24,8 +24,10 @@ Cypress.Commands.add('goToHome', () => {
   cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
 });
 
-Cypress.Commands.add('goToItemWithNavigation', (id) => {
+Cypress.Commands.add('goToItemWithNavigation', (id, openHidden = false) => {
   cy.wait(NAVIGATE_PAUSE);
-  cy.get(`#${NAVIGATION_HIDDEN_PARENTS_ID}`).click();
+  if (openHidden) {
+    cy.get(`#${NAVIGATION_HIDDEN_PARENTS_ID}`).click();
+  }
   cy.get(`#${buildNavigationLink(id)}`).click();
 });
