@@ -152,8 +152,8 @@ function CategorySelection({ item, edit }) {
       });
     }
   };
-  const disciplines = disciplineList.toArray();
-  const ageGroups = ageList.toArray();
+  const disciplines = disciplineList?.toArray();
+  const ageGroups = ageList?.toArray();
   return (
     <>
       <Typography variant="h6" className={classes.Selection}>
