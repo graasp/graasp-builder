@@ -20,14 +20,17 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 const { useCategoryTypes, useCategories, useItemCategories } = hooks;
 const { POST_ITEM_CATEGORY, DELETE_ITEM_CATEGORY } = MUTATION_KEYS;
 
-const useStyles = makeStyles({
-  Selection: {
-    marginTop: 20,
+const SELECT_OPTION = 'select-option';
+const REMOVE_OPTION = 'remove-option';
+
+const useStyles = makeStyles((theme) => ({
+  selection: {
+    marginTop: theme.spacing(2),
   },
-  DropMenu: {
-    marginBottom: 10,
+  dropMenu: {
+    marginBottom: theme.spacing(1),
   },
-});
+}));
 
 function CategorySelection({ item, edit }) {
   const { t } = useTranslation();
@@ -41,7 +44,7 @@ function CategorySelection({ item, edit }) {
   // current item
   const { itemId } = useParams();
 
-  // extra value
+  // get itemCategories, categoryTypes and allCategories
   const {
     data: itemCategories,
     isLoading: isItemCategoriesLoading,
@@ -50,57 +53,39 @@ function CategorySelection({ item, edit }) {
     data: categoryTypes,
     isLoading: isCategoryTypesLoading,
   } = useCategoryTypes();
-  const { data: allCategories, isLoading: isCategoriesLoading } = useCategories(
-    [],
-  );
-  const ageList = allCategories?.filter(
-    (entry) => entry.type === categoryTypes?.get(0).id,
-  );
-  const disciplineList = allCategories?.filter(
-    (entry) => entry.type === categoryTypes?.get(1).id,
-  );
+  const {
+    data: allCategories,
+    isLoading: isCategoriesLoading,
+  } = useCategories();
 
+  // process data
+  const categoriesMap = allCategories?.groupBy((entry) => entry.type);
+  const ageList = categoriesMap
+    ?.get(categoryTypes?.filter((type) => type.name === 'age').get(0).id)
+    .toArray();
+  const disciplineList = categoriesMap
+    ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
+    .toArray();
+
+  // map categoryId to entryId for itemCategory entries
   const mapItemCategory = new Map(
-    itemCategories?.map((obj) => [obj.category_id, obj.id]),
+    itemCategories?.map((obj) => [obj.categoryId, obj.id]),
   );
-  const ageCategory = ageList?.map((entry) => entry.id);
-  const disciplineCategory = disciplineList?.map((entry) => entry.id);
 
-  // seperate age and discipline category
-  const initialAgeValue = itemCategories?.filter((itemCategory) =>
-    ageCategory?.includes(itemCategory.category_id),
-  );
-  const initialDisciplineValue = itemCategories?.filter((itemCategory) =>
-    disciplineCategory?.includes(itemCategory.category_id),
-  );
-  const selectedDisciplineIds = initialDisciplineValue
-    ?.map((entry) => entry.category_id)
-    .toArray();
-  const selectedAgeIds = initialAgeValue
-    ?.map((entry) => entry.category_id)
-    .toArray();
-  // set initial value
-  const [ageOptionsValue, setAgeOptionsValue] = useState([]);
-  const [disciplineOptionsValue, setDisciplineOptionsValue] = useState([]);
+  // initialize state variable
+  const [selectedValues, setSelectedValues] = useState([]);
 
   // update state variables depending on fetch values
   useEffect(() => {
-    if (selectedAgeIds && ageList) {
-      setAgeOptionsValue(
-        ageList.filter((entry) => selectedAgeIds.includes(entry.id)).toArray(),
-      );
-    }
-  }, [item, itemCategories, ageList, selectedAgeIds]);
-
-  useEffect(() => {
-    if (selectedDisciplineIds && disciplineList) {
-      setDisciplineOptionsValue(
-        disciplineList
-          .filter((entry) => selectedDisciplineIds.includes(entry.id))
+    if (itemCategories && allCategories)
+      setSelectedValues(
+        allCategories
+          ?.filter((entry) =>
+            itemCategories?.map((obj) => obj.categoryId).includes(entry.id),
+          )
           .toArray(),
       );
-    }
-  }, [item, itemCategories, disciplineList, selectedDisciplineIds]);
+  }, [item, itemCategories, allCategories]);
 
   if (
     isMemberLoading ||
@@ -111,17 +96,21 @@ function CategorySelection({ item, edit }) {
     return <Loader />;
   }
 
-  const handleAgeChange = (event, value, reason) => {
-    if (reason === 'select-option') {
-      // post new category (discipline)
+  const handleChange = (categoryType) => (event, value, reason) => {
+    const typeMap = { age: ageList, discipline: disciplineList };
+    if (reason === SELECT_OPTION) {
+      // post new category
       const newCategoryId = value.at(-1).id;
       createItemCategory({
         itemId,
         categoryId: newCategoryId,
       });
-    } else if (reason === 'remove-option') {
+    } else if (reason === REMOVE_OPTION) {
       // remove an option
-      const result = ageOptionsValue.filter(
+      const previousValues = typeMap[categoryType]?.filter((entry) =>
+        selectedValues.includes(entry),
+      );
+      const result = previousValues.filter(
         ({ id: id1 }) => !value.some(({ id: id2 }) => id2 === id1),
       );
       const entryId = mapItemCategory.get(result[0].id);
@@ -132,44 +121,22 @@ function CategorySelection({ item, edit }) {
     }
   };
 
-  const handleDisciplineChange = (event, value, reason) => {
-    if (reason === 'select-option') {
-      // post new category (discipline)
-      const newCategoryId = value.at(-1).id;
-      createItemCategory({
-        itemId,
-        categoryId: newCategoryId,
-      });
-    } else if (reason === 'remove-option') {
-      // remove an option
-      const result = disciplineOptionsValue.filter(
-        ({ id: id1 }) => !value.some(({ id: id2 }) => id2 === id1),
-      );
-      const entryId = mapItemCategory.get(result[0].id);
-      deleteItemCategory({
-        itemId,
-        entryId,
-      });
-    }
-  };
-  const disciplines = disciplineList?.toArray();
-  const ageGroups = ageList?.toArray();
   return (
     <>
       <Typography variant="h6" className={classes.Selection}>
         {t('Category')}
       </Typography>
-      <Typography variant="body1"> Age Range: </Typography>
+      <Typography variant="body1">{t('Age Range')}</Typography>
       {edit && (
         <Autocomplete
           multiple
           disableClearable
           id={SHARE_ITEM_CATEGORY_AGE}
-          value={ageOptionsValue}
+          value={ageList?.filter((value) => selectedValues.includes(value))}
           getOptionSelected={(option, value) => option.id === value.id}
-          options={ageGroups}
+          options={ageList}
           getOptionLabel={(option) => option.name}
-          onChange={handleAgeChange}
+          onChange={handleChange('age')}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -179,17 +146,19 @@ function CategorySelection({ item, edit }) {
           )}
         />
       )}
-      <Typography variant="body1"> Discipline: </Typography>
+      <Typography variant="body1">{t('Discipline')}</Typography>
       {edit && (
         <Autocomplete
           multiple
           disableClearable
           id={SHARE_ITEM_CATEGORY_DISCIPLINE}
-          value={disciplineOptionsValue}
+          value={disciplineList?.filter((value) =>
+            selectedValues.includes(value),
+          )}
           getOptionSelected={(option, value) => option.id === value.id}
-          options={disciplines}
+          options={disciplineList}
           getOptionLabel={(option) => option.name}
-          onChange={handleDisciplineChange}
+          onChange={handleChange('discipline')}
           renderInput={(params) => (
             <TextField
               {...params}
