@@ -35,11 +35,7 @@ describe('Upload Thumbnails', () => {
       });
   });
 
-<<<<<<< HEAD
   it(`upload member avatar`, () => {
-=======
-  it.only(`upload member avatar`, () => {
->>>>>>> feat: add thumbnail setting
     cy.visit(MEMBER_PROFILE_PATH);
 
     // change item thumbnail

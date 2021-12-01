@@ -3,13 +3,8 @@ import { HOME_PATH, SHARED_ITEMS_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
   buildNameCellRendererId,
-<<<<<<< HEAD
-  HEADER_USER_ID,
-=======
   ITEM_CARD_MEDIA_CLASSNAME,
   HEADER_USER_ID,
-  ITEM_CARD_HEADER_CLASSNAME,
->>>>>>> feat: add thumbnail setting
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
@@ -62,11 +57,7 @@ describe('View Thumbnails', () => {
 
     // check bob avatar in shared items, grid mode
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-<<<<<<< HEAD
     cy.get(`#${buildItemCard(items[2].id)} img`)
-=======
-    cy.get(`#${buildItemCard(items[2].id)} .${ITEM_CARD_HEADER_CLASSNAME} img`)
->>>>>>> feat: add thumbnail setting
       .should('have.attr', 'src')
       .and('contain', 'blob:');
   });
