@@ -19,6 +19,7 @@ import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import CategorySelection from './CategorySelection';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -128,6 +129,7 @@ const ItemSharingTab = ({ item, memberships }) => {
       <SharingLink itemId={item.get('id')} />
 
       <VisibilitySelect item={item} edit={canEdit} />
+      <CategorySelection item={item} edit={canEdit} />
 
       {renderMembershipSettings()}
     </Container>

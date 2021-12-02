@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main",
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#85/thumbnails",
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git",
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
     "@material-ui/core": "4.11.2",
     "@material-ui/icons": "5.0.0-beta.4",
@@ -35,7 +35,7 @@
     "react-beautiful-dnd": "13.1.0",
     "react-dom": "^17.0.1",
     "react-i18next": "11.11.4",
-    "react-query": "3.16.0",
+    "react-query": "3.31.0",
     "react-quill": "1.3.5",
     "react-redux": "7.2.2",
     "react-redux-toastr": "7.6.5",

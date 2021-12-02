@@ -22,7 +22,7 @@ const RowActions = ({ data: item }) => (
   </>
 );
 RowActions.propTypes = {
-  data: PropTypes.shape({}).isRequired,
+  data: PropTypes.shape({ id: PropTypes.string }).isRequired,
 };
 
 const ToolbarActions = ({ selectedIds }) => (
