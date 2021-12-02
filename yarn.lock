@@ -2166,9 +2166,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#85/thumbnails":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=65fab859e8dc13c0e8cd4906cf91b8d90e7f96fa"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=c7e430fa32df97b4dfc8d609280c20cb3484c7cc"
   dependencies:
     axios: 0.21.4
     http-status-codes: 2.1.4
@@ -2179,13 +2179,13 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: c6b4b91df05d09acd8e6ea4a5ef75a984f9e375ecdeb5a5a3662a5a63fa3303f62a64b3512462df7e5747cead4413026e3d2b169817fa15a4d9aff4898117216
+  checksum: 4c2315d07f96bd4fa899e62ef08a0f0a3a1cb4902f95b0b4943f32bb0c371dd33ce586be0de00763f01d3c1e557224aecff1834f8ba0f70a1910623b9697ace1
   languageName: node
   linkType: hard
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=0b5f1d360981c053884ff656db085de2a4e084e9"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=c780060af6afcd6955c284911eb958b5a84db5bd"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2202,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 0b1b4e01c097a38dbb7c701f24942de8beaf94ac96e7bae1b6bb67882018fcbac8f568433d1399e2fee4a8b8b1cbcb73c1116fbf4e2d4d4220e305ee8000b69d
+  checksum: d92a45efd7324c0753bf76426afd6e3c8563fd556edb19d642f6f4a74056e0e3cebdc4c906e6d9db8cb1a3ceaebfe5c00bcd63c62dfe25ba2301f2e22c01dc24
   languageName: node
   linkType: hard
 
@@ -10290,7 +10290,7 @@ fsevents@^1.2.7:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#85/thumbnails"
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
@@ -16877,6 +16877,24 @@ fsevents@^1.2.7:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
+"react-query@npm:3.31.0":
+  version: 3.31.0
+  resolution: "react-query@npm:3.31.0"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    broadcast-channel: ^3.4.1
+    match-sorter: ^6.0.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: a00e05ea485f61a63686b98e7bd591112f321c732dc313e43ba4787ae9d767666e2cfff3da0dc2a3626fe229b87b3e5433d32c5d45f3647a031f24366678f586
   languageName: node
   linkType: hard
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
@@ -42,7 +43,7 @@ const Navigation = () => {
   const { data: parents, isLoading: parentIsLoading } = useParents({
     id: itemId,
     path: itemPath,
-    enabled: parentsOpen,
+    enabled: true,
   });
 
   if (isItemLoading) {
@@ -84,6 +85,16 @@ const Navigation = () => {
     );
   };
 
+  const ParentLink = ({ id, name }) => (
+    <Link key={id} to={buildItemPath(id)}>
+      <Typography id={buildNavigationLink(id)}>{name}</Typography>
+    </Link>
+  );
+  ParentLink.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  };
+
   const renderParents = () => {
     // nothing to display if no parents
     const p = item?.get('path');
@@ -91,29 +102,40 @@ const Navigation = () => {
       return null;
     }
 
-    // display parents only when needed
-    // todo: display parents if in database
-    if (!parentsOpen) {
+    if (parentIsLoading) {
       return (
         <Typography
           id={NAVIGATION_HIDDEN_PARENTS_ID}
           className={classes.parents}
-          onClick={onParentsClick}
         >
           {LOADING_CONTENT}
         </Typography>
       );
     }
 
-    if (parentIsLoading) {
-      return <Loader />;
+    // display parents only when needed
+    // always display last and first parent
+    if (!parentsOpen) {
+      return [
+        parents?.size >= 1 && (
+          <ParentLink name={parents.first().name} id={parents.first().id} />
+        ),
+        parents?.size >= 3 && (
+          <Typography
+            id={NAVIGATION_HIDDEN_PARENTS_ID}
+            className={classes.parents}
+            onClick={onParentsClick}
+          >
+            {LOADING_CONTENT}
+          </Typography>
+        ),
+        parents?.size >= 2 && (
+          <ParentLink name={parents.last().name} id={parents.last().id} />
+        ),
+      ];
     }
 
-    return parents?.map(({ name, id }) => (
-      <Link key={id} to={buildItemPath(id)}>
-        <Typography id={buildNavigationLink(id)}>{name}</Typography>
-      </Link>
-    ));
+    return parents?.map(({ name, id }) => <ParentLink name={name} id={id} />);
   };
 
   return (

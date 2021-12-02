@@ -1,31 +1,26 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import truncate from 'lodash.truncate';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
-import CustomCardHeader from './CustomCardHeader';
+import PropTypes from 'prop-types';
+import { Card as GraaspCard } from '@graasp/ui';
+import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
-import { buildItemCard } from '../../config/selectors';
+import { buildItemCard, buildItemLink } from '../../config/selectors';
 import EditButton from '../common/EditButton';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import { getItemImage, stripHtml } from '../../utils/item';
+import ItemMenu from './ItemMenu';
 import FavoriteButton from '../common/FavoriteButton';
 import PinButton from '../common/PinButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import { buildItemPath } from '../../config/paths';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    maxWidth: 345,
+const useStyles = makeStyles({
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-}));
+});
 
 const Item = ({ item, memberships }) => {
   const classes = useStyles();
@@ -39,25 +34,39 @@ const Item = ({ item, memberships }) => {
     memberId: member?.get('id'),
   });
 
+  const Actions = (
+    <>
+      {!member.isEmpty() && <FavoriteButton member={member} item={item} />}
+      {enableEdition && (
+        <>
+          <EditButton item={item} />
+          <PinButton item={item} />
+        </>
+      )}
+    </>
+  );
+
   return (
-    <Card className={classes.root} id={buildItemCard(id)}>
-      <CustomCardHeader item={item} canEdit={enableEdition} />
-      <CardMedia className={classes.media} image={image} title={name} />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {truncate(stripHtml(description), { length: DESCRIPTION_MAX_LENGTH })}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        {!member.isEmpty() && <FavoriteButton member={member} item={item} />}
-        {enableEdition && (
-          <>
-            <EditButton item={item} />
-            <PinButton item={item} />
-          </>
-        )}
-      </CardActions>
-    </Card>
+    <GraaspCard
+      description={truncate(stripHtml(description), {
+        length: DESCRIPTION_MAX_LENGTH,
+      })}
+      Actions={Actions}
+      name={name}
+      creator={member?.get('name')}
+      ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
+      image={image}
+      cardId={buildItemCard(id)}
+      NameWrapper={({ children }) => (
+        <Link
+          to={buildItemPath(id)}
+          id={buildItemLink(id)}
+          className={classes.link}
+        >
+          {children}
+        </Link>
+      )}
+    />
   );
 };
 
