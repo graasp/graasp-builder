@@ -52,8 +52,6 @@ const {
   ITEMS_ROUTE,
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
-  buildGetS3MetadataRoute,
-  buildS3UploadFileRoute,
   GET_CURRENT_MEMBER_ROUTE,
   buildSignInPath,
   SIGN_OUT_ROUTE,
@@ -713,9 +711,7 @@ export const mockUploadItem = (items, shouldThrowError) => {
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildUploadFilesRoute(ID_FORMAT),
-        )}$|${API_HOST}/${buildUploadFilesRoute()}$|${API_HOST}/${parseStringToRegExp(
-          buildS3UploadFileRoute(ID_FORMAT),
-        )}$|${API_HOST}/${buildS3UploadFileRoute()}$`,
+        )}$|${API_HOST}/${buildUploadFilesRoute()}`,
       ),
     },
     ({ reply }) => {
@@ -751,7 +747,7 @@ export const mockGetS3Metadata = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(`${API_HOST}/${buildGetS3MetadataRoute(ID_FORMAT)}$`),
+      url: new RegExp(`${API_HOST}/${buildDownloadFilesRoute(ID_FORMAT)}$`),
     },
     ({ reply, url }) => {
       if (shouldThrowError) {

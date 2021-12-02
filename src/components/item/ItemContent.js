@@ -30,7 +30,7 @@ import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const { useChildren, useFileContent, useS3FileContent } = hooks;
+const { useChildren, useFileContent } = hooks;
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -61,23 +61,14 @@ const ItemContent = ({ item, enableEdition }) => {
   const { data: content, isLoading: isLoadingFileContent } = useFileContent(
     id,
     {
-      enabled: item && itemType === ITEM_TYPES.FILE,
+      enabled:
+        item &&
+        (itemType === ITEM_TYPES.FILE || itemType === ITEM_TYPES.S3_FILE),
     },
   );
-  const {
-    data: s3Content,
-    isLoading: isLoadingS3FileContent,
-  } = useS3FileContent(id, {
-    enabled: itemType === ITEM_TYPES.S3_FILE,
-  });
   const isEditing = enableEdition && editingItemId === itemId;
 
-  if (
-    isLoadingFileContent ||
-    isLoadingS3FileContent ||
-    isLoadingUser ||
-    isLoadingChildren
-  ) {
+  if (isLoadingFileContent || isLoadingUser || isLoadingChildren) {
     return <Loader />;
   }
 
@@ -124,7 +115,7 @@ const ItemContent = ({ item, enableEdition }) => {
             id={buildS3FileItemId(itemId)}
             editCaption={isEditing}
             item={item}
-            content={s3Content}
+            content={content}
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
           />
