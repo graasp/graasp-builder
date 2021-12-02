@@ -23,6 +23,9 @@ const SELECT_OPTION = 'select-option';
 const REMOVE_OPTION = 'remove-option';
 
 const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    marginTop: theme.spacing(2),
+  },
   selection: {
     marginTop: theme.spacing(2),
   },
@@ -61,10 +64,10 @@ function CategorySelection({ item, edit }) {
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
   const ageList = categoriesMap
     ?.get(categoryTypes?.filter((type) => type.name === 'age').get(0).id)
-    .toArray();
+    ?.toArray();
   const disciplineList = categoriesMap
     ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
-    .toArray();
+    ?.toArray();
 
   // initialize state variable
   const [selectedValues, setSelectedValues] = useState([]);
@@ -119,7 +122,7 @@ function CategorySelection({ item, edit }) {
 
   /* eslint-disable react/jsx-props-no-spreading */
   return (
-    <>
+    <div className={classes.wrapper}>
       <Typography variant="h6" className={classes.Selection}>
         {t('Category')}
       </Typography>
@@ -138,7 +141,7 @@ function CategorySelection({ item, edit }) {
             <TextField
               {...params}
               variant="outlined"
-              placeholder={t('Please Choose From List')}
+              placeholder={t('Please choose from list')}
             />
           )}
         />
@@ -160,12 +163,12 @@ function CategorySelection({ item, edit }) {
             <TextField
               {...params}
               variant="outlined"
-              placeholder={t('Please Choose From List')}
+              placeholder={t('Please choose from list')}
             />
           )}
         />
       )}
-    </>
+    </div>
   );
 }
 
