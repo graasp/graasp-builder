@@ -2183,9 +2183,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git#50/cjs":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=d0234a6afcbe0e4525bddfca0cbb89b63e3db9bc"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=0b5f1d360981c053884ff656db085de2a4e084e9"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2202,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: f8721bf93f81c328cf199e92d1196a035aac0205ae0312e7e8b1b69cee08dedd0d9d815816465ef2c52a8b7ab832b6f964458fe5a6d31011978e11a7ee171322
+  checksum: 0b1b4e01c097a38dbb7c701f24942de8beaf94ac96e7bae1b6bb67882018fcbac8f568433d1399e2fee4a8b8b1cbcb73c1116fbf4e2d4d4220e305ee8000b69d
   languageName: node
   linkType: hard
 
@@ -8217,9 +8217,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.564, electron-to-chromium@npm:^1.3.896":
-  version: 1.4.7
-  resolution: "electron-to-chromium@npm:1.4.7"
-  checksum: b2903762b207d9b341aa6c792c43976c552a4a4516010979a9c5a37c6a81d46bdf1285348e76451d0788aa27de10ff66278013aaf3678e9d2c70d93bd8cf79ac
+  version: 1.4.8
+  resolution: "electron-to-chromium@npm:1.4.8"
+  checksum: 1b7ad23906baae9c01471a3290a93f274425219738432a96bd1961d4ac9f421d70ae31e5c2008c94d5bfe7bae8d31899b5ebe26e03362df586ab4b9f29cb3ee6
   languageName: node
   linkType: hard
 
@@ -10291,7 +10291,7 @@ fsevents@^1.2.7:
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#50/cjs"
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 5.0.0-beta.4
@@ -11938,12 +11938,12 @@ fsevents@^1.2.7:
   linkType: hard
 
 "istanbul-reports@npm:^3.0.2":
-  version: 3.1.0
-  resolution: "istanbul-reports@npm:3.1.0"
+  version: 3.1.1
+  resolution: "istanbul-reports@npm:3.1.1"
   dependencies:
     html-escaper: ^2.0.0
     istanbul-lib-report: ^3.0.0
-  checksum: 2013f4fc61e0870b1188eb74bc492b78bc88528eaf71ddda3daf7b84cff760a651155d1ab128e4b771acff99fe788f2b15016dde37542b0f07cca1dffa3ff8ec
+  checksum: a9940767ee960fd21d4c9b24c417c15d38725be2f3517a72070e962e088fdf7b813f50985f660cd48436690237fdc5640bab10a1a91e0e94b0e400c212c85f3c
   languageName: node
   linkType: hard
 
@@ -12497,15 +12497,15 @@ fsevents@^1.2.7:
   linkType: hard
 
 "joi@npm:^17.3.0":
-  version: 17.4.3
-  resolution: "joi@npm:17.4.3"
+  version: 17.5.0
+  resolution: "joi@npm:17.5.0"
   dependencies:
     "@hapi/hoek": ^9.0.0
     "@hapi/topo": ^5.0.0
     "@sideway/address": ^4.1.3
     "@sideway/formula": ^3.0.0
     "@sideway/pinpoint": ^2.0.0
-  checksum: bde4bded6c4dda4b817f26071da6291aa4f294235877beda06d70a8de5b5432114990178b43d5a6d4f756747b225919319cebaa9e474656d13b710719af98c6f
+  checksum: 6a20d009d2fa8a72dbfd9bc739d240f678b09d3a16c05b4bfb4e2d0503e60f7d7914250f0bfc52fb79a537490739ba36a1ace00a05b8ddecaaacfcedafc5c8b9
   languageName: node
   linkType: hard
 

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
@@ -67,11 +66,6 @@ function CategorySelection({ item, edit }) {
     ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
     .toArray();
 
-  // map categoryId to entryId for itemCategory entries
-  const mapItemCategory = new Map(
-    itemCategories?.map((obj) => [obj.categoryId, obj.id]),
-  );
-
   // initialize state variable
   const [selectedValues, setSelectedValues] = useState([]);
 
@@ -113,14 +107,17 @@ function CategorySelection({ item, edit }) {
       const result = previousValues.filter(
         ({ id: id1 }) => !value.some(({ id: id2 }) => id2 === id1),
       );
-      const entryId = mapItemCategory.get(result[0].id);
+      const deletedEntry = itemCategories.find(
+        (entry) => entry.categoryId === result[0].id,
+      );
       deleteItemCategory({
         itemId,
-        entryId,
+        entryId: deletedEntry.id,
       });
     }
   };
 
+  /* eslint-disable react/jsx-props-no-spreading */
   return (
     <>
       <Typography variant="h6" className={classes.Selection}>
@@ -141,7 +138,7 @@ function CategorySelection({ item, edit }) {
             <TextField
               {...params}
               variant="outlined"
-              placeholder="Please Choose From List"
+              placeholder={t('Please Choose From List')}
             />
           )}
         />
@@ -163,7 +160,7 @@ function CategorySelection({ item, edit }) {
             <TextField
               {...params}
               variant="outlined"
-              placeholder="Please Choose From List"
+              placeholder={t('Please Choose From List')}
             />
           )}
         />
