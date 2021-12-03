@@ -2185,7 +2185,7 @@ __metadata:
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=0b5f1d360981c053884ff656db085de2a4e084e9"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=ee92ce94c1f1a63d45a3b13050e6891562d355bb"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2202,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 0d37c7ab89f0bc1f476deb39b93391a4d87c7e9e9eccd49198dd12ebef07a606c38a928f2e04f8fa85c4db8df17b91af1f113b3ed822b9082d749c11a6b10aff
+  checksum: 7a769761e2e01e5c110bf22b4930283039cc96b83e998fcdf01128aa04ac11abda502c29594217814cb2529053b8141e7a0cc86c042345202b56bbfaa254cd56
   languageName: node
   linkType: hard
 

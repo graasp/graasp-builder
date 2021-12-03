@@ -162,7 +162,7 @@ export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
    (must be common multiple for possible row counts of 1,2,3,4,6) */
 export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 
-export const ITEM_DEFAULT_HEIGHT = 500;
+export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
 export const PSEUDONIMIZED_USER_MAIL = '@graasp.org';
