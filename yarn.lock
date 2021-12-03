@@ -2185,7 +2185,7 @@ __metadata:
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=441d6970b6e98bc88c1d2d6d5b824098e200290e"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=ee92ce94c1f1a63d45a3b13050e6891562d355bb"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -5864,9 +5864,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30000981, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001280":
-  version: 1.0.30001283
-  resolution: "caniuse-lite@npm:1.0.30001283"
-  checksum: a13916f1b5ea0d75fe34d1ac8b8b841f88da69f98b1fd5178fd350291fdc1794daebcaaf57c3d3bc60f33aa27ecdf8e0909dc1a013475754c5416515f9bc32c2
+  version: 1.0.30001284
+  resolution: "caniuse-lite@npm:1.0.30001284"
+  checksum: 67196113186dc38dc579b8d28c660ab45465594d4bb55a4e263779525ed3c3ed208d369775469faf706e9f68ef7071b14e4890c197406d79c8b936f6fabac458
   languageName: node
   linkType: hard
 
@@ -6300,15 +6300,6 @@ __metadata:
     color-name: ^1.0.0
     simple-swizzle: ^0.2.2
   checksum: 9b64a58391c3c66342a053a10b0877224a67cc99fea7576259c79ccf7e31f5777ef4512c0d899df03bf6b7bdd9730c7304275a5b275f6adfc10be9e15e451c9e
-  languageName: node
-  linkType: hard
-
-"color-support@npm:^1.1.2":
-  version: 1.1.3
-  resolution: "color-support@npm:1.1.3"
-  bin:
-    color-support: bin.js
-  checksum: 9b7356817670b9a13a26ca5af1c21615463b500783b739b7634a0c2047c16cef4b2865d7576875c31c3cddf9dd621fa19285e628f20198b233a5cfdda6d0793b
   languageName: node
   linkType: hard
 
@@ -8197,9 +8188,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.564, electron-to-chromium@npm:^1.3.896":
-  version: 1.4.8
-  resolution: "electron-to-chromium@npm:1.4.8"
-  checksum: 1b7ad23906baae9c01471a3290a93f274425219738432a96bd1961d4ac9f421d70ae31e5c2008c94d5bfe7bae8d31899b5ebe26e03362df586ab4b9f29cb3ee6
+  version: 1.4.10
+  resolution: "electron-to-chromium@npm:1.4.10"
+  checksum: 00b9ca97267fc3c865f9888a490e2c1bc2eef80805d8b4337661901d498bf4c771a237f5f7beec294dc847f9096b3a58910da431e4e8cc8dc08871d4630a5860
   languageName: node
   linkType: hard
 
@@ -10271,8 +10262,6 @@ fsevents@^1.2.7:
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#95/newFilePlugin"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2

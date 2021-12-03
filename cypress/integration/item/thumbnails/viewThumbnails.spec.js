@@ -3,7 +3,6 @@ import { HOME_PATH, SHARED_ITEMS_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
   buildNameCellRendererId,
-  ITEM_CARD_MEDIA_CLASSNAME,
   HEADER_USER_ID,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
