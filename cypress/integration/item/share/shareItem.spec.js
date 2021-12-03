@@ -35,7 +35,7 @@ export const changeVisibility = (value) => {
 };
 
 describe('Share Item', () => {
-  it.only('Default Private Item', () => {
+  it('Default Private Item', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, tags: DEFAULT_TAGS });
     const item = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(item.id));

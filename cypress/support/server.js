@@ -24,7 +24,7 @@ import {
   getItemLoginSchema,
   buildItemLoginSchemaExtra,
 } from '../../src/utils/itemExtra';
-import { SETTINGS } from '../../src/config/constants';
+import { SETTINGS, THUMBNAIL_EXTENSION } from '../../src/config/constants';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { getMemberById } from '../../src/utils/member';
 import { PERMISSION_LEVELS } from '../../src/enums';
@@ -1204,4 +1204,94 @@ export const mockPatchAppData = (shouldThrowError) => {
       return reply({ data: 'patch app data' });
     },
   ).as('patchAppData');
+};
+
+export const mockGetItemThumbnail = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${ITEMS_ROUTE}/thumbnails/${ID_FORMAT}\\?size\\=`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const [link, querystrings] = url.split('?');
+      const id = link.slice(API_HOST.length).split('/')[3];
+      const { size } = qs.parse(querystrings);
+
+      const thumbnails = items.find(({ id: thisId }) => id === thisId)
+        ?.thumbnails;
+      if (!thumbnails) {
+        return reply({ statusCode: StatusCodes.NOT_FOUND });
+      }
+      return reply({
+        fixture: `${thumbnails}/${size}`,
+        headers: { 'content-type': THUMBNAIL_EXTENSION },
+      });
+    },
+  ).as('downloadItemThumbnail');
+};
+
+export const mockPostItemThumbnail = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/thumbnails/${ID_FORMAT}$`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ statusCode: StatusCodes.OK });
+    },
+  ).as('uploadItemThumbnail');
+};
+
+export const mockGetAvatar = (members, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/members/avatars/${ID_FORMAT}\\?size\\=`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const [link, querystrings] = url.split('?');
+      const id = link.slice(API_HOST.length).split('/')[3];
+      const { size } = qs.parse(querystrings);
+
+      const { thumbnails } = members.find(({ id: thisId }) => id === thisId);
+      if (!thumbnails) {
+        return reply({ statusCode: StatusCodes.NOT_FOUND });
+      }
+
+      return reply({
+        fixture: `${thumbnails}/${size}`,
+        headers: { 'content-type': THUMBNAIL_EXTENSION },
+      });
+    },
+  ).as('downloadAvatar');
+};
+
+export const mockPostAvatar = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/members/avatars/${ID_FORMAT}$`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ statusCode: StatusCodes.OK });
+    },
+  ).as('uploadAvatar');
 };

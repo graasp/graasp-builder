@@ -2185,7 +2185,7 @@ __metadata:
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=0b5f1d360981c053884ff656db085de2a4e084e9"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=ee92ce94c1f1a63d45a3b13050e6891562d355bb"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2202,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 0b1b4e01c097a38dbb7c701f24942de8beaf94ac96e7bae1b6bb67882018fcbac8f568433d1399e2fee4a8b8b1cbcb73c1116fbf4e2d4d4220e305ee8000b69d
+  checksum: 7a769761e2e01e5c110bf22b4930283039cc96b83e998fcdf01128aa04ac11abda502c29594217814cb2529053b8141e7a0cc86c042345202b56bbfaa254cd56
   languageName: node
   linkType: hard
 
@@ -6212,7 +6212,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:1.1.1, clsx@npm:^1.0.4":
+"clsx@npm:1.1.1, clsx@npm:^1.0.4, clsx@npm:^1.1.1":
   version: 1.1.1
   resolution: "clsx@npm:1.1.1"
   checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
@@ -10342,6 +10342,7 @@ fsevents@^1.2.7:
     react-beautiful-dnd: 13.1.0
     react-dom: ^17.0.1
     react-i18next: 11.11.4
+    react-image-crop: 9.0.4
     react-query: 3.31.0
     react-quill: 1.3.5
     react-redux: 7.2.2
@@ -16863,6 +16864,17 @@ fsevents@^1.2.7:
     i18next: ">= 19.0.0"
     react: ">= 16.8.0"
   checksum: 5630bfe1b39e6ce893fcccfba62cd42db92d130c0d00f181ec3bc68884ee0db3c698d0b6320d05dc783e5e32c14f7e547bb8aa034788a5f317563ad32f29edf9
+  languageName: node
+  linkType: hard
+
+"react-image-crop@npm:9.0.4":
+  version: 9.0.4
+  resolution: "react-image-crop@npm:9.0.4"
+  dependencies:
+    clsx: ^1.1.1
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 59e9812269f3bfe69f5195504463d8b0b8726f7a628f7a14db88673b6a1bf081a56eb5fba2a2dd55775eecc45e8f39a7610ab60b7a60eee6fcf3b86e1d303b74
   languageName: node
   linkType: hard
 

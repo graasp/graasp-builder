@@ -23,6 +23,9 @@ const SELECT_OPTION = 'select-option';
 const REMOVE_OPTION = 'remove-option';
 
 const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    marginTop: theme.spacing(2),
+  },
   selection: {
     marginTop: theme.spacing(2),
   },
@@ -61,10 +64,10 @@ function CategorySelection({ item, edit }) {
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
   const ageList = categoriesMap
     ?.get(categoryTypes?.filter((type) => type.name === 'age').get(0).id)
-    .toArray();
+    ?.toArray();
   const disciplineList = categoriesMap
     ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
-    .toArray();
+    ?.toArray();
 
   // initialize state variable
   const [selectedValues, setSelectedValues] = useState([]);
@@ -119,53 +122,57 @@ function CategorySelection({ item, edit }) {
 
   /* eslint-disable react/jsx-props-no-spreading */
   return (
-    <>
+    <div className={classes.wrapper}>
       <Typography variant="h6" className={classes.Selection}>
         {t('Category')}
       </Typography>
-      <Typography variant="body1">{t('Age Range')}</Typography>
-      {edit && (
-        <Autocomplete
-          multiple
-          disableClearable
-          id={SHARE_ITEM_CATEGORY_AGE}
-          value={ageList?.filter((value) => selectedValues.includes(value))}
-          getOptionSelected={(option, value) => option.id === value.id}
-          options={ageList}
-          getOptionLabel={(option) => option.name}
-          onChange={handleChange('age')}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="outlined"
-              placeholder={t('Please Choose From List')}
-            />
-          )}
-        />
+      {edit && ageList && (
+        <>
+          <Typography variant="body1">{t('Age Range')}</Typography>
+          <Autocomplete
+            multiple
+            disableClearable
+            id={SHARE_ITEM_CATEGORY_AGE}
+            value={ageList?.filter((value) => selectedValues.includes(value))}
+            getOptionSelected={(option, value) => option.id === value.id}
+            options={ageList}
+            getOptionLabel={(option) => option.name}
+            onChange={handleChange('age')}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                placeholder={t('Please choose from list')}
+              />
+            )}
+          />
+        </>
       )}
-      <Typography variant="body1">{t('Discipline')}</Typography>
-      {edit && (
-        <Autocomplete
-          multiple
-          disableClearable
-          id={SHARE_ITEM_CATEGORY_DISCIPLINE}
-          value={disciplineList?.filter((value) =>
-            selectedValues.includes(value),
-          )}
-          getOptionSelected={(option, value) => option.id === value.id}
-          options={disciplineList}
-          getOptionLabel={(option) => option.name}
-          onChange={handleChange('discipline')}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="outlined"
-              placeholder={t('Please Choose From List')}
-            />
-          )}
-        />
+      {edit && disciplineList && (
+        <>
+          <Typography variant="body1">{t('Discipline')}</Typography>
+          <Autocomplete
+            multiple
+            disableClearable
+            id={SHARE_ITEM_CATEGORY_DISCIPLINE}
+            value={disciplineList?.filter((value) =>
+              selectedValues.includes(value),
+            )}
+            getOptionSelected={(option, value) => option.id === value.id}
+            options={disciplineList}
+            getOptionLabel={(option) => option.name}
+            onChange={handleChange('discipline')}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                placeholder={t('Please choose from list')}
+              />
+            )}
+          />
+        </>
       )}
-    </>
+    </div>
   );
 }
 

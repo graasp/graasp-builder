@@ -5,7 +5,6 @@ export const CONFIRM_DELETE_BUTTON_ID = 'confirmDeleteButton';
 export const buildItemCard = (id) => `itemCard-${id}`;
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
 export const ITEM_FORM_NAME_INPUT_ID = 'newItemNameInput';
-export const ITEM_FORM_IMAGE_INPUT_ID = 'newItemImageInput';
 export const ITEM_FORM_CONFIRM_BUTTON_ID = 'newItemConfirmButton';
 export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
 export const buildItemLink = (id) => `itemLink-${id}`;
@@ -153,3 +152,11 @@ export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
 export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
   'itemsTableRestoreSelectedItems';
 export const FOLDER_FORM_DESCRIPTION_ID = 'folderFormDescription';
+export const buildNameCellRendererId = (id) => `nameCellRenderer-${id}`;
+export const ITEM_CARD_MEDIA_CLASSNAME = 'itemCardMedia';
+export const ITEM_CARD_HEADER_CLASSNAME = 'itemCardHeader';
+export const THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME =
+  'thumbnailSettingUploadButton';
+export const CROP_MODAL_CONFIRM_BUTTON_CLASSNAME = 'cropModalConfirmButton';
+export const MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME =
+  'memberProfileAvatarUploadButton';

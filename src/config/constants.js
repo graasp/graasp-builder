@@ -51,6 +51,8 @@ export const GRAASP_PERFORM_HOST =
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
+// todo: use local image
+// this might require a webpack configuration for cypress
 export const DEFAULT_IMAGE_SRC =
   'https://pbs.twimg.com/profile_images/1300707321262346240/IsQAyu7q_400x400.jpg';
 
@@ -160,7 +162,7 @@ export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
    (must be common multiple for possible row counts of 1,2,3,4,6) */
 export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 
-export const ITEM_DEFAULT_HEIGHT = 500;
+export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
 export const PSEUDONIMIZED_USER_MAIL = '@graasp.org';
@@ -169,3 +171,7 @@ export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
 export const DRAG_ICON_SIZE = 18;
 
 export const ACTION_CELL_WIDTH = 230;
+export const THUMBNAIL_ASPECT = 1;
+export const THUMBNAIL_EXTENSION = 'image/jpeg';
+export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
+export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;

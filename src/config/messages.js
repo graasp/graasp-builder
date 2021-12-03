@@ -75,3 +75,11 @@ export const RECYCLE_ITEMS_SUCCESS_MESSAGE =
   'The item(s) were successfully moved to the recycle bin.';
 export const RECYCLE_ITEMS_ERROR_MESSAGE =
   'An error occurred while moving the item(s) to the recycle bin.';
+export const UPLOAD_ITEM_THUMBNAIL_SUCCESS_MESSAGE =
+  'The thumbnail was successfully uploaded.';
+export const UPLOAD_ITEM_THUMBNAIL_FAILURE_MESSAGE =
+  'An error occurred while uploading the thumbnail.';
+export const UPLOAD_AVATAR_SUCCESS_MESSAGE =
+  'The avatar was successfully uploaded.';
+export const UPLOAD_AVATAR_FAILURE_MESSAGE =
+  'An error occurred while uploading the avatar.';

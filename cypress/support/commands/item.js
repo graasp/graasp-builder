@@ -8,7 +8,6 @@ import {
   TREE_MODAL_CONFIRM_BUTTON_ID,
   TREE_MODAL_TREE_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
-  ITEM_FORM_IMAGE_INPUT_ID,
   ITEM_FORM_NAME_INPUT_ID,
   ITEM_FORM_LINK_INPUT_ID,
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
@@ -80,10 +79,8 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillFolderModal',
-  ({ name = '', extra = {}, description = '' }, { confirm = true } = {}) => {
+  ({ name = '', description = '' }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
-
-    cy.get(`#${ITEM_FORM_IMAGE_INPUT_ID}`).type(`{selectall}${extra.image}`);
 
     cy.get(`#${FOLDER_FORM_DESCRIPTION_ID}`).type(`{selectall}${description}`);
 
@@ -128,9 +125,9 @@ Cypress.Commands.add(
 
     cy.get(`#${ITEM_FORM_APP_URL_ID}`).click();
 
-    if(type){
+    if (type) {
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
-    }else{
+    } else {
       cy.get(`#${buildItemFormAppOptionId(getAppExtra(extra)?.name)}`).click();
     }
 

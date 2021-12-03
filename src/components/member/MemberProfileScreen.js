@@ -4,7 +4,6 @@ import { Loader } from '@graasp/ui';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Card from '@material-ui/core/Card';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as GraaspLogo } from '../../resources/graasp-logo.svg';
 import LanguageSwitch from './LanguageSwitch';
 import { formatDate } from '../../utils/date';
 import { DEFAULT_LANG } from '../../config/constants';
@@ -21,15 +20,14 @@ import notifier from '../../middlewares/notifier';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import Main from '../main/Main';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import AvatarSetting from './AvatarSetting';
 
 const useStyles = makeStyles((theme) => ({
-  profileTable: {
-    margin: theme.spacing(1, 0),
+  root: {
+    padding: theme.spacing(3),
   },
-  // todo: this will be replaced by a default image or the member avatar
-  logo: {
-    background: 'grey',
-    textAlign: 'center',
+  profileTable: {
+    margin: theme.spacing(1, 1),
   },
 }));
 
@@ -57,10 +55,6 @@ const MemberProfileScreen = () => {
     <Main>
       <Card className={classes.root}>
         <Grid container spacing={3}>
-          {/* use the member avatar */}
-          <Grid item xs={4} className={classes.logo}>
-            <GraaspLogo height={250} />
-          </Grid>
           <Grid item xs={8}>
             <Grid item xs={12}>
               <Typography variant="h4" id={MEMBER_PROFILE_MEMBER_NAME_ID}>
@@ -134,6 +128,8 @@ const MemberProfileScreen = () => {
             </Grid>
           </Grid>
         </Grid>
+
+        <AvatarSetting user={member} />
       </Card>
     </Main>
   );

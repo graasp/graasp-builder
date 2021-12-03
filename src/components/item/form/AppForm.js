@@ -46,7 +46,7 @@ const AppForm = ({ onChange, item }) => {
         <Autocomplete
           id={ITEM_FORM_APP_URL_ID}
           freeSolo
-          options={data?.toArray()}
+          options={data?.toArray() ?? []}
           getOptionLabel={(option) => option.name ?? option}
           value={url}
           onChange={handleAppUrlInput}

@@ -30,7 +30,7 @@ const Home = () => {
       <FileUploader />
       <ItemHeader />
       <Items
-        defautSortedColumn={{ createdAt: 'desc' }}
+        defautSortedColumn={{ updatedAt: 'desc' }}
         id={OWNED_ITEMS_ID}
         title={t('My Items')}
         items={ownItems}
