@@ -3596,23 +3596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/aws-s3@npm:1.7.7":
-  version: 1.7.7
-  resolution: "@uppy/aws-s3@npm:1.7.7"
-  dependencies:
-    "@uppy/companion-client": ^1.8.2
-    "@uppy/utils": ^3.4.1
-    "@uppy/xhr-upload": ^1.7.0
-    cuid: ^2.1.1
-    qs-stringify: ^1.1.0
-    url-parse: ^1.4.7
-  peerDependencies:
-    "@uppy/core": ^1.0.0
-  checksum: 8b2dd289396be3a7cd18239feb79cb711de0e091f0992a6bb6ac3eb430b42c7b01e956ae80f0a074ee5717aa60a2ccbece4c3aefdc969a4285d227433b916ecf
-  languageName: node
-  linkType: hard
-
-"@uppy/companion-client@npm:^1.10.2, @uppy/companion-client@npm:^1.8.2":
+"@uppy/companion-client@npm:^1.8.2":
   version: 1.10.2
   resolution: "@uppy/companion-client@npm:1.10.2"
   dependencies:
@@ -3846,19 +3830,6 @@ __metadata:
   peerDependencies:
     "@uppy/core": ^1.0.0
   checksum: 01afd1971cf4c2eb38bfd952b2520e6658e96c81371497f5d4ac29272c3baf4e8be7e3f878695dc9fd8dd135564798d61def7577df855796fac20a6771e2c817
-  languageName: node
-  linkType: hard
-
-"@uppy/xhr-upload@npm:^1.7.0":
-  version: 1.7.5
-  resolution: "@uppy/xhr-upload@npm:1.7.5"
-  dependencies:
-    "@uppy/companion-client": ^1.10.2
-    "@uppy/utils": ^3.6.2
-    cuid: ^2.1.1
-  peerDependencies:
-    "@uppy/core": ^1.0.0
-  checksum: 820a942f65cdc21ca4b60a35fe4132622216280840ff8657a4d8c841553598badc38501a44a45df6850421c020b9b69b1540f0a73b3a7f4b5a73b7dc8202ac78
   languageName: node
   linkType: hard
 
@@ -10310,7 +10281,6 @@ fsevents@^1.2.7:
     "@testing-library/jest-dom": ^5.11.6
     "@testing-library/react": ^11.2.2
     "@testing-library/user-event": ^12.6.0
-    "@uppy/aws-s3": 1.7.7
     "@uppy/core": 1.16.1
     "@uppy/dashboard": 1.17.1
     "@uppy/drag-drop": 1.4.25
