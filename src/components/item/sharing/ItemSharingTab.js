@@ -20,6 +20,7 @@ import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import CategorySelection from './CategorySelection';
+import CustomizedTagsEdit from './CustomizedTags';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -130,6 +131,7 @@ const ItemSharingTab = ({ item, memberships }) => {
 
       <VisibilitySelect item={item} edit={canEdit} />
       <CategorySelection item={item} edit={canEdit} />
+      <CustomizedTagsEdit item={item} edit={canEdit} />
 
       {renderMembershipSettings()}
     </Container>

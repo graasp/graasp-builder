@@ -123,55 +123,51 @@ function CategorySelection({ item, edit }) {
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div className={classes.wrapper}>
-      <Typography variant="h6" className={classes.Selection}>
+      <Typography variant="h6" className={classes.selection}>
         {t('Category')}
       </Typography>
-      {edit && ageList && (
-        <>
-          <Typography variant="body1">{t('Age Range')}</Typography>
-          <Autocomplete
-            multiple
-            disableClearable
-            id={SHARE_ITEM_CATEGORY_AGE}
-            value={ageList?.filter((value) => selectedValues.includes(value))}
-            getOptionSelected={(option, value) => option.id === value.id}
-            options={ageList}
-            getOptionLabel={(option) => option.name}
-            onChange={handleChange('age')}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder={t('Please choose from list')}
-              />
-            )}
-          />
-        </>
-      )}
-      {edit && disciplineList && (
-        <>
-          <Typography variant="body1">{t('Discipline')}</Typography>
-          <Autocomplete
-            multiple
-            disableClearable
-            id={SHARE_ITEM_CATEGORY_DISCIPLINE}
-            value={disciplineList?.filter((value) =>
-              selectedValues.includes(value),
-            )}
-            getOptionSelected={(option, value) => option.id === value.id}
-            options={disciplineList}
-            getOptionLabel={(option) => option.name}
-            onChange={handleChange('discipline')}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder={t('Please choose from list')}
-              />
-            )}
-          />
-        </>
-      )}
+      <>
+        <Typography variant="body1">{t('Age Range')}</Typography>
+        <Autocomplete
+          disabled={!edit || !ageList}
+          multiple
+          disableClearable
+          id={SHARE_ITEM_CATEGORY_AGE}
+          value={ageList?.filter((value) => selectedValues.includes(value))}
+          getOptionSelected={(option, value) => option.id === value.id}
+          options={ageList}
+          getOptionLabel={(option) => option.name}
+          onChange={handleChange('age')}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              placeholder={t('Please choose from list')}
+            />
+          )}
+        />
+        <Typography variant="body1">{t('Discipline')}</Typography>
+        <Autocomplete
+          disabled={!edit || !ageList}
+          multiple
+          disableClearable
+          id={SHARE_ITEM_CATEGORY_DISCIPLINE}
+          value={disciplineList?.filter((value) =>
+            selectedValues.includes(value),
+          )}
+          getOptionSelected={(option, value) => option.id === value.id}
+          options={disciplineList}
+          getOptionLabel={(option) => option.name}
+          onChange={handleChange('discipline')}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              placeholder={t('Please choose from list')}
+            />
+          )}
+        />
+      </>
     </div>
   );
 }
