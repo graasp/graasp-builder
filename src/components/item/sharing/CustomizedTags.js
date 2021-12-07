@@ -52,7 +52,6 @@ function CustomizedTagsEdit(item, edit) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const tagsList = displayValues?.split(',') || [];
-    console.log(displayValues);
     updateCustomizedTags({
       id: itemId,
       name: itemName,
