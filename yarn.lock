@@ -2181,7 +2181,7 @@ __metadata:
     react: ^17.0.0
   checksum: 995f51a282a436138f2852a22f88190b660f804645c31209b7405fc8172378612af032c07bd9d6a795c6f842186019ee93b5ade83d581613ac7d5792e9964812
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
