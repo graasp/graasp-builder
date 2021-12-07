@@ -5,7 +5,7 @@ import { Typography, TextField, Button, makeStyles } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { hooks, useMutation } from '../../../config/queryClient';
+import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,14 +18,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const { useCustomizedTags } = hooks;
-
-const { POST_CUSTOMIZED_TAGS } = MUTATION_KEYS;
+const { EDIT_ITEM } = MUTATION_KEYS;
 
 function CustomizedTagsEdit(item, edit) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { mutate: updateCustomizedTags } = useMutation(POST_CUSTOMIZED_TAGS);
+  const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
 
   // user
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
@@ -33,21 +31,19 @@ function CustomizedTagsEdit(item, edit) {
   // current item
   const { itemId } = useParams();
 
-  // get tags for item
-  const {
-    data: customizedTags,
-    isLoading: isCustomizedTagsLoading,
-  } = useCustomizedTags(itemId);
+  const { item: itemObj } = item;
+  const settings = itemObj.get('settings');
+  const itemName = itemObj.get('name');
 
   const [displayValues, setDisplayValues] = useState(false);
 
   useEffect(() => {
-    if (customizedTags) {
-      setDisplayValues(customizedTags.toArray());
+    if (settings) {
+      setDisplayValues(settings.tags || []);
     }
-  }, [customizedTags, item]);
+  }, [settings, item]);
 
-  if (isMemberLoading || isCustomizedTagsLoading) return <Loader />;
+  if (isMemberLoading) return <Loader />;
 
   const handleChange = (event) => {
     setDisplayValues(event.target.value);
@@ -56,9 +52,11 @@ function CustomizedTagsEdit(item, edit) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const tagsList = displayValues?.split(',') || [];
+    console.log(displayValues);
     updateCustomizedTags({
-      itemId,
-      values: tagsList,
+      id: itemId,
+      name: itemName,
+      settings: { tags: tagsList },
     });
   };
 
