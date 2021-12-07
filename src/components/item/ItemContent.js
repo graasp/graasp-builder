@@ -96,23 +96,11 @@ const ItemContent = ({ item, enableEdition }) => {
 
   switch (itemType) {
     case ITEM_TYPES.FILE:
+    case ITEM_TYPES.S3_FILE:
       return (
         <div className={classes.fileWrapper}>
           <FileItem
             id={buildFileItemId(itemId)}
-            editCaption={isEditing}
-            item={item}
-            content={content}
-            onSaveCaption={onSaveCaption}
-            saveButtonId={saveButtonId}
-          />
-        </div>
-      );
-    case ITEM_TYPES.S3_FILE:
-      return (
-        <div className={classes.fileWrapper}>
-          <S3FileItem
-            id={buildS3FileItemId(itemId)}
             editCaption={isEditing}
             item={item}
             content={content}

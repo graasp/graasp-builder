@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 4
+  version: 5
   cacheKey: 8
 
 "@babel/code-frame@npm:7.10.4":
@@ -63,29 +63,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.16.0, @babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.7.5, @babel/core@npm:^7.8.4, @babel/core@npm:^7.9.0":
-  version: 7.16.0
-  resolution: "@babel/core@npm:7.16.0"
-  dependencies:
-    "@babel/code-frame": ^7.16.0
-    "@babel/generator": ^7.16.0
-    "@babel/helper-compilation-targets": ^7.16.0
-    "@babel/helper-module-transforms": ^7.16.0
-    "@babel/helpers": ^7.16.0
-    "@babel/parser": ^7.16.0
-    "@babel/template": ^7.16.0
-    "@babel/traverse": ^7.16.0
-    "@babel/types": ^7.16.0
-    convert-source-map: ^1.7.0
-    debug: ^4.1.0
-    gensync: ^1.0.0-beta.2
-    json5: ^2.1.2
-    semver: ^6.3.0
-    source-map: ^0.5.0
-  checksum: a140f669daa90c774016a76b1f85641975333c1c219ae0a8e65d8b4c316836e918276e0dfd55613b14f8e578406a92393d4368a63bdd5d0708122976ee2ee8e3
-  languageName: node
-  linkType: hard
-
 "@babel/core@npm:7.4.5":
   version: 7.4.5
   resolution: "@babel/core@npm:7.4.5"
@@ -105,6 +82,29 @@ __metadata:
     semver: ^5.4.1
     source-map: ^0.5.0
   checksum: 10f93c3e1320012e5f3357cdf6e76c91cfe51b2ca80d9244d67ee9ad8f1083e563afd45fbb584504c1d698b16cc72f17ff0eef2904932139e2fc5adb7b833b3f
+  languageName: node
+  linkType: hard
+
+"@babel/core@npm:^7.1.0, @babel/core@npm:^7.12.3, @babel/core@npm:^7.7.5, @babel/core@npm:^7.8.4, @babel/core@npm:^7.9.0":
+  version: 7.16.0
+  resolution: "@babel/core@npm:7.16.0"
+  dependencies:
+    "@babel/code-frame": ^7.16.0
+    "@babel/generator": ^7.16.0
+    "@babel/helper-compilation-targets": ^7.16.0
+    "@babel/helper-module-transforms": ^7.16.0
+    "@babel/helpers": ^7.16.0
+    "@babel/parser": ^7.16.0
+    "@babel/template": ^7.16.0
+    "@babel/traverse": ^7.16.0
+    "@babel/types": ^7.16.0
+    convert-source-map: ^1.7.0
+    debug: ^4.1.0
+    gensync: ^1.0.0-beta.2
+    json5: ^2.1.2
+    semver: ^6.3.0
+    source-map: ^0.5.0
+  checksum: a140f669daa90c774016a76b1f85641975333c1c219ae0a8e65d8b4c316836e918276e0dfd55613b14f8e578406a92393d4368a63bdd5d0708122976ee2ee8e3
   languageName: node
   linkType: hard
 
@@ -2183,9 +2183,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git#65/s3FileItem":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=ee92ce94c1f1a63d45a3b13050e6891562d355bb"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=6db6a5aaa1224b5628b4b038d9aef73d59a3a241"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2202,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 7a769761e2e01e5c110bf22b4930283039cc96b83e998fcdf01128aa04ac11abda502c29594217814cb2529053b8141e7a0cc86c042345202b56bbfaa254cd56
+  checksum: 45f29927a1ad648eaf682633665e99966920f7ef49418c90af6b232ec00f45d6ab45c7b8d5aaade773a78ff3d27e20f479bac966d400f42a8fd2e3e363b2311c
   languageName: node
   linkType: hard
 
@@ -9867,6 +9867,7 @@ fsevents@^1.2.7:
     bindings: ^1.5.0
     nan: ^2.12.1
   checksum: ae855aa737aaa2f9167e9f70417cf6e45a5cd11918e1fee9923709a0149be52416d765433b4aeff56c789b1152e718cd1b13ddec6043b78cdda68260d86383c1
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
@@ -9876,25 +9877,26 @@ fsevents@^1.2.7:
   dependencies:
     node-gyp: latest
   checksum: 97ade64e75091afee5265e6956cb72ba34db7819b4c3e94c431d4be2b19b8bb7a2d4116da417950c3425f17c8fe693d25e20212cac583ac1521ad066b77ae31f
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
 "fsevents@patch:fsevents@^1.2.7#~builtin<compat/fsevents>":
   version: 1.2.13
-  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=1cc4b2"
+  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=18f3a7"
   dependencies:
     bindings: ^1.5.0
     nan: ^2.12.1
-  checksum: b264407498db2cfdcc2a05287334a4160c985a88e4a989e2f2f8dcc6afc8b04a4fcd82c797266442452e11c1fb07d7747d138b078fe4bb1f8f4fd2a6f2484d7e
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
 "fsevents@patch:fsevents@^2.1.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.1.3#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=1cc4b2"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
-  checksum: 78db9daf1f6526a49cefee3917cc988f62dc7f25b5dd80ad6de4ffc4af7f0cab7491ac737626ff53e482a111bc53aac9e411fe3602458eca36f6a003ecf69c16
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
@@ -10262,7 +10264,7 @@ fsevents@^1.2.7:
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
     "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#95/newFilePlugin"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#65/s3FileItem"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 5.0.0-beta.4
@@ -12247,7 +12249,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"jest-resolve@npm:26.6.2, jest-resolve@npm:^26.6.2":
+"jest-resolve@npm:^26.6.2":
   version: 26.6.2
   resolution: "jest-resolve@npm:26.6.2"
   dependencies:
@@ -13009,7 +13011,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"listr@npm:0.14.3, listr@npm:^0.14.3":
+"listr@npm:^0.14.3":
   version: 0.14.3
   resolution: "listr@npm:0.14.3"
   dependencies:
@@ -17659,38 +17661,38 @@ resolve@^2.0.0-next.3:
 
 "resolve@patch:resolve@1.1.7#~builtin<compat/resolve>":
   version: 1.1.7
-  resolution: "resolve@patch:resolve@npm%3A1.1.7#~builtin<compat/resolve>::version=1.1.7&hash=00b1ff"
-  checksum: 3477c7e1cb7c0588764f1c2dbdd84d1f4e98d0ad138485ff280c210ddc252c86735f9e6113cbe9491e24cf3205058fce8a7a1dd1f50370707656dbd895bd3826
+  resolution: "resolve@patch:resolve@npm%3A1.1.7#~builtin<compat/resolve>::version=1.1.7&hash=07638b"
+  checksum: e9dbca78600ae56835c43a09f1276876c883e4b4bbd43e2683fa140671519d2bdebeb1c1576ca87c8c508ae2987b3ec481645ac5d3054b0f23254cfc1ce49942
   languageName: node
   linkType: hard
 
 "resolve@patch:resolve@1.18.1#~builtin<compat/resolve>":
   version: 1.18.1
-  resolution: "resolve@patch:resolve@npm%3A1.18.1#~builtin<compat/resolve>::version=1.18.1&hash=00b1ff"
+  resolution: "resolve@patch:resolve@npm%3A1.18.1#~builtin<compat/resolve>::version=1.18.1&hash=07638b"
   dependencies:
     is-core-module: ^2.0.0
     path-parse: ^1.0.6
-  checksum: 3a5051499a570cf94d74353d494cacadbfa489107def201f87e26cabd80d000bd8abccbe247783b86b06d86ce2c646eee5c55900c71cbf1ad2043a67a92b0242
+  checksum: 7439c8f3d8fa00c9dc800ef3c8ed0bd8e8772823e6e4948b1a77487759e0fb905381808caae96398d135619af90654d8e74cac778e5b8c9d7138f2dd52bb2bba
   languageName: node
   linkType: hard
 
 "resolve@patch:resolve@^1.1.4#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.4.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.8.1#~builtin<compat/resolve>":
   version: 1.20.0
-  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=00b1ff"
+  resolution: "resolve@patch:resolve@npm%3A1.20.0#~builtin<compat/resolve>::version=1.20.0&hash=07638b"
   dependencies:
     is-core-module: ^2.2.0
     path-parse: ^1.0.6
-  checksum: bed00be983cd20a8af0e7840664f655c4b269786dbd9595c5f156cd9d8a0050e65cdbbbdafc30ee9b6245b230c78a2c8ab6447a52545b582f476c29adb188cc5
+  checksum: a0dd7d16a8e47af23afa9386df2dff10e3e0debb2c7299a42e581d9d9b04d7ad5d2c53f24f1e043f7b3c250cbdc71150063e53d0b6559683d37f790b7c8c3cd5
   languageName: node
   linkType: hard
 
 "resolve@patch:resolve@^2.0.0-next.3#~builtin<compat/resolve>":
   version: 2.0.0-next.3
-  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.3#~builtin<compat/resolve>::version=2.0.0-next.3&hash=00b1ff"
+  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.3#~builtin<compat/resolve>::version=2.0.0-next.3&hash=07638b"
   dependencies:
     is-core-module: ^2.2.0
     path-parse: ^1.0.6
-  checksum: eb88c5e53843bc022215744307a5f5664446c0fdb8f43c33456dce98d5ee6b3162d0cd0a177bb6f1c3d5c8bf01391ac7ab2de0e936e35318725fb40ba7efdaf6
+  checksum: 21684b4d99a4877337cdbd5484311c811b3e8910edb5d868eec85c6e6550b0f570d911f9a384f9e176172d6713f2715bd0b0887fa512cb8c6aeece018de6a9f8
   languageName: node
   linkType: hard
 
@@ -19911,11 +19913,11 @@ typescript@4.1.3:
 
 "typescript@patch:typescript@4.1.3#~builtin<compat/typescript>":
   version: 4.1.3
-  resolution: "typescript@patch:typescript@npm%3A4.1.3#~builtin<compat/typescript>::version=4.1.3&hash=d8b4e7"
+  resolution: "typescript@patch:typescript@npm%3A4.1.3#~builtin<compat/typescript>::version=4.1.3&hash=de8f8a"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f7de4f06a6407a8dfaf97eaa19bc457df860a522e9a9b75a95be23bd8fa09af3104c05e5fe2a9b7fa5c74d1f7790cf7dd61c8f7a78dfcf70000ff85a27dc3541
+  checksum: ed3df76d9b6efb448e5e73bca671698cda353a3807199ad95c78782a857e7685ccc94b799ac885423ced65ee21c87cbbeb823642c5dfd715efae5ebbc6137070
   languageName: node
   linkType: hard
 
