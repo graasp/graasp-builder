@@ -11,7 +11,7 @@ import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
-  SHARE_ITEM_CATEGORY_AGE,
+  SHARE_ITEM_CATEGORY_LEVEL,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
@@ -60,14 +60,21 @@ function CategorySelection({ item, edit }) {
     isLoading: isCategoriesLoading,
   } = useCategories();
 
+  // sort options by alphabetical order according to name
+  const compare = (a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  };
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
-  const ageList = categoriesMap
+  const levelList = categoriesMap
     ?.get(categoryTypes?.filter((type) => type.name === 'level').get(0).id)
     ?.toArray();
   const disciplineList = categoriesMap
     ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
-    ?.toArray();
+    ?.toArray()
+    .sort(compare);
 
   // initialize state variable
   const [selectedValues, setSelectedValues] = useState([]);
@@ -94,7 +101,7 @@ function CategorySelection({ item, edit }) {
   }
 
   const handleChange = (categoryType) => (event, value, reason) => {
-    const typeMap = { age: ageList, discipline: disciplineList };
+    const typeMap = { level: levelList, discipline: disciplineList };
     if (reason === SELECT_OPTION) {
       // post new category
       const newCategoryId = value.at(-1).id;
@@ -129,15 +136,15 @@ function CategorySelection({ item, edit }) {
       <>
         <Typography variant="body1">{t('Level')}</Typography>
         <Autocomplete
-          disabled={!edit || !ageList}
+          disabled={!edit || !levelList}
           multiple
           disableClearable
-          id={SHARE_ITEM_CATEGORY_AGE}
-          value={ageList?.filter((value) => selectedValues.includes(value))}
+          id={SHARE_ITEM_CATEGORY_LEVEL}
+          value={levelList?.filter((value) => selectedValues.includes(value))}
           getOptionSelected={(option, value) => option.id === value.id}
-          options={ageList}
+          options={levelList}
           getOptionLabel={(option) => option.name}
-          onChange={handleChange('age')}
+          onChange={handleChange('level')}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -148,7 +155,7 @@ function CategorySelection({ item, edit }) {
         />
         <Typography variant="body1">{t('Discipline')}</Typography>
         <Autocomplete
-          disabled={!edit || !ageList}
+          disabled={!edit || !levelList}
           multiple
           disableClearable
           id={SHARE_ITEM_CATEGORY_DISCIPLINE}
