@@ -63,7 +63,7 @@ function CategorySelection({ item, edit }) {
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
   const ageList = categoriesMap
-    ?.get(categoryTypes?.filter((type) => type.name === 'age').get(0).id)
+    ?.get(categoryTypes?.filter((type) => type.name === 'level').get(0).id)
     ?.toArray();
   const disciplineList = categoriesMap
     ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
@@ -127,7 +127,7 @@ function CategorySelection({ item, edit }) {
         {t('Category')}
       </Typography>
       <>
-        <Typography variant="body1">{t('Age Range')}</Typography>
+        <Typography variant="body1">{t('Level')}</Typography>
         <Autocomplete
           disabled={!edit || !ageList}
           multiple
