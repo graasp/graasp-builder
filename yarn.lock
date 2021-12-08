@@ -2168,7 +2168,7 @@ __metadata:
 
 "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#95/newFilePlugin":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=17b89907e583f8232e51facf18554dbfac159e1e"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=6858f85f78966bcd9939003e65984d2ceda90c8a"
   dependencies:
     axios: 0.21.4
     http-status-codes: 2.1.4
@@ -2179,13 +2179,13 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: bac4fd93b56e3f02ee68e46c23a5525a466a1489048dd66ec689203d80694023b6f36373185e8bc97ed09ab91472922e50603911f60acc512de284754b0cd88e
+  checksum: 4fdf63a32debe33836b76164f273f2b4a895fd2a1641154806f1775407b09f029f1708fb0901c9d899b5a1022b0f390a0c3f5b61404414da6cdfe7966739932b
   languageName: node
   linkType: hard
 
 "@graasp/ui@git://github.com/graasp/graasp-ui.git#65/s3FileItem":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=6db6a5aaa1224b5628b4b038d9aef73d59a3a241"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=02962e934307ba392500381c3dc956b0523af94e"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2202,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 45f29927a1ad648eaf682633665e99966920f7ef49418c90af6b232ec00f45d6ab45c7b8d5aaade773a78ff3d27e20f479bac966d400f42a8fd2e3e363b2311c
+  checksum: 20cb27692c572eb5acd2c2f3f6ae2eac7ef751e22bd51d1c1ef96c6c5f62940826dc6822a285cd5e1b16dfeb7a7e65d4043db29e53a7f03916f663ed2a0cbf05
   languageName: node
   linkType: hard
 

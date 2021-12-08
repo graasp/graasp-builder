@@ -2,19 +2,12 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core';
-import {
-  FileItem,
-  S3FileItem,
-  DocumentItem,
-  LinkItem,
-  AppItem,
-} from '@graasp/ui';
+import { FileItem, DocumentItem, LinkItem, AppItem } from '@graasp/ui';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildFileItemId,
   buildItemsTableId,
-  buildS3FileItemId,
   buildSaveButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
