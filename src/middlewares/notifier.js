@@ -45,6 +45,9 @@ import {
   UPLOAD_ITEM_THUMBNAIL_FAILURE_MESSAGE,
   UPLOAD_AVATAR_FAILURE_MESSAGE,
   UPLOAD_AVATAR_SUCCESS_MESSAGE,
+  IMPORT_ZIP_SUCCESS_MESSAGE,
+  IMPORT_ZIP_FAILURE_MESSAGE,
+  IMPORT_ZIP_PROGRESS_MESSAGE,
 } from '../config/messages';
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
@@ -72,6 +75,7 @@ const {
   restoreItemsRoutine,
   uploadItemThumbnailRoutine,
   uploadAvatarRoutine,
+  importZipRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -163,6 +167,10 @@ export default ({ type, payload }) => {
       message = UPLOAD_AVATAR_FAILURE_MESSAGE;
       break;
     }
+    case importZipRoutine.FAILURE: {
+      message = IMPORT_ZIP_FAILURE_MESSAGE;
+      break;
+    }
     // success messages
     case editMemberRoutine.SUCCESS: {
       message = EDIT_MEMBER_SUCCESS_MESSAGE;
@@ -237,6 +245,10 @@ export default ({ type, payload }) => {
       message = UPLOAD_AVATAR_SUCCESS_MESSAGE;
       break;
     }
+    case importZipRoutine.SUCCESS: {
+      message = IMPORT_ZIP_SUCCESS_MESSAGE;
+      break;
+    }
 
     // progress messages
     // todo: this might be handled differently
@@ -251,6 +263,13 @@ export default ({ type, payload }) => {
       toastr.info(
         i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
         i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE),
+      );
+      break;
+    }
+    case importZipRoutine.REQUEST: {
+      toastr.info(
+        i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
+        i18n.t(IMPORT_ZIP_PROGRESS_MESSAGE),
       );
       break;
     }

@@ -83,3 +83,9 @@ export const UPLOAD_AVATAR_SUCCESS_MESSAGE =
   'The avatar was successfully uploaded.';
 export const UPLOAD_AVATAR_FAILURE_MESSAGE =
   'An error occurred while uploading the avatar.';
+export const IMPORT_ZIP_SUCCESS_MESSAGE =
+  'The ZIP archive was successfully imported.';
+export const IMPORT_ZIP_FAILURE_MESSAGE =
+  'An error occurred while importing The ZIP archive.';
+export const IMPORT_ZIP_PROGRESS_MESSAGE =
+  'The ZIP is being processed. Please wait a moment.';

@@ -127,3 +127,23 @@ export const configureAvatarUppy = ({
     buildEndpoint: (id) =>
       `${API_HOST}/${API_ROUTES.buildUploadAvatarRoute(id)}`,
   });
+
+export const configureZipImportUppy = ({
+  itemId,
+  onComplete,
+  onFilesAdded,
+  onError,
+  onUpload,
+}) =>
+  configureUppy({
+    itemId,
+    onComplete,
+    onFilesAdded,
+    onError,
+    onUpload,
+    restrictions: {
+      maxNumberOfFiles: 1,
+      allowedFileTypes: ['application/zip'],
+    },
+    buildEndpoint: (id) => `${API_HOST}/${API_ROUTES.buildImportZipRoute(id)}`,
+  });

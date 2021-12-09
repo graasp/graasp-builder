@@ -23,6 +23,7 @@ import { buildItemPath } from '../../config/paths';
 import DocumentForm from '../item/form/DocumentForm';
 import AppForm from '../item/form/AppForm';
 import ItemTypeTabs from './ItemTypeTabs';
+import ImportZip from './ImportZip';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -103,6 +104,8 @@ const NewItemModal = ({ open, handleClose }) => {
         );
       case ITEM_TYPES.FILE:
         return <FileDashboardUploader />;
+      case ITEM_TYPES.ZIP:
+        return <ImportZip />;
       case ITEM_TYPES.APP:
         return (
           <AppForm
@@ -157,6 +160,7 @@ const NewItemModal = ({ open, handleClose }) => {
           </>
         );
       case ITEM_TYPES.FILE:
+      case ITEM_TYPES.ZIP:
         return (
           <Button
             id={CREATE_ITEM_CLOSE_BUTTON_ID}

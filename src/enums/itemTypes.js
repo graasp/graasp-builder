@@ -6,6 +6,9 @@ const ITEM_TYPES = {
   SHORTCUT: 'shortcut',
   DOCUMENT: 'document',
   APP: 'app',
+  // the following isn't a real item type
+  // but is used for the creation modal
+  ZIP: 'zip',
 };
 
 Object.freeze(ITEM_TYPES);

@@ -85,6 +85,7 @@ export const ITEM_FORM_DOCUMENT_TEXT_SELECTOR = `#${ITEM_FORM_DOCUMENT_TEXT_ID} 
 export const DOCUMENT_ITEM_TEXT_EDITOR_ID = 'documentItemTextEditor';
 export const DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR = `#${DOCUMENT_ITEM_TEXT_EDITOR_ID} .ql-editor`;
 export const CREATE_ITEM_APP_ID = 'createItemApp';
+export const CREATE_ITEM_ZIP_ID = 'createItemZip';
 export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
 export const buildItemFormAppOptionId = (name) =>
   `${name.replaceAll(/\s/g, '-')}`;
@@ -159,3 +160,4 @@ export const THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME =
 export const CROP_MODAL_CONFIRM_BUTTON_CLASSNAME = 'cropModalConfirmButton';
 export const MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME =
   'memberProfileAvatarUploadButton';
+export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
