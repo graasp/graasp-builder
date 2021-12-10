@@ -2,19 +2,12 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core';
-import {
-  FileItem,
-  S3FileItem,
-  DocumentItem,
-  LinkItem,
-  AppItem,
-} from '@graasp/ui';
+import { FileItem, DocumentItem, LinkItem, AppItem } from '@graasp/ui';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildFileItemId,
   buildItemsTableId,
-  buildS3FileItemId,
   buildSaveButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
@@ -30,7 +23,7 @@ import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const { useChildren, useFileContent, useS3FileContent } = hooks;
+const { useChildren, useFileContent } = hooks;
 
 const useStyles = makeStyles(() => ({
   fileWrapper: {
@@ -61,23 +54,14 @@ const ItemContent = ({ item, enableEdition }) => {
   const { data: content, isLoading: isLoadingFileContent } = useFileContent(
     id,
     {
-      enabled: item && itemType === ITEM_TYPES.FILE,
+      enabled:
+        item &&
+        (itemType === ITEM_TYPES.FILE || itemType === ITEM_TYPES.S3_FILE),
     },
   );
-  const {
-    data: s3Content,
-    isLoading: isLoadingS3FileContent,
-  } = useS3FileContent(id, {
-    enabled: itemType === ITEM_TYPES.S3_FILE,
-  });
   const isEditing = enableEdition && editingItemId === itemId;
 
-  if (
-    isLoadingFileContent ||
-    isLoadingS3FileContent ||
-    isLoadingUser ||
-    isLoadingChildren
-  ) {
+  if (isLoadingFileContent || isLoadingUser || isLoadingChildren) {
     return <Loader />;
   }
 
@@ -105,6 +89,7 @@ const ItemContent = ({ item, enableEdition }) => {
 
   switch (itemType) {
     case ITEM_TYPES.FILE:
+    case ITEM_TYPES.S3_FILE:
       return (
         <div className={classes.fileWrapper}>
           <FileItem
@@ -112,19 +97,6 @@ const ItemContent = ({ item, enableEdition }) => {
             editCaption={isEditing}
             item={item}
             content={content}
-            onSaveCaption={onSaveCaption}
-            saveButtonId={saveButtonId}
-          />
-        </div>
-      );
-    case ITEM_TYPES.S3_FILE:
-      return (
-        <div className={classes.fileWrapper}>
-          <S3FileItem
-            id={buildS3FileItemId(itemId)}
-            editCaption={isEditing}
-            item={item}
-            content={s3Content}
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
           />

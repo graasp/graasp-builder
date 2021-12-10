@@ -9,8 +9,6 @@
 ```
 REACT_APP_API_HOST=http://localhost:3000
 PORT=3111
-REACT_APP_UPLOAD_METHOD=default
-REACT_APP_S3_FILES_HOST=
 REACT_APP_SHOW_NOTIFICATIONS=true
 REACT_APP_AUTHENTICATION_HOST=http://localhost:3001
 ```
@@ -29,10 +27,6 @@ The first requirement for fully accessing the client is to be authenticated. If 
 
 You are successfully authenticated if you can access to the client without being redirected.
 
-### Environment Variables
-
-- `REACT_APP_UPLOAD_METHOD` (default: `default`): This variable can take the following values: `default` or `s3`. `default` will save your file locally while `s3` will send the files to an S3 bucket configured with the `REACT_APP_S3_FILES_HOST` variable.
-
 ## Testing
 
 Set the following environnement variables in `.env.test`
@@ -40,8 +34,6 @@ Set the following environnement variables in `.env.test`
 ```
 REACT_APP_API_HOST=http://localhost:3000
 PORT=3111
-REACT_APP_UPLOAD_METHOD=default
-REACT_APP_S3_FILES_HOST=
 REACT_APP_SHOW_NOTIFICATIONS=false
 REACT_APP_NODE_ENV=test
 ```

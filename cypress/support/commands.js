@@ -27,8 +27,6 @@ import {
   mockGetMemberBy,
   mockDeleteItems,
   mockDefaultDownloadFile,
-  mockGetS3Metadata,
-  mockGetS3FileContent,
   mockUploadItem,
   mockGetCurrentMember,
   mockSignInRedirection,
@@ -96,8 +94,6 @@ Cypress.Commands.add(
     getMemberError = false,
     defaultUploadError = false,
     defaultDownloadFileError = false,
-    getS3MetadataError = false,
-    getS3FileContentError = false,
     getCurrentMemberError = false,
     postItemTagError = false,
     postItemLoginError = false,
@@ -159,10 +155,6 @@ Cypress.Commands.add(
     mockUploadItem(cachedItems, defaultUploadError);
 
     mockDefaultDownloadFile(cachedItems, defaultDownloadFileError);
-
-    mockGetS3Metadata(cachedItems, getS3MetadataError);
-
-    mockGetS3FileContent(getS3FileContentError);
 
     mockGetCurrentMember(currentMember, getCurrentMemberError);
 
