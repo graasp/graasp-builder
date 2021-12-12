@@ -15,6 +15,8 @@ import {
   SHARE_ITEM_CATEGORY_DISCIPLINE,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { CATEGORY_TYPES } from '../../../config/constants';
+import { compare } from '../../../utils/item';
 
 const { useCategoryTypes, useCategories, useItemCategories } = hooks;
 const { POST_ITEM_CATEGORY, DELETE_ITEM_CATEGORY } = MUTATION_KEYS;
@@ -60,19 +62,16 @@ function CategorySelection({ item, edit }) {
     isLoading: isCategoriesLoading,
   } = useCategories();
 
-  // sort options by alphabetical order according to name
-  const compare = (a, b) => {
-    if (a.name < b.name) return -1;
-    if (a.name > b.name) return 1;
-    return 0;
-  };
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
   const levelList = categoriesMap
-    ?.get(categoryTypes?.filter((type) => type.name === 'level').get(0).id)
+    ?.get(categoryTypes?.find((type) => type.name === CATEGORY_TYPES.LEVEL)?.id)
     ?.toArray();
   const disciplineList = categoriesMap
-    ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
+    ?.get(
+      categoryTypes?.find((type) => type.name === CATEGORY_TYPES.DISCIPLINE)
+        ?.id,
+    )
     ?.toArray()
     .sort(compare);
 

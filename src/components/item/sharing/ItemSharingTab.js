@@ -20,7 +20,7 @@ import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import CategorySelection from './CategorySelection';
-import CustomizedTagsEdit from './CustomizedTags';
+import CustomizedTagsEdit from './CustomizedTagsEdit';
 
 const useStyles = makeStyles((theme) => ({
   title: {

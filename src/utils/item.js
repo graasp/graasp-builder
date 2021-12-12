@@ -146,3 +146,10 @@ export const getChildrenOrderFromFolderExtra = (item) =>
   item?.get('extra')?.folder?.childrenOrder ?? [];
 
 export const stripHtml = (str) => str?.replace(/<[^>]*>?/gm, '');
+
+// sort objects by alphabetical order according to name
+export const compare = (a, b) => {
+  if (a.name < b.name) return -1;
+  if (a.name > b.name) return 1;
+  return 0;
+};

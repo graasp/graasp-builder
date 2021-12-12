@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import { Typography, TextField, Button, makeStyles } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import SaveIcon from '@material-ui/icons/Save';
 import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
-function CustomizedTagsEdit(item, edit) {
+function CustomizedTagsEdit({ item, edit }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
@@ -31,9 +32,8 @@ function CustomizedTagsEdit(item, edit) {
   // current item
   const { itemId } = useParams();
 
-  const { item: itemObj } = item;
-  const settings = itemObj.get('settings');
-  const itemName = itemObj.get('name');
+  const settings = item?.get('settings');
+  const itemName = item?.get('name');
 
   const [displayValues, setDisplayValues] = useState(false);
 
@@ -41,7 +41,7 @@ function CustomizedTagsEdit(item, edit) {
     if (settings) {
       setDisplayValues(settings.tags || []);
     }
-  }, [settings, item]);
+  }, [settings]);
 
   if (isMemberLoading) return <Loader />;
 
@@ -66,12 +66,11 @@ function CustomizedTagsEdit(item, edit) {
       </Typography>
       <Typography variant="body1">
         {t('Please seperate tags by comma. ')}
-        {t('Eg. Tag1,Tag2,Tag3,...,TagN')}
+        {t('Eg. English,Biology,Lab,Plants,...,Demo')}
       </Typography>
       <form className={classes.container} onSubmit={handleSubmit}>
         <TextField
           disabled={!edit}
-          id="customized-tags-input-box"
           variant="outlined"
           label="Input"
           multiline
@@ -84,13 +83,18 @@ function CustomizedTagsEdit(item, edit) {
           variant="outlined"
           color="primary"
           className={classes.button}
-          endIcon={<SendIcon />}
+          endIcon={<SaveIcon />}
         >
-          {t('Submit')}
+          {t('Save')}
         </Button>
       </form>
     </>
   );
 }
+
+CustomizedTagsEdit.propTypes = {
+  item: PropTypes.instanceOf(Map).isRequired,
+  edit: PropTypes.bool.isRequired,
+};
 
 export default CustomizedTagsEdit;
