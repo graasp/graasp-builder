@@ -118,7 +118,6 @@ export const configureAvatarUppy = ({
     onUpload,
     onComplete,
     onError,
-    // autoProceed: false,
     fieldName: 'file',
     restrictions: {
       maxNumberOfFiles: 1,

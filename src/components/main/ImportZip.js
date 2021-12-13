@@ -29,7 +29,7 @@ const ImportZip = () => {
     notifier({ type: routines.importZipRoutine.FAILURE });
   };
 
-  const onFilesAdded = () => {
+  const onFileAdded = () => {
     notifier({ type: routines.importZipRoutine.REQUEST });
   };
 
@@ -39,7 +39,7 @@ const ImportZip = () => {
         itemId,
         onComplete,
         onError,
-        onFilesAdded,
+        onFileAdded,
       }),
     );
 

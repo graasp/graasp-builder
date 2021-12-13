@@ -76,6 +76,7 @@ const {
   buildGetMembersRoute,
   buildUploadItemThumbnailRoute,
   buildUploadAvatarRoute,
+  buildImportZipRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -722,6 +723,24 @@ export const mockUploadItem = (items, shouldThrowError) => {
       return reply(false);
     },
   ).as('uploadItem');
+};
+
+export const mockImportZip = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(buildImportZipRoute())}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(false);
+    },
+  ).as('importZip');
 };
 
 export const mockDefaultDownloadFile = (items, shouldThrowError) => {

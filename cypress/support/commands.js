@@ -65,6 +65,7 @@ import {
   mockGetAvatar,
   mockPostItemThumbnail,
   mockPostAvatar,
+  mockImportZip,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -110,6 +111,7 @@ Cypress.Commands.add(
     getAvatarError = false,
     postItemThumbnailError = false,
     postAvatarError = false,
+    importZipError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -227,6 +229,8 @@ Cypress.Commands.add(
     mockPostItemThumbnail(postItemThumbnailError);
 
     mockPostAvatar(postAvatarError);
+
+    mockImportZip(importZipError);
   },
 );
 
