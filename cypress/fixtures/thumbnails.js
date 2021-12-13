@@ -1,8 +1,7 @@
 import { PERMISSION_LEVELS } from '../../src/enums';
+import { FIXTURES_THUMBNAILS_FOLDER } from '../support/constants';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { MEMBERS } from './members';
-
-const FIXTURES_THUMBNAILS_FOLDER = './thumbnails';
 
 // eslint-disable-next-line import/prefer-default-export
 export const SAMPLE_ITEMS_WITH_THUMBNAILS = {
