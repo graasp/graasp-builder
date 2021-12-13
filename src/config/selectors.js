@@ -49,7 +49,6 @@ export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
 export const UPLOADER_ID = 'uploader';
 export const UPLOADER_DROP_ZONE_ITEMS_CLASS = 'uppy-Root';
 export const buildFileItemId = (id) => `file-${id}`;
-export const buildS3FileItemId = (id) => `file-${id}`;
 export const ITEM_PANEL_ID = 'itemPanelMetadata';
 export const ITEM_PANEL_NAME_ID = 'itemPanelName';
 export const ITEM_PANEL_TABLE_ID = 'itemPanelTable';

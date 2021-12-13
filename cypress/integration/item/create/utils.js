@@ -22,7 +22,7 @@ export const createItem = (payload, options) => {
     case ITEM_TYPES.S3_FILE:
     case ITEM_TYPES.FILE: {
       const { confirm = true } = options;
-      const file = [payload?.filepath || getS3FileExtra(payload?.extra)?.key];
+      const file = [payload?.filepath || getS3FileExtra(payload?.extra)?.path];
       cy.get(`#${CREATE_ITEM_FILE_ID}`).click();
 
       // drag-drop a file in the uploader
