@@ -2166,11 +2166,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#72/axios":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=050803ca2bbc3c651e7ace89788dd5e8820e47b8"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=565f919ed7cc908ff2c761bdc67a2ed6bc764f10"
   dependencies:
-    axios: 0.21.4
+    axios: 0.24.0
     http-status-codes: 2.1.4
     immutable: 4.0.0-rc.12
     js-cookie: 3.0.0
@@ -2179,7 +2179,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 17eeb4dd1e379f8b66f6901357b4174c7a1f4310911c68f40dfd3375f44dd85d68af0f3394204b8d63ce1cb5e609cf8421b16a5cccea9902afb47caa3aa148bc
+  checksum: 285e33d1b27d6df234c4753e1dec29c08ca57eb657c85b63001aa6360bcd341f7f340068251e688f2ddb38e9afc406296a32a7c03bfa5103abf04503fb1aa46f
   languageName: node
   linkType: hard
 
@@ -4782,7 +4782,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:0.21.4, axios@npm:^0.21.1":
+"axios@npm:0.24.0":
+  version: 0.24.0
+  resolution: "axios@npm:0.24.0"
+  dependencies:
+    follow-redirects: ^1.14.4
+  checksum: 468cf496c08a6aadfb7e699bebdac02851e3043d4e7d282350804ea8900e30d368daa6e3cd4ab83b8ddb5a3b1e17a5a21ada13fc9cebd27b74828f47a4236316
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.21.1":
   version: 0.21.4
   resolution: "axios@npm:0.21.4"
   dependencies:
@@ -9673,7 +9682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.0, follow-redirects@npm:^1.14.4":
   version: 1.14.6
   resolution: "follow-redirects@npm:1.14.6"
   peerDependenciesMeta:
@@ -10270,7 +10279,7 @@ __metadata:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#72/axios"
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
