@@ -3,7 +3,6 @@ import {
   buildEditButtonId,
   buildFileItemId,
   buildPlayerButtonId,
-  buildS3FileItemId,
   buildSettingsButtonId,
   buildShareButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
@@ -13,7 +12,6 @@ import {
   ITEM_PANEL_TABLE_ID,
   TEXT_EDITOR_CLASS,
 } from '../../../../src/config/selectors';
-import { ITEM_TYPES } from '../../../../src/enums';
 import {
   getDocumentExtra,
   getEmbeddedLinkExtra,
@@ -87,17 +85,13 @@ export const expectFileViewScreenLayout = ({
   item,
   currentMember = CURRENT_USER,
 }) => {
-  const { id, name, extra, creator, type, description } = item;
+  const { id, name, extra, creator, description } = item;
   const mimetype =
-    getFileExtra(extra)?.mimetype || getS3FileExtra(extra)?.contenttype;
+    getFileExtra(extra)?.mimetype || getS3FileExtra(extra)?.mimetype;
 
   // embedded element
   let selector = null;
-  if (type === ITEM_TYPES.FILE) {
-    selector = `#${buildFileItemId(id)}`;
-  } else if (type === ITEM_TYPES.S3_FILE) {
-    selector = `#${buildS3FileItemId(id)}`;
-  }
+  selector = `#${buildFileItemId(id)}`;
   cy.get(selector).should('exist');
 
   cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', description);

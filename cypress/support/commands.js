@@ -115,6 +115,8 @@ Cypress.Commands.add(
     const cachedMembers = JSON.parse(JSON.stringify(members));
     const allItems = [...cachedItems, ...recycledItems];
 
+    cy.setCookie('session', currentMember ? 'somecookie' : null);
+
     mockGetAppListRoute(APPS_LIST);
 
     mockGetOwnItems(cachedItems);

@@ -48,7 +48,7 @@ const ItemMetadataContent = ({ item }) => {
   let size = null;
   if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.S3_FILE) {
     const extra = getS3FileExtra(item.get('extra'));
-    ({ contenttype: type, size } = extra);
+    ({ mimetype: type, size } = extra);
   } else if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.FILE) {
     const extra = getFileExtra(item.get('extra'));
     ({ mimetype: type, size } = extra);

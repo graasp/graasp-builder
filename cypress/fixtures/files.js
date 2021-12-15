@@ -75,7 +75,7 @@ export const IMAGE_ITEM_S3 = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildS3FileExtra({
-    key: 'files/icon.png', // for testing
+    path: 'files/icon.png', // for testing
     size: 32439,
     mimetype: 'image/png',
   }),

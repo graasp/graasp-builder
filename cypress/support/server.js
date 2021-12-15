@@ -74,6 +74,8 @@ const {
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
   buildGetMembersRoute,
+  buildUploadItemThumbnailRoute,
+  buildUploadAvatarRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -1162,7 +1164,7 @@ export const mockGetItemThumbnail = (items, shouldThrowError) => {
     {
       method: DEFAULT_GET.method,
       url: new RegExp(
-        `${API_HOST}/${ITEMS_ROUTE}/thumbnails/${ID_FORMAT}\\?size\\=`,
+        `${API_HOST}/${ITEMS_ROUTE}/thumbnails/${ID_FORMAT}/download\\?size\\=`,
       ),
     },
     ({ reply, url }) => {
@@ -1191,7 +1193,7 @@ export const mockPostItemThumbnail = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_POST.method,
-      url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/thumbnails/${ID_FORMAT}$`),
+      url: new RegExp(`${buildUploadItemThumbnailRoute()}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {
@@ -1207,7 +1209,9 @@ export const mockGetAvatar = (members, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(`${API_HOST}/members/avatars/${ID_FORMAT}\\?size\\=`),
+      url: new RegExp(
+        `${API_HOST}/members/avatars/${ID_FORMAT}/download\\?size\\=`,
+      ),
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
@@ -1235,7 +1239,7 @@ export const mockPostAvatar = (shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_POST.method,
-      url: new RegExp(`${API_HOST}/members/avatars/${ID_FORMAT}$`),
+      url: new RegExp(`${buildUploadAvatarRoute()}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {
