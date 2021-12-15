@@ -62,7 +62,7 @@ function CustomizedTagsEdit({ item, edit }) {
   return (
     <>
       <Typography variant="h6" className={classes.title}>
-        {t('Customized Tags')}
+        {t('Tags')}
       </Typography>
       <Typography variant="body1">
         {t('Please seperate tags by comma. ')}
