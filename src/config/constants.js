@@ -1,9 +1,5 @@
 import env from '../env.json';
-import {
-  ITEM_LAYOUT_MODES,
-  PERMISSION_LEVELS,
-  ITEM_TYPES,
-} from '../enums';
+import { ITEM_LAYOUT_MODES, PERMISSION_LEVELS, ITEM_TYPES } from '../enums';
 
 const {
   API_HOST: ENV_API_HOST,

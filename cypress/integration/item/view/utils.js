@@ -3,7 +3,6 @@ import {
   buildEditButtonId,
   buildFileItemId,
   buildPlayerButtonId,
-  buildS3FileItemId,
   buildSettingsButtonId,
   buildShareButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
@@ -13,7 +12,6 @@ import {
   ITEM_PANEL_TABLE_ID,
   TEXT_EDITOR_CLASS,
 } from '../../../../src/config/selectors';
-import { ITEM_TYPES } from '../../../../src/enums';
 import {
   getDocumentExtra,
   getEmbeddedLinkExtra,

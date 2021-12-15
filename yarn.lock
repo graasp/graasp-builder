@@ -2166,9 +2166,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#72/axios":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=00ed4d70bcbc58b49c1b7f264d27e683220792d0"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=d90ea22f41148aa45fef8748d9f74be45d86ff13"
   dependencies:
     axios: 0.24.0
     http-status-codes: 2.1.4
@@ -2179,7 +2179,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 8fc3d1d157166e6f7d9621f1bef581038ddd4d6e0847a91a37abb7ca9bd66a2076283994acae491ef1d1b4b19b0dd5ea4c7815476c344169023d9a64bea21e66
+  checksum: 995f51a282a436138f2852a22f88190b660f804645c31209b7405fc8172378612af032c07bd9d6a795c6f842186019ee93b5ade83d581613ac7d5792e9964812
   languageName: node
   linkType: hard
 
@@ -10279,7 +10279,7 @@ __metadata:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#72/axios"
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
