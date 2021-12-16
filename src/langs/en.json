@@ -150,6 +150,11 @@
     "Discipline": "Discipline",
     "Age Range": "Age Range",
     "Category": "Category",
-    "Write the folder decription here...": "Write the folder decription here..."
+    "Write the folder decription here...": "Write the folder decription here...",
+    "Tags": "Tags",
+    "Please seperate tags by comma. ": "Please seperate tags by comma. ",
+    "Eg. English, Biology, Lab, Plants, ..., Demo": "Eg. English, Biology, Lab, Plants, ..., Demo",
+    "Level": "Level",
+    "Please choose from the list": "Please choose from the list"
   }
 }

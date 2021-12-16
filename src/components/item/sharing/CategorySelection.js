@@ -16,7 +16,7 @@ import {
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { CATEGORY_TYPES } from '../../../config/constants';
-import { compare } from '../../../utils/item';
+import { sortByName } from '../../../utils/item';
 
 const { useCategoryTypes, useCategories, useItemCategories } = hooks;
 const { POST_ITEM_CATEGORY, DELETE_ITEM_CATEGORY } = MUTATION_KEYS;
@@ -73,7 +73,7 @@ function CategorySelection({ item, edit }) {
         ?.id,
     )
     ?.toArray()
-    .sort(compare);
+    .sort(sortByName);
 
   // initialize state variable
   const [selectedValues, setSelectedValues] = useState([]);
@@ -148,7 +148,7 @@ function CategorySelection({ item, edit }) {
             <TextField
               {...params}
               variant="outlined"
-              placeholder={t('Please choose from list')}
+              placeholder={t('Please choose from the list')}
             />
           )}
         />

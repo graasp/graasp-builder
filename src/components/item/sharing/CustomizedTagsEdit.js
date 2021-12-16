@@ -39,7 +39,7 @@ function CustomizedTagsEdit({ item, edit }) {
 
   useEffect(() => {
     if (settings) {
-      setDisplayValues(settings.tags || []);
+      setDisplayValues(settings.tags?.join(' ,') || '');
     }
   }, [settings]);
 
@@ -51,7 +51,8 @@ function CustomizedTagsEdit({ item, edit }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const tagsList = displayValues?.split(',') || [];
+    const tagsList =
+      displayValues?.split(',').map((entry) => entry.trim()) || [];
     updateCustomizedTags({
       id: itemId,
       name: itemName,
@@ -66,7 +67,7 @@ function CustomizedTagsEdit({ item, edit }) {
       </Typography>
       <Typography variant="body1">
         {t('Please seperate tags by comma. ')}
-        {t('Eg. English,Biology,Lab,Plants,...,Demo')}
+        {t('Eg. English, Biology, Lab, Plants, ..., Demo')}
       </Typography>
       <form className={classes.container} onSubmit={handleSubmit}>
         <TextField
