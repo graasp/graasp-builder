@@ -25,8 +25,8 @@ const ImportZip = () => {
       notifier({ type: routines.importZipRoutine.SUCCESS });
     }
   };
-  const onError = () => {
-    notifier({ type: routines.importZipRoutine.FAILURE });
+  const onError = (error) => {
+    notifier({ type: routines.importZipRoutine.FAILURE, payload: { error } });
   };
 
   const onFileAdded = () => {

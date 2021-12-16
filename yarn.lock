@@ -2166,9 +2166,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@git://github.com/graasp/graasp-query-client.git#102/importZip":
+"@graasp/query-client@git://github.com/graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=16aa03493ba2a3d914a15aa330ebbb837a962c9e"
+  resolution: "@graasp/query-client@git://github.com/graasp/graasp-query-client.git#commit=218f878d372a2bac635cef3da58007b1b8a2cc39"
   dependencies:
     axios: 0.24.0
     http-status-codes: 2.1.4
@@ -2179,13 +2179,13 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 2a7585ea4327e8d4b91a381ee6b3f9be504a087b43ad44e9506c8d79a1759d211e08a5a1789df31646af3cf4514c0b631a0c0160f5ece77194ed8b74a5469ad5
+  checksum: 7efaa285f8790dc4cabc91f197918f53d3089c232c1bee143f7248fa31af45b4d44d89ccbcf2c68aba334e71ff331b5f8d49965c6629c80e8ba113e822217ebe
   languageName: node
   linkType: hard
 
-"@graasp/ui@git://github.com/graasp/graasp-ui.git#69/zipIcon":
+"@graasp/ui@git://github.com/graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=a45584873602f4e031a7597f043786684f8e3699"
+  resolution: "@graasp/ui@git://github.com/graasp/graasp-ui.git#commit=6f48f63d687c037e9fa48a6939aaafba970bceb2"
   dependencies:
     clsx: 1.1.1
     http-status-codes: 2.1.4
@@ -2202,7 +2202,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 2b935e912e059958f4790685f6cc8207573f0385b77ac977ff3f023145bafab08b221c6ed39c23880ce87fba5f84f929b56db6b8543b2ca8db475becaed8e827
+  checksum: 014a5fc5c4d24803e5f6ab7b4fefe8349d80cf5941b4736cdfed6205d0d5cc6ef16b955a61891215c097f34d5e34d1496ab6c2a76945ba415851a12f4679be5b
   languageName: node
   linkType: hard
 
@@ -10279,8 +10279,8 @@ __metadata:
     "@cypress/code-coverage": 3.9.2
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "git://github.com/graasp/graasp-chatbox.git#main"
-    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git#102/importZip"
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git#69/zipIcon"
+    "@graasp/query-client": "git://github.com/graasp/graasp-query-client.git"
+    "@graasp/ui": "git://github.com/graasp/graasp-ui.git"
     "@graasp/websockets": "git://github.com/graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.11.2
     "@material-ui/icons": 5.0.0-beta.4
