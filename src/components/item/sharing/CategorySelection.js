@@ -11,10 +11,12 @@ import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
-  SHARE_ITEM_CATEGORY_AGE,
+  SHARE_ITEM_CATEGORY_LEVEL,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { CATEGORY_TYPES } from '../../../config/constants';
+import { sortByName } from '../../../utils/item';
 
 const { useCategoryTypes, useCategories, useItemCategories } = hooks;
 const { POST_ITEM_CATEGORY, DELETE_ITEM_CATEGORY } = MUTATION_KEYS;
@@ -62,12 +64,16 @@ function CategorySelection({ item, edit }) {
 
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
-  const ageList = categoriesMap
-    ?.get(categoryTypes?.filter((type) => type.name === 'age').get(0).id)
+  const levelList = categoriesMap
+    ?.get(categoryTypes?.find((type) => type.name === CATEGORY_TYPES.LEVEL)?.id)
     ?.toArray();
   const disciplineList = categoriesMap
-    ?.get(categoryTypes?.filter((type) => type.name === 'discipline').get(0).id)
-    ?.toArray();
+    ?.get(
+      categoryTypes?.find((type) => type.name === CATEGORY_TYPES.DISCIPLINE)
+        ?.id,
+    )
+    ?.toArray()
+    .sort(sortByName);
 
   // initialize state variable
   const [selectedValues, setSelectedValues] = useState([]);
@@ -94,7 +100,7 @@ function CategorySelection({ item, edit }) {
   }
 
   const handleChange = (categoryType) => (event, value, reason) => {
-    const typeMap = { age: ageList, discipline: disciplineList };
+    const typeMap = { level: levelList, discipline: disciplineList };
     if (reason === SELECT_OPTION) {
       // post new category
       const newCategoryId = value.at(-1).id;
@@ -123,55 +129,51 @@ function CategorySelection({ item, edit }) {
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div className={classes.wrapper}>
-      <Typography variant="h6" className={classes.Selection}>
+      <Typography variant="h6" className={classes.selection}>
         {t('Category')}
       </Typography>
-      {edit && ageList && (
-        <>
-          <Typography variant="body1">{t('Age Range')}</Typography>
-          <Autocomplete
-            multiple
-            disableClearable
-            id={SHARE_ITEM_CATEGORY_AGE}
-            value={ageList?.filter((value) => selectedValues.includes(value))}
-            getOptionSelected={(option, value) => option.id === value.id}
-            options={ageList}
-            getOptionLabel={(option) => option.name}
-            onChange={handleChange('age')}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder={t('Please choose from list')}
-              />
-            )}
-          />
-        </>
-      )}
-      {edit && disciplineList && (
-        <>
-          <Typography variant="body1">{t('Discipline')}</Typography>
-          <Autocomplete
-            multiple
-            disableClearable
-            id={SHARE_ITEM_CATEGORY_DISCIPLINE}
-            value={disciplineList?.filter((value) =>
-              selectedValues.includes(value),
-            )}
-            getOptionSelected={(option, value) => option.id === value.id}
-            options={disciplineList}
-            getOptionLabel={(option) => option.name}
-            onChange={handleChange('discipline')}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder={t('Please choose from list')}
-              />
-            )}
-          />
-        </>
-      )}
+      <>
+        <Typography variant="body1">{t('Level')}</Typography>
+        <Autocomplete
+          disabled={!edit || !levelList}
+          multiple
+          disableClearable
+          id={SHARE_ITEM_CATEGORY_LEVEL}
+          value={levelList?.filter((value) => selectedValues.includes(value))}
+          getOptionSelected={(option, value) => option.id === value.id}
+          options={levelList}
+          getOptionLabel={(option) => option.name}
+          onChange={handleChange('level')}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              placeholder={t('Please choose from the list')}
+            />
+          )}
+        />
+        <Typography variant="body1">{t('Discipline')}</Typography>
+        <Autocomplete
+          disabled={!edit || !levelList}
+          multiple
+          disableClearable
+          id={SHARE_ITEM_CATEGORY_DISCIPLINE}
+          value={disciplineList?.filter((value) =>
+            selectedValues.includes(value),
+          )}
+          getOptionSelected={(option, value) => option.id === value.id}
+          options={disciplineList}
+          getOptionLabel={(option) => option.name}
+          onChange={handleChange('discipline')}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              placeholder={t('Please choose from list')}
+            />
+          )}
+        />
+      </>
     </div>
   );
 }

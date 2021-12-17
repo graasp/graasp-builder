@@ -160,3 +160,8 @@ export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
 export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
 export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
+
+export const CATEGORY_TYPES = {
+  LEVEL: 'level',
+  DISCIPLINE: 'discipline',
+};
