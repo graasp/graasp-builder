@@ -14,7 +14,7 @@ const { useItemChat, useMembers } = hooks;
 const Chatbox = ({ item }) => {
   const { data: chat, isLoading: isChatLoading } = useItemChat(item.get('id'));
   const { data: members, isLoading: isMembersLoading } = useMembers([
-    ...new Set(chat?.get('messages').map(({ creator }) => creator)),
+    ...new Set(chat?.get('messages')?.map(({ creator }) => creator)),
   ]);
   const { data: currentMember, isLoadingCurrentMember } = useContext(
     CurrentUserContext,

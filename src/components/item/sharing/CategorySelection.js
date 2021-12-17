@@ -15,6 +15,7 @@ import {
   SHARE_ITEM_CATEGORY_DISCIPLINE,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import ErrorAlert from '../../common/ErrorAlert';
 import { CATEGORY_TYPES } from '../../../config/constants';
 import { sortByName } from '../../../utils/item';
 
@@ -99,6 +100,10 @@ function CategorySelection({ item, edit }) {
     return <Loader />;
   }
 
+  if (!levelList || !disciplineList) {
+    return <ErrorAlert />;
+  }
+
   const handleChange = (categoryType) => (event, value, reason) => {
     const typeMap = { level: levelList, discipline: disciplineList };
     if (reason === SELECT_OPTION) {
@@ -126,7 +131,6 @@ function CategorySelection({ item, edit }) {
     }
   };
 
-  /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div className={classes.wrapper}>
       <Typography variant="h6" className={classes.selection}>
@@ -146,6 +150,7 @@ function CategorySelection({ item, edit }) {
           onChange={handleChange('level')}
           renderInput={(params) => (
             <TextField
+              /* eslint-disable react/jsx-props-no-spreading */
               {...params}
               variant="outlined"
               placeholder={t('Please choose from the list')}

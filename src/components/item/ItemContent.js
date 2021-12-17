@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core';
 import { FileItem, DocumentItem, LinkItem, AppItem } from '@graasp/ui';
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { MUTATION_KEYS, Api } from '@graasp/query-client';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildFileItemId,
@@ -137,6 +137,7 @@ const ItemContent = ({ item, enableEdition }) => {
           user={user}
           height={ITEM_DEFAULT_HEIGHT}
           mode={enableEdition ? APP_MODES.TEACHER : APP_MODES.STUDENT}
+          requestApiAccessToken={Api.requestApiAccessToken}
         />
       );
     case ITEM_TYPES.FOLDER:
