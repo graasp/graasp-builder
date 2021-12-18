@@ -2,7 +2,13 @@ import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
-import { Typography, TextField, Button, makeStyles } from '@material-ui/core';
+import {
+  Typography,
+  TextField,
+  Button,
+  Chip,
+  makeStyles,
+} from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -39,7 +45,7 @@ const CustomizedTagsEdit = ({ item, edit }) => {
 
   useEffect(() => {
     if (settings) {
-      setDisplayValues(settings.tags?.join(' ,') || '');
+      setDisplayValues(settings.tags?.join(', ') || '');
     }
   }, [settings]);
 
@@ -90,6 +96,10 @@ const CustomizedTagsEdit = ({ item, edit }) => {
           {t('Save')}
         </Button>
       </form>
+      <Typography variant="subtitle1">{t('Tags Preview')}</Typography>
+      {settings?.tags?.map((tag) => (
+        <Chip label={tag} />
+      ))}
     </>
   );
 };
