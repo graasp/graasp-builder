@@ -10,6 +10,7 @@ import {
   CREATE_ITEM_FOLDER_ID,
   CREATE_ITEM_DOCUMENT_ID,
   CREATE_ITEM_APP_ID,
+  CREATE_ITEM_ZIP_ID,
 } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,14 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }) => {
     setValue(newValue);
     onTypeChange(newValue);
   };
+
+  const zipIcon = (
+    <ItemIcon
+      type={ITEM_TYPES.FILE}
+      iconClass={classes.icon}
+      extra={{ file: { mimetype: 'application/zip' } }}
+    />
+  );
 
   return (
     <Tabs
@@ -79,6 +88,13 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }) => {
         value={ITEM_TYPES.APP}
         label={t('App')}
         icon={<ItemIcon type={ITEM_TYPES.APP} iconClass={classes.icon} />}
+        classes={{ wrapper: classes.wrapper }}
+      />
+      <Tab
+        id={CREATE_ITEM_ZIP_ID}
+        value={ITEM_TYPES.ZIP}
+        label={t('Import ZIP')}
+        icon={zipIcon}
         classes={{ wrapper: classes.wrapper }}
       />
     </Tabs>

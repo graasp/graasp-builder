@@ -65,6 +65,11 @@ export const PDF_ITEM_DEFAULT = {
   filepath: 'files/doc.pdf',
 };
 
+export const ZIP_DEFAULT = {
+  type: ITEM_TYPES.ZIP,
+  filepath: 'files/graasp.zip',
+};
+
 export const IMAGE_ITEM_S3 = {
   id: 'ad5519a2-5ba9-4305-b221-185facbe6a99',
   name: 'icon.png',

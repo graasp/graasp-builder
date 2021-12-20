@@ -7,6 +7,8 @@ import {
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_LINK_ID,
   DASHBOARD_UPLOADER_ID,
+  CREATE_ITEM_ZIP_ID,
+  ZIP_DASHBOARD_UPLOADER_ID,
 } from '../../../../src/config/selectors';
 import { getS3FileExtra } from '../../../../src/utils/itemExtra';
 
@@ -35,6 +37,19 @@ export const createItem = (payload, options) => {
       if (confirm) {
         cy.get(`#${CREATE_ITEM_CLOSE_BUTTON_ID}`).click();
       }
+      break;
+    }
+    case ITEM_TYPES.ZIP: {
+      const file = [payload?.filepath];
+      cy.get(`#${CREATE_ITEM_ZIP_ID}`).click();
+
+      // drag-drop a file in the uploader
+      cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).attachFile(
+        file,
+        {
+          subjectType: 'drag-n-drop',
+        },
+      );
       break;
     }
     case ITEM_TYPES.DOCUMENT:
