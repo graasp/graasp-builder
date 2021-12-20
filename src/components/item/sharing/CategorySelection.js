@@ -50,12 +50,18 @@ const CategorySelection = ({ item, edit }) => {
   const { itemId } = useParams();
 
   // get itemCategories, categoryTypes and allCategories
-  const { data: itemCategories, isLoading: isItemCategoriesLoading } =
-    useItemCategories(itemId);
-  const { data: categoryTypes, isLoading: isCategoryTypesLoading } =
-    useCategoryTypes();
-  const { data: allCategories, isLoading: isCategoriesLoading } =
-    useCategories();
+  const {
+    data: itemCategories,
+    isLoading: isItemCategoriesLoading,
+  } = useItemCategories(itemId);
+  const {
+    data: categoryTypes,
+    isLoading: isCategoryTypesLoading,
+  } = useCategoryTypes();
+  const {
+    data: allCategories,
+    isLoading: isCategoriesLoading,
+  } = useCategories();
 
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);

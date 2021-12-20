@@ -77,6 +77,9 @@ const {
   buildUploadItemThumbnailRoute,
   buildUploadAvatarRoute,
   buildImportZipRoute,
+  GET_CATEGORY_TYPES_ROUTE,
+  buildGetCategoriesRoute,
+  buildGetItemCategoriesRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -1269,4 +1272,56 @@ export const mockPostAvatar = (shouldThrowError) => {
       return reply({ statusCode: StatusCodes.OK });
     },
   ).as('uploadAvatar');
+};
+
+export const mockGetCategoryTypes = (categoryTypes) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(GET_CATEGORY_TYPES_ROUTE)}$`,
+      ),
+    },
+    ({ reply }) => {
+      reply(categoryTypes);
+    },
+  ).as('getCategoryTypes');
+};
+
+export const mockGetCategories = (categories, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(buildGetCategoriesRoute())}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+        return;
+      }
+      reply(categories);
+    },
+  ).as('getCategories');
+};
+
+export const mockGetItemCategories = (itemWithCategories, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildGetItemCategoriesRoute(itemWithCategories.id),
+        )}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+        return;
+      }
+      reply(itemWithCategories.categories);
+    },
+  ).as('getItemCategories');
 };

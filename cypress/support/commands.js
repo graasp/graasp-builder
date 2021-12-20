@@ -66,12 +66,20 @@ import {
   mockPostItemThumbnail,
   mockPostAvatar,
   mockImportZip,
+  mockGetCategoryTypes,
+  mockGetCategories,
+  mockGetItemCategories,
 } from './server';
 import './commands/item';
 import './commands/navigation';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { SAMPLE_FLAGS } from '../fixtures/flags';
 import { APPS_LIST } from '../fixtures/apps/apps';
+import {
+  ITEM_WITH_CATEGORIES,
+  SAMPLE_CATEGORIES,
+  SAMPLE_CATEGORY_TYPES,
+} from '../fixtures/categories';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -81,6 +89,9 @@ Cypress.Commands.add(
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     tags = [],
+    categories = SAMPLE_CATEGORIES,
+    categoryTypes = SAMPLE_CATEGORY_TYPES,
+    itemWithCategories = ITEM_WITH_CATEGORIES,
     flags = SAMPLE_FLAGS,
     deleteItemError = false,
     deleteItemsError = false,
@@ -112,6 +123,7 @@ Cypress.Commands.add(
     postItemThumbnailError = false,
     postAvatarError = false,
     importZipError = false,
+    getCategoriesError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -231,6 +243,12 @@ Cypress.Commands.add(
     mockPostAvatar(postAvatarError);
 
     mockImportZip(importZipError);
+    
+    mockGetCategoryTypes(categoryTypes);
+
+    mockGetCategories(categories, getCategoriesError);
+
+    mockGetItemCategories(itemWithCategories, getCategoriesError);
   },
 );
 

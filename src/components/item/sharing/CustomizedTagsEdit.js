@@ -41,7 +41,7 @@ const CustomizedTagsEdit = ({ item, edit }) => {
   const settings = item?.get('settings');
   const itemName = item?.get('name');
 
-  const [displayValues, setDisplayValues] = useState(false);
+  const [displayValues, setDisplayValues] = useState(null);
 
   useEffect(() => {
     if (settings) {

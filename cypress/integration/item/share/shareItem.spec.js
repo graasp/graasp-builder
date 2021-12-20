@@ -1,5 +1,6 @@
 import {
   buildShareButtonId,
+  SHARE_ITEM_CATEGORY_LEVEL,
   SHARE_ITEM_DIALOG_LINK_ID,
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
@@ -31,6 +32,11 @@ const openShareItemTab = (id) => {
 // eslint-disable-next-line import/prefer-default-export
 export const changeVisibility = (value) => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
+  cy.get(`li[data-value="${value}"]`).click();
+};
+
+export const changeCategory = (value) => {
+  cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`).click();
   cy.get(`li[data-value="${value}"]`).click();
 };
 
@@ -123,7 +129,6 @@ describe('Share Item', () => {
       expect(body?.tagId).to.equal(ITEM_PUBLISHED_TAG.id);
     });
   });
-
   it('Published Item', () => {
     const item = PUBLISHED_ITEM;
     cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
