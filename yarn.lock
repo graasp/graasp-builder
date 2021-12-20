@@ -10171,6 +10171,7 @@ __metadata:
     react: ^17.0.1
     react-beautiful-dnd: 13.1.0
     react-dom: ^17.0.1
+    react-ga4: 1.4.1
     react-i18next: 11.11.4
     react-image-crop: 9.0.4
     react-query: 3.31.0
@@ -16672,6 +16673,13 @@ __metadata:
   version: 6.0.10
   resolution: "react-error-overlay@npm:6.0.10"
   checksum: e7384f086a0162eecac8e081fe3c79b32f4ac8690c56bde35ab6b6380d10e6c8375bbb689a450902b6615261fcf6c95ea016fc0b200934667089ca83536bc4a7
+  languageName: node
+  linkType: hard
+
+"react-ga4@npm:1.4.1":
+  version: 1.4.1
+  resolution: "react-ga4@npm:1.4.1"
+  checksum: 4c33ecb47dfc26c241a6af8e2b08b29b6c059f40e456e93d1c2b65c995edce18f32d9777295774ec992d968d7c5efdd105eb62398972d85ff2e2b6dad8646a26
   languageName: node
   linkType: hard
 
