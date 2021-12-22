@@ -80,6 +80,8 @@ const {
   GET_CATEGORY_TYPES_ROUTE,
   buildGetCategoriesRoute,
   buildGetItemCategoriesRoute,
+  buildPostItemCategoryRoute,
+  buildDeleteItemCategoryRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -1306,22 +1308,59 @@ export const mockGetCategories = (categories, shouldThrowError) => {
   ).as('getCategories');
 };
 
-export const mockGetItemCategories = (itemWithCategories, shouldThrowError) => {
+export const mockGetItemCategories = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
-          buildGetItemCategoriesRoute(itemWithCategories.id),
+          buildGetItemCategoriesRoute(items[0].id),
         )}`,
       ),
     },
-    ({ reply }) => {
+    ({ reply, url }) => {
       if (shouldThrowError) {
         reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
         return;
       }
-      reply(itemWithCategories.categories);
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      console.log(itemId);
+      const result = items.find(({ id }) => id === itemId).categories || [];
+      reply(result);
     },
   ).as('getItemCategories');
+};
+
+export const mockPostItemCategory = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildPostItemCategoryRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('postItemCategory');
+};
+
+export const mockDeleteItemCategory = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(
+        `${API_HOST}/${buildDeleteItemCategoryRoute(ID_FORMAT)}$`,
+      ),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('deleteItemCategory');
 };

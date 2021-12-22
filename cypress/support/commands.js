@@ -69,6 +69,8 @@ import {
   mockGetCategoryTypes,
   mockGetCategories,
   mockGetItemCategories,
+  mockPostItemCategory,
+  mockDeleteItemCategory,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -76,7 +78,6 @@ import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { SAMPLE_FLAGS } from '../fixtures/flags';
 import { APPS_LIST } from '../fixtures/apps/apps';
 import {
-  ITEM_WITH_CATEGORIES,
   SAMPLE_CATEGORIES,
   SAMPLE_CATEGORY_TYPES,
 } from '../fixtures/categories';
@@ -91,7 +92,6 @@ Cypress.Commands.add(
     tags = [],
     categories = SAMPLE_CATEGORIES,
     categoryTypes = SAMPLE_CATEGORY_TYPES,
-    itemWithCategories = ITEM_WITH_CATEGORIES,
     flags = SAMPLE_FLAGS,
     deleteItemError = false,
     deleteItemsError = false,
@@ -124,6 +124,7 @@ Cypress.Commands.add(
     postAvatarError = false,
     importZipError = false,
     getCategoriesError = false,
+    getItemCategoriesError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -248,7 +249,11 @@ Cypress.Commands.add(
 
     mockGetCategories(categories, getCategoriesError);
 
-    mockGetItemCategories(itemWithCategories, getCategoriesError);
+    mockGetItemCategories(items, getCategoriesError);
+
+    mockPostItemCategory(getItemCategoriesError);
+
+    mockDeleteItemCategory(getItemCategoriesError);
   },
 );
 

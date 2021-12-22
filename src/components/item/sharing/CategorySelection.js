@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, ErrorAlert } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import { Map } from 'immutable';
