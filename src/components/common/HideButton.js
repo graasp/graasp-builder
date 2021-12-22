@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from 'react-query';
 import { hooks } from '../../config/queryClient';
-import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 
 const HideButton = ({ item }) => {
@@ -37,10 +37,10 @@ const HideButton = ({ item }) => {
   };
 
   return (
-    <Tooltip title={isHidden ? t('Unpin') : t('Pin')}>
+    <Tooltip title={isHidden ? t('Hide Item') : t('Show Item')}>
       <IconButton
-        aria-label={isHidden ? t('Unpin') : t('Pin')}
-        className={PIN_ITEM_BUTTON_CLASS}
+        aria-label={isHidden ? t('Hide Item') : t('Show Item')}
+        className={HIDDEN_ITEM_BUTTON_CLASS}
         onClick={handlePin}
       >
         {isHidden ? (

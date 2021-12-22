@@ -155,6 +155,8 @@
     "Please seperate tags by comma. ": "Please seperate tags by comma. ",
     "Eg. English, Biology, Lab, Plants, ..., Demo": "Eg. English, Biology, Lab, Plants, ..., Demo",
     "Level": "Level",
-    "Please choose from the list": "Please choose from the list"
+    "Please choose from the list": "Please choose from the list",
+    "Hide Item": "Hide Item",
+    "Show Item": "Show Item"
   }
 }
