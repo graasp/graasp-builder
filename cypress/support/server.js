@@ -1324,7 +1324,6 @@ export const mockGetItemCategories = (items, shouldThrowError) => {
         return;
       }
       const itemId = url.slice(API_HOST.length).split('/')[2];
-      console.log(itemId);
       const result = items.find(({ id }) => id === itemId).categories || [];
       reply(result);
     },
