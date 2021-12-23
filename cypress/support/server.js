@@ -1314,7 +1314,7 @@ export const mockGetItemCategories = (items, shouldThrowError) => {
       method: DEFAULT_GET.method,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
-          buildGetItemCategoriesRoute(items[0].id),
+          buildGetItemCategoriesRoute(items[0]?.id),
         )}`,
       ),
     },
@@ -1324,7 +1324,7 @@ export const mockGetItemCategories = (items, shouldThrowError) => {
         return;
       }
       const itemId = url.slice(API_HOST.length).split('/')[2];
-      const result = items.find(({ id }) => id === itemId).categories || [];
+      const result = items.find(({ id }) => id === itemId)?.categories || [];
       reply(result);
     },
   ).as('getItemCategories');
