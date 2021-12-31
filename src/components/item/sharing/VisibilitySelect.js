@@ -21,6 +21,7 @@ import {
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import checkBadWrods from '../validation';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
@@ -158,6 +159,17 @@ function VisibilitySelect({ item, edit }) {
         break;
       }
       case SETTINGS.ITEM_PUBLISHED.name: {
+        const containBadContent = checkBadWrods([
+          item?.get('name'),
+          item?.get('description'),
+        ]);
+        if (containBadContent) {
+          // eslint-disable-next-line no-alert
+          alert(
+            'Your item contains inappropriate content. Please modify before publish.',
+          );
+          break;
+        }
         postNewTag();
         // if previous is public, not necessary to delete/add the public tag
         if (prevTagName !== SETTINGS.ITEM_PUBLIC.name) {
