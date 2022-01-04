@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { useRouteMatch } from 'react-router';
+import { useMatch } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import FolderForm from '../item/form/FolderForm';
 import {
@@ -55,7 +55,7 @@ const NewItemModal = ({ open, handleClose }) => {
     [ITEM_TYPES.DOCUMENT]: { type: ITEM_TYPES.DOCUMENT },
   });
   const { mutate: postItem } = useMutation(MUTATION_KEYS.POST_ITEM);
-  const match = useRouteMatch(buildItemPath());
+  const match = useMatch(buildItemPath());
   const parentId = match?.params?.itemId;
 
   const submit = () => {

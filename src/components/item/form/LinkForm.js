@@ -11,7 +11,7 @@ import {
 } from '../../../utils/itemExtra';
 import { ITEM_TYPES } from '../../../enums';
 
-function LinkForm({ onChange, item }) {
+const LinkForm = ({ onChange, item }) => {
   const { t } = useTranslation();
 
   const handleLinkInput = (event) => {
@@ -41,7 +41,7 @@ function LinkForm({ onChange, item }) {
       />
     </>
   );
-}
+};
 
 LinkForm.propTypes = {
   onChange: PropTypes.func.isRequired,

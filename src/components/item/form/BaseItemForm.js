@@ -20,17 +20,15 @@ const BaseForm = ({ onChange, item, updatedProperties }) => {
   };
 
   return (
-    <>
-      <TextField
-        autoFocus
-        margin="dense"
-        id={ITEM_FORM_NAME_INPUT_ID}
-        label={t('Name')}
-        value={updatedProperties?.name || item?.name}
-        onChange={handleNameInput}
-        className={classes.shortInputField}
-      />
-    </>
+    <TextField
+      autoFocus
+      margin="dense"
+      id={ITEM_FORM_NAME_INPUT_ID}
+      label={t('Name')}
+      value={updatedProperties?.name || item?.name}
+      onChange={handleNameInput}
+      className={classes.shortInputField}
+    />
   );
 };
 

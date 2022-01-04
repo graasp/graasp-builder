@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -108,8 +108,10 @@ const EditItemModalProvider = ({ children }) => {
     </Dialog>
   );
 
+  const value = useMemo(() => ({ openModal }), []);
+
   return (
-    <EditItemModalContext.Provider value={{ openModal }}>
+    <EditItemModalContext.Provider value={value}>
       {renderModal()}
       {children}
     </EditItemModalContext.Provider>

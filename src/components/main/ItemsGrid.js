@@ -8,7 +8,6 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
 import {
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID,
@@ -171,4 +170,4 @@ ItemsGrid.defaultProps = {
 };
 
 const StyledComponent = withStyles(styles)(ItemsGrid);
-export default withRouter(StyledComponent);
+export default StyledComponent;

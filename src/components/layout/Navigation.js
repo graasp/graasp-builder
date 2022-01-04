@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import truncate from 'lodash.truncate';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import { Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { Link, useLocation, useMatch } from 'react-router-dom';
 import {
   HOME_PATH,
   buildItemPath,
@@ -32,11 +32,22 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const ParentLink = ({ id, name }) => (
+  <Link key={id} to={buildItemPath(id)}>
+    <Typography id={buildNavigationLink(id)}>{name}</Typography>
+  </Link>
+);
+
+ParentLink.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
 const Navigation = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { pathname } = useLocation();
-  const match = useRouteMatch(buildItemPath());
+  const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.get('path');
@@ -84,18 +95,6 @@ const Navigation = () => {
         <Typography id={NAVIGATION_HOME_LINK_ID}>{text}</Typography>
       </Link>
     );
-  };
-
-  const ParentLink = ({ id, name }) => (
-    <Link key={id} to={buildItemPath(id)}>
-      <Typography id={buildNavigationLink(id)}>
-        {truncate(name, { length: ITEM_NAME_MAX_LENGTH })}
-      </Typography>
-    </Link>
-  );
-  ParentLink.propTypes = {
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
   };
 
   const renderParents = () => {

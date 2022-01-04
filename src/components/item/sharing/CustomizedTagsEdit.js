@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
-function CustomizedTagsEdit({ item, edit }) {
+const CustomizedTagsEdit = ({ item, edit }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
@@ -92,7 +92,7 @@ function CustomizedTagsEdit({ item, edit }) {
       </form>
     </>
   );
-}
+};
 
 CustomizedTagsEdit.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,

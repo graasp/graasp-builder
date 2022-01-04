@@ -116,17 +116,15 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       {renderItemActions()}
       {renderTableActions()}
       {id && (
-        <>
-          <IconButton
-            id={ITEM_INFORMATION_BUTTON_ID}
-            onClick={onClickMetadata}
-            className={clsx({
-              [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
-            })}
-          >
-            <InfoIcon />
-          </IconButton>
-        </>
+        <IconButton
+          id={ITEM_INFORMATION_BUTTON_ID}
+          onClick={onClickMetadata}
+          className={clsx({
+            [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
+          })}
+        >
+          <InfoIcon />
+        </IconButton>
       )}
     </div>
   );

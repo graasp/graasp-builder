@@ -21,6 +21,7 @@ import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import Main from '../main/Main';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import AvatarSetting from './AvatarSetting';
+import Authorization from '../common/Authorization';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -135,4 +136,4 @@ const MemberProfileScreen = () => {
   );
 };
 
-export default MemberProfileScreen;
+export default Authorization()(MemberProfileScreen);

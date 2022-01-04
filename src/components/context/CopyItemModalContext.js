@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
@@ -50,8 +50,10 @@ const CopyItemModalProvider = ({ children }) => {
     );
   };
 
+  const value = useMemo(() => ({ openModal }), []);
+
   return (
-    <CopyItemModalContext.Provider value={{ openModal }}>
+    <CopyItemModalContext.Provider value={value}>
       {renderModal()}
       {children}
     </CopyItemModalContext.Provider>

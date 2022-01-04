@@ -11,6 +11,7 @@ import Items from './main/Items';
 import { hooks } from '../config/queryClient';
 import Loader from './common/Loader';
 import Main from './main/Main';
+import Authorization from './common/Authorization';
 
 const SharedItems = () => {
   const { t } = useTranslation();
@@ -36,4 +37,4 @@ const SharedItems = () => {
   );
 };
 
-export default SharedItems;
+export default Authorization()(SharedItems);

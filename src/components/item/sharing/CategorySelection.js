@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CategorySelection({ item, edit }) {
+const CategorySelection = ({ item, edit }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: createItemCategory } = useMutation(POST_ITEM_CATEGORY);
@@ -50,18 +50,12 @@ function CategorySelection({ item, edit }) {
   const { itemId } = useParams();
 
   // get itemCategories, categoryTypes and allCategories
-  const {
-    data: itemCategories,
-    isLoading: isItemCategoriesLoading,
-  } = useItemCategories(itemId);
-  const {
-    data: categoryTypes,
-    isLoading: isCategoryTypesLoading,
-  } = useCategoryTypes();
-  const {
-    data: allCategories,
-    isLoading: isCategoriesLoading,
-  } = useCategories();
+  const { data: itemCategories, isLoading: isItemCategoriesLoading } =
+    useItemCategories(itemId);
+  const { data: categoryTypes, isLoading: isCategoryTypesLoading } =
+    useCategoryTypes();
+  const { data: allCategories, isLoading: isCategoriesLoading } =
+    useCategories();
 
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
@@ -136,52 +130,51 @@ function CategorySelection({ item, edit }) {
       <Typography variant="h6" className={classes.selection}>
         {t('Category')}
       </Typography>
-      <>
-        <Typography variant="body1">{t('Level')}</Typography>
-        <Autocomplete
-          disabled={!edit || !levelList}
-          multiple
-          disableClearable
-          id={SHARE_ITEM_CATEGORY_LEVEL}
-          value={levelList?.filter((value) => selectedValues.includes(value))}
-          getOptionSelected={(option, value) => option.id === value.id}
-          options={levelList}
-          getOptionLabel={(option) => option.name}
-          onChange={handleChange('level')}
-          renderInput={(params) => (
-            <TextField
-              /* eslint-disable react/jsx-props-no-spreading */
-              {...params}
-              variant="outlined"
-              placeholder={t('Please choose from the list')}
-            />
-          )}
-        />
-        <Typography variant="body1">{t('Discipline')}</Typography>
-        <Autocomplete
-          disabled={!edit || !levelList}
-          multiple
-          disableClearable
-          id={SHARE_ITEM_CATEGORY_DISCIPLINE}
-          value={disciplineList?.filter((value) =>
-            selectedValues.includes(value),
-          )}
-          getOptionSelected={(option, value) => option.id === value.id}
-          options={disciplineList}
-          getOptionLabel={(option) => option.name}
-          onChange={handleChange('discipline')}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="outlined"
-              placeholder={t('Please choose from list')}
-            />
-          )}
-        />
-      </>
+      <Typography variant="body1">{t('Level')}</Typography>
+      <Autocomplete
+        disabled={!edit || !levelList}
+        multiple
+        disableClearable
+        id={SHARE_ITEM_CATEGORY_LEVEL}
+        value={levelList?.filter((value) => selectedValues.includes(value))}
+        getOptionSelected={(option, value) => option.id === value.id}
+        options={levelList}
+        getOptionLabel={(option) => option.name}
+        onChange={handleChange('level')}
+        renderInput={(params) => (
+          <TextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...params}
+            variant="outlined"
+            placeholder={t('Please choose from the list')}
+          />
+        )}
+      />
+      <Typography variant="body1">{t('Discipline')}</Typography>
+      <Autocomplete
+        disabled={!edit || !levelList}
+        multiple
+        disableClearable
+        id={SHARE_ITEM_CATEGORY_DISCIPLINE}
+        value={disciplineList?.filter((value) =>
+          selectedValues.includes(value),
+        )}
+        getOptionSelected={(option, value) => option.id === value.id}
+        options={disciplineList}
+        getOptionLabel={(option) => option.name}
+        onChange={handleChange('discipline')}
+        renderInput={(params) => (
+          <TextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...params}
+            variant="outlined"
+            placeholder={t('Please choose from list')}
+          />
+        )}
+      />
     </div>
   );
-}
+};
 
 CategorySelection.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,

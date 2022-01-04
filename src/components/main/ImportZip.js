@@ -3,7 +3,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import { routines } from '@graasp/query-client';
 import { Dashboard } from '@uppy/react';
-import { useRouteMatch } from 'react-router';
+import { useMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
@@ -14,7 +14,7 @@ import notifier from '../../middlewares/notifier';
 
 const ImportZip = () => {
   const [uppy, setUppy] = useState(null);
-  const match = useRouteMatch(buildItemPath());
+  const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const { t } = useTranslation();
 

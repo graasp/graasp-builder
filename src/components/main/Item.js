@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 import truncate from 'lodash.truncate';
@@ -66,6 +66,19 @@ const Item = ({ item, memberships }) => {
     </>
   );
 
+  const NameWrapper = useMemo(
+    ({ children }) => (
+      <Link
+        to={buildItemPath(id)}
+        id={buildItemLink(id)}
+        className={classes.link}
+      >
+        {children}
+      </Link>
+    ),
+    [id, classes],
+  );
+
   return (
     <GraaspCard
       description={truncate(stripHtml(description), {
@@ -77,15 +90,7 @@ const Item = ({ item, memberships }) => {
       ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
-      NameWrapper={({ children }) => (
-        <Link
-          to={buildItemPath(id)}
-          id={buildItemLink(id)}
-          className={classes.link}
-        >
-          {children}
-        </Link>
-      )}
+      NameWrapper={NameWrapper}
     />
   );
 };
