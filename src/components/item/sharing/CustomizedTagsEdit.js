@@ -14,6 +14,7 @@ import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { buildCustomizedTagsSelector } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -97,8 +98,8 @@ const CustomizedTagsEdit = ({ item, edit }) => {
         </Button>
       </form>
       <Typography variant="subtitle1">{t('Tags Preview')}</Typography>
-      {settings?.tags?.map((tag) => (
-        <Chip label={tag} />
+      {settings?.tags?.map((tag, index) => (
+        <Chip label={tag} id={buildCustomizedTagsSelector(index)} />
       ))}
     </>
   );

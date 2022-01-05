@@ -125,6 +125,8 @@ Cypress.Commands.add(
     importZipError = false,
     getCategoriesError = false,
     getItemCategoriesError = false,
+    postItemCategoryError = false,
+    deleteItemCategoryError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -249,11 +251,11 @@ Cypress.Commands.add(
 
     mockGetCategories(categories, getCategoriesError);
 
-    mockGetItemCategories(items, getCategoriesError);
+    mockGetItemCategories(items, getItemCategoriesError);
 
-    mockPostItemCategory(getItemCategoriesError);
+    mockPostItemCategory(postItemCategoryError);
 
-    mockDeleteItemCategory(getItemCategoriesError);
+    mockDeleteItemCategory(deleteItemCategoryError);
   },
 );
 

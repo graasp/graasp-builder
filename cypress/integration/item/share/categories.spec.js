@@ -1,23 +1,25 @@
 import {
   buildShareButtonId,
+  CATEGORIES_SELECTION_VALUE_SELECTOR,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
   SHARE_ITEM_CATEGORY_LEVEL,
 } from '../../../../src/config/selectors';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  CUSTOMIZED_TAGS,
   ITEM_WITH_CATEGORIES,
   SAMPLE_CATEGORIES,
 } from '../../../fixtures/categories';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
-import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
+import { ITEM_LOGIN_ITEMS, PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 
 const openShareItemTab = (id) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
 };
 
-// eslint-disable-next-line import/prefer-default-export
+const findCategoryNameById = (id) =>
+  SAMPLE_CATEGORIES.find((entry) => entry.id === id)?.name;
+
 export const deleteOption = () => {
   cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`).click();
   cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click();
@@ -35,12 +37,12 @@ describe('Categories', () => {
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
   });
-  it('Disply Item Categories', () => {
+  it('Display Item Categories', () => {
     // check for displaying value
-    const levelValue = cy.get(
-      'div.MuiChip-root.MuiAutocomplete-tag.MuiChip-deletable > span',
-    );
-    levelValue.first().contains(SAMPLE_CATEGORIES[0].name);
+    const levelValue = cy.get(`${CATEGORIES_SELECTION_VALUE_SELECTOR}`);
+    levelValue
+      .first()
+      .contains(findCategoryNameById(item.categories[0].categoryId));
   });
 
   it('Display item without category', () => {
@@ -52,51 +54,37 @@ describe('Categories', () => {
   it('Delete a category option', () => {
     // delete selection
     deleteOption();
-    cy.wait(['@deleteItemCategory']).then((data) => {
+    cy.wait('@deleteItemCategory').then((data) => {
       const entryId = item.categories[0].id;
       const {
         request: { url },
       } = data;
-      expect(url.split('/')[4]).equal('item-category');
-      expect(url.split('/')[5]).equal(entryId);
+      expect(url.split('/')).contains(entryId);
     });
   });
 
   it('Add a category option', () => {
     addOption();
-    cy.wait(['@postItemCategory']).then((data) => {
+    cy.wait('@postItemCategory').then((data) => {
       const {
         request: { url },
       } = data;
-      expect(url.split('/')[3]).equal('items');
-      expect(url.split('/')[4]).equal(item.id);
+      expect(url.split('/')).contains(item.id);
     });
   });
 });
 
-describe('Customized Tags', () => {
-  it('Display tags', () => {
-    const item = ITEM_WITH_CATEGORIES;
-    cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
+describe('Categories permissions', () => {
+  it('User signed out cannot edit category level', () => {
+    const item = PUBLISHED_ITEM;
+    cy.setUpApi({ items: [item], currentMember: SIGNED_OUT_MEMBER });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
-    const displayTags = cy.get('span.MuiChip-label');
-    displayTags.contains(CUSTOMIZED_TAGS[0]);
-  });
-});
-
-describe('Permissions', () => {
-  it('User signed out', () => {
-    const item = ITEM_LOGIN_ITEMS.items[0];
-    cy.setUpApi({ ...ITEM_LOGIN_ITEMS, currentMember: SIGNED_OUT_MEMBER });
-    cy.visit(buildItemPath(item.id));
-    const signInNotification = cy.get(
-      `span.MuiTypography-root.MuiFormControlLabel-label.makeStyles-signInWithWrapperLabel-10`,
-    );
-    signInNotification.contains('Sign In with');
+    const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
+    levelValue.should('be.disabled');
   });
 
-  it('Read-only', () => {
+  it('Read-only user cannot edit category level', () => {
     const item = ITEM_LOGIN_ITEMS.items[0];
     cy.setUpApi({
       ...ITEM_LOGIN_ITEMS,

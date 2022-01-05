@@ -162,3 +162,9 @@ export const CROP_MODAL_CONFIRM_BUTTON_CLASSNAME = 'cropModalConfirmButton';
 export const MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME =
   'memberProfileAvatarUploadButton';
 export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
+
+export const buildCustomizedTagsSelector = (index) =>
+  `customizedTagsPreview-${index}`;
+
+export const CATEGORIES_SELECTION_VALUE_SELECTOR =
+  'div.MuiChip-root.MuiAutocomplete-tag.MuiChip-deletable > span';

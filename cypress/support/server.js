@@ -79,7 +79,6 @@ const {
   buildImportZipRoute,
   GET_CATEGORY_TYPES_ROUTE,
   buildGetCategoriesRoute,
-  buildGetItemCategoriesRoute,
   buildPostItemCategoryRoute,
   buildDeleteItemCategoryRoute,
 } = API_ROUTES;
@@ -1300,7 +1299,7 @@ export const mockGetCategories = (categories, shouldThrowError) => {
     },
     ({ reply }) => {
       if (shouldThrowError) {
-        reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
         return;
       }
       reply(categories);
@@ -1312,15 +1311,11 @@ export const mockGetItemCategories = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(
-        `${API_HOST}/${parseStringToRegExp(
-          buildGetItemCategoriesRoute(items[0]?.id),
-        )}`,
-      ),
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/categories`),
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
-        reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
         return;
       }
       const itemId = url.slice(API_HOST.length).split('/')[2];
