@@ -1315,12 +1315,11 @@ export const mockGetItemCategories = (items, shouldThrowError) => {
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
-        reply({ statusCode: StatusCodes.BAD_REQUEST });
-        return;
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const result = items.find(({ id }) => id === itemId)?.categories || [];
-      reply(result);
+      return reply(result);
     },
   ).as('getItemCategories');
 };
