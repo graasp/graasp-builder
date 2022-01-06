@@ -8,14 +8,16 @@ import {
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 
-const togglePinButton = (itemId) => {
+const HiddenTagId = 'hiddenTagId';
+
+const toggleHideButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(
     `${buildItemsTableRowIdAttribute(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`,
   ).click();
 };
 
-const togglePinButtonCard = (itemId) => {
+const toggleHideButtonCard = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${buildItemCard(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`).click();
 };
@@ -30,7 +32,7 @@ describe('Hiding Item', () => {
     it('Hide an item', () => {
       const item = ITEMS_SETTINGS.items[1];
 
-      togglePinButton(item.id);
+      toggleHideButton(item.id);
 
       cy.wait(`@postItemTag`).then(
         ({
@@ -38,7 +40,7 @@ describe('Hiding Item', () => {
             body: { tagId },
           },
         }) => {
-          expect(tagId).to.equals('b5373e38-e89b-4dc7-b4b9-fd3601504467');
+          expect(tagId).to.equals(HiddenTagId);
         },
       );
     });
@@ -47,7 +49,7 @@ describe('Hiding Item', () => {
       const item = HIDDEN_ITEM;
 
       cy.wait(5000);
-      togglePinButton(item.id);
+      toggleHideButton(item.id);
 
       cy.wait('@deleteItemTag').then(({ request: { url } }) => {
         expect(url).to.contain(item.tags[1].id);
@@ -62,10 +64,10 @@ describe('Hiding Item', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
     });
 
-    it('Pin an item', () => {
+    it('Hide an item', () => {
       const item = ITEMS_SETTINGS.items[1];
 
-      togglePinButtonCard(item.id);
+      toggleHideButtonCard(item.id);
 
       cy.wait(`@postItemTag`).then(
         ({
@@ -73,15 +75,15 @@ describe('Hiding Item', () => {
             body: { tagId },
           },
         }) => {
-          expect(tagId).to.equals('b5373e38-e89b-4dc7-b4b9-fd3601504467');
+          expect(tagId).to.equals(HiddenTagId);
         },
       );
     });
 
-    it('Unpin Item', () => {
+    it('Show an Item', () => {
       const item = ITEMS_SETTINGS.items[0];
 
-      togglePinButtonCard(item.id);
+      toggleHideButtonCard(item.id);
 
       cy.wait('@deleteItemTag').then(({ request: { url } }) => {
         expect(url).to.contain(item.tags[1].id);

@@ -9,12 +9,12 @@ import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 
 describe('Item Settings', () => {
   beforeEach(() => {
-    cy.setUpApi({...ITEMS_SETTINGS});
+    cy.setUpApi({ ...ITEMS_SETTINGS });
   });
 
   describe('Chatbox Settings', () => {
     it('Disabling Chatbox', () => {
-      const itemId = ITEMS_SETTINGS.items[0].id;
+      const itemId = ITEMS_SETTINGS.items[1].id;
 
       cy.visit(buildItemPath(itemId));
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
@@ -25,9 +25,9 @@ describe('Item Settings', () => {
 
       cy.wait('@editItem').then(
         ({
-            response: {
-              body: { settings },
-            }
+          response: {
+            body: { settings },
+          },
         }) => {
           expect(settings.showChatbox).equals(false);
           cy.wait(EDIT_ITEM_PAUSE);
@@ -37,7 +37,7 @@ describe('Item Settings', () => {
     });
 
     it('Enabling Chatbox', () => {
-      const itemId = ITEMS_SETTINGS.items[1].id;
+      const itemId = ITEMS_SETTINGS.items[2].id;
 
       cy.visit(buildItemPath(itemId));
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
@@ -45,12 +45,12 @@ describe('Item Settings', () => {
       cy.get(`#${SETTINGS_CHATBOX_TOGGLE_ID}`).should('not.be.checked');
 
       cy.get(`#${SETTINGS_CHATBOX_TOGGLE_ID}`).click();
-   
+
       cy.wait('@editItem').then(
         ({
-            response: {
-              body: { settings },
-            }
+          response: {
+            body: { settings },
+          },
         }) => {
           expect(settings.showChatbox).equals(true);
           cy.wait(EDIT_ITEM_PAUSE);
@@ -62,7 +62,7 @@ describe('Item Settings', () => {
 
   describe('Pinned Settings', () => {
     it('Unpin Items', () => {
-      const itemId = ITEMS_SETTINGS.items[0].id;
+      const itemId = ITEMS_SETTINGS.items[1].id;
 
       cy.visit(buildItemPath(itemId));
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
@@ -73,9 +73,9 @@ describe('Item Settings', () => {
 
       cy.wait('@editItem').then(
         ({
-            response: {
-              body: { settings },
-            }
+          response: {
+            body: { settings },
+          },
         }) => {
           expect(settings.isPinned).equals(false);
           cy.wait(EDIT_ITEM_PAUSE);
@@ -85,7 +85,7 @@ describe('Item Settings', () => {
     });
 
     it('Pin Item', () => {
-      const itemId = ITEMS_SETTINGS.items[1].id;
+      const itemId = ITEMS_SETTINGS.items[2].id;
       cy.visit(buildItemPath(itemId));
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
 
@@ -95,9 +95,9 @@ describe('Item Settings', () => {
 
       cy.wait('@editItem').then(
         ({
-            response: {
-              body: { settings },
-            }
+          response: {
+            body: { settings },
+          },
         }) => {
           expect(settings.isPinned).equals(true);
           cy.wait(EDIT_ITEM_PAUSE);

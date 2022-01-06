@@ -17,13 +17,10 @@ const togglePinButton = (itemId) => {
 
 const togglePinButtonCard = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(
-    `#${buildItemCard(itemId)} .${PIN_ITEM_BUTTON_CLASS}`,
-  ).click();
+  cy.get(`#${buildItemCard(itemId)} .${PIN_ITEM_BUTTON_CLASS}`).click();
 };
 
 describe('Pinning Item', () => {
-
   describe('Successfully pinning item in List', () => {
     beforeEach(() => {
       cy.setUpApi(ITEMS_SETTINGS);
@@ -37,16 +34,17 @@ describe('Pinning Item', () => {
 
       cy.wait(`@editItem`).then(
         ({
-            request: {  
-              body : { settings }
-            } 
+          request: {
+            body: { settings },
+          },
         }) => {
-        expect(settings.isPinned).to.equals(true);
-      });
+          expect(settings.isPinned).to.equals(true);
+        },
+      );
     });
 
     it('Unpin Item', () => {
-      const item = ITEMS_SETTINGS.items[0];
+      const item = ITEMS_SETTINGS.items[1];
 
       togglePinButton(item.id);
 
@@ -62,7 +60,6 @@ describe('Pinning Item', () => {
     });
   });
 
-
   describe('Successfully pinning item in Grid', () => {
     beforeEach(() => {
       cy.setUpApi(ITEMS_SETTINGS);
@@ -77,16 +74,17 @@ describe('Pinning Item', () => {
 
       cy.wait(`@editItem`).then(
         ({
-            request: {  
-              body : { settings }
-            } 
+          request: {
+            body: { settings },
+          },
         }) => {
-        expect(settings.isPinned).to.equals(true);
-      });
+          expect(settings.isPinned).to.equals(true);
+        },
+      );
     });
 
     it('Unpin Item', () => {
-      const item = ITEMS_SETTINGS.items[0];
+      const item = ITEMS_SETTINGS.items[1];
 
       togglePinButtonCard(item.id);
 
