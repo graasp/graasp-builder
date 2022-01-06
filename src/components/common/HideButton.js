@@ -37,9 +37,9 @@ const HideButton = ({ item }) => {
   };
 
   return (
-    <Tooltip title={isHidden ? t('Hide Item') : t('Show Item')}>
+    <Tooltip title={isHidden ? t('Show Item') : t('Hide Item')}>
       <IconButton
-        aria-label={isHidden ? t('Hide Item') : t('Show Item')}
+        aria-label={isHidden ? t('Show Item') : t('Hide Item')}
         className={HIDDEN_ITEM_BUTTON_CLASS}
         onClick={handlePin}
       >

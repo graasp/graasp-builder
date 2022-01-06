@@ -600,8 +600,43 @@ export const PUBLISHED_ITEM = {
   ],
 };
 
+export const HIDDEN_ITEM = {
+  ...DEFAULT_FOLDER_ITEM,
+  id: 'ecafbd2a-5688-11eb-ae93-0242ac130001',
+  name: 'parent public item',
+  path: 'ecafbd2a_5688_11eb_ae93_0242ac130001',
+  extra: {
+    image: 'someimageurl',
+  },
+  tags: [
+    {
+      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130001',
+      tagId: ITEM_PUBLIC_TAG.id,
+      itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130001',
+    },
+    {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130001',
+      tagId: 'b5373e38-e89b-4dc7-b4b9-fd3601504467',
+      itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130001',
+    },
+  ],
+  memberships: [
+    {
+      itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130001',
+      permission: PERMISSION_LEVELS.ADMIN,
+      memberId: MEMBERS.ANNA.id,
+    },
+    {
+      itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130001',
+      permission: PERMISSION_LEVELS.READ,
+      memberId: MEMBERS.BOB.id,
+    },
+  ],
+};
+
 export const ITEMS_SETTINGS = {
   items: [
+    HIDDEN_ITEM,
     {
       ...DEFAULT_FOLDER_ITEM,
       id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
