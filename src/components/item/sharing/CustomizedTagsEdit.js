@@ -73,7 +73,7 @@ function CustomizedTagsEdit({ item, edit }) {
         <TextField
           disabled={!edit}
           variant="outlined"
-          label="Input"
+          label={t('Tags')}
           multiline
           maxRows={5}
           defaultValue={displayValues}
@@ -85,6 +85,7 @@ function CustomizedTagsEdit({ item, edit }) {
           color="primary"
           className={classes.button}
           endIcon={<SaveIcon />}
+          disabled={!edit}
         >
           {t('Save')}
         </Button>

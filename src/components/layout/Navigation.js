@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
+import truncate from 'lodash.truncate';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import {
@@ -19,7 +20,7 @@ import {
 import Loader from '../common/Loader';
 import { hooks } from '../../config/queryClient';
 import { getParentsIdsFromPath } from '../../utils/item';
-import { LOADING_CONTENT } from '../../config/constants';
+import { ITEM_NAME_MAX_LENGTH, LOADING_CONTENT } from '../../config/constants';
 
 const { useItem, useParents } = hooks;
 
@@ -87,7 +88,9 @@ const Navigation = () => {
 
   const ParentLink = ({ id, name }) => (
     <Link key={id} to={buildItemPath(id)}>
-      <Typography id={buildNavigationLink(id)}>{name}</Typography>
+      <Typography id={buildNavigationLink(id)}>
+        {truncate(name, { length: ITEM_NAME_MAX_LENGTH })}
+      </Typography>
     </Link>
   );
   ParentLink.propTypes = {
@@ -145,7 +148,7 @@ const Navigation = () => {
       {itemId && (
         <Link key={itemId} to={buildItemPath(itemId)}>
           <Typography id={buildNavigationLink(itemId)}>
-            {item.get('name')}
+            {truncate(item.get('name'), { length: ITEM_NAME_MAX_LENGTH })}
           </Typography>
         </Link>
       )}
