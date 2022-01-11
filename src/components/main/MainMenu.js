@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useLocation, useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import List from '@material-ui/core/List';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {
@@ -21,12 +21,12 @@ import { CurrentUserContext } from '../context/CurrentUserContext';
 const MainMenu = () => {
   const { t } = useTranslation();
   const [dense] = useState(true);
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: member } = useContext(CurrentUserContext);
 
   const goTo = (path) => {
-    push(path);
+    navigate(path);
   };
 
   const renderAuthenticatedMemberMenuItems = () => {

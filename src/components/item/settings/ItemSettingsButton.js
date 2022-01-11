@@ -11,10 +11,9 @@ import {
   ITEM_SETTINGS_BUTTON_CLASS,
 } from '../../../config/selectors';
 
-function ItemSettingsButton({ id }) {
-  const { setIsItemSettingsOpen, isItemSettingsOpen } = useContext(
-    LayoutContext,
-  );
+const ItemSettingsButton = ({ id }) => {
+  const { setIsItemSettingsOpen, isItemSettingsOpen } =
+    useContext(LayoutContext);
   const { t } = useTranslation();
 
   // on unmount close item settings
@@ -41,7 +40,7 @@ function ItemSettingsButton({ id }) {
       </IconButton>
     </Tooltip>
   );
-}
+};
 
 ItemSettingsButton.propTypes = {
   id: PropTypes.string.isRequired,

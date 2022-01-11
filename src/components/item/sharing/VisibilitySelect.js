@@ -32,13 +32,12 @@ const useStyles = makeStyles({
   },
 });
 
-function VisibilitySelect({ item, edit }) {
+const VisibilitySelect = ({ item, edit }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   // user
-  const { data: user, isLoading: isMemberLoading } = useContext(
-    CurrentUserContext,
-  );
+  const { data: user, isLoading: isMemberLoading } =
+    useContext(CurrentUserContext);
 
   // current item
   const { itemId } = useParams();
@@ -50,9 +49,11 @@ function VisibilitySelect({ item, edit }) {
 
   // item login tag and item extra value
   const { data: tags, isLoading: isTagsLoading } = useTags();
-  const { data: itemTags, isLoading: isItemTagsLoading, isError } = useItemTags(
-    itemId,
-  );
+  const {
+    data: itemTags,
+    isLoading: isItemTagsLoading,
+    isError,
+  } = useItemTags(itemId);
   const { data: itemLogin } = useItemLogin(itemId);
   const [itemTagValue, setItemTagValue] = useState(false);
   const [tagValue, setTagValue] = useState(false);
@@ -275,7 +276,7 @@ function VisibilitySelect({ item, edit }) {
       )}
     </>
   );
-}
+};
 
 VisibilitySelect.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,

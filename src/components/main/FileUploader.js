@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { DragDrop } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
-import { useRouteMatch } from 'react-router';
+import { useMatch } from 'react-router';
 import { routines, MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FileUploader = () => {
   const classes = useStyles();
-  const match = useRouteMatch(buildItemPath());
+  const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const [uppy, setUppy] = useState(null);
   const [isDragging, setIsDragging] = useState(false);

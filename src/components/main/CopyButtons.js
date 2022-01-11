@@ -17,19 +17,17 @@ const CopyButton = ({ itemIds, color, id }) => {
   };
 
   return (
-    <>
-      <Tooltip title={t('Copy')}>
-        <IconButton
-          id={id}
-          color={color}
-          className={ITEM_COPY_BUTTON_CLASS}
-          aria-label="copy"
-          onClick={handleCopy}
-        >
-          <FilterNone />
-        </IconButton>
-      </Tooltip>
-    </>
+    <Tooltip title={t('Copy')}>
+      <IconButton
+        id={id}
+        color={color}
+        className={ITEM_COPY_BUTTON_CLASS}
+        aria-label="copy"
+        onClick={handleCopy}
+      >
+        <FilterNone />
+      </IconButton>
+    </Tooltip>
   );
 };
 

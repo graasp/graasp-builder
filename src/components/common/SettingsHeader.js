@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
 import { Avatar } from '@graasp/ui';
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const SettingsHeader = () => {
   const { data: user, isLoading } = useContext(CurrentUserContext);
   const classes = useStyles();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
@@ -60,7 +60,7 @@ const SettingsHeader = () => {
   };
 
   const goToProfile = () => {
-    push(MEMBER_PROFILE_PATH);
+    navigate(MEMBER_PROFILE_PATH);
   };
 
   const renderMenu = () => {

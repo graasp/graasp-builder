@@ -1,14 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useHistory, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
 import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
@@ -67,7 +68,7 @@ const ItemsTable = ({
   isEditing,
 }) => {
   const { t } = useTranslation();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
@@ -78,8 +79,11 @@ const ItemsTable = ({
 
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
-  const isFolder = () => Boolean(itemId);
-  const canDrag = () => isFolder() && !isSearching;
+  const isFolder = useCallback(() => Boolean(itemId), [itemId]);
+  const canDrag = useCallback(
+    () => isFolder() && !isSearching,
+    [isFolder, isSearching],
+  );
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -103,7 +107,7 @@ const ItemsTable = ({
       if (item.type === ITEM_TYPES.SHORTCUT) {
         targetId = getShortcutTarget(item.extra);
       }
-      push(buildItemPath(targetId));
+      navigate(buildItemPath(targetId));
     }
   };
 
@@ -142,12 +146,79 @@ const ItemsTable = ({
 
   const itemRowDragText = (params) => params.rowNode.data.name;
 
-  const NoRowsComponent = () => <Typography>{t('No items')}</Typography>;
   const ActionComponent = ActionsCellRenderer({
     memberships,
     items: rows,
     member,
   });
+
+  const NoRowsComponent = useCallback(
+    () => <Typography>{t('No items')}</Typography>,
+    [t],
+  );
+
+  // never changes, so we can use useMemo
+  const columnDefs = useMemo(
+    () => [
+      {
+        hide: !canDrag(),
+        cellRendererFramework: DragCellRenderer,
+        cellClass: classes.dragCell,
+        headerClass: classes.dragCell,
+        rowDragText: itemRowDragText,
+        sortable: false,
+        maxWidth: DRAG_ICON_SIZE,
+      },
+      {
+        headerCheckboxSelection: true,
+        checkboxSelection: true,
+        headerName: t('Name'),
+        cellRendererFramework: NameCellRenderer,
+        flex: 4,
+        comparator: textComparator,
+        sort: defautSortedColumn?.name,
+        field: 'name',
+      },
+      {
+        field: 'type',
+        headerName: t('Type'),
+        type: 'rightAligned',
+        flex: 2,
+        comparator: textComparator,
+        sort: defautSortedColumn?.type,
+      },
+      {
+        field: 'updatedAt',
+        headerName: t('Updated At'),
+        flex: 3,
+        type: 'rightAligned',
+        valueFormatter: dateColumnFormatter,
+        comparator: dateComparator,
+        sort: defautSortedColumn?.updatedAt,
+      },
+      {
+        field: 'actions',
+        cellRendererFramework: actions ?? ActionComponent,
+        headerName: t('Actions'),
+        colId: 'actions',
+        type: 'rightAligned',
+        cellClass: classes.actionCell,
+        width: ACTION_CELL_WIDTH,
+        sortable: false,
+      },
+    ],
+    [canDrag, classes, t, defautSortedColumn, ActionComponent, actions],
+  );
+
+  // never changes, so we can use useMemo
+  const defaultColDef = useMemo(
+    () => ({
+      resizable: true,
+      sortable: true,
+    }),
+    [],
+  );
+
   return (
     <div className={classes.root}>
       <TableToolbar
@@ -166,16 +237,14 @@ const ItemsTable = ({
         id={tableId}
       >
         <AgGridReact
-          rowData={rows}
+          reactUi="true"
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          rowData={rows.toJS()}
           rowSelection="multiple"
           suppressRowClickSelection
           suppressCellSelection
           noRowsOverlayComponentFramework={NoRowsComponent}
-          frameworkComponents={{
-            actions: actions ?? ActionComponent,
-            nameCellRenderer: NameCellRenderer,
-            dragCellRenderer: DragCellRenderer,
-          }}
           rowDragManaged
           onRowDragEnd={onDragEnd}
           onGridReady={onGridReady}
@@ -184,55 +253,7 @@ const ItemsTable = ({
           rowClass={clickable ? classes.row : null}
           getRowNodeId={getRowNodeId}
           onRowDataChanged={onRowDataChanged}
-          applyColumnDefOrder
-        >
-          <AgGridColumn
-            hide={!canDrag()}
-            cellRenderer="dragCellRenderer"
-            cellClass={classes.dragCell}
-            headerClass={classes.dragCell}
-            rowDragText={itemRowDragText}
-            maxWidth={DRAG_ICON_SIZE}
-          />
-          <AgGridColumn
-            checkboxSelection
-            headerCheckboxSelection
-            headerName={t('Name')}
-            field="name"
-            cellRenderer="nameCellRenderer"
-            flex={4}
-            sortable
-            comparator={textComparator}
-            sort={defautSortedColumn?.name}
-          />
-          <AgGridColumn
-            headerName={t('Type')}
-            field="type"
-            type="rightAligned"
-            flex={2}
-            sortable
-            comparator={textComparator}
-            sort={defautSortedColumn?.type}
-          />
-          <AgGridColumn
-            headerName={t('Updated At')}
-            field="updatedAt"
-            flex={3}
-            type="rightAligned"
-            valueFormatter={dateColumnFormatter}
-            sortable
-            comparator={dateComparator}
-            sort={defautSortedColumn?.updatedAt}
-          />
-          <AgGridColumn
-            headerName={t('Actions')}
-            colId="actions"
-            cellRenderer="actions"
-            type="rightAligned"
-            cellClass={classes.actionCell}
-            width={ACTION_CELL_WIDTH}
-          />
-        </AgGridReact>
+        />
       </div>
     </div>
   );

@@ -17,19 +17,17 @@ const MoveButton = ({ itemIds, color, id }) => {
   };
 
   return (
-    <>
-      <Tooltip title={t('Move')}>
-        <IconButton
-          id={id}
-          color={color}
-          className={ITEM_MOVE_BUTTON_CLASS}
-          aria-label="move"
-          onClick={handleMove}
-        >
-          <OpenWith />
-        </IconButton>
-      </Tooltip>
-    </>
+    <Tooltip title={t('Move')}>
+      <IconButton
+        id={id}
+        color={color}
+        className={ITEM_MOVE_BUTTON_CLASS}
+        aria-label="move"
+        onClick={handleMove}
+      >
+        <OpenWith />
+      </IconButton>
+    </Tooltip>
   );
 };
 

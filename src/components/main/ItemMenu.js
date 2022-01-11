@@ -66,6 +66,35 @@ const ItemMenu = ({ item, canEdit }) => {
     handleClose();
   };
 
+  const renderEditorActions = () => {
+    if (!canEdit) {
+      return null;
+    }
+    return [
+      <MenuItem
+        key="move"
+        onClick={handleMove}
+        className={ITEM_MENU_MOVE_BUTTON_CLASS}
+      >
+        {t('Move')}
+      </MenuItem>,
+      <MenuItem
+        key="copy"
+        onClick={handleCopy}
+        className={ITEM_MENU_COPY_BUTTON_CLASS}
+      >
+        {t('Copy')}
+      </MenuItem>,
+      <MenuItem
+        key="delete"
+        onClick={handleRecycle}
+        className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
+      >
+        {t('Delete')}
+      </MenuItem>,
+    ];
+  };
+
   return (
     <>
       <IconButton
@@ -82,28 +111,7 @@ const ItemMenu = ({ item, canEdit }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {canEdit && (
-          <>
-            <MenuItem
-              onClick={handleMove}
-              className={ITEM_MENU_MOVE_BUTTON_CLASS}
-            >
-              {t('Move')}
-            </MenuItem>
-            <MenuItem
-              onClick={handleCopy}
-              className={ITEM_MENU_COPY_BUTTON_CLASS}
-            >
-              {t('Copy')}
-            </MenuItem>
-            <MenuItem
-              onClick={handleRecycle}
-              className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
-            >
-              {t('Delete')}
-            </MenuItem>
-          </>
-        )}
+        {renderEditorActions()}
         <MenuItem
           onClick={handleCreateShortcut}
           className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}

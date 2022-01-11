@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -53,8 +53,10 @@ const MoveItemModalProvider = ({ children }) => {
     );
   };
 
+  const value = useMemo(() => ({ openModal }), []);
+
   return (
-    <MoveItemModalContext.Provider value={{ openModal }}>
+    <MoveItemModalContext.Provider value={value}>
       {renderModal()}
       {children}
     </MoveItemModalContext.Provider>

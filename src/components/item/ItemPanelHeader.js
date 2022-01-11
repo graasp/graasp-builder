@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function ItemPanelHeader({ title, onClick }) {
+const ItemPanelHeader = ({ title, onClick }) => {
   const classes = useStyles();
 
   return (
@@ -28,7 +28,7 @@ function ItemPanelHeader({ title, onClick }) {
       <Divider />
     </>
   );
-}
+};
 ItemPanelHeader.propTypes = {
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,

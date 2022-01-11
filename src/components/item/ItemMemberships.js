@@ -55,7 +55,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
       <Grid item>
         <Tooltip
           title={t(
-            `This item is shared with ${filteredMemberships.size} users`,
+            `This item is shared with ${filteredMemberships.length} users`,
           )}
           aria-label="shared users"
         >
@@ -71,7 +71,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
               return (
                 <Badge
                   key={memberId}
-                  overlap="circle"
+                  overlap="circular"
                   anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',

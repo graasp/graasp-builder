@@ -41,9 +41,8 @@ const ItemContent = ({ item, enableEdition }) => {
   const { editingItemId, setEditingItemId } = useContext(LayoutContext);
 
   // provide user to app
-  const { data: user, isLoading: isLoadingUser } = useContext(
-    CurrentUserContext,
-  );
+  const { data: user, isLoading: isLoadingUser } =
+    useContext(CurrentUserContext);
 
   // display children
   const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {
@@ -152,7 +151,9 @@ const ItemContent = ({ item, enableEdition }) => {
             isEditing={isEditing}
             onSaveCaption={onSaveCaption}
             headerElements={
-              enableEdition ? [<NewItemButton fontSize="small" />] : undefined
+              enableEdition
+                ? [<NewItemButton key="newButton" fontSize="small" />]
+                : undefined
             }
           />
         </>

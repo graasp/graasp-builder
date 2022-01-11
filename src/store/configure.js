@@ -2,9 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { createBrowserHistory } from 'history';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import ReduxThunk from 'redux-thunk';
 import { reducer as toastrReducer } from 'react-redux-toastr';
-import ReduxPromise from 'redux-promise';
 
 /**
  * configures the store and returns it along with the history for the router
@@ -22,9 +20,7 @@ const configure = (state) => {
   const store = createStore(
     connectRouter(history)(reducers),
     state,
-    composeWithDevTools(
-      applyMiddleware(ReduxThunk, ReduxPromise, RouterMiddleware),
-    ),
+    composeWithDevTools(applyMiddleware(RouterMiddleware)),
   );
   return {
     store,

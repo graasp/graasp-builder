@@ -49,9 +49,17 @@ PinButton.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string,
     settings: PropTypes.shape({
-      isPinned: PropTypes.bool.isRequired,
-    }).isRequired,
-  }).isRequired,
+      isPinned: PropTypes.bool,
+    }),
+  }),
+};
+
+PinButton.defaultProps = {
+  item: {
+    settings: {
+      isPinned: false,
+    },
+  },
 };
 
 export default PinButton;

@@ -20,6 +20,16 @@ import { CurrentUserContext } from '../context/CurrentUserContext';
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 
+const NameWrapper =
+  ({ id, className }) =>
+  // eslint-disable-next-line react/prop-types
+  ({ children }) =>
+    (
+      <Link to={buildItemPath(id)} id={buildItemLink(id)} className={className}>
+        {children}
+      </Link>
+    );
+
 const useStyles = makeStyles({
   link: {
     textDecoration: 'none',
@@ -77,15 +87,7 @@ const Item = ({ item, memberships }) => {
       ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
-      NameWrapper={({ children }) => (
-        <Link
-          to={buildItemPath(id)}
-          id={buildItemLink(id)}
-          className={classes.link}
-        >
-          {children}
-        </Link>
-      )}
+      NameWrapper={NameWrapper({ id, className: classes.link })}
     />
   );
 };

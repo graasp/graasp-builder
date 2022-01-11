@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
 
@@ -22,27 +22,36 @@ const LayoutContextProvider = ({ children }) => {
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
   const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(false);
 
+  const value = useMemo(
+    () => ({
+      mode,
+      setMode,
+      editingItemId,
+      setEditingItemId,
+      isMainMenuOpen,
+      setIsMainMenuOpen,
+      isItemSettingsOpen,
+      setIsItemSettingsOpen,
+      isItemMetadataMenuOpen,
+      setIsItemMetadataMenuOpen,
+      isChatboxMenuOpen,
+      setIsChatboxMenuOpen,
+      isItemSharingOpen,
+      setIsItemSharingOpen,
+    }),
+    [
+      editingItemId,
+      isChatboxMenuOpen,
+      isItemMetadataMenuOpen,
+      isItemSettingsOpen,
+      isItemSharingOpen,
+      isMainMenuOpen,
+      mode,
+    ],
+  );
+
   return (
-    <LayoutContext.Provider
-      value={{
-        mode,
-        setMode,
-        editingItemId,
-        setEditingItemId,
-        isMainMenuOpen,
-        setIsMainMenuOpen,
-        isItemSettingsOpen,
-        setIsItemSettingsOpen,
-        isItemMetadataMenuOpen,
-        setIsItemMetadataMenuOpen,
-        isChatboxMenuOpen,
-        setIsChatboxMenuOpen,
-        isItemSharingOpen,
-        setIsItemSharingOpen,
-      }}
-    >
-      {children}
-    </LayoutContext.Provider>
+    <LayoutContext.Provider value={value}>{children}</LayoutContext.Provider>
   );
 };
 

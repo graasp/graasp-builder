@@ -17,19 +17,17 @@ const RecycleButton = ({ itemIds, color, id }) => {
   };
 
   return (
-    <>
-      <Tooltip title={t('Recycle')}>
-        <IconButton
-          id={id}
-          color={color}
-          className={ITEM_RECYCLE_BUTTON_CLASS}
-          aria-label="recycle"
-          onClick={handleClick}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
-    </>
+    <Tooltip title={t('Recycle')}>
+      <IconButton
+        id={id}
+        color={color}
+        className={ITEM_RECYCLE_BUTTON_CLASS}
+        aria-label="recycle"
+        onClick={handleClick}
+      >
+        <DeleteIcon />
+      </IconButton>
+    </Tooltip>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
 import { hooks } from '../../config/queryClient';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
@@ -11,6 +10,7 @@ import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
+import Authorization from '../common/Authorization';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -46,4 +46,4 @@ Home.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(Home);
+export default Authorization()(Home);

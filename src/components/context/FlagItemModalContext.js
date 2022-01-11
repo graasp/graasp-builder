@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
@@ -65,8 +65,10 @@ const FlagItemModalProvider = ({ children }) => {
     onClose();
   };
 
+  const value = useMemo(() => ({ openModal }), []);
+
   return (
-    <FlagItemModalContext.Provider value={{ openModal }}>
+    <FlagItemModalContext.Provider value={value}>
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogTitle>{t('Flag Item')}</DialogTitle>
         <DialogContent>

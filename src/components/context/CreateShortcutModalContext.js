@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -57,8 +57,10 @@ const CreateShortcutModalProvider = ({ children }) => {
     );
   };
 
+  const value = useMemo(() => ({ openModal }), []);
+
   return (
-    <CreateShortcutModalContext.Provider value={{ openModal }}>
+    <CreateShortcutModalContext.Provider value={value}>
       {renderModal()}
       {children}
     </CreateShortcutModalContext.Provider>
