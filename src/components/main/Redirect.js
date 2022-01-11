@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { HOME_PATH } from '../../config/paths';
 import { REDIRECT_URL_LOCAL_STORAGE_KEY } from '../../config/constants';
@@ -10,7 +10,9 @@ const Redirect = () => {
   const nextPath =
     localStorage.getItem(REDIRECT_URL_LOCAL_STORAGE_KEY) ?? HOME_PATH;
 
-  navigate(nextPath);
+  useEffect(() => {
+    navigate(nextPath);
+  });
 
   return <RedirectionContent link={nextPath} />;
 };

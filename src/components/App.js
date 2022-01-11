@@ -37,7 +37,7 @@ const App = () => (
           <Route path={RECYCLE_BIN_PATH} exact element={<RecycleBinScreen />} />
           <Route path={ITEMS_PATH} exact element={<Home />} />
           <Route path={REDIRECT_PATH} exact element={<Redirect />} />
-          <Route render={() => <Redirect to={HOME_PATH} />} />
+          <Route element={() => <Redirect />} />
         </Routes>
       </Router>
     </CurrentUserContextProvider>

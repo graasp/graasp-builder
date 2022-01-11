@@ -10,6 +10,7 @@ import {
 import { buildShortcutExtra } from '../../../../src/utils/itemExtra';
 import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const createShortcut = ({ id, toItemPath }) => {
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).click();
@@ -23,6 +24,7 @@ const createShortcutInGrid = ({ id, toItemPath }) => {
 };
 
 const createShortcutInList = ({ id, toItemPath }) => {
+  cy.wait(TABLE_ITEM_RENDER_TIME);
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   createShortcut({ id, toItemPath });

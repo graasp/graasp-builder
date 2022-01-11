@@ -5,10 +5,16 @@ import {
   buildSaveButtonId,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
-import { CAPTION_EDIT_PAUSE } from '../../../support/constants';
+import {
+  CAPTION_EDIT_PAUSE,
+  TABLE_ITEM_RENDER_TIME,
+} from '../../../support/constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
+  if (DEFAULT_ITEM_LAYOUT_MODE === ITEM_LAYOUT_MODES.LIST) {
+    cy.wait(TABLE_ITEM_RENDER_TIME);
+  }
   const { id, type } = payload;
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID: {

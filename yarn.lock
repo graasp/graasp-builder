@@ -7041,12 +7041,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-file-upload@npm:5.0.8":
-  version: 5.0.8
-  resolution: "cypress-file-upload@npm:5.0.8"
+"cypress-file-upload@npm:5.0.2":
+  version: 5.0.2
+  resolution: "cypress-file-upload@npm:5.0.2"
+  dependencies:
+    mime: ^2.5.0
   peerDependencies:
     cypress: ">3.0.0"
-  checksum: 9c70ca7e0bb137d0ec0b8d38987219ce15b26ac3a40e3ed4e78e6ad4690392eab905586848eec6ad8edd42ee480e68ccc63007b2ebd0a02f4b3eca116ff017e3
+  checksum: 2ee5e53e93854982002a5700326c47345e964711509fc0e5ceaff457c0ddc272739f9031e8b48393611c605fc32d412b4bb9d9c645d25b1cbb11e13d42f892de
   languageName: node
   linkType: hard
 
@@ -9811,7 +9813,7 @@ __metadata:
     concurrently: 7.0.0
     connected-react-router: 6.9.2
     cypress: 9.2.0
-    cypress-file-upload: 5.0.8
+    cypress-file-upload: 5.0.2
     cypress-localstorage-commands: 1.6.1
     env-cmd: 10.1.0
     eslint: ^7.31.0
@@ -13161,7 +13163,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime@npm:^2.4.4":
+"mime@npm:^2.4.4, mime@npm:^2.5.0":
   version: 2.6.0
   resolution: "mime@npm:2.6.0"
   bin:
