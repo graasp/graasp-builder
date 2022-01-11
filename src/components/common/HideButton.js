@@ -18,15 +18,15 @@ const HideButton = ({ item }) => {
   const addTag = useMutation(MUTATION_KEYS.POST_ITEM_TAG);
   const removeTag = useMutation(MUTATION_KEYS.DELETE_ITEM_TAG);
 
-  const isHidden =
-    tags?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID).size > 0;
+  const hiddenTag = tags
+    ?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID)
+    ?.first();
 
   const handlePin = () => {
-    if (isHidden) {
+    if (hiddenTag) {
       removeTag.mutate({
         id: item.id,
-        tagId: tags?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID).first()
-          .id,
+        tagId: hiddenTag.id,
       });
     } else {
       addTag.mutate({
@@ -37,13 +37,13 @@ const HideButton = ({ item }) => {
   };
 
   return (
-    <Tooltip title={isHidden ? t('Show Item') : t('Hide Item')}>
+    <Tooltip title={hiddenTag ? t('Show Item') : t('Hide Item')}>
       <IconButton
-        aria-label={isHidden ? t('Show Item') : t('Hide Item')}
+        aria-label={hiddenTag ? t('Show Item') : t('Hide Item')}
         className={HIDDEN_ITEM_BUTTON_CLASS}
         onClick={handlePin}
       >
-        {isHidden ? (
+        {hiddenTag ? (
           <VisibilityOff fontSize="small" />
         ) : (
           <Visibility fontSize="small" />
