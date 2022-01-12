@@ -1,4 +1,4 @@
-import { SETTINGS } from '../../src/config/constants';
+import { HIDDEN_ITEM_TAG_ID, SETTINGS } from '../../src/config/constants';
 import { ITEM_TYPES, PERMISSION_LEVELS } from '../../src/enums';
 import { buildItemLoginSchemaExtra } from '../../src/utils/itemExtra';
 import {
@@ -616,7 +616,7 @@ export const HIDDEN_ITEM = {
     },
     {
       id: 'ecbfbd2a-5688-12eb-ae93-0242ac130001',
-      tagId: 'b5373e38-e89b-4dc7-b4b9-fd3601504467',
+      tagId: HIDDEN_ITEM_TAG_ID,
       itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130001',
     },
   ],

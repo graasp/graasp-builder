@@ -8,7 +8,7 @@ import {
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 
-const hiddenTagId = 'hiddenTagId';
+const hiddenTagId = '12345678-1234-1234-1234-123456789012';
 
 const toggleHideButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
