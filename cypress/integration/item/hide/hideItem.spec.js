@@ -7,8 +7,7 @@ import {
 } from '../../../../src/config/selectors';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-
-const hiddenTagId = '12345678-1234-1234-1234-123456789012';
+import { ITEM_HIDDEN_TAG } from '../../../fixtures/itemTags';
 
 const toggleHideButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
@@ -40,7 +39,7 @@ describe('Hiding Item', () => {
             body: { tagId },
           },
         }) => {
-          expect(tagId).to.equals(hiddenTagId);
+          expect(tagId).to.equals(ITEM_HIDDEN_TAG.id);
         },
       );
     });
@@ -75,7 +74,7 @@ describe('Hiding Item', () => {
             body: { tagId },
           },
         }) => {
-          expect(tagId).to.equals(hiddenTagId);
+          expect(tagId).to.equals(ITEM_HIDDEN_TAG.id);
         },
       );
     });
