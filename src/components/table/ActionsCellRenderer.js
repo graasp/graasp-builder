@@ -9,6 +9,7 @@ import {
   getMembershipsForItem,
   isItemUpdateAllowedForUser,
 } from '../../utils/membership';
+import HideButton from '../common/HideButton';
 
 // items and memberships match by index
 const ActionsCellRenderer = ({ memberships, items, member }) => {
@@ -48,6 +49,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
         <>
           <EditButton item={item} />
           <PinButton item={item} />
+          <HideButton item={item} />
         </>
       );
     };

@@ -150,6 +150,8 @@
     "Discipline": "Discipline",
     "Age Range": "Tranche d'âge",
     "Category": "Catégorie",
-    "Write the folder decription here...": "Ecrire la description du dossier ici..."
+    "Write the folder decription here...": "Ecrire la description du dossier ici...",
+    "Hide Item": "Cacher l'élément",
+    "Show Item": "Montrer l'élément"
   }
 }

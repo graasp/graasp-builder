@@ -951,7 +951,7 @@ export const mockGetItemTags = (items) => {
     },
     ({ reply, url }) => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
-      const result = items.find(({ id }) => id === itemId).tags || [];
+      const result = items.find(({ id }) => id === itemId)?.tags || [];
       reply(result);
     },
   ).as('getItemTags');
@@ -1195,8 +1195,9 @@ export const mockGetItemThumbnail = (items, shouldThrowError) => {
       const id = link.slice(API_HOST.length).split('/')[3];
       const { size } = qs.parse(querystrings);
 
-      const thumbnails = items.find(({ id: thisId }) => id === thisId)
-        ?.thumbnails;
+      const thumbnails = items.find(
+        ({ id: thisId }) => id === thisId,
+      )?.thumbnails;
       if (!thumbnails) {
         return reply({ statusCode: StatusCodes.NOT_FOUND });
       }

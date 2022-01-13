@@ -1,4 +1,4 @@
-import { ITEMS_SETTINGS } from '../../../fixtures/items';
+import { ITEMS_SETTINGS, PINNED_ITEM } from '../../../fixtures/items';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -17,13 +17,10 @@ const togglePinButton = (itemId) => {
 
 const togglePinButtonCard = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(
-    `#${buildItemCard(itemId)} .${PIN_ITEM_BUTTON_CLASS}`,
-  ).click();
+  cy.get(`#${buildItemCard(itemId)} .${PIN_ITEM_BUTTON_CLASS}`).click();
 };
 
 describe('Pinning Item', () => {
-
   describe('Successfully pinning item in List', () => {
     beforeEach(() => {
       cy.setUpApi(ITEMS_SETTINGS);
@@ -31,22 +28,23 @@ describe('Pinning Item', () => {
     });
 
     it('Pin an item', () => {
-      const item = ITEMS_SETTINGS.items[1];
+      const item = ITEMS_SETTINGS.items[0];
 
       togglePinButton(item.id);
 
       cy.wait(`@editItem`).then(
         ({
-            request: {  
-              body : { settings }
-            } 
+          request: {
+            body: { settings },
+          },
         }) => {
-        expect(settings.isPinned).to.equals(true);
-      });
+          expect(settings.isPinned).to.equals(true);
+        },
+      );
     });
 
     it('Unpin Item', () => {
-      const item = ITEMS_SETTINGS.items[0];
+      const item = PINNED_ITEM;
 
       togglePinButton(item.id);
 
@@ -62,7 +60,6 @@ describe('Pinning Item', () => {
     });
   });
 
-
   describe('Successfully pinning item in Grid', () => {
     beforeEach(() => {
       cy.setUpApi(ITEMS_SETTINGS);
@@ -71,22 +68,23 @@ describe('Pinning Item', () => {
     });
 
     it('Pin an item', () => {
-      const item = ITEMS_SETTINGS.items[1];
+      const item = ITEMS_SETTINGS.items[0];
 
       togglePinButtonCard(item.id);
 
       cy.wait(`@editItem`).then(
         ({
-            request: {  
-              body : { settings }
-            } 
+          request: {
+            body: { settings },
+          },
         }) => {
-        expect(settings.isPinned).to.equals(true);
-      });
+          expect(settings.isPinned).to.equals(true);
+        },
+      );
     });
 
     it('Unpin Item', () => {
-      const item = ITEMS_SETTINGS.items[0];
+      const item = PINNED_ITEM;
 
       togglePinButtonCard(item.id);
 
