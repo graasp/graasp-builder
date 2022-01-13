@@ -1,4 +1,4 @@
-import { ITEMS_SETTINGS } from '../../../fixtures/items';
+import { ITEMS_SETTINGS, PINNED_ITEM } from '../../../fixtures/items';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
@@ -28,7 +28,7 @@ describe('Pinning Item', () => {
     });
 
     it('Pin an item', () => {
-      const item = ITEMS_SETTINGS.items[1];
+      const item = ITEMS_SETTINGS.items[0];
 
       togglePinButton(item.id);
 
@@ -44,7 +44,7 @@ describe('Pinning Item', () => {
     });
 
     it('Unpin Item', () => {
-      const item = ITEMS_SETTINGS.items[1];
+      const item = PINNED_ITEM;
 
       togglePinButton(item.id);
 
@@ -68,7 +68,7 @@ describe('Pinning Item', () => {
     });
 
     it('Pin an item', () => {
-      const item = ITEMS_SETTINGS.items[1];
+      const item = ITEMS_SETTINGS.items[0];
 
       togglePinButtonCard(item.id);
 
@@ -84,7 +84,7 @@ describe('Pinning Item', () => {
     });
 
     it('Unpin Item', () => {
-      const item = ITEMS_SETTINGS.items[1];
+      const item = PINNED_ITEM;
 
       togglePinButtonCard(item.id);
 
