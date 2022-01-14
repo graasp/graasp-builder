@@ -181,3 +181,6 @@ export const CATEGORY_TYPES = {
   LEVEL: 'level',
   DISCIPLINE: 'discipline',
 };
+
+// todo: factor out in graasp constants/utils
+export const ACCEPT_COOKIES_NAME = 'accept-all-cookies';
