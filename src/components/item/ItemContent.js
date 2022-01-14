@@ -37,7 +37,9 @@ const ItemContent = ({ item, enableEdition }) => {
   const classes = useStyles();
   const itemId = item.get(ITEM_KEYS.ID);
   const itemType = item?.get(ITEM_KEYS.TYPE);
-  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem, mutateAsync: editItemAsync } = useMutation(
+    MUTATION_KEYS.EDIT_ITEM,
+  );
   const { editingItemId, setEditingItemId } = useContext(LayoutContext);
 
   // provide user to app
@@ -133,6 +135,7 @@ const ItemContent = ({ item, enableEdition }) => {
           editCaption={isEditing}
           onSaveCaption={onSaveCaption}
           saveButtonId={saveButtonId}
+          onSettingsUpdate={editItemAsync}
           user={user}
           height={ITEM_DEFAULT_HEIGHT}
           mode={enableEdition ? APP_MODES.TEACHER : APP_MODES.STUDENT}
