@@ -29,7 +29,7 @@ const ImportZip = () => {
     notifier({ type: routines.importZipRoutine.FAILURE, payload: { error } });
   };
 
-  const onFileAdded = () => {
+  const onUpload = () => {
     notifier({ type: routines.importZipRoutine.REQUEST });
   };
 
@@ -39,7 +39,7 @@ const ImportZip = () => {
         itemId,
         onComplete,
         onError,
-        onFileAdded,
+        onUpload,
       }),
     );
 
@@ -65,9 +65,15 @@ const ImportZip = () => {
   return (
     <>
       <Typography variant="h6">{t('Import a Graasp Archive')}</Typography>
-      <Typography variant="caption">
+      <Typography variant="body">
         {t(
           'You can download your resources from graasp.eu by right clicking and choosing "Download as ZIP".',
+        )}
+      </Typography>
+      <br />
+      <Typography variant="body">
+        {t(
+          'Once your file is accepted, it will take several minutes for all imported files to be available.',
         )}
       </Typography>
       <div id={ZIP_DASHBOARD_UPLOADER_ID}>
