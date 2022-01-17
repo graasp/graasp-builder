@@ -28,6 +28,7 @@ import {
 } from '../../../utils/membership';
 import { hooks } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -96,6 +97,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       return (
         <>
           {!isItemSettingsOpen && activeActions}
+          {canEdit && <AnalyticsDashboardButton id={id} />}
           {canEdit && <ItemSettingsButton id={id} />}
         </>
       );

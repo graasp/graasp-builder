@@ -13,6 +13,7 @@ import ItemContent from '../item/ItemContent';
 import ItemMain from '../item/ItemMain';
 import ItemSettings from '../item/settings/ItemSettings';
 import ItemSharingTab from '../item/sharing/ItemSharingTab';
+import GraaspAnalyzer from './GraaspAnalyzer';
 import Main from './Main';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
@@ -36,6 +37,7 @@ const ItemScreen = () => {
     setIsItemSettingsOpen,
     setIsItemSharingOpen,
     isItemSharingOpen,
+    isDashboardOpen,
   } = useContext(LayoutContext);
   const { data: currentMember } = useContext(CurrentUserContext);
   const { data: memberships } = useItemMemberships([itemId]);
@@ -64,6 +66,9 @@ const ItemScreen = () => {
       return (
         <ItemSharingTab item={item} memberships={getMembership(memberships)} />
       );
+    }
+    if (isDashboardOpen) {
+      return <GraaspAnalyzer item={item} />;
     }
     return <ItemContent item={item} enableEdition={enableEdition} />;
   })();
