@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, ErrorAlert } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import { Map } from 'immutable';
@@ -13,10 +13,9 @@ import { hooks, useMutation } from '../../../config/queryClient';
 import {
   SHARE_ITEM_CATEGORY_LEVEL,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
-  SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import ErrorAlert from '../../common/ErrorAlert';
+import { ErrorAlert } from '../../common/ErrorAlert';
 import { CATEGORY_TYPES } from '../../../config/constants';
 import { sortByName } from '../../../utils/item';
 
@@ -51,18 +50,12 @@ const CategorySelection = ({ item, edit }) => {
   const { itemId } = useParams();
 
   // get itemCategories, categoryTypes and allCategories
-  const {
-    data: itemCategories,
-    isLoading: isItemCategoriesLoading,
-  } = useItemCategories(itemId);
-  const {
-    data: categoryTypes,
-    isLoading: isCategoryTypesLoading,
-  } = useCategoryTypes();
-  const {
-    data: allCategories,
-    isLoading: isCategoriesLoading,
-  } = useCategories();
+  const { data: itemCategories, isLoading: isItemCategoriesLoading } =
+    useItemCategories(itemId);
+  const { data: categoryTypes, isLoading: isCategoryTypesLoading } =
+    useCategoryTypes();
+  const { data: allCategories, isLoading: isCategoriesLoading } =
+    useCategories();
 
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
