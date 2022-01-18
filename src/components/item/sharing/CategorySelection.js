@@ -13,6 +13,7 @@ import { hooks, useMutation } from '../../../config/queryClient';
 import {
   SHARE_ITEM_CATEGORY_LEVEL,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
+  SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import ErrorAlert from '../../common/ErrorAlert';
@@ -118,9 +119,10 @@ const CategorySelection = ({ item, edit }) => {
       const deletedEntry = itemCategories.find(
         (entry) => entry.categoryId === result[0].id,
       );
+      console.log(deletedEntry);
       deleteItemCategory({
         itemId,
-        entryId: deletedEntry.id,
+        itemCategoryId: deletedEntry.id,
       });
     }
   };
@@ -130,7 +132,9 @@ const CategorySelection = ({ item, edit }) => {
       <Typography variant="h6" className={classes.selection}>
         {t('Category')}
       </Typography>
-      <Typography variant="body1">{t('Level')}</Typography>
+      <Typography variant="body1" id={SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}>
+        {t('Level')}
+      </Typography>
       <Autocomplete
         disabled={!edit || !levelList}
         multiple

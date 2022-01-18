@@ -1345,7 +1345,10 @@ export const mockDeleteItemCategory = (shouldThrowError) => {
     {
       method: DEFAULT_DELETE.method,
       url: new RegExp(
-        `${API_HOST}/${buildDeleteItemCategoryRoute(ID_FORMAT)}$`,
+        `${API_HOST}/${buildDeleteItemCategoryRoute({
+          itemId: ID_FORMAT,
+          itemCategoryId: ID_FORMAT,
+        })}$`,
       ),
     },
     ({ reply, body }) => {
