@@ -20,14 +20,14 @@ const openShareItemTab = (id) => {
 const findCategoryNameById = (id) =>
   SAMPLE_CATEGORIES.find((entry) => entry.id === id)?.name;
 
-export const deleteOption = () => {
+export const deleteFirstOption = () => {
   cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`).click();
-  cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click();
+  cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}-popup li[data-option-index="0"]`).click();
 };
 
-export const addOption = () => {
+export const addFirstOption = () => {
   cy.get(`#${SHARE_ITEM_CATEGORY_DISCIPLINE}`).click();
-  cy.get('.MuiAutocomplete-popper li[data-option-index="0"]').click();
+  cy.get(`#${SHARE_ITEM_CATEGORY_DISCIPLINE}-popup li[data-option-index="0"]`).click();
 };
 
 describe('Categories', () => {
@@ -37,6 +37,7 @@ describe('Categories', () => {
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
   });
+
   it('Display Item Categories', () => {
     // check for displaying value
     const levelValue = cy.get(`${CATEGORIES_SELECTION_VALUE_SELECTOR}`);
@@ -53,7 +54,7 @@ describe('Categories', () => {
 
   it('Delete a category option', () => {
     // delete selection
-    deleteOption();
+    deleteFirstOption();
     cy.wait('@deleteItemCategory').then((data) => {
       const entryId = item.categories[0].id;
       const {
@@ -64,7 +65,7 @@ describe('Categories', () => {
   });
 
   it('Add a category option', () => {
-    addOption();
+    addFirstOption();
     cy.wait('@postItemCategory').then((data) => {
       const {
         request: { url },

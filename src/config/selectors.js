@@ -140,6 +140,7 @@ export const CHATBOX_ID = 'chatbox';
 export const CHATBOX_INPUT_BOX_ID = 'chatboxInputBox';
 export const CONFIRM_RECYCLE_BUTTON_ID = 'confirmRecycleButton';
 export const SHARE_ITEM_VISIBILITY_SELECT_ID = 'shareItemVisiblitySelect';
+export const SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID = 'shareItemCategoryLevelTitle';
 export const SHARE_ITEM_CATEGORY_LEVEL = 'shareItemCategoryLevel';
 export const SHARE_ITEM_CATEGORY_DISCIPLINE = 'shareItemCategoryDiscipline';
 export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
@@ -163,8 +164,10 @@ export const MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME =
   'memberProfileAvatarUploadButton';
 export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
 
+export const ITEM_TAGS_EDIT_INPUT_ID = 'itemTagsEditInput';
+export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton'
 export const buildCustomizedTagsSelector = (index) =>
   `customizedTagsPreview-${index}`;
 
 export const CATEGORIES_SELECTION_VALUE_SELECTOR =
-  'div.MuiChip-root.MuiAutocomplete-tag.MuiChip-deletable > span';
+  `#${SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}+div span`;

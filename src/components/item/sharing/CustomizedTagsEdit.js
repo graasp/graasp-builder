@@ -14,7 +14,7 @@ import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { buildCustomizedTagsSelector } from '../../../config/selectors';
+import { buildCustomizedTagsSelector, ITEM_TAGS_EDIT_INPUT_ID, ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -85,6 +85,7 @@ const CustomizedTagsEdit = ({ item, edit }) => {
           maxRows={5}
           defaultValue={displayValues}
           onChange={handleChange}
+          id={ITEM_TAGS_EDIT_INPUT_ID}
         />
         <Button
           type="submit"
@@ -93,6 +94,7 @@ const CustomizedTagsEdit = ({ item, edit }) => {
           className={classes.button}
           endIcon={<SaveIcon />}
           disabled={!edit}
+          id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
         >
           {t('Save')}
         </Button>

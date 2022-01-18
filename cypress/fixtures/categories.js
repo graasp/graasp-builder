@@ -34,6 +34,8 @@ export const SAMPLE_ITEM_CATEGORIES = [
 
 export const CUSTOMIZED_TAGS = ['water', 'ice', 'temperature'];
 
+export const NEW_CUSTOMIZED_TAG = 'newTag';
+
 export const ITEM_WITH_CATEGORIES = {
   ...PUBLISHED_ITEM,
   settings: {

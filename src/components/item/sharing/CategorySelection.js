@@ -13,6 +13,7 @@ import { hooks, useMutation } from '../../../config/queryClient';
 import {
   SHARE_ITEM_CATEGORY_LEVEL,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
+  SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import ErrorAlert from '../../common/ErrorAlert';
