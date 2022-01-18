@@ -5,7 +5,10 @@ import {
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
 } from '../../../../src/config/selectors';
 import { buildItemPath } from '../../../../src/config/paths';
-import { ITEM_WITH_CATEGORIES, NEW_CUSTOMIZED_TAG } from '../../../fixtures/categories';
+import {
+  ITEM_WITH_CATEGORIES,
+  NEW_CUSTOMIZED_TAG,
+} from '../../../fixtures/categories';
 import { ITEM_LOGIN_ITEMS, PUBLISHED_ITEM } from '../../../fixtures/items';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
@@ -18,7 +21,7 @@ const visitItemPage = (item) => {
   cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
   cy.visit(buildItemPath(item.id));
   openShareItemTab(item.id);
-}
+};
 
 describe('Customized Tags', () => {
   it('Display tags', () => {
@@ -37,10 +40,13 @@ describe('Customized Tags', () => {
     cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('have.text', '');
   });
 
-  it('Change tags', () => {
+  it('Edit tags', () => {
     const item = ITEM_WITH_CATEGORIES;
     visitItemPage(item);
-    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).clear().type(NEW_CUSTOMIZED_TAG).should('have.text', NEW_CUSTOMIZED_TAG);
+    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`)
+      .clear()
+      .type(NEW_CUSTOMIZED_TAG)
+      .should('have.text', NEW_CUSTOMIZED_TAG);
     cy.get(`#${ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}`).click();
     cy.wait('@editItem').then((data) => {
       const {
@@ -48,7 +54,7 @@ describe('Customized Tags', () => {
       } = data;
       expect(url.split('/')).contains(item.id);
       expect(body.settings.tags).contains(NEW_CUSTOMIZED_TAG);
-    })
+    });
   });
 });
 
@@ -58,8 +64,8 @@ describe('Tags permissions', () => {
     cy.setUpApi({ items: [item], currentMember: SIGNED_OUT_MEMBER });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
-    const levelValue = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
-    levelValue.should('be.disabled');
+    const tagsEdit = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
+    tagsEdit.should('be.disabled');
   });
 
   it('Read-only user cannot edit tags', () => {
@@ -70,7 +76,7 @@ describe('Tags permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
-    const levelValue = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
-    levelValue.should('be.disabled');
+    const tagsEdit = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
+    tagsEdit.should('be.disabled');
   });
 });

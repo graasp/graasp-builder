@@ -20,14 +20,18 @@ const openShareItemTab = (id) => {
 const findCategoryNameById = (id) =>
   SAMPLE_CATEGORIES.find((entry) => entry.id === id)?.name;
 
-export const deleteFirstOption = () => {
+export const deleteOption = (index) => {
   cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`).click();
-  cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}-popup li[data-option-index="0"]`).click();
+  cy.get(
+    `#${SHARE_ITEM_CATEGORY_LEVEL}-popup li[data-option-index="${index}"]`,
+  ).click();
 };
 
-export const addFirstOption = () => {
+export const addOption = (index) => {
   cy.get(`#${SHARE_ITEM_CATEGORY_DISCIPLINE}`).click();
-  cy.get(`#${SHARE_ITEM_CATEGORY_DISCIPLINE}-popup li[data-option-index="0"]`).click();
+  cy.get(
+    `#${SHARE_ITEM_CATEGORY_DISCIPLINE}-popup li[data-option-index="${index}"]`,
+  ).click();
 };
 
 describe('Categories', () => {
@@ -54,7 +58,7 @@ describe('Categories', () => {
 
   it('Delete a category option', () => {
     // delete selection
-    deleteFirstOption();
+    deleteOption(0);
     cy.wait('@deleteItemCategory').then((data) => {
       const entryId = item.categories[0].id;
       const {
@@ -65,7 +69,7 @@ describe('Categories', () => {
   });
 
   it('Add a category option', () => {
-    addFirstOption();
+    addOption(0);
     cy.wait('@postItemCategory').then((data) => {
       const {
         request: { url },
