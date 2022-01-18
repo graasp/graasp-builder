@@ -15,7 +15,7 @@ import {
   SHARE_ITEM_CATEGORY_DISCIPLINE,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { ErrorAlert } from '../../common/ErrorAlert';
+import ErrorAlert from '../../common/ErrorAlert';
 import { CATEGORY_TYPES } from '../../../config/constants';
 import { sortByName } from '../../../utils/item';
 
