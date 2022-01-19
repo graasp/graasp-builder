@@ -581,7 +581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-proposal-private-property-in-object@npm:^7.16.7":
+"@babel/plugin-proposal-private-property-in-object@npm:^7.16.0, @babel/plugin-proposal-private-property-in-object@npm:^7.16.7":
   version: 7.16.7
   resolution: "@babel/plugin-proposal-private-property-in-object@npm:7.16.7"
   dependencies:
@@ -1922,10 +1922,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/utils@github:graasp/graasp-utils.git":
+  version: 0.1.0
+  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=fd6bb56269e37f1869eba555c198492f9d307f78"
+  checksum: 946280e2f85d05921defc5401da2543a96ac8863976e748e97c6b7c77affae7e918af585d732ac8069e79603a83fca0f835cc2a3227356b3425dd2f0d6688e3a
+  languageName: node
+  linkType: hard
+
 "@graasp/utils@github:graasp/graasp-utils.git#1/init":
   version: 1.0.0
-  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=68caebc54594ad1d80574e052ce996d2bf080c39"
-  checksum: 6888625b294b1017a2b6958a9e520943a5cb36140986f57a71675db0b12cd5117810a7b9902fff4be7008b16f4cc71f5cc58d97573d4859d0bccda2bd9a68a01
+  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=00a561d05a62188b256395f01cf2967a2bd4f2f3"
+  checksum: 0d0703c506bea57dc8a1f14e69836c0d7505f4e588ec8b1bf3e6c3c07139b7735adbe9d85b48676e6a31627a7aee1d63fa4980e77153d6a98585a8688728acc4
   languageName: node
   linkType: hard
 
@@ -3823,7 +3830,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.2.4, acorn@npm:^8.4.1":
+"acorn@npm:^8.2.4, acorn@npm:^8.4.1, acorn@npm:^8.5.0":
   version: 8.7.0
   resolution: "acorn@npm:8.7.0"
   bin:
@@ -9763,6 +9770,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
+    "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 5.0.0-beta.4

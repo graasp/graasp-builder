@@ -17,9 +17,8 @@ const AccessIndication = ({ itemId, onClick }) => {
   const { t } = useTranslation();
 
   const { data: tags, isLoading: isTagsLoading } = hooks.useTags();
-  const { data: itemTags, isLoading: isItemTagsLoading } = hooks.useItemTags(
-    itemId,
-  );
+  const { data: itemTags, isLoading: isItemTagsLoading } =
+    hooks.useItemTags(itemId);
   const { setIsItemSettingsOpen } = useContext(LayoutContext);
 
   const isPublic = isItemPublic({ itemTags, tags });

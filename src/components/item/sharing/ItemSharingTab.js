@@ -38,9 +38,8 @@ const useStyles = makeStyles((theme) => ({
 const ItemSharingTab = ({ item, memberships }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: currentMember, isLoadingCurrentMember } = useContext(
-    CurrentUserContext,
-  );
+  const { data: currentMember, isLoadingCurrentMember } =
+    useContext(CurrentUserContext);
   const { data: members } = hooks.useMembers(
     memberships?.map(({ memberId }) => memberId),
   );

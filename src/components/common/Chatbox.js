@@ -16,9 +16,8 @@ const Chatbox = ({ item }) => {
   const { data: members, isLoading: isMembersLoading } = useMembers([
     ...new Set(chat?.get('messages')?.map(({ creator }) => creator)),
   ]);
-  const { data: currentMember, isLoadingCurrentMember } = useContext(
-    CurrentUserContext,
-  );
+  const { data: currentMember, isLoadingCurrentMember } =
+    useContext(CurrentUserContext);
   const { mutate: sendMessage } = useMutation(
     MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE,
   );
