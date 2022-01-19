@@ -165,9 +165,11 @@ export const MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME =
 export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
 
 export const ITEM_TAGS_EDIT_INPUT_ID = 'itemTagsEditInput';
-export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton'
+export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton';
 export const buildCustomizedTagsSelector = (index) =>
   `customizedTagsPreview-${index}`;
 
-export const CATEGORIES_SELECTION_VALUE_SELECTOR =
-  `#${SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}+div span`;
+export const CATEGORIES_SELECTION_VALUE_SELECTOR = `#${SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}+div span`;
+
+export const buildCategoryMenuOptions = (menuName, optionIndex) =>
+  `${menuName}-popup li[data-option-index="${optionIndex}"]`;

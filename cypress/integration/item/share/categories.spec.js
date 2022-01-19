@@ -1,4 +1,5 @@
 import {
+  buildCategoryMenuOptions,
   buildShareButtonId,
   CATEGORIES_SELECTION_VALUE_SELECTOR,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
@@ -22,15 +23,13 @@ const findCategoryNameById = (id) =>
 
 export const deleteOption = (index) => {
   cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`).click();
-  cy.get(
-    `#${SHARE_ITEM_CATEGORY_LEVEL}-popup li[data-option-index="${index}"]`,
-  ).click();
+  cy.get(buildCategoryMenuOptions(SHARE_ITEM_CATEGORY_LEVEL, index)).click();
 };
 
 export const addOption = (index) => {
   cy.get(`#${SHARE_ITEM_CATEGORY_DISCIPLINE}`).click();
   cy.get(
-    `#${SHARE_ITEM_CATEGORY_DISCIPLINE}-popup li[data-option-index="${index}"]`,
+    buildCategoryMenuOptions(SHARE_ITEM_CATEGORY_DISCIPLINE, index),
   ).click();
 };
 
@@ -58,9 +57,10 @@ describe('Categories', () => {
 
   it('Delete a category option', () => {
     // delete selection
-    deleteOption(0);
+    const optionIndex = 0;
+    deleteOption(optionIndex);
     cy.wait('@deleteItemCategory').then((data) => {
-      const entryId = item.categories[0].id;
+      const entryId = item.categories[optionIndex].id;
       const {
         request: { url },
       } = data;
@@ -69,7 +69,8 @@ describe('Categories', () => {
   });
 
   it('Add a category option', () => {
-    addOption(0);
+    const optionIndex = 0;
+    addOption(optionIndex);
     cy.wait('@postItemCategory').then((data) => {
       const {
         request: { url },
