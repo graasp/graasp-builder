@@ -1,6 +1,3 @@
-export const ERROR_MESSAGE_HEADER = 'Error';
-export const SUCCESS_MESSAGE_HEADER = 'Success';
-export const FILE_UPLOAD_INFO_MESSAGE_HEADER = 'File Upload';
 export const GET_SHARED_ITEMS_ERROR_MESSAGE =
   'There was an error fetching items.';
 export const GET_ITEM_ERROR_MESSAGE = 'There was an error fetching the item.';
