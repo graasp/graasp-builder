@@ -123,7 +123,6 @@ describe('Share Item', () => {
       expect(body?.tagId).to.equal(ITEM_PUBLISHED_TAG.id);
     });
   });
-
   it('Published Item', () => {
     const item = PUBLISHED_ITEM;
     cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });

@@ -2,12 +2,19 @@ import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
-import { Typography, TextField, Button, makeStyles } from '@material-ui/core';
+import {
+  Typography,
+  TextField,
+  Button,
+  Chip,
+  makeStyles,
+} from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { buildCustomizedTagsSelector, ITEM_TAGS_EDIT_INPUT_ID, ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -35,11 +42,11 @@ const CustomizedTagsEdit = ({ item, edit }) => {
   const settings = item?.get('settings');
   const itemName = item?.get('name');
 
-  const [displayValues, setDisplayValues] = useState(false);
+  const [displayValues, setDisplayValues] = useState(null);
 
   useEffect(() => {
     if (settings) {
-      setDisplayValues(settings.tags?.join(' ,') || '');
+      setDisplayValues(settings.tags?.join(', ') || '');
     }
   }, [settings]);
 
@@ -78,6 +85,7 @@ const CustomizedTagsEdit = ({ item, edit }) => {
           maxRows={5}
           defaultValue={displayValues}
           onChange={handleChange}
+          id={ITEM_TAGS_EDIT_INPUT_ID}
         />
         <Button
           type="submit"
@@ -86,10 +94,15 @@ const CustomizedTagsEdit = ({ item, edit }) => {
           className={classes.button}
           endIcon={<SaveIcon />}
           disabled={!edit}
+          id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
         >
           {t('Save')}
         </Button>
       </form>
+      <Typography variant="subtitle1">{t('Tags Preview')}</Typography>
+      {settings?.tags?.map((tag, index) => (
+        <Chip label={tag} id={buildCustomizedTagsSelector(index)} />
+      ))}
     </>
   );
 };

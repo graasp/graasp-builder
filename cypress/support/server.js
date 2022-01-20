@@ -77,6 +77,10 @@ const {
   buildUploadItemThumbnailRoute,
   buildUploadAvatarRoute,
   buildImportZipRoute,
+  GET_CATEGORY_TYPES_ROUTE,
+  buildGetCategoriesRoute,
+  buildPostItemCategoryRoute,
+  buildDeleteItemCategoryRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -1269,4 +1273,90 @@ export const mockPostAvatar = (shouldThrowError) => {
       return reply({ statusCode: StatusCodes.OK });
     },
   ).as('uploadAvatar');
+};
+
+export const mockGetCategoryTypes = (categoryTypes) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(GET_CATEGORY_TYPES_ROUTE)}$`,
+      ),
+    },
+    ({ reply }) => {
+      reply(categoryTypes);
+    },
+  ).as('getCategoryTypes');
+};
+
+export const mockGetCategories = (categories, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(buildGetCategoriesRoute())}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+      reply(categories);
+    },
+  ).as('getCategories');
+};
+
+export const mockGetItemCategories = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/categories`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const result = items.find(({ id }) => id === itemId)?.categories || [];
+      return reply(result);
+    },
+  ).as('getItemCategories');
+};
+
+export const mockPostItemCategory = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildPostItemCategoryRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('postItemCategory');
+};
+
+export const mockDeleteItemCategory = (shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(
+        `${API_HOST}/${buildDeleteItemCategoryRoute({
+          itemId: ID_FORMAT,
+          itemCategoryId: ID_FORMAT,
+        })}$`,
+      ),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('deleteItemCategory');
 };
