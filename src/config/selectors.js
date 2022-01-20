@@ -172,4 +172,4 @@ export const buildCustomizedTagsSelector = (index) =>
 export const CATEGORIES_SELECTION_VALUE_SELECTOR = `#${SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}+div span`;
 
 export const buildCategoryMenuOptions = (menuName, optionIndex) =>
-  `${menuName}-popup li[data-option-index="${optionIndex}"]`;
+  `#${menuName}-popup li[data-option-index="${optionIndex}"]`;
