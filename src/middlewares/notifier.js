@@ -1,4 +1,4 @@
-import { toastr } from 'react-redux-toastr';
+import { toast } from 'react-toastify';
 import { routines } from '@graasp/query-client';
 import i18n from '../config/i18n';
 import {
@@ -17,9 +17,6 @@ import {
   UPLOAD_FILES_ERROR_MESSAGE,
   UPLOAD_FILES_SUCCESS_MESSAGE,
   UPLOAD_FILES_PROGRESS_MESSAGE,
-  FILE_UPLOAD_INFO_MESSAGE_HEADER,
-  SUCCESS_MESSAGE_HEADER,
-  ERROR_MESSAGE_HEADER,
   SIGN_OUT_ERROR_MESSAGE,
   SIGN_OUT_SUCCESS_MESSAGE,
   POST_ITEM_TAG_ERROR_MESSAGE,
@@ -253,24 +250,15 @@ export default ({ type, payload }) => {
     // progress messages
     // todo: this might be handled differently
     case uploadFileRoutine.REQUEST: {
-      toastr.info(
-        i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
-        i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE),
-      );
+      toast.info(i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE));
       break;
     }
     case uploadItemThumbnailRoutine.REQUEST: {
-      toastr.info(
-        i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
-        i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE),
-      );
+      toast.info(i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE));
       break;
     }
     case importZipRoutine.REQUEST: {
-      toastr.info(
-        i18n.t(FILE_UPLOAD_INFO_MESSAGE_HEADER),
-        i18n.t(IMPORT_ZIP_PROGRESS_MESSAGE),
-      );
+      toast.info(i18n.t(IMPORT_ZIP_PROGRESS_MESSAGE));
       break;
     }
     default:
@@ -278,10 +266,10 @@ export default ({ type, payload }) => {
 
   // error notification
   if (payload?.error && message) {
-    toastr.error(i18n.t(ERROR_MESSAGE_HEADER), i18n.t(message));
+    toast.error(i18n.t(message));
   }
   // success notification
   else if (message) {
-    toastr.success(i18n.t(SUCCESS_MESSAGE_HEADER), i18n.t(message));
+    toast.success(i18n.t(message));
   }
 };
