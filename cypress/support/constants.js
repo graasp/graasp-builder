@@ -20,4 +20,4 @@ export const CAPTION_EDIT_PAUSE = 2000;
 export const ROW_HEIGHT = 48;
 export const TABLE_ITEM_RENDER_TIME = 8000;
 export const FIXTURES_THUMBNAILS_FOLDER = './thumbnails';
-export const CHATBOX_LOADING_TIME = 4000;
+export const CHATBOX_LOADING_TIME = 7000;

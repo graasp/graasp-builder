@@ -14,16 +14,16 @@ const MoveItemModalProvider = ({ children }) => {
   const { mutate: moveItems } = useMutation(MUTATION_KEYS.MOVE_ITEMS);
 
   const [open, setOpen] = useState(false);
-  const [itemId, setItemId] = useState(false);
+  const [itemIds, setItemIds] = useState(false);
 
-  const openModal = (newItemId) => {
+  const openModal = (newItemIds) => {
     setOpen(true);
-    setItemId(newItemId);
+    setItemIds(newItemIds);
   };
 
   const onClose = () => {
     setOpen(false);
-    setItemId(null);
+    setItemIds(null);
   };
 
   const onConfirm = (payload) => {
@@ -37,7 +37,7 @@ const MoveItemModalProvider = ({ children }) => {
   };
 
   const renderModal = () => {
-    if (!itemId) {
+    if (!itemIds || !itemIds.length) {
       return null;
     }
 
@@ -46,7 +46,7 @@ const MoveItemModalProvider = ({ children }) => {
         prevent={TREE_PREVENT_SELECTION.SELF_AND_CHILDREN}
         onClose={onClose}
         open={open}
-        itemIds={itemId}
+        itemIds={itemIds}
         onConfirm={onConfirm}
         title={t('Where do you want to copy this item?')}
       />

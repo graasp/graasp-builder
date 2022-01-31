@@ -12,16 +12,16 @@ const CopyItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
   const { mutate: copyItems } = useMutation(MUTATION_KEYS.COPY_ITEMS);
   const [open, setOpen] = useState(false);
-  const [itemId, setItemId] = useState(false);
+  const [itemIds, setItemIds] = useState(false);
 
-  const openModal = (newItemId) => {
+  const openModal = (newItemIds) => {
     setOpen(true);
-    setItemId(newItemId);
+    setItemIds(newItemIds);
   };
 
   const onClose = () => {
     setOpen(false);
-    setItemId(null);
+    setItemIds(null);
   };
 
   const onConfirm = (payload) => {
@@ -35,7 +35,7 @@ const CopyItemModalProvider = ({ children }) => {
   };
 
   const renderModal = () => {
-    if (!itemId) {
+    if (!itemIds || !itemIds.length) {
       return null;
     }
 
@@ -43,7 +43,7 @@ const CopyItemModalProvider = ({ children }) => {
       <TreeModal
         onClose={onClose}
         open={open}
-        itemIds={itemId}
+        itemIds={itemIds}
         onConfirm={onConfirm}
         title={t('Where do you want to copy this item?')}
       />

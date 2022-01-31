@@ -47,7 +47,7 @@ const ItemMenu = ({ item, canEdit }) => {
   };
 
   const handleCopy = () => {
-    openCopyModal(item.id);
+    openCopyModal([item.id]);
     handleClose();
   };
 

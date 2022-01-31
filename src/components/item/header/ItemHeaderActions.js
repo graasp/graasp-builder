@@ -91,13 +91,13 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
           <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
             <ForumIcon />
           </IconButton>
+          {canEdit && <AnalyticsDashboardButton id={id} />}
         </>
       );
 
       return (
         <>
           {!isItemSettingsOpen && activeActions}
-          {canEdit && <AnalyticsDashboardButton id={id} />}
           {canEdit && <ItemSettingsButton id={id} />}
         </>
       );

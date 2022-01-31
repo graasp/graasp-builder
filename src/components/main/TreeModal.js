@@ -24,18 +24,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const { useItem, useOwnItems, useChildren } = hooks;
+const { useItem, useItems, useOwnItems, useChildren } = hooks;
 
 const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: items, isLoading } = useOwnItems();
+  const { data: ownItems, isLoading } = useOwnItems();
   const [selectedId, setSelectedId] = useState(null);
-  const { data: item, isItemLoading } = useItem(itemIds);
+  const { data: items, isItemLoading } = useItems(itemIds);
 
   const buildExpandedItems = () => {
-    if (item) {
-      const parentIds = getParentsIdsFromPath(item.get('path')) || [];
+    if (items && !items.isEmpty()) {
+      // suppose all items are in the same parent
+      const parentIds = getParentsIdsFromPath(items.first().path) || [];
       const newExpandedItems = [ROOT_ID, ...parentIds];
       return newExpandedItems;
     }
@@ -86,7 +87,7 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
       className={classes.root}
       selectedId={selectedId}
       initialExpendedItems={buildExpandedItems()}
-      items={items}
+      items={ownItems}
       onTreeItemSelect={onTreeItemSelect}
       useChildren={useChildren}
       useItem={useItem}
