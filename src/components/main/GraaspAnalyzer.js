@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { useTranslation } from 'react-i18next';
@@ -7,12 +7,23 @@ import {
   buildGraaspAnalyzerLink,
 } from '../../config/constants';
 import { buildGraaspAnalyzerId } from '../../config/selectors';
+import { LayoutContext } from '../context/LayoutContext';
 
 // todo: use as component
 const GraaspAnalyzer = ({ item }) => {
   const { t } = useTranslation();
+  const { setIsDashboardOpen } = useContext(LayoutContext);
   const ref = useRef();
   const id = item.get('id');
+
+  // close tab on unmount
+  useEffect(
+    () => () => {
+      setIsDashboardOpen(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <iframe
