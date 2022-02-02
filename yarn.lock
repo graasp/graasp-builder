@@ -1882,7 +1882,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=5f9cd60b811259b8144ca1417e08816317843a0e"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=d74abc223a2b4ca25778957b44eb03f79ea0e0a1"
   dependencies:
     axios: 0.24.0
     http-status-codes: 2.2.0
@@ -1893,14 +1893,15 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: fe0282867d94c69ef221bb1a0b910be27bdc26962e1a819665625074f987d8c8e2630becb1c32d3ce798430de106675fd66dd5d3ad24eee02a3b293bc153cda6
+  checksum: 67070abd99c5240003518c691995402430c236d19800a449e3b517736b1d756435060ee1022328fd60eae64484b001c6dffe08416ef102b8e001dbfac5c114c9
   languageName: node
   linkType: hard
 
 "@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=0d656f3a264ad4fba4c3902e058432f9d4bb2a2f"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=5c1abc2cccbdbde10461d75e8bb7454a9140c64d"
   dependencies:
+    "@graasp/utils": "github:graasp/graasp-utils.git#1/init"
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.0.0
@@ -1916,7 +1917,14 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 995d5484af27e434874c6795837a9f664aa96d0ee4a62c38fe8b7984fafe124af107f93bc64ca96b7c1959f89baf8bb1cbb8954ebabe0545077645ce2525b864
+  checksum: 7cb8740b3dc72cd5b01ae78b584326182486e7776f64a917981cbb44ea67ee358db027e8b56b48390f02a688285c94cd9aadd5be1559eac8ec1cd239e33fb1e3
+  languageName: node
+  linkType: hard
+
+"@graasp/utils@github:graasp/graasp-utils.git#1/init":
+  version: 1.0.0
+  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=68caebc54594ad1d80574e052ce996d2bf080c39"
+  checksum: 6888625b294b1017a2b6958a9e520943a5cb36140986f57a71675db0b12cd5117810a7b9902fff4be7008b16f4cc71f5cc58d97573d4859d0bccda2bd9a68a01
   languageName: node
   linkType: hard
 

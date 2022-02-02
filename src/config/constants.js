@@ -41,6 +41,12 @@ export const GRAASP_PERFORM_HOST =
   process.env.REACT_APP_GRAASP_PERFORM_HOST ||
   'http://localhost:3112';
 
+export const GRAASP_ANALYZER_HOST =
+  process.env.REACT_APP_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
+
+export const buildGraaspAnalyzerLink = (id) =>
+  `${GRAASP_ANALYZER_HOST}/embedded/${id}`;
+
 export const GA_MEASUREMENT_ID =
   ENV_GA_MEASUREMENT_ID || process.env.REACT_APP_GA_MEASUREMENT_ID;
 
@@ -70,6 +76,8 @@ export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_LANG = 'en';
 
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.READ;
+
+export const DEFAULT_ANALYZER_HEIGHT = 2300;
 
 export const PERMISSIONS_EDITION_ALLOWED = [
   PERMISSION_LEVELS.WRITE,

@@ -100,7 +100,7 @@ export default ({ type, payload }) => {
       break;
     }
     case deleteItemsRoutine.FAILURE:
-    case deleteItemRoutine: {
+    case deleteItemRoutine.FAILURE: {
       message = DELETE_ITEMS_ERROR_MESSAGE;
       break;
     }
@@ -263,7 +263,6 @@ export default ({ type, payload }) => {
     }
     default:
   }
-
   // error notification
   if (payload?.error && message) {
     toast.error(i18n.t(message));

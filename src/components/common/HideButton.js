@@ -22,6 +22,9 @@ const HideButton = ({ item }) => {
     ?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID)
     ?.first();
 
+  // since children items are hidden because parent is hidden, the hidden tag should be removed from the root item
+  const isOriginalHiddenItem = hiddenTag?.itemPath === item.path;
+
   const handlePin = () => {
     if (hiddenTag) {
       removeTag.mutate({
@@ -36,12 +39,18 @@ const HideButton = ({ item }) => {
     }
   };
 
+  let tooltip = hiddenTag ? t('Show Item') : t('Hide Item');
+  if (hiddenTag && !isOriginalHiddenItem) {
+    tooltip = t('This item is hidden because its parent item is hidden.');
+  }
+
   return (
-    <Tooltip title={hiddenTag ? t('Show Item') : t('Hide Item')}>
+    <Tooltip title={tooltip}>
       <IconButton
-        aria-label={hiddenTag ? t('Show Item') : t('Hide Item')}
+        aria-label={tooltip}
         className={HIDDEN_ITEM_BUTTON_CLASS}
         onClick={handlePin}
+        disable={!isOriginalHiddenItem}
       >
         {hiddenTag ? (
           <VisibilityOff fontSize="small" />
@@ -56,7 +65,7 @@ const HideButton = ({ item }) => {
 HideButton.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    itemPath: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
   }).isRequired,
 };
 

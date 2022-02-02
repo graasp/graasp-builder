@@ -10,11 +10,15 @@ import {
   ITEM_WITH_CHATBOX_MESSAGES,
 } from '../../../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
-import { WEBSOCKETS_DELAY_TIME } from '../../../support/constants';
+import {
+  CHATBOX_LOADING_TIME,
+  WEBSOCKETS_DELAY_TIME,
+} from '../../../support/constants';
 
 const openChatbox = () => {
   cy.get(`#${ITEM_CHATBOX_BUTTON_ID}`).click();
   cy.wait('@getItemChat');
+  cy.wait(CHATBOX_LOADING_TIME);
 };
 
 describe('Chatbox Scenarios', () => {

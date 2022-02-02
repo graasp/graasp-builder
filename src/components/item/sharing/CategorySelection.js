@@ -119,7 +119,6 @@ const CategorySelection = ({ item, edit }) => {
       const deletedEntry = itemCategories.find(
         (entry) => entry.categoryId === result[0].id,
       );
-      console.log(deletedEntry);
       deleteItemCategory({
         itemId,
         itemCategoryId: deletedEntry.id,

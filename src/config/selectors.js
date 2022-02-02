@@ -173,3 +173,5 @@ export const CATEGORIES_SELECTION_VALUE_SELECTOR = `#${SHARE_ITEM_CATEGORY_LEVEL
 
 export const buildCategoryMenuOptions = (menuName, optionIndex) =>
   `#${menuName}-popup li[data-option-index="${optionIndex}"]`;
+export const buildDashboardButtonId = (id) => `dashboard-button-${id}`;
+export const buildGraaspAnalyzerId = (id) => `graasp-analyzer-${id}`;

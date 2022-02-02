@@ -49,6 +49,7 @@ const ItemContent = ({ item, enableEdition }) => {
   // display children
   const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {
     ordered: true,
+    enabled: item?.get('type') === ITEM_TYPES.FOLDER,
   });
   const id = item?.get(ITEM_KEYS.ID);
 

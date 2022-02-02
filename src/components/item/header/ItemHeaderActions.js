@@ -28,6 +28,7 @@ import {
 } from '../../../utils/membership';
 import { hooks } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,6 +91,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
           <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
             <ForumIcon />
           </IconButton>
+          {canEdit && <AnalyticsDashboardButton id={id} />}
         </>
       );
 
