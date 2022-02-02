@@ -77,6 +77,7 @@ import './commands/navigation';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { SAMPLE_FLAGS } from '../fixtures/flags';
 import { APPS_LIST } from '../fixtures/apps/apps';
+import { ACCEPT_COOKIES_NAME } from '../../src/config/constants';
 import {
   SAMPLE_CATEGORIES,
   SAMPLE_CATEGORY_TYPES,
@@ -133,6 +134,9 @@ Cypress.Commands.add(
     const allItems = [...cachedItems, ...recycledItems];
 
     cy.setCookie('session', currentMember ? 'somecookie' : null);
+
+    // hide cookie banner by default
+    cy.setCookie(ACCEPT_COOKIES_NAME, true);
 
     mockGetAppListRoute(APPS_LIST);
 
@@ -246,7 +250,7 @@ Cypress.Commands.add(
     mockPostAvatar(postAvatarError);
 
     mockImportZip(importZipError);
-    
+
     mockGetCategoryTypes(categoryTypes);
 
     mockGetCategories(categories, getCategoriesError);
