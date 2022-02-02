@@ -136,7 +136,7 @@ Cypress.Commands.add(
     cy.setCookie('session', currentMember ? 'somecookie' : null);
 
     // hide cookie banner by default
-    cy.setCookie(ACCEPT_COOKIES_NAME, true);
+    cy.setCookie(ACCEPT_COOKIES_NAME, 'true');
 
     mockGetAppListRoute(APPS_LIST);
 
