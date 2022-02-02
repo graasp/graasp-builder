@@ -7,8 +7,9 @@ import * as serviceWorker from './serviceWorker';
 
 import '@graasp/ui/dist/bundle.css';
 import { GA_MEASUREMENT_ID } from './config/constants';
+import { hasAcceptedCookies } from './utils/cookies';
 
-if (GA_MEASUREMENT_ID) {
+if (GA_MEASUREMENT_ID && hasAcceptedCookies()) {
   ReactGA.initialize(GA_MEASUREMENT_ID);
   ReactGA.send('pageview');
 }

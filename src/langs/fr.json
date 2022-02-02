@@ -152,6 +152,9 @@
     "Category": "Catégorie",
     "Write the folder decription here...": "Ecrire la description du dossier ici...",
     "Hide Item": "Cacher l'élément",
-    "Show Item": "Montrer l'élément"
+    "Show Item": "Montrer l'élément",
+    "We use cookies and other tracking technologies to improve your browsing experience on our website, to analyze our website traffic, and to understand where our visitors are coming from. By browsing our website, you consent to our use of cookies and other tracking technologies.": "Nous utilisons des cookies et d'autres technologies de traçage pour améliorer votre expérience de navigation sur notre site, pour analyser le traffic et d'où viennent nos visiteurs. En naviguant sur notre site web, vous acceptez l'utilisation des cookies et d'autres technologies de traçage.",
+    "Accept all": "Tout accepter",
+    "Reject non-essential": "Refuser les cookies optionnels"
   }
 }

@@ -8,6 +8,7 @@ import { HEADER_HEIGHT, LEFT_MENU_WIDTH } from '../../config/constants';
 import MainMenu from './MainMenu';
 import Header from '../layout/Header';
 import { LayoutContext } from '../context/LayoutContext';
+import CookiesBanner from '../common/CookiesBanner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +68,7 @@ const Main = ({ children }) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
+      <CookiesBanner />
       <Header toggleMenu={toggleDrawer} isMenuOpen={isMainMenuOpen} />
       <Drawer
         className={classes.drawer}
