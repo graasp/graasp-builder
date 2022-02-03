@@ -7,6 +7,7 @@
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git",
     "@graasp/query-client": "github:graasp/graasp-query-client.git",
     "@graasp/ui": "github:graasp/graasp-ui.git",
+    "@graasp/utils": "github:graasp/graasp-utils.git",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "5.0.0-beta.4",
     "@material-ui/lab": "4.0.0-alpha.60",
@@ -117,5 +118,5 @@
       "src/serviceWorker.js"
     ]
   },
-  "packageManager": "yarn@3.2.0-rc.7"
+  "packageManager": "yarn@3.2.0-rc.11"
 }

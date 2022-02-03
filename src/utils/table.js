@@ -59,5 +59,7 @@ export const stableSort = (array, comparator) => {
 export const getRowsForPage = (table, { page, rowsPerPage }) =>
   table.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-export const userOrderComparator = (userOrder = []) => (a, b) =>
-  userOrder.indexOf(a.id) - userOrder.indexOf(b.id);
+export const userOrderComparator =
+  (userOrder = []) =>
+  (a, b) =>
+    userOrder.indexOf(a.id) - userOrder.indexOf(b.id);

@@ -175,3 +175,4 @@ export const buildCategoryMenuOptions = (menuName, optionIndex) =>
   `#${menuName}-popup li[data-option-index="${optionIndex}"]`;
 export const buildDashboardButtonId = (id) => `dashboard-button-${id}`;
 export const buildGraaspAnalyzerId = (id) => `graasp-analyzer-${id}`;
+export const buildPlayerTabName = (id) => `builder-tab-${id}`;

@@ -25,12 +25,10 @@ const Items = ({
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
-  const {
-    data: memberships,
-    isLoading: isMembershipsLoading,
-  } = useItemMemberships(
-    itemSearch?.results?.map(({ id: itemId }) => itemId).toJS(),
-  );
+  const { data: memberships, isLoading: isMembershipsLoading } =
+    useItemMemberships(
+      itemSearch?.results?.map(({ id: itemId }) => itemId).toJS(),
+    );
 
   if (isMembershipsLoading) {
     return <Loader />;

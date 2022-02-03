@@ -4,15 +4,21 @@ import IconButton from '@material-ui/core/IconButton';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
-import { redirect } from '../../utils/navigation';
+import { redirect } from '@graasp/utils';
 import { buildGraaspPlayerView } from '../../config/paths';
-import { buildPlayerButtonId } from '../../config/selectors';
+import {
+  buildPlayerButtonId,
+  buildPlayerTabName,
+} from '../../config/selectors';
 
 const PlayerViewButton = ({ itemId }) => {
   const { t } = useTranslation();
 
   const onClick = () => {
-    redirect(buildGraaspPlayerView(itemId), { openInNewTab: true });
+    redirect(buildGraaspPlayerView(itemId), {
+      name: buildPlayerTabName(itemId),
+      openInNewTab: true,
+    });
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router';
 import { API_ROUTES } from '@graasp/query-client';
+import { redirect } from '@graasp/utils';
 import {
   AUTHENTICATION_HOST,
   REDIRECT_URL_LOCAL_STORAGE_KEY,
@@ -8,7 +9,6 @@ import {
 } from '../../config/constants';
 import Loader from './Loader';
 import RedirectPage from './RedirectionContent';
-import { redirect } from '../../utils/navigation';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const Authorization = () => (ChildComponent) => {
