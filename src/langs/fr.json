@@ -155,6 +155,9 @@
     "Show Item": "Montrer l'élément",
     "We use cookies and other tracking technologies to improve your browsing experience on our website, to analyze our website traffic, and to understand where our visitors are coming from. By browsing our website, you consent to our use of cookies and other tracking technologies.": "Nous utilisons des cookies et d'autres technologies de traçage pour améliorer votre expérience de navigation sur notre site, pour analyser le traffic et d'où viennent nos visiteurs. En naviguant sur notre site web, vous acceptez l'utilisation des cookies et d'autres technologies de traçage.",
     "Accept all": "Tout accepter",
-    "Reject non-essential": "Refuser les cookies optionnels"
+    "Reject non-essential": "Refuser les cookies optionnels",
+    "Import a Graasp Archive": "Importer une archive Graasp",
+    "You can download your resources from graasp.eu by right clicking and choosing \"Download as ZIP\".": "Pour télécharger vos fichiers depuis la plateforme graasp.eu, faites un clique droit et choisissez \"Télécharger en tant que ZIP\".",
+    "Once your file is accepted, it will take several minutes for all imported files to be available.": "Une fois que votre fichier est accepté, attendez quelques minutes pour que tous vos fichiers soient disponibles."
   }
 }
