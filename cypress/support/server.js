@@ -1252,7 +1252,7 @@ export const mockGetAvatar = (members, shouldThrowError) => {
       }
 
       return reply({
-        fixture: `${thumbnails}/${size}`,
+        fixture: `${thumbnails}/${size}.jpeg`,
         headers: { 'content-type': THUMBNAIL_EXTENSION },
       });
     },
