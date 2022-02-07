@@ -14,6 +14,7 @@ import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
 import TableToolbar from './TableToolbar';
+import ItemsToolbar from './ItemsToolbar';
 import { formatDate } from '../../utils/date';
 import { ITEM_TYPES } from '../../enums';
 import { buildItemPath } from '../../config/paths';
@@ -231,16 +232,13 @@ const ItemsTable = ({
 
   return (
     <div className={classes.root}>
+      <ItemsToolbar title={tableTitle} headerElements={headerElements} />
+      <FolderDescription isEditing={isEditing} itemId={itemId} />
       <TableToolbar
-        tableTitle={tableTitle}
         numSelected={selected.length}
         selected={selected}
-        headerElements={headerElements}
         actions={toolbarActions}
       />
-
-      <FolderDescription isEditing={isEditing} itemId={itemId} />
-
       <div
         className="ag-theme-material"
         style={{ height: ITEMS_TABLE_CONTAINER_HEIGHT, width: '100%' }}

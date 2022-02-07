@@ -53,63 +53,41 @@ DefaultActions.propTypes = {
   selectedIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-const TableToolbar = ({
-  numSelected,
-  tableTitle,
-  selected,
-  headerElements,
-  actions,
-}) => {
+const TableToolbar = ({ numSelected, selected, actions }) => {
   const classes = useToolbarStyles();
   const { t } = useTranslation();
   const renderActions = actions ?? DefaultActions;
 
   return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
+    <>
       {numSelected > 0 ? (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
+        <Toolbar
+          className={clsx(classes.root, {
+            [classes.highlight]: numSelected > 0,
+          })}
         >
-          {t('nbitem selected', { numSelected })}
-        </Typography>
-      ) : (
-        <>
           <Typography
             className={classes.title}
-            variant="h6"
-            id="tableTitle"
+            color="inherit"
+            variant="subtitle1"
             component="div"
           >
-            {tableTitle}
+            {t('nbitem selected', { numSelected })}
           </Typography>
-
-          {headerElements}
-        </>
-      )}
-
-      {numSelected > 0 && renderActions({ selectedIds: selected })}
-    </Toolbar>
+          {numSelected > 0 && renderActions({ selectedIds: selected })}
+        </Toolbar>
+      ) : null}
+    </>
   );
 };
 
 TableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
-  tableTitle: PropTypes.string,
   selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-  headerElements: PropTypes.arrayOf(PropTypes.element),
   actions: PropTypes.element,
 };
 
 TableToolbar.defaultProps = {
-  tableTitle: 'Items',
-  headerElements: [],
   actions: null,
 };
 
