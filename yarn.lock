@@ -1909,9 +1909,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git":
+"@graasp/ui@github:graasp/graasp-ui.git#80/context":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=f4067389a0868cd84d5417fb02d564cc3a2d2637"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=9b528e750a68dd7520849a0562613a66aaaf6a98"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -1930,7 +1930,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: f24aec035b70b465f4f833dc28a30b5da6eda05392a81f9204eddb5b59b0767fcc735f2dcede980223beaa0b7ae0dfab47a09072378432d9d8d744883fc86865
+  checksum: 80ae854fab74942592a4801d56cdaed359b2e4a6ed08b862a1bf3cfe4caa38855e9096f7a86d293160aa2a7add02287ca8899a8ff69b6fcad3c6d70313558ad3
   languageName: node
   linkType: hard
 
@@ -9805,7 +9805,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git"
+    "@graasp/ui": "github:graasp/graasp-ui.git#80/context"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
