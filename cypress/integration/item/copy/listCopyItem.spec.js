@@ -10,6 +10,8 @@ import {
   buildItemMenu,
   ITEM_MENU_COPY_BUTTON_CLASS,
   buildItemMenuButtonId,
+  buildItemsTableId,
+  EDIT_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
@@ -93,7 +95,7 @@ describe('Copy Item in List', () => {
 
   describe('Error handling', () => {
     it('error while copying item does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemsError: true });
       const { id } = SAMPLE_ITEMS.items[0];
 
       // go to children item
@@ -107,10 +109,13 @@ describe('Copy Item in List', () => {
       const { path: toItemPath } = SAMPLE_ITEMS.items[0];
       copyItem({ id: copyItemId, toItemPath });
 
-      cy.wait('@copyItems').then(({ response: { body } }) => {
+      cy.wait('@copyItems').then(() => {
         // check item is still existing in parent
         cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
-        cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('not.exist');
+        cy.get(`#${buildItemsTableId(id)} .${EDIT_ITEM_BUTTON_CLASS}`).should(
+          'have.length',
+          3,
+        );
       });
     });
   });

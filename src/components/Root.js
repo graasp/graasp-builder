@@ -43,7 +43,7 @@ const Root = () => (
         <App />
       </MuiThemeProvider>
     </I18nextProvider>
-    {NODE_ENV === ENV.DEVELOPMENT && <ReactQueryDevtools initialIsOpen />}
+    {NODE_ENV === ENV.DEVELOPMENT && <ReactQueryDevtools />}
   </QueryClientProvider>
 );
 
