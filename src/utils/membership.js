@@ -12,7 +12,9 @@ export const isItemUpdateAllowedForUser = ({ memberships, memberId }) =>
     ),
   );
 
-export const getBestPermissionForMemberFromMemberships = ({
+// get highest permission a member have over an item,
+// longer the itemPath, deeper is the permission, thus highested
+export const getHighestPermissionForMemberFromMemberships = ({
   memberships,
   memberId,
 }) => {

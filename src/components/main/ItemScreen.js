@@ -4,7 +4,7 @@ import { ItemLoginAuthorization } from '@graasp/ui';
 import { useParams } from 'react-router';
 import {
   getMembership,
-  getBestPermissionForMemberFromMemberships,
+  getHighestPermissionForMemberFromMemberships,
 } from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
@@ -54,7 +54,7 @@ const ItemScreen = () => {
     return <ErrorAlert />;
   }
 
-  const itemMembership = getBestPermissionForMemberFromMemberships({
+  const itemMembership = getHighestPermissionForMemberFromMemberships({
     memberships: getMembership(memberships),
     memberId: currentMember?.get('id'),
   });
