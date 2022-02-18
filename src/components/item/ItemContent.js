@@ -12,7 +12,7 @@ import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
-import { ITEM_KEYS, ITEM_TYPES, APP_MODES } from '../../enums';
+import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import { API_HOST, ITEM_DEFAULT_HEIGHT } from '../../config/constants';
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemContent = ({ item, enableEdition }) => {
+const ItemContent = ({ item, enableEdition, permission }) => {
   const classes = useStyles();
   const itemId = item.get(ITEM_KEYS.ID);
   const itemType = item?.get(ITEM_KEYS.TYPE);
@@ -43,7 +43,7 @@ const ItemContent = ({ item, enableEdition }) => {
   const { editingItemId, setEditingItemId } = useContext(LayoutContext);
 
   // provide user to app
-  const { data: user, isLoading: isLoadingUser } =
+  const { data: member, isLoading: isLoadingUser } =
     useContext(CurrentUserContext);
 
   // display children
@@ -137,9 +137,9 @@ const ItemContent = ({ item, enableEdition }) => {
           onSaveCaption={onSaveCaption}
           saveButtonId={saveButtonId}
           onSettingsUpdate={editItemAsync}
-          user={user}
+          member={member}
           height={ITEM_DEFAULT_HEIGHT}
-          mode={enableEdition ? APP_MODES.TEACHER : APP_MODES.STUDENT}
+          permission={permission}
           requestApiAccessToken={Api.requestApiAccessToken}
         />
       );
@@ -171,6 +171,7 @@ const ItemContent = ({ item, enableEdition }) => {
 ItemContent.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   enableEdition: PropTypes.bool,
+  permission: PropTypes.string.isRequired,
 };
 
 ItemContent.defaultProps = {

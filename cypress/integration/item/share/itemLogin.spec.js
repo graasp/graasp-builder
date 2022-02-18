@@ -160,7 +160,6 @@ describe('Item Login', () => {
   describe('Display Item Login Setting', () => {
     it('edit item login setting', () => {
       cy.setUpApi(ITEM_LOGIN_ITEMS);
-      cy.log('item with item login');
       const item = ITEM_LOGIN_ITEMS.items[0];
       // check item with item login enabled
       cy.visit(buildItemPath(item.id));
@@ -173,7 +172,6 @@ describe('Item Login', () => {
       editItemLoginSetting(SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD);
 
       // disabled at child level
-      cy.log('child of item with item login');
       const item2 = ITEM_LOGIN_ITEMS.items[5];
       cy.visit(buildItemPath(item2.id));
       cy.get(`#${buildShareButtonId(item2.id)}`).click();

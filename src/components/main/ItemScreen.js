@@ -4,7 +4,7 @@ import { ItemLoginAuthorization } from '@graasp/ui';
 import { useParams } from 'react-router';
 import {
   getMembership,
-  isItemUpdateAllowedForUser,
+  getHighestPermissionForMemberFromMemberships,
 } from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
@@ -24,6 +24,7 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
+import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
 
 const { useItem, useItemMemberships, useCurrentMember, useItemLogin } = hooks;
 
@@ -53,10 +54,12 @@ const ItemScreen = () => {
     return <ErrorAlert />;
   }
 
-  const enableEdition = isItemUpdateAllowedForUser({
+  const itemMembership = getHighestPermissionForMemberFromMemberships({
     memberships: getMembership(memberships),
     memberId: currentMember?.get('id'),
   });
+  const permission = itemMembership?.permission;
+  const enableEdition = PERMISSIONS_EDITION_ALLOWED.includes(permission);
 
   const content = (() => {
     if (enableEdition && isItemSettingsOpen) {
@@ -70,7 +73,13 @@ const ItemScreen = () => {
     if (isDashboardOpen) {
       return <GraaspAnalyzer item={item} />;
     }
-    return <ItemContent item={item} enableEdition={enableEdition} />;
+    return (
+      <ItemContent
+        item={item}
+        enableEdition={enableEdition}
+        permission={permission}
+      />
+    );
   })();
 
   return (

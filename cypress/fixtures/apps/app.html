@@ -76,9 +76,8 @@
       port2 = e.ports[0];
       port2.onmessage = onMessage;
       console.log(e.data);
-      itemId = e.data.payload.itemId;
-      document.getElementById('requestContext-message').innerHTML =
-        e.data.payload.itemId;
+      itemId = JSON.parse(e.data).payload.itemId;
+      document.getElementById('requestContext-message').innerHTML = itemId;
     }
 
     // Handle messages received on port2

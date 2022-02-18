@@ -6,8 +6,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation } from 'react-query';
-import { hooks } from '../../config/queryClient';
+import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 

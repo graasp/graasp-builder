@@ -24,7 +24,7 @@ describe('Apps', () => {
     cy.checkContentInElementInIframe(
       iframeSelector,
       'ul',
-      'GET_AUTH_TOKEN_SUCCEEDED',
+      'GET_AUTH_TOKEN_SUCCESS',
     );
 
     // check app can get app-data
