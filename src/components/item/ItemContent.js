@@ -17,7 +17,6 @@ import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import { API_HOST, ITEM_DEFAULT_HEIGHT } from '../../config/constants';
 import { LayoutContext } from '../context/LayoutContext';
-import FileUploader from '../main/FileUploader';
 import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
@@ -147,7 +146,6 @@ const ItemContent = ({ item, enableEdition, permission }) => {
     case ITEM_TYPES.FOLDER:
       return (
         <>
-          <FileUploader />
           <Items
             parentId={itemId}
             id={buildItemsTableId(itemId)}

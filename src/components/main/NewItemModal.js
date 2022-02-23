@@ -16,7 +16,7 @@ import {
 } from '../../config/selectors';
 import { useMutation } from '../../config/queryClient';
 import { ITEM_TYPES } from '../../enums';
-import FileDashboardUploader from './FileDashboardUploader';
+import FileDashboardUploader from '../file/FileDashboardUploader';
 import LinkForm from '../item/form/LinkForm';
 import { isItemValid } from '../../utils/item';
 import { buildItemPath } from '../../config/paths';

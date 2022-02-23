@@ -1,61 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import '@uppy/core/dist/style.css';
+import React, { useContext } from 'react';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
-import { useMatch } from 'react-router';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
-import { useMutation } from '../../config/queryClient';
-import { configureFileUppy } from '../../utils/uppy';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
-import { buildItemPath } from '../../config/paths';
+import ErrorAlert from '../common/ErrorAlert';
+import { UppyContext } from './UppyContext';
 
 const FileDashboardUploader = () => {
-  const [uppy, setUppy] = useState(null);
-  const match = useMatch(buildItemPath());
-  const itemId = match?.params?.itemId;
+  const { uppy } = useContext(UppyContext);
   const { t } = useTranslation();
-  const { mutate: onFileUploadComplete } = useMutation(
-    MUTATION_KEYS.FILE_UPLOAD,
-  );
-
-  const onComplete = (result) => {
-    // update app on complete
-    // todo: improve with websockets or by receiving corresponding items
-    if (!result?.failed.length) {
-      onFileUploadComplete({ id: itemId });
-    }
-
-    return false;
-  };
-
-  const applyUppy = () =>
-    setUppy(
-      configureFileUppy({
-        itemId,
-        onComplete,
-      }),
-    );
-
-  useEffect(() => {
-    applyUppy();
-
-    return () => {
-      uppy?.close();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    applyUppy();
-    // update uppy configuration each time itemId changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemId]);
 
   if (!uppy) {
-    return null;
+    return <ErrorAlert />;
   }
 
   return (

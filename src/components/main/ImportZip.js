@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import { routines } from '@graasp/query-client';
 import { Dashboard } from '@uppy/react';

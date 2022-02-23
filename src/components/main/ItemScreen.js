@@ -25,6 +25,8 @@ import {
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
 import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
+import { UppyContextProvider } from '../file/UppyContext';
+import FileUploader from '../file/FileUploader';
 
 const { useItem, useItemMemberships, useCurrentMember, useItemLogin } = hooks;
 
@@ -84,7 +86,10 @@ const ItemScreen = () => {
 
   return (
     <Main>
-      <ItemMain item={item}>{content}</ItemMain>
+      <UppyContextProvider enable={enableEdition} itemId={itemId}>
+        <FileUploader />
+        <ItemMain item={item}>{content}</ItemMain>
+      </UppyContextProvider>
     </Main>
   );
 };

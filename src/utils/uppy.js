@@ -69,6 +69,7 @@ export const configureFileUppy = ({
   onFilesAdded,
   onError,
   onUpload,
+  onProgress,
 }) =>
   configureUppy({
     itemId,
@@ -76,6 +77,7 @@ export const configureFileUppy = ({
     onFilesAdded,
     onError,
     onUpload,
+    onProgress,
     buildEndpoint: (id) =>
       `${API_HOST}/${API_ROUTES.buildUploadFilesRoute(id)}`,
   });
@@ -88,6 +90,7 @@ export const configureThumbnailUppy = ({
   onUpload,
   onComplete,
   onError,
+  onProgress,
 }) =>
   configureUppy({
     itemId,
@@ -95,6 +98,7 @@ export const configureThumbnailUppy = ({
     onUpload,
     onComplete,
     onError,
+    onProgress,
     // autoProceed: false,
     fieldName: 'file',
     restrictions: {
