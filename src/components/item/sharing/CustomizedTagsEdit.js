@@ -19,6 +19,7 @@ import {
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
 } from '../../../config/selectors';
+import { SUBMIT_BUTTON_WIDTH } from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(2),
+    maxWidth: SUBMIT_BUTTON_WIDTH,
   },
 }));
 

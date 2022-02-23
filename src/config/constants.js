@@ -184,3 +184,5 @@ export const CATEGORY_TYPES = {
 
 // todo: factor out in graasp constants/utils
 export const ACCEPT_COOKIES_NAME = 'accept-all-cookies';
+
+export const SUBMIT_BUTTON_WIDTH = 100;

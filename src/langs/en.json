@@ -163,6 +163,12 @@
     "Reject non-essential": "Reject non-essential",
     "Import a Graasp Archive": "Import a Graasp Archive",
     "You can download your resources from graasp.eu by right clicking and choosing \"Download as ZIP\".": "You can download your resources from graasp.eu by right clicking and choosing \"Download as ZIP\".",
-    "Once your file is accepted, it will take several minutes for all imported files to be available.": "Once your file is accepted, it will take several minutes for all imported files to be available."
+    "Once your file is accepted, it will take several minutes for all imported files to be available.": "Once your file is accepted, it will take several minutes for all imported files to be available.",
+    "All content published on Graasp-Explorer does not allow commercial use.": "All content published on Graasp-Explorer does not allow commercial use.",
+    "Allow adaptations of your work to be shared?": "Allow adaptations of your work to be shared?",
+    "Need more info about CC License? Click here!": "Need more info about CC License? Click here!",
+    "Only if others share alike": "Only if others share alike",
+    "Icon Preview": "Icon Preview",
+    "Creative Commons License": "Creative Commons License"
   }
 }
