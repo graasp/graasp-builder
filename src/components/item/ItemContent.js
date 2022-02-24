@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemContent = ({ item, enableEdition, permission }) => {
+const ItemContent = ({ item, enableEditing }) => {
   const classes = useStyles();
   const itemId = item.get(ITEM_KEYS.ID);
   const itemType = item?.get(ITEM_KEYS.TYPE);
@@ -60,7 +60,7 @@ const ItemContent = ({ item, enableEdition, permission }) => {
         (itemType === ITEM_TYPES.FILE || itemType === ITEM_TYPES.S3_FILE),
     },
   );
-  const isEditing = enableEdition && editingItemId === itemId;
+  const isEditing = enableEditing && editingItemId === itemId;
 
   if (isLoadingFileContent || isLoadingUser || isLoadingChildren) {
     return <Loader />;
@@ -139,7 +139,7 @@ const ItemContent = ({ item, enableEdition, permission }) => {
           onSettingsUpdate={editItemAsync}
           member={member}
           height={ITEM_DEFAULT_HEIGHT}
-          permission={permission}
+          mode={enableEditing ? APP_MODES.TEACHER : APP_MODES.STUDENT}
           requestApiAccessToken={Api.requestApiAccessToken}
         />
       );
@@ -154,7 +154,7 @@ const ItemContent = ({ item, enableEdition, permission }) => {
             isEditing={isEditing}
             onSaveCaption={onSaveCaption}
             headerElements={
-              enableEdition
+              enableEditing
                 ? [<NewItemButton key="newButton" fontSize="small" />]
                 : undefined
             }
@@ -169,12 +169,11 @@ const ItemContent = ({ item, enableEdition, permission }) => {
 
 ItemContent.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  enableEdition: PropTypes.bool,
-  permission: PropTypes.string.isRequired,
+  enableEditing: PropTypes.bool,
 };
 
 ItemContent.defaultProps = {
-  enableEdition: false,
+  enableEditing: false,
 };
 
 export default ItemContent;

@@ -9,7 +9,7 @@ import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { configureZipImportUppy } from '../../utils/uppy';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
-import notifier from '../../middlewares/notifier';
+import notifier from '../../config/notifier';
 
 const ImportZip = () => {
   const [uppy, setUppy] = useState(null);

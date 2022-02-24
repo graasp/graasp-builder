@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { configureAvatarUppy } from '../../utils/uppy';
 import CropModal from '../common/CropModal';
 import { useMutation, hooks } from '../../config/queryClient';
-import notifier from '../../middlewares/notifier';
+import notifier from '../../config/notifier';
 import defaultImage from '../../config/logo.jpeg';
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,

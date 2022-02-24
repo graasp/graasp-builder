@@ -1909,6 +1909,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/translations@github:graasp/graasp-translations.git#1/init":
+  version: 0.1.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=75c750685a10ef6a562c871fac13a602ea09c4fe"
+  dependencies:
+    i18next: 21.6.11
+  checksum: 800b381ca315c927a120721ed41e8358cc51dd117639b44e82d10f57ebba74799c2d0005fe25a8242ee79f8bbc16c8375ca473e068093fe1890fe226b6a29c07
+  languageName: node
+  linkType: hard
+
 "@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
   resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=4dc4a1ad877927bd5606f8e6816bf926dac79b63"
@@ -9834,6 +9843,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
+    "@graasp/translations": "github:graasp/graasp-translations.git#1/init"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
@@ -9869,7 +9879,7 @@ __metadata:
     eslint-plugin-react: 7.22.0
     http-status-codes: 2.2.0
     husky: ^7.0.4
-    i18next: 21.6.5
+    i18next: 21.6.12
     immutable: 4.0.0
     istanbul-lib-coverage: 3.2.0
     js-cookie: 3.0.1
@@ -10430,6 +10440,24 @@ __metadata:
   version: 1.0.4
   resolution: "hyphenate-style-name@npm:1.0.4"
   checksum: 4f5bf4b055089754924babebaa23c17845937bcca6aee95d5d015f8fa1e6814279002bd6a9e541e3fac2cd02519fc76305396727066c57c8e21a7e73e7a12137
+  languageName: node
+  linkType: hard
+
+"i18next@npm:21.6.11":
+  version: 21.6.11
+  resolution: "i18next@npm:21.6.11"
+  dependencies:
+    "@babel/runtime": ^7.12.0
+  checksum: 42716a7519d6066a8c9400639ab80fba0b568ae02205b1155ec9c4e627704bb2181dd182ff5eb0c91f6c67c8038ddd0754214e1932de5699d488c21ffd617c5e
+  languageName: node
+  linkType: hard
+
+"i18next@npm:21.6.12":
+  version: 21.6.12
+  resolution: "i18next@npm:21.6.12"
+  dependencies:
+    "@babel/runtime": ^7.12.0
+  checksum: 577ab7e5c5ec5d9f8c24aef3d85c1134fc78aa370a254a0412b1207f98a994dd70bac4b11b979658cd2f2c7a764b78ad08ec3824d5ed900b51ca00d5c596c7df
   languageName: node
   linkType: hard
 

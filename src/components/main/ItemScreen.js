@@ -75,13 +75,7 @@ const ItemScreen = () => {
     if (isDashboardOpen) {
       return <GraaspAnalyzer item={item} />;
     }
-    return (
-      <ItemContent
-        item={item}
-        enableEdition={enableEdition}
-        permission={permission}
-      />
-    );
+    return <ItemContent item={item} enableEdition={enableEdition} />;
   })();
 
   return (
