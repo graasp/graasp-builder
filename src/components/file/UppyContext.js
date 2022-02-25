@@ -1,32 +1,13 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { makeStyles } from '@material-ui/core';
-import { StatusBar } from '@uppy/react';
-import { grey } from '@material-ui/core/colors';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import '@uppy/status-bar/dist/style.css';
 import { configureFileUppy } from '../../utils/uppy';
 import { useMutation } from '../../config/queryClient';
+import StatusBar from './StatusBar';
 
 const UppyContext = React.createContext();
-const useStyles = makeStyles(() => ({
-  snackbarContentRoot: {
-    background: 'white',
-  },
-  snackbarContentMessage: {
-    width: '85%',
-  },
-  snackbarContentAction: {
-    color: grey[500],
-  },
-}));
 
 const UppyContextProvider = ({ enable, itemId, children }) => {
-  const classes = useStyles();
   const [uppy, setUppy] = useState(null);
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { mutate: onFileUploadComplete } = useMutation(
@@ -42,8 +23,6 @@ const UppyContextProvider = ({ enable, itemId, children }) => {
   };
 
   const onComplete = (result) => {
-    // update app on complete
-    // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
       const data = result.successful[0].response.body;
       onFileUploadComplete({ id: itemId, data });
@@ -76,46 +55,9 @@ const UppyContextProvider = ({ enable, itemId, children }) => {
 
   const value = useMemo(() => ({ uppy }), [uppy]);
 
-  const statusBar = (
-    <StatusBar
-      uppy={uppy}
-      showProgressDetails
-      hideCancelButton
-      hideAfterFinish={false}
-    />
-  );
-  const action = (
-    <IconButton
-      size="small"
-      aria-label="close"
-      color="inherit"
-      onClick={handleClose}
-    >
-      <CloseIcon fontSize="small" />
-    </IconButton>
-  );
-
   return (
     <UppyContext.Provider value={value}>
-      {uppy && (
-        <Snackbar
-          open={openStatusBar}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-        >
-          <SnackbarContent
-            message={statusBar}
-            action={action}
-            classes={{
-              root: classes.snackbarContentRoot,
-              message: classes.snackbarContentMessage,
-              action: classes.snackbarContentAction,
-            }}
-          />
-        </Snackbar>
-      )}
+      <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       {children}
     </UppyContext.Provider>
   );

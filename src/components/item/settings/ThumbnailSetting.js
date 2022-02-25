@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MUTATION_KEYS, routines } from '@graasp/query-client';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import { Thumbnail } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -9,15 +9,13 @@ import Grid from '@material-ui/core/Grid';
 import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal from '../../common/CropModal';
 import { useMutation, hooks } from '../../../config/queryClient';
-import notifier from '../../../config/notifier';
 import defaultImage from '../../../config/logo.jpeg';
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../../config/constants';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
-
-const { uploadItemThumbnailRoutine } = routines;
+import StatusBar from '../../file/StatusBar';
 
 const useStyles = makeStyles(() => ({
   thumbnail: {
@@ -30,10 +28,11 @@ const ThumbnailSetting = ({ item }) => {
   const [uppy, setUppy] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState(false);
+  const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t } = useTranslation();
   const classes = useStyles();
-  const { mutate: onThumbnailUpload } = useMutation(
-    MUTATION_KEYS.UPLOAD_ITEM_THUMBNAIL,
+  const { mutate: onFileUploadComplete } = useMutation(
+    MUTATION_KEYS.FILE_UPLOAD,
   );
   const itemId = item.get('id');
 
@@ -41,21 +40,19 @@ const ThumbnailSetting = ({ item }) => {
     setUppy(
       configureThumbnailUppy({
         itemId,
+        onUpload: () => {
+          setOpenStatusBar(true);
+        },
         onError: (error) => {
-          onThumbnailUpload({ id: itemId, error });
+          onFileUploadComplete({ id: itemId, error });
         },
         onComplete: (result) => {
-          // update app on complete
-          // todo: improve with websockets or by receiving corresponding items
           if (result?.successful?.length) {
-            onThumbnailUpload({ id: itemId });
+            const data = result.successful[0].response.body;
+            onFileUploadComplete({ id: itemId, data });
           }
 
           return false;
-        },
-
-        onUpload: () => {
-          notifier?.({ type: uploadItemThumbnailRoutine.REQUEST });
         },
       }),
     );
@@ -65,6 +62,14 @@ const ThumbnailSetting = ({ item }) => {
   if (!uppy) {
     return null;
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenStatusBar(false);
+  };
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -100,6 +105,9 @@ const ThumbnailSetting = ({ item }) => {
 
   return (
     <>
+      {uppy && (
+        <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
+      )}
       <Grid container justifyContent="space-between">
         <Grid item sm={6}>
           <Typography variant="h5">{t('Thumbnail')}</Typography>

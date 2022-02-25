@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MUTATION_KEYS, routines } from '@graasp/query-client';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import { Avatar } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -9,15 +9,13 @@ import Grid from '@material-ui/core/Grid';
 import { configureAvatarUppy } from '../../utils/uppy';
 import CropModal from '../common/CropModal';
 import { useMutation, hooks } from '../../config/queryClient';
-import notifier from '../../config/notifier';
 import defaultImage from '../../config/logo.jpeg';
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../config/constants';
 import { MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME } from '../../config/selectors';
-
-const { uploadAvatarRoutine } = routines;
+import StatusBar from '../file/StatusBar';
 
 const useStyles = makeStyles(() => ({
   thumbnail: {
@@ -30,11 +28,10 @@ const AvatarSetting = ({ user }) => {
   const [uppy, setUppy] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState(false);
+  const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t } = useTranslation();
   const classes = useStyles();
-  const { mutate: onThumbnailUpload } = useMutation(
-    MUTATION_KEYS.UPLOAD_AVATAR,
-  );
+  const { mutate: onUploadAvatar } = useMutation(MUTATION_KEYS.UPLOAD_AVATAR);
 
   const userId = user.get('id');
 
@@ -42,21 +39,21 @@ const AvatarSetting = ({ user }) => {
     setUppy(
       configureAvatarUppy({
         itemId: userId,
+        onUpload: () => {
+          setOpenStatusBar(true);
+        },
         onError: (error) => {
-          onThumbnailUpload({ id: userId, error });
+          onUploadAvatar({ id: userId, error });
         },
         onComplete: (result) => {
           // update app on complete
           // todo: improve with websockets or by receiving corresponding items
           if (result?.successful?.length) {
-            onThumbnailUpload({ id: userId });
+            const data = result.successful[0].response.body;
+            onUploadAvatar({ id: userId, data });
           }
 
           return false;
-        },
-
-        onUpload: () => {
-          notifier?.({ type: uploadAvatarRoutine.REQUEST });
         },
       }),
     );
@@ -66,6 +63,14 @@ const AvatarSetting = ({ user }) => {
   if (!uppy) {
     return null;
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenStatusBar(false);
+  };
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -101,6 +106,9 @@ const AvatarSetting = ({ user }) => {
 
   return (
     <>
+      {uppy && (
+        <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
+      )}
       <Grid container justifyContent="space-between">
         <Grid item sm={6}>
           <Typography variant="h5">{t('Thumbnail')}</Typography>

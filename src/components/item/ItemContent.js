@@ -15,7 +15,11 @@ import {
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
-import { API_HOST, ITEM_DEFAULT_HEIGHT } from '../../config/constants';
+import {
+  API_HOST,
+  ITEM_DEFAULT_HEIGHT,
+  CONTEXT_BUILDER,
+} from '../../config/constants';
 import { LayoutContext } from '../context/LayoutContext';
 import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
@@ -32,7 +36,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemContent = ({ item, enableEditing }) => {
+const ItemContent = ({ item, enableEditing, permission }) => {
   const classes = useStyles();
   const itemId = item.get(ITEM_KEYS.ID);
   const itemType = item?.get(ITEM_KEYS.TYPE);
@@ -132,15 +136,16 @@ const ItemContent = ({ item, enableEditing }) => {
       return (
         <AppItem
           item={item}
-          apiHost={API_HOST} // todo: to change
+          apiHost={API_HOST}
           editCaption={isEditing}
           onSaveCaption={onSaveCaption}
           saveButtonId={saveButtonId}
           onSettingsUpdate={editItemAsync}
           member={member}
           height={ITEM_DEFAULT_HEIGHT}
-          mode={enableEditing ? APP_MODES.TEACHER : APP_MODES.STUDENT}
+          permission={permission}
           requestApiAccessToken={Api.requestApiAccessToken}
+          context={CONTEXT_BUILDER}
         />
       );
     case ITEM_TYPES.FOLDER:
@@ -170,6 +175,7 @@ const ItemContent = ({ item, enableEditing }) => {
 ItemContent.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   enableEditing: PropTypes.bool,
+  permission: PropTypes.string.isRequired,
 };
 
 ItemContent.defaultProps = {

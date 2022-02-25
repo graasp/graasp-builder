@@ -6,7 +6,7 @@
   "dependencies": {
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git",
     "@graasp/query-client": "github:graasp/graasp-query-client.git",
-    "@graasp/translations": "github:graasp/graasp-translations.git#1/init",
+    "@graasp/translations": "github:graasp/graasp-translations.git",
     "@graasp/ui": "github:graasp/graasp-ui.git",
     "@graasp/utils": "github:graasp/graasp-utils.git",
     "@material-ui/core": "4.12.3",
