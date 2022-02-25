@@ -125,6 +125,7 @@ const ItemContent = ({ item, enableEdition, permission }) => {
             edit={isEditing}
             onSave={onSaveDocument}
             saveButtonId={saveButtonId}
+            maxHeight="70vh"
           />
         </div>
       );
