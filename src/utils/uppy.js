@@ -30,6 +30,8 @@ const configureUppy = ({
     metaFields: [],
   });
 
+  // todo: pre process file and check beforehand the user remaining storage
+
   uppy.on('file-added', (file) => {
     onFileAdded?.(file);
   });

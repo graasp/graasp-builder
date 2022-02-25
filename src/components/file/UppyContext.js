@@ -45,7 +45,8 @@ const UppyContextProvider = ({ enable, itemId, children }) => {
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
-      onFileUploadComplete({ id: itemId });
+      const data = result.successful[0].response.body;
+      onFileUploadComplete({ id: itemId, data });
     }
 
     return false;
