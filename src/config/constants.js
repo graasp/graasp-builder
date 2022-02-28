@@ -186,3 +186,8 @@ export const CATEGORY_TYPES = {
 export const ACCEPT_COOKIES_NAME = 'accept-all-cookies';
 
 export const SUBMIT_BUTTON_WIDTH = 100;
+
+export const CC_LICENSE_ADAPTION_OPTIONS = {
+  ALLOW: 'allow',
+  ALIKE: 'alike',
+};

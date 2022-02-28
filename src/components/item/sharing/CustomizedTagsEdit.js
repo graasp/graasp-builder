@@ -67,8 +67,8 @@ const CustomizedTagsEdit = ({ item, edit }) => {
     const tagsList =
       displayValues
         ?.split(',')
-        .map((entry) => entry.trim())
-        .filter(Boolean) || [];
+        ?.map((entry) => entry.trim())
+        ?.filter(Boolean) || [];
     updateCustomizedTags({
       id: itemId,
       name: itemName,

@@ -1,13 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loader } from '@graasp/ui';
+import { Loader, CCLicenseIcon } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import {
   Typography,
   FormControl,
   FormControlLabel,
   RadioGroup,
-  FormHelperText,
   Button,
   Radio,
   Tooltip,
@@ -15,11 +14,14 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
-import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { redirect } from '@graasp/utils';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { SUBMIT_BUTTON_WIDTH } from '../../../config/constants';
+import {
+  CC_LICENSE_ADAPTION_OPTIONS,
+  SUBMIT_BUTTON_WIDTH,
+} from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -42,21 +44,19 @@ const CCLicenseSelection = ({ item, edit }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: updateCCLicense } = useMutation(EDIT_ITEM);
+  const [optionValue, setOptionValue] = useState(null);
 
   // user
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
 
-  // current item
-  const { itemId } = useParams();
-
+  // itemId
+  const itemId = item?.get('id');
   const settings = item?.get('settings');
   const itemName = item?.get('name');
 
-  const [optionValue, setOptionValue] = useState(null);
-
   useEffect(() => {
     if (settings) {
-      setOptionValue(settings.ccLicense);
+      setOptionValue(settings.ccLicenseAdaption);
     }
   }, [settings]);
 
@@ -71,41 +71,13 @@ const CCLicenseSelection = ({ item, edit }) => {
     updateCCLicense({
       id: itemId,
       name: itemName,
-      settings: { ccLicense: optionValue },
+      settings: { ccLicenseAdaption: optionValue },
     });
   };
 
   const handleClick = () => {
-    window.open('https://creativecommons.org/about/cclicenses/', '_blank');
-  };
-
-  const displayIcon = () => {
-    if (optionValue === 'yes') {
-      return (
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
-          <img
-            alt="Creative Commons License"
-            className={classes.icon}
-            src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
-          />
-        </a>
-      );
-    }
-    if (optionValue === 'conditional') {
-      return (
-        <a
-          rel="license"
-          href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
-        >
-          <img
-            alt="Creative Commons License"
-            className={classes.icon}
-            src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"
-          />
-        </a>
-      );
-    }
-    return <></>;
+    const url = 'https://creativecommons.org/about/cclicenses/';
+    redirect(url, { OpenInNewTab: true });
   };
 
   return (
@@ -125,11 +97,14 @@ const CCLicenseSelection = ({ item, edit }) => {
         <FormControl
           component="fieldset"
           className={classes.formControl}
-          disabled={!edit || settings?.ccLicense === 'yes'} // if choose 'yes', cannot change back
+          disabled={
+            !edit ||
+            settings?.ccLicenseAdaption === CC_LICENSE_ADAPTION_OPTIONS.ALLOW
+          } // if choose 'yes', cannot change back
         >
           <Typography variant="body1">
             {t(
-              'All content published on Graasp-Explorer does not allow commercial use.',
+              'All content published on Graasp Explorer does not allow commercial use.',
             )}
           </Typography>
           <Typography variant="body1">
@@ -137,22 +112,21 @@ const CCLicenseSelection = ({ item, edit }) => {
           </Typography>
           <RadioGroup
             aria-label="CC License"
-            name="CC License"
+            name={t('CC License')}
             value={optionValue}
             onChange={handleChange}
           >
             <FormControlLabel
-              value="yes"
+              value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
               control={<Radio color="primary" />}
               label={t('Yes')}
             />
             <FormControlLabel
-              value="conditional"
+              value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
               control={<Radio color="primary" />}
               label={t('Only if others share alike')}
             />
           </RadioGroup>
-          <FormHelperText>{}</FormHelperText>
           <Button
             type="submit"
             variant="outlined"
@@ -164,7 +138,7 @@ const CCLicenseSelection = ({ item, edit }) => {
         </FormControl>
       </form>
       <Typography variant="subtitle1">{t('Icon Preview')}</Typography>
-      {displayIcon()}
+      <CCLicenseIcon adaption={optionValue} className={classes.icon} />
     </>
   );
 };
