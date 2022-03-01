@@ -44,7 +44,7 @@ const CCLicenseSelection = ({ item, edit }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: updateCCLicense } = useMutation(EDIT_ITEM);
-  const [optionValue, setOptionValue] = useState(null);
+  const [optionValue, setOptionValue] = useState(false);
 
   // user
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
