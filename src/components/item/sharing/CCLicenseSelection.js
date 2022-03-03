@@ -4,13 +4,17 @@ import { Loader, CCLicenseIcon } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import {
   Typography,
-  FormControl,
   FormControlLabel,
   RadioGroup,
   Button,
   Radio,
   Tooltip,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
   makeStyles,
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
@@ -45,14 +49,18 @@ const CCLicenseSelection = ({ item, edit }) => {
   const classes = useStyles();
   const { mutate: updateCCLicense } = useMutation(EDIT_ITEM);
   const [optionValue, setOptionValue] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // user
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
 
   // itemId
   const itemId = item?.get('id');
+
   const settings = item?.get('settings');
   const itemName = item?.get('name');
+  const disabled =
+    settings?.ccLicenseAdaption === CC_LICENSE_ADAPTION_OPTIONS.ALLOW || !edit;
 
   useEffect(() => {
     if (settings) {
@@ -66,6 +74,19 @@ const CCLicenseSelection = ({ item, edit }) => {
     setOptionValue(event.target.value);
   };
 
+  const handleClick = () => {
+    const url = 'https://creativecommons.org/about/cclicenses/';
+    redirect(url, { OpenInNewTab: true });
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     updateCCLicense({
@@ -73,11 +94,7 @@ const CCLicenseSelection = ({ item, edit }) => {
       name: itemName,
       settings: { ccLicenseAdaption: optionValue },
     });
-  };
-
-  const handleClick = () => {
-    const url = 'https://creativecommons.org/about/cclicenses/';
-    redirect(url, { OpenInNewTab: true });
+    handleClose();
   };
 
   return (
@@ -93,50 +110,60 @@ const CCLicenseSelection = ({ item, edit }) => {
           </IconButton>
         </Tooltip>
       </Typography>
-      <form onSubmit={handleSubmit}>
-        <FormControl
-          component="fieldset"
-          className={classes.formControl}
-          disabled={
-            !edit ||
-            settings?.ccLicenseAdaption === CC_LICENSE_ADAPTION_OPTIONS.ALLOW
-          } // if choose 'yes', cannot change back
-        >
-          <Typography variant="body1">
+      <Typography variant="body1">
+        {t(
+          'All content published on Graasp Explorer does not allow commercial use.',
+        )}
+      </Typography>
+      <Typography variant="body1">
+        {t('Allow adaptations of your work to be shared?')}
+      </Typography>
+      <RadioGroup
+        aria-label="CC License"
+        name={t('CC License')}
+        value={optionValue}
+        onChange={handleChange}
+      >
+        <FormControlLabel
+          value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
+          control={<Radio color="primary" />}
+          label={t('Yes')}
+        />
+        <FormControlLabel
+          value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
+          control={<Radio color="primary" />}
+          label={t('Only if others share alike')}
+        />
+      </RadioGroup>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={handleClickOpen}
+        disabled={disabled || !optionValue} // disable the button if no option is selected
+      >
+        {t('Submit')}
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>{t('Confirm Your Submission')}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {t('Attention: This Action is irrevertable!')}
+            <br />
             {t(
-              'All content published on Graasp Explorer does not allow commercial use.',
+              'Once you submit your choice, you cannot remove selected Creative Commons License, or change to a more restricted choice.',
             )}
-          </Typography>
-          <Typography variant="body1">
-            {t('Allow adaptations of your work to be shared?')}
-          </Typography>
-          <RadioGroup
-            aria-label="CC License"
-            name={t('CC License')}
-            value={optionValue}
-            onChange={handleChange}
-          >
-            <FormControlLabel
-              value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
-              control={<Radio color="primary" />}
-              label={t('Yes')}
-            />
-            <FormControlLabel
-              value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
-              control={<Radio color="primary" />}
-              label={t('Only if others share alike')}
-            />
-          </RadioGroup>
-          <Button
-            type="submit"
-            variant="outlined"
-            color="primary"
-            className={classes.button}
-          >
-            {t('Submit')}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            {t('Cancel')}
           </Button>
-        </FormControl>
-      </form>
+          <Button onClick={handleSubmit} color="primary">
+            {t('Confirm')}
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Typography variant="subtitle1">{t('Icon Preview')}</Typography>
       <CCLicenseIcon adaption={optionValue} className={classes.icon} />
     </>
