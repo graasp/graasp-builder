@@ -6,15 +6,9 @@ import {
   Typography,
   FormControlLabel,
   RadioGroup,
-  Button,
   Radio,
   Tooltip,
   IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
   makeStyles,
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
@@ -22,10 +16,8 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { redirect } from '@graasp/utils';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import {
-  CC_LICENSE_ADAPTION_OPTIONS,
-  SUBMIT_BUTTON_WIDTH,
-} from '../../../config/constants';
+import { CC_LICENSE_ADAPTION_OPTIONS } from '../../../config/constants';
+import CCLicenseDialog from './CCLicenseDialog';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -34,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    maxWidth: SUBMIT_BUTTON_WIDTH,
+    width: 'auto',
   },
   icon: {
     marginTop: theme.spacing(1),
@@ -76,15 +68,7 @@ const CCLicenseSelection = ({ item, edit }) => {
 
   const handleClick = () => {
     const url = 'https://creativecommons.org/about/cclicenses/';
-    redirect(url, { OpenInNewTab: true });
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+    redirect(url, { openInNewTab: true });
   };
 
   const handleSubmit = (event) => {
@@ -94,7 +78,7 @@ const CCLicenseSelection = ({ item, edit }) => {
       name: itemName,
       settings: { ccLicenseAdaption: optionValue },
     });
-    handleClose();
+    setOpen(false);
   };
 
   return (
@@ -135,35 +119,13 @@ const CCLicenseSelection = ({ item, edit }) => {
           label={t('Only if others share alike')}
         />
       </RadioGroup>
-      <Button
-        variant="outlined"
-        color="primary"
+      <CCLicenseDialog
+        open={open}
+        setOpen={setOpen}
+        disabled={disabled || !optionValue}
         className={classes.button}
-        onClick={handleClickOpen}
-        disabled={disabled || !optionValue} // disable the button if no option is selected
-      >
-        {t('Submit')}
-      </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{t('Confirm Your Submission')}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {t('Attention: This Action is irrevertable!')}
-            <br />
-            {t(
-              'Once you submit your choice, you cannot remove selected Creative Commons License, or change to a more restricted choice.',
-            )}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            {t('Cancel')}
-          </Button>
-          <Button onClick={handleSubmit} color="primary">
-            {t('Confirm')}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        handleSubmit={handleSubmit}
+      />
       <Typography variant="subtitle1">{t('Icon Preview')}</Typography>
       <CCLicenseIcon adaption={optionValue} className={classes.icon} />
     </>
