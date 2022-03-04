@@ -191,3 +191,6 @@ export const CC_LICENSE_ADAPTION_OPTIONS = {
   ALLOW: 'allow',
   ALIKE: 'alike',
 };
+
+export const CC_LICENSE_ABOUT_URL =
+  'https://creativecommons.org/about/cclicenses/';

@@ -16,7 +16,10 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { redirect } from '@graasp/utils';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { CC_LICENSE_ADAPTION_OPTIONS } from '../../../config/constants';
+import {
+  CC_LICENSE_ABOUT_URL,
+  CC_LICENSE_ADAPTION_OPTIONS,
+} from '../../../config/constants';
 import CCLicenseDialog from './CCLicenseDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,7 +70,7 @@ const CCLicenseSelection = ({ item, edit }) => {
   };
 
   const handleClick = () => {
-    const url = 'https://creativecommons.org/about/cclicenses/';
+    const url = CC_LICENSE_ABOUT_URL;
     redirect(url, { openInNewTab: true });
   };
 
