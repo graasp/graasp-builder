@@ -149,7 +149,7 @@ const CategorySelection = ({ item, edit }) => {
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             variant="outlined"
-            placeholder={t('Please choose from the list')}
+            placeholder={t('Please choose from list')}
           />
         )}
       />

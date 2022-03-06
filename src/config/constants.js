@@ -184,3 +184,13 @@ export const CATEGORY_TYPES = {
 
 // todo: factor out in graasp constants/utils
 export const ACCEPT_COOKIES_NAME = 'accept-all-cookies';
+
+export const SUBMIT_BUTTON_WIDTH = 100;
+
+export const CC_LICENSE_ADAPTION_OPTIONS = {
+  ALLOW: 'allow',
+  ALIKE: 'alike',
+};
+
+export const CC_LICENSE_ABOUT_URL =
+  'https://creativecommons.org/about/cclicenses/';

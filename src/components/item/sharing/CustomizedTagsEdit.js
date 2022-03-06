@@ -14,7 +14,12 @@ import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { buildCustomizedTagsSelector, ITEM_TAGS_EDIT_INPUT_ID, ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID } from '../../../config/selectors';
+import {
+  buildCustomizedTagsSelector,
+  ITEM_TAGS_EDIT_INPUT_ID,
+  ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
+} from '../../../config/selectors';
+import { SUBMIT_BUTTON_WIDTH } from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -23,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(2),
+    maxWidth: SUBMIT_BUTTON_WIDTH,
   },
 }));
 
@@ -59,7 +65,10 @@ const CustomizedTagsEdit = ({ item, edit }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const tagsList =
-      displayValues?.split(',').map((entry) => entry.trim()) || [];
+      displayValues
+        ?.split(',')
+        ?.map((entry) => entry.trim())
+        ?.filter(Boolean) || [];
     updateCustomizedTags({
       id: itemId,
       name: itemName,
