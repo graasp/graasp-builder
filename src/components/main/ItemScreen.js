@@ -61,10 +61,10 @@ const ItemScreen = () => {
     memberId: currentMember?.get('id'),
   });
   const permission = itemMembership?.permission;
-  const enableEdition = PERMISSIONS_EDITION_ALLOWED.includes(permission);
+  const enableEditing = PERMISSIONS_EDITION_ALLOWED.includes(permission);
 
   const content = (() => {
-    if (enableEdition && isItemSettingsOpen) {
+    if (enableEditing && isItemSettingsOpen) {
       return <ItemSettings item={item} />;
     }
     if (isItemSharingOpen) {
@@ -78,7 +78,7 @@ const ItemScreen = () => {
     return (
       <ItemContent
         item={item}
-        enableEdition={enableEdition}
+        enableEditing={enableEditing}
         permission={permission}
       />
     );
@@ -86,7 +86,7 @@ const ItemScreen = () => {
 
   return (
     <Main>
-      <UppyContextProvider enable={enableEdition} itemId={itemId}>
+      <UppyContextProvider enable={enableEditing} itemId={itemId}>
         <FileUploader />
         <ItemMain item={item}>{content}</ItemMain>
       </UppyContextProvider>
