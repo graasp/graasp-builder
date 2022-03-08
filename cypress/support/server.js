@@ -1054,13 +1054,14 @@ export const mockGetAppLink = (shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(`${API_HOST}/${buildAppItemLinkForTest()}$`),
+      url: new RegExp(`${API_HOST}/${buildAppItemLinkForTest()}`),
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
-      const filepath = url.slice(API_HOST.length);
+
+      const filepath = url.slice(API_HOST.length).split('?')[0];
       return reply({ fixture: filepath });
     },
   ).as('getAppLink');

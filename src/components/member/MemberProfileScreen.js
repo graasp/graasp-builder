@@ -16,7 +16,7 @@ import {
   MEMBER_PROFILE_LANGUAGE_SWITCH_ID,
   MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID,
 } from '../../config/selectors';
-import notifier from '../../middlewares/notifier';
+import notifier from '../../config/notifier';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import Main from '../main/Main';
 import { CurrentUserContext } from '../context/CurrentUserContext';

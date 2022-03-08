@@ -15,9 +15,12 @@ import {
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
-import { API_HOST, ITEM_DEFAULT_HEIGHT } from '../../config/constants';
+import {
+  API_HOST,
+  ITEM_DEFAULT_HEIGHT,
+  CONTEXT_BUILDER,
+} from '../../config/constants';
 import { LayoutContext } from '../context/LayoutContext';
-import FileUploader from '../main/FileUploader';
 import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
@@ -33,7 +36,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemContent = ({ item, enableEdition, permission }) => {
+const ItemContent = ({ item, enableEditing, permission }) => {
   const classes = useStyles();
   const itemId = item.get(ITEM_KEYS.ID);
   const itemType = item?.get(ITEM_KEYS.TYPE);
@@ -61,7 +64,7 @@ const ItemContent = ({ item, enableEdition, permission }) => {
         (itemType === ITEM_TYPES.FILE || itemType === ITEM_TYPES.S3_FILE),
     },
   );
-  const isEditing = enableEdition && editingItemId === itemId;
+  const isEditing = enableEditing && editingItemId === itemId;
 
   if (isLoadingFileContent || isLoadingUser || isLoadingChildren) {
     return <Loader />;
@@ -133,7 +136,7 @@ const ItemContent = ({ item, enableEdition, permission }) => {
       return (
         <AppItem
           item={item}
-          apiHost={API_HOST} // todo: to change
+          apiHost={API_HOST}
           editCaption={isEditing}
           onSaveCaption={onSaveCaption}
           saveButtonId={saveButtonId}
@@ -142,12 +145,12 @@ const ItemContent = ({ item, enableEdition, permission }) => {
           height={ITEM_DEFAULT_HEIGHT}
           permission={permission}
           requestApiAccessToken={Api.requestApiAccessToken}
+          context={CONTEXT_BUILDER}
         />
       );
     case ITEM_TYPES.FOLDER:
       return (
         <>
-          <FileUploader />
           <Items
             parentId={itemId}
             id={buildItemsTableId(itemId)}
@@ -156,7 +159,7 @@ const ItemContent = ({ item, enableEdition, permission }) => {
             isEditing={isEditing}
             onSaveCaption={onSaveCaption}
             headerElements={
-              enableEdition
+              enableEditing
                 ? [<NewItemButton key="newButton" fontSize="small" />]
                 : undefined
             }
@@ -171,12 +174,12 @@ const ItemContent = ({ item, enableEdition, permission }) => {
 
 ItemContent.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  enableEdition: PropTypes.bool,
+  enableEditing: PropTypes.bool,
   permission: PropTypes.string.isRequired,
 };
 
 ItemContent.defaultProps = {
-  enableEdition: false,
+  enableEditing: false,
 };
 
 export default ItemContent;

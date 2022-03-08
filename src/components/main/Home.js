@@ -4,18 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { hooks } from '../../config/queryClient';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
-import FileUploader from './FileUploader';
+import FileUploader from '../file/FileUploader';
 import { HOME_ERROR_ALERT_ID, OWNED_ITEMS_ID } from '../../config/selectors';
 import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
 import Authorization from '../common/Authorization';
+import { UppyContextProvider } from '../file/UppyContext';
 
 const Home = () => {
   const { t } = useTranslation();
-  // get own items
-  const { data: ownItems, isLoading, isError } = hooks.useOwnItems();
+  const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
 
   if (isError) {
     return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
@@ -27,15 +27,17 @@ const Home = () => {
 
   return (
     <Main>
-      <FileUploader />
-      <ItemHeader />
-      <Items
-        defautSortedColumn={{ updatedAt: 'desc' }}
-        id={OWNED_ITEMS_ID}
-        title={t('My Items')}
-        items={ownItems}
-        headerElements={[<NewItemButton key="newButton" fontSize="small" />]}
-      />
+      <UppyContextProvider enable={isSuccess}>
+        <FileUploader />
+        <ItemHeader />
+        <Items
+          defautSortedColumn={{ updatedAt: 'desc' }}
+          id={OWNED_ITEMS_ID}
+          title={t('My Items')}
+          items={ownItems}
+          headerElements={[<NewItemButton key="newButton" fontSize="small" />]}
+        />
+      </UppyContextProvider>
     </Main>
   );
 };

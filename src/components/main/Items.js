@@ -22,6 +22,7 @@ const Items = ({
   defautSortedColumn,
   isEditing,
   parentId,
+  showThumbnails,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -65,6 +66,7 @@ const Items = ({
           toolbarActions={toolbarActions}
           clickable={clickable}
           isEditing={isEditing}
+          showThumbnails={showThumbnails}
         />
       );
   }
@@ -86,6 +88,7 @@ Items.propTypes = {
   }),
   isEditing: PropTypes.bool,
   parentId: PropTypes.string,
+  showThumbnails: PropTypes.bool,
 };
 
 Items.defaultProps = {
@@ -97,6 +100,7 @@ Items.defaultProps = {
   defautSortedColumn: {},
   isEditing: false,
   parentId: null,
+  showThumbnails: true,
 };
 
 export default Items;

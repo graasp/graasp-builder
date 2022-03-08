@@ -194,3 +194,5 @@ export const CC_LICENSE_ADAPTION_OPTIONS = {
 
 export const CC_LICENSE_ABOUT_URL =
   'https://creativecommons.org/about/cclicenses/';
+
+export const CONTEXT_BUILDER = 'builder';

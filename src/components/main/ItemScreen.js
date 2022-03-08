@@ -25,6 +25,8 @@ import {
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
 import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
+import { UppyContextProvider } from '../file/UppyContext';
+import FileUploader from '../file/FileUploader';
 
 const { useItem, useItemMemberships, useCurrentMember, useItemLogin } = hooks;
 
@@ -59,10 +61,10 @@ const ItemScreen = () => {
     memberId: currentMember?.get('id'),
   });
   const permission = itemMembership?.permission;
-  const enableEdition = PERMISSIONS_EDITION_ALLOWED.includes(permission);
+  const enableEditing = PERMISSIONS_EDITION_ALLOWED.includes(permission);
 
   const content = (() => {
-    if (enableEdition && isItemSettingsOpen) {
+    if (enableEditing && isItemSettingsOpen) {
       return <ItemSettings item={item} />;
     }
     if (isItemSharingOpen) {
@@ -76,7 +78,7 @@ const ItemScreen = () => {
     return (
       <ItemContent
         item={item}
-        enableEdition={enableEdition}
+        enableEditing={enableEditing}
         permission={permission}
       />
     );
@@ -84,7 +86,10 @@ const ItemScreen = () => {
 
   return (
     <Main>
-      <ItemMain item={item}>{content}</ItemMain>
+      <UppyContextProvider enable={enableEditing} itemId={itemId}>
+        <FileUploader />
+        <ItemMain item={item}>{content}</ItemMain>
+      </UppyContextProvider>
     </Main>
   );
 };

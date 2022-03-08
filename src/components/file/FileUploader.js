@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { DragDrop } from '@uppy/react';
-import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
-import { useMatch } from 'react-router';
-import { routines, MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
-import { useMutation } from '../../config/queryClient';
-import { configureFileUppy } from '../../utils/uppy';
 import { UPLOADER_ID } from '../../config/selectors';
-import { buildItemPath } from '../../config/paths';
-import notifier from '../../middlewares/notifier';
-
-const { uploadFileRoutine } = routines;
+import { UppyContext } from './UppyContext';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -48,53 +40,20 @@ const useStyles = makeStyles((theme) => ({
 
 const FileUploader = () => {
   const classes = useStyles();
-  const match = useMatch(buildItemPath());
-  const itemId = match?.params?.itemId;
-  const [uppy, setUppy] = useState(null);
+  const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { mutate: onFileUploadComplete } = useMutation(
-    MUTATION_KEYS.FILE_UPLOAD,
-  );
   const { t } = useTranslation();
 
   const closeUploader = () => {
     setIsDragging(false);
   };
 
-  const onFilesAdded = () => {
-    closeUploader();
-  };
-
-  const onComplete = (result) => {
-    // update app on complete
-    // todo: improve with websockets or by receiving corresponding items
-    if (result?.successful?.length) {
-      onFileUploadComplete({ id: itemId });
-    }
-
-    return false;
-  };
-
-  const onError = (error) => {
-    onFileUploadComplete({ id: itemId, error });
-  };
-
-  const onUpload = () => {
-    notifier({ type: uploadFileRoutine.REQUEST });
-  };
-
-  const applyUppy = () => {
-    setUppy(
-      configureFileUppy({
-        itemId,
-        onComplete,
-        onFilesAdded,
-        onError,
-        onUpload,
-      }),
-    );
-  };
+  useEffect(() => {
+    uppy?.on('files-added', () => {
+      closeUploader();
+    });
+  }, [uppy]);
 
   const handleWindowDragEnter = () => {
     setIsDragging(true);
@@ -118,8 +77,6 @@ const FileUploader = () => {
   };
 
   useEffect(() => {
-    applyUppy();
-
     window.addEventListener('dragenter', handleWindowDragEnter);
     window.addEventListener('mouseout', handleDragEnd);
 
@@ -131,11 +88,6 @@ const FileUploader = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    applyUppy();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemId]);
 
   const handleDrop = () => {
     // todo: trigger error that only MAX_FILES was uploaded

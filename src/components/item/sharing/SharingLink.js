@@ -23,7 +23,7 @@ import {
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
   SHARING_LINK_TYPES,
 } from '../../../config/constants';
-import notifier from '../../../middlewares/notifier';
+import notifier from '../../../config/notifier';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../../types/clipboard';
 import { copyToClipboard } from '../../../utils/clipboard';
 

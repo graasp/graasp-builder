@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import { routines } from '@graasp/query-client';
 import { Dashboard } from '@uppy/react';
@@ -10,7 +9,7 @@ import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { configureZipImportUppy } from '../../utils/uppy';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
-import notifier from '../../middlewares/notifier';
+import notifier from '../../config/notifier';
 
 const ImportZip = () => {
   const [uppy, setUppy] = useState(null);

@@ -46,9 +46,13 @@
     deleteAppDataDelete.addEventListener('click', deleteAppData);
     patchAppDataButton.addEventListener('click', patchAppData);
 
+    var params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+
     var port2;
     var authToken;
-    var itemId;
+    var itemId = params.itemId;
 
     function failOnError(response) {
       if (!response.ok) return Promise.reject('An unexpected error happened.');
@@ -75,7 +79,6 @@
     function initPort(e) {
       port2 = e.ports[0];
       port2.onmessage = onMessage;
-      console.log(e.data);
       itemId = JSON.parse(e.data).payload.itemId;
       document.getElementById('requestContext-message').innerHTML = itemId;
     }
@@ -100,7 +103,7 @@
       e.preventDefault();
       window.parent.postMessage(
         JSON.stringify({
-          type: 'GET_CONTEXT',
+          type: 'GET_CONTEXT' + '_' + itemId,
         }),
         '*',
       );
@@ -111,7 +114,7 @@
       e.preventDefault();
       port2.postMessage(
         JSON.stringify({
-          type: 'GET_AUTH_TOKEN',
+          type: 'GET_AUTH_TOKEN' + '_' + itemId,
           payload: {
             // false data
             app: '500fe32d-af45-4b23-8cd2-093e46289505',

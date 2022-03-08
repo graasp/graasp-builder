@@ -66,6 +66,7 @@ const ItemsTable = ({
   clickable,
   defautSortedColumn,
   isEditing,
+  showThumbnails,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -173,11 +174,12 @@ const ItemsTable = ({
         headerCheckboxSelection: true,
         checkboxSelection: true,
         headerName: t('Name'),
-        cellRendererFramework: NameCellRenderer,
+        cellRendererFramework: NameCellRenderer(showThumbnails),
         flex: 4,
         comparator: textComparator,
         sort: defautSortedColumn?.name,
         field: 'name',
+        showThumbnails,
       },
       {
         field: 'type',
@@ -207,7 +209,15 @@ const ItemsTable = ({
         sortable: false,
       },
     ],
-    [canDrag, classes, t, defautSortedColumn, ActionComponent, actions],
+    [
+      canDrag,
+      classes,
+      t,
+      defautSortedColumn,
+      ActionComponent,
+      actions,
+      showThumbnails,
+    ],
   );
 
   // never changes, so we can use useMemo
@@ -276,6 +286,7 @@ ItemsTable.propTypes = {
     name: PropTypes.string,
   }),
   isEditing: PropTypes.bool,
+  showThumbnails: PropTypes.bool,
 };
 
 ItemsTable.defaultProps = {
@@ -289,6 +300,7 @@ ItemsTable.defaultProps = {
   clickable: true,
   defautSortedColumn: {},
   isEditing: false,
+  showThumbnails: true,
 };
 
 export default ItemsTable;

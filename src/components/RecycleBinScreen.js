@@ -67,6 +67,7 @@ const RecycleBinScreen = () => {
         items={List(items)}
         actions={RowActions}
         toolbarActions={ToolbarActions}
+        showThumbnails={false}
       />
     </Main>
   );
