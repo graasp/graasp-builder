@@ -19,7 +19,6 @@ import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import ItemPublishConfiguration from './ItemPublishConfiguration';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -124,12 +123,8 @@ const ItemSharingTab = ({ item, memberships }) => {
       <Typography variant="h4" className={classes.title}>
         {t('Sharing')}
       </Typography>
-
       <SharingLink itemId={item.get('id')} />
-
       <VisibilitySelect item={item} edit={canEdit} />
-      <ItemPublishConfiguration item={item} edit={canEdit} />
-
       {renderMembershipSettings()}
     </Container>
   );
