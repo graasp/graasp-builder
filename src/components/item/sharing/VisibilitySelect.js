@@ -267,7 +267,16 @@ const VisibilitySelect = ({ item, edit }) => {
           )}
         </Typography>
       )}
-      {open && <ItemPublishConfiguration item={item} edit={edit} />}
+      {open && (
+        <ItemPublishConfiguration
+          item={item}
+          edit={edit}
+          tagValue={tagValue}
+          itemTagValue={itemTagValue}
+          publishedTag={getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name)}
+          publicTag={getTagByName(tags, SETTINGS.ITEM_PUBLIC.name)}
+        />
+      )}
     </>
   );
 };
