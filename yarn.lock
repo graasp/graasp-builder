@@ -95,6 +95,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/eslint-parser@npm:7.17.0":
+  version: 7.17.0
+  resolution: "@babel/eslint-parser@npm:7.17.0"
+  dependencies:
+    eslint-scope: ^5.1.1
+    eslint-visitor-keys: ^2.1.0
+    semver: ^6.3.0
+  peerDependencies:
+    "@babel/core": ">=7.11.0"
+    eslint: ^7.5.0 || ^8.0.0
+  checksum: 1cedd9998dd89f779bbc5496531e3ef1b43d6f4fb7209ed5088938292b81287302cb47c0923ce074e84e83aa41b236b09bfecacdf20770f4cbfade2de9519c10
+  languageName: node
+  linkType: hard
+
+"@babel/eslint-plugin@npm:7.16.5":
+  version: 7.16.5
+  resolution: "@babel/eslint-plugin@npm:7.16.5"
+  dependencies:
+    eslint-rule-composer: ^0.3.0
+  peerDependencies:
+    "@babel/eslint-parser": ">=7.11.0"
+    eslint: ">=7.5.0"
+  checksum: 479fb45cb7adf9c9cc02e8bc15a704e94b0eb5b961b9a66381994557d644aa7f4ffe9d7e6d16ed4ac5d2f7929f38d68bf0062f54f19cac9efa1f62e9b6f48a42
+  languageName: node
+  linkType: hard
+
 "@babel/generator@npm:^7.12.1, @babel/generator@npm:^7.17.3, @babel/generator@npm:^7.17.7":
   version: 7.17.7
   resolution: "@babel/generator@npm:7.17.7"
@@ -1416,7 +1442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-react@npm:^7.12.5, @babel/preset-react@npm:^7.16.0":
+"@babel/preset-react@npm:7.16.7, @babel/preset-react@npm:^7.12.5, @babel/preset-react@npm:^7.16.0":
   version: 7.16.7
   resolution: "@babel/preset-react@npm:7.16.7"
   dependencies:
@@ -1898,7 +1924,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1a7a124944787dd3a70c64e2c76e27b70b356fda"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=0ef8be02dd7fecdbe5522c83c891ff806673a4e1"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     axios: 0.26.1
@@ -1911,7 +1937,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 79da7437aca9df3bac8faa344ba5ed5f0a101e9c70ea0032bdc6126cd23c80009a18b4a603b1d8c8460b2bf7e74eab7ded529e8b26a183a4cab732d7817da749
+  checksum: 34f9a418c1a5484233d1df22d18930f7edcfa662332c57e88023840a1a64b96589a017fdfa3e4d091919abd1805f4b1b74aa06a90a86e6643c1945441cfbf2c1
   languageName: node
   linkType: hard
 
@@ -2320,19 +2346,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material-ui/icons@npm:5.0.0-beta.4":
-  version: 5.0.0-beta.4
-  resolution: "@material-ui/icons@npm:5.0.0-beta.4"
+"@material-ui/icons@npm:5.0.0-beta.5":
+  version: 5.0.0-beta.5
+  resolution: "@material-ui/icons@npm:5.0.0-beta.5"
   dependencies:
     "@babel/runtime": ^7.14.8
   peerDependencies:
     "@material-ui/core": ^5.0.0-alpha.36
     "@types/react": ^16.8.6 || ^17.0.0
-    react: ^17.0.0
+    react: ^17.0.2
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: c5880edaa5d7460d67ae00985e7d0227b327c2be1dda6dab35bf5830eb605299bc8f765a766623150459591859b75a5d0cfe7416d1bb5a2eb5059d5b558e44cf
+  checksum: e739ae18709af8388a88ec5d68ced7194c2445e99e381c616f0d4d4c670e9d560388831418ca8c49a8ebe2fdbb75f1404690805234ef6a418d9c2aa218a6efd2
   languageName: node
   linkType: hard
 
@@ -3012,7 +3038,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minimatch@npm:*, @types/minimatch@npm:^3.0.3":
+"@types/minimatch@npm:*":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
   checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
@@ -4228,13 +4254,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array-differ@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "array-differ@npm:3.0.0"
-  checksum: 117edd9df5c1530bd116c6e8eea891d4bd02850fd89b1b36e532b6540e47ca620a373b81feca1c62d1395d9ae601516ba538abe5e8172d41091da2c546b05fb7
-  languageName: node
-  linkType: hard
-
 "array-flatten@npm:1.1.1":
   version: 1.1.1
   resolution: "array-flatten@npm:1.1.1"
@@ -4543,7 +4562,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-eslint@npm:10.1.0, babel-eslint@npm:^10.1.0":
+"babel-eslint@npm:^10.1.0":
   version: 10.1.0
   resolution: "babel-eslint@npm:10.1.0"
   dependencies:
@@ -7125,12 +7144,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-localstorage-commands@npm:1.6.1":
-  version: 1.6.1
-  resolution: "cypress-localstorage-commands@npm:1.6.1"
+"cypress-localstorage-commands@npm:1.7.0":
+  version: 1.7.0
+  resolution: "cypress-localstorage-commands@npm:1.7.0"
   peerDependencies:
     cypress: ">=2.1.0"
-  checksum: 9f3fb01a90c2b5024c95349d3841fa136b4571b7a4c6cb9aaf706ad042fb2aa30370378f2a7fb4ea06b5d941180ed7454bc84c9262ee66a5d353e9869adbfd1e
+  checksum: 395944883aa917519ea6ccaa8f1a4847c496b8e96bff0bf1e8ab80f89ce9a937462a09e075ffc8f85e176a257aa674355c9af4e3153139788c4d8ad15da86bff
   languageName: node
   linkType: hard
 
@@ -7874,9 +7893,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.719":
-  version: 1.4.101
-  resolution: "electron-to-chromium@npm:1.4.101"
-  checksum: b4ba580c7e9f6ee4ea8c84524ed1c5279dcabf2d52b72e05aa7d4dc2097b07ada694c05e30d6f1ba0fe9e3788f0f027e9092fd4742967d65b484eb5db1e188f9
+  version: 1.4.100
+  resolution: "electron-to-chromium@npm:1.4.100"
+  checksum: d1a7e993421f3f693d0dce29f3f758cec293723e035fcdb2899b7ec0a6897292003232f0dc934324f2349d1e63d5c711d8137c20c7ff0b541fc8b9bac209380d
   languageName: node
   linkType: hard
 
@@ -8445,6 +8464,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-rule-composer@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "eslint-rule-composer@npm:0.3.0"
+  checksum: c2f57cded8d1c8f82483e0ce28861214347e24fd79fd4144667974cd334d718f4ba05080aaef2399e3bbe36f7d6632865110227e6b176ed6daa2d676df9281b1
+  languageName: node
+  linkType: hard
+
 "eslint-scope@npm:^4.0.3":
   version: 4.0.3
   resolution: "eslint-scope@npm:4.0.3"
@@ -8492,7 +8518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^2.0.0":
+"eslint-visitor-keys@npm:^2.0.0, eslint-visitor-keys@npm:^2.1.0":
   version: 2.1.0
   resolution: "eslint-visitor-keys@npm:2.1.0"
   checksum: e3081d7dd2611a35f0388bbdc2f5da60b3a3c5b8b6e928daffff7391146b434d691577aa95064c8b7faad0b8a680266bcda0a42439c18c717b80e6718d7e267d
@@ -9868,6 +9894,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "graasp-compose@workspace:."
   dependencies:
+    "@babel/eslint-parser": 7.17.0
+    "@babel/eslint-plugin": 7.16.5
+    "@babel/preset-react": 7.16.7
     "@commitlint/cli": 16.2.3
     "@commitlint/config-conventional": 16.2.1
     "@cypress/code-coverage": 3.9.12
@@ -9879,7 +9908,7 @@ __metadata:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
-    "@material-ui/icons": 5.0.0-beta.4
+    "@material-ui/icons": 5.0.0-beta.5
     "@material-ui/lab": 4.0.0-alpha.60
     "@testing-library/jest-dom": ^5.16.3
     "@testing-library/react": ^12.1.4
@@ -9893,13 +9922,12 @@ __metadata:
     "@uppy/xhr-upload": 2.0.7
     ag-grid-community: 27.1.0
     ag-grid-react: 27.1.0
-    babel-eslint: 10.1.0
     clsx: 1.1.1
     concurrently: 7.0.0
     connected-react-router: 6.9.2
     cypress: 9.5.2
     cypress-file-upload: 5.0.2
-    cypress-localstorage-commands: 1.6.1
+    cypress-localstorage-commands: 1.7.0
     env-cmd: 10.1.0
     eslint: ^7.31.0
     eslint-config-airbnb: 18.2.1
@@ -9919,7 +9947,6 @@ __metadata:
     npm-run-all: 4.1.5
     nyc: 15.1.0
     prettier: 2.6.1
-    pretty-quick: 3.1.3
     prop-types: 15.8.1
     qs: 6.10.3
     react: ^17.0.2
@@ -13549,13 +13576,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mri@npm:^1.1.5":
-  version: 1.2.0
-  resolution: "mri@npm:1.2.0"
-  checksum: 83f515abbcff60150873e424894a2f65d68037e5a7fcde8a9e2b285ee9c13ac581b63cfc1e6826c4732de3aeb84902f7c1e16b7aff46cd3f897a0f757a894e85
-  languageName: node
-  linkType: hard
-
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -13593,19 +13613,6 @@ __metadata:
   bin:
     multicast-dns: cli.js
   checksum: f515b49ca964429ab48a4ac8041fcf969c927aeb49ab65288bd982e52c849a870fc3b03565780b0d194a1a02da8821f28b6425e48e95b8107bc9fcc92f571a6f
-  languageName: node
-  linkType: hard
-
-"multimatch@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "multimatch@npm:4.0.0"
-  dependencies:
-    "@types/minimatch": ^3.0.3
-    array-differ: ^3.0.0
-    array-union: ^2.1.0
-    arrify: ^2.0.1
-    minimatch: ^3.0.4
-  checksum: bdb6a98dad4e919d9a1a2a0db872f44fa2337315f2fd5827d91ae005cf22f4425782bdfa97c10b80d567f0cb3c226c31f4e85f8f6a4a4be4facf9af0de1bb0c2
   languageName: node
   linkType: hard
 
@@ -15718,24 +15725,6 @@ __metadata:
     ansi-styles: ^5.0.0
     react-is: ^17.0.1
   checksum: cf610cffcb793885d16f184a62162f2dd0df31642d9a18edf4ca298e909a8fe80bdbf556d5c9573992c102ce8bf948691da91bf9739bee0ffb6e79c8a8a6e088
-  languageName: node
-  linkType: hard
-
-"pretty-quick@npm:3.1.3":
-  version: 3.1.3
-  resolution: "pretty-quick@npm:3.1.3"
-  dependencies:
-    chalk: ^3.0.0
-    execa: ^4.0.0
-    find-up: ^4.1.0
-    ignore: ^5.1.4
-    mri: ^1.1.5
-    multimatch: ^4.0.0
-  peerDependencies:
-    prettier: ">=2.0.0"
-  bin:
-    pretty-quick: bin/pretty-quick.js
-  checksum: 28bdc32571e6308e049497f58a9245f272275973782b6ed7fbcf98937101cc605a81b3ab48629dba4687b7e86c87a3733febacdc0746ca4da5d1c80a0b88cf45
   languageName: node
   linkType: hard
 

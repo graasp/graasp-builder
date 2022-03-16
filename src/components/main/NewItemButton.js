@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
+import { Button } from '@graasp/ui';
 import AddIcon from '@material-ui/icons/Add';
 import NewItemModal from './NewItemModal';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
@@ -34,8 +34,6 @@ const NewItemButton = ({ fontSize }) => {
       <Tooltip placement="left" title={t('Create new item')} arrow>
         <Button
           id={CREATE_ITEM_BUTTON_ID}
-          color="primary"
-          variant="contained"
           fontSize={fontSize}
           className={classes.createNewButton}
           onClick={handleClickOpen}

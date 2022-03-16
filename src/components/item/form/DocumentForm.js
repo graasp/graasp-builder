@@ -44,7 +44,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
           onChange={handleOnChange}
           edit
           placeholderText={t('Write something...')}
-          showSaveButton={false}
+          showActions={false}
         />
       </div>
     </>

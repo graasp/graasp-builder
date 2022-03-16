@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { Box, makeStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import { Button } from '@graasp/ui';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -143,12 +143,11 @@ const NewItemModal = ({ open, handleClose }) => {
       case ITEM_TYPES.DOCUMENT:
         return (
           <>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} variant="text">
               {t('Cancel')}
             </Button>
             <Button
               onClick={submit}
-              color="primary"
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
               disabled={
                 isConfirmButtonDisabled ||
@@ -162,11 +161,7 @@ const NewItemModal = ({ open, handleClose }) => {
       case ITEM_TYPES.FILE:
       case ITEM_TYPES.ZIP:
         return (
-          <Button
-            id={CREATE_ITEM_CLOSE_BUTTON_ID}
-            onClick={handleClose}
-            color="primary"
-          >
+          <Button id={CREATE_ITEM_CLOSE_BUTTON_ID} onClick={handleClose}>
             {t('Close')}
           </Button>
         );

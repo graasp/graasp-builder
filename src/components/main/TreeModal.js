@@ -5,8 +5,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { useTranslation } from 'react-i18next';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { Button, makeStyles } from '@material-ui/core';
-import { DynamicTreeView, Loader } from '@graasp/ui';
+import { makeStyles } from '@material-ui/core';
+import { Button, DynamicTreeView, Loader } from '@graasp/ui';
 import { ROOT_ID, TREE_VIEW_MAX_WIDTH } from '../../config/constants';
 import { ITEM_KEYS, ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { hooks } from '../../config/queryClient';
@@ -112,13 +112,11 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
       <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
       <DialogContent>{tree}</DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} variant="text">
           {t('Cancel')}
         </Button>
         <Button
           onClick={onClickConfirm}
-          color="primary"
-          variant="contained"
           disabled={!selectedId}
           id={TREE_MODAL_CONFIRM_BUTTON_ID}
         >

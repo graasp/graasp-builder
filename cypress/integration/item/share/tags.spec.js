@@ -12,6 +12,7 @@ import {
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
+import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 
 const openShareItemTab = (id) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
@@ -48,7 +49,7 @@ describe('Customized Tags', () => {
       .type(NEW_CUSTOMIZED_TAG)
       .should('have.text', NEW_CUSTOMIZED_TAG);
     cy.get(`#${ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}`).click();
-    cy.wait('@editItem').then((data) => {
+    cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
       const {
         request: { url, body },
       } = data;

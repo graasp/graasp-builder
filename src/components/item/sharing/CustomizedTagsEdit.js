@@ -1,14 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loader } from '@graasp/ui';
+import { Loader, Button } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
-import {
-  Typography,
-  TextField,
-  Button,
-  Chip,
-  makeStyles,
-} from '@material-ui/core';
+import { Typography, TextField, Chip, makeStyles } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -19,7 +13,6 @@ import {
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
 } from '../../../config/selectors';
-import { SUBMIT_BUTTON_WIDTH } from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -28,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(2),
-    maxWidth: SUBMIT_BUTTON_WIDTH,
   },
 }));
 
@@ -85,29 +77,25 @@ const CustomizedTagsEdit = ({ item, edit }) => {
         {t('Please seperate tags by comma. ')}
         {t('Eg. English, Biology, Lab, Plants, ..., Demo')}
       </Typography>
-      <form className={classes.container} onSubmit={handleSubmit}>
-        <TextField
-          disabled={!edit}
-          variant="outlined"
-          label={t('Tags')}
-          multiline
-          maxRows={5}
-          defaultValue={displayValues}
-          onChange={handleChange}
-          id={ITEM_TAGS_EDIT_INPUT_ID}
-        />
-        <Button
-          type="submit"
-          variant="outlined"
-          color="primary"
-          className={classes.button}
-          endIcon={<SaveIcon />}
-          disabled={!edit}
-          id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
-        >
-          {t('Save')}
-        </Button>
-      </form>
+      <TextField
+        disabled={!edit}
+        variant="outlined"
+        label={t('Tags')}
+        multiline
+        maxRows={5}
+        defaultValue={displayValues}
+        onChange={handleChange}
+        id={ITEM_TAGS_EDIT_INPUT_ID}
+      />
+      <Button
+        onClick={handleSubmit}
+        className={classes.button}
+        startIcon={<SaveIcon />}
+        disabled={!edit}
+        id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
+      >
+        {t('Save')}
+      </Button>
       <Typography variant="subtitle1">{t('Tags Preview')}</Typography>
       {settings?.tags?.map((tag, index) => (
         <Chip label={tag} id={buildCustomizedTagsSelector(index)} />

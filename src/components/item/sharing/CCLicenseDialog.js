@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import {
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
 } from '@material-ui/core';
+import { Button } from '@graasp/ui';
 
 const CCLicenseDialog = ({
   open,
@@ -31,7 +31,6 @@ const CCLicenseDialog = ({
     <>
       <Button
         variant="outlined"
-        color="primary"
         className={className}
         onClick={handleClickOpen}
         disabled={disabled} // disable the button if no option is selected
@@ -50,12 +49,10 @@ const CCLicenseDialog = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleClose} autoFocus variant="text">
             {t('Cancel')}
           </Button>
-          <Button onClick={handleSubmit} color="primary">
-            {t('Confirm')}
-          </Button>
+          <Button onClick={handleSubmit}>{t('Confirm')}</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
+import { Button } from '@graasp/ui';
+import { Grid, makeStyles, TextField } from '@material-ui/core';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
@@ -89,12 +90,7 @@ const CreateItemMembershipForm = ({ id }) => {
         />
       </Grid>
       <Grid item xs={1}>
-        <Button
-          onClick={submit}
-          variant="contained"
-          color="primary"
-          id={SHARE_ITEM_SHARE_BUTTON_ID}
-        >
+        <Button onClick={submit} id={SHARE_ITEM_SHARE_BUTTON_ID}>
           {t('Share')}
         </Button>
       </Grid>

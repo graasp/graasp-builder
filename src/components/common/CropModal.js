@@ -5,11 +5,11 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { withTranslation } from 'react-i18next';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Button } from '@graasp/ui';
 import { THUMBNAIL_ASPECT } from '../../config/constants';
 import { getCroppedImg } from '../../utils/image';
 import { CROP_MODAL_CONFIRM_BUTTON_CLASSNAME } from '../../config/selectors';
@@ -110,10 +110,11 @@ class CropModal extends Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>{t('Cancel')}</Button>
+          <Button onClick={onClose} variant="text">
+            {t('Cancel')}
+          </Button>
           <Button
             onClick={this.handleOnConfirm}
-            color="primary"
             className={CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}
           >
             {t('Confirm')}
