@@ -11,7 +11,7 @@ import {
   SAMPLE_CATEGORIES,
 } from '../../../fixtures/categories';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
-import { ITEM_LOGIN_ITEMS, PUBLISHED_ITEM } from '../../../fixtures/items';
+import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 
 const openShareItemTab = (id) => {
@@ -83,7 +83,11 @@ describe('Categories', () => {
 describe('Categories permissions', () => {
   it('User signed out cannot edit category level', () => {
     const item = PUBLISHED_ITEM;
-    cy.setUpApi({ items: [item], currentMember: SIGNED_OUT_MEMBER });
+    cy.setUpApi({
+      items: [item],
+      currentMember: SIGNED_OUT_MEMBER,
+      tags: DEFAULT_TAGS,
+    });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
     const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
@@ -91,10 +95,11 @@ describe('Categories permissions', () => {
   });
 
   it('Read-only user cannot edit category level', () => {
-    const item = ITEM_LOGIN_ITEMS.items[0];
+    const item = PUBLISHED_ITEM;
     cy.setUpApi({
-      ...ITEM_LOGIN_ITEMS,
+      items: [item],
       currentMember: MEMBERS.BOB,
+      tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);

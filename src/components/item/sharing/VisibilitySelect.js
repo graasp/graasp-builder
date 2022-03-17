@@ -267,7 +267,8 @@ const VisibilitySelect = ({ item, edit }) => {
           )}
         </Typography>
       )}
-      {isPublishedSelected && (
+      {(isPublishedSelected ||
+        tagValue?.name === SETTINGS.ITEM_PUBLISHED.name) && (
         <ItemPublishConfiguration
           item={item}
           edit={edit}

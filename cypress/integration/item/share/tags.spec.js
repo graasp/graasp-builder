@@ -9,7 +9,7 @@ import {
   ITEM_WITH_CATEGORIES,
   NEW_CUSTOMIZED_TAG,
 } from '../../../fixtures/categories';
-import { ITEM_LOGIN_ITEMS, PUBLISHED_ITEM } from '../../../fixtures/items';
+import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 
@@ -61,7 +61,11 @@ describe('Customized Tags', () => {
 describe('Tags permissions', () => {
   it('User signed out cannot edit tags', () => {
     const item = PUBLISHED_ITEM;
-    cy.setUpApi({ items: [item], currentMember: SIGNED_OUT_MEMBER });
+    cy.setUpApi({
+      items: [item],
+      currentMember: SIGNED_OUT_MEMBER,
+      tags: DEFAULT_TAGS,
+    });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
     const tagsEdit = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
@@ -69,10 +73,11 @@ describe('Tags permissions', () => {
   });
 
   it('Read-only user cannot edit tags', () => {
-    const item = ITEM_LOGIN_ITEMS.items[0];
+    const item = PUBLISHED_ITEM;
     cy.setUpApi({
-      ...ITEM_LOGIN_ITEMS,
+      items: [item],
       currentMember: MEMBERS.BOB,
+      tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
