@@ -2,48 +2,26 @@ import { toast } from 'react-toastify';
 import { routines } from '@graasp/query-client';
 import i18n from '../config/i18n';
 import {
-  COPY_ITEMS_ERROR_MESSAGE,
   COPY_ITEMS_SUCCESS_MESSAGE,
-  CREATE_ITEM_ERROR_MESSAGE,
   CREATE_ITEM_SUCCESS_MESSAGE,
-  DELETE_ITEMS_ERROR_MESSAGE,
   DELETE_ITEMS_SUCCESS_MESSAGE,
-  EDIT_ITEM_ERROR_MESSAGE,
   EDIT_ITEM_SUCCESS_MESSAGE,
-  MOVE_ITEMS_ERROR_MESSAGE,
   MOVE_ITEMS_SUCCESS_MESSAGE,
-  SHARE_ITEM_ERROR_MESSAGE,
   SHARE_ITEM_SUCCESS_MESSAGE,
-  UPLOAD_FILES_ERROR_MESSAGE,
   UPLOAD_FILES_SUCCESS_MESSAGE,
   UPLOAD_FILES_PROGRESS_MESSAGE,
-  SIGN_OUT_ERROR_MESSAGE,
   SIGN_OUT_SUCCESS_MESSAGE,
-  POST_ITEM_TAG_ERROR_MESSAGE,
-  DELETE_ITEM_TAG_ERROR_MESSAGE,
-  ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE,
-  EDIT_MEMBER_ERROR_MESSAGE,
   EDIT_MEMBER_SUCCESS_MESSAGE,
   COPY_MEMBER_ID_TO_CLIPBOARD_SUCCESS_MESSAGE,
-  COPY_MEMBER_ID_TO_CLIPBOARD_ERROR_MESSAGE,
-  EDIT_ITEM_MEMBERSHIP_ERROR_MESSAGE,
-  DELETE_ITEM_MEMBERSHIP_ERROR_MESSAGE,
   EDIT_ITEM_MEMBERSHIP_SUCCESS_MESSAGE,
   DELETE_ITEM_MEMBERSHIP_SUCCESS_MESSAGE,
-  POST_ITEM_FLAG_ERROR_MESSAGE,
   POST_ITEM_FLAG_SUCCESS_MESSAGE,
   COPY_ITEM_LINK_TO_CLIPBOARD_SUCCESS_MESSAGE,
-  COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE,
   RECYCLE_ITEMS_SUCCESS_MESSAGE,
-  RECYCLE_ITEMS_ERROR_MESSAGE,
-  RESTORE_ITEMS_ERROR_MESSAGE,
   RESTORE_ITEMS_SUCCESS_MESSAGE,
   UPLOAD_ITEM_THUMBNAIL_SUCCESS_MESSAGE,
-  UPLOAD_ITEM_THUMBNAIL_FAILURE_MESSAGE,
-  UPLOAD_AVATAR_FAILURE_MESSAGE,
   UPLOAD_AVATAR_SUCCESS_MESSAGE,
   IMPORT_ZIP_SUCCESS_MESSAGE,
-  IMPORT_ZIP_FAILURE_MESSAGE,
   IMPORT_ZIP_PROGRESS_MESSAGE,
   EXPORT_ZIP_FAILURE_MESSAGE,
 } from '../config/messages';
@@ -81,93 +59,34 @@ export default ({ type, payload }) => {
   let message = null;
   switch (type) {
     // error messages
-    case editItemMembershipRoutine.FAILURE: {
-      message = EDIT_ITEM_MEMBERSHIP_ERROR_MESSAGE;
-      break;
-    }
-    case deleteItemMembershipRoutine.FAILURE: {
-      message = DELETE_ITEM_MEMBERSHIP_ERROR_MESSAGE;
-      break;
-    }
-    case COPY_MEMBER_ID_TO_CLIPBOARD.FAILURE: {
-      message = COPY_MEMBER_ID_TO_CLIPBOARD_ERROR_MESSAGE;
-      break;
-    }
-    case editMemberRoutine.FAILURE: {
-      message = EDIT_MEMBER_ERROR_MESSAGE;
-      break;
-    }
-    case createItemRoutine.FAILURE: {
-      message = CREATE_ITEM_ERROR_MESSAGE;
-      break;
-    }
+    case editItemMembershipRoutine.FAILURE:
+    case deleteItemMembershipRoutine.FAILURE:
+    case COPY_MEMBER_ID_TO_CLIPBOARD.FAILURE:
+    case editMemberRoutine.FAILURE:
+    case createItemRoutine.FAILURE:
     case deleteItemsRoutine.FAILURE:
-    case deleteItemRoutine.FAILURE: {
-      message = DELETE_ITEMS_ERROR_MESSAGE;
-      break;
-    }
-    case moveItemsRoutine.FAILURE: {
-      message = MOVE_ITEMS_ERROR_MESSAGE;
-      break;
-    }
-    case copyItemsRoutine.FAILURE: {
-      message = COPY_ITEMS_ERROR_MESSAGE;
-      break;
-    }
-    case editItemRoutine.FAILURE: {
-      message = EDIT_ITEM_ERROR_MESSAGE;
-      break;
-    }
-    case shareItemRoutine.FAILURE: {
-      message = SHARE_ITEM_ERROR_MESSAGE;
-      break;
-    }
-    case uploadFileRoutine.FAILURE: {
-      message = UPLOAD_FILES_ERROR_MESSAGE;
-      break;
-    }
-    case signOutRoutine.FAILURE: {
-      message = SIGN_OUT_ERROR_MESSAGE;
-      break;
-    }
-    case postItemTagRoutine.FAILURE: {
-      message = POST_ITEM_TAG_ERROR_MESSAGE;
-      break;
-    }
-    case deleteItemTagRoutine.FAILURE: {
-      message = DELETE_ITEM_TAG_ERROR_MESSAGE;
-      break;
-    }
-    case postItemLoginRoutine.FAILURE: {
-      message = ITEM_LOGIN_SIGN_IN_ERROR_MESSAGE;
-      break;
-    }
-    case postItemFlagRoutine.FAILURE: {
-      message = POST_ITEM_FLAG_ERROR_MESSAGE;
-      break;
-    }
-    case COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE: {
-      message = COPY_ITEM_LINK_TO_CLIPBOARD_ERROR_MESSAGE;
-      break;
-    }
-    case recycleItemsRoutine.FAILURE: {
-      message = RECYCLE_ITEMS_ERROR_MESSAGE;
-      break;
-    }
-    case restoreItemsRoutine.FAILURE: {
-      message = RESTORE_ITEMS_ERROR_MESSAGE;
-      break;
-    }
-    case uploadItemThumbnailRoutine.FAILURE: {
-      message = UPLOAD_ITEM_THUMBNAIL_FAILURE_MESSAGE;
-      break;
-    }
-    case uploadAvatarRoutine.FAILURE: {
-      message = UPLOAD_AVATAR_FAILURE_MESSAGE;
-      break;
-    }
+    case deleteItemRoutine.FAILURE:
+    case moveItemsRoutine.FAILURE:
+    case copyItemsRoutine.FAILURE:
+    case editItemRoutine.FAILURE:
+    case shareItemRoutine.FAILURE:
+    case uploadFileRoutine.FAILURE:
+    case signOutRoutine.FAILURE:
+    case postItemTagRoutine.FAILURE:
+    case deleteItemTagRoutine.FAILURE:
+    case postItemLoginRoutine.FAILURE:
+    case postItemFlagRoutine.FAILURE:
+    case COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE:
+    case recycleItemsRoutine.FAILURE:
+    case restoreItemsRoutine.FAILURE:
+    case uploadItemThumbnailRoutine.FAILURE:
+    case uploadAvatarRoutine.FAILURE:
     case importZipRoutine.FAILURE: {
-      message = IMPORT_ZIP_FAILURE_MESSAGE;
+      // todo: factor out string
+      message = i18n.t(
+        payload?.error?.response?.data?.message ??
+          'An unexpected error occured',
+      );
       break;
     }
     case downloadItemRoutine.FAILURE: {
