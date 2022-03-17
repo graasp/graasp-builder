@@ -171,7 +171,7 @@ export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
 
 export const DRAG_ICON_SIZE = 18;
 
-export const ACTION_CELL_WIDTH = 230;
+export const ACTION_CELL_WIDTH = 300;
 export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
 export const THUMBNAIL_SETTING_MAX_WIDTH = 300;

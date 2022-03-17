@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
+import { Card as GraaspCard, Thumbnail, DownloadButton } from '@graasp/ui';
+import { MUTATION_KEYS } from '@graasp/query-client';
 import truncate from 'lodash.truncate';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +19,7 @@ import FavoriteButton from '../common/FavoriteButton';
 import PinButton from '../common/PinButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { buildItemPath } from '../../config/paths';
-import { hooks } from '../../config/queryClient';
+import { hooks, useMutation } from '../../config/queryClient';
 import HideButton from '../common/HideButton';
 
 const NameWrapper =
@@ -65,6 +66,28 @@ const Item = ({ item, memberships }) => {
     memberId: member?.get('id'),
   });
 
+  const {
+    mutate: downloadItem,
+    data,
+    isSuccess,
+    isLoading: isDownloading,
+  } = useMutation(MUTATION_KEYS.EXPORT_ZIP);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${item.id}.zip`);
+      document.body.appendChild(link);
+      link.click();
+    }
+  }, [data, isSuccess, item]);
+
+  const handleDownload = () => {
+    downloadItem(item.id);
+  };
+
   const Actions = (
     <>
       {!member.isEmpty() && <FavoriteButton member={member} item={item} />}
@@ -73,6 +96,10 @@ const Item = ({ item, memberships }) => {
           <EditButton item={item} />
           <PinButton item={item} />
           <HideButton item={item} />
+          <DownloadButton
+            handleDownload={handleDownload}
+            isLoading={isDownloading}
+          />
         </>
       )}
     </>

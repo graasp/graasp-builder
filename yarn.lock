@@ -1924,9 +1924,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git":
+"@graasp/ui@github:graasp/graasp-ui.git#105/downloadButton":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=24d2a4becb962236a768b9fb8e9a42f78580aee1"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=833577607913ed642c57bba03f0a01ec979f81b3"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -1946,7 +1946,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 03db9261ae6a180410dd32d63189eeff8dc394f183290b2ce46aecf85bf382424384c70c729fda7a4a17d160a3ab1a6db7b506fb0f913d677871c004af272359
+  checksum: 91f18b4fb37abba4c9d605e02adeb72c9a9dc9f4f7f1a48a4f7a297789047ea8c59ea4fa88a9b15b915e687b9ba9bb8a26888114bc0cf75c6c9e60751fce28ef
   languageName: node
   linkType: hard
 
@@ -9875,7 +9875,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git"
+    "@graasp/ui": "github:graasp/graasp-ui.git#105/downloadButton"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
