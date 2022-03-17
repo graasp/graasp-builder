@@ -16,7 +16,13 @@ import { useMutation, hooks } from '../../../config/queryClient';
 import CategorySelection from './CategorySelection';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
 import CCLicenseSelection from './CCLicenseSelection';
-import { SETTINGS, SUBMIT_BUTTON_WIDTH } from '../../../config/constants';
+import {
+  ADMIN_CONTACT,
+  ITEM_VALIDATION_REVIEW_STATUSES,
+  ITEM_VALIDATION_STATUSES,
+  SETTINGS,
+  SUBMIT_BUTTON_WIDTH,
+} from '../../../config/constants';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
@@ -72,7 +78,7 @@ const ItemPublishConfiguration = ({
   // get map of item validation and review statuses
   const { data: ivStatuses } = useItemValidationStatuses();
   const { data: ivrStatuses } = useItemValidationReviewStatuses();
-  const statusMap = new Map(
+  const validationStatusesMap = new Map(
     ivStatuses?.concat(ivrStatuses)?.map((entry) => [entry?.id, entry?.name]),
   );
 
@@ -87,29 +93,31 @@ const ItemPublishConfiguration = ({
 
   // group iv records by item validation status
   const ivByStatus = validItemValidation?.groupBy(({ validationStatusId }) =>
-    statusMap?.get(validationStatusId),
+    validationStatusesMap?.get(validationStatusId),
   );
 
-  const [isValidated, setIsValidated] = useState(false);
-  const [isPending, setIsPending] = useState(false); // true if there exists pending item validation or review
-  const [isSuspicious, setIsSuspicious] = useState(false); // true if item fails validation
+  const [itemValidationStatus, setItemValidationStatus] = useState(false);
 
   const processFailureValidations = (records) => {
     // first try to find successful validations, where ivrStatus is 'rejected'
     const successfulRecord = records?.find(
-      (record) => statusMap.get(record.reviewStatusId) === 'rejected',
+      (record) =>
+        validationStatusesMap.get(record.reviewStatusId) ===
+        ITEM_VALIDATION_REVIEW_STATUSES.REJECTED,
     );
     if (successfulRecord) {
-      setIsValidated(true);
+      setItemValidationStatus(ITEM_VALIDATION_STATUSES.SUCCESS);
     } else {
       // try to find pending review
       const pendingRecord = records?.find(
-        (record) => statusMap.get(record.reviewStatusId) === 'pending',
+        (record) =>
+          validationStatusesMap.get(record.reviewStatusId) ===
+          ITEM_VALIDATION_REVIEW_STATUSES.PENDING,
       );
       if (pendingRecord) {
-        setIsPending(true);
+        setItemValidationStatus(ITEM_VALIDATION_STATUSES.PENDING);
       } else {
-        setIsSuspicious(true); // only failed records
+        setItemValidationStatus(ITEM_VALIDATION_STATUSES.FAILURE); // only failed records
       }
     }
   };
@@ -118,13 +126,15 @@ const ItemPublishConfiguration = ({
     // process when we fetch the item validation and review records
     if (ivByStatus) {
       // first check if there exist any valid successful record
-      if (ivByStatus.get('success')) {
-        setIsValidated(true);
+      if (ivByStatus.get(ITEM_VALIDATION_STATUSES.SUCCESS)) {
+        setItemValidationStatus(ITEM_VALIDATION_STATUSES.SUCCESS);
         // then check if there exist any pending item validation or review
-      } else if (ivByStatus.get('pending')) {
-        setIsPending(true);
+      } else if (ivByStatus.get(ITEM_VALIDATION_STATUSES.PENDING)) {
+        setItemValidationStatus(ITEM_VALIDATION_STATUSES.PENDING);
       } else {
-        const failureValidations = ivByStatus.get('failure');
+        const failureValidations = ivByStatus.get(
+          ITEM_VALIDATION_STATUSES.FAILURE,
+        );
         // only process when there is failed item validation records
         if (failureValidations) {
           processFailureValidations(failureValidations);
@@ -140,7 +150,11 @@ const ItemPublishConfiguration = ({
 
   const handleValidate = () => {
     // prevent re-send request if the item is already successfully validated, or a validation is already pending
-    if (!isValidated && !isPending) validateItem({ itemId });
+    if (
+      !itemValidationStatus ||
+      itemValidationStatus === ITEM_VALIDATION_STATUSES.FAILURE
+    )
+      validateItem({ itemId });
   };
 
   const publishItem = () => {
@@ -170,36 +184,35 @@ const ItemPublishConfiguration = ({
 
   // display icon indicating current status of given item
   const displayItemValidationIcon = () => {
-    if (isValidated) return <CheckCircleIcon color="primary" />;
-    if (isPending) return <UpdateIcon color="primary" />;
-    if (isSuspicious) return <CancelIcon color="primary" />;
+    switch (itemValidationStatus) {
+      case ITEM_VALIDATION_STATUSES.SUCCESS:
+        return <CheckCircleIcon color="primary" />;
+      case ITEM_VALIDATION_STATUSES.PENDING:
+        return <UpdateIcon color="primary" />;
+      case ITEM_VALIDATION_STATUSES.FAILURE:
+        return <CancelIcon color="primary" />;
+      default:
+    }
     return null;
   };
 
   const displayItemValidationMessage = () => {
-    if (isValidated) {
-      return null;
-    }
-    if (isPending) {
-      return (
-        <Typography variant="body1">
-          {t(
-            'Your item is pending validation. Once the validation succeeds, you will be able to publish your item. ',
-          )}
-        </Typography>
-      );
-    }
-    if (isSuspicious) {
-      return (
-        <Typography variant="body1">
-          {
-            // update contact info
-            t(
-              'Your item might contain inappropriate content. Please remove them and re-validate it. If you have any problem, please contact graasp@epfl.ch',
-            )
-          }
-        </Typography>
-      );
+    switch (itemValidationStatus) {
+      case ITEM_VALIDATION_STATUSES.PENDING:
+        return (
+          <Typography variant="body1">
+            {t(
+              'Your item is pending validation. Once the validation succeeds, you will be able to publish your item.',
+            )}
+          </Typography>
+        );
+      case ITEM_VALIDATION_STATUSES.FAILURE:
+        return (
+          <Typography variant="body1">
+            {t('itemValidationFailureMessage', { contact: ADMIN_CONTACT })}
+          </Typography>
+        );
+      default:
     }
     return null;
   };
@@ -250,7 +263,9 @@ const ItemPublishConfiguration = ({
         variant="outlined"
         onClick={publishItem}
         color="primary"
-        disabled={!edit || !isValidated}
+        disabled={
+          !edit || itemValidationStatus !== ITEM_VALIDATION_STATUSES.SUCCESS
+        }
         className={classes.button}
         endIcon={
           tagValue?.name === SETTINGS.ITEM_PUBLISHED.name && (

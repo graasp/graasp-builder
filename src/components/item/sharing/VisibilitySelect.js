@@ -59,7 +59,7 @@ const VisibilitySelect = ({ item, edit }) => {
   const [itemTagValue, setItemTagValue] = useState(false);
   const [tagValue, setTagValue] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [isPublishedSelected, setIsPublishedSelected] = useState(false);
 
   // update state variables depending on fetch values
   useEffect(() => {
@@ -68,7 +68,7 @@ const VisibilitySelect = ({ item, edit }) => {
       setItemTagValue(itemTag);
       setTagValue(tag);
       if (tagValue?.name === SETTINGS.ITEM_PUBLISHED.name) {
-        setOpen(true);
+        setIsPublishedSelected(true);
       }
 
       // disable setting if any visiblity is set on any ancestor items
@@ -164,7 +164,7 @@ const VisibilitySelect = ({ item, edit }) => {
         break;
       }
       case SETTINGS.ITEM_PUBLISHED.name: {
-        setOpen(true);
+        setIsPublishedSelected(true);
         break;
       }
       default:
@@ -267,7 +267,7 @@ const VisibilitySelect = ({ item, edit }) => {
           )}
         </Typography>
       )}
-      {open && (
+      {isPublishedSelected && (
         <ItemPublishConfiguration
           item={item}
           edit={edit}
