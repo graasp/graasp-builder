@@ -34,6 +34,7 @@ const {
   uploadItemThumbnailRoutine,
   uploadAvatarRoutine,
   importZipRoutine,
+  downloadItemRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -62,7 +63,8 @@ export default ({ type, payload }) => {
     case restoreItemsRoutine.FAILURE:
     case uploadItemThumbnailRoutine.FAILURE:
     case uploadAvatarRoutine.FAILURE:
-    case importZipRoutine.FAILURE: {
+    case importZipRoutine.FAILURE:
+    case downloadItemRoutine.FAILURE: {
       // todo: factor out string
       message = i18n.t(
         payload?.error?.response?.data?.message ??
