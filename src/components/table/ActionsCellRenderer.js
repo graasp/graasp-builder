@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import React, { useEffect, useState } from 'react';
 import { DownloadButton } from '@graasp/ui';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { useTranslation } from 'react-i18next';
 import EditButton from '../common/EditButton';
 import ItemMenu from '../main/ItemMenu';
 import FavoriteButton from '../common/FavoriteButton';
@@ -16,6 +17,7 @@ import { useMutation } from '../../config/queryClient';
 
 // items and memberships match by index
 const ActionsCellRenderer = ({ memberships, items, member }) => {
+  const t = useTranslation();
   const ChildComponent = ({ data: item }) => {
     const [canEdit, setCanEdit] = useState(false);
 
@@ -78,6 +80,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
           <DownloadButton
             handleDownload={handleDownload}
             isLoading={isDownloading}
+            title={t('Download')}
           />
         </>
       );

@@ -99,6 +99,7 @@ const Item = ({ item, memberships }) => {
           <DownloadButton
             handleDownload={handleDownload}
             isLoading={isDownloading}
+            title={t('Download')}
           />
         </>
       )}
