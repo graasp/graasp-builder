@@ -17,7 +17,7 @@ import { useMutation } from '../../config/queryClient';
 
 // items and memberships match by index
 const ActionsCellRenderer = ({ memberships, items, member }) => {
-  const t = useTranslation();
+  const { t } = useTranslation();
   const ChildComponent = ({ data: item }) => {
     const [canEdit, setCanEdit] = useState(false);
 
