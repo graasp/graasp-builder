@@ -13,9 +13,11 @@ import {
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
+import { SHARE_TAB_PUBLISHED_PAUSE } from '../../../support/constants';
 
 const openShareItemTab = (id) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
+  cy.wait(SHARE_TAB_PUBLISHED_PAUSE);
 };
 
 const findCategoryNameById = (id) =>
@@ -39,12 +41,11 @@ describe('Categories', () => {
     cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
-    cy.wait(10000);
   });
 
   it('Display Item Categories', () => {
     // check for displaying value
-    const levelValue = cy.get(`${CATEGORIES_SELECTION_VALUE_SELECTOR}`);
+    const levelValue = cy.get(CATEGORIES_SELECTION_VALUE_SELECTOR);
     levelValue
       .first()
       .contains(findCategoryNameById(item.categories[0].categoryId));
@@ -91,9 +92,7 @@ describe('Categories permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
-    const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`, {
-      timeout: 10000,
-    });
+    const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
     levelValue.should('be.disabled');
   });
 
@@ -106,9 +105,7 @@ describe('Categories permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
-    const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`, {
-      timeout: 10000,
-    });
+    const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
     levelValue.should('be.disabled');
   });
 });

@@ -12,9 +12,11 @@ import {
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
+import { SHARE_TAB_PUBLISHED_PAUSE } from '../../../support/constants';
 
 const openShareItemTab = (id) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
+  cy.wait(SHARE_TAB_PUBLISHED_PAUSE);
 };
 
 const visitItemPage = (item) => {
