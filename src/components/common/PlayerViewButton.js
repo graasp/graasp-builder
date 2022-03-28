@@ -28,7 +28,7 @@ const PlayerViewButton = ({ itemId }) => {
         onClick={onClick}
         id={buildPlayerButtonId(itemId)}
       >
-        <PlayCircleFilledIcon fontSize="small" />
+        <PlayCircleFilledIcon />
       </IconButton>
     </Tooltip>
   );

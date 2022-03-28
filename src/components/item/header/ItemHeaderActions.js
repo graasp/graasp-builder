@@ -82,7 +82,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
                 }}
                 id={buildEditButtonId(id)}
               >
-                <EditIcon fontSize="small" />
+                <EditIcon />
               </IconButton>
             </Tooltip>
           )}
