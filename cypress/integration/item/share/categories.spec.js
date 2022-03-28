@@ -39,6 +39,7 @@ describe('Categories', () => {
     cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
+    cy.wait(1000);
   });
 
   it('Display Item Categories', () => {
@@ -90,6 +91,7 @@ describe('Categories permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
+    cy.wait(1000);
     const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
     levelValue.should('be.disabled');
   });
@@ -103,6 +105,7 @@ describe('Categories permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
+    cy.wait(1000);
     const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
     levelValue.should('be.disabled');
   });
