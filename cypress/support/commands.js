@@ -74,6 +74,7 @@ import {
   mockGetItemValidationAndReviews,
   mockGetItemValidationStatuses,
   mockGetItemValidationReviewStatuses,
+  mockPostItemValidation,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -275,6 +276,8 @@ Cypress.Commands.add(
     mockGetItemValidationReviewStatuses(statuses);
 
     mockGetItemValidationAndReviews(itemValidationAndReview);
+
+    mockPostItemValidation();
   },
 );
 

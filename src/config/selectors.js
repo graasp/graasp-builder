@@ -176,3 +176,6 @@ export const buildCategoryMenuOptions = (menuName, optionIndex) =>
 export const buildDashboardButtonId = (id) => `dashboard-button-${id}`;
 export const buildGraaspAnalyzerId = (id) => `graasp-analyzer-${id}`;
 export const buildPlayerTabName = (id) => `builder-tab-${id}`;
+
+export const ITEM_PUBLISH_SECTION_TITLE_SELECTOR = 'itemPublishSectionTitle';
+export const ITEM_VALIDATION_BUTTON_SELECTOR = 'itemValidationButton';

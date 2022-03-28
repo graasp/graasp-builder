@@ -1397,3 +1397,15 @@ export const mockGetItemValidationAndReviews = (itemValidationAndReviews) => {
     },
   ).as('getItemValidationAndReviews');
 };
+
+export const mockPostItemValidation = () => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/items/validations/${ID_FORMAT}`),
+    },
+    ({ reply, body }) => {
+      reply(body);
+    },
+  ).as('postItemValidation');
+};

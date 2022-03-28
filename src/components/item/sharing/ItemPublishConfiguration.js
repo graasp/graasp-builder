@@ -24,6 +24,10 @@ import {
   SUBMIT_BUTTON_WIDTH,
 } from '../../../config/constants';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import {
+  ITEM_PUBLISH_SECTION_TITLE_SELECTOR,
+  ITEM_VALIDATION_BUTTON_SELECTOR,
+} from '../../../config/selectors';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
 const {
@@ -220,7 +224,11 @@ const ItemPublishConfiguration = ({
   return (
     <>
       <Divider className={classes.divider} />
-      <Typography variant="h6" className={classes.heading}>
+      <Typography
+        variant="h6"
+        className={classes.heading}
+        id={ITEM_PUBLISH_SECTION_TITLE_SELECTOR}
+      >
         {t('Publication On Explorer')}
       </Typography>
       <Typography variant="body1">
@@ -240,6 +248,7 @@ const ItemPublishConfiguration = ({
         {t('You need to validate your item before publish it.')}
       </Typography>
       <Button
+        id={ITEM_VALIDATION_BUTTON_SELECTOR}
         variant="outlined"
         onClick={handleValidate}
         color="primary"
