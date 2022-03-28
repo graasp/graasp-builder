@@ -159,6 +159,13 @@ const ItemPublishConfiguration = ({
       itemValidationStatus === ITEM_VALIDATION_STATUSES.FAILURE
     )
       validateItem({ itemId });
+
+    // force to reload the page
+    // TODO: any better method to reload this component only?
+    setTimeout(() => {
+      // eslint-disable-next-line no-restricted-globals
+      location.reload();
+    }, 3000);
   };
 
   const publishItem = () => {
