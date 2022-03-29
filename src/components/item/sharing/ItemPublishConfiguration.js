@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes, { string } from 'prop-types';
 import { useTranslation } from 'react-i18next';

@@ -174,6 +174,16 @@
     "Attention: This Action is irreversible!": "Attention: This Action is irreversible!",
     "Once you submit your choice, you cannot remove selected Creative Commons License, or change to a more restricted choice.": "Once you submit your choice, you cannot remove selected Creative Commons License, or change to a more restricted choice.",
     "Confirm Your Submission": "Confirm Your Submission",
-    "itemValidationFailureMessage": "Your item might contain inappropriate content. Please remove them and validate your item again. If you have any question, please contact {{contact, string}}."
+    "itemValidationFailureMessage": "Your item might contain inappropriate content. Please remove them and validate your item again. If you have any question, please contact {{contact, string}}.",
+    "Publication On Explorer": "Publication On Explorer",
+    "You can publish your collection to Graasp Explorer, our open educational resource library.": "You can publish your collection to Graasp Explorer, our open educational resource library.",
+    "Published collections are accessible by the public.": "Published collections are accessible by the public.",
+    "To publish your collection, please follow the three steps below.": "To publish your collection, please follow the three steps below.",
+    "You need to validate your item before publish it. Please allow some time for the validation to finish.": "You need to validate your item before publish it. Please allow some time for the validation to finish.",
+    "Once your item is validated, you can set your item to published by clicking the button.": "Once your item is validated, you can set your item to published by clicking the button.",
+    "Set the options for your resource to make it easily accessible by the public.": "Set the options for your resource to make it easily accessible by the public.",
+    "Your item is pending validation. Once the validation succeeds, you will be able to publish your item.": "Your item is pending validation. Once the validation succeeds, you will be able to publish your item.",
+    "Validation": "Validation",
+    "Publication": "Publication"
   }
 }
