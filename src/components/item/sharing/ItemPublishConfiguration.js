@@ -10,26 +10,26 @@ import Looks3Icon from '@material-ui/icons/Looks3';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import UpdateIcon from '@material-ui/icons/Update';
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { MUTATION_KEYS, HOOK_KEYS } from '@graasp/query-client';
 import { useMutation, hooks, queryClient } from '../../../config/queryClient';
 import CategorySelection from './CategorySelection';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
 import CCLicenseSelection from './CCLicenseSelection';
 import {
   ADMIN_CONTACT,
-  buildItemValidationAndReviewsKey,
-  ITEM_VALIDATION_REVIEW_STATUSES,
   ITEM_VALIDATION_STATUSES,
   SETTINGS,
   SUBMIT_BUTTON_WIDTH,
 } from '../../../config/constants';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import {
-  ITEM_PUBLISH_SECTION_TITLE_SELECTOR,
-  ITEM_VALIDATION_BUTTON_SELECTOR,
+  ITEM_PUBLISH_SECTION_TITLE_ID,
+  ITEM_VALIDATION_BUTTON_ID,
 } from '../../../config/selectors';
+import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
+const { buildItemValidationAndReviewsKey } = HOOK_KEYS;
 const {
   useItemValidationAndReviews,
   useItemValidationStatuses,
@@ -103,48 +103,15 @@ const ItemPublishConfiguration = ({
 
   const [itemValidationStatus, setItemValidationStatus] = useState(false);
 
-  const processFailureValidations = (records) => {
-    // first try to find successful validations, where ivrStatus is 'rejected'
-    const successfulRecord = records?.find(
-      (record) =>
-        validationStatusesMap.get(record.reviewStatusId) ===
-        ITEM_VALIDATION_REVIEW_STATUSES.REJECTED,
-    );
-    if (successfulRecord) {
-      setItemValidationStatus(ITEM_VALIDATION_STATUSES.SUCCESS);
-    } else {
-      // try to find pending review
-      const pendingRecord = records?.find(
-        (record) =>
-          validationStatusesMap.get(record.reviewStatusId) ===
-          ITEM_VALIDATION_REVIEW_STATUSES.PENDING,
-      );
-      if (pendingRecord) {
-        setItemValidationStatus(ITEM_VALIDATION_STATUSES.PENDING);
-      } else {
-        setItemValidationStatus(ITEM_VALIDATION_STATUSES.FAILURE); // only failed records
-      }
-    }
-  };
-
   useEffect(() => {
     // process when we fetch the item validation and review records
     if (ivByStatus) {
-      // first check if there exist any valid successful record
-      if (ivByStatus.get(ITEM_VALIDATION_STATUSES.SUCCESS)) {
-        setItemValidationStatus(ITEM_VALIDATION_STATUSES.SUCCESS);
-        // then check if there exist any pending item validation or review
-      } else if (ivByStatus.get(ITEM_VALIDATION_STATUSES.PENDING)) {
-        setItemValidationStatus(ITEM_VALIDATION_STATUSES.PENDING);
-      } else {
-        const failureValidations = ivByStatus.get(
-          ITEM_VALIDATION_STATUSES.FAILURE,
-        );
-        // only process when there is failed item validation records
-        if (failureValidations) {
-          processFailureValidations(failureValidations);
-        }
-      }
+      setItemValidationStatus(
+        getValidationStatusFromItemValidations(
+          ivByStatus,
+          validationStatusesMap,
+        ),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ivByStatus]);
@@ -232,7 +199,7 @@ const ItemPublishConfiguration = ({
       <Typography
         variant="h6"
         className={classes.heading}
-        id={ITEM_PUBLISH_SECTION_TITLE_SELECTOR}
+        id={ITEM_PUBLISH_SECTION_TITLE_ID}
       >
         {t('Publication On Explorer')}
       </Typography>
@@ -255,7 +222,7 @@ const ItemPublishConfiguration = ({
         )}
       </Typography>
       <Button
-        id={ITEM_VALIDATION_BUTTON_SELECTOR}
+        id={ITEM_VALIDATION_BUTTON_ID}
         variant="outlined"
         onClick={handleValidate}
         color="primary"

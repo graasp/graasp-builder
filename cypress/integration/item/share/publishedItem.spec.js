@@ -1,7 +1,7 @@
 import {
   buildShareButtonId,
-  ITEM_PUBLISH_SECTION_TITLE_SELECTOR,
-  ITEM_VALIDATION_BUTTON_SELECTOR,
+  ITEM_PUBLISH_SECTION_TITLE_ID,
+  ITEM_VALIDATION_BUTTON_ID,
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../../src/config/selectors';
 import { buildItemPath } from '../../../../src/config/paths';
@@ -12,8 +12,6 @@ import {
 } from '../../../fixtures/items';
 import { SETTINGS } from '../../../../src/config/constants';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
-
-const ITEM_PUBLISH_SECTION_TITLE = 'Publication On Explorer';
 
 const openShareItemTab = (id) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
@@ -33,13 +31,10 @@ describe('Change visibililty to published', () => {
     openShareItemTab(item.id);
 
     // publication section should not exist at this time
-    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_SELECTOR}`).should('not.exist');
+    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_ID}`).should('not.exist');
 
     changeVisibility(SETTINGS.ITEM_PUBLISHED.name);
-    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_SELECTOR}`).should(
-      'have.text',
-      ITEM_PUBLISH_SECTION_TITLE,
-    );
+    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_ID}`).should('be.visible');
     // visibilitySelect value should not be changed
     const visiblitySelect = cy.get(
       `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
@@ -54,13 +49,10 @@ describe('Change visibililty to published', () => {
     openShareItemTab(item.id);
 
     // publication section should not exist at this time
-    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_SELECTOR}`).should('not.exist');
+    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_ID}`).should('not.exist');
 
     changeVisibility(SETTINGS.ITEM_PUBLISHED.name);
-    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_SELECTOR}`).should(
-      'have.text',
-      ITEM_PUBLISH_SECTION_TITLE,
-    );
+    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_ID}`).should('be.visible');
     // visibilitySelect value should not be changed
     const visiblitySelect = cy.get(
       `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
@@ -75,13 +67,10 @@ describe('Change visibililty to published', () => {
     openShareItemTab(item.id);
 
     // publication section should not exist at this time
-    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_SELECTOR}`).should('not.exist');
+    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_ID}`).should('not.exist');
 
     changeVisibility(SETTINGS.ITEM_PUBLISHED.name);
-    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_SELECTOR}`).should(
-      'have.text',
-      ITEM_PUBLISH_SECTION_TITLE,
-    );
+    cy.get(`#${ITEM_PUBLISH_SECTION_TITLE_ID}`).should('be.visible');
     // visibilitySelect value should not be changed
     const visiblitySelect = cy.get(
       `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
@@ -99,7 +88,7 @@ describe('Validate item', () => {
     changeVisibility(SETTINGS.ITEM_PUBLISHED.name);
 
     // click validate item button
-    cy.get(`#${ITEM_VALIDATION_BUTTON_SELECTOR}`).click();
+    cy.get(`#${ITEM_VALIDATION_BUTTON_ID}`).click();
 
     cy.wait('@postItemValidation').then((data) => {
       const {
