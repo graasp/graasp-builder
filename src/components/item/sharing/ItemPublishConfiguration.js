@@ -12,12 +12,13 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import UpdateIcon from '@material-ui/icons/Update';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation, hooks } from '../../../config/queryClient';
+import { useMutation, hooks, queryClient } from '../../../config/queryClient';
 import CategorySelection from './CategorySelection';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
 import CCLicenseSelection from './CCLicenseSelection';
 import {
   ADMIN_CONTACT,
+  buildItemValidationAndReviewsKey,
   ITEM_VALIDATION_REVIEW_STATUSES,
   ITEM_VALIDATION_STATUSES,
   SETTINGS,
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     width: 'auto',
     minWidth: SUBMIT_BUTTON_WIDTH,
+    marginRight: theme.spacing(2),
   },
 }));
 
@@ -159,13 +161,10 @@ const ItemPublishConfiguration = ({
       itemValidationStatus === ITEM_VALIDATION_STATUSES.FAILURE
     )
       validateItem({ itemId });
+  };
 
-    // force to reload the page
-    // TODO: any better method to reload this component only?
-    setTimeout(() => {
-      // eslint-disable-next-line no-restricted-globals
-      location.reload();
-    }, 3000);
+  const handleRefresh = () => {
+    queryClient.invalidateQueries(buildItemValidationAndReviewsKey(itemId));
   };
 
   const publishItem = () => {
@@ -252,7 +251,9 @@ const ItemPublishConfiguration = ({
         {t('Validation')}
       </Typography>
       <Typography variant="body1">
-        {t('You need to validate your item before publish it.')}
+        {t(
+          'You need to validate your item before publish it. Please allow some time for the validation to finish.',
+        )}
       </Typography>
       <Button
         id={ITEM_VALIDATION_BUTTON_SELECTOR}
@@ -264,6 +265,15 @@ const ItemPublishConfiguration = ({
         endIcon={displayItemValidationIcon()}
       >
         {t('Validate')}
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={handleRefresh}
+        color="primary"
+        disabled={!edit}
+        className={classes.button}
+      >
+        {t('Refresh')}
       </Button>
       {displayItemValidationMessage()}
       <Typography variant="h6" className={classes.subtitle}>

@@ -210,3 +210,9 @@ export const ITEM_VALIDATION_REVIEW_STATUSES = {
 };
 
 export const ADMIN_CONTACT = 'admin@graasp.org';
+
+export const buildItemValidationAndReviewsKey = (id) => [
+  'items',
+  id,
+  'itemValidationAndReviews',
+];
