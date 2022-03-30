@@ -27,7 +27,7 @@ const ShareButton = ({ itemId }) => {
         onClick={onClick}
         id={buildShareButtonId(itemId)}
       >
-        {isItemSharingOpen ? <CloseIcon /> : <ShareIcon fontSize="small" />}
+        {isItemSharingOpen ? <CloseIcon /> : <ShareIcon />}
       </IconButton>
     </Tooltip>
   );
