@@ -21,6 +21,7 @@ import {
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import ItemPublishConfiguration from './ItemPublishConfiguration';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
@@ -58,6 +59,7 @@ const VisibilitySelect = ({ item, edit }) => {
   const [itemTagValue, setItemTagValue] = useState(false);
   const [tagValue, setTagValue] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isPublishedSelected, setIsPublishedSelected] = useState(false);
 
   // update state variables depending on fetch values
   useEffect(() => {
@@ -65,6 +67,9 @@ const VisibilitySelect = ({ item, edit }) => {
       const { tag, itemTag } = getVisibilityTagAndItemTag({ tags, itemTags });
       setItemTagValue(itemTag);
       setTagValue(tag);
+      if (tagValue?.name === SETTINGS.ITEM_PUBLISHED.name) {
+        setIsPublishedSelected(true);
+      }
 
       // disable setting if any visiblity is set on any ancestor items
       setIsDisabled(
@@ -159,19 +164,7 @@ const VisibilitySelect = ({ item, edit }) => {
         break;
       }
       case SETTINGS.ITEM_PUBLISHED.name: {
-        postNewTag();
-        // if previous is public, not necessary to delete/add the public tag
-        if (prevTagName !== SETTINGS.ITEM_PUBLIC.name) {
-          // post public tag
-          postItemTag({
-            id: itemId,
-            tagId: publicTag.id,
-            itemPath: item?.get('path'),
-            creator: user?.get('id'),
-          });
-          // delete previous tag
-          deletePreviousTag();
-        }
+        setIsPublishedSelected(true);
         break;
       }
       default:
@@ -273,6 +266,17 @@ const VisibilitySelect = ({ item, edit }) => {
             'You cannot modify the visibility because it is defined in one of the parent of this item.',
           )}
         </Typography>
+      )}
+      {(isPublishedSelected ||
+        tagValue?.name === SETTINGS.ITEM_PUBLISHED.name) && (
+        <ItemPublishConfiguration
+          item={item}
+          edit={edit}
+          tagValue={tagValue}
+          itemTagValue={itemTagValue}
+          publishedTag={getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name)}
+          publicTag={getTagByName(tags, SETTINGS.ITEM_PUBLIC.name)}
+        />
       )}
     </>
   );

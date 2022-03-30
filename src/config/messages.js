@@ -47,3 +47,5 @@ export const IMPORT_ZIP_FAILURE_MESSAGE =
   'An error occurred while importing The ZIP archive.';
 export const IMPORT_ZIP_PROGRESS_MESSAGE =
   'The ZIP is being processed. Please wait a moment.';
+export const EXPORT_ZIP_FAILURE_MESSAGE =
+  'An error occurred while downloading the item as ZIP archive. Please try again later.';

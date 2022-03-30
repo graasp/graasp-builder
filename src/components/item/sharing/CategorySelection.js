@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   dropMenu: {
-    marginBottom: theme.spacing(1),
+    width: 'auto',
+    maxWidth: '85%',
   },
 }));
 
@@ -135,6 +136,7 @@ const CategorySelection = ({ item, edit }) => {
         {t('Level')}
       </Typography>
       <Autocomplete
+        className={classes.dropMenu}
         disabled={!edit || !levelList}
         multiple
         disableClearable
@@ -155,6 +157,7 @@ const CategorySelection = ({ item, edit }) => {
       />
       <Typography variant="body1">{t('Discipline')}</Typography>
       <Autocomplete
+        className={classes.dropMenu}
         disabled={!edit || !levelList}
         multiple
         disableClearable

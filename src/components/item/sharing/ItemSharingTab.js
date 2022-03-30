@@ -19,9 +19,6 @@ import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import CategorySelection from './CategorySelection';
-import CustomizedTagsEdit from './CustomizedTagsEdit';
-import CCLicenseSelection from './CCLicenseSelection';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -126,14 +123,8 @@ const ItemSharingTab = ({ item, memberships }) => {
       <Typography variant="h4" className={classes.title}>
         {t('Sharing')}
       </Typography>
-
       <SharingLink itemId={item.get('id')} />
-
       <VisibilitySelect item={item} edit={canEdit} />
-      <CategorySelection item={item} edit={canEdit} />
-      <CustomizedTagsEdit item={item} edit={canEdit} />
-      <CCLicenseSelection item={item} edit={canEdit} />
-
       {renderMembershipSettings()}
     </Container>
   );

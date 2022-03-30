@@ -10,6 +10,7 @@ import {
   isItemUpdateAllowedForUser,
 } from '../../utils/membership';
 import HideButton from '../common/HideButton';
+import DownloadButton from '../main/DownloadButton';
 
 // items and memberships match by index
 const ActionsCellRenderer = ({ memberships, items, member }) => {
@@ -50,6 +51,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
           <EditButton item={item} />
           <PinButton item={item} />
           <HideButton item={item} />
+          <DownloadButton id={item?.id} />
         </>
       );
     };
@@ -63,7 +65,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
     );
   };
   ChildComponent.propTypes = {
-    data: PropTypes.shape({}).isRequired,
+    data: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
   };
   return ChildComponent;
 };

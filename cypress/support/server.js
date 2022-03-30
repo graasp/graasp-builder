@@ -1361,3 +1361,51 @@ export const mockDeleteItemCategory = (shouldThrowError) => {
     },
   ).as('deleteItemCategory');
 };
+
+export const mockGetItemValidationStatuses = (iVStatuses) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/validations/statuses`),
+    },
+    ({ reply }) => {
+      reply(iVStatuses);
+    },
+  ).as('getItemValidationStatuses');
+};
+
+export const mockGetItemValidationReviewStatuses = (iVRStatuses) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/validations/review/statuses`),
+    },
+    ({ reply }) => {
+      reply(iVRStatuses);
+    },
+  ).as('getItemValidationReviewStatuses');
+};
+
+export const mockGetItemValidationAndReviews = (itemValidationAndReviews) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/validations/status/${ID_FORMAT}`),
+    },
+    ({ reply }) => {
+      reply(itemValidationAndReviews);
+    },
+  ).as('getItemValidationAndReviews');
+};
+
+export const mockPostItemValidation = () => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/items/validations/${ID_FORMAT}`),
+    },
+    ({ reply, body }) => {
+      reply(body);
+    },
+  ).as('postItemValidation');
+};

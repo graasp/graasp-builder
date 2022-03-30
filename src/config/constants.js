@@ -171,7 +171,7 @@ export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
 
 export const DRAG_ICON_SIZE = 18;
 
-export const ACTION_CELL_WIDTH = 230;
+export const ACTION_CELL_WIDTH = 300;
 export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
 export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
@@ -196,3 +196,17 @@ export const CC_LICENSE_ABOUT_URL =
   'https://creativecommons.org/about/cclicenses/';
 
 export const CONTEXT_BUILDER = 'builder';
+
+export const ITEM_VALIDATION_STATUSES = {
+  SUCCESS: 'success',
+  FAILURE: 'failure',
+  PENDING: 'pending',
+};
+
+export const ITEM_VALIDATION_REVIEW_STATUSES = {
+  ACCEPTED: 'accepted',
+  REJECTED: 'rejected',
+  PENDING: 'pending',
+};
+
+export const ADMIN_CONTACT = 'admin@graasp.org';

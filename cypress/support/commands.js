@@ -71,6 +71,10 @@ import {
   mockGetItemCategories,
   mockPostItemCategory,
   mockDeleteItemCategory,
+  mockGetItemValidationAndReviews,
+  mockGetItemValidationStatuses,
+  mockGetItemValidationReviewStatuses,
+  mockPostItemValidation,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -82,6 +86,10 @@ import {
   SAMPLE_CATEGORIES,
   SAMPLE_CATEGORY_TYPES,
 } from '../fixtures/categories';
+import {
+  ITEM_VALIDATION_AND_REVIEW,
+  SAMPLE_STATUSES,
+} from '../fixtures/validations';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -94,6 +102,8 @@ Cypress.Commands.add(
     categories = SAMPLE_CATEGORIES,
     categoryTypes = SAMPLE_CATEGORY_TYPES,
     flags = SAMPLE_FLAGS,
+    statuses = SAMPLE_STATUSES,
+    itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
     deleteItemError = false,
     deleteItemsError = false,
     postItemError = false,
@@ -260,6 +270,14 @@ Cypress.Commands.add(
     mockPostItemCategory(postItemCategoryError);
 
     mockDeleteItemCategory(deleteItemCategoryError);
+
+    mockGetItemValidationStatuses(statuses);
+
+    mockGetItemValidationReviewStatuses(statuses);
+
+    mockGetItemValidationAndReviews(itemValidationAndReview);
+
+    mockPostItemValidation();
   },
 );
 
