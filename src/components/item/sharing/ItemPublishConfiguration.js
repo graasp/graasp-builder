@@ -255,9 +255,6 @@ const ItemPublishConfiguration = ({
         variant="outlined"
         onClick={publishItem}
         color="primary"
-        disabled={
-          !edit || itemValidationStatus !== ITEM_VALIDATION_STATUSES.SUCCESS
-        }
         className={classes.button}
         endIcon={
           tagValue?.name === SETTINGS.ITEM_PUBLISHED.name && (
