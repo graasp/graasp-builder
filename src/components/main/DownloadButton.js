@@ -27,7 +27,7 @@ export const DownloadButton = ({ id }) => {
   }, [data, isSuccess, id]);
 
   const handleDownload = () => {
-    downloadItem(id);
+    downloadItem({ id });
   };
   return (
     <Button

@@ -1896,22 +1896,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git#147/exportHook":
+"@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=e9c591a7e9fd8350fc801e2e82dc241b6a5f40b8"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1a7a124944787dd3a70c64e2c76e27b70b356fda"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    axios: 0.24.0
+    axios: 0.26.1
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
     immutable: 4.0.0
     js-cookie: 3.0.1
-    qs: 6.10.2
-    react-query: 3.34.7
+    qs: 6.10.3
+    react-query: 3.34.16
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 2ba81059a50851836886df765bc8da99475aca7e0015ec1e67508684df50dab44cbe8b1043c414241805b26a3554481b9fcbe71e0ba58c5cc3e1ea1485ed77ae
+  checksum: 79da7437aca9df3bac8faa344ba5ed5f0a101e9c70ea0032bdc6126cd23c80009a18b4a603b1d8c8460b2bf7e74eab7ded529e8b26a183a4cab732d7817da749
   languageName: node
   linkType: hard
 
@@ -1926,7 +1926,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=24d2a4becb962236a768b9fb8e9a42f78580aee1"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=70bf58aaeee07538ca40229ca4b7a8b6c7830e94"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -1946,7 +1946,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 03db9261ae6a180410dd32d63189eeff8dc394f183290b2ce46aecf85bf382424384c70c729fda7a4a17d160a3ab1a6db7b506fb0f913d677871c004af272359
+  checksum: bec28ddb56842cf6e15d0afee9f3b313df3cc50347a513089ffc2886569fddcd0da0d34d9668e08445b6bec7d7dbe58c287a7bf2790a712fec7378d5b7f2b403
   languageName: node
   linkType: hard
 
@@ -4518,12 +4518,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:0.24.0":
-  version: 0.24.0
-  resolution: "axios@npm:0.24.0"
+"axios@npm:0.26.1":
+  version: 0.26.1
+  resolution: "axios@npm:0.26.1"
   dependencies:
-    follow-redirects: ^1.14.4
-  checksum: 468cf496c08a6aadfb7e699bebdac02851e3043d4e7d282350804ea8900e30d368daa6e3cd4ab83b8ddb5a3b1e17a5a21ada13fc9cebd27b74828f47a4236316
+    follow-redirects: ^1.14.8
+  checksum: d9eb58ff4bc0b36a04783fc9ff760e9245c829a5a1052ee7ca6013410d427036b1d10d04e7380c02f3508c5eaf3485b1ae67bd2adbfec3683704745c8d7a6e1a
   languageName: node
   linkType: hard
 
@@ -7874,9 +7874,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.719":
-  version: 1.4.98
-  resolution: "electron-to-chromium@npm:1.4.98"
-  checksum: 677854f189d4a3aee5acc23a0edc39a4d43f1a81b7797bb45a64717bbc9f48fca4569eae62ceb7b3d7e10735e6f0925e999f6dc6c89c6575f1b701959fb5e6b5
+  version: 1.4.101
+  resolution: "electron-to-chromium@npm:1.4.101"
+  checksum: b4ba580c7e9f6ee4ea8c84524ed1c5279dcabf2d52b72e05aa7d4dc2097b07ada694c05e30d6f1ba0fe9e3788f0f027e9092fd4742967d65b484eb5db1e188f9
   languageName: node
   linkType: hard
 
@@ -8381,11 +8381,11 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-react-hooks@npm:^4.2.0":
-  version: 4.3.0
-  resolution: "eslint-plugin-react-hooks@npm:4.3.0"
+  version: 4.4.0
+  resolution: "eslint-plugin-react-hooks@npm:4.4.0"
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
-  checksum: 0ba1566ba0780bbc75a5921f49188edf232db2085ab32c8d3889592f0db9d6fadc97fcf639775e0101dec6b5409ca3c803ec44213b90c8bacaf0bdf921871c2e
+  checksum: 350b50d45677cb2df682b9e54475912746bd2f56fc342e4d47fad78d71eb1b2b742e702f1e6c04ab2196346d3d7a2e327b5eee826f5b96bfb84b5c41d35e44e9
   languageName: node
   linkType: hard
 
@@ -9296,7 +9296,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.4, follow-redirects@npm:^1.14.7":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.7, follow-redirects@npm:^1.14.8":
   version: 1.14.9
   resolution: "follow-redirects@npm:1.14.9"
   peerDependenciesMeta:
@@ -9873,7 +9873,7 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git#147/exportHook"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -12957,9 +12957,9 @@ __metadata:
   linkType: hard
 
 "lru-cache@npm:^7.7.1":
-  version: 7.7.1
-  resolution: "lru-cache@npm:7.7.1"
-  checksum: f362c5a2cfa8ad6fe557ec43dc1b7a9695cce84a5652a43ff813609f782f5da576631e7dfad41878bf19a7a69438f38375178635ee80de269aa314280ca2f59e
+  version: 7.7.2
+  resolution: "lru-cache@npm:7.7.2"
+  checksum: 1aaad83fcffeeed2e08d5b47862e22abe9a2aa065d4e333a0e1944f4125f11acc7a950374ab53a68e61c6188b300f8b4bc59a5f4798d0ca3c9a67b33ea185433
   languageName: node
   linkType: hard
 
@@ -13008,8 +13008,8 @@ __metadata:
   linkType: hard
 
 "make-fetch-happen@npm:^10.0.3":
-  version: 10.1.0
-  resolution: "make-fetch-happen@npm:10.1.0"
+  version: 10.1.1
+  resolution: "make-fetch-happen@npm:10.1.1"
   dependencies:
     agentkeepalive: ^4.2.1
     cacache: ^16.0.2
@@ -13027,7 +13027,7 @@ __metadata:
     promise-retry: ^2.0.1
     socks-proxy-agent: ^6.1.1
     ssri: ^8.0.1
-  checksum: fae1c2f255f6467bf6731344c2c04dd0e1f1899d8ae4698d98e2c86131ba899a418746ebc564493b85d1651d43c93b49f7825a2773edda4285a1c4c5e5ba9168
+  checksum: 3f1b0acc2032061a01bb44458e07bbd5721e3fbfb5a1620eef38e7c7d022f2141373fc41a8056685441c70444d94e1479485492ac6e9e8ad5de87ea29ca9d9e4
   languageName: node
   linkType: hard
 
@@ -15645,9 +15645,9 @@ __metadata:
   linkType: hard
 
 "preact@npm:^10.5.13":
-  version: 10.6.6
-  resolution: "preact@npm:10.6.6"
-  checksum: d6a9581b222c60595f987be28738b68dabb3045f72043e2619af81e9ca00b2b0942717642bcfcaab77a0afa50a97cd35039139c7f425a62a4f02ceb793d8ef83
+  version: 10.7.0
+  resolution: "preact@npm:10.7.0"
+  checksum: fd0c0164379279f1b381c1438ef29bb56aaf55965ff5e72fce6b0d8e06aa1c621f685c17f3e1c969e0c609df6053106e4f0463c737f6dcc1fe98c8e24fa7a012
   languageName: node
   linkType: hard
 
@@ -15944,15 +15944,6 @@ __metadata:
   version: 1.5.1
   resolution: "q@npm:1.5.1"
   checksum: 147baa93c805bc1200ed698bdf9c72e9e42c05f96d007e33a558b5fdfd63e5ea130e99313f28efc1783e90e6bdb4e48b67a36fcc026b7b09202437ae88a1fb12
-  languageName: node
-  linkType: hard
-
-"qs@npm:6.10.2":
-  version: 6.10.2
-  resolution: "qs@npm:6.10.2"
-  dependencies:
-    side-channel: ^1.0.4
-  checksum: 46fcc8f75a062524b91f9bf6b3843f346135b27d91c2a2dc3eb7ef9e34435703fd52e16d927f8864fd572d4b0ebc5a40a00649535108b8e8ea845a861b414369
   languageName: node
   linkType: hard
 
@@ -16290,6 +16281,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-query@npm:3.34.16":
+  version: 3.34.16
+  resolution: "react-query@npm:3.34.16"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    broadcast-channel: ^3.4.1
+    match-sorter: ^6.0.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 77f5ee7279fa82642d5210b785f7b9eccc6e81c5b27b59bf112101b14e90737efeb8b73f9597bff56a08c5792ec5fa6889e14913aa196f5086ff4faeb077abd8
+  languageName: node
+  linkType: hard
+
 "react-query@npm:3.34.19":
   version: 3.34.19
   resolution: "react-query@npm:3.34.19"
@@ -16305,24 +16314,6 @@ __metadata:
     react-native:
       optional: true
   checksum: 765bec81e521a78ef04a8feb6710041ce838ef82bf6e1d35c7e9327cc242b232b242fd89f3604adf6747dce2df055d12b15e8e4208687cc5eb493c1c0bf71d34
-  languageName: node
-  linkType: hard
-
-"react-query@npm:3.34.7":
-  version: 3.34.7
-  resolution: "react-query@npm:3.34.7"
-  dependencies:
-    "@babel/runtime": ^7.5.5
-    broadcast-channel: ^3.4.1
-    match-sorter: ^6.0.2
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 879ea7c42a9414eaa0a49cceb2c87f69731ccb7e93cda73cf427b260822a1e5b34e524e6cc1dfcc00b6915cfc08399f23b36f701f5805b9ecb36cd4126cc4abe
   languageName: node
   linkType: hard
 

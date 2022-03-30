@@ -10,7 +10,7 @@ import Looks3Icon from '@material-ui/icons/Looks3';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import UpdateIcon from '@material-ui/icons/Update';
-import { MUTATION_KEYS, HOOK_KEYS } from '@graasp/query-client';
+import { MUTATION_KEYS, DATA_KEYS } from '@graasp/query-client';
 import { useMutation, hooks, queryClient } from '../../../config/queryClient';
 import CategorySelection from './CategorySelection';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
@@ -29,7 +29,7 @@ import {
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
-const { buildItemValidationAndReviewsKey } = HOOK_KEYS;
+const { buildItemValidationAndReviewsKey } = DATA_KEYS;
 const {
   useItemValidationAndReviews,
   useItemValidationStatuses,
