@@ -22,7 +22,7 @@ const openChatbox = () => {
 };
 
 // THESE TESTS ARE SKIPPED BECAUSE THEY FAIL IN CI
-describe.skip('Chatbox Scenarios', () => {
+describe('Chatbox Scenarios', () => {
   let client;
 
   beforeEach(() => {
@@ -42,7 +42,8 @@ describe.skip('Chatbox Scenarios', () => {
 
     // send message
     const message = 'a new message';
-    cy.get(`#${CHATBOX_ID} #${CHATBOX_INPUT_BOX_ID} input`).type(message);
+    // get the input field (which is a textarea because it is multiline
+    cy.get(`#${CHATBOX_ID} #${CHATBOX_INPUT_BOX_ID} textarea:visible`).type(message);
     cy.get(`#${CHATBOX_ID} #${CHATBOX_INPUT_BOX_ID} button`).click();
     cy.wait('@postItemChatMessage').then(({ request: { body } }) => {
       expect(body.body).to.equal(message);

@@ -9,7 +9,7 @@ import { HEADER_HEIGHT } from '../../config/constants';
 import { CHATBOX_INPUT_BOX_ID, CHATBOX_ID } from '../../config/selectors';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const { useItemChat, useMembers } = hooks;
+const { useItemChat, useMembers, useAvatar } = hooks;
 
 const Chatbox = ({ item }) => {
   const { data: chat, isLoading: isChatLoading } = useItemChat(item.get('id'));
@@ -20,6 +20,12 @@ const Chatbox = ({ item }) => {
     useContext(CurrentUserContext);
   const { mutate: sendMessage } = useMutation(
     MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE,
+  );
+  const { mutate: editMessage } = useMutation(
+    MUTATION_KEYS.PATCH_ITEM_CHAT_MESSAGE,
+  );
+  const { mutate: deleteMessage } = useMutation(
+    MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE,
   );
 
   if (isChatLoading || isLoadingCurrentMember || isMembersLoading) {
@@ -36,6 +42,9 @@ const Chatbox = ({ item }) => {
       messages={List(chat?.get('messages'))}
       height={window.innerHeight - HEADER_HEIGHT * 2}
       sendMessageFunction={sendMessage}
+      deleteMessageFunction={deleteMessage}
+      editMessageFunction={editMessage}
+      useAvatarHook={useAvatar}
     />
   );
 };
