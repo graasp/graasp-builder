@@ -2,6 +2,7 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { ZIP_DEFAULT } from '../../../fixtures/files';
+import { ZIP_DASHBOARD_UPLOADER_ID } from '../../../../src/config/selectors';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { createItem } from './utils';
 
@@ -17,7 +18,9 @@ describe('Import Zip', () => {
     // create
     createItem(ZIP_DEFAULT);
 
-    cy.wait('@importZip');
+    // check interface didn't crash
+    cy.wait(5000);
+    cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID}`).should('be.visible');
   });
 
   it('create file in item', () => {
@@ -32,12 +35,12 @@ describe('Import Zip', () => {
     // create
     createItem(ZIP_DEFAULT);
 
-    cy.wait('@importZip').then(({ response: { url } }) => {
-      expect(url).to.contain(id);
-    });
+    // check interface didn't crash
+    cy.wait(5000);
+    cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID}`).should('be.visible');
   });
 
-  it.only('catch error', () => {
+  it('catch error', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, importZipError: true });
     const { id } = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(id));
@@ -49,8 +52,8 @@ describe('Import Zip', () => {
     // create
     createItem(ZIP_DEFAULT);
 
-    cy.wait('@importZip').then(({ response: { url } }) => {
-      expect(url).to.contain(id);
-    });
+    // check interface didn't crash
+    cy.wait(5000);
+    cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID}`).should('be.visible');
   });
 });

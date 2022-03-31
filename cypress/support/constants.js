@@ -11,6 +11,8 @@ export const ITEM_LOADING_PAUSE = 2000;
 export const WEBSOCKETS_DELAY_TIME = 1500;
 export const WAIT_FOR_ITEM_TABLE_ROW_TIME = 7000;
 
+export const EDIT_TAG_REQUEST_TIMEOUT = 10000;
+
 export const REDIRECTION_CONTENT = 'hello';
 export const REQUEST_FAILURE_TIME = 2500;
 

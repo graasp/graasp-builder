@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from '@material-ui/core/Button';
+import { Button } from '@graasp/ui';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -94,14 +94,10 @@ const EditItemModalProvider = ({ children }) => {
         {renderForm()}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose} variant="text">
           {t('Cancel')}
         </Button>
-        <Button
-          onClick={submit}
-          color="primary"
-          id={ITEM_FORM_CONFIRM_BUTTON_ID}
-        >
+        <Button onClick={submit} id={ITEM_FORM_CONFIRM_BUTTON_ID}>
           {t('Save')}
         </Button>
       </DialogActions>

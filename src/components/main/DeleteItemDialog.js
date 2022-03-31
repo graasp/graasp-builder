@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import { Button } from '@graasp/ui';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -53,7 +53,7 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} color="primary" variant="text">
           {t('Cancel')}
         </Button>
         <Button
@@ -62,6 +62,7 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
           onClick={onDelete}
           color="secondary"
           autoFocus
+          variant="text"
         >
           {t('Delete Permanently')}
         </Button>

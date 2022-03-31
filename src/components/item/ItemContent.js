@@ -90,6 +90,10 @@ const ItemContent = ({ item, enableEditing, permission }) => {
     setEditingItemId(null);
   };
 
+  const onCancel = () => {
+    setEditingItemId(null);
+  };
+
   const saveButtonId = buildSaveButtonId(itemId);
 
   switch (itemType) {
@@ -127,6 +131,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
             item={item}
             edit={isEditing}
             onSave={onSaveDocument}
+            onCancel={onCancel}
             saveButtonId={saveButtonId}
             maxHeight="70vh"
           />

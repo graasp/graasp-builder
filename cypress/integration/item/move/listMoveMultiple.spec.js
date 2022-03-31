@@ -66,9 +66,6 @@ describe('Move Items in List', () => {
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(toItem);
       itemIds.forEach((movedItem) => expect(url).to.contain(movedItem));
-      itemIds.forEach((id) => {
-        cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('not.exist');
-      });
     });
   });
 

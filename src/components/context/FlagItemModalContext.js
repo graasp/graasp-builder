@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
+import { Button } from '@graasp/ui';
 import Dialog from '@material-ui/core/Dialog';
 import List from '@material-ui/core/List';
 import { ListItem, ListItemText, makeStyles } from '@material-ui/core';
@@ -90,7 +90,7 @@ const FlagItemModalProvider = ({ children }) => {
           </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="primary">
+          <Button onClick={onClose} variant="text">
             {t('Cancel')}
           </Button>
           <Button

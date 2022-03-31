@@ -25,7 +25,7 @@ const FolderForm = ({ onChange, item, updatedProperties }) => {
         value={updatedProperties?.description || item?.description}
         edit
         onChange={onCaptionChange}
-        showSaveButton={false}
+        showActions={false}
       />
     </>
   );

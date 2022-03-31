@@ -18,6 +18,10 @@ const FolderDescription = ({ itemId, isEditing }) => {
     setEditingItemId(null);
   };
 
+  const onCancel = () => {
+    setEditingItemId(null);
+  };
+
   if (!itemId) {
     return null;
   }
@@ -30,6 +34,7 @@ const FolderDescription = ({ itemId, isEditing }) => {
       showSaveButton
       onSave={onDescriptionSave}
       saveButtonId={buildSaveButtonId(itemId)}
+      onCancel={onCancel}
     />
   );
 };
