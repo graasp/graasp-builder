@@ -647,7 +647,7 @@ export const mockGetMembers = (members) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: `${API_HOST}/${buildGetMembersRoute([''])}`,
+      url: `${API_HOST}/${buildGetMembersRoute([''])}*`,
     },
     ({ url, reply }) => {
       let { id: memberIds } = qs.parse(url.slice(url.indexOf('?') + 1));
