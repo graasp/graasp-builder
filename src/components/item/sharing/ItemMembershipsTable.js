@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,7 +21,7 @@ import {
 } from '../../../config/selectors';
 import ItemMembershipSelect from './ItemMembershipSelect';
 
-const ItemMembershipRow = ({ membership, itemId }) => {
+const ItemMembershipRow = ({ membership, item }) => {
   const { data: user, isLoading } = hooks.useMember(membership.memberId);
   const { mutate: deleteItemMembership } = useMutation(
     MUTATION_KEYS.DELETE_ITEM_MEMBERSHIP,
@@ -28,18 +29,33 @@ const ItemMembershipRow = ({ membership, itemId }) => {
   const { mutate: editItemMembership } = useMutation(
     MUTATION_KEYS.EDIT_ITEM_MEMBERSHIP,
   );
+  const { mutate: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
 
   if (isLoading) {
     return <Loader />;
   }
 
   const deleteMembership = () => {
-    deleteItemMembership({ itemId, id: membership.id });
+    deleteItemMembership({ itemId: item.get('id'), id: membership.id });
   };
 
   const onChangePermission = (e) => {
     const { value } = e.target;
-    editItemMembership({ itemId, id: membership.id, permission: value });
+    if (membership.itemPath === item.get('path')) {
+      editItemMembership({
+        itemId: item.get('id'),
+        id: membership.id,
+        permission: value,
+      });
+    }
+    // editing a child parent, from a parent's membership should create a new membership
+    else {
+      shareItem({
+        id: item.get('id'),
+        email: user.get('email'),
+        permission: value,
+      });
+    }
   };
 
   return (
@@ -80,8 +96,9 @@ ItemMembershipRow.propTypes = {
     id: PropTypes.string.isRequired,
     permission: PropTypes.oneOf(Object.values(PERMISSION_LEVELS)).isRequired,
     memberId: PropTypes.string.isRequired,
+    itemPath: PropTypes.string.isRequired,
   }).isRequired,
-  itemId: PropTypes.string.isRequired,
+  item: PropTypes.instanceOf(Map).isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -91,12 +108,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line no-unused-vars
-const ItemMembershipsTable = ({ memberships, id, emptyMessage }) => {
+const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const content = memberships.length ? (
-    memberships.map((row) => <ItemMembershipRow membership={row} itemId={id} />)
+    memberships.map((row) => <ItemMembershipRow membership={row} item={item} />)
   ) : (
     <Typography align="center" className={classes.emptyText}>
       {emptyMessage || t('No user has access to this item.')}
@@ -113,7 +130,7 @@ const ItemMembershipsTable = ({ memberships, id, emptyMessage }) => {
 };
 
 ItemMembershipsTable.propTypes = {
-  id: PropTypes.string.isRequired,
+  item: PropTypes.instanceOf(Map).isRequired,
   memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   emptyMessage: PropTypes.string,
 };
