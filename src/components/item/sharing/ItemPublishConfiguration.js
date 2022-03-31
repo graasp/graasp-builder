@@ -19,7 +19,6 @@ import {
   ADMIN_CONTACT,
   ITEM_VALIDATION_STATUSES,
   SETTINGS,
-  SUBMIT_BUTTON_WIDTH,
 } from '../../../config/constants';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import {
@@ -56,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     width: 'auto',
-    minWidth: SUBMIT_BUTTON_WIDTH,
     marginRight: theme.spacing(2),
   },
 }));
