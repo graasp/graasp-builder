@@ -37,4 +37,23 @@ describe('Edit Membership', () => {
       expect(body?.permission).to.equal(permission);
     });
   });
+
+  it('edit children membership should create a new membership', () => {
+    cy.setUpApi({ ...ITEMS_WITH_MEMBERSHIPS });
+
+    // go to children item
+    const { id, memberships } = ITEMS_WITH_MEMBERSHIPS.items[1];
+    cy.visit(buildItemPath(id));
+
+    // update membership
+    const permission = PERMISSION_LEVELS.ADMIN;
+    const { id: mId } = memberships[1];
+    editItemMembership({ itemId: id, id: mId, permission });
+
+    cy.wait('@shareItem').then(({ request: { url, body } }) => {
+      expect(url).to.contain(id);
+      expect(body?.permission).to.equal(permission);
+      // expect(body?.memberId).to.equal(member.id);
+    });
+  });
 });
