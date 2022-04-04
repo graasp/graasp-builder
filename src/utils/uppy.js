@@ -148,7 +148,11 @@ export const configureZipImportUppy = ({
     onUpload,
     restrictions: {
       maxNumberOfFiles: 1,
-      allowedFileTypes: ['application/zip'],
+      allowedFileTypes: [
+        'application/zip',
+        'application/x-zip-compressed',
+        'multipart/x-zip',
+      ],
     },
     buildEndpoint: (id) => `${API_HOST}/${API_ROUTES.buildImportZipRoute(id)}`,
   });
