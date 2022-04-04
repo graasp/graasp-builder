@@ -24,6 +24,7 @@ export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
+export const PUBLISH_ITEM_BUTTON_CLASS = 'publishItemButton';
 export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
 export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
 export const buildPermissionOptionId = (id) => `permission-${id}`;
@@ -125,6 +126,7 @@ export const buildItemsGridPaginationButtonSelected = (page) =>
 export const ITEM_HEADER_ID = 'itemHeader';
 export const buildRowDraggerId = (id) => `rowDragger-${id}`;
 export const buildShareButtonId = (id) => `shareButton-${id}`;
+export const buildPublishButtonId = (id) => `publishButton-${id}`;
 export const buildDeleteButtonId = (id) => `deleteButton-${id}`;
 export const buildItemMenuButtonId = (id) => `itemMenuButton-${id}`;
 export const buildPlayerButtonId = (id) => `playerButton-${id}`;

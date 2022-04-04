@@ -29,6 +29,7 @@ import {
 import { hooks } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
+import PublishButton from '../../common/PublishButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
             </Tooltip>
           )}
           <ShareButton itemId={id} />
+          <PublishButton itemId={id} />
           <PlayerViewButton itemId={id} />
           <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
             <ForumIcon />

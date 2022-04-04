@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Loader } from '@graasp/ui';
@@ -26,10 +26,16 @@ import {
   ITEM_VALIDATION_BUTTON_ID,
 } from '../../../config/selectors';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
+import {
+  getTagByName,
+  getVisibilityTagAndItemTag,
+} from '../../../utils/itemTag';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
 const { buildItemValidationAndReviewsKey } = DATA_KEYS;
 const {
+  useTags,
+  useItemTags,
   useItemValidationAndReviews,
   useItemValidationStatuses,
   useItemValidationReviewStatuses,
@@ -59,14 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemPublishConfiguration = ({
-  item,
-  edit,
-  tagValue,
-  itemTagValue,
-  publishedTag,
-  publicTag,
-}) => {
+const ItemPublishConfiguration = ({ item, edit }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   // current user
@@ -74,8 +73,22 @@ const ItemPublishConfiguration = ({
   // current item
   const { itemId } = useParams();
 
+  // item tags
   const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
   const { mutate: postItemTag } = useMutation(POST_ITEM_TAG);
+
+  const { data: tags, isLoading: isTagsLoading } = useTags();
+  const {
+    data: itemTags,
+    isLoading: isItemTagsLoading,
+    isError,
+  } = useItemTags(itemId);
+
+  const [itemTagValue, setItemTagValue] = useState(false);
+  const [tagValue, setTagValue] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  // item validation
   const { mutate: validateItem } = useMutation(POST_ITEM_VALIDATION);
 
   // get map of item validation and review statuses
@@ -101,6 +114,21 @@ const ItemPublishConfiguration = ({
 
   const [itemValidationStatus, setItemValidationStatus] = useState(false);
 
+  // update state variables depending on fetch values
+  useEffect(() => {
+    if (tags && itemTags) {
+      const { tag, itemTag } = getVisibilityTagAndItemTag({ tags, itemTags });
+      setItemTagValue(itemTag);
+      setTagValue(tag);
+
+      // disable setting if any visiblity is set on any ancestor items
+      setIsDisabled(
+        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.get('path'),
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags, itemTags, item]);
+
   useEffect(() => {
     // process when we fetch the item validation and review records
     if (ivByStatus) {
@@ -114,8 +142,12 @@ const ItemPublishConfiguration = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ivByStatus]);
 
-  if (isLoading) {
+  if (isLoading || isTagsLoading || isItemTagsLoading) {
     return <Loader />;
+  }
+
+  if (isError) {
+    return null;
   }
 
   const handleValidate = () => {
@@ -132,6 +164,8 @@ const ItemPublishConfiguration = ({
   };
 
   const publishItem = () => {
+    const publishedTag = getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name);
+    const publicTag = getTagByName(tags, SETTINGS.ITEM_PUBLIC.name);
     // post published tag
     postItemTag({
       id: itemId,
@@ -250,6 +284,10 @@ const ItemPublishConfiguration = ({
         )}
       </Typography>
       <Button
+        disabled={
+          isDisabled ||
+          itemValidationStatus !== ITEM_VALIDATION_STATUSES.SUCCESS
+        }
         variant="outlined"
         onClick={publishItem}
         color="primary"
@@ -280,29 +318,9 @@ const ItemPublishConfiguration = ({
   );
 };
 
-// define types for propType only
-const Tag = {
-  id: string,
-  name: string,
-  nested: string,
-  createdAt: string,
-};
-
-const ItemTag = {
-  id: string,
-  tagId: string,
-  itemPath: string,
-  creator: string,
-  createdAt: string,
-};
-
 ItemPublishConfiguration.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   edit: PropTypes.bool.isRequired,
-  tagValue: PropTypes.instanceOf(Tag).isRequired,
-  itemTagValue: PropTypes.instanceOf(ItemTag).isRequired,
-  publishedTag: PropTypes.instanceOf(Tag).isRequired,
-  publicTag: PropTypes.instanceOf(Tag).isRequired,
 };
 
 export default ItemPublishConfiguration;
