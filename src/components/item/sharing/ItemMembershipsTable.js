@@ -48,7 +48,7 @@ const ItemMembershipRow = ({ membership, item }) => {
         permission: value,
       });
     }
-    // editing a child parent, from a parent's membership should create a new membership
+    // editing a parent's membership from a child should create a new membership
     else {
       shareItem({
         id: item.get('id'),

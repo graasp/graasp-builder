@@ -53,7 +53,6 @@ describe('Edit Membership', () => {
     cy.wait('@shareItem').then(({ request: { url, body } }) => {
       expect(url).to.contain(id);
       expect(body?.permission).to.equal(permission);
-      // expect(body?.memberId).to.equal(member.id);
     });
   });
 });
