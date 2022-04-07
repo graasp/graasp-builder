@@ -6,14 +6,19 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import IconButton from '@material-ui/core/IconButton';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { GraaspLogo } from '@graasp/ui';
+import { GraaspLogo, Navigation } from '@graasp/ui';
+import { Context } from '@graasp/utils';
 import {
   APP_NAME,
   GRAASP_LOGO_HEADER_HEIGHT,
   HEADER_HEIGHT,
+  HOST_MAP,
 } from '../../config/constants';
 import SettingsHeader from '../common/SettingsHeader';
-import { HEADER_APP_BAR_ID } from '../../config/selectors';
+import {
+  APP_NAVIGATION_DROP_DOWN_ID,
+  HEADER_APP_BAR_ID,
+} from '../../config/selectors';
 import { HOME_PATH } from '../../config/paths';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     fill: 'white',
   },
   title: {
-    margin: theme.spacing(0, 2),
+    margin: theme.spacing(0, 2, 0, 1),
   },
   link: {
     textDecoration: 'none',
@@ -75,6 +80,11 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
             <Typography variant="h6" color="inherit" className={classes.title}>
               {APP_NAME}
             </Typography>
+            <Navigation
+              id={APP_NAVIGATION_DROP_DOWN_ID}
+              hostMap={HOST_MAP}
+              currentValue={Context.BUILDER}
+            />
           </Link>
         </div>
         <SettingsHeader />

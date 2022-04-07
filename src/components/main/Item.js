@@ -74,7 +74,7 @@ const Item = ({ item, memberships }) => {
           <EditButton item={item} />
           <PinButton item={item} />
           <HideButton item={item} />
-          <DownloadButton id={id} />
+          <DownloadButton id={id} name={name} />
         </>
       )}
     </>
