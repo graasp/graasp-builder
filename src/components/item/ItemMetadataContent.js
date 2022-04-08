@@ -56,6 +56,22 @@ const ItemMetadataContent = ({ item }) => {
     type = item.get(ITEM_KEYS.TYPE);
   }
 
+  const renderLink = () => {
+    const buildTableRow = (link) => (
+      <TableRow>
+        <TableCell align="left">{t('Link')}</TableCell>
+        <TableCell align="right">{link}</TableCell>
+      </TableRow>
+    );
+    if (type === ITEM_TYPES.APP) {
+      return buildTableRow(item.get('extra')[ITEM_TYPES.APP].url);
+    }
+    if (type === ITEM_TYPES.LINK) {
+      return buildTableRow(item.get('extra')[ITEM_TYPES.LINK].url);
+    }
+    return null;
+  };
+
   return (
     <>
       <TableContainer className={classes.table}>
@@ -98,6 +114,7 @@ const ItemMetadataContent = ({ item }) => {
                 {formatDate(item.get('updatedAt'))}
               </TableCell>
             </TableRow>
+            {renderLink()}
           </TableBody>
         </Table>
       </TableContainer>

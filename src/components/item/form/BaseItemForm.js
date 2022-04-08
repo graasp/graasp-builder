@@ -25,7 +25,8 @@ const BaseForm = ({ onChange, item, updatedProperties }) => {
       margin="dense"
       id={ITEM_FORM_NAME_INPUT_ID}
       label={t('Name')}
-      value={updatedProperties?.name || item?.name}
+      // add empty string to avoid that label overlaps
+      value={updatedProperties?.name || item?.name || ''}
       onChange={handleNameInput}
       className={classes.shortInputField}
     />
