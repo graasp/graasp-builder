@@ -220,3 +220,5 @@ export const HOST_MAP = {
   [Context.EXPLORER]: GRAASP_EXPLORE_HOST,
   [Context.PLAYER]: GRAASP_PERFORM_HOST,
 };
+
+export const MAX_THUMBNAIL_SIZE = 10 * 1024 * 1024;
