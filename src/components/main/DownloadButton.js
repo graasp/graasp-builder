@@ -5,7 +5,7 @@ import { DownloadButton as Button } from '@graasp/ui';
 import PropTypes from 'prop-types';
 import { useMutation } from '../../config/queryClient';
 
-export const DownloadButton = ({ id }) => {
+export const DownloadButton = ({ id, name }) => {
   const { t } = useTranslation();
 
   const {
@@ -20,10 +20,11 @@ export const DownloadButton = ({ id }) => {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${id}.zip`);
+      link.setAttribute('download', `${name}.zip`);
       document.body.appendChild(link);
       link.click();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isSuccess, id]);
 
   const handleDownload = () => {
@@ -40,6 +41,7 @@ export const DownloadButton = ({ id }) => {
 
 DownloadButton.propTypes = {
   id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default DownloadButton;
