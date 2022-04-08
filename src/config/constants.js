@@ -216,7 +216,7 @@ export const ITEM_VALIDATION_REVIEW_STATUSES = {
 export const ADMIN_CONTACT = 'admin@graasp.org';
 
 export const HOST_MAP = {
-  [Context.BUILD]: '/',
-  [Context.EXPLORE]: GRAASP_EXPLORE_HOST,
-  [Context.PLAY]: GRAASP_PERFORM_HOST,
+  [Context.BUILDER]: '/',
+  [Context.EXPLORER]: GRAASP_EXPLORE_HOST,
+  [Context.PLAYER]: GRAASP_PERFORM_HOST,
 };
