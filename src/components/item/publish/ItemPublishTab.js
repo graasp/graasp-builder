@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import ItemPublishConfiguration from '../sharing/ItemPublishConfiguration';
+import ItemPublishConfiguration from './ItemPublishConfiguration';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {

@@ -20,9 +20,9 @@ const PublishButton = ({ itemId }) => {
   };
 
   return (
-    <Tooltip title={t('Share')}>
+    <Tooltip title={t('Publish')}>
       <IconButton
-        aria-label="share"
+        aria-label="publish"
         className={PUBLISH_ITEM_BUTTON_CLASS}
         onClick={onClick}
         id={buildPublishButtonId(itemId)}

@@ -32,11 +32,12 @@ import {
 } from '../../../utils/itemTag';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
-const { buildItemValidationAndReviewsKey } = DATA_KEYS;
+const { buildItemValidationAndReviewKey } = DATA_KEYS;
 const {
   useTags,
   useItemTags,
-  useItemValidationAndReviews,
+  useItemValidationAndReview,
+  useItemValidationGroups,
   useItemValidationStatuses,
   useItemValidationReviewStatuses,
 } = hooks;
@@ -100,16 +101,18 @@ const ItemPublishConfiguration = ({ item, edit }) => {
 
   // get item validation data
   const { data: itemValidationData, isLoading } =
-    useItemValidationAndReviews(itemId);
-  // remove iv records before the item is last updated
-  const validItemValidation = itemValidationData?.filter(
-    (entry) =>
-      new Date(entry.validationUpdatedAt) >= new Date(item?.get('updatedAt')),
-  );
+    useItemValidationAndReview(itemId);
+  // check if validation is still valid
+  const iVId =
+    new Date(itemValidationData?.createdAt) >= new Date(item?.get('updatedAt'))
+      ? itemValidationData?.itemValidationId
+      : undefined;
+  // get item validation groups
+  const { data: itemValidationGroups } = useItemValidationGroups(iVId);
 
   // group iv records by item validation status
-  const ivByStatus = validItemValidation?.groupBy(({ validationStatusId }) =>
-    validationStatusesMap?.get(validationStatusId),
+  const ivByStatus = itemValidationGroups?.groupBy(({ statusId }) =>
+    validationStatusesMap?.get(statusId),
   );
 
   const [itemValidationStatus, setItemValidationStatus] = useState(false);
@@ -136,6 +139,7 @@ const ItemPublishConfiguration = ({ item, edit }) => {
         getValidationStatusFromItemValidations(
           ivByStatus,
           validationStatusesMap,
+          itemValidationData,
         ),
       );
     }
@@ -160,7 +164,7 @@ const ItemPublishConfiguration = ({ item, edit }) => {
   };
 
   const handleRefresh = () => {
-    queryClient.invalidateQueries(buildItemValidationAndReviewsKey(itemId));
+    queryClient.invalidateQueries(buildItemValidationAndReviewKey(itemId));
   };
 
   const publishItem = () => {

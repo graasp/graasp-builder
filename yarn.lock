@@ -1914,9 +1914,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git":
+"@graasp/query-client@github:graasp/graasp-query-client.git#151/validationHooks":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1a7a124944787dd3a70c64e2c76e27b70b356fda"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=eef6b317561800c4b3771de9d3a5508d1acd47f5"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     axios: 0.26.1
@@ -1929,7 +1929,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 79da7437aca9df3bac8faa344ba5ed5f0a101e9c70ea0032bdc6126cd23c80009a18b4a603b1d8c8460b2bf7e74eab7ded529e8b26a183a4cab732d7817da749
+  checksum: 55503e8279b58e764fe35476cac2307d396a0326e1afda691ff1faaf43ed72b682c4b5903ffbed80fdb1e86b145889b9b9553d8fb775e0fd3d126c96c6875637
   languageName: node
   linkType: hard
 
@@ -9926,7 +9926,7 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git#151/validationHooks"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
