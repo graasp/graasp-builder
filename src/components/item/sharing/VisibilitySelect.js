@@ -245,6 +245,9 @@ const VisibilitySelect = ({ item, edit }) => {
             {t('Pseudonymized')}
           </MenuItem>
           <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>{t('Public')}</MenuItem>
+          <MenuItem value={SETTINGS.ITEM_PUBLISHED.name} disabled>
+            {t('Published')}
+          </MenuItem>
         </Select>
       )}
       {renderVisiblityIndication()}
