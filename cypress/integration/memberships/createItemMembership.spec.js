@@ -11,7 +11,7 @@ const shareItem = ({ member, permission, id }) => {
 };
 
 describe('Create Membership', () => {
-  it('share item from settings', () => {
+  it('share item', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     // go to children item
