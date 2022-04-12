@@ -51,7 +51,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
           <EditButton item={item} />
           <PinButton item={item} />
           <HideButton item={item} />
-          <DownloadButton id={item?.id} />
+          <DownloadButton id={item?.id} name={item?.name} />
         </>
       );
     };
@@ -65,7 +65,10 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
     );
   };
   ChildComponent.propTypes = {
-    data: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
+    data: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
   };
   return ChildComponent;
 };

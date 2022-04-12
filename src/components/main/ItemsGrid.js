@@ -19,7 +19,7 @@ import { ItemSearchInput, NoItemSearchResult } from '../item/ItemSearch';
 import EmptyItem from './EmptyItem';
 import Item from './Item';
 import FolderDescription from '../item/FolderDescription';
-import TableToolbar from './TableToolbar';
+import ItemsToolbar from './ItemsToolbar';
 
 const styles = (theme) => ({
   empty: { padding: theme.spacing(1, 2.5) },
@@ -100,7 +100,7 @@ const ItemsGrid = (props) => {
 
   return (
     <div>
-      <TableToolbar tableTitle={title} headerElements={headerElements} />
+      <ItemsToolbar title={title} headerElements={headerElements} />
       <FolderDescription itemId={parentId} isEditing={isEditing} />
       <Grid container spacing={1}>
         {renderItems()}

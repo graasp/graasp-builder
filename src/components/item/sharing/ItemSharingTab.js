@@ -93,7 +93,7 @@ const ItemSharingTab = ({ item, memberships }) => {
         </Typography>
         {canEdit && <CreateItemMembershipForm id={item.get('id')} />}
         <ItemMembershipsTable
-          id={item.get('id')}
+          item={item}
           emptyMessage={t('No user has access to this item.')}
           memberships={authorizedMemberships}
         />
@@ -108,7 +108,7 @@ const ItemSharingTab = ({ item, memberships }) => {
               {t('Authenticated Members')}
             </Typography>
             <ItemMembershipsTable
-              id={item.get('id')}
+              item={item}
               memberships={authenticatedMemberships}
               emptyMessage={t('No user has authenticated to this item yet.')}
             />
