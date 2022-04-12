@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CategorySelection = ({ item, edit }) => {
+const CategorySelection = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: createItemCategory } = useMutation(POST_ITEM_CATEGORY);
@@ -137,7 +137,7 @@ const CategorySelection = ({ item, edit }) => {
       </Typography>
       <Autocomplete
         className={classes.dropMenu}
-        disabled={!edit || !levelList}
+        disabled={!levelList}
         multiple
         disableClearable
         id={SHARE_ITEM_CATEGORY_LEVEL}
@@ -158,7 +158,7 @@ const CategorySelection = ({ item, edit }) => {
       <Typography variant="body1">{t('Discipline')}</Typography>
       <Autocomplete
         className={classes.dropMenu}
-        disabled={!edit || !levelList}
+        disabled={!levelList}
         multiple
         disableClearable
         id={SHARE_ITEM_CATEGORY_DISCIPLINE}
@@ -184,7 +184,6 @@ const CategorySelection = ({ item, edit }) => {
 
 CategorySelection.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  edit: PropTypes.bool.isRequired,
 };
 
 export default CategorySelection;

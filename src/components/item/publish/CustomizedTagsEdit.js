@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
-const CustomizedTagsEdit = ({ item, edit }) => {
+const CustomizedTagsEdit = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
@@ -78,7 +78,6 @@ const CustomizedTagsEdit = ({ item, edit }) => {
         {t('Eg. English, Biology, Lab, Plants, ..., Demo')}
       </Typography>
       <TextField
-        disabled={!edit}
         variant="outlined"
         label={t('Tags')}
         multiline
@@ -91,7 +90,6 @@ const CustomizedTagsEdit = ({ item, edit }) => {
         onClick={handleSubmit}
         className={classes.button}
         startIcon={<SaveIcon />}
-        disabled={!edit}
         id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
       >
         {t('Save')}
@@ -106,7 +104,6 @@ const CustomizedTagsEdit = ({ item, edit }) => {
 
 CustomizedTagsEdit.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  edit: PropTypes.bool.isRequired,
 };
 
 export default CustomizedTagsEdit;

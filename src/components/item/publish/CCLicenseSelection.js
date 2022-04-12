@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
-const CCLicenseSelection = ({ item, edit }) => {
+const CCLicenseSelection = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: updateCCLicense } = useMutation(EDIT_ITEM);
@@ -55,7 +55,7 @@ const CCLicenseSelection = ({ item, edit }) => {
   const settings = item?.get('settings');
   const itemName = item?.get('name');
   const disabled =
-    settings?.ccLicenseAdaption === CC_LICENSE_ADAPTION_OPTIONS.ALLOW || !edit;
+    settings?.ccLicenseAdaption === CC_LICENSE_ADAPTION_OPTIONS.ALLOW;
 
   useEffect(() => {
     if (settings) {
@@ -115,11 +115,13 @@ const CCLicenseSelection = ({ item, edit }) => {
           value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
           control={<Radio color="primary" />}
           label={t('Yes')}
+          disabled={disabled}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
           control={<Radio color="primary" />}
           label={t('Only if others share alike')}
+          disabled={disabled}
         />
       </RadioGroup>
       <CCLicenseDialog
@@ -137,7 +139,6 @@ const CCLicenseSelection = ({ item, edit }) => {
 
 CCLicenseSelection.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  edit: PropTypes.bool.isRequired,
 };
 
 export default CCLicenseSelection;

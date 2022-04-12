@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
@@ -18,24 +18,17 @@ import CCLicenseSelection from './CCLicenseSelection';
 import {
   ADMIN_CONTACT,
   ITEM_VALIDATION_STATUSES,
-  SETTINGS,
 } from '../../../config/constants';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
 } from '../../../config/selectors';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
-import {
-  getTagByName,
-  getVisibilityTagAndItemTag,
-} from '../../../utils/itemTag';
+import ItemPublishButton from './ItemPublishButton';
 
-const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
+const { POST_ITEM_VALIDATION } = MUTATION_KEYS;
 const { buildItemValidationAndReviewKey } = DATA_KEYS;
 const {
-  useTags,
-  useItemTags,
   useItemValidationAndReview,
   useItemValidationGroups,
   useItemValidationStatuses,
@@ -66,28 +59,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemPublishConfiguration = ({ item, edit }) => {
+const ItemPublishConfiguration = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  // current user
-  const { data: user } = useContext(CurrentUserContext);
   // current item
   const { itemId } = useParams();
-
-  // item tags
-  const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
-  const { mutate: postItemTag } = useMutation(POST_ITEM_TAG);
-
-  const { data: tags, isLoading: isTagsLoading } = useTags();
-  const {
-    data: itemTags,
-    isLoading: isItemTagsLoading,
-    isError,
-  } = useItemTags(itemId);
-
-  const [itemTagValue, setItemTagValue] = useState(false);
-  const [tagValue, setTagValue] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
 
   // item validation
   const { mutate: validateItem } = useMutation(POST_ITEM_VALIDATION);
@@ -106,7 +82,7 @@ const ItemPublishConfiguration = ({ item, edit }) => {
   const iVId =
     new Date(itemValidationData?.createdAt) >= new Date(item?.get('updatedAt'))
       ? itemValidationData?.itemValidationId
-      : undefined;
+      : null;
   // get item validation groups
   const { data: itemValidationGroups } = useItemValidationGroups(iVId);
 
@@ -116,21 +92,6 @@ const ItemPublishConfiguration = ({ item, edit }) => {
   );
 
   const [itemValidationStatus, setItemValidationStatus] = useState(false);
-
-  // update state variables depending on fetch values
-  useEffect(() => {
-    if (tags && itemTags) {
-      const { tag, itemTag } = getVisibilityTagAndItemTag({ tags, itemTags });
-      setItemTagValue(itemTag);
-      setTagValue(tag);
-
-      // disable setting if any visiblity is set on any ancestor items
-      setIsDisabled(
-        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.get('path'),
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tags, itemTags, item]);
 
   useEffect(() => {
     // process when we fetch the item validation and review records
@@ -146,12 +107,8 @@ const ItemPublishConfiguration = ({ item, edit }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ivByStatus]);
 
-  if (isLoading || isTagsLoading || isItemTagsLoading) {
+  if (isLoading) {
     return <Loader />;
-  }
-
-  if (isError) {
-    return null;
   }
 
   const handleValidate = () => {
@@ -161,37 +118,11 @@ const ItemPublishConfiguration = ({ item, edit }) => {
       itemValidationStatus === ITEM_VALIDATION_STATUSES.FAILURE
     )
       validateItem({ itemId });
+    setItemValidationStatus(ITEM_VALIDATION_STATUSES.PENDING);
   };
 
   const handleRefresh = () => {
     queryClient.invalidateQueries(buildItemValidationAndReviewKey(itemId));
-  };
-
-  const publishItem = () => {
-    const publishedTag = getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name);
-    const publicTag = getTagByName(tags, SETTINGS.ITEM_PUBLIC.name);
-    // post published tag
-    postItemTag({
-      id: itemId,
-      tagId: publishedTag.id,
-      itemPath: item?.get('path'),
-      creator: user?.get('id'),
-    });
-
-    // if previous is public, not necessary to delete/add the public tag
-    if (tagValue?.name !== SETTINGS.ITEM_PUBLIC.name) {
-      // post public tag
-      postItemTag({
-        id: itemId,
-        tagId: publicTag.id,
-        itemPath: item?.get('path'),
-        creator: user?.get('id'),
-      });
-      // delete previous tag
-      if (tagValue && tagValue.name !== SETTINGS.ITEM_PRIVATE.name) {
-        deleteItemTag({ id: itemId, tagId: itemTagValue?.id });
-      }
-    }
   };
 
   // display icon indicating current status of given item
@@ -262,7 +193,6 @@ const ItemPublishConfiguration = ({ item, edit }) => {
         variant="outlined"
         onClick={handleValidate}
         color="primary"
-        disabled={!edit}
         className={classes.button}
         endIcon={displayItemValidationIcon()}
       >
@@ -272,7 +202,6 @@ const ItemPublishConfiguration = ({ item, edit }) => {
         variant="outlined"
         onClick={handleRefresh}
         color="primary"
-        disabled={!edit}
         className={classes.button}
       >
         {t('Refresh')}
@@ -287,23 +216,10 @@ const ItemPublishConfiguration = ({ item, edit }) => {
           'Once your item is validated, you can set your item to published by clicking the button.',
         )}
       </Typography>
-      <Button
-        disabled={
-          isDisabled ||
-          itemValidationStatus !== ITEM_VALIDATION_STATUSES.SUCCESS
-        }
-        variant="outlined"
-        onClick={publishItem}
-        color="primary"
-        className={classes.button}
-        endIcon={
-          tagValue?.name === SETTINGS.ITEM_PUBLISHED.name && (
-            <CheckCircleIcon color="primary" />
-          )
-        }
-      >
-        {t('Publish')}
-      </Button>
+      <ItemPublishButton
+        item={item}
+        isValidated={itemValidationStatus === ITEM_VALIDATION_STATUSES.SUCCESS}
+      />
       <Typography variant="h6" className={classes.subtitle}>
         <Looks3Icon color="primary" className={classes.icon} />
         {t('Configuration')}
@@ -314,9 +230,9 @@ const ItemPublishConfiguration = ({ item, edit }) => {
         )}
       </Typography>
       <div className={classes.config}>
-        <CategorySelection item={item} edit={edit} />
-        <CustomizedTagsEdit item={item} edit={edit} />
-        <CCLicenseSelection item={item} edit={edit} />
+        <CategorySelection item={item} />
+        <CustomizedTagsEdit item={item} />
+        <CCLicenseSelection item={item} />
       </div>
     </>
   );
@@ -324,7 +240,6 @@ const ItemPublishConfiguration = ({ item, edit }) => {
 
 ItemPublishConfiguration.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  edit: PropTypes.bool.isRequired,
 };
 
 export default ItemPublishConfiguration;
