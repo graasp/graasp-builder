@@ -28,8 +28,12 @@ const AppForm = ({ onChange, item }) => {
   const handleAppUrlInput = (event, newValue) => {
     const url = newValue?.url ?? newValue;
     const name = newValue?.name ?? item.name;
-    setNewName(name);
-    onChange({ ...item, name, extra: buildAppExtra({ url }) });
+    const props = { ...item, extra: buildAppExtra({ url }) };
+    if (name) {
+      setNewName(name);
+      props.name = name;
+    }
+    onChange(props);
   };
 
   const classes = useStyles();
