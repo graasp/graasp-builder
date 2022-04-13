@@ -126,19 +126,11 @@ const VisibilitySelect = ({ item, edit }) => {
 
     switch (newTag) {
       case SETTINGS.ITEM_PRIVATE.name: {
-        if (prevTagName === SETTINGS.ITEM_PUBLISHED.name) {
-          deletePublishedAndPublicTags();
-        } else {
-          deletePreviousTag();
-        }
+        deletePublishedAndPublicTags();
         break;
       }
       case SETTINGS.ITEM_LOGIN.name: {
-        if (prevTagName === SETTINGS.ITEM_PUBLISHED.name) {
-          deletePublishedAndPublicTags();
-        } else {
-          deletePreviousTag();
-        }
+        deletePublishedAndPublicTags();
         postNewTag();
         // post login schema if it does not exist
         if (!getItemLoginSchema(item?.get('extra'))) {
@@ -150,11 +142,7 @@ const VisibilitySelect = ({ item, edit }) => {
         break;
       }
       case SETTINGS.ITEM_PUBLIC.name: {
-        // post the new tag only if it is not published
-        // if it was published, it was already public
-        if (prevTagName !== SETTINGS.ITEM_PUBLISHED.name) {
-          postNewTag();
-        }
+        postNewTag();
         deletePreviousTag();
         break;
       }
@@ -217,10 +205,14 @@ const VisibilitySelect = ({ item, edit }) => {
           </>
         );
       case SETTINGS.ITEM_PUBLIC.name:
-        return t('This item is public. Anyone can access it.');
-      case SETTINGS.ITEM_PUBLISHED.name:
-        return t(
-          'This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.',
+        return (
+          <>
+            {t('This item is public. Anyone can access it.')}
+            <br />
+            {t(
+              'Note: Items will be unpublished automatically if you change the visibility state from public to others.',
+            )}
+          </>
         );
       case SETTINGS.ITEM_PRIVATE.name:
       default:
@@ -245,9 +237,6 @@ const VisibilitySelect = ({ item, edit }) => {
             {t('Pseudonymized')}
           </MenuItem>
           <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>{t('Public')}</MenuItem>
-          <MenuItem value={SETTINGS.ITEM_PUBLISHED.name} disabled>
-            {t('Published')}
-          </MenuItem>
         </Select>
       )}
       {renderVisiblityIndication()}

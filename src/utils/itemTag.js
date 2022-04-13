@@ -11,7 +11,6 @@ export const hasItemLoginEnabled = ({ tags, itemTags }) =>
 
 export const getVisibilityTagAndItemTag = ({ tags, itemTags }) => {
   const tagIds = [
-    getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name)?.id,
     getTagByName(tags, SETTINGS.ITEM_PUBLIC.name)?.id,
     getTagByName(tags, SETTINGS.ITEM_LOGIN.name)?.id,
   ];
@@ -34,3 +33,11 @@ export const getItemPublicTag = (tags) =>
 
 export const isItemPublic = ({ tags, itemTags }) =>
   Boolean(itemTags?.find(({ tagId }) => tagId === getItemPublicTag(tags)?.id));
+
+export const getItemPublishedTag = (tags) =>
+  tags?.find(({ name }) => name === SETTINGS.ITEM_PUBLISHED.name);
+
+export const isItemPublished = ({ tags, itemTags }) =>
+  Boolean(
+    itemTags?.find(({ tagId }) => tagId === getItemPublishedTag(tags)?.id),
+  );
