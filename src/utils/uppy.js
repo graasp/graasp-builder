@@ -1,7 +1,11 @@
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import { API_ROUTES } from '@graasp/query-client';
-import { API_HOST, FILE_UPLOAD_MAX_FILES } from '../config/constants';
+import {
+  API_HOST,
+  FILE_UPLOAD_MAX_FILES,
+  MAX_THUMBNAIL_SIZE,
+} from '../config/constants';
 
 const configureUppy = ({
   itemId,
@@ -105,6 +109,7 @@ export const configureThumbnailUppy = ({
     fieldName: 'file',
     restrictions: {
       maxNumberOfFiles: 1,
+      maxFileSize: MAX_THUMBNAIL_SIZE,
       allowedFileTypes: ['image/*'],
     },
     buildEndpoint: (id) =>
@@ -127,6 +132,7 @@ export const configureAvatarUppy = ({
     fieldName: 'file',
     restrictions: {
       maxNumberOfFiles: 1,
+      maxFileSize: MAX_THUMBNAIL_SIZE,
       allowedFileTypes: ['image/*'],
     },
     buildEndpoint: (id) =>

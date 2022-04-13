@@ -129,6 +129,11 @@ Cypress.Commands.add(
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
     } else {
       cy.get(`#${buildItemFormAppOptionId(getAppExtra(extra)?.name)}`).click();
+      // check name get added automatically
+      cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should(
+        'have.value',
+        getAppExtra(extra)?.name,
+      );
     }
 
     if (confirm) {

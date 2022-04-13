@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -23,10 +23,17 @@ const useStyles = makeStyles((theme) => ({
 
 const AppForm = ({ onChange, item }) => {
   const { t } = useTranslation();
+  const [newName, setNewName] = useState(item?.name);
 
   const handleAppUrlInput = (event, newValue) => {
     const url = newValue?.url ?? newValue;
-    onChange({ ...item, extra: buildAppExtra({ url }) });
+    const name = newValue?.name ?? item.name;
+    const props = { ...item, extra: buildAppExtra({ url }) };
+    if (name) {
+      setNewName(name);
+      props.name = name;
+    }
+    onChange(props);
   };
 
   const classes = useStyles();
@@ -38,17 +45,17 @@ const AppForm = ({ onChange, item }) => {
   return (
     <div>
       <Typography variant="h6">{t('Create an App')}</Typography>
-      <BaseItemForm onChange={onChange} item={item} />
+      <BaseItemForm onChange={onChange} item={{ ...item, name: newName }} />
 
       {isAppsLoading ? (
         <Skeleton height={60} />
       ) : (
         <Autocomplete
           id={ITEM_FORM_APP_URL_ID}
-          freeSolo
           options={data?.toArray() ?? []}
-          getOptionLabel={(option) => option.name ?? option}
+          getOptionLabel={(option) => option.url ?? option}
           value={url}
+          clearOnBlur={false}
           onChange={handleAppUrlInput}
           onInputChange={handleAppUrlInput}
           renderOption={(option) => (
@@ -62,8 +69,11 @@ const AppForm = ({ onChange, item }) => {
             </div>
           )}
           renderInput={(params) => (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <TextField {...params} label={t('App url')} />
+            <TextField
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...params}
+              label={t('App url')}
+            />
           )}
         />
       )}
