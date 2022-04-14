@@ -213,6 +213,14 @@ export const ITEM_VALIDATION_REVIEW_STATUSES = {
   PENDING: 'pending',
 };
 
+export const VALIDATION_STATUS_NAMES = {
+  NOT_VALIDATED: 'not-validated',
+  SUCCESS: 'success',
+  FAILURE: 'failure',
+  PENDING_AUTOMATIC: 'pending-automatic',
+  PENDING_MANUAL: 'pending-manual',
+};
+
 export const ADMIN_CONTACT = 'admin@graasp.org';
 
 export const HOST_MAP = {

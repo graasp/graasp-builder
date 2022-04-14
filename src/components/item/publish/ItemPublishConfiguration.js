@@ -17,7 +17,7 @@ import CustomizedTagsEdit from './CustomizedTagsEdit';
 import CCLicenseSelection from './CCLicenseSelection';
 import {
   ADMIN_CONTACT,
-  ITEM_VALIDATION_STATUSES,
+  VALIDATION_STATUS_NAMES,
 } from '../../../config/constants';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
@@ -78,7 +78,6 @@ const ItemPublishConfiguration = ({ item }) => {
   // get item validation data
   const { data: itemValidationData, isLoading } =
     useItemValidationAndReview(itemId);
-  console.log(itemValidationData, item);
   // check if validation is still valid
   const iVId =
     new Date(itemValidationData?.get('createdAt')) >=
@@ -87,14 +86,15 @@ const ItemPublishConfiguration = ({ item }) => {
       : null;
   // get item validation groups
   const { data: itemValidationGroups } = useItemValidationGroups(iVId);
-  console.log(iVId, itemValidationGroups);
 
   // group iv records by item validation status
   const ivByStatus = itemValidationGroups?.groupBy(({ statusId }) =>
     validationStatusesMap?.get(statusId),
   );
 
-  const [itemValidationStatus, setItemValidationStatus] = useState(false);
+  const [itemValidationStatus, setItemValidationStatus] = useState(
+    VALIDATION_STATUS_NAMES.NOT_VALIDATED,
+  );
 
   useEffect(() => {
     // process when we fetch the item validation and review records
@@ -115,13 +115,11 @@ const ItemPublishConfiguration = ({ item }) => {
   }
 
   const handleValidate = () => {
-    // prevent re-send request if the item is already successfully validated, or a validation is already pending
-    if (
-      !itemValidationStatus ||
-      itemValidationStatus === ITEM_VALIDATION_STATUSES.FAILURE
-    )
+    // prevent re-send request if the item is already successfully validated
+    if (!(itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS)) {
       validateItem({ itemId });
-    setItemValidationStatus(ITEM_VALIDATION_STATUSES.PENDING);
+    }
+    setItemValidationStatus(VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC);
   };
 
   const handleRefresh = () => {
@@ -131,11 +129,13 @@ const ItemPublishConfiguration = ({ item }) => {
   // display icon indicating current status of given item
   const displayItemValidationIcon = () => {
     switch (itemValidationStatus) {
-      case ITEM_VALIDATION_STATUSES.SUCCESS:
+      case VALIDATION_STATUS_NAMES.SUCCESS:
         return <CheckCircleIcon color="primary" />;
-      case ITEM_VALIDATION_STATUSES.PENDING:
+      case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
         return <UpdateIcon color="primary" />;
-      case ITEM_VALIDATION_STATUSES.FAILURE:
+      case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
+        return <UpdateIcon color="primary" />;
+      case VALIDATION_STATUS_NAMES.FAILURE:
         return <CancelIcon color="primary" />;
       default:
     }
@@ -144,15 +144,23 @@ const ItemPublishConfiguration = ({ item }) => {
 
   const displayItemValidationMessage = () => {
     switch (itemValidationStatus) {
-      case ITEM_VALIDATION_STATUSES.PENDING:
+      case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
         return (
           <Typography variant="body1">
             {t(
-              'Your item is pending validation. Once the validation succeeds, you will be able to publish your item.',
+              'Your item is pending automatic validation. Once the validation succeeds, you will be able to publish your item.',
             )}
           </Typography>
         );
-      case ITEM_VALIDATION_STATUSES.FAILURE:
+      case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
+        return (
+          <Typography variant="body1">
+            {t(
+              'Your item failed the automatic validation. A member of our team will manually check your collection, please wait for the result.',
+            )}
+          </Typography>
+        );
+      case VALIDATION_STATUS_NAMES.FAILURE:
         return (
           <Typography variant="body1">
             {t('itemValidationFailureMessage', { contact: ADMIN_CONTACT })}
@@ -221,7 +229,7 @@ const ItemPublishConfiguration = ({ item }) => {
       </Typography>
       <ItemPublishButton
         item={item}
-        isValidated={itemValidationStatus === ITEM_VALIDATION_STATUSES.SUCCESS}
+        isValidated={itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS}
       />
       <Typography variant="h6" className={classes.subtitle}>
         <Looks3Icon color="primary" className={classes.icon} />
