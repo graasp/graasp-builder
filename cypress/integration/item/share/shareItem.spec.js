@@ -12,7 +12,6 @@ import {
 } from '../../../../src/config/paths';
 import {
   ITEM_LOGIN_ITEMS,
-  PUBLISHED_ITEM,
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
@@ -21,7 +20,6 @@ import {
   DEFAULT_TAGS,
   ITEM_LOGIN_TAG,
   ITEM_PUBLIC_TAG,
-  ITEM_PUBLISHED_TAG,
 } from '../../../fixtures/itemTags';
 
 const openShareItemTab = (id) => {
@@ -66,23 +64,6 @@ describe('Share Item', () => {
       expect(body?.itemPath).to.equal(item.path);
       expect(body?.tagId).to.equal(ITEM_PUBLIC_TAG.id);
     });
-
-    // change private -> published
-    /* temporarily disable the test due to changes in publish item
-    changeVisibility(SETTINGS.ITEM_PUBLISHED.name);
-    cy.wait(['@postItemTag', '@postItemTag']).then((data) => {
-      const tags = data.map(
-        ({
-          request: {
-            body: { tagId },
-          },
-        }) => tagId,
-      );
-      expect(tags).to.include.members([
-        ITEM_PUBLIC_TAG.id,
-      ]);
-    });
-    */
   });
 
   it('Public Item', () => {
@@ -116,58 +97,6 @@ describe('Share Item', () => {
       } = data[1];
       expect(body?.tagId).to.equal(ITEM_LOGIN_TAG.id);
     });
-    // change public -> published
-    // should only add a tag
-    // temporarily disable the test due to changes in publish item
-    // changeVisibility(SETTINGS.ITEM_PUBLISHED.name);
-    // cy.wait('@postItemTag').then(({ request: { body } }) => {
-    //   expect(body?.itemPath).to.equal(item.path);
-    //   expect(body?.tagId).to.equal(ITEM_PUBLISHED_TAG.id);
-    // });
-  });
-  it('Published Item', () => {
-    const item = PUBLISHED_ITEM;
-    cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
-    cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
-
-    const visiblitySelect = cy.get(
-      `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
-    );
-
-    // visibility select default value
-    visiblitySelect.should('have.value', SETTINGS.ITEM_PUBLISHED.name);
-
-    // change published -> item login
-    changeVisibility(SETTINGS.ITEM_LOGIN.name);
-    cy.wait(['@deleteItemTag', '@deleteItemTag', '@postItemTag']).then(
-      (data) => {
-        const tags = item.tags.map(({ id }) => id);
-        const {
-          request: { url },
-        } = data[0];
-        expect(url.split('/').pop()).to.oneOf(tags);
-
-        const {
-          request: { url: url1 },
-        } = data[1];
-        expect(url1.split('/').pop()).to.oneOf(tags);
-
-        const {
-          request: { body },
-        } = data[2];
-        expect(body?.tagId).to.equal(ITEM_LOGIN_TAG.id);
-      },
-    );
-    // change published -> public
-    // should only remove a tag
-    changeVisibility(SETTINGS.ITEM_PUBLIC.name);
-    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
-      const publishedTag = item.tags.find(
-        ({ tagId }) => tagId === ITEM_PUBLISHED_TAG.id,
-      );
-      expect(url).to.contain(publishedTag.id);
-    });
   });
 
   it('Pseudonymized Item', () => {
@@ -189,23 +118,5 @@ describe('Share Item', () => {
       SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
     );
     // item login edition is done in itemLogin.spec.js
-
-    // change item login -> published
-    /* temporarily disable the test due to changes in publish item
-    changeVisibility(SETTINGS.ITEM_PUBLISHED.name);
-    cy.wait(['@postItemTag', '@postItemTag']).then((data) => {
-      const tags = data.map(
-        ({
-          request: {
-            body: { tagId },
-          },
-        }) => tagId,
-      );
-      expect(tags).to.include.members([
-        ITEM_PUBLISHED_TAG.id,
-        ITEM_PUBLIC_TAG.id,
-      ]);
-    });
-    */
   });
 });

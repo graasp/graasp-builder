@@ -7,7 +7,9 @@ export const processFailureValidations = (
   validationStatusesMap,
   itemValidationData,
 ) => {
-  switch (validationStatusesMap?.get(itemValidationData?.reviewStatusId)) {
+  switch (
+    validationStatusesMap?.get(itemValidationData?.get('reviewStatusId'))
+  ) {
     case ITEM_VALIDATION_REVIEW_STATUSES.PENDING:
       return ITEM_VALIDATION_STATUSES.PENDING;
     case ITEM_VALIDATION_REVIEW_STATUSES.REJECTED:

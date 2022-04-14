@@ -14,6 +14,10 @@ import {
   getVisibilityTagAndItemTag,
   isItemPublished,
 } from '../../../utils/itemTag';
+import {
+  ITEM_PUBLISH_BUTTON_ID,
+  ITEM_UNPUBLISH_BUTTON_ID,
+} from '../../../config/selectors';
 
 const { POST_ITEM_TAG, DELETE_ITEM_TAG } = MUTATION_KEYS;
 const { useTags, useItemTags } = hooks;
@@ -102,6 +106,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
         color="primary"
         className={classes.button}
         endIcon={isPublished && <CheckCircleIcon color="primary" />}
+        id={ITEM_PUBLISH_BUTTON_ID}
       >
         {t('Publish')}
       </Button>
@@ -110,6 +115,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
         disabled={!isPublished}
         onClick={unpublishItem}
         color="default"
+        id={ITEM_UNPUBLISH_BUTTON_ID}
       >
         {t('Unpublish')}
       </Button>

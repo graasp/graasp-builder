@@ -182,3 +182,6 @@ export const buildPlayerTabName = (id) => `builder-tab-${id}`;
 export const ITEM_PUBLISH_SECTION_TITLE_ID = 'itemPublishSectionTitle';
 export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
 export const APP_NAVIGATION_DROP_DOWN_ID = 'appNavigationDropDown';
+
+export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';
+export const ITEM_UNPUBLISH_BUTTON_ID = 'itemUnpublishButton';

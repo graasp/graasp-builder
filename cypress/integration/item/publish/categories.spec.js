@@ -1,6 +1,6 @@
 import {
   buildCategoryMenuOptions,
-  buildShareButtonId,
+  buildPublishButtonId,
   CATEGORIES_SELECTION_VALUE_SELECTOR,
   SHARE_ITEM_CATEGORY_DISCIPLINE,
   SHARE_ITEM_CATEGORY_LEVEL,
@@ -14,8 +14,8 @@ import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 
-const openShareItemTab = (id) => {
-  cy.get(`#${buildShareButtonId(id)}`).click();
+const openPublishItemTab = (id) => {
+  cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 
 const findCategoryNameById = (id) =>
@@ -38,7 +38,7 @@ describe('Categories', () => {
   beforeEach(() => {
     cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
     cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+    openPublishItemTab(item.id);
   });
 
   it('Display Item Categories', () => {
@@ -80,6 +80,7 @@ describe('Categories', () => {
   });
 });
 
+// users without permission will not see the sections
 describe('Categories permissions', () => {
   it('User signed out cannot edit category level', () => {
     const item = PUBLISHED_ITEM;
@@ -89,9 +90,9 @@ describe('Categories permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+    openPublishItemTab(item.id);
     const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
-    levelValue.should('be.disabled');
+    levelValue.should('not.exist');
   });
 
   it('Read-only user cannot edit category level', () => {
@@ -102,8 +103,8 @@ describe('Categories permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+    openPublishItemTab(item.id);
     const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
-    levelValue.should('be.disabled');
+    levelValue.should('not.exist');
   });
 });

@@ -78,13 +78,16 @@ const ItemPublishConfiguration = ({ item }) => {
   // get item validation data
   const { data: itemValidationData, isLoading } =
     useItemValidationAndReview(itemId);
+  console.log(itemValidationData, item);
   // check if validation is still valid
   const iVId =
-    new Date(itemValidationData?.createdAt) >= new Date(item?.get('updatedAt'))
-      ? itemValidationData?.itemValidationId
+    new Date(itemValidationData?.get('createdAt')) >=
+    new Date(item?.get('updatedAt'))
+      ? itemValidationData?.get('itemValidationId')
       : null;
   // get item validation groups
   const { data: itemValidationGroups } = useItemValidationGroups(iVId);
+  console.log(iVId, itemValidationGroups);
 
   // group iv records by item validation status
   const ivByStatus = itemValidationGroups?.groupBy(({ statusId }) =>

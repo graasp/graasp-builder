@@ -71,10 +71,11 @@ import {
   mockGetItemCategories,
   mockPostItemCategory,
   mockDeleteItemCategory,
-  mockGetItemValidationAndReviews,
+  mockGetItemValidationAndReview,
   mockGetItemValidationStatuses,
   mockGetItemValidationReviewStatuses,
   mockPostItemValidation,
+  mockGetItemValidationGroups,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -88,6 +89,7 @@ import {
 } from '../fixtures/categories';
 import {
   ITEM_VALIDATION_AND_REVIEW,
+  ITEM_VALIDATION_GROUPS,
   SAMPLE_STATUSES,
 } from '../fixtures/validations';
 
@@ -104,6 +106,7 @@ Cypress.Commands.add(
     flags = SAMPLE_FLAGS,
     statuses = SAMPLE_STATUSES,
     itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
+    itemValidationGroups = ITEM_VALIDATION_GROUPS,
     deleteItemError = false,
     deleteItemsError = false,
     postItemError = false,
@@ -275,7 +278,9 @@ Cypress.Commands.add(
 
     mockGetItemValidationReviewStatuses(statuses);
 
-    mockGetItemValidationAndReviews(itemValidationAndReview);
+    mockGetItemValidationAndReview(itemValidationAndReview);
+
+    mockGetItemValidationGroups(itemValidationGroups);
 
     mockPostItemValidation();
   },
