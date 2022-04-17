@@ -1386,16 +1386,28 @@ export const mockGetItemValidationReviewStatuses = (iVRStatuses) => {
   ).as('getItemValidationReviewStatuses');
 };
 
-export const mockGetItemValidationAndReviews = (itemValidationAndReviews) => {
+export const mockGetItemValidationAndReview = (itemValidationAndReview) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
       url: new RegExp(`${API_HOST}/items/validations/status/${ID_FORMAT}`),
     },
     ({ reply }) => {
-      reply(itemValidationAndReviews);
+      reply(itemValidationAndReview);
     },
-  ).as('getItemValidationAndReviews');
+  ).as('getItemValidationAndReview');
+};
+
+export const mockGetItemValidationGroups = (itemValidationGroups) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/validations/groups/${ID_FORMAT}`),
+    },
+    ({ reply }) => {
+      reply(itemValidationGroups);
+    },
+  ).as('getItemValidationGroups');
 };
 
 export const mockPostItemValidation = () => {

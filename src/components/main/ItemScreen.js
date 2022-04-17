@@ -27,6 +27,7 @@ import {
 import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
 import { UppyContextProvider } from '../file/UppyContext';
 import FileUploader from '../file/FileUploader';
+import ItemPublishTab from '../item/publish/ItemPublishTab';
 
 const { useItem, useItemMemberships, useCurrentMember, useItemLogin } = hooks;
 
@@ -40,6 +41,7 @@ const ItemScreen = () => {
     setIsItemSettingsOpen,
     setIsItemSharingOpen,
     isItemSharingOpen,
+    isItemPublishOpen,
     isDashboardOpen,
   } = useContext(LayoutContext);
   const { data: currentMember } = useContext(CurrentUserContext);
@@ -74,6 +76,11 @@ const ItemScreen = () => {
     }
     if (isDashboardOpen) {
       return <GraaspAnalyzer item={item} />;
+    }
+    if (isItemPublishOpen) {
+      return (
+        <ItemPublishTab item={item} memberships={getMembership(memberships)} />
+      );
     }
     return (
       <ItemContent

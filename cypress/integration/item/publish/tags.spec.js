@@ -1,6 +1,6 @@
 import {
   buildCustomizedTagsSelector,
-  buildShareButtonId,
+  buildPublishButtonId,
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
 } from '../../../../src/config/selectors';
@@ -14,14 +14,14 @@ import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 
-const openShareItemTab = (id) => {
-  cy.get(`#${buildShareButtonId(id)}`).click();
+const openPublishItemTab = (id) => {
+  cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 
 const visitItemPage = (item) => {
   cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
   cy.visit(buildItemPath(item.id));
-  openShareItemTab(item.id);
+  openPublishItemTab(item.id);
 };
 
 describe('Customized Tags', () => {
@@ -68,9 +68,9 @@ describe('Tags permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+    openPublishItemTab(item.id);
     const tagsEdit = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
-    tagsEdit.should('be.disabled');
+    tagsEdit.should('not.exist');
   });
 
   it('Read-only user cannot edit tags', () => {
@@ -81,8 +81,8 @@ describe('Tags permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+    openPublishItemTab(item.id);
     const tagsEdit = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
-    tagsEdit.should('be.disabled');
+    tagsEdit.should('not.exist');
   });
 });

@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
-import PropTypes, { string } from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Loader } from '@graasp/ui';
@@ -17,20 +17,20 @@ import CustomizedTagsEdit from './CustomizedTagsEdit';
 import CCLicenseSelection from './CCLicenseSelection';
 import {
   ADMIN_CONTACT,
-  ITEM_VALIDATION_STATUSES,
-  SETTINGS,
+  VALIDATION_STATUS_NAMES,
 } from '../../../config/constants';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
 } from '../../../config/selectors';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
+import ItemPublishButton from './ItemPublishButton';
 
-const { DELETE_ITEM_TAG, POST_ITEM_TAG, POST_ITEM_VALIDATION } = MUTATION_KEYS;
-const { buildItemValidationAndReviewsKey } = DATA_KEYS;
+const { POST_ITEM_VALIDATION } = MUTATION_KEYS;
+const { buildItemValidationAndReviewKey } = DATA_KEYS;
 const {
-  useItemValidationAndReviews,
+  useItemValidationAndReview,
+  useItemValidationGroups,
   useItemValidationStatuses,
   useItemValidationReviewStatuses,
 } = hooks;
@@ -59,23 +59,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemPublishConfiguration = ({
-  item,
-  edit,
-  tagValue,
-  itemTagValue,
-  publishedTag,
-  publicTag,
-}) => {
+const ItemPublishConfiguration = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  // current user
-  const { data: user } = useContext(CurrentUserContext);
   // current item
   const { itemId } = useParams();
 
-  const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
-  const { mutate: postItemTag } = useMutation(POST_ITEM_TAG);
+  // item validation
   const { mutate: validateItem } = useMutation(POST_ITEM_VALIDATION);
 
   // get map of item validation and review statuses
@@ -87,19 +77,24 @@ const ItemPublishConfiguration = ({
 
   // get item validation data
   const { data: itemValidationData, isLoading } =
-    useItemValidationAndReviews(itemId);
-  // remove iv records before the item is last updated
-  const validItemValidation = itemValidationData?.filter(
-    (entry) =>
-      new Date(entry.validationUpdatedAt) >= new Date(item?.get('updatedAt')),
-  );
+    useItemValidationAndReview(itemId);
+  // check if validation is still valid
+  const iVId =
+    new Date(itemValidationData?.get('createdAt')) >=
+    new Date(item?.get('updatedAt'))
+      ? itemValidationData?.get('itemValidationId')
+      : null;
+  // get item validation groups
+  const { data: itemValidationGroups } = useItemValidationGroups(iVId);
 
   // group iv records by item validation status
-  const ivByStatus = validItemValidation?.groupBy(({ validationStatusId }) =>
-    validationStatusesMap?.get(validationStatusId),
+  const ivByStatus = itemValidationGroups?.groupBy(({ statusId }) =>
+    validationStatusesMap?.get(statusId),
   );
 
-  const [itemValidationStatus, setItemValidationStatus] = useState(false);
+  const [itemValidationStatus, setItemValidationStatus] = useState(
+    VALIDATION_STATUS_NAMES.NOT_VALIDATED,
+  );
 
   useEffect(() => {
     // process when we fetch the item validation and review records
@@ -108,6 +103,7 @@ const ItemPublishConfiguration = ({
         getValidationStatusFromItemValidations(
           ivByStatus,
           validationStatusesMap,
+          itemValidationData,
         ),
       );
     }
@@ -119,51 +115,27 @@ const ItemPublishConfiguration = ({
   }
 
   const handleValidate = () => {
-    // prevent re-send request if the item is already successfully validated, or a validation is already pending
-    if (
-      !itemValidationStatus ||
-      itemValidationStatus === ITEM_VALIDATION_STATUSES.FAILURE
-    )
+    // prevent re-send request if the item is already successfully validated
+    if (!(itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS)) {
       validateItem({ itemId });
+    }
+    setItemValidationStatus(VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC);
   };
 
   const handleRefresh = () => {
-    queryClient.invalidateQueries(buildItemValidationAndReviewsKey(itemId));
-  };
-
-  const publishItem = () => {
-    // post published tag
-    postItemTag({
-      id: itemId,
-      tagId: publishedTag.id,
-      itemPath: item?.get('path'),
-      creator: user?.get('id'),
-    });
-
-    // if previous is public, not necessary to delete/add the public tag
-    if (tagValue?.name !== SETTINGS.ITEM_PUBLIC.name) {
-      // post public tag
-      postItemTag({
-        id: itemId,
-        tagId: publicTag.id,
-        itemPath: item?.get('path'),
-        creator: user?.get('id'),
-      });
-      // delete previous tag
-      if (tagValue && tagValue.name !== SETTINGS.ITEM_PRIVATE.name) {
-        deleteItemTag({ id: itemId, tagId: itemTagValue?.id });
-      }
-    }
+    queryClient.invalidateQueries(buildItemValidationAndReviewKey(itemId));
   };
 
   // display icon indicating current status of given item
   const displayItemValidationIcon = () => {
     switch (itemValidationStatus) {
-      case ITEM_VALIDATION_STATUSES.SUCCESS:
+      case VALIDATION_STATUS_NAMES.SUCCESS:
         return <CheckCircleIcon color="primary" />;
-      case ITEM_VALIDATION_STATUSES.PENDING:
+      case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
         return <UpdateIcon color="primary" />;
-      case ITEM_VALIDATION_STATUSES.FAILURE:
+      case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
+        return <UpdateIcon color="primary" />;
+      case VALIDATION_STATUS_NAMES.FAILURE:
         return <CancelIcon color="primary" />;
       default:
     }
@@ -172,15 +144,23 @@ const ItemPublishConfiguration = ({
 
   const displayItemValidationMessage = () => {
     switch (itemValidationStatus) {
-      case ITEM_VALIDATION_STATUSES.PENDING:
+      case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
         return (
           <Typography variant="body1">
             {t(
-              'Your item is pending validation. Once the validation succeeds, you will be able to publish your item.',
+              'Your item is pending automatic validation. Once the validation succeeds, you will be able to publish your item.',
             )}
           </Typography>
         );
-      case ITEM_VALIDATION_STATUSES.FAILURE:
+      case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
+        return (
+          <Typography variant="body1">
+            {t(
+              'Your item failed the automatic validation. A member of our team will manually check your collection, please wait for the result.',
+            )}
+          </Typography>
+        );
+      case VALIDATION_STATUS_NAMES.FAILURE:
         return (
           <Typography variant="body1">
             {t('itemValidationFailureMessage', { contact: ADMIN_CONTACT })}
@@ -224,7 +204,6 @@ const ItemPublishConfiguration = ({
         variant="outlined"
         onClick={handleValidate}
         color="primary"
-        disabled={!edit}
         className={classes.button}
         endIcon={displayItemValidationIcon()}
       >
@@ -234,7 +213,6 @@ const ItemPublishConfiguration = ({
         variant="outlined"
         onClick={handleRefresh}
         color="primary"
-        disabled={!edit}
         className={classes.button}
       >
         {t('Refresh')}
@@ -249,19 +227,10 @@ const ItemPublishConfiguration = ({
           'Once your item is validated, you can set your item to published by clicking the button.',
         )}
       </Typography>
-      <Button
-        variant="outlined"
-        onClick={publishItem}
-        color="primary"
-        className={classes.button}
-        endIcon={
-          tagValue?.name === SETTINGS.ITEM_PUBLISHED.name && (
-            <CheckCircleIcon color="primary" />
-          )
-        }
-      >
-        {t('Publish')}
-      </Button>
+      <ItemPublishButton
+        item={item}
+        isValidated={itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS}
+      />
       <Typography variant="h6" className={classes.subtitle}>
         <Looks3Icon color="primary" className={classes.icon} />
         {t('Configuration')}
@@ -272,37 +241,16 @@ const ItemPublishConfiguration = ({
         )}
       </Typography>
       <div className={classes.config}>
-        <CategorySelection item={item} edit={edit} />
-        <CustomizedTagsEdit item={item} edit={edit} />
-        <CCLicenseSelection item={item} edit={edit} />
+        <CategorySelection item={item} />
+        <CustomizedTagsEdit item={item} />
+        <CCLicenseSelection item={item} />
       </div>
     </>
   );
 };
 
-// define types for propType only
-const Tag = {
-  id: string,
-  name: string,
-  nested: string,
-  createdAt: string,
-};
-
-const ItemTag = {
-  id: string,
-  tagId: string,
-  itemPath: string,
-  creator: string,
-  createdAt: string,
-};
-
 ItemPublishConfiguration.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  edit: PropTypes.bool.isRequired,
-  tagValue: PropTypes.instanceOf(Tag).isRequired,
-  itemTagValue: PropTypes.instanceOf(ItemTag).isRequired,
-  publishedTag: PropTypes.instanceOf(Tag).isRequired,
-  publicTag: PropTypes.instanceOf(Tag).isRequired,
 };
 
 export default ItemPublishConfiguration;

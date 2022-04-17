@@ -21,7 +21,6 @@ import {
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import ItemPublishConfiguration from './ItemPublishConfiguration';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
@@ -59,7 +58,6 @@ const VisibilitySelect = ({ item, edit }) => {
   const [itemTagValue, setItemTagValue] = useState(false);
   const [tagValue, setTagValue] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [isPublishedSelected, setIsPublishedSelected] = useState(false);
 
   // update state variables depending on fetch values
   useEffect(() => {
@@ -67,9 +65,6 @@ const VisibilitySelect = ({ item, edit }) => {
       const { tag, itemTag } = getVisibilityTagAndItemTag({ tags, itemTags });
       setItemTagValue(itemTag);
       setTagValue(tag);
-      if (tagValue?.name === SETTINGS.ITEM_PUBLISHED.name) {
-        setIsPublishedSelected(true);
-      }
 
       // disable setting if any visiblity is set on any ancestor items
       setIsDisabled(
@@ -131,19 +126,11 @@ const VisibilitySelect = ({ item, edit }) => {
 
     switch (newTag) {
       case SETTINGS.ITEM_PRIVATE.name: {
-        if (prevTagName === SETTINGS.ITEM_PUBLISHED.name) {
-          deletePublishedAndPublicTags();
-        } else {
-          deletePreviousTag();
-        }
+        deletePublishedAndPublicTags();
         break;
       }
       case SETTINGS.ITEM_LOGIN.name: {
-        if (prevTagName === SETTINGS.ITEM_PUBLISHED.name) {
-          deletePublishedAndPublicTags();
-        } else {
-          deletePreviousTag();
-        }
+        deletePublishedAndPublicTags();
         postNewTag();
         // post login schema if it does not exist
         if (!getItemLoginSchema(item?.get('extra'))) {
@@ -155,16 +142,8 @@ const VisibilitySelect = ({ item, edit }) => {
         break;
       }
       case SETTINGS.ITEM_PUBLIC.name: {
-        // post the new tag only if it is not published
-        // if it was published, it was already public
-        if (prevTagName !== SETTINGS.ITEM_PUBLISHED.name) {
-          postNewTag();
-        }
+        postNewTag();
         deletePreviousTag();
-        break;
-      }
-      case SETTINGS.ITEM_PUBLISHED.name: {
-        setIsPublishedSelected(true);
         break;
       }
       default:
@@ -226,10 +205,14 @@ const VisibilitySelect = ({ item, edit }) => {
           </>
         );
       case SETTINGS.ITEM_PUBLIC.name:
-        return t('This item is public. Anyone can access it.');
-      case SETTINGS.ITEM_PUBLISHED.name:
-        return t(
-          'This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.',
+        return (
+          <>
+            {t('This item is public. Anyone can access it.')}
+            <br />
+            {t(
+              'Note: Items will be unpublished automatically if you change the visibility state from public to others.',
+            )}
+          </>
         );
       case SETTINGS.ITEM_PRIVATE.name:
       default:
@@ -254,9 +237,6 @@ const VisibilitySelect = ({ item, edit }) => {
             {t('Pseudonymized')}
           </MenuItem>
           <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>{t('Public')}</MenuItem>
-          <MenuItem value={SETTINGS.ITEM_PUBLISHED.name}>
-            {t('Published')}
-          </MenuItem>
         </Select>
       )}
       {renderVisiblityIndication()}
@@ -266,17 +246,6 @@ const VisibilitySelect = ({ item, edit }) => {
             'You cannot modify the visibility because it is defined in one of the parent of this item.',
           )}
         </Typography>
-      )}
-      {(isPublishedSelected ||
-        tagValue?.name === SETTINGS.ITEM_PUBLISHED.name) && (
-        <ItemPublishConfiguration
-          item={item}
-          edit={edit}
-          tagValue={tagValue}
-          itemTagValue={itemTagValue}
-          publishedTag={getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name)}
-          publicTag={getTagByName(tags, SETTINGS.ITEM_PUBLIC.name)}
-        />
       )}
     </>
   );

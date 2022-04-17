@@ -1,42 +1,42 @@
 import {
   ITEM_VALIDATION_REVIEW_STATUSES,
   ITEM_VALIDATION_STATUSES,
+  VALIDATION_STATUS_NAMES,
 } from '../config/constants';
 
-export const processFailureValidations = (records, validationStatusesMap) => {
-  // first try to find successful validations, where ivrStatus is 'rejected'
-  const successfulRecord = records?.find(
-    (record) =>
-      validationStatusesMap.get(record.reviewStatusId) ===
-      ITEM_VALIDATION_REVIEW_STATUSES.REJECTED,
-  );
-  if (successfulRecord) return ITEM_VALIDATION_STATUSES.SUCCESS;
-
-  // try to find pending review
-  const pendingRecord = records?.find(
-    (record) =>
-      validationStatusesMap.get(record.reviewStatusId) ===
-      ITEM_VALIDATION_REVIEW_STATUSES.PENDING,
-  );
-  if (pendingRecord) return ITEM_VALIDATION_STATUSES.PENDING;
-  return ITEM_VALIDATION_STATUSES.FAILURE; // only failed records
+export const processFailureValidations = (
+  validationStatusesMap,
+  itemValidationData,
+) => {
+  switch (
+    validationStatusesMap?.get(itemValidationData?.get('reviewStatusId'))
+  ) {
+    case ITEM_VALIDATION_REVIEW_STATUSES.PENDING:
+      return VALIDATION_STATUS_NAMES.PENDING_MANUAL;
+    case ITEM_VALIDATION_REVIEW_STATUSES.REJECTED:
+      return VALIDATION_STATUS_NAMES.SUCCESS;
+    case ITEM_VALIDATION_REVIEW_STATUSES.ACCEPTED:
+      return VALIDATION_STATUS_NAMES.FAILURE;
+    default:
+      return false;
+  }
 };
 
 export const getValidationStatusFromItemValidations = (
   ivByStatus,
   validationStatusesMap,
+  itemValidationData,
 ) => {
-  // first check if there exist any valid successful record
-  if (ivByStatus.get(ITEM_VALIDATION_STATUSES.SUCCESS))
-    return ITEM_VALIDATION_STATUSES.SUCCESS;
-  // then check if there exist any pending item validation or review
+  // first check if there exist any pending entry
   if (ivByStatus.get(ITEM_VALIDATION_STATUSES.PENDING))
-    return ITEM_VALIDATION_STATUSES.PENDING;
+    return VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC;
 
   const failureValidations = ivByStatus.get(ITEM_VALIDATION_STATUSES.FAILURE);
   // only process when there is failed item validation records
-  if (failureValidations)
-    return processFailureValidations(failureValidations, validationStatusesMap);
+  if (failureValidations) {
+    return processFailureValidations(validationStatusesMap, itemValidationData);
+  }
 
-  return false;
+  // if no pending and no failed entry, validation is successful
+  return VALIDATION_STATUS_NAMES.SUCCESS;
 };
