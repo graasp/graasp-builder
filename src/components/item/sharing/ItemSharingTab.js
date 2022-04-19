@@ -19,6 +19,7 @@ import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import InvitationsTable from './InvitationsTable';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -42,6 +43,7 @@ const ItemSharingTab = ({ item, memberships }) => {
     memberships?.map(({ memberId }) => memberId),
   );
   const { setIsItemSharingOpen } = useContext(LayoutContext);
+  const { data: invitations } = hooks.useItemInvitations(item.get('id'));
 
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
@@ -91,7 +93,9 @@ const ItemSharingTab = ({ item, memberships }) => {
         <Typography variant="h5" className={classes.title}>
           {t('Authorized Members')}
         </Typography>
-        {canEdit && <CreateItemMembershipForm id={item.get('id')} />}
+        {canEdit && (
+          <CreateItemMembershipForm itemId={item.get('id')} members={members} />
+        )}
         <ItemMembershipsTable
           item={item}
           emptyMessage={t('No user has access to this item.')}
@@ -111,6 +115,20 @@ const ItemSharingTab = ({ item, memberships }) => {
               item={item}
               memberships={authenticatedMemberships}
               emptyMessage={t('No user has authenticated to this item yet.')}
+            />
+          </>
+        )}
+
+        {Boolean(invitations?.size) && (
+          <>
+            <Divider className={classes.divider} />
+            <Typography variant="h5" className={classes.title}>
+              {t('Pending Invitations')}
+            </Typography>
+            <InvitationsTable
+              item={item}
+              invitations={invitations}
+              emptyMessage={t('No invitation for this item yet.')}
             />
           </>
         )}

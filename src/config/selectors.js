@@ -133,6 +133,8 @@ export const buildPlayerButtonId = (id) => `playerButton-${id}`;
 export const buildEditButtonId = (id) => `editButton-${id}`;
 export const buildSettingsButtonId = (id) => `settingsButton-${id}`;
 export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';
+export const INVITE_ITEM_EMAIL_INPUT_ID = 'inviteItemEmailInput';
+export const INVITE_ITEM_BUTTON_ID = 'inviteItemButton';
 export const SHARE_ITEM_DIALOG_ID = 'shareItemDialog';
 export const SHARE_ITEM_DIALOG_LINK_ID = 'shareItemDialogLink';
 export const SHARE_ITEM_DIALOG_LINK_SELECT_ID = 'shareItemDialogLinkSelect';

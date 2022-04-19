@@ -31,7 +31,13 @@ const ItemMembershipRow = ({ membership, item }) => {
   const { mutate: editItemMembership } = useMutation(
     MUTATION_KEYS.EDIT_ITEM_MEMBERSHIP,
   );
-  const { mutate: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
+  const { mutate: shareItem } = useMutation(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
+
+  const [isParentMembership, setIsParentMembership] = useState(false);
+
+  useEffect(() => {
+    setIsParentMembership(membership.itemPath !== item.get('path'));
+  }, [membership, item]);
 
   const [isParentMembership, setIsParentMembership] = useState(false);
 
@@ -136,12 +142,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// eslint-disable-next-line no-unused-vars
 const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const content = memberships.length ? (
+  const content = memberships?.length ? (
     memberships.map((row) => <ItemMembershipRow membership={row} item={item} />)
   ) : (
     <Typography align="center" className={classes.emptyText}>

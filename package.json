@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git",
-    "@graasp/query-client": "github:graasp/graasp-query-client.git",
+    "@graasp/query-client": "github:graasp/graasp-query-client.git#155/invite",
     "@graasp/translations": "github:graasp/graasp-translations.git",
     "@graasp/ui": "github:graasp/graasp-ui.git#117/RemoveErrorAlertWhenLoadingFiles",
     "@graasp/utils": "github:graasp/graasp-utils.git",
