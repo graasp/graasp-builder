@@ -97,7 +97,11 @@ const EditItemModalProvider = ({ children }) => {
         <Button onClick={onClose} variant="text">
           {t('Cancel')}
         </Button>
-        <Button onClick={submit} id={ITEM_FORM_CONFIRM_BUTTON_ID}>
+        <Button
+          // should not allow users to save if the name is empty
+          onClick={submit}
+          id={ITEM_FORM_CONFIRM_BUTTON_ID}
+        >
           {t('Save')}
         </Button>
       </DialogActions>
