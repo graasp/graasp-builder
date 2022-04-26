@@ -27,7 +27,7 @@ const PublishButton = ({ itemId }) => {
         onClick={onClick}
         id={buildPublishButtonId(itemId)}
       >
-        {isItemPublishOpen ? <CloseIcon /> : <ExploreIcon fontSize="small" />}
+        {isItemPublishOpen ? <CloseIcon /> : <ExploreIcon />}
       </IconButton>
     </Tooltip>
   );
