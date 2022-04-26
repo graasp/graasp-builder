@@ -45,18 +45,20 @@ const HideButton = ({ item }) => {
 
   return (
     <Tooltip title={tooltip}>
-      <IconButton
-        aria-label={tooltip}
-        className={HIDDEN_ITEM_BUTTON_CLASS}
-        onClick={handlePin}
-        disable={!isOriginalHiddenItem}
-      >
-        {hiddenTag ? (
-          <VisibilityOff fontSize="small" />
-        ) : (
-          <Visibility fontSize="small" />
-        )}
-      </IconButton>
+      <span>
+        <IconButton
+          aria-label={tooltip}
+          className={HIDDEN_ITEM_BUTTON_CLASS}
+          onClick={handlePin}
+          disabled={!isOriginalHiddenItem}
+        >
+          {hiddenTag ? (
+            <VisibilityOff fontSize="small" />
+          ) : (
+            <Visibility fontSize="small" />
+          )}
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };
