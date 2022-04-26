@@ -2,8 +2,9 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { EDITED_FIELDS, SAMPLE_ITEMS } from '../../../fixtures/items';
-import { EDIT_ITEM_PAUSE } from '../../../support/constants';
+import { EDIT_ITEM_PAUSE, TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { editItem, editCaptionFromViewPage } from './utils';
+import { buildEditButtonId, ITEM_FORM_CONFIRM_BUTTON_ID } from "../../../../src/config/selectors";
 
 describe('Edit Folder', () => {
   describe('List', () => {
@@ -25,6 +26,30 @@ describe('Edit Folder', () => {
           // caption content might be wrapped with html tags
           expect(body?.description).to.contain(caption);
         });
+      });
+    });
+
+    describe('Dumb user', () => {
+      it('confirm with empty name', () => {
+        cy.setUpApi(SAMPLE_ITEMS);
+        cy.visit(HOME_PATH);
+
+        // wait for the render
+        cy.wait(TABLE_ITEM_RENDER_TIME);
+
+        // click edit button
+        const itemId = SAMPLE_ITEMS.items[0].id;
+        cy.get(`#${buildEditButtonId(itemId)}`).click();
+
+        cy.fillFolderModal({
+          // put an empty name for the folder
+            name: '',
+          },
+          { confirm: false }
+        );
+
+        // check that the button can not be clicked
+        cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should('be.disabled');
       });
     });
 
@@ -50,10 +75,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-          response: {
-            body: { id, name, description },
-          },
-        }) => {
+           response: {
+             body: { id, name, description },
+           },
+         }) => {
           // check item is edited and updated
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
@@ -86,10 +111,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
+           response: {
+             body: { id, name },
+           },
+         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);
@@ -142,10 +167,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
+           response: {
+             body: { id, name },
+           },
+         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           cy.get('@getOwnItems');
@@ -174,10 +199,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
+           response: {
+             body: { id, name },
+           },
+         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);

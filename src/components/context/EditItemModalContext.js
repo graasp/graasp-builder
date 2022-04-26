@@ -14,6 +14,10 @@ import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
 import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
+import { isItemValid } from '../../utils/item';
+
+// time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
+const DOUBLE_CLICK_DELAY_MS = 500;
 
 const EditItemModalContext = React.createContext();
 
@@ -32,6 +36,8 @@ const EditItemModalProvider = ({ children }) => {
   // updated properties are separated from the original item
   // so only necessary properties are sent when editing
   const [updatedProperties, setUpdatedItem] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
 
@@ -44,9 +50,20 @@ const EditItemModalProvider = ({ children }) => {
     setOpen(false);
     setItem(null);
     setUpdatedItem(null);
+    // schedule button disable state reset AFTER end of click event handling
+    setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
   };
 
   const submit = () => {
+    if (isConfirmButtonDisabled) {
+      return;
+    }
+    if (!isItemValid({ ...item, ...updatedProperties })) {
+      // todo: notify user
+      return;
+    }
+
+    setConfirmButtonDisabled(true);
     // add id to changed properties
     mutation.mutate({ id: item.id, ...updatedProperties });
     onClose();
@@ -98,7 +115,13 @@ const EditItemModalProvider = ({ children }) => {
           {t('Cancel')}
         </Button>
         <Button
-          // should not allow users to save if the name is empty
+          // should not allow users to save if the item is not valid
+          disabled={
+            // maybe we do not need the state variable and can just check the item
+            isConfirmButtonDisabled ||
+            // isItem Valid checks a full item, so we add the updated properties to the item to check
+            !isItemValid({ ...item, ...updatedProperties })
+          }
           onClick={submit}
           id={ITEM_FORM_CONFIRM_BUTTON_ID}
         >
