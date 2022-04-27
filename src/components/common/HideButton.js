@@ -16,13 +16,12 @@ const HideButton = ({ item }) => {
   const { data: tags } = hooks.useItemTags(item.id);
   const addTag = useMutation(MUTATION_KEYS.POST_ITEM_TAG);
   const removeTag = useMutation(MUTATION_KEYS.DELETE_ITEM_TAG);
-
   const hiddenTag = tags
     ?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID)
     ?.first();
-
   // since children items are hidden because parent is hidden, the hidden tag should be removed from the root item
-  const isOriginalHiddenItem = hiddenTag?.itemPath === item.path;
+  // if hiddenTag is undefined -> the item is not hidden
+  const isOriginalHiddenItem = !hiddenTag || hiddenTag?.itemPath === item.path;
 
   const handlePin = () => {
     if (hiddenTag) {
