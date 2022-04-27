@@ -3,31 +3,33 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import React, { useContext } from 'react';
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import FlagIcon from '@material-ui/icons/Flag';
 import { useTranslation } from 'react-i18next';
 import {
   buildItemMenu,
   buildItemMenuButtonId,
   ITEM_MENU_BUTTON_CLASS,
-  ITEM_MENU_COPY_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
-  ITEM_MENU_MOVE_BUTTON_CLASS,
-  ITEM_MENU_RECYCLE_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
 } from '../../config/selectors';
-import { CopyItemModalContext } from '../context/CopyItemModalContext';
 import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
-import { MoveItemModalContext } from '../context/MoveItemModalContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
-import { useMutation } from '../../config/queryClient';
+import MoveButton from '../common/MoveButton';
+import CopyButton from './CopyButton';
+import RecycleButton from '../common/RecycleButton';
+import HideButton from '../common/HideButton';
+import PinButton from '../common/PinButton';
+import FavoriteButton from '../common/FavoriteButton';
+import { BUTTON_TYPES } from '../../config/constants';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const ItemMenu = ({ item, canEdit }) => {
+  const { data: member } = useContext(CurrentUserContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
-  const { mutate: recycleItem } = useMutation(MUTATION_KEYS.RECYCLE_ITEM);
-  const { openModal: openCopyModal } = useContext(CopyItemModalContext);
-  const { openModal: openMoveModal } = useContext(MoveItemModalContext);
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
@@ -41,16 +43,6 @@ const ItemMenu = ({ item, canEdit }) => {
     setAnchorEl(null);
   };
 
-  const handleMove = () => {
-    openMoveModal([item.id]);
-    handleClose();
-  };
-
-  const handleCopy = () => {
-    openCopyModal([item.id]);
-    handleClose();
-  };
-
   const handleCreateShortcut = () => {
     openCreateShortcutModal(item);
     handleClose();
@@ -61,37 +53,37 @@ const ItemMenu = ({ item, canEdit }) => {
     handleClose();
   };
 
-  const handleRecycle = () => {
-    recycleItem(item.id);
-    handleClose();
-  };
-
   const renderEditorActions = () => {
     if (!canEdit) {
       return null;
     }
     return [
-      <MenuItem
-        key="move"
-        onClick={handleMove}
-        className={ITEM_MENU_MOVE_BUTTON_CLASS}
-      >
-        {t('Move')}
-      </MenuItem>,
-      <MenuItem
-        key="copy"
-        onClick={handleCopy}
-        className={ITEM_MENU_COPY_BUTTON_CLASS}
-      >
-        {t('Copy')}
-      </MenuItem>,
-      <MenuItem
-        key="delete"
-        onClick={handleRecycle}
-        className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
-      >
-        {t('Delete')}
-      </MenuItem>,
+      <MoveButton
+        type={BUTTON_TYPES.MENU_ITEM}
+        itemIds={[item.id]}
+        onClick={handleClose}
+      />,
+      <HideButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <PinButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <RecycleButton
+        type={BUTTON_TYPES.MENU_ITEM}
+        itemIds={[item.id]}
+        onClick={handleClose}
+      />,
+    ];
+  };
+
+  const renderAuthenticatedActions = () => {
+    if (!member || member.isEmpty()) {
+      return null;
+    }
+    return [
+      <FavoriteButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <CopyButton
+        type={BUTTON_TYPES.MENU_ITEM}
+        itemIds={[item.id]}
+        onClick={handleClose}
+      />,
     ];
   };
 
@@ -104,24 +96,36 @@ const ItemMenu = ({ item, canEdit }) => {
       >
         <MoreVertIcon />
       </IconButton>
-      <Menu
-        id={buildItemMenu(item.id)}
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {renderEditorActions()}
-        <MenuItem
-          onClick={handleCreateShortcut}
-          className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+      {Boolean(anchorEl) && (
+        <Menu
+          id={buildItemMenu(item.id)}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
         >
-          {t('Create Shortcut')}
-        </MenuItem>
-        <MenuItem onClick={handleFlag} className={ITEM_MENU_FLAG_BUTTON_CLASS}>
-          {t('Flag')}
-        </MenuItem>
-      </Menu>
+          {renderAuthenticatedActions()}
+          {renderEditorActions()}
+          <MenuItem
+            onClick={handleCreateShortcut}
+            className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+          >
+            <ListItemIcon>
+              <LabelImportantIcon />
+            </ListItemIcon>
+            {t('Create Shortcut')}
+          </MenuItem>
+          <MenuItem
+            onClick={handleFlag}
+            className={ITEM_MENU_FLAG_BUTTON_CLASS}
+          >
+            <ListItemIcon>
+              <FlagIcon />
+            </ListItemIcon>
+            {t('Flag')}
+          </MenuItem>
+        </Menu>
+      )}
     </>
   );
 };

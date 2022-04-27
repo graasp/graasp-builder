@@ -3,12 +3,13 @@ import { ITEM_TYPES, PERMISSION_LEVELS } from '../../src/enums';
 import { buildItemLoginSchemaExtra } from '../../src/utils/itemExtra';
 import {
   DEFAULT_TAGS,
-  ITEM_HIDDEN_TAG,
   ITEM_LOGIN_TAG,
   ITEM_PUBLIC_TAG,
   ITEM_PUBLISHED_TAG,
 } from './itemTags';
 import { CURRENT_USER, MEMBERS } from './members';
+
+const HIDDEN_ITEM_TAG_ID = Cypress.env('HIDDEN_ITEM_TAG_ID');
 
 export const DEFAULT_FOLDER_ITEM = {
   extra: {},
@@ -601,7 +602,7 @@ export const HIDDEN_ITEM = {
     },
     {
       id: 'ecbfbd2a-5688-12eb-ae93-0242ac130001',
-      tagId: ITEM_HIDDEN_TAG.id,
+      tagId: HIDDEN_ITEM_TAG_ID,
       itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130001',
     },
   ],

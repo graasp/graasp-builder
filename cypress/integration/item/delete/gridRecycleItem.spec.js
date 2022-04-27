@@ -26,7 +26,7 @@ describe('Recycle Item in Grid', () => {
 
     // recycle
     recycleItem(id);
-    cy.wait(['@recycleItem', '@getOwnItems']);
+    cy.wait(['@recycleItems', '@getOwnItems']);
   });
 
   it('recycle item inside parent', () => {
@@ -40,7 +40,7 @@ describe('Recycle Item in Grid', () => {
 
     // recycle
     recycleItem(idToDelete);
-    cy.wait('@recycleItem').then(() => {
+    cy.wait('@recycleItems').then(() => {
       // check update
       cy.wait('@getItem').its('response.url').should('contain', id);
     });
@@ -59,7 +59,7 @@ describe('Recycle Item in Grid', () => {
       // recycle
       recycleItem(idToDelete);
 
-      cy.wait('@recycleItem').then(() => {
+      cy.wait('@recycleItems').then(() => {
         // check item is still displayed
         cy.get(`#${buildItemCard(idToDelete)}`).should('exist');
       });

@@ -1,25 +1,21 @@
 import { HIDDEN_ITEM, ITEMS_SETTINGS } from '../../../fixtures/items';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
-  buildItemCard,
-  buildItemsTableRowIdAttribute,
+  buildItemMenu,
+  buildItemMenuButtonId,
   HIDDEN_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { ITEM_HIDDEN_TAG } from '../../../fixtures/itemTags';
 
 const toggleHideButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(
-    `${buildItemsTableRowIdAttribute(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`,
-  ).click();
+  const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
+  cy.get(menuSelector).click();
+  cy.get(`#${buildItemMenu(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`).click();
 };
 
-const toggleHideButtonCard = (itemId) => {
-  cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(`#${buildItemCard(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`).click();
-};
+const HIDDEN_ITEM_TAG_ID = Cypress.env('HIDDEN_ITEM_TAG_ID');
 
 describe('Hiding Item', () => {
   describe('Successfully hide item in List', () => {
@@ -39,7 +35,7 @@ describe('Hiding Item', () => {
             body: { tagId },
           },
         }) => {
-          expect(tagId).to.equals(ITEM_HIDDEN_TAG.id);
+          expect(tagId).to.equals(HIDDEN_ITEM_TAG_ID);
         },
       );
     });
@@ -66,7 +62,7 @@ describe('Hiding Item', () => {
     it('Hide an item', () => {
       const item = ITEMS_SETTINGS.items[1];
 
-      toggleHideButtonCard(item.id);
+      toggleHideButton(item.id);
 
       cy.wait(`@postItemTag`).then(
         ({
@@ -74,7 +70,7 @@ describe('Hiding Item', () => {
             body: { tagId },
           },
         }) => {
-          expect(tagId).to.equals(ITEM_HIDDEN_TAG.id);
+          expect(tagId).to.equals(HIDDEN_ITEM_TAG_ID);
         },
       );
     });
@@ -82,7 +78,7 @@ describe('Hiding Item', () => {
     it('Show an Item', () => {
       const item = ITEMS_SETTINGS.items[0];
 
-      toggleHideButtonCard(item.id);
+      toggleHideButton(item.id);
 
       cy.wait('@deleteItemTag').then(({ request: { url } }) => {
         expect(url).to.contain(item.tags[1].id);

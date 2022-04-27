@@ -7,9 +7,9 @@ import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useNavigate, useParams } from 'react-router';
+import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
@@ -19,7 +19,6 @@ import { formatDate } from '../../utils/date';
 import { ITEM_TYPES } from '../../enums';
 import { buildItemPath } from '../../config/paths';
 import {
-  ACTION_CELL_WIDTH,
   DRAG_ICON_SIZE,
   ITEMS_TABLE_CONTAINER_HEIGHT,
 } from '../../config/constants';
@@ -38,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     '& .ag-checked::after': {
       color: `${theme.palette.primary.main}!important`,
     },
+  },
+  table: {
+    fontSize: theme.typography.fontSize,
   },
   row: {
     cursor: 'pointer',
@@ -206,7 +208,6 @@ const ItemsTable = ({
         colId: 'actions',
         type: 'rightAligned',
         cellClass: classes.actionCell,
-        width: ACTION_CELL_WIDTH,
         sortable: false,
       },
     ],
@@ -240,7 +241,7 @@ const ItemsTable = ({
         actions={toolbarActions}
       />
       <div
-        className="ag-theme-material"
+        className={clsx('ag-theme-material', classes.table)}
         style={{ height: ITEMS_TABLE_CONTAINER_HEIGHT, width: '100%' }}
         id={tableId}
       >

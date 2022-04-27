@@ -55,7 +55,6 @@ import {
   mockPostAppData,
   mockDeleteAppData,
   mockPatchAppData,
-  mockRecycleItem,
   mockRecycleItems,
   mockGetRecycledItems,
   mockDeleteItemTag,
@@ -127,7 +126,6 @@ Cypress.Commands.add(
     editMemberError = false,
     postItemFlagError = false,
     getItemChatError = false,
-    recycleItemError = false,
     recycleItemsError = false,
     getRecycledItemsError = false,
     deleteItemTagError = false,
@@ -245,8 +243,6 @@ Cypress.Commands.add(
     mockDeleteAppData();
 
     mockPatchAppData();
-
-    mockRecycleItem(items, recycleItemError);
 
     mockRecycleItems(items, recycleItemsError);
 

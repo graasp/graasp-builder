@@ -69,7 +69,6 @@ const {
   GET_FLAGS_ROUTE,
   buildGetItemChatRoute,
   buildPostItemChatMessageRoute,
-  buildRecycleItemRoute,
   GET_RECYCLED_ITEMS_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
@@ -243,26 +242,6 @@ export const mockDeleteItems = (items, shouldThrowError) => {
   ).as('deleteItems');
 };
 
-export const mockRecycleItem = (items, shouldThrowError) => {
-  cy.intercept(
-    {
-      method: DEFAULT_POST.method,
-      url: new RegExp(`${API_HOST}/${buildRecycleItemRoute(ID_FORMAT)}`),
-    },
-    ({ url, reply }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
-      }
-
-      const id = url.slice(API_HOST.length).split('/')[2];
-      return reply({
-        statusCode: StatusCodes.OK,
-        body: getItemById(items, id),
-      });
-    },
-  ).as('recycleItem');
-};
-
 export const mockRecycleItems = (items, shouldThrowError) => {
   cy.intercept(
     {
@@ -271,7 +250,10 @@ export const mockRecycleItems = (items, shouldThrowError) => {
       query: { id: new RegExp(ID_FORMAT) },
     },
     ({ url, reply }) => {
-      const ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
+      let ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
+      if (!Array.isArray(ids)) {
+        ids = [ids];
+      }
 
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });

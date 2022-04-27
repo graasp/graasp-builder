@@ -28,6 +28,7 @@ module.exports = (on, config) => {
       },
       API_HOST: process.env.REACT_APP_API_HOST,
       AUTHENTICATION_HOST: process.env.REACT_APP_AUTHENTICATION_HOST,
+      HIDDEN_ITEM_TAG_ID: process.env.REACT_APP_HIDDEN_ITEM_TAG_ID,
     },
   };
   require('@cypress/code-coverage/task')(on, newConfig);

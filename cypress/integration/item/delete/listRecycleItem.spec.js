@@ -30,7 +30,7 @@ describe('Recycle Item in List', () => {
 
     // delete
     recycleItem(id);
-    cy.wait('@recycleItem').then(({ request: { url } }) => {
+    cy.wait('@recycleItems').then(({ request: { url } }) => {
       expect(url).to.contain(id);
     });
     cy.wait('@getOwnItems');
@@ -50,7 +50,7 @@ describe('Recycle Item in List', () => {
 
     // delete
     recycleItem(idToDelete);
-    cy.wait('@recycleItem').then(({ request: { url } }) => {
+    cy.wait('@recycleItems').then(({ request: { url } }) => {
       expect(url).to.contain(idToDelete);
     });
   });
@@ -71,7 +71,7 @@ describe('Recycle Item in List', () => {
       // delete
       recycleItem(idToDelete);
 
-      cy.wait('@recycleItem').then(() => {
+      cy.wait('@recycleItems').then(() => {
         // check item is still displayed
         cy.get(buildItemsTableRowIdAttribute(idToDelete)).should('exist');
       });

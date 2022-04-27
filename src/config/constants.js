@@ -101,7 +101,7 @@ export const LEFT_MENU_WIDTH = 250;
 export const RIGHT_MENU_WIDTH = 300;
 export const HEADER_HEIGHT = 64;
 
-export const FILE_UPLOAD_MAX_FILES = 5;
+export const FILE_UPLOAD_MAX_FILES = 15;
 export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
 
 export const ITEM_ICON_MAX_SIZE = 25;
@@ -180,7 +180,6 @@ export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
 
 export const DRAG_ICON_SIZE = 18;
 
-export const ACTION_CELL_WIDTH = 300;
 export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
 export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
@@ -233,3 +232,8 @@ export const HOST_MAP = {
 };
 
 export const MAX_THUMBNAIL_SIZE = 10 * 1024 * 1024;
+
+export const BUTTON_TYPES = {
+  MENU_ITEM: 'menuItem',
+  ICON_BUTTON: 'iconButton',
+};

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
+import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -22,6 +23,7 @@ import {
 import ItemMembershipSelect from './ItemMembershipSelect';
 
 const ItemMembershipRow = ({ membership, item }) => {
+  const { t } = useTranslation();
   const { data: user, isLoading } = hooks.useMember(membership.memberId);
   const { mutate: deleteItemMembership } = useMutation(
     MUTATION_KEYS.DELETE_ITEM_MEMBERSHIP,
@@ -30,6 +32,12 @@ const ItemMembershipRow = ({ membership, item }) => {
     MUTATION_KEYS.EDIT_ITEM_MEMBERSHIP,
   );
   const { mutate: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
+
+  const [isParentMembership, setIsParentMembership] = useState(false);
+
+  useEffect(() => {
+    setIsParentMembership(membership.itemPath !== item.get('path'));
+  }, [membership, item]);
 
   if (isLoading) {
     return <Loader />;
@@ -41,7 +49,7 @@ const ItemMembershipRow = ({ membership, item }) => {
 
   const onChangePermission = (e) => {
     const { value } = e.target;
-    if (membership.itemPath === item.get('path')) {
+    if (!isParentMembership) {
       editItemMembership({
         itemId: item.get('id'),
         id: membership.id,
@@ -56,6 +64,32 @@ const ItemMembershipRow = ({ membership, item }) => {
         permission: value,
       });
     }
+  };
+
+  const renderDeleteButton = () => {
+    const button = (
+      <IconButton
+        disabled={isParentMembership}
+        onClick={deleteMembership}
+        id={buildItemMembershipRowDeleteButtonId(membership.id)}
+      >
+        <CloseIcon />
+      </IconButton>
+    );
+
+    if (!isParentMembership) {
+      return button;
+    }
+
+    return (
+      <Tooltip
+        title={t(
+          'This membership is defined in the parent item and cannot be deleted here.',
+        )}
+      >
+        <div>{button}</div>
+      </Tooltip>
+    );
   };
 
   return (
@@ -80,12 +114,7 @@ const ItemMembershipRow = ({ membership, item }) => {
         />
       </TableCell>
       <TableCell align="right" padding="checkbox">
-        <IconButton
-          onClick={deleteMembership}
-          id={buildItemMembershipRowDeleteButtonId(membership.id)}
-        >
-          <CloseIcon />
-        </IconButton>
+        {renderDeleteButton()}
       </TableCell>
     </TableRow>
   );

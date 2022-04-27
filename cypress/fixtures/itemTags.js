@@ -13,10 +13,6 @@ export const ITEM_PUBLISHED_TAG = {
   name: SETTINGS.ITEM_PUBLISHED.name,
 };
 
-export const ITEM_HIDDEN_TAG = {
-  id: '12345678-1234-1234-1234-123456789012',
-};
-
 export const DEFAULT_TAGS = [
   ITEM_LOGIN_TAG,
   ITEM_PUBLIC_TAG,
