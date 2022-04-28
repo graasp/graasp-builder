@@ -30,6 +30,7 @@ const Chatbox = ({ item }) => {
   const { mutate: deleteMessage } = useMutation(
     MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE,
   );
+  const { mutate: clearChat } = useMutation(MUTATION_KEYS.CLEAR_ITEM_CHAT);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   useEffect(
@@ -76,6 +77,7 @@ const Chatbox = ({ item }) => {
       sendMessageFunction={sendMessage}
       deleteMessageFunction={deleteMessage}
       editMessageFunction={editMessage}
+      clearChatFunction={clearChat}
       useAvatarHook={useAvatar}
     />
   );
