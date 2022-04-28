@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { toast } from 'react-toastify';
 import { useMutation } from '../../config/queryClient';
 import FolderForm from '../item/form/FolderForm';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
@@ -58,7 +59,7 @@ const EditItemModalProvider = ({ children }) => {
       return;
     }
     if (!isItemValid({ ...item, ...updatedProperties })) {
-      // todo: notify user
+      toast.error(t('Item is invalid'));
       return;
     }
 
