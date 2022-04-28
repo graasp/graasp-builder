@@ -23,6 +23,7 @@ import {
 } from '../../../src/utils/itemExtra';
 import { getParentsIdsFromPath } from '../../../src/utils/item';
 import { TREE_VIEW_PAUSE } from '../constants';
+import { NEW_APP_NAME } from '../../fixtures/apps/apps';
 
 Cypress.Commands.add('fillShareForm', ({ member, permission }) => {
   // select permission
@@ -83,7 +84,9 @@ Cypress.Commands.add(
   ({ name = '', description = '' }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
     // first select all the text and then remove it to have a clear field, then type new description
-    cy.get(`#${FOLDER_FORM_DESCRIPTION_ID}`).type(`{selectall}{backspace}${description}`);
+    cy.get(`#${FOLDER_FORM_DESCRIPTION_ID}`).type(
+      `{selectall}{backspace}${description}`,
+    );
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
@@ -127,7 +130,6 @@ Cypress.Commands.add(
     cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(`#${ITEM_FORM_APP_URL_ID}`).click();
-    // todo: can not edit name field in modal
     if (type) {
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
     } else {
@@ -137,6 +139,10 @@ Cypress.Commands.add(
         'have.value',
         getAppExtra(extra)?.name,
       );
+      // edit the app name
+      cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`)
+        .type(`{selectall}{backspace}${NEW_APP_NAME}`)
+        .should('have.value', NEW_APP_NAME);
     }
 
     if (confirm) {

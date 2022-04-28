@@ -29,7 +29,7 @@ export const GRAASP_APP_PARENT_FOLDER = {
   path: 'bdf09f5a_5688_11eb_ae93_0242ac130002',
   extra: {
     image: 'someimageurl',
-    name: APP_NAME
+    name: APP_NAME,
   },
 };
 
@@ -43,7 +43,7 @@ export const GRAASP_APP_CHILDREN_ITEM = {
   extra: {
     [ITEM_TYPES.APP]: { 
       url: 'http://localhost.com:3333',
-      name: APP_NAME 
+      name: APP_NAME,
     },
   },
   creator: CURRENT_USER.id,
@@ -58,7 +58,7 @@ export const APP_USING_CONTEXT_ITEM = {
   extra: {
     [ITEM_TYPES.APP]: {
       url: `${API_HOST}/${buildAppItemLinkForTest('app.html')}`,
-      name: APP_NAME
+      name: APP_NAME,
     },
   },
   creator: CURRENT_USER.id,

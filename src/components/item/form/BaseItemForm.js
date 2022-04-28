@@ -25,7 +25,6 @@ const BaseForm = ({ onChange, item, updatedProperties }) => {
       margin="dense"
       id={ITEM_FORM_NAME_INPUT_ID}
       label={t('Name')}
-      // can not clear name completely
       value={updatedProperties?.name ?? item?.name}
       onChange={handleNameInput}
       className={classes.shortInputField}

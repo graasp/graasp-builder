@@ -24,6 +24,7 @@ import DocumentForm from '../item/form/DocumentForm';
 import AppForm from '../item/form/AppForm';
 import ItemTypeTabs from './ItemTypeTabs';
 import ImportZip from './ImportZip';
+import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -38,9 +39,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
 }));
-
-// time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
-const DOUBLE_CLICK_DELAY_MS = 500;
 
 const NewItemModal = ({ open, handleClose }) => {
   const { t } = useTranslation();

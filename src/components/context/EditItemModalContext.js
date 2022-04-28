@@ -15,9 +15,7 @@ import { ITEM_TYPES } from '../../enums';
 import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
 import { isItemValid } from '../../utils/item';
-
-// time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
-const DOUBLE_CLICK_DELAY_MS = 500;
+import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 
 const EditItemModalContext = React.createContext();
 
@@ -51,6 +49,7 @@ const EditItemModalProvider = ({ children }) => {
     setItem(null);
     setUpdatedItem(null);
     // schedule button disable state reset AFTER end of click event handling
+    // todo: factor out this logic to graasp-ui
     setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
   };
 

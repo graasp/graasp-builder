@@ -2,9 +2,15 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { EDITED_FIELDS, SAMPLE_ITEMS } from '../../../fixtures/items';
-import { EDIT_ITEM_PAUSE, TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
+import {
+  EDIT_ITEM_PAUSE,
+  TABLE_ITEM_RENDER_TIME,
+} from '../../../support/constants';
 import { editItem, editCaptionFromViewPage } from './utils';
-import { buildEditButtonId, ITEM_FORM_CONFIRM_BUTTON_ID } from "../../../../src/config/selectors";
+import {
+  buildEditButtonId,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+} from '../../../../src/config/selectors';
 
 describe('Edit Folder', () => {
   describe('List', () => {
@@ -29,28 +35,27 @@ describe('Edit Folder', () => {
       });
     });
 
-    describe('Dumb user', () => {
-      it('confirm with empty name', () => {
-        cy.setUpApi(SAMPLE_ITEMS);
-        cy.visit(HOME_PATH);
+    it('confirm with empty name', () => {
+      cy.setUpApi(SAMPLE_ITEMS);
+      cy.visit(HOME_PATH);
 
-        // wait for the render
-        cy.wait(TABLE_ITEM_RENDER_TIME);
+      // wait for the render
+      cy.wait(TABLE_ITEM_RENDER_TIME);
 
-        // click edit button
-        const itemId = SAMPLE_ITEMS.items[0].id;
-        cy.get(`#${buildEditButtonId(itemId)}`).click();
+      // click edit button
+      const itemId = SAMPLE_ITEMS.items[0].id;
+      cy.get(`#${buildEditButtonId(itemId)}`).click();
 
-        cy.fillFolderModal({
+      cy.fillFolderModal(
+        {
           // put an empty name for the folder
-            name: '',
-          },
-          { confirm: false }
-        );
+          name: '',
+        },
+        { confirm: false },
+      );
 
-        // check that the button can not be clicked
-        cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should('be.disabled');
-      });
+      // check that the button can not be clicked
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should('be.disabled');
     });
 
     it('edit folder on Home', () => {

@@ -1,4 +1,5 @@
-export const APP_NAME = "test app";
+export const APP_NAME = 'test app';
+export const NEW_APP_NAME = 'my new test app';
 
 export const APPS_LIST = [
     {
