@@ -1,10 +1,13 @@
 import { PERMISSION_LEVELS } from '../../../src/enums';
 import { buildItemPath } from '../../../src/config/paths';
-import { buildShareButtonId } from '../../../src/config/selectors';
+import {
+  buildShareButtonId,
+  SHARE_ITEM_EMAIL_INPUT_ID,
+} from '../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
-const shareItem = ({ member, permission, id }) => {
+const shareItem = ({ id, member, permission }) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
 
   cy.fillShareForm({ member, permission });
@@ -28,5 +31,8 @@ describe('Create Membership', () => {
       expect(body?.permission).to.equal(permission);
       expect(body?.memberId).to.equal(member.id);
     });
+
+    // check that the email field is emptied after sharing completes
+    cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).should('be.empty');
   });
 });

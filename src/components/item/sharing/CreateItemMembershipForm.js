@@ -34,17 +34,17 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateItemMembershipForm = ({ id }) => {
   const [mailError, setMailError] = useState(false);
+  const [email, setEmail] = useState('');
   const mutation = useMutation(MUTATION_KEYS.SHARE_ITEM);
   const { t } = useTranslation();
   const classes = useStyles();
 
   // refs
-  let email = '';
   let permission = '';
 
   const checkSubmission = () => {
     // check mail validity
-    if (!validator.isEmail(email.value)) {
+    if (!validator.isEmail(email)) {
       setMailError(t('This mail is not valid'));
       return false;
     }
@@ -60,23 +60,26 @@ const CreateItemMembershipForm = ({ id }) => {
     if (checkSubmission()) {
       mutation.mutate({
         id,
-        email: email.value,
+        email,
         permission: permission.value,
       });
-      email = '';
+      setEmail('');
     }
   };
 
+  const onChangeEmail = ({ target }) => {
+    setEmail(target.value);
+  };
+
   return (
-    <Grid container spacing={1} alignItems="center" justify="center">
+    <Grid container spacing={1} alignItems="center" justifyContent="center">
       <Grid item xs={7}>
         <TextField
           className={classes.emailInput}
           id={SHARE_ITEM_EMAIL_INPUT_ID}
           variant="outlined"
-          inputRef={(c) => {
-            email = c;
-          }}
+          value={email}
+          onChange={onChangeEmail}
           label={t('Email')}
           error={Boolean(mailError)}
           helperText={mailError}
