@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppForm = ({ onChange, item }) => {
+const AppForm = ({ onChange, item, updatedProperties }) => {
   const { t } = useTranslation();
   const [newName, setNewName] = useState(item?.name);
 
@@ -45,7 +45,11 @@ const AppForm = ({ onChange, item }) => {
   return (
     <div>
       <Typography variant="h6">{t('Create an App')}</Typography>
-      <BaseItemForm onChange={onChange} item={{ ...item, name: newName }} />
+      <BaseItemForm
+        onChange={onChange}
+        item={{ ...item, name: newName }}
+        updatedProperties={updatedProperties}
+      />
 
       {isAppsLoading ? (
         <Skeleton height={60} />
@@ -96,10 +100,19 @@ AppForm.propTypes = {
       image: PropTypes.string,
     }),
   }),
+  updatedProperties: PropTypes.shape({
+    name: PropTypes.string,
+    extra: PropTypes.shape({
+      app: PropTypes.shape({
+        url: PropTypes.string,
+      }),
+    }),
+  }),
 };
 
 AppForm.defaultProps = {
   item: {},
+  updatedProperties: {},
 };
 
 export default AppForm;

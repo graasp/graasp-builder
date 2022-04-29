@@ -25,7 +25,7 @@ const BaseForm = ({ onChange, item, updatedProperties }) => {
       margin="dense"
       id={ITEM_FORM_NAME_INPUT_ID}
       label={t('Name')}
-      value={updatedProperties?.name || item?.name}
+      value={updatedProperties?.name ?? item?.name}
       onChange={handleNameInput}
       className={classes.shortInputField}
       // always shrink because setting name from defined app does not shrink automatically

@@ -66,6 +66,9 @@ export const DESCRIPTION_MAX_LENGTH = 30;
 export const DEFAULT_IMAGE_SRC =
   'https://pbs.twimg.com/profile_images/1300707321262346240/IsQAyu7q_400x400.jpg';
 
+// time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
+export const DOUBLE_CLICK_DELAY_MS = 500;
+
 export const ROOT_ID = 'root-id';
 
 export const TREE_VIEW_MAX_WIDTH = 400;

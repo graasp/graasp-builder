@@ -50,15 +50,18 @@ describe('Published Item', () => {
   });
   it('Show published state on button', () => {
     // click validate item button
-    cy.get(`#${ITEM_PUBLISH_BUTTON_ID} > span`).children().children().should('exist');
-  });  
+    cy.get(`#${ITEM_PUBLISH_BUTTON_ID} > span`)
+      .children()
+      .children()
+      .should('exist');
+  });
   it('Unpublish item', () => {
     cy.get(`#${ITEM_UNPUBLISH_BUTTON_ID}`).click();
     cy.wait('@deleteItemTag').then(({ request: { url } }) => {
       // should contain published tag id
       expect(url).to.contain(item.tags[1].id);
     });
-  })
+  });
 });
 
 describe('Validated Item', () => {

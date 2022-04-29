@@ -8,12 +8,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { toast } from 'react-toastify';
 import { useMutation } from '../../config/queryClient';
 import FolderForm from '../item/form/FolderForm';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
 import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
+import { isItemValid } from '../../utils/item';
+import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 
 const EditItemModalContext = React.createContext();
 
@@ -32,6 +35,8 @@ const EditItemModalProvider = ({ children }) => {
   // updated properties are separated from the original item
   // so only necessary properties are sent when editing
   const [updatedProperties, setUpdatedItem] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
 
@@ -44,9 +49,21 @@ const EditItemModalProvider = ({ children }) => {
     setOpen(false);
     setItem(null);
     setUpdatedItem(null);
+    // schedule button disable state reset AFTER end of click event handling
+    // todo: factor out this logic to graasp-ui
+    setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
   };
 
   const submit = () => {
+    if (isConfirmButtonDisabled) {
+      return;
+    }
+    if (!isItemValid({ ...item, ...updatedProperties })) {
+      toast.error(t('Item is invalid'));
+      return;
+    }
+
+    setConfirmButtonDisabled(true);
     // add id to changed properties
     mutation.mutate({ id: item.id, ...updatedProperties });
     onClose();
@@ -97,7 +114,17 @@ const EditItemModalProvider = ({ children }) => {
         <Button onClick={onClose} variant="text">
           {t('Cancel')}
         </Button>
-        <Button onClick={submit} id={ITEM_FORM_CONFIRM_BUTTON_ID}>
+        <Button
+          // should not allow users to save if the item is not valid
+          disabled={
+            // maybe we do not need the state variable and can just check the item
+            isConfirmButtonDisabled ||
+            // isItem Valid checks a full item, so we add the updated properties to the item to check
+            !isItemValid({ ...item, ...updatedProperties })
+          }
+          onClick={submit}
+          id={ITEM_FORM_CONFIRM_BUTTON_ID}
+        >
           {t('Save')}
         </Button>
       </DialogActions>
