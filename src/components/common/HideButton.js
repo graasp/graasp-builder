@@ -40,16 +40,17 @@ const HideButton = ({ item, type, onClick }) => {
     onClick?.();
   };
 
-  let text = hiddenTag ? t('Show') : t('Hide');
+  const text = hiddenTag ? t('Show') : t('Hide');
+  let tooltip = text;
   if (hiddenTag && !isOriginalHiddenItem) {
-    text = t('This item is hidden because its parent item is hidden.');
+    tooltip = t('This item is hidden because its parent item is hidden.');
   }
 
   const icon = hiddenTag ? <VisibilityOff /> : <Visibility />;
 
   switch (type) {
-    case BUTTON_TYPES.MENU_ITEM:
-      return (
+    case BUTTON_TYPES.MENU_ITEM: {
+      const menuItem = (
         <MenuItem
           key={text}
           onClick={handleToggleHide}
@@ -60,10 +61,21 @@ const HideButton = ({ item, type, onClick }) => {
           {text}
         </MenuItem>
       );
+
+      // show tooltip only on disabled
+      if (isOriginalHiddenItem) {
+        return menuItem;
+      }
+      return (
+        <Tooltip title={tooltip} placement="left">
+          <span>{menuItem}</span>
+        </Tooltip>
+      );
+    }
     default:
     case BUTTON_TYPES.ICON_BUTTON:
       return (
-        <Tooltip title={text}>
+        <Tooltip title={tooltip}>
           <span>
             <IconButton
               aria-label={text}

@@ -620,6 +620,13 @@ export const HIDDEN_ITEM = {
   ],
 };
 
+export const CHILD_HIDDEN_ITEM = {
+  ...HIDDEN_ITEM,
+  id: 'ecafbd2a-3688-11eb-ae93-0242ac130003',
+  name: 'child of hidden item',
+  path: `${HIDDEN_ITEM.path}.ecafbd2a_3688_11eb_ae93_0242ac130003`,
+};
+
 export const PINNED_ITEM = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
@@ -665,5 +672,6 @@ export const ITEMS_SETTINGS = {
         },
       ],
     },
+    CHILD_HIDDEN_ITEM,
   ],
 };
