@@ -3,13 +3,10 @@ import { List } from 'immutable';
 import React, { useEffect, useState } from 'react';
 import EditButton from '../common/EditButton';
 import ItemMenu from '../main/ItemMenu';
-import FavoriteButton from '../common/FavoriteButton';
-import PinButton from '../common/PinButton';
 import {
   getMembershipsForItem,
   isItemUpdateAllowedForUser,
 } from '../../utils/membership';
-import HideButton from '../common/HideButton';
 import DownloadButton from '../main/DownloadButton';
 
 // items and memberships match by index
@@ -33,14 +30,6 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
       <ItemMenu item={item} canEdit={canEdit} />
     );
 
-    const renderAuthenticatedActions = () => {
-      if (!member || member.isEmpty()) {
-        return null;
-      }
-
-      return <FavoriteButton item={item} />;
-    };
-
     const renderEditorActions = () => {
       if (!canEdit) {
         return null;
@@ -49,8 +38,6 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
       return (
         <>
           <EditButton item={item} />
-          <PinButton item={item} />
-          <HideButton item={item} />
           <DownloadButton id={item?.id} name={item?.name} />
         </>
       );
@@ -58,7 +45,6 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
 
     return (
       <>
-        {renderAuthenticatedActions()}
         {renderEditorActions()}
         {renderAnyoneActions()}
       </>

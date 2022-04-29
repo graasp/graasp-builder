@@ -8,7 +8,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { LayoutContext } from '../context/LayoutContext';
 import { buildDashboardButtonId } from '../../config/selectors';
 
-// eslint-disable-next-line no-unused-vars
 const AnalyticsDashboardButton = ({ id }) => {
   const { t } = useTranslation();
   const { setIsDashboardOpen, isDashboardOpen } = useContext(LayoutContext);

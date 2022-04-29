@@ -80,12 +80,12 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
             <Typography variant="h6" color="inherit" className={classes.title}>
               {APP_NAME}
             </Typography>
-            <Navigation
-              id={APP_NAVIGATION_DROP_DOWN_ID}
-              hostMap={HOST_MAP}
-              currentValue={Context.BUILDER}
-            />
           </Link>
+          <Navigation
+            id={APP_NAVIGATION_DROP_DOWN_ID}
+            hostMap={HOST_MAP}
+            currentValue={Context.BUILDER}
+          />
         </div>
         <SettingsHeader />
       </Toolbar>

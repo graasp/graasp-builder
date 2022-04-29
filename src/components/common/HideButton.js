@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { HIDDEN_ITEM_TAG_ID } from '../../config/constants';
+import { BUTTON_TYPES, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 
-const HideButton = ({ item }) => {
+const HideButton = ({ item, type, onClick }) => {
   const { t } = useTranslation();
 
   const { data: tags } = hooks.useItemTags(item.id);
@@ -23,7 +25,7 @@ const HideButton = ({ item }) => {
   // if hiddenTag is undefined -> the item is not hidden
   const isOriginalHiddenItem = !hiddenTag || hiddenTag?.itemPath === item.path;
 
-  const handlePin = () => {
+  const handleToggleHide = () => {
     if (hiddenTag) {
       removeTag.mutate({
         id: item.id,
@@ -35,31 +37,58 @@ const HideButton = ({ item }) => {
         tagId: HIDDEN_ITEM_TAG_ID,
       });
     }
+    onClick?.();
   };
 
-  let tooltip = hiddenTag ? t('Show Item') : t('Hide Item');
+  const text = hiddenTag ? t('Show') : t('Hide');
+  let tooltip = text;
   if (hiddenTag && !isOriginalHiddenItem) {
     tooltip = t('This item is hidden because its parent item is hidden.');
   }
 
-  return (
-    <Tooltip title={tooltip}>
-      <span>
-        <IconButton
-          aria-label={tooltip}
+  const icon = hiddenTag ? <VisibilityOff /> : <Visibility />;
+
+  switch (type) {
+    case BUTTON_TYPES.MENU_ITEM: {
+      const menuItem = (
+        <MenuItem
+          key={text}
+          onClick={handleToggleHide}
           className={HIDDEN_ITEM_BUTTON_CLASS}
-          onClick={handlePin}
           disabled={!isOriginalHiddenItem}
         >
-          {hiddenTag ? (
-            <VisibilityOff fontSize="small" />
-          ) : (
-            <Visibility fontSize="small" />
-          )}
-        </IconButton>
-      </span>
-    </Tooltip>
-  );
+          <ListItemIcon>{icon}</ListItemIcon>
+          {text}
+        </MenuItem>
+      );
+
+      // show tooltip only on disabled
+      if (isOriginalHiddenItem) {
+        return menuItem;
+      }
+      return (
+        <Tooltip title={tooltip} placement="left">
+          <span>{menuItem}</span>
+        </Tooltip>
+      );
+    }
+    default:
+    case BUTTON_TYPES.ICON_BUTTON:
+      return (
+        <Tooltip title={tooltip}>
+          <span>
+            <IconButton
+              aria-label={text}
+              className={HIDDEN_ITEM_BUTTON_CLASS}
+              onClick={handleToggleHide}
+              disabled={!isOriginalHiddenItem}
+            >
+              {icon}
+            </IconButton>
+          </span>
+        </Tooltip>
+      );
+  }
 };
 
 HideButton.propTypes = {
@@ -67,6 +96,13 @@ HideButton.propTypes = {
     id: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
   }).isRequired,
+  type: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+HideButton.defaultProps = {
+  type: BUTTON_TYPES.ICON_BUTTON,
+  onClick: null,
 };
 
 export default HideButton;

@@ -44,12 +44,10 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        {t('Confirm deleting item.')}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t('Confirm deletion')}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {t('This item will be deleted permanently.')}
+          {t('itemDeleteMessage', { count: itemIds.length })}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

@@ -18,12 +18,25 @@ describe('Delete Membership', () => {
     const { id, memberships } = ITEMS_WITH_MEMBERSHIPS.items[0];
     cy.visit(buildItemPath(id));
 
-    // share
+    // delete
     const { id: mId } = memberships[1];
     deleteItemMembership({ id: mId, itemId: id });
 
     cy.wait('@deleteItemMembership').then(({ request: { url } }) => {
       expect(url).to.contain(mId);
     });
+  });
+  it('cannot delete item membership from parent', () => {
+    cy.setUpApi({ ...ITEMS_WITH_MEMBERSHIPS });
+
+    // go to children item
+    const { id, memberships } = ITEMS_WITH_MEMBERSHIPS.items[1];
+    cy.visit(buildItemPath(id));
+    cy.get(`#${buildShareButtonId(id)}`).click();
+
+    const { id: mId } = memberships[1];
+    cy.get(`#${buildItemMembershipRowDeleteButtonId(mId)}`).should(
+      'be.disabled',
+    );
   });
 });

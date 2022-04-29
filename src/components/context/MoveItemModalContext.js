@@ -48,7 +48,7 @@ const MoveItemModalProvider = ({ children }) => {
         open={open}
         itemIds={itemIds}
         onConfirm={onConfirm}
-        title={t('Where do you want to copy this item?')}
+        title={t('Where do you want to move this item?')}
       />
     );
   };

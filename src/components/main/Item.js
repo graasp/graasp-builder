@@ -15,11 +15,9 @@ import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import { stripHtml } from '../../utils/item';
 import ItemMenu from './ItemMenu';
 import FavoriteButton from '../common/FavoriteButton';
-import PinButton from '../common/PinButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
-import HideButton from '../common/HideButton';
 import DownloadButton from './DownloadButton';
 
 const NameWrapper =
@@ -72,8 +70,6 @@ const Item = ({ item, memberships }) => {
       {enableEdition && (
         <>
           <EditButton item={item} />
-          <PinButton item={item} />
-          <HideButton item={item} />
           <DownloadButton id={id} name={name} />
         </>
       )}

@@ -5,11 +5,14 @@ import PushPinIcon from '@material-ui/icons/PushPin';
 import PushPinOutlinedIcon from '@material-ui/icons/PushPinOutlined';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../config/queryClient';
 import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { BUTTON_TYPES } from '../../config/constants';
 
-const PinButton = ({ item }) => {
+const PinButton = ({ item, type, onClick }) => {
   const { t } = useTranslation();
 
   const editItem = useMutation(MUTATION_KEYS.EDIT_ITEM);
@@ -25,23 +28,38 @@ const PinButton = ({ item }) => {
         isPinned: !isPinned,
       },
     });
+    onClick?.();
   };
 
-  return (
-    <Tooltip title={isPinned ? t('Unpin') : t('Pin')}>
-      <IconButton
-        aria-label={isPinned ? t('Unpin') : t('Pin')}
-        className={PIN_ITEM_BUTTON_CLASS}
-        onClick={handlePin}
-      >
-        {isPinned ? (
-          <PushPinIcon fontSize="small" />
-        ) : (
-          <PushPinOutlinedIcon fontSize="small" />
-        )}
-      </IconButton>
-    </Tooltip>
-  );
+  const icon = isPinned ? <PushPinIcon /> : <PushPinOutlinedIcon />;
+  const text = isPinned ? t('Unpin') : t('Pin');
+
+  switch (type) {
+    case BUTTON_TYPES.MENU_ITEM:
+      return (
+        <MenuItem
+          key={text}
+          onClick={handlePin}
+          className={PIN_ITEM_BUTTON_CLASS}
+        >
+          <ListItemIcon>{icon}</ListItemIcon>
+          {text}
+        </MenuItem>
+      );
+    default:
+    case BUTTON_TYPES.ICON_BUTTON:
+      return (
+        <Tooltip title={text}>
+          <IconButton
+            aria-label={text}
+            className={PIN_ITEM_BUTTON_CLASS}
+            onClick={handlePin}
+          >
+            {icon}
+          </IconButton>
+        </Tooltip>
+      );
+  }
 };
 
 PinButton.propTypes = {
@@ -52,6 +70,8 @@ PinButton.propTypes = {
       isPinned: PropTypes.bool,
     }),
   }),
+  type: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 PinButton.defaultProps = {
@@ -60,6 +80,8 @@ PinButton.defaultProps = {
       isPinned: false,
     },
   },
+  type: BUTTON_TYPES.ICON_BUTTON,
+  onClick: null,
 };
 
 export default PinButton;

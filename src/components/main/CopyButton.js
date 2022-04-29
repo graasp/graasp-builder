@@ -1,63 +1,62 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
+import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { FilterNone } from '@material-ui/icons';
 import {
-  ITEM_MENU_RECYCLE_BUTTON_CLASS,
-  ITEM_RECYCLE_BUTTON_CLASS,
+  ITEM_COPY_BUTTON_CLASS,
+  ITEM_MENU_COPY_BUTTON_CLASS,
 } from '../../config/selectors';
-import { useMutation } from '../../config/queryClient';
+import { CopyItemModalContext } from '../context/CopyItemModalContext';
 import { BUTTON_TYPES } from '../../config/constants';
 
-const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
+const CopyButton = ({ itemIds, color, id, type, onClick }) => {
   const { t } = useTranslation();
-  const { mutate: recycleItems } = useMutation(MUTATION_KEYS.RECYCLE_ITEMS);
 
-  const handleClick = () => {
-    recycleItems(itemIds);
+  const { openModal: openCopyModal } = useContext(CopyItemModalContext);
+
+  const handleCopy = () => {
+    openCopyModal(itemIds);
     onClick?.();
   };
 
-  const text = t('Recycle');
+  const text = t('Copy');
 
   switch (type) {
     case BUTTON_TYPES.MENU_ITEM:
       return (
         <MenuItem
           key={text}
-          onClick={handleClick}
-          className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
+          onClick={handleCopy}
+          className={ITEM_MENU_COPY_BUTTON_CLASS}
         >
           <ListItemIcon>
-            <DeleteIcon />
+            <FilterNone />
           </ListItemIcon>
           {text}
         </MenuItem>
       );
     default:
-    case BUTTON_TYPES.ICON_BUTTON:
       return (
         <Tooltip title={text}>
           <IconButton
             id={id}
             color={color}
-            className={ITEM_RECYCLE_BUTTON_CLASS}
+            className={ITEM_COPY_BUTTON_CLASS}
             aria-label={text}
-            onClick={handleClick}
+            onClick={handleCopy}
           >
-            <DeleteIcon />
+            <FilterNone />
           </IconButton>
         </Tooltip>
       );
   }
 };
 
-RecycleButton.propTypes = {
+CopyButton.propTypes = {
   itemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   color: PropTypes.string,
   id: PropTypes.string,
@@ -65,11 +64,11 @@ RecycleButton.propTypes = {
   onClick: PropTypes.func,
 };
 
-RecycleButton.defaultProps = {
+CopyButton.defaultProps = {
   color: 'default',
   id: '',
   type: BUTTON_TYPES.ICON_BUTTON,
   onClick: null,
 };
 
-export default RecycleButton;
+export default CopyButton;
