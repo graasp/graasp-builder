@@ -1,4 +1,4 @@
-name: CI pipeline for Graasp auth
+name: CI pipeline for Graasp compose
 
 # Controls when the action will run.
 on:
@@ -16,7 +16,7 @@ on:
 jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@6fb866ebf9c7369f4c324a3ba64e079ad54f2b49
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@main
     with:
       build-folder: 'build'
     secrets:
