@@ -1,0 +1,26 @@
+name: CDelivery pipeline for Graasp compose
+
+# Controls when the action will run.
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  graasp-deploy-s3-workflow:
+    name: Graasp Builder
+    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@main
+    with:
+      build-folder: 'build'
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+      aws-region: ${{ secrets.AWS_REGION_PROD }}
+      aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_PROD }}
+      cloudfront-distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_PROD }}
+      api-host: ${{ secrets.REACT_APP_API_HOST_PROD }}
+      show-notifications: true
+      authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_PROD }}
+      graasp-perform-host: ${{ secrets.REACT_APP_GRAASP_PERFORM_HOST_PROD }}
+      graasp-analyzer-host: ${{ secrets.REACT_APP_GRAASP_ANALYZER_HOST_PROD }}
+      ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_PROD }}
+      hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_PROD }}
