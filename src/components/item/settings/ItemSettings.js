@@ -15,6 +15,7 @@ import { useMutation } from '../../../config/queryClient';
 import {
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_PINNED_TOGGLE_ID,
+  SETTINGS_EXPANDABLE_TOGGLE_ID,
 } from '../../../config/selectors';
 import ThumbnailSetting from './ThumbnailSetting';
 
@@ -59,6 +60,16 @@ const ItemSettings = ({ item }) => {
     });
   };
 
+  const handleExpandable = (event) => {
+    editItem.mutate({
+      id: item.get('id'),
+      name: item.get('name'),
+      settings: {
+        isExpandable: event.target.checked,
+      },
+    });
+  };
+
   const renderPinSetting = () => {
     const control = (
       <Switch
@@ -83,6 +94,18 @@ const ItemSettings = ({ item }) => {
     return <FormControlLabel label={t('Show Chat')} control={control} />;
   };
 
+  const renderExpandableSetting = () => {
+    const control = (
+      <Switch
+        id={SETTINGS_EXPANDABLE_TOGGLE_ID}
+        onChange={handleExpandable}
+        checked={settings?.isExpandable}
+        color="primary"
+      />
+    );
+    return <FormControlLabel label={t('Expandable item')} control={control} />;
+  };
+
   return (
     <Container disableGutters className={classes.wrapper}>
       <Typography variant="h4" className={classes.title}>
@@ -92,6 +115,7 @@ const ItemSettings = ({ item }) => {
       <FormGroup>
         {renderPinSetting()}
         {renderChatSetting()}
+        {renderExpandableSetting()}
       </FormGroup>
       <ThumbnailSetting item={item} />
     </Container>
