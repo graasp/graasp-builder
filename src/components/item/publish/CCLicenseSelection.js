@@ -54,8 +54,6 @@ const CCLicenseSelection = ({ item }) => {
 
   const settings = item?.get('settings');
   const itemName = item?.get('name');
-  const disabled =
-    settings?.ccLicenseAdaption === CC_LICENSE_ADAPTION_OPTIONS.ALLOW;
 
   useEffect(() => {
     if (settings) {
@@ -80,6 +78,16 @@ const CCLicenseSelection = ({ item }) => {
       id: itemId,
       name: itemName,
       settings: { ccLicenseAdaption: optionValue },
+    });
+    setOpen(false);
+  };
+
+  const handleRemove = (event) => {
+    event.preventDefault();
+    updateCCLicense({
+      id: itemId,
+      name: itemName,
+      settings: { ccLicenseAdaption: '' },
     });
     setOpen(false);
   };
@@ -115,24 +123,42 @@ const CCLicenseSelection = ({ item }) => {
           value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
           control={<Radio color="primary" />}
           label={t('Yes')}
-          disabled={disabled}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
           control={<Radio color="primary" />}
           label={t('Only if others share alike')}
-          disabled={disabled}
         />
       </RadioGroup>
       <CCLicenseDialog
         open={open}
         setOpen={setOpen}
-        disabled={disabled || !optionValue}
+        disabled={!optionValue}
         className={classes.button}
+        buttonName={t('Submit')}
+        dialogContent={t(
+          'Please verify that your item fits the CC License, and do not change to a more restricted option.',
+        )}
         handleSubmit={handleSubmit}
       />
+      {settings?.ccLicenseAdaption !== '' && (
+        <CCLicenseDialog
+          open={open}
+          setOpen={setOpen}
+          disabled={!optionValue}
+          className={classes.button}
+          buttonName={t('Remove License')}
+          dialogContent={t(
+            'Are you sure to remove existing CC License? This action is not suggested, and may lead to license inconsistency.',
+          )}
+          handleSubmit={handleRemove}
+        />
+      )}
       <Typography variant="subtitle1">{t('Icon Preview')}</Typography>
-      <CCLicenseIcon adaption={optionValue} className={classes.icon} />
+      <CCLicenseIcon
+        adaption={settings?.ccLicenseAdaption}
+        className={classes.icon}
+      />
     </>
   );
 };
