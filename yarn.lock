@@ -1929,9 +1929,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git#155/invite":
+"@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=c185416d58793ec13fbf5ea3e196187936a40fbe"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=c530373b06a325e7932ab194affd683659acf836"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     axios: 0.27.2
@@ -1944,7 +1944,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: a60c637e847bfb1cda0b983fc47cd56de80fdaba1818e32b11a67edb11b1b5450d9c38f3e45da48bc59b2ecba7b003956c2c28ac53446769d7ae81ede6025719
+  checksum: 2af3a7581654e297f4aec7b7455e2ff5c76a3f71abc814a6cf51c9cd60e2f0dd21ff78aa15342e0c818bb5c5c2ee67986bf9d68639aa6d5e4f7bb813a0b5bc88
   languageName: node
   linkType: hard
 
@@ -1983,9 +1983,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git#117/RemoveErrorAlertWhenLoadingFiles":
+"@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=edb7447a3ebb31c67ffec51266a6b31020e236d7"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ae2748b590cb945ec9d4668707c72df61c584186"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -2005,7 +2005,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 2b80170ab02c9dca4565678248b430dcf7667a74a1f300d4253780b404d3ebceaba2589b0543d9a30db61b2b30d6e29067d3015117d08669d2dab35681c5a81c
+  checksum: c5cb272c4e161e516aa874278dcab490416f0b5fefdfbc8468b3cef15b15c38ce71eecf97cfd9cdc203156121f40ad1941c205377083c874c78c8fa877b6b982
   languageName: node
   linkType: hard
 
@@ -10057,9 +10057,9 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git#155/invite"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git#117/RemoveErrorAlertWhenLoadingFiles"
+    "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
@@ -10098,6 +10098,7 @@ __metadata:
     istanbul-lib-coverage: 3.2.0
     js-cookie: 3.0.1
     katex: 0.15.3
+    lodash.partition: 4.6.0
     lodash.truncate: 4.4.2
     npm-run-all: 4.1.5
     nyc: 15.1.0
@@ -13011,6 +13012,13 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.once@npm:4.1.1"
   checksum: d768fa9f9b4e1dc6453be99b753906f58990e0c45e7b2ca5a3b40a33111e5d17f6edf2f768786e2716af90a8e78f8f91431ab8435f761fef00f9b0c256f6d245
+  languageName: node
+  linkType: hard
+
+"lodash.partition@npm:4.6.0":
+  version: 4.6.0
+  resolution: "lodash.partition@npm:4.6.0"
+  checksum: 57c01e3b790c4c4352bffd8be281bd98ed09f6076985d764163478b5a27db3183454cc8c9c25231210d3c69ae2bea37b78911a794bc82c296865eba8b6bd314f
   languageName: node
   linkType: hard
 

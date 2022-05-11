@@ -22,7 +22,7 @@ import {
   mockMoveItems,
   mockPostItem,
   mockEditItem,
-  mockShareItem,
+  mockPostItemMembership,
   mockGetMember,
   mockGetMemberBy,
   mockDeleteItems,
@@ -75,6 +75,10 @@ import {
   mockGetItemValidationReviewStatuses,
   mockPostItemValidation,
   mockGetItemValidationGroups,
+  mockPostInvitations,
+  mockGetItemInvitations,
+  mockPatchInvitation,
+  mockDeleteInvitation,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -139,6 +143,10 @@ Cypress.Commands.add(
     getItemCategoriesError = false,
     postItemCategoryError = false,
     deleteItemCategoryError = false,
+    postInvitationsError = false,
+    getItemInvitationsError = false,
+    patchInvitationError = false,
+    deleteInvitationError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -178,7 +186,7 @@ Cypress.Commands.add(
 
     mockEditItem(cachedItems, editItemError);
 
-    mockShareItem(cachedItems, shareItemError);
+    mockPostItemMembership(cachedItems, shareItemError);
 
     mockGetMember(cachedMembers);
 
@@ -279,6 +287,14 @@ Cypress.Commands.add(
     mockGetItemValidationGroups(itemValidationGroups);
 
     mockPostItemValidation();
+
+    mockPostInvitations(items, postInvitationsError);
+
+    mockGetItemInvitations(items, getItemInvitationsError);
+
+    mockPatchInvitation(items, patchInvitationError);
+
+    mockDeleteInvitation(items, deleteInvitationError);
   },
 );
 

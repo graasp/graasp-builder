@@ -187,3 +187,9 @@ export const APP_NAVIGATION_DROP_DOWN_ID = 'appNavigationDropDown';
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';
 export const ITEM_UNPUBLISH_BUTTON_ID = 'itemUnpublishButton';
+export const buildItemInvitationRowDeleteButtonId = (id) =>
+  `itemInvitationRowDeleteButton-${id}`;
+export const buildInvitationEmailTableRowId = (id) =>
+  `invitationEmailTableRow-${id}`;
+export const buildInvitationTableRowId = (id) => `invitationTableRow-${id}`;
+export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';

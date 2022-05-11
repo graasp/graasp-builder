@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
+import partition from 'lodash.partition';
 import { Map } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +12,7 @@ import SharingLink from './SharingLink';
 import VisibilitySelect from './VisibilitySelect';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
 import { hooks } from '../../../config/queryClient';
-import {
-  membershipsWithoutUser,
-  isItemUpdateAllowedForUser,
-} from '../../../utils/membership';
+import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
@@ -68,18 +66,8 @@ const ItemSharingTab = ({ item, memberships }) => {
       return null;
     }
 
-    const membershipsWithoutSelf = membershipsWithoutUser(
+    const [authenticatedMemberships, authorizedMemberships] = partition(
       memberships,
-      currentMember.get('id'),
-    );
-    const authorizedMemberships = membershipsWithoutSelf?.filter(
-      ({ memberId }) => {
-        const member = members?.find(({ id: mId }) => mId === memberId);
-        return !member?.email?.includes(PSEUDONIMIZED_USER_MAIL);
-      },
-    );
-
-    const authenticatedMemberships = membershipsWithoutSelf?.filter(
       ({ memberId }) => {
         const member = members?.find(({ id: mId }) => mId === memberId);
         return member?.email?.includes(PSEUDONIMIZED_USER_MAIL);

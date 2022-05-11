@@ -17,6 +17,7 @@ export const APP_NAME = 'Graasp';
 
 export const ENV = {
   DEVELOPMENT: 'development',
+  TEST: 'test',
 };
 
 export const NODE_ENV =

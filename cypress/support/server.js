@@ -32,6 +32,7 @@ import {
   buildAppItemLinkForTest,
   buildGetAppData,
 } from '../fixtures/apps';
+import { buildInvitation } from '../../src/utils/invitation';
 
 const {
   buildAppListRoute,
@@ -45,7 +46,7 @@ const {
   buildMoveItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
-  buildShareItemWithRoute,
+  buildPostItemMembershipRoute,
   buildGetMember,
   buildGetMemberBy,
   ITEMS_ROUTE,
@@ -62,7 +63,7 @@ const {
   buildPutItemLoginSchema,
   buildPostItemTagRoute,
   buildPatchMember,
-  SHARE_ITEM_WITH_ROUTE,
+  SHARED_ITEM_WITH_ROUTE,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
   buildPostItemFlagRoute,
@@ -80,6 +81,11 @@ const {
   buildGetCategoriesRoute,
   buildPostItemCategoryRoute,
   buildDeleteItemCategoryRoute,
+  buildPostInvitationsRoute,
+  buildGetItemInvitationsForItemRoute,
+  buildDeleteInvitationRoute,
+  buildPatchInvitationRoute,
+  buildResendInvitationRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -165,7 +171,7 @@ export const mockGetSharedItems = ({ items, member }) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: `${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`,
+      url: `${API_HOST}/${SHARED_ITEM_WITH_ROUTE}`,
     },
     (req) => {
       const own = items.filter(({ creator }) => creator !== member.id);
@@ -581,13 +587,13 @@ export const mockEditItem = (items, shouldThrowError) => {
   ).as('editItem');
 };
 
-export const mockShareItem = (items, shouldThrowError) => {
+export const mockPostItemMembership = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_POST.method,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
-          buildShareItemWithRoute(ID_FORMAT),
+          buildPostItemMembershipRoute(ID_FORMAT),
         )}`,
       ),
     },
@@ -598,7 +604,7 @@ export const mockShareItem = (items, shouldThrowError) => {
 
       return reply(body);
     },
-  ).as('shareItem');
+  ).as('postItemMembership');
 };
 
 export const mockGetMember = (members) => {
@@ -667,9 +673,9 @@ export const mockGetMemberBy = (members, shouldThrowError) => {
 
       const emailReg = new RegExp(EMAIL_FORMAT);
       const mail = emailReg.exec(url)[0];
-      const member = members.find(({ email }) => email === mail);
+      const result = members.filter(({ email }) => email === mail);
 
-      return reply([member]);
+      return reply(result);
     },
   ).as('getMemberBy');
 };
@@ -1402,4 +1408,117 @@ export const mockPostItemValidation = () => {
       reply(body);
     },
   ).as('postItemValidation');
+};
+
+export const mockPostInvitations = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildPostInvitationsRoute(ID_FORMAT)}`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(buildInvitation(body));
+    },
+  ).as('postInvitations');
+};
+
+export const mockGetItemInvitations = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${buildGetItemInvitationsForItemRoute(ID_FORMAT)}`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => id === itemId);
+      const invitations = item?.invitations ?? [];
+
+      return reply(invitations);
+    },
+  ).as('getInvitationsForItem');
+};
+
+export const mockResendInvitation = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildResendInvitationRoute({ itemId: ID_FORMAT, id: ID_FORMAT }),
+        )}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ statusCode: StatusCodes.NO_CONTENT });
+    },
+  ).as('resendInvitation');
+};
+
+export const mockPatchInvitation = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_PATCH.method,
+      url: new RegExp(
+        `${API_HOST}/${buildPatchInvitationRoute({
+          itemId: ID_FORMAT,
+          id: ID_FORMAT,
+        })}`,
+      ),
+    },
+    ({ reply, body, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const invitationId = url.slice(API_HOST.length).split('/')[4];
+      const item = items.find(({ id }) => id === itemId);
+      const invitation = item?.invitations?.find(
+        ({ id }) => id === invitationId,
+      );
+      const newInvitation = { ...invitation, ...body };
+      return reply(newInvitation);
+    },
+  ).as('patchInvitation');
+};
+
+export const mockDeleteInvitation = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(
+        `${API_HOST}/${buildDeleteInvitationRoute({
+          itemId: ID_FORMAT,
+          id: ID_FORMAT,
+        })}`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const invitationId = url.slice(API_HOST.length).split('/')[4];
+      const item = items.find(({ id }) => id === itemId);
+      const invitation = item?.invitations?.find(
+        ({ id }) => id === invitationId,
+      );
+      return reply(invitation);
+    },
+  ).as('deleteInvitation');
 };

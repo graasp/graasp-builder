@@ -4,7 +4,6 @@ import { Button } from '@graasp/ui';
 import IconButton from '@material-ui/core/IconButton';
 import { List } from 'immutable';
 import Tooltip from '@material-ui/core/Tooltip';
-import { v4 } from 'uuid';
 import { Grid, makeStyles, TextField } from '@material-ui/core';
 import { MUTATION_KEYS, Api } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +11,13 @@ import validator from 'validator';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { useMutation } from '../../../config/queryClient';
 import { API_HOST } from '../../../config/constants';
-import { SHARE_ITEM_EMAIL_INPUT_ID } from '../../../config/selectors';
-import { PERMISSION_LEVELS } from '../../../enums';
+import {
+  SHARE_ITEM_EMAIL_INPUT_ID,
+  CREATE_MEMBERSHIP_FORM_ID,
+  SHARE_ITEM_SHARE_BUTTON_ID,
+} from '../../../config/selectors';
 import ItemMembershipSelect from './ItemMembershipSelect';
+import { buildInvitation } from '../../../utils/invitation';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -36,15 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const buildDefaultInvitation = () => ({
-  // set temporary id for react-key
-  id: v4(),
-  email: '',
-  permission: PERMISSION_LEVELS.READ,
-});
-
+// todo: handle multiple invitations
 const CreateItemMembershipForm = ({ itemId, members }) => {
-  const [errors, setErrors] = useState(List([false]));
+  const [error, setError] = useState(false);
 
   const { mutate: postInvitations } = useMutation(
     MUTATION_KEYS.POST_INVITATIONS,
@@ -54,9 +51,7 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
   const classes = useStyles();
 
   // use an array to later allow sending multiple invitations
-  const [invitations, setInvitations] = useState(
-    List([buildDefaultInvitation()]),
-  );
+  const [invitation, setInvitation] = useState(buildInvitation());
 
   const isInvitationInvalid = ({ email }) => {
     // check mail validity
@@ -67,31 +62,18 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
       return t('This mail is not valid');
     }
     // check mail does not already exist
-    // TODO: check invitation at item level -> can create invitation in child
     if (members.find(({ email: thisEmail }) => thisEmail === email)) {
-      return t(
-        'You cannot share this item to this user because it already has some permissions',
-      );
+      return t('This user already has access to this item');
     }
     return false;
   };
 
   const handleInvite = async () => {
-    const checks = invitations.map(isInvitationInvalid);
-
-    if (checks.some(Boolean)) {
-      return setErrors(checks);
-    }
-
-    // todo: handle multiple invitations
     // not good to check email for multiple invitations at once
-    const idx = 0;
-    const invitation = invitations.get(idx);
-    const error = isInvitationInvalid(invitation);
-    setErrors(errors.set(idx, error));
+    const isInvalid = isInvitationInvalid(invitation);
 
-    if (error) {
-      return error;
+    if (isInvalid) {
+      return setError(isInvalid);
     }
 
     // check email has an associated account
@@ -112,19 +94,20 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
     // otherwise create invitation
     return postInvitations({
       itemId,
-      invitations: invitations.toJS(),
+      invitations: [invitation],
     });
   };
 
-  const onChangeEmail = (idx) => (event) => {
-    const email = event.target.value;
-    const newInvitations = invitations.update(idx, (invitation) => ({
+  const onChangeEmail = (event) => {
+    const newInvitation = {
       ...invitation,
-      email,
-    }));
-    setInvitations(newInvitations);
-    const error = isInvitationInvalid(newInvitations.get(idx));
-    setErrors(errors.set(idx, error));
+      email: event.target.value,
+    };
+    setInvitation(newInvitation);
+    if (error) {
+      const isInvalid = isInvitationInvalid(newInvitation);
+      setError(isInvalid);
+    }
   };
 
   const renderInvitationStatus = () => (
@@ -139,43 +122,40 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
     </Tooltip>
   );
 
-  const renderButton = (idx) => {
-    const disabled = Boolean(errors.get(idx));
+  const renderButton = () => {
+    const disabled = Boolean(error);
     return (
-      <Button onClick={handleInvite} disabled={disabled}>
+      <Button
+        onClick={handleInvite}
+        disabled={disabled}
+        id={SHARE_ITEM_SHARE_BUTTON_ID}
+      >
         {t('Invite')}
       </Button>
     );
   };
 
   return (
-    <Grid container spacing={1}>
-      {invitations.map((invitation, idx) => (
-        <Grid
-          container
-          alignItems="center"
-          justify="center"
-          key={invitation.id}
-        >
-          <Grid item xs={5}>
-            <TextField
-              value={invitation.email}
-              className={classes.emailInput}
-              id={SHARE_ITEM_EMAIL_INPUT_ID}
-              variant="outlined"
-              label={t('Email')}
-              error={Boolean(errors.get(idx))}
-              helperText={errors.get(idx)}
-              onChange={onChangeEmail(idx)}
-            />
-          </Grid>
-          <Grid item>
-            <ItemMembershipSelect value={invitation.permission} />
-          </Grid>
-          <Grid item>{renderButton(idx)}</Grid>
-          <Grid item>{renderInvitationStatus()}</Grid>
+    <Grid container spacing={1} id={CREATE_MEMBERSHIP_FORM_ID}>
+      <Grid container alignItems="center" justify="center" key={invitation.id}>
+        <Grid item xs={5}>
+          <TextField
+            value={invitation.email}
+            className={classes.emailInput}
+            id={SHARE_ITEM_EMAIL_INPUT_ID}
+            variant="outlined"
+            label={t('Email')}
+            error={Boolean(error)}
+            helperText={error}
+            onChange={onChangeEmail}
+          />
         </Grid>
-      ))}
+        <Grid item>
+          <ItemMembershipSelect value={invitation.permission} />
+        </Grid>
+        <Grid item>{renderButton()}</Grid>
+        <Grid item>{renderInvitationStatus()}</Grid>
+      </Grid>
     </Grid>
   );
 };

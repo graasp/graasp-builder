@@ -105,7 +105,7 @@ describe('Hiding Item', () => {
       });
     });
 
-    it.only('Cannot hide child of hidden item', () => {
+    it('Cannot hide child of hidden item', () => {
       cy.visit(buildItemPath(HIDDEN_ITEM.id));
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 

@@ -6,10 +6,10 @@ import Root from './components/Root';
 import * as serviceWorker from './serviceWorker';
 
 import '@graasp/ui/dist/bundle.css';
-import { GA_MEASUREMENT_ID } from './config/constants';
+import { ENV, GA_MEASUREMENT_ID, NODE_ENV } from './config/constants';
 import { hasAcceptedCookies } from './utils/cookies';
 
-if (GA_MEASUREMENT_ID && hasAcceptedCookies()) {
+if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
   ReactGA.initialize(GA_MEASUREMENT_ID);
   ReactGA.send('pageview');
 }

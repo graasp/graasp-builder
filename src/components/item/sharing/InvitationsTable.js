@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import { Button } from '@graasp/ui';
-import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TableContainer from '@material-ui/core/TableContainer';
 import { useTranslation } from 'react-i18next';
 import TableRow from '@material-ui/core/TableRow';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import IconButton from '@material-ui/core/IconButton';
 import { useMutation } from '../../../config/queryClient';
 import { PERMISSION_LEVELS } from '../../../enums';
 import ItemMembershipSelect from './ItemMembershipSelect';
+import TableRowDeleteButton from './TableRowDeleteButton';
+import {
+  buildInvitationEmailTableRowId,
+  buildInvitationTableRowId,
+  buildItemInvitationRowDeleteButtonId,
+} from '../../../config/selectors';
 
 const InvitationRow = ({ invitation, item }) => {
   const [clicked, setClicked] = useState(false);
+  const [isParentMembership, setIsParentMembership] = useState(false);
   const { t } = useTranslation();
   const { mutate: deleteInvitation } = useMutation(
     MUTATION_KEYS.DELETE_INVITATION,
@@ -33,6 +38,10 @@ const InvitationRow = ({ invitation, item }) => {
     MUTATION_KEYS.POST_INVITATIONS,
   );
   const itemId = item.get('id');
+
+  useEffect(() => {
+    setIsParentMembership(invitation.itemPath !== item.get('path'));
+  }, [invitation, item]);
 
   const onClickDelete = () => {
     deleteInvitation({ itemId, id: invitation.id });
@@ -67,8 +76,19 @@ const InvitationRow = ({ invitation, item }) => {
   };
 
   return (
-    <TableRow hover role="checkbox" tabIndex={-1} key={invitation.id}>
-      <TableCell component="th" scope="row" padding="none">
+    <TableRow
+      hover
+      role="checkbox"
+      tabIndex={-1}
+      key={invitation.id}
+      id={buildInvitationTableRowId(invitation.id)}
+    >
+      <TableCell
+        component="th"
+        scope="row"
+        padding="none"
+        id={buildInvitationEmailTableRowId(invitation.id)}
+      >
         {invitation.email}
       </TableCell>
       <TableCell align="right">
@@ -84,9 +104,14 @@ const InvitationRow = ({ invitation, item }) => {
         </Button>
       </TableCell>
       <TableCell align="right">
-        <IconButton onClick={onClickDelete}>
-          <CloseIcon />
-        </IconButton>
+        <TableRowDeleteButton
+          id={buildItemInvitationRowDeleteButtonId(invitation.id)}
+          disabled={isParentMembership}
+          onClick={onClickDelete}
+          tooltip={t(
+            'This invitation is defined in the parent item and cannot be deleted here.',
+          )}
+        />
       </TableCell>
     </TableRow>
   );
