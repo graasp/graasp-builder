@@ -16,7 +16,6 @@ const CCLicenseDialog = ({
   disabled,
   className,
   buttonName,
-  dialogContent,
   handleSubmit,
 }) => {
   const { t } = useTranslation();
@@ -42,7 +41,11 @@ const CCLicenseDialog = ({
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{t('Confirm Your Submission')}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{dialogContent}</DialogContentText>
+          <DialogContentText>
+            {t(
+              'Please verify that your item fits the CC License, and do not change to a more restricted option.',
+            )}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus variant="text">
@@ -58,15 +61,15 @@ const CCLicenseDialog = ({
 CCLicenseDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   className: PropTypes.string,
   buttonName: PropTypes.string.isRequired,
-  dialogContent: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
 CCLicenseDialog.defaultProps = {
   className: '',
+  disabled: false,
 };
 
 export default CCLicenseDialog;
