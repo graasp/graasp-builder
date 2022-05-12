@@ -15,6 +15,7 @@ const CCLicenseDialog = ({
   setOpen,
   disabled,
   className,
+  buttonName,
   handleSubmit,
 }) => {
   const { t } = useTranslation();
@@ -30,21 +31,19 @@ const CCLicenseDialog = ({
   return (
     <>
       <Button
-        variant="outlined"
+        variant="contained"
         className={className}
         onClick={handleClickOpen}
         disabled={disabled} // disable the button if no option is selected
       >
-        {t('Submit')}
+        {buttonName}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{t('Confirm Your Submission')}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {t('Attention: This action is irreversible!')}
-            <br />
             {t(
-              'Once you submit your choice, you cannot remove selected Creative Commons License, or change to a more restricted choice.',
+              'Please verify that your item fits the CC License, and do not change to a more restricted option.',
             )}
           </DialogContentText>
         </DialogContent>
@@ -62,13 +61,15 @@ const CCLicenseDialog = ({
 CCLicenseDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   className: PropTypes.string,
+  buttonName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
 CCLicenseDialog.defaultProps = {
   className: '',
+  disabled: false,
 };
 
 export default CCLicenseDialog;

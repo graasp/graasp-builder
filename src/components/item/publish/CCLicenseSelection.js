@@ -54,8 +54,6 @@ const CCLicenseSelection = ({ item }) => {
 
   const settings = item?.get('settings');
   const itemName = item?.get('name');
-  const disabled =
-    settings?.ccLicenseAdaption === CC_LICENSE_ADAPTION_OPTIONS.ALLOW;
 
   useEffect(() => {
     if (settings) {
@@ -115,24 +113,30 @@ const CCLicenseSelection = ({ item }) => {
           value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
           control={<Radio color="primary" />}
           label={t('Yes')}
-          disabled={disabled}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
           control={<Radio color="primary" />}
           label={t('Only if others share alike')}
-          disabled={disabled}
+        />
+        <FormControlLabel
+          value={CC_LICENSE_ADAPTION_OPTIONS.NONE}
+          control={<Radio color="primary" />}
+          label={t('None')}
         />
       </RadioGroup>
       <CCLicenseDialog
         open={open}
         setOpen={setOpen}
-        disabled={disabled || !optionValue}
         className={classes.button}
+        buttonName={t('Submit')}
         handleSubmit={handleSubmit}
       />
       <Typography variant="subtitle1">{t('Icon Preview')}</Typography>
-      <CCLicenseIcon adaption={optionValue} className={classes.icon} />
+      <CCLicenseIcon
+        adaption={settings?.ccLicenseAdaption}
+        className={classes.icon}
+      />
     </>
   );
 };
