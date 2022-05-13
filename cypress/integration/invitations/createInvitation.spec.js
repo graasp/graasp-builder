@@ -42,7 +42,7 @@ describe('Create Invitation', () => {
     // check that the email field is emptied after sharing completes
     cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).should('be.empty');
   });
-  it('cannot member with membership', () => {
+  it('cannot invite member with membership', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     // go to child item
