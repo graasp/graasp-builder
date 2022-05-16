@@ -52,7 +52,7 @@ describe('Create Invitation', () => {
     // invite
     const { email } = MEMBERS.ANNA;
     const permission = PERMISSION_LEVELS.READ;
-    inviteItem({ id, email, permission, submit: false });
+    inviteItem({ id, email, permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
   });
@@ -66,7 +66,7 @@ describe('Create Invitation', () => {
     // invite
     const email = 'mock';
     const permission = PERMISSION_LEVELS.READ;
-    inviteItem({ id, email, permission, submit: false });
+    inviteItem({ id, email, permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
   });

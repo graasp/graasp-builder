@@ -53,7 +53,7 @@ describe('Create Membership', () => {
     // fill
     const member = MEMBERS.ANNA;
     const permission = PERMISSION_LEVELS.READ;
-    shareItem({ id, member, permission, submit: false });
+    shareItem({ id, member, permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
   });
@@ -67,7 +67,7 @@ describe('Create Membership', () => {
 
     // fill
     const permission = PERMISSION_LEVELS.READ;
-    shareItem({ id, member: { email: 'wrong' }, permission, submit: false });
+    shareItem({ id, member: { email: 'wrong' }, permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
   });
