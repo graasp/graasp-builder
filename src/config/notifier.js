@@ -19,7 +19,7 @@ const {
   moveItemsRoutine,
   copyItemsRoutine,
   editItemRoutine,
-  shareItemRoutine,
+  postItemMembershipRoutine,
   uploadFileRoutine,
   signOutRoutine,
   postItemTagRoutine,
@@ -35,6 +35,7 @@ const {
   uploadAvatarRoutine,
   importZipRoutine,
   exportItemRoutine,
+  postInvitationsRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -51,7 +52,7 @@ export default ({ type, payload }) => {
     case moveItemsRoutine.FAILURE:
     case copyItemsRoutine.FAILURE:
     case editItemRoutine.FAILURE:
-    case shareItemRoutine.FAILURE:
+    case postItemMembershipRoutine.FAILURE:
     case uploadFileRoutine.FAILURE:
     case signOutRoutine.FAILURE:
     case postItemTagRoutine.FAILURE:
@@ -64,6 +65,7 @@ export default ({ type, payload }) => {
     case uploadItemThumbnailRoutine.FAILURE:
     case uploadAvatarRoutine.FAILURE:
     case importZipRoutine.FAILURE:
+    case postInvitationsRoutine.FAILURE:
     case exportItemRoutine.FAILURE: {
       // todo: factor out string
       message = i18n.t(
@@ -73,7 +75,6 @@ export default ({ type, payload }) => {
       break;
     }
     // success messages
-    case shareItemRoutine.SUCCESS:
     case uploadFileRoutine.SUCCESS:
     case signOutRoutine.SUCCESS:
     case COPY_MEMBER_ID_TO_CLIPBOARD.SUCCESS:
@@ -92,6 +93,7 @@ export default ({ type, payload }) => {
     case deleteItemsRoutine.SUCCESS:
     case deleteItemRoutine.SUCCESS:
     case createItemRoutine.SUCCESS:
+    case postInvitationsRoutine.SUCCESS:
     case editMemberRoutine.SUCCESS: {
       // todo: factor out string
       message = i18n.t(

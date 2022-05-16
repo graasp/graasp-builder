@@ -25,16 +25,23 @@ import { getParentsIdsFromPath } from '../../../src/utils/item';
 import { TREE_VIEW_PAUSE } from '../constants';
 import { NEW_APP_NAME } from '../../fixtures/apps/apps';
 
-Cypress.Commands.add('fillShareForm', ({ member, permission }) => {
-  // select permission
-  cy.get(`.${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`).click();
-  cy.get(`#${buildPermissionOptionId(permission)}`).click();
+Cypress.Commands.add(
+  'fillShareForm',
+  ({ member, permission, submit = true, selector = '' }) => {
+    // select permission
+    cy.get(`${selector} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`).click();
+    cy.get(`#${buildPermissionOptionId(permission)}`).click();
 
-  // input mail
-  cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).type(member.email);
+    // input mail
+    cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).type(member.email);
 
-  cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).click('left');
-});
+    if (submit) {
+      // wait for email to be validated and enable the button
+      cy.wait(1000);
+      cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).click('left');
+    }
+  },
+);
 
 Cypress.Commands.add('fillTreeModal', (toItemPath) => {
   const ids = getParentsIdsFromPath(toItemPath);

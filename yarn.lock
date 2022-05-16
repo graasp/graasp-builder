@@ -1931,20 +1931,20 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=547b957e91128def3f378ec4babe69b365dcbb2a"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=c530373b06a325e7932ab194affd683659acf836"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    axios: 0.26.1
+    axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
     immutable: 4.0.0
     js-cookie: 3.0.1
     qs: 6.10.3
-    react-query: 3.34.16
+    react-query: 3.34.19
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 462e46616aa809b36f08a56c077897e57f7b501d0af87e24794fabea68800d281dad75ccddc54f7b510fe692207729bc36f250b149f3c0c229a75deb136893c0
+  checksum: 2af3a7581654e297f4aec7b7455e2ff5c76a3f71abc814a6cf51c9cd60e2f0dd21ff78aa15342e0c818bb5c5c2ee67986bf9d68639aa6d5e4f7bb813a0b5bc88
   languageName: node
   linkType: hard
 
@@ -1983,9 +1983,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git#117/RemoveErrorAlertWhenLoadingFiles":
+"@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=edb7447a3ebb31c67ffec51266a6b31020e236d7"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ae2748b590cb945ec9d4668707c72df61c584186"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -2005,7 +2005,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 2b80170ab02c9dca4565678248b430dcf7667a74a1f300d4253780b404d3ebceaba2589b0543d9a30db61b2b30d6e29067d3015117d08669d2dab35681c5a81c
+  checksum: c5cb272c4e161e516aa874278dcab490416f0b5fefdfbc8468b3cef15b15c38ce71eecf97cfd9cdc203156121f40ad1941c205377083c874c78c8fa877b6b982
   languageName: node
   linkType: hard
 
@@ -2360,12 +2360,12 @@ __metadata:
   linkType: hard
 
 "@jridgewell/trace-mapping@npm:^0.3.9":
-  version: 0.3.10
-  resolution: "@jridgewell/trace-mapping@npm:0.3.10"
+  version: 0.3.11
+  resolution: "@jridgewell/trace-mapping@npm:0.3.11"
   dependencies:
     "@jridgewell/resolve-uri": ^3.0.3
     "@jridgewell/sourcemap-codec": ^1.4.10
-  checksum: 1e5f7ff99f6fe8b671aab61b5a943d00f689728380e2d20df1e8a7418b421d4f941679ab327282d9ad5b2d71c0eedf2928ad2b974d0bd046e57c6fd66e891144
+  checksum: 0f1f807e33a23280c538574028af30f8173d7622704799b0d97fcfcacc45864e348ba40692488bb9afb606a21a14ac955fbe0bba02a6e0f021e52869f0fd2d65
   languageName: node
   linkType: hard
 
@@ -3113,16 +3113,16 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:>=12":
-  version: 17.0.31
-  resolution: "@types/node@npm:17.0.31"
-  checksum: 704618350f8420d5c47db0f7778398e821b7724369946f5c441a7e6b9343295553936400eb8309f0b07d5e39c240988ab3456b983712ca86265dabc9aee4ad3d
+  version: 17.0.32
+  resolution: "@types/node@npm:17.0.32"
+  checksum: afb05704b42032566b3da8b2d80a68883cd3b888472d1b8b4dd6c84f8fad371454f083d4e28bd30c10589187296119d92aba255638b30067afe062b5922388a5
   languageName: node
   linkType: hard
 
 "@types/node@npm:^14.14.31":
-  version: 14.18.16
-  resolution: "@types/node@npm:14.18.16"
-  checksum: 1999799309dc8620a2adf9a5d5e48416af87321bae4c950b4aa8018fcef2c3b6c1fcf98c39eae06f6492c03a643a5a44e2bb3750cd2574d9cf7eac33bac50e24
+  version: 14.18.17
+  resolution: "@types/node@npm:14.18.17"
+  checksum: 39c1647c10dba23d338a9d76b90b814a86275f047beb856a2f85536f3c061a7232ff7b8691e85800a82f2e3670976aa29635c84344690052cf03272476198adb
   languageName: node
   linkType: hard
 
@@ -4629,12 +4629,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:0.26.1":
-  version: 0.26.1
-  resolution: "axios@npm:0.26.1"
+"axios@npm:0.27.2":
+  version: 0.27.2
+  resolution: "axios@npm:0.27.2"
   dependencies:
-    follow-redirects: ^1.14.8
-  checksum: d9eb58ff4bc0b36a04783fc9ff760e9245c829a5a1052ee7ca6013410d427036b1d10d04e7380c02f3508c5eaf3485b1ae67bd2adbfec3683704745c8d7a6e1a
+    follow-redirects: ^1.14.9
+    form-data: ^4.0.0
+  checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
   languageName: node
   linkType: hard
 
@@ -9432,7 +9433,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.7, follow-redirects@npm:^1.14.8":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.7, follow-redirects@npm:^1.14.9":
   version: 1.15.0
   resolution: "follow-redirects@npm:1.15.0"
   peerDependenciesMeta:
@@ -9496,6 +9497,17 @@ __metadata:
     combined-stream: ^1.0.8
     mime-types: ^2.1.12
   checksum: b019e8d35c8afc14a2bd8a7a92fa4f525a4726b6d5a9740e8d2623c30e308fbb58dc8469f90415a856698933c8479b01646a9dff33c87cc4e76d72aedbbf860d
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "form-data@npm:4.0.0"
+  dependencies:
+    asynckit: ^0.4.0
+    combined-stream: ^1.0.8
+    mime-types: ^2.1.12
+  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
   languageName: node
   linkType: hard
 
@@ -10047,7 +10059,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git#117/RemoveErrorAlertWhenLoadingFiles"
+    "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
@@ -10086,6 +10098,7 @@ __metadata:
     istanbul-lib-coverage: 3.2.0
     js-cookie: 3.0.1
     katex: 0.15.3
+    lodash.partition: 4.6.0
     lodash.truncate: 4.4.2
     npm-run-all: 4.1.5
     nyc: 15.1.0
@@ -10961,9 +10974,9 @@ __metadata:
   linkType: hard
 
 "ip@npm:^1.1.0, ip@npm:^1.1.5":
-  version: 1.1.6
-  resolution: "ip@npm:1.1.6"
-  checksum: 3e5f72b447fd292801491f03091ef1221fbc37de527d3bf306b297e3e58530e7ad80ae92a2f716d8a25fbb6e16afe05cbcb7cef671107ddb37ac7a1693158c6b
+  version: 1.1.8
+  resolution: "ip@npm:1.1.8"
+  checksum: a2ade53eb339fb0cbe9e69a44caab10d6e3784662285eb5d2677117ee4facc33a64679051c35e0dfdb1a3983a51ce2f5d2cb36446d52e10d01881789b76e28fb
   languageName: node
   linkType: hard
 
@@ -12999,6 +13012,13 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.once@npm:4.1.1"
   checksum: d768fa9f9b4e1dc6453be99b753906f58990e0c45e7b2ca5a3b40a33111e5d17f6edf2f768786e2716af90a8e78f8f91431ab8435f761fef00f9b0c256f6d245
+  languageName: node
+  linkType: hard
+
+"lodash.partition@npm:4.6.0":
+  version: 4.6.0
+  resolution: "lodash.partition@npm:4.6.0"
+  checksum: 57c01e3b790c4c4352bffd8be281bd98ed09f6076985d764163478b5a27db3183454cc8c9c25231210d3c69ae2bea37b78911a794bc82c296865eba8b6bd314f
   languageName: node
   linkType: hard
 
@@ -16429,24 +16449,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-query@npm:3.34.16":
-  version: 3.34.16
-  resolution: "react-query@npm:3.34.16"
-  dependencies:
-    "@babel/runtime": ^7.5.5
-    broadcast-channel: ^3.4.1
-    match-sorter: ^6.0.2
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 77f5ee7279fa82642d5210b785f7b9eccc6e81c5b27b59bf112101b14e90737efeb8b73f9597bff56a08c5792ec5fa6889e14913aa196f5086ff4faeb077abd8
-  languageName: node
-  linkType: hard
-
 "react-query@npm:3.34.19":
   version: 3.34.19
   resolution: "react-query@npm:3.34.19"
@@ -19421,11 +19423,11 @@ __metadata:
   linkType: hard
 
 "uglify-js@npm:^3.1.4":
-  version: 3.15.4
-  resolution: "uglify-js@npm:3.15.4"
+  version: 3.15.5
+  resolution: "uglify-js@npm:3.15.5"
   bin:
     uglifyjs: bin/uglifyjs
-  checksum: 5f673c5dd7f3b3dd15d1d26aebfe29bccbb1b896c4b5423ec70a2e8b9506c70b6fb6a53dec83df5ad65a717ec9a850adf08e0aedf9b1711eac5eb080216615fa
+  checksum: f29e0a6ce889ce6711fd1938a92e0c243c6028347bea618c5267312752f96b6a92c773b39f68b7e337a77042bf18e6eeac550d84a1f611911a210d15ca190e1c
   languageName: node
   linkType: hard
 

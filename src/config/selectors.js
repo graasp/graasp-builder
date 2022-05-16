@@ -133,6 +133,8 @@ export const buildPlayerButtonId = (id) => `playerButton-${id}`;
 export const buildEditButtonId = (id) => `editButton-${id}`;
 export const buildSettingsButtonId = (id) => `settingsButton-${id}`;
 export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';
+export const INVITE_ITEM_EMAIL_INPUT_ID = 'inviteItemEmailInput';
+export const INVITE_ITEM_BUTTON_ID = 'inviteItemButton';
 export const SHARE_ITEM_DIALOG_ID = 'shareItemDialog';
 export const SHARE_ITEM_DIALOG_LINK_ID = 'shareItemDialogLink';
 export const SHARE_ITEM_DIALOG_LINK_SELECT_ID = 'shareItemDialogLinkSelect';
@@ -185,3 +187,9 @@ export const APP_NAVIGATION_DROP_DOWN_ID = 'appNavigationDropDown';
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';
 export const ITEM_UNPUBLISH_BUTTON_ID = 'itemUnpublishButton';
+export const buildItemInvitationRowDeleteButtonId = (id) =>
+  `itemInvitationRowDeleteButton-${id}`;
+export const buildInvitationEmailTableRowId = (id) =>
+  `invitationEmailTableRow-${id}`;
+export const buildInvitationTableRowId = (id) => `invitationTableRow-${id}`;
+export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';

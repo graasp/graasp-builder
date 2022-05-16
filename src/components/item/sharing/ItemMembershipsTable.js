@@ -4,15 +4,12 @@ import { Map } from 'immutable';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import Tooltip from '@material-ui/core/Tooltip';
-import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TableContainer from '@material-ui/core/TableContainer';
 import { useTranslation } from 'react-i18next';
 import TableRow from '@material-ui/core/TableRow';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import IconButton from '@material-ui/core/IconButton';
 import { Loader } from '@graasp/ui';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { PERMISSION_LEVELS } from '../../../enums';
@@ -21,6 +18,7 @@ import {
   buildItemMembershipRowId,
 } from '../../../config/selectors';
 import ItemMembershipSelect from './ItemMembershipSelect';
+import TableRowDeleteButton from './TableRowDeleteButton';
 
 const ItemMembershipRow = ({ membership, item }) => {
   const { t } = useTranslation();
@@ -31,7 +29,7 @@ const ItemMembershipRow = ({ membership, item }) => {
   const { mutate: editItemMembership } = useMutation(
     MUTATION_KEYS.EDIT_ITEM_MEMBERSHIP,
   );
-  const { mutate: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
+  const { mutate: shareItem } = useMutation(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
 
   const [isParentMembership, setIsParentMembership] = useState(false);
 
@@ -66,32 +64,6 @@ const ItemMembershipRow = ({ membership, item }) => {
     }
   };
 
-  const renderDeleteButton = () => {
-    const button = (
-      <IconButton
-        disabled={isParentMembership}
-        onClick={deleteMembership}
-        id={buildItemMembershipRowDeleteButtonId(membership.id)}
-      >
-        <CloseIcon />
-      </IconButton>
-    );
-
-    if (!isParentMembership) {
-      return button;
-    }
-
-    return (
-      <Tooltip
-        title={t(
-          'This membership is defined in the parent item and cannot be deleted here.',
-        )}
-      >
-        <div>{button}</div>
-      </Tooltip>
-    );
-  };
-
   return (
     <TableRow
       hover
@@ -114,7 +86,14 @@ const ItemMembershipRow = ({ membership, item }) => {
         />
       </TableCell>
       <TableCell align="right" padding="checkbox">
-        {renderDeleteButton()}
+        <TableRowDeleteButton
+          id={buildItemMembershipRowDeleteButtonId(membership.id)}
+          disabled={isParentMembership}
+          onClick={deleteMembership}
+          tooltip={t(
+            'This membership is defined in the parent item and cannot be deleted here.',
+          )}
+        />
       </TableCell>
     </TableRow>
   );
@@ -136,12 +115,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// eslint-disable-next-line no-unused-vars
 const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const content = memberships.length ? (
+  const content = memberships?.length ? (
     memberships.map((row) => <ItemMembershipRow membership={row} item={item} />)
   ) : (
     <Typography align="center" className={classes.emptyText}>

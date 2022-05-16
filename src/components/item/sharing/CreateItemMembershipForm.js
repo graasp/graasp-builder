@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@graasp/ui';
+import IconButton from '@material-ui/core/IconButton';
+import { List } from 'immutable';
+import Tooltip from '@material-ui/core/Tooltip';
 import { Grid, makeStyles, TextField } from '@material-ui/core';
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { MUTATION_KEYS, Api } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { useMutation } from '../../../config/queryClient';
+import { API_HOST } from '../../../config/constants';
 import {
   SHARE_ITEM_EMAIL_INPUT_ID,
+  CREATE_MEMBERSHIP_FORM_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../config/selectors';
 import ItemMembershipSelect from './ItemMembershipSelect';
+import { buildInvitation } from '../../../utils/invitation';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,77 +39,130 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateItemMembershipForm = ({ id }) => {
-  const [mailError, setMailError] = useState(false);
-  const [email, setEmail] = useState('');
-  const mutation = useMutation(MUTATION_KEYS.SHARE_ITEM);
+// todo: handle multiple invitations
+const CreateItemMembershipForm = ({ itemId, members }) => {
+  const [error, setError] = useState(false);
+
+  const { mutate: postInvitations } = useMutation(
+    MUTATION_KEYS.POST_INVITATIONS,
+  );
+  const { mutate: share } = useMutation(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
   const { t } = useTranslation();
   const classes = useStyles();
 
-  // refs
-  let permission = '';
+  // use an array to later allow sending multiple invitations
+  const [invitation, setInvitation] = useState(buildInvitation());
 
-  const checkSubmission = () => {
+  const isInvitationInvalid = ({ email }) => {
     // check mail validity
+    if (!email) {
+      return t('The mail cannot be empty');
+    }
     if (!validator.isEmail(email)) {
-      setMailError(t('This mail is not valid'));
-      return false;
+      return t('This mail is not valid');
     }
-
-    // todo: check mail does not already exist
-    // but this is difficult to check as membership contains memberId != email
-
-    setMailError(null);
-    return true;
+    // check mail does not already exist
+    if (members.find(({ email: thisEmail }) => thisEmail === email)) {
+      return t('This user already has access to this item');
+    }
+    return false;
   };
 
-  const submit = () => {
-    if (checkSubmission()) {
-      mutation.mutate({
-        id,
-        email,
-        permission: permission.value,
+  const handleInvite = async () => {
+    // not good to check email for multiple invitations at once
+    const isInvalid = isInvitationInvalid(invitation);
+
+    if (isInvalid) {
+      return setError(isInvalid);
+    }
+
+    // check email has an associated account
+    const accounts = await Api.getMemberBy(
+      { email: invitation.email },
+      {
+        API_HOST,
+      },
+    );
+    // if yes, create a membership
+    if (accounts.length) {
+      return share({
+        id: itemId,
+        email: invitation.email,
+        permission: invitation.permission,
       });
-      setEmail('');
+    }
+    // otherwise create invitation
+    return postInvitations({
+      itemId,
+      invitations: [invitation],
+    });
+  };
+
+  const onChangeEmail = (event) => {
+    const newInvitation = {
+      ...invitation,
+      email: event.target.value,
+    };
+    setInvitation(newInvitation);
+    if (error) {
+      const isInvalid = isInvitationInvalid(newInvitation);
+      setError(isInvalid);
     }
   };
 
-  const onChangeEmail = ({ target }) => {
-    setEmail(target.value);
+  const renderInvitationStatus = () => (
+    <Tooltip
+      title={t(
+        'Non-registered register on the platform will receive a personal link to register.',
+      )}
+    >
+      <IconButton aria-label="status">
+        <ErrorOutlineIcon />
+      </IconButton>
+    </Tooltip>
+  );
+
+  const renderButton = () => {
+    const disabled = Boolean(error);
+    return (
+      <Button
+        onClick={handleInvite}
+        disabled={disabled}
+        id={SHARE_ITEM_SHARE_BUTTON_ID}
+      >
+        {t('Invite')}
+      </Button>
+    );
   };
 
   return (
-    <Grid container spacing={1} alignItems="center" justifyContent="center">
-      <Grid item xs={7}>
-        <TextField
-          className={classes.emailInput}
-          id={SHARE_ITEM_EMAIL_INPUT_ID}
-          variant="outlined"
-          value={email}
-          onChange={onChangeEmail}
-          label={t('Email')}
-          error={Boolean(mailError)}
-          helperText={mailError}
-        />
-      </Grid>
-      <Grid item>
-        <ItemMembershipSelect
-          inputRef={(c) => {
-            permission = c;
-          }}
-        />
-      </Grid>
-      <Grid item xs={1}>
-        <Button onClick={submit} id={SHARE_ITEM_SHARE_BUTTON_ID}>
-          {t('Share')}
-        </Button>
+    <Grid container spacing={1} id={CREATE_MEMBERSHIP_FORM_ID}>
+      <Grid container alignItems="center" justify="center" key={invitation.id}>
+        <Grid item xs={5}>
+          <TextField
+            value={invitation.email}
+            className={classes.emailInput}
+            id={SHARE_ITEM_EMAIL_INPUT_ID}
+            variant="outlined"
+            label={t('Email')}
+            error={Boolean(error)}
+            helperText={error}
+            onChange={onChangeEmail}
+          />
+        </Grid>
+        <Grid item>
+          <ItemMembershipSelect value={invitation.permission} />
+        </Grid>
+        <Grid item>{renderButton()}</Grid>
+        <Grid item>{renderInvitationStatus()}</Grid>
       </Grid>
     </Grid>
   );
 };
 
 CreateItemMembershipForm.propTypes = {
-  id: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired,
+  members: PropTypes.instanceOf(List).isRequired,
 };
 
 export default CreateItemMembershipForm;
