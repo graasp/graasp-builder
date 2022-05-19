@@ -1985,9 +1985,11 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui.git#116/deps":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=bd0dfda296f5770d0c1bc9a6e0827c6dd7b90a5c"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=b252161c3501e1cc2cb11096da91c2568e0d7c18"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git#8/objectEnum"
+    ag-grid-community: 27.3.0
+    ag-grid-react: 27.3.0
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.0.0
@@ -2005,7 +2007,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 1cc432ea5548b73594ea3d1046f918ea4a385dd8121581ed663b6e69a3d3d2faf32a3e777460ccfb1fdeba34911fa803fca03350a5d11184fa8fdce263058bae
+  checksum: 440467d9f41893fa668bdeae2faade7a9c552ed37545bddf9bd9b5770b9b31f105357e305c6c8c75fff598ab05647bd1db28f3fc33adccd18f318675694dd316
   languageName: node
   linkType: hard
 
@@ -4053,6 +4055,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ag-grid-community@npm:27.3.0":
+  version: 27.3.0
+  resolution: "ag-grid-community@npm:27.3.0"
+  checksum: 3041c188239c50b875d45f82e4de1adfc7170c7338d0c18e504bc4d57bf71906bf291aaee0c59149ad65900e7308268ed5db32ad7f5f2368ef8e9e6b2c156a02
+  languageName: node
+  linkType: hard
+
 "ag-grid-react@npm:27.1.0":
   version: 27.1.0
   resolution: "ag-grid-react@npm:27.1.0"
@@ -4063,6 +4072,19 @@ __metadata:
     react: ^16.3.0 || ^17.0.0
     react-dom: ^16.3.0 || ^17.0.0
   checksum: 36631975f2b94c3ac063423e195b14ebeb901cb2b0f1559c987c25e32d627db04a10d5420f90b173fa3e36cf915430b7201364c087f8265f812d072301f77b74
+  languageName: node
+  linkType: hard
+
+"ag-grid-react@npm:27.3.0":
+  version: 27.3.0
+  resolution: "ag-grid-react@npm:27.3.0"
+  dependencies:
+    prop-types: ^15.8.1
+  peerDependencies:
+    ag-grid-community: ~27.3.0
+    react: ^16.3.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+  checksum: 9e4b7dd3649fb9ff2e4f0c63d273c7e76b076c5329812e775e43a0bf367b315e34968874d041001f0f29976160aa4dc62626c60ce4e6fd4f6d4d00f468a54810
   languageName: node
   linkType: hard
 

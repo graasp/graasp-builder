@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-import { Button } from '@graasp/ui';
+import { Button, Table as GraaspTable } from '@graasp/ui';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -12,7 +12,6 @@ import {
   buildInvitationTableRowId,
   buildItemInvitationRowDeleteButtonId,
 } from '../../../config/selectors';
-import GraaspTable from './GraaspTable';
 import TableRowPermission from './TableRowPermission';
 import {
   MEMBERSHIP_TABLE_HEIGHT,
@@ -156,6 +155,9 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
     [t, InvitationRenderer, PermissionRenderer, ActionRenderer],
   );
 
+  const countTextFunction = (selected) =>
+    t('itemSelected', { count: selected.length });
+
   return (
     <GraaspTable
       columnDefs={columnDefs}
@@ -165,6 +167,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       getRowId={getRowId}
       rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
       isClickable={false}
+      countTextFunction={countTextFunction}
     />
   );
 };

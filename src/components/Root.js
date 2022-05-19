@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import 'react-toastify/dist/ReactToastify.css';
 import '@uppy/core/dist/style.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.min.css';
 
 import App from './App';
 import {

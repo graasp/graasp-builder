@@ -4,14 +4,13 @@ import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Loader } from '@graasp/ui';
+import { Loader, Table as GraaspTable } from '@graasp/ui';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
 } from '../../../config/selectors';
 import TableRowDeleteButton from './TableRowDeleteButton';
-import GraaspTable from './GraaspTable';
 import TableRowPermission from './TableRowPermission';
 import {
   MEMBERSHIP_TABLE_HEIGHT,
@@ -147,6 +146,8 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
   if (isLoading) {
     return <Loader />;
   }
+  const countTextFunction = (selected) =>
+    t('itemSelected', { count: selected.length });
 
   return (
     <GraaspTable
@@ -157,6 +158,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
       rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
       isClickable={false}
       emptyMessage={emptyMessage}
+      countTextFunction={countTextFunction}
     />
   );
 };

@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Table as GraaspTable } from '@graasp/ui';
 import { makeStyles } from '@material-ui/core';
 import { useNavigate, useParams } from 'react-router';
 import Typography from '@material-ui/core/Typography';
@@ -19,7 +20,6 @@ import NameCellRenderer from '../table/NameCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
-import GraaspTable from '../item/sharing/GraaspTable';
 
 const { useItem } = hooks;
 
@@ -156,6 +156,9 @@ const ItemsTable = ({
     [classes, t, defaultSortedColumn, ActionComponent, actions, showThumbnails],
   );
 
+  const countTextFunction = (selected) =>
+    t('itemSelected', { count: selected.length });
+
   return (
     <>
       <ItemsToolbar title={tableTitle} headerElements={headerElements} />
@@ -173,6 +176,7 @@ const ItemsTable = ({
         enableDrag={canDrag()}
         rowDragText={itemRowDragText}
         renderActions={toolbarActions}
+        countTextFunction={countTextFunction}
       />
     </>
   );
