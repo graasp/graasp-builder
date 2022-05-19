@@ -3,35 +3,73 @@ import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import { useIsParentInstance } from '../../../utils/item';
 
-function TableRowDeleteButton({ id, disabled, tooltip, onClick }) {
-  const button = (
-    <IconButton disabled={disabled} onClick={onClick} id={id}>
-      <CloseIcon />
-    </IconButton>
-  );
+const TableRowDeleteButton = ({
+  item,
+  buildIdFunction,
+  tooltip,
+  color,
+  onDelete,
+}) => {
+  const ChildComponent = ({ data }) => {
+    const isFromParent = useIsParentInstance({
+      instance: data,
+      item,
+    });
 
-  if (!disabled || !tooltip) {
-    return button;
-  }
+    const disabled = isFromParent;
 
-  return (
-    <Tooltip title={tooltip}>
-      <div>{button}</div>
-    </Tooltip>
-  );
-}
+    const onClick = () => {
+      onDelete({ instance: data });
+    };
+
+    const renderButton = () => {
+      const button = (
+        <IconButton
+          disabled={disabled}
+          onClick={onClick}
+          id={buildIdFunction(data.id)}
+          color={color}
+        >
+          <CloseIcon />
+        </IconButton>
+      );
+
+      if (!disabled || !tooltip) {
+        return button;
+      }
+
+      return (
+        <Tooltip title={tooltip}>
+          <div>{button}</div>
+        </Tooltip>
+      );
+    };
+
+    return renderButton();
+  };
+
+  ChildComponent.propTypes = {
+    data: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      itemPath: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+  return ChildComponent;
+};
 
 TableRowDeleteButton.propTypes = {
-  id: PropTypes.string,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   tooltip: PropTypes.string,
   onClick: PropTypes.func.isRequired,
+  color: PropTypes.string,
 };
 
 TableRowDeleteButton.defaultProps = {
-  id: '',
   tooltip: null,
+  color: 'default',
+  disabled: false,
 };
 
 export default TableRowDeleteButton;

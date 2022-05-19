@@ -8,6 +8,9 @@ import { buildRowDraggerId } from '../../config/selectors';
 const useStyles = makeStyles(() => ({
   dragIconContainer: {
     display: 'flex',
+    '&:hover': {
+      cursor: 'move',
+    },
   },
   dragIcon: {
     fontSize: DRAG_ICON_SIZE,

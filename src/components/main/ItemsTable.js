@@ -1,55 +1,29 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { makeStyles } from '@material-ui/core';
 import { useNavigate, useParams } from 'react-router';
-import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
-import TableToolbar from './TableToolbar';
 import ItemsToolbar from './ItemsToolbar';
 import { formatDate } from '../../utils/date';
 import { ITEM_TYPES } from '../../enums';
 import { buildItemPath } from '../../config/paths';
-import {
-  DRAG_ICON_SIZE,
-  ITEMS_TABLE_CONTAINER_HEIGHT,
-} from '../../config/constants';
+import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import { buildItemsTableRowId } from '../../config/selectors';
 import NameCellRenderer from '../table/NameCellRenderer';
-import DragCellRenderer from '../table/DragCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
+import GraaspTable from '../item/sharing/GraaspTable';
 
 const { useItem } = hooks;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    '& .ag-checked::after': {
-      color: `${theme.palette.primary.main}!important`,
-    },
-  },
-  table: {
-    fontSize: theme.typography.fontSize,
-  },
-  row: {
-    cursor: 'pointer',
-  },
-  dragCell: {
-    paddingLeft: '0!important',
-    paddingRight: '0!important',
-    display: 'flex',
-    alignItems: 'center',
-  },
+const useStyles = makeStyles(() => ({
   actionCell: {
     paddingLeft: '0!important',
     paddingRight: '0!important',
@@ -67,19 +41,16 @@ const ItemsTable = ({
   actions,
   toolbarActions,
   clickable,
-  defautSortedColumn,
+  defaultSortedColumn,
   isEditing,
   showThumbnails,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const classes = useStyles();
   const { itemId } = useParams();
+  const classes = useStyles();
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useContext(CurrentUserContext);
-
-  const [gridApi, setGridApi] = useState(null);
-  const [selected, setSelected] = useState([]);
 
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
@@ -89,19 +60,7 @@ const ItemsTable = ({
     [isFolder, isSearching],
   );
 
-  const onGridReady = (params) => {
-    setGridApi(params.api);
-  };
-
-  const onSelectionChanged = () => {
-    setSelected(gridApi?.getSelectedRows().map((r) => r.id) ?? []);
-  };
-
-  const onRowDataChanged = () => {
-    onSelectionChanged();
-  };
-
-  const getRowNodeId = (row) => buildItemsTableRowId(row.id);
+  const getRowNodeId = ({ data }) => buildItemsTableRowId(data.id);
 
   const onCellClicked = ({ column: { colId }, data: item }) => {
     if (colId !== 'actions') {
@@ -115,11 +74,7 @@ const ItemsTable = ({
     }
   };
 
-  const getDisplayedRowIds = () =>
-    gridApi.getModel().rowsToDisplay.map((r) => r.data.id);
-
-  const hasOrderChanged = () => {
-    const rowIds = getDisplayedRowIds();
+  const hasOrderChanged = (rowIds) => {
     const childrenOrder = getChildrenOrderFromFolderExtra(parentItem);
 
     return (
@@ -128,13 +83,14 @@ const ItemsTable = ({
     );
   };
 
-  const onDragEnd = () => {
-    if (canDrag() && hasOrderChanged()) {
+  const onDragEnd = (displayRows) => {
+    const rowIds = displayRows.map((r) => r.data.id);
+    if (canDrag() && hasOrderChanged(rowIds)) {
       mutation.mutate({
         id: itemId,
         extra: {
           folder: {
-            childrenOrder: getDisplayedRowIds(),
+            childrenOrder: rowIds,
           },
         },
       });
@@ -142,11 +98,6 @@ const ItemsTable = ({
   };
 
   const dateColumnFormatter = ({ value }) => formatDate(value);
-
-  const dateComparator = (d1, d2) => new Date(d1) - new Date(d2);
-
-  const textComparator = (text1, text2) =>
-    text1.localeCompare(text2, undefined, { sensitivity: 'base' });
 
   const itemRowDragText = (params) => params.rowNode.data.name;
 
@@ -165,22 +116,13 @@ const ItemsTable = ({
   const columnDefs = useMemo(
     () => [
       {
-        hide: !canDrag(),
-        cellRendererFramework: DragCellRenderer,
-        cellClass: classes.dragCell,
-        headerClass: classes.dragCell,
-        rowDragText: itemRowDragText,
-        sortable: false,
-        maxWidth: DRAG_ICON_SIZE,
-      },
-      {
         headerCheckboxSelection: true,
         checkboxSelection: true,
         headerName: t('Name'),
-        cellRendererFramework: NameCellRenderer(showThumbnails),
+        cellRenderer: NameCellRenderer(showThumbnails),
         flex: 4,
-        comparator: textComparator,
-        sort: defautSortedColumn?.name,
+        comparator: GraaspTable.textComparator,
+        sort: defaultSortedColumn?.name,
         field: 'name',
         showThumbnails,
       },
@@ -189,8 +131,8 @@ const ItemsTable = ({
         headerName: t('Type'),
         type: 'rightAligned',
         flex: 2,
-        comparator: textComparator,
-        sort: defautSortedColumn?.type,
+        comparator: GraaspTable.textComparator,
+        sort: defaultSortedColumn?.type,
       },
       {
         field: 'updatedAt',
@@ -198,12 +140,12 @@ const ItemsTable = ({
         flex: 3,
         type: 'rightAligned',
         valueFormatter: dateColumnFormatter,
-        comparator: dateComparator,
-        sort: defautSortedColumn?.updatedAt,
+        comparator: GraaspTable.dateComparator,
+        sort: defaultSortedColumn?.updatedAt,
       },
       {
         field: 'actions',
-        cellRendererFramework: actions ?? ActionComponent,
+        cellRenderer: actions ?? ActionComponent,
         headerName: t('Actions'),
         colId: 'actions',
         type: 'rightAligned',
@@ -211,60 +153,28 @@ const ItemsTable = ({
         sortable: false,
       },
     ],
-    [
-      canDrag,
-      classes,
-      t,
-      defautSortedColumn,
-      ActionComponent,
-      actions,
-      showThumbnails,
-    ],
-  );
-
-  // never changes, so we can use useMemo
-  const defaultColDef = useMemo(
-    () => ({
-      resizable: true,
-      sortable: true,
-    }),
-    [],
+    [classes, t, defaultSortedColumn, ActionComponent, actions, showThumbnails],
   );
 
   return (
-    <div className={classes.root}>
+    <>
       <ItemsToolbar title={tableTitle} headerElements={headerElements} />
       <FolderDescription isEditing={isEditing} itemId={itemId} />
-      <TableToolbar
-        numSelected={selected.length}
-        selected={selected}
-        actions={toolbarActions}
-      />
-      <div
-        className={clsx('ag-theme-material', classes.table)}
-        style={{ height: ITEMS_TABLE_CONTAINER_HEIGHT, width: '100%' }}
+      <GraaspTable
         id={tableId}
-      >
-        <AgGridReact
-          reactUi="true"
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          rowData={rows.toJS()}
-          rowSelection="multiple"
-          suppressRowClickSelection
-          suppressCellSelection
-          noRowsOverlayComponentFramework={NoRowsComponent}
-          rowDragManaged
-          onRowDragEnd={onDragEnd}
-          onGridReady={onGridReady}
-          onSelectionChanged={onSelectionChanged}
-          onCellClicked={clickable ? onCellClicked : null}
-          rowClass={clickable ? classes.row : null}
-          getRowNodeId={getRowNodeId}
-          onRowDataChanged={onRowDataChanged}
-        />
-      </div>
-    </div>
+        columnDefs={columnDefs}
+        tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
+        rowData={rows.toJS()}
+        noRowsOverlayComponentFramework={NoRowsComponent}
+        onRowDragEnd={onDragEnd}
+        onCellClicked={onCellClicked}
+        getRowId={getRowNodeId}
+        clickable={clickable}
+        enableDrag={canDrag()}
+        rowDragText={itemRowDragText}
+        renderActions={toolbarActions}
+      />
+    </>
   );
 };
 
@@ -278,7 +188,7 @@ ItemsTable.propTypes = {
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
   clickable: PropTypes.bool,
-  defautSortedColumn: PropTypes.shape({
+  defaultSortedColumn: PropTypes.shape({
     updatedAt: PropTypes.string,
     createdAt: PropTypes.string,
     type: PropTypes.string,
@@ -297,7 +207,7 @@ ItemsTable.defaultProps = {
   actions: null,
   toolbarActions: null,
   clickable: true,
-  defautSortedColumn: {},
+  defaultSortedColumn: {},
   isEditing: false,
   showThumbnails: true,
 };

@@ -68,6 +68,10 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
     return false;
   };
 
+  const onChangePermission = (e) => {
+    setInvitation({ ...invitation, permission: e.target.value });
+  };
+
   const handleInvite = async () => {
     // not good to check email for multiple invitations at once
     const isInvalid = isInvitationInvalid(invitation);
@@ -113,7 +117,7 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
   const renderInvitationStatus = () => (
     <Tooltip
       title={t(
-        'Non-registered register on the platform will receive a personal link to register.',
+        'Non-registered users will receive a personal link to register on the platform.',
       )}
     >
       <IconButton aria-label="status">
@@ -151,7 +155,10 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
           />
         </Grid>
         <Grid item>
-          <ItemMembershipSelect value={invitation.permission} />
+          <ItemMembershipSelect
+            value={invitation.permission}
+            onChange={onChangePermission}
+          />
         </Grid>
         <Grid item>{renderButton()}</Grid>
         <Grid item>{renderInvitationStatus()}</Grid>
@@ -162,7 +169,10 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
 
 CreateItemMembershipForm.propTypes = {
   itemId: PropTypes.string.isRequired,
-  members: PropTypes.instanceOf(List).isRequired,
+  members: PropTypes.instanceOf(List),
+};
+CreateItemMembershipForm.defaultProps = {
+  members: List(),
 };
 
 export default CreateItemMembershipForm;

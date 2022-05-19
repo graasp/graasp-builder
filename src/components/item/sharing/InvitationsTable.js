@@ -1,163 +1,177 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
+import { Map, List } from 'immutable';
 import { Button } from '@graasp/ui';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TableContainer from '@material-ui/core/TableContainer';
 import { useTranslation } from 'react-i18next';
-import TableRow from '@material-ui/core/TableRow';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { PERMISSION_LEVELS } from '../../../enums';
-import ItemMembershipSelect from './ItemMembershipSelect';
 import TableRowDeleteButton from './TableRowDeleteButton';
 import {
-  buildInvitationEmailTableRowId,
   buildInvitationTableRowId,
   buildItemInvitationRowDeleteButtonId,
 } from '../../../config/selectors';
+import GraaspTable from './GraaspTable';
+import TableRowPermission from './TableRowPermission';
+import {
+  MEMBERSHIP_TABLE_HEIGHT,
+  MEMBERSHIP_TABLE_ROW_HEIGHT,
+} from '../../../config/constants';
 
-const InvitationRow = ({ invitation, item }) => {
-  const [clicked, setClicked] = useState(false);
-  const [isParentMembership, setIsParentMembership] = useState(false);
+const ResendInvitationRenderer = (item) => {
   const { t } = useTranslation();
-  const { mutate: deleteInvitation } = useMutation(
-    MUTATION_KEYS.DELETE_INVITATION,
-  );
+  const itemId = item.get('id');
   const { mutate: resendInvitation } = useMutation(
     MUTATION_KEYS.RESEND_INVITATION,
   );
-  const { mutate: editInvitation } = useMutation(
-    MUTATION_KEYS.PATCH_INVITATION,
-  );
-  const { mutate: postInvitations } = useMutation(
-    MUTATION_KEYS.POST_INVITATIONS,
-  );
-  const itemId = item.get('id');
+  const ChildComponent = ({ data: invitation }) => {
+    const [clicked, setClicked] = useState(false);
 
-  useEffect(() => {
-    setIsParentMembership(invitation.itemPath !== item.get('path'));
-  }, [invitation, item]);
+    const resendEmail = () => {
+      setClicked(true);
+      resendInvitation({ itemId, id: invitation.id });
+    };
 
-  const onClickDelete = () => {
-    deleteInvitation({ itemId, id: invitation.id });
+    return (
+      <Button variant="outlined" onClick={resendEmail} disabled={clicked}>
+        {t('Resend Invitation')}
+      </Button>
+    );
   };
-
-  const onChangePermission = (e) => {
-    const { value } = e.target;
-    if (invitation.itemPath === item.get('path')) {
-      editInvitation({
-        itemId,
-        id: invitation.id,
-        permission: value,
-      });
-    }
-    // editing a parent's invitation from a child should create a new invitation
-    else {
-      postInvitations({
-        itemId,
-        invitations: [
-          {
-            email: invitation.email,
-            permission: value,
-          },
-        ],
-      });
-    }
+  ChildComponent.propTypes = {
+    data: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      itemPath: PropTypes.string.isRequired,
+      permission: PropTypes.oneOf(Object.values(PERMISSION_LEVELS)).isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string,
+    }).isRequired,
   };
-
-  const resendEmail = () => {
-    setClicked(true);
-    resendInvitation({ itemId, id: invitation.id });
-  };
-
-  return (
-    <TableRow
-      hover
-      role="checkbox"
-      tabIndex={-1}
-      key={invitation.id}
-      id={buildInvitationTableRowId(invitation.id)}
-    >
-      <TableCell
-        component="th"
-        scope="row"
-        padding="none"
-        id={buildInvitationEmailTableRowId(invitation.id)}
-      >
-        {invitation.email}
-      </TableCell>
-      <TableCell align="right">
-        <ItemMembershipSelect
-          value={invitation.permission}
-          showLabel={false}
-          onChange={onChangePermission}
-        />
-      </TableCell>
-      <TableCell align="right">
-        <Button variant="outlined" onClick={resendEmail} disabled={clicked}>
-          {t('Resend Invitation')}
-        </Button>
-      </TableCell>
-      <TableCell align="right">
-        <TableRowDeleteButton
-          id={buildItemInvitationRowDeleteButtonId(invitation.id)}
-          disabled={isParentMembership}
-          onClick={onClickDelete}
-          tooltip={t(
-            'This invitation is defined in the parent item and cannot be deleted here.',
-          )}
-        />
-      </TableCell>
-    </TableRow>
-  );
+  return ChildComponent;
 };
 
-InvitationRow.propTypes = {
-  invitation: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    itemPath: PropTypes.string.isRequired,
-    permission: PropTypes.oneOf(Object.values(PERMISSION_LEVELS)).isRequired,
-    email: PropTypes.string.isRequired,
-    name: PropTypes.string,
-  }).isRequired,
-  item: PropTypes.instanceOf(Map).isRequired,
-};
-
-const useStyles = makeStyles((theme) => ({
-  emptyText: {
-    margin: theme.spacing(2, 0),
+const useStyles = makeStyles(() => ({
+  row: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  actionCell: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 }));
 
 const InvitationsTable = ({ invitations, item, emptyMessage }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { mutate: editInvitation } = useMutation(
+    MUTATION_KEYS.PATCH_INVITATION,
+  );
+  const { mutate: postInvitations } = useMutation(
+    MUTATION_KEYS.POST_INVITATIONS,
+  );
+  const { mutate: deleteInvitation } = useMutation(
+    MUTATION_KEYS.DELETE_INVITATION,
+  );
 
-  const content = invitations?.size ? (
-    invitations.map((row) => <InvitationRow invitation={row} item={item} />)
-  ) : (
-    <Typography align="center" className={classes.emptyText}>
-      {emptyMessage || t('No user has access to this item.')}
-    </Typography>
+  const getRowId = ({ data }) => buildInvitationTableRowId(data.id);
+
+  const onDelete = ({ instance }) => {
+    deleteInvitation({ itemId: item.get('id'), id: instance.id });
+  };
+
+  const ActionRenderer = TableRowDeleteButton({
+    item,
+    onDelete,
+    buildIdFunction: buildItemInvitationRowDeleteButtonId,
+    tooltip: t(
+      'This invitation is defined in the parent item and cannot be deleted here.',
+    ),
+  });
+
+  const PermissionRenderer = TableRowPermission({
+    item,
+    editFunction: ({ instance, value }) => {
+      editInvitation({
+        id: instance.id,
+        permission: value,
+        itemId: item.get('id'),
+      });
+    },
+    createFunction: ({ instance, value }) => {
+      postInvitations({
+        itemId: item.get('id'),
+        invitations: [
+          {
+            email: instance.email,
+            permission: value,
+          },
+        ],
+      });
+    },
+  });
+
+  const InvitationRenderer = ResendInvitationRenderer(item);
+
+  // never changes, so we can use useMemo
+  const columnDefs = useMemo(
+    () => [
+      {
+        headerCheckboxSelection: true,
+        checkboxSelection: true,
+        comparator: GraaspTable.textComparator,
+        headerName: t('Mail'),
+        field: 'email',
+        cellClass: classes.row,
+        flex: 1,
+      },
+      {
+        headerName: t('Invitation'),
+        sortable: false,
+        cellRenderer: InvitationRenderer,
+        cellClass: classes.row,
+        flex: 1,
+        field: 'email',
+      },
+      {
+        headerName: t('Permission'),
+        cellRenderer: PermissionRenderer,
+        comparator: GraaspTable.textComparator,
+        type: 'rightAligned',
+        field: 'permission',
+      },
+      {
+        field: 'actions',
+        cellRenderer: ActionRenderer,
+        headerName: t('Actions'),
+        colId: 'actions',
+        type: 'rightAligned',
+        sortable: false,
+        cellClass: classes.actionCell,
+      },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t, InvitationRenderer, PermissionRenderer, ActionRenderer],
   );
 
   return (
-    <TableContainer>
-      <Table size="small">
-        <TableBody>{content}</TableBody>
-      </Table>
-    </TableContainer>
+    <GraaspTable
+      columnDefs={columnDefs}
+      tableHeight={MEMBERSHIP_TABLE_HEIGHT}
+      rowData={invitations.toJS()}
+      emptyMessage={emptyMessage}
+      getRowId={getRowId}
+      rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
+      isClickable={false}
+    />
   );
 };
 
 InvitationsTable.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  invitations: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  invitations: PropTypes.instanceOf(List).isRequired,
   emptyMessage: PropTypes.string,
 };
 

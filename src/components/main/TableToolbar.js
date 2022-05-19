@@ -5,14 +5,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
-  ITEMS_TABLE_COPY_SELECTED_ITEMS_ID,
-  ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID,
-} from '../../config/selectors';
-import CopyButton from './CopyButton';
-import MoveButton from '../common/MoveButton';
-import RecycleButton from '../common/RecycleButton';
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -30,33 +22,15 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const DefaultActions = ({ selectedIds }) => (
-  <>
-    <MoveButton
-      id={ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}
-      color="secondary"
-      itemIds={selectedIds}
-    />
-    <CopyButton
-      id={ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}
-      color="secondary"
-      itemIds={selectedIds}
-    />
-    <RecycleButton
-      id={ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID}
-      color="secondary"
-      itemIds={selectedIds}
-    />
-  </>
-);
-DefaultActions.propTypes = {
-  selectedIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-const TableToolbar = ({ numSelected, selected, actions }) => {
+const TableToolbar = ({
+  numSelected,
+  selected,
+  renderActions,
+  NoSelectionToolbarComponent,
+}) => {
   const classes = useToolbarStyles();
   const { t } = useTranslation();
-  const renderActions = actions ?? DefaultActions;
+  const actions = renderActions?.({ selectedIds: selected });
 
   return (
     <>
@@ -74,21 +48,26 @@ const TableToolbar = ({ numSelected, selected, actions }) => {
           >
             {t('itemSelected', { count: numSelected })}
           </Typography>
-          {numSelected > 0 && renderActions({ selectedIds: selected })}
+
+          {numSelected > 0 ? actions : null}
         </Toolbar>
-      ) : null}
+      ) : (
+        NoSelectionToolbarComponent
+      )}
     </>
   );
 };
 
 TableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-  actions: PropTypes.element,
+  selected: PropTypes.arrayOf(PropTypes.string).isRequired,
+  renderActions: PropTypes.func,
+  NoSelectionToolbarComponent: PropTypes.node,
 };
 
 TableToolbar.defaultProps = {
-  actions: null,
+  renderActions: null,
+  NoSelectionToolbarComponent: null,
 };
 
 export default TableToolbar;

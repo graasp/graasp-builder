@@ -1959,7 +1959,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=f698030e5aaaaeb6a7e27e055fd2f53dd8addc9f"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=42c200404e7ac9a66036c01210ce627e778032f4"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -1979,22 +1979,22 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 765d81e4a760cceef52397cb58d44738db04ee794003f5abd2448a8389136bb06f8a94ab4ecb6122e04fbd62f57b931b318e881a309f3dda09695fce104148d1
+  checksum: bc470c7c783c546e9da6f87630f994814f74d49a63f5541328db74081480b7db0ed78fde09b38ed9d30299ed45d31e2fa3e0b43071a4fd86e7ceec41989a5255
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git":
+"@graasp/ui@github:graasp/graasp-ui.git#116/deps":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ae2748b590cb945ec9d4668707c72df61c584186"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=bd0dfda296f5770d0c1bc9a6e0827c6dd7b90a5c"
   dependencies:
-    "@graasp/utils": "github:graasp/graasp-utils.git"
+    "@graasp/utils": "github:graasp/graasp-utils.git#8/objectEnum"
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.0.0
     katex: 0.15.3
     qs: 6.10.3
     react-cookie-consent: 7.4.1
-    react-i18next: 11.16.2
+    react-i18next: 11.16.9
     react-quill: 1.3.5
     react-text-mask: 5.4.3
     uuid: 8.3.2
@@ -2005,7 +2005,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: c5cb272c4e161e516aa874278dcab490416f0b5fefdfbc8468b3cef15b15c38ce71eecf97cfd9cdc203156121f40ad1941c205377083c874c78c8fa877b6b982
+  checksum: 1cc432ea5548b73594ea3d1046f918ea4a385dd8121581ed663b6e69a3d3d2faf32a3e777460ccfb1fdeba34911fa803fca03350a5d11184fa8fdce263058bae
   languageName: node
   linkType: hard
 
@@ -2013,6 +2013,13 @@ __metadata:
   version: 0.1.0
   resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=e31e4065909a253e20082d2fea34cad466a11b83"
   checksum: cf448e4cb02b13dad1f6f790bd09860a63ca087ce83888e38a3882e73c918b345247f70ee014fff9982a0b853627df7d0fdef5e16e7c98896ad82347223aa689
+  languageName: node
+  linkType: hard
+
+"@graasp/utils@github:graasp/graasp-utils.git#8/objectEnum":
+  version: 0.1.0
+  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=6959732352183e69e8b66fe844a3878fd79d2682"
+  checksum: 8d7a8cac8f9ce6726babed4efd127163520100f6ad9edf40e26789b66982ce6a9c2359267db1583e6050f45b56598eb59660fa46593e1df69ee4dc165cf6ec61
   languageName: node
   linkType: hard
 
@@ -10059,7 +10066,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git"
+    "@graasp/ui": "github:graasp/graasp-ui.git#116/deps"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
@@ -16421,6 +16428,25 @@ __metadata:
     react-native:
       optional: true
   checksum: 3e86c5e7a73eef88eff7487bbc87ecf3d5c6808ce3d0cc1e9599e6a1b72466d2d6ced2b1b600c18a2309757bea49d1670526a1bc8953a9bf377964e9ea3c9166
+  languageName: node
+  linkType: hard
+
+"react-i18next@npm:11.16.9":
+  version: 11.16.9
+  resolution: "react-i18next@npm:11.16.9"
+  dependencies:
+    "@babel/runtime": ^7.14.5
+    html-escaper: ^2.0.2
+    html-parse-stringify: ^3.0.1
+  peerDependencies:
+    i18next: ">= 19.0.0"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: b79606a0c36a822b3d9a1e4f2bb4b44643c121de9425ddfeea7e63e5136fe33d4b0b42f045f14d53592dcdbde1fb43cd7be4555b22747d2e0f6f754d3a60c711
   languageName: node
   linkType: hard
 

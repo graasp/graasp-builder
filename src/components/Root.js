@@ -2,7 +2,7 @@ import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { grey } from '@material-ui/core/colors';
 import { ToastContainer } from 'react-toastify';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import 'react-toastify/dist/ReactToastify.css';
 import '@uppy/core/dist/style.css';
 
@@ -15,7 +15,7 @@ import {
 import i18nConfig from '../config/i18n';
 import { SHOW_NOTIFICATIONS, NODE_ENV, ENV } from '../config/constants';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#5050d2',

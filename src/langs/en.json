@@ -186,6 +186,18 @@
     "Set the options for your resource to make it easily accessible by the public.": "Set the options for your resource to make it easily accessible by the public.",
     "Your item is pending validation. Once the validation succeeds, you will be able to publish your item.": "Your item is pending validation. Once the validation succeeds, you will be able to publish your item.",
     "Validation": "Validation",
-    "Publication": "Publication"
+    "Publication": "Publication",
+    "Resend Invitation": "Resend Invitation",
+    "Mail": "Mail",
+    "Invitation": "Invitation",
+    "This membership is defined in the parent item and cannot be deleted here.": "This membership is defined in the parent item and cannot be deleted here.",
+    "No invitation for this item yet.": "No invitation for this item yet.",
+    "Invite": "Invite",
+    "Non-registered users will receive a personal link to register on the platform.": "Non-registered users will receive a personal link to register on the platform.",
+    "Pending Invitations": "Pending Invitations",
+    "Analytics Dashboard": "Analytics Dashboard",
+    "This invitation is defined in the parent item and cannot be deleted here.": "This invitation is defined in the parent item and cannot be deleted here.",
+    "Publish": "Publier",
+    "Download": "Download"
   }
 }

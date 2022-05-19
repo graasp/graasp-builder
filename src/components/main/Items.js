@@ -19,7 +19,7 @@ const Items = ({
   actions,
   toolbarActions,
   clickable,
-  defautSortedColumn,
+  defaultSortedColumn,
   isEditing,
   parentId,
   showThumbnails,
@@ -55,7 +55,7 @@ const Items = ({
     default:
       return (
         <ItemsTable
-          defautSortedColumn={defautSortedColumn}
+          defaultSortedColumn={defaultSortedColumn}
           id={id}
           tableTitle={title}
           items={itemSearch.results}
@@ -80,7 +80,7 @@ Items.propTypes = {
   actions: PropTypes.element,
   toolbarActions: PropTypes.element,
   clickable: PropTypes.bool,
-  defautSortedColumn: PropTypes.shape({
+  defaultSortedColumn: PropTypes.shape({
     updatedAt: PropTypes.string,
     createdAt: PropTypes.string,
     type: PropTypes.string,
@@ -97,7 +97,7 @@ Items.defaultProps = {
   actions: null,
   toolbarActions: null,
   clickable: true,
-  defautSortedColumn: {},
+  defaultSortedColumn: {},
   isEditing: false,
   parentId: null,
   showThumbnails: true,

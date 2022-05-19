@@ -1,28 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TableContainer from '@material-ui/core/TableContainer';
 import { useTranslation } from 'react-i18next';
-import TableRow from '@material-ui/core/TableRow';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Loader } from '@graasp/ui';
 import { hooks, useMutation } from '../../../config/queryClient';
-import { PERMISSION_LEVELS } from '../../../enums';
 import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
 } from '../../../config/selectors';
-import ItemMembershipSelect from './ItemMembershipSelect';
 import TableRowDeleteButton from './TableRowDeleteButton';
+import GraaspTable from './GraaspTable';
+import TableRowPermission from './TableRowPermission';
+import {
+  MEMBERSHIP_TABLE_HEIGHT,
+  MEMBERSHIP_TABLE_ROW_HEIGHT,
+} from '../../../config/constants';
 
-const ItemMembershipRow = ({ membership, item }) => {
+const NameRenderer = (users) => {
+  const ChildComponent = ({ data: membership }) => {
+    const user = users?.find(({ id }) => id === membership.memberId);
+
+    return user?.name ?? '';
+  };
+  return ChildComponent;
+};
+
+const EmailRenderer = (users) => {
+  const ChildComponent = ({ data: membership }) => {
+    const user = users?.find(({ id }) => id === membership.memberId);
+
+    return user?.email ?? '';
+  };
+  return ChildComponent;
+};
+
+const useStyles = makeStyles(() => ({
+  row: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  actionCell: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+}));
+
+const getRowId = ({ data }) => buildItemMembershipRowId(data.id);
+
+const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
+  const classes = useStyles();
   const { t } = useTranslation();
-  const { data: user, isLoading } = hooks.useMember(membership.memberId);
+  const { data: users, isLoading } = hooks.useMembers(
+    memberships.map(({ memberId }) => memberId),
+  );
+
   const { mutate: deleteItemMembership } = useMutation(
     MUTATION_KEYS.DELETE_ITEM_MEMBERSHIP,
   );
@@ -31,108 +65,99 @@ const ItemMembershipRow = ({ membership, item }) => {
   );
   const { mutate: shareItem } = useMutation(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
 
-  const [isParentMembership, setIsParentMembership] = useState(false);
+  const onDelete = ({ instance }) => {
+    deleteItemMembership({ itemId: item.get('id'), id: instance.id });
+  };
 
-  useEffect(() => {
-    setIsParentMembership(membership.itemPath !== item.get('path'));
-  }, [membership, item]);
+  const actionRenderer = TableRowDeleteButton({
+    item,
+    onDelete,
+    buildIdFunction: buildItemMembershipRowDeleteButtonId,
+    tooltip: t(
+      'This membership is defined in the parent item and cannot be deleted here.',
+    ),
+  });
+  const permissionRenderer = TableRowPermission({
+    item,
+    editFunction: ({ value, instance }) => {
+      editItemMembership({
+        itemId: item.get('id'),
+        id: instance.id,
+        permission: value,
+      });
+    },
+    createFunction: ({ value, instance }) => {
+      shareItem({
+        id: item.get('id'),
+        email: users?.find(({ id }) => id === instance.memberId),
+        permission: value,
+      });
+    },
+  });
+  const NameCellRenderer = NameRenderer(users);
+  const EmailCellRenderer = EmailRenderer(users);
+
+  // never changes, so we can use useMemo
+  const columnDefs = useMemo(
+    () => [
+      {
+        headerCheckboxSelection: true,
+        checkboxSelection: true,
+        headerName: t('Mail'),
+        cellRenderer: EmailCellRenderer,
+        field: 'email',
+        cellClass: classes.row,
+        flex: 1,
+      },
+      {
+        headerName: t('Name'),
+        cellRenderer: NameCellRenderer,
+        field: 'memberId',
+        cellClass: classes.row,
+        flex: 1,
+      },
+      {
+        headerName: t('Permission'),
+        cellRenderer: permissionRenderer,
+        comparator: GraaspTable.textComparator,
+        sort: true,
+        type: 'rightAligned',
+        field: 'permission',
+      },
+      {
+        field: 'actions',
+        cellRenderer: actionRenderer,
+        headerName: t('Actions'),
+        colId: 'actions',
+        type: 'rightAligned',
+        sortable: false,
+        cellClass: classes.actionCell,
+      },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      t,
+      EmailCellRenderer,
+      NameCellRenderer,
+      permissionRenderer,
+      actionRenderer,
+    ],
+  );
 
   if (isLoading) {
     return <Loader />;
   }
 
-  const deleteMembership = () => {
-    deleteItemMembership({ itemId: item.get('id'), id: membership.id });
-  };
-
-  const onChangePermission = (e) => {
-    const { value } = e.target;
-    if (!isParentMembership) {
-      editItemMembership({
-        itemId: item.get('id'),
-        id: membership.id,
-        permission: value,
-      });
-    }
-    // editing a parent's membership from a child should create a new membership
-    else {
-      shareItem({
-        id: item.get('id'),
-        email: user.get('email'),
-        permission: value,
-      });
-    }
-  };
-
   return (
-    <TableRow
-      hover
-      role="checkbox"
-      tabIndex={-1}
-      key={membership.id}
-      id={buildItemMembershipRowId(membership.id)}
-    >
-      <TableCell component="th" scope="row" padding="none">
-        {user.get('name')}
-      </TableCell>
-      <TableCell component="th" scope="row" padding="none">
-        {user.get('email')}
-      </TableCell>
-      <TableCell align="right">
-        <ItemMembershipSelect
-          value={membership.permission}
-          showLabel={false}
-          onChange={onChangePermission}
-        />
-      </TableCell>
-      <TableCell align="right" padding="checkbox">
-        <TableRowDeleteButton
-          id={buildItemMembershipRowDeleteButtonId(membership.id)}
-          disabled={isParentMembership}
-          onClick={deleteMembership}
-          tooltip={t(
-            'This membership is defined in the parent item and cannot be deleted here.',
-          )}
-        />
-      </TableCell>
-    </TableRow>
-  );
-};
-
-ItemMembershipRow.propTypes = {
-  membership: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    permission: PropTypes.oneOf(Object.values(PERMISSION_LEVELS)).isRequired,
-    memberId: PropTypes.string.isRequired,
-    itemPath: PropTypes.string.isRequired,
-  }).isRequired,
-  item: PropTypes.instanceOf(Map).isRequired,
-};
-
-const useStyles = makeStyles((theme) => ({
-  emptyText: {
-    margin: theme.spacing(2, 0),
-  },
-}));
-
-const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
-
-  const content = memberships?.length ? (
-    memberships.map((row) => <ItemMembershipRow membership={row} item={item} />)
-  ) : (
-    <Typography align="center" className={classes.emptyText}>
-      {emptyMessage || t('No user has access to this item.')}
-    </Typography>
-  );
-
-  return (
-    <TableContainer>
-      <Table size="small">
-        <TableBody>{content}</TableBody>
-      </Table>
-    </TableContainer>
+    <GraaspTable
+      columnDefs={columnDefs}
+      tableHeight={MEMBERSHIP_TABLE_HEIGHT}
+      rowData={memberships}
+      getRowId={getRowId}
+      rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
+      isClickable={false}
+      emptyMessage={emptyMessage}
+    />
   );
 };
 
