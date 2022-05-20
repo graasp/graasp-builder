@@ -68,7 +68,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
     deleteItemMembership({ itemId: item.get('id'), id: instance.id });
   };
 
-  const actionRenderer = TableRowDeleteButton({
+  const ActionRenderer = TableRowDeleteButton({
     item,
     onDelete,
     buildIdFunction: buildItemMembershipRowDeleteButtonId,
@@ -76,7 +76,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
       'This membership is defined in the parent item and cannot be deleted here.',
     ),
   });
-  const permissionRenderer = TableRowPermission({
+  const PermissionRenderer = TableRowPermission({
     item,
     editFunction: ({ value, instance }) => {
       editItemMembership({
@@ -86,9 +86,10 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
       });
     },
     createFunction: ({ value, instance }) => {
+      const email = users?.find(({ id }) => id === instance.memberId)?.email;
       shareItem({
         id: item.get('id'),
-        email: users?.find(({ id }) => id === instance.memberId),
+        email,
         permission: value,
       });
     },
@@ -117,7 +118,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
       },
       {
         headerName: t('Permission'),
-        cellRenderer: permissionRenderer,
+        cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
         sort: true,
         type: 'rightAligned',
@@ -125,7 +126,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
       },
       {
         field: 'actions',
-        cellRenderer: actionRenderer,
+        cellRenderer: ActionRenderer,
         headerName: t('Actions'),
         colId: 'actions',
         type: 'rightAligned',
@@ -138,8 +139,8 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
       t,
       EmailCellRenderer,
       NameCellRenderer,
-      permissionRenderer,
-      actionRenderer,
+      PermissionRenderer,
+      ActionRenderer,
     ],
   );
 

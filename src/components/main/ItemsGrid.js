@@ -1,8 +1,7 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { withStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
@@ -21,7 +20,7 @@ import Item from './Item';
 import FolderDescription from '../item/FolderDescription';
 import ItemsToolbar from './ItemsToolbar';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   empty: { padding: theme.spacing(1, 2.5) },
   title: {
     display: 'flex',
@@ -44,11 +43,10 @@ const styles = (theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
-});
+}));
 
 const ItemsGrid = (props) => {
   const {
-    classes,
     items,
     title,
     itemSearch,
@@ -59,6 +57,7 @@ const ItemsGrid = (props) => {
   } = props;
 
   const { t } = useTranslation();
+  const classes = useStyles();
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(
     GRID_ITEMS_PER_PAGE_CHOICES[0],
@@ -169,5 +168,4 @@ ItemsGrid.defaultProps = {
   parentId: null,
 };
 
-const StyledComponent = withStyles(styles)(ItemsGrid);
-export default StyledComponent;
+export default ItemsGrid;

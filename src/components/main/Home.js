@@ -12,7 +12,7 @@ import Main from './Main';
 import NewItemButton from './NewItemButton';
 import Authorization from '../common/Authorization';
 import { UppyContextProvider } from '../file/UppyContext';
-import ItemActions from './ItemActions';
+import ItemActionsRenderer from './ItemActions';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ const Home = () => {
           title={t('My Items')}
           items={ownItems}
           headerElements={[<NewItemButton key="newButton" fontSize="small" />]}
-          toolbarActions={ItemActions}
+          ToolbarActions={ItemActionsRenderer}
         />
       </UppyContextProvider>
     </Main>

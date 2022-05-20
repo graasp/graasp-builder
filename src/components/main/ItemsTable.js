@@ -6,7 +6,6 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { Table as GraaspTable } from '@graasp/ui';
 import { makeStyles } from '@material-ui/core';
 import { useNavigate, useParams } from 'react-router';
-import Typography from '@material-ui/core/Typography';
 import { hooks, useMutation } from '../../config/queryClient';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
@@ -15,7 +14,10 @@ import { formatDate } from '../../utils/date';
 import { ITEM_TYPES } from '../../enums';
 import { buildItemPath } from '../../config/paths';
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
-import { buildItemsTableRowId } from '../../config/selectors';
+import {
+  buildItemsTableRowId,
+  ROW_DRAGGER_CLASS,
+} from '../../config/selectors';
 import NameCellRenderer from '../table/NameCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import { CurrentUserContext } from '../context/CurrentUserContext';
@@ -39,7 +41,7 @@ const ItemsTable = ({
   headerElements,
   isSearching,
   actions,
-  toolbarActions,
+  ToolbarActions,
   clickable,
   defaultSortedColumn,
   isEditing,
@@ -107,11 +109,6 @@ const ItemsTable = ({
     member,
   });
 
-  const NoRowsComponent = useCallback(
-    () => <Typography>{t('No items')}</Typography>,
-    [t],
-  );
-
   // never changes, so we can use useMemo
   const columnDefs = useMemo(
     () => [
@@ -168,15 +165,16 @@ const ItemsTable = ({
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
         rowData={rows.toJS()}
-        noRowsOverlayComponentFramework={NoRowsComponent}
-        onRowDragEnd={onDragEnd}
+        emptyMessage={t('No items')}
+        onDragEnd={onDragEnd}
         onCellClicked={onCellClicked}
         getRowId={getRowNodeId}
         clickable={clickable}
         enableDrag={canDrag()}
         rowDragText={itemRowDragText}
-        renderActions={toolbarActions}
+        ToolbarActions={ToolbarActions}
         countTextFunction={countTextFunction}
+        dragClassName={ROW_DRAGGER_CLASS}
       />
     </>
   );
@@ -190,7 +188,7 @@ ItemsTable.propTypes = {
   headerElements: PropTypes.arrayOf(PropTypes.element),
   isSearching: PropTypes.bool,
   actions: PropTypes.element,
-  toolbarActions: PropTypes.element,
+  ToolbarActions: PropTypes.func,
   clickable: PropTypes.bool,
   defaultSortedColumn: PropTypes.shape({
     updatedAt: PropTypes.string,
@@ -209,7 +207,7 @@ ItemsTable.defaultProps = {
   headerElements: [],
   isSearching: false,
   actions: null,
-  toolbarActions: null,
+  ToolbarActions: null,
   clickable: true,
   defaultSortedColumn: {},
   isEditing: false,

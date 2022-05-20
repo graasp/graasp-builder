@@ -1985,9 +1985,9 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui.git#116/deps":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=b252161c3501e1cc2cb11096da91c2568e0d7c18"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ea25d0893d9481916313d6598cb3c0993e86d23b"
   dependencies:
-    "@graasp/utils": "github:graasp/graasp-utils.git#8/objectEnum"
+    "@graasp/utils": "github:graasp/graasp-utils.git"
     ag-grid-community: 27.3.0
     ag-grid-react: 27.3.0
     clsx: 1.1.1
@@ -2007,7 +2007,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 440467d9f41893fa668bdeae2faade7a9c552ed37545bddf9bd9b5770b9b31f105357e305c6c8c75fff598ab05647bd1db28f3fc33adccd18f318675694dd316
+  checksum: 306691ec0a2fabd0243a72370454ce9f9f2b3ccb32a9e6a47f7d678e9385a081d2bbe0599bfc0db81ca6f89c3e45880871aea9770e6af047250b2435796ef7fd
   languageName: node
   linkType: hard
 
@@ -2015,13 +2015,6 @@ __metadata:
   version: 0.1.0
   resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=e31e4065909a253e20082d2fea34cad466a11b83"
   checksum: cf448e4cb02b13dad1f6f790bd09860a63ca087ce83888e38a3882e73c918b345247f70ee014fff9982a0b853627df7d0fdef5e16e7c98896ad82347223aa689
-  languageName: node
-  linkType: hard
-
-"@graasp/utils@github:graasp/graasp-utils.git#8/objectEnum":
-  version: 0.1.0
-  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=6959732352183e69e8b66fe844a3878fd79d2682"
-  checksum: 8d7a8cac8f9ce6726babed4efd127163520100f6ad9edf40e26789b66982ce6a9c2359267db1583e6050f45b56598eb59660fa46593e1df69ee4dc165cf6ec61
   languageName: node
   linkType: hard
 

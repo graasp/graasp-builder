@@ -3,12 +3,15 @@ import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
 import {
   buildItemsTableId,
   buildItemsTableRowId,
-  buildRowDraggerId,
+  buildItemsTableRowSelector,
+  ROW_DRAGGER_CLASS,
 } from '../../../../src/config/selectors';
 import { TABLE_ITEM_RENDER_TIME, ROW_HEIGHT } from '../../../support/constants';
 
 const reorderAndCheckItem = (id, currentPosition, newPosition) => {
-  const dragIcon = `#${buildRowDraggerId(id)}`;
+  const dragIcon = `${buildItemsTableRowSelector(
+    id,
+  )} .${ROW_DRAGGER_CLASS} svg`;
 
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.dragAndDrop(dragIcon, 0, (newPosition - currentPosition) * ROW_HEIGHT);

@@ -169,7 +169,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
                 ? [<NewItemButton key="newButton" fontSize="small" />]
                 : undefined
             }
-            toolbarActions={ItemActions}
+            ToolbarActions={ItemActions}
           />
         </>
       );
