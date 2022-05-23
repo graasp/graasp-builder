@@ -5,13 +5,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import { useIsParentInstance } from '../../../utils/item';
 
-const TableRowDeleteButton = ({
+const TableRowDeleteButtonRenderer = ({
   item,
   buildIdFunction,
   tooltip,
   color,
   onDelete,
 }) => {
+  // todo: use typescript to precise data is one of Invitation or Membership
   const ChildComponent = ({ data }) => {
     const isFromParent = useIsParentInstance({
       instance: data,
@@ -59,17 +60,17 @@ const TableRowDeleteButton = ({
   return ChildComponent;
 };
 
-TableRowDeleteButton.propTypes = {
+TableRowDeleteButtonRenderer.propTypes = {
   disabled: PropTypes.bool,
   tooltip: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   color: PropTypes.string,
 };
 
-TableRowDeleteButton.defaultProps = {
+TableRowDeleteButtonRenderer.defaultProps = {
   tooltip: null,
   color: 'default',
   disabled: false,
 };
 
-export default TableRowDeleteButton;
+export default TableRowDeleteButtonRenderer;

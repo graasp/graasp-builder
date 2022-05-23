@@ -4,7 +4,8 @@ import { useIsParentInstance } from '../../../utils/item';
 import ItemMembershipSelect from './ItemMembershipSelect';
 import { PERMISSION_LEVELS } from '../../../enums';
 
-const TableRowPermission = ({ item, editFunction, createFunction }) => {
+const TableRowPermissionRenderer = ({ item, editFunction, createFunction }) => {
+  // todo: use typescript to precise data is one of Invitation or Membership
   const ChildComponent = ({ data: instance }) => {
     const isParentMembership = useIsParentInstance({
       instance,
@@ -38,4 +39,4 @@ const TableRowPermission = ({ item, editFunction, createFunction }) => {
   };
   return ChildComponent;
 };
-export default TableRowPermission;
+export default TableRowPermissionRenderer;

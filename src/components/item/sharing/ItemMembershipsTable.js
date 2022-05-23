@@ -10,8 +10,8 @@ import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
 } from '../../../config/selectors';
-import TableRowDeleteButton from './TableRowDeleteButton';
-import TableRowPermission from './TableRowPermission';
+import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
+import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 import {
   MEMBERSHIP_TABLE_HEIGHT,
   MEMBERSHIP_TABLE_ROW_HEIGHT,
@@ -68,7 +68,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
     deleteItemMembership({ itemId: item.get('id'), id: instance.id });
   };
 
-  const ActionRenderer = TableRowDeleteButton({
+  const ActionRenderer = TableRowDeleteButtonRenderer({
     item,
     onDelete,
     buildIdFunction: buildItemMembershipRowDeleteButtonId,
@@ -76,7 +76,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
       'This membership is defined in the parent item and cannot be deleted here.',
     ),
   });
-  const PermissionRenderer = TableRowPermission({
+  const PermissionRenderer = TableRowPermissionRenderer({
     item,
     editFunction: ({ value, instance }) => {
       editItemMembership({

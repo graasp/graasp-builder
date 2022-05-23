@@ -155,6 +155,7 @@ export const sortByName = (a, b) => {
   return 0;
 };
 
+// todo: use typescript to precise data is one of Invitation or Membership
 export const useIsParentInstance = ({ instance, item }) => {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {
