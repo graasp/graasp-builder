@@ -1985,7 +1985,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui.git#116/deps":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=f6fcd994637198099a057d72b75db9ac58cbfc9a"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=e7474888ed85e79ef0f54ca60c1052fce6278939"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -2007,7 +2007,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 97c4b45b1418a93445db62cfb219a64af493fd62ed2d23ec774c05fd727163210649265ed99473ac24b74c01e3f06826ee2b29c6f6b7ec121fca7e19dc075d2c
+  checksum: 8baa7ba49afa51a2fd63177ee33ad3619f31de01d9c7c5e80d2feeb4a8c452d76b302229c7c76bb0220a755256ce2c2079ed6b81d58def45785cac0b370342cd
   languageName: node
   linkType: hard
 
@@ -4048,16 +4048,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:27.1.0":
-  version: 27.1.0
-  resolution: "ag-grid-react@npm:27.1.0"
+"ag-grid-react@npm:27.3.0":
+  version: 27.3.0
+  resolution: "ag-grid-react@npm:27.3.0"
   dependencies:
     prop-types: ^15.8.1
   peerDependencies:
-    ag-grid-community: ~27.1.0
-    react: ^16.3.0 || ^17.0.0
-    react-dom: ^16.3.0 || ^17.0.0
-  checksum: 36631975f2b94c3ac063423e195b14ebeb901cb2b0f1559c987c25e32d627db04a10d5420f90b173fa3e36cf915430b7201364c087f8265f812d072301f77b74
+    ag-grid-community: ~27.3.0
+    react: ^16.3.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+  checksum: 9e4b7dd3649fb9ff2e4f0c63d273c7e76b076c5329812e775e43a0bf367b315e34968874d041001f0f29976160aa4dc62626c60ce4e6fd4f6d4d00f468a54810
   languageName: node
   linkType: hard
 
@@ -10078,7 +10078,7 @@ __metadata:
     "@uppy/tus": 2.2.1
     "@uppy/xhr-upload": 2.0.7
     ag-grid-community: 27.3.0
-    ag-grid-react: 27.1.0
+    ag-grid-react: 27.3.0
     clsx: 1.1.1
     concurrently: 7.0.0
     connected-react-router: 6.9.2

@@ -30,6 +30,7 @@ const useStyles = makeStyles(() => ({
   },
   permission: {
     overflow: 'visible',
+    textAlign: 'right',
   },
 }));
 
@@ -63,7 +64,12 @@ const EmailRenderer = (users) => {
 
 const getRowId = ({ data }) => buildItemMembershipRowId(data.id);
 
-const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
+const ItemMembershipsTable = ({
+  memberships,
+  item,
+  emptyMessage,
+  showEmail,
+}) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { data: users, isLoading } = hooks.useMembers(
@@ -82,39 +88,40 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
     deleteItemMembership({ itemId: item.get('id'), id: instance.id });
   };
 
-  const ActionRenderer = TableRowDeleteButtonRenderer({
-    item,
-    onDelete,
-    buildIdFunction: buildItemMembershipRowDeleteButtonId,
-    tooltip: t(
-      'This membership is defined in the parent item and cannot be deleted here.',
-    ),
-  });
-  const PermissionRenderer = TableRowPermissionRenderer({
-    item,
-    editFunction: ({ value, instance }) => {
-      editItemMembership({
-        itemId: item.get('id'),
-        id: instance.id,
-        permission: value,
-      });
-    },
-    createFunction: ({ value, instance }) => {
-      const email = users?.find(({ id }) => id === instance.memberId)?.email;
-      shareItem({
-        id: item.get('id'),
-        email,
-        permission: value,
-      });
-    },
-  });
-  const NameCellRenderer = NameRenderer(users);
-  const EmailCellRenderer = EmailRenderer(users);
-
   // never changes, so we can use useMemo
-  const columnDefs = useMemo(
-    () => [
-      {
+  const columnDefs = useMemo(() => {
+    const ActionRenderer = TableRowDeleteButtonRenderer({
+      item,
+      onDelete,
+      buildIdFunction: buildItemMembershipRowDeleteButtonId,
+      tooltip: t(
+        'This membership is defined in the parent item and cannot be deleted here.',
+      ),
+    });
+    const PermissionRenderer = TableRowPermissionRenderer({
+      item,
+      editFunction: ({ value, instance }) => {
+        editItemMembership({
+          itemId: item.get('id'),
+          id: instance.id,
+          permission: value,
+        });
+      },
+      createFunction: ({ value, instance }) => {
+        const email = users?.find(({ id }) => id === instance.memberId)?.email;
+        shareItem({
+          id: item.get('id'),
+          email,
+          permission: value,
+        });
+      },
+    });
+    const NameCellRenderer = NameRenderer(users);
+
+    const columns = [];
+    if (showEmail) {
+      const EmailCellRenderer = EmailRenderer(users);
+      columns.push({
         headerCheckboxSelection: true,
         checkboxSelection: true,
         headerName: t('Mail'),
@@ -123,7 +130,10 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
         cellClass: classes.row,
         flex: 2,
         tooltipField: 'email',
-      },
+      });
+    }
+
+    return columns.concat([
       {
         headerName: t('Name'),
         cellRenderer: NameCellRenderer,
@@ -152,16 +162,9 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
         cellClass: classes.actionCell,
         flex: 1,
       },
-    ],
+    ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      t,
-      EmailCellRenderer,
-      NameCellRenderer,
-      PermissionRenderer,
-      ActionRenderer,
-    ],
-  );
+  }, [item, users, showEmail]);
 
   if (isLoading) {
     return <Loader />;
@@ -187,10 +190,12 @@ ItemMembershipsTable.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   emptyMessage: PropTypes.string,
+  showEmail: PropTypes.bool,
 };
 
 ItemMembershipsTable.defaultProps = {
   emptyMessage: null,
+  showEmail: true,
 };
 
 export default ItemMembershipsTable;

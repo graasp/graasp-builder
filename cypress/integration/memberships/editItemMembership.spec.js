@@ -17,7 +17,7 @@ const editItemMembership = ({ itemId, id, permission }) => {
   const select = cy.get(
     `${buildItemMembershipRowSelector(
       id,
-    )}  .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`,
+    )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`,
   );
   select.click();
   select.get(`#${buildPermissionOptionId(permission)}`).click();

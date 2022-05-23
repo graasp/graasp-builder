@@ -121,7 +121,6 @@ const ItemsTable = ({
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.name,
         field: 'name',
-        showThumbnails,
         tooltipField: 'name',
       },
       {
