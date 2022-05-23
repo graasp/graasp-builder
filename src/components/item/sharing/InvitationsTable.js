@@ -93,6 +93,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         field: 'email',
         cellClass: classes.row,
         flex: 1,
+        tooltipField: 'email',
       },
       {
         headerName: t('Invitation'),

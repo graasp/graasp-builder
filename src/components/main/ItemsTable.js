@@ -18,7 +18,7 @@ import {
   buildItemsTableRowId,
   ROW_DRAGGER_CLASS,
 } from '../../config/selectors';
-import NameCellRenderer from '../table/NameCellRenderer';
+import NameCellRenderer from '../table/ItemNameCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
@@ -122,6 +122,7 @@ const ItemsTable = ({
         sort: defaultSortedColumn?.name,
         field: 'name',
         showThumbnails,
+        tooltipField: 'name',
       },
       {
         field: 'type',

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@material-ui/core';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Loader, Table as GraaspTable } from '@graasp/ui';
 import { hooks, useMutation } from '../../../config/queryClient';
@@ -17,24 +18,6 @@ import {
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
 
-const NameRenderer = (users) => {
-  const ChildComponent = ({ data: membership }) => {
-    const user = users?.find(({ id }) => id === membership.memberId);
-
-    return user?.name ?? '';
-  };
-  return ChildComponent;
-};
-
-const EmailRenderer = (users) => {
-  const ChildComponent = ({ data: membership }) => {
-    const user = users?.find(({ id }) => id === membership.memberId);
-
-    return user?.email ?? '';
-  };
-  return ChildComponent;
-};
-
 const useStyles = makeStyles(() => ({
   row: {
     display: 'flex',
@@ -45,7 +28,38 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
+  permission: {
+    overflow: 'visible',
+  },
 }));
+
+const NameRenderer = (users) => {
+  const ChildComponent = ({ data: membership }) => {
+    const user = users?.find(({ id }) => id === membership.memberId);
+
+    return <Typography noWrap>{user?.name ?? ''}</Typography>;
+  };
+  ChildComponent.propTypes = {
+    data: PropTypes.shape({
+      memberId: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+  return ChildComponent;
+};
+
+const EmailRenderer = (users) => {
+  const ChildComponent = ({ data: membership }) => {
+    const user = users?.find(({ id }) => id === membership.memberId);
+
+    return <Typography noWrap>{user?.email ?? ''}</Typography>;
+  };
+  ChildComponent.propTypes = {
+    data: PropTypes.shape({
+      memberId: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+  return ChildComponent;
+};
 
 const getRowId = ({ data }) => buildItemMembershipRowId(data.id);
 
@@ -107,14 +121,16 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
         cellRenderer: EmailCellRenderer,
         field: 'email',
         cellClass: classes.row,
-        flex: 1,
+        flex: 2,
+        tooltipField: 'email',
       },
       {
         headerName: t('Name'),
         cellRenderer: NameCellRenderer,
         field: 'memberId',
         cellClass: classes.row,
-        flex: 1,
+        flex: 2,
+        tooltipField: 'name',
       },
       {
         headerName: t('Permission'),
@@ -123,6 +139,8 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
         sort: true,
         type: 'rightAligned',
         field: 'permission',
+        flex: 1,
+        cellClass: classes.permission,
       },
       {
         field: 'actions',
@@ -132,6 +150,7 @@ const ItemMembershipsTable = ({ memberships, item, emptyMessage }) => {
         type: 'rightAligned',
         sortable: false,
         cellClass: classes.actionCell,
+        flex: 1,
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
