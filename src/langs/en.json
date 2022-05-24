@@ -186,6 +186,8 @@
     "Set the options for your resource to make it easily accessible by the public.": "Set the options for your resource to make it easily accessible by the public.",
     "Your item is pending validation. Once the validation succeeds, you will be able to publish your item.": "Your item is pending validation. Once the validation succeeds, you will be able to publish your item.",
     "Validation": "Validation",
-    "Publication": "Publication"
+    "Publication": "Publication",
+    "Delete Account": "Delete account",
+    "DeleteAccountMessage": "Your account will be deleted permanently."
   }
 }
