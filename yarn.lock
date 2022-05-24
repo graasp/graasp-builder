@@ -4147,23 +4147,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:27.1.0":
-  version: 27.1.0
-  resolution: "ag-grid-community@npm:27.1.0"
-  checksum: b385fe4e6f0d6e781ad7acbf58cc165acf1d536c07a604bd4f642e8f9e4595c937bd9296e3375c0eb0e4fdebb99362c4892eb07c87a8a95926e8dc1ae6b1f851
+"ag-grid-community@npm:27.3.0":
+  version: 27.3.0
+  resolution: "ag-grid-community@npm:27.3.0"
+  checksum: 3041c188239c50b875d45f82e4de1adfc7170c7338d0c18e504bc4d57bf71906bf291aaee0c59149ad65900e7308268ed5db32ad7f5f2368ef8e9e6b2c156a02
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:27.1.0":
-  version: 27.1.0
-  resolution: "ag-grid-react@npm:27.1.0"
+"ag-grid-react@npm:27.3.0":
+  version: 27.3.0
+  resolution: "ag-grid-react@npm:27.3.0"
   dependencies:
     prop-types: ^15.8.1
   peerDependencies:
-    ag-grid-community: ~27.1.0
-    react: ^16.3.0 || ^17.0.0
-    react-dom: ^16.3.0 || ^17.0.0
-  checksum: 36631975f2b94c3ac063423e195b14ebeb901cb2b0f1559c987c25e32d627db04a10d5420f90b173fa3e36cf915430b7201364c087f8265f812d072301f77b74
+    ag-grid-community: ~27.3.0
+    react: ^16.3.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+  checksum: 9e4b7dd3649fb9ff2e4f0c63d273c7e76b076c5329812e775e43a0bf367b315e34968874d041001f0f29976160aa4dc62626c60ce4e6fd4f6d4d00f468a54810
   languageName: node
   linkType: hard
 
@@ -10262,8 +10262,8 @@ __metadata:
     "@uppy/status-bar": 2.1.3
     "@uppy/tus": 2.2.1
     "@uppy/xhr-upload": 2.0.7
-    ag-grid-community: 27.1.0
-    ag-grid-react: 27.1.0
+    ag-grid-community: 27.3.0
+    ag-grid-react: 27.3.0
     clsx: 1.1.1
     concurrently: 7.0.0
     connected-react-router: 6.9.2

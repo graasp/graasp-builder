@@ -46,7 +46,7 @@ const ItemPanel = ({ open, children }) => {
 
 ItemPanel.propTypes = {
   open: PropTypes.bool.isRequired,
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]),

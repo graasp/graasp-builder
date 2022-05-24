@@ -1,6 +1,6 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
-  buildInvitationEmailTableRowId,
+  buildInvitationTableRowSelector,
   buildItemInvitationRowDeleteButtonId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
@@ -18,7 +18,7 @@ describe('View Invitations', () => {
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
     invitations.forEach(({ itemPath, id, email }) => {
-      cy.get(`#${buildInvitationEmailTableRowId(id)}`).should('contain', email);
+      cy.get(buildInvitationTableRowSelector(id)).should('contain', email);
 
       if (itemPath !== item.path) {
         cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).should(

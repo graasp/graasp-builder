@@ -38,6 +38,8 @@ export const OWNED_ITEMS_ID = 'ownedItems';
 export const ITEMS_TABLE_BODY = 'itemsTableBody';
 export const ITEMS_TABLE_ROW = '.ag-row';
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
+export const buildItemsTableRowSelector = (id) =>
+  `[row-id="${buildItemsTableRowId(id)}"]`;
 export const buildItemsTableRowIdAttribute = (id) =>
   `.ag-center-cols-container [row-id="${buildItemsTableRowId(id)}"]`;
 export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
@@ -106,6 +108,8 @@ export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
 export const buildMemberAvatarClass = (id) => `memberAvatar-${id}`;
 export const ITEM_SETTINGS_BUTTON_CLASS = 'itemSettingsButton';
 export const buildItemMembershipRowId = (id) => `itemMembershipRow-${id}`;
+export const buildItemMembershipRowSelector = (id) =>
+  `[row-id="${buildItemMembershipRowId(id)}"]`;
 export const ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS =
   'itemMembershipPermissionSelect';
 export const buildItemMembershipRowDeleteButtonId = (id) =>
@@ -124,7 +128,7 @@ export const buildItemsGridPaginationButton = (page) =>
 export const buildItemsGridPaginationButtonSelected = (page) =>
   `${buildItemsGridPaginationButton(page)}.Mui-selected`;
 export const ITEM_HEADER_ID = 'itemHeader';
-export const buildRowDraggerId = (id) => `rowDragger-${id}`;
+export const ROW_DRAGGER_CLASS = `rowDragger`;
 export const buildShareButtonId = (id) => `shareButton-${id}`;
 export const buildPublishButtonId = (id) => `publishButton-${id}`;
 export const buildDeleteButtonId = (id) => `deleteButton-${id}`;
@@ -193,4 +197,6 @@ export const buildItemInvitationRowDeleteButtonId = (id) =>
 export const buildInvitationEmailTableRowId = (id) =>
   `invitationEmailTableRow-${id}`;
 export const buildInvitationTableRowId = (id) => `invitationTableRow-${id}`;
+export const buildInvitationTableRowSelector = (id) =>
+  `[row-id="${buildInvitationTableRowId(id)}"]`;
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';

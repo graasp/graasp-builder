@@ -103,6 +103,7 @@ const ItemSharingTab = ({ item, memberships }) => {
               item={item}
               memberships={authenticatedMemberships}
               emptyMessage={t('No user has authenticated to this item yet.')}
+              showEmail={false}
             />
           </>
         )}
@@ -137,6 +138,9 @@ const ItemSharingTab = ({ item, memberships }) => {
 };
 ItemSharingTab.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  memberships: PropTypes.arrayOf(PropTypes.shape({})),
+};
+ItemSharingTab.defaultProps = {
+  memberships: [],
 };
 export default ItemSharingTab;
