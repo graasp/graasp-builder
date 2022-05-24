@@ -4,6 +4,7 @@ import buildI18n from '@graasp/translations';
 import {
   UPLOAD_FILES_PROGRESS_MESSAGE,
   IMPORT_ZIP_PROGRESS_MESSAGE,
+  IMPORT_H5P_PROGRESS_MESSAGE,
 } from './messages';
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
@@ -34,6 +35,7 @@ const {
   uploadItemThumbnailRoutine,
   uploadAvatarRoutine,
   importZipRoutine,
+  importH5PRoutine,
   exportItemRoutine,
   postInvitationsRoutine,
 } = routines;
@@ -65,6 +67,7 @@ export default ({ type, payload }) => {
     case uploadItemThumbnailRoutine.FAILURE:
     case uploadAvatarRoutine.FAILURE:
     case importZipRoutine.FAILURE:
+    case importH5PRoutine.FAILURE:
     case postInvitationsRoutine.FAILURE:
     case exportItemRoutine.FAILURE: {
       // todo: factor out string
@@ -87,6 +90,7 @@ export default ({ type, payload }) => {
     case uploadItemThumbnailRoutine.SUCCESS:
     case uploadAvatarRoutine.SUCCESS:
     case importZipRoutine.SUCCESS:
+    case importH5PRoutine.SUCCESS:
     case editItemRoutine.SUCCESS:
     case copyItemsRoutine.SUCCESS:
     case moveItemsRoutine.SUCCESS:
@@ -114,6 +118,10 @@ export default ({ type, payload }) => {
     }
     case importZipRoutine.REQUEST: {
       toast.info(i18n.t(IMPORT_ZIP_PROGRESS_MESSAGE));
+      break;
+    }
+    case importH5PRoutine.REQUEST: {
+      toast.info(i18n.t(IMPORT_H5P_PROGRESS_MESSAGE));
       break;
     }
     default:

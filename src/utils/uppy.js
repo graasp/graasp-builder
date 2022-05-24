@@ -1,6 +1,6 @@
+import { API_ROUTES } from '@graasp/query-client';
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
-import { API_ROUTES } from '@graasp/query-client';
 import {
   API_HOST,
   FILE_UPLOAD_MAX_FILES,
@@ -161,4 +161,24 @@ export const configureZipImportUppy = ({
       ],
     },
     buildEndpoint: (id) => `${API_HOST}/${API_ROUTES.buildImportZipRoute(id)}`,
+  });
+
+export const configureH5PImportUppy = ({
+  itemId,
+  onComplete,
+  onFilesAdded,
+  onError,
+  onUpload,
+}) =>
+  configureUppy({
+    itemId,
+    onComplete,
+    onFilesAdded,
+    onError,
+    onUpload,
+    restrictions: {
+      maxNumberOfFiles: 1,
+      allowedFileTypes: ['.h5p'],
+    },
+    buildEndpoint: (id) => `${API_HOST}/${API_ROUTES.buildImportH5PRoute(id)}`,
   });
