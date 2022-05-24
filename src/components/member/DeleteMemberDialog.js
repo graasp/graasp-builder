@@ -18,16 +18,15 @@ const useStyles = makeStyles(() => ({
   },
   deleteButton: {
     color: 'red',
-  }
+  },
 }));
-
 
 const DeleteMemberDialog = ({ id }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const { mutate: deleteMember } = useMutation(MUTATION_KEYS.DELETE_MEMBER) 
+  const { mutate: deleteMember } = useMutation(MUTATION_KEYS.DELETE_MEMBER);
 
   return (
     <>
@@ -37,7 +36,9 @@ const DeleteMemberDialog = ({ id }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{t('Confirm deletion')}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {t('Confirm deletion')}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {t('DeleteAccountMessage')}
@@ -59,10 +60,10 @@ const DeleteMemberDialog = ({ id }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    
-      <Button  
+
+      <Button
         variant="text"
-        className={classes.deleteButton} 
+        className={classes.deleteButton}
         color="secondary"
         onClick={() => setOpen(true)}
       >
