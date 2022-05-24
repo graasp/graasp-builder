@@ -1959,7 +1959,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=f698030e5aaaaeb6a7e27e055fd2f53dd8addc9f"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=42c200404e7ac9a66036c01210ce627e778032f4"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -1979,13 +1979,13 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 765d81e4a760cceef52397cb58d44738db04ee794003f5abd2448a8389136bb06f8a94ab4ecb6122e04fbd62f57b931b318e881a309f3dda09695fce104148d1
+  checksum: bc470c7c783c546e9da6f87630f994814f74d49a63f5541328db74081480b7db0ed78fde09b38ed9d30299ed45d31e2fa3e0b43071a4fd86e7ceec41989a5255
   languageName: node
   linkType: hard
 
 "@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ae2748b590cb945ec9d4668707c72df61c584186"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=40dec00985e34d057edc5630c5ac2889c09f0724"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
@@ -1994,7 +1994,7 @@ __metadata:
     katex: 0.15.3
     qs: 6.10.3
     react-cookie-consent: 7.4.1
-    react-i18next: 11.16.2
+    react-i18next: 11.16.9
     react-quill: 1.3.5
     react-text-mask: 5.4.3
     uuid: 8.3.2
@@ -2002,10 +2002,12 @@ __metadata:
     "@material-ui/core": 4.11.0
     "@material-ui/icons": 4.9.1
     "@material-ui/lab": 4.0.0-alpha.58
+    ag-grid-community: 27.3.0
+    ag-grid-react: 27.3.0
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: c5cb272c4e161e516aa874278dcab490416f0b5fefdfbc8468b3cef15b15c38ce71eecf97cfd9cdc203156121f40ad1941c205377083c874c78c8fa877b6b982
+  checksum: 2a1d0f74f087daf6215e43dce39b07d4a9b9047bcf2cb9194f2a8ad54a2dd359e916e22e14a5039100f2415e7424be9058782090cf3c967412dfc475a521b967
   languageName: node
   linkType: hard
 
@@ -4039,23 +4041,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:27.1.0":
-  version: 27.1.0
-  resolution: "ag-grid-community@npm:27.1.0"
-  checksum: b385fe4e6f0d6e781ad7acbf58cc165acf1d536c07a604bd4f642e8f9e4595c937bd9296e3375c0eb0e4fdebb99362c4892eb07c87a8a95926e8dc1ae6b1f851
+"ag-grid-community@npm:27.3.0":
+  version: 27.3.0
+  resolution: "ag-grid-community@npm:27.3.0"
+  checksum: 3041c188239c50b875d45f82e4de1adfc7170c7338d0c18e504bc4d57bf71906bf291aaee0c59149ad65900e7308268ed5db32ad7f5f2368ef8e9e6b2c156a02
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:27.1.0":
-  version: 27.1.0
-  resolution: "ag-grid-react@npm:27.1.0"
+"ag-grid-react@npm:27.3.0":
+  version: 27.3.0
+  resolution: "ag-grid-react@npm:27.3.0"
   dependencies:
     prop-types: ^15.8.1
   peerDependencies:
-    ag-grid-community: ~27.1.0
-    react: ^16.3.0 || ^17.0.0
-    react-dom: ^16.3.0 || ^17.0.0
-  checksum: 36631975f2b94c3ac063423e195b14ebeb901cb2b0f1559c987c25e32d627db04a10d5420f90b173fa3e36cf915430b7201364c087f8265f812d072301f77b74
+    ag-grid-community: ~27.3.0
+    react: ^16.3.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+  checksum: 9e4b7dd3649fb9ff2e4f0c63d273c7e76b076c5329812e775e43a0bf367b315e34968874d041001f0f29976160aa4dc62626c60ce4e6fd4f6d4d00f468a54810
   languageName: node
   linkType: hard
 
@@ -10075,8 +10077,8 @@ __metadata:
     "@uppy/status-bar": 2.1.3
     "@uppy/tus": 2.2.1
     "@uppy/xhr-upload": 2.0.7
-    ag-grid-community: 27.1.0
-    ag-grid-react: 27.1.0
+    ag-grid-community: 27.3.0
+    ag-grid-react: 27.3.0
     clsx: 1.1.1
     concurrently: 7.0.0
     connected-react-router: 6.9.2
@@ -16421,6 +16423,25 @@ __metadata:
     react-native:
       optional: true
   checksum: 3e86c5e7a73eef88eff7487bbc87ecf3d5c6808ce3d0cc1e9599e6a1b72466d2d6ced2b1b600c18a2309757bea49d1670526a1bc8953a9bf377964e9ea3c9166
+  languageName: node
+  linkType: hard
+
+"react-i18next@npm:11.16.9":
+  version: 11.16.9
+  resolution: "react-i18next@npm:11.16.9"
+  dependencies:
+    "@babel/runtime": ^7.14.5
+    html-escaper: ^2.0.2
+    html-parse-stringify: ^3.0.1
+  peerDependencies:
+    i18next: ">= 19.0.0"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: b79606a0c36a822b3d9a1e4f2bb4b44643c121de9425ddfeea7e63e5136fe33d4b0b42f045f14d53592dcdbde1fb43cd7be4555b22747d2e0f6f754d3a60c711
   languageName: node
   linkType: hard
 

@@ -4,9 +4,11 @@ import {
   buildShareButtonId,
 } from '../../../src/config/selectors';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
+import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 
 const deleteItemMembership = ({ id, itemId }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
+  cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
   cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).click();
 };
 

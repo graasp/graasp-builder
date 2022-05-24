@@ -66,7 +66,7 @@ const RecycleBinScreen = () => {
         title={t('Deleted Items')}
         items={List(items)}
         actions={RowActions}
-        toolbarActions={ToolbarActions}
+        ToolbarActions={ToolbarActions}
         showThumbnails={false}
       />
     </Main>

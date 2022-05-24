@@ -1,6 +1,6 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
-  buildItemMembershipRowId,
+  buildItemMembershipRowSelector,
   buildMemberAvatarClass,
   buildShareButtonId,
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
@@ -52,13 +52,13 @@ describe('View Memberships', () => {
         ({ id: mId }) => mId === memberId,
       );
       // check name and mail
-      cy.get(`#${buildItemMembershipRowId(id)}`)
+      cy.get(buildItemMembershipRowSelector(id))
         .should('contain', name)
         .should('contain', email);
 
       // check permission select
       cy.get(
-        `#${buildItemMembershipRowId(
+        `${buildItemMembershipRowSelector(
           id,
         )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
       ).should('have.value', permission);

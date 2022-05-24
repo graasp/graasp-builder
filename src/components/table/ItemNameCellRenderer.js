@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
 import { buildNameCellRendererId } from '../../config/selectors';
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NameCellRenderer = (showThumbnails) => {
+const ItemNameCellRenderer = (showThumbnails) => {
   const Component = ({ data: item }) => {
     const classes = useStyles();
     const { t } = useTranslation();
@@ -41,7 +42,9 @@ const NameCellRenderer = (showThumbnails) => {
             name={item.name}
           />
         )}
-        <div className={classes.name}>{item.name}</div>
+        <Typography noWrap className={classes.name}>
+          {item.name}
+        </Typography>
       </div>
     );
   };
@@ -58,4 +61,4 @@ const NameCellRenderer = (showThumbnails) => {
   return Component;
 };
 
-export default NameCellRenderer;
+export default ItemNameCellRenderer;
