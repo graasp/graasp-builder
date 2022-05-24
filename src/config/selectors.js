@@ -144,9 +144,10 @@ export const CHATBOX_ID = 'chatbox';
 export const CHATBOX_INPUT_BOX_ID = 'chatboxInputBox';
 export const CONFIRM_RECYCLE_BUTTON_ID = 'confirmRecycleButton';
 export const SHARE_ITEM_VISIBILITY_SELECT_ID = 'shareItemVisiblitySelect';
-export const SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID = 'shareItemCategoryLevelTitle';
-export const SHARE_ITEM_CATEGORY_LEVEL = 'shareItemCategoryLevel';
-export const SHARE_ITEM_CATEGORY_DISCIPLINE = 'shareItemCategoryDiscipline';
+export const buildCategorySelectionTitleId = (title) =>
+  `itemCategoryTitle-${title}`;
+export const buildCategorySelectionId = (title) =>
+  `itemCategoryDropdown-${title}`;
 export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
@@ -174,7 +175,8 @@ export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton';
 export const buildCustomizedTagsSelector = (index) =>
   `customizedTagsPreview-${index}`;
 
-export const CATEGORIES_SELECTION_VALUE_SELECTOR = `#${SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}+div span`;
+export const buildCategoriesSelectionValueSelector = (title) =>
+  `#${buildCategorySelectionTitleId(title)}+div span`;
 
 export const buildCategoryMenuOptions = (menuName, optionIndex) =>
   `#${menuName}-popup li[data-option-index="${optionIndex}"]`;
