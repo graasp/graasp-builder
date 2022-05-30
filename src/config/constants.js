@@ -189,6 +189,13 @@ export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
 export const CATEGORY_TYPES = {
   LEVEL: 'level',
   DISCIPLINE: 'discipline',
+  LANGUAGE: 'language',
+};
+
+export const CATEGORY_TYPE_TITLES = {
+  LEVEL: 'Level',
+  DISCIPLINE: 'Discipline',
+  LANGUAGE: 'Language',
 };
 
 // todo: factor out in graasp constants/utils

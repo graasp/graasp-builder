@@ -18,6 +18,7 @@ import {
   SETTINGS_EXPANDABLE_TOGGLE_ID,
 } from '../../../config/selectors';
 import ThumbnailSetting from './ThumbnailSetting';
+import CCLicenseSelection from '../publish/CCLicenseSelection';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -118,6 +119,7 @@ const ItemSettings = ({ item }) => {
         {renderExpandableSetting()}
       </FormGroup>
       <ThumbnailSetting item={item} />
+      <CCLicenseSelection item={item} />
     </Container>
   );
 };
