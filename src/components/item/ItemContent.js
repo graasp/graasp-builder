@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core';
-import { FileItem, DocumentItem, LinkItem, AppItem } from '@graasp/ui';
+import { FileItem, DocumentItem, LinkItem, AppItem, H5PItem } from '@graasp/ui';
 import { MUTATION_KEYS, Api } from '@graasp/query-client';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
@@ -25,6 +25,7 @@ import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import { H5P_FRAME_CSS_PATH, H5P_FRAME_JS_PATH } from '../../config/paths';
 
 const { useChildren, useFileContent } = hooks;
 
@@ -170,6 +171,16 @@ const ItemContent = ({ item, enableEditing, permission }) => {
             }
           />
         </>
+      );
+    case ITEM_TYPES.H5P:
+      return (
+        <H5PItem
+          item={item}
+          playerOptions={{
+            frameJs: H5P_FRAME_JS_PATH,
+            frameCss: H5P_FRAME_CSS_PATH,
+          }}
+        />
       );
 
     default:
