@@ -30,8 +30,7 @@ export const GRAASP_DOCUMENT_CHILDREN_ITEM = {
   type: ITEM_TYPES.DOCUMENT,
   name: 'children graasp text',
   description: 'a description for graasp text',
-  path:
-    'bdf09f5a_5688_11eb_ae93_0242ac130002.1cafbd2a_5688_12eb_ae93_0242ac130002',
+  path: 'bdf09f5a_5688_11eb_ae93_0242ac130002.1cafbd2a_5688_12eb_ae93_0242ac130002',
   creator: CURRENT_USER.id,
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',

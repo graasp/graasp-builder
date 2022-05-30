@@ -10,7 +10,10 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import ErrorAlert from '../../common/ErrorAlert';
-import { CATEGORY_TYPES } from '../../../config/constants';
+import {
+  CATEGORY_TYPES,
+  CATEGORY_TYPE_TITLES,
+} from '../../../config/constants';
 import { sortByName } from '../../../utils/item';
 import DropdownMenu from './DropdownMenu';
 
@@ -132,20 +135,20 @@ const CategorySelection = ({ item }) => {
         {t('Category')}
       </Typography>
       <DropdownMenu
-        title={t('Level')}
-        handleChange={handleChange('level')}
+        title={t(CATEGORY_TYPE_TITLES.LEVEL)}
+        handleChange={handleChange(CATEGORY_TYPES.LEVEL)}
         valueList={levelList}
         selectedValues={selectedValues}
       />
       <DropdownMenu
-        title={t('Discipline')}
-        handleChange={handleChange('discipline')}
+        title={t(CATEGORY_TYPE_TITLES.DISCIPLINE)}
+        handleChange={handleChange(CATEGORY_TYPES.DISCIPLINE)}
         valueList={disciplineList}
         selectedValues={selectedValues}
       />
       <DropdownMenu
-        title={t('Language')}
-        handleChange={handleChange('language')}
+        title={t(CATEGORY_TYPE_TITLES.LANGUAGE)}
+        handleChange={handleChange(CATEGORY_TYPES.LANGUAGE)}
         valueList={languageList}
         selectedValues={selectedValues}
       />

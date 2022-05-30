@@ -9,7 +9,6 @@ import {
   buildCategorySelectionId,
   buildCategorySelectionTitleId,
 } from '../../../config/selectors';
-import ErrorAlert from '../../common/ErrorAlert';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -29,7 +28,7 @@ const DropdownMenu = ({ title, handleChange, valueList, selectedValues }) => {
   const classes = useStyles();
 
   if (!valueList) {
-    return <ErrorAlert />;
+    return null;
   }
 
   return (
