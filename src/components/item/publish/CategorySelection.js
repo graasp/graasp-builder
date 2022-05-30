@@ -9,7 +9,6 @@ import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import ErrorAlert from '../../common/ErrorAlert';
 import {
   CATEGORY_TYPES,
   CATEGORY_TYPE_TITLES,
@@ -98,12 +97,7 @@ const CategorySelection = ({ item }) => {
     return <Loader />;
   }
 
-  if (!levelList || !disciplineList) {
-    return <ErrorAlert />;
-  }
-
-  const handleChange = (categoryType) => (event, value, reason) => {
-    const typeMap = { level: levelList, discipline: disciplineList };
+  const handleChange = (valueList) => (event, value, reason) => {
     if (reason === SELECT_OPTION) {
       // post new category
       const newCategoryId = value.at(-1).id;
@@ -113,7 +107,7 @@ const CategorySelection = ({ item }) => {
       });
     } else if (reason === REMOVE_OPTION) {
       // remove an option
-      const previousValues = typeMap[categoryType]?.filter((entry) =>
+      const previousValues = valueList?.filter((entry) =>
         selectedValues.includes(entry),
       );
       const result = previousValues.filter(
@@ -136,19 +130,19 @@ const CategorySelection = ({ item }) => {
       </Typography>
       <DropdownMenu
         title={t(CATEGORY_TYPE_TITLES.LEVEL)}
-        handleChange={handleChange(CATEGORY_TYPES.LEVEL)}
+        handleChange={handleChange(levelList)}
         valueList={levelList}
         selectedValues={selectedValues}
       />
       <DropdownMenu
         title={t(CATEGORY_TYPE_TITLES.DISCIPLINE)}
-        handleChange={handleChange(CATEGORY_TYPES.DISCIPLINE)}
+        handleChange={handleChange(disciplineList)}
         valueList={disciplineList}
         selectedValues={selectedValues}
       />
       <DropdownMenu
         title={t(CATEGORY_TYPE_TITLES.LANGUAGE)}
-        handleChange={handleChange(CATEGORY_TYPES.LANGUAGE)}
+        handleChange={handleChange(languageList)}
         valueList={languageList}
         selectedValues={selectedValues}
       />
