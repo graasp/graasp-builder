@@ -10,7 +10,6 @@ import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
-import Authorization from '../common/Authorization';
 import { UppyContextProvider } from '../file/UppyContext';
 import ItemActionsRenderer from './ItemActions';
 
@@ -50,4 +49,4 @@ Home.propTypes = {
   }).isRequired,
 };
 
-export default Authorization()(Home);
+export default Home;

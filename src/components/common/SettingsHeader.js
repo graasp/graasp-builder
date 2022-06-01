@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import truncate from 'lodash.truncate';
+import { redirect } from '@graasp/utils';
 import { Avatar } from '@graasp/ui';
 import { MUTATION_KEYS, API_ROUTES } from '@graasp/query-client';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -15,6 +16,7 @@ import {
   AUTHENTICATION_HOST,
   USERNAME_MAX_LENGTH,
   HEADER_USERNAME_MAX_WIDTH,
+  SIGN_IN_LINK,
 } from '../../config/constants';
 import {
   HEADER_USER_ID,
@@ -44,7 +46,19 @@ const SettingsHeader = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
+  const { mutate: signOut, isSuccess: isSignOuSuccess } = useMutation(
+    MUTATION_KEYS.SIGN_OUT,
+  );
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isSignOuSuccess) {
+    redirect(SIGN_IN_LINK);
+  }
+
+  const username = user?.get('name');
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -98,12 +112,6 @@ const SettingsHeader = () => {
       </Menu>
     );
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  const username = user?.get('name');
 
   return (
     <>

@@ -19,7 +19,6 @@ import {
 } from '../../utils/item';
 import { getFavoriteItems } from '../../utils/member';
 import { CurrentUserContext } from '../context/CurrentUserContext';
-import Authorization from '../common/Authorization';
 
 const FavoriteItems = () => {
   const { t } = useTranslation();
@@ -78,4 +77,4 @@ const FavoriteItems = () => {
   );
 };
 
-export default Authorization()(FavoriteItems);
+export default FavoriteItems;

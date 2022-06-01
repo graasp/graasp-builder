@@ -1953,11 +1953,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git":
+"@graasp/query-client@github:graasp/graasp-query-client.git#165/signOutRedirect":
   version: 0.1.0
+<<<<<<< HEAD
   resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=bac21c91be5563dd2c524b5fccd5483d74509e14"
+=======
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=493ed141070afb85ed945678eaaadd96b62b57f5"
+>>>>>>> a0f2764 (refactor: factor out withAutorization)
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
+    "@graasp/utils": "github:graasp/graasp-utils.git#11/redirect"
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
@@ -1968,7 +1973,11 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
+<<<<<<< HEAD
   checksum: 83e21708ceea28a459d2495f6f47a8985a552531dcbba4ddc5dae53c61baa653aafc511f2f74e40e43d9db198202d7f297b07e00e855e5526dc8ca7f539f7994
+=======
+  checksum: d3a1fa33d3b22567f1253c1da3338fc09d72088f8dc49665efd8015803d4d9e8917f9d7b4e95512f0b100123160d6ef6aaafc1cf7462c4e85f3e89123da4a536
+>>>>>>> a0f2764 (refactor: factor out withAutorization)
   languageName: node
   linkType: hard
 
@@ -1981,7 +1990,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui, @graasp/ui@github:graasp/graasp-ui.git":
+"@graasp/ui@github:graasp/graasp-ui":
   version: 0.2.0
   resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=95eb3595e74d559b6afd3ae6571589fd0b15736d"
   dependencies:
@@ -2009,10 +2018,46 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/ui@github:graasp/graasp-ui.git#130/redirect":
+  version: 0.2.0
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=5c0ec4b5db9f0d3e4c0fb5aaec14fa2289f573fd"
+  dependencies:
+    "@graasp/utils": "github:graasp/graasp-utils.git#11/redirect"
+    clsx: 1.1.1
+    http-status-codes: 2.2.0
+    immutable: 4.0.0
+    katex: 0.15.3
+    qs: 6.10.3
+    react-cookie-consent: 7.4.1
+    react-i18next: 11.16.9
+    react-quill: 1.3.5
+    react-text-mask: 5.4.3
+    uuid: 8.3.2
+  peerDependencies:
+    "@material-ui/core": 4.11.0
+    "@material-ui/icons": 4.9.1
+    "@material-ui/lab": 4.0.0-alpha.58
+    ag-grid-community: 27.3.0
+    ag-grid-react: 27.3.0
+    i18next: 21.3.1
+    react: ^16.13.1
+    react-dom: 16.13.1
+    react-router-dom: 6.2.2
+  checksum: f3b915fb62b0758d8d18d154d91021182850bf5a19f074fb7ba87e31b35d26c2e10c95c7652773d62529390a9c3b6b8cb37613eab5e78ff32f99ec6e8e2b7b67
+  languageName: node
+  linkType: hard
+
 "@graasp/utils@github:graasp/graasp-utils.git":
   version: 0.1.0
   resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=82be1fd0ba2cc7a3c59465012b55e10736e17f96"
   checksum: 8d7a8cac8f9ce6726babed4efd127163520100f6ad9edf40e26789b66982ce6a9c2359267db1583e6050f45b56598eb59660fa46593e1df69ee4dc165cf6ec61
+  languageName: node
+  linkType: hard
+
+"@graasp/utils@github:graasp/graasp-utils.git#11/redirect":
+  version: 0.1.0
+  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=a6fbcb5c02e7b7b79e7d0dd29734d549367fe509"
+  checksum: eebd3a95fdb9a0adfbca3c3d06339ac033f6fa32cf4e91292525f480ec7d683a345a71dde7418f0108d1d8e7eb4cb189c2ef48ef58a21b2512bc251c62060e51
   languageName: node
   linkType: hard
 
@@ -10322,10 +10367,10 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git#165/signOutRedirect"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git"
-    "@graasp/utils": "github:graasp/graasp-utils.git"
+    "@graasp/ui": "github:graasp/graasp-ui.git#130/redirect"
+    "@graasp/utils": "github:graasp/graasp-utils.git#11/redirect"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 5.0.0-beta.5

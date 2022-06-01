@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Loader, withAuthorization } from '@graasp/ui';
+import { API_ROUTES } from '@graasp/query-client';
+import { Loader, Authorization } from '@graasp/ui';
 import {
   HOME_PATH,
   ITEMS_PATH,
@@ -19,10 +21,16 @@ import MemberProfileScreen from './member/MemberProfileScreen';
 import FavoriteItems from './main/FavoriteItems';
 import RecycleBinScreen from './RecycleBinScreen';
 import { CurrentUserContext } from './context/CurrentUserContext';
-import { SIGN_IN_LINK } from '../config/constants';
+import { AUTHENTICATION_HOST } from '../config/constants';
 
-const App = () => {
+const RR = () => {
+  const redirectionLink = `${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath()}`;
+
   const { data: currentMember, isLoading } = useContext(CurrentUserContext);
+  // {
+  //   data: { size: 3 },
+  //   isLoading: false,
+  // };
 
   if (isLoading) {
     return <Loader />;
@@ -30,22 +38,22 @@ const App = () => {
 
   const withAuthorizationProps = {
     currentMember,
-    redirectionLink: SIGN_IN_LINK,
+    redirectionLink,
   };
-  const HomeWithAuthorization = withAuthorization(Home, withAuthorizationProps);
-  const SharedWithAuthorization = withAuthorization(
+  const HomeWithAuthorization = Authorization(Home, withAuthorizationProps);
+  const SharedWithAuthorization = Authorization(
     SharedItems,
     withAuthorizationProps,
   );
-  const FavoriteWithAuthorization = withAuthorization(
+  const FavoriteWithAuthorization = Authorization(
     FavoriteItems,
     withAuthorizationProps,
   );
-  const MemberWithAuthorization = withAuthorization(
+  const MemberWithAuthorization = Authorization(
     MemberProfileScreen,
     withAuthorizationProps,
   );
-  const RecycleWithAuthorization = withAuthorization(
+  const RecycleWithAuthorization = Authorization(
     RecycleBinScreen,
     withAuthorizationProps,
   );
@@ -54,7 +62,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path={HOME_PATH} exact element={<HomeWithAuthorization />} />
-        <Route
+        {/* <Route
           path={SHARED_ITEMS_PATH}
           exact
           element={<SharedWithAuthorization />}
@@ -62,6 +70,7 @@ const App = () => {
         <Route
           path={FAVORITE_ITEMS_PATH}
           exact
+          // eslint-disable-next-line arrow-body-style
           element={<FavoriteWithAuthorization />}
         />
         <Route path={buildItemPath()} element={<ItemScreen />} />
@@ -77,10 +86,10 @@ const App = () => {
         />
         <Route path={ITEMS_PATH} exact element={<HomeWithAuthorization />} />
         <Route path={REDIRECT_PATH} exact element={<Redirect />} />
-        <Route element={<Redirect />} />
+        <Route element={<Redirect />} /> */}
       </Routes>
     </Router>
   );
 };
 
-export default App;
+export default RR;

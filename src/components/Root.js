@@ -13,8 +13,10 @@ import {
   queryClient,
   ReactQueryDevtools,
 } from '../config/queryClient';
+import ModalProviders from './context/ModalProviders';
 import i18nConfig from '../config/i18n';
 import { SHOW_NOTIFICATIONS, NODE_ENV, ENV } from '../config/constants';
+import { CurrentUserContextProvider } from './context/CurrentUserContext';
 
 const theme = createTheme({
   palette: {
@@ -43,7 +45,11 @@ const Root = () => (
         {SHOW_NOTIFICATIONS && (
           <ToastContainer position="bottom-right" theme="colored" />
         )}
-        <App />
+        <ModalProviders>
+          <CurrentUserContextProvider>
+            <App />
+          </CurrentUserContextProvider>
+        </ModalProviders>
       </MuiThemeProvider>
     </I18nextProvider>
     {NODE_ENV === ENV.DEVELOPMENT && <ReactQueryDevtools />}

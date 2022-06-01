@@ -1,4 +1,5 @@
 import { Context } from '@graasp/utils';
+import { API_ROUTES } from '@graasp/query-client';
 import env from '../env.json';
 import { ITEM_LAYOUT_MODES, PERMISSION_LEVELS, ITEM_TYPES } from '../enums';
 
@@ -255,3 +256,5 @@ export const BUTTON_TYPES = {
 
 export const MEMBERSHIP_TABLE_HEIGHT = 400;
 export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
+
+export const SIGN_IN_LINK = `${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath()}`;
