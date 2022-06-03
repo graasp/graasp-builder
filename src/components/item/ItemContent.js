@@ -25,7 +25,11 @@ import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
-import { H5P_FRAME_CSS_PATH, H5P_FRAME_JS_PATH } from '../../config/paths';
+import {
+  buildServeH5PContentURL,
+  H5P_FRAME_CSS_PATH,
+  H5P_FRAME_JS_PATH,
+} from '../../config/h5p';
 
 const { useChildren, useFileContent } = hooks;
 
@@ -175,8 +179,9 @@ const ItemContent = ({ item, enableEditing, permission }) => {
     case ITEM_TYPES.H5P:
       return (
         <H5PItem
-          item={item}
+          itemId={itemId}
           playerOptions={{
+            h5pJsonPath: buildServeH5PContentURL(itemId),
             frameJs: H5P_FRAME_JS_PATH,
             frameCss: H5P_FRAME_CSS_PATH,
           }}

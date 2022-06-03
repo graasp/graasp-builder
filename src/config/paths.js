@@ -1,4 +1,4 @@
-import { GRAASP_PERFORM_HOST, H5P_ASSETS_HOST } from './constants';
+import { GRAASP_PERFORM_HOST } from './constants';
 
 export const HOME_PATH = '/';
 export const SHARED_ITEMS_PATH = '/shared';
@@ -14,5 +14,3 @@ export const buildGraaspPlayerView = (id) => `${GRAASP_PERFORM_HOST}/${id}`;
 export const buildGraaspBuilderView = (id) =>
   `${window.location.origin}${buildItemPath(id)}`;
 export const RECYCLE_BIN_PATH = '/recycle-bin';
-export const H5P_FRAME_JS_PATH = `${H5P_ASSETS_HOST}/frame.bundle.js`;
-export const H5P_FRAME_CSS_PATH = `${H5P_ASSETS_HOST}/styles/h5p.css`;
