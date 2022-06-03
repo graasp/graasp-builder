@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { redirectToSavedUrl } from '@graasp/utils';
-import { RedirectContent } from '@graasp/ui';
+import { RedirectionContent } from '@graasp/ui';
 import { HOME_PATH } from '../../config/paths';
 
 const Redirect = () => {
@@ -8,7 +8,7 @@ const Redirect = () => {
     redirectToSavedUrl(HOME_PATH);
   }, []);
 
-  return <RedirectContent link={HOME_PATH} />;
+  return <RedirectionContent link={HOME_PATH} />;
 };
 
 export default Redirect;

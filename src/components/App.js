@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import { saveUrlForRedirection } from '@graasp/utils';
 import { Loader, withAuthorization } from '@graasp/ui';
+import { useLocation } from 'react-router';
 import {
   HOME_PATH,
   ITEMS_PATH,
@@ -19,9 +21,10 @@ import MemberProfileScreen from './member/MemberProfileScreen';
 import FavoriteItems from './main/FavoriteItems';
 import RecycleBinScreen from './RecycleBinScreen';
 import { CurrentUserContext } from './context/CurrentUserContext';
-import { SIGN_IN_LINK } from '../config/constants';
+import { DOMAIN, SIGN_IN_PATH } from '../config/constants';
 
 const App = () => {
+  const { pathname } = useLocation();
   const { data: currentMember, isLoading } = useContext(CurrentUserContext);
 
   if (isLoading) {
@@ -30,7 +33,11 @@ const App = () => {
 
   const withAuthorizationProps = {
     currentMember,
-    redirectionLink: SIGN_IN_LINK,
+    redirectionLink: SIGN_IN_PATH,
+    onRedirect: () => {
+      // save current url for later redirection after sign in
+      saveUrlForRedirection(pathname, DOMAIN);
+    },
   };
   const HomeWithAuthorization = withAuthorization(Home, withAuthorizationProps);
   const SharedWithAuthorization = withAuthorization(
@@ -51,35 +58,33 @@ const App = () => {
   );
 
   return (
-    <Router>
-      <Routes>
-        <Route path={HOME_PATH} exact element={<HomeWithAuthorization />} />
-        <Route
-          path={SHARED_ITEMS_PATH}
-          exact
-          element={<SharedWithAuthorization />}
-        />
-        <Route
-          path={FAVORITE_ITEMS_PATH}
-          exact
-          element={<FavoriteWithAuthorization />}
-        />
-        <Route path={buildItemPath()} element={<ItemScreen />} />
-        <Route
-          path={MEMBER_PROFILE_PATH}
-          exact
-          element={<MemberWithAuthorization />}
-        />
-        <Route
-          path={RECYCLE_BIN_PATH}
-          exact
-          element={<RecycleWithAuthorization />}
-        />
-        <Route path={ITEMS_PATH} exact element={<HomeWithAuthorization />} />
-        <Route path={REDIRECT_PATH} exact element={<Redirect />} />
-        <Route element={<Redirect />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path={HOME_PATH} exact element={<HomeWithAuthorization />} />
+      <Route
+        path={SHARED_ITEMS_PATH}
+        exact
+        element={<SharedWithAuthorization />}
+      />
+      <Route
+        path={FAVORITE_ITEMS_PATH}
+        exact
+        element={<FavoriteWithAuthorization />}
+      />
+      <Route path={buildItemPath()} element={<ItemScreen />} />
+      <Route
+        path={MEMBER_PROFILE_PATH}
+        exact
+        element={<MemberWithAuthorization />}
+      />
+      <Route
+        path={RECYCLE_BIN_PATH}
+        exact
+        element={<RecycleWithAuthorization />}
+      />
+      <Route path={ITEMS_PATH} exact element={<HomeWithAuthorization />} />
+      <Route path={REDIRECT_PATH} exact element={<Redirect />} />
+      <Route element={<Redirect />} />
+    </Routes>
   );
 };
 

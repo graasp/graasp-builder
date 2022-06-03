@@ -1,5 +1,6 @@
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { grey } from '@material-ui/core/colors';
 import { ToastContainer } from 'react-toastify';
 import { createTheme, MuiThemeProvider } from '@material-ui/core/styles';
@@ -45,11 +46,13 @@ const Root = () => (
         {SHOW_NOTIFICATIONS && (
           <ToastContainer position="bottom-right" theme="colored" />
         )}
-        <ModalProviders>
-          <CurrentUserContextProvider>
-            <App />
-          </CurrentUserContextProvider>
-        </ModalProviders>
+        <Router>
+          <ModalProviders>
+            <CurrentUserContextProvider>
+              <App />
+            </CurrentUserContextProvider>
+          </ModalProviders>
+        </Router>
       </MuiThemeProvider>
     </I18nextProvider>
     {NODE_ENV === ENV.DEVELOPMENT && <ReactQueryDevtools />}
