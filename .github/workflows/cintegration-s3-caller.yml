@@ -1,4 +1,4 @@
-name: CI pipeline for Graasp compose
+name: Continuous Integration pipeline for Graasp compose
 
 # Controls when the action will run.
 on:
@@ -16,7 +16,7 @@ on:
 jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@main
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@5ad156f86b2de177a81546db2ddc252a2ace36ca
     with:
       build-folder: 'build'
     secrets:
@@ -26,7 +26,7 @@ jobs:
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_DEV }}
       cloudfront-distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_DEV }}
       api-host: ${{ secrets.REACT_APP_API_HOST_DEV }}
-      show-notifications: true
+      show-notifications: ${{ secrets.SHOW_NOTIFICATIONS }}
       authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_DEV }}
       graasp-perform-host: ${{ secrets.REACT_APP_GRAASP_PERFORM_HOST_DEV }}
       graasp-analyzer-host: ${{ secrets.REACT_APP_GRAASP_ANALYZER_HOST_DEV }}
