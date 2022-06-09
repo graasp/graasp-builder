@@ -16,7 +16,9 @@ const CollapseButton = ({ item, type, onClick }) => {
   const { t } = useTranslation();
 
   const editItem = useMutation(MUTATION_KEYS.EDIT_ITEM);
-  const [isCollapsible, setIsCollapsible] = useState(item?.settings?.isCollapsible);
+  const [isCollapsible, setIsCollapsible] = useState(
+    item?.settings?.isCollapsible,
+  );
 
   const handleCollapse = () => {
     setIsCollapsible(!isCollapsible);
