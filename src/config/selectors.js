@@ -22,6 +22,7 @@ export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
 export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
+export const COLLAPSE_ITEM_BUTTON_CLASS = 'collapseButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const PUBLISH_ITEM_BUTTON_CLASS = 'publishItemButton';
@@ -159,7 +160,7 @@ export const buildItemsTableId = (id) => `itemsTable-${id}`;
 
 export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
 export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
-export const SETTINGS_EXPANDABLE_TOGGLE_ID = 'settingsExpandableToggle';
+export const SETTINGS_COLLAPSE_TOGGLE_ID = 'settingsCollapseToggle';
 
 export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
   'itemsTableRestoreSelectedItems';
