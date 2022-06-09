@@ -15,7 +15,7 @@ import { useMutation } from '../../../config/queryClient';
 import {
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_PINNED_TOGGLE_ID,
-  SETTINGS_EXPANDABLE_TOGGLE_ID,
+  SETTINGS_COLLAPSE_TOGGLE_ID,
 } from '../../../config/selectors';
 import ThumbnailSetting from './ThumbnailSetting';
 import CCLicenseSelection from '../publish/CCLicenseSelection';
@@ -61,12 +61,12 @@ const ItemSettings = ({ item }) => {
     });
   };
 
-  const handleExpandable = (event) => {
+  const handleCollapse = (event) => {
     editItem.mutate({
       id: item.get('id'),
       name: item.get('name'),
       settings: {
-        isExpandable: event.target.checked,
+        isCollapsible: event.target.checked,
       },
     });
   };
@@ -95,16 +95,16 @@ const ItemSettings = ({ item }) => {
     return <FormControlLabel label={t('Show Chat')} control={control} />;
   };
 
-  const renderExpandableSetting = () => {
+  const renderCollapseSetting = () => {
     const control = (
       <Switch
-        id={SETTINGS_EXPANDABLE_TOGGLE_ID}
-        onChange={handleExpandable}
-        checked={settings?.isExpandable}
+        id={SETTINGS_COLLAPSE_TOGGLE_ID}
+        onChange={handleCollapse}
+        checked={settings?.isCollapsible}
         color="primary"
       />
     );
-    return <FormControlLabel label={t('Expandable item')} control={control} />;
+    return <FormControlLabel label={t('Collapsible item')} control={control} />;
   };
 
   return (
@@ -116,7 +116,7 @@ const ItemSettings = ({ item }) => {
       <FormGroup>
         {renderPinSetting()}
         {renderChatSetting()}
-        {renderExpandableSetting()}
+        {renderCollapseSetting()}
       </FormGroup>
       <ThumbnailSetting item={item} />
       <CCLicenseSelection item={item} />
