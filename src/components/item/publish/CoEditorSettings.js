@@ -9,11 +9,10 @@ import {
   RadioGroup,
   FormControlLabel,
 } from '@material-ui/core';
-import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { DISPLAY_CO_EDITOR_OPTIONS } from '../../../config/constants';
+import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -36,14 +35,13 @@ const CoEditorSettings = ({ item }) => {
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
 
   // current item
-  const { itemId } = useParams();
-
+  const itemId = item?.get('id');
   const settings = item?.get('settings');
   const itemName = item?.get('name');
 
   // by default, co editors will not be displayed
   const [optionValue, setOptionValue] = useState(
-    DISPLAY_CO_EDITOR_OPTIONS.NO.value,
+    DISPLAY_CO_EDITORS_OPTIONS.NO.value,
   );
 
   useEffect(() => {
@@ -71,7 +69,7 @@ const CoEditorSettings = ({ item }) => {
       </Typography>
       <Typography variant="body1">
         {t(
-          'Do you want to display co-editors after published? All users with edit permission will be displayed.',
+          'Do you want to display co-editors on the publication page? All users with edit or admin permissions will be displayed.',
         )}
       </Typography>
       <RadioGroup
@@ -80,16 +78,15 @@ const CoEditorSettings = ({ item }) => {
         value={optionValue}
         onChange={handleChange}
       >
-        <FormControlLabel
-          value={DISPLAY_CO_EDITOR_OPTIONS.YES.value}
-          control={<Radio color="primary" />}
-          label={t(DISPLAY_CO_EDITOR_OPTIONS.YES.label)}
-        />
-        <FormControlLabel
-          value={DISPLAY_CO_EDITOR_OPTIONS.NO.value}
-          control={<Radio color="primary" />}
-          label={t(DISPLAY_CO_EDITOR_OPTIONS.NO.label)}
-        />
+        {
+          Object.values(DISPLAY_CO_EDITORS_OPTIONS).map((option) => (
+            <FormControlLabel
+              value={option.value}
+              control={<Radio color="primary" />}
+              label={t(option.label)}
+            />
+          ))
+        }
       </RadioGroup>
     </>
   );

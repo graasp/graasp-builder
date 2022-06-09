@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Loader } from '@graasp/ui';
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, makeStyles, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation, hooks } from '../../../config/queryClient';
@@ -20,7 +20,7 @@ import {
 } from '../../../config/selectors';
 
 const { POST_ITEM_TAG, DELETE_ITEM_TAG } = MUTATION_KEYS;
-const { useTags, useItemTags } = hooks;
+const { useTags, useItemTags, useItemMemberships } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -38,6 +38,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
   // current item
   const { itemId } = useParams();
 
+  // item tags
   const { mutate: postItemTag } = useMutation(POST_ITEM_TAG);
   const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
 
@@ -48,8 +49,15 @@ const ItemPublishButton = ({ item, isValidated }) => {
     isError,
   } = useItemTags(itemId);
 
+  // item memberships for co-editors
+  const { data: memberships } = useItemMemberships([itemId]);
+
+  // TODO: send emails to co-editors, this can be moved to backend
+  const coEditors = memberships.filter((membership) => membership?.permission === "admin" || membership?.permission === "write");
+
   const [isPublished, setIsPublished] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [emailNotification, setEmailNotification] = useState(false);
 
   // update state variables depending on fetch values
   useEffect(() => {
@@ -97,6 +105,10 @@ const ItemPublishButton = ({ item, isValidated }) => {
     }
   };
 
+  const toggleEmailNotification = () => {
+    setEmailNotification(!emailNotification);
+  }
+
   return (
     <>
       <Button
@@ -119,6 +131,19 @@ const ItemPublishButton = ({ item, isValidated }) => {
       >
         {t('Unpublish')}
       </Button>
+      <div>
+        <FormControlLabel
+          control={(
+            <Checkbox
+              checked={emailNotification}
+              onChange={toggleEmailNotification}
+              name="emailNotification"
+              color="primary"
+            />
+          )}
+          label="Send email notifications to all co-editors"
+        />
+      </div>
       {isPublished && (
         <Typography variant="body1">
           {t(

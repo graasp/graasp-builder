@@ -254,7 +254,7 @@ export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
 // signin page path from auth host
 export const SIGN_IN_PATH = buildSignInPath({ host: AUTHENTICATION_HOST });
 
-export const DISPLAY_CO_EDITOR_OPTIONS = {
+export const DISPLAY_CO_EDITORS_OPTIONS = {
   YES: {
     value: 'yes',
     label: 'Yes',
