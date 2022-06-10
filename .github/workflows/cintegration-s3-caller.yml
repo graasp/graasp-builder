@@ -1,4 +1,4 @@
-name: Continuous Integration pipeline for Graasp compose
+name: Deploy Graasp compose to development environment
 
 # Controls when the action will run.
 on:
@@ -16,6 +16,7 @@ on:
 jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
+    # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
     uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@5ad156f86b2de177a81546db2ddc252a2ace36ca
     with:
       build-folder: 'build'
@@ -24,7 +25,7 @@ jobs:
       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
       aws-region: ${{ secrets.AWS_REGION_DEV }}
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_DEV }}
-      cloudfront-distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_DEV }}
+      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_DEV }}
       api-host: ${{ secrets.REACT_APP_API_HOST_DEV }}
       show-notifications: ${{ secrets.SHOW_NOTIFICATIONS }}
       authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_DEV }}

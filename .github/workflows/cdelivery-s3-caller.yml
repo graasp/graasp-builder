@@ -1,4 +1,4 @@
-name: Continuous Delivery pipeline for Graasp compose
+name: Deploy Graasp compose to staging environment
 
 # Controls when the action will run.
 on:
