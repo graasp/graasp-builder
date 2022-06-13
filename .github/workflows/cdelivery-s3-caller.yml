@@ -1,0 +1,28 @@
+name: Deploy to staging environment
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on repository-dispatch event
+  repository_dispatch:
+    types: [staging-deployment]
+
+jobs:
+  graasp-deploy-s3-workflow:
+    name: Graasp Builder
+    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@main
+    with:
+      build-folder: 'build'
+      tag: ${{ github.event.client_payload.tag }}
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
+      aws-region: ${{ secrets.AWS_REGION_STAGE }}
+      aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_STAGE }}
+      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_STAGE }}
+      api-host: ${{ secrets.REACT_APP_API_HOST_STAGE }}
+      show-notifications: ${{ secrets.SHOW_NOTIFICATIONS }}
+      authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_STAGE }}
+      graasp-perform-host: ${{ secrets.REACT_APP_GRAASP_PERFORM_HOST_STAGE }}
+      graasp-analyzer-host: ${{ secrets.REACT_APP_GRAASP_ANALYZER_HOST_STAGE }}
+      ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_STAGE }}
+      hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_STAGE }}

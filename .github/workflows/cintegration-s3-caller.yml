@@ -1,0 +1,38 @@
+name: Deploy to development environment
+
+# Control when the action will run.
+on:
+  # Triggers the workflow on push events only for the main branch
+  push:
+    branches:
+    - main
+
+  # Triggers the workflow on closed pull request events only for the main branch
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+  # Allows to run the workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  graasp-deploy-s3-workflow:
+    name: Graasp Builder
+    # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@5ad156f86b2de177a81546db2ddc252a2ace36ca
+    with:
+      build-folder: 'build'
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+      aws-region: ${{ secrets.AWS_REGION_DEV }}
+      aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_DEV }}
+      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_DEV }}
+      api-host: ${{ secrets.REACT_APP_API_HOST_DEV }}
+      show-notifications: ${{ secrets.SHOW_NOTIFICATIONS }}
+      authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_DEV }}
+      graasp-perform-host: ${{ secrets.REACT_APP_GRAASP_PERFORM_HOST_DEV }}
+      graasp-analyzer-host: ${{ secrets.REACT_APP_GRAASP_ANALYZER_HOST_DEV }}
+      ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_DEV }}
+      hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_DEV }}
+
