@@ -37,12 +37,12 @@ const ItemSettings = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const editItem = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
   const settings = item.get('settings');
 
   const handleChatbox = (event) => {
-    editItem.mutate({
+    editItem({
       id: item.get('id'),
       name: item.get('name'),
       settings: {
@@ -52,7 +52,7 @@ const ItemSettings = ({ item }) => {
   };
 
   const handlePinned = (event) => {
-    editItem.mutate({
+    editItem({
       id: item.get('id'),
       name: item.get('name'),
       settings: {
@@ -62,7 +62,7 @@ const ItemSettings = ({ item }) => {
   };
 
   const handleCollapse = (event) => {
-    editItem.mutate({
+    editItem({
       id: item.get('id'),
       name: item.get('name'),
       settings: {
@@ -104,7 +104,7 @@ const ItemSettings = ({ item }) => {
         color="primary"
       />
     );
-    return <FormControlLabel label={t('Collapsible item')} control={control} />;
+    return <FormControlLabel label={t('Collapse item')} control={control} />;
   };
 
   return (

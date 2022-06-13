@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -15,15 +15,18 @@ import { BUTTON_TYPES } from '../../config/constants';
 const CollapseButton = ({ item, type, onClick }) => {
   const { t } = useTranslation();
 
-  const editItem = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
   const [isCollapsible, setIsCollapsible] = useState(
     item?.settings?.isCollapsible,
   );
 
-  const handleCollapse = () => {
-    setIsCollapsible(!isCollapsible);
+  useEffect(() => {
+    setIsCollapsible(item?.settings?.isCollapsible);
+  }, [item]);
 
-    editItem.mutate({
+  const handleCollapse = () => {
+
+    editItem({
       id: item.id,
       name: item.name,
       settings: {
