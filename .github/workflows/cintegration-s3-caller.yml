@@ -1,16 +1,18 @@
-name: Deploy Graasp compose to development environment
+name: Deploy to development environment
 
-# Controls when the action will run.
+# Control when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push events only for the main branch
   push:
     branches:
-      - main
+    - main
 
+  # Triggers the workflow on closed pull request events only for the main branch
   pull_request:
     branches: [main]
+    types: [closed]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows to run the workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
