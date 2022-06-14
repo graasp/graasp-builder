@@ -17,9 +17,7 @@ const Authorization = () => (ChildComponent) => {
 
     const redirectToSignIn = () => {
       redirect(
-        `${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath(
-          `${window.location.origin}${pathname}`,
-        )}`,
+        `${AUTHENTICATION_HOST}/${API_ROUTES.SIGN_IN_ROUTE}`,
       );
     };
 
@@ -45,9 +43,7 @@ const Authorization = () => (ChildComponent) => {
     // redirect page if redirection is not working
     return (
       <RedirectPage
-        link={`${AUTHENTICATION_HOST}/${API_ROUTES.buildSignInPath(
-          `${window.location.origin}${pathname}`,
-        )}`}
+        link={`${AUTHENTICATION_HOST}/${API_ROUTES.SIGN_IN_ROUTE}`}
       />
     );
   };
