@@ -1,6 +1,6 @@
 name: Deploy to development environment
 
-# Control when the action will run.
+# Control when the action will run
 on:
   # Triggers the workflow on push events only for the main branch
   push:
@@ -15,11 +15,12 @@ on:
   # Allows to run the workflow manually from the Actions tab
   workflow_dispatch:
 
+# This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@5ad156f86b2de177a81546db2ddc252a2ace36ca
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@524286168c130cd06b106aabafd3df7e92e64857
     with:
       build-folder: 'build'
     secrets:
