@@ -10,7 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../config/queryClient';
-import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
+import {
+  CONFIRM_DELETE_BUTTON_ID,
+  DELETE_MEMBER_BUTTON_ID,
+} from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
   confirmDeleteButton: {
@@ -28,19 +31,20 @@ const DeleteMemberDialog = ({ id }) => {
   const [open, setOpen] = useState(false);
   const { mutate: deleteMember } = useMutation(MUTATION_KEYS.DELETE_MEMBER);
 
+  const alertDialogTitle = 'alert-dialog-title';
+  const alertDialogDescription = 'alert-dialog-description';
+
   return (
     <>
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby={alertDialogTitle}
+        aria-describedby={alertDialogDescription}
       >
-        <DialogTitle id="alert-dialog-title">
-          {t('Confirm deletion')}
-        </DialogTitle>
+        <DialogTitle id={alertDialogTitle}>{t('Confirm deletion')}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id={alertDialogDescription}>
             {t('DeleteAccountMessage')}
           </DialogContentText>
         </DialogContent>
@@ -62,6 +66,7 @@ const DeleteMemberDialog = ({ id }) => {
       </Dialog>
 
       <Button
+        id={DELETE_MEMBER_BUTTON_ID}
         variant="text"
         className={classes.deleteButton}
         color="secondary"

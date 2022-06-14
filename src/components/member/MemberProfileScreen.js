@@ -132,7 +132,7 @@ const MemberProfileScreen = () => {
         </Grid>
 
         <AvatarSetting user={member} />
-        <DeleteMemberDialog id={member.get('id')} />
+        <DeleteMemberDialog id={member?.get('id')} />
       </Card>
     </Main>
   );
