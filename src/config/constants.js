@@ -189,6 +189,13 @@ export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
 export const CATEGORY_TYPES = {
   LEVEL: 'level',
   DISCIPLINE: 'discipline',
+  LANGUAGE: 'language',
+};
+
+export const CATEGORY_TYPE_TITLES = {
+  LEVEL: 'Level',
+  DISCIPLINE: 'Discipline',
+  LANGUAGE: 'Language',
 };
 
 // todo: factor out in graasp constants/utils
@@ -239,3 +246,6 @@ export const BUTTON_TYPES = {
   MENU_ITEM: 'menuItem',
   ICON_BUTTON: 'iconButton',
 };
+
+export const MEMBERSHIP_TABLE_HEIGHT = 400;
+export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;

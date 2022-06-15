@@ -1,9 +1,8 @@
 import {
+  buildCategoriesSelectionValueSelector,
   buildCategoryMenuOptions,
+  buildCategorySelectionId,
   buildPublishButtonId,
-  CATEGORIES_SELECTION_VALUE_SELECTOR,
-  SHARE_ITEM_CATEGORY_DISCIPLINE,
-  SHARE_ITEM_CATEGORY_LEVEL,
 } from '../../../../src/config/selectors';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
@@ -13,6 +12,7 @@ import {
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
+import { CATEGORY_TYPE_TITLES } from '../../../../src/config/constants';
 
 const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
@@ -22,14 +22,24 @@ const findCategoryNameById = (id) =>
   SAMPLE_CATEGORIES.find((entry) => entry.id === id)?.name;
 
 export const deleteOption = (index) => {
-  cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`).click();
-  cy.get(buildCategoryMenuOptions(SHARE_ITEM_CATEGORY_LEVEL, index)).click();
+  cy.get(`#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`).click();
+  cy.get(
+    buildCategoryMenuOptions(
+      buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL),
+      index,
+    ),
+  ).click();
 };
 
 export const addOption = (index) => {
-  cy.get(`#${SHARE_ITEM_CATEGORY_DISCIPLINE}`).click();
   cy.get(
-    buildCategoryMenuOptions(SHARE_ITEM_CATEGORY_DISCIPLINE, index),
+    `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.DISCIPLINE)}`,
+  ).click();
+  cy.get(
+    buildCategoryMenuOptions(
+      buildCategorySelectionId(CATEGORY_TYPE_TITLES.DISCIPLINE),
+      index,
+    ),
   ).click();
 };
 
@@ -43,7 +53,9 @@ describe('Categories', () => {
 
   it('Display Item Categories', () => {
     // check for displaying value
-    const levelValue = cy.get(CATEGORIES_SELECTION_VALUE_SELECTOR);
+    const levelValue = cy.get(
+      buildCategoriesSelectionValueSelector(CATEGORY_TYPE_TITLES.LEVEL),
+    );
     levelValue
       .first()
       .contains(findCategoryNameById(item.categories[0].categoryId));
@@ -51,7 +63,9 @@ describe('Categories', () => {
 
   it('Display item without category', () => {
     // check for not displaying if no categories
-    const disciplineValue = cy.get(`#${SHARE_ITEM_CATEGORY_DISCIPLINE}`);
+    const disciplineValue = cy.get(
+      `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.DISCIPLINE)}`,
+    );
     disciplineValue.should('be.empty');
   });
 
@@ -91,7 +105,9 @@ describe('Categories permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
-    const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
+    const levelValue = cy.get(
+      `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
+    );
     levelValue.should('not.exist');
   });
 
@@ -104,7 +120,9 @@ describe('Categories permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
-    const levelValue = cy.get(`#${SHARE_ITEM_CATEGORY_LEVEL}`);
+    const levelValue = cy.get(
+      `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
+    );
     levelValue.should('not.exist');
   });
 });

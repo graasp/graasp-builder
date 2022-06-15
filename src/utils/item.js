@@ -1,5 +1,6 @@
 // synchronous functions to manage items from redux
 
+import { useEffect, useState } from 'react';
 import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
 import { ITEM_TYPES } from '../enums';
 import {
@@ -153,3 +154,21 @@ export const sortByName = (a, b) => {
   if (a.name > b.name) return 1;
   return 0;
 };
+
+// todo: use typescript to precise data is one of Invitation or Membership
+export const useIsParentInstance = ({ instance, item }) => {
+  const [isParentMembership, setIsParentMembership] = useState(false);
+  useEffect(() => {
+    setIsParentMembership(instance.itemPath !== item.get('path'));
+    return () => {
+      setIsParentMembership(false);
+    };
+  }, [instance, item]);
+
+  return isParentMembership;
+};
+
+export const textComparator = (text1, text2) =>
+  text1.localeCompare(text2, undefined, { sensitivity: 'base' });
+
+export const dateComparator = (d1, d2) => new Date(d1) - new Date(d2);

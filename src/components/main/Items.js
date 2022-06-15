@@ -17,9 +17,9 @@ const Items = ({
   id,
   headerElements,
   actions,
-  toolbarActions,
+  ToolbarActions,
   clickable,
-  defautSortedColumn,
+  defaultSortedColumn,
   isEditing,
   parentId,
   showThumbnails,
@@ -55,15 +55,15 @@ const Items = ({
     default:
       return (
         <ItemsTable
-          defautSortedColumn={defautSortedColumn}
           id={id}
+          actions={actions}
           tableTitle={title}
+          defaultSortedColumn={defaultSortedColumn}
           items={itemSearch.results}
           memberships={memberships}
           headerElements={[itemSearch.input, ...headerElements]}
           isSearching={Boolean(itemSearch.text)}
-          actions={actions}
-          toolbarActions={toolbarActions}
+          ToolbarActions={ToolbarActions}
           clickable={clickable}
           isEditing={isEditing}
           showThumbnails={showThumbnails}
@@ -78,9 +78,9 @@ Items.propTypes = {
   id: PropTypes.string,
   headerElements: PropTypes.arrayOf(PropTypes.element),
   actions: PropTypes.element,
-  toolbarActions: PropTypes.element,
+  ToolbarActions: PropTypes.func,
   clickable: PropTypes.bool,
-  defautSortedColumn: PropTypes.shape({
+  defaultSortedColumn: PropTypes.shape({
     updatedAt: PropTypes.string,
     createdAt: PropTypes.string,
     type: PropTypes.string,
@@ -95,9 +95,9 @@ Items.defaultProps = {
   id: null,
   headerElements: [],
   actions: null,
-  toolbarActions: null,
+  ToolbarActions: null,
   clickable: true,
-  defautSortedColumn: {},
+  defaultSortedColumn: {},
   isEditing: false,
   parentId: null,
   showThumbnails: true,

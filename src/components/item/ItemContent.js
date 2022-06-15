@@ -25,6 +25,7 @@ import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import NewItemButton from '../main/NewItemButton';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import ItemActions from '../main/ItemActions';
 
 const { useChildren, useFileContent } = hooks;
 
@@ -168,6 +169,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
                 ? [<NewItemButton key="newButton" fontSize="small" />]
                 : undefined
             }
+            ToolbarActions={ItemActions}
           />
         </>
       );

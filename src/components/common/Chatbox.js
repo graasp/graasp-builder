@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import GraaspChatbox from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -8,7 +8,6 @@ import { hooks, useMutation } from '../../config/queryClient';
 import { CHATBOX_INPUT_BOX_ID, CHATBOX_ID } from '../../config/selectors';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { PERMISSION_LEVELS } from '../../enums';
-import { HEADER_HEIGHT } from '../../config/constants';
 
 const { useItemChat, useMembers, useAvatar, useItemMemberships } = hooks;
 
@@ -31,23 +30,6 @@ const Chatbox = ({ item }) => {
     MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE,
   );
   const { mutate: clearChat } = useMutation(MUTATION_KEYS.CLEAR_ITEM_CHAT);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-
-  useEffect(
-    () => {
-      const handleResize = () => {
-        setWindowHeight(window.innerHeight);
-      };
-      window.addEventListener('resize', handleResize);
-
-      // cleanup eventListener
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    },
-    // run on first render only
-    [],
-  );
 
   if (
     isChatLoading ||
@@ -72,7 +54,6 @@ const Chatbox = ({ item }) => {
       currentMember={currentMember}
       chatId={item.get('id')}
       messages={List(chat?.get('messages'))}
-      height={windowHeight - HEADER_HEIGHT * 2}
       showAdminTools={isAdmin}
       sendMessageFunction={sendMessage}
       deleteMessageFunction={deleteMessage}

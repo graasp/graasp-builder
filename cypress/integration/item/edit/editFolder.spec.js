@@ -80,10 +80,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-           response: {
-             body: { id, name, description },
-           },
-         }) => {
+          response: {
+            body: { id, name, description },
+          },
+        }) => {
           // check item is edited and updated
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
@@ -116,10 +116,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-           response: {
-             body: { id, name },
-           },
-         }) => {
+          response: {
+            body: { id, name },
+          },
+        }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);
@@ -172,10 +172,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-           response: {
-             body: { id, name },
-           },
-         }) => {
+          response: {
+            body: { id, name },
+          },
+        }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           cy.get('@getOwnItems');
@@ -204,10 +204,10 @@ describe('Edit Folder', () => {
 
       cy.wait('@editItem').then(
         ({
-           response: {
-             body: { id, name },
-           },
-         }) => {
+          response: {
+            body: { id, name },
+          },
+        }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);

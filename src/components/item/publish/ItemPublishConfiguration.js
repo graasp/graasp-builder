@@ -14,7 +14,6 @@ import { MUTATION_KEYS, DATA_KEYS } from '@graasp/query-client';
 import { useMutation, hooks, queryClient } from '../../../config/queryClient';
 import CategorySelection from './CategorySelection';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
-import CCLicenseSelection from './CCLicenseSelection';
 import {
   ADMIN_CONTACT,
   VALIDATION_STATUS_NAMES,
@@ -243,7 +242,6 @@ const ItemPublishConfiguration = ({ item }) => {
       <div className={classes.config}>
         <CategorySelection item={item} />
         <CustomizedTagsEdit item={item} />
-        <CCLicenseSelection item={item} />
       </div>
     </>
   );
