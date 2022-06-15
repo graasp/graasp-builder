@@ -17,7 +17,6 @@ import GraaspAnalyzer from './GraaspAnalyzer';
 import Main from './Main';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
-  ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
   ITEM_LOGIN_SIGN_IN_MODE_ID,
@@ -119,7 +118,6 @@ const WrappedItemScreen = () => {
     useItem,
     useItemLogin,
     ForbiddenContent,
-    forbiddenContentId: ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
     memberIdInputId: ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
     usernameInputId: ITEM_LOGIN_SIGN_IN_USERNAME_ID,
     signInButtonId: ITEM_LOGIN_SIGN_IN_BUTTON_ID,

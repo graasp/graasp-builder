@@ -6,6 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Main from './Main';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
+import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -37,6 +38,7 @@ function ItemForbiddenScreen() {
   return (
     <Main>
       <Grid
+        id={ITEM_LOGIN_SCREEN_FORBIDDEN_ID}
         container
         justifyContent="center"
         alignItems="center"

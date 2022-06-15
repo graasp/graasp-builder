@@ -42,7 +42,7 @@ export const SHOW_NOTIFICATIONS =
 export const AUTHENTICATION_HOST =
   ENV_AUTHENTICATION_HOST ||
   process.env.REACT_APP_AUTHENTICATION_HOST ||
-  'http://localhost:3111';
+  'http://localhost:3001';
 
 export const GRAASP_PERFORM_HOST =
   ENV_GRAASP_PERFORM_HOST ||
@@ -148,8 +148,6 @@ export const SETTINGS = {
 export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
 export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME;
-
-export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const USER_ITEM_ORDER = 'user_order';
 

@@ -24,7 +24,11 @@ import {
   getItemLoginSchema,
   buildItemLoginSchemaExtra,
 } from '../../src/utils/itemExtra';
-import { SETTINGS, THUMBNAIL_EXTENSION } from '../../src/config/constants';
+import {
+  SETTINGS,
+  SIGN_IN_PATH,
+  THUMBNAIL_EXTENSION,
+} from '../../src/config/constants';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { getMemberById } from '../../src/utils/member';
 import { PERMISSION_LEVELS } from '../../src/enums';
@@ -54,7 +58,6 @@ const {
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
   GET_CURRENT_MEMBER_ROUTE,
-  SIGN_IN_ROUTE,
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
   buildGetItemLoginRoute,
@@ -90,7 +93,6 @@ const {
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
-const AUTHENTICATION_HOST = Cypress.env('AUTHENTICATION_HOST');
 
 const checkMembership = ({ item, currentMember }) => {
   // mock membership
@@ -765,7 +767,7 @@ export const mockSignInRedirection = () => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: `${AUTHENTICATION_HOST}/${SIGN_IN_ROUTE}`,
+      url: SIGN_IN_PATH,
     },
     ({ reply }) => {
       reply(redirectionReply);

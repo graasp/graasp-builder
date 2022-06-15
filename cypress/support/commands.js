@@ -103,6 +103,7 @@ Cypress.Commands.add(
     recycledItems = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
+    storedSessions = [],
     tags = [],
     categories = SAMPLE_CATEGORIES,
     categoryTypes = SAMPLE_CATEGORY_TYPES,
@@ -152,7 +153,11 @@ Cypress.Commands.add(
     const cachedMembers = JSON.parse(JSON.stringify(members));
     const allItems = [...cachedItems, ...recycledItems];
 
-    cy.setCookie('session', currentMember ? 'somecookie' : null);
+    cy.setCookie(COOKIE_KEYS.SESSION_KEY, currentMember ? 'somecookie' : null);
+    cy.setCookie(
+      COOKIE_KEYS.STORED_SESSIONS_KEY,
+      JSON.stringify(storedSessions),
+    );
 
     // hide cookie banner by default
     cy.setCookie(COOKIE_KEYS.ACCEPT_COOKIES_KEY, 'true');
