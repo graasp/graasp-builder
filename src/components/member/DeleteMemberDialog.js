@@ -45,7 +45,7 @@ const DeleteMemberDialog = ({ id }) => {
         <DialogTitle id={alertDialogTitle}>{t('Confirm deletion')}</DialogTitle>
         <DialogContent>
           <DialogContentText id={alertDialogDescription}>
-            {t('DeleteAccountMessage')}
+            {t('Your account will be deleted permanently.')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

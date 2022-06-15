@@ -188,6 +188,6 @@
     "Validation": "Validation",
     "Publication": "Publication",
     "Delete Account": "Delete account",
-    "DeleteAccountMessage": "Your account will be deleted permanently."
+    "Your account will be deleted permanently.": "Your account will be deleted permanently."
   }
 }
