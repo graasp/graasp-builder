@@ -15,7 +15,7 @@ jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@e545e23e196a2bd6b96be494f3acf230342e875b
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@5049607f97ad484178fe228673f1802974af834f
     with:
       build-folder: 'build'
     secrets:
