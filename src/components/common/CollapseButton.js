@@ -25,7 +25,6 @@ const CollapseButton = ({ item, type, onClick }) => {
   }, [item]);
 
   const handleCollapse = () => {
-
     editItem({
       id: item.id,
       name: item.name,

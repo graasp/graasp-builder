@@ -16,9 +16,7 @@ const Authorization = () => (ChildComponent) => {
     const { pathname } = useLocation();
 
     const redirectToSignIn = () => {
-      redirect(
-        `${AUTHENTICATION_HOST}/${API_ROUTES.SIGN_IN_ROUTE}`,
-      );
+      redirect(`${AUTHENTICATION_HOST}/${API_ROUTES.SIGN_IN_ROUTE}`);
     };
 
     const { data: currentMember, isLoading } = useContext(CurrentUserContext);
