@@ -19,6 +19,7 @@ import {
   API_HOST,
   ITEM_DEFAULT_HEIGHT,
   CONTEXT_BUILDER,
+  H5P_ASSETS_HOST,
 } from '../../config/constants';
 import { LayoutContext } from '../context/LayoutContext';
 import Items from '../main/Items';
@@ -176,17 +177,24 @@ const ItemContent = ({ item, enableEditing, permission }) => {
           />
         </>
       );
-    case ITEM_TYPES.H5P:
+    case ITEM_TYPES.H5P: {
+      const h5pContentPath = item.get('extra')?.h5p?.contentFilePath;
+      if (!h5pContentPath) {
+        return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+      }
+
       return (
         <H5PItem
           itemId={itemId}
+          h5pAssetsHost={H5P_ASSETS_HOST}
           playerOptions={{
-            h5pJsonPath: buildServeH5PContentURL(itemId),
+            h5pJsonPath: buildServeH5PContentURL(h5pContentPath),
             frameJs: H5P_FRAME_JS_PATH,
             frameCss: H5P_FRAME_CSS_PATH,
           }}
         />
       );
+    }
 
     default:
       return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
