@@ -53,7 +53,7 @@ const {
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
   GET_CURRENT_MEMBER_ROUTE,
-  buildSignInPath,
+  SIGN_IN_ROUTE,
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
   buildGetItemLoginRoute,
@@ -758,7 +758,7 @@ export const mockSignInRedirection = () => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: `${AUTHENTICATION_HOST}/${buildSignInPath()}`,
+      url: `${AUTHENTICATION_HOST}/${SIGN_IN_ROUTE}`,
     },
     ({ reply }) => {
       reply(redirectionReply);
