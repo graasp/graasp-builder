@@ -78,15 +78,13 @@ const CoEditorSettings = ({ item }) => {
         value={optionValue}
         onChange={handleChange}
       >
-        {
-          Object.values(DISPLAY_CO_EDITORS_OPTIONS).map((option) => (
-            <FormControlLabel
-              value={option.value}
-              control={<Radio color="primary" />}
-              label={t(option.label)}
-            />
-          ))
-        }
+        {Object.values(DISPLAY_CO_EDITORS_OPTIONS).map((option) => (
+          <FormControlLabel
+            value={option.value}
+            control={<Radio color="primary" />}
+            label={t(option.label)}
+          />
+        ))}
       </RadioGroup>
     </>
   );

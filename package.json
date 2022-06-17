@@ -129,7 +129,8 @@
     "immer": "9.0.6",
     "glob-parent": "5.1.2",
     "browserslist": "4.16.5",
-    "ansi-html": "0.0.8"
+    "ansi-html": "0.0.8",
+    "@graasp/query-client": "portal:/home/louise/Desktop/graasp/graasp-query-client"
   },
   "packageManager": "yarn@3.2.0-rc.11"
 }

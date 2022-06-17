@@ -256,11 +256,11 @@ export const SIGN_IN_PATH = buildSignInPath({ host: AUTHENTICATION_HOST });
 
 export const DISPLAY_CO_EDITORS_OPTIONS = {
   YES: {
-    value: 'yes',
+    value: true,
     label: 'Yes',
   },
   NO: {
-    value: 'no',
+    value: false,
     label: 'No',
   },
 };
