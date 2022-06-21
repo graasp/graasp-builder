@@ -25,7 +25,7 @@ import {
   mockEditItem,
   mockPostItemMembership,
   mockGetMember,
-  mockGetMemberBy,
+  mockGetMembersBy,
   mockDeleteItems,
   mockDefaultDownloadFile,
   mockUploadItem,
@@ -198,7 +198,7 @@ Cypress.Commands.add(
 
     mockGetMembers(cachedMembers);
 
-    mockGetMemberBy(cachedMembers, getMemberError);
+    mockGetMembersBy(cachedMembers, getMemberError);
 
     mockUploadItem(cachedItems, defaultUploadError);
 

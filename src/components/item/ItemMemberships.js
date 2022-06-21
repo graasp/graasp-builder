@@ -12,7 +12,7 @@ import { hooks } from '../../config/queryClient';
 import MemberAvatar from '../common/MemberAvatar';
 import { PERMISSION_LEVELS } from '../../enums';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
-import { getMembership, membershipsWithoutUser } from '../../utils/membership';
+import { membershipsWithoutUser } from '../../utils/membership';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const useStyles = makeStyles({
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: memberships, isError } = hooks.useItemMemberships([id]);
+  const { data: memberships, isError } = hooks.useItemMemberships(id);
   const { data: currentUser } = useContext(CurrentUserContext);
 
   if (!id) {
@@ -36,7 +36,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   }
 
   const filteredMemberships = membershipsWithoutUser(
-    getMembership(memberships),
+    memberships,
     currentUser?.get('id'),
   );
 

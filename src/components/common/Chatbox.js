@@ -17,7 +17,7 @@ const Chatbox = ({ item }) => {
     ...new Set(chat?.get('messages')?.map(({ creator }) => creator)),
   ]);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
-    useItemMemberships([item.get('id')]);
+    useItemMemberships(item.get('id'));
   const { data: currentMember, isLoadingCurrentMember } =
     useContext(CurrentUserContext);
   const { mutate: sendMessage } = useMutation(
@@ -42,9 +42,7 @@ const Chatbox = ({ item }) => {
 
   // only show export chat when user has admin right on the item
   const isAdmin =
-    itemPermissions
-      .get(0)
-      ?.find((perms) => perms.memberId === currentMember.get('id'))
+    itemPermissions?.find((perms) => perms.memberId === currentMember.get('id'))
       ?.permission === PERMISSION_LEVELS.ADMIN;
   return (
     <GraaspChatbox

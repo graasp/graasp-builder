@@ -53,7 +53,7 @@ const {
   GET_OWN_ITEMS_ROUTE,
   buildPostItemMembershipRoute,
   buildGetMember,
-  buildGetMemberBy,
+  buildGetMembersBy,
   ITEMS_ROUTE,
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
@@ -668,12 +668,12 @@ export const mockGetMembers = (members) => {
   ).as('getMembers');
 };
 
-export const mockGetMemberBy = (members, shouldThrowError) => {
+export const mockGetMembersBy = (members, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
       url: new RegExp(
-        `${API_HOST}/${parseStringToRegExp(buildGetMemberBy(EMAIL_FORMAT))}`,
+        `${API_HOST}/${parseStringToRegExp(buildGetMembersBy([EMAIL_FORMAT]))}`,
       ),
     },
     ({ reply, url }) => {
@@ -687,7 +687,7 @@ export const mockGetMemberBy = (members, shouldThrowError) => {
 
       return reply(result);
     },
-  ).as('getMemberBy');
+  ).as('getMembersBy');
 };
 
 export const mockEditMember = (members, shouldThrowError) => {

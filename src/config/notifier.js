@@ -37,6 +37,7 @@ const {
   exportItemRoutine,
   postInvitationsRoutine,
   resendInvitationRoutine,
+  shareItemRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -68,6 +69,7 @@ export default ({ type, payload }) => {
     case importZipRoutine.FAILURE:
     case postInvitationsRoutine.FAILURE:
     case resendInvitationRoutine.FAILURE:
+    case shareItemRoutine.FAILURE:
     case exportItemRoutine.FAILURE: {
       // todo: factor out string
       message = i18n.t(
@@ -102,6 +104,15 @@ export default ({ type, payload }) => {
       message = i18n.t(
         payload?.message ?? 'The operation successfully proceeded',
       );
+      break;
+    }
+    case shareItemRoutine.SUCCESS: {
+      if (!payload.failure.length) {
+        // todo: factor out string
+        message = i18n.t(
+          payload?.message ?? 'The operation successfully proceeded',
+        );
+      }
       break;
     }
 
