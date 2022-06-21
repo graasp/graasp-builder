@@ -7,7 +7,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { makeStyles } from '@material-ui/core';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
-import { ROOT_ID, TREE_VIEW_MAX_WIDTH } from '../../config/constants';
+import {
+  ROOT_ID,
+  SHARED_ROOT_ID,
+  TREE_VIEW_MAX_WIDTH,
+} from '../../config/constants';
 import { ITEM_KEYS, ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { hooks } from '../../config/queryClient';
 import {
@@ -24,26 +28,36 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const { useItem, useItems, useOwnItems, useChildren } = hooks;
+const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: ownItems, isLoading } = useOwnItems();
+  const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
+  // bug: get only shared items with write/admin rights
+  const { data: sharedItems, isLoading: isSharedItemsLoading } =
+    useSharedItems();
   const [selectedId, setSelectedId] = useState(null);
   const { data: items, isItemLoading } = useItems(itemIds);
 
-  const buildExpandedItems = () => {
+  const buildExpandedItems = (rootId) => {
     if (items && !items.isEmpty()) {
       // suppose all items are in the same parent
       const parentIds = getParentsIdsFromPath(items.first().path) || [];
-      const newExpandedItems = [ROOT_ID, ...parentIds];
-      return newExpandedItems;
+      // return expanded list depending current root id
+      // define root depending on whether is the root parent is in the owned items
+      const rootItemId = parentIds[0];
+      const oItem = ownItems.find(({ id }) => id === rootItemId);
+      const itemRootId = oItem ? ROOT_ID : SHARED_ROOT_ID;
+      if (rootId === itemRootId) {
+        const newExpandedItems = [rootId, ...parentIds];
+        return newExpandedItems;
+      }
     }
-    return [ROOT_ID];
+    return [];
   };
 
-  if (isLoading || isItemLoading) {
+  if (isOwnItemsLoading || isSharedItemsLoading || isItemLoading) {
     return <Loader />;
   }
 
@@ -82,24 +96,44 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
 
   // compute tree only when the modal is open
   const tree = !open ? null : (
-    <DynamicTreeView
-      id={TREE_MODAL_TREE_ID}
-      className={classes.root}
-      selectedId={selectedId}
-      initialExpendedItems={buildExpandedItems()}
-      items={ownItems}
-      onTreeItemSelect={onTreeItemSelect}
-      useChildren={useChildren}
-      useItem={useItem}
-      showCheckbox
-      rootLabel={t('Owned Items')}
-      rootId={ROOT_ID}
-      rootClassName={buildTreeItemClass(ROOT_ID)}
-      showItemFilter={isFolder}
-      shouldFetchChildrenForItem={isFolder}
-      isTreeItemDisabled={isTreeItemDisabled}
-      buildTreeItemClass={buildTreeItemClass}
-    />
+    <>
+      <DynamicTreeView
+        id={TREE_MODAL_TREE_ID}
+        className={classes.root}
+        selectedId={selectedId}
+        initialExpendedItems={buildExpandedItems(ROOT_ID)}
+        items={ownItems}
+        onTreeItemSelect={onTreeItemSelect}
+        useChildren={useChildren}
+        useItem={useItem}
+        showCheckbox
+        rootLabel={t('Owned Items')}
+        rootId={ROOT_ID}
+        rootClassName={buildTreeItemClass(ROOT_ID)}
+        showItemFilter={isFolder}
+        shouldFetchChildrenForItem={isFolder}
+        isTreeItemDisabled={isTreeItemDisabled}
+        buildTreeItemClass={buildTreeItemClass}
+      />
+      <DynamicTreeView
+        // id={TREE_MODAL_TREE_ID}
+        className={classes.root}
+        selectedId={selectedId}
+        initialExpendedItems={buildExpandedItems(SHARED_ROOT_ID)}
+        items={sharedItems}
+        onTreeItemSelect={onTreeItemSelect}
+        useChildren={useChildren}
+        useItem={useItem}
+        showCheckbox
+        rootLabel={t('Shared Items')}
+        rootId={SHARED_ROOT_ID}
+        rootClassName={buildTreeItemClass(SHARED_ROOT_ID)}
+        showItemFilter={isFolder}
+        shouldFetchChildrenForItem={isFolder}
+        isTreeItemDisabled={isTreeItemDisabled}
+        buildTreeItemClass={buildTreeItemClass}
+      />
+    </>
   );
 
   return (

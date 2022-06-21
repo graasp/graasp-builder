@@ -32,6 +32,7 @@ const SharedItems = () => {
         id={SHARED_ITEMS_ID}
         title={t('Items Shared With Me')}
         items={List(sharedItems)}
+        showCreator
       />
     </Main>
   );

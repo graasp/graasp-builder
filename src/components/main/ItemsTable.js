@@ -20,6 +20,7 @@ import {
 } from '../../config/selectors';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
+import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 
@@ -31,11 +32,16 @@ const useStyles = makeStyles(() => ({
     paddingRight: '0!important',
     textAlign: 'right',
   },
+  creatorName: {
+    display: 'flex',
+    justifyContent: 'end',
+  },
 }));
 
 const ItemsTable = ({
   items: rows,
   memberships,
+  creators,
   tableTitle,
   id: tableId,
   headerElements,
@@ -46,6 +52,7 @@ const ItemsTable = ({
   defaultSortedColumn,
   isEditing,
   showThumbnails,
+  showCreator,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -110,8 +117,8 @@ const ItemsTable = ({
   });
 
   // never changes, so we can use useMemo
-  const columnDefs = useMemo(
-    () => [
+  const columnDefs = useMemo(() => {
+    const columns = [
       {
         headerCheckboxSelection: true,
         checkboxSelection: true,
@@ -149,9 +156,31 @@ const ItemsTable = ({
         cellClass: classes.actionCell,
         sortable: false,
       },
-    ],
-    [classes, t, defaultSortedColumn, ActionComponent, actions, showThumbnails],
-  );
+    ];
+
+    if (showCreator) {
+      columns.splice(1, 0, {
+        field: 'creator',
+        flex: 3,
+        headerName: t('Creator'),
+        colId: 'creator',
+        type: 'rightAligned',
+        cellRenderer: MemberNameCellRenderer(creators),
+        cellClass: classes.creatorName,
+        sortable: false,
+      });
+    }
+    return columns;
+  }, [
+    creators,
+    showCreator,
+    classes,
+    t,
+    defaultSortedColumn,
+    ActionComponent,
+    actions,
+    showThumbnails,
+  ]);
 
   const countTextFunction = (selected) =>
     t('itemSelected', { count: selected.length });
@@ -198,6 +227,8 @@ ItemsTable.propTypes = {
   }),
   isEditing: PropTypes.bool,
   showThumbnails: PropTypes.bool,
+  showCreator: PropTypes.bool,
+  creators: PropTypes.instanceOf(List),
 };
 
 ItemsTable.defaultProps = {
@@ -212,6 +243,8 @@ ItemsTable.defaultProps = {
   defaultSortedColumn: {},
   isEditing: false,
   showThumbnails: true,
+  showCreator: false,
+  creators: List(),
 };
 
 export default ItemsTable;

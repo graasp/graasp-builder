@@ -36,6 +36,7 @@ const {
   importZipRoutine,
   exportItemRoutine,
   postInvitationsRoutine,
+  resendInvitationRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -66,6 +67,7 @@ export default ({ type, payload }) => {
     case uploadAvatarRoutine.FAILURE:
     case importZipRoutine.FAILURE:
     case postInvitationsRoutine.FAILURE:
+    case resendInvitationRoutine.FAILURE:
     case exportItemRoutine.FAILURE: {
       // todo: factor out string
       message = i18n.t(
@@ -94,6 +96,7 @@ export default ({ type, payload }) => {
     case deleteItemRoutine.SUCCESS:
     case createItemRoutine.SUCCESS:
     case postInvitationsRoutine.SUCCESS:
+    case resendInvitationRoutine.SUCCESS:
     case editMemberRoutine.SUCCESS: {
       // todo: factor out string
       message = i18n.t(

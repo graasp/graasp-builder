@@ -43,10 +43,12 @@ const useStyles = makeStyles((theme) => ({
 const CreateItemMembershipForm = ({ itemId, members }) => {
   const [error, setError] = useState(false);
 
-  const { mutate: postInvitations } = useMutation(
+  const { mutateAsync: postInvitations } = useMutation(
     MUTATION_KEYS.POST_INVITATIONS,
   );
-  const { mutate: share } = useMutation(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
+  const { mutateAsync: share } = useMutation(
+    MUTATION_KEYS.POST_ITEM_MEMBERSHIP,
+  );
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -80,26 +82,42 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
       return setError(isInvalid);
     }
 
-    // check email has an associated account
-    const accounts = await Api.getMemberBy(
-      { email: invitation.email },
-      {
-        API_HOST,
-      },
-    );
-    // if yes, create a membership
-    if (accounts.length) {
-      return share({
-        id: itemId,
-        email: invitation.email,
-        permission: invitation.permission,
-      });
+    let returnedValue;
+    try {
+      // check email has an associated account
+      const accounts = await Api.getMemberBy(
+        { email: invitation.email },
+        {
+          API_HOST,
+        },
+      );
+
+      // if yes, create a membership
+      if (accounts.length) {
+        returnedValue = await share({
+          id: itemId,
+          email: invitation.email,
+          permission: invitation.permission,
+        });
+      }
+      // otherwise create invitation
+      else {
+        returnedValue = await postInvitations({
+          itemId,
+          invitations: [invitation],
+        });
+      }
+
+      // reset email input
+      const newInvitation = {
+        ...invitation,
+        email: '',
+      };
+      setInvitation(newInvitation);
+    } catch (e) {
+      console.error(e);
     }
-    // otherwise create invitation
-    return postInvitations({
-      itemId,
-      invitations: [invitation],
-    });
+    return returnedValue;
   };
 
   const onChangeEmail = (event) => {
