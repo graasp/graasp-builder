@@ -11,12 +11,14 @@ const {
   GA_MEASUREMENT_ID: ENV_GA_MEASUREMENT_ID,
   HIDDEN_ITEM_TAG_ID: ENV_HIDDEN_ITEM_TAG_ID,
   GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
+  REACT_APP_SENTRY_DSN: ENV_SENTRY_DSN,
 } = env;
 
 export const APP_NAME = 'Graasp';
 
 export const ENV = {
   DEVELOPMENT: 'development',
+  PRODUCTION: 'production',
   TEST: 'test',
 };
 
@@ -25,6 +27,8 @@ export const NODE_ENV =
   process.env.REACT_APP_NODE_ENV ||
   process.env.NODE_ENV ||
   ENV.DEVELOPMENT;
+
+export const SENTRY_DSN = ENV_SENTRY_DSN || process.env.REACT_APP_SENTRY_DSN;
 
 export const API_HOST =
   ENV_API_HOST || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
