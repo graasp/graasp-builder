@@ -74,7 +74,9 @@ export const DEFAULT_IMAGE_SRC =
 // time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
 export const DOUBLE_CLICK_DELAY_MS = 500;
 
+// root used for tree item menu
 export const ROOT_ID = 'root-id';
+export const SHARED_ROOT_ID = 'shared-root-id';
 
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;

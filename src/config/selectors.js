@@ -204,3 +204,4 @@ export const buildInvitationTableRowId = (id) => `invitationTableRow-${id}`;
 export const buildInvitationTableRowSelector = (id) =>
   `[row-id="${buildInvitationTableRowId(id)}"]`;
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
+export const NAVIGATION_ROOT_ID = 'navigationRoot';

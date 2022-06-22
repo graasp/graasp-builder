@@ -70,7 +70,6 @@
     "Shared Items": "Shared Items",
     "Analytics": "Analytics",
     "Player View": "Player View",
-    "Trash": "Trash",
     "Settings": "Settings",
     "Close": "Close",
     "Shortcut to name": "Shortcut to {{name}}",
@@ -116,7 +115,7 @@
     "Anyone authenticated with the link": "Anyone authenticated with the link",
     "This item enables item login. New users can access this item when they authenticate using the item login.": "This item enables item login. New users can access this item when they authenticate using the item login.",
     "Access": "Access",
-    "Recycle Bin": "Recycle Bin",
+    "Trash": "Trash",
     "Choose one of the following action.": "Choose one of the following action.",
     "Recycle": "Recycle",
     "Delete Permanently": "Delete Permanently",
@@ -128,8 +127,8 @@
     "No user has access to this item.": "No user has access to this item.",
     "Authorized Members": "Authorized Members",
     "Authenticated Members": "Authenticated Members",
-    "Username and Password": "Username and Password",
-    "Username": "Username",
+    "Pseudonym and Password": "Pseudonym and Password",
+    "Pseudonym": "Pseudonym",
     "No user has authenticated to this item yet.": "No user has authenticated to this item yet.",
     "Pin": "Pin this item",
     "Unpin": "Unpin this item",
@@ -202,6 +201,7 @@
     "Analytics Dashboard": "Analytics Dashboard",
     "This invitation is defined in the parent item and cannot be deleted here.": "This invitation is defined in the parent item and cannot be deleted here.",
     "Publish": "Publish",
-    "Download": "Download"
+    "Download": "Download",
+    "No items": "No items"
   }
 }

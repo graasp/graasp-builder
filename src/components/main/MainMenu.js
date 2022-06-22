@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import ListItem from '@material-ui/core/ListItem';
-import PollIcon from '@material-ui/icons/Poll';
 import FolderIcon from '@material-ui/icons/Folder';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -83,23 +82,13 @@ const MainMenu = () => {
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          <ListItemText primary={t('Recycle Bin')} />
+          <ListItemText primary={t('Trash')} />
         </ListItem>
       </>
     );
   };
 
-  return (
-    <List dense={dense}>
-      {renderAuthenticatedMemberMenuItems()}
-      <ListItem button disabled>
-        <ListItemIcon>
-          <PollIcon />
-        </ListItemIcon>
-        <ListItemText primary={t('Analytics')} />
-      </ListItem>
-    </List>
-  );
+  return <List dense={dense}>{renderAuthenticatedMemberMenuItems()}</List>;
 };
 
 export default MainMenu;

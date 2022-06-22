@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
@@ -16,11 +16,13 @@ import {
   buildNavigationLink,
   NAVIGATION_HIDDEN_PARENTS_ID,
   NAVIGATION_HOME_LINK_ID,
+  NAVIGATION_ROOT_ID,
 } from '../../config/selectors';
 import Loader from '../common/Loader';
 import { hooks } from '../../config/queryClient';
 import { getParentsIdsFromPath } from '../../utils/item';
 import { ITEM_NAME_MAX_LENGTH, LOADING_CONTENT } from '../../config/constants';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItem, useParents } = hooks;
 
@@ -48,9 +50,11 @@ const Navigation = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
   const match = useMatch(buildItemPath());
+  const { data: currentMember } = useContext(CurrentUserContext);
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.get('path');
+
   const [parentsOpen, setParentsOpen] = useState(false);
   const { data: parents, isLoading: parentIsLoading } = useParents({
     id: itemId,
@@ -68,30 +72,35 @@ const Navigation = () => {
 
   const renderRootLink = () => {
     // build root depending on user permission or pathname
-    // todo: consider accessing from guest
 
-    let to;
-    let text;
+    // does not show root if user is not authenticated
+    const currentMemberId = currentMember?.get('id');
+    if (!currentMemberId) {
+      return null;
+    }
 
-    switch (pathname) {
-      case SHARED_ITEMS_PATH: {
-        to = SHARED_ITEMS_PATH;
-        text = t('Shared Items');
-        break;
-      }
-      case FAVORITE_ITEMS_PATH: {
-        to = FAVORITE_ITEMS_PATH;
-        text = t('Favorite Items');
-        break;
-      }
-      default: {
-        to = HOME_PATH;
-        text = t('My Items');
-      }
+    let to = HOME_PATH;
+    let text = t('My Items');
+
+    const isParentOwned =
+      (item?.get('creator') ?? parents?.first()?.creator) === currentMemberId;
+
+    // favorite root path
+    if (pathname === FAVORITE_ITEMS_PATH) {
+      to = FAVORITE_ITEMS_PATH;
+      text = t('Favorite Items');
+    }
+    // shared items and non owned items
+    else if (
+      pathname === SHARED_ITEMS_PATH ||
+      (pathname !== HOME_PATH && !isParentOwned)
+    ) {
+      to = SHARED_ITEMS_PATH;
+      text = t('Shared Items');
     }
 
     return (
-      <Link color="inherit" to={to}>
+      <Link color="inherit" to={to} id={NAVIGATION_ROOT_ID}>
         <Typography id={NAVIGATION_HOME_LINK_ID}>{text}</Typography>
       </Link>
     );
@@ -115,14 +124,21 @@ const Navigation = () => {
       );
     }
 
+    // filter out non-accessible parents
+    // cases for items in a shared item
+    const availableParents = parents?.filter(Boolean);
+
     // display parents only when needed
     // always display last and first parent
     if (!parentsOpen) {
       return [
-        parents?.size >= 1 && (
-          <ParentLink name={parents.first().name} id={parents.first().id} />
+        availableParents?.size >= 1 && (
+          <ParentLink
+            name={availableParents.first().name}
+            id={availableParents.first().id}
+          />
         ),
-        parents?.size >= 3 && (
+        availableParents?.size >= 3 && (
           <Typography
             id={NAVIGATION_HIDDEN_PARENTS_ID}
             className={classes.parents}
@@ -131,13 +147,18 @@ const Navigation = () => {
             {LOADING_CONTENT}
           </Typography>
         ),
-        parents?.size >= 2 && (
-          <ParentLink name={parents.last().name} id={parents.last().id} />
+        availableParents?.size >= 2 && (
+          <ParentLink
+            name={availableParents.last().name}
+            id={availableParents.last().id}
+          />
         ),
       ];
     }
 
-    return parents?.map(({ name, id }) => <ParentLink name={name} id={id} />);
+    return availableParents?.map(({ name, id }) => (
+      <ParentLink name={name} id={id} />
+    ));
   };
 
   return (

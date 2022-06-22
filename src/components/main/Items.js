@@ -23,6 +23,7 @@ const Items = ({
   isEditing,
   parentId,
   showThumbnails,
+  showCreator,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -30,6 +31,10 @@ const Items = ({
     useItemMemberships(
       itemSearch?.results?.map(({ id: itemId }) => itemId).toJS(),
     );
+  // todo: disable depending on showCreator
+  const { data: creators } = hooks.useMembers(
+    Object.keys(items?.groupBy(({ creator }) => creator).toJS()),
+  );
 
   if (isMembershipsLoading) {
     return <Loader />;
@@ -67,6 +72,8 @@ const Items = ({
           clickable={clickable}
           isEditing={isEditing}
           showThumbnails={showThumbnails}
+          showCreator={showCreator}
+          creators={creators}
         />
       );
   }
@@ -89,6 +96,7 @@ Items.propTypes = {
   isEditing: PropTypes.bool,
   parentId: PropTypes.string,
   showThumbnails: PropTypes.bool,
+  showCreator: PropTypes.bool,
 };
 
 Items.defaultProps = {
@@ -101,6 +109,7 @@ Items.defaultProps = {
   isEditing: false,
   parentId: null,
   showThumbnails: true,
+  showCreator: false,
 };
 
 export default Items;
