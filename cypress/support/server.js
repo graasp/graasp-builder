@@ -1,6 +1,7 @@
 import { v4 as uuidv4, v4 } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
 import qs from 'querystring';
+import { FAILURE_MESSAGES } from '@graasp/translations';
 import { API_ROUTES } from '@graasp/query-client';
 import {
   getItemById,
@@ -642,7 +643,13 @@ export const mockGetMembers = (members) => {
       if (typeof memberIds === 'string') {
         memberIds = [memberIds];
       }
-      const allMembers = memberIds?.map((id) => getMemberById(members, id));
+      const allMembers = memberIds?.map(
+        (id) =>
+          getMemberById(members, id) ?? {
+            statusCode: StatusCodes.NOT_FOUND,
+            name: FAILURE_MESSAGES.MEMBER_NOT_FOUND,
+          },
+      );
       // member does not exist in db
       if (!allMembers) {
         return reply({

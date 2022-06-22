@@ -6,9 +6,14 @@ import {
   CREATE_ITEM_BUTTON_ID,
   buildItemMenuButtonId,
   buildItemMenu,
+  NAVIGATION_ROOT_ID,
 } from '../../../../src/config/selectors';
-import { buildMemberWithFavorites } from '../../../fixtures/members';
+import {
+  buildMemberWithFavorites,
+  CURRENT_USER,
+} from '../../../fixtures/members';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
+import i18n from '../../../../src/config/i18n';
 
 const toggleFavoriteButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
@@ -26,11 +31,16 @@ describe('Favorite Item', () => {
         ...SAMPLE_ITEMS,
         currentMember: buildMemberWithFavorites(favoriteItems),
       });
+      i18n.changeLanguage(CURRENT_USER.extra.lang);
       cy.visit(HOME_PATH);
     });
 
     it("New button doesn't exists", () => {
       cy.visit(FAVORITE_ITEMS_PATH);
+      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
+        'have.text',
+        i18n.t('Favorite Items'),
+      );
       cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 

@@ -2,7 +2,12 @@ import {
   DEFAULT_ITEM_LAYOUT_MODE,
   GRID_ITEMS_PER_PAGE_CHOICES,
 } from '../../../../src/config/constants';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import i18n from '../../../../src/config/i18n';
+import {
+  buildItemPath,
+  HOME_PATH,
+  SHARED_ITEMS_PATH,
+} from '../../../../src/config/paths';
 import {
   buildItemCard,
   buildItemsTableRowIdAttribute,
@@ -12,11 +17,14 @@ import {
   ITEMS_GRID_PAGINATION_ID,
   NAVIGATION_HOME_LINK_ID,
   ITEMS_TABLE_ROW,
+  NAVIGATION_ROOT_ID,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { generateOwnItems, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
+import { CURRENT_USER } from '../../../fixtures/members';
+import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
 import { expectFolderViewScreenLayout } from './utils';
 
@@ -26,11 +34,13 @@ describe('View Folder', () => {
       cy.setUpApi({
         items: [
           ...SAMPLE_ITEMS.items,
+          ...SHARED_ITEMS.items,
           GRAASP_LINK_ITEM,
           IMAGE_ITEM_DEFAULT,
           VIDEO_ITEM_S3,
         ],
       });
+      i18n.changeLanguage(CURRENT_USER.extra.lang);
     });
 
     it('visit Home', () => {
@@ -45,6 +55,9 @@ describe('View Folder', () => {
         }
       });
 
+      // breadcrumb navigation
+      cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
+
       // visit child
       const { id: childId } = SAMPLE_ITEMS.items[0];
       cy.goToItemInGrid(childId);
@@ -57,12 +70,18 @@ describe('View Folder', () => {
         }
       });
 
+      // breadcrumb navigation
+      cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
+
       // visit child
       const { id: childChildId } = SAMPLE_ITEMS.items[2];
       cy.goToItemInGrid(childChildId);
 
       // expect no children
       cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
+
+      // breadcrumb navigation
+      cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
 
       // return parent with navigation and should display children
       cy.wait(NAVIGATION_LOAD_PAUSE);
@@ -74,6 +93,45 @@ describe('View Folder', () => {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
         }
       });
+      // breadcrumb navigation
+      cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
+    });
+
+    it('visit Shared Items', () => {
+      cy.visit(SHARED_ITEMS_PATH);
+      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+
+      // should get own items
+      cy.wait('@getSharedItems').then(({ response: { body } }) => {
+        // check item is created and displayed
+        for (const item of body) {
+          cy.get(`#${buildItemCard(item.id)}`).should('exist');
+        }
+      });
+
+      // breadcrumb navigation
+      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
+        'have.text',
+        i18n.t('Shared Items'),
+      );
+
+      // visit child
+      const { id: childId } = SHARED_ITEMS.items[0];
+      cy.goToItemInGrid(childId);
+
+      // should get children
+      cy.wait('@getChildren').then(({ response: { body } }) => {
+        // check item is created and displayed
+        for (const item of body) {
+          cy.get(`#${buildItemCard(item.id)}`).should('exist');
+        }
+      });
+
+      // breadcrumb navigation
+      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
+        'have.text',
+        i18n.t('Shared Items'),
+      );
     });
 
     it('visit item by id', () => {

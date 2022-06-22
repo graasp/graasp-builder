@@ -109,11 +109,10 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
       }
 
       // reset email input
-      const newInvitation = {
+      setInvitation({
         ...invitation,
         email: '',
-      };
-      setInvitation(newInvitation);
+      });
     } catch (e) {
       console.error(e);
     }

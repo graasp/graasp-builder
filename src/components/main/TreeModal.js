@@ -34,27 +34,43 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
-  // bug: get only shared items with write/admin rights
+  // todo: get only shared items with write/admin rights
+  // otherwise choosing an item without the write rights will result in an error
   const { data: sharedItems, isLoading: isSharedItemsLoading } =
     useSharedItems();
   const [selectedId, setSelectedId] = useState(null);
   const { data: items, isItemLoading } = useItems(itemIds);
 
-  const buildExpandedItems = (rootId) => {
-    if (items && !items.isEmpty()) {
-      // suppose all items are in the same parent
-      const parentIds = getParentsIdsFromPath(items.first().path) || [];
-      // return expanded list depending current root id
-      // define root depending on whether is the root parent is in the owned items
-      const rootItemId = parentIds[0];
-      const oItem = ownItems.find(({ id }) => id === rootItemId);
-      const itemRootId = oItem ? ROOT_ID : SHARED_ROOT_ID;
-      if (rootId === itemRootId) {
-        const newExpandedItems = [rootId, ...parentIds];
-        return newExpandedItems;
-      }
+  // build the expanded item ids list for a given tree (with treeRootId as id)
+  // by default, we expand all parents of items
+  // all other tree roots should be closed
+  const buildExpandedItems = (treeRootId) => {
+    if (!items || items.isEmpty()) {
+      return [];
     }
-    return [];
+
+    // suppose all items are in the same parent
+    const parentIds = getParentsIdsFromPath(items.first().path) || [];
+    if (!parentIds.length) {
+      return [];
+    }
+
+    // return expanded list depending current root id
+    // define root id depending on whether is the root parent is in the owned items
+    const rootItemId = parentIds[0];
+    const isRootItemOwned = Boolean(
+      ownItems.find(({ id }) => id === rootItemId),
+    );
+    const itemRootId = isRootItemOwned ? ROOT_ID : SHARED_ROOT_ID;
+
+    // trees root not being treeRootId should be closed
+    if (treeRootId !== itemRootId) {
+      return [];
+    }
+
+    // return expanded ids
+    const newExpandedItems = [treeRootId, ...parentIds];
+    return newExpandedItems;
   };
 
   if (isOwnItemsLoading || isSharedItemsLoading || isItemLoading) {

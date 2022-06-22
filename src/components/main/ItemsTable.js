@@ -165,7 +165,10 @@ const ItemsTable = ({
         headerName: t('Creator'),
         colId: 'creator',
         type: 'rightAligned',
-        cellRenderer: MemberNameCellRenderer(creators),
+        cellRenderer: MemberNameCellRenderer({
+          users: creators,
+          defaultValue: t('Unknown'),
+        }),
         cellClass: classes.creatorName,
         sortable: false,
       });

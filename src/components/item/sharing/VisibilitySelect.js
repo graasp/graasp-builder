@@ -186,10 +186,10 @@ const VisibilitySelect = ({ item, edit }) => {
         id={SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}
       >
         <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME}>
-          {t('Pseudonyme')}
+          {t('Pseudonym')}
         </MenuItem>
         <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD}>
-          {t('Pseudonyme and Password')}
+          {t('Pseudonym and Password')}
         </MenuItem>
       </Select>
     );

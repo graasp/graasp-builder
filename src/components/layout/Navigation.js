@@ -16,6 +16,7 @@ import {
   buildNavigationLink,
   NAVIGATION_HIDDEN_PARENTS_ID,
   NAVIGATION_HOME_LINK_ID,
+  NAVIGATION_ROOT_ID,
 } from '../../config/selectors';
 import Loader from '../common/Loader';
 import { hooks } from '../../config/queryClient';
@@ -78,30 +79,28 @@ const Navigation = () => {
       return null;
     }
 
-    let to;
-    let text;
+    let to = HOME_PATH;
+    let text = t('My Items');
 
     const isParentOwned =
       (item?.get('creator') ?? parents?.first()?.creator) === currentMemberId;
 
-    // shared items and non owned items
-    if (pathname === SHARED_ITEMS_PATH || !isParentOwned) {
-      to = SHARED_ITEMS_PATH;
-      text = t('Shared Items');
-    }
     // favorite root path
-    else if (pathname === FAVORITE_ITEMS_PATH) {
+    if (pathname === FAVORITE_ITEMS_PATH) {
       to = FAVORITE_ITEMS_PATH;
       text = t('Favorite Items');
     }
-    // default
-    else {
-      to = HOME_PATH;
-      text = t('My Items');
+    // shared items and non owned items
+    else if (
+      pathname === SHARED_ITEMS_PATH ||
+      (pathname !== HOME_PATH && !isParentOwned)
+    ) {
+      to = SHARED_ITEMS_PATH;
+      text = t('Shared Items');
     }
 
     return (
-      <Link color="inherit" to={to}>
+      <Link color="inherit" to={to} id={NAVIGATION_ROOT_ID}>
         <Typography id={NAVIGATION_HOME_LINK_ID}>{text}</Typography>
       </Link>
     );
