@@ -80,6 +80,7 @@ import {
   mockGetItemInvitations,
   mockPatchInvitation,
   mockDeleteInvitation,
+  mockPublishItem,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -300,6 +301,8 @@ Cypress.Commands.add(
     mockPatchInvitation(items, patchInvitationError);
 
     mockDeleteInvitation(items, deleteInvitationError);
+
+    mockPublishItem(items);
   },
 );
 

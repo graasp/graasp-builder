@@ -1531,3 +1531,16 @@ export const mockDeleteInvitation = (items, shouldThrowError) => {
     },
   ).as('deleteInvitation');
 };
+
+export const mockPublishItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/publish`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      reply(items.find(item => item?.id === itemId));
+    },
+  ).as('publishItem');
+};

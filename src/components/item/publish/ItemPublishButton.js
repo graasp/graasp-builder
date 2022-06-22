@@ -20,6 +20,7 @@ import {
   isItemPublished,
 } from '../../../utils/itemTag';
 import {
+  EMAIL_NOTIFICATION_CHECKBOX,
   ITEM_PUBLISH_BUTTON_ID,
   ITEM_UNPUBLISH_BUTTON_ID,
 } from '../../../config/selectors';
@@ -132,6 +133,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
           control={
             // eslint-disable-next-line react/jsx-wrap-multilines
             <Checkbox
+              id={EMAIL_NOTIFICATION_CHECKBOX}
               checked={emailNotification}
               onChange={toggleEmailNotification}
               name="emailNotification"
