@@ -49,6 +49,7 @@ export const ITEM_WITH_CATEGORIES = {
   ...PUBLISHED_ITEM,
   settings: {
     tags: CUSTOMIZED_TAGS,
+    displayCoEditors: true,
   },
   // for tests
   categories: SAMPLE_ITEM_CATEGORIES,

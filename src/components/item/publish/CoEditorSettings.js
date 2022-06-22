@@ -13,6 +13,7 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
+import { buildCoEditorSettingsRadioGroup } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -80,6 +81,7 @@ const CoEditorSettings = ({ item }) => {
       >
         {Object.values(DISPLAY_CO_EDITORS_OPTIONS).map((option) => (
           <FormControlLabel
+            id={buildCoEditorSettingsRadioGroup(option.value)}
             value={option.value}
             control={<Radio color="primary" />}
             label={t(option.label)}

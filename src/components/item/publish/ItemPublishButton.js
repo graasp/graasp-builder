@@ -82,9 +82,11 @@ const ItemPublishButton = ({ item, isValidated }) => {
   const handlePublish = () => {
     // Prevent resend request if item is already published
     if (!isPublished) {
+      // use undefined instead of 'false' because queryString will be empty when value is undefined
+      const notification = emailNotification ? true : undefined;
       publishItem({
         id: itemId,
-        notification: emailNotification,
+        notification,
       });
     }
   };

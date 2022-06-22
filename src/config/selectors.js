@@ -214,3 +214,6 @@ export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
 export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
   'headerMemberMenuSignOutButton';
 export const buildMemberMenuItemId = (id) => `memberMenuItem-${id}`;
+
+export const buildCoEditorSettingsRadioGroup = (id) =>
+  `coEditorSettingsRadioButton-${id}`;
