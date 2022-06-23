@@ -22,6 +22,7 @@ describe('Header', () => {
     cy.wait(3000);
     cy.get(`#${APP_NAVIGATION_DROP_DOWN_ID}`).should('exist');
   });
+
   describe('User Menu', () => {
     it('Standalone actions', () => {
       cy.setUpApi();
@@ -36,6 +37,7 @@ describe('Header', () => {
       cy.get(`#${HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID}`).click();
       cy.url().should('equal', SIGN_IN_PATH);
     });
+
     it('Sign out', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);

@@ -12,6 +12,7 @@ describe('Redirection', () => {
 
     cy.url().should('contain', link);
   });
+
   it('Redirection to home if no url is saved', () => {
     cy.setUpApi();
 
