@@ -205,3 +205,12 @@ export const buildInvitationTableRowSelector = (id) =>
   `[row-id="${buildInvitationTableRowId(id)}"]`;
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
 export const NAVIGATION_ROOT_ID = 'navigationRoot';
+export const HEADER_MEMBER_MENU_BUTTON_ID = 'headerMemberMenuButton';
+export const HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID =
+  'headerMemberMenuSeeProfileButton';
+export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
+  'headerMemberMenuSignInButton';
+
+export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
+  'headerMemberMenuSignOutButton';
+export const buildMemberMenuItemId = (id) => `memberMenuItem-${id}`;

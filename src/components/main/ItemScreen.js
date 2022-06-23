@@ -17,7 +17,6 @@ import GraaspAnalyzer from './GraaspAnalyzer';
 import Main from './Main';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
-  ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
   ITEM_LOGIN_SIGN_IN_MODE_ID,
@@ -28,6 +27,7 @@ import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
 import { UppyContextProvider } from '../file/UppyContext';
 import FileUploader from '../file/FileUploader';
 import ItemPublishTab from '../item/publish/ItemPublishTab';
+import ItemForbiddenScreen from './ItemForbiddenScreen';
 
 const { useItem, useItemMemberships, useCurrentMember, useItemLogin } = hooks;
 
@@ -108,6 +108,8 @@ const WrappedItemScreen = () => {
   );
   const { itemId } = useParams();
 
+  const ForbiddenContent = <ItemForbiddenScreen />;
+
   const Component = ItemLoginAuthorization({
     signIn: itemLoginSignIn,
     signOut,
@@ -115,7 +117,7 @@ const WrappedItemScreen = () => {
     useCurrentMember,
     useItem,
     useItemLogin,
-    forbiddenContentId: ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
+    ForbiddenContent,
     memberIdInputId: ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
     usernameInputId: ITEM_LOGIN_SIGN_IN_USERNAME_ID,
     signInButtonId: ITEM_LOGIN_SIGN_IN_BUTTON_ID,

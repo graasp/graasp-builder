@@ -1,4 +1,4 @@
-import { Context } from '@graasp/utils';
+import { Context, buildSignInPath } from '@graasp/utils';
 import env from '../env.json';
 import { ITEM_LAYOUT_MODES, PERMISSION_LEVELS, ITEM_TYPES } from '../enums';
 
@@ -12,6 +12,7 @@ const {
   HIDDEN_ITEM_TAG_ID: ENV_HIDDEN_ITEM_TAG_ID,
   GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
   REACT_APP_SENTRY_DSN: ENV_SENTRY_DSN,
+  DOMAIN: ENV_DOMAIN,
 } = env;
 
 export const APP_NAME = 'Graasp';
@@ -41,7 +42,7 @@ export const SHOW_NOTIFICATIONS =
 export const AUTHENTICATION_HOST =
   ENV_AUTHENTICATION_HOST ||
   process.env.REACT_APP_AUTHENTICATION_HOST ||
-  'http://localhost:3111';
+  'http://localhost:3001';
 
 export const GRAASP_PERFORM_HOST =
   ENV_GRAASP_PERFORM_HOST ||
@@ -63,6 +64,8 @@ export const GA_MEASUREMENT_ID =
 
 export const HIDDEN_ITEM_TAG_ID =
   ENV_HIDDEN_ITEM_TAG_ID || process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || false;
+
+export const DOMAIN = ENV_DOMAIN || process.env.REACT_APP_DOMAIN;
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -113,9 +116,7 @@ export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
 
 export const ITEM_ICON_MAX_SIZE = 25;
 
-export const USERNAME_MAX_LENGTH = 15;
 export const ITEM_NAME_MAX_LENGTH = 15;
-export const HEADER_USERNAME_MAX_WIDTH = 120;
 
 export const SHARE_ITEM_MODAL_MIN_WIDTH = 120;
 
@@ -147,8 +148,6 @@ export const SETTINGS = {
 export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
 export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME;
-
-export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const USER_ITEM_ORDER = 'user_order';
 
@@ -182,7 +181,6 @@ export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
-export const PSEUDONIMIZED_USER_MAIL = '@graasp.org';
 export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
 
 export const DRAG_ICON_SIZE = 18;
@@ -203,9 +201,6 @@ export const CATEGORY_TYPE_TITLES = {
   DISCIPLINE: 'Discipline',
   LANGUAGE: 'Language',
 };
-
-// todo: factor out in graasp constants/utils
-export const ACCEPT_COOKIES_NAME = 'accept-all-cookies';
 
 export const CC_LICENSE_ADAPTION_OPTIONS = {
   ALLOW: 'allow',
@@ -255,3 +250,6 @@ export const BUTTON_TYPES = {
 
 export const MEMBERSHIP_TABLE_HEIGHT = 400;
 export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
+
+// signin page path from auth host
+export const SIGN_IN_PATH = buildSignInPath({ host: AUTHENTICATION_HOST });

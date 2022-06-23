@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga4';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
+import { hasAcceptedCookies } from '@graasp/utils';
 import './index.css';
 import Root from './components/Root';
 import * as serviceWorker from './serviceWorker';
@@ -14,7 +15,6 @@ import {
   NODE_ENV,
   SENTRY_DSN,
 } from './config/constants';
-import { hasAcceptedCookies } from './utils/cookies';
 
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
 

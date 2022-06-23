@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { hooks } from '../../config/queryClient';
 import i18n from '../../config/i18n';
@@ -17,8 +17,11 @@ const CurrentUserContextProvider = ({ children }) => {
     }
   }, [lang]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const value = useMemo(() => query, [query.data]);
+
   return (
-    <CurrentUserContext.Provider value={query}>
+    <CurrentUserContext.Provider value={value}>
       {children}
     </CurrentUserContext.Provider>
   );
