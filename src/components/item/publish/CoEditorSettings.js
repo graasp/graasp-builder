@@ -59,7 +59,8 @@ const CoEditorSettings = ({ item }) => {
   }
 
   const handleChange = (event) => {
-    const newValue = event.target.value;
+    // value from radio button is string, convert to boolean
+    const newValue = event.target.value === 'true';
     setOptionValue(newValue);
     updateDisplayCoEditors({
       id: itemId,

@@ -1956,9 +1956,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git#169/itemPublish":
+"@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=8c6cdb16dbf88ac38f6bab1d27c99eba294f31f0"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=aa690de0833289b3e78b9eb01edc8e45df5254a8"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -1972,7 +1972,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 2a0ca5a5aea206d14d3c2c40f095b6a57bf867d9f5efd6ecfd4d07187f7761d84c250dae3c2e044383af09262b7fde45e80402d26f921c2a4f9dfacd2387d305
+  checksum: e940a7e3d1a7a1ad4d3639ec13b9a22230bfd6cf91c9d9d5972dece9d7d623bfec630d397f01ff1e856ba3ba1c0ea8d77bdcb3d7eddc7ac8c8c7df66c07886c4
   languageName: node
   linkType: hard
 
@@ -10361,7 +10361,7 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git#169/itemPublish"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
