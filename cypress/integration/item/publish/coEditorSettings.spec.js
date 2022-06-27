@@ -45,7 +45,7 @@ describe('Co-editor Setting', () => {
         request: { url, body },
       } = data;
       expect(url.split('/')).contains(item.id);
-      expect(body.settings.displayCoEditors).contains(newOptionValue);
+      expect(body.settings.displayCoEditors).equals(newOptionValue);
     });
   });
 });
