@@ -54,7 +54,9 @@ const CoEditorSettings = ({ item }) => {
     }
   }, [settings]);
 
-  if (isMemberLoading) return <Loader />;
+  if (isMemberLoading) {
+    return <Loader />;
+  }
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -78,7 +80,6 @@ const CoEditorSettings = ({ item }) => {
       </Typography>
       <RadioGroup
         id={CO_EDITOR_SETTINGS_RADIO_GROUP_ID}
-        aria-label="Co-Editors"
         name={t('Display co-editors?')}
         value={optionValue}
         onChange={handleChange}

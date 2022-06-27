@@ -90,6 +90,7 @@ const {
   buildDeleteInvitationRoute,
   buildPatchInvitationRoute,
   buildResendInvitationRoute,
+  buildItemPublishRoute
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -1536,7 +1537,7 @@ export const mockPublishItem = (items) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/publish`),
+      url: new RegExp(`${API_HOST}/${buildItemPublishRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
       const itemId = url.slice(API_HOST.length).split('/')[2];

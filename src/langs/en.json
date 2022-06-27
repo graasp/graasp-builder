@@ -206,6 +206,7 @@
     "No items": "No items",
     "Co-Editors": "Co-Editors",
     "Do you want to display co-editors after published? All users with edit permission will be displayed.": "Do you want to display co-editors after published? All users with edit permission will be displayed.",
-    "Display co-editors?": "Display co-editors?"
+    "Display co-editors?": "Display co-editors?",
+    "Send email notifications to all co-editors": "Send email notifications to all co-editors"
   }
 }

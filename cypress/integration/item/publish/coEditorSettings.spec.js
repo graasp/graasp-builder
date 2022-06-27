@@ -24,7 +24,7 @@ const visitItemPage = (item) => {
 };
 
 describe('Co-editor Setting', () => {
-  it('Display choices ', () => {
+  it('Display choices', () => {
     const item = ITEM_WITH_CATEGORIES;
     visitItemPage(item);
 
@@ -34,11 +34,11 @@ describe('Co-editor Setting', () => {
     });
   });
 
-  it('Change choice ', () => {
+  it('Change choice', () => {
     const item = ITEM_WITH_CATEGORIES;
     visitItemPage(item);
 
-    const newOptionValue = false;
+    const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
     cy.get(`#${buildCoEditorSettingsRadioButtonId(newOptionValue)}`).click();
     cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
       const {
