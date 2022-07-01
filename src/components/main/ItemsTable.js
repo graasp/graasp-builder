@@ -3,7 +3,7 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Table as GraaspTable } from '@graasp/ui';
+import { Table as GraaspTable } from '@graasp/ui/dist/table';
 import { makeStyles } from '@material-ui/core';
 import { useNavigate, useParams } from 'react-router';
 import { hooks, useMutation } from '../../config/queryClient';

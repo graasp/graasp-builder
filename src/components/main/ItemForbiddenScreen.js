@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import BlockIcon from '@material-ui/icons/Block';
 import { Button } from '@graasp/ui';
@@ -7,6 +7,7 @@ import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Main from './Main';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ItemForbiddenScreen() {
+  const { data: member } = useContext(CurrentUserContext);
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -31,7 +33,7 @@ function ItemForbiddenScreen() {
       startIcon={<AccountCircleIcon />}
       className={classes.switchButton}
     >
-      {t('Switch account')}
+      {member ? t('Switch account') : t('Sign In')}
     </Button>
   );
 

@@ -1984,34 +1984,6 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=95eb3595e74d559b6afd3ae6571589fd0b15736d"
-  dependencies:
-    "@graasp/utils": "github:graasp/graasp-utils.git"
-    clsx: 1.1.1
-    http-status-codes: 2.2.0
-    immutable: 4.0.0
-    katex: 0.15.3
-    qs: 6.10.3
-    react-cookie-consent: 7.4.1
-    react-i18next: 11.16.9
-    react-quill: 1.3.5
-    react-text-mask: 5.4.3
-    uuid: 8.3.2
-  peerDependencies:
-    "@material-ui/core": 4.11.0
-    "@material-ui/icons": 4.9.1
-    "@material-ui/lab": 4.0.0-alpha.58
-    ag-grid-community: 27.3.0
-    ag-grid-react: 27.3.0
-    i18next: 21.3.1
-    react: ^16.13.1
-    react-dom: 16.13.1
-  checksum: 487a8f6d69615a3e0d9c5c5e537192f5b016443702deb992114556b3c506f0e3e04a2af3ac0cbdcfc7515e62b5ec926c102a033331ff9c4f240b59ddf6f27ed9
-  languageName: node
-  linkType: hard
-
-"@graasp/ui@github:graasp/graasp-ui.git":
-  version: 0.2.0
   resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=a6d1845020858db0fbf3f5ff12b2810726a4e28f"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -2038,6 +2010,42 @@ __metadata:
     react-dom: 16.13.1
     react-router-dom: 6.2.2
   checksum: b8d7de2da9498586537021db436c8362e63a0e27487185daaacbcc80354723d356f0bcc7a41f2da804c34e28901b77e8717c0e29b89274aecccda51191161847
+  languageName: node
+  linkType: hard
+
+"@graasp/ui@github:graasp/graasp-ui.git#134/optionalDep":
+  version: 0.2.0
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=adfa1f0c4b54f108a1e50bc000e1e5f820846d6c"
+  dependencies:
+    "@graasp/utils": "github:graasp/graasp-utils.git"
+    clsx: 1.1.1
+    http-status-codes: 2.2.0
+    immutable: 4.0.0
+    katex: 0.15.3
+    lodash.truncate: 4.4.2
+    qs: 6.10.3
+    react-cookie-consent: 7.4.1
+    react-i18next: 11.16.9
+    react-quill: 1.3.5
+    react-rnd: 10.3.7
+    react-text-mask: 5.4.3
+    uuid: 8.3.2
+  peerDependencies:
+    "@material-ui/core": 4.11.0
+    "@material-ui/icons": 4.9.1
+    "@material-ui/lab": 4.0.0-alpha.58
+    ag-grid-community: 27.3.0
+    ag-grid-react: 27.3.0
+    i18next: 21.3.1
+    react: ^16.13.1
+    react-dom: 16.13.1
+    react-router-dom: 6.2.2
+  peerDependenciesMeta:
+    ag-grid-community:
+      optional: true
+    ag-grid-react:
+      optional: true
+  checksum: d9dd7cc73d7649463a3754ead720a90d4559c54d64a5129db89f06f1f2503219e1df04a9142a54c272c2b2ab5ae3324f08df24d41ad620763ad21acf4ce7be84
   languageName: node
   linkType: hard
 
@@ -10366,7 +10374,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git"
+    "@graasp/ui": "github:graasp/graasp-ui.git#134/optionalDep"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
