@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Loader, Table as GraaspTable } from '@graasp/ui';
+import { Loader } from '@graasp/ui';
+import { Table as GraaspTable } from '@graasp/ui/dist/table';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,

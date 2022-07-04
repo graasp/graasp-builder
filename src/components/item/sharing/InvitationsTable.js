@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-import { Table as GraaspTable } from '@graasp/ui';
+import { Table as GraaspTable } from '@graasp/ui/dist/table';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
