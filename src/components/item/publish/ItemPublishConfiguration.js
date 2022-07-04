@@ -24,6 +24,7 @@ import {
 } from '../../../config/selectors';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
 import ItemPublishButton from './ItemPublishButton';
+import CoEditorSettings from './CoEditorSettings';
 
 const { POST_ITEM_VALIDATION } = MUTATION_KEYS;
 const { buildItemValidationAndReviewKey } = DATA_KEYS;
@@ -240,6 +241,7 @@ const ItemPublishConfiguration = ({ item }) => {
         )}
       </Typography>
       <div className={classes.config}>
+        <CoEditorSettings item={item} />
         <CategorySelection item={item} />
         <CustomizedTagsEdit item={item} />
       </div>
