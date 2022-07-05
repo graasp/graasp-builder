@@ -41,7 +41,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
   );
 
   // display only if has more than 2 memberships
-  if (!filteredMemberships?.length) {
+  if (!filteredMemberships?.size) {
     return null;
   }
 
@@ -54,9 +54,9 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
     >
       <Grid item>
         <Tooltip
-          title={t(
-            `This item is shared with ${filteredMemberships.length} users`,
-          )}
+          title={t(`This item is shared with users`, {
+            users: filteredMemberships.length,
+          })}
           aria-label="shared users"
         >
           <AvatarGroup max={maxAvatar} spacing={3} onClick={onClick}>

@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { List } from 'immutable';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Grid, makeStyles, TextField } from '@material-ui/core';
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { MUTATION_KEYS, routines } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
@@ -17,6 +17,9 @@ import {
 } from '../../../config/selectors';
 import ItemMembershipSelect from './ItemMembershipSelect';
 import { buildInvitation } from '../../../utils/invitation';
+import notifier from '../../../config/notifier';
+
+const { shareItemRoutine } = routines;
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -79,7 +82,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
 
     let returnedValue;
     try {
-      await shareItem({
+      const result = await shareItem({
         itemId,
         data: [
           {
@@ -90,11 +93,23 @@ const CreateItemMembershipForm = ({ item, members }) => {
         ],
       });
 
-      // reset email input
-      setInvitation({
-        ...invitation,
-        email: '',
-      });
+      // manually notify error
+      if (result?.failure?.length) {
+        notifier({
+          type: shareItemRoutine.FAILURE,
+          payload: {
+            error: {
+              response: { data: { message: result?.failure?.[0].message } },
+            },
+          },
+        });
+      } else {
+        // reset email input
+        setInvitation({
+          ...invitation,
+          email: '',
+        });
+      }
     } catch (e) {
       console.error(e);
     }

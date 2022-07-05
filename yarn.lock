@@ -1958,7 +1958,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client.git#172/shareMutation":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=20074c6f2970aa31159af6ba1960cef1bfea2596"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=24fb986d0d241ce30f75a6e474e2e82d5bd3d5c8"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git#13/pseudonymized"
@@ -1972,7 +1972,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 0d425033b606d7ac642e51ec8138f81e8c548af9aefc392df624016c872eeddc667cb44930902b124f470c3bb6349b4e231dd1306df591e7924d3bf2dc7924a5
+  checksum: d6e4fa595705d9ef93264045bd980b8ae6dc13bf7a69753485d152f6b36d92f7c4e1d52d72baba0175345247593d18a960866b0b9a5e1020e2d71fc1715b487f
   languageName: node
   linkType: hard
 

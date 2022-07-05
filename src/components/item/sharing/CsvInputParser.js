@@ -93,14 +93,25 @@ const CsvInputParser = ({ item }) => {
       );
     }
 
-    // does not show errors if results is not defined
-    // or if there is no failure with menaningful data
-    // this won't show membership already exists error
     if (!results) {
       return null;
     }
+
+    // show generic network/axios errors
+    const genericErrors = results?.failure?.filter(
+      (e) => e?.code && e?.message,
+    );
+    if (genericErrors?.length) {
+      return genericErrors.map((err) => (
+        <Alert severity="success">{t(err.message)}</Alert>
+      ));
+    }
+
+    // does not show errors if results is not defined
+    // or if there is no failure with menaningful data
+    // this won't show membership already exists error
     const failureToShow = results.failure.filter(
-      (e) => e?.data?.email ?? e?.data?.name,
+      (e) => e?.data?.email || e?.data?.name,
     );
     if (!failureToShow.length && isSuccess) {
       return (

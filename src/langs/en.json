@@ -213,6 +213,10 @@
     "Import users from a CSV file": "Import users from a CSV file",
     "Choose a CSV file": "Choose a CSV file",
     "Your CSV should have at least the column 'email'. The columns 'name' and 'permission' are optional.": "Your CSV should have at least the column 'email'. The columns 'name' and 'permission' are optional.",
-    "The import failed for these entries": "The import failed for these entries"
+    "The import failed for these entries": "The import failed for these entries",
+    "This item is shared with users": "This item is shared with {{users}} users",
+    "You are not signed in.": "You are not signed in.",
+    "Sign in with another account": "Sign in with another account",
+    "See Profile": "See Profile"
   }
 }

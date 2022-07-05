@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { routines } from '@graasp/query-client';
-import buildI18n from '@graasp/translations';
+import buildI18n, { FAILURE_MESSAGES } from '@graasp/translations';
 import {
   UPLOAD_FILES_PROGRESS_MESSAGE,
   IMPORT_ZIP_PROGRESS_MESSAGE,
@@ -11,6 +11,12 @@ import {
 } from '../types/clipboard';
 
 const i18n = buildI18n();
+
+const getErrorMessageFromPayload = (payload) =>
+  i18n.t(
+    payload?.error?.response?.data?.message ??
+      FAILURE_MESSAGES.UNEXPECTED_ERROR,
+  );
 
 const {
   createItemRoutine,
@@ -71,11 +77,7 @@ export default ({ type, payload }) => {
     case resendInvitationRoutine.FAILURE:
     case shareItemRoutine.FAILURE:
     case exportItemRoutine.FAILURE: {
-      // todo: factor out string
-      message = i18n.t(
-        payload?.error?.response?.data?.message ??
-          'An unexpected error occured',
-      );
+      message = getErrorMessageFromPayload(payload);
       break;
     }
     // success messages
@@ -113,6 +115,8 @@ export default ({ type, payload }) => {
           payload?.message ?? 'The operation successfully proceeded',
         );
       }
+
+      // do nothing for multiple failures: the interface handles it
       break;
     }
 

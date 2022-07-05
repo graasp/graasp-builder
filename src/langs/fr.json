@@ -209,6 +209,10 @@
     "A CSV entry cannot override the data already saved. If a user already has permission, update the value in the table manually.": "Une entrée d'un CSV ne peut pas remplacer une valeur déjà présente. Si un utilisateur a déjà des permissions, mettez à jour la valeur depuis le tableau manuellement.",
     "Import users from a CSV file": "Importer des utilisateurs depuis un fichier CSV",
     "Choose a CSV file": "Choisir un fichier CSV",
-    "The import failed for these entries": "L'importation a échoué pour ces valeurs"
+    "The import failed for these entries": "L'importation a échoué pour ces valeurs",
+    "This item is shared with users": "Cet élément est partagé avec {{users}} utilisateurs",
+    "You are not signed in.": "Vous n'êtes pas connecté.",
+    "Sign in with another account": "Se connecter avec un autre compte",
+    "See Profile": "Voir le Profil"
   }
 }

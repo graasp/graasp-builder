@@ -73,7 +73,7 @@ const ItemScreen = () => {
       return <GraaspAnalyzer item={item} />;
     }
     if (isItemPublishOpen) {
-      return <ItemPublishTab item={item} memberships={memberships} />;
+      return <ItemPublishTab item={item} permission={permission} />;
     }
     return (
       <ItemContent

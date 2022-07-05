@@ -21,7 +21,7 @@ const inviteItem = ({ id, email, permission, submit }) => {
 };
 
 describe('Create Invitation', () => {
-  it('invite one new member', () => {
+  it.only('invite one new member', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     const { id } = SAMPLE_ITEMS.items[0];
