@@ -17,7 +17,7 @@ const copyItem = ({ id, toItemPath }) => {
 };
 
 describe('Copy Item in Grid', () => {
-  it.only('copy item on Home', () => {
+  it('copy item on Home', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);

@@ -56,7 +56,7 @@ const ItemScreen = () => {
   }
 
   const itemMembership = getHighestPermissionForMemberFromMemberships({
-    memberships,
+    memberships: memberships?.toJS(),
     memberId: currentMember?.get('id'),
   });
   const permission = itemMembership?.permission;
