@@ -1953,11 +1953,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git#163-h5p":
+"@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=154537c836d995d9fda71551e91986e3bd3cdbcf"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7f6453b0a5a4cf991305bcaeacfc3c6ad78855c2"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
+    "@graasp/utils": "github:graasp/graasp-utils.git"
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
@@ -1968,16 +1969,16 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: d36122bbeb45254099fe218e93c3d4cac400f2e6c13ec1ed87a57c05c7e67d138298ad6f39041459194f76498a77c6660666b5c1b8d13d2a0fd7a4efee8194b4
+  checksum: 402e5ca4b009550e9962448d4314c0987003888f222c7f29365919dfccb67c937ae678cb329361c76d44d6c5f4c4c248c82e073155ad9b39c6d42e6bea348c0b
   languageName: node
   linkType: hard
 
 "@graasp/translations@github:graasp/graasp-translations.git":
   version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=4e97fe01b016edd2e99986f354de8f8f819c21fb"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=f6042354f3c929a0d35cf6478ddb6a3fe994f6e4"
   dependencies:
     i18next: 21.6.11
-  checksum: ddf3f034435db297895ddd727028247c37790590cab24f991b4a2205faf08b5009cb751298ff2c89bb8810cff8d57c0fd8dd663970433ef47e1fba107ed1689c
+  checksum: c91e9050a9e386b19dc04a24322c9df3c7fb5f747ade55d0c55d450f6ac78defa8c9e35df77856ec0783a6bd308da2778ae4b7209c6654126d4af8157fda0b09
   languageName: node
   linkType: hard
 
@@ -2040,8 +2041,11 @@ __metadata:
 
 "@graasp/utils@github:graasp/graasp-utils.git":
   version: 0.1.0
-  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=82be1fd0ba2cc7a3c59465012b55e10736e17f96"
-  checksum: 8d7a8cac8f9ce6726babed4efd127163520100f6ad9edf40e26789b66982ce6a9c2359267db1583e6050f45b56598eb59660fa46593e1df69ee4dc165cf6ec61
+  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=f53d68bf0fd32b4e64c896df595e1172c3a97334"
+  dependencies:
+    js-cookie: 3.0.1
+    qs: 6.10.3
+  checksum: a7b3abb3b3c457117f09c792ab41ba7d101c5fae3e82e06cd6124a87155414b23759a0501716a20cb397c645c32e293a368a3366130cd275ae2a4e90c8218b6b
   languageName: node
   linkType: hard
 
@@ -10292,7 +10296,7 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git#163-h5p"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git#126-add-h5p"
     "@graasp/utils": "github:graasp/graasp-utils.git"

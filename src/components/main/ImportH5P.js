@@ -5,7 +5,6 @@ import { Dashboard } from '@uppy/react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatch } from 'react-router';
-import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import notifier from '../../config/notifier';
 import { buildItemPath } from '../../config/paths';
 import { H5P_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
@@ -81,12 +80,7 @@ const ImportH5P = () => {
           height={200}
           width="100%"
           proudlyDisplayPoweredByUppy={false}
-          note={t(
-            `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
-            {
-              maxFiles: FILE_UPLOAD_MAX_FILES,
-            },
-          )}
+          note={t('Upload a file')}
           locale={{
             strings: {
               // Text to show on the droppable area.

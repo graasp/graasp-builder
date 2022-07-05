@@ -19,7 +19,7 @@ import {
   API_HOST,
   ITEM_DEFAULT_HEIGHT,
   CONTEXT_BUILDER,
-  H5P_ASSETS_HOST,
+  H5P_ASSETS_BASE_URL,
 } from '../../config/constants';
 import { LayoutContext } from '../context/LayoutContext';
 import Items from '../main/Items';
@@ -186,7 +186,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
       return (
         <H5PItem
           itemId={itemId}
-          h5pAssetsHost={H5P_ASSETS_HOST}
+          h5pAssetsHost={H5P_ASSETS_BASE_URL}
           playerOptions={{
             h5pJsonPath: buildServeH5PContentURL(h5pContentPath),
             frameJs: H5P_FRAME_JS_PATH,

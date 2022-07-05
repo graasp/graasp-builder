@@ -4,6 +4,7 @@ import XHRUpload from '@uppy/xhr-upload';
 import {
   API_HOST,
   FILE_UPLOAD_MAX_FILES,
+  H5P_FILE_DOT_EXTENSION,
   MAX_THUMBNAIL_SIZE,
 } from '../config/constants';
 
@@ -178,7 +179,7 @@ export const configureH5PImportUppy = ({
     onUpload,
     restrictions: {
       maxNumberOfFiles: 1,
-      allowedFileTypes: ['.h5p'],
+      allowedFileTypes: [H5P_FILE_DOT_EXTENSION],
     },
     buildEndpoint: (id) => `${API_HOST}/${API_ROUTES.buildImportH5PRoute(id)}`,
   });

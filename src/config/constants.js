@@ -11,8 +11,8 @@ const {
   GA_MEASUREMENT_ID: ENV_GA_MEASUREMENT_ID,
   HIDDEN_ITEM_TAG_ID: ENV_HIDDEN_ITEM_TAG_ID,
   GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
-  H5P_ASSETS_HOST: ENV_H5P_ASSETS_HOST,
-  H5P_CONTENT_HOST: ENV_H5P_CONTENT_HOST,
+  H5P_ASSETS_BASE_URL: ENV_H5P_ASSETS_BASE_URL,
+  H5P_CONTENT_BASE_URL: ENV_H5P_CONTENT_BASE_URL,
 } = env;
 
 export const APP_NAME = 'Graasp';
@@ -50,15 +50,15 @@ export const GRAASP_EXPLORE_HOST =
   process.env.REACT_APP_GRAASP_EXPLORE_HOST ||
   'http://localhost:3005';
 
-export const H5P_ASSETS_HOST =
-  ENV_H5P_ASSETS_HOST ||
-  process.env.REACT_APP_H5P_ASSETS_HOST ||
-  'http://localhost:3000/p/h5p-content';
+export const H5P_ASSETS_BASE_URL =
+  ENV_H5P_ASSETS_BASE_URL ||
+  process.env.REACT_APP_H5P_ASSETS_BASE_URL ||
+  `${API_HOST}/p/h5p-assets`;
 
-export const H5P_CONTENT_HOST =
-  ENV_H5P_CONTENT_HOST ||
-  process.env.REACT_APP_H5P_CONTENT_HOST ||
-  'http://localhost:3000/p';
+export const H5P_CONTENT_BASE_URL =
+  ENV_H5P_CONTENT_BASE_URL ||
+  process.env.REACT_APP_H5P_CONTENT_BASE_URL ||
+  `${API_HOST}/p/h5p-content`;
 
 export const GRAASP_ANALYZER_HOST =
   process.env.REACT_APP_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
@@ -197,6 +197,8 @@ export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
 export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
 export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
+
+export const H5P_FILE_DOT_EXTENSION = '.h5p';
 
 export const CATEGORY_TYPES = {
   LEVEL: 'level',
