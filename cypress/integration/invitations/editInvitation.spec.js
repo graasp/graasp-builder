@@ -31,7 +31,7 @@ describe('Edit Invitation', () => {
 
     // update membership
     const permission = PERMISSION_LEVELS.READ;
-    const { id: iId } = invitations[2];
+    const { id: iId } = invitations[1];
     editInvitation({ itemId: id, id: iId, permission });
 
     cy.wait('@patchInvitation').then(({ request: { url, body } }) => {
@@ -40,7 +40,7 @@ describe('Edit Invitation', () => {
     });
   });
 
-  it('edit children invitation should create a new membership', () => {
+  it('edit parent invitation from children should create a new membership', () => {
     cy.setUpApi({ ...ITEMS_WITH_INVITATIONS });
 
     // go to children item
@@ -49,7 +49,7 @@ describe('Edit Invitation', () => {
 
     // update membership
     const permission = PERMISSION_LEVELS.ADMIN;
-    const { id: iId } = invitations[1];
+    const { id: iId } = invitations[0];
     editInvitation({ itemId: id, id: iId, permission });
 
     cy.wait('@postInvitations').then(({ request: { url, body } }) => {

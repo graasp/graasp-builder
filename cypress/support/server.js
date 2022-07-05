@@ -11,7 +11,7 @@ import {
   transformIdForPath,
 } from '../../src/utils/item';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
-import { ID_FORMAT, parseStringToRegExp, EMAIL_FORMAT } from './utils';
+import { ID_FORMAT, parseStringToRegExp } from './utils';
 import {
   DEFAULT_PATCH,
   DEFAULT_GET,
@@ -53,7 +53,7 @@ const {
   GET_OWN_ITEMS_ROUTE,
   buildPostItemMembershipRoute,
   buildGetMember,
-  buildGetMembersBy,
+  buildPostManyItemMembershipsRoute,
   ITEMS_ROUTE,
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
@@ -286,7 +286,9 @@ export const mockRestoreItems = (items, shouldThrowError) => {
     },
     ({ url, reply }) => {
       let ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
-      if (typeof ids !== 'object') ids = [ids];
+      if (!Array.isArray(ids)) {
+        ids = [ids];
+      }
 
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
@@ -611,6 +613,44 @@ export const mockPostItemMembership = (items, shouldThrowError) => {
   ).as('postItemMembership');
 };
 
+export const mockPostManyItemMemberships = (items, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(
+        `${API_HOST}/${buildPostManyItemMembershipsRoute(ID_FORMAT)}`,
+      ),
+    },
+    ({ reply, body, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+      const itemId = url.split('/')[4];
+      const itemMemberships = items.find(
+        ({ id }) => id === itemId,
+      )?.memberships;
+
+      // return membership or error if membership
+      // for member id already exists
+      return reply(
+        body.memberships.map((m) => {
+          const thisM = itemMemberships?.find(
+            ({ memberId }) => m.memberId === memberId,
+          );
+          if (thisM) {
+            return {
+              statusCode: StatusCodes.BAD_REQUEST,
+              message: 'membership already exists',
+              data: thisM,
+            };
+          }
+          return m;
+        }),
+      );
+    },
+  ).as('postManyItemMemberships');
+};
+
 export const mockGetMember = (members) => {
   cy.intercept(
     {
@@ -643,7 +683,7 @@ export const mockGetMembers = (members) => {
     },
     ({ url, reply }) => {
       let { id: memberIds } = qs.parse(url.slice(url.indexOf('?') + 1));
-      if (typeof memberIds === 'string') {
+      if (!Array.isArray(memberIds)) {
         memberIds = [memberIds];
       }
       const allMembers = memberIds?.map(
@@ -672,18 +712,21 @@ export const mockGetMembersBy = (members, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(
-        `${API_HOST}/${parseStringToRegExp(buildGetMembersBy([EMAIL_FORMAT]))}`,
-      ),
+      url: `${API_HOST}/members/search?email=*`,
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
-      const emailReg = new RegExp(EMAIL_FORMAT);
-      const mail = emailReg.exec(url)[0];
-      const result = members.filter(({ email }) => email === mail);
+      const querystrings = url.split('?')[1];
+      let { email: emails } = qs.parse(querystrings);
+      if (!Array.isArray(emails)) {
+        emails = [emails];
+      }
+      const result = emails.map((mail) =>
+        members.filter(({ email }) => email === mail),
+      );
 
       return reply(result);
     },
@@ -1426,12 +1469,27 @@ export const mockPostInvitations = (items, shouldThrowError) => {
       method: DEFAULT_POST.method,
       url: new RegExp(`${API_HOST}/${buildPostInvitationsRoute(ID_FORMAT)}`),
     },
-    ({ reply, body }) => {
+    ({ reply, body, url }) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
-      return reply(buildInvitation(body));
+      const itemId = url.split('/')[4];
+      const invitations = items.find(({ id }) => id === itemId)?.invitations;
+
+      return reply(
+        body.invitations.map((inv) => {
+          const thisInv = invitations.find(({ email }) => email === inv.email);
+          if (thisInv) {
+            return {
+              statusCode: StatusCodes.BAD_REQUEST,
+              message: 'An invitation already exists for this email',
+              data: inv,
+            };
+          }
+          return buildInvitation(inv);
+        }),
+      );
     },
   ).as('postInvitations');
 };

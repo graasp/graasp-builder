@@ -81,6 +81,7 @@ import {
   mockPatchInvitation,
   mockDeleteInvitation,
   mockPublishItem,
+  mockPostManyItemMemberships,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -193,6 +194,7 @@ Cypress.Commands.add(
     mockEditItem(cachedItems, editItemError);
 
     mockPostItemMembership(cachedItems, shareItemError);
+    mockPostManyItemMemberships(cachedItems, shareItemError);
 
     mockGetMember(cachedMembers);
 

@@ -214,8 +214,14 @@ export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
 export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
   'headerMemberMenuSignOutButton';
 export const buildMemberMenuItemId = (id) => `memberMenuItem-${id}`;
-
 export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
 export const buildCoEditorSettingsRadioButtonId = (id) =>
   `coEditorSettingsRadioButton-${id}`;
 export const EMAIL_NOTIFICATION_CHECKBOX = 'emailNotificationCheckbox';
+export const SHARE_ITEM_CSV_PARSER_BUTTON_ID = 'shareItemCsvParserButton';
+export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID =
+  'shareItemCsvParserInputButton';
+export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR = `${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID} input`;
+export const SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID = 'shareITemFromCsvAlertError';
+export const SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID =
+  'shareItemFromCsvResultFailures';

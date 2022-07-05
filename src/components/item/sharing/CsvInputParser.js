@@ -18,6 +18,12 @@ import Papa from 'papaparse';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
 import { PERMISSION_LEVELS } from '../../../enums';
+import {
+  SHARE_ITEM_CSV_PARSER_BUTTON_ID,
+  SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID,
+  SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
+  SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
+} from '../../../config/selectors';
 
 const allowedExtensions = ['.csv'].join(',');
 
@@ -38,7 +44,9 @@ const CsvInputParser = ({ item }) => {
     mutate: share,
     isLoading,
     isSuccess,
+    isError,
     data: results,
+    error,
   } = useMutation(MUTATION_KEYS.SHARE_ITEM);
 
   const openModal = () => {
@@ -76,12 +84,21 @@ const CsvInputParser = ({ item }) => {
       return <Loader />;
     }
 
-    if (!results) {
-      return null;
+    // general errors
+    if (isError) {
+      return (
+        <Alert id={SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID} severity="error">
+          {t(error)}
+        </Alert>
+      );
     }
 
     // does not show errors if results is not defined
-    // or if there is no failure
+    // or if there is no failure with menaningful data
+    // this won't show membership already exists error
+    if (!results) {
+      return null;
+    }
     const failureToShow = results.failure.filter(
       (e) => e?.data?.email ?? e?.data?.name,
     );
@@ -94,7 +111,7 @@ const CsvInputParser = ({ item }) => {
     }
 
     return (
-      <Alert severity="error">
+      <Alert id={SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID} severity="error">
         <AlertTitle>{t('The import failed for these entries')}</AlertTitle>
         <Grid container>
           {failureToShow.map((e) => (
@@ -112,19 +129,26 @@ const CsvInputParser = ({ item }) => {
     );
   };
 
+  const label = 'shareItemFromCsvLabel';
+
   return (
     <>
-      <Button onClick={openModal} variant="outlined" size="small">
+      <Button
+        id={SHARE_ITEM_CSV_PARSER_BUTTON_ID}
+        onClick={openModal}
+        variant="outlined"
+        size="small"
+      >
         {t('Import from CSV')}
       </Button>
       {isOpen && (
         <Dialog
           scroll="paper"
           onClose={handleClose}
-          aria-labelledby="simple-dialog-title"
+          aria-labelledby={label}
           open
         >
-          <DialogTitle id="simple-dialog-title">
+          <DialogTitle id={label}>
             {t('Import users from a CSV file')}
           </DialogTitle>
           <DialogContent dividers>
@@ -138,7 +162,11 @@ const CsvInputParser = ({ item }) => {
               )}
             </DialogContentText>
             <Box className={classes.buttonWrapper}>
-              <Button startIcon={<PublishIcon />} component="label">
+              <Button
+                id={SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID}
+                startIcon={<PublishIcon />}
+                component="label"
+              >
                 {t('Choose a CSV file')}
                 <input
                   type="file"
