@@ -99,7 +99,7 @@ const CsvInputParser = ({ item }) => {
 
     // show generic network/axios errors
     const genericErrors = results?.failure?.filter(
-      (e) => e?.code && e?.message,
+      (e) => e?.code && e?.message && !e?.data,
     );
     if (genericErrors?.length) {
       return genericErrors.map((err) => (

@@ -10387,7 +10387,7 @@ __metadata:
     "@graasp/query-client": "github:graasp/graasp-query-client.git#172/shareMutation"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git#143/componentButton"
-    "@graasp/utils": "github:graasp/graasp-utils.git#13/pseudonymized"
+    "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 5.0.0-beta.5
