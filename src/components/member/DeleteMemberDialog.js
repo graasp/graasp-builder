@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Grid, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,7 +21,25 @@ const useStyles = makeStyles(() => ({
     color: 'red',
   },
   deleteButton: {
-    color: 'red',
+    backgroundColor: 'red',
+    margin: '12px 0px',
+  },
+  mainContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    margin: '12px 0px',
+  },
+  deleteAccountContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    padding: '0px 12px',
+    margin: '0px 0px',
+  },
+  note: {
+    fontSize: '12px',
+    margin: '4px 0 2px',
   },
 }));
 
@@ -64,16 +83,32 @@ const DeleteMemberDialog = ({ id }) => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Button
-        id={DELETE_MEMBER_BUTTON_ID}
-        variant="text"
-        className={classes.deleteButton}
-        color="secondary"
-        onClick={() => setOpen(true)}
-      >
-        {t('Delete Account')}
-      </Button>
+      <Grid container spacing={3} className={classes.mainContainer}>
+        <Grid item xs={8}>
+          <Grid item xs={12}>
+            <Typography variant="h5">Delete this account</Typography>
+          </Grid>
+          <Grid
+            container
+            spacing={3}
+            className={classes.deleteAccountContainer}
+          >
+            <Typography className={classes.note}>
+              Once you delete an account, there is no going back. Please be
+              certain.
+            </Typography>
+            <Button
+              id={DELETE_MEMBER_BUTTON_ID}
+              variant="contained"
+              className={classes.deleteButton}
+              color="primary"
+              onClick={() => setOpen(true)}
+            >
+              Delete Account
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
     </>
   );
 };
