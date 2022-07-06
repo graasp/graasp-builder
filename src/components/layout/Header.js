@@ -14,7 +14,7 @@ import {
   HEADER_HEIGHT,
   HOST_MAP,
 } from '../../config/constants';
-import SettingsHeader from '../common/SettingsHeader';
+import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import {
   APP_NAVIGATION_DROP_DOWN_ID,
   HEADER_APP_BAR_ID,
@@ -87,7 +87,7 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
             currentValue={Context.BUILDER}
           />
         </div>
-        <SettingsHeader />
+        <UserSwitchWrapper />
       </Toolbar>
     </AppBar>
   );

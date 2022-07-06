@@ -43,12 +43,12 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add('fillTreeModal', (toItemPath) => {
+Cypress.Commands.add('fillTreeModal', (toItemPath, treeRootId = ROOT_ID) => {
   const ids = getParentsIdsFromPath(toItemPath);
 
   cy.wait(TREE_VIEW_PAUSE);
 
-  [ROOT_ID, ...ids].forEach((value, idx, array) => {
+  [treeRootId, ...ids].forEach((value, idx, array) => {
     cy.get(`#${TREE_MODAL_TREE_ID}`).then(($tree) => {
       // click on the element
       if (idx === array.length - 1) {

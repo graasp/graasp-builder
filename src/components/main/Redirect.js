@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { redirectToSavedUrl } from '@graasp/utils';
+import { RedirectionContent } from '@graasp/ui';
 import { HOME_PATH } from '../../config/paths';
-import { REDIRECT_URL_LOCAL_STORAGE_KEY } from '../../config/constants';
-import RedirectionContent from '../common/RedirectionContent';
 
 const Redirect = () => {
-  const navigate = useNavigate();
-
-  const nextPath =
-    localStorage.getItem(REDIRECT_URL_LOCAL_STORAGE_KEY) ?? HOME_PATH;
-
   useEffect(() => {
-    navigate(nextPath);
-  });
+    redirectToSavedUrl(HOME_PATH);
+  }, []);
 
-  return <RedirectionContent link={nextPath} />;
+  return <RedirectionContent link={HOME_PATH} />;
 };
 
 export default Redirect;

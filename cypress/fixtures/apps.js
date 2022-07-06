@@ -35,13 +35,12 @@ export const GRAASP_APP_PARENT_FOLDER = {
 
 export const GRAASP_APP_CHILDREN_ITEM = {
   id: 'ecafbd2a-5688-12eb-ae91-0272ac130002',
-  path:
-    'bdf09f5a_5688_11eb_ae93_0242ac130002.ecafbd2a_5688_12eb_ae91_0272ac130002',
+  path: 'bdf09f5a_5688_11eb_ae93_0242ac130002.ecafbd2a_5688_12eb_ae91_0272ac130002',
   name: 'my app',
   description: 'my app description',
   type: ITEM_TYPES.APP,
   extra: {
-    [ITEM_TYPES.APP]: { 
+    [ITEM_TYPES.APP]: {
       url: 'http://localhost.com:3333',
       name: APP_NAME,
     },

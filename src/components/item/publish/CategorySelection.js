@@ -5,20 +5,16 @@ import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useParams } from 'react-router';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { hooks, useMutation } from '../../../config/queryClient';
-import {
-  SHARE_ITEM_CATEGORY_LEVEL,
-  SHARE_ITEM_CATEGORY_DISCIPLINE,
-  SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID,
-} from '../../../config/selectors';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import ErrorAlert from '../../common/ErrorAlert';
-import { CATEGORY_TYPES } from '../../../config/constants';
+import {
+  CATEGORY_TYPES,
+  CATEGORY_TYPE_TITLES,
+} from '../../../config/constants';
 import { sortByName } from '../../../utils/item';
+import DropdownMenu from './DropdownMenu';
 
 const { useCategoryTypes, useCategories, useItemCategories } = hooks;
 const { POST_ITEM_CATEGORY, DELETE_ITEM_CATEGORY } = MUTATION_KEYS;
@@ -71,6 +67,11 @@ const CategorySelection = ({ item }) => {
     )
     ?.toArray()
     .sort(sortByName);
+  const languageList = categoriesMap
+    ?.get(
+      categoryTypes?.find((type) => type.name === CATEGORY_TYPES.LANGUAGE)?.id,
+    )
+    ?.toArray();
 
   // initialize state variable
   const [selectedValues, setSelectedValues] = useState([]);
@@ -96,12 +97,7 @@ const CategorySelection = ({ item }) => {
     return <Loader />;
   }
 
-  if (!levelList || !disciplineList) {
-    return <ErrorAlert />;
-  }
-
-  const handleChange = (categoryType) => (event, value, reason) => {
-    const typeMap = { level: levelList, discipline: disciplineList };
+  const handleChange = (valueList) => (event, value, reason) => {
     if (reason === SELECT_OPTION) {
       // post new category
       const newCategoryId = value.at(-1).id;
@@ -111,7 +107,7 @@ const CategorySelection = ({ item }) => {
       });
     } else if (reason === REMOVE_OPTION) {
       // remove an option
-      const previousValues = typeMap[categoryType]?.filter((entry) =>
+      const previousValues = valueList?.filter((entry) =>
         selectedValues.includes(entry),
       );
       const result = previousValues.filter(
@@ -132,51 +128,23 @@ const CategorySelection = ({ item }) => {
       <Typography variant="h6" className={classes.selection}>
         {t('Category')}
       </Typography>
-      <Typography variant="body1" id={SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}>
-        {t('Level')}
-      </Typography>
-      <Autocomplete
-        className={classes.dropMenu}
-        disabled={!levelList}
-        multiple
-        disableClearable
-        id={SHARE_ITEM_CATEGORY_LEVEL}
-        value={levelList?.filter((value) => selectedValues.includes(value))}
-        getOptionSelected={(option, value) => option.id === value.id}
-        options={levelList}
-        getOptionLabel={(option) => option.name}
-        onChange={handleChange('level')}
-        renderInput={(params) => (
-          <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...params}
-            variant="outlined"
-            placeholder={t('Please choose from list')}
-          />
-        )}
+      <DropdownMenu
+        title={t(CATEGORY_TYPE_TITLES.LEVEL)}
+        handleChange={handleChange(levelList)}
+        valueList={levelList}
+        selectedValues={selectedValues}
       />
-      <Typography variant="body1">{t('Discipline')}</Typography>
-      <Autocomplete
-        className={classes.dropMenu}
-        disabled={!levelList}
-        multiple
-        disableClearable
-        id={SHARE_ITEM_CATEGORY_DISCIPLINE}
-        value={disciplineList?.filter((value) =>
-          selectedValues.includes(value),
-        )}
-        getOptionSelected={(option, value) => option.id === value.id}
-        options={disciplineList}
-        getOptionLabel={(option) => option.name}
-        onChange={handleChange('discipline')}
-        renderInput={(params) => (
-          <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...params}
-            variant="outlined"
-            placeholder={t('Please choose from list')}
-          />
-        )}
+      <DropdownMenu
+        title={t(CATEGORY_TYPE_TITLES.DISCIPLINE)}
+        handleChange={handleChange(disciplineList)}
+        valueList={disciplineList}
+        selectedValues={selectedValues}
+      />
+      <DropdownMenu
+        title={t(CATEGORY_TYPE_TITLES.LANGUAGE)}
+        handleChange={handleChange(languageList)}
+        valueList={languageList}
+        selectedValues={selectedValues}
       />
     </div>
   );

@@ -1,9 +1,14 @@
 import {
   ROOT_ID,
   DEFAULT_ITEM_LAYOUT_MODE,
+  SHARED_ROOT_ID,
 } from '../../../../src/config/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import {
+  buildItemPath,
+  HOME_PATH,
+  SHARED_ITEMS_PATH,
+} from '../../../../src/config/paths';
 import {
   buildItemsTableRowIdAttribute,
   buildItemMenu,
@@ -12,8 +17,9 @@ import {
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
+import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 
-const moveItem = ({ id: movedItemId, toItemPath }) => {
+const moveItem = ({ id: movedItemId, toItemPath, rootId = ROOT_ID }) => {
   const menuSelector = `#${buildItemMenuButtonId(movedItemId)}`;
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
@@ -21,7 +27,7 @@ const moveItem = ({ id: movedItemId, toItemPath }) => {
     `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
   ).click();
 
-  cy.fillTreeModal(toItemPath);
+  cy.fillTreeModal(toItemPath, rootId);
 };
 
 describe('Move Item in List', () => {
@@ -84,6 +90,27 @@ describe('Move Item in List', () => {
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);
+      expect(url).to.contain(movedItem);
+    });
+  });
+
+  it('move item in shared item', () => {
+    cy.setUpApi(SHARED_ITEMS);
+
+    // go to children item
+    cy.visit(SHARED_ITEMS_PATH);
+
+    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    }
+
+    // move
+    const { path: toItemPath, id: toItemId } = SHARED_ITEMS.items[0];
+    const { id: movedItem } = SHARED_ITEMS.items[1];
+    moveItem({ id: movedItem, toItemPath, rootId: SHARED_ROOT_ID });
+
+    cy.wait('@moveItems').then(({ request: { body, url } }) => {
+      expect(body.parentId).to.equal(toItemId);
       expect(url).to.contain(movedItem);
     });
   });

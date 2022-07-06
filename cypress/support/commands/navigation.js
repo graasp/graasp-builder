@@ -5,7 +5,11 @@ import {
   NAVIGATION_HIDDEN_PARENTS_ID,
   NAVIGATION_HOME_LINK_ID,
 } from '../../../src/config/selectors';
-import { NAVIGATE_PAUSE, WAIT_FOR_ITEM_TABLE_ROW_TIME } from '../constants';
+import {
+  NAVIGATE_PAUSE,
+  WAIT_FOR_ITEM_TABLE_ROW_TIME,
+  TABLE_ITEM_RENDER_TIME,
+} from '../constants';
 
 Cypress.Commands.add('goToItemInGrid', (id) => {
   cy.wait(NAVIGATE_PAUSE);
@@ -30,4 +34,5 @@ Cypress.Commands.add('goToItemWithNavigation', (id, openHidden = false) => {
     cy.get(`#${NAVIGATION_HIDDEN_PARENTS_ID}`).click();
   }
   cy.get(`#${buildNavigationLink(id)}`).click();
+  cy.wait(TABLE_ITEM_RENDER_TIME);
 });

@@ -1,5 +1,6 @@
 import {
   buildPublishButtonId,
+  EMAIL_NOTIFICATION_CHECKBOX,
   ITEM_PUBLISH_BUTTON_ID,
   ITEM_UNPUBLISH_BUTTON_ID,
   ITEM_VALIDATION_BUTTON_ID,
@@ -10,7 +11,7 @@ import {
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
-import { DEFAULT_TAGS, ITEM_PUBLISHED_TAG } from '../../../fixtures/itemTags';
+import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { VALIDATED_ITEM } from '../../../fixtures/validations';
 
 const openPublishItemTab = (id) => {
@@ -74,11 +75,31 @@ describe('Validated Item', () => {
     // click validate item button
     cy.get(`#${ITEM_PUBLISH_BUTTON_ID}`).click();
 
-    cy.wait('@postItemTag').then((data) => {
+    cy.wait('@publishItem').then((data) => {
       const {
-        request: { body },
+        request: { url },
       } = data;
-      expect(body?.tagId).to.equal(ITEM_PUBLISHED_TAG.id);
+      expect(url.includes(VALIDATED_ITEM.id));
+      expect(!url.includes('notification'));
+    });
+  });
+
+  it('Publish item with notification', () => {
+    cy.setUpApi({ items: [VALIDATED_ITEM], tags: DEFAULT_TAGS });
+    const item = VALIDATED_ITEM;
+    cy.visit(buildItemPath(item.id));
+    openPublishItemTab(item.id);
+
+    // click validate item button
+    cy.get(`#${EMAIL_NOTIFICATION_CHECKBOX}`).check();
+    cy.get(`#${ITEM_PUBLISH_BUTTON_ID}`).click();
+
+    cy.wait('@publishItem').then((data) => {
+      const {
+        request: { url },
+      } = data;
+      expect(url.includes(VALIDATED_ITEM.id));
+      expect(url.includes('notification'));
     });
   });
 });

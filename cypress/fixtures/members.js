@@ -57,3 +57,12 @@ export const buildMemberWithFavorites = (favoriteItems) => ({
   ...CURRENT_USER,
   extra: { ...CURRENT_USER.extra, favoriteItems },
 });
+
+export const MOCK_SESSIONS = [
+  { id: MEMBERS.BOB.id, token: 'bob-token', createdAt: Date.now() },
+  {
+    id: MEMBERS.CEDRIC.id,
+    token: 'cedric-token',
+    createdAt: Date.now(),
+  },
+];

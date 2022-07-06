@@ -11,7 +11,6 @@ import Items from './main/Items';
 import { hooks } from '../config/queryClient';
 import Loader from './common/Loader';
 import Main from './main/Main';
-import Authorization from './common/Authorization';
 
 const SharedItems = () => {
   const { t } = useTranslation();
@@ -32,9 +31,10 @@ const SharedItems = () => {
         id={SHARED_ITEMS_ID}
         title={t('Items Shared With Me')}
         items={List(sharedItems)}
+        showCreator
       />
     </Main>
   );
 };
 
-export default Authorization()(SharedItems);
+export default SharedItems;

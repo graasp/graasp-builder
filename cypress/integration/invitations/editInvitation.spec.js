@@ -1,17 +1,19 @@
 import { PERMISSION_LEVELS } from '../../../src/enums';
 import { buildItemPath } from '../../../src/config/paths';
 import {
-  buildInvitationTableRowId,
+  buildInvitationTableRowSelector,
   buildPermissionOptionId,
   buildShareButtonId,
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
 } from '../../../src/config/selectors';
 import { ITEMS_WITH_INVITATIONS } from '../../fixtures/invitations';
+import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 
 const editInvitation = ({ itemId, id, permission }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
+  cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
   const select = cy.get(
-    `#${buildInvitationTableRowId(
+    `${buildInvitationTableRowSelector(
       id,
     )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`,
   );

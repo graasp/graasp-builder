@@ -22,6 +22,7 @@ import CopyButton from './CopyButton';
 import RecycleButton from '../common/RecycleButton';
 import HideButton from '../common/HideButton';
 import PinButton from '../common/PinButton';
+import CollapseButton from '../common/CollapseButton';
 import FavoriteButton from '../common/FavoriteButton';
 import { BUTTON_TYPES } from '../../config/constants';
 import { CurrentUserContext } from '../context/CurrentUserContext';
@@ -65,6 +66,7 @@ const ItemMenu = ({ item, canEdit }) => {
       />,
       <HideButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
       <PinButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <CollapseButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
       <RecycleButton
         type={BUTTON_TYPES.MENU_ITEM}
         itemIds={[item.id]}

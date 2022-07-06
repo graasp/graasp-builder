@@ -14,7 +14,6 @@ import { MUTATION_KEYS, DATA_KEYS } from '@graasp/query-client';
 import { useMutation, hooks, queryClient } from '../../../config/queryClient';
 import CategorySelection from './CategorySelection';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
-import CCLicenseSelection from './CCLicenseSelection';
 import {
   ADMIN_CONTACT,
   VALIDATION_STATUS_NAMES,
@@ -25,6 +24,7 @@ import {
 } from '../../../config/selectors';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
 import ItemPublishButton from './ItemPublishButton';
+import CoEditorSettings from './CoEditorSettings';
 
 const { POST_ITEM_VALIDATION } = MUTATION_KEYS;
 const { buildItemValidationAndReviewKey } = DATA_KEYS;
@@ -241,9 +241,9 @@ const ItemPublishConfiguration = ({ item }) => {
         )}
       </Typography>
       <div className={classes.config}>
+        <CoEditorSettings item={item} />
         <CategorySelection item={item} />
         <CustomizedTagsEdit item={item} />
-        <CCLicenseSelection item={item} />
       </div>
     </>
   );

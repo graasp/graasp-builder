@@ -1,4 +1,4 @@
-import { Context } from '@graasp/utils';
+import { Context, buildSignInPath } from '@graasp/utils';
 import env from '../env.json';
 import { ITEM_LAYOUT_MODES, PERMISSION_LEVELS, ITEM_TYPES } from '../enums';
 
@@ -13,12 +13,15 @@ const {
   GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
   H5P_ASSETS_BASE_URL: ENV_H5P_ASSETS_BASE_URL,
   H5P_CONTENT_BASE_URL: ENV_H5P_CONTENT_BASE_URL,
+  REACT_APP_SENTRY_DSN: ENV_SENTRY_DSN,
+  DOMAIN: ENV_DOMAIN,
 } = env;
 
 export const APP_NAME = 'Graasp';
 
 export const ENV = {
   DEVELOPMENT: 'development',
+  PRODUCTION: 'production',
   TEST: 'test',
 };
 
@@ -27,6 +30,8 @@ export const NODE_ENV =
   process.env.REACT_APP_NODE_ENV ||
   process.env.NODE_ENV ||
   ENV.DEVELOPMENT;
+
+export const SENTRY_DSN = ENV_SENTRY_DSN || process.env.REACT_APP_SENTRY_DSN;
 
 export const API_HOST =
   ENV_API_HOST || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
@@ -39,7 +44,7 @@ export const SHOW_NOTIFICATIONS =
 export const AUTHENTICATION_HOST =
   ENV_AUTHENTICATION_HOST ||
   process.env.REACT_APP_AUTHENTICATION_HOST ||
-  'http://localhost:3111';
+  'http://localhost:3001';
 
 export const GRAASP_PERFORM_HOST =
   ENV_GRAASP_PERFORM_HOST ||
@@ -72,6 +77,8 @@ export const GA_MEASUREMENT_ID =
 export const HIDDEN_ITEM_TAG_ID =
   ENV_HIDDEN_ITEM_TAG_ID || process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || false;
 
+export const DOMAIN = ENV_DOMAIN || process.env.REACT_APP_DOMAIN;
+
 export const DESCRIPTION_MAX_LENGTH = 30;
 
 // todo: use local image
@@ -82,7 +89,9 @@ export const DEFAULT_IMAGE_SRC =
 // time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
 export const DOUBLE_CLICK_DELAY_MS = 500;
 
+// root used for tree item menu
 export const ROOT_ID = 'root-id';
+export const SHARED_ROOT_ID = 'shared-root-id';
 
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
@@ -119,9 +128,7 @@ export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
 
 export const ITEM_ICON_MAX_SIZE = 25;
 
-export const USERNAME_MAX_LENGTH = 15;
 export const ITEM_NAME_MAX_LENGTH = 15;
-export const HEADER_USERNAME_MAX_WIDTH = 120;
 
 export const SHARE_ITEM_MODAL_MIN_WIDTH = 120;
 
@@ -153,8 +160,6 @@ export const SETTINGS = {
 export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
 export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME;
-
-export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const USER_ITEM_ORDER = 'user_order';
 
@@ -188,7 +193,6 @@ export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
-export const PSEUDONIMIZED_USER_MAIL = '@graasp.org';
 export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
 
 export const DRAG_ICON_SIZE = 18;
@@ -203,10 +207,14 @@ export const H5P_FILE_DOT_EXTENSION = '.h5p';
 export const CATEGORY_TYPES = {
   LEVEL: 'level',
   DISCIPLINE: 'discipline',
+  LANGUAGE: 'language',
 };
 
-// todo: factor out in graasp constants/utils
-export const ACCEPT_COOKIES_NAME = 'accept-all-cookies';
+export const CATEGORY_TYPE_TITLES = {
+  LEVEL: 'Level',
+  DISCIPLINE: 'Discipline',
+  LANGUAGE: 'Language',
+};
 
 export const CC_LICENSE_ADAPTION_OPTIONS = {
   ALLOW: 'allow',
@@ -252,4 +260,21 @@ export const MAX_THUMBNAIL_SIZE = 10 * 1024 * 1024;
 export const BUTTON_TYPES = {
   MENU_ITEM: 'menuItem',
   ICON_BUTTON: 'iconButton',
+};
+
+export const MEMBERSHIP_TABLE_HEIGHT = 400;
+export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
+
+// signin page path from auth host
+export const SIGN_IN_PATH = buildSignInPath({ host: AUTHENTICATION_HOST });
+
+export const DISPLAY_CO_EDITORS_OPTIONS = {
+  YES: {
+    value: true,
+    label: 'Yes',
+  },
+  NO: {
+    value: false,
+    label: 'No',
+  },
 };

@@ -1,25 +1,31 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Loader } from '@graasp/ui';
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import {
+  Button,
+  makeStyles,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation, hooks } from '../../../config/queryClient';
 import { SETTINGS } from '../../../config/constants';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 import {
   getTagByName,
   getVisibilityTagAndItemTag,
   isItemPublished,
 } from '../../../utils/itemTag';
 import {
+  EMAIL_NOTIFICATION_CHECKBOX,
   ITEM_PUBLISH_BUTTON_ID,
   ITEM_UNPUBLISH_BUTTON_ID,
 } from '../../../config/selectors';
 
-const { POST_ITEM_TAG, DELETE_ITEM_TAG } = MUTATION_KEYS;
+const { DELETE_ITEM_TAG, PUBLISH_ITEM } = MUTATION_KEYS;
 const { useTags, useItemTags } = hooks;
 
 const useStyles = makeStyles((theme) => ({
@@ -33,13 +39,13 @@ const useStyles = makeStyles((theme) => ({
 const ItemPublishButton = ({ item, isValidated }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  // current user
-  const { data: user } = useContext(CurrentUserContext);
+
   // current item
   const { itemId } = useParams();
 
-  const { mutate: postItemTag } = useMutation(POST_ITEM_TAG);
+  // item tags
   const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
+  const { mutate: publishItem } = useMutation(PUBLISH_ITEM);
 
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const {
@@ -50,6 +56,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
 
   const [isPublished, setIsPublished] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [emailNotification, setEmailNotification] = useState(false);
 
   // update state variables depending on fetch values
   useEffect(() => {
@@ -73,21 +80,17 @@ const ItemPublishButton = ({ item, isValidated }) => {
     return null;
   }
 
-  const publishItem = () => {
+  const handlePublish = () => {
     // Prevent resend request if item is already published
     if (!isPublished) {
-      const publishedTag = getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name);
-      // post published tag
-      postItemTag({
+      publishItem({
         id: itemId,
-        tagId: publishedTag.id,
-        itemPath: item?.get('path'),
-        creator: user?.get('id'),
+        notification: emailNotification,
       });
     }
   };
 
-  const unpublishItem = () => {
+  const handleUnpublish = () => {
     const publishedTag = getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name);
     const publishedItemTag = itemTags.find(
       ({ tagId }) => tagId === publishedTag.id,
@@ -97,12 +100,16 @@ const ItemPublishButton = ({ item, isValidated }) => {
     }
   };
 
+  const toggleEmailNotification = () => {
+    setEmailNotification(!emailNotification);
+  };
+
   return (
     <>
       <Button
         disabled={isDisabled || !isValidated}
         variant="outlined"
-        onClick={publishItem}
+        onClick={handlePublish}
         color="primary"
         className={classes.button}
         endIcon={isPublished && <CheckCircleIcon color="primary" />}
@@ -113,12 +120,26 @@ const ItemPublishButton = ({ item, isValidated }) => {
       <Button
         variant="outlined"
         disabled={!isPublished}
-        onClick={unpublishItem}
+        onClick={handleUnpublish}
         color="default"
         id={ITEM_UNPUBLISH_BUTTON_ID}
       >
         {t('Unpublish')}
       </Button>
+      <div>
+        <FormControlLabel
+          control={
+            // eslint-disable-next-line react/jsx-wrap-multilines
+            <Checkbox
+              id={EMAIL_NOTIFICATION_CHECKBOX}
+              checked={emailNotification}
+              onChange={toggleEmailNotification}
+              color="primary"
+            />
+          }
+          label={t('Send email notifications to all co-editors')}
+        />
+      </div>
       {isPublished && (
         <Typography variant="body1">
           {t(

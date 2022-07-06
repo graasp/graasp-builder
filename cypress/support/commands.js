@@ -2,6 +2,7 @@
 import 'cypress-file-upload';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'cypress-localstorage-commands';
+import { COOKIE_KEYS } from '@graasp/utils';
 import { ITEM_LAYOUT_MODES } from '../../src/enums';
 import {
   ITEM_INFORMATION_BUTTON_ID,
@@ -79,13 +80,13 @@ import {
   mockGetItemInvitations,
   mockPatchInvitation,
   mockDeleteInvitation,
+  mockPublishItem,
 } from './server';
 import './commands/item';
 import './commands/navigation';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { SAMPLE_FLAGS } from '../fixtures/flags';
 import { APPS_LIST } from '../fixtures/apps/apps';
-import { ACCEPT_COOKIES_NAME } from '../../src/config/constants';
 import {
   SAMPLE_CATEGORIES,
   SAMPLE_CATEGORY_TYPES,
@@ -103,6 +104,7 @@ Cypress.Commands.add(
     recycledItems = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
+    storedSessions = [],
     tags = [],
     categories = SAMPLE_CATEGORIES,
     categoryTypes = SAMPLE_CATEGORY_TYPES,
@@ -152,10 +154,14 @@ Cypress.Commands.add(
     const cachedMembers = JSON.parse(JSON.stringify(members));
     const allItems = [...cachedItems, ...recycledItems];
 
-    cy.setCookie('session', currentMember ? 'somecookie' : null);
+    cy.setCookie(COOKIE_KEYS.SESSION_KEY, currentMember ? 'somecookie' : null);
+    cy.setCookie(
+      COOKIE_KEYS.STORED_SESSIONS_KEY,
+      JSON.stringify(storedSessions),
+    );
 
     // hide cookie banner by default
-    cy.setCookie(ACCEPT_COOKIES_NAME, 'true');
+    cy.setCookie(COOKIE_KEYS.ACCEPT_COOKIES_KEY, 'true');
 
     mockGetAppListRoute(APPS_LIST);
 
@@ -295,6 +301,8 @@ Cypress.Commands.add(
     mockPatchInvitation(items, patchInvitationError);
 
     mockDeleteInvitation(items, deleteInvitationError);
+
+    mockPublishItem(items);
   },
 );
 

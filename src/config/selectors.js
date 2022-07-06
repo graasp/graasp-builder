@@ -22,6 +22,7 @@ export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
 export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
+export const COLLAPSE_ITEM_BUTTON_CLASS = 'collapseButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const PUBLISH_ITEM_BUTTON_CLASS = 'publishItemButton';
@@ -30,6 +31,7 @@ export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
 export const buildPermissionOptionId = (id) => `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 export const MODE_LIST_BUTTON_ID = 'modeListButton';
+export const DELETE_MEMBER_BUTTON_ID = 'deleteMemberButton';
 
 export const MODE_GRID_BUTTON_ID = 'modeCardButton';
 export const SHARED_ITEMS_ID = 'sharedItems';
@@ -38,6 +40,8 @@ export const OWNED_ITEMS_ID = 'ownedItems';
 export const ITEMS_TABLE_BODY = 'itemsTableBody';
 export const ITEMS_TABLE_ROW = '.ag-row';
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
+export const buildItemsTableRowSelector = (id) =>
+  `[row-id="${buildItemsTableRowId(id)}"]`;
 export const buildItemsTableRowIdAttribute = (id) =>
   `.ag-center-cols-container [row-id="${buildItemsTableRowId(id)}"]`;
 export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
@@ -107,6 +111,8 @@ export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
 export const buildMemberAvatarClass = (id) => `memberAvatar-${id}`;
 export const ITEM_SETTINGS_BUTTON_CLASS = 'itemSettingsButton';
 export const buildItemMembershipRowId = (id) => `itemMembershipRow-${id}`;
+export const buildItemMembershipRowSelector = (id) =>
+  `[row-id="${buildItemMembershipRowId(id)}"]`;
 export const ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS =
   'itemMembershipPermissionSelect';
 export const buildItemMembershipRowDeleteButtonId = (id) =>
@@ -125,7 +131,7 @@ export const buildItemsGridPaginationButton = (page) =>
 export const buildItemsGridPaginationButtonSelected = (page) =>
   `${buildItemsGridPaginationButton(page)}.Mui-selected`;
 export const ITEM_HEADER_ID = 'itemHeader';
-export const buildRowDraggerId = (id) => `rowDragger-${id}`;
+export const ROW_DRAGGER_CLASS = `rowDragger`;
 export const buildShareButtonId = (id) => `shareButton-${id}`;
 export const buildPublishButtonId = (id) => `publishButton-${id}`;
 export const buildDeleteButtonId = (id) => `deleteButton-${id}`;
@@ -145,9 +151,10 @@ export const CHATBOX_ID = 'chatbox';
 export const CHATBOX_INPUT_BOX_ID = 'chatboxInputBox';
 export const CONFIRM_RECYCLE_BUTTON_ID = 'confirmRecycleButton';
 export const SHARE_ITEM_VISIBILITY_SELECT_ID = 'shareItemVisiblitySelect';
-export const SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID = 'shareItemCategoryLevelTitle';
-export const SHARE_ITEM_CATEGORY_LEVEL = 'shareItemCategoryLevel';
-export const SHARE_ITEM_CATEGORY_DISCIPLINE = 'shareItemCategoryDiscipline';
+export const buildCategorySelectionTitleId = (title) =>
+  `itemCategoryTitle-${title}`;
+export const buildCategorySelectionId = (title) =>
+  `itemCategoryDropdown-${title}`;
 export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
@@ -155,7 +162,7 @@ export const buildItemsTableId = (id) => `itemsTable-${id}`;
 
 export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
 export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
-export const SETTINGS_EXPANDABLE_TOGGLE_ID = 'settingsExpandableToggle';
+export const SETTINGS_COLLAPSE_TOGGLE_ID = 'settingsCollapseToggle';
 
 export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
   'itemsTableRestoreSelectedItems';
@@ -176,7 +183,8 @@ export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton';
 export const buildCustomizedTagsSelector = (index) =>
   `customizedTagsPreview-${index}`;
 
-export const CATEGORIES_SELECTION_VALUE_SELECTOR = `#${SHARE_ITEM_CATEGORY_LEVEL_TITLE_ID}+div span`;
+export const buildCategoriesSelectionValueSelector = (title) =>
+  `#${buildCategorySelectionTitleId(title)}+div span`;
 
 export const buildCategoryMenuOptions = (menuName, optionIndex) =>
   `#${menuName}-popup li[data-option-index="${optionIndex}"]`;
@@ -195,4 +203,21 @@ export const buildItemInvitationRowDeleteButtonId = (id) =>
 export const buildInvitationEmailTableRowId = (id) =>
   `invitationEmailTableRow-${id}`;
 export const buildInvitationTableRowId = (id) => `invitationTableRow-${id}`;
+export const buildInvitationTableRowSelector = (id) =>
+  `[row-id="${buildInvitationTableRowId(id)}"]`;
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
+export const NAVIGATION_ROOT_ID = 'navigationRoot';
+export const HEADER_MEMBER_MENU_BUTTON_ID = 'headerMemberMenuButton';
+export const HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID =
+  'headerMemberMenuSeeProfileButton';
+export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
+  'headerMemberMenuSignInButton';
+
+export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
+  'headerMemberMenuSignOutButton';
+export const buildMemberMenuItemId = (id) => `memberMenuItem-${id}`;
+
+export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
+export const buildCoEditorSettingsRadioButtonId = (id) =>
+  `coEditorSettingsRadioButton-${id}`;
+export const EMAIL_NOTIFICATION_CHECKBOX = 'emailNotificationCheckbox';

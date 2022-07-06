@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import partition from 'lodash.partition';
 import { Map } from 'immutable';
 import { Loader } from '@graasp/ui';
+import { isPseudonymizedMember } from '@graasp/utils';
 import { useTranslation } from 'react-i18next';
 import { Divider, makeStyles } from '@material-ui/core';
 import ItemMembershipsTable from './ItemMembershipsTable';
@@ -13,7 +14,6 @@ import VisibilitySelect from './VisibilitySelect';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
 import { hooks } from '../../../config/queryClient';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
-import { PSEUDONIMIZED_USER_MAIL } from '../../../config/constants';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
@@ -70,7 +70,7 @@ const ItemSharingTab = ({ item, memberships }) => {
       memberships,
       ({ memberId }) => {
         const member = members?.find(({ id: mId }) => mId === memberId);
-        return member?.email?.includes(PSEUDONIMIZED_USER_MAIL);
+        return member?.email && isPseudonymizedMember(member.email);
       },
     );
 
@@ -103,6 +103,7 @@ const ItemSharingTab = ({ item, memberships }) => {
               item={item}
               memberships={authenticatedMemberships}
               emptyMessage={t('No user has authenticated to this item yet.')}
+              showEmail={false}
             />
           </>
         )}
@@ -137,6 +138,9 @@ const ItemSharingTab = ({ item, memberships }) => {
 };
 ItemSharingTab.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  memberships: PropTypes.arrayOf(PropTypes.shape({})),
+};
+ItemSharingTab.defaultProps = {
+  memberships: [],
 };
 export default ItemSharingTab;

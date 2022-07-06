@@ -17,12 +17,13 @@ const Items = ({
   id,
   headerElements,
   actions,
-  toolbarActions,
+  ToolbarActions,
   clickable,
-  defautSortedColumn,
+  defaultSortedColumn,
   isEditing,
   parentId,
   showThumbnails,
+  showCreator,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
@@ -30,6 +31,10 @@ const Items = ({
     useItemMemberships(
       itemSearch?.results?.map(({ id: itemId }) => itemId).toJS(),
     );
+  // todo: disable depending on showCreator
+  const { data: creators } = hooks.useMembers(
+    Object.keys(items?.groupBy(({ creator }) => creator).toJS()),
+  );
 
   if (isMembershipsLoading) {
     return <Loader />;
@@ -55,18 +60,20 @@ const Items = ({
     default:
       return (
         <ItemsTable
-          defautSortedColumn={defautSortedColumn}
           id={id}
+          actions={actions}
           tableTitle={title}
+          defaultSortedColumn={defaultSortedColumn}
           items={itemSearch.results}
           memberships={memberships}
           headerElements={[itemSearch.input, ...headerElements]}
           isSearching={Boolean(itemSearch.text)}
-          actions={actions}
-          toolbarActions={toolbarActions}
+          ToolbarActions={ToolbarActions}
           clickable={clickable}
           isEditing={isEditing}
           showThumbnails={showThumbnails}
+          showCreator={showCreator}
+          creators={creators}
         />
       );
   }
@@ -78,9 +85,9 @@ Items.propTypes = {
   id: PropTypes.string,
   headerElements: PropTypes.arrayOf(PropTypes.element),
   actions: PropTypes.element,
-  toolbarActions: PropTypes.element,
+  ToolbarActions: PropTypes.func,
   clickable: PropTypes.bool,
-  defautSortedColumn: PropTypes.shape({
+  defaultSortedColumn: PropTypes.shape({
     updatedAt: PropTypes.string,
     createdAt: PropTypes.string,
     type: PropTypes.string,
@@ -89,18 +96,20 @@ Items.propTypes = {
   isEditing: PropTypes.bool,
   parentId: PropTypes.string,
   showThumbnails: PropTypes.bool,
+  showCreator: PropTypes.bool,
 };
 
 Items.defaultProps = {
   id: null,
   headerElements: [],
   actions: null,
-  toolbarActions: null,
+  ToolbarActions: null,
   clickable: true,
-  defautSortedColumn: {},
+  defaultSortedColumn: {},
   isEditing: false,
   parentId: null,
   showThumbnails: true,
+  showCreator: false,
 };
 
 export default Items;

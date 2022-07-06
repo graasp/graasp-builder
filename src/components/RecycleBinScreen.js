@@ -14,7 +14,6 @@ import {
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
   ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID,
 } from '../config/selectors';
-import Authorization from './common/Authorization';
 
 const RowActions = ({ data: item }) => (
   <>
@@ -66,11 +65,11 @@ const RecycleBinScreen = () => {
         title={t('Deleted Items')}
         items={List(items)}
         actions={RowActions}
-        toolbarActions={ToolbarActions}
+        ToolbarActions={ToolbarActions}
         showThumbnails={false}
       />
     </Main>
   );
 };
 
-export default Authorization()(RecycleBinScreen);
+export default RecycleBinScreen;

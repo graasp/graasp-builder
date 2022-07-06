@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-          cache: 'yarn'
+          #cache: 'yarn'
 
       - name: install yarn
         # avoid checksum errors with github packages
@@ -21,7 +21,6 @@ jobs:
         uses: cypress-io/github-action@v2
         env:
           REACT_APP_API_HOST: ${{ secrets.REACT_APP_API_HOST }}
-          REACT_APP_AUTHENTICATION_HOST: http://localhost:3000
           REACT_APP_NODE_ENV: test
           REACT_APP_HIDDEN_ITEM_TAG_ID: 12345678-1234-1234-1234-123456789012
         with:

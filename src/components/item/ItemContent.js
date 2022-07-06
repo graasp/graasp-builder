@@ -31,6 +31,7 @@ import {
   H5P_FRAME_CSS_PATH,
   H5P_FRAME_JS_PATH,
 } from '../../config/h5p';
+import ItemActions from '../main/ItemActions';
 
 const { useChildren, useFileContent } = hooks;
 
@@ -174,6 +175,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
                 ? [<NewItemButton key="newButton" fontSize="small" />]
                 : undefined
             }
+            ToolbarActions={ItemActions}
           />
         </>
       );

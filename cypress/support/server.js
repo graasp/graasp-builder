@@ -1,6 +1,7 @@
 import { v4 as uuidv4, v4 } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
 import qs from 'querystring';
+import { FAILURE_MESSAGES } from '@graasp/translations';
 import { API_ROUTES } from '@graasp/query-client';
 import {
   getItemById,
@@ -23,7 +24,11 @@ import {
   getItemLoginSchema,
   buildItemLoginSchemaExtra,
 } from '../../src/utils/itemExtra';
-import { SETTINGS, THUMBNAIL_EXTENSION } from '../../src/config/constants';
+import {
+  SETTINGS,
+  SIGN_IN_PATH,
+  THUMBNAIL_EXTENSION,
+} from '../../src/config/constants';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { getMemberById } from '../../src/utils/member';
 import { PERMISSION_LEVELS } from '../../src/enums';
@@ -53,7 +58,6 @@ const {
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
   GET_CURRENT_MEMBER_ROUTE,
-  buildSignInPath,
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
   buildGetItemLoginRoute,
@@ -86,10 +90,10 @@ const {
   buildDeleteInvitationRoute,
   buildPatchInvitationRoute,
   buildResendInvitationRoute,
+  buildItemPublishRoute
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
-const AUTHENTICATION_HOST = Cypress.env('AUTHENTICATION_HOST');
 
 const checkMembership = ({ item, currentMember }) => {
   // mock membership
@@ -642,7 +646,13 @@ export const mockGetMembers = (members) => {
       if (typeof memberIds === 'string') {
         memberIds = [memberIds];
       }
-      const allMembers = memberIds?.map((id) => getMemberById(members, id));
+      const allMembers = memberIds?.map(
+        (id) =>
+          getMemberById(members, id) ?? {
+            statusCode: StatusCodes.NOT_FOUND,
+            name: FAILURE_MESSAGES.MEMBER_NOT_FOUND,
+          },
+      );
       // member does not exist in db
       if (!allMembers) {
         return reply({
@@ -758,7 +768,7 @@ export const mockSignInRedirection = () => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: `${AUTHENTICATION_HOST}/${buildSignInPath()}`,
+      url: SIGN_IN_PATH,
     },
     ({ reply }) => {
       reply(redirectionReply);
@@ -1521,4 +1531,17 @@ export const mockDeleteInvitation = (items, shouldThrowError) => {
       return reply(invitation);
     },
   ).as('deleteInvitation');
+};
+
+export const mockPublishItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildItemPublishRoute(ID_FORMAT)}`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      reply(items.find(item => item?.id === itemId));
+    },
+  ).as('publishItem');
 };
