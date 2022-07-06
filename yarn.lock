@@ -1956,9 +1956,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git":
+"@graasp/query-client@github:graasp/graasp-query-client.git#179/addPasswordEdition":
   version: 0.1.0
+<<<<<<< HEAD
   resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=aa690de0833289b3e78b9eb01edc8e45df5254a8"
+=======
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=d82be4fac8fbf684e661bb9caea957ab883dfcde"
+>>>>>>> 80e677a (fix: update yarn.lock)
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -1972,7 +1976,11 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
+<<<<<<< HEAD
   checksum: e940a7e3d1a7a1ad4d3639ec13b9a22230bfd6cf91c9d9d5972dece9d7d623bfec630d397f01ff1e856ba3ba1c0ea8d77bdcb3d7eddc7ac8c8c7df66c07886c4
+=======
+  checksum: aa74155687e7f5ac698328f8050d7c39afdcbfd118ea36dc20e44d6e7415a81131d639082883f49643fb4b840b157eb767a889fb7ef256ce8890c3cb76fa1a11
+>>>>>>> 80e677a (fix: update yarn.lock)
   languageName: node
   linkType: hard
 
@@ -10361,7 +10369,7 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git#179/addPasswordEdition"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
