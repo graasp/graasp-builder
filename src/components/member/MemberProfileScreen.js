@@ -22,6 +22,7 @@ import Main from '../main/Main';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import AvatarSetting from './AvatarSetting';
 import DeleteMemberDialog from './DeleteMemberDialog';
+import PasswordSetting from './PasswordSetting';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -131,6 +132,7 @@ const MemberProfileScreen = () => {
         </Grid>
 
         <AvatarSetting user={member} />
+        <PasswordSetting user={member} />
         <DeleteMemberDialog id={member?.get('id')} />
       </Card>
     </Main>

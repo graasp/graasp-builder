@@ -219,3 +219,13 @@ export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
 export const buildCoEditorSettingsRadioButtonId = (id) =>
   `coEditorSettingsRadioButton-${id}`;
 export const EMAIL_NOTIFICATION_CHECKBOX = 'emailNotificationCheckbox';
+
+export const MEMBER_CURRENT_PASSWORD_ID = 'memberCurrentPassword';
+export const MEMBER_NEW_PASSWORD_ID = 'memberNewPassword';
+export const MEMBER_NEW_PASSWORD_CONFIRMATION_ID =
+  'memberNewPasswordConfirmation';
+export const CONFIRM_CHANGE_PASSWORD_BUTTON_ID = 'confirmChangePasswordButton';
+export const CONFIRM_RESET_PASSWORD_BUTTON_ID = 'confirmResetPasswordButton';
+export const USER_CURRENT_PASSWORD_INPUT_ID = 'currentPasswordInput';
+export const USER_NEW_PASSWORD_INPUT_ID = 'newPasswordInput';
+export const USER_CONFIRM_PASSWORD_INPUT_ID = 'confirmPasswordInput';
