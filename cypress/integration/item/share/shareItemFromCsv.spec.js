@@ -18,7 +18,7 @@ const shareItem = ({ id, fixture }) => {
 };
 
 describe('Share Item From CSV', () => {
-  it.skip('empty csv', () => {
+  it('empty csv', () => {
     const fixture = 'share/empty.csv';
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
@@ -30,7 +30,7 @@ describe('Share Item From CSV', () => {
     cy.get(`#${SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID}`).should('be.visible');
   });
 
-  it.skip('incorrect columns', () => {
+  it('incorrect columns', () => {
     const fixture = 'share/incorrectColumns.csv';
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 

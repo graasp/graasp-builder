@@ -103,7 +103,7 @@ const CsvInputParser = ({ item }) => {
     );
     if (genericErrors?.length) {
       return genericErrors.map((err) => (
-        <Alert severity="success">{t(err.message)}</Alert>
+        <Alert severity="error">{t(err.message)}</Alert>
       ));
     }
 

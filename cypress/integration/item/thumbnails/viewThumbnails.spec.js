@@ -11,7 +11,7 @@ import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
 import { THUMBNAIL_LOADING_TIME } from '../../../support/constants';
 
 // THESE TESTS ARE SKIPPED SINCE THEY FAIL IN CI
-describe.skip('View Thumbnails', () => {
+describe('View Thumbnails', () => {
   beforeEach(() => {});
 
   it(`display thumbnail icons`, () => {

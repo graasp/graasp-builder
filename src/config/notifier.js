@@ -18,6 +18,9 @@ const getErrorMessageFromPayload = (payload) =>
       FAILURE_MESSAGES.UNEXPECTED_ERROR,
   );
 
+const getSuccessMessageFromPayload = (payload) =>
+  i18n.t(payload?.message ?? 'The operation successfully proceeded');
+
 const {
   createItemRoutine,
   deleteItemsRoutine,
@@ -102,18 +105,12 @@ export default ({ type, payload }) => {
     case postInvitationsRoutine.SUCCESS:
     case resendInvitationRoutine.SUCCESS:
     case editMemberRoutine.SUCCESS: {
-      // todo: factor out string
-      message = i18n.t(
-        payload?.message ?? 'The operation successfully proceeded',
-      );
+      message = getSuccessMessageFromPayload(payload);
       break;
     }
     case shareItemRoutine.SUCCESS: {
       if (!payload.failure.length) {
-        // todo: factor out string
-        message = i18n.t(
-          payload?.message ?? 'The operation successfully proceeded',
-        );
+        message = getSuccessMessageFromPayload(payload);
       }
 
       // do nothing for multiple failures: the interface handles it

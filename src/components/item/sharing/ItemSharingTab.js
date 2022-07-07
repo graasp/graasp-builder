@@ -142,9 +142,6 @@ const ItemSharingTab = ({ item }) => {
 };
 ItemSharingTab.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  // memberships: PropTypes.arrayOf(PropTypes.shape({})),
 };
-// ItemSharingTab.defaultProps = {
-//   memberships: [],
-// };
+
 export default ItemSharingTab;

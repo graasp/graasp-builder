@@ -14,7 +14,7 @@ describe('View Memberships', () => {
     cy.setUpApi({ ...ITEMS_WITH_MEMBERSHIPS });
   });
 
-  it.only('view membership in share item modal', () => {
+  it('view membership in share item modal', () => {
     const [item] = ITEMS_WITH_MEMBERSHIPS.items;
     const { memberships } = item;
     cy.visit(buildItemPath(item.id));

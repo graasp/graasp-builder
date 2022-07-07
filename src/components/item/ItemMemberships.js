@@ -54,8 +54,8 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
     >
       <Grid item>
         <Tooltip
-          title={t(`This item is shared with users`, {
-            users: filteredMemberships.length,
+          title={t('sharedWithMembers', {
+            count: filteredMemberships.length,
           })}
           aria-label="shared users"
         >
