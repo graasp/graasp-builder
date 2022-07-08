@@ -17,16 +17,17 @@ export const strengthValidator = (password) => {
       minSymbols: 0,
     })
   ) {
-    return PASSWORD_WEAK_ERROR;
+    throw PASSWORD_WEAK_ERROR;
   }
-  return null;
+  return true;
 };
 
 export const passwordValidator = (password) => {
+  let res = false;
   if (validator.isEmpty(password)) {
-    return PASSWORD_EMPTY_ERROR;
+    res = PASSWORD_EMPTY_ERROR;
   }
-  return null;
+  return res;
 };
 
 export const newPasswordValidator = (
@@ -35,10 +36,10 @@ export const newPasswordValidator = (
   confirmPassword,
 ) => {
   if (currentPassword === newPassword) {
-    return PASSWORD_EQUAL_ERROR;
+    throw PASSWORD_EQUAL_ERROR;
   }
   if (newPassword !== confirmPassword) {
-    return PASSWORD_CONFIRM_ERROR;
+    throw PASSWORD_CONFIRM_ERROR;
   }
-  return null;
+  return true;
 };

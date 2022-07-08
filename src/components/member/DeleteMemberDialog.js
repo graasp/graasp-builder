@@ -16,30 +16,26 @@ import {
   DELETE_MEMBER_BUTTON_ID,
 } from '../../config/selectors';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   confirmDeleteButton: {
     color: 'red',
   },
   deleteButton: {
     backgroundColor: 'red',
-    margin: '12px 0px',
+    margin: theme.spacing(1, 0),
   },
   mainContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start',
-    margin: '12px 0px',
+    margin: theme.spacing(1, 0),
   },
   deleteAccountContainer: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: '0px 12px',
-    margin: '0px 0px',
-  },
-  note: {
-    fontSize: '12px',
-    margin: '4px 0 2px',
+    alignItems: 'flex-start',
+    padding: theme.spacing(0, 1),
+    margin: theme.spacing(0, 0),
   },
 }));
 
@@ -93,9 +89,10 @@ const DeleteMemberDialog = ({ id }) => {
             spacing={3}
             className={classes.deleteAccountContainer}
           >
-            <Typography className={classes.note}>
-              Once you delete an account, there is no going back. Please be
-              certain.
+            <Typography variant="caption">
+              {t(
+                'Once you delete an account, there is no going back. Please be certain.',
+              )}
             </Typography>
             <Button
               id={DELETE_MEMBER_BUTTON_ID}
@@ -104,7 +101,7 @@ const DeleteMemberDialog = ({ id }) => {
               color="primary"
               onClick={() => setOpen(true)}
             >
-              Delete Account
+              {t('Delete Account')}
             </Button>
           </Grid>
         </Grid>

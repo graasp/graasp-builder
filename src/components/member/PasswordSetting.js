@@ -20,30 +20,27 @@ import {
   passwordValidator,
   strengthValidator,
 } from '../../utils/validation';
+import { PASSWORD_EMPTY_ERROR } from '../../config/messages';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   mainContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start',
-    margin: '12px 0px',
+    margin: theme.spacing(1, 0),
   },
   changePasswordContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    margin: '12px 0px',
+    margin: theme.spacing(1, 0),
   },
   buttonItem: {
     display: 'flex',
-    padding: '12px',
+    padding: theme.spacing(1),
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
-  },
-  note: {
-    fontSize: '12px',
-    margin: '4px 0 2px',
   },
 }));
 
@@ -62,6 +59,31 @@ const PasswordSetting = ({ user }) => {
   );
 
   const userId = user.get('id');
+  const hasPassword = user.get('password');
+
+  const verifyEmptyPassword = () => {
+    const checkingCurrentPassword = passwordValidator(currentPassword);
+    const checkingNewPassword = passwordValidator(newPassword);
+    const checkingConfirmPassword = passwordValidator(confirmPassword);
+    setCurrentPasswordError(checkingCurrentPassword);
+    setNewPasswordError(checkingNewPassword);
+    setConfirmPasswordError(checkingConfirmPassword);
+    // throw error if one of the password fields is empty
+    if (hasPassword) {
+      // check all three fields if the user already has a password set
+      if (
+        checkingCurrentPassword ||
+        checkingNewPassword ||
+        checkingConfirmPassword
+      ) {
+        throw PASSWORD_EMPTY_ERROR;
+      }
+    }
+    // only check two fields if the user does not have a password set
+    if (checkingNewPassword || checkingConfirmPassword) {
+      throw PASSWORD_EMPTY_ERROR;
+    }
+  };
 
   const onClose = () => {
     setCurrentPassword('');
@@ -70,40 +92,22 @@ const PasswordSetting = ({ user }) => {
   };
 
   const handleChangePassword = () => {
-    const checkingCurrentPassword = passwordValidator(currentPassword);
-    const checkingNewPassword = passwordValidator(newPassword);
-    const checkingConfirmPassword = passwordValidator(confirmPassword);
-    // verify empty fields
-    if (
-      user.get('password') &&
-      (checkingCurrentPassword ||
-        checkingNewPassword ||
-        checkingConfirmPassword)
-    ) {
-      setCurrentPasswordError(checkingCurrentPassword);
-      setNewPasswordError(checkingNewPassword);
-      setConfirmPasswordError(checkingConfirmPassword);
-    } else {
-      const checkingPasswordUpdate = newPasswordValidator(
+    try {
+      // verify there are no empty inputs
+      verifyEmptyPassword();
+      // perform validation when all fields are filled in
+      newPasswordValidator(currentPassword, newPassword, confirmPassword);
+      // check password strength for new password
+      strengthValidator(newPassword);
+      // perform password update
+      onUpdatePassword({
+        id: userId,
+        password: newPassword,
         currentPassword,
-        newPassword,
-        confirmPassword,
-      );
-      if (checkingPasswordUpdate) {
-        toast.error(checkingPasswordUpdate);
-      } else {
-        const checkingStrength = strengthValidator(newPassword);
-        if (checkingStrength) {
-          toast.error(checkingStrength);
-        } else {
-          onUpdatePassword({
-            id: userId,
-            password: newPassword,
-            currentPassword,
-          });
-          onClose();
-        }
-      }
+      });
+      onClose();
+    } catch (err) {
+      toast.error(err);
     }
   };
 
@@ -125,19 +129,21 @@ const PasswordSetting = ({ user }) => {
       <Grid container spacing={3} className={classes.mainContainer}>
         <Grid item xs={8}>
           <Grid item xs={12}>
-            {user.get('password') !== null ? (
-              <Typography variant="h5">{t('Change Password')}</Typography>
-            ) : (
-              <Typography variant="h5">{t('Set Password')}</Typography>
-            )}
+            <Typography variant="h5">
+              {hasPassword ? (
+                <div>{t('Change Password')}</div>
+              ) : (
+                <div>{t('Set Password')}</div>
+              )}
+            </Typography>
           </Grid>
           <Grid
             container
             spacing={3}
             className={classes.changePasswordContainer}
           >
-            <Grid item xs={12} sm={6}>
-              {user.get('password') !== null ? (
+            <Grid item xs={12} sm={12}>
+              {hasPassword ? (
                 <TextField
                   className={classes.input}
                   required
@@ -154,7 +160,6 @@ const PasswordSetting = ({ user }) => {
                 <Grid item xs={12} sm={6} />
               )}
             </Grid>
-            <Grid item xs={12} sm={6} />
             <Grid item xs={12} sm={6}>
               <TextField
                 className={classes.input}
@@ -183,35 +188,37 @@ const PasswordSetting = ({ user }) => {
                 type="password"
               />
             </Grid>
-            <Grid container direction="row">
-              <Grid item xs={12} sm={6} className={classes.buttonItem}>
-                <Typography className={classes.note}>
-                  {t(
-                    'Make sure it is at least 8 characters including a number, a lowercase letter and an uppercase letter.',
-                  )}
-                </Typography>
-                <Button
-                  id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleChangePassword()}
-                >
-                  {t('Update password')}
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} className={classes.buttonItem}>
-                <Typography className={classes.note}>
-                  {t('I forgot my password:')}
-                </Typography>
-                <Button
-                  id={CONFIRM_RESET_PASSWORD_BUTTON_ID}
-                  variant="outlined"
-                  disabled
-                  // TO DO:
-                  // onClick={() => handleChangePassword()}
-                >
-                  {t('Request a reset')}
-                </Button>
+            <Grid item xs={12} sm={12}>
+              <Grid container>
+                <Grid item xs={12} sm={6} className={classes.buttonItem}>
+                  <Typography variant="caption">
+                    {t(
+                      'Make sure it is at least 8 characters including a number, a lowercase letter and an uppercase letter.',
+                    )}
+                  </Typography>
+                  <Button
+                    id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleChangePassword()}
+                  >
+                    {t('Update password')}
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sm={6} className={classes.buttonItem}>
+                  <Typography variant="caption">
+                    {t('I forgot my password:')}
+                  </Typography>
+                  <Button
+                    id={CONFIRM_RESET_PASSWORD_BUTTON_ID}
+                    variant="outlined"
+                    disabled
+                    // TO DO:
+                    // onClick={() => handleChangePassword()}
+                  >
+                    {t('Request a reset')}
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
