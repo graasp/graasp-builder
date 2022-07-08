@@ -17,9 +17,14 @@ import {
 import { MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME } from '../../config/selectors';
 import StatusBar from '../file/StatusBar';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   thumbnail: {
     textAlign: 'right',
+  },
+  mainContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    margin: theme.spacing(1, 0),
   },
 }));
 
@@ -109,10 +114,10 @@ const AvatarSetting = ({ user }) => {
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
-      <Grid container justifyContent="space-between">
+      <Grid container spacing={3} className={classes.mainContainer}>
         <Grid item sm={6}>
           <Typography variant="h5">{t('Thumbnail')}</Typography>
-          <Typography variant="body">{t('Update thumbnail')}</Typography>
+          <Typography variant="body1">{t('Update thumbnail')}</Typography>
           <input
             type="file"
             accept="image/*"
@@ -123,7 +128,7 @@ const AvatarSetting = ({ user }) => {
             className={MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}
           />
         </Grid>
-        <Grid item sm={6} className={classes.thumbnail}>
+        <Grid item sm={6} xs={12}>
           <Avatar
             id={userId}
             extra={user?.get('extra')}
