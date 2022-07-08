@@ -82,7 +82,7 @@ const DeleteMemberDialog = ({ id }) => {
       <Grid container spacing={3} className={classes.mainContainer}>
         <Grid item xs={8}>
           <Grid item xs={12}>
-            <Typography variant="h5">Delete this account</Typography>
+            <Typography variant="h5">{t('Delete this account')}</Typography>
           </Grid>
           <Grid
             container
