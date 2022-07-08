@@ -20,6 +20,11 @@ export const SAMPLE_ITEMS_WITH_THUMBNAILS = {
           permission: PERMISSION_LEVELS.ADMIN,
           memberId: MEMBERS.ANNA.id,
         },
+        {
+          itemPath: 'bfa09f5a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.BOB.id,
+        },
       ],
     },
     {
@@ -32,7 +37,7 @@ export const SAMPLE_ITEMS_WITH_THUMBNAILS = {
       },
       memberships: [
         {
-          itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
+          itemPath: 'bfa09f5a_5688_11eb_ae93_0242ac130002',
           permission: PERMISSION_LEVELS.ADMIN,
           memberId: MEMBERS.CEDRIC.id,
         },
@@ -46,23 +51,28 @@ export const SAMPLE_ITEMS_WITH_THUMBNAILS = {
     },
     {
       ...DEFAULT_FOLDER_ITEM,
-      id: 'bfa09f5a-5688-11eb-ae93-0242ac130002',
+      id: 'bfa09f5a-5688-11eb-ae93-0242ac130001',
       name: 'own_item_name3',
-      path: 'bfa09f5a_5688_11eb_ae93_0242ac130002',
+      path: 'bfa09f5a_5688_11eb_ae93_0242ac130001',
       extra: {
         image: 'someimageurl',
       },
       creator: MEMBERS.CEDRIC.id,
       memberships: [
         {
-          itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
+          itemPath: 'bfa09f5a_5688_11eb_ae93_0242ac130001',
           permission: PERMISSION_LEVELS.ADMIN,
           memberId: MEMBERS.CEDRIC.id,
         },
         {
-          itemPath: 'bfa09f5a_5688_11eb_ae93_0242ac130002',
+          itemPath: 'bfa09f5a_5688_11eb_ae93_0242ac130001',
           permission: PERMISSION_LEVELS.ADMIN,
           memberId: MEMBERS.BOB.id,
+        },
+        {
+          itemPath: 'bfa09f5a_5688_11eb_ae93_0242ac130001',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.ANNA.id,
         },
       ],
     },

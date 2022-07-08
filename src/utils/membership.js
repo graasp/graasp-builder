@@ -53,7 +53,7 @@ export const getMembership = (memberships) => {
 
 export const getMembershipsForItem = ({ item, memberships, items }) => {
   const index = items.findKey(({ id }) => id === item.id);
-  const m = memberships.get(index);
+  const m = memberships?.get(index);
   if (isError(m)) {
     return undefined;
   }

@@ -3,7 +3,7 @@ import { HOME_PATH, SHARED_ITEMS_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
   buildNameCellRendererId,
-  HEADER_USER_ID,
+  HEADER_MEMBER_MENU_BUTTON_ID,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
@@ -53,7 +53,7 @@ describe('View Thumbnails', () => {
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
 
     // display member avatar in header
-    cy.get(`#${HEADER_USER_ID} img`)
+    cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID} img`)
       .should('have.attr', 'src')
       .and('contain', 'blob:');
 
@@ -62,7 +62,7 @@ describe('View Thumbnails', () => {
     // check bob avatar in shared items, grid mode
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
     cy.wait(TABLE_ITEM_RENDER_TIME);
-    cy.get(`#${buildItemCard(items[2].id)} img`)
+    cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
       .and('contain', 'blob:');
   });
