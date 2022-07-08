@@ -8,7 +8,7 @@ import {
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
 import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
-import { THUMBNAIL_LOADING_TIME } from '../../../support/constants';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 // THESE TESTS ARE SKIPPED SINCE THEY FAIL IN CI
 describe('View Thumbnails', () => {
@@ -18,7 +18,7 @@ describe('View Thumbnails', () => {
     cy.setUpApi(SAMPLE_ITEMS_WITH_THUMBNAILS);
 
     cy.visit(HOME_PATH);
-    cy.wait(THUMBNAIL_LOADING_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
 
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
 
@@ -31,7 +31,7 @@ describe('View Thumbnails', () => {
 
     // GRID
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    cy.wait(THUMBNAIL_LOADING_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`#${buildItemCard(items[0].id)} img`)
       .should('have.attr', 'src')
       .and('contain', DEFAULT_IMAGE_SRC);
@@ -48,7 +48,7 @@ describe('View Thumbnails', () => {
     });
 
     cy.visit(HOME_PATH);
-    cy.wait(THUMBNAIL_LOADING_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
 
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
 
@@ -61,7 +61,7 @@ describe('View Thumbnails', () => {
 
     // check bob avatar in shared items, grid mode
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    cy.wait(THUMBNAIL_LOADING_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`#${buildItemCard(items[2].id)} img`)
       .should('have.attr', 'src')
       .and('contain', 'blob:');
