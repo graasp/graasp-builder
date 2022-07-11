@@ -25,7 +25,7 @@ import {
   mockEditItem,
   mockPostItemMembership,
   mockGetMember,
-  mockGetMemberBy,
+  mockGetMembersBy,
   mockDeleteItems,
   mockDefaultDownloadFile,
   mockUploadItem,
@@ -81,6 +81,7 @@ import {
   mockPatchInvitation,
   mockDeleteInvitation,
   mockPublishItem,
+  mockPostManyItemMemberships,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -193,12 +194,13 @@ Cypress.Commands.add(
     mockEditItem(cachedItems, editItemError);
 
     mockPostItemMembership(cachedItems, shareItemError);
+    mockPostManyItemMemberships(cachedItems, shareItemError);
 
     mockGetMember(cachedMembers);
 
     mockGetMembers(cachedMembers);
 
-    mockGetMemberBy(cachedMembers, getMemberError);
+    mockGetMembersBy(cachedMembers, getMemberError);
 
     mockUploadItem(cachedItems, defaultUploadError);
 

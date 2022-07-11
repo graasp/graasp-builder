@@ -5,9 +5,7 @@ import { Map } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { getHighestPermissionForMemberFromMemberships } from '../../../utils/membership';
 import { LayoutContext } from '../../context/LayoutContext';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { hooks } from '../../../config/queryClient';
 import ItemPublishConfiguration from './ItemPublishConfiguration';
 import { PERMISSION_LEVELS } from '../../../enums';
@@ -21,25 +19,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemPublishTab = ({ item, memberships }) => {
+const ItemPublishTab = ({ item, permission }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { data: currentMember, isLoadingCurrentMember } =
-    useContext(CurrentUserContext);
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.get('id'),
   );
   const { setIsItemPublishOpen } = useContext(LayoutContext);
 
-  const hasAdminPermission =
-    getHighestPermissionForMemberFromMemberships({
-      memberships,
-      memberId: currentMember?.get('id'),
-    })?.permission === PERMISSION_LEVELS.ADMIN;
-
   const isPublic = isItemPublic({ tags, itemTags });
-  const canPublish = hasAdminPermission && isPublic;
+  const canPublish = permission === PERMISSION_LEVELS.ADMIN && isPublic;
 
   useEffect(
     () => () => {
@@ -49,7 +39,7 @@ const ItemPublishTab = ({ item, memberships }) => {
     [],
   );
 
-  if (isLoadingCurrentMember || isTagsLoading || isItemTagsLoading) {
+  if (isTagsLoading || isItemTagsLoading) {
     return <Loader />;
   }
 
@@ -67,8 +57,14 @@ const ItemPublishTab = ({ item, memberships }) => {
     </Container>
   );
 };
+
 ItemPublishTab.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  permission: PropTypes.oneOf(PERMISSION_LEVELS),
 };
+
+ItemPublishTab.defaultProps = {
+  permission: PERMISSION_LEVELS.READ,
+};
+
 export default ItemPublishTab;

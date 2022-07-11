@@ -33,11 +33,18 @@ describe('Create Membership', () => {
     const permission = PERMISSION_LEVELS.READ;
     shareItem({ id, member, permission });
 
-    cy.wait('@postItemMembership').then(({ request: { url, body } }) => {
-      expect(url).to.contain(id);
-      expect(body?.permission).to.equal(permission);
-      expect(body?.memberId).to.equal(member.id);
-    });
+    cy.wait('@postManyItemMemberships').then(
+      ({
+        request: {
+          url,
+          body: { memberships },
+        },
+      }) => {
+        expect(url).to.contain(id);
+        expect(memberships[0].permission).to.equal(permission);
+        expect(memberships[0].memberId).to.equal(member.id);
+      },
+    );
 
     // check that the email field is emptied after sharing completes
     cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).should('be.empty');

@@ -14,7 +14,11 @@ import { formatDate } from '../../src/utils/date';
 describe('Member Profile', () => {
   beforeEach(() => {
     cy.setUpApi();
-    cy.visit(MEMBER_PROFILE_PATH);
+    cy.visit(MEMBER_PROFILE_PATH, {
+      onBeforeLoad(win) {
+        cy.spy(win.navigator.clipboard, 'writeText').as('copy');
+      },
+    });
   });
 
   it('Layout', () => {
@@ -48,10 +52,6 @@ describe('Member Profile', () => {
 
     cy.get(`#${MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID}`).click();
 
-    cy.window().then((win) => {
-      win.navigator.clipboard.readText().then((text) => {
-        expect(text).to.equal(id);
-      });
-    });
+    cy.get('@copy').should('be.calledWithExactly', id);
   });
 });

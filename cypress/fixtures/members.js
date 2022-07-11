@@ -49,6 +49,12 @@ export const MEMBERS = {
     email: 'fanny@email.com',
     createdAt: '2021-04-13 14:56:34.749946',
   },
+  GARRY: {
+    id: 'ecafbd2a-5642-31fb-ae93-0242ac130412',
+    name: 'garry',
+    email: 'garry@email.com',
+    createdAt: '2021-04-13 14:56:34.749946',
+  },
 };
 
 export const CURRENT_USER = MEMBERS.ANNA;

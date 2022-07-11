@@ -22,10 +22,7 @@ import ShareButton from '../../common/ShareButton';
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import PlayerViewButton from '../../common/PlayerViewButton';
-import {
-  getMembership,
-  isItemUpdateAllowedForUser,
-} from '../../../utils/membership';
+import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { hooks } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
@@ -59,9 +56,9 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
 
   const { data: member } = useContext(CurrentUserContext);
 
-  const { data: memberships } = useItemMemberships([id]);
+  const { data: memberships } = useItemMemberships(id);
   const canEdit = isItemUpdateAllowedForUser({
-    memberships: getMembership(memberships),
+    memberships,
     memberId: member?.get('id'),
   });
 

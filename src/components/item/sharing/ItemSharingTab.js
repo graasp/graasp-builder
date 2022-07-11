@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import partition from 'lodash.partition';
 import { Map } from 'immutable';
@@ -18,6 +19,7 @@ import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import InvitationsTable from './InvitationsTable';
+import CsvInputParser from './CsvInputParser';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -32,9 +34,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemSharingTab = ({ item, memberships }) => {
+const ItemSharingTab = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const { data: memberships } = hooks.useItemMemberships(item?.get('id'));
   const { data: currentMember, isLoadingCurrentMember } =
     useContext(CurrentUserContext);
   const { data: members } = hooks.useMembers(
@@ -67,7 +70,7 @@ const ItemSharingTab = ({ item, memberships }) => {
     }
 
     const [authenticatedMemberships, authorizedMemberships] = partition(
-      memberships,
+      memberships.toJS(),
       ({ memberId }) => {
         const member = members?.find(({ id: mId }) => mId === memberId);
         return member?.email && isPseudonymizedMember(member.email);
@@ -78,12 +81,13 @@ const ItemSharingTab = ({ item, memberships }) => {
       <>
         <Divider className={classes.divider} />
 
-        <Typography variant="h5" className={classes.title}>
-          {t('Authorized Members')}
-        </Typography>
-        {canEdit && (
-          <CreateItemMembershipForm itemId={item.get('id')} members={members} />
-        )}
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Typography variant="h5" className={classes.title}>
+            {t('Authorized Members')}
+          </Typography>
+          {canEdit && <CsvInputParser item={item} />}
+        </Grid>
+        {canEdit && <CreateItemMembershipForm item={item} members={members} />}
         <ItemMembershipsTable
           item={item}
           emptyMessage={t('No user has access to this item.')}
@@ -138,9 +142,6 @@ const ItemSharingTab = ({ item, memberships }) => {
 };
 ItemSharingTab.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
-  memberships: PropTypes.arrayOf(PropTypes.shape({})),
 };
-ItemSharingTab.defaultProps = {
-  memberships: [],
-};
+
 export default ItemSharingTab;
