@@ -1958,7 +1958,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client.git#179/addPasswordEdition":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=d82be4fac8fbf684e661bb9caea957ab883dfcde"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=abb4ef4e18a730610415ada14ad3b0de43375b02"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -1972,16 +1972,16 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: aa74155687e7f5ac698328f8050d7c39afdcbfd118ea36dc20e44d6e7415a81131d639082883f49643fb4b840b157eb767a889fb7ef256ce8890c3cb76fa1a11
+  checksum: a641f3b11a3d3724a3ef512d33fa8590af1945e27eaf032d9401bd0a26a02725d685ab61f6d3146b1e8350f01fc227432c7120663d76743efd7c6336393903a6
   languageName: node
   linkType: hard
 
 "@graasp/translations@github:graasp/graasp-translations.git":
   version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=f6042354f3c929a0d35cf6478ddb6a3fe994f6e4"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=6ef311e68a408e60eeb3a655cb06f91c5db634e0"
   dependencies:
     i18next: 21.6.11
-  checksum: c91e9050a9e386b19dc04a24322c9df3c7fb5f747ade55d0c55d450f6ac78defa8c9e35df77856ec0783a6bd308da2778ae4b7209c6654126d4af8157fda0b09
+  checksum: 5078b2800a9c6f66db82a8075ed59c4183930c070fc1c8f833a652e89468161b54aee982a9ad04ad3a2461a3928fe8fdcfcbf3df9f2edf419d6631fa54515f3a
   languageName: node
   linkType: hard
 

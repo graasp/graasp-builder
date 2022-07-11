@@ -89,11 +89,6 @@ const DeleteMemberDialog = ({ id }) => {
             spacing={3}
             className={classes.deleteAccountContainer}
           >
-            <Typography variant="caption">
-              {t(
-                'Once you delete an account, there is no going back. Please be certain.',
-              )}
-            </Typography>
             <Button
               id={DELETE_MEMBER_BUTTON_ID}
               variant="contained"
@@ -103,6 +98,11 @@ const DeleteMemberDialog = ({ id }) => {
             >
               {t('Delete Account')}
             </Button>
+            <Typography variant="caption">
+              {t(
+                'Once you delete an account, there is no going back. Please be certain.',
+              )}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

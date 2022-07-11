@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -35,51 +34,42 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     margin: theme.spacing(1, 0),
   },
+  firstRow: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
   buttonItem: {
     display: 'flex',
-    padding: theme.spacing(1),
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
   },
+  updateButton: {
+    margin: theme.spacing(1, 0),
+  },
 }));
 
-const PasswordSetting = ({ user }) => {
+const PasswordSetting = () => {
   const { t } = useTranslation();
   const classes = useStyles();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [currentPasswordError, setCurrentPasswordError] = useState(null);
   const [newPasswordError, setNewPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
   const { mutate: onUpdatePassword } = useMutation(
     MUTATION_KEYS.UPDATE_PASSWORD,
   );
 
-  const userId = user.get('id');
-  const hasPassword = user.get('password');
-
   const verifyEmptyPassword = () => {
-    const checkingCurrentPassword = passwordValidator(currentPassword);
     const checkingNewPassword = passwordValidator(newPassword);
     const checkingConfirmPassword = passwordValidator(confirmPassword);
-    setCurrentPasswordError(checkingCurrentPassword);
     setNewPasswordError(checkingNewPassword);
     setConfirmPasswordError(checkingConfirmPassword);
     // throw error if one of the password fields is empty
-    if (hasPassword) {
-      // check all three fields if the user already has a password set
-      if (
-        checkingCurrentPassword ||
-        checkingNewPassword ||
-        checkingConfirmPassword
-      ) {
-        throw PASSWORD_EMPTY_ERROR;
-      }
-    }
-    // only check two fields if the user does not have a password set
     if (checkingNewPassword || checkingConfirmPassword) {
       throw PASSWORD_EMPTY_ERROR;
     }
@@ -101,7 +91,6 @@ const PasswordSetting = ({ user }) => {
       strengthValidator(newPassword);
       // perform password update
       onUpdatePassword({
-        id: userId,
         password: newPassword,
         currentPassword,
       });
@@ -113,7 +102,6 @@ const PasswordSetting = ({ user }) => {
 
   const handleCurrentPasswordInput = (event) => {
     setCurrentPassword(event.target.value);
-    setCurrentPasswordError(passwordValidator(event.target.value));
   };
   const handleNewPasswordInput = (event) => {
     setNewPassword(event.target.value);
@@ -129,36 +117,29 @@ const PasswordSetting = ({ user }) => {
       <Grid container spacing={3} className={classes.mainContainer}>
         <Grid item xs={8}>
           <Grid item xs={12}>
-            <Typography variant="h5">
-              {hasPassword ? (
-                <div>{t('Change Password')}</div>
-              ) : (
-                <div>{t('Set Password')}</div>
-              )}
-            </Typography>
+            <Typography variant="h5">{t('Change Password')}</Typography>
           </Grid>
           <Grid
             container
             spacing={3}
             className={classes.changePasswordContainer}
           >
-            <Grid item xs={12} sm={12}>
-              {hasPassword ? (
-                <TextField
-                  className={classes.input}
-                  required
-                  label={t('Current Password')}
-                  variant="outlined"
-                  value={currentPassword}
-                  error={currentPasswordError}
-                  helperText={currentPasswordError}
-                  onChange={handleCurrentPasswordInput}
-                  id={USER_CURRENT_PASSWORD_INPUT_ID}
-                  type="password"
-                />
-              ) : (
-                <Grid item xs={12} sm={6} />
-              )}
+            <Grid item xs={12} sm={12} className={classes.firstRow}>
+              <TextField
+                className={classes.input}
+                required
+                label={t('Current Password')}
+                variant="outlined"
+                value={currentPassword}
+                onChange={handleCurrentPasswordInput}
+                id={USER_CURRENT_PASSWORD_INPUT_ID}
+                type="password"
+              />
+              <Typography variant="subtitle2">
+                {t(
+                  'Leave this field empty if you do not already have a password set.',
+                )}
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -188,38 +169,32 @@ const PasswordSetting = ({ user }) => {
                 type="password"
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <Grid container>
-                <Grid item xs={12} sm={6} className={classes.buttonItem}>
-                  <Typography variant="caption">
-                    {t(
-                      'Make sure it is at least 8 characters including a number, a lowercase letter and an uppercase letter.',
-                    )}
-                  </Typography>
-                  <Button
-                    id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleChangePassword()}
-                  >
-                    {t('Update password')}
-                  </Button>
-                </Grid>
-                <Grid item xs={12} sm={6} className={classes.buttonItem}>
-                  <Typography variant="caption">
-                    {t('I forgot my password:')}
-                  </Typography>
-                  <Button
-                    id={CONFIRM_RESET_PASSWORD_BUTTON_ID}
-                    variant="outlined"
-                    disabled
-                    // TO DO:
-                    // onClick={() => handleChangePassword()}
-                  >
-                    {t('Request a reset')}
-                  </Button>
-                </Grid>
-              </Grid>
+            <Grid item xs={12} sm={6} className={classes.buttonItem}>
+              <Button
+                id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
+                variant="contained"
+                color="primary"
+                className={classes.updateButton}
+                onClick={() => handleChangePassword()}
+              >
+                {t('Update password')}
+              </Button>
+              <Typography variant="caption">
+                {t(
+                  'Make sure it is at least 8 characters including a number, a lowercase letter and an uppercase letter.',
+                )}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} className={classes.buttonItem}>
+              <Button
+                id={CONFIRM_RESET_PASSWORD_BUTTON_ID}
+                variant="outlined"
+                disabled
+                // TO DO:
+                // onClick={() => handleChangePassword()}
+              >
+                {t('Request a reset')}
+              </Button>
             </Grid>
           </Grid>
         </Grid>
@@ -228,8 +203,6 @@ const PasswordSetting = ({ user }) => {
   );
 };
 
-PasswordSetting.propTypes = {
-  user: PropTypes.instanceOf(Map).isRequired,
-};
+PasswordSetting.propTypes = {};
 
 export default PasswordSetting;
