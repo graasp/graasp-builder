@@ -60,9 +60,7 @@ const PasswordSetting = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [newPasswordError, setNewPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-  const { mutate: onUpdatePassword } = useMutation(
-    MUTATION_KEYS.UPDATE_PASSWORD,
-  );
+  const { mutate: updatePassword } = useMutation(MUTATION_KEYS.UPDATE_PASSWORD);
 
   const verifyEmptyPassword = () => {
     const checkingNewPassword = passwordValidator(newPassword);
@@ -90,7 +88,7 @@ const PasswordSetting = () => {
       // check password strength for new password
       strengthValidator(newPassword);
       // perform password update
-      onUpdatePassword({
+      updatePassword({
         password: newPassword,
         currentPassword,
       });
