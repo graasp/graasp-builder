@@ -14,6 +14,7 @@ import {
 } from '../../src/config/selectors';
 import { CURRENT_USER } from '../fixtures/members';
 import { formatDate } from '../../src/utils/date';
+import { PASSWORD_CONFIRM_ERROR, PASSWORD_WEAK_ERROR } from '../../src/config/messages';
 
 describe('Member Profile', () => {
   beforeEach(() => {
@@ -34,10 +35,10 @@ describe('Member Profile', () => {
       'contain',
       langs[extra.lang],
     );
-    cy.get(`#${USER_CURRENT_PASSWORD_INPUT_ID}`);
-    cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`);
-    cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`);
-    cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`);
+    cy.get(`#${USER_CURRENT_PASSWORD_INPUT_ID}`).should('be.visible');
+    cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).should('be.visible');
+    cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`).should('be.visible');
+    cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`).should('be.visible');
   });
 
   it('Changing Language edits user', () => {
@@ -60,6 +61,34 @@ describe('Member Profile', () => {
       win.navigator.clipboard.readText().then((text) => {
         expect(text).to.equal(id);
       });
+    });
+  });
+
+  it('Enter different passwords', () => {
+
+    cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).type('password1');
+    cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`).type('password2');
+
+    cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`).click();
+    cy.get('.Toastify__toast-container').should('be.visible');
+    cy.get('.Toastify__toast-container').find('div').find('div').find('div').invoke('text')
+    .then((text)=>{
+      const toastText = text;
+      expect(toastText).to.equal(PASSWORD_CONFIRM_ERROR);
+    });
+  });
+
+  it('Enter weak password', () => {
+
+    cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).type('password');
+    cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`).type('password');
+
+    cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`).click();
+    cy.get('.Toastify__toast-container').should('be.visible');
+    cy.get('.Toastify__toast-container').find('div').find('div').find('div').invoke('text')
+    .then((text)=>{
+      const toastText = text;
+      expect(toastText).to.equal(PASSWORD_WEAK_ERROR);
     });
   });
 
