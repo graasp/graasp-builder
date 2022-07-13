@@ -90,7 +90,8 @@ const {
   buildDeleteInvitationRoute,
   buildPatchInvitationRoute,
   buildResendInvitationRoute,
-  buildItemPublishRoute
+  buildItemPublishRoute, 
+  buildUpdateMemberPassword
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -1544,4 +1545,20 @@ export const mockPublishItem = (items) => {
       reply(items.find(item => item?.id === itemId));
     },
   ).as('publishItem');
+};
+
+export const mockUpdatePassword = (members, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_PATCH.method,
+      url: new RegExp(`${API_HOST}/${buildUpdateMemberPassword()}`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply('update password');
+    },
+  ).as('updatePassword');
 };
