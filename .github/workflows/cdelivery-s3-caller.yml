@@ -9,7 +9,7 @@ on:
 jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
-    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@5976045215b3db442504fdfecf3255fcb5d96fab
+    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
     with:
       build-folder: 'build'
       tag: ${{ github.event.client_payload.tag }}
@@ -22,9 +22,9 @@ jobs:
       api-host: ${{ secrets.REACT_APP_API_HOST_STAGE }}
       show-notifications: ${{ secrets.REACT_APP_SHOW_NOTIFICATIONS }}
       authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_STAGE }}
-      graasp-perform-host: ${{ secrets.REACT_APP_GRAASP_PERFORM_HOST_STAGE }}
-      graasp-explorer-host: ${{ secrets.REACT_APP_GRAASP_EXPLORE_HOST_STAGE }}
-      graasp-analyzer-host: ${{ secrets.REACT_APP_GRAASP_ANALYZER_HOST_STAGE }}
+      graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_STAGE }}
+      graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_STAGE }}
+      graasp-analyzer-host: ${{ secrets.ANALYZER_CLIENT_HOST_STAGE }}
       ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_STAGE }}
       hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_STAGE }}
       domain: ${{ secrets.REACT_APP_DOMAIN_STAGE }}
