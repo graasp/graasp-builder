@@ -14,7 +14,6 @@ import {
 } from '../../src/config/selectors';
 import { CURRENT_USER } from '../fixtures/members';
 import { formatDate } from '../../src/utils/date';
-import { PASSWORD_CONFIRM_ERROR, PASSWORD_WEAK_ERROR } from '../../src/config/messages';
 
 describe('Member Profile', () => {
   beforeEach(() => {
@@ -64,35 +63,49 @@ describe('Member Profile', () => {
     });
   });
 
-  it('Enter different passwords', () => {
+  it('Throw error with empty password', () => {
 
+    cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).type('password1');
+    
+    cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`).click();
+    cy.get('#confirmPasswordInput-helper-text').should('be.visible');
+    cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).clear();
+    cy.get('#newPasswordInput-helper-text').should('be.visible');
+  });
+
+  it('Not trigger request with diffferent passwords', () => {
+    Cypress.on('fail', (error) => {
+      if (error.message.indexOf('Timed out retrying') !== 0) throw error
+    })
+    
     cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).type('password1');
     cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`).type('password2');
 
     cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`).click();
-    cy.get('.Toastify__toast-container').should('be.visible');
-    cy.get('.Toastify__toast-container').find('div').find('div').find('div').invoke('text')
-    .then((text)=>{
-      const toastText = text;
-      expect(toastText).to.equal(PASSWORD_CONFIRM_ERROR);
-    });
+    cy.wait('@updatePassword', {
+        requestTimeout: 1000,
+      }).then((xhr) => {
+        expect.isNull(xhr.response.body);
+      });
   });
 
-  it('Enter weak password', () => {
-
+  it('Not trigger request with weak password', () => {
+    Cypress.on('fail', (error) => {
+      if (error.message.indexOf('Timed out retrying') !== 0) throw error
+    })
+    
     cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).type('password');
     cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`).type('password');
 
     cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`).click();
-    cy.get('.Toastify__toast-container').should('be.visible');
-    cy.get('.Toastify__toast-container').find('div').find('div').find('div').invoke('text')
-    .then((text)=>{
-      const toastText = text;
-      expect(toastText).to.equal(PASSWORD_WEAK_ERROR);
-    });
+    cy.wait('@updatePassword', {
+        requestTimeout: 1000,
+      }).then((xhr) => {
+        expect.isNull(xhr.response.body);
+      });
   });
 
-  it('Update user password', () => {
+  it('Update user password correctly', () => {
 
     cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).type('ASDasd123');
     cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`).type('ASDasd123');
