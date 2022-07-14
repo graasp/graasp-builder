@@ -199,6 +199,22 @@
     "This invitation is defined in the parent item and cannot be deleted here.": "Cette invitation est définie dans l'élément parent, et ne peut pas être supprimée ici.",
     "Publish": "Publier",
     "Download": "Télécharger",
-    "No items": "Aucun élément"
+    "Co-Editors": "Co-Editeurs",
+    "Do you want to display co-editors after published? All users with edit permission will be displayed.": "Voulez-vous afficher les co-éditeurs après publication? Tous les utilisateurs ayant les permissions d'écriture seront affichés.",
+    "Display co-editors?": "Afficher les co-éditeurs ?",
+    "Send email notifications to all co-editors": "Envoyer une notification par email à tous les co-éditeurs",
+    "Import from CSV": "Importer depuis un CSV",
+    "The users were successfully imported": "Les utilisateurs ont été importés avec succès",
+    "Your CSV should have at least the column 'email'. The columns 'name' and 'permission' are optional.": "Votre fichier CSV doit au moins avoir une colonne 'email'. Les colonnes 'name' et 'permission' sont optionnelles.",
+    "A CSV entry cannot override the data already saved. If a user already has permission, update the value in the table manually.": "Une entrée d'un CSV ne peut pas remplacer une valeur déjà présente. Si un utilisateur a déjà des permissions, mettez à jour la valeur depuis le tableau manuellement.",
+    "Import users from a CSV file": "Importer des utilisateurs depuis un fichier CSV",
+    "Choose a CSV file": "Choisir un fichier CSV",
+    "The import failed for these entries": "L'importation a échoué pour ces valeurs",
+    "sharedWithMembers_zero": "Cet élément n'est pas partagé",
+    "sharedWithMembers_one": "Cet élément est partagé avec un utilisateur",
+    "sharedWithMembers_other": "Cet élément est partagé avec {{count}} utilisateurs",
+    "You are not signed in.": "Vous n'êtes pas connecté.",
+    "Sign in with another account": "Se connecter avec un autre compte",
+    "See Profile": "Voir le Profil"
   }
 }

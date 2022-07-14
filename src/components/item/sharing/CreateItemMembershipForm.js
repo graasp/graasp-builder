@@ -5,12 +5,11 @@ import IconButton from '@material-ui/core/IconButton';
 import { List } from 'immutable';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Grid, makeStyles, TextField } from '@material-ui/core';
-import { MUTATION_KEYS, Api } from '@graasp/query-client';
+import { MUTATION_KEYS, routines } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { useMutation } from '../../../config/queryClient';
-import { API_HOST } from '../../../config/constants';
 import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   CREATE_MEMBERSHIP_FORM_ID,
@@ -18,6 +17,9 @@ import {
 } from '../../../config/selectors';
 import ItemMembershipSelect from './ItemMembershipSelect';
 import { buildInvitation } from '../../../utils/invitation';
+import notifier from '../../../config/notifier';
+
+const { shareItemRoutine } = routines;
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -40,15 +42,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // todo: handle multiple invitations
-const CreateItemMembershipForm = ({ itemId, members }) => {
+const CreateItemMembershipForm = ({ item, members }) => {
+  const itemId = item.get('id');
   const [error, setError] = useState(false);
 
-  const { mutateAsync: postInvitations } = useMutation(
-    MUTATION_KEYS.POST_INVITATIONS,
-  );
-  const { mutateAsync: share } = useMutation(
-    MUTATION_KEYS.POST_ITEM_MEMBERSHIP,
-  );
+  const { mutateAsync: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -74,7 +72,7 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
     setInvitation({ ...invitation, permission: e.target.value });
   };
 
-  const handleInvite = async () => {
+  const handleShare = async () => {
     // not good to check email for multiple invitations at once
     const isInvalid = isInvitationInvalid(invitation);
 
@@ -84,35 +82,34 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
 
     let returnedValue;
     try {
-      // check email has an associated account
-      const accounts = await Api.getMemberBy(
-        { email: invitation.email },
-        {
-          API_HOST,
-        },
-      );
-
-      // if yes, create a membership
-      if (accounts.length) {
-        returnedValue = await share({
-          id: itemId,
-          email: invitation.email,
-          permission: invitation.permission,
-        });
-      }
-      // otherwise create invitation
-      else {
-        returnedValue = await postInvitations({
-          itemId,
-          invitations: [invitation],
-        });
-      }
-
-      // reset email input
-      setInvitation({
-        ...invitation,
-        email: '',
+      const result = await shareItem({
+        itemId,
+        data: [
+          {
+            id: itemId,
+            email: invitation.email,
+            permission: invitation.permission,
+          },
+        ],
       });
+
+      // manually notify error
+      if (result?.failure?.length) {
+        notifier({
+          type: shareItemRoutine.FAILURE,
+          payload: {
+            error: {
+              response: { data: { message: result?.failure?.[0].message } },
+            },
+          },
+        });
+      } else {
+        // reset email input
+        setInvitation({
+          ...invitation,
+          email: '',
+        });
+      }
     } catch (e) {
       console.error(e);
     }
@@ -147,18 +144,18 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
     const disabled = Boolean(error);
     return (
       <Button
-        onClick={handleInvite}
+        onClick={handleShare}
         disabled={disabled}
         id={SHARE_ITEM_SHARE_BUTTON_ID}
       >
-        {t('Invite')}
+        {t('Share')}
       </Button>
     );
   };
 
   return (
     <Grid container spacing={1} id={CREATE_MEMBERSHIP_FORM_ID}>
-      <Grid container alignItems="center" justify="center" key={invitation.id}>
+      <Grid container alignItems="center" justify="center">
         <Grid item xs={5}>
           <TextField
             value={invitation.email}
@@ -185,7 +182,7 @@ const CreateItemMembershipForm = ({ itemId, members }) => {
 };
 
 CreateItemMembershipForm.propTypes = {
-  itemId: PropTypes.string.isRequired,
+  item: PropTypes.instanceOf(Map).isRequired,
   members: PropTypes.instanceOf(List),
 };
 CreateItemMembershipForm.defaultProps = {

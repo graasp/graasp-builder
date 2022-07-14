@@ -3,22 +3,22 @@ import { HOME_PATH, SHARED_ITEMS_PATH } from '../../../../src/config/paths';
 import {
   buildItemCard,
   buildNameCellRendererId,
-  HEADER_USER_ID,
+  HEADER_MEMBER_MENU_BUTTON_ID,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
 import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
-import { THUMBNAIL_LOADING_TIME } from '../../../support/constants';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 // THESE TESTS ARE SKIPPED SINCE THEY FAIL IN CI
-describe.skip('View Thumbnails', () => {
+describe('View Thumbnails', () => {
   beforeEach(() => {});
 
   it(`display thumbnail icons`, () => {
     cy.setUpApi(SAMPLE_ITEMS_WITH_THUMBNAILS);
 
     cy.visit(HOME_PATH);
-    cy.wait(THUMBNAIL_LOADING_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
 
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
 
@@ -31,7 +31,7 @@ describe.skip('View Thumbnails', () => {
 
     // GRID
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    cy.wait(THUMBNAIL_LOADING_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`#${buildItemCard(items[0].id)} img`)
       .should('have.attr', 'src')
       .and('contain', DEFAULT_IMAGE_SRC);
@@ -48,12 +48,12 @@ describe.skip('View Thumbnails', () => {
     });
 
     cy.visit(HOME_PATH);
-    cy.wait(THUMBNAIL_LOADING_TIME);
+    cy.wait(TABLE_ITEM_RENDER_TIME);
 
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
 
     // display member avatar in header
-    cy.get(`#${HEADER_USER_ID} img`)
+    cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID} img`)
       .should('have.attr', 'src')
       .and('contain', 'blob:');
 
@@ -61,8 +61,8 @@ describe.skip('View Thumbnails', () => {
 
     // check bob avatar in shared items, grid mode
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    cy.wait(THUMBNAIL_LOADING_TIME);
-    cy.get(`#${buildItemCard(items[2].id)} img`)
+    cy.wait(TABLE_ITEM_RENDER_TIME);
+    cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
       .and('contain', 'blob:');
   });

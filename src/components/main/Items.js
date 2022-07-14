@@ -9,7 +9,7 @@ import ItemsGrid from './ItemsGrid';
 import { hooks } from '../../config/queryClient';
 import ItemsTable from './ItemsTable';
 
-const { useItemMemberships } = hooks;
+const { useManyItemMemberships } = hooks;
 
 const Items = ({
   items,
@@ -28,7 +28,7 @@ const Items = ({
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
   const { data: memberships, isLoading: isMembershipsLoading } =
-    useItemMemberships(
+    useManyItemMemberships(
       itemSearch?.results?.map(({ id: itemId }) => itemId).toJS(),
     );
   // todo: disable depending on showCreator

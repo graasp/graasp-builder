@@ -2,10 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemLoginAuthorization } from '@graasp/ui';
 import { useParams } from 'react-router';
-import {
-  getMembership,
-  getHighestPermissionForMemberFromMemberships,
-} from '../../utils/membership';
+import { getHighestPermissionForMemberFromMemberships } from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { LayoutContext } from '../context/LayoutContext';
@@ -29,7 +26,7 @@ import FileUploader from '../file/FileUploader';
 import ItemPublishTab from '../item/publish/ItemPublishTab';
 import ItemForbiddenScreen from './ItemForbiddenScreen';
 
-const { useItem, useItemMemberships, useCurrentMember, useItemLogin } = hooks;
+const { useItem, useCurrentMember, useItemLogin, useItemMemberships } = hooks;
 
 const ItemScreen = () => {
   const { itemId } = useParams();
@@ -45,7 +42,7 @@ const ItemScreen = () => {
     isDashboardOpen,
   } = useContext(LayoutContext);
   const { data: currentMember } = useContext(CurrentUserContext);
-  const { data: memberships } = useItemMemberships([itemId]);
+  const { data: memberships } = useItemMemberships(itemId);
 
   useEffect(() => {
     setEditingItemId(null);
@@ -59,7 +56,7 @@ const ItemScreen = () => {
   }
 
   const itemMembership = getHighestPermissionForMemberFromMemberships({
-    memberships: getMembership(memberships),
+    memberships: memberships?.toJS(),
     memberId: currentMember?.get('id'),
   });
   const permission = itemMembership?.permission;
@@ -70,17 +67,13 @@ const ItemScreen = () => {
       return <ItemSettings item={item} />;
     }
     if (isItemSharingOpen) {
-      return (
-        <ItemSharingTab item={item} memberships={getMembership(memberships)} />
-      );
+      return <ItemSharingTab item={item} memberships={memberships} />;
     }
     if (isDashboardOpen) {
       return <GraaspAnalyzer item={item} />;
     }
     if (isItemPublishOpen) {
-      return (
-        <ItemPublishTab item={item} memberships={getMembership(memberships)} />
-      );
+      return <ItemPublishTab item={item} permission={permission} />;
     }
     return (
       <ItemContent

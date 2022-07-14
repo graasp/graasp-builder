@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { routines } from '@graasp/query-client';
-import buildI18n from '@graasp/translations';
+import buildI18n, { FAILURE_MESSAGES } from '@graasp/translations';
 import {
   UPLOAD_FILES_PROGRESS_MESSAGE,
   IMPORT_ZIP_PROGRESS_MESSAGE,
@@ -11,6 +11,15 @@ import {
 } from '../types/clipboard';
 
 const i18n = buildI18n();
+
+const getErrorMessageFromPayload = (payload) =>
+  i18n.t(
+    payload?.error?.response?.data?.message ??
+      FAILURE_MESSAGES.UNEXPECTED_ERROR,
+  );
+
+const getSuccessMessageFromPayload = (payload) =>
+  i18n.t(payload?.message ?? 'The operation successfully proceeded');
 
 const {
   createItemRoutine,
@@ -38,6 +47,7 @@ const {
   postInvitationsRoutine,
   resendInvitationRoutine,
   updatePasswordRoutine,
+  shareItemRoutine,
 } = routines;
 
 export default ({ type, payload }) => {
@@ -70,12 +80,9 @@ export default ({ type, payload }) => {
     case postInvitationsRoutine.FAILURE:
     case resendInvitationRoutine.FAILURE:
     case updatePasswordRoutine.FAILURE:
+    case shareItemRoutine.FAILURE:
     case exportItemRoutine.FAILURE: {
-      // todo: factor out string
-      message = i18n.t(
-        payload?.error?.response?.data?.message ??
-          'An unexpected error occured',
-      );
+      message = getErrorMessageFromPayload(payload);
       break;
     }
     // success messages
@@ -101,10 +108,15 @@ export default ({ type, payload }) => {
     case resendInvitationRoutine.SUCCESS:
     case updatePasswordRoutine.SUCCESS:
     case editMemberRoutine.SUCCESS: {
-      // todo: factor out string
-      message = i18n.t(
-        payload?.message ?? 'The operation successfully proceeded',
-      );
+      message = getSuccessMessageFromPayload(payload);
+      break;
+    }
+    case shareItemRoutine.SUCCESS: {
+      if (!payload.failure.length) {
+        message = getSuccessMessageFromPayload(payload);
+      }
+
+      // do nothing for multiple failures: the interface handles it
       break;
     }
 

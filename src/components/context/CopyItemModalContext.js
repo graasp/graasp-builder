@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react';
+import { validate } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
 import { useMutation } from '../../config/queryClient';
 import TreeModal from '../main/TreeModal';
-import { ROOT_ID } from '../../config/constants';
 
 const CopyItemModalContext = React.createContext();
 
@@ -28,7 +28,7 @@ const CopyItemModalProvider = ({ children }) => {
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: payload.to === ROOT_ID ? null : payload.to,
+      to: !validate(payload.to) ? null : payload.to,
     };
     copyItems(newPayload);
     onClose();

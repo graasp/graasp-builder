@@ -28,14 +28,14 @@ export const ITEMS_WITH_INVITATIONS = {
           permission: PERMISSION_LEVELS.ADMIN,
           memberId: MEMBERS.FANNY.id,
         },
-      ],
-      invitations: [
         {
           id: 'ecafbd2a-5688-11eb-be93-0242ac130004',
           itemPath: 'bcafbd2a_5688_11eb_ae93_0242ac130002',
           permission: PERMISSION_LEVELS.ADMIN,
           email: MEMBERS.ANNA.email,
         },
+      ],
+      invitations: [
         {
           id: 'ecafbd2a-5688-11eb-be92-0242ac130005',
           itemPath: 'bcafbd2a_5688_11eb_ae93_0242ac130002',
@@ -59,4 +59,5 @@ export const ITEMS_WITH_INVITATIONS = {
       ],
     },
   ],
+  members: [MEMBERS.FANNY, MEMBERS.ANNA, MEMBERS.EVAN],
 };
