@@ -1609,7 +1609,7 @@ export const mockUpdatePassword = (members, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_PATCH.method,
-      url: new RegExp(`${API_HOST}/${buildUpdateMemberPassword()}`),
+      url: new RegExp(`${API_HOST}/${buildUpdateMemberPassword}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {
