@@ -73,6 +73,21 @@ describe('Member Profile', () => {
     cy.get('#newPasswordInput-helper-text').should('be.visible');
   });
 
+  it('Not trigger request with same current password', () => {
+    Cypress.on('fail', (error) => {
+      if (error.message.indexOf('Timed out retrying') !== 0) throw error
+    })
+
+    cy.get(`#${USER_CURRENT_PASSWORD_INPUT_ID}`).type('password1');
+    cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).type('password1');
+    
+    cy.get(`#${CONFIRM_CHANGE_PASSWORD_BUTTON_ID}`).click();
+    cy.wait('@updatePassword', {
+      requestTimeout: 1000,
+    }).then((xhr) => {
+      expect.isNull(xhr.response.body);
+    });  });
+
   it('Not trigger request with diffferent passwords', () => {
     Cypress.on('fail', (error) => {
       if (error.message.indexOf('Timed out retrying') !== 0) throw error
