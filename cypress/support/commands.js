@@ -81,6 +81,7 @@ import {
   mockPatchInvitation,
   mockDeleteInvitation,
   mockPublishItem,
+  mockUpdatePassword,
   mockPostManyItemMemberships,
 } from './server';
 import './commands/item';
@@ -150,6 +151,7 @@ Cypress.Commands.add(
     getItemInvitationsError = false,
     patchInvitationError = false,
     deleteInvitationError = false,
+    updatePasswordError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -305,6 +307,8 @@ Cypress.Commands.add(
     mockDeleteInvitation(items, deleteInvitationError);
 
     mockPublishItem(items);
+
+    mockUpdatePassword(members, updatePasswordError);
   },
 );
 

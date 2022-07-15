@@ -46,6 +46,7 @@ const {
   exportItemRoutine,
   postInvitationsRoutine,
   resendInvitationRoutine,
+  updatePasswordRoutine,
   shareItemRoutine,
 } = routines;
 
@@ -78,6 +79,7 @@ export default ({ type, payload }) => {
     case importZipRoutine.FAILURE:
     case postInvitationsRoutine.FAILURE:
     case resendInvitationRoutine.FAILURE:
+    case updatePasswordRoutine.FAILURE:
     case shareItemRoutine.FAILURE:
     case exportItemRoutine.FAILURE: {
       message = getErrorMessageFromPayload(payload);
@@ -104,6 +106,7 @@ export default ({ type, payload }) => {
     case createItemRoutine.SUCCESS:
     case postInvitationsRoutine.SUCCESS:
     case resendInvitationRoutine.SUCCESS:
+    case updatePasswordRoutine.SUCCESS:
     case editMemberRoutine.SUCCESS: {
       message = getSuccessMessageFromPayload(payload);
       break;

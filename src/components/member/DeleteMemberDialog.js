@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Grid, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,12 +16,26 @@ import {
   DELETE_MEMBER_BUTTON_ID,
 } from '../../config/selectors';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   confirmDeleteButton: {
     color: 'red',
   },
   deleteButton: {
-    color: 'red',
+    backgroundColor: 'red',
+    margin: theme.spacing(1, 0),
+  },
+  mainContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    margin: theme.spacing(1, 0),
+  },
+  deleteAccountContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    padding: theme.spacing(0, 1),
+    margin: theme.spacing(0, 0),
   },
 }));
 
@@ -64,16 +79,33 @@ const DeleteMemberDialog = ({ id }) => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Button
-        id={DELETE_MEMBER_BUTTON_ID}
-        variant="text"
-        className={classes.deleteButton}
-        color="secondary"
-        onClick={() => setOpen(true)}
-      >
-        {t('Delete Account')}
-      </Button>
+      <Grid container spacing={3} className={classes.mainContainer}>
+        <Grid item xs={8}>
+          <Grid item xs={12}>
+            <Typography variant="h5">{t('Delete this account')}</Typography>
+          </Grid>
+          <Grid
+            container
+            spacing={3}
+            className={classes.deleteAccountContainer}
+          >
+            <Button
+              id={DELETE_MEMBER_BUTTON_ID}
+              variant="contained"
+              className={classes.deleteButton}
+              color="primary"
+              onClick={() => setOpen(true)}
+            >
+              {t('Delete Account')}
+            </Button>
+            <Typography variant="caption">
+              {t(
+                'Once you delete an account, there is no going back. Please be certain.',
+              )}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
     </>
   );
 };
