@@ -68,7 +68,11 @@
     "cypress:open": "env-cmd -f ./.env.test cypress open",
     "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3111 && yarn cypress:run\"",
     "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome --spec \"cypress/**/*.spec.js\"",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "release": "standard-version -a",
+    "release:first": "standard-version -a --first-release",
+    "release:minor": "standard-version -a --release-as minor",
+    "release:major": "standard-version -a --release-as major"
   },
   "eslintConfig": {
     "extends": "react-app"
