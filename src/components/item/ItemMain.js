@@ -97,6 +97,7 @@ const ItemMain = ({ id, children, item }) => {
         })}
       >
         <ItemHeader
+          showNavigation
           onClickMetadata={handleToggleMetadataMenu}
           onClickChatbox={handleToggleChatboxMenu}
         />

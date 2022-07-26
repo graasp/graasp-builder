@@ -88,8 +88,8 @@ const ItemPublishConfiguration = ({ item }) => {
   const { data: itemValidationGroups } = useItemValidationGroups(iVId);
 
   // group iv records by item validation status
-  const ivByStatus = itemValidationGroups?.groupBy(({ statusId }) =>
-    validationStatusesMap?.get(statusId),
+  const ivByStatus = itemValidationGroups?.groupBy(
+    ({ statusId }) => validationStatusesMap[statusId],
   );
 
   const [itemValidationStatus, setItemValidationStatus] = useState(

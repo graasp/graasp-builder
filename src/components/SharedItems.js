@@ -26,10 +26,10 @@ const SharedItems = () => {
 
   return (
     <Main>
-      <ItemHeader />
+      <ItemHeader showNavigation={false} />
       <Items
         id={SHARED_ITEMS_ID}
-        title={t('Items Shared With Me')}
+        title={t('Shared Items')}
         items={List(sharedItems)}
         showCreator
       />

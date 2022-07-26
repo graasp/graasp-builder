@@ -59,14 +59,15 @@ const RecycleBinScreen = () => {
 
   return (
     <Main>
-      <ItemHeader />
+      <ItemHeader showNavigation={false} />
       <Items
         clickable={false}
-        title={t('Deleted Items')}
+        title={t('Recycle Bin')}
         items={List(items)}
         actions={RowActions}
         ToolbarActions={ToolbarActions}
         showThumbnails={false}
+        enableMemberships={false}
       />
     </Main>
   );

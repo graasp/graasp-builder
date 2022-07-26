@@ -6,7 +6,6 @@ import {
   CREATE_ITEM_BUTTON_ID,
   buildItemMenuButtonId,
   buildItemMenu,
-  NAVIGATION_ROOT_ID,
   FAVORITE_ITEMS_ID,
 } from '../../../../src/config/selectors';
 import {
@@ -49,12 +48,8 @@ describe('Favorite Item', () => {
       cy.visit(HOME_PATH);
     });
 
-    it("New button doesn't exists", () => {
+    it("New button doesn't exist", () => {
       cy.visit(FAVORITE_ITEMS_PATH);
-      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
-        'have.text',
-        i18n.t('Favorite Items'),
-      );
       cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 

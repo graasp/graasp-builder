@@ -55,9 +55,6 @@ describe('View Folder', () => {
         }
       });
 
-      // breadcrumb navigation
-      cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
-
       // visit child
       const { id: childId } = SAMPLE_ITEMS.items[0];
       cy.goToItemInGrid(childId);
@@ -70,7 +67,7 @@ describe('View Folder', () => {
         }
       });
 
-      // breadcrumb navigation
+      // root title
       cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
 
       // visit child
@@ -80,7 +77,7 @@ describe('View Folder', () => {
       // expect no children
       cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
 
-      // breadcrumb navigation
+      // root title
       cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
 
       // return parent with navigation and should display children
@@ -93,7 +90,7 @@ describe('View Folder', () => {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
         }
       });
-      // breadcrumb navigation
+      // root title
       cy.get(`#${NAVIGATION_ROOT_ID}`).should('have.text', i18n.t('My Items'));
     });
 
@@ -108,12 +105,6 @@ describe('View Folder', () => {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
         }
       });
-
-      // breadcrumb navigation
-      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
-        'have.text',
-        i18n.t('Shared Items'),
-      );
 
       // visit child
       const { id: childId } = SHARED_ITEMS.items[0];
