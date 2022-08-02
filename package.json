@@ -4,8 +4,8 @@
   "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git",
-    "@graasp/query-client": "github:graasp/graasp-query-client.git",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#46/addMentions",
+    "@graasp/query-client": "github:graasp/graasp-query-client#183/updateChatMessageTypes",
     "@graasp/translations": "github:graasp/graasp-translations.git",
     "@graasp/ui": "github:graasp/graasp-ui.git",
     "@graasp/utils": "github:graasp/graasp-utils.git",

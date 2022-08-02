@@ -22,7 +22,10 @@ const LayoutContextProvider = ({ children }) => {
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
 
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
-  const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(false);
+  // check query params to see if chat should be open
+  const chatIsOpen =
+    new URLSearchParams(window.location.search).get('chat') === 'open';
+  const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(chatIsOpen);
 
   const value = useMemo(
     () => ({

@@ -1516,7 +1516,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.0, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:7.4.5":
+  version: 7.4.5
+  resolution: "@babel/runtime@npm:7.4.5"
+  dependencies:
+    regenerator-runtime: ^0.13.2
+  checksum: 05be5b730eb3e42536de5271ab15c41e1e368d4e49c4668a1923b5980d4d0735484f80fa69fe5953bc3988bfdf17bb2c28e31f4499113579489860180bbcbdf9
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.0, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.3.4, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -1525,7 +1534,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.10.4, @babel/template@npm:^7.18.10, @babel/template@npm:^7.18.6, @babel/template@npm:^7.3.3":
+"@babel/template@npm:^7.10.4, @babel/template@npm:^7.18.6, @babel/template@npm:^7.3.3":
+  version: 7.18.6
+  resolution: "@babel/template@npm:7.18.6"
+  dependencies:
+    "@babel/code-frame": ^7.18.6
+    "@babel/parser": ^7.18.10
+    "@babel/types": ^7.18.10
+  checksum: cb02ed804b7b1938dbecef4e01562013b80681843dd391933315b3dd9880820def3b5b1bff6320d6e4c6a1d63d1d5799630d658ec6b0369c5505e7e4029c38fb
+  languageName: node
+  linkType: hard
+
+"@babel/template@npm:^7.18.10":
   version: 7.18.10
   resolution: "@babel/template@npm:7.18.10"
   dependencies:
@@ -1964,9 +1984,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox.git":
+"@graasp/chatbox@github:graasp/graasp-chatbox#46/addMentions":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=0a0d1c674a02822f2004bef1b572f0046e4f8daa"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e0a8cd983bb522e15edcdd04ca6c7f328c5a0f04"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui"
@@ -1974,11 +1994,12 @@ __metadata:
     i18next: 21.6.11
     immutable: 4.0.0
     lodash.truncate: 4.4.2
-    moment: 2.29.1
+    moment: 2.29.4
     prism-react-renderer: 1.3.5
     react-csv: 2.2.2
-    react-i18next: 11.15.3
+    react-i18next: 11.18.1
     react-markdown: 8.0.3
+    react-mentions: 4.4.7
     react-router-dom: 6.3.0
     remark-breaks: 3.0.2
     remark-gfm: 3.0.1
@@ -1990,13 +2011,13 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 29771d40dcb9361ea5507774d1fd55a0f97f0061e5e1b83ad0c5cd28e3e07fac72b2e64b93b502b951e4f7151756e9c86303fbde176ad2a128f55f9091578954
+  checksum: 1438fae97fd27b02669b55c0de96ffdeb0a021860b46d32dcd18b5fd65547a6f80dd75344e06a0d2a4ac1aa3ecb922f95f235cd041fac3f4a47d67b2e0ed888b
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git":
+"@graasp/query-client@github:graasp/graasp-query-client#183/updateChatMessageTypes":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1872025f2191336c792b31f729d471721d3ae30b"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=88b9e9de686063809c9019e7aac4cf89bd460cc6"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -2011,7 +2032,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 2f9c83ec4f00edf81993be6a2b1c0a16cd6a0cf4abad876b93aecd42ac8e1da4b9c977a5cd280c8af4dcfc5a6a6acd3234eff13a90bda363620d320381747474
+  checksum: d33c7be7252002adca12ce0542c03f850460fe81259a7b60bfb91d78a343f62d0004133d9766383203400f5fabdba186dfd0c4b7d5512d12fe8af255e96f29d5
   languageName: node
   linkType: hard
 
@@ -10550,8 +10571,8 @@ __metadata:
     "@commitlint/config-conventional": 16.2.1
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git"
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#46/addMentions"
+    "@graasp/query-client": "github:graasp/graasp-query-client#183/updateChatMessageTypes"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -11493,6 +11514,15 @@ __metadata:
     has: ^1.0.3
     side-channel: ^1.0.4
   checksum: 1944f92e981e47aebc98a88ff0db579fd90543d937806104d0b96557b10c1f170c51fb777b97740a8b6ddeec585fca8c39ae99fd08a8e058dfc8ab70937238bf
+  languageName: node
+  linkType: hard
+
+"invariant@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "invariant@npm:2.2.4"
+  dependencies:
+    loose-envify: ^1.0.0
+  checksum: cc3182d793aad82a8d1f0af697b462939cb46066ec48bbf1707c150ad5fad6406137e91a262022c269702e01621f35ef60269f6c0d7fd178487959809acdfb14
   languageName: node
   linkType: hard
 
@@ -13753,7 +13783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0, loose-envify@npm:^1.3.1, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.3.1, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -14869,10 +14899,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:2.29.1":
-  version: 2.29.1
-  resolution: "moment@npm:2.29.1"
-  checksum: 1e14d5f422a2687996be11dd2d50c8de3bd577c4a4ca79ba5d02c397242a933e5b941655de6c8cb90ac18f01cc4127e55b4a12ae3c527a6c0a274e455979345e
+"moment@npm:2.29.4":
+  version: 2.29.4
+  resolution: "moment@npm:2.29.4"
+  checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e
   languageName: node
   linkType: hard
 
@@ -17325,7 +17355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.0.0, prop-types@npm:^15.5.10, prop-types@npm:^15.5.6, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.0.0, prop-types@npm:^15.5.10, prop-types@npm:^15.5.6, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -17762,25 +17792,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:11.15.3":
-  version: 11.15.3
-  resolution: "react-i18next@npm:11.15.3"
-  dependencies:
-    "@babel/runtime": ^7.14.5
-    html-escaper: ^2.0.2
-    html-parse-stringify: ^3.0.1
-  peerDependencies:
-    i18next: ">= 19.0.0"
-    react: ">= 16.8.0"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 8bb926e40136f57c21771d41b92c445ce457b70243fef45642c98967d2c6bb2d8a0df3c0db16909c2c6a8b007b2f7a4355b949a80e07f7e1152ed1be4756400d
-  languageName: node
-  linkType: hard
-
 "react-i18next@npm:11.16.2":
   version: 11.16.2
   resolution: "react-i18next@npm:11.16.2"
@@ -17816,6 +17827,24 @@ __metadata:
     react-native:
       optional: true
   checksum: b79606a0c36a822b3d9a1e4f2bb4b44643c121de9425ddfeea7e63e5136fe33d4b0b42f045f14d53592dcdbde1fb43cd7be4555b22747d2e0f6f754d3a60c711
+  languageName: node
+  linkType: hard
+
+"react-i18next@npm:11.18.1":
+  version: 11.18.1
+  resolution: "react-i18next@npm:11.18.1"
+  dependencies:
+    "@babel/runtime": ^7.14.5
+    html-parse-stringify: ^3.0.1
+  peerDependencies:
+    i18next: ">= 19.0.0"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 3614d4f41a2bad2831aee7c02da6403955eacf7aeef1cd73635a99b072e72f2ebed3e83ac2bc1bfe72421cb2de025bfbecc9929bfc495ba1f055d49851bf6e62
   languageName: node
   linkType: hard
 
@@ -17874,6 +17903,21 @@ __metadata:
     "@types/react": ">=16"
     react: ">=16"
   checksum: 66c0b45889d0262168547d9356145ced276993dac1d441c5c1cf2371fe71f347419696f9040c084c7d77c1caced21d358677c38f66edae736f942ac5964c032f
+  languageName: node
+  linkType: hard
+
+"react-mentions@npm:4.4.7":
+  version: 4.4.7
+  resolution: "react-mentions@npm:4.4.7"
+  dependencies:
+    "@babel/runtime": 7.4.5
+    invariant: ^2.2.4
+    prop-types: ^15.5.8
+    substyle: ^9.1.0
+  peerDependencies:
+    react: ">=16.8.3"
+    react-dom: ">=16.8.3"
+  checksum: 3d195df7b8d762d0f184cb8a76c82ea7f6509b122bfac733c0bdebc3d592bd0aa98f3c61535945c2a115c92afb97949590c6cb00d77d3cb5e40ccaa385223dcb
   languageName: node
   linkType: hard
 
@@ -18321,7 +18365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.4, regenerator-runtime@npm:^0.13.7":
+"regenerator-runtime@npm:^0.13.2, regenerator-runtime@npm:^0.13.4, regenerator-runtime@npm:^0.13.7":
   version: 0.13.9
   resolution: "regenerator-runtime@npm:0.13.9"
   checksum: 65ed455fe5afd799e2897baf691ca21c2772e1a969d19bb0c4695757c2d96249eb74ee3553ea34a91062b2a676beedf630b4c1551cc6299afb937be1426ec55e
@@ -20264,6 +20308,18 @@ __metadata:
   dependencies:
     minimist: ^1.1.0
   checksum: 8359df72e9a2d03c35702ba58e49cac04daae8f27dff26837e12687c7d10cb800a036fd33fdc5eb0e8c24fb25d804f657fe8bde18dd3dd6ec7dab8eff7aac27e
+  languageName: node
+  linkType: hard
+
+"substyle@npm:^9.1.0":
+  version: 9.4.1
+  resolution: "substyle@npm:9.4.1"
+  dependencies:
+    "@babel/runtime": ^7.3.4
+    invariant: ^2.2.4
+  peerDependencies:
+    react: ">=16.8.3"
+  checksum: 30df7cde7d20943073c072dabcf99cbd95bc06136e7abf302fa0e2fdaa0912f1880d0a9424a1ff0012173e42e8ff03a43a717252c4e930cb41e739c29fccdea5
   languageName: node
   linkType: hard
 
