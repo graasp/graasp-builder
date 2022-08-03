@@ -7,6 +7,7 @@ import PERMISSION_LEVELS from './permissionLevels';
 import TREE_PREVENT_SELECTION from './treePreventSelection';
 import ITEM_KEYS from './itemKeys';
 import APP_MODES from './appModes';
+import CHAT_STATUS from './chatbox';
 
 export {
   ITEM_LAYOUT_MODES,
@@ -18,4 +19,5 @@ export {
   TREE_PREVENT_SELECTION,
   ITEM_KEYS,
   APP_MODES,
+  CHAT_STATUS,
 };
