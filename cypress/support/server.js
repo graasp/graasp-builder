@@ -1145,6 +1145,22 @@ export const mockPostItemChatMessage = (shouldThrowError) => {
   ).as('postItemChatMessage');
 };
 
+export const mockGetMemberMentions = ({ mentions }, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/mentions`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ id: CURRENT_USER.id, mentions });
+    },
+  ).as('getMemberMentions');
+};
+
 export const mockAppApiAccessToken = (shouldThrowError) => {
   cy.intercept(
     {
