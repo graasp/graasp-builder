@@ -34,7 +34,7 @@ const ThumbnailSetting = ({ item }) => {
   const { mutate: onFileUploadComplete } = useMutation(
     MUTATION_KEYS.FILE_UPLOAD,
   );
-  const itemId = item.get('id');
+  const itemId = item.id;
 
   useEffect(() => {
     setUppy(
@@ -129,7 +129,7 @@ const ThumbnailSetting = ({ item }) => {
         <Grid item sm={6} className={classes.thumbnail}>
           <Thumbnail
             id={itemId}
-            extra={item?.get('extra')}
+            extra={item?.extra}
             alt={t('current thumbnail')}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}

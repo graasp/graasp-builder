@@ -37,18 +37,18 @@ const useStyles = makeStyles((theme) => ({
 const ItemSharingTab = ({ item }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { data: memberships } = hooks.useItemMemberships(item?.get('id'));
+  const { data: memberships } = hooks.useItemMemberships(item?.id);
   const { data: currentMember, isLoadingCurrentMember } =
     useContext(CurrentUserContext);
   const { data: members } = hooks.useMembers(
     memberships?.map(({ memberId }) => memberId),
   );
   const { setIsItemSharingOpen } = useContext(LayoutContext);
-  const { data: invitations } = hooks.useItemInvitations(item.get('id'));
+  const { data: invitations } = hooks.useItemInvitations(item.id);
 
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
-    memberId: currentMember?.get('id'),
+    memberId: currentMember?.id,
   });
 
   useEffect(
@@ -97,7 +97,7 @@ const ItemSharingTab = ({ item }) => {
         {/* show authenticated members if login schema is defined
         todo: show only if item is pseudomized
         */}
-        {getItemLoginSchema(item?.get('extra')) && (
+        {getItemLoginSchema(item?.extra) && (
           <>
             <Divider className={classes.divider} />
             <Typography variant="h5" className={classes.title}>
@@ -134,7 +134,7 @@ const ItemSharingTab = ({ item }) => {
       <Typography variant="h4" className={classes.title}>
         {t('Sharing')}
       </Typography>
-      <SharingLink itemId={item.get('id')} />
+      <SharingLink itemId={item.id} />
       <VisibilitySelect item={item} edit={canEdit} />
       {renderMembershipSettings()}
     </Container>

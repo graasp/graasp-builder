@@ -51,15 +51,15 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
     isItemSettingsOpen,
     isItemMetadataMenuOpen,
   } = useContext(LayoutContext);
-  const id = item?.get('id');
-  const type = item?.get('type');
+  const id = item?.id;
+  const type = item?.type;
 
   const { data: member } = useContext(CurrentUserContext);
 
   const { data: memberships } = useItemMemberships(id);
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
-    memberId: member?.get('id'),
+    memberId: member?.id,
   });
 
   const renderItemActions = () => {

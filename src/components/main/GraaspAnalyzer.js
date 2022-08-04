@@ -14,7 +14,7 @@ const GraaspAnalyzer = ({ item }) => {
   const { t } = useTranslation();
   const { setIsDashboardOpen } = useContext(LayoutContext);
   const ref = useRef();
-  const id = item.get('id');
+  const { id } = item;
 
   // close tab on unmount
   useEffect(

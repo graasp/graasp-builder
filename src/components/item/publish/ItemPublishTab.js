@@ -24,7 +24,7 @@ const ItemPublishTab = ({ item, permission }) => {
   const { t } = useTranslation();
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
-    item?.get('id'),
+    item?.id,
   );
   const { setIsItemPublishOpen } = useContext(LayoutContext);
 

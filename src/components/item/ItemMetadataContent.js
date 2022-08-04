@@ -38,7 +38,7 @@ const ItemMetadataContent = ({ item }) => {
 
   const classes = useStyles();
   const { setIsItemSharingOpen } = useContext(LayoutContext);
-  const { data: creator } = useMember(item.get('creator'));
+  const { data: creator } = useMember(item.creator);
 
   const onClick = () => {
     setIsItemSharingOpen(true);
@@ -47,10 +47,10 @@ const ItemMetadataContent = ({ item }) => {
   let type = null;
   let size = null;
   if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.S3_FILE) {
-    const extra = getS3FileExtra(item.get('extra'));
+    const extra = getS3FileExtra(item.extra);
     ({ mimetype: type, size } = extra);
   } else if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.FILE) {
-    const extra = getFileExtra(item.get('extra'));
+    const extra = getFileExtra(item.extra);
     ({ mimetype: type, size } = extra);
   } else {
     type = item.get(ITEM_KEYS.TYPE);
@@ -64,10 +64,10 @@ const ItemMetadataContent = ({ item }) => {
       </TableRow>
     );
     if (type === ITEM_TYPES.APP) {
-      return buildTableRow(item.get('extra')[ITEM_TYPES.APP].url);
+      return buildTableRow(item.extra[ITEM_TYPES.APP].url);
     }
     if (type === ITEM_TYPES.LINK) {
-      return buildTableRow(item.get('extra')[ITEM_TYPES.LINK].url);
+      return buildTableRow(item.extra[ITEM_TYPES.LINK].url);
     }
     return null;
   };
@@ -100,25 +100,21 @@ const ItemMetadataContent = ({ item }) => {
             )}
             <TableRow>
               <TableCell align="left">{t('Creator')}</TableCell>
-              <TableCell align="right">{creator?.get('name')}</TableCell>
+              <TableCell align="right">{creator?.name}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="left">{t('Created At')}</TableCell>
-              <TableCell align="right">
-                {formatDate(item.get('createdAt'))}
-              </TableCell>
+              <TableCell align="right">{formatDate(item.createdAt)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="left">{t('Updated At')}</TableCell>
-              <TableCell align="right">
-                {formatDate(item.get('updatedAt'))}
-              </TableCell>
+              <TableCell align="right">{formatDate(item.updatedAt)}</TableCell>
             </TableRow>
             {renderLink()}
           </TableBody>
         </Table>
       </TableContainer>
-      <ItemMemberships id={item.get('id')} maxAvatar={5} onClick={onClick} />
+      <ItemMemberships id={item.id} maxAvatar={5} onClick={onClick} />
     </>
   );
 };

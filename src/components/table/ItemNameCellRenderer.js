@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import { ItemIcon, Thumbnail } from '@graasp/ui';
-import { hooks } from '../../config/queryClient';
+import { ItemIcon } from '@graasp/ui';
+
 import { buildNameCellRendererId } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,17 +20,8 @@ const useStyles = makeStyles((theme) => ({
 const ItemNameCellRenderer = (showThumbnails) => {
   const Component = ({ data: item }) => {
     const classes = useStyles();
-    const { t } = useTranslation();
-    const ThumbnailComponent = showThumbnails
-      ? Thumbnail({
-          id: item.id,
-          extra: item.extra,
-          maxWidth: 30,
-          maxHeight: 30,
-          alt: t('small thumbnail'),
-          useThumbnail: hooks.useItemThumbnail,
-        })
-      : null;
+
+    const ThumbnailComponent = showThumbnails ? null : null;
 
     return (
       <div className={classes.nameCell} id={buildNameCellRendererId(item.id)}>

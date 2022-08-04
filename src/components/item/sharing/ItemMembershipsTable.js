@@ -86,7 +86,7 @@ const ItemMembershipsTable = ({
   const { mutate: shareItem } = useMutation(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
 
   const onDelete = ({ instance }) => {
-    deleteItemMembership({ itemId: item.get('id'), id: instance.id });
+    deleteItemMembership({ itemId: item.id, id: instance.id });
   };
 
   // never changes, so we can use useMemo
@@ -103,7 +103,7 @@ const ItemMembershipsTable = ({
       item,
       editFunction: ({ value, instance }) => {
         editItemMembership({
-          itemId: item.get('id'),
+          itemId: item.id,
           id: instance.id,
           permission: value,
         });
@@ -111,7 +111,7 @@ const ItemMembershipsTable = ({
       createFunction: ({ value, instance }) => {
         const email = users?.find(({ id }) => id === instance.memberId)?.email;
         shareItem({
-          id: item.get('id'),
+          id: item.id,
           email,
           permission: value,
         });

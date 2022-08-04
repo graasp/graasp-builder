@@ -50,10 +50,10 @@ const CCLicenseSelection = ({ item }) => {
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
 
   // itemId
-  const itemId = item?.get('id');
+  const itemId = item?.id;
 
-  const settings = item?.get('settings');
-  const itemName = item?.get('name');
+  const settings = item?.settings;
+  const itemName = item?.name;
 
   useEffect(() => {
     if (settings) {

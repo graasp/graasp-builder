@@ -131,7 +131,7 @@ export const getItemImage = ({ url, extra, useDefault = true }) => {
 };
 
 export const isItemFavorite = (item, member) =>
-  member?.get('extra')?.favoriteItems?.includes(item.id);
+  member?.extra?.favoriteItems?.includes(item.id);
 
 // todo: find other possible solutions
 export const getExistingItems = (items) =>
@@ -144,7 +144,7 @@ export const getErrorItemIds = (items) =>
   items.filter((item) => item.statusCode).map((item) => item.data);
 
 export const getChildrenOrderFromFolderExtra = (item) =>
-  item?.get('extra')?.folder?.childrenOrder ?? [];
+  item?.extra?.folder?.childrenOrder ?? [];
 
 export const stripHtml = (str) => str?.replace(/<[^>]*>?/gm, '');
 
@@ -159,7 +159,7 @@ export const sortByName = (a, b) => {
 export const useIsParentInstance = ({ instance, item }) => {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {
-    setIsParentMembership(instance.itemPath !== item.get('path'));
+    setIsParentMembership(instance.itemPath !== item.path);
     return () => {
       setIsParentMembership(false);
     };
