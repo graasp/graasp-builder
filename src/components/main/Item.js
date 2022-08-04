@@ -61,12 +61,14 @@ const Item = ({ item, memberships }) => {
   const { data: member } = useContext(CurrentUserContext);
   const enableEdition = isItemUpdateAllowedForUser({
     memberships,
-    memberId: member?.get('id'),
+    memberId: member?.id,
   });
 
   const Actions = (
     <>
-      {!member.isEmpty() && <FavoriteButton member={member} item={item} />}
+      {!member.toSeq().isEmpty() && (
+        <FavoriteButton member={member} item={item} />
+      )}
       {enableEdition && (
         <>
           <EditButton item={item} />
@@ -83,7 +85,7 @@ const Item = ({ item, memberships }) => {
       })}
       Actions={Actions}
       name={name}
-      creator={member?.get('name')}
+      creator={member?.name}
       ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}

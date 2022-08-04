@@ -46,7 +46,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
   const getRowId = ({ data }) => buildInvitationTableRowId(data.id);
 
   const onDelete = ({ instance }) => {
-    deleteInvitation({ itemId: item.get('id'), id: instance.id });
+    deleteInvitation({ itemId: item.id, id: instance.id });
   };
 
   const ActionRenderer = TableRowDeleteButtonRenderer({
@@ -64,12 +64,12 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       editInvitation({
         id: instance.id,
         permission: value,
-        itemId: item.get('id'),
+        itemId: item.id,
       });
     },
     createFunction: ({ instance, value }) => {
       postInvitations({
-        itemId: item.get('id'),
+        itemId: item.id,
         invitations: [
           {
             email: instance.email,

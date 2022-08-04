@@ -39,9 +39,9 @@ const CoEditorSettings = ({ item }) => {
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
 
   // current item
-  const itemId = item?.get('id');
-  const settings = item?.get('settings');
-  const itemName = item?.get('name');
+  const itemId = item?.id;
+  const settings = item?.settings;
+  const itemName = item?.name;
 
   // by default, co editors will not be displayed
   const [optionValue, setOptionValue] = useState(

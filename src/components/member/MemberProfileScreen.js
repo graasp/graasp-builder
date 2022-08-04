@@ -43,7 +43,7 @@ const MemberProfileScreen = () => {
   }
 
   const copyIdToClipboard = () => {
-    copyToClipboard(member.get('id'), {
+    copyToClipboard(member.id, {
       onSuccess: () => {
         notifier({ type: COPY_MEMBER_ID_TO_CLIPBOARD.SUCCESS, payload: {} });
       },
@@ -60,7 +60,7 @@ const MemberProfileScreen = () => {
           <Grid item xs={8}>
             <Grid item xs={12}>
               <Typography variant="h4" id={MEMBER_PROFILE_MEMBER_NAME_ID}>
-                {member.get('name')}
+                {member.name}
               </Typography>
             </Grid>
             {/* todo: display only as light user */}
@@ -74,7 +74,7 @@ const MemberProfileScreen = () => {
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_MEMBER_ID_ID}>
-                  {member.get('id')}
+                  {member.id}
                   <IconButton
                     id={MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID}
                     onClick={copyIdToClipboard}
@@ -94,7 +94,7 @@ const MemberProfileScreen = () => {
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_EMAIL_ID}>
-                  {member.get('email')}
+                  {member.email}
                 </Typography>
               </Grid>
             </Grid>
@@ -108,7 +108,7 @@ const MemberProfileScreen = () => {
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_INSCRIPTION_DATE_ID}>
-                  {formatDate(member.get('createdAt'))}
+                  {formatDate(member.createdAt)}
                 </Typography>
               </Grid>
             </Grid>
@@ -123,8 +123,8 @@ const MemberProfileScreen = () => {
               <Grid item xs={8}>
                 <LanguageSwitch
                   id={MEMBER_PROFILE_LANGUAGE_SWITCH_ID}
-                  memberId={member.get('id')}
-                  lang={member.get('extra')?.lang || DEFAULT_LANG}
+                  memberId={member.id}
+                  lang={member.extra?.lang || DEFAULT_LANG}
                 />
               </Grid>
             </Grid>
@@ -133,7 +133,7 @@ const MemberProfileScreen = () => {
 
         <AvatarSetting user={member} />
         <PasswordSetting user={member} />
-        <DeleteMemberDialog id={member?.get('id')} />
+        <DeleteMemberDialog id={member?.id} />
       </Card>
     </Main>
   );

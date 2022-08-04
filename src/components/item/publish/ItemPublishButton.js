@@ -66,7 +66,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
 
       // disable setting if any visiblity is set on any ancestor items
       setIsDisabled(
-        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.get('path'),
+        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.path,
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

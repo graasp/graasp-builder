@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 // todo: handle multiple invitations
 const CreateItemMembershipForm = ({ item, members }) => {
-  const itemId = item.get('id');
+  const itemId = item.id;
   const [error, setError] = useState(false);
 
   const { mutateAsync: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);

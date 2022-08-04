@@ -38,7 +38,7 @@ const AvatarSetting = ({ user }) => {
   const classes = useStyles();
   const { mutate: onUploadAvatar } = useMutation(MUTATION_KEYS.UPLOAD_AVATAR);
 
-  const userId = user.get('id');
+  const userId = user.id;
 
   useEffect(() => {
     setUppy(
@@ -131,7 +131,7 @@ const AvatarSetting = ({ user }) => {
         <Grid item sm={6} xs={12}>
           <Avatar
             id={userId}
-            extra={user?.get('extra')}
+            extra={user?.extra}
             alt={t('current thumbnail')}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}

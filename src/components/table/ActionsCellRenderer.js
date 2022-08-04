@@ -19,7 +19,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
         setCanEdit(
           isItemUpdateAllowedForUser({
             memberships: getMembershipsForItem({ item, items, memberships }),
-            memberId: member?.get('id'),
+            memberId: member?.id,
           }),
         );
       }

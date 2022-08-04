@@ -36,8 +36,8 @@ const useStyles = makeStyles(() => ({
 const CsvInputParser = ({ item }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const itemId = item.get('id');
-  const itemPath = item.get('path');
+  const itemId = item.id;
+  const itemPath = item.path;
   const [isOpen, setIsOpen] = useState(false);
   const messageI18n = buildI18n();
   const {

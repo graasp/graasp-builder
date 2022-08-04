@@ -23,10 +23,10 @@ const FavoriteButton = ({ item, type, onClick }) => {
 
   const handleFavorite = () => {
     mutation.mutate({
-      id: member.get('id'),
+      id: member.id,
       extra: {
-        favoriteItems: member?.get('extra').favoriteItems
-          ? member.get('extra').favoriteItems.concat([item.id])
+        favoriteItems: member?.extra.favoriteItems
+          ? member.extra.favoriteItems.concat([item.id])
           : [item.id],
       },
     });
@@ -35,11 +35,11 @@ const FavoriteButton = ({ item, type, onClick }) => {
 
   const handleUnfavorite = () => {
     mutation.mutate({
-      id: member.get('id'),
+      id: member.id,
       extra: {
-        favoriteItems: member
-          ?.get('extra')
-          .favoriteItems?.filter((id) => id !== item.id),
+        favoriteItems: member?.extra.favoriteItems?.filter(
+          (id) => id !== item.id,
+        ),
       },
     });
     onClick?.();

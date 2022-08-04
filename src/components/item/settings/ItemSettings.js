@@ -39,12 +39,12 @@ const ItemSettings = ({ item }) => {
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
-  const settings = item.get('settings');
+  const { settings } = item;
 
   const handleChatbox = (event) => {
     editItem({
-      id: item.get('id'),
-      name: item.get('name'),
+      id: item.id,
+      name: item.name,
       settings: {
         showChatbox: event.target.checked,
       },
@@ -53,8 +53,8 @@ const ItemSettings = ({ item }) => {
 
   const handlePinned = (event) => {
     editItem({
-      id: item.get('id'),
-      name: item.get('name'),
+      id: item.id,
+      name: item.name,
       settings: {
         isPinned: event.target.checked,
       },
@@ -63,8 +63,8 @@ const ItemSettings = ({ item }) => {
 
   const handleCollapse = (event) => {
     editItem({
-      id: item.get('id'),
-      name: item.get('name'),
+      id: item.id,
+      name: item.name,
       settings: {
         isCollapsible: event.target.checked,
       },

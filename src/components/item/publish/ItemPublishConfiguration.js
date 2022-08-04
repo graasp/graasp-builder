@@ -80,9 +80,8 @@ const ItemPublishConfiguration = ({ item }) => {
     useItemValidationAndReview(itemId);
   // check if validation is still valid
   const iVId =
-    new Date(itemValidationData?.get('createdAt')) >=
-    new Date(item?.get('updatedAt'))
-      ? itemValidationData?.get('itemValidationId')
+    new Date(itemValidationData?.createdAt) >= new Date(item?.updatedAt)
+      ? itemValidationData?.itemValidationId
       : null;
   // get item validation groups
   const { data: itemValidationGroups } = useItemValidationGroups(iVId);

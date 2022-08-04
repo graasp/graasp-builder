@@ -37,8 +37,8 @@ const CustomizedTagsEdit = ({ item }) => {
   // current item
   const { itemId } = useParams();
 
-  const settings = item?.get('settings');
-  const itemName = item?.get('name');
+  const settings = item?.settings;
+  const itemName = item?.name;
 
   const [displayValues, setDisplayValues] = useState(null);
 

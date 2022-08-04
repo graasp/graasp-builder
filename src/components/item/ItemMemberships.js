@@ -37,7 +37,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
 
   const filteredMemberships = membershipsWithoutUser(
     memberships,
-    currentUser?.get('id'),
+    currentUser?.id,
   );
 
   // display only if has more than 2 memberships
