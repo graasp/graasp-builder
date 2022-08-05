@@ -47,16 +47,16 @@ const Item = ({ item, memberships }) => {
   const { id, name, description, extra } = item;
   const { t } = useTranslation();
 
-  const ThumbnailComponent = Thumbnail({
-    id: item.id,
-    extra,
-    // maxWidth: 30,
-    // maxHeight: 30,
-    alt: t('thumbnail'),
-    defaultImage: DEFAULT_IMAGE_SRC,
-    useThumbnail: hooks.useItemThumbnail,
-    className: classes.thumbnail,
-  });
+  const ThumbnailComponent = (
+    <Thumbnail
+      id={item.id}
+      extra
+      alt={t('thumbnail')}
+      defaultImage={DEFAULT_IMAGE_SRC}
+      useThumbnail={hooks.useItemThumbnail}
+      className={classes.thumbnail}
+    />
+  );
 
   const { data: member } = useContext(CurrentUserContext);
   const enableEdition = isItemUpdateAllowedForUser({
