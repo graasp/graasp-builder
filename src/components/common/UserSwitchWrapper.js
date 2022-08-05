@@ -27,7 +27,8 @@ const UserSwitchWrapper = ({ ButtonContent }) => {
   const { t } = useTranslation();
   const { mutateAsync: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
   const { mutate: switchMember } = useMutation(MUTATION_KEYS.SWITCH_MEMBER);
-
+  console.log('MMM');
+  console.log(member);
   return (
     <>
       <GraaspUserSwitch
