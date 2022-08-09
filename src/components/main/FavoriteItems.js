@@ -31,8 +31,7 @@ const FavoriteItems = () => {
     data: favoriteItems = List(),
     isLoading: isItemsLoading,
     isError: isItemsError,
-  } = hooks.useItems(getFavoriteItems(member.extra));
-
+  } = hooks.useItems(getFavoriteItems(member.extra).toJS());
   const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
 
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them

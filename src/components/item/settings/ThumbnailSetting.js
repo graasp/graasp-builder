@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import clsx from 'clsx';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Thumbnail } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,7 @@ import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal from '../../common/CropModal';
 import { useMutation, hooks } from '../../../config/queryClient';
 import defaultImage from '../../../config/logo.jpeg';
+import { getEmbeddedLinkExtra } from '../../../utils/itemExtra';
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
@@ -103,6 +105,11 @@ const ThumbnailSetting = ({ item }) => {
     }
   };
 
+  const alt = t('current thumbnail');
+  const defaultImageComponent = (
+    <img src={defaultImage} alt={alt} className={clsx(classes.img)} />
+  );
+
   return (
     <>
       {uppy && (
@@ -129,12 +136,14 @@ const ThumbnailSetting = ({ item }) => {
         <Grid item sm={6} className={classes.thumbnail}>
           <Thumbnail
             id={itemId}
-            extra={item?.extra}
-            alt={t('current thumbnail')}
+            extraThumbnail={getEmbeddedLinkExtra(item?.extra)?.thumbnails?.get(
+              0,
+            )}
+            alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
             useThumbnail={hooks.useItemThumbnail}
-            defaultImage={defaultImage}
+            defaultValue={defaultImageComponent}
           />
         </Grid>
       </Grid>
