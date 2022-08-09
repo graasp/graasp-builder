@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 import truncate from 'lodash.truncate';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,6 +20,7 @@ import { CurrentUserContext } from '../context/CurrentUserContext';
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import DownloadButton from './DownloadButton';
+import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 
 const NameWrapper =
   ({ id, className }) =>
@@ -47,14 +49,23 @@ const Item = ({ item, memberships }) => {
   const { id, name, description, extra } = item;
   const { t } = useTranslation();
 
+  const alt = t('thumbnail');
+  const classname = classes.thumbnail;
+  const defaultValueComponent = (
+    <img
+      src={DEFAULT_IMAGE_SRC}
+      alt={alt}
+      className={clsx(classes.img, classname)}
+    />
+  );
   const ThumbnailComponent = (
     <Thumbnail
       id={item.id}
-      extra
-      alt={t('thumbnail')}
-      defaultImage={DEFAULT_IMAGE_SRC}
+      extraThumbnail={getEmbeddedLinkExtra(extra)?.thumbnails?.get(0)}
+      alt={alt}
+      defaultValue={defaultValueComponent}
       useThumbnail={hooks.useItemThumbnail}
-      className={classes.thumbnail}
+      className={classname}
     />
   );
 
@@ -64,6 +75,8 @@ const Item = ({ item, memberships }) => {
     memberId: member?.id,
   });
 
+  // We need to convert the Record<item> (immutable) to item (object)
+  // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
       {!member.toSeq().isEmpty() && (
@@ -71,7 +84,7 @@ const Item = ({ item, memberships }) => {
       )}
       {enableEdition && (
         <>
-          <EditButton item={item} />
+          <EditButton item={item.toJS()} />
           <DownloadButton id={id} name={name} />
         </>
       )}
