@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
+import { Record, List } from 'immutable';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -142,7 +142,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
 };
 
 InvitationsTable.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   invitations: PropTypes.instanceOf(List).isRequired,
   emptyMessage: PropTypes.string,
 };

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import {
@@ -99,7 +100,7 @@ const CoEditorSettings = ({ item }) => {
 };
 
 CoEditorSettings.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default CoEditorSettings;

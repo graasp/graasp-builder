@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Loader } from '@graasp/ui';
@@ -152,7 +153,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
 };
 
 ItemPublishButton.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   isValidated: PropTypes.bool.isRequired,
 };
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { makeStyles } from '@material-ui/core';
 import { FileItem, DocumentItem, LinkItem, AppItem } from '@graasp/ui';
 import { MUTATION_KEYS, Api } from '@graasp/query-client';
@@ -180,7 +180,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
 };
 
 ItemContent.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   enableEditing: PropTypes.bool,
   permission: PropTypes.string.isRequired,
 };

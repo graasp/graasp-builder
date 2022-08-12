@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { Loader, CCLicenseIcon } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import {
@@ -142,7 +143,7 @@ const CCLicenseSelection = ({ item }) => {
 };
 
 CCLicenseSelection.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default CCLicenseSelection;

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { Record } from 'immutable';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 import truncate from 'lodash.truncate';
 import { makeStyles } from '@material-ui/core/styles';
@@ -61,7 +62,7 @@ const Item = ({ item, memberships }) => {
   const ThumbnailComponent = (
     <Thumbnail
       id={item.id}
-      extraThumbnail={getEmbeddedLinkExtra(extra)?.thumbnails?.get(0)}
+      thumbnailSrc={getEmbeddedLinkExtra(extra)?.thumbnails?.get(0)}
       alt={alt}
       defaultValue={defaultValueComponent}
       useThumbnail={hooks.useItemThumbnail}
@@ -108,7 +109,7 @@ const Item = ({ item, memberships }) => {
 };
 
 Item.propTypes = {
-  item: PropTypes.shape({
+  item: PropTypes.instanceOf(Record).isRequiredshape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,

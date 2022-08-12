@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@graasp/ui';
 import IconButton from '@material-ui/core/IconButton';
-import { List } from 'immutable';
+import { Record, List } from 'immutable';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Grid, makeStyles, TextField } from '@material-ui/core';
 import { MUTATION_KEYS, routines } from '@graasp/query-client';
@@ -182,7 +182,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
 };
 
 CreateItemMembershipForm.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   members: PropTypes.instanceOf(List),
 };
 CreateItemMembershipForm.defaultProps = {

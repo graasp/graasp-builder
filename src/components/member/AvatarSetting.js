@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Record } from 'immutable';
 import { Avatar } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -38,7 +39,7 @@ const AvatarSetting = ({ user }) => {
   const classes = useStyles();
   const { mutate: onUploadAvatar } = useMutation(MUTATION_KEYS.UPLOAD_AVATAR);
 
-  const userId = user.id;
+  const userId = user?.id;
 
   useEffect(() => {
     setUppy(
@@ -151,7 +152,7 @@ const AvatarSetting = ({ user }) => {
 };
 
 AvatarSetting.propTypes = {
-  user: PropTypes.instanceOf(Map).isRequired,
+  user: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default AvatarSetting;

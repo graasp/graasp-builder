@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import Select from '@material-ui/core/Select';
@@ -249,7 +249,7 @@ const VisibilitySelect = ({ item, edit }) => {
 };
 
 VisibilitySelect.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   edit: PropTypes.bool.isRequired,
 };
 

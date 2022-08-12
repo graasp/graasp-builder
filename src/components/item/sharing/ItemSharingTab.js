@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import partition from 'lodash.partition';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { isPseudonymizedMember } from '@graasp/utils';
 import { useTranslation } from 'react-i18next';
@@ -141,7 +141,7 @@ const ItemSharingTab = ({ item }) => {
   );
 };
 ItemSharingTab.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemSharingTab;
