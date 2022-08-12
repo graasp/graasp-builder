@@ -29,7 +29,7 @@ const MainMenu = () => {
   };
 
   const renderAuthenticatedMemberMenuItems = () => {
-    if (member?.toSeq().isEmpty()) {
+    if (!member || !member.id) {
       return (
         <ListItem button disabled>
           <ListItemIcon>

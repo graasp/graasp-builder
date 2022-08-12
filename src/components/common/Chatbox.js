@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import GraaspChatbox from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Map, List } from 'immutable';
+import { Record, List } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { hooks, useMutation } from '../../config/queryClient';
 import { CHATBOX_INPUT_BOX_ID, CHATBOX_ID } from '../../config/selectors';
@@ -63,7 +63,7 @@ const Chatbox = ({ item }) => {
 };
 
 Chatbox.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default Chatbox;

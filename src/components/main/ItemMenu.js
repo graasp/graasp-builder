@@ -76,7 +76,7 @@ const ItemMenu = ({ item, canEdit }) => {
   };
 
   const renderAuthenticatedActions = () => {
-    if (!member || member.toSeq().isEmpty()) {
+    if (!member || !member.id) {
       return null;
     }
     return [

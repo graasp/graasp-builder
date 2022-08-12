@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { Loader, Button } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import { Typography, TextField, Chip, makeStyles } from '@material-ui/core';
@@ -103,7 +104,7 @@ const CustomizedTagsEdit = ({ item }) => {
 };
 
 CustomizedTagsEdit.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default CustomizedTagsEdit;

@@ -25,7 +25,7 @@ const FavoriteButton = ({ item, type, onClick }) => {
     mutation.mutate({
       id: member.id,
       extra: {
-        favoriteItems: member?.extra.favoriteItems
+        favoriteItems: member?.extra?.favoriteItems
           ? member.extra.favoriteItems.concat([item.id])
           : [item.id],
       },
@@ -37,7 +37,7 @@ const FavoriteButton = ({ item, type, onClick }) => {
     mutation.mutate({
       id: member.id,
       extra: {
-        favoriteItems: member?.extra.favoriteItems?.filter(
+        favoriteItems: member?.extra?.favoriteItems?.filter(
           (id) => id !== item.id,
         ),
       },

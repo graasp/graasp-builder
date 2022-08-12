@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import {
   FormControlLabel,
@@ -125,7 +125,7 @@ const ItemSettings = ({ item }) => {
 };
 
 ItemSettings.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemSettings;

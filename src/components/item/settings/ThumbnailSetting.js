@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
+import { Record } from 'immutable';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Thumbnail } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
@@ -136,9 +137,7 @@ const ThumbnailSetting = ({ item }) => {
         <Grid item sm={6} className={classes.thumbnail}>
           <Thumbnail
             id={itemId}
-            extraThumbnail={getEmbeddedLinkExtra(item?.extra)?.thumbnails?.get(
-              0,
-            )}
+            thumbnailSrc={getEmbeddedLinkExtra(item?.extra)?.thumbnails?.get(0)}
             alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
@@ -158,7 +157,7 @@ const ThumbnailSetting = ({ item }) => {
 };
 
 ThumbnailSetting.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ThumbnailSetting;

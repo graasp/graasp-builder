@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
@@ -188,7 +188,7 @@ const ItemMembershipsTable = ({
 };
 
 ItemMembershipsTable.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   emptyMessage: PropTypes.string,
   showEmail: PropTypes.bool,

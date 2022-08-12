@@ -28,7 +28,7 @@ const ItemNameCellRenderer = (showThumbnails) => {
       <ItemIcon
         type={item.type}
         id={item.id}
-        extraIcon={getEmbeddedLinkExtra(item.extra)?.icons?.[0]}
+        iconSrc={getEmbeddedLinkExtra(item.extra)?.icons?.[0]}
         name={item.name}
       />
     );
@@ -38,7 +38,7 @@ const ItemNameCellRenderer = (showThumbnails) => {
         {showThumbnails && (
           <Thumbnail
             id={item.id}
-            extraThumbnail={getEmbeddedLinkExtra(item.extra)?.thumbnails?.[0]}
+            thumbnailSrc={getEmbeddedLinkExtra(item.extra)?.thumbnails?.[0]}
             maxWidth={30}
             maxHeight={30}
             alt={alt}

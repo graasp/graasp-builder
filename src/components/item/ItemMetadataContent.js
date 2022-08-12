@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -120,7 +121,7 @@ const ItemMetadataContent = ({ item }) => {
 };
 
 ItemMetadataContent.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemMetadataContent;
