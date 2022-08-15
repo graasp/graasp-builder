@@ -2075,9 +2075,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git#126-add-h5p":
+"@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=5c796319558096662f28d48ab3912b7de56bb3c9"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=8e38ca1792bc922cfaff872551620ef8a20db7c9"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -2107,7 +2107,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 109aac88309c7c4b188db83c38ff0188aaafe190df7e3cf56c70c44b2eb060caa71c951cb2653443110fdb3ec64d52d892eb8d5159224a868e37867c6eca57f3
+  checksum: 59d4db944de392c52414a77f3f01b2fda6d5e0782fd6fa3f6b9544439cd160660d406bdb756bbf2755cd10bf4fc1391dcd9cfbf1c83049217dc2e50b62c3f2e2
   languageName: node
   linkType: hard
 
@@ -2127,7 +2127,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/websockets@github:graasp/graasp-websockets.git#master":
+"@graasp/websockets@github:graasp/graasp-websockets.git":
   version: 1.0.0
   resolution: "@graasp/websockets@https://github.com/graasp/graasp-websockets.git#commit=3977527ed1dd6d4c8b90681c586897243d4f49cf"
   dependencies:
@@ -10507,9 +10507,9 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git#126-add-h5p"
+    "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
-    "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
+    "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 5.0.0-beta.5
     "@material-ui/lab": 4.0.0-alpha.60
