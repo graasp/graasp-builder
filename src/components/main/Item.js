@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Record } from 'immutable';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 import truncate from 'lodash.truncate';
 import { makeStyles } from '@material-ui/core/styles';
@@ -109,7 +108,7 @@ const Item = ({ item, memberships }) => {
 };
 
 Item.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequiredshape({
+  item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -118,6 +117,7 @@ Item.propTypes = {
     extra: PropTypes.shape({
       image: PropTypes.string.isRequired,
     }).isRequired,
+    toJS: PropTypes.func,
   }).isRequired,
   memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
