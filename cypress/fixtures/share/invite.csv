@@ -1,0 +1,7 @@
+name,email,permission
+kim,kim@email.com,write
+cedric,cedric@email.com,read
+fanny,fanny@email.com,read
+david,david@email.com,read
+evan,evan@email.com,write
+garry,garry@email.com,admin

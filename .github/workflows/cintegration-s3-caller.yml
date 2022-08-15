@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - master
 
   # Allows to run the workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,7 +16,7 @@ jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@5049607f97ad484178fe228673f1802974af834f
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
     with:
       build-folder: 'build'
     secrets:
@@ -27,9 +28,9 @@ jobs:
       api-host: ${{ secrets.REACT_APP_API_HOST_DEV }}
       show-notifications: ${{ secrets.REACT_APP_SHOW_NOTIFICATIONS }}
       authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_DEV }}
-      graasp-perform-host: ${{ secrets.REACT_APP_GRAASP_PERFORM_HOST_DEV }}
-      graasp-explorer-host: ${{ secrets.REACT_APP_GRAASP_EXPLORE_HOST_DEV }}
-      graasp-analyzer-host: ${{ secrets.REACT_APP_GRAASP_ANALYZER_HOST_DEV }}
+      graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_DEV }}
+      graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_DEV }}
+      graasp-analyzer-host: ${{ secrets.ANALYZER_CLIENT_HOST_DEV }}
       ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_DEV }}
       hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_DEV }}
       domain: ${{ secrets.REACT_APP_DOMAIN_DEV }}

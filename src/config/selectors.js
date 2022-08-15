@@ -65,7 +65,6 @@ export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';
 export const DASHBOARD_UPLOADER_ID = 'dashboardUploader';
 export const CREATE_ITEM_CLOSE_BUTTON_ID = 'createItemCloseButton';
 export const HEADER_APP_BAR_ID = 'headerAppBar';
-export const HEADER_USER_ID = 'headerUser';
 export const USER_MENU_SIGN_OUT_OPTION_ID = 'userMenuSignOutOption';
 export const NAVIGATION_HIDDEN_PARENTS_ID = 'navigationHiddenParents';
 export const ITEM_LOGIN_SCREEN_ID = 'itemLoginScreen';
@@ -216,8 +215,24 @@ export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
 export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
   'headerMemberMenuSignOutButton';
 export const buildMemberMenuItemId = (id) => `memberMenuItem-${id}`;
-
 export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
 export const buildCoEditorSettingsRadioButtonId = (id) =>
   `coEditorSettingsRadioButton-${id}`;
 export const EMAIL_NOTIFICATION_CHECKBOX = 'emailNotificationCheckbox';
+
+export const MEMBER_CURRENT_PASSWORD_ID = 'memberCurrentPassword';
+export const MEMBER_NEW_PASSWORD_ID = 'memberNewPassword';
+export const MEMBER_NEW_PASSWORD_CONFIRMATION_ID =
+  'memberNewPasswordConfirmation';
+export const CONFIRM_CHANGE_PASSWORD_BUTTON_ID = 'confirmChangePasswordButton';
+export const CONFIRM_RESET_PASSWORD_BUTTON_ID = 'confirmResetPasswordButton';
+export const USER_CURRENT_PASSWORD_INPUT_ID = 'currentPasswordInput';
+export const USER_NEW_PASSWORD_INPUT_ID = 'newPasswordInput';
+export const USER_CONFIRM_PASSWORD_INPUT_ID = 'confirmPasswordInput';
+export const SHARE_ITEM_CSV_PARSER_BUTTON_ID = 'shareItemCsvParserButton';
+export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID =
+  'shareItemCsvParserInputButton';
+export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR = `${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID} input`;
+export const SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID = 'shareITemFromCsvAlertError';
+export const SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID =
+  'shareItemFromCsvResultFailures';

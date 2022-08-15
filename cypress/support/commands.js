@@ -25,7 +25,7 @@ import {
   mockEditItem,
   mockPostItemMembership,
   mockGetMember,
-  mockGetMemberBy,
+  mockGetMembersBy,
   mockDeleteItems,
   mockDefaultDownloadFile,
   mockUploadItem,
@@ -81,6 +81,8 @@ import {
   mockPatchInvitation,
   mockDeleteInvitation,
   mockPublishItem,
+  mockUpdatePassword,
+  mockPostManyItemMemberships,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -149,6 +151,7 @@ Cypress.Commands.add(
     getItemInvitationsError = false,
     patchInvitationError = false,
     deleteInvitationError = false,
+    updatePasswordError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -193,12 +196,13 @@ Cypress.Commands.add(
     mockEditItem(cachedItems, editItemError);
 
     mockPostItemMembership(cachedItems, shareItemError);
+    mockPostManyItemMemberships(cachedItems, shareItemError);
 
     mockGetMember(cachedMembers);
 
     mockGetMembers(cachedMembers);
 
-    mockGetMemberBy(cachedMembers, getMemberError);
+    mockGetMembersBy(cachedMembers, getMemberError);
 
     mockUploadItem(cachedItems, defaultUploadError);
 
@@ -303,6 +307,8 @@ Cypress.Commands.add(
     mockDeleteInvitation(items, deleteInvitationError);
 
     mockPublishItem(items);
+
+    mockUpdatePassword(members, updatePasswordError);
   },
 );
 

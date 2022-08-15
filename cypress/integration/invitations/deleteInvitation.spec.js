@@ -36,7 +36,7 @@ describe('Delete Invitation', () => {
     cy.visit(buildItemPath(id));
     cy.get(`#${buildShareButtonId(id)}`).click();
 
-    const { id: mId } = invitations[1];
+    const { id: mId } = invitations[0];
     cy.get(`#${buildItemInvitationRowDeleteButtonId(mId)}`).should(
       'be.disabled',
     );

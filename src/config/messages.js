@@ -51,3 +51,10 @@ export const IMPORT_H5P_PROGRESS_MESSAGE =
   'The H5P is being processed. Please wait a moment.';
 export const EXPORT_ZIP_FAILURE_MESSAGE =
   'An error occurred while downloading the item as ZIP archive. Please try again later.';
+
+export const PASSWORD_EMPTY_ERROR = 'Please enter a valid password';
+export const PASSWORD_WEAK_ERROR = '"New Password" not strong enough';
+export const PASSWORD_EQUAL_ERROR =
+  'Please enter a new password different from your current one';
+export const PASSWORD_CONFIRM_ERROR =
+  'Please make sure "New Password" matches "Confirm password"';

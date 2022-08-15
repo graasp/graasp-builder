@@ -26,7 +26,7 @@ describe('Create Document', () => {
     });
   });
 
-  it('create dcoument in item', () => {
+  it('create document in item', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     const { id } = SAMPLE_ITEMS.items[0];
 

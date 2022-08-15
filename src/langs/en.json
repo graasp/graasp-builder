@@ -204,10 +204,22 @@
     "This invitation is defined in the parent item and cannot be deleted here.": "This invitation is defined in the parent item and cannot be deleted here.",
     "Publish": "Publish",
     "Download": "Download",
-    "No items": "No items",
     "Co-Editors": "Co-Editors",
     "Do you want to display co-editors after published? All users with edit permission will be displayed.": "Do you want to display co-editors after published? All users with edit permission will be displayed.",
     "Display co-editors?": "Display co-editors?",
-    "Send email notifications to all co-editors": "Send email notifications to all co-editors"
+    "Send email notifications to all co-editors": "Send email notifications to all co-editors",
+    "Import from CSV": "Import from CSV",
+    "The users were successfully imported": "The users were successfully imported",
+    "A CSV entry cannot override the data already saved. If a user already has permission, update the value in the table manually.": "A CSV entry cannot override the data already saved. If a user already has permission, update the value in the table manually.",
+    "Import users from a CSV file": "Import users from a CSV file",
+    "Choose a CSV file": "Choose a CSV file",
+    "Your CSV should have at least the column 'email'. The columns 'name' and 'permission' are optional.": "Your CSV should have at least the column 'email'. The columns 'name' and 'permission' are optional.",
+    "The import failed for these entries": "The import failed for these entries",
+    "sharedWithMembers_zero": "This item is not shared",
+    "sharedWithMembers_one": "This item is shared with one user",
+    "sharedWithMembers_other": "This item is shared with {{count}} users",
+    "You are not signed in.": "You are not signed in.",
+    "Sign in with another account": "Sign in with another account",
+    "See Profile": "See Profile"
   }
 }
