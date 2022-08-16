@@ -1994,9 +1994,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git#188/ChangeImmutableImplementationToWorkProperlyWithReactQuery":
+"@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=c4e594df68e8ccf569ac27b0e0a5445bba1a0738"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1872025f2191336c792b31f729d471721d3ae30b"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -2076,9 +2076,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git#150/ChangeImmutableImplementationToWorkProperlyWithReactQuery":
+"@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=463071b3f766b04c943b08d25019b9304cf355a4"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=8e38ca1792bc922cfaff872551620ef8a20db7c9"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -2108,7 +2108,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 2ee5eb3c9f932a7af686e9b88cad9fbd4f93edb98559c6f18ce47c7389d8bfad03e765fd4a67b75d8795bde9aeea408fad80f3614e8a92d9616800cb1c8e4242
+  checksum: 59d4db944de392c52414a77f3f01b2fda6d5e0782fd6fa3f6b9544439cd160660d406bdb756bbf2755cd10bf4fc1391dcd9cfbf1c83049217dc2e50b62c3f2e2
   languageName: node
   linkType: hard
 
@@ -10551,9 +10551,9 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git#188/ChangeImmutableImplementationToWorkProperlyWithReactQuery"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git#150/ChangeImmutableImplementationToWorkProperlyWithReactQuery"
+    "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
     "@material-ui/core": 4.12.3

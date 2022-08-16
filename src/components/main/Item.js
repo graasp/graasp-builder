@@ -79,9 +79,7 @@ const Item = ({ item, memberships }) => {
   // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {(member && member.id) && (
-        <FavoriteButton member={member} item={item} />
-      )}
+      {member && member.id && <FavoriteButton member={member} item={item} />}
       {enableEdition && (
         <>
           <EditButton item={item.toJS()} />
