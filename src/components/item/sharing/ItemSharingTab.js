@@ -44,7 +44,7 @@ const ItemSharingTab = ({ item }) => {
     memberships?.map(({ memberId }) => memberId),
   );
   const { setIsItemSharingOpen } = useContext(LayoutContext);
-  const { data: invitations } = hooks.useItemInvitations(item.id);
+  const { data: invitations } = hooks.useItemInvitations(item?.id);
 
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
