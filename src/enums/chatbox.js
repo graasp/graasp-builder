@@ -1,5 +1,6 @@
 const CHAT_STATUS = {
-  OPEN: 'open',
+  OPEN: 'true',
+  CLOSE: 'false',
 };
 
 Object.freeze(CHAT_STATUS);
