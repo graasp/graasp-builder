@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Container from '@material-ui/core/Container';
+import InfoIcon from '@material-ui/icons/Info';
 import Typography from '@material-ui/core/Typography';
 import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +10,7 @@ import {
   FormGroup,
   makeStyles,
   Switch,
+  Tooltip,
 } from '@material-ui/core';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
@@ -19,6 +21,7 @@ import {
 } from '../../../config/selectors';
 import ThumbnailSetting from './ThumbnailSetting';
 import CCLicenseSelection from '../publish/CCLicenseSelection';
+import { ITEM_TYPES } from '../../../enums';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -30,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     margin: theme.spacing(3, 0),
+  },
+  collapseTooltip: {
+    color: 'lightgrey',
+    marginBottom: -theme.spacing(0.5),
   },
 }));
 
@@ -96,15 +103,34 @@ const ItemSettings = ({ item }) => {
   };
 
   const renderCollapseSetting = () => {
+    const disabled = item.type === ITEM_TYPES.FOLDER;
     const control = (
       <Switch
         id={SETTINGS_COLLAPSE_TOGGLE_ID}
         onChange={handleCollapse}
         checked={settings?.isCollapsible}
         color="primary"
+        disabled={disabled}
       />
     );
-    return <FormControlLabel label={t('Collapse item')} control={control} />;
+    const formLabel = (
+      <FormControlLabel
+        className={classes.collapse}
+        label={t('Collapse item')}
+        control={control}
+      />
+    );
+    const tooltip = disabled ? (
+      <Tooltip title={t('A folder cannot be collapsed')} placement="right">
+        <InfoIcon className={classes.collapseTooltip} fontSize="small" />
+      </Tooltip>
+    ) : null;
+    return (
+      <div>
+        {formLabel}
+        {tooltip}
+      </div>
+    );
   };
 
   return (
