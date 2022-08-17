@@ -9,23 +9,24 @@ on:
 jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
-    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@bea834ec77096ee815ec190d28d7e2cf7d94ada1
+    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@1a7c4c74273be6fd1c56eb6c5a8fb4af2d211b86
     with:
       build-folder: 'build'
       tag: ${{ github.event.client_payload.tag }}
     secrets:
+      api-host: ${{ secrets.REACT_APP_API_HOST_STAGE }}
+      authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_STAGE }}
       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
       aws-region: ${{ secrets.AWS_REGION_STAGE }}
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_STAGE }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
       cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_STAGE }}
-      api-host: ${{ secrets.REACT_APP_API_HOST_STAGE }}
-      show-notifications: ${{ secrets.REACT_APP_SHOW_NOTIFICATIONS }}
-      authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_STAGE }}
-      graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_STAGE }}
-      graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_STAGE }}
-      graasp-analyzer-host: ${{ secrets.ANALYZER_CLIENT_HOST_STAGE }}
-      ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_STAGE }}
-      hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_STAGE }}
       domain: ${{ secrets.REACT_APP_DOMAIN_STAGE }}
+      ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_STAGE }}
+      graasp-analyzer-host: ${{ secrets.ANALYZER_CLIENT_HOST_STAGE }}
+      graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_STAGE }}
+      graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_STAGE }}
+      h5p-integration-url: ${{ secrets.H5P_INTEGRATION_URL_STAGE }}
+      hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_STAGE }}
       sentry-dsn: ${{ secrets.REACT_APP_SENTRY_DSN }}
+      show-notifications: ${{ secrets.REACT_APP_SHOW_NOTIFICATIONS }}

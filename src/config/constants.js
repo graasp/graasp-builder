@@ -1,6 +1,6 @@
-import { Context, buildSignInPath } from '@graasp/utils';
+import { buildSignInPath, Context } from '@graasp/utils';
+import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
 import env from '../env.json';
-import { ITEM_LAYOUT_MODES, PERMISSION_LEVELS, ITEM_TYPES } from '../enums';
 
 const {
   API_HOST: ENV_API_HOST,
@@ -11,6 +11,7 @@ const {
   GA_MEASUREMENT_ID: ENV_GA_MEASUREMENT_ID,
   HIDDEN_ITEM_TAG_ID: ENV_HIDDEN_ITEM_TAG_ID,
   GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
+  H5P_INTEGRATION_URL: ENV_H5P_INTEGRATION_URL,
   REACT_APP_SENTRY_DSN: ENV_SENTRY_DSN,
   DOMAIN: ENV_DOMAIN,
 } = env;
@@ -52,6 +53,11 @@ export const GRAASP_LIBRARY_HOST =
   ENV_GRAASP_EXPLORE_HOST ||
   process.env.REACT_APP_GRAASP_EXPLORE_HOST ||
   'http://localhost:3005';
+
+export const H5P_INTEGRATION_URL =
+  ENV_H5P_INTEGRATION_URL ||
+  process.env.REACT_APP_H5P_INTEGRATION_URL ||
+  `${API_HOST}/p/h5p-integration`;
 
 export const GRAASP_ANALYZER_HOST =
   process.env.REACT_APP_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
@@ -189,6 +195,8 @@ export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
 export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
 export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
+
+export const H5P_FILE_DOT_EXTENSION = '.h5p';
 
 export const CATEGORY_TYPES = {
   LEVEL: 'level',

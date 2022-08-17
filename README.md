@@ -11,6 +11,7 @@ REACT_APP_API_HOST=http://localhost:3000
 PORT=3111
 REACT_APP_SHOW_NOTIFICATIONS=true
 REACT_APP_AUTHENTICATION_HOST=http://localhost:3001
+REACT_APP_H5P_INTEGRATION_URL=
 ```
 
 4. Run `yarn start`. The client should be accessible at `localhost:3111`
@@ -36,6 +37,7 @@ REACT_APP_API_HOST=http://localhost:3000
 PORT=3111
 REACT_APP_SHOW_NOTIFICATIONS=false
 REACT_APP_NODE_ENV=test
+REACT_APP_H5P_INTEGRATION_URL=
 ```
 
 Run `yarn cypress`. This should run every tests headlessly.

@@ -60,6 +60,7 @@
     "Share Item": "Share Item",
     "Drop here or": "Drop here or",
     "Browse": "Browse",
+    "Upload a file": "Upload a file",
     "You can upload up to FILE_UPLOAD_MAX_FILES files at a time": "You can upload up to {{maxFiles}} files at a time",
     "s3-file": "s3-file",
     "file": "file",

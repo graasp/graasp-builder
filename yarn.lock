@@ -2128,7 +2128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/websockets@github:graasp/graasp-websockets.git#master":
+"@graasp/websockets@github:graasp/graasp-websockets.git":
   version: 1.0.0
   resolution: "@graasp/websockets@https://github.com/graasp/graasp-websockets.git#commit=3977527ed1dd6d4c8b90681c586897243d4f49cf"
   dependencies:
@@ -10555,7 +10555,7 @@ __metadata:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
-    "@graasp/websockets": "github:graasp/graasp-websockets.git#master"
+    "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 5.0.0-beta.5
     "@material-ui/lab": 4.0.0-alpha.60

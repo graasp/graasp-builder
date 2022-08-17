@@ -11,6 +11,7 @@ import {
   CREATE_ITEM_DOCUMENT_ID,
   CREATE_ITEM_APP_ID,
   CREATE_ITEM_ZIP_ID,
+  CREATE_ITEM_H5P_ID,
 } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
@@ -95,6 +96,13 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }) => {
         value={ITEM_TYPES.ZIP}
         label={t('Import ZIP')}
         icon={zipIcon}
+        classes={{ wrapper: classes.wrapper }}
+      />
+      <Tab
+        id={CREATE_ITEM_H5P_ID}
+        value={ITEM_TYPES.H5P}
+        label={t('Import H5P')}
+        icon={<ItemIcon type={ITEM_TYPES.H5P} iconClass={classes.icon} />}
         classes={{ wrapper: classes.wrapper }}
       />
     </Tabs>

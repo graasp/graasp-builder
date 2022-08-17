@@ -25,6 +25,7 @@ import AppForm from '../item/form/AppForm';
 import ItemTypeTabs from './ItemTypeTabs';
 import ImportZip from './ImportZip';
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
+import ImportH5P from './ImportH5P';
 
 const useStyles = makeStyles((theme) => ({
   dialogContent: {
@@ -104,6 +105,8 @@ const NewItemModal = ({ open, handleClose }) => {
         return <FileDashboardUploader />;
       case ITEM_TYPES.ZIP:
         return <ImportZip />;
+      case ITEM_TYPES.H5P:
+        return <ImportH5P />;
       case ITEM_TYPES.APP:
         return (
           <AppForm
@@ -158,6 +161,7 @@ const NewItemModal = ({ open, handleClose }) => {
         );
       case ITEM_TYPES.FILE:
       case ITEM_TYPES.ZIP:
+      case ITEM_TYPES.H5P:
         return (
           <Button id={CREATE_ITEM_CLOSE_BUTTON_ID} onClick={handleClose}>
             {t('Close')}

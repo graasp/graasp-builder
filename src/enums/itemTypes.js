@@ -6,6 +6,7 @@ const ITEM_TYPES = {
   SHORTCUT: 'shortcut',
   DOCUMENT: 'document',
   APP: 'app',
+  H5P: 'h5p',
   // the following isn't a real item type
   // but is used for the creation modal
   ZIP: 'zip',

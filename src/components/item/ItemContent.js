@@ -1,9 +1,15 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { Record } from 'immutable';
+import { Api, MUTATION_KEYS } from '@graasp/query-client';
+import { AppItem, DocumentItem, FileItem, H5PItem, LinkItem } from '@graasp/ui';
 import { makeStyles } from '@material-ui/core';
-import { FileItem, DocumentItem, LinkItem, AppItem } from '@graasp/ui';
-import { MUTATION_KEYS, Api } from '@graasp/query-client';
+import { Record } from 'immutable';
+import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import {
+  API_HOST,
+  CONTEXT_BUILDER,
+  H5P_INTEGRATION_URL,
+  ITEM_DEFAULT_HEIGHT,
+} from '../../config/constants';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   buildFileItemId,
@@ -13,19 +19,14 @@ import {
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
 import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
-import Loader from '../common/Loader';
-import ErrorAlert from '../common/ErrorAlert';
-import {
-  API_HOST,
-  ITEM_DEFAULT_HEIGHT,
-  CONTEXT_BUILDER,
-} from '../../config/constants';
-import { LayoutContext } from '../context/LayoutContext';
-import Items from '../main/Items';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
-import NewItemButton from '../main/NewItemButton';
+import ErrorAlert from '../common/ErrorAlert';
+import Loader from '../common/Loader';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import { LayoutContext } from '../context/LayoutContext';
 import ItemActions from '../main/ItemActions';
+import Items from '../main/Items';
+import NewItemButton from '../main/NewItemButton';
 
 const { useChildren, useFileContent } = hooks;
 
@@ -173,6 +174,20 @@ const ItemContent = ({ item, enableEditing, permission }) => {
           />
         </>
       );
+    case ITEM_TYPES.H5P: {
+      const contentId = item.get('extra')?.h5p?.contentId;
+      if (!contentId) {
+        return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+      }
+
+      return (
+        <H5PItem
+          itemId={itemId}
+          contentId={contentId}
+          integrationUrl={H5P_INTEGRATION_URL}
+        />
+      );
+    }
 
     default:
       return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
