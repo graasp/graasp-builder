@@ -6,6 +6,7 @@ import { Typography } from '@material-ui/core';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
 import { buildNameCellRendererId } from '../../config/selectors';
+import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 
 const useStyles = makeStyles((theme) => ({
   nameCell: {
@@ -21,25 +22,28 @@ const ItemNameCellRenderer = (showThumbnails) => {
   const Component = ({ data: item }) => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const ThumbnailComponent = showThumbnails
-      ? Thumbnail({
-          id: item.id,
-          extra: item.extra,
-          maxWidth: 30,
-          maxHeight: 30,
-          alt: t('small thumbnail'),
-          useThumbnail: hooks.useItemThumbnail,
-        })
-      : null;
+
+    const alt = t('small thumbnail');
+    const defaultValueComponent = (
+      <ItemIcon
+        type={item.type}
+        id={item.id}
+        iconSrc={getEmbeddedLinkExtra(item.extra)?.icons?.[0]}
+        name={item.name}
+      />
+    );
 
     return (
       <div className={classes.nameCell} id={buildNameCellRendererId(item.id)}>
-        {ThumbnailComponent ?? (
-          <ItemIcon
-            type={item.type}
+        {showThumbnails && (
+          <Thumbnail
             id={item.id}
-            extra={item.extra}
-            name={item.name}
+            thumbnailSrc={getEmbeddedLinkExtra(item.extra)?.thumbnails?.[0]}
+            maxWidth={30}
+            maxHeight={30}
+            alt={alt}
+            defaultValue={defaultValueComponent}
+            useThumbnail={hooks.useItemThumbnail}
           />
         )}
         <Typography noWrap className={classes.name}>

@@ -28,7 +28,7 @@ const FolderDescription = ({ itemId, isEditing }) => {
 
   return (
     <TextEditor
-      value={parentItem?.get('description')}
+      value={parentItem?.description}
       edit={isEditing}
       placeholderText={t('Write the folder decription here...')}
       showSaveButton

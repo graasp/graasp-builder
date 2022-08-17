@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from '@graasp/ui';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import Select from '@material-ui/core/Select';
@@ -68,7 +68,7 @@ const VisibilitySelect = ({ item, edit }) => {
 
       // disable setting if any visiblity is set on any ancestor items
       setIsDisabled(
-        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.get('path'),
+        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.path,
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,8 +112,8 @@ const VisibilitySelect = ({ item, edit }) => {
       postItemTag({
         id: itemId,
         tagId: newTagId,
-        itemPath: item?.get('path'),
-        creator: user?.get('id'),
+        itemPath: item?.path,
+        creator: user?.id,
       });
 
     // delete previous visibility tag
@@ -133,7 +133,7 @@ const VisibilitySelect = ({ item, edit }) => {
         deletePublishedAndPublicTags();
         postNewTag();
         // post login schema if it does not exist
-        if (!getItemLoginSchema(item?.get('extra'))) {
+        if (!getItemLoginSchema(item?.extra)) {
           putItemLoginSchema({
             itemId,
             loginSchema: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
@@ -168,8 +168,7 @@ const VisibilitySelect = ({ item, edit }) => {
     if (!edit) {
       return (
         <span className={classes.loginSchemaText}>
-          {itemLogin?.get('loginSchema') ===
-          SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME
+          {itemLogin?.loginSchema === SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME
             ? t('username')
             : t('username and password')}
         </span>
@@ -178,9 +177,7 @@ const VisibilitySelect = ({ item, edit }) => {
 
     return (
       <Select
-        value={
-          itemLogin?.get('loginSchema') || SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME
-        }
+        value={itemLogin?.loginSchema || SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME}
         onChange={handleLoginSchemaChange}
         disabled={isDisabled}
         id={SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}
@@ -252,7 +249,7 @@ const VisibilitySelect = ({ item, edit }) => {
 };
 
 VisibilitySelect.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   edit: PropTypes.bool.isRequired,
 };
 

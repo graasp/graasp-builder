@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Container from '@material-ui/core/Container';
+import InfoIcon from '@material-ui/icons/Info';
 import Typography from '@material-ui/core/Typography';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import {
   FormControlLabel,
   FormGroup,
   makeStyles,
   Switch,
+  Tooltip,
 } from '@material-ui/core';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { useMutation } from '../../../config/queryClient';
@@ -19,6 +21,7 @@ import {
 } from '../../../config/selectors';
 import ThumbnailSetting from './ThumbnailSetting';
 import CCLicenseSelection from '../publish/CCLicenseSelection';
+import { ITEM_TYPES } from '../../../enums';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -31,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(3, 0),
   },
+  collapseTooltip: {
+    color: 'lightgrey',
+    marginBottom: -theme.spacing(0.5),
+  },
 }));
 
 const ItemSettings = ({ item }) => {
@@ -39,12 +46,12 @@ const ItemSettings = ({ item }) => {
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
-  const settings = item.get('settings');
+  const { settings } = item;
 
   const handleChatbox = (event) => {
     editItem({
-      id: item.get('id'),
-      name: item.get('name'),
+      id: item.id,
+      name: item.name,
       settings: {
         showChatbox: event.target.checked,
       },
@@ -53,8 +60,8 @@ const ItemSettings = ({ item }) => {
 
   const handlePinned = (event) => {
     editItem({
-      id: item.get('id'),
-      name: item.get('name'),
+      id: item.id,
+      name: item.name,
       settings: {
         isPinned: event.target.checked,
       },
@@ -63,8 +70,8 @@ const ItemSettings = ({ item }) => {
 
   const handleCollapse = (event) => {
     editItem({
-      id: item.get('id'),
-      name: item.get('name'),
+      id: item.id,
+      name: item.name,
       settings: {
         isCollapsible: event.target.checked,
       },
@@ -96,15 +103,34 @@ const ItemSettings = ({ item }) => {
   };
 
   const renderCollapseSetting = () => {
+    const disabled = item.type === ITEM_TYPES.FOLDER;
     const control = (
       <Switch
         id={SETTINGS_COLLAPSE_TOGGLE_ID}
         onChange={handleCollapse}
         checked={settings?.isCollapsible}
         color="primary"
+        disabled={disabled}
       />
     );
-    return <FormControlLabel label={t('Collapse item')} control={control} />;
+    const formLabel = (
+      <FormControlLabel
+        className={classes.collapse}
+        label={t('Collapse item')}
+        control={control}
+      />
+    );
+    const tooltip = disabled ? (
+      <Tooltip title={t('A folder cannot be collapsed')} placement="right">
+        <InfoIcon className={classes.collapseTooltip} fontSize="small" />
+      </Tooltip>
+    ) : null;
+    return (
+      <div>
+        {formLabel}
+        {tooltip}
+      </div>
+    );
   };
 
   return (
@@ -125,7 +151,7 @@ const ItemSettings = ({ item }) => {
 };
 
 ItemSettings.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemSettings;

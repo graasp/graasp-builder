@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { List } from 'immutable';
+import { Record, List } from 'immutable';
 import React, { useEffect, useState } from 'react';
 import EditButton from '../common/EditButton';
 import ItemMenu from '../main/ItemMenu';
@@ -19,7 +19,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
         setCanEdit(
           isItemUpdateAllowedForUser({
             memberships: getMembershipsForItem({ item, items, memberships }),
-            memberId: member?.get('id'),
+            memberId: member?.id,
           }),
         );
       }
@@ -61,7 +61,7 @@ const ActionsCellRenderer = ({ memberships, items, member }) => {
 
 ActionsCellRenderer.propTypes = {
   memberships: PropTypes.instanceOf(List).isRequired,
-  member: PropTypes.instanceOf(Map).isRequired,
+  member: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ActionsCellRenderer;

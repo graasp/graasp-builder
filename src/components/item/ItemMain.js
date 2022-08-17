@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -109,7 +109,7 @@ const ItemMain = ({ id, children, item }) => {
 
 ItemMain.propTypes = {
   children: PropTypes.node.isRequired,
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   id: PropTypes.string,
 };
 

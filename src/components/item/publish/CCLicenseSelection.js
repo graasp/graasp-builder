@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { Loader, CCLicenseIcon } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import {
@@ -50,10 +51,10 @@ const CCLicenseSelection = ({ item }) => {
   const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
 
   // itemId
-  const itemId = item?.get('id');
+  const itemId = item?.id;
 
-  const settings = item?.get('settings');
-  const itemName = item?.get('name');
+  const settings = item?.settings;
+  const itemName = item?.name;
 
   useEffect(() => {
     if (settings) {
@@ -142,7 +143,7 @@ const CCLicenseSelection = ({ item }) => {
 };
 
 CCLicenseSelection.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default CCLicenseSelection;

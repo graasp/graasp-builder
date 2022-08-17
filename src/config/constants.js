@@ -49,7 +49,7 @@ export const GRAASP_PERFORM_HOST =
   ENV_GRAASP_PERFORM_HOST ||
   process.env.REACT_APP_GRAASP_PERFORM_HOST ||
   'http://localhost:3112';
-export const GRAASP_EXPLORE_HOST =
+export const GRAASP_LIBRARY_HOST =
   ENV_GRAASP_EXPLORE_HOST ||
   process.env.REACT_APP_GRAASP_EXPLORE_HOST ||
   'http://localhost:3005';
@@ -245,7 +245,7 @@ export const ADMIN_CONTACT = 'admin@graasp.org';
 
 export const HOST_MAP = {
   [Context.BUILDER]: '/',
-  [Context.EXPLORER]: GRAASP_EXPLORE_HOST,
+  [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
   [Context.PLAYER]: GRAASP_PERFORM_HOST,
 };
 

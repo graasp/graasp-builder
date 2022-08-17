@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Loader } from '@graasp/ui';
@@ -66,7 +67,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
 
       // disable setting if any visiblity is set on any ancestor items
       setIsDisabled(
-        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.get('path'),
+        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.path,
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,7 +153,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
 };
 
 ItemPublishButton.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   isValidated: PropTypes.bool.isRequired,
 };
 

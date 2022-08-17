@@ -10,7 +10,7 @@ const CurrentUserContextProvider = ({ children }) => {
   const query = useCurrentMember();
 
   // update language depending on user setting
-  const lang = query?.data?.get('extra')?.lang;
+  const lang = query?.data?.extra?.lang;
   useEffect(() => {
     if (lang !== i18n.language) {
       i18n.changeLanguage(lang);

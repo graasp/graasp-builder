@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/graasp/graasp-compose/compare/v0.1.0...v0.1.1) (2022-08-17)
+
+
+### Bug Fixes
+
+* minor change, remove toSeq ([935d8b1](https://github.com/graasp/graasp-compose/commit/935d8b1bc596acdb55d2fb0b807f01b4be008c74))
+* solve small errors ([dfe89cb](https://github.com/graasp/graasp-compose/commit/dfe89cb232b89c61fe5792e571320bdae227b4cf))
+* solve Thumbnail issue, refactor extra props, and minor changes ([223c172](https://github.com/graasp/graasp-compose/commit/223c172d6c29ba134a7150e26dc7fbb17bac0a0f))
+* solve Thumbnail visualization ([1d176f2](https://github.com/graasp/graasp-compose/commit/1d176f281775592541a027eee0d59513854052e9))
+
+
+### Continuous Integration
+
+* add sentry to workflows ([#411](https://github.com/graasp/graasp-compose/issues/411)) ([83f0875](https://github.com/graasp/graasp-compose/commit/83f087561ab8dd816ad477c2372f58edb3fa7575))
+
 ## 0.1.0 (2022-07-21)
 
 

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 import truncate from 'lodash.truncate';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,6 +20,7 @@ import { CurrentUserContext } from '../context/CurrentUserContext';
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import DownloadButton from './DownloadButton';
+import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 
 const NameWrapper =
   ({ id, className }) =>
@@ -47,29 +49,40 @@ const Item = ({ item, memberships }) => {
   const { id, name, description, extra } = item;
   const { t } = useTranslation();
 
-  const ThumbnailComponent = Thumbnail({
-    id: item.id,
-    extra,
-    // maxWidth: 30,
-    // maxHeight: 30,
-    alt: t('thumbnail'),
-    defaultImage: DEFAULT_IMAGE_SRC,
-    useThumbnail: hooks.useItemThumbnail,
-    className: classes.thumbnail,
-  });
+  const alt = t('thumbnail');
+  const classname = classes.thumbnail;
+  const defaultValueComponent = (
+    <img
+      src={DEFAULT_IMAGE_SRC}
+      alt={alt}
+      className={clsx(classes.img, classname)}
+    />
+  );
+  const ThumbnailComponent = (
+    <Thumbnail
+      id={item.id}
+      thumbnailSrc={getEmbeddedLinkExtra(extra)?.thumbnails?.get(0)}
+      alt={alt}
+      defaultValue={defaultValueComponent}
+      useThumbnail={hooks.useItemThumbnail}
+      className={classname}
+    />
+  );
 
   const { data: member } = useContext(CurrentUserContext);
   const enableEdition = isItemUpdateAllowedForUser({
     memberships,
-    memberId: member?.get('id'),
+    memberId: member?.id,
   });
 
+  // We need to convert the Record<item> (immutable) to item (object)
+  // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {!member.isEmpty() && <FavoriteButton member={member} item={item} />}
+      {member && member.id && <FavoriteButton member={member} item={item} />}
       {enableEdition && (
         <>
-          <EditButton item={item} />
+          <EditButton item={item.toJS()} />
           <DownloadButton id={id} name={name} />
         </>
       )}
@@ -83,7 +96,7 @@ const Item = ({ item, memberships }) => {
       })}
       Actions={Actions}
       name={name}
-      creator={member?.get('name')}
+      creator={member?.name}
       ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
@@ -102,6 +115,7 @@ Item.propTypes = {
     extra: PropTypes.shape({
       image: PropTypes.string.isRequired,
     }).isRequired,
+    toJS: PropTypes.func,
   }).isRequired,
   memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };

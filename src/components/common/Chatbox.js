@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import GraaspChatbox from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Map, List } from 'immutable';
+import { Record, List } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { hooks, useMutation } from '../../config/queryClient';
 import { CHATBOX_INPUT_BOX_ID, CHATBOX_ID } from '../../config/selectors';
@@ -12,12 +12,12 @@ import { PERMISSION_LEVELS } from '../../enums';
 const { useItemChat, useMembers, useAvatar, useItemMemberships } = hooks;
 
 const Chatbox = ({ item }) => {
-  const { data: chat, isLoading: isChatLoading } = useItemChat(item.get('id'));
+  const { data: chat, isLoading: isChatLoading } = useItemChat(item.id);
   const { data: members, isLoading: isMembersLoading } = useMembers([
-    ...new Set(chat?.get('messages')?.map(({ creator }) => creator)),
+    ...new Set(chat?.messages?.map(({ creator }) => creator)),
   ]);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
-    useItemMemberships(item.get('id'));
+    useItemMemberships(item.id);
   const { data: currentMember, isLoadingCurrentMember } =
     useContext(CurrentUserContext);
   const { mutate: sendMessage } = useMutation(
@@ -42,7 +42,7 @@ const Chatbox = ({ item }) => {
 
   // only show export chat when user has admin right on the item
   const isAdmin =
-    itemPermissions?.find((perms) => perms.memberId === currentMember.get('id'))
+    itemPermissions?.find((perms) => perms.memberId === currentMember.id)
       ?.permission === PERMISSION_LEVELS.ADMIN;
   return (
     <GraaspChatbox
@@ -50,8 +50,8 @@ const Chatbox = ({ item }) => {
       members={members}
       sendMessageBoxId={CHATBOX_INPUT_BOX_ID}
       currentMember={currentMember}
-      chatId={item.get('id')}
-      messages={List(chat?.get('messages'))}
+      chatId={item.id}
+      messages={List(chat?.messages)}
       showAdminTools={isAdmin}
       sendMessageFunction={sendMessage}
       deleteMessageFunction={deleteMessage}
@@ -63,7 +63,7 @@ const Chatbox = ({ item }) => {
 };
 
 Chatbox.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default Chatbox;

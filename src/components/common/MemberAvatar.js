@@ -23,9 +23,9 @@ const MemberAvatar = ({ id }) => {
   return (
     <Avatar
       className={clsx(classes.avatar, buildMemberAvatarClass(id))}
-      alt={member?.get('name')}
-      id={member?.get('id')}
-      extra={member?.get('extra')}
+      alt={member?.name}
+      id={member?.id}
+      extra={member?.extra}
       useAvatar={hooks.useAvatar}
       variant="circle"
       component="avatar"

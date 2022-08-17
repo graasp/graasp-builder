@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
+import { Record, List } from 'immutable';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -46,7 +46,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
   const getRowId = ({ data }) => buildInvitationTableRowId(data.id);
 
   const onDelete = ({ instance }) => {
-    deleteInvitation({ itemId: item.get('id'), id: instance.id });
+    deleteInvitation({ itemId: item.id, id: instance.id });
   };
 
   const ActionRenderer = TableRowDeleteButtonRenderer({
@@ -64,12 +64,12 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       editInvitation({
         id: instance.id,
         permission: value,
-        itemId: item.get('id'),
+        itemId: item.id,
       });
     },
     createFunction: ({ instance, value }) => {
       postInvitations({
-        itemId: item.get('id'),
+        itemId: item.id,
         invitations: [
           {
             email: instance.email,
@@ -142,7 +142,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
 };
 
 InvitationsTable.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   invitations: PropTypes.instanceOf(List).isRequired,
   emptyMessage: PropTypes.string,
 };

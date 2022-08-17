@@ -53,7 +53,7 @@ const Navigation = () => {
   const { data: currentMember } = useContext(CurrentUserContext);
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
-  const itemPath = item?.get('path');
+  const itemPath = item?.path;
 
   const [parentsOpen, setParentsOpen] = useState(false);
   const { data: parents, isLoading: parentIsLoading } = useParents({
@@ -74,7 +74,7 @@ const Navigation = () => {
     // build root depending on user permission or pathname
 
     // does not show root if user is not authenticated
-    const currentMemberId = currentMember?.get('id');
+    const currentMemberId = currentMember?.id;
     if (!currentMemberId) {
       return null;
     }
@@ -83,7 +83,7 @@ const Navigation = () => {
     let text = t('My Items');
 
     const isParentOwned =
-      (item?.get('creator') ?? parents?.first()?.creator) === currentMemberId;
+      (item?.creator ?? parents?.first()?.creator) === currentMemberId;
 
     // favorite root path
     if (pathname === FAVORITE_ITEMS_PATH) {
@@ -108,7 +108,7 @@ const Navigation = () => {
 
   const renderParents = () => {
     // nothing to display if no parents
-    const p = item?.get('path');
+    const p = item?.path;
     if (!p || getParentsIdsFromPath(p).length <= 1) {
       return null;
     }
@@ -168,7 +168,7 @@ const Navigation = () => {
       {itemId && (
         <Link key={itemId} to={buildItemPath(itemId)}>
           <Typography id={buildNavigationLink(itemId)}>
-            {truncate(item.get('name'), { length: ITEM_NAME_MAX_LENGTH })}
+            {truncate(item.name, { length: ITEM_NAME_MAX_LENGTH })}
           </Typography>
         </Link>
       )}

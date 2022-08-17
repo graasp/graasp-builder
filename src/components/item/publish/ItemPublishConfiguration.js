@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Loader } from '@graasp/ui';
@@ -80,9 +81,8 @@ const ItemPublishConfiguration = ({ item }) => {
     useItemValidationAndReview(itemId);
   // check if validation is still valid
   const iVId =
-    new Date(itemValidationData?.get('createdAt')) >=
-    new Date(item?.get('updatedAt'))
-      ? itemValidationData?.get('itemValidationId')
+    new Date(itemValidationData?.createdAt) >= new Date(item?.updatedAt)
+      ? itemValidationData?.itemValidationId
       : null;
   // get item validation groups
   const { data: itemValidationGroups } = useItemValidationGroups(iVId);
@@ -250,7 +250,7 @@ const ItemPublishConfiguration = ({ item }) => {
 };
 
 ItemPublishConfiguration.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemPublishConfiguration;

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { Loader, Button } from '@graasp/ui';
 import { useTranslation } from 'react-i18next';
 import { Typography, TextField, Chip, makeStyles } from '@material-ui/core';
@@ -37,8 +38,8 @@ const CustomizedTagsEdit = ({ item }) => {
   // current item
   const { itemId } = useParams();
 
-  const settings = item?.get('settings');
-  const itemName = item?.get('name');
+  const settings = item?.settings;
+  const itemName = item?.name;
 
   const [displayValues, setDisplayValues] = useState(null);
 
@@ -103,7 +104,7 @@ const CustomizedTagsEdit = ({ item }) => {
 };
 
 CustomizedTagsEdit.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default CustomizedTagsEdit;

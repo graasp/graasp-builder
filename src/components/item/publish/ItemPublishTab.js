@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ const ItemPublishTab = ({ item, permission }) => {
   const { t } = useTranslation();
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
-    item?.get('id'),
+    item?.id,
   );
   const { setIsItemPublishOpen } = useContext(LayoutContext);
 
@@ -59,7 +59,7 @@ const ItemPublishTab = ({ item, permission }) => {
 };
 
 ItemPublishTab.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   permission: PropTypes.oneOf(PERMISSION_LEVELS),
 };
 

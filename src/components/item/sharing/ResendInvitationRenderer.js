@@ -8,7 +8,7 @@ import { PERMISSION_LEVELS } from '../../../enums';
 
 const ResendInvitationRenderer = (item) => {
   const { t } = useTranslation();
-  const itemId = item.get('id');
+  const itemId = item.id;
   const { mutate: resendInvitation } = useMutation(
     MUTATION_KEYS.RESEND_INVITATION,
   );

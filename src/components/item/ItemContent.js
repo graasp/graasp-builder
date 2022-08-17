@@ -1,7 +1,7 @@
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import { AppItem, DocumentItem, FileItem, H5PItem, LinkItem } from '@graasp/ui';
 import { makeStyles } from '@material-ui/core';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import {
@@ -54,7 +54,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
   // display children
   const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {
     ordered: true,
-    enabled: item?.get('type') === ITEM_TYPES.FOLDER,
+    enabled: item?.type === ITEM_TYPES.FOLDER,
   });
   const id = item?.get(ITEM_KEYS.ID);
 
@@ -78,7 +78,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
 
   const onSaveCaption = (caption) => {
     // edit item only when description has changed
-    if (caption !== item.get('description')) {
+    if (caption !== item.description) {
       editItem({ id: itemId, description: caption });
     }
     setEditingItemId(null);
@@ -86,7 +86,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
 
   const onSaveDocument = (text) => {
     // edit item only when description has changed
-    if (text !== getDocumentExtra(item?.get('extra')).content) {
+    if (text !== getDocumentExtra(item?.extra).content) {
       editItem({ id: itemId, extra: buildDocumentExtra({ content: text }) });
     }
     setEditingItemId(null);
@@ -161,7 +161,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
           <Items
             parentId={itemId}
             id={buildItemsTableId(itemId)}
-            title={item.get('name')}
+            title={item.name}
             items={children}
             isEditing={isEditing}
             onSaveCaption={onSaveCaption}
@@ -195,7 +195,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
 };
 
 ItemContent.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
   enableEditing: PropTypes.bool,
   permission: PropTypes.string.isRequired,
 };

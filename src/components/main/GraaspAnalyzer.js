@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { useTranslation } from 'react-i18next';
 import {
   DEFAULT_ANALYZER_HEIGHT,
@@ -14,7 +14,7 @@ const GraaspAnalyzer = ({ item }) => {
   const { t } = useTranslation();
   const { setIsDashboardOpen } = useContext(LayoutContext);
   const ref = useRef();
-  const id = item.get('id');
+  const { id } = item;
 
   // close tab on unmount
   useEffect(
@@ -40,7 +40,7 @@ const GraaspAnalyzer = ({ item }) => {
 
 GraaspAnalyzer.propTypes = {
   item: PropTypes.instanceOf({
-    Map,
+    Record,
   }).isRequired,
 };
 

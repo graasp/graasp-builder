@@ -31,8 +31,7 @@ const FavoriteItems = () => {
     data: favoriteItems = List(),
     isLoading: isItemsLoading,
     isError: isItemsError,
-  } = hooks.useItems(getFavoriteItems(member.get('extra')));
-
+  } = hooks.useItems(getFavoriteItems(member.extra).toJS());
   const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
 
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them
@@ -41,11 +40,11 @@ const FavoriteItems = () => {
     if (!favoriteItems.isEmpty() && containsNonExistingItems(favoriteItems)) {
       const errorIds = getErrorItemIds(favoriteItems);
       mutation.mutate({
-        id: member.get('id'),
+        id: member.id,
         extra: {
-          favoriteItems: member
-            .get('extra')
-            .favoriteItems?.filter((id) => !errorIds.includes(id)),
+          favoriteItems: member.extra.favoriteItems?.filter(
+            (id) => !errorIds.includes(id),
+          ),
         },
       });
     }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Record } from 'immutable';
 import { Button, Loader } from '@graasp/ui';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -36,8 +37,7 @@ const useStyles = makeStyles(() => ({
 const CsvInputParser = ({ item }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const itemId = item.get('id');
-  const itemPath = item.get('path');
+  const { id: itemId, path: itemPath } = item;
   const [isOpen, setIsOpen] = useState(false);
   const messageI18n = buildI18n();
   const {
@@ -201,7 +201,7 @@ const CsvInputParser = ({ item }) => {
 };
 
 CsvInputParser.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
+  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default CsvInputParser;

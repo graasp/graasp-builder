@@ -57,7 +57,7 @@ const ItemScreen = () => {
 
   const itemMembership = getHighestPermissionForMemberFromMemberships({
     memberships: memberships?.toJS(),
-    memberId: currentMember?.get('id'),
+    memberId: currentMember?.id,
   });
   const permission = itemMembership?.permission;
   const enableEditing = PERMISSIONS_EDITION_ALLOWED.includes(permission);

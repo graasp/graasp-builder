@@ -3,7 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import EditIcon from '@material-ui/icons/Edit';
-import { Map } from 'immutable';
+import { Map, Record } from 'immutable';
 import InfoIcon from '@material-ui/icons/Info';
 import Tooltip from '@material-ui/core/Tooltip';
 import ForumIcon from '@material-ui/icons/Forum';
@@ -51,15 +51,15 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
     isItemSettingsOpen,
     isItemMetadataMenuOpen,
   } = useContext(LayoutContext);
-  const id = item?.get('id');
-  const type = item?.get('type');
+  const id = item?.id;
+  const type = item?.type;
 
   const { data: member } = useContext(CurrentUserContext);
 
   const { data: memberships } = useItemMemberships(id);
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
-    memberId: member?.get('id'),
+    memberId: member?.id,
   });
 
   const renderItemActions = () => {
@@ -134,7 +134,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
 ItemHeaderActions.propTypes = {
   onClickMetadata: PropTypes.func,
   onClickChatbox: PropTypes.func,
-  item: PropTypes.instanceOf(Map),
+  item: PropTypes.instanceOf(Record),
 };
 
 ItemHeaderActions.defaultProps = {
