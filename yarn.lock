@@ -1976,12 +1976,12 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox#46/addMentions":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e0a8cd983bb522e15edcdd04ca6c7f328c5a0f04"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e653a57ae0594e5bfd43259165e1efc326dd2dc6"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui"
     clsx: 1.1.1
-    i18next: 21.6.11
+    i18next: 21.8.1
     immutable: 4.0.0
     lodash.truncate: 4.4.2
     moment: 2.29.4
@@ -2001,13 +2001,13 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 1438fae97fd27b02669b55c0de96ffdeb0a021860b46d32dcd18b5fd65547a6f80dd75344e06a0d2a4ac1aa3ecb922f95f235cd041fac3f4a47d67b2e0ed888b
+  checksum: f5eae5212d86145a57ae001663e24aef73b0b1422818a2b982b4dc07bedd074537df4b259615ec0fa716e004be29f4d71933786e52d3f6c9711c2e5176eca523
   languageName: node
   linkType: hard
 
 "@graasp/query-client@github:graasp/graasp-query-client#183/updateChatMessageTypes":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=9ea7fa7b1a459de06a1e7493add32452775567b2"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=b613ea773cf81dee878a1150895180f27032cb6d"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
@@ -2022,7 +2022,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: a260e21862feba42ccb5d0d7a709a2758b8d45690b39a58f90f1e14004257a61ae05d1a1fa10c1530828fddf14245122ed6c2c2cdc8d250e043c88db7184c8b1
+  checksum: b926ed8bc75840618f4cba4e7432e242aa04ba065fad57747576894d3f0c23c1cf89a9d0c642c0c34ee36f95e4104cdf69c699045502981058f40971ac22514b
   languageName: node
   linkType: hard
 
@@ -11211,6 +11211,15 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.17.2
   checksum: bc6e117874d9b69a39d6ad322851d25f75908c7fa977c8771b98ba7b0273aceba96e82326ed0855b8db098b1490c5a0decbe62b4f61dac84fdc677c2fdc52bb8
+  languageName: node
+  linkType: hard
+
+"i18next@npm:21.8.1":
+  version: 21.8.1
+  resolution: "i18next@npm:21.8.1"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+  checksum: d95da86626356d980c7063f41f2dcb3ce82462a11aa968df10bb87eb19e7fa54a2303643551bfef6276c18e6fb12e8e320f6ff914ff2ad4e0b32ff849150fed0
   languageName: node
   linkType: hard
 
