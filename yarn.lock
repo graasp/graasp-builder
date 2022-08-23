@@ -1976,9 +1976,9 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox#46/addMentions":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e653a57ae0594e5bfd43259165e1efc326dd2dc6"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=3d960b2efb69188c8a8baded5e32692fc569ab41"
   dependencies:
-    "@graasp/translations": "github:graasp/graasp-translations.git"
+    "@graasp/translations": "github:graasp/graasp-translations#32/addMentionsTranslations"
     "@graasp/ui": "github:graasp/graasp-ui"
     clsx: 1.1.1
     i18next: 21.8.1
@@ -1989,7 +1989,7 @@ __metadata:
     react-csv: 2.2.2
     react-i18next: 11.18.1
     react-markdown: 8.0.3
-    react-mentions: 4.4.7
+    react-mentions: 4.4.6
     react-router-dom: 6.3.0
     remark-breaks: 3.0.2
     remark-gfm: 3.0.1
@@ -2001,7 +2001,7 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: f5eae5212d86145a57ae001663e24aef73b0b1422818a2b982b4dc07bedd074537df4b259615ec0fa716e004be29f4d71933786e52d3f6c9711c2e5176eca523
+  checksum: 16e0c4349ff90072f0259bb234c5493ef9aaf54bce72476fcd74a2283896c427b64a8cb017b926ec471680edeedd3b6457d0dfd5f48060b4dbbb088d7c2d245b
   languageName: node
   linkType: hard
 
@@ -2039,6 +2039,15 @@ __metadata:
     slonik: 28.1.1
     uuid: 8.3.2
   checksum: 5bd019b105f58ee8ffdff527d9b6110a31d1d82e17101c41ee98e9dae9a75b972547a01e32c3587b8a89458cd738601de2eb48e4eddbc4d6893e01e4845fdbdf
+  languageName: node
+  linkType: hard
+
+"@graasp/translations@github:graasp/graasp-translations#32/addMentionsTranslations":
+  version: 0.1.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=496b52ade0ebf655d94bd89f45335dd8f255732e"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 1b00196da9371f7ec9a864f6b0152fac566786ee38fd744cf00565b6e446748398f5f6baa4dfc137f21e1c2e208ced4288e8f7552efbd624a955ffb2ebe8bc98
   languageName: node
   linkType: hard
 
@@ -17903,9 +17912,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-mentions@npm:4.4.7":
-  version: 4.4.7
-  resolution: "react-mentions@npm:4.4.7"
+"react-mentions@npm:4.4.6":
+  version: 4.4.6
+  resolution: "react-mentions@npm:4.4.6"
   dependencies:
     "@babel/runtime": 7.4.5
     invariant: ^2.2.4
@@ -17914,7 +17923,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.3"
     react-dom: ">=16.8.3"
-  checksum: 3d195df7b8d762d0f184cb8a76c82ea7f6509b122bfac733c0bdebc3d592bd0aa98f3c61535945c2a115c92afb97949590c6cb00d77d3cb5e40ccaa385223dcb
+  checksum: 174b218936958d4c2ed76d1001b67331475288ad212089552a887382dcc587eda4e14250b89d9cbe91135255ad3a33395f2367ae8d14f8085f70998032608f59
   languageName: node
   linkType: hard
 
