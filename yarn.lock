@@ -1525,7 +1525,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.0, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.3.4, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.0, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.3.4, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -1976,7 +1976,7 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox#46/addMentions":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=3d960b2efb69188c8a8baded5e32692fc569ab41"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=0a63eafd93d8513ca4af74e35bfe9270d623b3b3"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations#32/addMentionsTranslations"
     "@graasp/ui": "github:graasp/graasp-ui"
@@ -2001,14 +2001,15 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 16e0c4349ff90072f0259bb234c5493ef9aaf54bce72476fcd74a2283896c427b64a8cb017b926ec471680edeedd3b6457d0dfd5f48060b4dbbb088d7c2d245b
+  checksum: 53e21886a14fd60e619b67162d0a5da8ec5766d7fc20b2093c1a23c635bb4ea332abfaf1c7d57fa32e34b31325c8ff1a5b598b82f5f5bf299a90052be869156c
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#183/updateChatMessageTypes":
+"@graasp/query-client@github:graasp/graasp-query-client":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=b613ea773cf81dee878a1150895180f27032cb6d"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=6ef71cc527741f4cce266e28265779149932d4f4"
   dependencies:
+    "@graasp/sdk": "github:graasp/graasp-sdk"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     axios: 0.27.2
@@ -2022,7 +2023,24 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: b926ed8bc75840618f4cba4e7432e242aa04ba065fad57747576894d3f0c23c1cf89a9d0c642c0c34ee36f95e4104cdf69c699045502981058f40971ac22514b
+  checksum: c2224dc891e89c93b07469de1af99d0de53b71a7114a14808246ff3bb1e45744c3d49359114611c00a2a6c0a034d87f09d4d5b803a90b617d9dd276ca1deafe5
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@github:graasp/graasp-sdk":
+  version: 0.1.0
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=5170aab6390aa6deb16b9be559a359bdec050cc9"
+  dependencies:
+    "@fastify/secure-session": 5.2.0
+    aws-sdk: 2.1111.0
+    fastify: ^3.29.1
+    fluent-json-schema: 3.1.0
+    immutable: 4.1.0
+    js-cookie: 3.0.1
+    qs: 6.11.0
+    slonik: 28.1.1
+    uuid: 8.3.2
+  checksum: 4548423660f7c7d57f07ae1fa3d243e80d516f03bddd04c23df707aabe9302b671f22e17f318c48414960921a3fd9ee5144e0f0da057d070879923f1a0389edf
   languageName: node
   linkType: hard
 
@@ -2042,21 +2060,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations#32/addMentionsTranslations":
+"@graasp/translations@github:graasp/graasp-translations#main":
   version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=496b52ade0ebf655d94bd89f45335dd8f255732e"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=1eb30447fca754c2b418bfa6d86772348952ccf0"
   dependencies:
     i18next: 21.8.1
-  checksum: 1b00196da9371f7ec9a864f6b0152fac566786ee38fd744cf00565b6e446748398f5f6baa4dfc137f21e1c2e208ced4288e8f7552efbd624a955ffb2ebe8bc98
-  languageName: node
-  linkType: hard
-
-"@graasp/translations@github:graasp/graasp-translations.git":
-  version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=b5839cf012e2838da6893d5cec9b3ecd5d0d3376"
-  dependencies:
-    i18next: 21.6.11
-  checksum: bae42e4d5b91b09caa3d84b5568d2394995523ad9d8c80623ace0702ef09bde62f2731741ac4a31a244131ee009360c519d1e10defed4f54eb45de9c0bdc0403
+  checksum: 5cb8f4782c29bf6c83347604193a77c89acf0edabc541534adf1ada844305777e3a9dc1b01c1b7f8bb463a79ca8563b70f9052e67640e6f3ea0d13622a6af24c
   languageName: node
   linkType: hard
 
@@ -10578,8 +10587,8 @@ __metadata:
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
     "@graasp/chatbox": "github:graasp/graasp-chatbox#46/addMentions"
-    "@graasp/query-client": "github:graasp/graasp-query-client#183/updateChatMessageTypes"
-    "@graasp/translations": "github:graasp/graasp-translations.git"
+    "@graasp/query-client": "github:graasp/graasp-query-client"
+    "@graasp/translations": "github:graasp/graasp-translations"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
@@ -11202,15 +11211,6 @@ __metadata:
   version: 1.0.4
   resolution: "hyphenate-style-name@npm:1.0.4"
   checksum: 4f5bf4b055089754924babebaa23c17845937bcca6aee95d5d015f8fa1e6814279002bd6a9e541e3fac2cd02519fc76305396727066c57c8e21a7e73e7a12137
-  languageName: node
-  linkType: hard
-
-"i18next@npm:21.6.11":
-  version: 21.6.11
-  resolution: "i18next@npm:21.6.11"
-  dependencies:
-    "@babel/runtime": ^7.12.0
-  checksum: 42716a7519d6066a8c9400639ab80fba0b568ae02205b1155ec9c4e627704bb2181dd182ff5eb0c91f6c67c8038ddd0754214e1932de5699d488c21ffd617c5e
   languageName: node
   linkType: hard
 
