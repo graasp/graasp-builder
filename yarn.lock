@@ -1974,11 +1974,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox#46/addMentions":
+"@graasp/chatbox@github:graasp/graasp-chatbox":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=0a63eafd93d8513ca4af74e35bfe9270d623b3b3"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=94732c50d222f2a26b14168d3e9ab7568abd5494"
   dependencies:
-    "@graasp/translations": "github:graasp/graasp-translations#32/addMentionsTranslations"
+    "@graasp/translations": "github:graasp/graasp-translations"
     "@graasp/ui": "github:graasp/graasp-ui"
     clsx: 1.1.1
     i18next: 21.8.1
@@ -2001,7 +2001,7 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 53e21886a14fd60e619b67162d0a5da8ec5766d7fc20b2093c1a23c635bb4ea332abfaf1c7d57fa32e34b31325c8ff1a5b598b82f5f5bf299a90052be869156c
+  checksum: 2eba977f9ed47c84a1a49ae33b5abe68466e8f7f30f7ed77a472ffe673c67fe99e4cc0404818d8c1267d405c98052593cdca8b4c27d8649e2aa82fc7f46b9fba
   languageName: node
   linkType: hard
 
@@ -10586,7 +10586,7 @@ __metadata:
     "@commitlint/config-conventional": 16.2.1
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
-    "@graasp/chatbox": "github:graasp/graasp-chatbox#46/addMentions"
+    "@graasp/chatbox": "github:graasp/graasp-chatbox"
     "@graasp/query-client": "github:graasp/graasp-query-client"
     "@graasp/translations": "github:graasp/graasp-translations"
     "@graasp/ui": "github:graasp/graasp-ui.git"
