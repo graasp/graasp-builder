@@ -23,7 +23,7 @@ const FileDashboardUploader = () => {
       <Typography variant="h6">{t('Upload a File')}</Typography>
       <Typography variant="body" paragraph>
         {t(
-          'If you drag-and-drop zip or H5P archives, or if you any of them as a new “FILE", they will just be stored as such. To expend and use them, use the special “IMPORT ZIP” or “IMPORT H5P” option.',
+          'If you drag-and-drop zip or H5P archives, or if you import them as a new "FILE", they will be stored as such. To expand and use them, use the special "IMPORT ZIP" or "IMPORT H5P" option.',
         )}
       </Typography>
       <Typography variant="body" paragraph>

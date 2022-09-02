@@ -61,7 +61,7 @@
     "Drop here or": "Drop here or",
     "Browse": "Browse",
     "Upload a file": "Upload a file",
-    "If you drag-and-drop zip or H5P archives, or if you upload any of them as a new \"FILE\", they will just be stored as such. To expend and use them, use the special \"IMPORT ZIP\" or \"IMPORT H5P\" option.": "If you drag-and-drop zip or H5P archives, or if you upload any of them as a new \"FILE\", they will just be stored as such. To expend and use them, use the special \"IMPORT ZIP\" or \"IMPORT H5P\" option.",
+    "If you drag-and-drop zip or H5P archives, or if you import them as a new \"FILE\", they will be stored as such. To expand and use them, use the special \"IMPORT ZIP\" or \"IMPORT H5P\" option.": "If you drag-and-drop zip or H5P archives, or if you import as a new \"FILE\", they will be stored as such. To expand and use them, use the special \"IMPORT ZIP\" or \"IMPORT H5P\" option.",
     "You can upload up to FILE_UPLOAD_MAX_FILES file sof MAX_FILE_SIZE at a time": "You can upload up to {{maxFiles}} files of {{maxSize}} at a time",
     "You can upload up to one ZIP of SIZE at a time.": "You can upload up to one ZIP of {{maxSize}} at a time.",
     "You can upload up to one H5P of SIZE at a time.": "You can upload up to one H5P of {{maxSize}} at a time.",

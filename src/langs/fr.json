@@ -62,7 +62,7 @@
     "Drop here or": "Déposer ici ou",
     "Browse": "Parcourir",
     "Upload a file": "Déposez un fichier",
-    "If you drag-and-drop zip or H5P archives, or if you upload any of them as a new \"FILE\", they will just be stored as such. To expend and use them, use the special \"IMPORT ZIP\" or \"IMPORT H5P\" option.": "Si un fichier zip ou H5P est téléchargé comme un \"FICHIER\", ils seront sauvegardé tels quels. Pour les extraire, utiliser les options dédiées \"IMPORTER UN ZIP\" ou \"IMPORTER UN H5P\".",
+    "If you drag-and-drop zip or H5P archives, or if you import them as a new \"FILE\", they will be stored as such. To expand and use them, use the special \"IMPORT ZIP\" or \"IMPORT H5P\" option.": "Si un fichier zip ou H5P est téléchargé comme un \"FICHIER\", ils seront sauvegardé tels quels. Pour les extraire, utiliser les options dédiées \"IMPORTER UN ZIP\" ou \"IMPORTER UN H5P\".",
     "You can upload up to FILE_UPLOAD_MAX_FILES files of MAX_FILE_SIZE at a time.": "Jusqu'à {{maxFiles}} fichiers de {{maxSize}} peuvent être déposés à la fois.",
     "You can upload up to one ZIP of SIZE at a time.": "Un seul fichier ZIP de taille maximum {{maxSize}} peut être envoyé à la fois.",
     "You can upload up to one H5P of SIZE at a time.": "Un seul fichier H5P de taille maximum {{maxSize}} peut être envoyé à la fois.",
