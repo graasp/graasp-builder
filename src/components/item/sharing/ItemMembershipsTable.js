@@ -23,6 +23,10 @@ const useStyles = makeStyles(() => ({
   row: {
     display: 'flex',
     alignItems: 'center',
+
+    '& > div': {
+      width: '100%',
+    },
   },
   actionCell: {
     display: 'flex',
@@ -131,6 +135,7 @@ const ItemMembershipsTable = ({
         cellClass: classes.row,
         flex: 2,
         tooltipField: 'email',
+        resizable: true,
       });
     }
 

@@ -1974,7 +1974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox":
+"@graasp/chatbox@github:graasp/graasp-chatbox.git":
   version: 0.1.0
   resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=94732c50d222f2a26b14168d3e9ab7568abd5494"
   dependencies:
@@ -2005,9 +2005,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client":
+"@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=6ef71cc527741f4cce266e28265779149932d4f4"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=ff4d851ed4ee687893fab9ad44db250dd4ffdfb7"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk"
     "@graasp/translations": "github:graasp/graasp-translations.git"
@@ -2016,14 +2016,12 @@ __metadata:
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
     immutable: 4.0.0
-    jest-immutable-matchers: 3.0.0
-    js-cookie: 3.0.1
     qs: 6.10.3
     react-query: 3.34.19
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: c2224dc891e89c93b07469de1af99d0de53b71a7114a14808246ff3bb1e45744c3d49359114611c00a2a6c0a034d87f09d4d5b803a90b617d9dd276ca1deafe5
+  checksum: 213c7178972224d5aa8d0e6af49db77d7b3cb91946d05507a5473418bb02bad3c4bd56034d6543e0fb4bc154026159338a290c2d4592f2da53c8ab671e2b93f2
   languageName: node
   linkType: hard
 
@@ -10586,11 +10584,11 @@ __metadata:
     "@commitlint/config-conventional": 16.2.1
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
-    "@graasp/chatbox": "github:graasp/graasp-chatbox"
-    "@graasp/query-client": "github:graasp/graasp-query-client"
-    "@graasp/translations": "github:graasp/graasp-translations"
+    "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git"
+    "@graasp/sdk": "github:graasp/graasp-sdk.git"
+    "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git"
-    "@graasp/utils": "github:graasp/graasp-utils.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 5.0.0-beta.5
@@ -10634,6 +10632,7 @@ __metadata:
     nyc: 15.1.0
     papaparse: 5.3.2
     prettier: 2.6.1
+    pretty-bytes: 6.0.0
     prop-types: 15.8.1
     qs: 6.10.3
     react: ^17.0.2
@@ -12501,16 +12500,6 @@ __metadata:
     fsevents:
       optional: true
   checksum: 8ad5236d5646d2388d2bd58a57ea53698923434f43d59ea9ebdc58bce4d0b8544c8de2f7acaa9a6d73171f04460388b2b6d7d6b6c256aea4ebb8780140781596
-  languageName: node
-  linkType: hard
-
-"jest-immutable-matchers@npm:3.0.0":
-  version: 3.0.0
-  resolution: "jest-immutable-matchers@npm:3.0.0"
-  peerDependencies:
-    immutable: ">=3.0.0"
-    jest: ">=21.0.0"
-  checksum: 28c30e0bdb1637e3e1bf4a2b6f02cbc66ba6f3b4cb2c204968d13c591e0fabfdd0b68ee5fc1af49ba23ad702c0543676d7e70a6d19100193d2fafb1e7eb5621f
   languageName: node
   linkType: hard
 
@@ -17214,6 +17203,13 @@ __metadata:
   bin:
     prettier: bin-prettier.js
   checksum: 78be1f8a3ddfad7c3d8a854b6c8941a3bb1ddfca4225c38d778e0fe1029a55368f71b3bbefff82c689015fbb4d391ec44add957f01308ad2725e01a7c1f37cb6
+  languageName: node
+  linkType: hard
+
+"pretty-bytes@npm:6.0.0":
+  version: 6.0.0
+  resolution: "pretty-bytes@npm:6.0.0"
+  checksum: 0bb9f95e617236404b29a8392c6efd82d65805f622f5e809ecd70068102be857d4e3276c86d2a32fa2ef851cc29472e380945dab7bec83ec79bd57a19a10faf7
   languageName: node
   linkType: hard
 

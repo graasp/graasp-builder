@@ -25,6 +25,7 @@ import { UppyContextProvider } from '../file/UppyContext';
 import FileUploader from '../file/FileUploader';
 import ItemPublishTab from '../item/publish/ItemPublishTab';
 import ItemForbiddenScreen from './ItemForbiddenScreen';
+import { ITEM_TYPES } from '../../enums';
 
 const { useItem, useCurrentMember, useItemLogin, useItemMemberships } = hooks;
 
@@ -87,7 +88,7 @@ const ItemScreen = () => {
   return (
     <Main>
       <UppyContextProvider enable={enableEditing} itemId={itemId}>
-        <FileUploader />
+        {item.type === ITEM_TYPES.FOLDER && <FileUploader />}
         <ItemMain item={item}>{content}</ItemMain>
       </UppyContextProvider>
     </Main>

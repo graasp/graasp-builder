@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
+    marginLeft: theme.spacing(1),
   },
   icon: {
     marginBottom: '0 !important',

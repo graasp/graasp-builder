@@ -179,11 +179,11 @@ const ItemPublishConfiguration = ({ item }) => {
         className={classes.heading}
         id={ITEM_PUBLISH_SECTION_TITLE_ID}
       >
-        {t('Publication On Explorer')}
+        {t('Publication On Graasp Library')}
       </Typography>
       <Typography variant="body1">
         {t(
-          'You can publish your collection to Graasp Explorer, our open educational resource library.',
+          'You can publish your collection to Graasp Library, our open educational resource library.',
         )}
         <br />
         {t('Published collections are accessible by the public.')}

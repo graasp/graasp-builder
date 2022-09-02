@@ -64,6 +64,14 @@ describe('Share Item', () => {
       expect(body?.itemPath).to.equal(item.path);
       expect(body?.tagId).to.equal(ITEM_PUBLIC_TAG.id);
     });
+
+    // change public -> private
+    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
+    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
+      // we cannot test the select value since the database is not updated
+      // eslint-disable-next-line no-unused-expressions
+      expect(url).to.be.true;
+    });
   });
 
   it('Public Item', () => {
@@ -118,5 +126,13 @@ describe('Share Item', () => {
       SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
     );
     // item login edition is done in itemLogin.spec.js
+
+    // change pseudonymized -> private
+    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
+    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
+      // we cannot test the select value since the database is not updated
+      // eslint-disable-next-line no-unused-expressions
+      expect(url).to.be.true;
+    });
   });
 });

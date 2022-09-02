@@ -1,4 +1,4 @@
-import { getCurrentSession } from '@graasp/utils';
+import { getCurrentSession } from '@graasp/sdk';
 import { SIGN_IN_PATH } from '../../src/config/constants';
 import { HOME_PATH } from '../../src/config/paths';
 import {

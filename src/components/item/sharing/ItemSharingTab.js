@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import partition from 'lodash.partition';
 import { Record } from 'immutable';
 import { Loader } from '@graasp/ui';
-import { isPseudonymizedMember } from '@graasp/utils';
+import { isPseudonymizedMember } from '@graasp/sdk';
 import { useTranslation } from 'react-i18next';
 import { Divider, makeStyles } from '@material-ui/core';
 import ItemMembershipsTable from './ItemMembershipsTable';

@@ -144,7 +144,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
       {isPublished && (
         <Typography variant="body1">
           {t(
-            'This element is published. Anyone can access it and is available on Graasp Explorer, our public repository of learning ressources.',
+            'This element is published. Anyone can access it and is available on Graasp Library, our public repository of learning ressources.',
           )}
         </Typography>
       )}

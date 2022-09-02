@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga4';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
-import { hasAcceptedCookies } from '@graasp/utils';
+import { hasAcceptedCookies } from '@graasp/sdk';
 import './index.css';
 import Root from './components/Root';
 import * as serviceWorker from './serviceWorker';

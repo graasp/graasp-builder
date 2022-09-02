@@ -1,4 +1,4 @@
-import { buildSignInPath, Context } from '@graasp/utils';
+import { buildSignInPath, Context } from '@graasp/sdk';
 import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
 import env from '../env.json';
 
@@ -187,7 +187,7 @@ export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
-export const ITEMS_TABLE_CONTAINER_HEIGHT = '60vh';
+export const ITEMS_TABLE_CONTAINER_HEIGHT = '55vh';
 
 export const DRAG_ICON_SIZE = 18;
 
@@ -248,8 +248,6 @@ export const HOST_MAP = {
   [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
   [Context.PLAYER]: GRAASP_PERFORM_HOST,
 };
-
-export const MAX_THUMBNAIL_SIZE = 10 * 1024 * 1024;
 
 export const BUTTON_TYPES = {
   MENU_ITEM: 'menuItem',

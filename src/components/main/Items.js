@@ -33,7 +33,7 @@ const Items = ({
     );
   // todo: disable depending on showCreator
   const { data: creators } = hooks.useMembers(
-    Object.keys(items?.groupBy(({ creator }) => creator).toJS()),
+    Object.keys(items?.groupBy(({ creator }) => creator)?.toJS() ?? []),
   );
 
   if (isMembershipsLoading) {
