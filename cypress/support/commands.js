@@ -83,6 +83,7 @@ import {
   mockPublishItem,
   mockUpdatePassword,
   mockPostManyItemMemberships,
+  mockGetMemberMentions,
 } from './server';
 import './commands/item';
 import './commands/navigation';
@@ -98,6 +99,7 @@ import {
   ITEM_VALIDATION_GROUPS,
   SAMPLE_STATUSES,
 } from '../fixtures/validations';
+import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -106,6 +108,7 @@ Cypress.Commands.add(
     recycledItems = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
+    mentions = SAMPLE_MENTIONS,
     storedSessions = [],
     tags = [],
     categories = SAMPLE_CATEGORIES,
@@ -249,6 +252,8 @@ Cypress.Commands.add(
     mockGetItemChat({ items }, getItemChatError);
 
     mockPostItemChatMessage();
+
+    mockGetMemberMentions({ mentions });
 
     mockGetAppLink();
 

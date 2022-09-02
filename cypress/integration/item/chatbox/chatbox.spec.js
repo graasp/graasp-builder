@@ -48,7 +48,8 @@ describe('Chatbox Scenarios', () => {
     );
     cy.get(`#${CHATBOX_ID} #${CHATBOX_INPUT_BOX_ID} button`).click();
     cy.wait('@postItemChatMessage').then(({ request: { body } }) => {
-      expect(body.body).to.equal(message);
+      expect(body.body.message).to.equal(message);
+      expect(body.body.mentions).to.deep.equal([]);
 
       // mock websocket response
       client.receive({

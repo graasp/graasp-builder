@@ -29,3 +29,16 @@ export const ITEM_WITHOUT_CHATBOX_MESSAGES = {
   name: 'item without chatbox messages',
   chat: [],
 };
+
+export const SAMPLE_MENTIONS = [
+  {
+    id: "7062d5e6-a4a0-4828-b4b9-8bc9e21f7abd",
+    messageId: "3241ca2e-8d79-4d48-b6a9-8124f5a33540",
+    memberId: CURRENT_USER.id,
+    creator: MEMBERS.BOB.id,
+    createdAt: "2022-07-18T07:48:05.008Z",
+    updatedAt: "2022-07-18T07:48:05.008Z",
+    status: "unread",
+    message: "`<!@all>[00000000-0000-4000-8000-000000000000]` this is going to be great !",
+  }
+]
