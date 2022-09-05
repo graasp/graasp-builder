@@ -3,6 +3,12 @@ const CHAT_STATUS = {
   CLOSE: 'false',
 };
 
-Object.freeze(CHAT_STATUS);
+const BUTTON_VARIANTS = {
+  BUTTON: 'button',
+  ICON: 'icon',
+};
 
-export default CHAT_STATUS;
+Object.freeze(CHAT_STATUS);
+Object.freeze(BUTTON_VARIANTS);
+
+export { CHAT_STATUS, BUTTON_VARIANTS };

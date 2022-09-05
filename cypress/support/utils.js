@@ -1,3 +1,7 @@
+import Papa from 'papaparse';
+
+import { EXPORT_CSV_HEADERS } from '../../src/config/constants';
+
 // use simple id format for tests
 export const ID_FORMAT = '(?=.*[0-9])(?=.*[a-zA-Z])([a-z0-9-]+)';
 
@@ -30,3 +34,24 @@ export const parseStringToRegExp = (
 };
 
 export const EMAIL_FORMAT = '[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+';
+
+const validateCsvData = (data, numMessages) => {
+  expect(data).to.have.length(numMessages);
+};
+
+const validateHeaders = (headers) => {
+  const expectedHeader = EXPORT_CSV_HEADERS.map((h) => h.label);
+  expect(headers).to.deep.equal(expectedHeader);
+};
+
+export const verifyDownloadedChat = (name, numMessages) => {
+  // get file from download folder
+  const downloadsFolder = Cypress.config('downloadsFolder');
+  const filename = [downloadsFolder, name].join('/');
+  cy.readFile(filename, 'utf-8').then((csvString) => {
+    // parse CSV data with headers
+    const { data, meta } = Papa.parse(csvString, { header: true });
+    validateHeaders(meta.fields);
+    validateCsvData(data, numMessages);
+  });
+};

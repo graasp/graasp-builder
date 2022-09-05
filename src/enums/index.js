@@ -1,4 +1,4 @@
-import CHAT_STATUS from './chatbox';
+import { BUTTON_VARIANTS, CHAT_STATUS } from './chatbox';
 import ITEM_DATA_TYPES from './itemDataTypes';
 import ITEM_LAYOUT_MODES from './itemLayoutModes';
 import ITEM_TYPES from './itemTypes';
@@ -16,4 +16,5 @@ export {
   PERMISSION_LEVELS,
   TREE_PREVENT_SELECTION,
   CHAT_STATUS,
+  BUTTON_VARIANTS,
 };

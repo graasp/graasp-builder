@@ -263,3 +263,12 @@ export const DEFAULT_LINK_SHOW_IFRAME = false;
 export const DEFAULT_LINK_SHOW_BUTTON = true;
 
 export const GRAASP_ASSETS_URL = process.env.REACT_APP_GRAASP_ASSETS_URL;
+export const EXPORT_CSV_HEADERS = [
+  { label: 'message_id', key: 'id' },
+  { label: 'item_id', key: 'chatId' },
+  { label: 'created_at', key: 'createdAt' },
+  { label: 'updated_at', key: 'updatedAt' },
+  { label: 'creator_id', key: 'creator' },
+  { label: 'creator_name', key: 'creatorName' },
+  { label: 'message_content', key: 'body' },
+];

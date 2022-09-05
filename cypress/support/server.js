@@ -75,7 +75,9 @@ const {
   buildPostItemFlagRoute,
   GET_FLAGS_ROUTE,
   buildGetItemChatRoute,
+  buildExportItemChatRoute,
   buildPostItemChatMessageRoute,
+  buildClearItemChatRoute,
   GET_RECYCLED_ITEMS_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
@@ -1139,6 +1141,33 @@ export const mockGetItemChat = ({ items }, shouldThrowError) => {
   ).as('getItemChat');
 };
 
+export const mockDownloadItemChat = ({ items }, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildExportItemChatRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+
+      const messages = item?.chat?.map((c) => ({
+        ...c,
+        creatorName: Object.values(MEMBERS).find((m) => m.id === c.creator)
+          ?.name,
+      }));
+      return reply({
+        id: itemId,
+        messages,
+      });
+    },
+  ).as('downloadItemChat');
+};
+
 export const mockPostItemChatMessage = (shouldThrowError) => {
   cy.intercept(
     {
@@ -1154,6 +1183,24 @@ export const mockPostItemChatMessage = (shouldThrowError) => {
       return reply(body);
     },
   ).as('postItemChatMessage');
+};
+
+export const mockClearItemChat = ({ items }, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(`${API_HOST}/${buildClearItemChatRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+      return reply({ id: itemId, messages: item?.chat });
+    },
+  ).as('clearItemChat');
 };
 
 export const mockGetMemberMentions = ({ mentions }, shouldThrowError) => {
