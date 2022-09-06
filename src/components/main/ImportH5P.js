@@ -1,6 +1,5 @@
 import { routines } from '@graasp/query-client';
 import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
-import prettyBytes from 'pretty-bytes';
 import Typography from '@material-ui/core/Typography';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
@@ -10,7 +9,7 @@ import { useMatch } from 'react-router';
 import notifier from '../../config/notifier';
 import { buildItemPath } from '../../config/paths';
 import { H5P_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
-import { configureH5PImportUppy } from '../../utils/uppy';
+import { configureH5PImportUppy, humanFileSize } from '../../utils/uppy';
 
 const ImportH5P = () => {
   const [uppy, setUppy] = useState(null);
@@ -77,7 +76,7 @@ const ImportH5P = () => {
       </Typography>
       <Typography variant="body" paragraph>
         {t(`You can upload up to one ZIP of SIZE at a time.`, {
-          maxSize: prettyBytes(MAX_ZIP_FILE_SIZE),
+          maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
         })}
       </Typography>
       <div id={H5P_DASHBOARD_UPLOADER_ID}>

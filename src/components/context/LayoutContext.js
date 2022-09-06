@@ -15,10 +15,7 @@ const LayoutContextProvider = ({ children }) => {
 
   // item settings page open
   // todo: separate in item specific context
-  const [isItemSettingsOpen, setIsItemSettingsOpen] = useState(false);
-  const [isItemSharingOpen, setIsItemSharingOpen] = useState(false);
-  const [isItemPublishOpen, setIsItemPublishOpen] = useState(false);
-  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [openedActionTabId, setOpenedActionTabId] = useState(null);
 
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
 
@@ -37,30 +34,20 @@ const LayoutContextProvider = ({ children }) => {
       setEditingItemId,
       isMainMenuOpen,
       setIsMainMenuOpen,
-      isItemSettingsOpen,
-      setIsItemSettingsOpen,
+      openedActionTabId,
+      setOpenedActionTabId,
       isItemMetadataMenuOpen,
       setIsItemMetadataMenuOpen,
       isChatboxMenuOpen,
       setIsChatboxMenuOpen,
-      isItemSharingOpen,
-      setIsItemSharingOpen,
-      isDashboardOpen,
-      setIsDashboardOpen,
-      isItemPublishOpen,
-      setIsItemPublishOpen,
     }),
     [
       editingItemId,
       isChatboxMenuOpen,
       isItemMetadataMenuOpen,
-      isItemSettingsOpen,
-      isItemSharingOpen,
-      isItemPublishOpen,
       isMainMenuOpen,
-      isDashboardOpen,
-      setIsDashboardOpen,
       mode,
+      openedActionTabId,
     ],
   );
 

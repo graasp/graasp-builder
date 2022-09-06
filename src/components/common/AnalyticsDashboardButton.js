@@ -7,19 +7,24 @@ import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 import { LayoutContext } from '../context/LayoutContext';
 import { buildDashboardButtonId } from '../../config/selectors';
+import { ITEM_ACTION_TABS } from '../../config/constants';
 
 const AnalyticsDashboardButton = ({ id }) => {
   const { t } = useTranslation();
-  const { setIsDashboardOpen, isDashboardOpen } = useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   return (
     <Tooltip title={t('Analytics Dashboard')}>
       <IconButton
         aria-label={t('Analytics Dashboard')}
-        onClick={() => setIsDashboardOpen(!isDashboardOpen)}
+        onClick={() => setOpenedActionTabId(ITEM_ACTION_TABS.DASHBOARD)}
         id={buildDashboardButtonId(id)}
       >
-        {isDashboardOpen ? <CloseIcon /> : <PieChartIcon />}
+        {openedActionTabId === ITEM_ACTION_TABS.DASHBOARD ? (
+          <CloseIcon />
+        ) : (
+          <PieChartIcon />
+        )}
       </IconButton>
     </Tooltip>
   );

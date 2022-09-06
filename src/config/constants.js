@@ -270,3 +270,10 @@ export const DISPLAY_CO_EDITORS_OPTIONS = {
     label: 'No',
   },
 };
+
+export const ITEM_ACTION_TABS = {
+  SETTINGS: 'settings',
+  DASHBOARD: 'dashboard',
+  LIBRARY: 'library',
+  SHARING: 'sharing',
+};

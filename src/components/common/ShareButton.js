@@ -10,13 +10,14 @@ import {
   SHARE_ITEM_BUTTON_CLASS,
 } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
+import { ITEM_ACTION_TABS } from '../../config/constants';
 
 const ShareButton = ({ itemId }) => {
   const { t } = useTranslation();
-  const { setIsItemSharingOpen, isItemSharingOpen } = useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {
-    setIsItemSharingOpen(!isItemSharingOpen);
+    setOpenedActionTabId(ITEM_ACTION_TABS.SHARING);
   };
 
   return (
@@ -27,7 +28,11 @@ const ShareButton = ({ itemId }) => {
         onClick={onClick}
         id={buildShareButtonId(itemId)}
       >
-        {isItemSharingOpen ? <CloseIcon /> : <ShareIcon />}
+        {openedActionTabId === ITEM_ACTION_TABS.SHARING ? (
+          <CloseIcon />
+        ) : (
+          <ShareIcon />
+        )}
       </IconButton>
     </Tooltip>
   );

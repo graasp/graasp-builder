@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '@uppy/dashboard/dist/style.css';
 import { routines } from '@graasp/query-client';
-import prettyBytes from 'pretty-bytes';
 import { Dashboard } from '@uppy/react';
 import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
 import { useMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
-import { configureZipImportUppy } from '../../utils/uppy';
+import { configureZipImportUppy, humanFileSize } from '../../utils/uppy';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
 import notifier from '../../config/notifier';
@@ -76,9 +75,12 @@ const ImportZip = () => {
         )}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(`You can upload up to one ZIP of SIZE at a time.`, {
-          maxSize: prettyBytes(MAX_ZIP_FILE_SIZE),
-        })}
+        {t(
+          `You can upload up to one ZIP of SIZE at a time. On error, try to upload a smaller zip.`,
+          {
+            maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
+          },
+        )}
       </Typography>
       <div id={ZIP_DASHBOARD_UPLOADER_ID}>
         <Dashboard

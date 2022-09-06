@@ -4,6 +4,7 @@ import {
   MAX_ZIP_FILE_SIZE,
   MAX_FILE_SIZE,
 } from '@graasp/sdk';
+import { partial } from 'filesize';
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import {
@@ -190,3 +191,5 @@ export const configureH5PImportUppy = ({
     },
     buildEndpoint: (id) => `${API_HOST}/${API_ROUTES.buildImportH5PRoute(id)}`,
   });
+
+export const humanFileSize = partial({ base: 12 });
