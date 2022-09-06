@@ -17,7 +17,11 @@ const ShareButton = ({ itemId }) => {
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {
-    setOpenedActionTabId(ITEM_ACTION_TABS.SHARING);
+    setOpenedActionTabId(
+      openedActionTabId === ITEM_ACTION_TABS.SHARING
+        ? null
+        : ITEM_ACTION_TABS.SHARING,
+    );
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -16,17 +16,12 @@ const ItemSettingsButton = ({ id }) => {
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
   const { t } = useTranslation();
 
-  // on unmount close item settings
-  useEffect(
-    () => () => {
-      setOpenedActionTabId(false);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
   const onClickSettings = () => {
-    setOpenedActionTabId(ITEM_ACTION_TABS.SETTINGS);
+    setOpenedActionTabId(
+      openedActionTabId === ITEM_ACTION_TABS.SETTINGS
+        ? null
+        : ITEM_ACTION_TABS.SETTINGS,
+    );
   };
 
   return (

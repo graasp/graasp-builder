@@ -17,7 +17,11 @@ const PublishButton = ({ itemId }) => {
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {
-    setOpenedActionTabId(ITEM_ACTION_TABS.LIBRARY);
+    setOpenedActionTabId(
+      openedActionTabId === ITEM_ACTION_TABS.LIBRARY
+        ? null
+        : ITEM_ACTION_TABS.LIBRARY,
+    );
   };
 
   return (

@@ -13,11 +13,19 @@ const AnalyticsDashboardButton = ({ id }) => {
   const { t } = useTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
+  const onClick = () => {
+    setOpenedActionTabId(
+      openedActionTabId === ITEM_ACTION_TABS.DASHBOARD
+        ? null
+        : ITEM_ACTION_TABS.SHARING,
+    );
+  };
+
   return (
     <Tooltip title={t('Analytics Dashboard')}>
       <IconButton
         aria-label={t('Analytics Dashboard')}
-        onClick={() => setOpenedActionTabId(ITEM_ACTION_TABS.DASHBOARD)}
+        onClick={onClick}
         id={buildDashboardButtonId(id)}
       >
         {openedActionTabId === ITEM_ACTION_TABS.DASHBOARD ? (
