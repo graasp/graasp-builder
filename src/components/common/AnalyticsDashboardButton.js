@@ -17,7 +17,7 @@ const AnalyticsDashboardButton = ({ id }) => {
     setOpenedActionTabId(
       openedActionTabId === ITEM_ACTION_TABS.DASHBOARD
         ? null
-        : ITEM_ACTION_TABS.SHARING,
+        : ITEM_ACTION_TABS.DASHBOARD,
     );
   };
 
