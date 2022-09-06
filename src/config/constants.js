@@ -99,6 +99,14 @@ export const MIME_TYPES = {
 export const DRAWER_WIDTH = 300;
 export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_LANG = 'en';
+export const DEFAULT_EMAIL_FREQUENCY = 'always';
+
+export const emailFrequency = {
+  always: 'Always receive email notifications',
+  // todo: schedule a digest of the notifications
+  // daily: 'Receive email notifications once per day',
+  never: 'Disable email notifications',
+};
 
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.READ;
 

@@ -103,6 +103,8 @@ export const MEMBER_PROFILE_EMAIL_ID = 'memberProfileEmail';
 export const MEMBER_PROFILE_INSCRIPTION_DATE_ID =
   'memberProfileInscriptionDate';
 export const MEMBER_PROFILE_LANGUAGE_SWITCH_ID = 'memberProfileLanguageSwitch';
+export const MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID =
+  'memberProfileEmailFreqSwitch';
 export const MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID =
   'memberProfileMemberIdCopyButton';
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';

@@ -10,6 +10,7 @@ export const MEMBERS = {
     createdAt: '2021-04-13 14:56:34.749946',
     extra: {
       lang: 'fr',
+      emailFreq: 'never',
     },
   },
   BOB: {
