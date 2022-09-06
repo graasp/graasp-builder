@@ -1976,7 +1976,7 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox.git":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=70430537891a07ab2ce0cd7a31f5a5744d447ce4"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=94732c50d222f2a26b14168d3e9ab7568abd5494"
   dependencies:
     "@graasp/translations": "github:graasp/graasp-translations"
     "@graasp/ui": "github:graasp/graasp-ui"
@@ -2001,7 +2001,7 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 68ebccb1cf66488c4b4a004101569c616f7d0271fb209475111b7975a06adf6c5b9396c36988f69ae72b3be4ae89066c92a1bf24c9f47aed01dc09c41ba6b2d1
+  checksum: 2eba977f9ed47c84a1a49ae33b5abe68466e8f7f30f7ed77a472ffe673c67fe99e4cc0404818d8c1267d405c98052593cdca8b4c27d8649e2aa82fc7f46b9fba
   languageName: node
   linkType: hard
 
@@ -2906,9 +2906,9 @@ __metadata:
   linkType: hard
 
 "@sinclair/typebox@npm:^0.24.1":
-  version: 0.24.35
-  resolution: "@sinclair/typebox@npm:0.24.35"
-  checksum: 41fdadc7692f5b62acbc2155d693977bf5bdffb934ba046c1a55624c46dfa12a9a4a3878c4ce89a4c5625ce90e2210a02c256e564262b3ec4f4738b195033f57
+  version: 0.24.37
+  resolution: "@sinclair/typebox@npm:0.24.37"
+  checksum: 7e5ab66ee687820f6f5caf0471ee1f43f60f64fdc8e945273cb8b773f28e014c9c3ea8f6a618ba63bc9d1237b4dd20a1da24fda502b3f4e7fe3620a43d82f83c
   languageName: node
   linkType: hard
 
