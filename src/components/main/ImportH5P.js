@@ -75,7 +75,7 @@ const ImportH5P = () => {
         )}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(`You can upload up to one ZIP of SIZE at a time.`, {
+        {t(`You can upload up to one H5P of SIZE at a time.`, {
           maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
         })}
       </Typography>
