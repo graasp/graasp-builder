@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.5 (2022-09-08)
+
+
+### Bug Fixes
+
+* fix undefined favorite item list ([#436](https://github.com/graasp/graasp-compose/issues/436)) ([6cd4f07](https://github.com/graasp/graasp-compose/commit/6cd4f07c757baa62549e293f829c7983ed1d16c2))
+
 ### 0.1.4 (2022-09-08)
 
 ### 0.1.3 (2022-09-08)
