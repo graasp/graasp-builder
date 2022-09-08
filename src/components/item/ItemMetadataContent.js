@@ -76,7 +76,11 @@ const ItemMetadataContent = ({ item }) => {
   return (
     <>
       <TableContainer className={classes.table}>
-        <Typography variant="h5" id={ITEM_PANEL_NAME_ID}>
+        <Typography
+          variant="h5"
+          id={ITEM_PANEL_NAME_ID}
+          className={classes.name}
+        >
           {item.get(ITEM_KEYS.NAME)}
         </Typography>
         <Table

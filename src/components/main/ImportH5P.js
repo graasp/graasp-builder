@@ -1,4 +1,5 @@
 import { routines } from '@graasp/query-client';
+import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
 import Typography from '@material-ui/core/Typography';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
@@ -8,7 +9,7 @@ import { useMatch } from 'react-router';
 import notifier from '../../config/notifier';
 import { buildItemPath } from '../../config/paths';
 import { H5P_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
-import { configureH5PImportUppy } from '../../utils/uppy';
+import { configureH5PImportUppy, humanFileSize } from '../../utils/uppy';
 
 const ImportH5P = () => {
   const [uppy, setUppy] = useState(null);
@@ -63,16 +64,20 @@ const ImportH5P = () => {
   return (
     <>
       <Typography variant="h6">{t('Import H5P rich content')}</Typography>
-      <Typography variant="body">
+      <Typography variant="body" paragraph>
         {t(
           'You can upload H5P rich content by uploading exported .h5p files (e.g. from H5P.com, external Moodle services, etc).',
         )}
       </Typography>
-      <br />
-      <Typography variant="body">
+      <Typography variant="body" paragraph>
         {t(
           'Once your file is accepted, it will take several minutes for it to be available.',
         )}
+      </Typography>
+      <Typography variant="body" paragraph>
+        {t(`You can upload up to one ZIP of SIZE at a time.`, {
+          maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
+        })}
       </Typography>
       <div id={H5P_DASHBOARD_UPLOADER_ID}>
         <Dashboard
@@ -80,16 +85,6 @@ const ImportH5P = () => {
           height={200}
           width="100%"
           proudlyDisplayPoweredByUppy={false}
-          note={t('Upload a file')}
-          locale={{
-            strings: {
-              // Text to show on the droppable area.
-              // `%{browse}` is replaced with a link that opens the system file selection dialog.
-              dropPaste: `${t('Drop here or')} %{browse}`,
-              // Used as the label for the link that opens the system file selection dialog.
-              browse: t('Browse'),
-            },
-          }}
         />
       </div>
     </>

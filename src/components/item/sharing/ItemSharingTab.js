@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import partition from 'lodash.partition';
 import { Record } from 'immutable';
 import { Loader } from '@graasp/ui';
-import { isPseudonymizedMember } from '@graasp/utils';
+import { isPseudonymizedMember } from '@graasp/sdk';
 import { useTranslation } from 'react-i18next';
 import { Divider, makeStyles } from '@material-ui/core';
 import ItemMembershipsTable from './ItemMembershipsTable';
@@ -16,7 +16,6 @@ import CreateItemMembershipForm from './CreateItemMembershipForm';
 import { hooks } from '../../../config/queryClient';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
-import { LayoutContext } from '../../context/LayoutContext';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import InvitationsTable from './InvitationsTable';
 import CsvInputParser from './CsvInputParser';
@@ -43,21 +42,12 @@ const ItemSharingTab = ({ item }) => {
   const { data: members } = hooks.useMembers(
     memberships?.map(({ memberId }) => memberId),
   );
-  const { setIsItemSharingOpen } = useContext(LayoutContext);
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
     memberId: currentMember?.id,
   });
-
-  useEffect(
-    () => () => {
-      setIsItemSharingOpen(false);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   if (isLoadingCurrentMember) {
     return <Loader />;

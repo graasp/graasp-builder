@@ -64,6 +64,14 @@ describe('Share Item', () => {
       expect(body?.itemPath).to.equal(item.path);
       expect(body?.tagId).to.equal(ITEM_PUBLIC_TAG.id);
     });
+
+    // change public -> private
+    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
+    cy.wait('@deleteItemTag').then(() => {
+      // we cannot test the select value since the database is not updated
+      // eslint-disable-next-line no-unused-expressions
+      cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).should('be.visible');
+    });
   });
 
   it('Public Item', () => {
@@ -105,12 +113,11 @@ describe('Share Item', () => {
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
 
-    const visiblitySelect = cy.get(
-      `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
-    );
-
     // visibility select default value
-    visiblitySelect.should('have.value', SETTINGS.ITEM_LOGIN.name);
+    cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`).should(
+      'have.value',
+      SETTINGS.ITEM_LOGIN.name,
+    );
 
     // change item login schema
     cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID} + input`).should(
@@ -118,5 +125,11 @@ describe('Share Item', () => {
       SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
     );
     // item login edition is done in itemLogin.spec.js
+
+    // change pseudonymized -> private
+    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
+    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
+      expect(url).to.include(item.tags[0].id);
+    });
   });
 });

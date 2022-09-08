@@ -1,4 +1,4 @@
-import { COOKIE_KEYS } from '@graasp/utils';
+import { COOKIE_KEYS } from '@graasp/sdk';
 import {
   buildItemPath,
   HOME_PATH,

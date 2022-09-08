@@ -20,11 +20,15 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
-import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
+import {
+  ITEM_ACTION_TABS,
+  PERMISSIONS_EDITION_ALLOWED,
+} from '../../config/constants';
 import { UppyContextProvider } from '../file/UppyContext';
 import FileUploader from '../file/FileUploader';
 import ItemPublishTab from '../item/publish/ItemPublishTab';
 import ItemForbiddenScreen from './ItemForbiddenScreen';
+import { ITEM_TYPES } from '../../enums';
 
 const { useItem, useCurrentMember, useItemLogin, useItemMemberships } = hooks;
 
@@ -32,22 +36,12 @@ const ItemScreen = () => {
   const { itemId } = useParams();
   const { data: item, isError } = useItem(itemId);
 
-  const {
-    isItemSettingsOpen,
-    setEditingItemId,
-    setIsItemSettingsOpen,
-    setIsItemSharingOpen,
-    isItemSharingOpen,
-    isItemPublishOpen,
-    isDashboardOpen,
-  } = useContext(LayoutContext);
+  const { setEditingItemId, openedActionTabId } = useContext(LayoutContext);
   const { data: currentMember } = useContext(CurrentUserContext);
   const { data: memberships } = useItemMemberships(itemId);
 
   useEffect(() => {
     setEditingItemId(null);
-    setIsItemSettingsOpen(false);
-    setIsItemSharingOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
@@ -63,31 +57,35 @@ const ItemScreen = () => {
   const enableEditing = PERMISSIONS_EDITION_ALLOWED.includes(permission);
 
   const content = (() => {
-    if (enableEditing && isItemSettingsOpen) {
+    if (openedActionTabId === ITEM_ACTION_TABS.SETTINGS && enableEditing) {
       return <ItemSettings item={item} />;
     }
-    if (isItemSharingOpen) {
-      return <ItemSharingTab item={item} memberships={memberships} />;
+
+    switch (openedActionTabId) {
+      case ITEM_ACTION_TABS.SHARING: {
+        return <ItemSharingTab item={item} memberships={memberships} />;
+      }
+      case ITEM_ACTION_TABS.DASHBOARD: {
+        return <GraaspAnalyzer item={item} />;
+      }
+      case ITEM_ACTION_TABS.LIBRARY: {
+        return <ItemPublishTab item={item} permission={permission} />;
+      }
+      default:
+        return (
+          <ItemContent
+            item={item}
+            enableEditing={enableEditing}
+            permission={permission}
+          />
+        );
     }
-    if (isDashboardOpen) {
-      return <GraaspAnalyzer item={item} />;
-    }
-    if (isItemPublishOpen) {
-      return <ItemPublishTab item={item} permission={permission} />;
-    }
-    return (
-      <ItemContent
-        item={item}
-        enableEditing={enableEditing}
-        permission={permission}
-      />
-    );
   })();
 
   return (
     <Main>
       <UppyContextProvider enable={enableEditing} itemId={itemId}>
-        <FileUploader />
+        {item.type === ITEM_TYPES.FOLDER && <FileUploader />}
         <ItemMain item={item}>{content}</ItemMain>
       </UppyContextProvider>
     </Main>

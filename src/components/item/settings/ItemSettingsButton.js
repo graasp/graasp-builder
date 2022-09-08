@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -10,23 +10,18 @@ import {
   buildSettingsButtonId,
   ITEM_SETTINGS_BUTTON_CLASS,
 } from '../../../config/selectors';
+import { ITEM_ACTION_TABS } from '../../../config/constants';
 
 const ItemSettingsButton = ({ id }) => {
-  const { setIsItemSettingsOpen, isItemSettingsOpen } =
-    useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
   const { t } = useTranslation();
 
-  // on unmount close item settings
-  useEffect(
-    () => () => {
-      setIsItemSettingsOpen(false);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
   const onClickSettings = () => {
-    setIsItemSettingsOpen(!isItemSettingsOpen);
+    setOpenedActionTabId(
+      openedActionTabId === ITEM_ACTION_TABS.SETTINGS
+        ? null
+        : ITEM_ACTION_TABS.SETTINGS,
+    );
   };
 
   return (
@@ -36,7 +31,11 @@ const ItemSettingsButton = ({ id }) => {
         className={ITEM_SETTINGS_BUTTON_CLASS}
         id={buildSettingsButtonId(id)}
       >
-        {isItemSettingsOpen ? <CloseIcon /> : <SettingsIcon />}
+        {openedActionTabId === ITEM_ACTION_TABS.SETTINGS ? (
+          <CloseIcon />
+        ) : (
+          <SettingsIcon />
+        )}
       </IconButton>
     </Tooltip>
   );

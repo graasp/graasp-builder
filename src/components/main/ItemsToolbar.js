@@ -13,6 +13,7 @@ const useToolbarStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
     display: 'flex',
     alignItems: 'center',
+    wordBreak: 'break-word',
   },
   highlight: {
     background: theme.palette.primary.main,

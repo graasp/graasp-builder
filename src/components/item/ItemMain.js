@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
     // takes the whole screen height minus the header height approximatively
     // this might have to change
-    minHeight: '90vh',
+    minHeight: '85vh',
     display: 'flex',
     flexDirection: 'column',
   },

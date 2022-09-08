@@ -126,6 +126,7 @@ const VisibilitySelect = ({ item, edit }) => {
 
     switch (newTag) {
       case SETTINGS.ITEM_PRIVATE.name: {
+        deletePreviousTag();
         deletePublishedAndPublicTags();
         break;
       }

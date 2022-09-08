@@ -1,11 +1,16 @@
 import { API_ROUTES } from '@graasp/query-client';
+import {
+  MAX_THUMBNAIL_SIZE,
+  MAX_ZIP_FILE_SIZE,
+  MAX_FILE_SIZE,
+} from '@graasp/sdk';
+import { partial } from 'filesize';
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import {
   API_HOST,
   FILE_UPLOAD_MAX_FILES,
   H5P_FILE_DOT_EXTENSION,
-  MAX_THUMBNAIL_SIZE,
 } from '../config/constants';
 
 const configureUppy = ({
@@ -19,6 +24,7 @@ const configureUppy = ({
   buildEndpoint,
   fieldName = 'files',
   restrictions = {
+    maxFileSize: MAX_FILE_SIZE,
     maxNumberOfFiles: FILE_UPLOAD_MAX_FILES,
   },
 }) => {
@@ -154,6 +160,7 @@ export const configureZipImportUppy = ({
     onError,
     onUpload,
     restrictions: {
+      maxFileSize: MAX_ZIP_FILE_SIZE,
       maxNumberOfFiles: 1,
       allowedFileTypes: [
         'application/zip',
@@ -178,8 +185,11 @@ export const configureH5PImportUppy = ({
     onError,
     onUpload,
     restrictions: {
+      maxFileSize: MAX_ZIP_FILE_SIZE,
       maxNumberOfFiles: 1,
       allowedFileTypes: [H5P_FILE_DOT_EXTENSION],
     },
     buildEndpoint: (id) => `${API_HOST}/${API_ROUTES.buildImportH5PRoute(id)}`,
   });
+
+export const humanFileSize = partial({ base: 12 });

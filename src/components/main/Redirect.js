@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { redirectToSavedUrl } from '@graasp/utils';
+import { redirectToSavedUrl } from '@graasp/sdk';
 import { RedirectionContent } from '@graasp/ui';
 import { HOME_PATH } from '../../config/paths';
 

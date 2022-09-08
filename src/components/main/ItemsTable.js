@@ -207,6 +207,9 @@ const ItemsTable = ({
         ToolbarActions={ToolbarActions}
         countTextFunction={countTextFunction}
         dragClassName={ROW_DRAGGER_CLASS}
+        onGridReady={(params) => {
+          params.api.sizeColumnsToFit();
+        }}
       />
     </>
   );

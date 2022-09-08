@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { redirect } from '@graasp/utils';
+import { redirect } from '@graasp/sdk';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import {
@@ -98,7 +98,7 @@ const CCLicenseSelection = ({ item }) => {
       </Typography>
       <Typography variant="body1">
         {t(
-          'All content published on Graasp Explorer does not allow commercial use.',
+          'All content published on Graasp Library does not allow commercial use.',
         )}
       </Typography>
       <Typography variant="body1">

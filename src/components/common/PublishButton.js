@@ -10,13 +10,18 @@ import {
   PUBLISH_ITEM_BUTTON_CLASS,
 } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
+import { ITEM_ACTION_TABS } from '../../config/constants';
 
 const PublishButton = ({ itemId }) => {
   const { t } = useTranslation();
-  const { setIsItemPublishOpen, isItemPublishOpen } = useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {
-    setIsItemPublishOpen(!isItemPublishOpen);
+    setOpenedActionTabId(
+      openedActionTabId === ITEM_ACTION_TABS.LIBRARY
+        ? null
+        : ITEM_ACTION_TABS.LIBRARY,
+    );
   };
 
   return (
@@ -27,7 +32,11 @@ const PublishButton = ({ itemId }) => {
         onClick={onClick}
         id={buildPublishButtonId(itemId)}
       >
-        {isItemPublishOpen ? <CloseIcon /> : <ExploreIcon />}
+        {openedActionTabId === ITEM_ACTION_TABS.LIBRARY ? (
+          <CloseIcon />
+        ) : (
+          <ExploreIcon />
+        )}
       </IconButton>
     </Tooltip>
   );

@@ -4,11 +4,11 @@
   "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
-    "@graasp/chatbox": "github:graasp/graasp-chatbox",
-    "@graasp/query-client": "github:graasp/graasp-query-client",
-    "@graasp/translations": "github:graasp/graasp-translations",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox.git",
+    "@graasp/query-client": "github:graasp/graasp-query-client.git",
+    "@graasp/sdk": "github:graasp/graasp-sdk.git",
+    "@graasp/translations": "github:graasp/graasp-translations.git",
     "@graasp/ui": "github:graasp/graasp-ui.git",
-    "@graasp/utils": "github:graasp/graasp-utils.git",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "5.0.0-beta.5",
     "@material-ui/lab": "4.0.0-alpha.60",
@@ -24,6 +24,7 @@
     "ag-grid-community": "27.3.0",
     "ag-grid-react": "27.3.0",
     "clsx": "1.1.1",
+    "filesize": "9.0.11",
     "http-status-codes": "2.2.0",
     "i18next": "21.6.14",
     "immutable": "4.0.0",
@@ -136,5 +137,5 @@
     "ansi-html": "0.0.8",
     "@graasp/translations": "github:graasp/graasp-translations#main"
   },
-  "packageManager": "yarn@3.2.0-rc.11"
+  "packageManager": "yarn@3.2.3"
 }

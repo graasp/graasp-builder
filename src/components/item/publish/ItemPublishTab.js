@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
 import { Record } from 'immutable';
 import { Loader } from '@graasp/ui';
 import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { LayoutContext } from '../../context/LayoutContext';
 import { hooks } from '../../../config/queryClient';
 import ItemPublishConfiguration from './ItemPublishConfiguration';
 import { PERMISSION_LEVELS } from '../../../enums';
@@ -26,18 +25,9 @@ const ItemPublishTab = ({ item, permission }) => {
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.id,
   );
-  const { setIsItemPublishOpen } = useContext(LayoutContext);
 
   const isPublic = isItemPublic({ tags, itemTags });
   const canPublish = permission === PERMISSION_LEVELS.ADMIN && isPublic;
-
-  useEffect(
-    () => () => {
-      setIsItemPublishOpen(false);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   if (isTagsLoading || isItemTagsLoading) {
     return <Loader />;

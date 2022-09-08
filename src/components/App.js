@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { saveUrlForRedirection } from '@graasp/utils';
+import { saveUrlForRedirection } from '@graasp/sdk';
 import { Loader, withAuthorization } from '@graasp/ui';
 import { useLocation } from 'react-router';
 import {

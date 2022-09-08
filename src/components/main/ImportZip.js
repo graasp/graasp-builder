@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import '@uppy/dashboard/dist/style.css';
 import { routines } from '@graasp/query-client';
 import { Dashboard } from '@uppy/react';
+import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
 import { useMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
-import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
-import { configureZipImportUppy } from '../../utils/uppy';
+import { configureZipImportUppy, humanFileSize } from '../../utils/uppy';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { buildItemPath } from '../../config/paths';
 import notifier from '../../config/notifier';
@@ -64,15 +64,22 @@ const ImportZip = () => {
   return (
     <>
       <Typography variant="h6">{t('Import a Graasp Archive')}</Typography>
-      <Typography variant="body">
+      <Typography variant="body" paragraph>
         {t(
           'You can download your resources from graasp.eu by right clicking and choosing "Download as ZIP".',
         )}
       </Typography>
-      <br />
-      <Typography variant="body">
+      <Typography variant="body" paragraph>
         {t(
           'Once your file is accepted, it will take several minutes for all imported files to be available.',
+        )}
+      </Typography>
+      <Typography variant="body" paragraph>
+        {t(
+          `You can upload up to one ZIP of SIZE at a time. On error, try to upload a smaller zip.`,
+          {
+            maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
+          },
         )}
       </Typography>
       <div id={ZIP_DASHBOARD_UPLOADER_ID}>
@@ -81,21 +88,6 @@ const ImportZip = () => {
           height={200}
           width="100%"
           proudlyDisplayPoweredByUppy={false}
-          note={t(
-            `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
-            {
-              maxFiles: FILE_UPLOAD_MAX_FILES,
-            },
-          )}
-          locale={{
-            strings: {
-              // Text to show on the droppable area.
-              // `%{browse}` is replaced with a link that opens the system file selection dialog.
-              dropPaste: `${t('Drop here or')} %{browse}`,
-              // Used as the label for the link that opens the system file selection dialog.
-              browse: t('Browse'),
-            },
-          }}
         />
       </div>
     </>

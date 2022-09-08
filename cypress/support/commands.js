@@ -2,7 +2,7 @@
 import 'cypress-file-upload';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'cypress-localstorage-commands';
-import { COOKIE_KEYS } from '@graasp/utils';
+import { COOKIE_KEYS } from '@graasp/sdk';
 import { ITEM_LAYOUT_MODES } from '../../src/enums';
 import {
   ITEM_INFORMATION_BUTTON_ID,

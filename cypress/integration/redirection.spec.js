@@ -1,4 +1,4 @@
-import { saveUrlForRedirection } from '@graasp/utils';
+import { saveUrlForRedirection } from '@graasp/sdk';
 import { REDIRECT_PATH } from '../../src/config/paths';
 import { OWNED_ITEMS_ID } from '../../src/config/selectors';
 

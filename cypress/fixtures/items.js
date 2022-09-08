@@ -173,6 +173,7 @@ export const ITEM_LOGIN_ITEMS = {
       },
       tags: [
         {
+          id: 'efaf3d5a-5688-11eb-ae93-0242ac130002',
           tagId: ITEM_LOGIN_TAG.id,
           itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
         },

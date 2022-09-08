@@ -7,10 +7,9 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import IconButton from '@material-ui/core/IconButton';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { GraaspLogo, Navigation } from '@graasp/ui';
-import { Context } from '@graasp/utils';
 import { MentionButton } from '@graasp/chatbox';
-import { useMutation } from 'react-query';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Context } from '@graasp/sdk';
 import {
   APP_NAME,
   GRAASP_LOGO_HEADER_HEIGHT,
@@ -23,7 +22,7 @@ import {
   HEADER_APP_BAR_ID,
 } from '../../config/selectors';
 import { HOME_PATH } from '../../config/paths';
-import { hooks } from '../../config/queryClient';
+import { hooks, useMutation } from '../../config/queryClient';
 
 const useStyles = makeStyles((theme) => ({
   header: {

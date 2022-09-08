@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import { useTranslation } from 'react-i18next';
 import Tooltip from '@material-ui/core/Tooltip';
-import { redirect } from '@graasp/utils';
+import { redirect } from '@graasp/sdk';
 import { buildGraaspPlayerView } from '../../config/paths';
 import {
   buildPlayerButtonId,

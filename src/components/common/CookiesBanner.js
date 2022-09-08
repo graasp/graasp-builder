@@ -1,6 +1,6 @@
 import React from 'react';
 import { CookiesBanner } from '@graasp/ui';
-import { COOKIE_KEYS } from '@graasp/utils';
+import { COOKIE_KEYS } from '@graasp/sdk';
 import { useTranslation } from 'react-i18next';
 
 const Component = () => {
