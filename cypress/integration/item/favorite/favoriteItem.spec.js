@@ -7,6 +7,7 @@ import {
   buildItemMenuButtonId,
   buildItemMenu,
   NAVIGATION_ROOT_ID,
+  FAVORITE_ITEMS_ID,
 } from '../../../../src/config/selectors';
 import {
   buildMemberWithFavorites,
@@ -25,6 +26,19 @@ const toggleFavoriteButton = (itemId) => {
 const favoriteItems = [SAMPLE_ITEMS.items[1].id, SAMPLE_ITEMS.items[2].id];
 
 describe('Favorite Item', () => {
+  describe('Member has no favorite items', () => {
+    beforeEach(() => {
+      cy.setUpApi({
+        ...SAMPLE_ITEMS,
+      });
+      cy.visit(FAVORITE_ITEMS_PATH);
+    });
+
+    it('Show empty table', () => {
+      cy.get(`#${FAVORITE_ITEMS_ID}`).should('exist');
+    });
+  });
+
   describe('Member has several valid favorite items', () => {
     beforeEach(() => {
       cy.setUpApi({
