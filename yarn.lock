@@ -2042,7 +2042,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations, @graasp/translations@github:graasp/graasp-translations.git":
+"@graasp/translations@github:graasp/graasp-translations#34/chatboxTranslations":
+  version: 0.1.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=f180be4abd25f91e3d0eef68638eeace1b737448"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 2c00fc7cff04584a07d66caabcb55d95f2eb2ead9071e28b9053c37b3f055bf056469a40fbd94f63d3091864f549854955ee6bc604c941fe02d397dbc51a6e66
+  languageName: node
+  linkType: hard
+
+"@graasp/translations@github:graasp/graasp-translations.git":
   version: 0.1.0
   resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=1eb30447fca754c2b418bfa6d86772348952ccf0"
   dependencies:
