@@ -14,6 +14,7 @@ const useToolbarStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     wordBreak: 'break-word',
+    fontSize: '2em',
   },
   highlight: {
     background: theme.palette.primary.main,
@@ -27,12 +28,7 @@ const ItemsToolbar = ({ title, headerElements }) => {
   return (
     <>
       <Toolbar className={classes.root}>
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
+        <Typography className={classes.title} variant="h4" component="div">
           {title}
         </Typography>
         {headerElements}

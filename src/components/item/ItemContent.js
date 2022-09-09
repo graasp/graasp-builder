@@ -18,8 +18,8 @@ import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
-import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
+import { ITEM_TYPES } from '../../enums';
 import ErrorAlert from '../common/ErrorAlert';
 import Loader from '../common/Loader';
 import { CurrentUserContext } from '../context/CurrentUserContext';
@@ -40,8 +40,7 @@ const useStyles = makeStyles(() => ({
 
 const ItemContent = ({ item, enableEditing, permission }) => {
   const classes = useStyles();
-  const itemId = item.get(ITEM_KEYS.ID);
-  const itemType = item?.get(ITEM_KEYS.TYPE);
+  const { id: itemId, type: itemType } = item;
   const { mutate: editItem, mutateAsync: editItemAsync } = useMutation(
     MUTATION_KEYS.EDIT_ITEM,
   );
@@ -56,10 +55,9 @@ const ItemContent = ({ item, enableEditing, permission }) => {
     ordered: true,
     enabled: item?.type === ITEM_TYPES.FOLDER,
   });
-  const id = item?.get(ITEM_KEYS.ID);
 
   const { data: content, isLoading: isLoadingFileContent } = useFileContent(
-    id,
+    itemId,
     {
       enabled:
         item &&

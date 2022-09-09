@@ -24,12 +24,15 @@ const Items = ({
   parentId,
   showThumbnails,
   showCreator,
+  enableMemberships,
 }) => {
   const { mode } = useContext(LayoutContext);
   const itemSearch = useItemSearch(items);
   const { data: memberships, isLoading: isMembershipsLoading } =
     useManyItemMemberships(
-      itemSearch?.results?.map(({ id: itemId }) => itemId).toJS(),
+      enableMemberships
+        ? itemSearch?.results?.map(({ id: itemId }) => itemId).toJS()
+        : [],
     );
   // todo: disable depending on showCreator
   const { data: creators } = hooks.useMembers(
@@ -97,6 +100,7 @@ Items.propTypes = {
   parentId: PropTypes.string,
   showThumbnails: PropTypes.bool,
   showCreator: PropTypes.bool,
+  enableMemberships: PropTypes.bool,
 };
 
 Items.defaultProps = {
@@ -110,6 +114,7 @@ Items.defaultProps = {
   parentId: null,
   showThumbnails: true,
   showCreator: false,
+  enableMemberships: true,
 };
 
 export default Items;

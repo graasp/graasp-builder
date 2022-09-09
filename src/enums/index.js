@@ -5,7 +5,6 @@ import MIME_TYPES from './mimeTypes';
 import ORDERING from './orderingTypes';
 import PERMISSION_LEVELS from './permissionLevels';
 import TREE_PREVENT_SELECTION from './treePreventSelection';
-import ITEM_KEYS from './itemKeys';
 import APP_MODES from './appModes';
 import CHAT_STATUS from './chatbox';
 
@@ -17,7 +16,6 @@ export {
   ORDERING,
   PERMISSION_LEVELS,
   TREE_PREVENT_SELECTION,
-  ITEM_KEYS,
   APP_MODES,
   CHAT_STATUS,
 };

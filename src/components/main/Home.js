@@ -29,7 +29,7 @@ const Home = () => {
     <Main>
       <UppyContextProvider enable={isSuccess}>
         <FileUploader />
-        <ItemHeader />
+        <ItemHeader showNavigation={false} />
         <Items
           defaultSortedColumn={{ updatedAt: 'desc' }}
           id={OWNED_ITEMS_ID}

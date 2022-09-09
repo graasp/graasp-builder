@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemHeader = ({ onClickMetadata, onClickChatbox }) => {
+const ItemHeader = ({ onClickMetadata, onClickChatbox, showNavigation }) => {
   const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
@@ -35,7 +35,8 @@ const ItemHeader = ({ onClickMetadata, onClickChatbox }) => {
 
   return (
     <div className={classes.root} id={ITEM_HEADER_ID}>
-      <Navigation />
+      {/* display empty div to render actions on the right */}
+      {showNavigation ? <Navigation /> : <div />}
       <ItemHeaderActions
         item={item}
         onClickChatbox={onClickChatbox}
@@ -48,11 +49,13 @@ const ItemHeader = ({ onClickMetadata, onClickChatbox }) => {
 ItemHeader.propTypes = {
   onClickMetadata: PropTypes.func,
   onClickChatbox: PropTypes.func,
+  showNavigation: PropTypes.bool,
 };
 
 ItemHeader.defaultProps = {
   onClickMetadata: () => {},
   onClickChatbox: () => {},
+  showNavigation: true,
 };
 
 export default ItemHeader;

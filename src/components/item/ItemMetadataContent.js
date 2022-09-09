@@ -17,7 +17,7 @@ import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
-import { ITEM_KEYS, ITEM_TYPES } from '../../enums';
+import { ITEM_TYPES } from '../../enums';
 import ItemMemberships from './ItemMemberships';
 
 const { useMember } = hooks;
@@ -45,16 +45,14 @@ const ItemMetadataContent = ({ item }) => {
     setIsItemSharingOpen(true);
   };
 
-  let type = null;
+  let { type } = item;
   let size = null;
-  if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.S3_FILE) {
+  if (type === ITEM_TYPES.S3_FILE) {
     const extra = getS3FileExtra(item.extra);
     ({ mimetype: type, size } = extra);
-  } else if (item.get(ITEM_KEYS.TYPE) === ITEM_TYPES.FILE) {
+  } else if (type === ITEM_TYPES.FILE) {
     const extra = getFileExtra(item.extra);
     ({ mimetype: type, size } = extra);
-  } else {
-    type = item.get(ITEM_KEYS.TYPE);
   }
 
   const renderLink = () => {
@@ -81,7 +79,7 @@ const ItemMetadataContent = ({ item }) => {
           id={ITEM_PANEL_NAME_ID}
           className={classes.name}
         >
-          {item.get(ITEM_KEYS.NAME)}
+          {item.name}
         </Typography>
         <Table
           id={ITEM_PANEL_TABLE_ID}

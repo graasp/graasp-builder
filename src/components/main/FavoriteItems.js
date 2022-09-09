@@ -70,7 +70,7 @@ const FavoriteItems = () => {
 
   return (
     <Main>
-      <ItemHeader />
+      <ItemHeader showNavigation={false} />
       {renderContent()}
     </Main>
   );

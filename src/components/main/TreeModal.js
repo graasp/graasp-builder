@@ -12,7 +12,7 @@ import {
   SHARED_ROOT_ID,
   TREE_VIEW_MAX_WIDTH,
 } from '../../config/constants';
-import { ITEM_KEYS, ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
+import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { hooks } from '../../config/queryClient';
 import {
   buildTreeItemClass,
@@ -108,7 +108,7 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
     }
   };
 
-  const isFolder = (i) => i.get(ITEM_KEYS.TYPE) === ITEM_TYPES.FOLDER;
+  const isFolder = (i) => i.type === ITEM_TYPES.FOLDER;
 
   // compute tree only when the modal is open
   const tree = !open ? null : (
