@@ -1976,9 +1976,9 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox.git":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=94732c50d222f2a26b14168d3e9ab7568abd5494"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=a746be13a4b31e89bfe87d51b5a5a6eab94679e6"
   dependencies:
-    "@graasp/translations": "github:graasp/graasp-translations"
+    "@graasp/translations": "github:graasp/graasp-translations#34/chatboxTranslations"
     "@graasp/ui": "github:graasp/graasp-ui"
     clsx: 1.1.1
     i18next: 21.8.1
@@ -2001,7 +2001,7 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 2eba977f9ed47c84a1a49ae33b5abe68466e8f7f30f7ed77a472ffe673c67fe99e4cc0404818d8c1267d405c98052593cdca8b4c27d8649e2aa82fc7f46b9fba
+  checksum: c3966bff740201b98de1b8dc96492b165013d8ffded016d1cbd4a0ad37abc7e190db0ae1c6d9d9adb5d525b0e949f2072f5177afd281c81fda1c099f10ec3194
   languageName: node
   linkType: hard
 
