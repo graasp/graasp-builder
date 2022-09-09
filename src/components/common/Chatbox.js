@@ -13,13 +13,12 @@ const { useItemChat, useMembers, useAvatar, useItemMemberships } = hooks;
 
 const Chatbox = ({ item }) => {
   const { data: chat, isLoading: isChatLoading } = useItemChat(item.id);
-  const { data: memberships } = useItemMemberships(item.id);
-  const { data: members, isLoading: isMembersLoading } = useMembers(
-    memberships?.map((m) => m.memberId)?.toArray() || [],
-  );
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     useItemMemberships(item.id);
-  const { data: currentMember, isLoadingCurrentMember } =
+  const { data: members, isLoading: isMembersLoading } = useMembers(
+    itemPermissions?.map((m) => m.memberId)?.toArray() || [],
+  );
+  const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useContext(CurrentUserContext);
   const { mutate: sendMessage } = useMutation(
     MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE,
@@ -34,9 +33,9 @@ const Chatbox = ({ item }) => {
 
   if (
     isChatLoading ||
-    isLoadingCurrentMember ||
     isMembersLoading ||
-    isLoadingItemPermissions
+    isLoadingItemPermissions ||
+    isLoadingCurrentMember
   ) {
     return <Loader />;
   }
