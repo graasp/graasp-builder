@@ -49,7 +49,6 @@ const ItemScreen = () => {
     return <ErrorAlert />;
   }
 
-  console.log('memberships: ', memberships);
   const itemMembership = getHighestPermissionForMemberFromMemberships({
     memberships: memberships?.toJS(),
     memberId: currentMember?.id,
