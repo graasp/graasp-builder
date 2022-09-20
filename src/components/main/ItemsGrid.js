@@ -63,6 +63,10 @@ const ItemsGrid = (props) => {
     GRID_ITEMS_PER_PAGE_CHOICES[0],
   );
 
+  if (!items || !items.size) {
+    return <Typography variant="h5">{t('No items')}</Typography>;
+  }
+
   const pagesCount = Math.ceil(items.size / itemsPerPage);
 
   // bugfix: since page state is independent from search, must ensure always within range

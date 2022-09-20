@@ -223,6 +223,10 @@
     "sharedWithMembers_other": "Cet élément est partagé avec {{count}} utilisateurs",
     "You are not signed in.": "Vous n'êtes pas connecté.",
     "Sign in with another account": "Se connecter avec un autre compte",
-    "See Profile": "Voir le Profil"
+    "See Profile": "Voir le Profil",
+    "Link Settings": "Paramètres du lien",
+    "Show Link Button": "Montrer le bouton cliquable",
+    "Show Link Iframe": "Montrer le lien dans une iframe",
+    "If both setting are disabled, a button will be displayed by default.": "Si les deux paramètres sont désactivés, un bouton sera affiché par défaut."
   }
 }
