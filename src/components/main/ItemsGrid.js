@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemsGrid = (props) => {
   const {
-    items,
+    items = List(),
     title,
     itemSearch,
     headerElements,
@@ -62,10 +62,6 @@ const ItemsGrid = (props) => {
   const [itemsPerPage, setItemsPerPage] = useState(
     GRID_ITEMS_PER_PAGE_CHOICES[0],
   );
-
-  if (!items || !items.size) {
-    return <Typography variant="h5">{t('No items')}</Typography>;
-  }
 
   const pagesCount = Math.ceil(items.size / itemsPerPage);
 

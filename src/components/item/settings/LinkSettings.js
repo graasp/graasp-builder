@@ -12,8 +12,8 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import Typography from '@material-ui/core/Typography';
 import { useMutation } from '../../../config/queryClient';
 import {
-  SETTINGS_CHATBOX_TOGGLE_ID,
-  SETTINGS_PINNED_TOGGLE_ID,
+  SETTINGS_LINK_SHOW_BUTTON_ID,
+  SETTINGS_LINK_SHOW_IFRAME_ID,
 } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +63,7 @@ const LinkSettings = ({ item }) => {
   const renderIframeToggle = () => {
     const control = (
       <Switch
-        id={SETTINGS_PINNED_TOGGLE_ID}
+        id={SETTINGS_LINK_SHOW_IFRAME_ID}
         onChange={handleIframeSetting}
         checked={settings?.showLinkIframe ?? true}
         color="primary"
@@ -75,7 +75,7 @@ const LinkSettings = ({ item }) => {
   const renderButtonToggle = () => {
     const control = (
       <Switch
-        id={SETTINGS_CHATBOX_TOGGLE_ID}
+        id={SETTINGS_LINK_SHOW_BUTTON_ID}
         onChange={handleButtonSetting}
         checked={settings?.showLinkButton ?? false}
         color="primary"
