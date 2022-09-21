@@ -2096,9 +2096,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git#161-link":
+"@graasp/ui@github:graasp/graasp-ui.git":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=7d953fc839494130ebe28cf2599d8a670b493e78"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=13ae642e8cfbb9e23404a540b168331a32fe6c8a"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -10582,7 +10582,7 @@ __metadata:
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git#161-link"
+    "@graasp/ui": "github:graasp/graasp-ui.git"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 5.0.0-beta.5
