@@ -225,6 +225,10 @@
     "sharedWithMembers_other": "This item is shared with {{count}} users",
     "You are not signed in.": "You are not signed in.",
     "Sign in with another account": "Sign in with another account",
-    "See Profile": "See Profile"
+    "See Profile": "See Profile",
+    "Link Settings": "Link Settings",
+    "Show Link Button": "Show Link Button",
+    "Show Link Iframe": "Show Link Iframe",
+    "If both setting are disabled, a button will be displayed by default.": "If both setting are disabled, a button will be displayed by default."
   }
 }

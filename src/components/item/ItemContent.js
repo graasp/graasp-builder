@@ -120,6 +120,8 @@ const ItemContent = ({ item, enableEditing, permission }) => {
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
             height={ITEM_DEFAULT_HEIGHT}
+            showButton={item.settings?.showLinkButton}
+            showIframe={item.settings?.showLinkIframe}
           />
         </div>
       );

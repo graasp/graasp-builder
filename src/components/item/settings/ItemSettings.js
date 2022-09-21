@@ -22,6 +22,7 @@ import {
 import ThumbnailSetting from './ThumbnailSetting';
 import CCLicenseSelection from '../publish/CCLicenseSelection';
 import { ITEM_TYPES } from '../../../enums';
+import LinkSettings from './LinkSettings';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -144,6 +145,7 @@ const ItemSettings = ({ item }) => {
         {renderChatSetting()}
         {renderCollapseSetting()}
       </FormGroup>
+      {item.type === ITEM_TYPES.LINK && <LinkSettings item={item} />}
       <ThumbnailSetting item={item} />
       <CCLicenseSelection item={item} />
     </Container>

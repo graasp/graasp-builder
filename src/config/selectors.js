@@ -238,3 +238,5 @@ export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR = `${SHARE_ITEM_CSV_PAR
 export const SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID = 'shareITemFromCsvAlertError';
 export const SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID =
   'shareItemFromCsvResultFailures';
+export const SETTINGS_LINK_SHOW_IFRAME_ID = 'settingsLinkShowIframe';
+export const SETTINGS_LINK_SHOW_BUTTON_ID = 'settingsLinkShowButton';

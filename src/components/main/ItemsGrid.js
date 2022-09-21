@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemsGrid = (props) => {
   const {
-    items,
+    items = List(),
     title,
     itemSearch,
     headerElements,
