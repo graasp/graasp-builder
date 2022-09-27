@@ -23,7 +23,7 @@ if (SENTRY_DSN) {
     dsn: SENTRY_DSN,
     integrations: [new BrowserTracing()],
     environment: SENTRY_ENVIRONMENT,
-    release: `${process.env.npm_package_name}@${process.env.npm_package_version}`,
+    release: `${process.env.npm_package_name}@v${process.env.npm_package_version}`,
 
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
