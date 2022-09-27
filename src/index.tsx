@@ -18,16 +18,19 @@ import {
 
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
 
-Sentry.init({
-  dsn: SENTRY_DSN,
-  integrations: [new BrowserTracing()],
-  environment: SENTRY_ENVIRONMENT,
+if (SENTRY_DSN) {
+  Sentry.init({
+    dsn: SENTRY_DSN,
+    integrations: [new BrowserTracing()],
+    environment: SENTRY_ENVIRONMENT,
+    release: `${process.env.npm_package_name}@v${process.env.npm_package_version}`,
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
-});
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
+  });
+}
 
 if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
   ReactGA.initialize(GA_MEASUREMENT_ID);

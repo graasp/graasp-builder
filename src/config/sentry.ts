@@ -1,5 +1,6 @@
 import { NODE_ENV, ENV } from './constants';
 
+
 const generateSentryConfig = () => {
   let SENTRY_ENVIRONMENT = ENV.DEVELOPMENT;
   let SENTRY_TRACE_SAMPLE_RATE = 1.0;
