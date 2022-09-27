@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: yarn install, build
-        uses: yarn && yarn build
+        run: yarn && yarn build
       - name: Create Sentry release
         uses: getsentry/action-release@v1
         env:
