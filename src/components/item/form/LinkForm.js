@@ -1,15 +1,17 @@
-import React from 'react';
-import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
+import { TextField } from '@mui/material';
+import Typography from '@mui/material/Typography';
+
 import { useTranslation } from 'react-i18next';
-import Typography from '@material-ui/core/Typography';
-import { isUrlValid } from '../../../utils/item';
+
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
+import { ITEM_TYPES } from '../../../enums';
+import { isUrlValid } from '../../../utils/item';
 import {
   buildEmbeddedLinkExtra,
   getEmbeddedLinkExtra,
 } from '../../../utils/itemExtra';
-import { ITEM_TYPES } from '../../../enums';
 
 const LinkForm = ({ onChange, item }) => {
   const { t } = useTranslation();

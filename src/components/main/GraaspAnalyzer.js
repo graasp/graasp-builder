@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
+import PropTypes from 'prop-types';
+
+import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import {
   DEFAULT_ANALYZER_HEIGHT,
   buildGraaspAnalyzerLink,
@@ -12,14 +14,14 @@ import { LayoutContext } from '../context/LayoutContext';
 // todo: use as component
 const GraaspAnalyzer = ({ item }) => {
   const { t } = useTranslation();
-  const { setIsDashboardOpen } = useContext(LayoutContext);
+  const { setOpenedActionTabId } = useContext(LayoutContext);
   const ref = useRef();
   const { id } = item;
 
   // close tab on unmount
   useEffect(
     () => () => {
-      setIsDashboardOpen(false);
+      setOpenedActionTabId(null);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],

@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
+import PropTypes from 'prop-types';
+
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Looks3Icon from '@mui/icons-material/Looks3';
+import LooksOneIcon from '@mui/icons-material/LooksOne';
+import LooksTwoIcon from '@mui/icons-material/LooksTwo';
+import UpdateIcon from '@mui/icons-material/Update';
+import { Box, Button, Divider, Typography } from '@mui/material';
+
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+
+import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
 import { Loader } from '@graasp/ui';
-import { Button, Divider, makeStyles, Typography } from '@material-ui/core';
-import LooksOneIcon from '@material-ui/icons/LooksOne';
-import LooksTwoIcon from '@material-ui/icons/LooksTwo';
-import Looks3Icon from '@material-ui/icons/Looks3';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CancelIcon from '@material-ui/icons/Cancel';
-import UpdateIcon from '@material-ui/icons/Update';
-import { MUTATION_KEYS, DATA_KEYS } from '@graasp/query-client';
-import { useMutation, hooks, queryClient } from '../../../config/queryClient';
-import CategorySelection from './CategorySelection';
-import CustomizedTagsEdit from './CustomizedTagsEdit';
+
 import {
   ADMIN_CONTACT,
   VALIDATION_STATUS_NAMES,
 } from '../../../config/constants';
+import { hooks, queryClient, useMutation } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
 } from '../../../config/selectors';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
-import ItemPublishButton from './ItemPublishButton';
+import CategorySelection from './CategorySelection';
 import CoEditorSettings from './CoEditorSettings';
+import CustomizedTagsEdit from './CustomizedTagsEdit';
+import ItemPublishButton from './ItemPublishButton';
 
 const { POST_ITEM_VALIDATION } = MUTATION_KEYS;
 const { buildItemValidationAndReviewKey } = DATA_KEYS;
@@ -36,33 +40,8 @@ const {
   useItemValidationReviewStatuses,
 } = hooks;
 
-const useStyles = makeStyles((theme) => ({
-  divider: {
-    marginTop: theme.spacing(3),
-  },
-  heading: {
-    marginTop: theme.spacing(2),
-  },
-  subtitle: {
-    marginTop: theme.spacing(1),
-  },
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  config: {
-    marginRight: theme.spacing(3),
-    marginLeft: theme.spacing(3),
-  },
-  button: {
-    marginTop: theme.spacing(1),
-    width: 'auto',
-    marginRight: theme.spacing(2),
-  },
-}));
-
 const ItemPublishConfiguration = ({ item }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   // current item
   const { itemId } = useParams();
 
@@ -173,12 +152,8 @@ const ItemPublishConfiguration = ({ item }) => {
 
   return (
     <>
-      <Divider className={classes.divider} />
-      <Typography
-        variant="h6"
-        className={classes.heading}
-        id={ITEM_PUBLISH_SECTION_TITLE_ID}
-      >
+      <Divider mt={3} />
+      <Typography variant="h6" mt={2} id={ITEM_PUBLISH_SECTION_TITLE_ID}>
         {t('Publication On Graasp Library')}
       </Typography>
       <Typography variant="body1">
@@ -190,8 +165,8 @@ const ItemPublishConfiguration = ({ item }) => {
         <br />
         {t('To publish your collection, please follow the three steps below.')}
       </Typography>
-      <Typography variant="h6" className={classes.subtitle}>
-        <LooksOneIcon color="primary" className={classes.icon} />
+      <Typography variant="h6" mt={1}>
+        <LooksOneIcon color="primary" mr={2} />
         {t('Validation')}
       </Typography>
       <Typography variant="body1">
@@ -204,22 +179,16 @@ const ItemPublishConfiguration = ({ item }) => {
         variant="outlined"
         onClick={handleValidate}
         color="primary"
-        className={classes.button}
         endIcon={displayItemValidationIcon()}
       >
         {t('Validate')}
       </Button>
-      <Button
-        variant="outlined"
-        onClick={handleRefresh}
-        color="primary"
-        className={classes.button}
-      >
+      <Button variant="outlined" onClick={handleRefresh} color="primary">
         {t('Refresh')}
       </Button>
       {displayItemValidationMessage()}
-      <Typography variant="h6" className={classes.subtitle}>
-        <LooksTwoIcon color="primary" className={classes.icon} />
+      <Typography variant="h6" mt={2}>
+        <LooksTwoIcon color="primary" mr={2} />
         {t('Publication')}
       </Typography>
       <Typography variant="body1">
@@ -231,8 +200,8 @@ const ItemPublishConfiguration = ({ item }) => {
         item={item}
         isValidated={itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS}
       />
-      <Typography variant="h6" className={classes.subtitle}>
-        <Looks3Icon color="primary" className={classes.icon} />
+      <Typography variant="h6" mt={2}>
+        <Looks3Icon color="primary" mr={2} />
         {t('Configuration')}
       </Typography>
       <Typography variant="body1">
@@ -240,11 +209,11 @@ const ItemPublishConfiguration = ({ item }) => {
           'Set the options for your resource to make it easily accessible by the public.',
         )}
       </Typography>
-      <div className={classes.config}>
+      <Box mx={3}>
         <CoEditorSettings item={item} />
         <CategorySelection item={item} />
         <CustomizedTagsEdit item={item} />
-      </div>
+      </Box>
     </>
   );
 };

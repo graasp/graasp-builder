@@ -1,65 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import IconButton from '@material-ui/core/IconButton';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { GraaspLogo, Navigation } from '@graasp/ui';
-import { MentionButton } from '@graasp/chatbox';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import { Typography, styled } from '@mui/material';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+
+import { Link } from 'react-router-dom';
+
+// import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Context } from '@graasp/sdk';
+import { Header as GraaspHeader, GraaspLogo, Navigation } from '@graasp/ui';
+
 import {
   APP_NAME,
   GRAASP_LOGO_HEADER_HEIGHT,
   HEADER_HEIGHT,
   HOST_MAP,
 } from '../../config/constants';
-import UserSwitchWrapper from '../common/UserSwitchWrapper';
+import { HOME_PATH } from '../../config/paths';
+import { hooks, useMutation } from '../../config/queryClient';
 import {
   APP_NAVIGATION_DROP_DOWN_ID,
   HEADER_APP_BAR_ID,
 } from '../../config/selectors';
-import { HOME_PATH } from '../../config/paths';
-import { hooks, useMutation } from '../../config/queryClient';
+import UserSwitchWrapper from '../common/UserSwitchWrapper';
 
-const useStyles = makeStyles((theme) => ({
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  headerLeft: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerRight: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  logo: {
-    fill: 'white',
-  },
-  title: {
-    margin: theme.spacing(0, 2, 0, 1),
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'inherit',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  appBarBlank: {
-    height: HEADER_HEIGHT,
-  },
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none',
+  color: 'inherit',
+  display: 'flex',
+  alignItems: 'center',
 }));
 
 const Header = ({ isMenuOpen, toggleMenu }) => {
-  const classes = useStyles();
-
   const { data: currentMember } = hooks.useCurrentMember();
   const memberId = currentMember?.get('id');
   // mutations to handle the mentions
@@ -93,40 +68,38 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
     );
   };
 
-  return (
-    <AppBar position="fixed" id={HEADER_APP_BAR_ID}>
-      <Toolbar className={classes.header}>
-        <div className={classes.headerLeft}>
-          {renderMenuIcon()}
-          <Link to={HOME_PATH} className={classes.link}>
-            <GraaspLogo
-              height={GRAASP_LOGO_HEADER_HEIGHT}
-              className={classes.logo}
-            />
-            <Typography variant="h6" color="inherit" className={classes.title}>
-              {APP_NAME}
-            </Typography>
-          </Link>
-          <Navigation
-            id={APP_NAVIGATION_DROP_DOWN_ID}
-            hostMap={HOST_MAP}
-            currentValue={Context.BUILDER}
-          />
-        </div>
-        <div className={classes.headerRight}>
-          <MentionButton
-            color="secondary"
-            useMentions={hooks.useMentions}
-            useMembers={hooks.useMembers}
-            patchMentionFunction={patchMentionFunction}
-            deleteMentionFunction={deleteMentionFunction}
-            clearAllMentionsFunction={clearAllMentionsFunction}
-          />
-          <UserSwitchWrapper />
-        </div>
-      </Toolbar>
-    </AppBar>
+  const leftContent = (
+    <Box display="flex" ml={2}>
+      {renderMenuIcon()}
+      <StyledLink to={HOME_PATH}>
+        <GraaspLogo height={GRAASP_LOGO_HEADER_HEIGHT} sx={{ fill: 'white' }} />
+        <Typography variant="h6" color="inherit" mr={2} ml={1}>
+          {APP_NAME}
+        </Typography>
+      </StyledLink>
+      <Navigation
+        id={APP_NAVIGATION_DROP_DOWN_ID}
+        hostMap={HOST_MAP}
+        currentValue={Context.BUILDER}
+      />
+    </Box>
   );
+
+  const rightContent = (
+    <>
+      {/* <MentionButton
+  color="secondary"
+  useMentions={hooks.useMentions}
+  useMembers={hooks.useMembers}
+  patchMentionFunction={patchMentionFunction}
+  deleteMentionFunction={deleteMentionFunction}
+  clearAllMentionsFunction={clearAllMentionsFunction}
+/> */}
+      <UserSwitchWrapper />
+    </>
+  );
+
+  return <GraaspHeader leftContent={leftContent} rightContent={rightContent} />;
 };
 
 Header.propTypes = {

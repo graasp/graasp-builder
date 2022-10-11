@@ -1,13 +1,15 @@
+import { List, Record } from 'immutable';
 import PropTypes from 'prop-types';
-import { Record, List } from 'immutable';
-import React, { useEffect, useState } from 'react';
-import EditButton from '../common/EditButton';
-import ItemMenu from '../main/ItemMenu';
+
+import { useEffect, useState } from 'react';
+
 import {
   getMembershipsForItem,
   isItemUpdateAllowedForUser,
 } from '../../utils/membership';
+import EditButton from '../common/EditButton';
 import DownloadButton from '../main/DownloadButton';
+import ItemMenu from '../main/ItemMenu';
 
 // items and memberships match by index
 const ActionsCellRenderer = ({ memberships, items, member }) => {

@@ -1,39 +1,26 @@
-import React, { useContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
-import { Loader } from '@graasp/ui';
-import { useTranslation } from 'react-i18next';
-import {
-  Typography,
-  makeStyles,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-} from '@material-ui/core';
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation } from '../../../config/queryClient';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
-import {
-  buildCoEditorSettingsRadioButtonId,
-  CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
-} from '../../../config/selectors';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    marginTop: theme.spacing(2),
-  },
-  button: {
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-  },
-}));
+import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
+
+import { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { Loader } from '@graasp/ui';
+
+import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
+import { useMutation } from '../../../config/queryClient';
+import {
+  CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
+  buildCoEditorSettingsRadioButtonId,
+} from '../../../config/selectors';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 const CoEditorSettings = ({ item }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { mutate: updateDisplayCoEditors } = useMutation(EDIT_ITEM);
 
   // user
@@ -72,7 +59,7 @@ const CoEditorSettings = ({ item }) => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.title}>
+      <Typography variant="h6" mt={2}>
         {t('Co-Editors')}
       </Typography>
       <Typography variant="body1">
@@ -88,6 +75,7 @@ const CoEditorSettings = ({ item }) => {
       >
         {Object.values(DISPLAY_CO_EDITORS_OPTIONS).map((option) => (
           <FormControlLabel
+            key={option.value}
             id={buildCoEditorSettingsRadioButtonId(option.value)}
             value={option.value}
             control={<Radio color="primary" />}

@@ -1,17 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { useParams } from 'react-router';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemLoginAuthorization } from '@graasp/ui';
-import { useParams } from 'react-router';
-import { getHighestPermissionForMemberFromMemberships } from '../../utils/membership';
-import ErrorAlert from '../common/ErrorAlert';
-import { CurrentUserContext } from '../context/CurrentUserContext';
-import { LayoutContext } from '../context/LayoutContext';
-import ItemContent from '../item/ItemContent';
-import ItemMain from '../item/ItemMain';
-import ItemSettings from '../item/settings/ItemSettings';
-import ItemSharingTab from '../item/sharing/ItemSharingTab';
-import GraaspAnalyzer from './GraaspAnalyzer';
-import Main from './Main';
+
+import {
+  ITEM_ACTION_TABS,
+  PERMISSIONS_EDITION_ALLOWED,
+} from '../../config/constants';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
@@ -20,15 +16,21 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
-import {
-  ITEM_ACTION_TABS,
-  PERMISSIONS_EDITION_ALLOWED,
-} from '../../config/constants';
-import { UppyContextProvider } from '../file/UppyContext';
-import FileUploader from '../file/FileUploader';
-import ItemPublishTab from '../item/publish/ItemPublishTab';
-import ItemForbiddenScreen from './ItemForbiddenScreen';
 import { ITEM_TYPES } from '../../enums';
+import { getHighestPermissionForMemberFromMemberships } from '../../utils/membership';
+import ErrorAlert from '../common/ErrorAlert';
+import { CurrentUserContext } from '../context/CurrentUserContext';
+import { LayoutContext } from '../context/LayoutContext';
+import FileUploader from '../file/FileUploader';
+import { UppyContextProvider } from '../file/UppyContext';
+import ItemContent from '../item/ItemContent';
+import ItemMain from '../item/ItemMain';
+import ItemPublishTab from '../item/publish/ItemPublishTab';
+import ItemSettings from '../item/settings/ItemSettings';
+import ItemSharingTab from '../item/sharing/ItemSharingTab';
+import GraaspAnalyzer from './GraaspAnalyzer';
+import ItemForbiddenScreen from './ItemForbiddenScreen';
+import Main from './Main';
 
 const { useItem, useCurrentMember, useItemLogin, useItemMemberships } = hooks;
 

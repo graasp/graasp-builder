@@ -1,40 +1,36 @@
-import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Loader } from '@graasp/ui';
-import MenuItem from '@material-ui/core/MenuItem';
 import { Record } from 'immutable';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Typography from '@mui/material/Typography';
+
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
 import { useParams } from 'react-router';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation, hooks } from '../../../config/queryClient';
+import { Loader } from '@graasp/ui';
+
 import { SETTINGS } from '../../../config/constants';
-import {
-  getTagByName,
-  getVisibilityTagAndItemTag,
-} from '../../../utils/itemTag';
-import { getItemLoginSchema } from '../../../utils/itemExtra';
+import { hooks, useMutation } from '../../../config/queryClient';
 import {
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   SHARE_ITEM_VISIBILITY_SELECT_ID,
 } from '../../../config/selectors';
+import { getItemLoginSchema } from '../../../utils/itemExtra';
+import {
+  getTagByName,
+  getVisibilityTagAndItemTag,
+} from '../../../utils/itemTag';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
 const { useTags, useItemTags, useItemLogin } = hooks;
 
-const useStyles = makeStyles({
-  loginSchemaText: {
-    fontWeight: 'bold',
-  },
-});
-
 const VisibilitySelect = ({ item, edit }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   // user
   const { data: user, isLoading: isMemberLoading } =
     useContext(CurrentUserContext);
@@ -168,7 +164,7 @@ const VisibilitySelect = ({ item, edit }) => {
     // do not show select if the user cannot edit the item
     if (!edit) {
       return (
-        <span className={classes.loginSchemaText}>
+        <span style={{ fontWeight: 'bold' }}>
           {itemLogin?.loginSchema === SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME
             ? t('username')
             : t('username and password')}

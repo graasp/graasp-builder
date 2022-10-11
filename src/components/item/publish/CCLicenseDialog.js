@@ -1,20 +1,21 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+
 import {
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-} from '@material-ui/core';
+  DialogTitle,
+} from '@mui/material';
+
+import { useTranslation } from 'react-i18next';
+
 import { Button } from '@graasp/ui';
 
 const CCLicenseDialog = ({
   open,
   setOpen,
   disabled,
-  className,
   buttonName,
   handleSubmit,
 }) => {
@@ -32,7 +33,7 @@ const CCLicenseDialog = ({
     <>
       <Button
         variant="contained"
-        className={className}
+        my={1}
         onClick={handleClickOpen}
         disabled={disabled} // disable the button if no option is selected
       >
@@ -62,13 +63,11 @@ CCLicenseDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  className: PropTypes.string,
   buttonName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
 CCLicenseDialog.defaultProps = {
-  className: '',
   disabled: false,
 };
 

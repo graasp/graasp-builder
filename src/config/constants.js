@@ -1,4 +1,5 @@
-import { buildSignInPath, Context } from '@graasp/sdk';
+import { Context, buildSignInPath } from '@graasp/sdk';
+
 import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
 import env from '../env.json';
 
@@ -11,7 +12,6 @@ const {
   HIDDEN_ITEM_TAG_ID: ENV_HIDDEN_ITEM_TAG_ID,
   GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
   H5P_INTEGRATION_URL: ENV_H5P_INTEGRATION_URL,
-  DOMAIN: ENV_DOMAIN,
 } = env;
 
 export const APP_NAME = 'Graasp';
@@ -68,7 +68,7 @@ export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 export const HIDDEN_ITEM_TAG_ID =
   ENV_HIDDEN_ITEM_TAG_ID || process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || false;
 
-export const DOMAIN = ENV_DOMAIN || process.env.REACT_APP_DOMAIN;
+export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -281,4 +281,8 @@ export const ITEM_ACTION_TABS = {
   DASHBOARD: 'dashboard',
   LIBRARY: 'library',
   SHARING: 'sharing',
+};
+
+export const THUMBNAIL_SIZES = {
+  SMALL: 'small',
 };

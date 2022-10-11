@@ -1,29 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+
+import { Box, Typography } from '@mui/material';
+
 import { ItemIcon, Thumbnail } from '@graasp/ui';
+
 import { hooks } from '../../config/queryClient';
 import { buildNameCellRendererId } from '../../config/selectors';
 import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 
-const useStyles = makeStyles((theme) => ({
-  nameCell: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  name: {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
 const ItemNameCellRenderer = (showThumbnails) => {
   const Component = ({ data: item }) => {
-    const classes = useStyles();
-    const { t } = useTranslation();
-
-    const alt = t('small thumbnail');
+    const alt = item.name;
     const defaultValueComponent = (
       <ItemIcon
         type={item.type}
@@ -34,7 +21,11 @@ const ItemNameCellRenderer = (showThumbnails) => {
     );
 
     return (
-      <div className={classes.nameCell} id={buildNameCellRendererId(item.id)}>
+      <Box
+        display="flex"
+        alignItems="center"
+        id={buildNameCellRendererId(item.id)}
+      >
         {showThumbnails && (
           <Thumbnail
             id={item.id}
@@ -46,10 +37,10 @@ const ItemNameCellRenderer = (showThumbnails) => {
             useThumbnail={hooks.useItemThumbnail}
           />
         )}
-        <Typography noWrap className={classes.name}>
+        <Typography noWrap ml={1}>
           {item.name}
         </Typography>
-      </div>
+      </Box>
     );
   };
 

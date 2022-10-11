@@ -1,24 +1,27 @@
-import React, { useContext, useEffect } from 'react';
 import { List } from 'immutable';
+
+import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import {
-  FAVORITE_ITEMS_ID,
-  FAVORITE_ITEMS_ERROR_ALERT_ID,
-} from '../../config/selectors';
+import { Loader } from '@graasp/ui';
+
 import { hooks, useMutation } from '../../config/queryClient';
-import ErrorAlert from '../common/ErrorAlert';
-import Loader from '../common/Loader';
-import Main from './Main';
-import ItemHeader from '../item/header/ItemHeader';
-import Items from './Items';
+import {
+  FAVORITE_ITEMS_ERROR_ALERT_ID,
+  FAVORITE_ITEMS_ID,
+} from '../../config/selectors';
 import {
   containsNonExistingItems,
   getErrorItemIds,
   getExistingItems,
 } from '../../utils/item';
 import { getFavoriteItems } from '../../utils/member';
+import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import ItemHeader from '../item/header/ItemHeader';
+import Items from './Items';
+import Main from './Main';
 
 const FavoriteItems = () => {
   const { t } = useTranslation();

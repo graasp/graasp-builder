@@ -1,49 +1,45 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { Box, makeStyles } from '@material-ui/core';
-import { Button } from '@graasp/ui';
-import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import { useMatch } from 'react-router';
-import { MUTATION_KEYS } from '@graasp/query-client';
-import FolderForm from '../item/form/FolderForm';
-import {
-  ITEM_FORM_CONFIRM_BUTTON_ID,
-  CREATE_ITEM_CLOSE_BUTTON_ID,
-} from '../../config/selectors';
-import { useMutation } from '../../config/queryClient';
-import { ITEM_TYPES } from '../../enums';
-import FileDashboardUploader from '../file/FileDashboardUploader';
-import LinkForm from '../item/form/LinkForm';
-import { isItemValid } from '../../utils/item';
-import { buildItemPath } from '../../config/paths';
-import DocumentForm from '../item/form/DocumentForm';
-import AppForm from '../item/form/AppForm';
-import ItemTypeTabs from './ItemTypeTabs';
-import ImportZip from './ImportZip';
-import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
-import ImportH5P from './ImportH5P';
 
-const useStyles = makeStyles((theme) => ({
-  dialogContent: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    paddingLeft: 0,
-  },
-  form: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    width: '100%',
-  },
+import { Box, styled } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import Typography from '@mui/material/Typography';
+
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useMatch } from 'react-router';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { Button } from '@graasp/ui';
+
+import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
+import { buildItemPath } from '../../config/paths';
+import { useMutation } from '../../config/queryClient';
+import {
+  CREATE_ITEM_CLOSE_BUTTON_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+} from '../../config/selectors';
+import { ITEM_TYPES } from '../../enums';
+import { isItemValid } from '../../utils/item';
+import FileDashboardUploader from '../file/FileDashboardUploader';
+import AppForm from '../item/form/AppForm';
+import DocumentForm from '../item/form/DocumentForm';
+import FolderForm from '../item/form/FolderForm';
+import LinkForm from '../item/form/LinkForm';
+import ImportH5P from './ImportH5P';
+import ImportZip from './ImportZip';
+import ItemTypeTabs from './ItemTypeTabs';
+
+const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
+  flexGrow: 1,
+  backgroundColor: theme.palette.background.paper,
+  display: 'flex',
+  paddingLeft: 0,
 }));
 
 const NewItemModal = ({ open, handleClose }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
   const [initialItem] = useState({});
@@ -174,13 +170,21 @@ const NewItemModal = ({ open, handleClose }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogContent className={classes.dialogContent}>
+      <StyledDialogContent>
         <ItemTypeTabs
           onTypeChange={setSelectedItemType}
           initialValue={selectedItemType}
         />
-        <Box className={classes.form}>{renderContent()}</Box>
-      </DialogContent>
+        <Box
+          sx={{
+            pl: 2,
+            pr: 2,
+            width: '100%',
+          }}
+        >
+          {renderContent()}
+        </Box>
+      </StyledDialogContent>
       <DialogActions>{renderActions()}</DialogActions>
     </Dialog>
   );

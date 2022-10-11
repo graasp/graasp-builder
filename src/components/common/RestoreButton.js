@@ -1,12 +1,15 @@
-import React from 'react';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
+
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
 import { useTranslation } from 'react-i18next';
-import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
-import Tooltip from '@material-ui/core/Tooltip';
-import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+
 import { useMutation } from '../../config/queryClient';
+import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
 
 const RestoreButton = ({ itemIds, color, id }) => {
   const { t } = useTranslation();

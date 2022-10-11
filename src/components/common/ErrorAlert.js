@@ -1,6 +1,7 @@
-import Alert from '@material-ui/lab/Alert';
-import React from 'react';
 import PropTypes from 'prop-types';
+
+import Alert from '@mui/material/Alert';
+
 import { useTranslation } from 'react-i18next';
 
 const ErrorAlert = ({ id }) => {

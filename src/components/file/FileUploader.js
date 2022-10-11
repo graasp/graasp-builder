@@ -1,45 +1,36 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-import { DragDrop } from '@uppy/react';
 import '@uppy/drag-drop/dist/style.css';
+import { DragDrop } from '@uppy/react';
+
+import { Container, styled } from '@mui/material';
+
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
 import { UPLOADER_ID } from '../../config/selectors';
 import { UppyContext } from './UppyContext';
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: 'none',
-    height: '100vh',
-    width: '100%',
-    boxSizing: 'border-box',
-    position: 'absolute',
-    top: 0,
-    padding: `${HEADER_HEIGHT + theme.spacing(3)}px ${theme.spacing(
-      3,
-    )}px ${theme.spacing(3)}px`,
-    left: 0,
-    // show above drawer
-    zIndex: theme.zIndex.drawer + 1,
-    opacity: 0.8,
+const StyledContainer = styled(Container)(({ theme }) => ({
+  display: 'none',
+  height: '100vh',
+  width: '100%',
+  boxSizing: 'border-box',
+  position: 'absolute',
+  top: 0,
+  padding: `${HEADER_HEIGHT + theme.spacing(3)}px ${theme.spacing(
+    3,
+  )}px ${theme.spacing(3)}px`,
+  left: 0,
+  // show above drawer
+  zIndex: theme.zIndex.drawer + 1,
+  opacity: 0.8,
 
-    '& div': {
-      width: '100%',
-    },
-  },
-  show: {
-    display: 'flex',
-  },
-  invalid: {
-    '& div button': {
-      backgroundColor: 'red !important',
-    },
+  '& div': {
+    width: '100%',
   },
 }));
 
 const FileUploader = () => {
-  const classes = useStyles();
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
@@ -99,13 +90,26 @@ const FileUploader = () => {
     return null;
   }
 
+  const buildSx = () => {
+    let sx = {};
+    if (isDragging) {
+      sx = { ...sx, display: 'flex' };
+    }
+    if (!isValid) {
+      sx = {
+        ...sx,
+        '& div button': {
+          backgroundColor: 'red !important',
+        },
+      };
+    }
+    return sx;
+  };
+
   return (
-    <div
+    <StyledContainer
       id={UPLOADER_ID}
-      className={clsx(classes.wrapper, {
-        [classes.show]: isDragging,
-        [classes.invalid]: !isValid,
-      })}
+      sx={buildSx()}
       onDragEnter={(e) => handleDragEnter(e)}
       onDragEnd={(e) => handleDragEnd(e)}
       onDragLeave={(e) => handleDragEnd(e)}
@@ -126,7 +130,7 @@ const FileUploader = () => {
           },
         }}
       />
-    </div>
+    </StyledContainer>
   );
 };
 

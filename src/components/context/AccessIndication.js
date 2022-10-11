@@ -1,17 +1,21 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Loader } from '@graasp/ui';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Typography, Grid } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+
+import InfoIcon from '@mui/icons-material/Info';
+import { Grid, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import InfoIcon from '@material-ui/icons/Info';
-import { LayoutContext } from './LayoutContext';
-import { hooks } from '../../config/queryClient';
-import ItemMemberships from '../item/ItemMemberships';
-import { hasItemLoginEnabled, isItemPublic } from '../../utils/itemTag';
+
+import { Loader } from '@graasp/ui';
+
 import { SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR } from '../../config/constants';
+import { hooks } from '../../config/queryClient';
 import { ACCESS_INDICATION_ID } from '../../config/selectors';
+import { hasItemLoginEnabled, isItemPublic } from '../../utils/itemTag';
+import ItemMemberships from '../item/ItemMemberships';
+import { LayoutContext } from './LayoutContext';
 
 const AccessIndication = ({ itemId, onClick }) => {
   const { t } = useTranslation();

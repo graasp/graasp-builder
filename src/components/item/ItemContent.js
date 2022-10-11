@@ -1,9 +1,20 @@
-import { Api, MUTATION_KEYS } from '@graasp/query-client';
-import { AppItem, DocumentItem, FileItem, H5PItem, LinkItem } from '@graasp/ui';
-import { makeStyles } from '@material-ui/core';
 import { Record } from 'immutable';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+
+import { Container, styled } from '@mui/material';
+
+import { useContext } from 'react';
+
+import { Api, MUTATION_KEYS } from '@graasp/query-client';
+import {
+  AppItem,
+  DocumentItem,
+  FileItem,
+  H5PItem,
+  LinkItem,
+  Loader,
+} from '@graasp/ui';
+
 import {
   API_HOST,
   CONTEXT_BUILDER,
@@ -12,16 +23,15 @@ import {
 } from '../../config/constants';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
+  DOCUMENT_ITEM_TEXT_EDITOR_ID,
+  ITEM_SCREEN_ERROR_ALERT_ID,
   buildFileItemId,
   buildItemsTableId,
   buildSaveButtonId,
-  DOCUMENT_ITEM_TEXT_EDITOR_ID,
-  ITEM_SCREEN_ERROR_ALERT_ID,
 } from '../../config/selectors';
-import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import { ITEM_TYPES } from '../../enums';
+import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import ErrorAlert from '../common/ErrorAlert';
-import Loader from '../common/Loader';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { LayoutContext } from '../context/LayoutContext';
 import ItemActions from '../main/ItemActions';
@@ -30,16 +40,13 @@ import NewItemButton from '../main/NewItemButton';
 
 const { useChildren, useFileContent } = hooks;
 
-const useStyles = makeStyles(() => ({
-  fileWrapper: {
-    textAlign: 'center',
-    height: '80vh',
-    flexGrow: 1,
-  },
+const FileWrapper = styled(Container)(() => ({
+  textAlign: 'center',
+  height: '80vh',
+  flexGrow: 1,
 }));
 
 const ItemContent = ({ item, enableEditing, permission }) => {
-  const classes = useStyles();
   const { id: itemId, type: itemType } = item;
   const { mutate: editItem, mutateAsync: editItemAsync } = useMutation(
     MUTATION_KEYS.EDIT_ITEM,
@@ -100,7 +107,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
     case ITEM_TYPES.FILE:
     case ITEM_TYPES.S3_FILE:
       return (
-        <div className={classes.fileWrapper}>
+        <FileWrapper>
           <FileItem
             id={buildFileItemId(itemId)}
             editCaption={isEditing}
@@ -109,11 +116,11 @@ const ItemContent = ({ item, enableEditing, permission }) => {
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
           />
-        </div>
+        </FileWrapper>
       );
     case ITEM_TYPES.LINK:
       return (
-        <div className={classes.fileWrapper}>
+        <FileWrapper>
           <LinkItem
             item={item}
             editCaption={isEditing}
@@ -123,11 +130,11 @@ const ItemContent = ({ item, enableEditing, permission }) => {
             showButton={item.settings?.showLinkButton}
             showIframe={item.settings?.showLinkIframe}
           />
-        </div>
+        </FileWrapper>
       );
     case ITEM_TYPES.DOCUMENT:
       return (
-        <div className={classes.fileWrapper}>
+        <FileWrapper>
           <DocumentItem
             id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
             item={item}
@@ -137,7 +144,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
             saveButtonId={saveButtonId}
             maxHeight="70vh"
           />
-        </div>
+        </FileWrapper>
       );
     case ITEM_TYPES.APP:
       return (

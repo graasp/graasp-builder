@@ -1,43 +1,32 @@
-import React, { useContext } from 'react';
 import { Record } from 'immutable';
 import PropTypes from 'prop-types';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { formatDate } from '../../utils/date';
+
 import { hooks } from '../../config/queryClient';
-import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
-import { LayoutContext } from '../context/LayoutContext';
 import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
+import { formatDate } from '../../utils/date';
+import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
+import { LayoutContext } from '../context/LayoutContext';
 import ItemMemberships from './ItemMemberships';
 
 const { useMember } = hooks;
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    padding: theme.spacing(2),
-  },
-  extra: {
-    wordBreak: 'break-all',
-  },
-  name: {
-    wordBreak: 'break-word',
-  },
-}));
-
 const ItemMetadataContent = ({ item }) => {
   const { t } = useTranslation();
 
-  const classes = useStyles();
   const { setIsItemSharingOpen } = useContext(LayoutContext);
   const { data: creator } = useMember(item.creator);
 
@@ -73,12 +62,8 @@ const ItemMetadataContent = ({ item }) => {
 
   return (
     <>
-      <TableContainer className={classes.table}>
-        <Typography
-          variant="h5"
-          id={ITEM_PANEL_NAME_ID}
-          className={classes.name}
-        >
+      <TableContainer sx={{ p: 2 }}>
+        <Typography variant="h5" id={ITEM_PANEL_NAME_ID} noWrap>
           {item.name}
         </Typography>
         <Table

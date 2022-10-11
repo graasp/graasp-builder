@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import { Button, TextField } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { Button, TextField } from '@material-ui/core';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+
+import { PASSWORD_EMPTY_ERROR } from '../../config/messages';
 import { useMutation } from '../../config/queryClient';
 import {
   CONFIRM_CHANGE_PASSWORD_BUTTON_ID,
@@ -19,41 +22,9 @@ import {
   passwordValidator,
   strengthValidator,
 } from '../../utils/validation';
-import { PASSWORD_EMPTY_ERROR } from '../../config/messages';
-
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    margin: theme.spacing(1, 0),
-  },
-  changePasswordContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    margin: theme.spacing(1, 0),
-  },
-  firstRow: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-  },
-  buttonItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-  },
-  updateButton: {
-    margin: theme.spacing(1, 0),
-  },
-}));
 
 const PasswordSetting = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -112,7 +83,13 @@ const PasswordSetting = () => {
 
   return (
     <>
-      <Grid container spacing={3} className={classes.mainContainer}>
+      <Grid
+        container
+        spacing={3}
+        direction="column"
+        alignItems="flex-start"
+        my={1}
+      >
         <Grid item xs={8}>
           <Grid item xs={12}>
             <Typography variant="h5">{t('Change Password')}</Typography>
@@ -120,11 +97,22 @@ const PasswordSetting = () => {
           <Grid
             container
             spacing={3}
-            className={classes.changePasswordContainer}
+            display="flex"
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            my={1}
           >
-            <Grid item xs={12} sm={12} className={classes.firstRow}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              display="flex"
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="center"
+            >
               <TextField
-                className={classes.input}
                 required
                 label={t('Current Password')}
                 variant="outlined"
@@ -141,7 +129,6 @@ const PasswordSetting = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                className={classes.input}
                 required
                 label={t('New Password')}
                 variant="outlined"
@@ -155,7 +142,6 @@ const PasswordSetting = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                className={classes.input}
                 required
                 label={t('Confirm Password')}
                 variant="outlined"
@@ -167,12 +153,20 @@ const PasswordSetting = () => {
                 type="password"
               />
             </Grid>
-            <Grid item xs={12} sm={6} className={classes.buttonItem}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              display="flex"
+              direction="column"
+              justifyContent="flex-end"
+              alignItems="flex-start"
+            >
               <Button
                 id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
                 variant="contained"
                 color="primary"
-                className={classes.updateButton}
+                my={1}
                 onClick={() => handleChangePassword()}
               >
                 {t('Update password')}
@@ -183,7 +177,15 @@ const PasswordSetting = () => {
                 )}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} className={classes.buttonItem}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              display="flex"
+              direction="column"
+              justifyContent="flex-end"
+              alignItems="flex-start"
+            >
               <Button
                 id={CONFIRM_RESET_PASSWORD_BUTTON_ID}
                 variant="outlined"

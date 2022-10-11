@@ -1,6 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+
 import { TextEditor } from '@graasp/ui';
+
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 

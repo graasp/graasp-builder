@@ -1,41 +1,31 @@
-import React, { useContext } from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import PropTypes from 'prop-types';
-import partition from 'lodash.partition';
 import { Record } from 'immutable';
-import { Loader } from '@graasp/ui';
-import { isPseudonymizedMember } from '@graasp/sdk';
+import partition from 'lodash.partition';
+import PropTypes from 'prop-types';
+
+import { Divider } from '@mui/material';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, makeStyles } from '@material-ui/core';
+
+import { isPseudonymizedMember } from '@graasp/sdk';
+import { Loader } from '@graasp/ui';
+
+import { hooks } from '../../../config/queryClient';
+import { getItemLoginSchema } from '../../../utils/itemExtra';
+import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
+import CreateItemMembershipForm from './CreateItemMembershipForm';
+import CsvInputParser from './CsvInputParser';
+import InvitationsTable from './InvitationsTable';
 import ItemMembershipsTable from './ItemMembershipsTable';
 import SharingLink from './SharingLink';
 import VisibilitySelect from './VisibilitySelect';
-import CreateItemMembershipForm from './CreateItemMembershipForm';
-import { hooks } from '../../../config/queryClient';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
-import { getItemLoginSchema } from '../../../utils/itemExtra';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
-import InvitationsTable from './InvitationsTable';
-import CsvInputParser from './CsvInputParser';
-
-const useStyles = makeStyles((theme) => ({
-  title: {
-    margin: 0,
-    padding: 0,
-  },
-  wrapper: {
-    marginTop: theme.spacing(2),
-  },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
-}));
 
 const ItemSharingTab = ({ item }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { data: memberships } = hooks.useItemMemberships(item?.id);
   const { data: currentMember, isLoadingCurrentMember } =
     useContext(CurrentUserContext);
@@ -69,10 +59,10 @@ const ItemSharingTab = ({ item }) => {
 
     return (
       <>
-        <Divider className={classes.divider} />
+        <Divider my={3} />
 
         <Grid container justifyContent="space-between" alignItems="center">
-          <Typography variant="h5" className={classes.title}>
+          <Typography variant="h5" m={0} p={0}>
             {t('Authorized Members')}
           </Typography>
           {canEdit && <CsvInputParser item={item} />}
@@ -89,8 +79,8 @@ const ItemSharingTab = ({ item }) => {
         */}
         {getItemLoginSchema(item?.extra) && (
           <>
-            <Divider className={classes.divider} />
-            <Typography variant="h5" className={classes.title}>
+            <Divider my={3} />
+            <Typography variant="h5" m={0} p={0}>
               {t('Authenticated Members')}
             </Typography>
             <ItemMembershipsTable
@@ -104,10 +94,8 @@ const ItemSharingTab = ({ item }) => {
 
         {Boolean(invitations?.size) && (
           <>
-            <Divider className={classes.divider} />
-            <Typography variant="h5" className={classes.title}>
-              {t('Pending Invitations')}
-            </Typography>
+            <Divider my={3} />
+            <Typography variant="h5">{t('Pending Invitations')}</Typography>
             <InvitationsTable
               item={item}
               invitations={invitations}
@@ -120,10 +108,8 @@ const ItemSharingTab = ({ item }) => {
   };
 
   return (
-    <Container disableGutters className={classes.wrapper}>
-      <Typography variant="h4" className={classes.title}>
-        {t('Sharing')}
-      </Typography>
+    <Container disableGutters mt={2}>
+      <Typography variant="h4">{t('Sharing')}</Typography>
       <SharingLink itemId={item.id} />
       <VisibilitySelect item={item} edit={canEdit} />
       {renderMembershipSettings()}

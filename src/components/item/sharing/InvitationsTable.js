@@ -1,37 +1,31 @@
-import React, { useMemo } from 'react';
+import { List, Record } from 'immutable';
 import PropTypes from 'prop-types';
-import { Record, List } from 'immutable';
-import { Table as GraaspTable } from '@graasp/ui/dist/table';
-import { makeStyles } from '@material-ui/core/styles';
+
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation } from '../../../config/queryClient';
-import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
-import {
-  buildInvitationTableRowId,
-  buildItemInvitationRowDeleteButtonId,
-} from '../../../config/selectors';
-import TableRowPermissionRenderer from './TableRowPermissionRenderer';
+import { Table as GraaspTable } from '@graasp/ui/dist/table';
+
 import {
   MEMBERSHIP_TABLE_HEIGHT,
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
+import { useMutation } from '../../../config/queryClient';
+import {
+  buildInvitationTableRowId,
+  buildItemInvitationRowDeleteButtonId,
+} from '../../../config/selectors';
 import ResendInvitationRenderer from './ResendInvitationRenderer';
+import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
+import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 
-const useStyles = makeStyles(() => ({
-  row: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  actionCell: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-}));
+const rowStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
 
 const InvitationsTable = ({ invitations, item, emptyMessage }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const { mutate: editInvitation } = useMutation(
     MUTATION_KEYS.PATCH_INVITATION,
@@ -91,7 +85,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         comparator: GraaspTable.textComparator,
         headerName: t('Mail'),
         field: 'email',
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 1,
         tooltipField: 'email',
       },
@@ -99,7 +93,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         headerName: t('Invitation'),
         sortable: false,
         cellRenderer: InvitationRenderer,
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 1,
         field: 'email',
       },
@@ -117,7 +111,11 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
-        cellClass: classes.actionCell,
+        cellStyle: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

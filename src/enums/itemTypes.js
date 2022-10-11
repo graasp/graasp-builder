@@ -1,3 +1,6 @@
+/**
+ * @deprecated use graasp sdk
+ */
 const ITEM_TYPES = {
   FOLDER: 'folder',
   FILE: 'file',
@@ -13,5 +16,7 @@ const ITEM_TYPES = {
 };
 
 Object.freeze(ITEM_TYPES);
-
+/**
+ * @deprecated use graasp sdk
+ */
 export default ITEM_TYPES;

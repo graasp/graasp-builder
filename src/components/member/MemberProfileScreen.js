@@ -1,43 +1,36 @@
-import React, { useContext } from 'react';
-import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
-import { Loader } from '@graasp/ui';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Card from '@material-ui/core/Card';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { Grid, IconButton, Typography } from '@mui/material';
+import Card from '@mui/material/Card';
+
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitch from './LanguageSwitch';
-import { formatDate } from '../../utils/date';
-import { DEFAULT_LANG, DEFAULT_EMAIL_FREQUENCY } from '../../config/constants';
-import { copyToClipboard } from '../../utils/clipboard';
+
+import { Loader } from '@graasp/ui';
+
+import { DEFAULT_EMAIL_FREQUENCY, DEFAULT_LANG } from '../../config/constants';
+import notifier from '../../config/notifier';
 import {
-  MEMBER_PROFILE_MEMBER_ID_ID,
+  MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
   MEMBER_PROFILE_EMAIL_ID,
-  MEMBER_PROFILE_MEMBER_NAME_ID,
   MEMBER_PROFILE_INSCRIPTION_DATE_ID,
   MEMBER_PROFILE_LANGUAGE_SWITCH_ID,
   MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID,
-  MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
+  MEMBER_PROFILE_MEMBER_ID_ID,
+  MEMBER_PROFILE_MEMBER_NAME_ID,
 } from '../../config/selectors';
-import notifier from '../../config/notifier';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
-import Main from '../main/Main';
+import { copyToClipboard } from '../../utils/clipboard';
+import { formatDate } from '../../utils/date';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import Main from '../main/Main';
 import AvatarSetting from './AvatarSetting';
 import DeleteMemberDialog from './DeleteMemberDialog';
-import PasswordSetting from './PasswordSetting';
 import EmailPreferenceSwitch from './EmailPreferenceSwitch';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-  profileTable: {
-    margin: theme.spacing(1, 1),
-  },
-}));
+import LanguageSwitch from './LanguageSwitch';
+import PasswordSetting from './PasswordSetting';
 
 const MemberProfileScreen = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { data: member, isLoading } = useContext(CurrentUserContext);
 
   if (isLoading) {
@@ -57,7 +50,7 @@ const MemberProfileScreen = () => {
 
   return (
     <Main>
-      <Card className={classes.root}>
+      <Card p={3}>
         <Grid container spacing={3}>
           <Grid item xs={10}>
             <Grid item xs={12}>
@@ -66,11 +59,7 @@ const MemberProfileScreen = () => {
               </Typography>
             </Grid>
             {/* todo: display only as light user */}
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container m={1} alignItems="center">
               <Grid item xs={4}>
                 <Typography>{t('Member ID')}</Typography>
               </Grid>
@@ -86,11 +75,7 @@ const MemberProfileScreen = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
                 <Typography>{t('Email')}</Typography>
               </Grid>
@@ -100,11 +85,7 @@ const MemberProfileScreen = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
                 <Typography>{t('Member Since')}</Typography>
               </Grid>
@@ -114,11 +95,7 @@ const MemberProfileScreen = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
                 <Typography>{t('Language')}</Typography>
               </Grid>
@@ -130,11 +107,7 @@ const MemberProfileScreen = () => {
                 />
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
                 <Typography>{t('Email Frequency')}</Typography>
               </Grid>

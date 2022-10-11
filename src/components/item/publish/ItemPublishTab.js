@@ -1,25 +1,21 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
-import { Loader } from '@graasp/ui';
-import { makeStyles, Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
+
+import { Typography } from '@mui/material';
+import Container from '@mui/material/Container';
+
 import { useTranslation } from 'react-i18next';
+
+import { Loader } from '@graasp/ui';
+
 import { hooks } from '../../../config/queryClient';
-import ItemPublishConfiguration from './ItemPublishConfiguration';
 import { PERMISSION_LEVELS } from '../../../enums';
 import { isItemPublic } from '../../../utils/itemTag';
+import ItemPublishConfiguration from './ItemPublishConfiguration';
 
 const { useTags, useItemTags } = hooks;
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    marginTop: theme.spacing(2),
-  },
-}));
-
 const ItemPublishTab = ({ item, permission }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
@@ -34,7 +30,7 @@ const ItemPublishTab = ({ item, permission }) => {
   }
 
   return (
-    <Container disableGutters className={classes.wrapper}>
+    <Container disableGutters mt={2}>
       {canPublish ? (
         <ItemPublishConfiguration item={item} />
       ) : (

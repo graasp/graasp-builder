@@ -1,5 +1,5 @@
-import { ORDERING } from '../enums';
 import { USER_ITEM_ORDER } from '../config/constants';
+import { ORDERING } from '../enums';
 
 /**
  * Custum sorting function depending on a given property name

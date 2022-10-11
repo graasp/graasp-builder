@@ -1,30 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { Record } from 'immutable';
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { Thumbnail } from '@graasp/ui';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { configureThumbnailUppy } from '../../../utils/uppy';
-import CropModal from '../../common/CropModal';
-import { useMutation, hooks } from '../../../config/queryClient';
-import defaultImage from '../../../config/logo.jpeg';
-import { getEmbeddedLinkExtra } from '../../../utils/itemExtra';
+
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+import { Thumbnail } from '@graasp/ui';
+
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../../config/constants';
+import defaultImage from '../../../config/logo.jpeg';
+import { hooks, useMutation } from '../../../config/queryClient';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
+import { getEmbeddedLinkExtra } from '../../../utils/itemExtra';
+import { configureThumbnailUppy } from '../../../utils/uppy';
+import CropModal from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
-
-const useStyles = makeStyles(() => ({
-  thumbnail: {
-    textAlign: 'right',
-  },
-}));
 
 const ThumbnailSetting = ({ item }) => {
   const inputRef = useRef();
@@ -33,7 +31,6 @@ const ThumbnailSetting = ({ item }) => {
   const [fileSource, setFileSource] = useState(false);
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t } = useTranslation();
-  const classes = useStyles();
   const { mutate: onFileUploadComplete } = useMutation(
     MUTATION_KEYS.FILE_UPLOAD,
   );
@@ -106,10 +103,8 @@ const ThumbnailSetting = ({ item }) => {
     }
   };
 
-  const alt = t('current thumbnail');
-  const defaultImageComponent = (
-    <img src={defaultImage} alt={alt} className={clsx(classes.img)} />
-  );
+  const alt = t(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
+  const defaultImageComponent = <img src={defaultImage} alt={alt} />;
 
   return (
     <>
@@ -118,11 +113,11 @@ const ThumbnailSetting = ({ item }) => {
       )}
       <Grid container justifyContent="space-between">
         <Grid item sm={6}>
-          <Typography variant="h5">{t('Thumbnail')}</Typography>
+          <Typography variant="h5">
+            {t(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
+          </Typography>
           <Typography variant="body">
-            {t(
-              'Provide an image to update your thumbnail. You might need to refresh the page to see the changes.',
-            )}
+            {t(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
           </Typography>
           <input
             type="file"
@@ -134,7 +129,7 @@ const ThumbnailSetting = ({ item }) => {
             className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
           />
         </Grid>
-        <Grid item sm={6} className={classes.thumbnail}>
+        <Grid item sm={6} textAlign="right">
           <Thumbnail
             id={itemId}
             thumbnailSrc={getEmbeddedLinkExtra(item?.extra)?.thumbnails?.get(0)}

@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Tooltip from '@material-ui/core/Tooltip';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+
+import { BUTTON_TYPES } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { BUTTON_TYPES } from '../../config/constants';
 
 const CollapseButton = ({ item, type, onClick }) => {
   const { t } = useTranslation();

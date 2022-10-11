@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import PieChartIcon from '@material-ui/icons/PieChart';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Tooltip from '@material-ui/core/Tooltip';
-import { LayoutContext } from '../context/LayoutContext';
-import { buildDashboardButtonId } from '../../config/selectors';
+
+import CloseIcon from '@mui/icons-material/Close';
+import PieChartIcon from '@mui/icons-material/PieChart';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { ITEM_ACTION_TABS } from '../../config/constants';
+import { buildDashboardButtonId } from '../../config/selectors';
+import { LayoutContext } from '../context/LayoutContext';
 
 const AnalyticsDashboardButton = ({ id }) => {
   const { t } = useTranslation();

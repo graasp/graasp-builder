@@ -1,14 +1,17 @@
-import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation } from '../../config/queryClient';
-import TreeModal from '../main/TreeModal';
-import { buildShortcutExtra } from '../../utils/itemExtra';
-import { ITEM_TYPES } from '../../enums';
-import { ROOT_ID } from '../../config/constants';
 
-const CreateShortcutModalContext = React.createContext();
+import { createContext, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+
+import { ROOT_ID } from '../../config/constants';
+import { useMutation } from '../../config/queryClient';
+import { ITEM_TYPES } from '../../enums';
+import { buildShortcutExtra } from '../../utils/itemExtra';
+import TreeModal from '../main/TreeModal';
+
+const CreateShortcutModalContext = createContext();
 
 const CreateShortcutModalProvider = ({ children }) => {
   const { t } = useTranslation();

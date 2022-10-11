@@ -1,6 +1,12 @@
 {
-  "extends": ["react-app", "airbnb", "prettier"],
-  "plugins": ["import", "jsx-a11y", "react"],
+  "extends": [
+    "react-app", 
+    "airbnb", 
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"],
+  "plugins": ["import", "jsx-a11y", "react", "@typescript-eslint"],
   "env": {
     "browser": true,
     "node": true,
@@ -11,7 +17,7 @@
     "cy": true,
     "Cypress": true
   },
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "rules": {
     "jsx-a11y/anchor-is-valid": [
       "error",
@@ -41,6 +47,7 @@
       }
     ],
     "react/state-in-constructor": ["error", "never"],
+    "react/react-in-jsx-scope": "off",
     "no-console": [1, { "allow": ["error"] }],
     "import/extensions": [
         "error",
@@ -51,7 +58,9 @@
           "ts": "never",
           "tsx": "never"
         }
-    ]
+    ],
+    "react/prop-types": "off",
+    "react/require-default-props": "off"
   },
   "settings": {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],

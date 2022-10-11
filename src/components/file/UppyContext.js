@@ -1,11 +1,14 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
-import { configureFileUppy } from '../../utils/uppy';
+
+import { createContext, useEffect, useMemo, useState } from 'react';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+
 import { useMutation } from '../../config/queryClient';
+import { configureFileUppy } from '../../utils/uppy';
 import StatusBar from './StatusBar';
 
-const UppyContext = React.createContext();
+const UppyContext = createContext();
 
 const UppyContextProvider = ({ enable, itemId, children }) => {
   const [uppy, setUppy] = useState(null);

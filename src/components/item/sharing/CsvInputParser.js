@@ -1,41 +1,37 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
-import { Button, Loader } from '@graasp/ui';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Alert from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import buildI18n from '@graasp/translations';
-import PublishIcon from '@material-ui/icons/Publish';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
 import Papa from 'papaparse';
+import PropTypes from 'prop-types';
+
+import PublishIcon from '@mui/icons-material/Publish';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import buildI18n from '@graasp/translations';
+import { Button, Loader } from '@graasp/ui';
+
 import { useMutation } from '../../../config/queryClient';
-import { PERMISSION_LEVELS } from '../../../enums';
 import {
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
   SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID,
   SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
 } from '../../../config/selectors';
+import { PERMISSION_LEVELS } from '../../../enums';
 
 const allowedExtensions = ['.csv'].join(',');
 
-const useStyles = makeStyles(() => ({
-  buttonWrapper: {
-    textAlign: 'center',
-  },
-}));
-
 const CsvInputParser = ({ item }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const { id: itemId, path: itemPath } = item;
   const [isOpen, setIsOpen] = useState(false);
@@ -103,7 +99,9 @@ const CsvInputParser = ({ item }) => {
     );
     if (genericErrors?.length) {
       return genericErrors.map((err) => (
-        <Alert severity="error">{t(err.message)}</Alert>
+        <Alert key={err} severity="error">
+          {t(err.message)}
+        </Alert>
       ));
     }
 
@@ -126,7 +124,7 @@ const CsvInputParser = ({ item }) => {
         <AlertTitle>{t('The import failed for these entries')}</AlertTitle>
         <Grid container>
           {failureToShow.map((e) => (
-            <Grid container>
+            <Grid container key={e}>
               <Grid item xs={4}>
                 {e?.data?.email ?? e?.data?.name}
               </Grid>
@@ -172,7 +170,7 @@ const CsvInputParser = ({ item }) => {
                 'A CSV entry cannot override the data already saved. If a user already has permission, update the value in the table manually.',
               )}
             </DialogContentText>
-            <Box className={classes.buttonWrapper}>
+            <Box textAlign="center">
               <Button
                 id={SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID}
                 startIcon={<PublishIcon />}

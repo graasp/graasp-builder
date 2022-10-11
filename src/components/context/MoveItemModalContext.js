@@ -1,13 +1,16 @@
-import React, { useMemo, useState } from 'react';
-import { validate } from 'uuid';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { validate } from 'uuid';
+
+import { createContext, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { TREE_PREVENT_SELECTION } from '../../enums';
+
 import { useMutation } from '../../config/queryClient';
+import { TREE_PREVENT_SELECTION } from '../../enums';
 import TreeModal from '../main/TreeModal';
 
-const MoveItemModalContext = React.createContext();
+const MoveItemModalContext = createContext();
 
 const MoveItemModalProvider = ({ children }) => {
   const { t } = useTranslation();

@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { Box, styled } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Link from '@material-ui/core/Link';
-import Select from '@material-ui/core/Select';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Tooltip from '@material-ui/core/Tooltip';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import { makeStyles } from '@material-ui/core';
-import {
-  SHARE_ITEM_DIALOG_LINK_ID,
-  SHARE_ITEM_DIALOG_LINK_SELECT_ID,
-} from '../../../config/selectors';
-import {
-  buildGraaspBuilderView,
-  buildGraaspPlayerView,
-} from '../../../config/paths';
+
 import {
   SHARE_ITEM_MODAL_MIN_WIDTH,
   SHARE_LINK_COLOR,
@@ -24,59 +19,40 @@ import {
   SHARING_LINK_TYPES,
 } from '../../../config/constants';
 import notifier from '../../../config/notifier';
+import {
+  buildGraaspBuilderView,
+  buildGraaspPlayerView,
+} from '../../../config/paths';
+import {
+  SHARE_ITEM_DIALOG_LINK_ID,
+  SHARE_ITEM_DIALOG_LINK_SELECT_ID,
+} from '../../../config/selectors';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../../types/clipboard';
 import { copyToClipboard } from '../../../utils/clipboard';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: SHARE_ITEM_MODAL_MIN_WIDTH,
-  },
-  dialogContent: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  shortInputField: {
-    width: '50%',
-  },
-  addedMargin: {
-    marginTop: theme.spacing(2),
-  },
-  emailInput: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  shareLinkContainer: {
-    borderRadius: theme.shape.borderRadius,
-    borderWidth: SHARE_LINK_CONTAINER_BORDER_WIDTH,
-    borderStyle: SHARE_LINK_CONTAINER_BORDER_STYLE,
-    padding: theme.spacing(1),
-    margin: theme.spacing(1, 'auto'),
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '80%',
-    position: 'relative',
-  },
-  shareLink: {
-    color: SHARE_LINK_COLOR,
-    textDecoration: 'none !important',
-    width: '70%',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-  },
-  copyButton: {
-    padding: theme.spacing(0),
-    marginLeft: theme.spacing(1),
-  },
-  selector: {
-    marginLeft: theme.spacing(1),
-  },
+const StyledBox = styled(Box)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  borderWidth: SHARE_LINK_CONTAINER_BORDER_WIDTH,
+  borderStyle: SHARE_LINK_CONTAINER_BORDER_STYLE,
+  padding: theme.spacing(1),
+  margin: theme.spacing(1, 'auto'),
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '80%',
+  position: 'relative',
+}));
+
+const StyledLink = styled(Box)(({ theme }) => ({
+  color: SHARE_LINK_COLOR,
+  textDecoration: 'none !important',
+  width: '70%',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
 }));
 
 const SharingLink = ({ itemId }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   const [linkType, setLinkType] = useState(null);
   const [link, setLink] = useState(null);
@@ -97,6 +73,7 @@ const SharingLink = ({ itemId }) => {
           break;
       }
     }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     return () => {};
   }, [itemId, linkType]);
 
@@ -116,18 +93,13 @@ const SharingLink = ({ itemId }) => {
   };
 
   return (
-    <div className={classes.shareLinkContainer}>
-      <Link
-        className={classes.shareLink}
-        href={link}
-        target="_blank"
-        id={SHARE_ITEM_DIALOG_LINK_ID}
-      >
+    <StyledBox>
+      <StyledLink href={link} target="_blank" id={SHARE_ITEM_DIALOG_LINK_ID}>
         {link}
-      </Link>
+      </StyledLink>
       <div>
         <Select
-          className={classes.selector}
+          ml={1}
           value={linkType}
           onChange={handleLinkTypeChange}
           id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
@@ -136,12 +108,12 @@ const SharingLink = ({ itemId }) => {
           <MenuItem value={SHARING_LINK_TYPES.PLAYER}>{t('Player')}</MenuItem>
         </Select>
         <Tooltip title={t('Copy to Clipboard')}>
-          <IconButton onClick={handleCopy} className={classes.copyButton}>
+          <IconButton onClick={handleCopy} p={0} ml={1}>
             <FileCopyIcon />
           </IconButton>
         </Tooltip>
       </div>
-    </div>
+    </StyledBox>
   );
 };
 

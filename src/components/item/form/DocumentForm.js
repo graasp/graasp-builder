@@ -1,21 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 import { useTranslation } from 'react-i18next';
+
 import { TextEditor } from '@graasp/ui';
-import Typography from '@material-ui/core/Typography';
+
+import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
 import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
-import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
-
-const useStyles = makeStyles((theme) => ({
-  textEditorWrapper: {
-    marginTop: theme.spacing(2),
-  },
-}));
 
 const DocumentForm = ({ onChange, item, updatedProperties }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const handleOnChange = (content) => {
@@ -37,7 +33,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
         item={item}
         updatedProperties={updatedProperties}
       />
-      <div className={classes.textEditorWrapper}>
+      <Box sx={{ mt: 2 }}>
         <TextEditor
           id={ITEM_FORM_DOCUMENT_TEXT_ID}
           value={value}
@@ -46,7 +42,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
           placeholderText={t('Write something...')}
           showActions={false}
         />
-      </div>
+      </Box>
     </>
   );
 };

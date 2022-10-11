@@ -1,45 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
+import PropTypes from 'prop-types';
+
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material';
+
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-import { Loader } from '@graasp/ui';
-import {
-  Button,
-  makeStyles,
-  Typography,
-  FormControlLabel,
-  Checkbox,
-} from '@material-ui/core';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation, hooks } from '../../../config/queryClient';
+import { Loader } from '@graasp/ui';
+
 import { SETTINGS } from '../../../config/constants';
-import {
-  getTagByName,
-  getVisibilityTagAndItemTag,
-  isItemPublished,
-} from '../../../utils/itemTag';
+import { hooks, useMutation } from '../../../config/queryClient';
 import {
   EMAIL_NOTIFICATION_CHECKBOX,
   ITEM_PUBLISH_BUTTON_ID,
   ITEM_UNPUBLISH_BUTTON_ID,
 } from '../../../config/selectors';
+import {
+  getTagByName,
+  getVisibilityTagAndItemTag,
+  isItemPublished,
+} from '../../../utils/itemTag';
 
 const { DELETE_ITEM_TAG, PUBLISH_ITEM } = MUTATION_KEYS;
 const { useTags, useItemTags } = hooks;
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    marginTop: theme.spacing(1),
-    width: 'auto',
-    marginRight: theme.spacing(2),
-  },
-}));
-
 const ItemPublishButton = ({ item, isValidated }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   // current item
   const { itemId } = useParams();
@@ -112,7 +101,11 @@ const ItemPublishButton = ({ item, isValidated }) => {
         variant="outlined"
         onClick={handlePublish}
         color="primary"
-        className={classes.button}
+        sx={{
+          marginTop: 1,
+          width: 'auto',
+          marginRight: 2,
+        }}
         endIcon={isPublished && <CheckCircleIcon color="primary" />}
         id={ITEM_PUBLISH_BUTTON_ID}
       >

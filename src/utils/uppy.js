@@ -1,12 +1,14 @@
-import { API_ROUTES } from '@graasp/query-client';
-import {
-  MAX_THUMBNAIL_SIZE,
-  MAX_ZIP_FILE_SIZE,
-  MAX_FILE_SIZE,
-} from '@graasp/sdk';
-import fileSize from 'filesize';
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
+import fileSize from 'filesize';
+
+import { API_ROUTES } from '@graasp/query-client';
+import {
+  MAX_FILE_SIZE,
+  MAX_THUMBNAIL_SIZE,
+  MAX_ZIP_FILE_SIZE,
+} from '@graasp/sdk';
+
 import {
   API_HOST,
   FILE_UPLOAD_MAX_FILES,

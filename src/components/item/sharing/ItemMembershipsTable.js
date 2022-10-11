@@ -1,12 +1,19 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
+import { Typography } from '@mui/material';
+
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@material-ui/core';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Loader } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
+
+import {
+  MEMBERSHIP_TABLE_HEIGHT,
+  MEMBERSHIP_TABLE_ROW_HEIGHT,
+} from '../../../config/constants';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,
@@ -14,30 +21,15 @@ import {
 } from '../../../config/selectors';
 import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
 import TableRowPermissionRenderer from './TableRowPermissionRenderer';
-import {
-  MEMBERSHIP_TABLE_HEIGHT,
-  MEMBERSHIP_TABLE_ROW_HEIGHT,
-} from '../../../config/constants';
 
-const useStyles = makeStyles(() => ({
-  row: {
-    display: 'flex',
-    alignItems: 'center',
+const rowStyle = {
+  display: 'flex',
+  alignItems: 'center',
 
-    '& > div': {
-      width: '100%',
-    },
+  '& > div': {
+    width: '100%',
   },
-  actionCell: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  permission: {
-    overflow: 'visible',
-    textAlign: 'right',
-  },
-}));
+};
 
 const NameRenderer = (users) => {
   const ChildComponent = ({ data: membership }) => {
@@ -75,7 +67,6 @@ const ItemMembershipsTable = ({
   emptyMessage,
   showEmail,
 }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const { data: users, isLoading } = hooks.useMembers(
     memberships.map(({ memberId }) => memberId),
@@ -132,7 +123,7 @@ const ItemMembershipsTable = ({
         headerName: t('Mail'),
         cellRenderer: EmailCellRenderer,
         field: 'email',
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 2,
         tooltipField: 'email',
         resizable: true,
@@ -144,7 +135,7 @@ const ItemMembershipsTable = ({
         headerName: t('Name'),
         cellRenderer: NameCellRenderer,
         field: 'memberId',
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 2,
         tooltipField: 'name',
       },
@@ -156,7 +147,10 @@ const ItemMembershipsTable = ({
         type: 'rightAligned',
         field: 'permission',
         flex: 1,
-        cellClass: classes.permission,
+        cellStyle: {
+          overflow: 'visible',
+          textAlign: 'right',
+        },
       },
       {
         field: 'actions',
@@ -165,7 +159,11 @@ const ItemMembershipsTable = ({
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
-        cellClass: classes.actionCell,
+        cellStyle: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        },
         flex: 1,
       },
     ]);

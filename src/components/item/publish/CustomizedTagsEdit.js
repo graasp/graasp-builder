@@ -1,35 +1,29 @@
-import React, { useContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
-import { Loader, Button } from '@graasp/ui';
+import PropTypes from 'prop-types';
+
+import SaveIcon from '@mui/icons-material/Save';
+import { Chip, TextField, Typography } from '@mui/material';
+
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography, TextField, Chip, makeStyles } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
 import { useParams } from 'react-router';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+import { Loader, SaveButton } from '@graasp/ui';
+
 import { useMutation } from '../../../config/queryClient';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 import {
-  buildCustomizedTagsSelector,
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
+  buildCustomizedTagsSelector,
 } from '../../../config/selectors';
-
-const useStyles = makeStyles((theme) => ({
-  title: {
-    marginTop: theme.spacing(2),
-  },
-  button: {
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-  },
-}));
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 const CustomizedTagsEdit = ({ item }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
 
   // user
@@ -71,33 +65,33 @@ const CustomizedTagsEdit = ({ item }) => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.title}>
-        {t('Tags')}
+      <Typography variant="h6" mt={2}>
+        {t(BUILDER.ITEM_TAGS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t('Please seperate tags by comma. ')}
-        {t('Eg. English, Biology, Lab, Plants, ..., Demo')}
+        {t(BUILDER.ITEM_TAGS_INFORMATION)}
       </Typography>
       <TextField
         variant="outlined"
-        label={t('Tags')}
+        label={t(BUILDER.ITEM_TAGS_LABEL)}
         multiline
         maxRows={5}
         defaultValue={displayValues}
         onChange={handleChange}
         id={ITEM_TAGS_EDIT_INPUT_ID}
       />
-      <Button
+      <SaveButton
         onClick={handleSubmit}
-        className={classes.button}
-        startIcon={<SaveIcon />}
+        sx={{ marginTop: 1, marginLeft: 2 }}
         id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
-      >
-        {t('Save')}
-      </Button>
-      <Typography variant="subtitle1">{t('Tags Preview')}</Typography>
+        text={t(BUILDER.SAVE_BUTTON)}
+        hasChanges
+      />
+      <Typography variant="subtitle1">
+        {t(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
+      </Typography>
       {settings?.tags?.map((tag, index) => (
-        <Chip label={tag} id={buildCustomizedTagsSelector(index)} />
+        <Chip key={tag} label={tag} id={buildCustomizedTagsSelector(index)} />
       ))}
     </>
   );

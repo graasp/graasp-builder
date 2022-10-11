@@ -1,6 +1,6 @@
 // synchronous functions to manage items from redux
-
 import { useEffect, useState } from 'react';
+
 import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
 import { ITEM_TYPES } from '../enums';
 import {
@@ -143,7 +143,7 @@ export const containsNonExistingItems = (items) =>
 export const getErrorItemIds = (items) =>
   items.filter((item) => item.statusCode).map((item) => item.data);
 
-export const getChildrenOrderFromFolderExtra = (item) =>
+export const getChildrenOrderFromFolderExtra = (item): string[] =>
   item?.extra?.folder?.childrenOrder ?? [];
 
 export const stripHtml = (str) => str?.replace(/<[^>]*>?/gm, '');

@@ -1,5 +1,5 @@
-import { validate } from 'uuid';
 import { List } from 'immutable';
+import { validate } from 'uuid';
 
 export const isMemberIdValid = (memberId) => validate(memberId?.trim());
 

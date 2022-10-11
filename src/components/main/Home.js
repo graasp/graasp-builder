@@ -1,17 +1,19 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+
 import { useTranslation } from 'react-i18next';
+
+import { Loader } from '@graasp/ui';
+
 import { hooks } from '../../config/queryClient';
-import ItemHeader from '../item/header/ItemHeader';
-import Items from './Items';
-import FileUploader from '../file/FileUploader';
 import { HOME_ERROR_ALERT_ID, OWNED_ITEMS_ID } from '../../config/selectors';
-import Loader from '../common/Loader';
 import ErrorAlert from '../common/ErrorAlert';
+import FileUploader from '../file/FileUploader';
+import { UppyContextProvider } from '../file/UppyContext';
+import ItemHeader from '../item/header/ItemHeader';
+import ItemActionsRenderer from './ItemActions';
+import Items from './Items';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
-import { UppyContextProvider } from '../file/UppyContext';
-import ItemActionsRenderer from './ItemActions';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -41,12 +43,6 @@ const Home = () => {
       </UppyContextProvider>
     </Main>
   );
-};
-
-Home.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({ itemId: PropTypes.string }).isRequired,
-  }).isRequired,
 };
 
 export default Home;

@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { DownloadButton as Button } from '@graasp/ui';
-import PropTypes from 'prop-types';
+
 import { useMutation } from '../../config/queryClient';
 
 export const DownloadButton = ({ id, name }) => {

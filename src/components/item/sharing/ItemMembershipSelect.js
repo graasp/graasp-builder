@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
-import Select from '@material-ui/core/Select';
+
+import { FormControl, InputLabel, styled } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormControl, InputLabel, makeStyles } from '@material-ui/core';
-import { PERMISSION_LEVELS } from '../../../enums';
+
 import {
-  buildPermissionOptionId,
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
+  buildPermissionOptionId,
 } from '../../../config/selectors';
+import { PERMISSION_LEVELS } from '../../../enums';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 'auto',
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  minWidth: 'auto',
 
-    // apply secondary color
-    '& .MuiFormLabel-root': {
-      color: (prop) =>
-        prop.color === 'secondary' ? theme.palette.secondary.main : 'default',
-    },
-    '& .MuiInputBase-root': {
-      color: (prop) =>
-        prop.color === 'secondary' ? theme.palette.secondary.main : 'default',
-    },
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: (prop) =>
-        prop.color === 'secondary' ? theme.palette.secondary.main : 'default',
-    },
+  // apply secondary color
+  '.MuiFormLabel-root': {
+    color: (prop) =>
+      prop.color === 'secondary' ? theme.palette.secondary.main : 'default',
+  },
+  '.MuiInputBase-root': {
+    color: (prop) =>
+      prop.color === 'secondary' ? theme.palette.secondary.main : 'default',
+  },
+  '.MuiOutlinedInput-notchedOutline': {
+    borderColor: (prop) =>
+      prop.color === 'secondary' ? theme.palette.secondary.main : 'default',
   },
 }));
 
@@ -39,7 +40,6 @@ const ItemMembershipSelect = ({
   color,
 }) => {
   const { t } = useTranslation();
-  const classes = useStyles({ color });
   const [permission, setPermission] = useState(value);
   const labelId = 'permission-label';
   const labelProps = showLabel
@@ -58,7 +58,7 @@ const ItemMembershipSelect = ({
   }, [value]);
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <StyledFormControl variant="outlined">
       {showLabel && <InputLabel id={labelId}>{label}</InputLabel>}
       <Select
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -81,7 +81,7 @@ const ItemMembershipSelect = ({
           </MenuItem>
         ))}
       </Select>
-    </FormControl>
+    </StyledFormControl>
   );
 };
 

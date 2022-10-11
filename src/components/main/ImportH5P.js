@@ -1,11 +1,15 @@
-import { routines } from '@graasp/query-client';
-import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
-import Typography from '@material-ui/core/Typography';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
-import React, { useEffect, useState } from 'react';
+
+import Typography from '@mui/material/Typography';
+
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatch } from 'react-router';
+
+import { routines } from '@graasp/query-client';
+import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
+
 import notifier from '../../config/notifier';
 import { buildItemPath } from '../../config/paths';
 import { H5P_DASHBOARD_UPLOADER_ID } from '../../config/selectors';

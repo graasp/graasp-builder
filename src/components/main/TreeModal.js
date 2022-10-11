@@ -1,38 +1,33 @@
-import React, { useState } from 'react';
 import PropTypes, { arrayOf } from 'prop-types';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core';
+
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
+
 import {
   ROOT_ID,
   SHARED_ROOT_ID,
   TREE_VIEW_MAX_WIDTH,
 } from '../../config/constants';
-import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { hooks } from '../../config/queryClient';
 import {
-  buildTreeItemClass,
-  TREE_MODAL_TREE_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
+  TREE_MODAL_TREE_ID,
+  buildTreeItemClass,
 } from '../../config/selectors';
+import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { getParentsIdsFromPath } from '../../utils/item';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: TREE_VIEW_MAX_WIDTH,
-  },
-}));
 
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
   // todo: get only shared items with write/admin rights
   // otherwise choosing an item without the write rights will result in an error
@@ -115,7 +110,10 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
     <>
       <DynamicTreeView
         id={TREE_MODAL_TREE_ID}
-        className={classes.root}
+        rootSx={{
+          flexGrow: 1,
+          maxWidth: TREE_VIEW_MAX_WIDTH,
+        }}
         selectedId={selectedId}
         initialExpendedItems={buildExpandedItems(ROOT_ID)}
         items={ownItems}
@@ -133,7 +131,10 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
       />
       <DynamicTreeView
         // id={TREE_MODAL_TREE_ID}
-        className={classes.root}
+        rootSx={{
+          flexGrow: 1,
+          maxWidth: TREE_VIEW_MAX_WIDTH,
+        }}
         selectedId={selectedId}
         initialExpendedItems={buildExpandedItems(SHARED_ROOT_ID)}
         items={sharedItems}

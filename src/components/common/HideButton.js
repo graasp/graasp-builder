@@ -1,16 +1,20 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+
 import { useTranslation } from 'react-i18next';
-import Tooltip from '@material-ui/core/Tooltip';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+
+import { BUTTON_TYPES, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { BUTTON_TYPES, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 
 const HideButton = ({ item, type, onClick }) => {
   const { t } = useTranslation();
@@ -40,10 +44,12 @@ const HideButton = ({ item, type, onClick }) => {
     onClick?.();
   };
 
-  const text = hiddenTag ? t('Show') : t('Hide');
+  const text = hiddenTag
+    ? t(BUILDER.HIDE_ITEM_SHOW_TEXT)
+    : t(BUILDER.HIDE_ITEM_HIDE_TEXT);
   let tooltip = text;
   if (hiddenTag && !isOriginalHiddenItem) {
-    tooltip = t('This item is hidden because its parent item is hidden.');
+    tooltip = t(BUILDER.HIDE_ITEM_HIDDEN_PARENT_INFORMATION);
   }
 
   const icon = hiddenTag ? <VisibilityOff /> : <Visibility />;

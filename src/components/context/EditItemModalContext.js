@@ -1,35 +1,31 @@
-import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@graasp/ui';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { MUTATION_KEYS } from '@graasp/query-client';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import { createContext, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+import { Button } from '@graasp/ui';
+
+import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
-import FolderForm from '../item/form/FolderForm';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
+import { isItemValid } from '../../utils/item';
 import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
-import { isItemValid } from '../../utils/item';
-import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
+import FolderForm from '../item/form/FolderForm';
 
-const EditItemModalContext = React.createContext();
-
-const useStyles = makeStyles(() => ({
-  dialogContent: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-}));
+const EditItemModalContext = createContext();
 
 const EditItemModalProvider = ({ children }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
   // updated properties are separated from the original item
@@ -59,7 +55,7 @@ const EditItemModalProvider = ({ children }) => {
       return;
     }
     if (!isItemValid({ ...item, ...updatedProperties })) {
-      toast.error(t('Item is invalid'));
+      toast.error(t(BUILDER.EDIT_ITEM_ERROR_MESSAGE));
       return;
     }
 
@@ -106,13 +102,20 @@ const EditItemModalProvider = ({ children }) => {
 
   const renderModal = () => (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle id={item?.id}>{t('Edit Item')}</DialogTitle>
-      <DialogContent className={classes.dialogContent}>
+      <DialogTitle id={item?.id}>
+        {t(BUILDER.EDIT_ITEM_MODAL_TITLE)}
+      </DialogTitle>
+      <DialogContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         {renderForm()}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} variant="text">
-          {t('Cancel')}
+          {t(BUILDER.CANCEL_BUTTON)}
         </Button>
         <Button
           // should not allow users to save if the item is not valid
@@ -125,7 +128,7 @@ const EditItemModalProvider = ({ children }) => {
           onClick={submit}
           id={ITEM_FORM_CONFIRM_BUTTON_ID}
         >
-          {t('Save')}
+          {t(BUILDER.SAVE_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

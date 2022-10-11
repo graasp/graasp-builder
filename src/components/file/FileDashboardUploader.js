@@ -1,14 +1,18 @@
-import React, { useContext } from 'react';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
+
+import Typography from '@mui/material/Typography';
+
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { MAX_FILE_SIZE } from '@graasp/sdk';
-import Typography from '@material-ui/core/Typography';
+
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
+import { humanFileSize } from '../../utils/uppy';
 import ErrorAlert from '../common/ErrorAlert';
 import { UppyContext } from './UppyContext';
-import { humanFileSize } from '../../utils/uppy';
 
 const FileDashboardUploader = () => {
   const { uppy } = useContext(UppyContext);

@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
 import '@uppy/dashboard/dist/style.css';
-import { routines } from '@graasp/query-client';
 import { Dashboard } from '@uppy/react';
-import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
-import { useMatch } from 'react-router';
+
+import Typography from '@mui/material/Typography';
+
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Typography from '@material-ui/core/Typography';
-import { configureZipImportUppy, humanFileSize } from '../../utils/uppy';
-import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
-import { buildItemPath } from '../../config/paths';
+import { useMatch } from 'react-router';
+
+import { routines } from '@graasp/query-client';
+import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
+
 import notifier from '../../config/notifier';
+import { buildItemPath } from '../../config/paths';
+import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
+import { configureZipImportUppy, humanFileSize } from '../../utils/uppy';
 
 const ImportZip = () => {
   const [uppy, setUppy] = useState(null);

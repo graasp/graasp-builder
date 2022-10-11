@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@graasp/ui';
+
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Button } from '@graasp/ui';
+
 import { useMutation } from '../../../config/queryClient';
 import { PERMISSION_LEVELS } from '../../../enums';
 
