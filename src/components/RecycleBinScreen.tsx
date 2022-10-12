@@ -21,7 +21,11 @@ type RowActionsProps = {
   data: { id: string };
 };
 
-const RowActions: FC<RowActionsProps> = ({ data: item }: any) => (
+const RowActions: FC<RowActionsProps> = ({
+  data: item,
+}: {
+  data: { id: string };
+}) => (
   <>
     <RestoreButton itemIds={[item.id]} />
     <DeleteButton itemIds={[item.id]} />
@@ -51,7 +55,7 @@ const ToolbarActions: FC<ToolbarActionsProps> = ({
   </>
 );
 
-const RecycleBinScreen = () => {
+const RecycleBinScreen: FC = () => {
   const { t } = useTranslation();
   const { data: items, isLoading, isError } = hooks.useRecycledItems();
 

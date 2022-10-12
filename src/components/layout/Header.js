@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import PropTypes from 'prop-types';
 
 import MenuIcon from '@mui/icons-material/Menu';

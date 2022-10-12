@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { ShareButton as GraaspShareButton } from '@graasp/ui';
 
 import { ITEM_ACTION_TABS } from '../../config/constants';
@@ -28,8 +29,8 @@ const ShareButton: FC<Props> = ({ itemId }) => {
 
   return (
     <GraaspShareButton
-      tooltip={t('Share')}
-      ariaLabel={t('Share')}
+      tooltip={t(BUILDER.SHARE_ITEM_BUTTON)}
+      ariaLabel={t(BUILDER.SHARE_ITEM_BUTTON)}
       className={SHARE_ITEM_BUTTON_CLASS}
       onClick={onClick}
       open={openedActionTabId === ITEM_ACTION_TABS.SHARING}

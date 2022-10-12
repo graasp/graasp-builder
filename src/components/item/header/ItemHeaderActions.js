@@ -3,7 +3,6 @@ import { Map, Record } from 'immutable';
 import PropTypes from 'prop-types';
 
 import EditIcon from '@mui/icons-material/Edit';
-import ForumIcon from '@mui/icons-material/Forum';
 import InfoIcon from '@mui/icons-material/Info';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';

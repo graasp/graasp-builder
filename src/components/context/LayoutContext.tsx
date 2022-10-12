@@ -2,16 +2,16 @@
 import { createContext, useMemo, useState } from 'react';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
-import { CHAT_STATUS } from '../../enums';
+import { CHAT_STATUS, ITEM_LAYOUT_MODES } from '../../enums';
 
 interface LayoutContextInterface {
   mode: string;
   setMode: Function;
-  editingItemId: string;
+  editingItemId: string | null;
   setEditingItemId: Function;
   isMainMenuOpen: boolean;
   setIsMainMenuOpen: Function;
-  openedActionTabId: string;
+  openedActionTabId: string | null;
   setOpenedActionTabId: Function;
   isItemMetadataMenuOpen: boolean;
   setIsItemMetadataMenuOpen: Function;
@@ -19,9 +19,38 @@ interface LayoutContextInterface {
   setIsChatboxMenuOpen: Function;
 }
 
-const LayoutContext = createContext<LayoutContextInterface | null>(null);
+const LayoutContext = createContext<LayoutContextInterface>({
+  mode: ITEM_LAYOUT_MODES.LIST,
+  setMode: () => {
+    // do nothing
+  },
+  editingItemId: null,
+  setEditingItemId: () => {
+    // do nothing
+  },
+  isMainMenuOpen: true,
+  setIsMainMenuOpen: () => {
+    // do nothing
+  },
+  openedActionTabId: null,
+  setOpenedActionTabId: () => {
+    // do nothing
+  },
+  isItemMetadataMenuOpen: false,
+  setIsItemMetadataMenuOpen: () => {
+    // do nothing
+  },
+  isChatboxMenuOpen: false,
+  setIsChatboxMenuOpen: () => {
+    // do nothing
+  },
+});
 
-const LayoutContextProvider = ({ children }: { children: JSX.Element }) => {
+const LayoutContextProvider = ({
+  children,
+}: {
+  children: JSX.Element;
+}): JSX.Element => {
   // layout mode: grid or list
   const [mode, setMode] = useState(DEFAULT_ITEM_LAYOUT_MODE);
 

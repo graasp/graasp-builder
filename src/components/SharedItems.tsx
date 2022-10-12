@@ -1,5 +1,6 @@
 import { List } from 'immutable';
 
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Loader } from '@graasp/ui';
@@ -14,7 +15,7 @@ import ItemHeader from './item/header/ItemHeader';
 import Items from './main/Items';
 import Main from './main/Main';
 
-const SharedItems = () => {
+const SharedItems: FC = () => {
   const { t } = useTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
 

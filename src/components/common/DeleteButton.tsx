@@ -1,6 +1,9 @@
-import { FC, MouseEventHandler, useState } from 'react';
+import { IconButtonProps } from '@mui/material/IconButton';
+
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { DeleteButton as GraaspDeleteButton } from '@graasp/ui';
 
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
@@ -8,12 +11,16 @@ import DeleteItemDialog from '../main/DeleteItemDialog';
 
 type Props = {
   itemIds: string[];
-  color?: string;
+  color?: IconButtonProps['color'];
   id?: string;
   type?: string;
-  onClick: MouseEventHandler;
+  onClick?: () => void;
 };
 
+/**
+ * Delete Button Component
+ * This button opens a dialog to confirm the action
+ */
 const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
   const { t } = useTranslation();
 
@@ -28,7 +35,7 @@ const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
     setOpen(false);
   };
 
-  const text = t('Delete');
+  const text = t(BUILDER.DELETE_BUTTON);
 
   return (
     <>

@@ -9,6 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 
 import { BUTTON_TYPES } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
@@ -26,7 +27,7 @@ const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
     onClick?.();
   };
 
-  const text = t('Recycle');
+  const text = t(BUILDER.RECYCLE_ITEM_BUTTON);
 
   switch (type) {
     case BUTTON_TYPES.MENU_ITEM:

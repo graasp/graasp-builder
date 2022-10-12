@@ -3,6 +3,7 @@ import 'ag-grid-community/dist/styles/ag-theme-material.min.css';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -23,7 +24,7 @@ import ModalProviders from './context/ModalProviders';
 
 const theme = createTheme(GraaspTheme);
 
-const Root = () => (
+const Root: FC = () => (
   <QueryClientProvider client={queryClient}>
     <I18nextProvider i18n={i18nConfig}>
       <ThemeProvider theme={theme}>

@@ -1,7 +1,7 @@
 import { RecordOf } from 'immutable';
 import truncate from 'lodash.truncate';
 
-import { FC, useContext } from 'react';
+import { CSSProperties, FC, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Item as GraaspItem, ItemMembership } from '@graasp/sdk';
@@ -26,7 +26,7 @@ import ItemMenu from './ItemMenu';
 const NameWrapper =
   ({ id, style }: { id: string; style: CSSProperties }) =>
   // eslint-disable-next-line react/prop-types, react/display-name
-  ({ children }) =>
+  ({ children }: { children: JSX.Element }) =>
     (
       <Link to={buildItemPath(id)} id={buildItemLink(id)} style={style}>
         {children}

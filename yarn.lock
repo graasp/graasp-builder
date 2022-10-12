@@ -2233,10 +2233,10 @@ __metadata:
 
 "@graasp/translations@github:graasp/graasp-translations.git#36-builder":
   version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=79306e34a12be9b45dcb15750493eecd7e514a83"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=0ed6576ebefec3551a56539768ad7af6f4f91bd1"
   dependencies:
     i18next: 21.8.1
-  checksum: 8f3c151609253ab8986406ef41c64098c93012ab9b6c976b167d63fb31229a43b9e120d2c6eba24e6259e661af687b7aa4e659bf504e14c6237e02716f2bc503
+  checksum: ba7188b783aee7301906aea7d329ed5c77ae7879766a8e14840a658f550bc390b1d9642a44eccb72a2b742d3969534e248ac19a8f8e8e9a50da9e7a128269840
   languageName: node
   linkType: hard
 
@@ -3623,6 +3623,22 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
+  languageName: node
+  linkType: hard
+
+"@types/lodash.truncate@npm:4.4.7":
+  version: 4.4.7
+  resolution: "@types/lodash.truncate@npm:4.4.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: d95ed373b514d63535f07a523244c6513bdbf4512f6b96cac28fde408be5a1212d9f5de847614c521508752a4cc150cc470b1295ad543ee31b79cb0bd310e716
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.14.186
+  resolution: "@types/lodash@npm:4.14.186"
+  checksum: ee0c1368a8100bb6efb88335107473a41928fc307ff1ef4ff1278868ccddba9c04c68c36d1ffe3a0392ef4a956e1955f7de3203ec09df4f1655dd1b88485c549
   languageName: node
   linkType: hard
 
@@ -10931,6 +10947,7 @@ __metadata:
     "@testing-library/user-event": ^13.5.0
     "@trivago/prettier-plugin-sort-imports": 3.2.0
     "@types/jest": 29.0.3
+    "@types/lodash.truncate": 4.4.7
     "@types/node": 18.7.21
     "@types/react": ^17.0.2
     "@types/react-dom": ^17.0.2

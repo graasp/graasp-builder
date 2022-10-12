@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 
 import { BUTTON_TYPES } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
@@ -40,7 +41,9 @@ const CollapseButton = ({ item, type, onClick }) => {
   };
 
   const icon = isCollapsible ? <ExpandLessIcon /> : <ExpandMoreIcon />;
-  const text = isCollapsible ? t('Uncollapse') : t('Collapse');
+  const text = isCollapsible
+    ? t(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)
+    : t(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
 
   switch (type) {
     case BUTTON_TYPES.MENU_ITEM:

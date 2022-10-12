@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { useLocation } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ import ItemScreen from './main/ItemScreen';
 import Redirect from './main/Redirect';
 import MemberProfileScreen from './member/MemberProfileScreen';
 
-const App = () => {
+const App: FC = () => {
   const { pathname } = useLocation();
   const { data: currentMember, isLoading } = useContext(CurrentUserContext);
 

@@ -3,8 +3,8 @@ import { FormControl, Select, SelectChangeEvent } from '@mui/material';
 import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { langs } from '@graasp/translations';
 
-import { langs } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 
 type Props = {

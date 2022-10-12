@@ -2,7 +2,7 @@ import { List, RecordOf } from 'immutable';
 
 import Typography from '@mui/material/Typography';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Item } from '@graasp/sdk';
@@ -13,7 +13,7 @@ import {
   ITEM_SEARCH_INPUT_ID,
 } from '../../config/selectors';
 
-export const NoItemSearchResult = () => {
+export const NoItemSearchResult: FC = () => {
   const { t } = useTranslation();
 
   return (
@@ -28,7 +28,13 @@ export const NoItemSearchResult = () => {
   );
 };
 
-export const useItemSearch = (items: List<RecordOf<Item>>) => {
+export const useItemSearch = (
+  items: List<RecordOf<Item>>,
+): {
+  results: List<RecordOf<Item>>;
+  text: string;
+  input: JSX.Element;
+} => {
   const [searchText, setSearchText] = useState<string>('');
 
   const handleSearchInput = (event: ChangeEvent<{ value: string }>) => {

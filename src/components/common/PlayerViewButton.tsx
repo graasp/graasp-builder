@@ -5,6 +5,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { redirect } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 import { PlayIcon } from '@graasp/ui';
 
 import { buildGraaspPlayerView } from '../../config/paths';
@@ -28,9 +29,9 @@ const PlayerViewButton: FC<Props> = ({ itemId }) => {
   };
 
   return (
-    <Tooltip title={t('Show Player View')}>
+    <Tooltip title={t(BUILDER.PLAY_BUTTON_TOOLTIP)}>
       <IconButton
-        aria-label={t('player view')}
+        aria-label={t(BUILDER.PLAY_BUTTON_TOOLTIP)}
         onClick={onClick}
         id={buildPlayerButtonId(itemId)}
       >

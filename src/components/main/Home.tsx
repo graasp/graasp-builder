@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Loader } from '@graasp/ui';
@@ -15,7 +14,7 @@ import Items from './Items';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
 
-const Home = () => {
+const Home: FC = () => {
   const { t } = useTranslation();
   const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
 

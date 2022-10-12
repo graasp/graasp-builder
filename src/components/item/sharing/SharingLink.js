@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
-  SHARE_ITEM_MODAL_MIN_WIDTH,
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
@@ -43,7 +42,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   position: 'relative',
 }));
 
-const StyledLink = styled(Box)(({ theme }) => ({
+const StyledLink = styled(Link)(() => ({
   color: SHARE_LINK_COLOR,
   textDecoration: 'none !important',
   width: '70%',

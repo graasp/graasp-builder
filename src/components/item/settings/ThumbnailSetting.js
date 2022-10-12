@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 

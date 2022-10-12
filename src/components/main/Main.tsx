@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { Typography, styled } from '@mui/material';
@@ -35,7 +36,7 @@ const StyledLink = styled(Link)(() => ({
   display: 'flex',
   alignItems: 'center',
 }));
-type Props = { children: JSX.Element };
+type Props = { children: JSX.Element | JSX.Element[] };
 
 const Main: FC<Props> = ({ children }) => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);

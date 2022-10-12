@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 import { PinButton as GraaspPinButton } from '@graasp/ui';
 
 import { useMutation } from '../../config/queryClient';
@@ -13,8 +14,7 @@ import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 type Props = {
   type?: string;
   item: RecordOf<Item>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  onClick: Function;
+  onClick: () => void;
 };
 
 const PinButton: FC<Props> = ({ item, type, onClick }) => {
@@ -36,8 +36,8 @@ const PinButton: FC<Props> = ({ item, type, onClick }) => {
     onClick?.();
   };
 
-  const pinText = t('Pin');
-  const unPinText = t('UnPin');
+  const pinText = t(BUILDER.PIN_ITEM_PIN_TEXT);
+  const unPinText = t(BUILDER.PIN_ITEM_UNPIN_TEXT);
 
   return (
     <GraaspPinButton

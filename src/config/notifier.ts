@@ -13,15 +13,27 @@ import {
   UPLOAD_FILES_PROGRESS_MESSAGE,
 } from './messages';
 
+// TODO: get from graasp client
+type ErrorPayload = {
+  failure?: unknown[],
+  error?: { response?: { data?: { message: string } } }
+}
+
+type SuccessPayload = {
+  message?: string
+}
+
+type Payload = ErrorPayload & SuccessPayload
+
 const i18n = buildI18n();
 
-const getErrorMessageFromPayload = (payload) =>
+const getErrorMessageFromPayload = (payload: ErrorPayload) =>
   i18n.t(
     payload?.error?.response?.data?.message ??
-      FAILURE_MESSAGES.UNEXPECTED_ERROR,
+    FAILURE_MESSAGES.UNEXPECTED_ERROR,
   );
 
-const getSuccessMessageFromPayload = (payload) =>
+const getSuccessMessageFromPayload = (payload: SuccessPayload) =>
   i18n.t(payload?.message ?? 'The operation successfully proceeded');
 
 const {
@@ -54,7 +66,7 @@ const {
   shareItemRoutine,
 } = routines;
 
-export default ({ type, payload }) => {
+export default ({ type, payload }: { type: string, payload: Payload }): void => {
   let message = null;
   switch (type) {
     // error messages
@@ -118,7 +130,7 @@ export default ({ type, payload }) => {
       break;
     }
     case shareItemRoutine.SUCCESS: {
-      if (!payload.failure.length) {
+      if (!payload?.failure?.length) {
         message = getSuccessMessageFromPayload(payload);
       }
 

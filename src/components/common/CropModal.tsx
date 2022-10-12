@@ -9,6 +9,7 @@ import { withTranslation } from 'react-i18next';
 import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
+import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { THUMBNAIL_ASPECT } from '../../config/constants';
@@ -98,10 +99,12 @@ class CropModal extends Component<Props, State> {
 
     return (
       <Dialog open={open} onClose={onClose} aria-labelledby={label}>
-        <DialogTitle id={label}>{t('Crop Image')}</DialogTitle>
+        <DialogTitle id={label}>
+          {t(BUILDER.CROP_IMAGE_MODAL_TITLE)}
+        </DialogTitle>
         <DialogContent sx={{ textAlign: 'center' }}>
           <DialogContentText>
-            {t('Crop your chosen image to fit the image size requirements.')}
+            {t(BUILDER.CROP_IMAGE_MODAL_CONTENT_TEXT)}
           </DialogContentText>
           <ReactCrop
             src={src}
@@ -113,13 +116,13 @@ class CropModal extends Component<Props, State> {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} variant="text">
-            {t('Cancel')}
+            {t(BUILDER.CANCEL_BUTTON)}
           </Button>
           <Button
             onClick={this.handleOnConfirm}
             className={CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}
           >
-            {t('Confirm')}
+            {t(BUILDER.CONFIRM_BUTTON)}
           </Button>
         </DialogActions>
       </Dialog>

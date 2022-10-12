@@ -1,7 +1,6 @@
 import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 
-import SaveIcon from '@mui/icons-material/Save';
 import { Chip, TextField, Typography } from '@mui/material';
 
 import { useContext, useEffect, useState } from 'react';

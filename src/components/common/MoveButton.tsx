@@ -3,6 +3,7 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import { FC, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { MoveButton as GraaspMoveButton } from '@graasp/ui';
 
 import { BUTTON_TYPES } from '../../config/constants';
@@ -42,7 +43,7 @@ const MoveButton: FC<MoveButtonProps> = ({
       type={type}
       id={id}
       onClick={handleMove}
-      text={t('Move')}
+      text={t(BUILDER.MOVE_BUTTON)}
       menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
       iconClassName={ITEM_MOVE_BUTTON_CLASS}
     />

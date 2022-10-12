@@ -8,6 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR } from '../../config/constants';
@@ -41,16 +42,15 @@ const AccessIndication = ({ itemId, onClick }) => {
   let accessText = null;
   let tooltipText = null;
   if (isPublic) {
-    accessText = t('Public');
-    tooltipText = t('This item is public. Anyone can access this item.');
+    accessText = t(BUILDER.ACCESS_PUBLIC_TAG);
+    tooltipText = t(BUILDER.ACCESS_PUBLIC_TAG_TOOLTIP);
   } else if (hasItemLogin) {
-    accessText = t('Anyone authenticated with the link');
-    tooltipText = t(
-      'This item enables item login. New users can access this item when they authenticate using the item login.',
-    );
+    accessText = t(BUILDER.ACCESS_ITEM_LOGIN_TAG);
+    tooltipText = t(BUILDER.ACCESS_ITEM_LOGIN_TAG_TOOLTIP);
   }
 
   if (accessText && tooltipText) {
+    const text = `${t(BUILDER.ACCESS_TITLE)}: ${accessText}`;
     return (
       <Grid
         container
@@ -59,14 +59,12 @@ const AccessIndication = ({ itemId, onClick }) => {
         id={ACCESS_INDICATION_ID}
       >
         <Grid item>
-          <Typography variant="body1">
-            {`${t('Access')}: ${accessText}`}
-          </Typography>
+          <Typography variant="body1">{text}</Typography>
         </Grid>
         <Grid item>
           <Tooltip title={tooltipText}>
             <IconButton
-              aria-label="access information"
+              aria-label={text}
               color="primary"
               onClick={openSettings}
             >

@@ -5,6 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { FC, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { LibraryIcon } from '@graasp/ui';
 
 import { ITEM_ACTION_TABS } from '../../config/constants';
@@ -30,10 +31,12 @@ const PublishButton: FC<Props> = ({ itemId }) => {
     );
   };
 
+  const title = t(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE);
+
   return (
-    <Tooltip title={t('Publish')}>
+    <Tooltip title={title}>
       <IconButton
-        aria-label="publish"
+        aria-label={title}
         className={PUBLISH_ITEM_BUTTON_CLASS}
         onClick={onClick}
         id={buildPublishButtonId(itemId)}

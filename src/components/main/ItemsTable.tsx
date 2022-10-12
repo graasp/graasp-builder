@@ -127,7 +127,7 @@ const ItemsTable: FC<Props> = ({
   const onDragEnd = (displayRows: { data: Item }[]) => {
     if (!itemId) {
       // TODO
-      console.log('no item id defined');
+      console.error('no item id defined');
     } else {
       const rowIds = displayRows.map((r) => r.data.id);
       if (canDrag() && hasOrderChanged(rowIds)) {

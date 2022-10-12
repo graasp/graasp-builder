@@ -8,6 +8,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
+
 import { ITEM_ACTION_TABS } from '../../config/constants';
 import { buildDashboardButtonId } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
@@ -25,9 +27,9 @@ const AnalyticsDashboardButton = ({ id }) => {
   };
 
   return (
-    <Tooltip title={t('Analytics Dashboard')}>
+    <Tooltip title={t(BUILDER.ANALYTICS_DASHBOARD_LABEL)}>
       <IconButton
-        aria-label={t('Analytics Dashboard')}
+        aria-label={t(BUILDER.ANALYTICS_DASHBOARD_LABEL)}
         onClick={onClick}
         id={buildDashboardButtonId(id)}
       >

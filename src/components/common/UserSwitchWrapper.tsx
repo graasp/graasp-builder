@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Member } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
 import { DOMAIN, SIGN_IN_PATH } from '../../config/constants';
@@ -52,10 +53,10 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
       isCurrentMemberSuccess={isSuccessUser}
       useAvatar={hooks.useAvatar}
       switchMember={switchMember}
-      seeProfileText={t('See Profile')}
-      signedOutTooltipText={t('You are not signed in.')}
-      signOutText={t('Sign Out')}
-      switchMemberText={t('Sign in with another account')}
+      seeProfileText={t(BUILDER.USER_SWITCH_PROFILE_BUTTON)}
+      signedOutTooltipText={t(BUILDER.USER_SWITCH_SIGNED_OUT_TOOLTIP)}
+      signOutText={t(BUILDER.USER_SWITCH_SIGN_OUT_BUTTON)}
+      switchMemberText={t(BUILDER.USER_SWITCH_SWITCH_USER_TEXT)}
       profilePath={MEMBER_PROFILE_PATH}
       domain={DOMAIN}
       redirectPath={SIGN_IN_PATH}
