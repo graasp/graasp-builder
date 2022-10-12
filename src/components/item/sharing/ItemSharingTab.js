@@ -59,7 +59,7 @@ const ItemSharingTab = ({ item }) => {
 
     return (
       <>
-        <Divider my={3} />
+        <Divider sx={{ my: 3 }} />
 
         <Grid container justifyContent="space-between" alignItems="center">
           <Typography variant="h5" m={0} p={0}>
@@ -79,7 +79,7 @@ const ItemSharingTab = ({ item }) => {
         */}
         {getItemLoginSchema(item?.extra) && (
           <>
-            <Divider my={3} />
+            <Divider sx={{ my: 3 }} />
             <Typography variant="h5" m={0} p={0}>
               {t('Authenticated Members')}
             </Typography>
@@ -94,7 +94,7 @@ const ItemSharingTab = ({ item }) => {
 
         {Boolean(invitations?.size) && (
           <>
-            <Divider my={3} />
+            <Divider sx={{ my: 3 }} />
             <Typography variant="h5">{t('Pending Invitations')}</Typography>
             <InvitationsTable
               item={item}

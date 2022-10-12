@@ -1,5 +1,7 @@
 import { List } from 'immutable';
 
+import Container from '@mui/material/Container';
+
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -29,13 +31,15 @@ const SharedItems: FC = () => {
 
   return (
     <Main>
-      <ItemHeader showNavigation={false} />
-      <Items
-        id={SHARED_ITEMS_ID}
-        title={t('Shared Items')}
-        items={List(sharedItems)}
-        showCreator
-      />
+      <Container>
+        <ItemHeader showNavigation={false} />
+        <Items
+          id={SHARED_ITEMS_ID}
+          title={t('Shared Items')}
+          items={List(sharedItems)}
+          showCreator
+        />
+      </Container>
     </Main>
   );
 };

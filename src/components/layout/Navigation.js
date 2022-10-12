@@ -38,7 +38,9 @@ const ParentTitle = styled(Typography)(() => ({
 
 const ParentLink = ({ id, name }) => (
   <Link key={id} to={buildItemPath(id)}>
-    <Typography id={buildNavigationLink(id)}>{name}</Typography>
+    <Typography id={buildNavigationLink(id)}>
+      {truncate(name, { length: ITEM_NAME_MAX_LENGTH })}
+    </Typography>
   </Link>
 );
 

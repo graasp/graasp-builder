@@ -4,10 +4,11 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Item } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import {
   ITEM_FORM_APP_URL_ID, // buildItemFormAppOptionId,
@@ -39,7 +40,7 @@ type Props = {
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const [newName, setNewName] = useState(item?.name);
 
   // todo: not clear if newValue is a string or object
@@ -61,7 +62,9 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
 
   return (
     <div>
-      <Typography variant="h6">{t('Create an App')}</Typography>
+      <Typography variant="h6">
+        {t(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
+      </Typography>
       <BaseItemForm
         onChange={onChange}
         item={{ ...item, name: newName }}
@@ -97,7 +100,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
             <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
-              label={t('App url')}
+              label={t(BUILDER.CREATE_NEW_ITEM_APP_URL_LABEL)}
             />
           )}
         />

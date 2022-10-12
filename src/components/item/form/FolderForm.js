@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+import Box from '@mui/material/Box';
+
 import { TextEditor } from '@graasp/ui';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
@@ -21,13 +23,15 @@ const FolderForm = ({ onChange, item, updatedProperties }) => {
         updatedProperties={updatedProperties}
       />
 
-      <TextEditor
-        id={FOLDER_FORM_DESCRIPTION_ID}
-        value={updatedProperties?.description || item?.description}
-        edit
-        onChange={onCaptionChange}
-        showActions={false}
-      />
+      <Box sx={{ mt: 2 }}>
+        <TextEditor
+          id={FOLDER_FORM_DESCRIPTION_ID}
+          value={updatedProperties?.description || item?.description}
+          edit
+          onChange={onCaptionChange}
+          showActions={false}
+        />
+      </Box>
     </>
   );
 };

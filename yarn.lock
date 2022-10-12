@@ -2233,16 +2233,16 @@ __metadata:
 
 "@graasp/translations@github:graasp/graasp-translations.git#36-builder":
   version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=0ed6576ebefec3551a56539768ad7af6f4f91bd1"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=125486e68e50db8670082f1b272dbaa6e8a58be6"
   dependencies:
     i18next: 21.8.1
-  checksum: ba7188b783aee7301906aea7d329ed5c77ae7879766a8e14840a658f550bc390b1d9642a44eccb72a2b742d3969534e248ac19a8f8e8e9a50da9e7a128269840
+  checksum: fa278ee91443c15ec72e0065c496ba6652e508f1f7529936f079093549e71072ba9bc88ff2cf4f1961dda28994458cc412e0292f1559ee464984bbf6a2a1af22
   languageName: node
   linkType: hard
 
 "@graasp/ui@github:graasp/graasp-ui.git#93-new-mui5":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=e5ca581390a15ad0b7ef2c921c60c2c0f1751049"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=a0e80fa32807270199a02816dfdcf3dc7fa4160e"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -2274,7 +2274,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: a43a4c12aa1f9015a41d2634181088a2ded7e37a637e38d7bc726796c85622a9db33741ba964f974e8cbde4e5676d02bb9e34c37856945aca9339b8c6addf183
+  checksum: d975bc5e652b81760784d3ecd39479904a6d966b9b9bb393257f0528357a0d63bf93551e21143e181b4b5668f45f61b25af888f1ff8afdabe91f31ee9246edef
   languageName: node
   linkType: hard
 

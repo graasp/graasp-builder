@@ -1,3 +1,5 @@
+import Container from '@mui/material/Container';
+
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -30,15 +32,19 @@ const Home: FC = () => {
     <Main>
       <UppyContextProvider enable={isSuccess}>
         <FileUploader />
-        <ItemHeader showNavigation={false} />
-        <Items
-          defaultSortedColumn={{ updatedAt: 'desc' }}
-          id={OWNED_ITEMS_ID}
-          title={t('My Items')}
-          items={ownItems}
-          headerElements={[<NewItemButton key="newButton" fontSize="small" />]}
-          ToolbarActions={ItemActionsRenderer}
-        />
+        <Container>
+          <ItemHeader showNavigation={false} />
+          <Items
+            defaultSortedColumn={{ updatedAt: 'desc' }}
+            id={OWNED_ITEMS_ID}
+            title={t('My Items')}
+            items={ownItems}
+            headerElements={[
+              <NewItemButton key="newButton" fontSize="small" />,
+            ]}
+            ToolbarActions={ItemActionsRenderer}
+          />
+        </Container>
       </UppyContextProvider>
     </Main>
   );

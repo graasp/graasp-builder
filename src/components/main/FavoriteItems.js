@@ -1,5 +1,7 @@
 import { List } from 'immutable';
 
+import Container from '@mui/material/Container';
+
 import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -73,8 +75,10 @@ const FavoriteItems = () => {
 
   return (
     <Main>
-      <ItemHeader showNavigation={false} />
-      {renderContent()}
+      <Container>
+        <ItemHeader showNavigation={false} />
+        {renderContent()}
+      </Container>
     </Main>
   );
 };

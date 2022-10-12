@@ -8,11 +8,12 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS, routines } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../../config/i18n';
 import notifier from '../../../config/notifier';
 import { useMutation } from '../../../config/queryClient';
 import {
@@ -31,7 +32,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
   const [error, setError] = useState(false);
 
   const { mutateAsync: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
   const [invitation, setInvitation] = useState(buildInvitation());
@@ -39,14 +40,14 @@ const CreateItemMembershipForm = ({ item, members }) => {
   const isInvitationInvalid = ({ email }) => {
     // check mail validity
     if (!email) {
-      return t('The mail cannot be empty');
+      return t(BUILDER.SHARE_ITEM_FORM_INVITATION_EMPTY_EMAIL_MESSAGE);
     }
     if (!validator.isEmail(email)) {
-      return t('This mail is not valid');
+      return t(BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE);
     }
     // check mail does not already exist
     if (members.find(({ email: thisEmail }) => thisEmail === email)) {
-      return t('This user already has access to this item');
+      return t(BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE);
     }
     return false;
   };
@@ -112,11 +113,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
   };
 
   const renderInvitationStatus = () => (
-    <Tooltip
-      title={t(
-        'Non-registered users will receive a personal link to register on the platform.',
-      )}
-    >
+    <Tooltip title={t(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}>
       <IconButton aria-label="status">
         <ErrorOutlineIcon />
       </IconButton>
@@ -131,14 +128,14 @@ const CreateItemMembershipForm = ({ item, members }) => {
         disabled={disabled}
         id={SHARE_ITEM_SHARE_BUTTON_ID}
       >
-        {t('Share')}
+        {t(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
       </Button>
     );
   };
 
   return (
-    <Grid container spacing={1} id={CREATE_MEMBERSHIP_FORM_ID}>
-      <Grid container alignItems="center" justify="center">
+    <Grid container id={CREATE_MEMBERSHIP_FORM_ID}>
+      <Grid container alignItems="center" justifyContent="center" spacing={1}>
         <Grid item xs={5}>
           <TextField
             value={invitation.email}
@@ -148,7 +145,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
             }}
             id={SHARE_ITEM_EMAIL_INPUT_ID}
             variant="outlined"
-            label={t('Email')}
+            label={t(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
             error={Boolean(error)}
             helperText={error}
             onChange={onChangeEmail}

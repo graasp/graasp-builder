@@ -1,10 +1,10 @@
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { Grid, IconButton, Typography } from '@mui/material';
-import Card from '@mui/material/Card';
+import { Container, Grid, IconButton, Typography } from '@mui/material';
 
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { ACCOUNT, namespaces } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { DEFAULT_EMAIL_FREQUENCY, DEFAULT_LANG } from '../../config/constants';
@@ -30,7 +30,7 @@ import LanguageSwitch from './LanguageSwitch';
 import PasswordSetting from './PasswordSetting';
 
 const MemberProfileScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(namespaces.account);
   const { data: member, isLoading } = useContext(CurrentUserContext);
 
   if (isLoading) {
@@ -50,18 +50,16 @@ const MemberProfileScreen = () => {
 
   return (
     <Main>
-      <Card p={3}>
+      <Container sx={{ mt: 2 }}>
         <Grid container spacing={3}>
-          <Grid item xs={10}>
-            <Grid item xs={12}>
-              <Typography variant="h4" id={MEMBER_PROFILE_MEMBER_NAME_ID}>
-                {member.name}
-              </Typography>
-            </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h4" id={MEMBER_PROFILE_MEMBER_NAME_ID}>
+              {member.name}
+            </Typography>
             {/* todo: display only as light user */}
-            <Grid container m={1} alignItems="center">
+            <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Member ID')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_MEMBER_ID_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_MEMBER_ID_ID}>
@@ -77,7 +75,7 @@ const MemberProfileScreen = () => {
             </Grid>
             <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Email')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_EMAIL_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_EMAIL_ID}>
@@ -87,7 +85,7 @@ const MemberProfileScreen = () => {
             </Grid>
             <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Member Since')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_CREATED_AT_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_INSCRIPTION_DATE_ID}>
@@ -97,7 +95,7 @@ const MemberProfileScreen = () => {
             </Grid>
             <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Language')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_LANGUAGE_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <LanguageSwitch
@@ -109,7 +107,9 @@ const MemberProfileScreen = () => {
             </Grid>
             <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Email Frequency')}</Typography>
+                <Typography>
+                  {t(ACCOUNT.PROFILE_EMAIL_FREQUENCY_TITLE)}
+                </Typography>
               </Grid>
               <Grid item xs={8}>
                 <EmailPreferenceSwitch
@@ -125,7 +125,7 @@ const MemberProfileScreen = () => {
         <AvatarSetting user={member} />
         <PasswordSetting user={member} />
         <DeleteMemberDialog id={member?.id} />
-      </Card>
+      </Container>
     </Main>
   );
 };

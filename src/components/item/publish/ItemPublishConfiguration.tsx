@@ -1,5 +1,4 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -10,16 +9,18 @@ import UpdateIcon from '@mui/icons-material/Update';
 import { Box, Button, Divider, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
+import { Item } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import {
   ADMIN_CONTACT,
   VALIDATION_STATUS_NAMES,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, queryClient, useMutation } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
@@ -40,8 +41,12 @@ const {
   useItemValidationReviewStatuses,
 } = hooks;
 
-const ItemPublishConfiguration = ({ item }) => {
-  const { t } = useTranslation();
+type Props = {
+  item: RecordOf<Item>;
+};
+
+const ItemPublishConfiguration: FC<Props> = ({ item }) => {
+  const { t } = useBuilderTranslation();
   // current item
   const { itemId } = useParams();
 
@@ -152,22 +157,16 @@ const ItemPublishConfiguration = ({ item }) => {
 
   return (
     <>
-      <Divider mt={3} />
+      <Divider sx={{ mt: 3 }} />
       <Typography variant="h6" mt={2} id={ITEM_PUBLISH_SECTION_TITLE_ID}>
-        {t('Publication On Graasp Library')}
+        {t(BUILDER.LIBRARY_SETTINGS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(
-          'You can publish your collection to Graasp Library, our open educational resource library.',
-        )}
-        <br />
-        {t('Published collections are accessible by the public.')}
-        <br />
-        {t('To publish your collection, please follow the three steps below.')}
+        {t(BUILDER.LIBRARY_SETTINGS_INFORMATION)}
       </Typography>
-      <Typography variant="h6" mt={1}>
+      <Typography variant="h6" sx={{ mt: 1 }}>
         <LooksOneIcon color="primary" mr={2} />
-        {t('Validation')}
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_TITLE)}
       </Typography>
       <Typography variant="body1">
         {t(
@@ -201,7 +200,7 @@ const ItemPublishConfiguration = ({ item }) => {
         isValidated={itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS}
       />
       <Typography variant="h6" mt={2}>
-        <Looks3Icon color="primary" mr={2} />
+        <Looks3Icon color="primary" sx={{ mr: 2 }} />
         {t('Configuration')}
       </Typography>
       <Typography variant="body1">
@@ -216,10 +215,6 @@ const ItemPublishConfiguration = ({ item }) => {
       </Box>
     </>
   );
-};
-
-ItemPublishConfiguration.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemPublishConfiguration;

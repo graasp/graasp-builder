@@ -43,9 +43,7 @@ const Chatbox = ({ item }) => {
   ) {
     return <Loader />;
   }
-
   return null;
-
   // only show export chat when user has admin right on the item
   // const isAdmin =
   //   itemPermissions?.find((perms) => perms.memberId === currentMember.id)

@@ -2,15 +2,16 @@ import { List, Record } from 'immutable';
 import PropTypes from 'prop-types';
 
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import {
   MEMBERSHIP_TABLE_HEIGHT,
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   buildInvitationTableRowId,
@@ -26,7 +27,7 @@ const rowStyle = {
 };
 
 const InvitationsTable = ({ invitations, item, emptyMessage }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: editInvitation } = useMutation(
     MUTATION_KEYS.PATCH_INVITATION,
   );
@@ -47,9 +48,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
     item,
     onDelete,
     buildIdFunction: buildItemInvitationRowDeleteButtonId,
-    tooltip: t(
-      'This invitation is defined in the parent item and cannot be deleted here.',
-    ),
+    tooltip: t(BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP),
   });
 
   const PermissionRenderer = TableRowPermissionRenderer({
@@ -83,14 +82,14 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         headerCheckboxSelection: true,
         checkboxSelection: true,
         comparator: GraaspTable.textComparator,
-        headerName: t('Mail'),
+        headerName: t(BUILDER.INVITATIONS_TABLE_EMAIL_HEADER),
         field: 'email',
         cellStyle: rowStyle,
         flex: 1,
         tooltipField: 'email',
       },
       {
-        headerName: t('Invitation'),
+        headerName: t(BUILDER.INVITATIONS_TABLE_INVITATION_HEADER),
         sortable: false,
         cellRenderer: InvitationRenderer,
         cellStyle: rowStyle,
@@ -98,7 +97,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         field: 'email',
       },
       {
-        headerName: t('Permission'),
+        headerName: t(BUILDER.INVITATIONS_TABLE_PERMISSION_HEADER),
         cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
         type: 'rightAligned',
@@ -107,7 +106,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       {
         field: 'actions',
         cellRenderer: ActionRenderer,
-        headerName: t('Actions'),
+        headerName: t(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,

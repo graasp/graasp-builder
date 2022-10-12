@@ -1,24 +1,18 @@
 import PropTypes from 'prop-types';
 
-import { styled } from '@mui/material';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-
-const Title = styled(Typography)(() => ({
-  flex: '1 1 100%',
-  display: 'flex',
-  alignItems: 'center',
-}));
+import { Grid, Typography } from '@mui/material';
 
 const ItemsToolbar = ({ title, headerElements }) => (
-  <>
-    <Toolbar pl={2} pr={1}>
-      <Title variant="h4" component="div" noWrap>
+  <Grid container>
+    <Grid item md={8}>
+      <Typography variant="h4" noWrap>
         {title}
-      </Title>
+      </Typography>
+    </Grid>
+    <Grid item md={4} sx={{ display: 'flex', justifyContent: 'right' }}>
       {headerElements}
-    </Toolbar>
-  </>
+    </Grid>
+  </Grid>
 );
 
 ItemsToolbar.propTypes = {

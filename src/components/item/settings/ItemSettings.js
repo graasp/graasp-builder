@@ -6,10 +6,10 @@ import { FormControlLabel, FormGroup, Switch, Tooltip } from '@mui/material';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import { useTranslation } from 'react-i18next';
-
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   SETTINGS_CHATBOX_TOGGLE_ID,
@@ -22,7 +22,7 @@ import LinkSettings from './LinkSettings';
 import ThumbnailSetting from './ThumbnailSetting';
 
 const ItemSettings = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
@@ -67,7 +67,12 @@ const ItemSettings = ({ item }) => {
         color="primary"
       />
     );
-    return <FormControlLabel label={t('Pin')} control={control} />;
+    return (
+      <FormControlLabel
+        label={t(BUILDER.SETTINGS_PIN_ITEM_LABEL)}
+        control={control}
+      />
+    );
   };
 
   const renderChatSetting = () => {
@@ -79,7 +84,12 @@ const ItemSettings = ({ item }) => {
         color="primary"
       />
     );
-    return <FormControlLabel label={t('Show Chat')} control={control} />;
+    return (
+      <FormControlLabel
+        label={t(BUILDER.SETTINGS_SHOW_CHAT_LABEL)}
+        control={control}
+      />
+    );
   };
 
   const renderCollapseSetting = () => {
@@ -94,11 +104,14 @@ const ItemSettings = ({ item }) => {
       />
     );
     const formLabel = (
-      <FormControlLabel label={t('Collapse item')} control={control} />
+      <FormControlLabel
+        label={t(BUILDER.SETTINGS_COLLAPSE_LABEL)}
+        control={control}
+      />
     );
     const tooltip = disabled ? (
       <Tooltip
-        title={t('A folder cannot be collapsed')}
+        title={t(BUILDER.SETTINGS_COLLAPSE_FOLDER_INFORMATION)}
         placement="right"
         m={0}
         p={0}
@@ -116,7 +129,7 @@ const ItemSettings = ({ item }) => {
 
   return (
     <Container disableGutters mt={2}>
-      <Typography variant="h4">{t('Settings')}</Typography>
+      <Typography variant="h4">{t(BUILDER.SETTINGS_TITLE)}</Typography>
 
       <FormGroup>
         {renderPinSetting()}

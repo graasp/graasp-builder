@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { ACCOUNT, namespaces } from '@graasp/translations';
 import { Avatar } from '@graasp/ui';
 
 import {
@@ -27,7 +28,7 @@ const AvatarSetting = ({ user }) => {
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState(false);
   const [openStatusBar, setOpenStatusBar] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(namespaces.account);
   const { mutate: onUploadAvatar } = useMutation(MUTATION_KEYS.UPLOAD_AVATAR);
 
   const userId = user?.id;
@@ -114,8 +115,12 @@ const AvatarSetting = ({ user }) => {
         my={1}
       >
         <Grid item sm={6}>
-          <Typography variant="h5">{t('Thumbnail')}</Typography>
-          <Typography variant="body1">{t('Update thumbnail')}</Typography>
+          <Typography variant="h5">
+            {t(ACCOUNT.PROFILE_AVATAR_TITLE)}
+          </Typography>
+          <Typography variant="body1">
+            {t(ACCOUNT.PROFILE_AVATAR_INFORMATION)}
+          </Typography>
           <input
             type="file"
             accept="image/*"
@@ -130,7 +135,7 @@ const AvatarSetting = ({ user }) => {
           <Avatar
             id={userId}
             extra={user?.extra}
-            alt={t('current thumbnail')}
+            alt={t(ACCOUNT.PROFILE_AVATAR_CURRENT_ALT)}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
             useAvatar={hooks.useAvatar}

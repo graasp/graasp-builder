@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -14,6 +14,7 @@ import {
   MEMBERSHIP_TABLE_HEIGHT,
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,
@@ -67,7 +68,7 @@ const ItemMembershipsTable = ({
   emptyMessage,
   showEmail,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { data: users, isLoading } = hooks.useMembers(
     memberships.map(({ memberId }) => memberId),
   );
@@ -90,9 +91,7 @@ const ItemMembershipsTable = ({
       item,
       onDelete,
       buildIdFunction: buildItemMembershipRowDeleteButtonId,
-      tooltip: t(
-        'This membership is defined in the parent item and cannot be deleted here.',
-      ),
+      tooltip: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP),
     });
     const PermissionRenderer = TableRowPermissionRenderer({
       item,
@@ -120,7 +119,7 @@ const ItemMembershipsTable = ({
       columns.push({
         headerCheckboxSelection: true,
         checkboxSelection: true,
-        headerName: t('Mail'),
+        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER),
         cellRenderer: EmailCellRenderer,
         field: 'email',
         cellStyle: rowStyle,
@@ -132,7 +131,7 @@ const ItemMembershipsTable = ({
 
     return columns.concat([
       {
-        headerName: t('Name'),
+        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER),
         cellRenderer: NameCellRenderer,
         field: 'memberId',
         cellStyle: rowStyle,
@@ -140,7 +139,7 @@ const ItemMembershipsTable = ({
         tooltipField: 'name',
       },
       {
-        headerName: t('Permission'),
+        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER),
         cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
         sort: true,
@@ -155,7 +154,7 @@ const ItemMembershipsTable = ({
       {
         field: 'actions',
         cellRenderer: ActionRenderer,
-        headerName: t('Actions'),
+        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,

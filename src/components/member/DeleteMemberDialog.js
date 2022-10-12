@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { ACCOUNT, COMMON, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useMutation } from '../../config/queryClient';
@@ -20,7 +21,8 @@ import {
 } from '../../config/selectors';
 
 const DeleteMemberDialog = ({ id }) => {
-  const { t } = useTranslation();
+  const { t: accountT } = useTranslation(namespaces.account);
+  const { t: commonT } = useTranslation(namespaces.common);
 
   const [open, setOpen] = useState(false);
   const { mutate: deleteMember } = useMutation(MUTATION_KEYS.DELETE_MEMBER);
@@ -36,15 +38,17 @@ const DeleteMemberDialog = ({ id }) => {
         aria-labelledby={alertDialogTitle}
         aria-describedby={alertDialogDescription}
       >
-        <DialogTitle id={alertDialogTitle}>{t('Confirm deletion')}</DialogTitle>
+        <DialogTitle id={alertDialogTitle}>
+          {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_TITLE)}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id={alertDialogDescription}>
-            {t('Your account will be deleted permanently.')}
+            {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_INFORMATION)}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)} color="primary" variant="text">
-            {t('Cancel')}
+            {commonT(COMMON.CANCEL_BUTTON)}
           </Button>
           <Button
             id={CONFIRM_DELETE_BUTTON_ID}
@@ -53,7 +57,7 @@ const DeleteMemberDialog = ({ id }) => {
             autoFocus
             variant="text"
           >
-            {t('Delete Permanently')}
+            {commonT('Delete Permanently')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -66,7 +70,9 @@ const DeleteMemberDialog = ({ id }) => {
       >
         <Grid item xs={8}>
           <Grid item xs={12}>
-            <Typography variant="h5">{t('Delete this account')}</Typography>
+            <Typography variant="h5">
+              {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_TITLE)}
+            </Typography>
           </Grid>
           <Grid
             container
@@ -85,12 +91,10 @@ const DeleteMemberDialog = ({ id }) => {
               my={1}
               onClick={() => setOpen(true)}
             >
-              {t('Delete Account')}
+              {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_BUTTON)}
             </Button>
             <Typography variant="caption">
-              {t(
-                'Once you delete an account, there is no going back. Please be certain.',
-              )}
+              {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_INFORMATION)}
             </Typography>
           </Grid>
         </Grid>

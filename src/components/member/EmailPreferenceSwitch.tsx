@@ -1,8 +1,12 @@
+import { SelectChangeEvent } from '@mui/material';
+
 import { FC } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { FormControl, Select, SelectChangeEvent } from '@mui/material';
-import { useMutation } from '../../config/queryClient';
+import { Select } from '@graasp/ui';
+
 import { emailFrequency } from '../../config/constants';
+import { useMutation } from '../../config/queryClient';
 
 type EmailPreferenceSwitchProps = {
   id?: string;
@@ -31,15 +35,17 @@ const EmailPreferenceSwitch: FC<EmailPreferenceSwitchProps> = ({
   };
 
   return (
-    <FormControl>
-      <Select id={id} native value={emailFreq} onChange={handleChange}>
-        {Object.entries(emailFrequency).map(([freq, name]) => (
-          <option value={freq} key={name}>
-            {name}
-          </option>
-        ))}
-      </Select>
-    </FormControl>
+    <Select
+      id={id}
+      native
+      defaultValue={emailFreq}
+      onChange={handleChange}
+      variant="standard"
+      values={Object.entries(emailFrequency).map(([freq, name]) => ({
+        value: freq,
+        text: name,
+      }))}
+    />
   );
 };
 

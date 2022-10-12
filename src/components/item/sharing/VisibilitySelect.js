@@ -225,6 +225,7 @@ const VisibilitySelect = ({ item, edit }) => {
           onChange={handleChange}
           disabled={isDisabled}
           id={SHARE_ITEM_VISIBILITY_SELECT_ID}
+          sx={{ mr: 1 }}
         >
           <MenuItem value={SETTINGS.ITEM_PRIVATE.name}>{t('Private')}</MenuItem>
           <MenuItem value={SETTINGS.ITEM_LOGIN.name}>

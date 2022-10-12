@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { hooks } from '../config/queryClient';
@@ -72,7 +73,7 @@ const RecycleBinScreen: FC = () => {
       <ItemHeader showNavigation={false} />
       <Items
         clickable={false}
-        title={t('Recycle Bin')}
+        title={t(BUILDER.RECYCLE_BIN_TITLE)}
         items={List(items)}
         actions={RowActions}
         ToolbarActions={ToolbarActions}

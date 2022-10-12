@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { useTranslation } from 'react-i18next';
-
+import { BUILDER } from '@graasp/translations';
 import { TextEditor } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
 import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
 
 const DocumentForm = ({ onChange, item, updatedProperties }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const handleOnChange = (content) => {
     onChange({
@@ -27,7 +27,9 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
 
   return (
     <>
-      <Typography variant="h6">{t('Create a Document')}</Typography>
+      <Typography variant="h6">
+        {t(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
+      </Typography>
       <BaseForm
         onChange={onChange}
         item={item}
@@ -39,7 +41,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
           value={value}
           onChange={handleOnChange}
           edit
-          placeholderText={t('Write something...')}
+          placeholderText={t(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
           showActions={false}
         />
       </Box>

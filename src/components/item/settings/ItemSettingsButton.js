@@ -6,9 +6,11 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { BUILDER } from '@graasp/translations';
 
 import { ITEM_ACTION_TABS } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import {
   ITEM_SETTINGS_BUTTON_CLASS,
   buildSettingsButtonId,
@@ -17,7 +19,7 @@ import { LayoutContext } from '../../context/LayoutContext';
 
 const ItemSettingsButton = ({ id }) => {
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const onClickSettings = () => {
     setOpenedActionTabId(
@@ -28,7 +30,7 @@ const ItemSettingsButton = ({ id }) => {
   };
 
   return (
-    <Tooltip title={t('Settings')}>
+    <Tooltip title={t(BUILDER.SETTINGS_TITLE)}>
       <IconButton
         onClick={onClickSettings}
         className={ITEM_SETTINGS_BUTTON_CLASS}

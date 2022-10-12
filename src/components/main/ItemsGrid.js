@@ -71,7 +71,7 @@ const ItemsGrid = (props) => {
     }
 
     return itemsInPage.map((item) => (
-      <Grid key={item.id} item xs={12} sm={12} md={6} lg={4} xl={2}>
+      <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
         <Item
           item={item}
           memberships={getMembershipsForItem({ items, memberships, item })}

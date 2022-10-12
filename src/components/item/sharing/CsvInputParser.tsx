@@ -1,6 +1,5 @@
-import { Record } from 'immutable';
+import { RecordOf } from 'immutable';
 import Papa from 'papaparse';
-import PropTypes from 'prop-types';
 
 import PublishIcon from '@mui/icons-material/Publish';
 import Alert from '@mui/material/Alert';
@@ -13,13 +12,15 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import buildI18n from '@graasp/translations';
+import { Item } from '@graasp/sdk';
+import { BUILDER, namespaces } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
@@ -31,11 +32,16 @@ import { PERMISSION_LEVELS } from '../../../enums';
 
 const allowedExtensions = ['.csv'].join(',');
 
-const CsvInputParser = ({ item }) => {
-  const { t } = useTranslation();
+type Props = {
+  item: RecordOf<Item>;
+};
+
+const CsvInputParser: FC<Props> = ({ item }) => {
+  const { t } = useBuilderTranslation();
+  const { t: messageT } = useTranslation(namespaces.messages);
+  const { t: commonT } = useTranslation(namespaces.common);
   const { id: itemId, path: itemPath } = item;
   const [isOpen, setIsOpen] = useState(false);
-  const messageI18n = buildI18n();
   const {
     mutate: share,
     isLoading,
@@ -43,7 +49,7 @@ const CsvInputParser = ({ item }) => {
     isError,
     data: results,
     error,
-  } = useMutation(MUTATION_KEYS.SHARE_ITEM);
+  } = useMutation<any, any, any>(MUTATION_KEYS.SHARE_ITEM);
 
   const openModal = () => {
     setIsOpen(true);
@@ -59,17 +65,19 @@ const CsvInputParser = ({ item }) => {
 
       // Event listener on reader when the file loads
       reader.onload = async ({ target }) => {
-        const csv = Papa.parse(target.result, { header: true });
-        const parsedData = csv?.data;
+        if (target?.result) {
+          const csv = Papa.parse(target.result, { header: true });
+          const parsedData = csv?.data;
 
-        // add current item path and default permission read
-        const dataWithItemPath = parsedData.map((d) => ({
-          permission: PERMISSION_LEVELS.READ,
-          ...d,
-          itemPath,
-        }));
+          // add current item path and default permission read
+          const dataWithItemPath = parsedData.map((d) => ({
+            permission: PERMISSION_LEVELS.READ,
+            ...d,
+            itemPath,
+          }));
 
-        share({ data: dataWithItemPath, itemId });
+          share({ data: dataWithItemPath, itemId });
+        }
       };
       reader.readAsText(inputFile);
     }
@@ -94,12 +102,13 @@ const CsvInputParser = ({ item }) => {
     }
 
     // show generic network/axios errors
-    const genericErrors = results?.failure?.filter(
-      (e) => e?.code && e?.message && !e?.data,
+    const genericErrors: Error[] = results?.failure?.filter(
+      (e: { code?: string; message?: string; data?: unknown }) =>
+        e?.code && e?.message && !e?.data,
     );
     if (genericErrors?.length) {
       return genericErrors.map((err) => (
-        <Alert key={err} severity="error">
+        <Alert key={err.message} severity="error">
           {t(err.message)}
         </Alert>
       ));
@@ -114,14 +123,16 @@ const CsvInputParser = ({ item }) => {
     if (!failureToShow.length && isSuccess) {
       return (
         <Alert severity="success">
-          {t('The users were successfully imported!')}
+          {t(BUILDER.SHARE_ITEM_CSV_IMPORT_SUCCESS_MESSAGE)}
         </Alert>
       );
     }
 
     return (
       <Alert id={SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID} severity="error">
-        <AlertTitle>{t('The import failed for these entries')}</AlertTitle>
+        <AlertTitle>
+          {t(BUILDER.SHARE_ITEM_CSV_IMPORT_ERROR_MESSAGE)}
+        </AlertTitle>
         <Grid container>
           {failureToShow.map((e) => (
             <Grid container key={e}>
@@ -129,7 +140,7 @@ const CsvInputParser = ({ item }) => {
                 {e?.data?.email ?? e?.data?.name}
               </Grid>
               <Grid item xs={8}>
-                {messageI18n.t(e?.message)}
+                {messageT(e?.message)}
               </Grid>
             </Grid>
           ))}
@@ -148,7 +159,7 @@ const CsvInputParser = ({ item }) => {
         variant="outlined"
         size="small"
       >
-        {t('Import from CSV')}
+        {t(BUILDER.SHARE_ITEM_CSV_IMPORT_BUTTON)}
       </Button>
       {isOpen && (
         <Dialog
@@ -158,17 +169,11 @@ const CsvInputParser = ({ item }) => {
           open
         >
           <DialogTitle id={label}>
-            {t('Import users from a CSV file')}
+            {t(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_TITLE)}
           </DialogTitle>
           <DialogContent dividers>
             <DialogContentText>
-              {t(
-                "Your CSV should have at least the column 'email'. The columns 'name' and 'permission' are optional.",
-              )}
-              <br />
-              {t(
-                'A CSV entry cannot override the data already saved. If a user already has permission, update the value in the table manually.',
-              )}
+              {t(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT)}
             </DialogContentText>
             <Box textAlign="center">
               <Button
@@ -176,7 +181,7 @@ const CsvInputParser = ({ item }) => {
                 startIcon={<PublishIcon />}
                 component="label"
               >
-                {t('Choose a CSV file')}
+                {t(BUILDER.SHARE_ITEM_CSV_IMPORT_INPUT_BUTTON)}
                 <input
                   type="file"
                   hidden
@@ -189,17 +194,13 @@ const CsvInputParser = ({ item }) => {
           </DialogContent>
           <DialogActions>
             <Button variant="text" onClick={handleClose} color="primary">
-              {t('Close')}
+              {commonT(COMMON.CLOSE_BUTTON)}
             </Button>
           </DialogActions>
         </Dialog>
       )}
     </>
   );
-};
-
-CsvInputParser.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default CsvInputParser;

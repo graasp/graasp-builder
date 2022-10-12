@@ -8,11 +8,11 @@ import IconButton from '@mui/material/IconButton';
 import { FC, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+// import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Context } from '@graasp/sdk';
 import { GraaspLogo, Main as GraaspMain, Navigation } from '@graasp/ui';
 
-// import { MentionButton } from '@graasp/chatbox';
 import {
   APP_NAME,
   GRAASP_LOGO_HEADER_HEIGHT,
@@ -81,13 +81,13 @@ const Main: FC<Props> = ({ children }) => {
   const rightContent = (
     <>
       {/* <MentionButton
-  color="secondary"
-  useMentions={hooks.useMentions}
-  useMembers={hooks.useMembers}
-  patchMentionFunction={patchMentionFunction}
-  deleteMentionFunction={deleteMentionFunction}
-  clearAllMentionsFunction={clearAllMentionsFunction}
-/> */}
+        color="secondary"
+        useMentions={hooks.useMentions}
+        useMembers={hooks.useMembers}
+        patchMentionFunction={patchMentionFunction}
+        deleteMentionFunction={deleteMentionFunction}
+        clearAllMentionsFunction={clearAllMentionsFunction}
+      /> */}
       <UserSwitchWrapper />
     </>
   );
@@ -100,7 +100,6 @@ const Main: FC<Props> = ({ children }) => {
       open={isMainMenuOpen}
     >
       <CookiesBanner />
-      {/* <Header toggleMenu={toggleDrawer} isMenuOpen={isMainMenuOpen} /> */}
       {children}
     </GraaspMain>
   );

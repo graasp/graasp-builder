@@ -122,6 +122,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
       return (
         <FileWrapper>
           <LinkItem
+            isResizable
             item={item}
             editCaption={isEditing}
             onSaveCaption={onSaveCaption}
@@ -149,6 +150,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
     case ITEM_TYPES.APP:
       return (
         <AppItem
+          isResizable
           item={item}
           apiHost={API_HOST}
           editCaption={isEditing}

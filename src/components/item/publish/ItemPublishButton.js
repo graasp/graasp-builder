@@ -2,14 +2,14 @@ import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material';
+import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Loader } from '@graasp/ui';
+import { Button, Loader } from '@graasp/ui';
 
 import { SETTINGS } from '../../../config/constants';
 import { hooks, useMutation } from '../../../config/queryClient';
@@ -98,13 +98,9 @@ const ItemPublishButton = ({ item, isValidated }) => {
     <>
       <Button
         disabled={isDisabled || !isValidated}
-        variant="outlined"
         onClick={handlePublish}
-        color="primary"
         sx={{
-          marginTop: 1,
-          width: 'auto',
-          marginRight: 2,
+          mr: 2,
         }}
         endIcon={isPublished && <CheckCircleIcon color="primary" />}
         id={ITEM_PUBLISH_BUTTON_ID}
@@ -112,10 +108,8 @@ const ItemPublishButton = ({ item, isValidated }) => {
         {t('Publish')}
       </Button>
       <Button
-        variant="outlined"
         disabled={!isPublished}
         onClick={handleUnpublish}
-        color="default"
         id={ITEM_UNPUBLISH_BUTTON_ID}
       >
         {t('Unpublish')}
