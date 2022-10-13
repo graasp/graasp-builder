@@ -1,11 +1,11 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { BUILDER } from '@graasp/translations';
 import { DeleteButton as GraaspDeleteButton } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
 import DeleteItemDialog from '../main/DeleteItemDialog';
 
@@ -22,7 +22,7 @@ type Props = {
  * This button opens a dialog to confirm the action
  */
 const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const [open, setOpen] = useState(false);
 

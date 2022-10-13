@@ -3,12 +3,12 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { BUILDER } from '@graasp/translations';
+import { ACCOUNT, namespaces } from '@graasp/translations';
 
-import { useBuilderTranslation } from '../../config/i18n';
 import { PASSWORD_EMPTY_ERROR } from '../../config/messages';
 import { useMutation } from '../../config/queryClient';
 import {
@@ -25,14 +25,16 @@ import {
 } from '../../utils/validation';
 
 const PasswordSetting: FC = () => {
-  const { t } = useBuilderTranslation();
+  const { t: accountT } = useTranslation(namespaces.account);
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-  const { mutate: updatePassword } = useMutation(MUTATION_KEYS.UPDATE_PASSWORD);
+  const [newPasswordError, setNewPasswordError] = useState<string>();
+  const [confirmPasswordError, setConfirmPasswordError] = useState<string>();
+  const { mutate: updatePassword } = useMutation<any, any, any>(
+    MUTATION_KEYS.UPDATE_PASSWORD,
+  );
 
   const verifyEmptyPassword = () => {
     const checkingNewPassword = passwordValidator(newPassword);
@@ -87,17 +89,17 @@ const PasswordSetting: FC = () => {
       <Grid container spacing={1} direction="column" my={1}>
         <Grid item xs={12}>
           <Typography variant="h5">
-            {t(BUILDER.PASSWORD_SETTINGS_TITLE)}
+            {accountT(ACCOUNT.PASSWORD_SETTINGS_TITLE)}
           </Typography>
           <Typography variant="body1">
-            {t(BUILDER.PASSWORD_SETTINGS_CONFIRM_INFORMATION)}
+            {accountT(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_INFORMATION)}
           </Typography>
         </Grid>
         <Grid container spacing={2} my={1}>
           <Grid item xs={12} sm={12}>
             <TextField
               required
-              label={t(BUILDER.PASSWORD_SETTINGS_CURRENT_LABEL)}
+              label={accountT(ACCOUNT.PASSWORD_SETTINGS_CURRENT_LABEL)}
               variant="outlined"
               value={currentPassword}
               onChange={handleCurrentPasswordInput}
@@ -105,13 +107,13 @@ const PasswordSetting: FC = () => {
               type="password"
             />
             <Typography variant="subtitle2">
-              {t(BUILDER.PASSWORD_SETTINGS_CURRENT_INFORMATION)}
+              {accountT(ACCOUNT.PASSWORD_SETTINGS_CURRENT_INFORMATION)}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
               required
-              label={t(BUILDER.PASSWORD_SETTINGS_NEW_LABEL)}
+              label={accountT(ACCOUNT.PASSWORD_SETTINGS_NEW_LABEL)}
               variant="outlined"
               value={newPassword}
               error={newPasswordError}
@@ -123,7 +125,7 @@ const PasswordSetting: FC = () => {
             />
             <TextField
               required
-              label={t(BUILDER.PASSWORD_SETTINGS_NEW_CONFIRM_LABEL)}
+              label={accountT(ACCOUNT.PASSWORD_SETTINGS_NEW_CONFIRM_LABEL)}
               variant="outlined"
               value={confirmPassword}
               error={confirmPasswordError}
@@ -143,7 +145,7 @@ const PasswordSetting: FC = () => {
               // TO DO:
               // onClick={() => handleChangePassword()}
             >
-              {t(BUILDER.PASSWORD_SETTINGS_REQUEST_RESET_BUTTON)}
+              {accountT(ACCOUNT.PASSWORD_SETTINGS_REQUEST_RESET_BUTTON)}
             </Button>
             <Button
               id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
@@ -152,7 +154,7 @@ const PasswordSetting: FC = () => {
               my={1}
               onClick={() => handleChangePassword()}
             >
-              {t(BUILDER.PASSWORD_SETTINGS_CONFIRM_BUTTON)}
+              {accountT(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_BUTTON)}
             </Button>
           </Grid>
         </Grid>

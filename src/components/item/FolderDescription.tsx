@@ -1,9 +1,10 @@
 import { FC, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { TextEditor } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import { buildSaveButtonId } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
@@ -14,7 +15,7 @@ type Props = {
 };
 
 const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: editItem } = useMutation<
     any,
     any,
@@ -40,7 +41,7 @@ const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
     <TextEditor
       value={parentItem?.description}
       edit={isEditing}
-      placeholderText={t('Write the folder decription here...')}
+      placeholderText={t(BUILDER.EDIT_FOLDER_DESCRIPTION_PLACEHOLDER)}
       showActions
       onSave={onDescriptionSave}
       saveButtonId={buildSaveButtonId(itemId)}

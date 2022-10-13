@@ -4,16 +4,15 @@ import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useTranslation } from 'react-i18next';
-
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
 
 const RestoreButton = ({ itemIds, color, id }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: restoreItems } = useMutation(MUTATION_KEYS.RESTORE_ITEMS);
 
   const onClick = () => {

@@ -1,12 +1,12 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
 import { FC, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { BUILDER } from '@graasp/translations';
 import { MoveButton as GraaspMoveButton } from '@graasp/ui';
 
 import { BUTTON_TYPES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
   ITEM_MOVE_BUTTON_CLASS,
@@ -28,7 +28,7 @@ const MoveButton: FC<MoveButtonProps> = ({
   type = BUTTON_TYPES.ICON_BUTTON,
   onClick,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const { openModal: openMoveModal } = useContext(MoveItemModalContext);
 

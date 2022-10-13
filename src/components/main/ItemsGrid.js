@@ -8,9 +8,11 @@ import Pagination from '@mui/material/Pagination';
 import Select from '@mui/material/Select';
 
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { BUILDER } from '@graasp/translations';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID,
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID,
@@ -40,7 +42,7 @@ const ItemsGrid = (props) => {
     parentId,
   } = props;
 
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(
     GRID_ITEMS_PER_PAGE_CHOICES[0],
@@ -90,14 +92,14 @@ const ItemsGrid = (props) => {
       <Box p={2} alignItems="center" display="flex" justifyContent="center">
         <StyledBox display="flex">
           <Typography pr={1} variant="body2">
-            {t('Items per page')}
+            {t(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
           </Typography>
           <Select
             labelId={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID}
             id={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID}
             value={itemsPerPage}
             onChange={(e) => setItemsPerPage(e.target.value)}
-            label="Items per page"
+            label={t(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
           >
             {GRID_ITEMS_PER_PAGE_CHOICES.map((v) => (
               <MenuItem value={v} key={v}>

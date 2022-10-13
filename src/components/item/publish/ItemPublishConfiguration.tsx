@@ -157,7 +157,6 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
 
   return (
     <>
-      <Divider sx={{ mt: 3 }} />
       <Typography variant="h6" mt={2} id={ITEM_PUBLISH_SECTION_TITLE_ID}>
         {t(BUILDER.LIBRARY_SETTINGS_TITLE)}
       </Typography>

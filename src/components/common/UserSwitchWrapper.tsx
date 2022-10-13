@@ -1,7 +1,6 @@
 import { RecordOf } from 'immutable';
 
 import { FC, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -10,6 +9,7 @@ import { BUILDER } from '@graasp/translations';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
 import { DOMAIN, SIGN_IN_PATH } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { MEMBER_PROFILE_PATH } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
@@ -33,7 +33,7 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     isSuccess: isSuccessUser,
   } = useContext(CurrentUserContext);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutateAsync: signOut } = useMutation<any, any, any>(
     MUTATION_KEYS.SIGN_OUT,
   );

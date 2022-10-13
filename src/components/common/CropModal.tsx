@@ -9,7 +9,7 @@ import { withTranslation } from 'react-i18next';
 import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { THUMBNAIL_ASPECT } from '../../config/constants';
@@ -130,4 +130,4 @@ class CropModal extends Component<Props, State> {
   }
 }
 
-export default withTranslation()(CropModal);
+export default withTranslation(namespaces.builder)(CropModal);

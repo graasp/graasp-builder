@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Loader, SaveButton } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   ITEM_TAGS_EDIT_INPUT_ID,
@@ -22,7 +23,8 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 const CustomizedTagsEdit = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
+  const { t: commonT } = useTranslation(namespaces.common);
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
 
   // user
@@ -83,15 +85,23 @@ const CustomizedTagsEdit = ({ item }) => {
         onClick={handleSubmit}
         sx={{ marginTop: 1, marginLeft: 2 }}
         id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
-        text={t(BUILDER.SAVE_BUTTON)}
+        text={commonT(COMMON.SAVE_BUTTON)}
         hasChanges
       />
-      <Typography variant="subtitle1">
-        {t(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
-      </Typography>
-      {settings?.tags?.map((tag, index) => (
-        <Chip key={tag} label={tag} id={buildCustomizedTagsSelector(index)} />
-      ))}
+      {settings?.tags?.size && (
+        <>
+          <Typography variant="subtitle1">
+            {t(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
+          </Typography>
+          {settings?.tags?.map((tag, index) => (
+            <Chip
+              key={tag}
+              label={tag}
+              id={buildCustomizedTagsSelector(index)}
+            />
+          ))}
+        </>
+      )}
     </>
   );
 };

@@ -1,13 +1,13 @@
 import { RecordOf } from 'immutable';
 
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { PinButton as GraaspPinButton } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
@@ -18,7 +18,7 @@ type Props = {
 };
 
 const PinButton: FC<Props> = ({ item, type, onClick }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const editItem = useMutation<any, any, any>(MUTATION_KEYS.EDIT_ITEM);
   const [isPinned, setPinned] = useState(item?.settings?.isPinned);

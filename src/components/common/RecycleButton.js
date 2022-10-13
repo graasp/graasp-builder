@@ -6,12 +6,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useTranslation } from 'react-i18next';
-
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
 import { BUTTON_TYPES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
@@ -19,7 +18,7 @@ import {
 } from '../../config/selectors';
 
 const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: recycleItems } = useMutation(MUTATION_KEYS.RECYCLE_ITEMS);
 
   const handleClick = () => {

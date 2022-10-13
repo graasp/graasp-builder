@@ -3,13 +3,13 @@ import { RecordOf } from 'immutable';
 import { IconButtonProps } from '@mui/material/IconButton';
 
 import { FC, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { FavoriteButton as GraaspFavoriteButton } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { isItemFavorite } from '../../utils/item';
@@ -24,7 +24,7 @@ type Props = {
 
 const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
   const { data: member } = useContext(CurrentUserContext);
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const mutation = useMutation<any, any, any>(MUTATION_KEYS.EDIT_MEMBER);
 
   const isFavorite = isItemFavorite(item, member);

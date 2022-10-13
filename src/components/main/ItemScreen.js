@@ -38,12 +38,14 @@ const ItemScreen = () => {
   const { itemId } = useParams();
   const { data: item, isError } = useItem(itemId);
 
-  const { setEditingItemId, openedActionTabId } = useContext(LayoutContext);
+  const { setEditingItemId, openedActionTabId, setOpenedActionTabId } =
+    useContext(LayoutContext);
   const { data: currentMember } = useContext(CurrentUserContext);
   const { data: memberships } = useItemMemberships(itemId);
 
   useEffect(() => {
     setEditingItemId(null);
+    setOpenedActionTabId(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 

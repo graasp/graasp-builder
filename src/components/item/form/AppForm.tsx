@@ -11,7 +11,8 @@ import { BUILDER } from '@graasp/translations';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import {
-  ITEM_FORM_APP_URL_ID, // buildItemFormAppOptionId,
+  ITEM_FORM_APP_URL_ID,
+  buildItemFormAppOptionId,
 } from '../../../config/selectors';
 import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
@@ -82,20 +83,20 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
           clearOnBlur={false}
           onChange={handleAppUrlInput}
           onInputChange={handleAppUrlInput}
-          // renderOption={(option) => (
-          //   <div id={buildItemFormAppOptionId(option.name)}>
-          //     <img
-          //       style={{
-          //         verticalAlign: 'middle',
-          //         margin: 1
-          //         height: '30px',
-          //       }}
-          //       src={option.extra.image}
-          //       alt={option.name}
-          //     />
-          //     {option.name}
-          //   </div>
-          // )}
+          renderOption={(option: App) => (
+            <div id={buildItemFormAppOptionId(option.name)}>
+              <img
+                style={{
+                  verticalAlign: 'middle',
+                  margin: 1,
+                  height: '30px',
+                }}
+                src={option.extra?.image}
+                alt={option.name}
+              />
+              {option.name}
+            </div>
+          )}
           renderInput={(params) => (
             <TextField
               // eslint-disable-next-line react/jsx-props-no-spreading

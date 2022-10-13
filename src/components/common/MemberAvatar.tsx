@@ -33,7 +33,7 @@ const MemberAvatar: FC<Props> = ({ id }) => {
       maxWidth={30}
       maxHeight={30}
       blob={thumbnailBlob}
-      sx={{ mx: 0.3 }}
+      sx={{ mx: 1 }}
     />
   );
 };

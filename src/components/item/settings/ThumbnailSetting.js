@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -15,6 +14,7 @@ import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import defaultImage from '../../../config/logo.jpeg';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
@@ -29,7 +29,7 @@ const ThumbnailSetting = ({ item }) => {
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState(false);
   const [openStatusBar, setOpenStatusBar] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: onFileUploadComplete } = useMutation(
     MUTATION_KEYS.FILE_UPLOAD,
   );

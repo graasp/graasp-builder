@@ -184,7 +184,7 @@ const ItemContent = ({ item, enableEditing, permission }) => {
         </>
       );
     case ITEM_TYPES.H5P: {
-      const contentId = item.get('extra')?.h5p?.contentId;
+      const contentId = item.extra?.h5p?.contentId;
       if (!contentId) {
         return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
       }

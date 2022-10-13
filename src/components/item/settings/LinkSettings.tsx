@@ -3,12 +3,11 @@ import { RecordOf } from 'immutable';
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { useTranslation } from 'react-i18next';
-
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   SETTINGS_LINK_SHOW_BUTTON_ID,
@@ -20,7 +19,7 @@ type Props = {
 };
 
 const LinkSettings: FC<Props> = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
 

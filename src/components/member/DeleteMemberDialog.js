@@ -57,7 +57,7 @@ const DeleteMemberDialog = ({ id }) => {
             autoFocus
             variant="text"
           >
-            {commonT('Delete Permanently')}
+            {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_CONFIRM_BUTTON)}
           </Button>
         </DialogActions>
       </Dialog>

@@ -2,13 +2,15 @@ import PropTypes from 'prop-types';
 
 import Alert from '@mui/material/Alert';
 
-import { useTranslation } from 'react-i18next';
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 
 const ErrorAlert = ({ id }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   return (
     <Alert id={id} severity="error">
-      {t('An error occured.')}
+      {t(BUILDER.ERROR_MESSAGE)}
     </Alert>
   );
 };

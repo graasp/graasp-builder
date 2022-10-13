@@ -9,11 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import {
   ITEM_CHATBOX_BUTTON_ID,
@@ -35,7 +36,7 @@ import ModeButton from './ModeButton';
 const { useItemMemberships } = hooks;
 
 const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const {
     setEditingItemId,
     editingItemId,
@@ -63,7 +64,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       const activeActions = (
         <>
           {showEditButton && (
-            <Tooltip title={t('Edit')}>
+            <Tooltip title={t(BUILDER.EDIT_BUTTON_TOOLTIP)}>
               <IconButton
                 aria-label="edit"
                 onClick={() => {
@@ -76,9 +77,9 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
             </Tooltip>
           )}
           <ShareButton itemId={id} />
-          <PublishButton itemId={id} />
-          <PlayerViewButton itemId={id} />
           <ChatboxButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox} />
+          <PlayerViewButton itemId={id} />
+          <PublishButton itemId={id} />
           {canEdit && <AnalyticsDashboardButton id={id} />}
         </>
       );

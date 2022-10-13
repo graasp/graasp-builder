@@ -2,12 +2,12 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { redirect } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { PlayIcon } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { buildGraaspPlayerView } from '../../config/paths';
 import {
   buildPlayerButtonId,
@@ -19,7 +19,7 @@ type Props = {
 };
 
 const PlayerViewButton: FC<Props> = ({ itemId }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const onClick = () => {
     redirect(buildGraaspPlayerView(itemId), {
@@ -35,7 +35,7 @@ const PlayerViewButton: FC<Props> = ({ itemId }) => {
         onClick={onClick}
         id={buildPlayerButtonId(itemId)}
       >
-        <PlayIcon size={30} primaryColor="grey" />
+        <PlayIcon size={30} />
       </IconButton>
     </Tooltip>
   );

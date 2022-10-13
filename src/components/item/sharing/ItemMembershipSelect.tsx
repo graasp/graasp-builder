@@ -1,8 +1,9 @@
 import { SelectProps } from '@mui/material';
 
 import { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, namespaces } from '@graasp/translations';
 import { Select } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -28,6 +29,7 @@ const ItemMembershipSelect: FC<Props> = ({
   displayEmpty = false,
 }) => {
   const { t } = useBuilderTranslation();
+  const { t: enumT } = useTranslation(namespaces.enums);
   const [permission, setPermission] = useState(value);
   const labelId = showLabel ? 'permission-label' : undefined;
   const label = showLabel
@@ -45,13 +47,13 @@ const ItemMembershipSelect: FC<Props> = ({
     <Select
       labelId={labelId}
       label={label}
-      values={Object.values(PERMISSION_LEVELS)}
+      values={Object.values(PERMISSION_LEVELS).map((v) => ({
+        value: v,
+        text: enumT(v),
+      }))}
       buildOptionId={buildPermissionOptionId}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      // {...labelProps}
       defaultValue={permission}
       onChange={onChange}
-      // renderValue={(v) => v ?? label}
       displayEmpty={displayEmpty}
       className={ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}
       color={color}

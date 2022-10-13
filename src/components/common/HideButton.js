@@ -7,17 +7,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useTranslation } from 'react-i18next';
-
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
 import { BUTTON_TYPES, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 const HideButton = ({ item, type, onClick }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const { data: tags } = hooks.useItemTags(item.id);
   const addTag = useMutation(MUTATION_KEYS.POST_ITEM_TAG);

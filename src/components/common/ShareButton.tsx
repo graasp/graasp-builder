@@ -1,10 +1,10 @@
 import { FC, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { BUILDER } from '@graasp/translations';
 import { ShareButton as GraaspShareButton } from '@graasp/ui';
 
 import { ITEM_ACTION_TABS } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   SHARE_ITEM_BUTTON_CLASS,
   buildShareButtonId,
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const ShareButton: FC<Props> = ({ itemId }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {

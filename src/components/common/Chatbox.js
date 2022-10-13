@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useContext } from 'react';
 
-// import GraaspChatbox from '@graasp/chatbox';
+import GraaspChatbox from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Loader } from '@graasp/ui';
 
@@ -43,28 +43,28 @@ const Chatbox = ({ item }) => {
   ) {
     return <Loader />;
   }
-  return null;
+
   // only show export chat when user has admin right on the item
-  // const isAdmin =
-  //   itemPermissions?.find((perms) => perms.memberId === currentMember.id)
-  //     ?.permission === PERMISSION_LEVELS.ADMIN;
-  // return (
-  //   <GraaspChatbox
-  //     id={CHATBOX_ID}
-  //     lang={currentMember.extra?.lang}
-  //     members={members}
-  //     sendMessageBoxId={CHATBOX_INPUT_BOX_ID}
-  //     currentMember={currentMember}
-  //     chatId={item.id}
-  //     messages={chat?.messages}
-  //     showAdminTools={isAdmin}
-  //     sendMessageFunction={sendMessage}
-  //     deleteMessageFunction={deleteMessage}
-  //     editMessageFunction={editMessage}
-  //     clearChatFunction={clearChat}
-  //     useAvatarHook={useAvatar}
-  //   />
-  // );
+  const isAdmin =
+    itemPermissions?.find((perms) => perms.memberId === currentMember.id)
+      ?.permission === PERMISSION_LEVELS.ADMIN;
+  return (
+    <GraaspChatbox
+      id={CHATBOX_ID}
+      lang={currentMember.extra?.lang}
+      members={members}
+      sendMessageBoxId={CHATBOX_INPUT_BOX_ID}
+      currentMember={currentMember}
+      chatId={item.id}
+      messages={chat?.messages}
+      showAdminTools={isAdmin}
+      sendMessageFunction={sendMessage}
+      deleteMessageFunction={deleteMessage}
+      editMessageFunction={editMessage}
+      clearChatFunction={clearChat}
+      useAvatarHook={useAvatar}
+    />
+  );
 };
 
 Chatbox.propTypes = {
