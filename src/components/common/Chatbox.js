@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 

@@ -2284,10 +2284,10 @@ __metadata:
 
 "@graasp/translations@github:graasp/graasp-translations.git#36-builder":
   version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=66627881794a7d22c3817a84358c703701c74986"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=bf49d1079dabc2599b951e74b64ff9b4aef80a65"
   dependencies:
     i18next: 21.8.1
-  checksum: 95af23a0562b0c49427ed673fe25f801ad96ddeb12394c40147d1feb78221da3eef50315e92732e30d236a2995594c7aa2c7eef5b6b9650625c6cd82f2dc820d
+  checksum: aaab718b9c7a822afff505a1e65b719b875b83a4dc3fe8608297aeadb10a6b0d9244d77efecb4ab676f3aeccd63780faab0698db2795b90b245b1980f5d97b35
   languageName: node
   linkType: hard
 
@@ -3804,6 +3804,15 @@ __metadata:
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
   checksum: e87bccbf11f95035c89a132b52b79ce69a1e3652fe55962363063c9c0dae0fe2477ebc585e03a9652adc6f381d24ba5589cc5e51849df4ced3d3e004a7d40ed5
+  languageName: node
+  linkType: hard
+
+"@types/papaparse@npm:5.3.5":
+  version: 5.3.5
+  resolution: "@types/papaparse@npm:5.3.5"
+  dependencies:
+    "@types/node": "*"
+  checksum: f9833662e5536836be9586b9344757d99e22c7cfd6997ab212700c3b623491e28548676e023adfa801fc7c60f3f6d1d417dbf02c5f138442ed9b020b128a7f5f
   languageName: node
   linkType: hard
 
@@ -11138,6 +11147,7 @@ __metadata:
     "@types/jest": 29.0.3
     "@types/lodash.truncate": 4.4.7
     "@types/node": 18.7.21
+    "@types/papaparse": 5.3.5
     "@types/react": ^17.0.2
     "@types/react-dom": ^17.0.2
     "@types/uuid": 8.3.4

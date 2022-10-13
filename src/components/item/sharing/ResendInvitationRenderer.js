@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';

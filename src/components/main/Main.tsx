@@ -12,14 +12,12 @@ import { GraaspLogo, Main as GraaspMain, Navigation } from '@graasp/ui';
 import {
   APP_NAME,
   GRAASP_LOGO_HEADER_HEIGHT,
-  HEADER_HEIGHT,
   HOST_MAP,
 } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
-  APP_NAVIGATION_DROP_DOWN_ID,
-  HEADER_APP_BAR_ID,
+  APP_NAVIGATION_DROP_DOWN_ID, // HEADER_APP_BAR_ID,
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
@@ -35,7 +33,7 @@ const StyledLink = styled(Link)(() => ({
 type Props = { children: JSX.Element | JSX.Element[] };
 
 const Main: FC<Props> = ({ children }) => {
-  const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);
+  const { isMainMenuOpen } = useContext(LayoutContext);
   const { data: currentMember } = hooks.useCurrentMember();
   const memberId = currentMember?.get('id');
   // mutations to handle the mentions
@@ -53,10 +51,6 @@ const Main: FC<Props> = ({ children }) => {
     MUTATION_KEYS.CLEAR_MENTIONS,
   );
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
-
-  const toggleDrawer = (isOpen: boolean) => {
-    setIsMainMenuOpen(isOpen);
-  };
 
   const leftContent = (
     <Box display="flex" ml={2}>

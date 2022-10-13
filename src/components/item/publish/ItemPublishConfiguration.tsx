@@ -6,7 +6,7 @@ import Looks3Icon from '@mui/icons-material/Looks3';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import UpdateIcon from '@mui/icons-material/Update';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import CloseIcon from '@mui/icons-material/Close';
-import PieChartIcon from '@mui/icons-material/PieChart';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 
 import { createContext, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 
 import { ROOT_ID } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { ITEM_TYPES } from '../../enums';
 import { buildShortcutExtra } from '../../utils/itemExtra';
@@ -14,7 +15,7 @@ import TreeModal from '../main/TreeModal';
 const CreateShortcutModalContext = createContext();
 
 const CreateShortcutModalProvider = ({ children }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: createShortcut } = useMutation(MUTATION_KEYS.POST_ITEM);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(false);
@@ -31,7 +32,7 @@ const CreateShortcutModalProvider = ({ children }) => {
 
   const onConfirm = ({ id: target, to }) => {
     const shortcut = {
-      name: t('Shortcut to name', { name: item.name }),
+      name: t(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, { name: item.name }),
       extra: buildShortcutExtra(target[0]),
       type: ITEM_TYPES.SHORTCUT,
     };
@@ -55,7 +56,7 @@ const CreateShortcutModalProvider = ({ children }) => {
         open={open}
         itemIds={[item.id]}
         onConfirm={onConfirm}
-        title={t('Where do you want to create the shortcut?')}
+        title={t(BUILDER.CREATE_SHORTCUT_MODAL_TITLE)}
       />
     );
   };

@@ -223,6 +223,7 @@ const ItemsTable: FC<Props> = ({
       });
     }
     return columns;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     creators,
     showCreator,

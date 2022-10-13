@@ -4,11 +4,12 @@ import { Dashboard } from '@uppy/react';
 import Typography from '@mui/material/Typography';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { humanFileSize } from '../../utils/uppy';
 import ErrorAlert from '../common/ErrorAlert';
@@ -16,7 +17,7 @@ import { UppyContext } from './UppyContext';
 
 const FileDashboardUploader = () => {
   const { uppy } = useContext(UppyContext);
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   if (!uppy) {
     return <ErrorAlert />;
@@ -24,20 +25,15 @@ const FileDashboardUploader = () => {
 
   return (
     <>
-      <Typography variant="h6">{t('Upload a File')}</Typography>
+      <Typography variant="h6">{t(BUILDER.UPLOAD_FILE_TITLE)}</Typography>
       <Typography variant="body" paragraph>
-        {t(
-          'If you drag-and-drop zip or H5P archives, or if you import them as a new "FILE", they will be stored as such. To expand and use them, use the special "IMPORT ZIP" or "IMPORT H5P" option.',
-        )}
+        {t(BUILDER.UPLOAD_FILE_INFORMATIONS)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(
-          `You can upload up to FILE_UPLOAD_MAX_FILES files of MAX_FILE_SIZE at a time.`,
-          {
-            maxFiles: FILE_UPLOAD_MAX_FILES,
-            maxSize: humanFileSize(MAX_FILE_SIZE),
-          },
-        )}
+        {t(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
+          maxFiles: FILE_UPLOAD_MAX_FILES,
+          maxSize: humanFileSize(MAX_FILE_SIZE),
+        })}
       </Typography>
       <div id={DASHBOARD_UPLOADER_ID}>
         <Dashboard
