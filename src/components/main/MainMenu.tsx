@@ -4,11 +4,12 @@ import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 
 import { FC, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 
+import { BUILDER } from '@graasp/translations';
 import { MainMenu as GraaspMainMenu, MenuItem } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
@@ -18,7 +19,7 @@ import {
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const MainMenu: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: member } = useContext(CurrentUserContext);
@@ -29,7 +30,9 @@ const MainMenu: FC = () => {
 
   const renderAuthenticatedMemberMenuItems = () => {
     if (!member || !member.id) {
-      return <MenuItem disabled text={t('Home')} icon={<FolderIcon />} />;
+      return (
+        <MenuItem disabled text={t(BUILDER.HOME_TITLE)} icon={<FolderIcon />} />
+      );
     }
 
     return (
@@ -38,24 +41,24 @@ const MainMenu: FC = () => {
           onClick={() => goTo(HOME_PATH)}
           selected={pathname === HOME_PATH}
           icon={<FolderIcon />}
-          text={t('My Items')}
+          text={t(BUILDER.MY_ITEMS_TITLE)}
         />
         <MenuItem
           onClick={() => goTo(SHARED_ITEMS_PATH)}
-          text={t('Shared Items')}
+          text={t(BUILDER.SHARED_ITEMS_TITLE)}
           icon={<FolderSharedIcon />}
           selected={pathname === SHARED_ITEMS_PATH}
         />
         <MenuItem
           onClick={() => goTo(FAVORITE_ITEMS_PATH)}
           selected={pathname === FAVORITE_ITEMS_PATH}
-          text={t('Favorite Items')}
+          text={t(BUILDER.FAVORITE_ITEMS_TITLE)}
           icon={<FavoriteIcon />}
         />
         <MenuItem
           onClick={() => goTo(RECYCLE_BIN_PATH)}
           selected={pathname === RECYCLE_BIN_PATH}
-          text={t('Trash')}
+          text={t(BUILDER.RECYCLE_BIN_TITLE)}
           icon={<DeleteIcon />}
         />
       </>

@@ -1,11 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
+import ExploreIcon from '@mui/icons-material/Explore';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { FC, useContext } from 'react';
 
 import { BUILDER } from '@graasp/translations';
-import { LibraryIcon } from '@graasp/ui';
 
 import { ITEM_ACTION_TABS } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
@@ -44,7 +44,7 @@ const PublishButton: FC<Props> = ({ itemId }) => {
         {openedActionTabId === ITEM_ACTION_TABS.LIBRARY ? (
           <CloseIcon />
         ) : (
-          <LibraryIcon size={30} primaryColor="grey" />
+          <ExploreIcon />
         )}
       </IconButton>
     </Tooltip>

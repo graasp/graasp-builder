@@ -1,12 +1,13 @@
 import { List } from 'immutable';
 
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../config/i18n';
 import { hooks } from '../config/queryClient';
 import {
   SHARED_ITEMS_ERROR_ALERT_ID,
@@ -18,7 +19,7 @@ import Items from './main/Items';
 import Main from './main/Main';
 
 const SharedItems: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
 
   if (isError) {
@@ -31,15 +32,15 @@ const SharedItems: FC = () => {
 
   return (
     <Main>
-      <Container>
+      <Box mx={2}>
         <ItemHeader showNavigation={false} />
         <Items
           id={SHARED_ITEMS_ID}
-          title={t('Shared Items')}
+          title={t(BUILDER.SHARED_ITEMS_TITLE)}
           items={List(sharedItems)}
           showCreator
         />
-      </Container>
+      </Box>
     </Main>
   );
 };

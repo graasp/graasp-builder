@@ -3,6 +3,8 @@ import { RecordOf } from 'immutable';
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
+import { ChangeEvent, FC } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
@@ -21,11 +23,13 @@ type Props = {
 const LinkSettings: FC<Props> = ({ item }) => {
   const { t } = useBuilderTranslation();
 
-  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = useMutation<any, any, any>(
+    MUTATION_KEYS.EDIT_ITEM,
+  );
 
   const { settings } = item;
 
-  const handleIframeSetting = (event) => {
+  const handleIframeSetting = (event: ChangeEvent<HTMLInputElement>) => {
     editItem({
       id: item.id,
       name: item.name,
@@ -35,7 +39,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
     });
   };
 
-  const handleButtonSetting = (event) => {
+  const handleButtonSetting = (event: ChangeEvent<HTMLInputElement>) => {
     editItem({
       id: item.id,
       name: item.name,
@@ -50,7 +54,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
       <Switch
         id={SETTINGS_LINK_SHOW_IFRAME_ID}
         onChange={handleIframeSetting}
-        checked={settings?.showLinkIframe ?? true}
+        checked={Boolean(settings?.showLinkIframe) ?? true}
         color="primary"
       />
     );
@@ -67,7 +71,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
       <Switch
         id={SETTINGS_LINK_SHOW_BUTTON_ID}
         onChange={handleButtonSetting}
-        checked={settings?.showLinkButton ?? false}
+        checked={Boolean(settings?.showLinkButton) ?? false}
         color="primary"
       />
     );
@@ -84,7 +88,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
       <Typography variant="h5" m={0} p={0}>
         {t(BUILDER.SETTINGS_LINK_SETTINGS_TITLE)}
       </Typography>
-      <Typography variant="body">
+      <Typography variant="body1">
         {t(BUILDER.SETTINGS_LINK_SETTINGS_INFORMATIONS)}
       </Typography>
       <FormGroup>

@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
-import { BUILDER, namespaces } from '@graasp/translations';
+import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';

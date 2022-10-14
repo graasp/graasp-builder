@@ -1,11 +1,12 @@
 import Typography from '@mui/material/Typography';
 
-import { useTranslation } from 'react-i18next';
+import { BUILDER } from '@graasp/translations';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { ITEMS_GRID_NO_ITEM_ID } from '../../config/selectors';
 
 const EmptyItem = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   return (
     <Typography
@@ -14,7 +15,7 @@ const EmptyItem = () => {
       align="center"
       display="block"
     >
-      {t('This item is empty.')}
+      {t(BUILDER.EMPTY_ITEM_MESSAGE)}
     </Typography>
   );
 };

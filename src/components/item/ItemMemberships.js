@@ -8,8 +8,10 @@ import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
 import { PERMISSION_LEVELS } from '../../enums';
@@ -18,7 +20,7 @@ import MemberAvatar from '../common/MemberAvatar';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { data: memberships, isError } = hooks.useItemMemberships(id);
   const { data: currentUser } = useContext(CurrentUserContext);
 
@@ -49,10 +51,10 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
     >
       <Grid item>
         <Tooltip
-          title={t('sharedWithMembers', {
+          title={t(BUILDER.SHARED_MEMBERS_TOOLTIP, {
             count: filteredMemberships.length,
           })}
-          aria-label="shared users"
+          aria-label={t(BUILDER.SHARED_MEMBERS_LABEL)}
         >
           <AvatarGroup max={maxAvatar} spacing={3} onClick={onClick}>
             {filteredMemberships.map(({ memberId, permission }) => {

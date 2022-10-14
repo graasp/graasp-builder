@@ -1,5 +1,5 @@
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { Container, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Grid, IconButton, Typography } from '@mui/material';
 
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -50,7 +50,7 @@ const MemberProfileScreen = () => {
 
   return (
     <Main>
-      <Container sx={{ mt: 2 }}>
+      <Box sx={{ m: 2 }}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h4" id={MEMBER_PROFILE_MEMBER_NAME_ID}>
@@ -125,7 +125,7 @@ const MemberProfileScreen = () => {
         <AvatarSetting user={member} />
         <PasswordSetting user={member} />
         <DeleteMemberDialog id={member?.id} />
-      </Container>
+      </Box>
     </Main>
   );
 };

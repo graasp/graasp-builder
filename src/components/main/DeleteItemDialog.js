@@ -9,15 +9,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
+
+const labelId = 'alert-dialog-title';
+const descriptionId = 'alert-dialog-description';
 
 const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 
 const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
+  const { t: commonT } = useTranslation(namespaces.common);
 
   const { mutate: deleteItems } = useMutation(DELETE_ITEMS);
   const { mutate: deleteItem } = useMutation(DELETE_ITEM);
@@ -35,18 +41,20 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby={labelId}
+      aria-describedby={descriptionId}
     >
-      <DialogTitle id="alert-dialog-title">{t('Confirm deletion')}</DialogTitle>
+      <DialogTitle id={labelId}>
+        {t(BUILDER.DELETE_ITEM_MODAL_TITLE)}
+      </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {t('itemDeleteMessage', { count: itemIds.length })}
+        <DialogContentText id={descriptionId}>
+          {t(BUILDER.DELETE_ITEM_MODAL_CONTENT, { count: itemIds.length })}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary" variant="text">
-          {t('Cancel')}
+          {commonT(COMMON.CANCEL_BUTTON)}
         </Button>
         <Button
           id={CONFIRM_DELETE_BUTTON_ID}
@@ -55,7 +63,7 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
           autoFocus
           variant="text"
         >
-          {t('Delete Permanently')}
+          {t(BUILDER.DELETE_ITEM_MODAL_CONFIRM_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

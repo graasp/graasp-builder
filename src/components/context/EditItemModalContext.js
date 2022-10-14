@@ -6,7 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { createContext, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -14,6 +13,7 @@ import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
@@ -25,7 +25,7 @@ import FolderForm from '../item/form/FolderForm';
 const EditItemModalContext = createContext();
 
 const EditItemModalProvider = ({ children }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
   // updated properties are separated from the original item

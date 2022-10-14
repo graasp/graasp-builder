@@ -67,6 +67,7 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
       tooltip={text}
       type={type}
       size={size}
+      text={text}
     />
   );
 };

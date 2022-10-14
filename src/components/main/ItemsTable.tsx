@@ -235,7 +235,7 @@ const ItemsTable: FC<Props> = ({
   ]);
 
   const countTextFunction = (selected: string[]) =>
-    t('itemSelected', { count: selected.length });
+    t(BUILDER.ITEMS_TABLE_SELECTION_TEXT_other, { count: selected.length });
 
   return (
     <>

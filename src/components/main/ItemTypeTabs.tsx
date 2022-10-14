@@ -21,7 +21,7 @@ import { InternalItemType, NewItemTabType } from '../../config/types';
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.divider}`,
-  minWidth: 'fit-content',
+  maxWidth: 150,
 }));
 
 type Props = {

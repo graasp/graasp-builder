@@ -11,9 +11,11 @@ import { useTranslation } from 'react-i18next';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
 import { useMutation } from '../../config/queryClient';
 import {
@@ -39,7 +41,8 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
 }));
 
 const NewItemModal = ({ open, handleClose }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
+  const { t: commonT } = useTranslation(namespaces.common);
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
   const [initialItem] = useState({});
@@ -89,7 +92,9 @@ const NewItemModal = ({ open, handleClose }) => {
       case ITEM_TYPES.FOLDER:
         return (
           <>
-            <Typography variant="h6">{t('Create a Folder')}</Typography>
+            <Typography variant="h6">
+              {t(BUILDER.CREATE_ITEM_FOLDER_TITLE)}
+            </Typography>
             <FolderForm
               onChange={updateItem}
               item={initialItem}
@@ -141,7 +146,7 @@ const NewItemModal = ({ open, handleClose }) => {
         return (
           <>
             <Button onClick={handleClose} variant="text">
-              {t('Cancel')}
+              {commonT(COMMON.CANCEL_BUTTON)}
             </Button>
             <Button
               onClick={submit}
@@ -151,7 +156,7 @@ const NewItemModal = ({ open, handleClose }) => {
                 !isItemValid(updatedPropertiesPerType[selectedItemType])
               }
             >
-              {t('Add')}
+              {t(BUILDER.CREATE_ITEM_ADD_BUTTON)}
             </Button>
           </>
         );
@@ -160,7 +165,7 @@ const NewItemModal = ({ open, handleClose }) => {
       case ITEM_TYPES.H5P:
         return (
           <Button id={CREATE_ITEM_CLOSE_BUTTON_ID} onClick={handleClose}>
-            {t('Close')}
+            {commonT(COMMON.CLOSE_BUTTON)}
           </Button>
         );
       default:

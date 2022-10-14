@@ -1,21 +1,21 @@
-import PropTypes from 'prop-types';
-
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { Box, styled } from '@mui/material';
+import { Box, SelectChangeEvent, styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { Context } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 
 import {
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
-  SHARING_LINK_TYPES,
 } from '../../../config/constants';
 import notifier from '../../../config/notifier';
 import {
@@ -50,25 +50,29 @@ const StyledLink = styled(Link)(() => ({
   whiteSpace: 'nowrap',
 }));
 
-const SharingLink = ({ itemId }) => {
+type Props = {
+  itemId?: string;
+};
+
+const SharingLink: FC<Props> = ({ itemId }) => {
   const { t } = useTranslation();
 
-  const [linkType, setLinkType] = useState(null);
-  const [link, setLink] = useState(null);
+  const [linkType, setLinkType] = useState<Context>();
+  const [link, setLink] = useState<string>();
 
   useEffect(() => {
     if (itemId) {
       switch (linkType) {
-        case SHARING_LINK_TYPES.BUILDER: {
+        case Context.BUILDER: {
           setLink(buildGraaspBuilderView(itemId));
           break;
         }
-        case SHARING_LINK_TYPES.PLAYER: {
+        case Context.PLAYER: {
           setLink(buildGraaspPlayerView(itemId));
           break;
         }
         default:
-          setLinkType(SHARING_LINK_TYPES.BUILDER);
+          setLinkType(Context.BUILDER);
           break;
       }
     }
@@ -77,18 +81,20 @@ const SharingLink = ({ itemId }) => {
   }, [itemId, linkType]);
 
   const handleCopy = () => {
-    copyToClipboard(link, {
-      onSuccess: () => {
-        notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS, payload: {} });
-      },
-      onError: () => {
-        notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE, payload: {} });
-      },
-    });
+    if (link) {
+      copyToClipboard(link, {
+        onSuccess: () => {
+          notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS, payload: {} });
+        },
+        onError: () => {
+          notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE, payload: {} });
+        },
+      });
+    }
   };
 
-  const handleLinkTypeChange = (event) => {
-    setLinkType(event.target.value);
+  const handleLinkTypeChange = (event: SelectChangeEvent<Context>) => {
+    setLinkType(event.target.value as Context);
   };
 
   return (
@@ -98,26 +104,29 @@ const SharingLink = ({ itemId }) => {
       </StyledLink>
       <div>
         <Select
-          ml={1}
+          sx={{ ml: 1 }}
           value={linkType}
           onChange={handleLinkTypeChange}
           id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
         >
-          <MenuItem value={SHARING_LINK_TYPES.BUILDER}>{t('Builder')}</MenuItem>
-          <MenuItem value={SHARING_LINK_TYPES.PLAYER}>{t('Player')}</MenuItem>
+          <MenuItem
+            sx={{ textTransform: 'capitalize' }}
+            value={Context.BUILDER}
+          >
+            {t(Context.BUILDER)}
+          </MenuItem>
+          <MenuItem sx={{ textTransform: 'capitalize' }} value={Context.PLAYER}>
+            {t(Context.PLAYER)}
+          </MenuItem>
         </Select>
-        <Tooltip title={t('Copy to Clipboard')}>
-          <IconButton onClick={handleCopy} p={0} ml={1}>
+        <Tooltip title={t(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>
+          <IconButton onClick={handleCopy} sx={{ p: 0, ml: 1 }}>
             <FileCopyIcon />
           </IconButton>
         </Tooltip>
       </div>
     </StyledBox>
   );
-};
-
-SharingLink.propTypes = {
-  itemId: PropTypes.string.isRequired,
 };
 
 export default SharingLink;

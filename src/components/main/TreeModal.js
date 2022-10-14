@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
 
 import {
@@ -15,6 +16,7 @@ import {
   SHARED_ROOT_ID,
   TREE_VIEW_MAX_WIDTH,
 } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
   TREE_MODAL_CONFIRM_BUTTON_ID,
@@ -24,10 +26,12 @@ import {
 import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { getParentsIdsFromPath } from '../../utils/item';
 
+const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
+  const { t: commonT } = useTranslation(namespaces.common);
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
   // todo: get only shared items with write/admin rights
   // otherwise choosing an item without the write rights will result in an error
@@ -121,7 +125,7 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
         useChildren={useChildren}
         useItem={useItem}
         showCheckbox
-        rootLabel={t('Owned Items')}
+        rootLabel={t(BUILDER.ITEMS_TREE_OWN_ITEMS_LABEL)}
         rootId={ROOT_ID}
         rootClassName={buildTreeItemClass(ROOT_ID)}
         showItemFilter={isFolder}
@@ -156,22 +160,22 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   return (
     <Dialog
       onClose={handleClose}
-      aria-labelledby="simple-dialog-title"
+      aria-labelledby={dialogId}
       open={open}
       scroll="paper"
     >
-      <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
+      <DialogTitle id={dialogId}>{title}</DialogTitle>
       <DialogContent>{tree}</DialogContent>
       <DialogActions>
         <Button onClick={handleClose} variant="text">
-          {t('Cancel')}
+          {commonT(COMMON.CANCEL_BUTTON)}
         </Button>
         <Button
           onClick={onClickConfirm}
           disabled={!selectedId}
           id={TREE_MODAL_CONFIRM_BUTTON_ID}
         >
-          {t('Confirm')}
+          {t(BUILDER.TREE_MODAL_CONFIRM_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

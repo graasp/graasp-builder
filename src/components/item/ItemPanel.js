@@ -6,12 +6,11 @@ import Drawer from '@mui/material/Drawer';
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { ITEM_PANEL_ID } from '../../config/selectors';
 
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
+const StyledDrawer = styled(Drawer)(() => ({
   width: RIGHT_MENU_WIDTH,
   flexShrink: 0,
   '.MuiDrawer-paper': {
     width: RIGHT_MENU_WIDTH,
-    padding: theme.spacing(1),
   },
 }));
 

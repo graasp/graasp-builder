@@ -38,7 +38,7 @@ const FileUploader = () => {
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { t } = useBuilderTranslation();
+  const { t, i18n } = useBuilderTranslation();
 
   const closeUploader = () => {
     setIsDragging(false);
@@ -126,13 +126,7 @@ const FileUploader = () => {
           maxSize: humanFileSize(MAX_FILE_SIZE),
         })}
         locale={{
-          strings: {
-            // Text to show on the droppable area.
-            // `%{browse}` is replaced with a link that opens the system file selection dialog.
-            dropHereOr: `${t(BUILDER.UPLOAD_FILE_DROP_TEXT)} %{browse}`,
-            // Used as the label for the link that opens the system file selection dialog.
-            browse: t(BUILDER.UPLOAD_FILE_BROWSE),
-          },
+          strings: i18n.options.resources[i18n.language].uppy,
         }}
       />
     </StyledContainer>

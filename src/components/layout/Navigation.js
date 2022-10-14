@@ -6,12 +6,13 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 
 import { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useMatch } from 'react-router-dom';
 
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { ITEM_NAME_MAX_LENGTH, LOADING_CONTENT } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
@@ -50,7 +51,7 @@ ParentLink.propTypes = {
 };
 
 const Navigation = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { pathname } = useLocation();
   const match = useMatch(buildItemPath());
   const { data: currentMember } = useContext(CurrentUserContext);
@@ -83,7 +84,7 @@ const Navigation = () => {
     }
 
     let to = HOME_PATH;
-    let text = t('My Items');
+    let text = t(BUILDER.NAVIGATION_MY_ITEMS_TITLE);
 
     const isParentOwned =
       (item?.creator ?? parents?.first()?.creator) === currentMemberId;
@@ -91,7 +92,7 @@ const Navigation = () => {
     // favorite root path
     if (pathname === FAVORITE_ITEMS_PATH) {
       to = FAVORITE_ITEMS_PATH;
-      text = t('Favorite Items');
+      text = t(BUILDER.NAVIGATION_FAVORITE_ITEMS_TITLE);
     }
     // shared items and non owned items
     else if (
@@ -99,7 +100,7 @@ const Navigation = () => {
       (pathname !== HOME_PATH && !isParentOwned)
     ) {
       to = SHARED_ITEMS_PATH;
-      text = t('Shared Items');
+      text = t(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE);
     }
 
     return (

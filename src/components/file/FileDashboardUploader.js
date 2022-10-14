@@ -17,7 +17,7 @@ import { UppyContext } from './UppyContext';
 
 const FileDashboardUploader = () => {
   const { uppy } = useContext(UppyContext);
-  const { t } = useBuilderTranslation();
+  const { t, i18n } = useBuilderTranslation();
 
   if (!uppy) {
     return <ErrorAlert />;
@@ -41,6 +41,9 @@ const FileDashboardUploader = () => {
           height={200}
           width="100%"
           proudlyDisplayPoweredByUppy={false}
+          locale={{
+            strings: i18n.options.resources[i18n.language].uppy,
+          }}
         />
       </div>
     </>

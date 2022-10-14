@@ -37,17 +37,22 @@ const Main: FC<Props> = ({ children }) => {
   const { data: currentMember } = hooks.useCurrentMember();
   const memberId = currentMember?.get('id');
   // mutations to handle the mentions
-  const { mutate: patchMentionMutate } = useMutation(
+  const { mutate: patchMentionMutate } = useMutation<any, any, any>(
     MUTATION_KEYS.PATCH_MENTION,
   );
-  const patchMentionFunction = ({ id, status }) =>
-    patchMentionMutate({ memberId, id, status });
-  const { mutate: deleteMentionMutate } = useMutation(
+  const patchMentionFunction = ({
+    id,
+    status,
+  }: {
+    id: string;
+    status: string;
+  }) => patchMentionMutate({ memberId, id, status });
+  const { mutate: deleteMentionMutate } = useMutation<any, any, any>(
     MUTATION_KEYS.DELETE_MENTION,
   );
-  const deleteMentionFunction = (mentionId) =>
+  const deleteMentionFunction = (mentionId: string) =>
     deleteMentionMutate({ memberId, mentionId });
-  const { mutate: clearAllMentionsMutate } = useMutation(
+  const { mutate: clearAllMentionsMutate } = useMutation<any, any, any>(
     MUTATION_KEYS.CLEAR_MENTIONS,
   );
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });

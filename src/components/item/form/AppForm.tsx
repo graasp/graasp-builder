@@ -83,8 +83,10 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
           clearOnBlur={false}
           onChange={handleAppUrlInput}
           onInputChange={handleAppUrlInput}
-          renderOption={(_props: unknown, option: App) => (
-            <div
+          renderOption={(props: unknown, option: App) => (
+            <li
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...props}
               style={{
                 display: 'flex',
                 padding: 8,
@@ -105,7 +107,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
                 {option.name}
               </Typography>
               <Typography variant="caption">{option.description}</Typography>
-            </div>
+            </li>
           )}
           renderInput={(params) => (
             <TextField

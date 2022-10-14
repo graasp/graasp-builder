@@ -1,10 +1,11 @@
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { HOME_ERROR_ALERT_ID, OWNED_ITEMS_ID } from '../../config/selectors';
 import ErrorAlert from '../common/ErrorAlert';
@@ -17,7 +18,7 @@ import Main from './Main';
 import NewItemButton from './NewItemButton';
 
 const Home: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
 
   if (isError) {
@@ -32,19 +33,19 @@ const Home: FC = () => {
     <Main>
       <UppyContextProvider enable={isSuccess}>
         <FileUploader />
-        <Container>
+        <Box mx={2}>
           <ItemHeader showNavigation={false} />
           <Items
             defaultSortedColumn={{ updatedAt: 'desc' }}
             id={OWNED_ITEMS_ID}
-            title={t('My Items')}
+            title={t(BUILDER.MY_ITEMS_TITLE)}
             items={ownItems}
             headerElements={[
               <NewItemButton key="newButton" fontSize="small" />,
             ]}
             ToolbarActions={ItemActionsRenderer}
           />
-        </Container>
+        </Box>
       </UppyContextProvider>
     </Main>
   );

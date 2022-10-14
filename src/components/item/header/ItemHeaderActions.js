@@ -77,7 +77,11 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
             </Tooltip>
           )}
           <ShareButton itemId={id} />
-          <ChatboxButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox} />
+          <ChatboxButton
+            tooltip={t(BUILDER.ITEM_CHATBOX_TITLE)}
+            id={ITEM_CHATBOX_BUTTON_ID}
+            onClick={onClickChatbox}
+          />
           <PlayerViewButton itemId={id} />
           <PublishButton itemId={id} />
           {canEdit && <AnalyticsDashboardButton id={id} />}
@@ -107,15 +111,17 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       {renderItemActions()}
       {renderTableActions()}
       {id && (
-        <IconButton
-          id={ITEM_INFORMATION_BUTTON_ID}
-          onClick={onClickMetadata}
-          className={clsx({
-            [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
-          })}
-        >
-          <InfoIcon />
-        </IconButton>
+        <Tooltip title={t(BUILDER.ITEM_METADATA_TITLE)}>
+          <IconButton
+            id={ITEM_INFORMATION_BUTTON_ID}
+            onClick={onClickMetadata}
+            className={clsx({
+              [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
+            })}
+          >
+            <InfoIcon />
+          </IconButton>
+        </Tooltip>
       )}
     </Box>
   );

@@ -1,10 +1,11 @@
 import { IconButtonProps } from '@mui/material';
 
 import { FC, MouseEventHandler, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { CopyButton as Button } from '@graasp/ui';
+import { BUILDER } from '@graasp/translations';
+import { CopyButton as GraaspCopyButton } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_COPY_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
@@ -20,7 +21,7 @@ export type Props = {
 };
 
 const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const { openModal: openCopyModal } = useContext(CopyItemModalContext);
 
@@ -32,10 +33,10 @@ const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
   };
 
   return (
-    <Button
+    <GraaspCopyButton
       type={type}
       id={id}
-      text={t('Copy')}
+      text={t(BUILDER.ITEM_COPY_BUTTON)}
       color={color}
       iconClassName={ITEM_COPY_BUTTON_CLASS}
       menuItemClassName={ITEM_MENU_COPY_BUTTON_CLASS}

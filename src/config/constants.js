@@ -162,11 +162,6 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 
 export const USER_ITEM_ORDER = 'user_order';
 
-export const SHARING_LINK_TYPES = {
-  BUILDER: 'builder',
-  PLAYER: 'player',
-};
-
 export const ITEM_TYPES_WITH_CAPTIONS = [
   ITEM_TYPES.FOLDER,
   ITEM_TYPES.S3_FILE,

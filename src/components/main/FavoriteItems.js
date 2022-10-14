@@ -1,13 +1,14 @@
 import { List } from 'immutable';
 
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 import { useContext, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   FAVORITE_ITEMS_ERROR_ALERT_ID,
@@ -26,7 +27,7 @@ import Items from './Items';
 import Main from './Main';
 
 const FavoriteItems = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const {
     data: member,
     isLoading: isMemberLoading,
@@ -67,7 +68,7 @@ const FavoriteItems = () => {
     return (
       <Items
         id={FAVORITE_ITEMS_ID}
-        title={t('Favorite Items')}
+        title={t(BUILDER.FAVORITE_ITEMS_TITLE)}
         items={getExistingItems(favoriteItems)}
       />
     );
@@ -75,10 +76,10 @@ const FavoriteItems = () => {
 
   return (
     <Main>
-      <Container>
+      <Box mx={2}>
         <ItemHeader showNavigation={false} />
         {renderContent()}
-      </Container>
+      </Box>
     </Main>
   );
 };

@@ -1,8 +1,9 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
-import { useContext, useEffect, useRef } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { Context, Item } from '@graasp/sdk';
 
 import {
   DEFAULT_ANALYZER_HEIGHT,
@@ -11,11 +12,14 @@ import {
 import { buildGraaspAnalyzerId } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
 
+type Props = {
+  item: RecordOf<Item>;
+};
+
 // todo: use as component
-const GraaspAnalyzer = ({ item }) => {
+const GraaspAnalyzer: FC<Props> = ({ item }) => {
   const { t } = useTranslation();
   const { setOpenedActionTabId } = useContext(LayoutContext);
-  const ref = useRef();
   const { id } = item;
 
   // close tab on unmount
@@ -29,21 +33,14 @@ const GraaspAnalyzer = ({ item }) => {
 
   return (
     <iframe
-      ref={ref}
       /* todo: dynamic height */
       height={DEFAULT_ANALYZER_HEIGHT}
-      title={t('Graasp Analyzer')}
+      title={`Graasp ${t(Context.ANALYTICS)}`}
       src={buildGraaspAnalyzerLink(id)}
       id={buildGraaspAnalyzerId(id)}
       frameBorder="0"
     />
   );
-};
-
-GraaspAnalyzer.propTypes = {
-  item: PropTypes.instanceOf({
-    Record,
-  }).isRequired,
 };
 
 export default GraaspAnalyzer;

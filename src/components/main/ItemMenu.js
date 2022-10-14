@@ -9,11 +9,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { BUILDER } from '@graasp/translations';
 
 import { BUTTON_TYPES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
@@ -35,7 +35,7 @@ import CopyButton from './CopyButton';
 const ItemMenu = ({ item, canEdit }) => {
   const { data: member } = useContext(CurrentUserContext);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );

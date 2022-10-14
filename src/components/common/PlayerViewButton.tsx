@@ -35,7 +35,7 @@ const PlayerViewButton: FC<Props> = ({ itemId }) => {
         onClick={onClick}
         id={buildPlayerButtonId(itemId)}
       >
-        <PlayIcon size={30} />
+        <PlayIcon size={30} primaryColor="grey" />
       </IconButton>
     </Tooltip>
   );

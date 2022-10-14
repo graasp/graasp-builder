@@ -9,8 +9,10 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
   ITEM_PANEL_NAME_ID,
@@ -25,7 +27,7 @@ import ItemMemberships from './ItemMemberships';
 const { useMember } = hooks;
 
 const ItemMetadataContent = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const { setIsItemSharingOpen } = useContext(LayoutContext);
   const { data: creator } = useMember(item.creator);
@@ -47,7 +49,9 @@ const ItemMetadataContent = ({ item }) => {
   const renderLink = () => {
     const buildTableRow = (link) => (
       <TableRow>
-        <TableCell align="left">{t('Link')}</TableCell>
+        <TableCell align="left">
+          {t(BUILDER.ITEM_METADATA_LINK_TITLE)}
+        </TableCell>
         <TableCell align="right">{link}</TableCell>
       </TableRow>
     );
@@ -62,40 +66,46 @@ const ItemMetadataContent = ({ item }) => {
 
   return (
     <>
-      <TableContainer sx={{ p: 2 }}>
+      <TableContainer sx={{ p: 2, boxSizing: 'border-box' }}>
         <Typography variant="h5" id={ITEM_PANEL_NAME_ID} noWrap>
           {item.name}
         </Typography>
         <Table
           id={ITEM_PANEL_TABLE_ID}
           size="small"
-          aria-label="item panel table"
+          aria-label={t(BUILDER.ITEM_METADATA_TITLE)}
         >
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                {t('Type')}
+                {t(BUILDER.ITEM_METADATA_TYPE_TITLE)}
               </TableCell>
               <TableCell align="right">{type}</TableCell>
             </TableRow>
             {size && (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  {t('Size')}
+                  {t(BUILDER.ITEM_METADATA_SIZE_TITLE)}
                 </TableCell>
                 <TableCell align="right">{size}</TableCell>
               </TableRow>
             )}
             <TableRow>
-              <TableCell align="left">{t('Creator')}</TableCell>
+              <TableCell align="left">
+                {t(BUILDER.ITEM_METADATA_CREATOR_TITLE)}
+              </TableCell>
               <TableCell align="right">{creator?.name}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="left">{t('Created At')}</TableCell>
+              <TableCell align="left">
+                {t(BUILDER.ITEM_METADATA_CREATED_AT_TITLE)}
+              </TableCell>
               <TableCell align="right">{formatDate(item.createdAt)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="left">{t('Updated At')}</TableCell>
+              <TableCell align="left">
+                {t(BUILDER.ITEM_METADATA_UPDATED_AT_TITLE)}
+              </TableCell>
               <TableCell align="right">{formatDate(item.updatedAt)}</TableCell>
             </TableRow>
             {renderLink()}

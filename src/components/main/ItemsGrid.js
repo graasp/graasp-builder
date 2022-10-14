@@ -86,7 +86,7 @@ const ItemsGrid = (props) => {
     <div>
       <ItemsToolbar title={title} headerElements={headerElements} />
       <FolderDescription itemId={parentId} isEditing={isEditing} />
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         {renderItems()}
       </Grid>
       <Box p={2} alignItems="center" display="flex" justifyContent="center">

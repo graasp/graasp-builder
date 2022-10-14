@@ -1,11 +1,13 @@
 import { List } from 'immutable';
 
+import { Box } from '@mui/material';
+
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
+import { useBuilderTranslation } from '../config/i18n';
 import { hooks } from '../config/queryClient';
 import {
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
@@ -57,7 +59,7 @@ const ToolbarActions: FC<ToolbarActionsProps> = ({
 );
 
 const RecycleBinScreen: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { data: items, isLoading, isError } = hooks.useRecycledItems();
 
   if (isError) {
@@ -70,16 +72,18 @@ const RecycleBinScreen: FC = () => {
 
   return (
     <Main>
-      <ItemHeader showNavigation={false} />
-      <Items
-        clickable={false}
-        title={t(BUILDER.RECYCLE_BIN_TITLE)}
-        items={List(items)}
-        actions={RowActions}
-        ToolbarActions={ToolbarActions}
-        showThumbnails={false}
-        enableMemberships={false}
-      />
+      <Box mx={2}>
+        <ItemHeader showNavigation={false} />
+        <Items
+          clickable={false}
+          title={t(BUILDER.RECYCLE_BIN_TITLE)}
+          items={List(items)}
+          actions={RowActions}
+          ToolbarActions={ToolbarActions}
+          showThumbnails={false}
+          enableMemberships={false}
+        />
+      </Box>
     </Main>
   );
 };

@@ -6,13 +6,14 @@ import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
 import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { SETTINGS } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
@@ -30,7 +31,7 @@ const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 const { useTags, useItemTags, useItemLogin } = hooks;
 
 const VisibilitySelect = ({ item, edit }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   // user
   const { data: user, isLoading: isMemberLoading } =
     useContext(CurrentUserContext);
@@ -166,8 +167,12 @@ const VisibilitySelect = ({ item, edit }) => {
       return (
         <span style={{ fontWeight: 'bold' }}>
           {itemLogin?.loginSchema === SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME
-            ? t('username')
-            : t('username and password')}
+            ? t(
+                BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL,
+              )
+            : t(
+                BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL,
+              )}
         </span>
       );
     }
@@ -180,10 +185,14 @@ const VisibilitySelect = ({ item, edit }) => {
         id={SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}
       >
         <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME}>
-          {t('Pseudonym')}
+          {t(
+            BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL,
+          )}
         </MenuItem>
         <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD}>
-          {t('Pseudonym and Password')}
+          {t(
+            BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL,
+          )}
         </MenuItem>
       </Select>
     );
@@ -194,31 +203,25 @@ const VisibilitySelect = ({ item, edit }) => {
       case SETTINGS.ITEM_LOGIN.name:
         return (
           <>
-            {t('This item is accessible if the visitor provides a ')}
+            {t(
+              BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSSAGE,
+            )}
             {renderLoginSchemaSelect()}
           </>
         );
       case SETTINGS.ITEM_PUBLIC.name:
-        return (
-          <>
-            {t('This item is public. Anyone can access it.')}
-            <br />
-            {t(
-              'Note: Items will be unpublished automatically if you change the visibility state from public to others.',
-            )}
-          </>
-        );
+        return t(BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_INFORMATIONS);
       case SETTINGS.ITEM_PRIVATE.name:
       default:
-        return t(
-          'This item is private. Only authorized members can access it.',
-        );
+        return t(BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_INFORMATION);
     }
   };
 
   return (
     <>
-      <Typography variant="h6">{t('Visibility')}</Typography>
+      <Typography variant="h6">
+        {t(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
+      </Typography>
       {edit && (
         <Select
           value={tagValue?.name || SETTINGS.ITEM_PRIVATE.name}
@@ -227,19 +230,21 @@ const VisibilitySelect = ({ item, edit }) => {
           id={SHARE_ITEM_VISIBILITY_SELECT_ID}
           sx={{ mr: 1 }}
         >
-          <MenuItem value={SETTINGS.ITEM_PRIVATE.name}>{t('Private')}</MenuItem>
-          <MenuItem value={SETTINGS.ITEM_LOGIN.name}>
-            {t('Pseudonymized')}
+          <MenuItem value={SETTINGS.ITEM_PRIVATE.name}>
+            {t(BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_LABEL)}
           </MenuItem>
-          <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>{t('Public')}</MenuItem>
+          <MenuItem value={SETTINGS.ITEM_LOGIN.name}>
+            {t(BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL)}
+          </MenuItem>
+          <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>
+            {t(BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL)}
+          </MenuItem>
         </Select>
       )}
       {renderVisiblityIndication()}
       {isDisabled && (
         <Typography variant="body2">
-          {t(
-            'You cannot modify the visibility because it is defined in one of the parent of this item.',
-          )}
+          {t(BUILDER.ITEM_SETTINGS_VISIBILITY_CANNOT_EDIT_PARENT_MESSAGE)}
         </Typography>
       )}
     </>
