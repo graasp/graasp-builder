@@ -4,8 +4,10 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../../config/i18n';
 import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
@@ -14,7 +16,7 @@ import { ITEM_LAYOUT_MODES } from '../../../enums';
 import { LayoutContext } from '../../context/LayoutContext';
 
 const ModeButton = () => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mode, setMode } = useContext(LayoutContext);
 
   const handleOnClick = (value) => {
@@ -25,7 +27,7 @@ const ModeButton = () => {
     case ITEM_LAYOUT_MODES.GRID:
       return (
         <div>
-          <Tooltip title={t('View as List')}>
+          <Tooltip title={t(BUILDER.LAYOUT_MODE_LIST_LABEL)}>
             <span>
               <IconButton
                 id={MODE_LIST_BUTTON_ID}
@@ -43,7 +45,7 @@ const ModeButton = () => {
     case ITEM_LAYOUT_MODES.LIST:
       return (
         <div>
-          <Tooltip title={t('View as Card')}>
+          <Tooltip title={t(BUILDER.LAYOUT_MODE_GRID_LABEL)}>
             <span>
               <IconButton
                 id={MODE_GRID_BUTTON_ID}

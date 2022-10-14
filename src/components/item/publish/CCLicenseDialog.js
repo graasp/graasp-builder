@@ -10,7 +10,10 @@ import {
 
 import { useTranslation } from 'react-i18next';
 
+import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
+
+import { useBuilderTranslation } from '../../../config/i18n';
 
 const CCLicenseDialog = ({
   open,
@@ -19,7 +22,8 @@ const CCLicenseDialog = ({
   buttonName,
   handleSubmit,
 }) => {
-  const { t } = useTranslation();
+  const { t: commonT } = useTranslation(namespaces.common);
+  const { t } = useBuilderTranslation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,19 +44,19 @@ const CCLicenseDialog = ({
         {buttonName}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{t('Confirm Your Submission')}</DialogTitle>
+        <DialogTitle>
+          {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_TITLE)}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {t(
-              'Please verify that your item fits the CC License, and do not change to a more restricted option.',
-            )}
+            {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_CONTENT)}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus variant="text">
-            {t('Cancel')}
+            {commonT(COMMON.CANCEL_BUTTON)}
           </Button>
-          <Button onClick={handleSubmit}>{t('Confirm')}</Button>
+          <Button onClick={handleSubmit}>{t(BUILDER.CONFIRM_BUTTON)}</Button>
         </DialogActions>
       </Dialog>
     </>

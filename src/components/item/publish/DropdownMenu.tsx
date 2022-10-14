@@ -6,8 +6,10 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { FC, SyntheticEvent } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../../config/i18n';
 import {
   buildCategorySelectionId,
   buildCategorySelectionTitleId,
@@ -31,7 +33,7 @@ const DropdownMenu: FC<Props> = ({
   valueList,
   selectedValues,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   if (!valueList) {
     return null;
@@ -57,7 +59,7 @@ const DropdownMenu: FC<Props> = ({
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             variant="outlined"
-            placeholder={t('Please choose from list')}
+            placeholder={t(BUILDER.DROP_DOWN_PLACEHOLDER)}
           />
         )}
       />

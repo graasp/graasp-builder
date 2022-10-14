@@ -1,13 +1,12 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { COOKIE_KEYS } from '@graasp/sdk';
-import { COMMON } from '@graasp/translations';
+import { COMMON, namespaces } from '@graasp/translations';
 import { CookiesBanner } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../config/i18n';
-
 const Component: FC = () => {
-  const { t } = useBuilderTranslation();
+  const { t } = useTranslation(namespaces.common);
 
   return (
     <CookiesBanner

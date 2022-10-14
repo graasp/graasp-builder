@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
 import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
@@ -20,7 +21,7 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 const CoEditorSettings = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: updateDisplayCoEditors } = useMutation(EDIT_ITEM);
 
   // user
@@ -60,16 +61,14 @@ const CoEditorSettings = ({ item }) => {
   return (
     <>
       <Typography variant="h6" mt={2}>
-        {t('Co-Editors')}
+        {t(BUILDER.ITEM_SETTINGS_CO_EDITORS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(
-          'Do you want to display co-editors on the publication page? All users with edit or admin permissions will be displayed.',
-        )}
+        {t(BUILDER.ITEM_SETTINGS_CO_EDITORS_INFORMATIONS)}
       </Typography>
       <RadioGroup
         id={CO_EDITOR_SETTINGS_RADIO_GROUP_ID}
-        name={t('Display co-editors?')}
+        name={t(BUILDER.ITEM_SETTINGS_CO_EDITORS_LABEL)}
         value={optionValue}
         onChange={handleChange}
       >

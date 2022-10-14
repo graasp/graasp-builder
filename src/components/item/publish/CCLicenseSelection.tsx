@@ -11,16 +11,17 @@ import {
 } from '@mui/material';
 
 import { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item, redirect } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 import { CCLicenseIcon, Loader } from '@graasp/ui';
 
 import {
   CC_LICENSE_ABOUT_URL,
   CC_LICENSE_ADAPTION_OPTIONS,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import CCLicenseDialog from './CCLicenseDialog';
@@ -39,7 +40,7 @@ type Props = {
 };
 
 const CCLicenseSelection: FC<Props> = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: updateCCLicense } = useMutation<
     any,
     any,
@@ -95,9 +96,9 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
   return (
     <>
       <Typography variant="h6" mt={2}>
-        {t('Creative Commons License')}
+        {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_TITLE)}
         <Tooltip
-          title={t('Need more info about CC License? Click here!')}
+          title={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_MORE_INFORMATIONS)}
           arrow
         >
           <IconButton aria-label="info" onClick={handleClick}>
@@ -106,42 +107,39 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
         </Tooltip>
       </Typography>
       <Typography variant="body1">
-        {t(
-          'All content published on Graasp Library does not allow commercial use.',
-        )}
-      </Typography>
-      <Typography variant="body1">
-        {t('Allow adaptations of your work to be shared?')}
+        {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_INFORMATIONS)}
       </Typography>
       <RadioGroup
-        aria-label="CC License"
-        name={t('CC License')}
+        aria-label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
+        name={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
         value={optionValue}
         onChange={handleChange}
       >
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
           control={<Radio color="primary" />}
-          label={t('Yes')}
+          label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALLOW_LABEL)}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
           control={<Radio color="primary" />}
-          label={t('Only if others share alike')}
+          label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALIKE_LABEL)}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.NONE}
           control={<Radio color="primary" />}
-          label={t('None')}
+          label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_NONE_LABEL)}
         />
       </RadioGroup>
       <CCLicenseDialog
         open={open}
         setOpen={setOpen}
-        buttonName={t('Submit')}
+        buttonName={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_SUBMIT_BUTTON)}
         handleSubmit={handleSubmit}
       />
-      <Typography variant="subtitle1">{t('Icon Preview')}</Typography>
+      <Typography variant="subtitle1">
+        {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
+      </Typography>
       <CCLicenseIcon
         adaption={settings?.ccLicenseAdaption as CCLicenseAdaption}
         sx={{ mt: 1 }}

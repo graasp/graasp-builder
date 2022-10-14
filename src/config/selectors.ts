@@ -93,8 +93,8 @@ export const CREATE_ITEM_APP_ID = 'createItemApp';
 export const CREATE_ITEM_ZIP_ID = 'createItemZip';
 export const CREATE_ITEM_H5P_ID = 'createItemH5P';
 export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
-export const buildItemFormAppOptionId = (name: string): string =>
-  `${name.replaceAll(/\s/g, '-')}`;
+export const buildItemFormAppOptionId = (name?: string): string =>
+  `${name?.replaceAll(/\s/g, '-')}`;
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
 export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';

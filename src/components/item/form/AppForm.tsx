@@ -83,18 +83,28 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
           clearOnBlur={false}
           onChange={handleAppUrlInput}
           onInputChange={handleAppUrlInput}
-          renderOption={(option: App) => (
-            <div id={buildItemFormAppOptionId(option.name)}>
+          renderOption={(_props: unknown, option: App) => (
+            <div
+              style={{
+                display: 'flex',
+                padding: 8,
+                alignItems: 'center',
+              }}
+              id={buildItemFormAppOptionId(option.name)}
+            >
               <img
                 style={{
                   verticalAlign: 'middle',
-                  margin: 1,
+                  margin: 8,
                   height: '30px',
                 }}
                 src={option.extra?.image}
                 alt={option.name}
               />
-              {option.name}
+              <Typography variant="body1" pr={1}>
+                {option.name}
+              </Typography>
+              <Typography variant="caption">{option.description}</Typography>
             </div>
           )}
           renderInput={(params) => (

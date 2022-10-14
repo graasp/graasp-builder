@@ -8,7 +8,7 @@ import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import UpdateIcon from '@mui/icons-material/Update';
 import { Box, Button, Typography } from '@mui/material';
 
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
@@ -131,23 +131,21 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
       case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
         return (
           <Typography variant="body1">
-            {t(
-              'Your item is pending automatic validation. Once the validation succeeds, you will be able to publish your item.',
-            )}
+            {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_AUTOMATIC)}
           </Typography>
         );
       case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
         return (
           <Typography variant="body1">
-            {t(
-              'Your item failed the automatic validation. A member of our team will manually check your collection, please wait for the result.',
-            )}
+            {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_MANUAL)}
           </Typography>
         );
       case VALIDATION_STATUS_NAMES.FAILURE:
         return (
           <Typography variant="body1">
-            {t('itemValidationFailureMessage', { contact: ADMIN_CONTACT })}
+            {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_FAILURE, {
+              contact: ADMIN_CONTACT,
+            })}
           </Typography>
         );
       default:
@@ -163,14 +161,12 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
       <Typography variant="body1">
         {t(BUILDER.LIBRARY_SETTINGS_INFORMATION)}
       </Typography>
-      <Typography variant="h6" sx={{ mt: 1 }}>
-        <LooksOneIcon color="primary" mr={2} />
+      <Typography variant="h6" sx={{ mt: 1, mr: 2 }}>
+        <LooksOneIcon color="primary" />
         {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(
-          'You need to validate your item before publish it. Please allow some time for the validation to finish.',
-        )}
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_INFORMATIONS)}
       </Typography>
       <Button
         id={ITEM_VALIDATION_BUTTON_ID}
@@ -179,20 +175,18 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
         color="primary"
         endIcon={displayItemValidationIcon()}
       >
-        {t('Validate')}
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON)}
       </Button>
       <Button variant="outlined" onClick={handleRefresh} color="primary">
-        {t('Refresh')}
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON)}
       </Button>
       {displayItemValidationMessage()}
-      <Typography variant="h6" mt={2}>
-        <LooksTwoIcon color="primary" mr={2} />
-        {t('Publication')}
+      <Typography variant="h6" mt={2} mr={2}>
+        <LooksTwoIcon color="primary" />
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(
-          'Once your item is validated, you can set your item to published by clicking the button.',
-        )}
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_INFORMATIONS)}
       </Typography>
       <ItemPublishButton
         item={item}
@@ -200,12 +194,10 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
       />
       <Typography variant="h6" mt={2}>
         <Looks3Icon color="primary" sx={{ mr: 2 }} />
-        {t('Configuration')}
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(
-          'Set the options for your resource to make it easily accessible by the public.',
-        )}
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_INFORMATIONS)}
       </Typography>
       <Box mx={3}>
         <CoEditorSettings item={item} />

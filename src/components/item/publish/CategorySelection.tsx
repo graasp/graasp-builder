@@ -2,17 +2,18 @@ import { AutocompleteChangeReason, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { FC, SyntheticEvent, useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import {
   CATEGORY_TYPES,
   CATEGORY_TYPE_TITLES,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { Category } from '../../../config/types';
 import { sortByName } from '../../../utils/item';
@@ -30,7 +31,7 @@ type Props = {
 };
 
 const CategorySelection: FC<Props> = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
   const { mutate: createItemCategory } = useMutation<
     any,
     any,
@@ -160,7 +161,7 @@ const CategorySelection: FC<Props> = ({ item }) => {
   return (
     <Box mt={2}>
       <Typography variant="h6" mt={2}>
-        {t('Category')}
+        {t(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
       </Typography>
       <DropdownMenu
         title={t(CATEGORY_TYPE_TITLES.LEVEL)}

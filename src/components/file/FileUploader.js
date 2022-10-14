@@ -4,10 +4,14 @@ import { DragDrop } from '@uppy/react';
 import { Container, styled } from '@mui/material';
 
 import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { MAX_FILE_SIZE } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
 
 import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { UPLOADER_ID } from '../../config/selectors';
+import { humanFileSize } from '../../utils/uppy';
 import { UppyContext } from './UppyContext';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
@@ -34,7 +38,7 @@ const FileUploader = () => {
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   const closeUploader = () => {
     setIsDragging(false);
@@ -117,16 +121,17 @@ const FileUploader = () => {
     >
       <DragDrop
         uppy={uppy}
-        note={t(`You can upload up to FILE_UPLOAD_MAX_FILES files at a time`, {
+        note={t(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
           maxFiles: FILE_UPLOAD_MAX_FILES,
+          maxSize: humanFileSize(MAX_FILE_SIZE),
         })}
         locale={{
           strings: {
             // Text to show on the droppable area.
             // `%{browse}` is replaced with a link that opens the system file selection dialog.
-            dropHereOr: `${t('Drop here or')} %{browse}`,
+            dropHereOr: `${t(BUILDER.UPLOAD_FILE_DROP_TEXT)} %{browse}`,
             // Used as the label for the link that opens the system file selection dialog.
-            browse: t('Browse'),
+            browse: t(BUILDER.UPLOAD_FILE_BROWSE),
           },
         }}
       />

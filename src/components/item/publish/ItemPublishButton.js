@@ -5,13 +5,14 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
 import { SETTINGS } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
   EMAIL_NOTIFICATION_CHECKBOX,
@@ -28,7 +29,7 @@ const { DELETE_ITEM_TAG, PUBLISH_ITEM } = MUTATION_KEYS;
 const { useTags, useItemTags } = hooks;
 
 const ItemPublishButton = ({ item, isValidated }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
 
   // current item
   const { itemId } = useParams();
@@ -105,14 +106,14 @@ const ItemPublishButton = ({ item, isValidated }) => {
         endIcon={isPublished && <CheckCircleIcon color="primary" />}
         id={ITEM_PUBLISH_BUTTON_ID}
       >
-        {t('Publish')}
+        {t(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
       </Button>
       <Button
         disabled={!isPublished}
         onClick={handleUnpublish}
         id={ITEM_UNPUBLISH_BUTTON_ID}
       >
-        {t('Unpublish')}
+        {t(BUILDER.LIBRARY_SETTINGS_UNPUBLISH_BUTTON)}
       </Button>
       <div>
         <FormControlLabel
@@ -125,14 +126,12 @@ const ItemPublishButton = ({ item, isValidated }) => {
               color="primary"
             />
           }
-          label={t('Send email notifications to all co-editors')}
+          label={t(BUILDER.LIBRARY_SETTINGS_PUBLISH_NOTIFICATIONS_LABEL)}
         />
       </div>
       {isPublished && (
         <Typography variant="body1">
-          {t(
-            'This element is published. Anyone can access it and is available on Graasp Library, our public repository of learning ressources.',
-          )}
+          {t(BUILDER.LIBRARY_SETTINGS_PUBLISHED_STATUS)}
         </Typography>
       )}
     </>

@@ -10,13 +10,13 @@ import SnackbarContent from '@mui/material/SnackbarContent';
 import { grey } from '@mui/material/colors';
 
 const StyledSnackbarContent = styled(SnackbarContent)(() => ({
-  '.MuiSnackbarContent-root': {
+  '&.MuiSnackbarContent-root': {
     background: 'white',
   },
-  '.MuiSnackbarContent-message': {
+  '& .MuiSnackbarContent-message': {
     width: '85%',
   },
-  '.MuiSnackbarContent-action': {
+  '& .MuiSnackbarContent-action': {
     color: grey[500],
   },
 }));
