@@ -74,12 +74,12 @@ const CustomizedTagsEdit = ({ item }) => {
       </Typography>
       <TextField
         variant="outlined"
-        label={t(BUILDER.ITEM_TAGS_LABEL)}
         multiline
         maxRows={5}
         defaultValue={displayValues}
         onChange={handleChange}
         id={ITEM_TAGS_EDIT_INPUT_ID}
+        sx={{ mt: 1, mb: 1 }}
       />
       <SaveButton
         onClick={handleSubmit}

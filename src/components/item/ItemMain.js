@@ -1,7 +1,7 @@
 import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 
-import { Container, Divider, Typography, styled } from '@mui/material';
+import { Box, Divider, Typography, styled } from '@mui/material';
 
 import { useContext } from 'react';
 
@@ -17,7 +17,7 @@ import ItemMetadataContent from './ItemMetadataContent';
 import ItemPanel from './ItemPanel';
 import ItemHeader from './header/ItemHeader';
 
-const StyledContainer = styled(Container)(({ theme, open }) => {
+const StyledContainer = styled(Box)(({ theme, open }) => {
   const openStyles = open
     ? {
         transition: theme.transitions.create('margin', {
@@ -30,7 +30,7 @@ const StyledContainer = styled(Container)(({ theme, open }) => {
 
   return {
     position: 'relative',
-    padding: theme.spacing(1),
+    padding: theme.spacing(1, 2),
     flexGrow: 1,
     marginRight: 0,
     width: 'unset',

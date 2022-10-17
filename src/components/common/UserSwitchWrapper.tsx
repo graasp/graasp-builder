@@ -41,7 +41,9 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     MUTATION_KEYS.SWITCH_MEMBER,
   );
 
-  const renderAvatar = (m: RecordOf<Member>) => <MemberAvatar id={member.id} />;
+  const renderAvatar: FC<{ m: RecordOf<Member> }> = (m) => (
+    <MemberAvatar id={member.id} />
+  );
 
   return (
     <GraaspUserSwitch

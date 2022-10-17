@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types';
-
 import { Box, styled } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatch } from 'react-router';
 
@@ -40,7 +38,12 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   paddingLeft: 0,
 }));
 
-const NewItemModal = ({ open, handleClose }) => {
+type Props = {
+  open?: boolean;
+  handleClose: () => void;
+};
+
+const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const { t } = useBuilderTranslation();
   const { t: commonT } = useTranslation(namespaces.common);
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
@@ -52,7 +55,9 @@ const NewItemModal = ({ open, handleClose }) => {
     [ITEM_TYPES.APP]: { type: ITEM_TYPES.APP },
     [ITEM_TYPES.DOCUMENT]: { type: ITEM_TYPES.DOCUMENT },
   });
-  const { mutate: postItem } = useMutation(MUTATION_KEYS.POST_ITEM);
+  const { mutate: postItem } = useMutation<any, any, any>(
+    MUTATION_KEYS.POST_ITEM,
+  );
   const match = useMatch(buildItemPath());
   const parentId = match?.params?.itemId;
 
@@ -93,7 +98,7 @@ const NewItemModal = ({ open, handleClose }) => {
         return (
           <>
             <Typography variant="h6">
-              {t(BUILDER.CREATE_ITEM_FOLDER_TITLE)}
+              {t(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
             </Typography>
             <FolderForm
               onChange={updateItem}
@@ -193,15 +198,6 @@ const NewItemModal = ({ open, handleClose }) => {
       <DialogActions>{renderActions()}</DialogActions>
     </Dialog>
   );
-};
-
-NewItemModal.propTypes = {
-  open: PropTypes.bool,
-  handleClose: PropTypes.func.isRequired,
-};
-
-NewItemModal.defaultProps = {
-  open: false,
 };
 
 export default NewItemModal;

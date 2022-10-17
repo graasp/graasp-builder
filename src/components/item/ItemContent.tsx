@@ -1,11 +1,11 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
 import { Container, styled } from '@mui/material';
 
 import { useContext } from 'react';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
+import { Item, PermissionLevel } from '@graasp/sdk';
 import {
   AppItem,
   DocumentItem,
@@ -46,7 +46,13 @@ const FileWrapper = styled(Container)(() => ({
   flexGrow: 1,
 }));
 
-const ItemContent = ({ item, enableEditing, permission }) => {
+type Props = {
+  item: RecordOf<Item>;
+  enableEditing?: boolean;
+  permission: PermissionLevel;
+};
+
+const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   const { id: itemId, type: itemType } = item;
   const { mutate: editItem, mutateAsync: editItemAsync } = useMutation(
     MUTATION_KEYS.EDIT_ITEM,
@@ -201,16 +207,6 @@ const ItemContent = ({ item, enableEditing, permission }) => {
     default:
       return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
-};
-
-ItemContent.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  enableEditing: PropTypes.bool,
-  permission: PropTypes.string.isRequired,
-};
-
-ItemContent.defaultProps = {
-  enableEditing: false,
 };
 
 export default ItemContent;

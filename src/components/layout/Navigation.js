@@ -37,12 +37,16 @@ const ParentTitle = styled(Typography)(() => ({
   },
 }));
 
+const StyledLink = styled(Link)({
+  textDecoration: 'none',
+});
+
 const ParentLink = ({ id, name }) => (
-  <Link key={id} to={buildItemPath(id)}>
+  <StyledLink key={id} to={buildItemPath(id)}>
     <Typography id={buildNavigationLink(id)}>
       {truncate(name, { length: ITEM_NAME_MAX_LENGTH })}
     </Typography>
-  </Link>
+  </StyledLink>
 );
 
 ParentLink.propTypes = {
@@ -104,9 +108,9 @@ const Navigation = () => {
     }
 
     return (
-      <Link color="inherit" to={to} id={NAVIGATION_ROOT_ID}>
+      <StyledLink color="inherit" to={to} id={NAVIGATION_ROOT_ID}>
         <Typography id={NAVIGATION_HOME_LINK_ID}>{text}</Typography>
-      </Link>
+      </StyledLink>
     );
   };
 
@@ -166,11 +170,11 @@ const Navigation = () => {
       {renderRootLink()}
       {renderParents()}
       {itemId && (
-        <Link key={itemId} to={buildItemPath(itemId)}>
+        <StyledLink key={itemId} to={buildItemPath(itemId)}>
           <Typography id={buildNavigationLink(itemId)}>
             {truncate(item.name, { length: ITEM_NAME_MAX_LENGTH })}
           </Typography>
-        </Link>
+        </StyledLink>
       )}
     </Breadcrumbs>
   );

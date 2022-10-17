@@ -6,10 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { createContext, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
@@ -26,6 +27,7 @@ const EditItemModalContext = createContext();
 
 const EditItemModalProvider = ({ children }) => {
   const { t } = useBuilderTranslation();
+  const { t: commonT } = useTranslation(namespaces.common);
   const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
   // updated properties are separated from the original item
@@ -115,7 +117,7 @@ const EditItemModalProvider = ({ children }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} variant="text">
-          {t(BUILDER.CANCEL_BUTTON)}
+          {commonT(COMMON.CANCEL_BUTTON)}
         </Button>
         <Button
           // should not allow users to save if the item is not valid
@@ -128,7 +130,7 @@ const EditItemModalProvider = ({ children }) => {
           onClick={submit}
           id={ITEM_FORM_CONFIRM_BUTTON_ID}
         >
-          {t(BUILDER.SAVE_BUTTON)}
+          {commonT(COMMON.SAVE_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

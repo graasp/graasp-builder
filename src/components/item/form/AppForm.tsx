@@ -45,14 +45,19 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const [newName, setNewName] = useState(item?.name);
 
   // todo: not clear if newValue is a string or object
-  const handleAppUrlInput = (_event: any, newValue: App | string) => {
-    const url = newValue; // newValue?.url ?? newValue;
-    const name = item?.name; // newValue?.name ?? item?.name;
-    const props = { ...item, extra: buildAppExtra({ url }), name: '' };
+  const handleAppSelection = (_event: any, newValue: RecordOf<App>) => {
+    const url = newValue?.url;
+    const name = newValue?.name ?? item?.name;
+    const props = { ...item, extra: buildAppExtra({ url }) };
     if (name) {
       setNewName(name);
       props.name = name;
     }
+    onChange(props);
+  };
+  // todo: not clear if newValue is a string or object
+  const handleAppInput = (_event: any, url: string) => {
+    const props = { ...item, extra: buildAppExtra({ url }) };
     onChange(props);
   };
 
@@ -81,8 +86,8 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
           getOptionLabel={(option) => option.url ?? option}
           value={url}
           clearOnBlur={false}
-          onChange={handleAppUrlInput}
-          onInputChange={handleAppUrlInput}
+          onChange={handleAppSelection}
+          onInputChange={handleAppInput}
           renderOption={(props: unknown, option: App) => (
             <li
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -111,6 +116,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
           )}
           renderInput={(params) => (
             <TextField
+              variant="standard"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
               label={t(BUILDER.CREATE_NEW_ITEM_APP_URL_LABEL)}

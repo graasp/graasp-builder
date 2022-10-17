@@ -17,5 +17,4 @@ export type Invitation = {
 // eslint-disable-next-line no-shadow
 export enum InternalItemType { ZIP = 'zip' }
 
-export type NewItemTabType = ItemType.FOLDER | ItemType.LOCAL_FILE | ItemType.APP | ItemType.LINK | ItemType.DOCUMENT
-  | ItemType.H5P | InternalItemType.ZIP
+export type NewItemTabType = ItemType | InternalItemType.ZIP

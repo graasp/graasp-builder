@@ -1,9 +1,9 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
 import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
+import { Item, PermissionLevel } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -15,7 +15,15 @@ import ItemPublishConfiguration from './ItemPublishConfiguration';
 
 const { useTags, useItemTags } = hooks;
 
-const ItemPublishTab = ({ item, permission }) => {
+type Props = {
+  item: RecordOf<Item>;
+  permission?: PermissionLevel;
+};
+
+const ItemPublishTab: FC<Props> = ({
+  item,
+  permission = PermissionLevel.Read,
+}) => {
   const { t } = useBuilderTranslation();
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
@@ -40,15 +48,6 @@ const ItemPublishTab = ({ item, permission }) => {
       )}
     </Container>
   );
-};
-
-ItemPublishTab.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  permission: PropTypes.oneOf(PERMISSION_LEVELS),
-};
-
-ItemPublishTab.defaultProps = {
-  permission: PERMISSION_LEVELS.READ,
 };
 
 export default ItemPublishTab;

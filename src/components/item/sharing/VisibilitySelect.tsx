@@ -1,14 +1,15 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
+import { SelectChangeEvent } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
-import { useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -30,7 +31,22 @@ const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
 const { useTags, useItemTags, useItemLogin } = hooks;
 
-const VisibilitySelect = ({ item, edit }) => {
+// todo: use graasp sdk
+type Tag = {
+  name: string;
+};
+// todo: use graasp sdk
+type ItemTag = {
+  tagId: string;
+  id: string;
+};
+
+type Props = {
+  item: RecordOf<Item>;
+  edit?: boolean;
+};
+
+const VisibilitySelect: FC<Props> = ({ item, edit }) => {
   const { t } = useBuilderTranslation();
   // user
   const { data: user, isLoading: isMemberLoading } =
@@ -40,9 +56,11 @@ const VisibilitySelect = ({ item, edit }) => {
   const { itemId } = useParams();
 
   // mutations
-  const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
-  const { mutate: postItemTag } = useMutation(POST_ITEM_TAG);
-  const { mutate: putItemLoginSchema } = useMutation(PUT_ITEM_LOGIN);
+  const { mutate: deleteItemTag } = useMutation<any, any, any>(DELETE_ITEM_TAG);
+  const { mutate: postItemTag } = useMutation<any, any, any>(POST_ITEM_TAG);
+  const { mutate: putItemLoginSchema } = useMutation<any, any, any>(
+    PUT_ITEM_LOGIN,
+  );
 
   // item login tag and item extra value
   const { data: tags, isLoading: isTagsLoading } = useTags();
@@ -52,8 +70,8 @@ const VisibilitySelect = ({ item, edit }) => {
     isError,
   } = useItemTags(itemId);
   const { data: itemLogin } = useItemLogin(itemId);
-  const [itemTagValue, setItemTagValue] = useState(false);
-  const [tagValue, setTagValue] = useState(false);
+  const [itemTagValue, setItemTagValue] = useState<ItemTag>();
+  const [tagValue, setTagValue] = useState<Tag>();
   const [isDisabled, setIsDisabled] = useState(false);
 
   // update state variables depending on fetch values
@@ -149,7 +167,7 @@ const VisibilitySelect = ({ item, edit }) => {
     }
   };
 
-  const handleLoginSchemaChange = (event) => {
+  const handleLoginSchemaChange = (event: SelectChangeEvent) => {
     const newLoginSchema = event.target.value;
     putItemLoginSchema({
       itemId,
@@ -250,10 +268,4 @@ const VisibilitySelect = ({ item, edit }) => {
     </>
   );
 };
-
-VisibilitySelect.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  edit: PropTypes.bool.isRequired,
-};
-
 export default VisibilitySelect;

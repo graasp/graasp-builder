@@ -30,6 +30,7 @@ import {
 } from '../../../config/selectors';
 import { PERMISSION_LEVELS } from '../../../enums';
 
+const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');
 
 type Props = {
@@ -148,8 +149,6 @@ const CsvInputParser: FC<Props> = ({ item }) => {
       </Alert>
     );
   };
-
-  const label = 'shareItemFromCsvLabel';
 
   return (
     <>

@@ -187,7 +187,7 @@ export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
-export const ITEMS_TABLE_CONTAINER_HEIGHT = '55vh';
+export const ITEMS_TABLE_CONTAINER_HEIGHT = '65vh';
 
 export const DRAG_ICON_SIZE = 18;
 

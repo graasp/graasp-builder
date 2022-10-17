@@ -137,13 +137,17 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
         buttonName={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_SUBMIT_BUTTON)}
         handleSubmit={handleSubmit}
       />
-      <Typography variant="subtitle1">
-        {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
-      </Typography>
-      <CCLicenseIcon
-        adaption={settings?.ccLicenseAdaption as CCLicenseAdaption}
-        sx={{ mt: 1 }}
-      />
+      {settings?.ccLicenseAdaption && (
+        <>
+          <Typography variant="subtitle1">
+            {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
+          </Typography>
+          <CCLicenseIcon
+            adaption={settings?.ccLicenseAdaption as CCLicenseAdaption}
+            sx={{ mt: 1 }}
+          />
+        </>
+      )}
     </>
   );
 };

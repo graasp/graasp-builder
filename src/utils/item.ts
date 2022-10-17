@@ -1,8 +1,10 @@
 // synchronous functions to manage items from redux
 import { useEffect, useState } from 'react';
-
+import { RecordOf } from 'immutable'
+import { Member, Item, ItemMembership } from '@graasp/sdk'
 import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
 import { ITEM_TYPES } from '../enums';
+import { Invitation } from '../config/types'
 import {
   getAppExtra,
   getDocumentExtra,
@@ -10,9 +12,9 @@ import {
 } from './itemExtra';
 
 // eslint-disable-next-line no-useless-escape
-export const transformIdForPath = (id) => id.replace(/\-/g, '_');
+export const transformIdForPath = (id: string): string => id.replace(/\-/g, '_');
 
-export const getParentsIdsFromPath = (path, { ignoreSelf = false } = {}) => {
+export const getParentsIdsFromPath = (path: string, { ignoreSelf = false } = {}): string[] => {
   if (!path) {
     return [];
   }
@@ -33,16 +35,13 @@ export const getParentsIdsFromPath = (path, { ignoreSelf = false } = {}) => {
   return ids;
 };
 
-export const buildPath = ({ prefix, ids }) =>
+export const buildPath = ({ prefix, ids }: { prefix: string, ids: string[] }): string =>
   `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
 
-export const getItemById = (items, id) =>
+export const getItemById = (items: Item[], id: string): Item =>
   items.find(({ id: thisId }) => id === thisId);
 
-export const getItemsById = (items, ids) =>
-  items.filter(({ id: thisId }) => ids.includes(thisId));
-
-export const getDirectParentId = (path) => {
+export const getDirectParentId = (path: string): string => {
   const ids = getParentsIdsFromPath(path);
   const parentIdx = ids.length - 2;
   if (parentIdx < 0) {
@@ -51,37 +50,30 @@ export const getDirectParentId = (path) => {
   return ids[parentIdx];
 };
 
-export const isChild = (id) => {
+export const isChild = (id: string): ({ path }: { path: string }) => boolean => {
   const reg = new RegExp(`${transformIdForPath(id)}(?=\\.[^\\.]*$)`);
   return ({ path }) => path.match(reg);
 };
 
-export const getChildren = (items, id) => items.filter(isChild(id));
+export const getChildren = (items: Item[], id: string): Item[] => items.filter(isChild(id));
 
-export const isRootItem = ({ path }) => path.length === UUID_LENGTH;
+export const isRootItem = ({ path }: { path: string }): boolean => path.length === UUID_LENGTH;
 
-export const areItemsEqual = (i1, i2) => {
-  if (!i1 && !i2) return true;
 
-  if (!i1 || !i2) return false;
-
-  return i1.updatedAt === i2.updatedAt;
-};
-
-export const isUrlValid = (str) => {
+export const isUrlValid = (str: string): boolean => {
   const pattern = new RegExp(
     '^(https?:\\/\\/)+' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
   return str && pattern.test(str);
 };
 
-export const isItemValid = (item) => {
+export const isItemValid = <T>(item: T): boolean => {
   if (!item) {
     return false;
   }
@@ -114,7 +106,7 @@ export const isItemValid = (item) => {
   return shouldHaveName && hasValidTypeProperties;
 };
 
-export const getItemImage = ({ url, extra, useDefault = true }) => {
+export const getItemImage = ({ url, extra, useDefault = true }: { url: string, extra: { thumbnails?: string[] }, useDefault?: boolean }): string | null => {
   if (url) {
     return url;
   }
@@ -130,33 +122,33 @@ export const getItemImage = ({ url, extra, useDefault = true }) => {
   return null;
 };
 
-export const isItemFavorite = (item, member) =>
+export const isItemFavorite = (item: RecordOf<Item>, member: RecordOf<Member>): boolean =>
   member?.extra?.favoriteItems?.includes(item.id);
 
 // todo: find other possible solutions
-export const getExistingItems = (items) =>
+export const getExistingItems = (items: T): T =>
   items.filter((item) => !item.statusCode);
 
-export const containsNonExistingItems = (items) =>
+export const containsNonExistingItems = (items: T): boolean =>
   items.some((item) => item.statusCode);
 
-export const getErrorItemIds = (items) =>
+export const getErrorItemIds = (items: T): T =>
   items.filter((item) => item.statusCode).map((item) => item.data);
 
-export const getChildrenOrderFromFolderExtra = (item): string[] =>
+export const getChildrenOrderFromFolderExtra = (item: Item): string[] =>
   item?.extra?.folder?.childrenOrder ?? [];
 
-export const stripHtml = (str) => str?.replace(/<[^>]*>?/gm, '');
+export const stripHtml = (str?: string): string => str?.replace(/<[^>]*>?/gm, '');
 
 // sort objects by alphabetical order according to name
-export const sortByName = (a, b) => {
+export const sortByName = (a: Item, b: Item): number => {
   if (a.name < b.name) return -1;
   if (a.name > b.name) return 1;
   return 0;
 };
 
 // todo: use typescript to precise data is one of Invitation or Membership
-export const useIsParentInstance = ({ instance, item }) => {
+export const useIsParentInstance = ({ instance, item }: { instance: Invitation | ItemMembership, item: Item }): boolean => {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {
     setIsParentMembership(instance.itemPath !== item.path);
@@ -168,7 +160,7 @@ export const useIsParentInstance = ({ instance, item }) => {
   return isParentMembership;
 };
 
-export const textComparator = (text1, text2) =>
+export const textComparator = (text1: string, text2: string): boolean =>
   text1.localeCompare(text2, undefined, { sensitivity: 'base' });
 
-export const dateComparator = (d1, d2) => new Date(d1) - new Date(d2);
+export const dateComparator = (d1: Date, d2: Date): number => new Date(d1) - new Date(d2);

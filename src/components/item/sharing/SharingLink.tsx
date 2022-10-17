@@ -10,13 +10,14 @@ import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Context } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, namespaces } from '@graasp/translations';
 
 import {
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import notifier from '../../../config/notifier';
 import {
   buildGraaspBuilderView,
@@ -55,9 +56,10 @@ type Props = {
 };
 
 const SharingLink: FC<Props> = ({ itemId }) => {
-  const { t } = useTranslation();
+  const { t } = useBuilderTranslation();
+  const { t: enumT } = useTranslation(namespaces.enums);
 
-  const [linkType, setLinkType] = useState<Context>();
+  const [linkType, setLinkType] = useState<Context>(Context.PLAYER);
   const [link, setLink] = useState<string>();
 
   useEffect(() => {
@@ -104,19 +106,23 @@ const SharingLink: FC<Props> = ({ itemId }) => {
       </StyledLink>
       <div>
         <Select
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, textTransform: 'capitalize' }}
           value={linkType}
           onChange={handleLinkTypeChange}
+          renderValue={(value) => enumT(value)}
           id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
         >
           <MenuItem
-            sx={{ textTransform: 'capitalize' }}
+            // sx={{ textTransform: 'capitalize' }}
             value={Context.BUILDER}
           >
-            {t(Context.BUILDER)}
+            {enumT(Context.BUILDER)}
           </MenuItem>
-          <MenuItem sx={{ textTransform: 'capitalize' }} value={Context.PLAYER}>
-            {t(Context.PLAYER)}
+          <MenuItem
+            // sx={{ textTransform: 'capitalize' }}
+            value={Context.PLAYER}
+          >
+            {enumT(Context.PLAYER)}
           </MenuItem>
         </Select>
         <Tooltip title={t(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>

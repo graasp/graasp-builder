@@ -12,7 +12,7 @@
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git#54/mui5",
     "@graasp/query-client": "github:graasp/graasp-query-client.git#205-typescript",
     "@graasp/sdk": "github:graasp/graasp-sdk.git",
-    "@graasp/translations": "github:graasp/graasp-translations.git#36-builder",
+    "@graasp/translations": "github:graasp/graasp-translations.git",
     "@graasp/ui": "github:graasp/graasp-ui.git#93-new-mui5",
     "@mui/icons-material": "5.8.3",
     "@mui/lab": "~5.0.0-alpha.85",
