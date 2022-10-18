@@ -1,15 +1,14 @@
-import PropTypes from 'prop-types';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { createContext, useMemo, useState } from 'react';
+import { FC, createContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Item, ItemType } from '@graasp/sdk';
 import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -17,18 +16,27 @@ import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
-import { ITEM_TYPES } from '../../enums';
 import { isItemValid } from '../../utils/item';
 import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
 import FolderForm from '../item/form/FolderForm';
 
-const EditItemModalContext = createContext();
+type Props = {
+  children: JSX.Element | JSX.Element[];
+};
 
-const EditItemModalProvider = ({ children }) => {
+const EditItemModalContext = createContext({
+  openModal: (_newItem: Item) => {
+    // do nothing
+  },
+});
+
+const EditItemModalProvider: FC<Props> = ({ children }) => {
   const { t } = useBuilderTranslation();
   const { t: commonT } = useTranslation(namespaces.common);
-  const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = useMutation<any, any, any>(
+    MUTATION_KEYS.EDIT_ITEM,
+  );
 
   // updated properties are separated from the original item
   // so only necessary properties are sent when editing
@@ -36,9 +44,9 @@ const EditItemModalProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState(null);
+  const [item, setItem] = useState<Item | null>(null);
 
-  const openModal = (newItem) => {
+  const openModal = (newItem: Item) => {
     setOpen(true);
     setItem(newItem);
   };
@@ -63,13 +71,13 @@ const EditItemModalProvider = ({ children }) => {
 
     setConfirmButtonDisabled(true);
     // add id to changed properties
-    mutation.mutate({ id: item.id, ...updatedProperties });
+    editItem({ id: item.id, ...updatedProperties });
     onClose();
   };
 
   const renderForm = () => {
     switch (item?.type) {
-      case ITEM_TYPES.DOCUMENT:
+      case ItemType.DOCUMENT:
         return (
           <DocumentForm
             onChange={setUpdatedItem}
@@ -77,7 +85,7 @@ const EditItemModalProvider = ({ children }) => {
             updatedProperties={updatedProperties}
           />
         );
-      case ITEM_TYPES.FOLDER:
+      case ItemType.FOLDER:
         return (
           <FolderForm
             onChange={setUpdatedItem}
@@ -85,11 +93,11 @@ const EditItemModalProvider = ({ children }) => {
             updatedProperties={updatedProperties}
           />
         );
-      case ITEM_TYPES.FILE:
-      case ITEM_TYPES.S3_FILE:
-      case ITEM_TYPES.LINK:
-      case ITEM_TYPES.SHORTCUT:
-      case ITEM_TYPES.APP:
+      case ItemType.LOCAL_FILE:
+      case ItemType.S3_FILE:
+      case ItemType.LINK:
+      case ItemType.SHORTCUT:
+      case ItemType.APP:
         return (
           <BaseItemForm
             onChange={setUpdatedItem}
@@ -144,14 +152,6 @@ const EditItemModalProvider = ({ children }) => {
       {children}
     </EditItemModalContext.Provider>
   );
-};
-
-EditItemModalProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-EditItemModalProvider.defaultProps = {
-  children: null,
 };
 
 export { EditItemModalProvider, EditItemModalContext };

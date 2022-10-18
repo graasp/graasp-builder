@@ -76,7 +76,7 @@ const Item: FC<Props> = ({ item, memberships }) => {
       {member && member.id && <FavoriteButton size="small" item={item} />}
       {enableEdition && (
         <>
-          <EditButton item={item} />
+          <EditButton item={item.toJS()} />
           <DownloadButton id={id} name={name} />
         </>
       )}

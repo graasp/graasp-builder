@@ -1,29 +1,27 @@
-import { ROOT_ID } from '../../../src/config/constants';
 import {
-  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
-  SHARE_ITEM_SHARE_BUTTON_ID,
-  buildPermissionOptionId,
-  SHARE_ITEM_EMAIL_INPUT_ID,
-  buildTreeItemClass,
-  TREE_MODAL_CONFIRM_BUTTON_ID,
-  TREE_MODAL_TREE_ID,
-  ITEM_FORM_CONFIRM_BUTTON_ID,
-  ITEM_FORM_NAME_INPUT_ID,
-  ITEM_FORM_LINK_INPUT_ID,
-  ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
-  ITEM_FORM_APP_URL_ID,
-  buildItemFormAppOptionId,
   FOLDER_FORM_DESCRIPTION_ID,
+  ITEM_FORM_APP_URL_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+  ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
+  ITEM_FORM_LINK_INPUT_ID,
+  ITEM_FORM_NAME_INPUT_ID,
+  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
+  SHARE_ITEM_EMAIL_INPUT_ID,
+  SHARE_ITEM_SHARE_BUTTON_ID,
+  TREE_MODAL_CONFIRM_BUTTON_ID,
+  TREE_MODAL_MY_ITEMS_ID,
+  buildItemFormAppOptionId,
+  buildPermissionOptionId,
+  buildTreeItemId,
 } from '../../../src/config/selectors';
-
+import { getParentsIdsFromPath } from '../../../src/utils/item';
 import {
   getAppExtra,
   getDocumentExtra,
   getEmbeddedLinkExtra,
 } from '../../../src/utils/itemExtra';
-import { getParentsIdsFromPath } from '../../../src/utils/item';
-import { TREE_VIEW_PAUSE } from '../constants';
 import { NEW_APP_NAME } from '../../fixtures/apps/apps';
+import { TREE_VIEW_PAUSE } from '../constants';
 
 Cypress.Commands.add(
   'fillShareForm',
@@ -43,36 +41,45 @@ Cypress.Commands.add(
   },
 );
 
-Cypress.Commands.add('fillTreeModal', (toItemPath, treeRootId = ROOT_ID) => {
-  const ids = getParentsIdsFromPath(toItemPath);
+Cypress.Commands.add(
+  'fillTreeModal',
+  (toItemPath, treeRootId = TREE_MODAL_MY_ITEMS_ID) => {
+    const ids = getParentsIdsFromPath(toItemPath);
 
-  cy.wait(TREE_VIEW_PAUSE);
+    cy.wait(TREE_VIEW_PAUSE);
 
-  [treeRootId, ...ids].forEach((value, idx, array) => {
-    cy.get(`#${TREE_MODAL_TREE_ID}`).then(($tree) => {
-      // click on the element
-      if (idx === array.length - 1) {
-        cy.wrap($tree)
-          .get(`.${buildTreeItemClass(value)} .MuiTreeItem-label input`)
-          .first()
-          .click();
-      }
-      // if can't find children click on parent (current value)
-      if (
-        idx !== array.length - 1 &&
-        !$tree.find(`.${buildTreeItemClass(array[idx + 1])} .MuiTreeItem-label`)
-          .length
-      ) {
-        cy.wrap($tree)
-          .get(`.${buildTreeItemClass(value)} .MuiTreeItem-label`)
-          .first()
-          .click();
-      }
+    [treeRootId, ...ids].forEach((value, idx, array) => {
+      cy.get(`#${treeRootId}`).then(($tree) => {
+        // click on the element
+        if (idx === array.length - 1) {
+          cy.wrap($tree)
+            .get(
+              `#${buildTreeItemId(value, treeRootId)} .MuiTreeItem-label input`,
+            )
+            .first()
+            .click();
+        }
+        // if can't find children click on parent (current value)
+        if (
+          idx !== array.length - 1 &&
+          !$tree.find(
+            `#${buildTreeItemId(
+              array[idx + 1],
+              treeRootId,
+            )} .MuiTreeItem-label`,
+          ).length
+        ) {
+          cy.wrap($tree)
+            .get(`#${buildTreeItemId(value, treeRootId)} .MuiTreeItem-label`)
+            .first()
+            .click();
+        }
+      });
     });
-  });
 
-  cy.get(`#${TREE_MODAL_CONFIRM_BUTTON_ID}`).click();
-});
+    cy.get(`#${TREE_MODAL_CONFIRM_BUTTON_ID}`).click();
+  },
+);
 
 Cypress.Commands.add(
   'fillBaseItemModal',

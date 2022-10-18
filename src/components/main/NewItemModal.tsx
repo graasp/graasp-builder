@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { ItemType } from '@graasp/sdk';
 import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -20,7 +21,7 @@ import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '../../config/selectors';
-import { ITEM_TYPES } from '../../enums';
+import { InternalItemType } from '../../config/types';
 import { isItemValid } from '../../utils/item';
 import FileDashboardUploader from '../file/FileDashboardUploader';
 import AppForm from '../item/form/AppForm';
@@ -47,13 +48,15 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const { t } = useBuilderTranslation();
   const { t: commonT } = useTranslation(namespaces.common);
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
-  const [selectedItemType, setSelectedItemType] = useState(ITEM_TYPES.FOLDER);
+  const [selectedItemType, setSelectedItemType] = useState<ItemType>(
+    ItemType.FOLDER,
+  );
   const [initialItem] = useState({});
   const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
-    [ITEM_TYPES.FOLDER]: { type: ITEM_TYPES.FOLDER },
-    [ITEM_TYPES.LINK]: { type: ITEM_TYPES.LINK },
-    [ITEM_TYPES.APP]: { type: ITEM_TYPES.APP },
-    [ITEM_TYPES.DOCUMENT]: { type: ITEM_TYPES.DOCUMENT },
+    [ItemType.FOLDER]: { type: ItemType.FOLDER },
+    [ItemType.LINK]: { type: ItemType.LINK },
+    [ItemType.APP]: { type: ItemType.APP },
+    [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
   });
   const { mutate: postItem } = useMutation<any, any, any>(
     MUTATION_KEYS.POST_ITEM,
@@ -63,9 +66,14 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
 
   const submit = () => {
     if (isConfirmButtonDisabled) {
+      console.error('confirm button is disabled');
       return false;
     }
     if (!isItemValid(updatedPropertiesPerType[selectedItemType])) {
+      console.error(
+        'your item has invalid properties',
+        updatedPropertiesPerType[selectedItemType],
+      );
       // todo: notify user
       return false;
     }
@@ -94,7 +102,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
 
   const renderContent = () => {
     switch (selectedItemType) {
-      case ITEM_TYPES.FOLDER:
+      case ItemType.FOLDER:
         return (
           <>
             <Typography variant="h6">
@@ -103,38 +111,38 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
             <FolderForm
               onChange={updateItem}
               item={initialItem}
-              updatedProperties={updatedPropertiesPerType[ITEM_TYPES.FOLDER]}
+              updatedProperties={updatedPropertiesPerType[ItemType.FOLDER]}
             />
           </>
         );
-      case ITEM_TYPES.FILE:
+      case ItemType.FILE:
         return <FileDashboardUploader />;
-      case ITEM_TYPES.ZIP:
+      case ItemType.ZIP:
         return <ImportZip />;
-      case ITEM_TYPES.H5P:
+      case ItemType.H5P:
         return <ImportH5P />;
-      case ITEM_TYPES.APP:
+      case ItemType.APP:
         return (
           <AppForm
             onChange={updateItem}
             item={initialItem}
-            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.APP]}
+            updatedProperties={updatedPropertiesPerType[ItemType.APP]}
           />
         );
-      case ITEM_TYPES.LINK:
+      case ItemType.LINK:
         return (
           <LinkForm
             onChange={updateItem}
             item={initialItem}
-            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.LINK]}
+            updatedProperties={updatedPropertiesPerType[ItemType.LINK]}
           />
         );
-      case ITEM_TYPES.DOCUMENT:
+      case ItemType.DOCUMENT:
         return (
           <DocumentForm
             onChange={updateItem}
             item={initialItem}
-            updatedProperties={updatedPropertiesPerType[ITEM_TYPES.DOCUMENT]}
+            updatedProperties={updatedPropertiesPerType[ItemType.DOCUMENT]}
           />
         );
       default:
@@ -144,10 +152,10 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
 
   const renderActions = () => {
     switch (selectedItemType) {
-      case ITEM_TYPES.FOLDER:
-      case ITEM_TYPES.APP:
-      case ITEM_TYPES.LINK:
-      case ITEM_TYPES.DOCUMENT:
+      case ItemType.FOLDER:
+      case ItemType.APP:
+      case ItemType.LINK:
+      case ItemType.DOCUMENT:
         return (
           <>
             <Button onClick={handleClose} variant="text">
@@ -165,9 +173,10 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
             </Button>
           </>
         );
-      case ITEM_TYPES.FILE:
-      case ITEM_TYPES.ZIP:
-      case ITEM_TYPES.H5P:
+      case ItemType.S3_FILE:
+      case ItemType.LOCAL_FILE:
+      case InternalItemType.ZIP:
+      case ItemType.H5P:
         return (
           <Button id={CREATE_ITEM_CLOSE_BUTTON_ID} onClick={handleClose}>
             {commonT(COMMON.CLOSE_BUTTON)}

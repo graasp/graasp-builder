@@ -1,12 +1,12 @@
-import { ROOT_ID } from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  ITEM_MENU_MOVE_BUTTON_CLASS,
+  TREE_MODAL_MY_ITEMS_ID,
   buildItemCard,
   buildItemMenu,
   buildItemMenuButtonId,
-  ITEM_MENU_MOVE_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const moveItem = ({ id: movedItemId, toItemPath }) => {
@@ -65,7 +65,7 @@ describe('Move Item in Grid', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const toItem = ROOT_ID;
+    const toItem = TREE_MODAL_MY_ITEMS_ID;
     moveItem({ id: movedItem, toItemPath: toItem });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {

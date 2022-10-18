@@ -17,7 +17,8 @@ import {
 import { HOME_PATH } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
-  APP_NAVIGATION_DROP_DOWN_ID, // HEADER_APP_BAR_ID,
+  APP_NAVIGATION_DROP_DOWN_ID,
+  HEADER_APP_BAR_ID,
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
@@ -93,6 +94,7 @@ const Main: FC<Props> = ({ children }) => {
 
   return (
     <GraaspMain
+      headerId={HEADER_APP_BAR_ID}
       headerLeftContent={leftContent}
       headerRightContent={rightContent}
       sidebar={<MainMenu />}

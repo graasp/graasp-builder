@@ -2291,6 +2291,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/translations@github:graasp/graasp-translations.git#39-fix-builder-trans":
+  version: 0.1.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=c9763d90547518b3d3278699dcca39046b7c5ad6"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 31765b3a4a231a83c175261b2e80fe23a2487f5c8c1b23c21dfbe2f115ee10687cf16d38f8f813ccdf03513ea976bff7c14c45dba252ecaae9b1625f680aeb94
+  languageName: node
+  linkType: hard
+
 "@graasp/ui@github:graasp/graasp-ui#93-new-mui5":
   version: 0.2.0
   resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=2584911cb9a3d1688504422223a2ba60f89b489b"
@@ -2331,7 +2340,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui.git#93-new-mui5":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=5e5ebd5d0954169f54ccc39763f6c1d7726714ba"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=2a1ec2eecbb32c30507dcb88ceef77f2b92b9c82"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -2363,7 +2372,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: dfbf871e1b79e68a86f342653a62bc865833e25e253adad2d86f0a876e86285d7af05c684c15e13b5797242dcc38eaefb1586f9562d3bae708cd71b105b56be3
+  checksum: 4c75f2224187ab759c3268b7a281b08b9ad7c34fed6a179f4b4ef8c27a8c007fe7248ce87beadee6598519d153b10b9d4f0ad7281eca16102950499060d04610
   languageName: node
   linkType: hard
 
@@ -11116,9 +11125,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graasp-compose@workspace:.":
+"graasp-builder@workspace:.":
   version: 0.0.0-use.local
-  resolution: "graasp-compose@workspace:."
+  resolution: "graasp-builder@workspace:."
   dependencies:
     "@babel/eslint-parser": 7.17.0
     "@babel/eslint-plugin": 7.16.5
@@ -11132,7 +11141,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git#54/mui5"
     "@graasp/query-client": "github:graasp/graasp-query-client.git#205-typescript"
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
-    "@graasp/translations": "github:graasp/graasp-translations.git"
+    "@graasp/translations": "github:graasp/graasp-translations.git#39-fix-builder-trans"
     "@graasp/ui": "github:graasp/graasp-ui.git#93-new-mui5"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.8.3

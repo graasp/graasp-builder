@@ -1,12 +1,13 @@
 import qs from 'querystring';
-import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../../../src/enums';
-import { ROOT_ID } from '../../../../src/config/constants';
+
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
+  ITEM_MENU_SHORTCUT_BUTTON_CLASS,
+  TREE_MODAL_MY_ITEMS_ID,
   buildItemMenu,
   buildItemMenuButtonId,
-  ITEM_MENU_SHORTCUT_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../../../src/enums';
 import { buildShortcutExtra } from '../../../../src/utils/itemExtra';
 import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -53,7 +54,7 @@ describe('Create Shortcut', () => {
       cy.visit(HOME_PATH);
 
       const { id } = SAMPLE_ITEMS.items[0];
-      createShortcutInList({ id, toItemId: ROOT_ID });
+      createShortcutInList({ id, toItemId: TREE_MODAL_MY_ITEMS_ID });
 
       checkCreateShortcutRequest({ id });
     });
@@ -98,7 +99,7 @@ describe('Create Shortcut', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       const { id } = SAMPLE_ITEMS.items[0];
-      createShortcutInGrid({ id, toItemId: ROOT_ID });
+      createShortcutInGrid({ id, toItemId: TREE_MODAL_MY_ITEMS_ID });
 
       checkCreateShortcutRequest({ id });
     });

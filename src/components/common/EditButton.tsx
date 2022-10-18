@@ -1,5 +1,3 @@
-import { RecordOf } from 'immutable';
-
 import { FC, useContext } from 'react';
 
 import { Item } from '@graasp/sdk';
@@ -14,7 +12,7 @@ import {
 import { EditItemModalContext } from '../context/EditItemModalContext';
 
 type Props = {
-  item: RecordOf<Item> | Item;
+  item: Item;
 };
 
 const EditButton: FC<Props> = ({ item }) => {

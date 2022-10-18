@@ -1,9 +1,8 @@
 // synchronous functions to manage items from redux
 import { useEffect, useState } from 'react';
 import { RecordOf } from 'immutable'
-import { Member, Item, ItemMembership } from '@graasp/sdk'
+import { Member, Item, ItemMembership, ItemType } from '@graasp/sdk'
 import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
-import { ITEM_TYPES } from '../enums';
 import { Invitation } from '../config/types'
 import {
   getAppExtra,
@@ -73,7 +72,7 @@ export const isUrlValid = (str: string): boolean => {
   return str && pattern.test(str);
 };
 
-export const isItemValid = <T>(item: T): boolean => {
+export const isItemValid = (item: Item): boolean => {
   if (!item) {
     return false;
   }
@@ -82,19 +81,19 @@ export const isItemValid = <T>(item: T): boolean => {
   const shouldHaveName = Boolean(name);
 
   // item should have a type
-  let hasValidTypeProperties = Object.values(ITEM_TYPES).includes(type);
+  let hasValidTypeProperties = Object.values(ItemType).includes(type);
   switch (type) {
-    case ITEM_TYPES.LINK: {
+    case ItemType.LINK: {
       const { url } = getEmbeddedLinkExtra(extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
-    case ITEM_TYPES.APP: {
+    case ItemType.APP: {
       const { url } = getAppExtra(extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
-    case ITEM_TYPES.DOCUMENT: {
+    case ItemType.DOCUMENT: {
       const { content } = getDocumentExtra(extra) || {};
       hasValidTypeProperties = content?.length > 0;
       break;

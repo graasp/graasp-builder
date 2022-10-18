@@ -11,17 +11,14 @@ import { useTranslation } from 'react-i18next';
 import { BUILDER, COMMON, namespaces } from '@graasp/translations';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
 
-import {
-  ROOT_ID,
-  SHARED_ROOT_ID,
-  TREE_VIEW_MAX_WIDTH,
-} from '../../config/constants';
+import { TREE_VIEW_MAX_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
   TREE_MODAL_CONFIRM_BUTTON_ID,
-  TREE_MODAL_TREE_ID,
-  buildTreeItemClass,
+  TREE_MODAL_MY_ITEMS_ID,
+  TREE_MODAL_SHARED_ITEMS_ID,
+  buildTreeItemId,
 } from '../../config/selectors';
 import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { getParentsIdsFromPath } from '../../utils/item';
@@ -60,7 +57,9 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
     const isRootItemOwned = Boolean(
       ownItems.find(({ id }) => id === rootItemId),
     );
-    const itemRootId = isRootItemOwned ? ROOT_ID : SHARED_ROOT_ID;
+    const itemRootId = isRootItemOwned
+      ? TREE_MODAL_MY_ITEMS_ID
+      : TREE_MODAL_SHARED_ITEMS_ID;
 
     // trees root not being treeRootId should be closed
     if (treeRootId !== itemRootId) {
@@ -113,46 +112,46 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const tree = !open ? null : (
     <>
       <DynamicTreeView
-        id={TREE_MODAL_TREE_ID}
+        id={TREE_MODAL_MY_ITEMS_ID}
         rootSx={{
           flexGrow: 1,
           maxWidth: TREE_VIEW_MAX_WIDTH,
         }}
         selectedId={selectedId}
-        initialExpendedItems={buildExpandedItems(ROOT_ID)}
+        initialExpendedItems={buildExpandedItems(TREE_MODAL_MY_ITEMS_ID)}
         items={ownItems}
         onTreeItemSelect={onTreeItemSelect}
         useChildren={useChildren}
         useItem={useItem}
         showCheckbox
         rootLabel={t(BUILDER.ITEMS_TREE_OWN_ITEMS_LABEL)}
-        rootId={ROOT_ID}
-        rootClassName={buildTreeItemClass(ROOT_ID)}
+        rootId={TREE_MODAL_MY_ITEMS_ID}
+        rootClassName={buildTreeItemId(TREE_MODAL_MY_ITEMS_ID)}
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemClass={buildTreeItemClass}
+        buildTreeItemId={buildTreeItemId}
       />
       <DynamicTreeView
-        // id={TREE_MODAL_TREE_ID}
+        id={TREE_MODAL_SHARED_ITEMS_ID}
         rootSx={{
           flexGrow: 1,
           maxWidth: TREE_VIEW_MAX_WIDTH,
         }}
         selectedId={selectedId}
-        initialExpendedItems={buildExpandedItems(SHARED_ROOT_ID)}
+        initialExpendedItems={buildExpandedItems(TREE_MODAL_SHARED_ITEMS_ID)}
         items={sharedItems}
         onTreeItemSelect={onTreeItemSelect}
         useChildren={useChildren}
         useItem={useItem}
         showCheckbox
         rootLabel={t('Shared Items')}
-        rootId={SHARED_ROOT_ID}
-        rootClassName={buildTreeItemClass(SHARED_ROOT_ID)}
+        rootId={TREE_MODAL_SHARED_ITEMS_ID}
+        rootClassName={buildTreeItemId(TREE_MODAL_SHARED_ITEMS_ID)}
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemClass={buildTreeItemClass}
+        buildTreeItemId={buildTreeItemId}
       />
     </>
   );

@@ -28,5 +28,6 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "exclude": ["cypress", "*.test.ts", "*.test.js"]
 }

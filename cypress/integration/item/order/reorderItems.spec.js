@@ -1,12 +1,12 @@
 import { buildItemPath } from '../../../../src/config/paths';
-import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
 import {
+  ROW_DRAGGER_CLASS,
   buildItemsTableId,
   buildItemsTableRowId,
   buildItemsTableRowSelector,
-  ROW_DRAGGER_CLASS,
 } from '../../../../src/config/selectors';
-import { TABLE_ITEM_RENDER_TIME, ROW_HEIGHT } from '../../../support/constants';
+import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
+import { ROW_HEIGHT, TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const reorderAndCheckItem = (id, currentPosition, newPosition) => {
   const dragIcon = `${buildItemsTableRowSelector(

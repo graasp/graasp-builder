@@ -1,6 +1,6 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { HOME_PATH } from '../../../../src/config/paths';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { EDITED_FIELDS, SHORTCUT } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';

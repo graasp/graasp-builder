@@ -1,18 +1,15 @@
 {
-  "name": "graasp-compose",
+  "name": "graasp-builder",
   "version": "0.1.7",
   "private": true,
   "license": "AGPL-3.0-only",
-  "to-add-back": {
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
-  },
   "dependencies": {
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@graasp/chatbox": "github:graasp/graasp-chatbox.git#54/mui5",
     "@graasp/query-client": "github:graasp/graasp-query-client.git#205-typescript",
     "@graasp/sdk": "github:graasp/graasp-sdk.git",
-    "@graasp/translations": "github:graasp/graasp-translations.git",
+    "@graasp/translations": "github:graasp/graasp-translations.git#39-fix-builder-trans",
     "@graasp/ui": "github:graasp/graasp-ui.git#93-new-mui5",
     "@mui/icons-material": "5.8.3",
     "@mui/lab": "~5.0.0-alpha.85",

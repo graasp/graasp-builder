@@ -14,10 +14,7 @@ import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
-import {
-  ROW_DRAGGER_CLASS,
-  buildItemsTableRowId,
-} from '../../config/selectors';
+import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
@@ -235,7 +232,7 @@ const ItemsTable: FC<Props> = ({
   ]);
 
   const countTextFunction = (selected: string[]) =>
-    t(BUILDER.ITEMS_TABLE_SELECTION_TEXT_other, { count: selected.length });
+    t(BUILDER.ITEMS_TABLE_SELECTION_TEXT, { count: selected.length });
 
   return (
     <>
@@ -255,7 +252,6 @@ const ItemsTable: FC<Props> = ({
         rowDragText={itemRowDragText}
         ToolbarActions={ToolbarActions}
         countTextFunction={countTextFunction}
-        dragClassName={ROW_DRAGGER_CLASS}
       />
     </>
   );

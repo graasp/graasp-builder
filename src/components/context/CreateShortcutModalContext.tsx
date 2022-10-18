@@ -1,24 +1,34 @@
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
-import { createContext, useMemo, useState } from 'react';
+import { FC, createContext, useMemo, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Item, ItemType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
-import { ROOT_ID } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
-import { ITEM_TYPES } from '../../enums';
+import { TREE_MODAL_MY_ITEMS_ID } from '../../config/selectors';
 import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal from '../main/TreeModal';
 
-const CreateShortcutModalContext = createContext();
+const CreateShortcutModalContext = createContext({
+  openModal: () => {
+    // do nothing
+  },
+});
 
-const CreateShortcutModalProvider = ({ children }) => {
+type Props = {
+  children: JSX.Element | JSX.Element[];
+};
+
+const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
   const { t } = useBuilderTranslation();
-  const { mutate: createShortcut } = useMutation(MUTATION_KEYS.POST_ITEM);
+  const { mutate: createShortcut } = useMutation<any, any, any>(
+    MUTATION_KEYS.POST_ITEM,
+  );
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState(false);
+  const [item, setItem] = useState<RecordOf<Item>>();
 
   const openModal = (newItem) => {
     setOpen(true);
@@ -34,10 +44,10 @@ const CreateShortcutModalProvider = ({ children }) => {
     const shortcut = {
       name: t(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, { name: item.name }),
       extra: buildShortcutExtra(target[0]),
-      type: ITEM_TYPES.SHORTCUT,
+      type: ItemType.SHORTCUT,
     };
     // set parent id if not root
-    if (to !== ROOT_ID) {
+    if (to !== TREE_MODAL_MY_ITEMS_ID) {
       shortcut.parentId = to;
     }
     createShortcut(shortcut);
@@ -69,14 +79,6 @@ const CreateShortcutModalProvider = ({ children }) => {
       {children}
     </CreateShortcutModalContext.Provider>
   );
-};
-
-CreateShortcutModalProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-CreateShortcutModalProvider.defaultProps = {
-  children: null,
 };
 
 export { CreateShortcutModalProvider, CreateShortcutModalContext };
