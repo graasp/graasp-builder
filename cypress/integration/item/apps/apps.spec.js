@@ -3,13 +3,13 @@ import { APP_USING_CONTEXT_ITEM } from '../../../fixtures/apps';
 
 describe('Apps', () => {
   it('App should request context', () => {
-    const { extra, id } = APP_USING_CONTEXT_ITEM;
+    const { extra, id, name } = APP_USING_CONTEXT_ITEM;
     cy.setUpApi({ items: [APP_USING_CONTEXT_ITEM] });
     cy.visit(buildItemPath(id));
 
     cy.wait(3000);
 
-    const iframeSelector = `iframe[src="${extra.app.url}"]`;
+    const iframeSelector = `iframe[title="${name}"]`;
 
     // check app receives successfully the context
     cy.clickElementInIframe(iframeSelector, '#requestContext');

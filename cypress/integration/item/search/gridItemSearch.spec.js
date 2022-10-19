@@ -1,22 +1,22 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  buildItemCard,
-  buildItemsGridPaginationButtonSelected,
   ITEMS_GRID_NO_ITEM_ID,
   ITEMS_GRID_NO_SEARCH_RESULT_ID,
   ITEMS_GRID_PAGINATION_ID,
   ITEM_SEARCH_INPUT_ID,
+  buildItemCard,
+  buildItemsGridPaginationButtonSelected,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { generateOwnItems, SAMPLE_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 
 describe('Search Item in Grid', () => {
   const { id } = SAMPLE_ITEMS.items[0];
   const child3 = SAMPLE_ITEMS.items.find((it) => it.name === 'own_item_name3');
   const child4 = SAMPLE_ITEMS.items.find((it) => it.name === 'own_item_name4');
 
-  it('searches in grid successfully', () => {
+  it.only('searches in grid successfully', () => {
     cy.setUpApi(SAMPLE_ITEMS);
 
     // visit child

@@ -1,26 +1,27 @@
-import {
-  buildShareButtonId,
-  SHARE_ITEM_DIALOG_LINK_ID,
-  SHARE_ITEM_DIALOG_LINK_SELECT_ID,
-  SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
-  SHARE_ITEM_VISIBILITY_SELECT_ID,
-} from '../../../../src/config/selectors';
+import {Context} from '@graasp/sdk'
+import { SETTINGS, SHARING_LINK_TYPES } from '../../../../src/config/constants';
 import {
   buildGraaspBuilderView,
   buildGraaspPlayerView,
   buildItemPath,
 } from '../../../../src/config/paths';
 import {
-  ITEM_LOGIN_ITEMS,
-  SAMPLE_ITEMS,
-  SAMPLE_PUBLIC_ITEMS,
-} from '../../../fixtures/items';
-import { SETTINGS, SHARING_LINK_TYPES } from '../../../../src/config/constants';
+  SHARE_ITEM_DIALOG_LINK_ID,
+  SHARE_ITEM_DIALOG_LINK_SELECT_ID,
+  SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
+  SHARE_ITEM_VISIBILITY_SELECT_ID,
+  buildShareButtonId,
+} from '../../../../src/config/selectors';
 import {
   DEFAULT_TAGS,
   ITEM_LOGIN_TAG,
   ITEM_PUBLIC_TAG,
 } from '../../../fixtures/itemTags';
+import {
+  ITEM_LOGIN_ITEMS,
+  SAMPLE_ITEMS,
+  SAMPLE_PUBLIC_ITEMS,
+} from '../../../fixtures/items';
 
 const openShareItemTab = (id) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
@@ -42,13 +43,13 @@ describe('Share Item', () => {
     // sharing link
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'contain',
-      `${buildGraaspBuilderView(item.id)}`,
+      `${buildGraaspPlayerView(item.id)}`,
     );
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_SELECT_ID}`).click();
-    cy.get(`li[data-value="${SHARING_LINK_TYPES.PLAYER}"]`).click();
+    cy.get(`li[data-value="${Context.BUILDER}"]`).click();
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'have.text',
-      `${buildGraaspPlayerView(item.id)}`,
+      `${buildGraaspBuilderView(item.id)}`,
     );
 
     const visiblitySelect = cy.get(

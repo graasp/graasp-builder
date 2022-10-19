@@ -29,15 +29,17 @@ type App = {
 
 type Props = {
   onChange: (item: Partial<Item>) => void;
-  item: Item;
-  updatedProperties: {
-    name: string;
-    extra: {
-      app: {
-        url: string;
-      };
-    };
-  };
+  item: Partial<Item>;
+  updatedProperties: Partial<
+    | Item
+    | {
+        extra: {
+          app: {
+            url: string;
+          };
+        };
+      }
+  >;
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {

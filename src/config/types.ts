@@ -6,6 +6,12 @@ export type Category = {
   name: string;
 };
 
+// todo: use graasp sdk
+export type ItemCategory = {
+  id: string;
+  categoryId: string;
+};
+
 export type Invitation = {
   id: string,
   email: string,

@@ -21,7 +21,7 @@ import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '../../config/selectors';
-import { InternalItemType } from '../../config/types';
+import { InternalItemType, NewItemTabType } from '../../config/types';
 import { isItemValid } from '../../utils/item';
 import FileDashboardUploader from '../file/FileDashboardUploader';
 import AppForm from '../item/form/AppForm';
@@ -48,7 +48,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const { t } = useBuilderTranslation();
   const { t: commonT } = useTranslation(namespaces.common);
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
-  const [selectedItemType, setSelectedItemType] = useState<ItemType>(
+  const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
   );
   const [initialItem] = useState({});
@@ -115,9 +115,10 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
             />
           </>
         );
-      case ItemType.FILE:
+      case ItemType.S3_FILE:
+      case ItemType.LOCAL_FILE:
         return <FileDashboardUploader />;
-      case ItemType.ZIP:
+      case InternalItemType.ZIP:
         return <ImportZip />;
       case ItemType.H5P:
         return <ImportH5P />;

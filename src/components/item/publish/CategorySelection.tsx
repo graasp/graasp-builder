@@ -1,20 +1,17 @@
 import { AutocompleteChangeReason, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { FC, SyntheticEvent, useContext, useEffect, useState } from 'react';
+import { FC, SyntheticEvent, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, namespaces } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
-import {
-  CATEGORY_TYPES,
-  CATEGORY_TYPE_TITLES,
-} from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
+import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
 import { Category } from '../../../config/types';
 import { sortByName } from '../../../utils/item';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
@@ -26,12 +23,9 @@ const { POST_ITEM_CATEGORY, DELETE_ITEM_CATEGORY } = MUTATION_KEYS;
 const SELECT_OPTION = 'selectOption';
 const REMOVE_OPTION = 'removeOption';
 
-type Props = {
-  item: Item;
-};
-
-const CategorySelection: FC<Props> = ({ item }) => {
+const CategorySelection: FC = () => {
   const { t } = useBuilderTranslation();
+  const { t: categoriesT } = useTranslation(namespaces.categories);
   const { mutate: createItemCategory } = useMutation<
     any,
     any,
@@ -65,50 +59,6 @@ const CategorySelection: FC<Props> = ({ item }) => {
 
   // process data
   const categoriesMap = allCategories?.groupBy((entry) => entry.type);
-  const levelCategoryId = categoryTypes?.find(
-    (type) => type.name === CATEGORY_TYPES.LEVEL,
-  )?.id;
-  const disciplineCategoryId = categoryTypes?.find(
-    (type) => type.name === CATEGORY_TYPES.DISCIPLINE,
-  )?.id;
-  const languageCategoryId = categoryTypes?.find(
-    (type) => type.name === CATEGORY_TYPES.LANGUAGE,
-  )?.id;
-  // todo
-  let levelList: any[] = [];
-  let disciplineList: any[] = [];
-  let languageList: any[] = [];
-
-  if (categoriesMap) {
-    if (levelCategoryId) {
-      levelList = categoriesMap.get(levelCategoryId)?.toArray() || [];
-    }
-
-    if (disciplineCategoryId) {
-      disciplineList =
-        categoriesMap.get(disciplineCategoryId)?.toArray().sort(sortByName) ||
-        [];
-    }
-
-    if (languageCategoryId) {
-      languageList = categoriesMap.get(languageCategoryId)?.toArray() || [];
-    }
-  }
-
-  // initialize state variable
-  const [selectedValues, setSelectedValues] = useState<Category[]>([]);
-
-  // update state variables depending on fetch values
-  useEffect(() => {
-    if (itemCategories && allCategories)
-      setSelectedValues(
-        allCategories
-          ?.filter((entry) =>
-            itemCategories?.map((obj) => obj.categoryId).includes(entry.id),
-          )
-          .toArray(),
-      );
-  }, [item, itemCategories, allCategories]);
 
   if (
     isMemberLoading ||
@@ -122,8 +72,8 @@ const CategorySelection: FC<Props> = ({ item }) => {
   const handleChange =
     (valueList: Category[]) =>
     (
-      _event: SyntheticEvent,
-      value: Category[],
+      event: SyntheticEvent,
+      _values: Category[],
       reason: AutocompleteChangeReason,
     ) => {
       if (!itemId) {
@@ -133,54 +83,49 @@ const CategorySelection: FC<Props> = ({ item }) => {
 
       if (reason === SELECT_OPTION) {
         // post new category
-        const newCategoryId = value[value.length - 1].id;
+        const newCategoryId = values[values.length - 1].id;
         createItemCategory({
           itemId,
           categoryId: newCategoryId,
         });
       } else if (reason === REMOVE_OPTION) {
-        // remove an option
-        const previousValues = valueList?.filter((entry) =>
-          selectedValues.includes(entry),
-        );
-        const result = previousValues.filter(
-          ({ id: id1 }) => !value.some(({ id: id2 }) => id2 === id1),
-        );
-        const deletedEntry = itemCategories?.find(
-          (entry) => entry.categoryId === result[0].id,
-        );
-        if (deletedEntry) {
+        const deletedCategoryId = event.target.getAttribute('data-id');
+        const itemCategoryIdToDelete = itemCategories.find(
+          ({ categoryId }) => categoryId === deletedCategoryId,
+        )?.id;
+        if (itemCategoryIdToDelete) {
           deleteItemCategory({
             itemId,
-            itemCategoryId: deletedEntry.id,
+            itemCategoryId: itemCategoryIdToDelete,
           });
         }
       }
     };
 
   return (
-    <Box mt={2}>
+    <Box mt={2} id={LIBRARY_SETTINGS_CATEGORIES_ID}>
       <Typography variant="h6" mt={2}>
         {t(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
       </Typography>
-      <DropdownMenu
-        title={t(CATEGORY_TYPE_TITLES.LEVEL)}
-        handleChange={handleChange(levelList)}
-        valueList={levelList}
-        selectedValues={selectedValues}
-      />
-      <DropdownMenu
-        title={t(CATEGORY_TYPE_TITLES.DISCIPLINE)}
-        handleChange={handleChange(disciplineList)}
-        valueList={disciplineList}
-        selectedValues={selectedValues}
-      />
-      <DropdownMenu
-        title={t(CATEGORY_TYPE_TITLES.LANGUAGE)}
-        handleChange={handleChange(languageList)}
-        valueList={languageList}
-        selectedValues={selectedValues}
-      />
+      {categoryTypes?.map(({ id, name }) => {
+        const values =
+          categoriesMap
+            ?.get(id)
+            ?.toJS()
+            ?.map((c) => ({ ...c, name: categoriesT(c.name) }))
+            ?.sort(sortByName) ?? [];
+
+        return (
+          <DropdownMenu
+            key={id}
+            title={categoriesT(name)}
+            handleChange={handleChange(values)}
+            valueList={values}
+            selectedValues={itemCategories}
+            typeId={id}
+          />
+        );
+      })}
     </Box>
   );
 };

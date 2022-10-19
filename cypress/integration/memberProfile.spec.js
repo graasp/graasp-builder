@@ -1,21 +1,24 @@
-import { MEMBER_PROFILE_PATH } from '../../src/config/paths';
-import { langs } from '../../src/config/i18n';
+import { langs } from '@graasp/translations';
+
 import { emailFrequency } from '../../src/config/constants';
+import { MEMBER_PROFILE_PATH } from '../../src/config/paths';
 import {
-  MEMBER_PROFILE_MEMBER_ID_ID,
-  MEMBER_PROFILE_MEMBER_NAME_ID,
-  MEMBER_PROFILE_EMAIL_ID,
-  MEMBER_PROFILE_LANGUAGE_SWITCH_ID,
-  MEMBER_PROFILE_INSCRIPTION_DATE_ID,
-  MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID,
-  USER_NEW_PASSWORD_INPUT_ID,
-  USER_CONFIRM_PASSWORD_INPUT_ID,
-  USER_CURRENT_PASSWORD_INPUT_ID,
   CONFIRM_CHANGE_PASSWORD_BUTTON_ID,
   MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
+  MEMBER_PROFILE_EMAIL_ID,
+  MEMBER_PROFILE_INSCRIPTION_DATE_ID,
+  MEMBER_PROFILE_LANGUAGE_SWITCH_ID,
+  MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID,
+  MEMBER_PROFILE_MEMBER_ID_ID,
+  MEMBER_PROFILE_MEMBER_NAME_ID,
+  USER_CONFIRM_PASSWORD_INPUT_ID,
+  USER_CURRENT_PASSWORD_INPUT_ID,
+  USER_NEW_PASSWORD_INPUT_ID,
+  buildEmailFrequencyOptionId,
+  buildLanguageOptionId,
 } from '../../src/config/selectors';
-import { CURRENT_USER } from '../fixtures/members';
 import { formatDate } from '../../src/utils/date';
+import { CURRENT_USER } from '../fixtures/members';
 
 describe('Member Profile', () => {
   beforeEach(() => {
@@ -53,7 +56,8 @@ describe('Member Profile', () => {
   it('Changing Language edits user', () => {
     const { id } = CURRENT_USER;
 
-    cy.get(`#${MEMBER_PROFILE_LANGUAGE_SWITCH_ID}`).select('en');
+    cy.get(`#${MEMBER_PROFILE_LANGUAGE_SWITCH_ID}`).click();
+    cy.get(`#${buildLanguageOptionId('en')}`).click();
 
     cy.wait('@editMember').then(({ request: { body, url } }) => {
       expect(url).to.contain(id);
@@ -64,7 +68,8 @@ describe('Member Profile', () => {
   it('Changing Email frequency edits user', () => {
     const { id } = CURRENT_USER;
 
-    cy.get(`#${MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID}`).select('always');
+    cy.get(`#${MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID}`).click();
+    cy.get(`#${buildEmailFrequencyOptionId('always')}`).click();
 
     cy.wait('@editMember').then(({ request: { body, url } }) => {
       expect(url).to.contain(id);

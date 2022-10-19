@@ -54,7 +54,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
       <Switch
         id={SETTINGS_LINK_SHOW_IFRAME_ID}
         onChange={handleIframeSetting}
-        checked={Boolean(settings?.showLinkIframe) ?? true}
+        checked={Boolean(settings?.showLinkIframe ?? true)}
         color="primary"
       />
     );

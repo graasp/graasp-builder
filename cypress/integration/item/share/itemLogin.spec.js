@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
+
 import {
   SETTINGS,
   SETTINGS_ITEM_LOGIN_DEFAULT,
 } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildShareButtonId,
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
@@ -13,6 +13,7 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
+  buildShareButtonId,
 } from '../../../../src/config/selectors';
 import { getItemLoginExtra } from '../../../../src/utils/itemExtra';
 import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';

@@ -1,3 +1,5 @@
+import { List } from 'immutable';
+
 import { Box } from '@mui/material';
 import Autocomplete, {
   AutocompleteChangeReason,
@@ -12,14 +14,16 @@ import { BUILDER } from '@graasp/translations';
 import { useBuilderTranslation } from '../../../config/i18n';
 import {
   buildCategorySelectionId,
+  buildCategorySelectionOptionId,
   buildCategorySelectionTitleId,
 } from '../../../config/selectors';
-import { Category } from '../../../config/types';
+import { Category, ItemCategory } from '../../../config/types';
 
 type Props = {
+  typeId: string;
   title: string;
   valueList: Category[];
-  selectedValues: Category[];
+  selectedValues: List<ItemCategory>;
   handleChange: (
     _event: SyntheticEvent,
     value: Category[],
@@ -28,6 +32,7 @@ type Props = {
 };
 
 const DropdownMenu: FC<Props> = ({
+  typeId,
   title,
   handleChange,
   valueList,
@@ -39,9 +44,13 @@ const DropdownMenu: FC<Props> = ({
     return null;
   }
 
+  const values = valueList.filter(({ id }) =>
+    selectedValues.find(({ categoryId }) => categoryId === id),
+  );
+
   return (
     <Box mt={2}>
-      <Typography variant="body1" id={buildCategorySelectionTitleId(title)}>
+      <Typography variant="body1" id={buildCategorySelectionTitleId(typeId)}>
         {title}
       </Typography>
       <Autocomplete
@@ -49,8 +58,8 @@ const DropdownMenu: FC<Props> = ({
         disabled={!valueList}
         multiple
         disableClearable
-        id={buildCategorySelectionId(title)}
-        value={valueList?.filter((value) => selectedValues.includes(value))}
+        id={buildCategorySelectionId(typeId)}
+        value={values}
         options={valueList}
         getOptionLabel={(option) => option.name}
         onChange={handleChange}
@@ -61,6 +70,17 @@ const DropdownMenu: FC<Props> = ({
             variant="outlined"
             placeholder={t(BUILDER.DROP_DOWN_PLACEHOLDER)}
           />
+        )}
+        renderOption={(props: unknown, option: Category) => (
+          <li
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...props}
+            // necessary for test
+            data-id={option.id}
+            id={buildCategorySelectionOptionId(typeId, option.id)}
+          >
+            {option.name}
+          </li>
         )}
       />
     </Box>

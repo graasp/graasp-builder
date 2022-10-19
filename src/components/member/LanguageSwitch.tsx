@@ -7,6 +7,7 @@ import { langs } from '@graasp/translations';
 import { Select } from '@graasp/ui';
 
 import { useMutation } from '../../config/queryClient';
+import { buildLanguageOptionId } from '../../config/selectors';
 
 type Props = {
   id?: string;
@@ -36,6 +37,7 @@ const LanguageSwitch: FC<Props> = ({ id, memberId, lang }) => {
       id={id}
       defaultValue={lang}
       onChange={handleChange}
+      buildOptionId={buildLanguageOptionId}
       values={Object.entries(langs).map(([value, text]) => ({ value, text }))}
     />
   );

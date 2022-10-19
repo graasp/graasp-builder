@@ -7,6 +7,7 @@ import { Select } from '@graasp/ui';
 
 import { emailFrequency } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
+import { buildEmailFrequencyOptionId } from '../../config/selectors';
 
 type EmailPreferenceSwitchProps = {
   id?: string;
@@ -40,6 +41,7 @@ const EmailPreferenceSwitch: FC<EmailPreferenceSwitchProps> = ({
       native
       defaultValue={emailFreq}
       onChange={handleChange}
+      buildOptionId={buildEmailFrequencyOptionId}
       variant="standard"
       values={Object.entries(emailFrequency).map(([freq, name]) => ({
         value: freq,

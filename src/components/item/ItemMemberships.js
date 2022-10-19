@@ -52,7 +52,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
       <Grid item>
         <Tooltip
           title={t(BUILDER.SHARED_MEMBERS_TOOLTIP, {
-            count: filteredMemberships.length,
+            count: filteredMemberships.size,
           })}
           aria-label={t(BUILDER.SHARED_MEMBERS_LABEL)}
         >
