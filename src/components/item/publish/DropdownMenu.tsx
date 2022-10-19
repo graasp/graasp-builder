@@ -23,7 +23,7 @@ type Props = {
   typeId: string;
   title: string;
   values: Category[];
-  selectedValues: List<ItemCategory>;
+  selectedValues?: List<ItemCategory>;
   handleChange: (
     _event: SyntheticEvent,
     value: Category[],
@@ -45,7 +45,7 @@ const DropdownMenu: FC<Props> = ({
   }
 
   const selected = values.filter(({ id }) =>
-    selectedValues.find(({ categoryId }) => categoryId === id),
+    selectedValues?.find(({ categoryId }) => categoryId === id),
   );
 
   return (

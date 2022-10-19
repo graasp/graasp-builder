@@ -2340,7 +2340,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui.git#93-new-mui5":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=581954a6324be889e3763ada2636ff491dd4ba67"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=7165e6664e981a0dd28e4a96adfa5384e35249df"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -2372,7 +2372,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 971efc334491d66bed9bbde7d9afedf3ce3ecee707efbf3838a5272858553b47aa073106eea0c13f08ad3bdc34e86c99356117c84e0ac5b7c26532d86bc4ede0
+  checksum: 26ffffc93ade4c708e21e97f8ef15fb350573aab7e6268741ac6f7765f3d5eadd43d6a3cec80c51f6943e041438ebcf101cca1c8e92deeb1c7f6397af34d5bf5
   languageName: node
   linkType: hard
 
