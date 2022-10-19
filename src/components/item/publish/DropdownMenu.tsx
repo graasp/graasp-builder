@@ -22,7 +22,7 @@ import { Category, ItemCategory } from '../../../config/types';
 type Props = {
   typeId: string;
   title: string;
-  valueList: Category[];
+  values: Category[];
   selectedValues: List<ItemCategory>;
   handleChange: (
     _event: SyntheticEvent,
@@ -35,16 +35,16 @@ const DropdownMenu: FC<Props> = ({
   typeId,
   title,
   handleChange,
-  valueList,
+  values,
   selectedValues,
 }) => {
   const { t } = useBuilderTranslation();
 
-  if (!valueList) {
+  if (!values) {
     return null;
   }
 
-  const values = valueList.filter(({ id }) =>
+  const selected = values.filter(({ id }) =>
     selectedValues.find(({ categoryId }) => categoryId === id),
   );
 
@@ -55,12 +55,12 @@ const DropdownMenu: FC<Props> = ({
       </Typography>
       <Autocomplete
         sx={{ width: 'auto', maxWidth: '85%' }}
-        disabled={!valueList}
+        disabled={!values}
         multiple
         disableClearable
         id={buildCategorySelectionId(typeId)}
-        value={values}
-        options={valueList}
+        value={selected}
+        options={values}
         getOptionLabel={(option) => option.name}
         onChange={handleChange}
         renderInput={(params) => (

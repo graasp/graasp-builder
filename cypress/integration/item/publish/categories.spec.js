@@ -78,7 +78,7 @@ describe('Categories', () => {
       });
     });
 
-    it('Add a category', () => {
+    it.only('Add a category', () => {
       const { type, id } = SAMPLE_CATEGORIES[1];
       toggleOption(id, type);
       cy.wait('@postItemCategory').then((data) => {

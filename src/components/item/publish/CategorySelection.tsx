@@ -83,7 +83,7 @@ const CategorySelection: FC = () => {
 
       if (reason === SELECT_OPTION) {
         // post new category
-        const newCategoryId = values[values.length - 1].id;
+        const newCategoryId = event.target.getAttribute('data-id');
         createItemCategory({
           itemId,
           categoryId: newCategoryId,
@@ -120,7 +120,7 @@ const CategorySelection: FC = () => {
             key={id}
             title={categoriesT(name)}
             handleChange={handleChange(values)}
-            valueList={values}
+            values={values}
             selectedValues={itemCategories}
             typeId={id}
           />
