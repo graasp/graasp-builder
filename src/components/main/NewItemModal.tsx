@@ -5,16 +5,15 @@ import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemType } from '@graasp/sdk';
-import { BUILDER, COMMON, namespaces } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
-import { useBuilderTranslation } from '../../config/i18n';
+import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
 import { useMutation } from '../../config/queryClient';
 import {
@@ -45,8 +44,8 @@ type Props = {
 };
 
 const NewItemModal: FC<Props> = ({ open, handleClose }) => {
-  const { t } = useBuilderTranslation();
-  const { t: commonT } = useTranslation(namespaces.common);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
@@ -106,7 +105,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
         return (
           <>
             <Typography variant="h6">
-              {t(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
+              {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
             </Typography>
             <FolderForm
               onChange={updateItem}
@@ -160,7 +159,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
         return (
           <>
             <Button onClick={handleClose} variant="text">
-              {commonT(COMMON.CANCEL_BUTTON)}
+              {translateCommon(COMMON.CANCEL_BUTTON)}
             </Button>
             <Button
               onClick={submit}
@@ -170,7 +169,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
                 !isItemValid(updatedPropertiesPerType[selectedItemType])
               }
             >
-              {t(BUILDER.CREATE_ITEM_ADD_BUTTON)}
+              {translateBuilder(BUILDER.CREATE_ITEM_ADD_BUTTON)}
             </Button>
           </>
         );
@@ -180,7 +179,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
       case ItemType.H5P:
         return (
           <Button id={CREATE_ITEM_CLOSE_BUTTON_ID} onClick={handleClose}>
-            {commonT(COMMON.CLOSE_BUTTON)}
+            {translateCommon(COMMON.CLOSE_BUTTON)}
           </Button>
         );
       default:

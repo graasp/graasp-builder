@@ -243,5 +243,5 @@ export const SETTINGS_LINK_SHOW_IFRAME_ID = 'settingsLinkShowIframe';
 export const SETTINGS_LINK_SHOW_BUTTON_ID = 'settingsLinkShowButton';
 export const buildCategorySelectionOptionId = (typeId: string, id: string): string => `category-${typeId}-option-${id}`
 export const LIBRARY_SETTINGS_CATEGORIES_ID = 'librarySettingsCategories'
-export const buildLanguageOptionId = (value:string):string => `languageOption-${value}`
-export const buildEmailFrequencyOptionId = (value:string):string => `emailFrequencyOption-${value}`
+export const buildLanguageOptionId = (value:string): string => `languageOption-${value}`
+export const buildEmailFrequencyOptionId = (value:string): string => `emailFrequencyOption-${value}`

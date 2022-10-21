@@ -28,7 +28,7 @@ import CCLicenseDialog from './CCLicenseDialog';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
-// export in graasp sdk
+// TODO: export in graasp sdk
 // eslint-disable-next-line
 enum CCLicenseAdaption {
   ALLOW = 'allow',
@@ -40,7 +40,7 @@ type Props = {
 };
 
 const CCLicenseSelection: FC<Props> = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: updateCCLicense } = useMutation<
     any,
     any,
@@ -96,9 +96,11 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
   return (
     <>
       <Typography variant="h6" mt={2}>
-        {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_TITLE)}
+        {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_TITLE)}
         <Tooltip
-          title={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_MORE_INFORMATIONS)}
+          title={translateBuilder(
+            BUILDER.ITEM_SETTINGS_CC_LICENSE_MORE_INFORMATIONS,
+          )}
           arrow
         >
           <IconButton aria-label="info" onClick={handleClick}>
@@ -107,40 +109,42 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
         </Tooltip>
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_INFORMATIONS)}
+        {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_INFORMATIONS)}
       </Typography>
       <RadioGroup
-        aria-label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
-        name={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
+        aria-label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
+        name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
         value={optionValue}
         onChange={handleChange}
       >
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
           control={<Radio color="primary" />}
-          label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALLOW_LABEL)}
+          label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALLOW_LABEL)}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
           control={<Radio color="primary" />}
-          label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALIKE_LABEL)}
+          label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALIKE_LABEL)}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.NONE}
           control={<Radio color="primary" />}
-          label={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_NONE_LABEL)}
+          label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_NONE_LABEL)}
         />
       </RadioGroup>
       <CCLicenseDialog
         open={open}
         setOpen={setOpen}
-        buttonName={t(BUILDER.ITEM_SETTINGS_CC_LICENSE_SUBMIT_BUTTON)}
+        buttonName={translateBuilder(
+          BUILDER.ITEM_SETTINGS_CC_LICENSE_SUBMIT_BUTTON,
+        )}
         handleSubmit={handleSubmit}
       />
       {settings?.ccLicenseAdaption && (
         <>
           <Typography variant="subtitle1">
-            {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
+            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
           </Typography>
           <CCLicenseIcon
             adaption={settings?.ccLicenseAdaption as CCLicenseAdaption}

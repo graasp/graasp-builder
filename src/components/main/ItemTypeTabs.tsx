@@ -30,7 +30,7 @@ type Props = {
 };
 
 const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const [value, setValue] = useState<NewItemTabType>(
     initialValue ?? ItemType.FOLDER,
@@ -43,7 +43,7 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
 
   const zipIcon = (
     <ItemIcon
-      alt={t(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
+      alt={translateBuilder(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
       type={ItemType.LOCAL_FILE}
       sx={{ mb: 0 }}
       extra={{ file: { mimetype: 'application/zip' } }}
@@ -60,10 +60,10 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
       <Tab
         id={CREATE_ITEM_FOLDER_ID}
         value={ItemType.FOLDER}
-        label={t(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
+        label={translateBuilder(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
         icon={
           <ItemIcon
-            alt={t(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
+            alt={translateBuilder(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
             type={ItemType.FOLDER}
             sx={{ mb: 0 }}
           />
@@ -72,10 +72,10 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
       <Tab
         id={CREATE_ITEM_FILE_ID}
         value={ItemType.LOCAL_FILE}
-        label={t(BUILDER.NEW_ITEM_FILE_TAB_TEXT)}
+        label={translateBuilder(BUILDER.NEW_ITEM_FILE_TAB_TEXT)}
         icon={
           <ItemIcon
-            alt={t(BUILDER.NEW_ITEM_FILE_TAB_TEXT)}
+            alt={translateBuilder(BUILDER.NEW_ITEM_FILE_TAB_TEXT)}
             type={ItemType.LOCAL_FILE}
             sx={{ mb: 0 }}
           />
@@ -84,10 +84,10 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
       <Tab
         id={CREATE_ITEM_LINK_ID}
         value={ItemType.LINK}
-        label={t(BUILDER.NEW_ITEM_LINK_TAB_TEXT)}
+        label={translateBuilder(BUILDER.NEW_ITEM_LINK_TAB_TEXT)}
         icon={
           <ItemIcon
-            alt={t(BUILDER.NEW_ITEM_LINK_TAB_TEXT)}
+            alt={translateBuilder(BUILDER.NEW_ITEM_LINK_TAB_TEXT)}
             type={ItemType.LINK}
             sx={{ mb: 0 }}
           />
@@ -96,10 +96,10 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
       <Tab
         id={CREATE_ITEM_DOCUMENT_ID}
         value={ItemType.DOCUMENT}
-        label={t(BUILDER.NEW_ITEM_DOCUMENT_TAB_TEXT)}
+        label={translateBuilder(BUILDER.NEW_ITEM_DOCUMENT_TAB_TEXT)}
         icon={
           <ItemIcon
-            alt={t(BUILDER.NEW_ITEM_DOCUMENT_TAB_TEXT)}
+            alt={translateBuilder(BUILDER.NEW_ITEM_DOCUMENT_TAB_TEXT)}
             type={ItemType.DOCUMENT}
             sx={{ mb: 0 }}
           />
@@ -108,10 +108,10 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
       <Tab
         id={CREATE_ITEM_APP_ID}
         value={ItemType.APP}
-        label={t(BUILDER.NEW_ITEM_APP_TAB_TEXT)}
+        label={translateBuilder(BUILDER.NEW_ITEM_APP_TAB_TEXT)}
         icon={
           <ItemIcon
-            alt={t(BUILDER.NEW_ITEM_APP_TAB_TEXT)}
+            alt={translateBuilder(BUILDER.NEW_ITEM_APP_TAB_TEXT)}
             type={ItemType.APP}
             sx={{ mb: 0 }}
           />
@@ -120,16 +120,16 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
       <Tab
         id={CREATE_ITEM_ZIP_ID}
         value={InternalItemType.ZIP}
-        label={t(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
+        label={translateBuilder(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
         icon={zipIcon}
       />
       <Tab
         id={CREATE_ITEM_H5P_ID}
         value={ItemType.H5P}
-        label={t(BUILDER.NEW_ITEM_H5P_TAB_TEXT)}
+        label={translateBuilder(BUILDER.NEW_ITEM_H5P_TAB_TEXT)}
         icon={
           <ItemIcon
-            alt={t(BUILDER.NEW_ITEM_H5P_TAB_TEXT)}
+            alt={translateBuilder(BUILDER.NEW_ITEM_H5P_TAB_TEXT)}
             type={ItemType.H5P}
             sx={{ mb: 0 }}
           />

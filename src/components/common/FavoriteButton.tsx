@@ -24,7 +24,7 @@ type Props = {
 
 const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
   const { data: member } = useContext(CurrentUserContext);
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const mutation = useMutation<any, any, any>(MUTATION_KEYS.EDIT_MEMBER);
 
   const isFavorite = isItemFavorite(item, member);
@@ -54,8 +54,8 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
   };
 
   const text = isFavorite
-    ? t(BUILDER.FAVORITE_ITEM_REMOVE_TEXT)
-    : t(BUILDER.FAVORITE_ITEM_ADD_TEXT);
+    ? translateBuilder(BUILDER.FAVORITE_ITEM_REMOVE_TEXT)
+    : translateBuilder(BUILDER.FAVORITE_ITEM_ADD_TEXT);
 
   return (
     <GraaspFavoriteButton

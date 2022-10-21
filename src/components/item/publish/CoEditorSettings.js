@@ -21,7 +21,7 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 const CoEditorSettings = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: updateDisplayCoEditors } = useMutation(EDIT_ITEM);
 
   // user
@@ -61,14 +61,14 @@ const CoEditorSettings = ({ item }) => {
   return (
     <>
       <Typography variant="h6" mt={2}>
-        {t(BUILDER.ITEM_SETTINGS_CO_EDITORS_TITLE)}
+        {translateBuilder(BUILDER.ITEM_SETTINGS_CO_EDITORS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.ITEM_SETTINGS_CO_EDITORS_INFORMATIONS)}
+        {translateBuilder(BUILDER.ITEM_SETTINGS_CO_EDITORS_INFORMATIONS)}
       </Typography>
       <RadioGroup
         id={CO_EDITOR_SETTINGS_RADIO_GROUP_ID}
-        name={t(BUILDER.ITEM_SETTINGS_CO_EDITORS_LABEL)}
+        name={translateBuilder(BUILDER.ITEM_SETTINGS_CO_EDITORS_LABEL)}
         value={optionValue}
         onChange={handleChange}
       >
@@ -78,7 +78,7 @@ const CoEditorSettings = ({ item }) => {
             id={buildCoEditorSettingsRadioButtonId(option.value)}
             value={option.value}
             control={<Radio color="primary" />}
-            label={t(option.label)}
+            label={translateBuilder(option.label)}
           />
         ))}
       </RadioGroup>

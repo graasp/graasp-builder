@@ -21,7 +21,7 @@ type Props = {
 };
 
 const LinkSettings: FC<Props> = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation<any, any, any>(
     MUTATION_KEYS.EDIT_ITEM,
@@ -30,23 +30,31 @@ const LinkSettings: FC<Props> = ({ item }) => {
   const { settings } = item;
 
   const handleIframeSetting = (event: ChangeEvent<HTMLInputElement>) => {
-    editItem({
-      id: item.id,
-      name: item.name,
-      settings: {
-        showLinkIframe: event.target.checked,
-      },
-    });
+    if (event?.target?.checked) {
+      editItem({
+        id: item.id,
+        name: item.name,
+        settings: {
+          showLinkIframe: event.target.checked,
+        },
+      });
+    } else {
+      console.error(`Value ${event?.target?.checked} is invalid`);
+    }
   };
 
   const handleButtonSetting = (event: ChangeEvent<HTMLInputElement>) => {
-    editItem({
-      id: item.id,
-      name: item.name,
-      settings: {
-        showLinkButton: event.target.checked,
-      },
-    });
+    if (event?.target?.checked) {
+      editItem({
+        id: item.id,
+        name: item.name,
+        settings: {
+          showLinkButton: event.target.checked,
+        },
+      });
+    } else {
+      console.error(`Value ${event?.target?.checked} is invalid`);
+    }
   };
 
   const renderIframeToggle = () => {
@@ -60,7 +68,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
     );
     return (
       <FormControlLabel
-        label={t(BUILDER.SETTINGS_LINK_SHOW_IFRAME)}
+        label={translateBuilder(BUILDER.SETTINGS_LINK_SHOW_IFRAME)}
         control={control}
       />
     );
@@ -77,7 +85,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
     );
     return (
       <FormControlLabel
-        label={t(BUILDER.SETTINGS_LINK_SHOW_BUTTON)}
+        label={translateBuilder(BUILDER.SETTINGS_LINK_SHOW_BUTTON)}
         control={control}
       />
     );
@@ -86,10 +94,10 @@ const LinkSettings: FC<Props> = ({ item }) => {
   return (
     <>
       <Typography variant="h5" m={0} p={0}>
-        {t(BUILDER.SETTINGS_LINK_SETTINGS_TITLE)}
+        {translateBuilder(BUILDER.SETTINGS_LINK_SETTINGS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.SETTINGS_LINK_SETTINGS_INFORMATIONS)}
+        {translateBuilder(BUILDER.SETTINGS_LINK_SETTINGS_INFORMATIONS)}
       </Typography>
       <FormGroup>
         {renderIframeToggle()}

@@ -41,8 +41,8 @@ const StyledLink = styled(Link)({
   textDecoration: 'none',
 });
 
-const ParentLink = ({ id, name }) => (
-  <StyledLink key={id} to={buildItemPath(id)}>
+const ParentLink = ({ id, key, name }) => (
+  <StyledLink key={key} to={buildItemPath(id)}>
     <Typography id={buildNavigationLink(id)}>
       {truncate(name, { length: ITEM_NAME_MAX_LENGTH })}
     </Typography>
@@ -55,7 +55,7 @@ ParentLink.propTypes = {
 };
 
 const Navigation = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { pathname } = useLocation();
   const match = useMatch(buildItemPath());
   const { data: currentMember } = useContext(CurrentUserContext);
@@ -88,7 +88,7 @@ const Navigation = () => {
     }
 
     let to = HOME_PATH;
-    let text = t(BUILDER.NAVIGATION_MY_ITEMS_TITLE);
+    let text = translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE);
 
     const isParentOwned =
       (item?.creator ?? parents?.first()?.creator) === currentMemberId;
@@ -96,7 +96,7 @@ const Navigation = () => {
     // favorite root path
     if (pathname === FAVORITE_ITEMS_PATH) {
       to = FAVORITE_ITEMS_PATH;
-      text = t(BUILDER.NAVIGATION_FAVORITE_ITEMS_TITLE);
+      text = translateBuilder(BUILDER.NAVIGATION_FAVORITE_ITEMS_TITLE);
     }
     // shared items and non owned items
     else if (
@@ -104,7 +104,7 @@ const Navigation = () => {
       (pathname !== HOME_PATH && !isParentOwned)
     ) {
       to = SHARED_ITEMS_PATH;
-      text = t(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE);
+      text = translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE);
     }
 
     return (

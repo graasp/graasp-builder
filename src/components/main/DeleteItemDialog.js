@@ -6,13 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { useTranslation } from 'react-i18next';
-
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { BUILDER, COMMON, namespaces } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../config/i18n';
+import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
 
@@ -22,8 +20,8 @@ const descriptionId = 'alert-dialog-description';
 const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 
 const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
-  const { t } = useBuilderTranslation();
-  const { t: commonT } = useTranslation(namespaces.common);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
 
   const { mutate: deleteItems } = useMutation(DELETE_ITEMS);
   const { mutate: deleteItem } = useMutation(DELETE_ITEM);
@@ -45,16 +43,18 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
       aria-describedby={descriptionId}
     >
       <DialogTitle id={labelId}>
-        {t(BUILDER.DELETE_ITEM_MODAL_TITLE)}
+        {translateBuilder(BUILDER.DELETE_ITEM_MODAL_TITLE)}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id={descriptionId}>
-          {t(BUILDER.DELETE_ITEM_MODAL_CONTENT, { count: itemIds.length })}
+          {translateBuilder(BUILDER.DELETE_ITEM_MODAL_CONTENT, {
+            count: itemIds.length,
+          })}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary" variant="text">
-          {commonT(COMMON.CANCEL_BUTTON)}
+          {translateCommon(COMMON.CANCEL_BUTTON)}
         </Button>
         <Button
           id={CONFIRM_DELETE_BUTTON_ID}
@@ -63,7 +63,7 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
           autoFocus
           variant="text"
         >
-          {t(BUILDER.DELETE_ITEM_MODAL_CONFIRM_BUTTON)}
+          {translateBuilder(BUILDER.DELETE_ITEM_MODAL_CONFIRM_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

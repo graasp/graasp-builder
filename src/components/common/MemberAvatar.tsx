@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { COMMON } from '@graasp/translations';
 import { Avatar } from '@graasp/ui';
 
-import { THUMBNAIL_SIZES } from '../../config/constants';
+import { AVATAR_ICON_HEIGHT, THUMBNAIL_SIZES } from '../../config/constants';
+import { useCommonTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { buildMemberAvatarClass } from '../../config/selectors';
 
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const MemberAvatar: FC<Props> = ({ id }) => {
-  const { t } = useTranslation();
+  const { t } = useCommonTranslation();
   const { data: member, isLoading, isFetching } = hooks.useMember(id);
   const {
     data: thumbnailBlob,
@@ -30,8 +30,8 @@ const MemberAvatar: FC<Props> = ({ id }) => {
       className={buildMemberAvatarClass(member?.id)}
       alt={member?.name || t(COMMON.AVATAR_DEFAULT_ALT)}
       component="avatar"
-      maxWidth={30}
-      maxHeight={30}
+      maxWidth={AVATAR_ICON_HEIGHT}
+      maxHeight={AVATAR_ICON_HEIGHT}
       blob={thumbnailBlob}
       sx={{ mx: 1 }}
     />

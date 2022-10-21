@@ -2,12 +2,12 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { ACCOUNT, namespaces } from '@graasp/translations';
+import { ACCOUNT } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { DEFAULT_EMAIL_FREQUENCY, DEFAULT_LANG } from '../../config/constants';
+import { useAccountTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';
 import {
   MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
@@ -30,7 +30,7 @@ import LanguageSwitch from './LanguageSwitch';
 import PasswordSetting from './PasswordSetting';
 
 const MemberProfileScreen = () => {
-  const { t } = useTranslation(namespaces.account);
+  const { t } = useAccountTranslation();
   const { data: member, isLoading } = useContext(CurrentUserContext);
 
   if (isLoading) {

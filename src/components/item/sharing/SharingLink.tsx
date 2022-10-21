@@ -7,17 +7,19 @@ import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 
 import { FC, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Context } from '@graasp/sdk';
-import { BUILDER, namespaces } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 
 import {
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
 } from '../../../config/constants';
-import { useBuilderTranslation } from '../../../config/i18n';
+import {
+  useBuilderTranslation,
+  useEnumsTranslation,
+} from '../../../config/i18n';
 import notifier from '../../../config/notifier';
 import {
   buildGraaspBuilderView,
@@ -56,8 +58,8 @@ type Props = {
 };
 
 const SharingLink: FC<Props> = ({ itemId }) => {
-  const { t } = useBuilderTranslation();
-  const { t: enumT } = useTranslation(namespaces.enums);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: enumT } = useEnumsTranslation();
 
   const [linkType, setLinkType] = useState<Context>(Context.PLAYER);
   const [link, setLink] = useState<string>();
@@ -125,7 +127,7 @@ const SharingLink: FC<Props> = ({ itemId }) => {
             {enumT(Context.PLAYER)}
           </MenuItem>
         </Select>
-        <Tooltip title={t(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>
+        <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>
           <IconButton onClick={handleCopy} sx={{ p: 0, ml: 1 }}>
             <FileCopyIcon />
           </IconButton>

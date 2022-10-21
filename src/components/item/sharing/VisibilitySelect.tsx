@@ -47,7 +47,7 @@ type Props = {
 };
 
 const VisibilitySelect: FC<Props> = ({ item, edit }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   // user
   const { data: user, isLoading: isMemberLoading } =
     useContext(CurrentUserContext);
@@ -228,17 +228,21 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
           </>
         );
       case SETTINGS.ITEM_PUBLIC.name:
-        return t(BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_INFORMATIONS);
+        return translateBuilder(
+          BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_INFORMATIONS,
+        );
       case SETTINGS.ITEM_PRIVATE.name:
       default:
-        return t(BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_INFORMATION);
+        return translateBuilder(
+          BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_INFORMATION,
+        );
     }
   };
 
   return (
     <>
       <Typography variant="h6">
-        {t(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
+        {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
       </Typography>
       {edit && (
         <Select
@@ -249,20 +253,24 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
           sx={{ mr: 1 }}
         >
           <MenuItem value={SETTINGS.ITEM_PRIVATE.name}>
-            {t(BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_LABEL)}
+            {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_LABEL)}
           </MenuItem>
           <MenuItem value={SETTINGS.ITEM_LOGIN.name}>
-            {t(BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL)}
+            {translateBuilder(
+              BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL,
+            )}
           </MenuItem>
           <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>
-            {t(BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL)}
+            {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL)}
           </MenuItem>
         </Select>
       )}
       {renderVisiblityIndication()}
       {isDisabled && (
         <Typography variant="body2">
-          {t(BUILDER.ITEM_SETTINGS_VISIBILITY_CANNOT_EDIT_PARENT_MESSAGE)}
+          {translateBuilder(
+            BUILDER.ITEM_SETTINGS_VISIBILITY_CANNOT_EDIT_PARENT_MESSAGE,
+          )}
         </Typography>
       )}
     </>

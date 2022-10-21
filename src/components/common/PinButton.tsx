@@ -18,7 +18,7 @@ type Props = {
 };
 
 const PinButton: FC<Props> = ({ item, type, onClick }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const editItem = useMutation<any, any, any>(MUTATION_KEYS.EDIT_ITEM);
   const [isPinned, setPinned] = useState(item?.settings?.isPinned);
@@ -36,8 +36,8 @@ const PinButton: FC<Props> = ({ item, type, onClick }) => {
     onClick?.();
   };
 
-  const pinText = t(BUILDER.PIN_ITEM_PIN_TEXT);
-  const unPinText = t(BUILDER.PIN_ITEM_UNPIN_TEXT);
+  const pinText = translateBuilder(BUILDER.PIN_ITEM_PIN_TEXT);
+  const unPinText = translateBuilder(BUILDER.PIN_ITEM_UNPIN_TEXT);
 
   return (
     <GraaspPinButton

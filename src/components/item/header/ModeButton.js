@@ -16,7 +16,7 @@ import { ITEM_LAYOUT_MODES } from '../../../enums';
 import { LayoutContext } from '../../context/LayoutContext';
 
 const ModeButton = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mode, setMode } = useContext(LayoutContext);
 
   const handleOnClick = (value) => {
@@ -27,7 +27,7 @@ const ModeButton = () => {
     case ITEM_LAYOUT_MODES.GRID:
       return (
         <div>
-          <Tooltip title={t(BUILDER.LAYOUT_MODE_LIST_LABEL)}>
+          <Tooltip title={translateBuilder(BUILDER.LAYOUT_MODE_LIST_LABEL)}>
             <span>
               <IconButton
                 id={MODE_LIST_BUTTON_ID}
@@ -45,7 +45,7 @@ const ModeButton = () => {
     case ITEM_LAYOUT_MODES.LIST:
       return (
         <div>
-          <Tooltip title={t(BUILDER.LAYOUT_MODE_GRID_LABEL)}>
+          <Tooltip title={translateBuilder(BUILDER.LAYOUT_MODE_GRID_LABEL)}>
             <span>
               <IconButton
                 id={MODE_GRID_BUTTON_ID}

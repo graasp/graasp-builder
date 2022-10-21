@@ -14,7 +14,7 @@ import TreeModal from '../main/TreeModal';
 const MoveItemModalContext = createContext();
 
 const MoveItemModalProvider = ({ children }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: moveItems } = useMutation(MUTATION_KEYS.MOVE_ITEMS);
 
   const [open, setOpen] = useState(false);
@@ -52,7 +52,7 @@ const MoveItemModalProvider = ({ children }) => {
         open={open}
         itemIds={itemIds}
         onConfirm={onConfirm}
-        title={t(BUILDER.MOVE_ITEM_MODAL_TITLE)}
+        title={translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE)}
       />
     );
   };

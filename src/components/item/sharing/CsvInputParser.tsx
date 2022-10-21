@@ -13,14 +13,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
-import { BUILDER, COMMON, namespaces } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../../config/i18n';
+import {
+  useBuilderTranslation,
+  useCommonTranslation,
+  useMessagesTranslation,
+} from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
@@ -38,9 +41,9 @@ type Props = {
 };
 
 const CsvInputParser: FC<Props> = ({ item }) => {
-  const { t } = useBuilderTranslation();
-  const { t: messageT } = useTranslation(namespaces.messages);
-  const { t: commonT } = useTranslation(namespaces.common);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateMessages } = useMessagesTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const { id: itemId, path: itemPath } = item;
   const [isOpen, setIsOpen] = useState(false);
   const {
@@ -124,7 +127,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     if (!failureToShow.length && isSuccess) {
       return (
         <Alert severity="success">
-          {t(BUILDER.SHARE_ITEM_CSV_IMPORT_SUCCESS_MESSAGE)}
+          {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_SUCCESS_MESSAGE)}
         </Alert>
       );
     }
@@ -132,7 +135,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     return (
       <Alert id={SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID} severity="error">
         <AlertTitle>
-          {t(BUILDER.SHARE_ITEM_CSV_IMPORT_ERROR_MESSAGE)}
+          {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_ERROR_MESSAGE)}
         </AlertTitle>
         <Grid container>
           {failureToShow.map((e) => (
@@ -141,7 +144,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
                 {e?.data?.email ?? e?.data?.name}
               </Grid>
               <Grid item xs={8}>
-                {messageT(e?.message)}
+                {translateMessages(e?.message)}
               </Grid>
             </Grid>
           ))}
@@ -158,7 +161,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
         variant="outlined"
         size="small"
       >
-        {t(BUILDER.SHARE_ITEM_CSV_IMPORT_BUTTON)}
+        {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_BUTTON)}
       </Button>
       {isOpen && (
         <Dialog
@@ -168,11 +171,11 @@ const CsvInputParser: FC<Props> = ({ item }) => {
           open
         >
           <DialogTitle id={label}>
-            {t(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_TITLE)}
+            {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_TITLE)}
           </DialogTitle>
           <DialogContent dividers>
             <DialogContentText>
-              {t(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT)}
+              {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT)}
             </DialogContentText>
             <Box textAlign="center">
               <Button
@@ -180,7 +183,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
                 startIcon={<PublishIcon />}
                 component="label"
               >
-                {t(BUILDER.SHARE_ITEM_CSV_IMPORT_INPUT_BUTTON)}
+                {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_INPUT_BUTTON)}
                 <input
                   type="file"
                   hidden
@@ -193,7 +196,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
           </DialogContent>
           <DialogActions>
             <Button variant="text" onClick={handleClose} color="primary">
-              {commonT(COMMON.CLOSE_BUTTON)}
+              {translateCommon(COMMON.CLOSE_BUTTON)}
             </Button>
           </DialogActions>
         </Dialog>

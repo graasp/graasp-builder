@@ -21,7 +21,7 @@ export type Props = {
 };
 
 const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { openModal: openCopyModal } = useContext(CopyItemModalContext);
 
@@ -36,7 +36,7 @@ const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
     <GraaspCopyButton
       type={type}
       id={id}
-      text={t(BUILDER.ITEM_COPY_BUTTON)}
+      text={translateBuilder(BUILDER.ITEM_COPY_BUTTON)}
       color={color}
       iconClassName={ITEM_COPY_BUTTON_CLASS}
       menuItemClassName={ITEM_MENU_COPY_BUTTON_CLASS}

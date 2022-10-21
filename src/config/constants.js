@@ -136,7 +136,7 @@ export const SETTINGS = {
       USERNAME_AND_PASSWORD: 'username+password',
     },
     SIGN_IN_MODE: {
-      PSEUDONYME: 'pseudonym',
+      PSEUDONYM: 'pseudonym',
       MEMBER_ID: 'memberId',
     },
   },
@@ -277,3 +277,6 @@ export const ITEM_ACTION_TABS = {
 export const THUMBNAIL_SIZES = {
   SMALL: 'small',
 };
+
+export const ITEM_HEADER_ICON_HEIGHT = 30;
+export const AVATAR_ICON_HEIGHT = 30;

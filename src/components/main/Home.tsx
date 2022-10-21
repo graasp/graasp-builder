@@ -18,7 +18,7 @@ import Main from './Main';
 import NewItemButton from './NewItemButton';
 
 const Home: FC = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
 
   if (isError) {
@@ -38,7 +38,7 @@ const Home: FC = () => {
           <Items
             defaultSortedColumn={{ updatedAt: 'desc' }}
             id={OWNED_ITEMS_ID}
-            title={t(BUILDER.MY_ITEMS_TITLE)}
+            title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
             items={ownItems}
             headerElements={[
               <NewItemButton key="newButton" fontSize="small" />,

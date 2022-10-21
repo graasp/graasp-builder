@@ -29,7 +29,7 @@ const ThumbnailSetting = ({ item }) => {
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState(false);
   const [openStatusBar, setOpenStatusBar] = useState(false);
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: onFileUploadComplete } = useMutation(
     MUTATION_KEYS.FILE_UPLOAD,
   );
@@ -102,7 +102,7 @@ const ThumbnailSetting = ({ item }) => {
     }
   };
 
-  const alt = t(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
+  const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
   const defaultImageComponent = <img src={defaultImage} alt={alt} />;
 
   return (
@@ -113,10 +113,10 @@ const ThumbnailSetting = ({ item }) => {
       <Grid container justifyContent="space-between">
         <Grid item sm={6}>
           <Typography variant="h5">
-            {t(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
+            {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
           </Typography>
           <Typography variant="body">
-            {t(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
+            {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
           </Typography>
           <input
             type="file"

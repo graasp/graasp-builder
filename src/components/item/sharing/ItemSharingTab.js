@@ -26,7 +26,7 @@ import SharingLink from './SharingLink';
 import VisibilitySelect from './VisibilitySelect';
 
 const ItemSharingTab = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: memberships } = hooks.useItemMemberships(item?.id);
   const { data: currentMember, isLoadingCurrentMember } =
     useContext(CurrentUserContext);
@@ -64,14 +64,16 @@ const ItemSharingTab = ({ item }) => {
 
         <Grid container justifyContent="space-between" alignItems="center">
           <Typography variant="h5" m={0} p={0}>
-            {t(BUILDER.SHARING_AUTHORIZED_MEMBERS_TITLE)}
+            {translateBuilder(BUILDER.SHARING_AUTHORIZED_MEMBERS_TITLE)}
           </Typography>
           {canEdit && <CsvInputParser item={item} />}
         </Grid>
         {canEdit && <CreateItemMembershipForm item={item} members={members} />}
         <ItemMembershipsTable
           item={item}
-          emptyMessage={t(BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE)}
+          emptyMessage={translateBuilder(
+            BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE,
+          )}
           memberships={authorizedMemberships}
         />
 
@@ -82,12 +84,12 @@ const ItemSharingTab = ({ item }) => {
           <>
             <Divider sx={{ my: 3 }} />
             <Typography variant="h5" m={0} p={0}>
-              {t(BUILDER.SHARING_AUTHENTICATED_MEMBERS_TITLE)}
+              {translateBuilder(BUILDER.SHARING_AUTHENTICATED_MEMBERS_TITLE)}
             </Typography>
             <ItemMembershipsTable
               item={item}
               memberships={authenticatedMemberships}
-              emptyMessage={t(
+              emptyMessage={translateBuilder(
                 BUILDER.SHARING_AUTHENTICATED_MEMBERS_EMPTY_MESSAGE,
               )}
               showEmail={false}
@@ -99,12 +101,14 @@ const ItemSharingTab = ({ item }) => {
           <>
             <Divider sx={{ my: 3 }} />
             <Typography variant="h5">
-              {t(BUILDER.SHARING_INVITATIONS_TITLE)}
+              {translateBuilder(BUILDER.SHARING_INVITATIONS_TITLE)}
             </Typography>
             <InvitationsTable
               item={item}
               invitations={invitations}
-              emptyMessage={t(BUILDER.SHARING_INVITATIONS_EMPTY_MESSAGE)}
+              emptyMessage={translateBuilder(
+                BUILDER.SHARING_INVITATIONS_EMPTY_MESSAGE,
+              )}
             />
             <Divider sx={{ my: 3 }} />
           </>
@@ -115,7 +119,9 @@ const ItemSharingTab = ({ item }) => {
 
   return (
     <Container disableGutters mt={2}>
-      <Typography variant="h4">{t(BUILDER.SHARING_TITLE)}</Typography>
+      <Typography variant="h4">
+        {translateBuilder(BUILDER.SHARING_TITLE)}
+      </Typography>
       <SharingLink itemId={item.id} />
       <VisibilitySelect item={item} edit={canEdit} />
       {renderMembershipSettings()}

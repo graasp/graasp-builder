@@ -12,7 +12,7 @@ import { useMutation } from '../../config/queryClient';
 import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
 
 const RestoreButton = ({ itemIds, color, id }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: restoreItems } = useMutation(MUTATION_KEYS.RESTORE_ITEMS);
 
   const onClick = () => {
@@ -20,7 +20,7 @@ const RestoreButton = ({ itemIds, color, id }) => {
     restoreItems(itemIds);
   };
 
-  const title = t(BUILDER.RESTORE_ITEM_BUTTON);
+  const title = translateBuilder(BUILDER.RESTORE_ITEM_BUTTON);
 
   return (
     <Tooltip title={title}>

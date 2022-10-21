@@ -42,7 +42,7 @@ const ItemsGrid = (props) => {
     parentId,
   } = props;
 
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(
     GRID_ITEMS_PER_PAGE_CHOICES[0],
@@ -92,14 +92,14 @@ const ItemsGrid = (props) => {
       <Box p={2} alignItems="center" display="flex" justifyContent="center">
         <StyledBox display="flex">
           <Typography pr={1} variant="body2">
-            {t(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
+            {translateBuilder(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
           </Typography>
           <Select
             labelId={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID}
             id={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID}
             value={itemsPerPage}
             onChange={(e) => setItemsPerPage(e.target.value)}
-            label={t(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
+            label={translateBuilder(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
           >
             {GRID_ITEMS_PER_PAGE_CHOICES.map((v) => (
               <MenuItem value={v} key={v}>

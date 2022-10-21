@@ -37,7 +37,7 @@ const checkItemLoginScreenLayout = (
 
 const fillItemLoginScreenLayout = ({ username, password, memberId }) => {
   if (!memberId) {
-    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYME);
+    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM);
     cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).clear().type(username);
   } else {
     changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.MEMBER_ID);

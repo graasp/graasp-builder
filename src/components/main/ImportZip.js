@@ -20,7 +20,7 @@ const ImportZip = () => {
   const [uppy, setUppy] = useState(null);
   const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const onComplete = (result) => {
     // update app on complete
@@ -68,15 +68,17 @@ const ImportZip = () => {
 
   return (
     <>
-      <Typography variant="h6">{t(BUILDER.IMPORT_ZIP_TITLE)}</Typography>
-      <Typography variant="body" paragraph>
-        {t(BUILDER.IMPORT_ZIP_INFORMATION)}
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.IMPORT_ZIP_TITLE)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(BUILDER.IMPORT_ZIP_WARNING)}
+        {translateBuilder(BUILDER.IMPORT_ZIP_INFORMATION)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(BUILDER.IMPORT_ZIP_LIMITATIONS_TEXT, {
+        {translateBuilder(BUILDER.IMPORT_ZIP_WARNING)}
+      </Typography>
+      <Typography variant="body" paragraph>
+        {translateBuilder(BUILDER.IMPORT_ZIP_LIMITATIONS_TEXT, {
           maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
         })}
       </Typography>

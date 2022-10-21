@@ -7,10 +7,10 @@ import { BUILDER } from '@graasp/translations';
 import { useBuilderTranslation } from '../../config/i18n';
 
 const ErrorAlert = ({ id }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   return (
     <Alert id={id} severity="error">
-      {t(BUILDER.ERROR_MESSAGE)}
+      {translateBuilder(BUILDER.ERROR_MESSAGE)}
     </Alert>
   );
 };

@@ -27,7 +27,7 @@ import ItemMemberships from './ItemMemberships';
 const { useMember } = hooks;
 
 const ItemMetadataContent = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { setIsItemSharingOpen } = useContext(LayoutContext);
   const { data: creator } = useMember(item.creator);
@@ -50,7 +50,7 @@ const ItemMetadataContent = ({ item }) => {
     const buildTableRow = (link) => (
       <TableRow>
         <TableCell align="left">
-          {t(BUILDER.ITEM_METADATA_LINK_TITLE)}
+          {translateBuilder(BUILDER.ITEM_METADATA_LINK_TITLE)}
         </TableCell>
         <TableCell align="right">{link}</TableCell>
       </TableRow>
@@ -73,38 +73,38 @@ const ItemMetadataContent = ({ item }) => {
         <Table
           id={ITEM_PANEL_TABLE_ID}
           size="small"
-          aria-label={t(BUILDER.ITEM_METADATA_TITLE)}
+          aria-label={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}
         >
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                {t(BUILDER.ITEM_METADATA_TYPE_TITLE)}
+                {translateBuilder(BUILDER.ITEM_METADATA_TYPE_TITLE)}
               </TableCell>
               <TableCell align="right">{type}</TableCell>
             </TableRow>
             {size && (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  {t(BUILDER.ITEM_METADATA_SIZE_TITLE)}
+                  {translateBuilder(BUILDER.ITEM_METADATA_SIZE_TITLE)}
                 </TableCell>
                 <TableCell align="right">{size}</TableCell>
               </TableRow>
             )}
             <TableRow>
               <TableCell align="left">
-                {t(BUILDER.ITEM_METADATA_CREATOR_TITLE)}
+                {translateBuilder(BUILDER.ITEM_METADATA_CREATOR_TITLE)}
               </TableCell>
               <TableCell align="right">{creator?.name}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="left">
-                {t(BUILDER.ITEM_METADATA_CREATED_AT_TITLE)}
+                {translateBuilder(BUILDER.ITEM_METADATA_CREATED_AT_TITLE)}
               </TableCell>
               <TableCell align="right">{formatDate(item.createdAt)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="left">
-                {t(BUILDER.ITEM_METADATA_UPDATED_AT_TITLE)}
+                {translateBuilder(BUILDER.ITEM_METADATA_UPDATED_AT_TITLE)}
               </TableCell>
               <TableCell align="right">{formatDate(item.updatedAt)}</TableCell>
             </TableRow>

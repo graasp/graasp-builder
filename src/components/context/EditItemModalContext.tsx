@@ -4,16 +4,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { FC, createContext, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item, ItemType } from '@graasp/sdk';
-import { BUILDER, COMMON, namespaces } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
-import { useBuilderTranslation } from '../../config/i18n';
+import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { isItemValid } from '../../utils/item';
@@ -32,8 +31,8 @@ const EditItemModalContext = createContext({
 });
 
 const EditItemModalProvider: FC<Props> = ({ children }) => {
-  const { t } = useBuilderTranslation();
-  const { t: commonT } = useTranslation(namespaces.common);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const { mutate: editItem } = useMutation<any, any, any>(
     MUTATION_KEYS.EDIT_ITEM,
   );
@@ -65,7 +64,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
       return;
     }
     if (!isItemValid({ ...item, ...updatedProperties })) {
-      toast.error(t(BUILDER.EDIT_ITEM_ERROR_MESSAGE));
+      toast.error(translateBuilder(BUILDER.EDIT_ITEM_ERROR_MESSAGE));
       return;
     }
 
@@ -113,7 +112,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
   const renderModal = () => (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle id={item?.id}>
-        {t(BUILDER.EDIT_ITEM_MODAL_TITLE)}
+        {translateBuilder(BUILDER.EDIT_ITEM_MODAL_TITLE)}
       </DialogTitle>
       <DialogContent
         sx={{
@@ -125,7 +124,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} variant="text">
-          {commonT(COMMON.CANCEL_BUTTON)}
+          {translateCommon(COMMON.CANCEL_BUTTON)}
         </Button>
         <Button
           // should not allow users to save if the item is not valid
@@ -138,7 +137,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
           onClick={submit}
           id={ITEM_FORM_CONFIRM_BUTTON_ID}
         >
-          {commonT(COMMON.SAVE_BUTTON)}
+          {translateCommon(COMMON.SAVE_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

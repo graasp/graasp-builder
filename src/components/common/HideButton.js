@@ -16,7 +16,7 @@ import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 const HideButton = ({ item, type, onClick }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { data: tags } = hooks.useItemTags(item.id);
   const addTag = useMutation(MUTATION_KEYS.POST_ITEM_TAG);
@@ -44,11 +44,11 @@ const HideButton = ({ item, type, onClick }) => {
   };
 
   const text = hiddenTag
-    ? t(BUILDER.HIDE_ITEM_SHOW_TEXT)
-    : t(BUILDER.HIDE_ITEM_HIDE_TEXT);
+    ? translateBuilder(BUILDER.HIDE_ITEM_SHOW_TEXT)
+    : translateBuilder(BUILDER.HIDE_ITEM_HIDE_TEXT);
   let tooltip = text;
   if (hiddenTag && !isOriginalHiddenItem) {
-    tooltip = t(BUILDER.HIDE_ITEM_HIDDEN_PARENT_INFORMATION);
+    tooltip = translateBuilder(BUILDER.HIDE_ITEM_HIDDEN_PARENT_INFORMATION);
   }
 
   const icon = hiddenTag ? <VisibilityOff /> : <Visibility />;

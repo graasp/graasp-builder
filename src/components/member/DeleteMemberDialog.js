@@ -8,12 +8,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ACCOUNT, COMMON, namespaces } from '@graasp/translations';
+import { ACCOUNT, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
+import { useAccountTranslation, useCommonTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import {
   CONFIRM_DELETE_BUTTON_ID,
@@ -21,8 +21,8 @@ import {
 } from '../../config/selectors';
 
 const DeleteMemberDialog = ({ id }) => {
-  const { t: accountT } = useTranslation(namespaces.account);
-  const { t: commonT } = useTranslation(namespaces.common);
+  const { t: translateAccount } = useAccountTranslation();
+  const { t: translateCommon } = useCommonTranslation();
 
   const [open, setOpen] = useState(false);
   const { mutate: deleteMember } = useMutation(MUTATION_KEYS.DELETE_MEMBER);
@@ -39,16 +39,16 @@ const DeleteMemberDialog = ({ id }) => {
         aria-describedby={alertDialogDescription}
       >
         <DialogTitle id={alertDialogTitle}>
-          {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_TITLE)}
+          {translateAccount(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_TITLE)}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id={alertDialogDescription}>
-            {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_INFORMATION)}
+            {translateAccount(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_INFORMATION)}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)} color="primary" variant="text">
-            {commonT(COMMON.CANCEL_BUTTON)}
+            {translateCommon(COMMON.CANCEL_BUTTON)}
           </Button>
           <Button
             id={CONFIRM_DELETE_BUTTON_ID}
@@ -57,7 +57,9 @@ const DeleteMemberDialog = ({ id }) => {
             autoFocus
             variant="text"
           >
-            {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_CONFIRM_BUTTON)}
+            {translateAccount(
+              ACCOUNT.PROFILE_DELETE_ACCOUNT_MODAL_CONFIRM_BUTTON,
+            )}
           </Button>
         </DialogActions>
       </Dialog>
@@ -71,7 +73,7 @@ const DeleteMemberDialog = ({ id }) => {
         <Grid item xs={8}>
           <Grid item xs={12}>
             <Typography variant="h5">
-              {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_TITLE)}
+              {translateAccount(ACCOUNT.PROFILE_DELETE_ACCOUNT_TITLE)}
             </Typography>
           </Grid>
           <Grid
@@ -91,10 +93,10 @@ const DeleteMemberDialog = ({ id }) => {
               my={1}
               onClick={() => setOpen(true)}
             >
-              {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_BUTTON)}
+              {translateAccount(ACCOUNT.PROFILE_DELETE_ACCOUNT_BUTTON)}
             </Button>
             <Typography variant="caption">
-              {accountT(ACCOUNT.PROFILE_DELETE_ACCOUNT_INFORMATION)}
+              {translateAccount(ACCOUNT.PROFILE_DELETE_ACCOUNT_INFORMATION)}
             </Typography>
           </Grid>
         </Grid>

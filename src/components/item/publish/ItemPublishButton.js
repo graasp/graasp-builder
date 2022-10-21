@@ -29,7 +29,7 @@ const { DELETE_ITEM_TAG, PUBLISH_ITEM } = MUTATION_KEYS;
 const { useTags, useItemTags } = hooks;
 
 const ItemPublishButton = ({ item, isValidated }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   // current item
   const { itemId } = useParams();
@@ -106,14 +106,14 @@ const ItemPublishButton = ({ item, isValidated }) => {
         endIcon={isPublished && <CheckCircleIcon color="primary" />}
         id={ITEM_PUBLISH_BUTTON_ID}
       >
-        {t(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
       </Button>
       <Button
         disabled={!isPublished}
         onClick={handleUnpublish}
         id={ITEM_UNPUBLISH_BUTTON_ID}
       >
-        {t(BUILDER.LIBRARY_SETTINGS_UNPUBLISH_BUTTON)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_UNPUBLISH_BUTTON)}
       </Button>
       <div>
         <FormControlLabel
@@ -126,12 +126,14 @@ const ItemPublishButton = ({ item, isValidated }) => {
               color="primary"
             />
           }
-          label={t(BUILDER.LIBRARY_SETTINGS_PUBLISH_NOTIFICATIONS_LABEL)}
+          label={translateBuilder(
+            BUILDER.LIBRARY_SETTINGS_PUBLISH_NOTIFICATIONS_LABEL,
+          )}
         />
       </div>
       {isPublished && (
         <Typography variant="body1">
-          {t(BUILDER.LIBRARY_SETTINGS_PUBLISHED_STATUS)}
+          {translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISHED_STATUS)}
         </Typography>
       )}
     </>

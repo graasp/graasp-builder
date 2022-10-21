@@ -2,14 +2,16 @@ import { AutocompleteChangeReason, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { FC, SyntheticEvent, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { BUILDER, namespaces } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../../config/i18n';
+import {
+  useBuilderTranslation,
+  useCategoriesTranslation,
+} from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
 import { Category } from '../../../config/types';
@@ -24,8 +26,8 @@ const SELECT_OPTION = 'selectOption';
 const REMOVE_OPTION = 'removeOption';
 
 const CategorySelection: FC = () => {
-  const { t } = useBuilderTranslation();
-  const { t: categoriesT } = useTranslation(namespaces.categories);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCategories } = useCategoriesTranslation();
   const { mutate: createItemCategory } = useMutation<
     any,
     any,
@@ -105,20 +107,24 @@ const CategorySelection: FC = () => {
   return (
     <Box mt={2} id={LIBRARY_SETTINGS_CATEGORIES_ID}>
       <Typography variant="h6" mt={2}>
-        {t(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
+        {translateBuilder(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
       </Typography>
       {categoryTypes?.map(({ id, name }) => {
         const values =
           categoriesMap
             ?.get(id)
             ?.toJS()
-            ?.map((c) => ({ ...c, name: categoriesT(c.name) }))
-            ?.sort(sortByName) ?? [];
+            ?.map((c) => ({ ...c, name: translateCategories(c.name) }))
+            ?.sort(sortByName) ?? ([] as Category[]);
+
+        if (!values.length) {
+          return null;
+        }
 
         return (
           <DropdownMenu
             key={id}
-            title={categoriesT(name)}
+            title={translateCategories(name)}
             handleChange={handleChange(values)}
             values={values}
             selectedValues={itemCategories}

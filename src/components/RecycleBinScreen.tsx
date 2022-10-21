@@ -59,7 +59,7 @@ const ToolbarActions: FC<ToolbarActionsProps> = ({
 );
 
 const RecycleBinScreen: FC = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: items, isLoading, isError } = hooks.useRecycledItems();
 
   if (isError) {
@@ -76,7 +76,7 @@ const RecycleBinScreen: FC = () => {
         <ItemHeader showNavigation={false} />
         <Items
           clickable={false}
-          title={t(BUILDER.RECYCLE_BIN_TITLE)}
+          title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
           items={List(items)}
           actions={RowActions}
           ToolbarActions={ToolbarActions}

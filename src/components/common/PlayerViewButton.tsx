@@ -7,6 +7,7 @@ import { redirect } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { PlayIcon } from '@graasp/ui';
 
+import { ITEM_HEADER_ICON_HEIGHT } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { buildGraaspPlayerView } from '../../config/paths';
 import {
@@ -19,7 +20,7 @@ type Props = {
 };
 
 const PlayerViewButton: FC<Props> = ({ itemId }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const onClick = () => {
     redirect(buildGraaspPlayerView(itemId), {
@@ -29,13 +30,13 @@ const PlayerViewButton: FC<Props> = ({ itemId }) => {
   };
 
   return (
-    <Tooltip title={t(BUILDER.PLAY_BUTTON_TOOLTIP)}>
+    <Tooltip title={translateBuilder(BUILDER.PLAY_BUTTON_TOOLTIP)}>
       <IconButton
-        aria-label={t(BUILDER.PLAY_BUTTON_TOOLTIP)}
+        aria-label={translateBuilder(BUILDER.PLAY_BUTTON_TOOLTIP)}
         onClick={onClick}
         id={buildPlayerButtonId(itemId)}
       >
-        <PlayIcon size={30} primaryColor="grey" />
+        <PlayIcon size={ITEM_HEADER_ICON_HEIGHT} primaryColor="grey" />
       </IconButton>
     </Tooltip>
   );

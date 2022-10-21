@@ -2,7 +2,7 @@ import { USER_ITEM_ORDER } from '../config/constants';
 import { ORDERING } from '../enums';
 
 /**
- * Custum sorting function depending on a given property name
+ * Costum sorting function depending on a given property name
  * @param {object} a
  * @param {object} b
  * @param {string} orderBy property name to sort a and b

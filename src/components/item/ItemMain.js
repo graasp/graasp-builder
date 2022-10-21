@@ -50,7 +50,7 @@ const StyledContainer = styled(Box)(({ theme, open }) => {
 });
 
 const ItemMain = ({ id, children, item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const {
     isItemMetadataMenuOpen,
     setIsItemMetadataMenuOpen,
@@ -78,7 +78,7 @@ const ItemMain = ({ id, children, item }) => {
             direction="rtl"
           >
             <Typography variant="h6">
-              {t(BUILDER.ITEM_CHATBOX_TITLE)}
+              {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
             </Typography>
           </DrawerHeader>
           <Divider />
@@ -93,7 +93,9 @@ const ItemMain = ({ id, children, item }) => {
           // todo
           direction="rtl"
         >
-          <Typography variant="h6">{t(BUILDER.ITEM_METADATA_TITLE)}</Typography>
+          <Typography variant="h6">
+            {translateBuilder(BUILDER.ITEM_METADATA_TITLE)}
+          </Typography>
         </DrawerHeader>
         <Divider />
         <ItemMetadataContent item={item} />

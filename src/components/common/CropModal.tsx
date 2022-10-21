@@ -61,8 +61,8 @@ class CropModal extends Component<Props, State> {
       height = imgWidth / outputImageAspectRatio;
     }
 
-    const y = (imgHeight - height) / 2;
-    const x = (imgWidth - width) / 2;
+    const y = Math.floor((imgHeight - height) / 2);
+    const x = Math.floor((imgWidth - width) / 2);
 
     const crop = {
       width,

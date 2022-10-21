@@ -15,7 +15,7 @@ type Props = {
 };
 
 const BaseForm: FC<Props> = ({ onChange, item, updatedProperties }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
     onChange({ ...updatedProperties, name: event.target.value });
@@ -26,7 +26,7 @@ const BaseForm: FC<Props> = ({ onChange, item, updatedProperties }) => {
       variant="standard"
       autoFocus
       id={ITEM_FORM_NAME_INPUT_ID}
-      label={t(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
+      label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
       value={updatedProperties?.name ?? item?.name}
       onChange={handleNameInput}
       // always shrink because setting name from defined app does not shrink automatically

@@ -74,7 +74,7 @@ describe('View Folder', () => {
       // root title
       cy.get(`#${NAVIGATION_ROOT_ID}`).should(
         'have.text',
-        t(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
+        translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
       );
 
       // visit child
@@ -87,7 +87,7 @@ describe('View Folder', () => {
       // root title
       cy.get(`#${NAVIGATION_ROOT_ID}`).should(
         'have.text',
-        t(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
+        translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
       );
 
       // return parent with navigation and should display children
@@ -103,7 +103,7 @@ describe('View Folder', () => {
       // root title
       cy.get(`#${NAVIGATION_ROOT_ID}`).should(
         'have.text',
-        t(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
+        translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
       );
     });
 
@@ -134,7 +134,7 @@ describe('View Folder', () => {
       // breadcrumb navigation
       cy.get(`#${NAVIGATION_ROOT_ID}`).should(
         'have.text',
-        t(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE),
+        translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE),
       );
     });
 

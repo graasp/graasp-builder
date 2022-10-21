@@ -27,12 +27,16 @@ const EmailPreferenceSwitch: FC<EmailPreferenceSwitchProps> = ({
   >(MUTATION_KEYS.EDIT_MEMBER);
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    editMember({
-      id: memberId,
-      extra: {
-        emailFreq: event.target.value as string,
-      },
-    });
+    if (event.target.value) {
+      editMember({
+        id: memberId,
+        extra: {
+          emailFreq: event.target.value as string,
+        },
+      });
+    } else {
+      console.error(`The frequency ${event.target.value} is not valid`);
+    }
   };
 
   return (

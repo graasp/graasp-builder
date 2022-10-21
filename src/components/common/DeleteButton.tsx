@@ -22,7 +22,7 @@ type Props = {
  * This button opens a dialog to confirm the action
  */
 const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const [open, setOpen] = useState(false);
 
@@ -35,7 +35,7 @@ const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
     setOpen(false);
   };
 
-  const text = t(BUILDER.DELETE_BUTTON);
+  const text = translateBuilder(BUILDER.DELETE_BUTTON);
 
   return (
     <>

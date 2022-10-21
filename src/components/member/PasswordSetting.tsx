@@ -3,12 +3,12 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ACCOUNT, namespaces } from '@graasp/translations';
+import { ACCOUNT } from '@graasp/translations';
 
+import { useAccountTranslation } from '../../config/i18n';
 import { PASSWORD_EMPTY_ERROR } from '../../config/messages';
 import { useMutation } from '../../config/queryClient';
 import {
@@ -25,7 +25,7 @@ import {
 } from '../../utils/validation';
 
 const PasswordSetting: FC = () => {
-  const { t: accountT } = useTranslation(namespaces.account);
+  const { t: translateAccount } = useAccountTranslation();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -89,17 +89,17 @@ const PasswordSetting: FC = () => {
       <Grid container spacing={1} direction="column" my={1}>
         <Grid item xs={12}>
           <Typography variant="h5">
-            {accountT(ACCOUNT.PASSWORD_SETTINGS_TITLE)}
+            {translateAccount(ACCOUNT.PASSWORD_SETTINGS_TITLE)}
           </Typography>
           <Typography variant="body1">
-            {accountT(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_INFORMATION)}
+            {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_INFORMATION)}
           </Typography>
         </Grid>
         <Grid container spacing={2} my={1}>
           <Grid item xs={12} sm={12}>
             <TextField
               required
-              label={accountT(ACCOUNT.PASSWORD_SETTINGS_CURRENT_LABEL)}
+              label={translateAccount(ACCOUNT.PASSWORD_SETTINGS_CURRENT_LABEL)}
               variant="outlined"
               value={currentPassword}
               onChange={handleCurrentPasswordInput}
@@ -107,13 +107,13 @@ const PasswordSetting: FC = () => {
               type="password"
             />
             <Typography variant="subtitle2">
-              {accountT(ACCOUNT.PASSWORD_SETTINGS_CURRENT_INFORMATION)}
+              {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CURRENT_INFORMATION)}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
               required
-              label={accountT(ACCOUNT.PASSWORD_SETTINGS_NEW_LABEL)}
+              label={translateAccount(ACCOUNT.PASSWORD_SETTINGS_NEW_LABEL)}
               variant="outlined"
               value={newPassword}
               error={newPasswordError}
@@ -125,7 +125,9 @@ const PasswordSetting: FC = () => {
             />
             <TextField
               required
-              label={accountT(ACCOUNT.PASSWORD_SETTINGS_NEW_CONFIRM_LABEL)}
+              label={translateAccount(
+                ACCOUNT.PASSWORD_SETTINGS_NEW_CONFIRM_LABEL,
+              )}
               variant="outlined"
               value={confirmPassword}
               error={confirmPasswordError}
@@ -145,7 +147,7 @@ const PasswordSetting: FC = () => {
               // TO DO:
               // onClick={() => handleChangePassword()}
             >
-              {accountT(ACCOUNT.PASSWORD_SETTINGS_REQUEST_RESET_BUTTON)}
+              {translateAccount(ACCOUNT.PASSWORD_SETTINGS_REQUEST_RESET_BUTTON)}
             </Button>
             <Button
               id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
@@ -154,7 +156,7 @@ const PasswordSetting: FC = () => {
               my={1}
               onClick={() => handleChangePassword()}
             >
-              {accountT(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_BUTTON)}
+              {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_BUTTON)}
             </Button>
           </Grid>
         </Grid>

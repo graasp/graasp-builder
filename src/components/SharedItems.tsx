@@ -19,7 +19,7 @@ import Items from './main/Items';
 import Main from './main/Main';
 
 const SharedItems: FC = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
 
   if (isError) {
@@ -36,7 +36,7 @@ const SharedItems: FC = () => {
         <ItemHeader showNavigation={false} />
         <Items
           id={SHARED_ITEMS_ID}
-          title={t(BUILDER.SHARED_ITEMS_TITLE)}
+          title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
           items={List(sharedItems)}
           showCreator
         />

@@ -68,7 +68,7 @@ const ItemMembershipsTable = ({
   emptyMessage,
   showEmail,
 }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: users, isLoading } = hooks.useMembers(
     memberships.map(({ memberId }) => memberId),
   );
@@ -91,7 +91,9 @@ const ItemMembershipsTable = ({
       item,
       onDelete,
       buildIdFunction: buildItemMembershipRowDeleteButtonId,
-      tooltip: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP),
+      tooltip: translateBuilder(
+        BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+      ),
     });
     const PermissionRenderer = TableRowPermissionRenderer({
       item,
@@ -119,7 +121,9 @@ const ItemMembershipsTable = ({
       columns.push({
         headerCheckboxSelection: true,
         checkboxSelection: true,
-        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER,
+        ),
         cellRenderer: EmailCellRenderer,
         field: 'email',
         cellStyle: rowStyle,
@@ -131,7 +135,9 @@ const ItemMembershipsTable = ({
 
     return columns.concat([
       {
-        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER,
+        ),
         cellRenderer: NameCellRenderer,
         field: 'memberId',
         cellStyle: rowStyle,
@@ -139,7 +145,9 @@ const ItemMembershipsTable = ({
         tooltipField: 'name',
       },
       {
-        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER,
+        ),
         cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
         sort: true,
@@ -154,7 +162,9 @@ const ItemMembershipsTable = ({
       {
         field: 'actions',
         cellRenderer: ActionRenderer,
-        headerName: t(BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER,
+        ),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
@@ -173,7 +183,9 @@ const ItemMembershipsTable = ({
     return <Loader />;
   }
   const countTextFunction = (selected) =>
-    t('itemSelected', { count: selected.length });
+    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
+      count: selected.length,
+    });
 
   return (
     <GraaspTable

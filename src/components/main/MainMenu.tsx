@@ -19,7 +19,7 @@ import {
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const MainMenu: FC = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: member } = useContext(CurrentUserContext);
@@ -31,7 +31,11 @@ const MainMenu: FC = () => {
   const renderAuthenticatedMemberMenuItems = () => {
     if (!member || !member.id) {
       return (
-        <MenuItem disabled text={t(BUILDER.HOME_TITLE)} icon={<FolderIcon />} />
+        <MenuItem
+          disabled
+          text={translateBuilder(BUILDER.HOME_TITLE)}
+          icon={<FolderIcon />}
+        />
       );
     }
 
@@ -41,24 +45,24 @@ const MainMenu: FC = () => {
           onClick={() => goTo(HOME_PATH)}
           selected={pathname === HOME_PATH}
           icon={<FolderIcon />}
-          text={t(BUILDER.MY_ITEMS_TITLE)}
+          text={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
         />
         <MenuItem
           onClick={() => goTo(SHARED_ITEMS_PATH)}
-          text={t(BUILDER.SHARED_ITEMS_TITLE)}
+          text={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
           icon={<FolderSharedIcon />}
           selected={pathname === SHARED_ITEMS_PATH}
         />
         <MenuItem
           onClick={() => goTo(FAVORITE_ITEMS_PATH)}
           selected={pathname === FAVORITE_ITEMS_PATH}
-          text={t(BUILDER.FAVORITE_ITEMS_TITLE)}
+          text={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
           icon={<FavoriteIcon />}
         />
         <MenuItem
           onClick={() => goTo(RECYCLE_BIN_PATH)}
           selected={pathname === RECYCLE_BIN_PATH}
-          text={t(BUILDER.RECYCLE_BIN_TITLE)}
+          text={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
           icon={<DeleteIcon />}
         />
       </>

@@ -11,7 +11,7 @@ export const getCroppedImg = (image: HTMLImageElement, crop: PixelCrop, extensio
   canvas.width = crop.width * scaleX;
   canvas.height = crop.height * scaleY;
 
-  ctx?.drawImage(
+  ctx.drawImage(
     image,
     crop.x * scaleX,
     crop.y * scaleY,

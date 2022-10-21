@@ -38,11 +38,7 @@ const DropdownMenu: FC<Props> = ({
   values,
   selectedValues,
 }) => {
-  const { t } = useBuilderTranslation();
-
-  if (!values) {
-    return null;
-  }
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const selected = values.filter(({ id }) =>
     selectedValues?.find(({ categoryId }) => categoryId === id),
@@ -68,7 +64,7 @@ const DropdownMenu: FC<Props> = ({
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             variant="outlined"
-            placeholder={t(BUILDER.DROP_DOWN_PLACEHOLDER)}
+            placeholder={translateBuilder(BUILDER.DROP_DOWN_PLACEHOLDER)}
           />
         )}
         renderOption={(props: unknown, option: Category) => (

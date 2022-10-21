@@ -14,7 +14,7 @@ import NewItemModal from './NewItemModal';
 
 const NewItemButton = ({ fontSize }) => {
   const [open, setOpen] = useState(false);
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,7 +26,11 @@ const NewItemButton = ({ fontSize }) => {
 
   return (
     <>
-      <Tooltip placement="left" title={t(BUILDER.NEW_ITEM_BUTTON)} arrow>
+      <Tooltip
+        placement="left"
+        title={translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+        arrow
+      >
         <Button
           id={CREATE_ITEM_BUTTON_ID}
           fontSize={fontSize}
@@ -38,7 +42,7 @@ const NewItemButton = ({ fontSize }) => {
           }}
         >
           <AddIcon />
-          {t(BUILDER.NEW_ITEM_BUTTON)}
+          {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
         </Button>
       </Tooltip>
       <NewItemModal

@@ -38,7 +38,7 @@ const FileUploader = () => {
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const { t, i18n } = useBuilderTranslation();
+  const { t: translateBuilder, i18n } = useBuilderTranslation();
 
   const closeUploader = () => {
     setIsDragging(false);
@@ -121,7 +121,7 @@ const FileUploader = () => {
     >
       <DragDrop
         uppy={uppy}
-        note={t(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
+        note={translateBuilder(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
           maxFiles: FILE_UPLOAD_MAX_FILES,
           maxSize: humanFileSize(MAX_FILE_SIZE),
         })}

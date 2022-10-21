@@ -46,7 +46,7 @@ type Props = {
 };
 
 const ItemPublishConfiguration: FC<Props> = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   // current item
   const { itemId } = useParams();
 
@@ -131,21 +131,28 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
       case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
         return (
           <Typography variant="body1">
-            {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_AUTOMATIC)}
+            {translateBuilder(
+              BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_AUTOMATIC,
+            )}
           </Typography>
         );
       case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
         return (
           <Typography variant="body1">
-            {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_MANUAL)}
+            {translateBuilder(
+              BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_MANUAL,
+            )}
           </Typography>
         );
       case VALIDATION_STATUS_NAMES.FAILURE:
         return (
           <Typography variant="body1">
-            {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_FAILURE, {
-              contact: ADMIN_CONTACT,
-            })}
+            {translateBuilder(
+              BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_FAILURE,
+              {
+                contact: ADMIN_CONTACT,
+              },
+            )}
           </Typography>
         );
       default:
@@ -156,17 +163,17 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
   return (
     <>
       <Typography variant="h6" mt={2} id={ITEM_PUBLISH_SECTION_TITLE_ID}>
-        {t(BUILDER.LIBRARY_SETTINGS_TITLE)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.LIBRARY_SETTINGS_INFORMATION)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_INFORMATION)}
       </Typography>
       <Typography variant="h6" sx={{ mt: 1, mr: 2 }}>
         <LooksOneIcon color="primary" />
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_TITLE)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_INFORMATIONS)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_INFORMATIONS)}
       </Typography>
       <Button
         id={ITEM_VALIDATION_BUTTON_ID}
@@ -175,18 +182,22 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
         color="primary"
         endIcon={displayItemValidationIcon()}
       >
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON)}
       </Button>
       <Button variant="outlined" onClick={handleRefresh} color="primary">
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON)}
+        {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON)}
       </Button>
       {displayItemValidationMessage()}
       <Typography variant="h6" mt={2} mr={2}>
         <LooksTwoIcon color="primary" />
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_TITLE)}
+        {translateBuilder(
+          BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_TITLE,
+        )}
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_INFORMATIONS)}
+        {translateBuilder(
+          BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_INFORMATIONS,
+        )}
       </Typography>
       <ItemPublishButton
         item={item}
@@ -194,10 +205,14 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
       />
       <Typography variant="h6" mt={2}>
         <Looks3Icon color="primary" sx={{ mr: 2 }} />
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_TITLE)}
+        {translateBuilder(
+          BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_TITLE,
+        )}
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_INFORMATIONS)}
+        {translateBuilder(
+          BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_INFORMATIONS,
+        )}
       </Typography>
       <Box mx={3}>
         <CoEditorSettings item={item} />

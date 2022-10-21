@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 import { Chip, TextField, Typography } from '@mui/material';
 
 import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { BUILDER, COMMON, namespaces } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Loader, SaveButton } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../../config/i18n';
+import {
+  useBuilderTranslation,
+  useCommonTranslation,
+} from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   ITEM_TAGS_EDIT_INPUT_ID,
@@ -23,8 +25,8 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 const CustomizedTagsEdit = ({ item }) => {
-  const { t } = useBuilderTranslation();
-  const { t: commonT } = useTranslation(namespaces.common);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
 
   // user
@@ -67,10 +69,10 @@ const CustomizedTagsEdit = ({ item }) => {
   return (
     <>
       <Typography variant="h6" mt={2}>
-        {t(BUILDER.ITEM_TAGS_TITLE)}
+        {translateBuilder(BUILDER.ITEM_TAGS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t(BUILDER.ITEM_TAGS_INFORMATION)}
+        {translateBuilder(BUILDER.ITEM_TAGS_INFORMATION)}
       </Typography>
       <TextField
         variant="outlined"
@@ -85,13 +87,13 @@ const CustomizedTagsEdit = ({ item }) => {
         onClick={handleSubmit}
         sx={{ marginTop: 1, marginLeft: 2 }}
         id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
-        text={commonT(COMMON.SAVE_BUTTON)}
+        text={translateCommon(COMMON.SAVE_BUTTON)}
         hasChanges
       />
       {settings?.tags?.size && (
         <>
           <Typography variant="subtitle1">
-            {t(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
+            {translateBuilder(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
           </Typography>
           {settings?.tags?.map((tag, index) => (
             <Chip

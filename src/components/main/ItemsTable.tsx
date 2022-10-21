@@ -2,16 +2,19 @@ import { ColDef, IRowDragItem } from 'ag-grid-community';
 import { List, RecordOf } from 'immutable';
 
 import { FC, useCallback, useContext, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item, ItemMembership, ItemType, Member } from '@graasp/sdk';
-import { BUILDER, namespaces } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
-import { useBuilderTranslation } from '../../config/i18n';
+import {
+  useBuilderTranslation,
+  useCommonTranslation,
+  useEnumsTranslation,
+} from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
@@ -67,8 +70,9 @@ const ItemsTable: FC<Props> = ({
   showCreator = false,
   creators = List(),
 }) => {
-  const { t } = useBuilderTranslation();
-  const { t: enumsT } = useTranslation(namespaces.enums);
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
+  const { t: TranslateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
@@ -125,7 +129,6 @@ const ItemsTable: FC<Props> = ({
 
   const onDragEnd = (displayRows: { data: Item }[]) => {
     if (!itemId) {
-      // TODO
       console.error('no item id defined');
     } else {
       const rowIds = displayRows.map((r) => r.data.id);
@@ -146,7 +149,8 @@ const ItemsTable: FC<Props> = ({
     formatDate(value);
 
   const itemRowDragText = (params: IRowDragItem) =>
-    params?.rowNode?.data?.name ?? t(BUILDER.ITEMS_TABLE_DRAG_DEFAULT_MESSAGE);
+    params?.rowNode?.data?.name ??
+    translateBuilder(BUILDER.ITEMS_TABLE_DRAG_DEFAULT_MESSAGE);
 
   const ActionComponent = ActionsCellRenderer({
     memberships,
@@ -160,7 +164,7 @@ const ItemsTable: FC<Props> = ({
       {
         headerCheckboxSelection: true,
         checkboxSelection: true,
-        headerName: t(BUILDER.ITEMS_TABLE_NAME_HEADER),
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
         cellRenderer: NameCellRenderer(showThumbnails),
         flex: 4,
         comparator: GraaspTable.textComparator,
@@ -170,16 +174,16 @@ const ItemsTable: FC<Props> = ({
       },
       {
         field: 'type',
-        headerName: t(BUILDER.ITEMS_TABLE_TYPE_HEADER),
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
         type: 'rightAligned',
-        cellRenderer: ({ data }: { data: Item }) => enumsT(data.type),
+        cellRenderer: ({ data }: { data: Item }) => TranslateEnums(data.type),
         flex: 2,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.type,
       },
       {
         field: 'updatedAt',
-        headerName: t(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
         flex: 3,
         type: 'rightAligned',
         valueFormatter: dateColumnFormatter,
@@ -189,7 +193,7 @@ const ItemsTable: FC<Props> = ({
       {
         field: 'actions',
         cellRenderer: actions ?? ActionComponent,
-        headerName: t(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         cellStyle: {
@@ -205,12 +209,12 @@ const ItemsTable: FC<Props> = ({
       columns.splice(1, 0, {
         field: 'creator',
         flex: 3,
-        headerName: t(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
         colId: 'creator',
         type: 'rightAligned',
         cellRenderer: MemberNameCellRenderer({
           users: creators,
-          defaultValue: t('Unknown'),
+          defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
         }),
         cellStyle: {
           display: 'flex',
@@ -224,7 +228,7 @@ const ItemsTable: FC<Props> = ({
   }, [
     creators,
     showCreator,
-    t,
+    translateBuilder,
     defaultSortedColumn,
     ActionComponent,
     actions,
@@ -232,7 +236,9 @@ const ItemsTable: FC<Props> = ({
   ]);
 
   const countTextFunction = (selected: string[]) =>
-    t(BUILDER.ITEMS_TABLE_SELECTION_TEXT, { count: selected.length });
+    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
+      count: selected.length,
+    });
 
   return (
     <>
@@ -243,7 +249,7 @@ const ItemsTable: FC<Props> = ({
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
         rowData={rows.toJS() as Item[]}
-        emptyMessage={t(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
+        emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
         onCellClicked={onCellClicked}
         getRowId={getRowNodeId}

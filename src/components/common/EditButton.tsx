@@ -16,7 +16,7 @@ type Props = {
 };
 
 const EditButton: FC<Props> = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { openModal } = useContext(EditItemModalContext);
 
   const handleEdit = () => {
@@ -25,9 +25,9 @@ const EditButton: FC<Props> = ({ item }) => {
 
   return (
     <GraaspEditButton
-      tooltip={t(BUILDER.EDIT_ITEM_BUTTON)}
+      tooltip={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
       id={buildEditButtonId(item.id)}
-      ariaLabel={t(BUILDER.EDIT_ITEM_BUTTON)}
+      ariaLabel={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
       className={EDIT_ITEM_BUTTON_CLASS}
       onClick={handleEdit}
     />

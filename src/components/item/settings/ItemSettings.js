@@ -22,7 +22,7 @@ import LinkSettings from './LinkSettings';
 import ThumbnailSetting from './ThumbnailSetting';
 
 const ItemSettings = ({ item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
@@ -69,7 +69,7 @@ const ItemSettings = ({ item }) => {
     );
     return (
       <FormControlLabel
-        label={t(BUILDER.SETTINGS_PIN_ITEM_LABEL)}
+        label={translateBuilder(BUILDER.SETTINGS_PIN_ITEM_LABEL)}
         control={control}
       />
     );
@@ -86,7 +86,7 @@ const ItemSettings = ({ item }) => {
     );
     return (
       <FormControlLabel
-        label={t(BUILDER.SETTINGS_SHOW_CHAT_LABEL)}
+        label={translateBuilder(BUILDER.SETTINGS_SHOW_CHAT_LABEL)}
         control={control}
       />
     );
@@ -105,13 +105,13 @@ const ItemSettings = ({ item }) => {
     );
     const formLabel = (
       <FormControlLabel
-        label={t(BUILDER.SETTINGS_COLLAPSE_LABEL)}
+        label={translateBuilder(BUILDER.SETTINGS_COLLAPSE_LABEL)}
         control={control}
       />
     );
     const tooltip = disabled ? (
       <Tooltip
-        title={t(BUILDER.SETTINGS_COLLAPSE_FOLDER_INFORMATION)}
+        title={translateBuilder(BUILDER.SETTINGS_COLLAPSE_FOLDER_INFORMATION)}
         placement="right"
         m={0}
         p={0}
@@ -129,7 +129,9 @@ const ItemSettings = ({ item }) => {
 
   return (
     <Container disableGutters mt={2}>
-      <Typography variant="h4">{t(BUILDER.SETTINGS_TITLE)}</Typography>
+      <Typography variant="h4">
+        {translateBuilder(BUILDER.SETTINGS_TITLE)}
+      </Typography>
 
       <FormGroup>
         {renderPinSetting()}

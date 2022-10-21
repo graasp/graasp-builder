@@ -124,7 +124,7 @@ describe('Item Settings', () => {
       cy.get(`#${SETTINGS_LINK_SHOW_BUTTON_ID}`).should('not.exist');
     });
 
-    it.only('Toggle Iframe', () => {
+    it('Toggle Iframe', () => {
       const itemId = GRAASP_LINK_ITEM.id;
 
       cy.visit(buildItemPath(itemId));

@@ -13,7 +13,7 @@ import TreeModal from '../main/TreeModal';
 const CopyItemModalContext = createContext();
 
 const CopyItemModalProvider = ({ children }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: copyItems } = useMutation(MUTATION_KEYS.COPY_ITEMS);
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState(false);
@@ -49,7 +49,7 @@ const CopyItemModalProvider = ({ children }) => {
         open={open}
         itemIds={itemIds}
         onConfirm={onConfirm}
-        title={t(BUILDER.COPY_ITEM_MODAL_TITLE)}
+        title={translateBuilder(BUILDER.COPY_ITEM_MODAL_TITLE)}
       />
     );
   };

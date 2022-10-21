@@ -15,12 +15,12 @@ import {
 } from '../../../utils/itemExtra';
 
 const LinkForm = ({ onChange, item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleLinkInput = (event) => {
     onChange({
       ...item,
-      name: t(BUILDER.LINK_DEFAULT_NAME), // todo: this is replaced by iframely
+      name: translateBuilder(BUILDER.LINK_DEFAULT_NAME), // todo: this is replaced by iframely
       extra: buildEmbeddedLinkExtra({ url: event.target.value }),
     });
   };
@@ -30,18 +30,20 @@ const LinkForm = ({ onChange, item }) => {
 
   return (
     <>
-      <Typography variant="h6">{t(BUILDER.CREATE_ITEM_LINK_TITLE)}</Typography>
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
+      </Typography>
       <TextField
         id={ITEM_FORM_LINK_INPUT_ID}
         error={isLinkInvalid}
         autoFocus
         margin="dense"
-        label={t(BUILDER.CREATE_ITEM_LINK_LABEL)}
+        label={translateBuilder(BUILDER.CREATE_ITEM_LINK_LABEL)}
         value={url}
         onChange={handleLinkInput}
         helperText={
           Boolean(isLinkInvalid) &&
-          t(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR)
+          translateBuilder(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR)
         }
         fullWidth
       />

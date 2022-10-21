@@ -17,7 +17,6 @@ import {
 } from './config/constants';
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
 import './index.css';
-import * as serviceWorker from './serviceWorker';
 
 if (SENTRY_DSN) {
   Sentry.init({
@@ -44,8 +43,3 @@ ReactDOM.render(
   </StrictMode>,
   document.getElementById('root'),
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

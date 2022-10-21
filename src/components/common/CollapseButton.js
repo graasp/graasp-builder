@@ -18,7 +18,7 @@ import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 const CollapseButton = ({ item, type, onClick }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
   const [isCollapsible, setIsCollapsible] = useState(
@@ -42,8 +42,8 @@ const CollapseButton = ({ item, type, onClick }) => {
 
   const icon = isCollapsible ? <ExpandLessIcon /> : <ExpandMoreIcon />;
   const text = isCollapsible
-    ? t(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)
-    : t(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
+    ? translateBuilder(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)
+    : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
 
   switch (type) {
     case BUTTON_TYPES.MENU_ITEM:

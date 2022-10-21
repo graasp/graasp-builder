@@ -20,7 +20,7 @@ const ImportH5P = () => {
   const [uppy, setUppy] = useState(null);
   const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const onComplete = (result) => {
     // update app on complete
@@ -68,15 +68,17 @@ const ImportH5P = () => {
 
   return (
     <>
-      <Typography variant="h6">{t(BUILDER.IMPORT_H5P_TITLE)}</Typography>
-      <Typography variant="body" paragraph>
-        {t(BUILDER.IMPORT_H5P_INFORMATIONS)}
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(BUILDER.IMPORT_H5P_WARNING)}
+        {translateBuilder(BUILDER.IMPORT_H5P_INFORMATIONS)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(BUILDER.IMPORT_H5P_LIMITATIONS_TEXT, {
+        {translateBuilder(BUILDER.IMPORT_H5P_WARNING)}
+      </Typography>
+      <Typography variant="body" paragraph>
+        {translateBuilder(BUILDER.IMPORT_H5P_LIMITATIONS_TEXT, {
           maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
         })}
       </Typography>

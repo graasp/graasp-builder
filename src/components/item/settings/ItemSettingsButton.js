@@ -19,7 +19,7 @@ import { LayoutContext } from '../../context/LayoutContext';
 
 const ItemSettingsButton = ({ id }) => {
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const onClickSettings = () => {
     setOpenedActionTabId(
@@ -30,7 +30,7 @@ const ItemSettingsButton = ({ id }) => {
   };
 
   return (
-    <Tooltip title={t(BUILDER.SETTINGS_TITLE)}>
+    <Tooltip title={translateBuilder(BUILDER.SETTINGS_TITLE)}>
       <IconButton
         onClick={onClickSettings}
         className={ITEM_SETTINGS_BUTTON_CLASS}

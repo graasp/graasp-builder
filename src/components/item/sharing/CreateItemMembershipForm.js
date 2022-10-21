@@ -32,7 +32,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
   const [error, setError] = useState(false);
 
   const { mutateAsync: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
   const [invitation, setInvitation] = useState(buildInvitation());
@@ -40,14 +40,20 @@ const CreateItemMembershipForm = ({ item, members }) => {
   const isInvitationInvalid = ({ email }) => {
     // check mail validity
     if (!email) {
-      return t(BUILDER.SHARE_ITEM_FORM_INVITATION_EMPTY_EMAIL_MESSAGE);
+      return translateBuilder(
+        BUILDER.SHARE_ITEM_FORM_INVITATION_EMPTY_EMAIL_MESSAGE,
+      );
     }
     if (!validator.isEmail(email)) {
-      return t(BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE);
+      return translateBuilder(
+        BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE,
+      );
     }
     // check mail does not already exist
     if (members.find(({ email: thisEmail }) => thisEmail === email)) {
-      return t(BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE);
+      return translateBuilder(
+        BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
+      );
     }
     return false;
   };
@@ -113,7 +119,9 @@ const CreateItemMembershipForm = ({ item, members }) => {
   };
 
   const renderInvitationStatus = () => (
-    <Tooltip title={t(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}>
+    <Tooltip
+      title={translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
+    >
       <IconButton aria-label="status">
         <ErrorOutlineIcon />
       </IconButton>
@@ -128,7 +136,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
         disabled={disabled}
         id={SHARE_ITEM_SHARE_BUTTON_ID}
       >
-        {t(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
+        {translateBuilder(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
       </Button>
     );
   };
@@ -145,7 +153,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
             }}
             id={SHARE_ITEM_EMAIL_INPUT_ID}
             variant="outlined"
-            label={t(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
+            label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
             error={Boolean(error)}
             helperText={error}
             onChange={onChangeEmail}

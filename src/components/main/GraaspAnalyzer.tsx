@@ -1,7 +1,6 @@
 import { RecordOf } from 'immutable';
 
 import { FC, useContext, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Context, Item } from '@graasp/sdk';
 
@@ -9,6 +8,7 @@ import {
   DEFAULT_ANALYZER_HEIGHT,
   buildGraaspAnalyzerLink,
 } from '../../config/constants';
+import { useEnumsTranslation } from '../../config/i18n';
 import { buildGraaspAnalyzerId } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
 
@@ -18,7 +18,7 @@ type Props = {
 
 // todo: use as component
 const GraaspAnalyzer: FC<Props> = ({ item }) => {
-  const { t } = useTranslation();
+  const { t } = useEnumsTranslation();
   const { setOpenedActionTabId } = useContext(LayoutContext);
   const { id } = item;
 

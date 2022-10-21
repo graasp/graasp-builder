@@ -36,7 +36,7 @@ import ModeButton from './ModeButton';
 const { useItemMemberships } = hooks;
 
 const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const {
     setEditingItemId,
     editingItemId,
@@ -64,7 +64,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       const activeActions = (
         <>
           {showEditButton && (
-            <Tooltip title={t(BUILDER.EDIT_BUTTON_TOOLTIP)}>
+            <Tooltip title={translateBuilder(BUILDER.EDIT_BUTTON_TOOLTIP)}>
               <IconButton
                 aria-label="edit"
                 onClick={() => {
@@ -78,7 +78,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
           )}
           <ShareButton itemId={id} />
           <ChatboxButton
-            tooltip={t(BUILDER.ITEM_CHATBOX_TITLE)}
+            tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
             id={ITEM_CHATBOX_BUTTON_ID}
             onClick={onClickChatbox}
           />
@@ -111,7 +111,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       {renderItemActions()}
       {renderTableActions()}
       {id && (
-        <Tooltip title={t(BUILDER.ITEM_METADATA_TITLE)}>
+        <Tooltip title={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}>
           <IconButton
             id={ITEM_INFORMATION_BUTTON_ID}
             onClick={onClickMetadata}

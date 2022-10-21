@@ -23,12 +23,16 @@ const LanguageSwitch: FC<Props> = ({ id, memberId, lang }) => {
   >(MUTATION_KEYS.EDIT_MEMBER);
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    editMember({
-      id: memberId,
-      extra: {
-        lang: event.target.value as string,
-      },
-    });
+    if (event.target.value) {
+      editMember({
+        id: memberId,
+        extra: {
+          lang: event.target.value as string,
+        },
+      });
+    } else {
+      console.error(`The lang ${event.target.value} is not valid`);
+    }
   };
 
   return (

@@ -43,7 +43,7 @@ type Props = {
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const [newName, setNewName] = useState(item?.name);
 
   // todo: not clear if newValue is a string or object
@@ -71,7 +71,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   return (
     <div>
       <Typography variant="h6">
-        {t(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
+        {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
       </Typography>
       <BaseItemForm
         onChange={onChange}
@@ -121,7 +121,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
               variant="standard"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
-              label={t(BUILDER.CREATE_NEW_ITEM_APP_URL_LABEL)}
+              label={translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_URL_LABEL)}
             />
           )}
         />

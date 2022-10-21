@@ -28,7 +28,7 @@ const MoveButton: FC<MoveButtonProps> = ({
   type = BUTTON_TYPES.ICON_BUTTON,
   onClick,
 }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { openModal: openMoveModal } = useContext(MoveItemModalContext);
 
@@ -43,7 +43,7 @@ const MoveButton: FC<MoveButtonProps> = ({
       type={type}
       id={id}
       onClick={handleMove}
-      text={t(BUILDER.MOVE_BUTTON)}
+      text={translateBuilder(BUILDER.MOVE_BUTTON)}
       menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
       iconClassName={ITEM_MOVE_BUTTON_CLASS}
     />

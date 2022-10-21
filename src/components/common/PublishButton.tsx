@@ -20,7 +20,7 @@ type Props = {
 };
 
 const PublishButton: FC<Props> = ({ itemId }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {
@@ -31,7 +31,7 @@ const PublishButton: FC<Props> = ({ itemId }) => {
     );
   };
 
-  const title = t(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE);
+  const title = translateBuilder(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE);
 
   return (
     <Tooltip title={title}>

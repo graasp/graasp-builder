@@ -15,7 +15,7 @@ type Props = {
 };
 
 const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: editItem } = useMutation<
     any,
     any,
@@ -41,7 +41,9 @@ const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
     <TextEditor
       value={parentItem?.description}
       edit={isEditing}
-      placeholderText={t(BUILDER.EDIT_FOLDER_DESCRIPTION_PLACEHOLDER)}
+      placeholderText={translateBuilder(
+        BUILDER.EDIT_FOLDER_DESCRIPTION_PLACEHOLDER,
+      )}
       showActions
       onSave={onDescriptionSave}
       saveButtonId={buildSaveButtonId(itemId)}

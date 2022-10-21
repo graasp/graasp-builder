@@ -16,7 +16,7 @@ describe('Search Item in Grid', () => {
   const child3 = SAMPLE_ITEMS.items.find((it) => it.name === 'own_item_name3');
   const child4 = SAMPLE_ITEMS.items.find((it) => it.name === 'own_item_name4');
 
-  it.only('searches in grid successfully', () => {
+  it('searches in grid successfully', () => {
     cy.setUpApi(SAMPLE_ITEMS);
 
     // visit child

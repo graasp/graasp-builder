@@ -10,7 +10,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 
 export const DownloadButton = ({ id, name }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const {
     mutate: downloadItem,
@@ -38,7 +38,7 @@ export const DownloadButton = ({ id, name }) => {
     <Button
       handleDownload={handleDownload}
       isLoading={isDownloading}
-      title={t(BUILDER.DOWNLOAD_ITEM_BUTTON)}
+      title={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
     />
   );
 };

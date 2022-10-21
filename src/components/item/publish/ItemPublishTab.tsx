@@ -1,7 +1,9 @@
 import { RecordOf } from 'immutable';
 
 import { Typography } from '@mui/material';
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+
+import { FC } from 'react';
 
 import { Item, PermissionLevel } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
@@ -9,7 +11,6 @@ import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
-import { PERMISSION_LEVELS } from '../../../enums';
 import { isItemPublic } from '../../../utils/itemTag';
 import ItemPublishConfiguration from './ItemPublishConfiguration';
 
@@ -24,29 +25,31 @@ const ItemPublishTab: FC<Props> = ({
   item,
   permission = PermissionLevel.Read,
 }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.id,
   );
 
   const isPublic = isItemPublic({ tags, itemTags });
-  const canPublish = permission === PERMISSION_LEVELS.ADMIN && isPublic;
+  const canPublish = permission === PermissionLevel.ADMIN && isPublic;
 
   if (isTagsLoading || isItemTagsLoading) {
     return <Loader />;
   }
 
   return (
-    <Container disableGutters mt={2}>
+    <Box m={2}>
       {canPublish ? (
         <ItemPublishConfiguration item={item} />
       ) : (
         <Typography variant="body1">
-          {t(BUILDER.LIBRARY_SETTINGS_NOT_PUBLISHED_ITEM_MESSAGE)}
+          {translateBuilder(
+            BUILDER.LIBRARY_SETTINGS_NOT_PUBLISHED_ITEM_MESSAGE,
+          )}
         </Typography>
       )}
-    </Container>
+    </Box>
   );
 };
 

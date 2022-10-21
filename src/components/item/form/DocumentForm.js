@@ -12,7 +12,7 @@ import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
 
 const DocumentForm = ({ onChange, item, updatedProperties }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleOnChange = (content) => {
     onChange({
@@ -28,7 +28,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
   return (
     <>
       <Typography variant="h6">
-        {t(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
+        {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
       </Typography>
       <BaseForm
         onChange={onChange}
@@ -41,7 +41,7 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
           value={value}
           onChange={handleOnChange}
           edit
-          placeholderText={t(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
+          placeholderText={translateBuilder(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
           showActions={false}
         />
       </Box>

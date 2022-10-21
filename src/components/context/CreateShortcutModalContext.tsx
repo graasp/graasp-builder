@@ -23,7 +23,7 @@ type Props = {
 };
 
 const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: createShortcut } = useMutation<any, any, any>(
     MUTATION_KEYS.POST_ITEM,
   );
@@ -42,7 +42,9 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
 
   const onConfirm = ({ id: target, to }) => {
     const shortcut = {
-      name: t(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, { name: item.name }),
+      name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {
+        name: item.name,
+      }),
       extra: buildShortcutExtra(target[0]),
       type: ItemType.SHORTCUT,
     };
@@ -66,7 +68,7 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
         open={open}
         itemIds={[item.id]}
         onConfirm={onConfirm}
-        title={t(BUILDER.CREATE_SHORTCUT_MODAL_TITLE)}
+        title={translateBuilder(BUILDER.CREATE_SHORTCUT_MODAL_TITLE)}
       />
     );
   };

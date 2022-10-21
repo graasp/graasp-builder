@@ -9,6 +9,7 @@ import { ITEM_PANEL_ID } from '../../config/selectors';
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   width: RIGHT_MENU_WIDTH,
   flexShrink: 0,
+  // todo: move this to the UI theme.
   '.MuiDrawer-paper': {
     padding: theme.spacing(0, 1),
     boxSizing: 'border-box',

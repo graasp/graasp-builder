@@ -34,7 +34,7 @@ describe('Co-editor Setting', () => {
     });
   });
 
-  it.only('Change choice', () => {
+  it('Change choice', () => {
     const item = ITEM_WITH_CATEGORIES;
     visitItemPage(item);
 

@@ -11,7 +11,7 @@ import { useMutation } from '../../../config/queryClient';
 import { PERMISSION_LEVELS } from '../../../enums';
 
 const ResendInvitationRenderer = (item) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const itemId = item.id;
   const { mutate: resendInvitation } = useMutation(
     MUTATION_KEYS.RESEND_INVITATION,
@@ -27,7 +27,7 @@ const ResendInvitationRenderer = (item) => {
 
     return (
       <Button variant="outlined" onClick={resendEmail} disabled={clicked}>
-        {t(BUILDER.SHARING_INVITATIONS_RESEND_BUTTON)}
+        {translateBuilder(BUILDER.SHARING_INVITATIONS_RESEND_BUTTON)}
       </Button>
     );
   };

@@ -5,7 +5,7 @@
   "singleQuote": true,
   "bracketSpacing": true,
   "arrowParens": "always",
-  "importOrder": ["^@mui","^react",  "^@?graasp", "^[./]"],
+  "importOrder": ["^@mui", "^react", "^@?graasp", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }

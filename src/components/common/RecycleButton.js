@@ -18,7 +18,7 @@ import {
 } from '../../config/selectors';
 
 const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: recycleItems } = useMutation(MUTATION_KEYS.RECYCLE_ITEMS);
 
   const handleClick = () => {
@@ -26,7 +26,7 @@ const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
     onClick?.();
   };
 
-  const text = t(BUILDER.RECYCLE_ITEM_BUTTON);
+  const text = translateBuilder(BUILDER.RECYCLE_ITEM_BUTTON);
 
   switch (type) {
     case BUTTON_TYPES.MENU_ITEM:

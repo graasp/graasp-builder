@@ -27,7 +27,7 @@ const rowStyle = {
 };
 
 const InvitationsTable = ({ invitations, item, emptyMessage }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: editInvitation } = useMutation(
     MUTATION_KEYS.PATCH_INVITATION,
   );
@@ -48,7 +48,9 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
     item,
     onDelete,
     buildIdFunction: buildItemInvitationRowDeleteButtonId,
-    tooltip: t(BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP),
+    tooltip: translateBuilder(
+      BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+    ),
   });
 
   const PermissionRenderer = TableRowPermissionRenderer({
@@ -82,14 +84,16 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         headerCheckboxSelection: true,
         checkboxSelection: true,
         comparator: GraaspTable.textComparator,
-        headerName: t(BUILDER.INVITATIONS_TABLE_EMAIL_HEADER),
+        headerName: translateBuilder(BUILDER.INVITATIONS_TABLE_EMAIL_HEADER),
         field: 'email',
         cellStyle: rowStyle,
         flex: 1,
         tooltipField: 'email',
       },
       {
-        headerName: t(BUILDER.INVITATIONS_TABLE_INVITATION_HEADER),
+        headerName: translateBuilder(
+          BUILDER.INVITATIONS_TABLE_INVITATION_HEADER,
+        ),
         sortable: false,
         cellRenderer: InvitationRenderer,
         cellStyle: rowStyle,
@@ -97,7 +101,9 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         field: 'email',
       },
       {
-        headerName: t(BUILDER.INVITATIONS_TABLE_PERMISSION_HEADER),
+        headerName: translateBuilder(
+          BUILDER.INVITATIONS_TABLE_PERMISSION_HEADER,
+        ),
         cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
         type: 'rightAligned',
@@ -106,7 +112,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       {
         field: 'actions',
         cellRenderer: ActionRenderer,
-        headerName: t(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
+        headerName: translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
@@ -118,11 +124,13 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, InvitationRenderer, PermissionRenderer, ActionRenderer],
+    [translateBuilder, InvitationRenderer, PermissionRenderer, ActionRenderer],
   );
 
   const countTextFunction = (selected) =>
-    t('itemSelected', { count: selected.length });
+    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
+      count: selected.length,
+    });
 
   return (
     <GraaspTable

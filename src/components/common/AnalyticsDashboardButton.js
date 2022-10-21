@@ -15,7 +15,7 @@ import { buildDashboardButtonId } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
 
 const AnalyticsDashboardButton = ({ id }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {
@@ -27,9 +27,9 @@ const AnalyticsDashboardButton = ({ id }) => {
   };
 
   return (
-    <Tooltip title={t(BUILDER.ANALYTICS_DASHBOARD_LABEL)}>
+    <Tooltip title={translateBuilder(BUILDER.ANALYTICS_DASHBOARD_LABEL)}>
       <IconButton
-        aria-label={t(BUILDER.ANALYTICS_DASHBOARD_LABEL)}
+        aria-label={translateBuilder(BUILDER.ANALYTICS_DASHBOARD_LABEL)}
         onClick={onClick}
         id={buildDashboardButtonId(id)}
       >

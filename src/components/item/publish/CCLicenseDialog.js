@@ -8,12 +8,13 @@ import {
   DialogTitle,
 } from '@mui/material';
 
-import { useTranslation } from 'react-i18next';
-
-import { BUILDER, COMMON, namespaces } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../../config/i18n';
+import {
+  useBuilderTranslation,
+  useCommonTranslation,
+} from '../../../config/i18n';
 
 const CCLicenseDialog = ({
   open,
@@ -22,8 +23,8 @@ const CCLicenseDialog = ({
   buttonName,
   handleSubmit,
 }) => {
-  const { t: commonT } = useTranslation(namespaces.common);
-  const { t } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,18 +46,20 @@ const CCLicenseDialog = ({
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
-          {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_TITLE)}
+          {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_TITLE)}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {t(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_CONTENT)}
+            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_CONTENT)}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus variant="text">
-            {commonT(COMMON.CANCEL_BUTTON)}
+            {translateCommon(COMMON.CANCEL_BUTTON)}
           </Button>
-          <Button onClick={handleSubmit}>{t(BUILDER.CONFIRM_BUTTON)}</Button>
+          <Button onClick={handleSubmit}>
+            {translateBuilder(BUILDER.CONFIRM_BUTTON)}
+          </Button>
         </DialogActions>
       </Dialog>
     </>

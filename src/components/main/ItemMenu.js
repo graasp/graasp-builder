@@ -35,7 +35,7 @@ import CopyButton from './CopyButton';
 const ItemMenu = ({ item, canEdit }) => {
   const { data: member } = useContext(CurrentUserContext);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
@@ -131,7 +131,7 @@ const ItemMenu = ({ item, canEdit }) => {
             <ListItemIcon>
               <LabelImportantIcon />
             </ListItemIcon>
-            {t(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
+            {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
           </MenuItem>
           <MenuItem
             onClick={handleFlag}
@@ -140,7 +140,7 @@ const ItemMenu = ({ item, canEdit }) => {
             <ListItemIcon>
               <FlagIcon />
             </ListItemIcon>
-            {t(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
+            {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
           </MenuItem>
         </Menu>
       )}

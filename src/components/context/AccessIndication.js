@@ -6,12 +6,12 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { ACCESS_INDICATION_ID } from '../../config/selectors';
 import { hasItemLoginEnabled, isItemPublic } from '../../utils/itemTag';
@@ -19,7 +19,7 @@ import ItemMemberships from '../item/ItemMemberships';
 import { LayoutContext } from './LayoutContext';
 
 const AccessIndication = ({ itemId, onClick }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { data: tags, isLoading: isTagsLoading } = hooks.useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } =
@@ -42,15 +42,15 @@ const AccessIndication = ({ itemId, onClick }) => {
   let accessText = null;
   let tooltipText = null;
   if (isPublic) {
-    accessText = t(BUILDER.ACCESS_PUBLIC_TAG);
-    tooltipText = t(BUILDER.ACCESS_PUBLIC_TAG_TOOLTIP);
+    accessText = translateBuilder(BUILDER.ACCESS_PUBLIC_TAG);
+    tooltipText = translateBuilder(BUILDER.ACCESS_PUBLIC_TAG_TOOLTIP);
   } else if (hasItemLogin) {
-    accessText = t(BUILDER.ACCESS_ITEM_LOGIN_TAG);
-    tooltipText = t(BUILDER.ACCESS_ITEM_LOGIN_TAG_TOOLTIP);
+    accessText = translateBuilder(BUILDER.ACCESS_ITEM_LOGIN_TAG);
+    tooltipText = translateBuilder(BUILDER.ACCESS_ITEM_LOGIN_TAG_TOOLTIP);
   }
 
   if (accessText && tooltipText) {
-    const text = `${t(BUILDER.ACCESS_TITLE)}: ${accessText}`;
+    const text = `${translateBuilder(BUILDER.ACCESS_TITLE)}: ${accessText}`;
     return (
       <Grid
         container

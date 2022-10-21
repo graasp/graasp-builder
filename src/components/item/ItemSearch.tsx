@@ -15,7 +15,7 @@ import {
 } from '../../config/selectors';
 
 export const NoItemSearchResult: FC = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   return (
     <Typography
@@ -24,7 +24,7 @@ export const NoItemSearchResult: FC = () => {
       align="center"
       display="block"
     >
-      {t(BUILDER.ITEM_SEARCH_NO_RESULTS_MESSAGE)}
+      {translateBuilder(BUILDER.ITEM_SEARCH_NO_RESULTS_MESSAGE)}
     </Typography>
   );
 };
@@ -36,7 +36,7 @@ export const useItemSearch = (
   text: string;
   input: JSX.Element;
 } => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const [searchText, setSearchText] = useState<string>('');
 
   const handleSearchInput = (event: ChangeEvent<{ value: string }>) => {
@@ -54,7 +54,7 @@ export const useItemSearch = (
       onChange={handleSearchInput}
       value={searchText}
       inputBaseId={ITEM_SEARCH_INPUT_ID}
-      placeholder={t(BUILDER.ITEM_SEARCH_PLACEHOLDER)}
+      placeholder={translateBuilder(BUILDER.ITEM_SEARCH_PLACEHOLDER)}
     />
   );
   return { results, text: searchText, input: itemSearchInput };

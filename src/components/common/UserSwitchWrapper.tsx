@@ -33,7 +33,7 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     isSuccess: isSuccessUser,
   } = useContext(CurrentUserContext);
   const navigate = useNavigate();
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = useMutation<any, any, any>(
     MUTATION_KEYS.SIGN_OUT,
   );
@@ -55,10 +55,12 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
       isCurrentMemberSuccess={isSuccessUser}
       useAvatar={hooks.useAvatar}
       switchMember={switchMember}
-      seeProfileText={t(BUILDER.USER_SWITCH_PROFILE_BUTTON)}
-      signedOutTooltipText={t(BUILDER.USER_SWITCH_SIGNED_OUT_TOOLTIP)}
-      signOutText={t(BUILDER.USER_SWITCH_SIGN_OUT_BUTTON)}
-      switchMemberText={t(BUILDER.USER_SWITCH_SWITCH_USER_TEXT)}
+      seeProfileText={translateBuilder(BUILDER.USER_SWITCH_PROFILE_BUTTON)}
+      signedOutTooltipText={translateBuilder(
+        BUILDER.USER_SWITCH_SIGNED_OUT_TOOLTIP,
+      )}
+      signOutText={translateBuilder(BUILDER.USER_SWITCH_SIGN_OUT_BUTTON)}
+      switchMemberText={translateBuilder(BUILDER.USER_SWITCH_SWITCH_USER_TEXT)}
       profilePath={MEMBER_PROFILE_PATH}
       domain={DOMAIN}
       redirectPath={SIGN_IN_PATH}

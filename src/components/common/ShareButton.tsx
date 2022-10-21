@@ -16,7 +16,7 @@ type Props = {
 };
 
 const ShareButton: FC<Props> = ({ itemId }) => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
   const onClick = () => {
@@ -29,8 +29,8 @@ const ShareButton: FC<Props> = ({ itemId }) => {
 
   return (
     <GraaspShareButton
-      tooltip={t(BUILDER.SHARE_ITEM_BUTTON)}
-      ariaLabel={t(BUILDER.SHARE_ITEM_BUTTON)}
+      tooltip={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
+      ariaLabel={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
       className={SHARE_ITEM_BUTTON_CLASS}
       onClick={onClick}
       open={openedActionTabId === ITEM_ACTION_TABS.SHARING}

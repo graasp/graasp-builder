@@ -17,7 +17,7 @@ import { UppyContext } from './UppyContext';
 
 const FileDashboardUploader = () => {
   const { uppy } = useContext(UppyContext);
-  const { t, i18n } = useBuilderTranslation();
+  const { t: translateBuilder, i18n } = useBuilderTranslation();
 
   if (!uppy) {
     return <ErrorAlert />;
@@ -25,12 +25,14 @@ const FileDashboardUploader = () => {
 
   return (
     <>
-      <Typography variant="h6">{t(BUILDER.UPLOAD_FILE_TITLE)}</Typography>
-      <Typography variant="body" paragraph>
-        {t(BUILDER.UPLOAD_FILE_INFORMATIONS)}
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
+        {translateBuilder(BUILDER.UPLOAD_FILE_INFORMATIONS)}
+      </Typography>
+      <Typography variant="body" paragraph>
+        {translateBuilder(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
           maxFiles: FILE_UPLOAD_MAX_FILES,
           maxSize: humanFileSize(MAX_FILE_SIZE),
         })}

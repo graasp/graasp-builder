@@ -27,7 +27,7 @@ import Items from './Items';
 import Main from './Main';
 
 const FavoriteItems = () => {
-  const { t } = useBuilderTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const {
     data: member,
     isLoading: isMemberLoading,
@@ -68,7 +68,7 @@ const FavoriteItems = () => {
     return (
       <Items
         id={FAVORITE_ITEMS_ID}
-        title={t(BUILDER.FAVORITE_ITEMS_TITLE)}
+        title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
         items={getExistingItems(favoriteItems)}
       />
     );
