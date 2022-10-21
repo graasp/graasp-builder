@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item, ItemMembership, ItemType, Member } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';

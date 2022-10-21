@@ -32,7 +32,7 @@ const ItemPublishTab: FC<Props> = ({
   );
 
   const isPublic = isItemPublic({ tags, itemTags });
-  const canPublish = permission === PermissionLevel.ADMIN && isPublic;
+  const canPublish = permission === PermissionLevel.Admin && isPublic;
 
   if (isTagsLoading || isItemTagsLoading) {
     return <Loader />;

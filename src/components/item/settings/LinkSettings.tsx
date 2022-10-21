@@ -30,7 +30,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
   const { settings } = item;
 
   const handleIframeSetting = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event?.target?.checked) {
+    if (event?.target?.checked !== settings?.showLinkIframe) {
       editItem({
         id: item.id,
         name: item.name,
@@ -44,7 +44,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
   };
 
   const handleButtonSetting = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event?.target?.checked) {
+    if (event?.target?.checked !== settings?.showLinkButton) {
       editItem({
         id: item.id,
         name: item.name,

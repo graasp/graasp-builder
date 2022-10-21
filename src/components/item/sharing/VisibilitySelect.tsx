@@ -185,10 +185,10 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
       return (
         <span style={{ fontWeight: 'bold' }}>
           {itemLogin?.loginSchema === SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME
-            ? t(
+            ? translateBuilder(
                 BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL,
               )
-            : t(
+            : translateBuilder(
                 BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL,
               )}
         </span>
@@ -203,12 +203,12 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
         id={SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}
       >
         <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME}>
-          {t(
+          {translateBuilder(
             BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL,
           )}
         </MenuItem>
         <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD}>
-          {t(
+          {translateBuilder(
             BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL,
           )}
         </MenuItem>
@@ -221,7 +221,7 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
       case SETTINGS.ITEM_LOGIN.name:
         return (
           <>
-            {t(
+            {translateBuilder(
               BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSSAGE,
             )}
             {renderLoginSchemaSelect()}

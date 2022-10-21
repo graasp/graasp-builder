@@ -30,7 +30,7 @@ import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
 import { expectFolderViewScreenLayout } from './utils';
 
-const t = (key) => i18n.t(key, { ns: namespaces.builder });
+const translateBuilder = (key) => i18n.t(key, { ns: namespaces.builder });
 
 describe('View Folder', () => {
   describe('Grid', () => {
