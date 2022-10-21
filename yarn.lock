@@ -2203,9 +2203,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox.git#54/mui5":
+"@graasp/chatbox@github:graasp/graasp-chatbox.git":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=3a16dbceef62742ead04255d5d89f19fbf3264ba"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=7e7bbc13e44a9ce8574d437fcfff5de68dd2f990"
   dependencies:
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
@@ -2232,13 +2232,13 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 6adceddab4789f723b7aa45fa106e2d105e6f46810a1eb559491cadaa7d1d39f19c8ae8e86a8d4521f3947d1a1d3eb80aecd34f2ee3441e41818d695dc8bd324
+  checksum: 50bbec7e77b580fcf5c53bf2b5f766dce47f89e45e4f0f703788580a5dbacb4ee306aa192d12f54b0ce82f180b35221272faf8f9ee90855d935cccd683a12e08
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git#205-typescript":
+"@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=ca21428a19f6744921841f77ef9b3f17efd82f40"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=df9f6c1df24c54488f6868bc27bfdf5da28a59bf"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk"
     "@graasp/translations": "github:graasp/graasp-translations.git"
@@ -2291,15 +2291,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations.git#39-fix-builder-trans":
-  version: 0.1.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=b7dc669e5072dd0b19cc59afd7a7d5b9a0e7506c"
-  dependencies:
-    i18next: 21.8.1
-  checksum: c2e51c088af876255780f1776d0e394db5c4e8e3404f81ca5a9c74e84f1c230b1ec39da6fdb6f8e78b68f642d14064a9e7caaf87854b3fb664219895f8ea1750
-  languageName: node
-  linkType: hard
-
 "@graasp/ui@github:graasp/graasp-ui#93-new-mui5":
   version: 0.2.0
   resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=2584911cb9a3d1688504422223a2ba60f89b489b"
@@ -2340,7 +2331,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui.git#93-new-mui5":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=7165e6664e981a0dd28e4a96adfa5384e35249df"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=803ce6539425a38b171ee08c2f4643659413334c"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     clsx: 1.1.1
@@ -2364,15 +2355,15 @@ __metadata:
     ag-grid-community: 28.1.1
     ag-grid-react: 28.1.1
     i18next: ~21.8.9
-    react: ~18.1.0
-    react-dom: ~18.1.0
+    react: 17.0.2
+    react-dom: 17.0.2
     react-router-dom: 6.2.2
   peerDependenciesMeta:
     ag-grid-community:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 26ffffc93ade4c708e21e97f8ef15fb350573aab7e6268741ac6f7765f3d5eadd43d6a3cec80c51f6943e041438ebcf101cca1c8e92deeb1c7f6397af34d5bf5
+  checksum: a92da562fec4195d619e39f1b9eca39a6ddfaf8617a4c97bbe1b09b0dc67678df53643e59513c111612b053e1b5a2f11536e517b6dec0c86897f3daa84dd4e72
   languageName: node
   linkType: hard
 
@@ -11138,10 +11129,10 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git#54/mui5"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git#205-typescript"
+    "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
-    "@graasp/translations": "github:graasp/graasp-translations.git#39-fix-builder-trans"
+    "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git#93-new-mui5"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.8.3
