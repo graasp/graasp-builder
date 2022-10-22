@@ -96,7 +96,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     if (isError) {
       return (
         <Alert id={SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID} severity="error">
-          {t(error)}
+          {translateBuilder(error)}
         </Alert>
       );
     }
