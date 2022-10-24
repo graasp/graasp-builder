@@ -184,7 +184,7 @@ const ItemsTable: FC<Props> = ({
       {
         field: 'updatedAt',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
-        flex: 3,
+        flex: 2,
         type: 'rightAligned',
         valueFormatter: dateColumnFormatter,
         comparator: GraaspTable.dateComparator,
@@ -196,6 +196,7 @@ const ItemsTable: FC<Props> = ({
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
+        flex: 3,
         cellStyle: {
           paddingLeft: '0!important',
           paddingRight: '0!important',
