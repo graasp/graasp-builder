@@ -1,38 +1,33 @@
-import React, { useState } from 'react';
 import PropTypes, { arrayOf } from 'prop-types';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import { useTranslation } from 'react-i18next';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import { useState } from 'react';
+
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
-import {
-  ROOT_ID,
-  SHARED_ROOT_ID,
-  TREE_VIEW_MAX_WIDTH,
-} from '../../config/constants';
-import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
+
+import { TREE_VIEW_MAX_WIDTH } from '../../config/constants';
+import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
-  buildTreeItemClass,
-  TREE_MODAL_TREE_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
+  TREE_MODAL_MY_ITEMS_ID,
+  TREE_MODAL_SHARED_ITEMS_ID,
+  buildTreeItemId,
 } from '../../config/selectors';
+import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { getParentsIdsFromPath } from '../../utils/item';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: TREE_VIEW_MAX_WIDTH,
-  },
-}));
-
+const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
   // todo: get only shared items with write/admin rights
   // otherwise choosing an item without the write rights will result in an error
@@ -61,7 +56,9 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
     const isRootItemOwned = Boolean(
       ownItems.find(({ id }) => id === rootItemId),
     );
-    const itemRootId = isRootItemOwned ? ROOT_ID : SHARED_ROOT_ID;
+    const itemRootId = isRootItemOwned
+      ? TREE_MODAL_MY_ITEMS_ID
+      : TREE_MODAL_SHARED_ITEMS_ID;
 
     // trees root not being treeRootId should be closed
     if (treeRootId !== itemRootId) {
@@ -114,40 +111,46 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const tree = !open ? null : (
     <>
       <DynamicTreeView
-        id={TREE_MODAL_TREE_ID}
-        className={classes.root}
+        id={TREE_MODAL_MY_ITEMS_ID}
+        rootSx={{
+          flexGrow: 1,
+          maxWidth: TREE_VIEW_MAX_WIDTH,
+        }}
         selectedId={selectedId}
-        initialExpendedItems={buildExpandedItems(ROOT_ID)}
+        initialExpendedItems={buildExpandedItems(TREE_MODAL_MY_ITEMS_ID)}
         items={ownItems}
         onTreeItemSelect={onTreeItemSelect}
         useChildren={useChildren}
         useItem={useItem}
         showCheckbox
-        rootLabel={t('Owned Items')}
-        rootId={ROOT_ID}
-        rootClassName={buildTreeItemClass(ROOT_ID)}
+        rootLabel={translateBuilder(BUILDER.ITEMS_TREE_OWN_ITEMS_LABEL)}
+        rootId={TREE_MODAL_MY_ITEMS_ID}
+        rootClassName={buildTreeItemId(TREE_MODAL_MY_ITEMS_ID)}
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemClass={buildTreeItemClass}
+        buildTreeItemId={buildTreeItemId}
       />
       <DynamicTreeView
-        // id={TREE_MODAL_TREE_ID}
-        className={classes.root}
+        id={TREE_MODAL_SHARED_ITEMS_ID}
+        rootSx={{
+          flexGrow: 1,
+          maxWidth: TREE_VIEW_MAX_WIDTH,
+        }}
         selectedId={selectedId}
-        initialExpendedItems={buildExpandedItems(SHARED_ROOT_ID)}
+        initialExpendedItems={buildExpandedItems(TREE_MODAL_SHARED_ITEMS_ID)}
         items={sharedItems}
         onTreeItemSelect={onTreeItemSelect}
         useChildren={useChildren}
         useItem={useItem}
         showCheckbox
-        rootLabel={t('Shared Items')}
-        rootId={SHARED_ROOT_ID}
-        rootClassName={buildTreeItemClass(SHARED_ROOT_ID)}
+        rootLabel={translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE)}
+        rootId={TREE_MODAL_SHARED_ITEMS_ID}
+        rootClassName={buildTreeItemId(TREE_MODAL_SHARED_ITEMS_ID)}
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemClass={buildTreeItemClass}
+        buildTreeItemId={buildTreeItemId}
       />
     </>
   );
@@ -155,22 +158,22 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   return (
     <Dialog
       onClose={handleClose}
-      aria-labelledby="simple-dialog-title"
+      aria-labelledby={dialogId}
       open={open}
       scroll="paper"
     >
-      <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
+      <DialogTitle id={dialogId}>{title}</DialogTitle>
       <DialogContent>{tree}</DialogContent>
       <DialogActions>
         <Button onClick={handleClose} variant="text">
-          {t('Cancel')}
+          {translateCommon(COMMON.CANCEL_BUTTON)}
         </Button>
         <Button
           onClick={onClickConfirm}
           disabled={!selectedId}
           id={TREE_MODAL_CONFIRM_BUTTON_ID}
         >
-          {t('Confirm')}
+          {translateBuilder(BUILDER.TREE_MODAL_CONFIRM_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

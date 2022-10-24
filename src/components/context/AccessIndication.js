@@ -1,20 +1,25 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import InfoIcon from '@mui/icons-material/Info';
+import { Grid, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useContext } from 'react';
+
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Typography, Grid } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import { useTranslation } from 'react-i18next';
-import InfoIcon from '@material-ui/icons/Info';
-import { LayoutContext } from './LayoutContext';
-import { hooks } from '../../config/queryClient';
-import ItemMemberships from '../item/ItemMemberships';
-import { hasItemLoginEnabled, isItemPublic } from '../../utils/itemTag';
+
 import { SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
+import { hooks } from '../../config/queryClient';
 import { ACCESS_INDICATION_ID } from '../../config/selectors';
+import { hasItemLoginEnabled, isItemPublic } from '../../utils/itemTag';
+import ItemMemberships from '../item/ItemMemberships';
+import { LayoutContext } from './LayoutContext';
 
 const AccessIndication = ({ itemId, onClick }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { data: tags, isLoading: isTagsLoading } = hooks.useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } =
@@ -37,16 +42,15 @@ const AccessIndication = ({ itemId, onClick }) => {
   let accessText = null;
   let tooltipText = null;
   if (isPublic) {
-    accessText = t('Public');
-    tooltipText = t('This item is public. Anyone can access this item.');
+    accessText = translateBuilder(BUILDER.ACCESS_PUBLIC_TAG);
+    tooltipText = translateBuilder(BUILDER.ACCESS_PUBLIC_TAG_TOOLTIP);
   } else if (hasItemLogin) {
-    accessText = t('Anyone authenticated with the link');
-    tooltipText = t(
-      'This item enables item login. New users can access this item when they authenticate using the item login.',
-    );
+    accessText = translateBuilder(BUILDER.ACCESS_ITEM_LOGIN_TAG);
+    tooltipText = translateBuilder(BUILDER.ACCESS_ITEM_LOGIN_TAG_TOOLTIP);
   }
 
   if (accessText && tooltipText) {
+    const text = `${translateBuilder(BUILDER.ACCESS_TITLE)}: ${accessText}`;
     return (
       <Grid
         container
@@ -55,14 +59,12 @@ const AccessIndication = ({ itemId, onClick }) => {
         id={ACCESS_INDICATION_ID}
       >
         <Grid item>
-          <Typography variant="body1">
-            {`${t('Access')}: ${accessText}`}
-          </Typography>
+          <Typography variant="body1">{text}</Typography>
         </Grid>
         <Grid item>
           <Tooltip title={tooltipText}>
             <IconButton
-              aria-label="access information"
+              aria-label={text}
               color="primary"
               onClick={openSettings}
             >

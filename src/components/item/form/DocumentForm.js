@@ -1,22 +1,18 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
+import { BUILDER } from '@graasp/translations';
 import { TextEditor } from '@graasp/ui';
-import Typography from '@material-ui/core/Typography';
+
+import { useBuilderTranslation } from '../../../config/i18n';
+import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
 import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
-import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
-
-const useStyles = makeStyles((theme) => ({
-  textEditorWrapper: {
-    marginTop: theme.spacing(2),
-  },
-}));
 
 const DocumentForm = ({ onChange, item, updatedProperties }) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleOnChange = (content) => {
     onChange({
@@ -31,22 +27,24 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
 
   return (
     <>
-      <Typography variant="h6">{t('Create a Document')}</Typography>
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
+      </Typography>
       <BaseForm
         onChange={onChange}
         item={item}
         updatedProperties={updatedProperties}
       />
-      <div className={classes.textEditorWrapper}>
+      <Box sx={{ mt: 2 }}>
         <TextEditor
           id={ITEM_FORM_DOCUMENT_TEXT_ID}
           value={value}
           onChange={handleOnChange}
           edit
-          placeholderText={t('Write something...')}
+          placeholderText={translateBuilder(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
           showActions={false}
         />
-      </div>
+      </Box>
     </>
   );
 };

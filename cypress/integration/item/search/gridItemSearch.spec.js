@@ -1,15 +1,15 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  buildItemCard,
-  buildItemsGridPaginationButtonSelected,
   ITEMS_GRID_NO_ITEM_ID,
   ITEMS_GRID_NO_SEARCH_RESULT_ID,
   ITEMS_GRID_PAGINATION_ID,
   ITEM_SEARCH_INPUT_ID,
+  buildItemCard,
+  buildItemsGridPaginationButtonSelected,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { generateOwnItems, SAMPLE_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 
 describe('Search Item in Grid', () => {
   const { id } = SAMPLE_ITEMS.items[0];

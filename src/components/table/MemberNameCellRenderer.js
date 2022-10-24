@@ -1,6 +1,6 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
+import { Typography } from '@mui/material';
 
 const MemberNameCellRenderer = ({ users, defaultValue }) => {
   const ChildComponent = ({ data: item }) => {

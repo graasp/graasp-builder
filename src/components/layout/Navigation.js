@@ -1,43 +1,52 @@
-import React, { useContext, useState } from 'react';
-import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
 import truncate from 'lodash.truncate';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import PropTypes from 'prop-types';
+
+import { styled } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+
+import { useContext, useState } from 'react';
 import { Link, useLocation, useMatch } from 'react-router-dom';
+
+import { BUILDER } from '@graasp/translations';
+import { Loader } from '@graasp/ui';
+
+import { ITEM_NAME_MAX_LENGTH, LOADING_CONTENT } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
-  HOME_PATH,
-  buildItemPath,
-  SHARED_ITEMS_PATH,
   FAVORITE_ITEMS_PATH,
+  HOME_PATH,
+  SHARED_ITEMS_PATH,
+  buildItemPath,
 } from '../../config/paths';
+import { hooks } from '../../config/queryClient';
 import {
-  buildNavigationLink,
   NAVIGATION_HIDDEN_PARENTS_ID,
   NAVIGATION_HOME_LINK_ID,
   NAVIGATION_ROOT_ID,
+  buildNavigationLink,
 } from '../../config/selectors';
-import Loader from '../common/Loader';
-import { hooks } from '../../config/queryClient';
 import { getParentsIdsFromPath } from '../../utils/item';
-import { ITEM_NAME_MAX_LENGTH, LOADING_CONTENT } from '../../config/constants';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItem, useParents } = hooks;
 
-const useStyles = makeStyles(() => ({
-  parents: {
-    '&:hover': {
-      cursor: 'pointer',
-    },
+const ParentTitle = styled(Typography)(() => ({
+  '&:hover': {
+    cursor: 'pointer',
   },
 }));
 
-const ParentLink = ({ id, name }) => (
-  <Link key={id} to={buildItemPath(id)}>
-    <Typography id={buildNavigationLink(id)}>{name}</Typography>
-  </Link>
+const StyledLink = styled(Link)({
+  textDecoration: 'none',
+});
+
+const ParentLink = ({ id, key, name }) => (
+  <StyledLink key={key} to={buildItemPath(id)}>
+    <Typography id={buildNavigationLink(id)}>
+      {truncate(name, { length: ITEM_NAME_MAX_LENGTH })}
+    </Typography>
+  </StyledLink>
 );
 
 ParentLink.propTypes = {
@@ -46,8 +55,7 @@ ParentLink.propTypes = {
 };
 
 const Navigation = () => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { pathname } = useLocation();
   const match = useMatch(buildItemPath());
   const { data: currentMember } = useContext(CurrentUserContext);
@@ -80,7 +88,7 @@ const Navigation = () => {
     }
 
     let to = HOME_PATH;
-    let text = t('My Items');
+    let text = translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE);
 
     const isParentOwned =
       (item?.creator ?? parents?.first()?.creator) === currentMemberId;
@@ -88,7 +96,7 @@ const Navigation = () => {
     // favorite root path
     if (pathname === FAVORITE_ITEMS_PATH) {
       to = FAVORITE_ITEMS_PATH;
-      text = t('Favorite Items');
+      text = translateBuilder(BUILDER.NAVIGATION_FAVORITE_ITEMS_TITLE);
     }
     // shared items and non owned items
     else if (
@@ -96,13 +104,13 @@ const Navigation = () => {
       (pathname !== HOME_PATH && !isParentOwned)
     ) {
       to = SHARED_ITEMS_PATH;
-      text = t('Shared Items');
+      text = translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE);
     }
 
     return (
-      <Link color="inherit" to={to} id={NAVIGATION_ROOT_ID}>
+      <StyledLink color="inherit" to={to} id={NAVIGATION_ROOT_ID}>
         <Typography id={NAVIGATION_HOME_LINK_ID}>{text}</Typography>
-      </Link>
+      </StyledLink>
     );
   };
 
@@ -115,12 +123,9 @@ const Navigation = () => {
 
     if (parentIsLoading) {
       return (
-        <Typography
-          id={NAVIGATION_HIDDEN_PARENTS_ID}
-          className={classes.parents}
-        >
+        <ParentTitle id={NAVIGATION_HIDDEN_PARENTS_ID}>
           {LOADING_CONTENT}
-        </Typography>
+        </ParentTitle>
       );
     }
 
@@ -139,13 +144,12 @@ const Navigation = () => {
           />
         ),
         availableParents?.size >= 3 && (
-          <Typography
+          <ParentTitle
             id={NAVIGATION_HIDDEN_PARENTS_ID}
-            className={classes.parents}
             onClick={onParentsClick}
           >
             {LOADING_CONTENT}
-          </Typography>
+          </ParentTitle>
         ),
         availableParents?.size >= 2 && (
           <ParentLink
@@ -157,7 +161,7 @@ const Navigation = () => {
     }
 
     return availableParents?.map(({ name, id }) => (
-      <ParentLink name={name} id={id} />
+      <ParentLink key={id} name={name} id={id} />
     ));
   };
 
@@ -166,11 +170,11 @@ const Navigation = () => {
       {renderRootLink()}
       {renderParents()}
       {itemId && (
-        <Link key={itemId} to={buildItemPath(itemId)}>
+        <StyledLink key={itemId} to={buildItemPath(itemId)}>
           <Typography id={buildNavigationLink(itemId)}>
             {truncate(item.name, { length: ITEM_NAME_MAX_LENGTH })}
           </Typography>
-        </Link>
+        </StyledLink>
       )}
     </Breadcrumbs>
   );

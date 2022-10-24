@@ -1,15 +1,18 @@
-import React from 'react';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import { useTranslation } from 'react-i18next';
-import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
-import Tooltip from '@material-ui/core/Tooltip';
-import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
+
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
+import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
 
 const RestoreButton = ({ itemIds, color, id }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: restoreItems } = useMutation(MUTATION_KEYS.RESTORE_ITEMS);
 
   const onClick = () => {
@@ -17,12 +20,14 @@ const RestoreButton = ({ itemIds, color, id }) => {
     restoreItems(itemIds);
   };
 
+  const title = translateBuilder(BUILDER.RESTORE_ITEM_BUTTON);
+
   return (
-    <Tooltip title={t('Restore')}>
+    <Tooltip title={title}>
       <span>
         <IconButton
           id={id}
-          aria-label="restore"
+          aria-label={title}
           color={color}
           className={RESTORE_ITEMS_BUTTON_CLASS}
           onClick={onClick}

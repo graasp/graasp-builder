@@ -1,29 +1,26 @@
-import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import Tooltip from '@material-ui/core/Tooltip';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Badge from '@material-ui/core/Badge';
-import AvatarGroup from '@material-ui/lab/AvatarGroup';
+
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import AvatarGroup from '@mui/material/AvatarGroup';
+import Badge from '@mui/material/Badge';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useContext } from 'react';
+
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
-import MemberAvatar from '../common/MemberAvatar';
-import { PERMISSION_LEVELS } from '../../enums';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
+import { PERMISSION_LEVELS } from '../../enums';
 import { membershipsWithoutUser } from '../../utils/membership';
+import MemberAvatar from '../common/MemberAvatar';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const useStyles = makeStyles({
-  badge: {
-    border: 'none',
-  },
-});
-
 const ItemMemberships = ({ id, maxAvatar, onClick }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: memberships, isError } = hooks.useItemMemberships(id);
   const { data: currentUser } = useContext(CurrentUserContext);
 
@@ -54,10 +51,10 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
     >
       <Grid item>
         <Tooltip
-          title={t('sharedWithMembers', {
-            count: filteredMemberships.length,
+          title={translateBuilder(BUILDER.SHARED_MEMBERS_TOOLTIP, {
+            count: filteredMemberships.size,
           })}
-          aria-label="shared users"
+          aria-label={translateBuilder(BUILDER.SHARED_MEMBERS_LABEL)}
         >
           <AvatarGroup max={maxAvatar} spacing={3} onClick={onClick}>
             {filteredMemberships.map(({ memberId, permission }) => {
@@ -77,7 +74,7 @@ const ItemMemberships = ({ id, maxAvatar, onClick }) => {
                     horizontal: 'right',
                   }}
                   badgeContent={badgeContent}
-                  className={classes.badge}
+                  sx={{ border: 'none' }}
                 >
                   <MemberAvatar id={memberId} />
                 </Badge>

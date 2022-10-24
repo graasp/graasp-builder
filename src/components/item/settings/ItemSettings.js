@@ -1,49 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Container from '@material-ui/core/Container';
-import InfoIcon from '@material-ui/icons/Info';
-import Typography from '@material-ui/core/Typography';
 import { Record } from 'immutable';
-import { useTranslation } from 'react-i18next';
-import {
-  FormControlLabel,
-  FormGroup,
-  makeStyles,
-  Switch,
-  Tooltip,
-} from '@material-ui/core';
+import PropTypes from 'prop-types';
+
+import InfoIcon from '@mui/icons-material/Info';
+import { FormControlLabel, FormGroup, Switch, Tooltip } from '@mui/material';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
   SETTINGS_CHATBOX_TOGGLE_ID,
-  SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_COLLAPSE_TOGGLE_ID,
+  SETTINGS_PINNED_TOGGLE_ID,
 } from '../../../config/selectors';
-import ThumbnailSetting from './ThumbnailSetting';
-import CCLicenseSelection from '../publish/CCLicenseSelection';
 import { ITEM_TYPES } from '../../../enums';
+import CCLicenseSelection from '../publish/CCLicenseSelection';
 import LinkSettings from './LinkSettings';
-
-const useStyles = makeStyles((theme) => ({
-  title: {
-    margin: 0,
-    padding: 0,
-  },
-  wrapper: {
-    marginTop: theme.spacing(2),
-  },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
-  collapseTooltip: {
-    color: 'lightgrey',
-    marginBottom: -theme.spacing(0.5),
-  },
-}));
+import ThumbnailSetting from './ThumbnailSetting';
 
 const ItemSettings = ({ item }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
@@ -88,7 +67,12 @@ const ItemSettings = ({ item }) => {
         color="primary"
       />
     );
-    return <FormControlLabel label={t('Pin')} control={control} />;
+    return (
+      <FormControlLabel
+        label={translateBuilder(BUILDER.SETTINGS_PIN_ITEM_LABEL)}
+        control={control}
+      />
+    );
   };
 
   const renderChatSetting = () => {
@@ -100,7 +84,12 @@ const ItemSettings = ({ item }) => {
         color="primary"
       />
     );
-    return <FormControlLabel label={t('Show Chat')} control={control} />;
+    return (
+      <FormControlLabel
+        label={translateBuilder(BUILDER.SETTINGS_SHOW_CHAT_LABEL)}
+        control={control}
+      />
+    );
   };
 
   const renderCollapseSetting = () => {
@@ -116,14 +105,18 @@ const ItemSettings = ({ item }) => {
     );
     const formLabel = (
       <FormControlLabel
-        className={classes.collapse}
-        label={t('Collapse item')}
+        label={translateBuilder(BUILDER.SETTINGS_COLLAPSE_LABEL)}
         control={control}
       />
     );
     const tooltip = disabled ? (
-      <Tooltip title={t('A folder cannot be collapsed')} placement="right">
-        <InfoIcon className={classes.collapseTooltip} fontSize="small" />
+      <Tooltip
+        title={translateBuilder(BUILDER.SETTINGS_COLLAPSE_FOLDER_INFORMATION)}
+        placement="right"
+        m={0}
+        p={0}
+      >
+        <InfoIcon color="lightgrey" mb={-0.5} fontSize="small" />
       </Tooltip>
     ) : null;
     return (
@@ -135,9 +128,9 @@ const ItemSettings = ({ item }) => {
   };
 
   return (
-    <Container disableGutters className={classes.wrapper}>
-      <Typography variant="h4" className={classes.title}>
-        {t('Settings')}
+    <Container disableGutters mt={2}>
+      <Typography variant="h4">
+        {translateBuilder(BUILDER.SETTINGS_TITLE)}
       </Typography>
 
       <FormGroup>

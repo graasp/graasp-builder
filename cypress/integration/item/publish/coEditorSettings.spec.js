@@ -1,17 +1,15 @@
-import {
-  buildCoEditorSettingsRadioButtonId,
-  buildPublishButtonId,
-  CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
-} from '../../../../src/config/selectors';
+import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  ITEM_WITH_CATEGORIES,
-} from '../../../fixtures/categories';
-import { PUBLISHED_ITEM } from '../../../fixtures/items';
+  CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
+  buildCoEditorSettingsRadioButtonId,
+  buildPublishButtonId,
+} from '../../../../src/config/selectors';
+import { ITEM_WITH_CATEGORIES } from '../../../fixtures/categories';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
+import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
-import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../../src/config/constants';
 
 const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
@@ -29,7 +27,9 @@ describe('Co-editor Setting', () => {
     visitItemPage(item);
 
     Object.values(DISPLAY_CO_EDITORS_OPTIONS).forEach((option) => {
-      const displayTags = cy.get(`#${buildCoEditorSettingsRadioButtonId(option.value)}`);
+      const displayTags = cy.get(
+        `#${buildCoEditorSettingsRadioButtonId(option.value)}`,
+      );
       displayTags.should('be.visible');
     });
   });

@@ -1,24 +1,30 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+
 import {
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-} from '@material-ui/core';
+  DialogTitle,
+} from '@mui/material';
+
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
+
+import {
+  useBuilderTranslation,
+  useCommonTranslation,
+} from '../../../config/i18n';
 
 const CCLicenseDialog = ({
   open,
   setOpen,
   disabled,
-  className,
   buttonName,
   handleSubmit,
 }) => {
-  const { t } = useTranslation();
+  const { t: translateCommon } = useCommonTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,26 +38,28 @@ const CCLicenseDialog = ({
     <>
       <Button
         variant="contained"
-        className={className}
+        my={1}
         onClick={handleClickOpen}
         disabled={disabled} // disable the button if no option is selected
       >
         {buttonName}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{t('Confirm Your Submission')}</DialogTitle>
+        <DialogTitle>
+          {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_TITLE)}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {t(
-              'Please verify that your item fits the CC License, and do not change to a more restricted option.',
-            )}
+            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_MODAL_CONTENT)}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus variant="text">
-            {t('Cancel')}
+            {translateCommon(COMMON.CANCEL_BUTTON)}
           </Button>
-          <Button onClick={handleSubmit}>{t('Confirm')}</Button>
+          <Button onClick={handleSubmit}>
+            {translateBuilder(BUILDER.CONFIRM_BUTTON)}
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -62,13 +70,11 @@ CCLicenseDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  className: PropTypes.string,
   buttonName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
 CCLicenseDialog.defaultProps = {
-  className: '',
   disabled: false,
 };
 

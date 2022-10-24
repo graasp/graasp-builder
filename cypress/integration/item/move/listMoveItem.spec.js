@@ -1,25 +1,23 @@
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import {
-  ROOT_ID,
-  DEFAULT_ITEM_LAYOUT_MODE,
-  SHARED_ROOT_ID,
-} from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import {
-  buildItemPath,
   HOME_PATH,
   SHARED_ITEMS_PATH,
+  buildItemPath,
 } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowIdAttribute,
-  buildItemMenu,
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  TREE_MODAL_MY_ITEMS_ID,
+  TREE_MODAL_SHARED_ITEMS_ID,
+  buildItemMenu,
   buildItemMenuButtonId,
+  buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const moveItem = ({ id: movedItemId, toItemPath, rootId = ROOT_ID }) => {
+const moveItem = ({ id: movedItemId, toItemPath, rootId }) => {
   const menuSelector = `#${buildItemMenuButtonId(movedItemId)}`;
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
@@ -85,7 +83,7 @@ describe('Move Item in List', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const toItem = ROOT_ID;
+    const toItem = TREE_MODAL_MY_ITEMS_ID;
     moveItem({ id: movedItem, toItemPath: toItem });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
@@ -107,7 +105,7 @@ describe('Move Item in List', () => {
     // move
     const { path: toItemPath, id: toItemId } = SHARED_ITEMS.items[0];
     const { id: movedItem } = SHARED_ITEMS.items[1];
-    moveItem({ id: movedItem, toItemPath, rootId: SHARED_ROOT_ID });
+    moveItem({ id: movedItem, toItemPath, rootId: TREE_MODAL_SHARED_ITEMS_ID });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(toItemId);

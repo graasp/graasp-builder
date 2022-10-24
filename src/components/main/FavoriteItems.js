@@ -1,27 +1,33 @@
-import React, { useContext, useEffect } from 'react';
 import { List } from 'immutable';
-import { useTranslation } from 'react-i18next';
+
+import Box from '@mui/material/Box';
+
+import { useContext, useEffect } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import {
-  FAVORITE_ITEMS_ID,
-  FAVORITE_ITEMS_ERROR_ALERT_ID,
-} from '../../config/selectors';
+import { BUILDER } from '@graasp/translations';
+import { Loader } from '@graasp/ui';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
-import ErrorAlert from '../common/ErrorAlert';
-import Loader from '../common/Loader';
-import Main from './Main';
-import ItemHeader from '../item/header/ItemHeader';
-import Items from './Items';
+import {
+  FAVORITE_ITEMS_ERROR_ALERT_ID,
+  FAVORITE_ITEMS_ID,
+} from '../../config/selectors';
 import {
   containsNonExistingItems,
   getErrorItemIds,
   getExistingItems,
 } from '../../utils/item';
 import { getFavoriteItems } from '../../utils/member';
+import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import ItemHeader from '../item/header/ItemHeader';
+import Items from './Items';
+import Main from './Main';
 
 const FavoriteItems = () => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const {
     data: member,
     isLoading: isMemberLoading,
@@ -62,7 +68,7 @@ const FavoriteItems = () => {
     return (
       <Items
         id={FAVORITE_ITEMS_ID}
-        title={t('Favorite Items')}
+        title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
         items={getExistingItems(favoriteItems)}
       />
     );
@@ -70,8 +76,10 @@ const FavoriteItems = () => {
 
   return (
     <Main>
-      <ItemHeader showNavigation={false} />
-      {renderContent()}
+      <Box mx={2}>
+        <ItemHeader showNavigation={false} />
+        {renderContent()}
+      </Box>
     </Main>
   );
 };

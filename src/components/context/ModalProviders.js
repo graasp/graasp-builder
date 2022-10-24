@@ -1,11 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { EditItemModalProvider } from './EditItemModalContext';
+
 import { CopyItemModalProvider } from './CopyItemModalContext';
-import { MoveItemModalProvider } from './MoveItemModalContext';
-import { LayoutContextProvider } from './LayoutContext';
 import { CreateShortcutModalProvider } from './CreateShortcutModalContext';
+import { EditItemModalProvider } from './EditItemModalContext';
 import { FlagItemModalProvider } from './FlagItemModalContext';
+import { LayoutContextProvider } from './LayoutContext';
+import { MoveItemModalProvider } from './MoveItemModalContext';
 
 const ModalProviders = ({ children }) => (
   <LayoutContextProvider>

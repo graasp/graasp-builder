@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@graasp/ui';
-import { useTranslation } from 'react-i18next';
+
+import { useState } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+import { Button } from '@graasp/ui';
+
+import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import { PERMISSION_LEVELS } from '../../../enums';
 
 const ResendInvitationRenderer = (item) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const itemId = item.id;
   const { mutate: resendInvitation } = useMutation(
     MUTATION_KEYS.RESEND_INVITATION,
@@ -23,7 +27,7 @@ const ResendInvitationRenderer = (item) => {
 
     return (
       <Button variant="outlined" onClick={resendEmail} disabled={clicked}>
-        {t('Resend Invitation')}
+        {translateBuilder(BUILDER.SHARING_INVITATIONS_RESEND_BUTTON)}
       </Button>
     );
   };

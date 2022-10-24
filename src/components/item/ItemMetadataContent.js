@@ -1,43 +1,34 @@
-import React, { useContext } from 'react';
 import { Record } from 'immutable';
 import PropTypes from 'prop-types';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import { useTranslation } from 'react-i18next';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { formatDate } from '../../utils/date';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+
+import { useContext } from 'react';
+
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
-import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
-import { LayoutContext } from '../context/LayoutContext';
 import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { ITEM_TYPES } from '../../enums';
+import { formatDate } from '../../utils/date';
+import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
+import { LayoutContext } from '../context/LayoutContext';
 import ItemMemberships from './ItemMemberships';
 
 const { useMember } = hooks;
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    padding: theme.spacing(2),
-  },
-  extra: {
-    wordBreak: 'break-all',
-  },
-  name: {
-    wordBreak: 'break-word',
-  },
-}));
-
 const ItemMetadataContent = ({ item }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
-  const classes = useStyles();
   const { setIsItemSharingOpen } = useContext(LayoutContext);
   const { data: creator } = useMember(item.creator);
 
@@ -58,7 +49,9 @@ const ItemMetadataContent = ({ item }) => {
   const renderLink = () => {
     const buildTableRow = (link) => (
       <TableRow>
-        <TableCell align="left">{t('Link')}</TableCell>
+        <TableCell align="left">
+          {translateBuilder(BUILDER.ITEM_METADATA_LINK_TITLE)}
+        </TableCell>
         <TableCell align="right">{link}</TableCell>
       </TableRow>
     );
@@ -73,44 +66,46 @@ const ItemMetadataContent = ({ item }) => {
 
   return (
     <>
-      <TableContainer className={classes.table}>
-        <Typography
-          variant="h5"
-          id={ITEM_PANEL_NAME_ID}
-          className={classes.name}
-        >
+      <TableContainer sx={{ p: 2, boxSizing: 'border-box' }}>
+        <Typography variant="h5" id={ITEM_PANEL_NAME_ID} noWrap>
           {item.name}
         </Typography>
         <Table
           id={ITEM_PANEL_TABLE_ID}
           size="small"
-          aria-label="item panel table"
+          aria-label={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}
         >
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                {t('Type')}
+                {translateBuilder(BUILDER.ITEM_METADATA_TYPE_TITLE)}
               </TableCell>
               <TableCell align="right">{type}</TableCell>
             </TableRow>
             {size && (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  {t('Size')}
+                  {translateBuilder(BUILDER.ITEM_METADATA_SIZE_TITLE)}
                 </TableCell>
                 <TableCell align="right">{size}</TableCell>
               </TableRow>
             )}
             <TableRow>
-              <TableCell align="left">{t('Creator')}</TableCell>
+              <TableCell align="left">
+                {translateBuilder(BUILDER.ITEM_METADATA_CREATOR_TITLE)}
+              </TableCell>
               <TableCell align="right">{creator?.name}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="left">{t('Created At')}</TableCell>
+              <TableCell align="left">
+                {translateBuilder(BUILDER.ITEM_METADATA_CREATED_AT_TITLE)}
+              </TableCell>
               <TableCell align="right">{formatDate(item.createdAt)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="left">{t('Updated At')}</TableCell>
+              <TableCell align="left">
+                {translateBuilder(BUILDER.ITEM_METADATA_UPDATED_AT_TITLE)}
+              </TableCell>
               <TableCell align="right">{formatDate(item.updatedAt)}</TableCell>
             </TableRow>
             {renderLink()}

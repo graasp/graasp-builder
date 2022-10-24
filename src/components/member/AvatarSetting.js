@@ -1,33 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { Record } from 'immutable';
-import { Avatar } from '@graasp/ui';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { configureAvatarUppy } from '../../utils/uppy';
-import CropModal from '../common/CropModal';
-import { useMutation, hooks } from '../../config/queryClient';
-import defaultImage from '../../config/logo.jpeg';
+
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import { useEffect, useRef, useState } from 'react';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { ACCOUNT } from '@graasp/translations';
+import { Avatar } from '@graasp/ui';
+
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../config/constants';
+import { useAccountTranslation } from '../../config/i18n';
+import defaultImage from '../../config/logo.jpeg';
+import { hooks, useMutation } from '../../config/queryClient';
 import { MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME } from '../../config/selectors';
+import { configureAvatarUppy } from '../../utils/uppy';
+import CropModal from '../common/CropModal';
 import StatusBar from '../file/StatusBar';
-
-const useStyles = makeStyles((theme) => ({
-  thumbnail: {
-    textAlign: 'right',
-  },
-  mainContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    margin: theme.spacing(1, 0),
-  },
-}));
 
 const AvatarSetting = ({ user }) => {
   const inputRef = useRef();
@@ -35,8 +28,7 @@ const AvatarSetting = ({ user }) => {
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState(false);
   const [openStatusBar, setOpenStatusBar] = useState(false);
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t } = useAccountTranslation();
   const { mutate: onUploadAvatar } = useMutation(MUTATION_KEYS.UPLOAD_AVATAR);
 
   const userId = user?.id;
@@ -115,10 +107,20 @@ const AvatarSetting = ({ user }) => {
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
-      <Grid container spacing={3} className={classes.mainContainer}>
+      <Grid
+        container
+        spacing={3}
+        direction="column"
+        alignItems="flex-start"
+        my={1}
+      >
         <Grid item sm={6}>
-          <Typography variant="h5">{t('Thumbnail')}</Typography>
-          <Typography variant="body1">{t('Update thumbnail')}</Typography>
+          <Typography variant="h5">
+            {t(ACCOUNT.PROFILE_AVATAR_TITLE)}
+          </Typography>
+          <Typography variant="body1">
+            {t(ACCOUNT.PROFILE_AVATAR_INFORMATION)}
+          </Typography>
           <input
             type="file"
             accept="image/*"
@@ -133,7 +135,7 @@ const AvatarSetting = ({ user }) => {
           <Avatar
             id={userId}
             extra={user?.extra}
-            alt={t('current thumbnail')}
+            alt={t(ACCOUNT.PROFILE_AVATAR_CURRENT_ALT)}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
             useAvatar={hooks.useAvatar}

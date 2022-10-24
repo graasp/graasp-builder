@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Button } from '@graasp/ui';
-import AddIcon from '@material-ui/icons/Add';
-import NewItemModal from './NewItemModal';
-import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
 
-const useStyles = makeStyles((theme) => ({
-  createNewButton: {
-    cursor: 'pointer',
-    margin: theme.spacing(1),
-    flex: 'none',
-  },
-}));
+import AddIcon from '@mui/icons-material/Add';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useState } from 'react';
+
+import { BUILDER } from '@graasp/translations';
+import { Button } from '@graasp/ui';
+
+import { useBuilderTranslation } from '../../config/i18n';
+import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
+import NewItemModal from './NewItemModal';
 
 const NewItemButton = ({ fontSize }) => {
   const [open, setOpen] = useState(false);
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,15 +26,23 @@ const NewItemButton = ({ fontSize }) => {
 
   return (
     <>
-      <Tooltip placement="left" title={t('Create new item')} arrow>
+      <Tooltip
+        placement="left"
+        title={translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+        arrow
+      >
         <Button
           id={CREATE_ITEM_BUTTON_ID}
           fontSize={fontSize}
-          className={classes.createNewButton}
           onClick={handleClickOpen}
+          sx={{
+            cursor: 'pointer',
+            flex: 'none',
+            ml: 1,
+          }}
         >
           <AddIcon />
-          {t('New Item')}
+          {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
         </Button>
       </Tooltip>
       <NewItemModal

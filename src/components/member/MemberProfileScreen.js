@@ -1,43 +1,36 @@
-import React, { useContext } from 'react';
-import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { Box, Grid, IconButton, Typography } from '@mui/material';
+
+import { useContext } from 'react';
+
+import { ACCOUNT } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Card from '@material-ui/core/Card';
-import { useTranslation } from 'react-i18next';
-import LanguageSwitch from './LanguageSwitch';
-import { formatDate } from '../../utils/date';
-import { DEFAULT_LANG, DEFAULT_EMAIL_FREQUENCY } from '../../config/constants';
-import { copyToClipboard } from '../../utils/clipboard';
+
+import { DEFAULT_EMAIL_FREQUENCY, DEFAULT_LANG } from '../../config/constants';
+import { useAccountTranslation } from '../../config/i18n';
+import notifier from '../../config/notifier';
 import {
-  MEMBER_PROFILE_MEMBER_ID_ID,
+  MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
   MEMBER_PROFILE_EMAIL_ID,
-  MEMBER_PROFILE_MEMBER_NAME_ID,
   MEMBER_PROFILE_INSCRIPTION_DATE_ID,
   MEMBER_PROFILE_LANGUAGE_SWITCH_ID,
   MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID,
-  MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
+  MEMBER_PROFILE_MEMBER_ID_ID,
+  MEMBER_PROFILE_MEMBER_NAME_ID,
 } from '../../config/selectors';
-import notifier from '../../config/notifier';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
-import Main from '../main/Main';
+import { copyToClipboard } from '../../utils/clipboard';
+import { formatDate } from '../../utils/date';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import Main from '../main/Main';
 import AvatarSetting from './AvatarSetting';
 import DeleteMemberDialog from './DeleteMemberDialog';
-import PasswordSetting from './PasswordSetting';
 import EmailPreferenceSwitch from './EmailPreferenceSwitch';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-  profileTable: {
-    margin: theme.spacing(1, 1),
-  },
-}));
+import LanguageSwitch from './LanguageSwitch';
+import PasswordSetting from './PasswordSetting';
 
 const MemberProfileScreen = () => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t } = useAccountTranslation();
   const { data: member, isLoading } = useContext(CurrentUserContext);
 
   if (isLoading) {
@@ -57,22 +50,16 @@ const MemberProfileScreen = () => {
 
   return (
     <Main>
-      <Card className={classes.root}>
+      <Box sx={{ m: 2 }}>
         <Grid container spacing={3}>
-          <Grid item xs={10}>
-            <Grid item xs={12}>
-              <Typography variant="h4" id={MEMBER_PROFILE_MEMBER_NAME_ID}>
-                {member.name}
-              </Typography>
-            </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h4" id={MEMBER_PROFILE_MEMBER_NAME_ID}>
+              {member.name}
+            </Typography>
             {/* todo: display only as light user */}
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Member ID')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_MEMBER_ID_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_MEMBER_ID_ID}>
@@ -86,13 +73,9 @@ const MemberProfileScreen = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Email')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_EMAIL_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_EMAIL_ID}>
@@ -100,13 +83,9 @@ const MemberProfileScreen = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Member Since')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_CREATED_AT_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_INSCRIPTION_DATE_ID}>
@@ -114,13 +93,9 @@ const MemberProfileScreen = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Language')}</Typography>
+                <Typography>{t(ACCOUNT.PROFILE_LANGUAGE_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
                 <LanguageSwitch
@@ -130,13 +105,11 @@ const MemberProfileScreen = () => {
                 />
               </Grid>
             </Grid>
-            <Grid
-              container
-              className={classes.profileTable}
-              alignItems="center"
-            >
+            <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography>{t('Email Frequency')}</Typography>
+                <Typography>
+                  {t(ACCOUNT.PROFILE_EMAIL_FREQUENCY_TITLE)}
+                </Typography>
               </Grid>
               <Grid item xs={8}>
                 <EmailPreferenceSwitch
@@ -152,7 +125,7 @@ const MemberProfileScreen = () => {
         <AvatarSetting user={member} />
         <PasswordSetting user={member} />
         <DeleteMemberDialog id={member?.id} />
-      </Card>
+      </Box>
     </Main>
   );
 };

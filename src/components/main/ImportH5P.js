@@ -1,11 +1,16 @@
-import { routines } from '@graasp/query-client';
-import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
-import Typography from '@material-ui/core/Typography';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import Typography from '@mui/material/Typography';
+
+import { useEffect, useState } from 'react';
 import { useMatch } from 'react-router';
+
+import { routines } from '@graasp/query-client';
+import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';
 import { buildItemPath } from '../../config/paths';
 import { H5P_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
@@ -15,7 +20,7 @@ const ImportH5P = () => {
   const [uppy, setUppy] = useState(null);
   const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const onComplete = (result) => {
     // update app on complete
@@ -63,19 +68,17 @@ const ImportH5P = () => {
 
   return (
     <>
-      <Typography variant="h6">{t('Import H5P rich content')}</Typography>
-      <Typography variant="body" paragraph>
-        {t(
-          'You can upload H5P rich content by uploading exported .h5p files (e.g. from H5P.com, external Moodle services, etc).',
-        )}
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(
-          'Once your file is accepted, it will take several minutes for it to be available.',
-        )}
+        {translateBuilder(BUILDER.IMPORT_H5P_INFORMATIONS)}
       </Typography>
       <Typography variant="body" paragraph>
-        {t(`You can upload up to one H5P of SIZE at a time.`, {
+        {translateBuilder(BUILDER.IMPORT_H5P_WARNING)}
+      </Typography>
+      <Typography variant="body" paragraph>
+        {translateBuilder(BUILDER.IMPORT_H5P_LIMITATIONS_TEXT, {
           maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
         })}
       </Typography>

@@ -1,32 +1,30 @@
-import React from 'react';
-import { Button } from '@graasp/ui';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER, COMMON } from '@graasp/translations';
+import { Button } from '@graasp/ui';
+
+import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
 
-const useStyles = makeStyles(() => ({
-  confirmDeleteButton: {
-    color: 'red',
-  },
-}));
+const labelId = 'alert-dialog-title';
+const descriptionId = 'alert-dialog-description';
 
 const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 
 const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
 
   const { mutate: deleteItems } = useMutation(DELETE_ITEMS);
   const { mutate: deleteItem } = useMutation(DELETE_ITEM);
-
-  const classes = useStyles();
 
   const onDelete = () => {
     if (itemIds.length > 1) {
@@ -41,28 +39,31 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby={labelId}
+      aria-describedby={descriptionId}
     >
-      <DialogTitle id="alert-dialog-title">{t('Confirm deletion')}</DialogTitle>
+      <DialogTitle id={labelId}>
+        {translateBuilder(BUILDER.DELETE_ITEM_MODAL_TITLE)}
+      </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {t('itemDeleteMessage', { count: itemIds.length })}
+        <DialogContentText id={descriptionId}>
+          {translateBuilder(BUILDER.DELETE_ITEM_MODAL_CONTENT, {
+            count: itemIds.length,
+          })}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary" variant="text">
-          {t('Cancel')}
+          {translateCommon(COMMON.CANCEL_BUTTON)}
         </Button>
         <Button
           id={CONFIRM_DELETE_BUTTON_ID}
-          className={classes.confirmDeleteButton}
           onClick={onDelete}
-          color="secondary"
+          color="error"
           autoFocus
           variant="text"
         >
-          {t('Delete Permanently')}
+          {translateBuilder(BUILDER.DELETE_ITEM_MODAL_CONFIRM_BUTTON)}
         </Button>
       </DialogActions>
     </Dialog>

@@ -1,12 +1,15 @@
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
+
+import { useContext } from 'react';
+
 import { Loader } from '@graasp/ui';
-import React, { useContext } from 'react';
+
+import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
 import { LayoutContext } from '../context/LayoutContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ItemsGrid from './ItemsGrid';
-import { hooks } from '../../config/queryClient';
 import ItemsTable from './ItemsTable';
 
 const { useManyItemMemberships } = hooks;
@@ -87,7 +90,8 @@ Items.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.string,
   headerElements: PropTypes.arrayOf(PropTypes.element),
-  actions: PropTypes.element,
+  // eslint-disable-next-line react/forbid-prop-types
+  actions: PropTypes.any,
   ToolbarActions: PropTypes.func,
   clickable: PropTypes.bool,
   defaultSortedColumn: PropTypes.shape({

@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+
+import { PERMISSION_LEVELS } from '../../../enums';
 import { useIsParentInstance } from '../../../utils/item';
 import ItemMembershipSelect from './ItemMembershipSelect';
-import { PERMISSION_LEVELS } from '../../../enums';
 
 const TableRowPermissionRenderer = ({ item, editFunction, createFunction }) => {
   // todo: use typescript to precise data is one of Invitation or Membership

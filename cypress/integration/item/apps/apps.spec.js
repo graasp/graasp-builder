@@ -3,7 +3,7 @@ import { APP_USING_CONTEXT_ITEM } from '../../../fixtures/apps';
 
 describe('Apps', () => {
   it('App should request context', () => {
-    const { name, id } = APP_USING_CONTEXT_ITEM;
+    const { extra, id, name } = APP_USING_CONTEXT_ITEM;
     cy.setUpApi({ items: [APP_USING_CONTEXT_ITEM] });
     cy.visit(buildItemPath(id));
 
@@ -24,7 +24,7 @@ describe('Apps', () => {
     cy.checkContentInElementInIframe(
       iframeSelector,
       'ul',
-      `${'GET_AUTH_TOKEN_SUCCESS_'}${id}`,
+      `GET_AUTH_TOKEN_SUCCESS_${id}`,
     );
 
     // check app can get app-data

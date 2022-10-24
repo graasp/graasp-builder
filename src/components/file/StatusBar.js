@@ -1,29 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { grey } from '@material-ui/core/colors';
 import { StatusBar as UppyStatusBar } from '@uppy/react';
 import '@uppy/status-bar/dist/style.css';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(() => ({
-  snackbarContentRoot: {
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import { grey } from '@mui/material/colors';
+
+const StyledSnackbarContent = styled(SnackbarContent)(() => ({
+  '&.MuiSnackbarContent-root': {
     background: 'white',
   },
-  snackbarContentMessage: {
+  '& .MuiSnackbarContent-message': {
     width: '85%',
   },
-  snackbarContentAction: {
+  '& .MuiSnackbarContent-action': {
     color: grey[500],
   },
 }));
 
 const StatusBar = ({ handleClose, open, uppy }) => {
-  const classes = useStyles();
-
   if (!uppy) {
     return null;
   }
@@ -55,15 +53,7 @@ const StatusBar = ({ handleClose, open, uppy }) => {
         horizontal: 'left',
       }}
     >
-      <SnackbarContent
-        message={statusBar}
-        action={action}
-        classes={{
-          root: classes.snackbarContentRoot,
-          message: classes.snackbarContentMessage,
-          action: classes.snackbarContentAction,
-        }}
-      />
+      <StyledSnackbarContent message={statusBar} action={action} />
     </Snackbar>
   );
 };

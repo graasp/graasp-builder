@@ -1,23 +1,26 @@
-import React from 'react';
-import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import Typography from '@material-ui/core/Typography';
-import { isUrlValid } from '../../../utils/item';
+
+import { TextField } from '@mui/material';
+import Typography from '@mui/material/Typography';
+
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
+import { ITEM_TYPES } from '../../../enums';
+import { isUrlValid } from '../../../utils/item';
 import {
   buildEmbeddedLinkExtra,
   getEmbeddedLinkExtra,
 } from '../../../utils/itemExtra';
-import { ITEM_TYPES } from '../../../enums';
 
 const LinkForm = ({ onChange, item }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleLinkInput = (event) => {
     onChange({
       ...item,
-      name: 'a random name for link', // todo: this is replaced by iframely
+      name: translateBuilder(BUILDER.LINK_DEFAULT_NAME), // todo: this is replaced by iframely
       extra: buildEmbeddedLinkExtra({ url: event.target.value }),
     });
   };
@@ -27,16 +30,21 @@ const LinkForm = ({ onChange, item }) => {
 
   return (
     <>
-      <Typography variant="h6">{t('Create a Link')}</Typography>
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
+      </Typography>
       <TextField
         id={ITEM_FORM_LINK_INPUT_ID}
         error={isLinkInvalid}
         autoFocus
         margin="dense"
-        label={t('Link')}
+        label={translateBuilder(BUILDER.CREATE_ITEM_LINK_LABEL)}
         value={url}
         onChange={handleLinkInput}
-        helperText={Boolean(isLinkInvalid) && t('This link is not valid')}
+        helperText={
+          Boolean(isLinkInvalid) &&
+          translateBuilder(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR)
+        }
         fullWidth
       />
     </>

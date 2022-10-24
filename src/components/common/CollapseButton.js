@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { useTranslation } from 'react-i18next';
-import Tooltip from '@material-ui/core/Tooltip';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useEffect, useState } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+
+import { BUTTON_TYPES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { BUTTON_TYPES } from '../../config/constants';
 
 const CollapseButton = ({ item, type, onClick }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
   const [isCollapsible, setIsCollapsible] = useState(
@@ -36,7 +41,9 @@ const CollapseButton = ({ item, type, onClick }) => {
   };
 
   const icon = isCollapsible ? <ExpandLessIcon /> : <ExpandMoreIcon />;
-  const text = isCollapsible ? t('Uncollapse') : t('Collapse');
+  const text = isCollapsible
+    ? translateBuilder(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)
+    : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
 
   switch (type) {
     case BUTTON_TYPES.MENU_ITEM:

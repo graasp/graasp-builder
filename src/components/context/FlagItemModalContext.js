@@ -1,43 +1,34 @@
-import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
+
+import { ListItem, ListItemText } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+
+import { createContext, useMemo, useState } from 'react';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
-import Dialog from '@material-ui/core/Dialog';
-import List from '@material-ui/core/List';
-import { ListItem, ListItemText, makeStyles } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import { useMutation, hooks } from '../../config/queryClient';
-import {
-  buildFlagListItemId,
-  FLAG_ITEM_BUTTON_ID,
-} from '../../config/selectors';
+
 import { FLAG_LIST_MAX_HEIGHT } from '../../config/constants';
+import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
+import { hooks, useMutation } from '../../config/queryClient';
+import {
+  FLAG_ITEM_BUTTON_ID,
+  buildFlagListItemId,
+} from '../../config/selectors';
 
 const { useFlags } = hooks;
 
-const FlagItemModalContext = React.createContext();
-
-const useStyles = makeStyles(() => ({
-  list: {
-    width: '100%',
-    overflow: 'auto',
-    maxHeight: FLAG_LIST_MAX_HEIGHT,
-  },
-  listTitle: {
-    fontSize: 'small',
-  },
-  flagItemButton: {
-    color: 'red',
-  },
-}));
+const FlagItemModalContext = createContext();
 
 const FlagItemModalProvider = ({ children }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const { mutate: postFlagItem } = useMutation(MUTATION_KEYS.POST_ITEM_FLAG);
   const [open, setOpen] = useState(false);
   const [selectedFlag, setSelectedFlag] = useState(false);
@@ -70,12 +61,21 @@ const FlagItemModalProvider = ({ children }) => {
   return (
     <FlagItemModalContext.Provider value={value}>
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-        <DialogTitle>{t('Flag Item')}</DialogTitle>
+        <DialogTitle>
+          {translateBuilder(BUILDER.FLAG_ITEM_MODAL_TITLE)}
+        </DialogTitle>
         <DialogContent>
-          <Typography variant="h6" className={classes.listTitle}>
-            {`${t('Select reason for flagging this item')}:`}
+          <Typography variant="body1">
+            {translateBuilder(BUILDER.FLAG_ITEM_REASON_TITLE)}
           </Typography>
-          <List component="nav" className={classes.list}>
+          <List
+            component="nav"
+            sx={{
+              width: '100%',
+              overflow: 'auto',
+              maxHeight: FLAG_LIST_MAX_HEIGHT,
+            }}
+          >
             {flags?.map((flag) => (
               <ListItem
                 key={flag.id}
@@ -91,15 +91,14 @@ const FlagItemModalProvider = ({ children }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} variant="text">
-            {t('Cancel')}
+            {translateCommon(COMMON.CANCEL_BUTTON)}
           </Button>
           <Button
             onClick={onFlag}
-            className={classes.flagItemButton}
             id={FLAG_ITEM_BUTTON_ID}
             disabled={!selectedFlag}
           >
-            {t('Flag')}
+            {translateBuilder(BUILDER.FLAG_ITEM_BUTTON)}
           </Button>
         </DialogActions>
       </Dialog>

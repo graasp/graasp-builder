@@ -1,15 +1,19 @@
-import React, { useMemo, useState } from 'react';
-import { validate } from 'uuid';
-import { useTranslation } from 'react-i18next';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
+import { validate } from 'uuid';
+
+import { createContext, useMemo, useState } from 'react';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import TreeModal from '../main/TreeModal';
 
-const CopyItemModalContext = React.createContext();
+const CopyItemModalContext = createContext();
 
 const CopyItemModalProvider = ({ children }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: copyItems } = useMutation(MUTATION_KEYS.COPY_ITEMS);
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState(false);
@@ -45,7 +49,7 @@ const CopyItemModalProvider = ({ children }) => {
         open={open}
         itemIds={itemIds}
         onConfirm={onConfirm}
-        title={t('Where do you want to copy this item?')}
+        title={translateBuilder(BUILDER.COPY_ITEM_MODAL_TITLE)}
       />
     );
   };

@@ -29,7 +29,7 @@ jobs:
     name: Graasp Builder
     # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/update-staging-version.yml@09614e5f7929924953cd1861f827ebda533e820a
+    uses: graasp/graasp-deploy/.github/workflows/update-staging-version.yml@410d94e37b16683e4a6f02a6bb45000e3ff92e69
     with:
       release-type: ${{ inputs.release-type }}
     secrets:

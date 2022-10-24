@@ -1,20 +1,25 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { useTranslation } from 'react-i18next';
-import CloseIcon from '@material-ui/icons/Close';
-import { LayoutContext } from '../../context/LayoutContext';
-import {
-  buildSettingsButtonId,
-  ITEM_SETTINGS_BUTTON_CLASS,
-} from '../../../config/selectors';
+
+import CloseIcon from '@mui/icons-material/Close';
+import SettingsIcon from '@mui/icons-material/Settings';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useContext } from 'react';
+
+import { BUILDER } from '@graasp/translations';
+
 import { ITEM_ACTION_TABS } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
+import {
+  ITEM_SETTINGS_BUTTON_CLASS,
+  buildSettingsButtonId,
+} from '../../../config/selectors';
+import { LayoutContext } from '../../context/LayoutContext';
 
 const ItemSettingsButton = ({ id }) => {
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const onClickSettings = () => {
     setOpenedActionTabId(
@@ -25,7 +30,7 @@ const ItemSettingsButton = ({ id }) => {
   };
 
   return (
-    <Tooltip title={t('Settings')}>
+    <Tooltip title={translateBuilder(BUILDER.SETTINGS_TITLE)}>
       <IconButton
         onClick={onClickSettings}
         className={ITEM_SETTINGS_BUTTON_CLASS}

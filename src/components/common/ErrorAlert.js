@@ -1,13 +1,16 @@
-import Alert from '@material-ui/lab/Alert';
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+
+import Alert from '@mui/material/Alert';
+
+import { BUILDER } from '@graasp/translations';
+
+import { useBuilderTranslation } from '../../config/i18n';
 
 const ErrorAlert = ({ id }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   return (
     <Alert id={id} severity="error">
-      {t('An error occured.')}
+      {translateBuilder(BUILDER.ERROR_MESSAGE)}
     </Alert>
   );
 };

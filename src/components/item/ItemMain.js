@@ -1,57 +1,56 @@
-import React, { useContext } from 'react';
 import { Record } from 'immutable';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { RIGHT_MENU_WIDTH } from '../../config/constants';
-import ItemHeader from './header/ItemHeader';
-import ItemPanel from './ItemPanel';
-import { ITEM_MAIN_CLASS } from '../../config/selectors';
-import { LayoutContext } from '../context/LayoutContext';
-import Chatbox from '../common/Chatbox';
-import ItemMetadataContent from './ItemMetadataContent';
-import ItemPanelHeader from './ItemPanelHeader';
 
-const useStyles = makeStyles((theme) => ({
-  hide: {
-    display: 'none',
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
+import { Box, Divider, Typography, styled } from '@mui/material';
+
+import { useContext } from 'react';
+
+import { BUILDER } from '@graasp/translations';
+import { DrawerHeader } from '@graasp/ui';
+
+import { RIGHT_MENU_WIDTH } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
+import { ITEM_MAIN_CLASS } from '../../config/selectors';
+import Chatbox from '../common/Chatbox';
+import { LayoutContext } from '../context/LayoutContext';
+import ItemMetadataContent from './ItemMetadataContent';
+import ItemPanel from './ItemPanel';
+import ItemHeader from './header/ItemHeader';
+
+const StyledContainer = styled(Box)(({ theme, open }) => {
+  const openStyles = open
+    ? {
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginRight: RIGHT_MENU_WIDTH,
+      }
+    : {};
+
+  return {
     position: 'relative',
-    padding: theme.spacing(1),
+    padding: theme.spacing(1, 2),
     flexGrow: 1,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
     marginRight: 0,
+    width: 'unset',
     // takes the whole screen height minus the header height approximatively
     // this might have to change
     minHeight: '85vh',
     display: 'flex',
     flexDirection: 'column',
-  },
-  contentShift: {
+
     transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    marginRight: RIGHT_MENU_WIDTH,
-  },
-}));
+
+    ...openStyles,
+  };
+});
 
 const ItemMain = ({ id, children, item }) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const {
     isItemMetadataMenuOpen,
     setIsItemMetadataMenuOpen,
@@ -67,35 +66,42 @@ const ItemMain = ({ id, children, item }) => {
     setIsChatboxMenuOpen(!isChatboxMenuOpen);
     setIsItemMetadataMenuOpen(false);
   };
-
   return (
     <div id={id} className={ITEM_MAIN_CLASS}>
       {isChatboxMenuOpen && (
         <ItemPanel open={isChatboxMenuOpen}>
-          <ItemPanelHeader
-            title={t('Comments')}
-            onClick={() => {
+          <DrawerHeader
+            handleDrawerClose={() => {
               setIsChatboxMenuOpen(false);
             }}
-          />
+            // todo
+            direction="rtl"
+          >
+            <Typography variant="h6">
+              {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+            </Typography>
+          </DrawerHeader>
+          <Divider />
           <Chatbox item={item} />
         </ItemPanel>
       )}
       <ItemPanel open={isItemMetadataMenuOpen}>
-        <ItemPanelHeader
-          title={t('Information')}
-          onClick={() => {
+        <DrawerHeader
+          handleDrawerClose={() => {
             setIsItemMetadataMenuOpen(false);
           }}
-        />
+          // todo
+          direction="rtl"
+        >
+          <Typography variant="h6">
+            {translateBuilder(BUILDER.ITEM_METADATA_TITLE)}
+          </Typography>
+        </DrawerHeader>
+        <Divider />
         <ItemMetadataContent item={item} />
       </ItemPanel>
 
-      <div
-        className={clsx(classes.root, classes.content, {
-          [classes.contentShift]: isItemMetadataMenuOpen || isChatboxMenuOpen,
-        })}
-      >
+      <StyledContainer open={isChatboxMenuOpen || isItemMetadataMenuOpen}>
         <ItemHeader
           showNavigation
           onClickMetadata={handleToggleMetadataMenu}
@@ -103,7 +109,7 @@ const ItemMain = ({ id, children, item }) => {
         />
 
         {children}
-      </div>
+      </StyledContainer>
     </div>
   );
 };

@@ -1,38 +1,33 @@
-import React, { useMemo } from 'react';
+import { List, Record } from 'immutable';
 import PropTypes from 'prop-types';
-import { Record, List } from 'immutable';
-import { Table as GraaspTable } from '@graasp/ui/dist/table';
-import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
+
+import { useMemo } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation } from '../../../config/queryClient';
-import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
-import {
-  buildInvitationTableRowId,
-  buildItemInvitationRowDeleteButtonId,
-} from '../../../config/selectors';
-import TableRowPermissionRenderer from './TableRowPermissionRenderer';
+import { BUILDER } from '@graasp/translations';
+import { Table as GraaspTable } from '@graasp/ui/dist/table';
+
 import {
   MEMBERSHIP_TABLE_HEIGHT,
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
+import { useMutation } from '../../../config/queryClient';
+import {
+  buildInvitationTableRowId,
+  buildItemInvitationRowDeleteButtonId,
+} from '../../../config/selectors';
 import ResendInvitationRenderer from './ResendInvitationRenderer';
+import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
+import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 
-const useStyles = makeStyles(() => ({
-  row: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  actionCell: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-}));
+const rowStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
 
 const InvitationsTable = ({ invitations, item, emptyMessage }) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: editInvitation } = useMutation(
     MUTATION_KEYS.PATCH_INVITATION,
   );
@@ -53,8 +48,8 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
     item,
     onDelete,
     buildIdFunction: buildItemInvitationRowDeleteButtonId,
-    tooltip: t(
-      'This invitation is defined in the parent item and cannot be deleted here.',
+    tooltip: translateBuilder(
+      BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
     ),
   });
 
@@ -89,22 +84,26 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
         headerCheckboxSelection: true,
         checkboxSelection: true,
         comparator: GraaspTable.textComparator,
-        headerName: t('Mail'),
+        headerName: translateBuilder(BUILDER.INVITATIONS_TABLE_EMAIL_HEADER),
         field: 'email',
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 1,
         tooltipField: 'email',
       },
       {
-        headerName: t('Invitation'),
+        headerName: translateBuilder(
+          BUILDER.INVITATIONS_TABLE_INVITATION_HEADER,
+        ),
         sortable: false,
         cellRenderer: InvitationRenderer,
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 1,
         field: 'email',
       },
       {
-        headerName: t('Permission'),
+        headerName: translateBuilder(
+          BUILDER.INVITATIONS_TABLE_PERMISSION_HEADER,
+        ),
         cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
         type: 'rightAligned',
@@ -113,19 +112,25 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       {
         field: 'actions',
         cellRenderer: ActionRenderer,
-        headerName: t('Actions'),
+        headerName: translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
-        cellClass: classes.actionCell,
+        cellStyle: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, InvitationRenderer, PermissionRenderer, ActionRenderer],
+    [translateBuilder, InvitationRenderer, PermissionRenderer, ActionRenderer],
   );
 
   const countTextFunction = (selected) =>
-    t('itemSelected', { count: selected.length });
+    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
+      count: selected.length,
+    });
 
   return (
     <GraaspTable

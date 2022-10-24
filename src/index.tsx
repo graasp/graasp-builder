@@ -1,22 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactGA from 'react-ga4';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
-import { hasAcceptedCookies } from '@graasp/sdk';
-import './index.css';
-import Root from './components/Root';
-import * as serviceWorker from './serviceWorker';
 
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom';
+import ReactGA from 'react-ga4';
+
+import { hasAcceptedCookies } from '@graasp/sdk';
 import '@graasp/ui/dist/bundle.css';
+
+import Root from './components/Root';
 import {
   ENV,
   GA_MEASUREMENT_ID,
   NODE_ENV,
   SENTRY_DSN,
 } from './config/constants';
-
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
+import './index.css';
 
 if (SENTRY_DSN) {
   Sentry.init({
@@ -38,13 +38,8 @@ if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <Root />
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root'),
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

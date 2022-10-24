@@ -1,36 +1,41 @@
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
-import LabelImportantIcon from '@material-ui/icons/LabelImportant';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import FlagIcon from '@material-ui/icons/Flag';
-import { useTranslation } from 'react-i18next';
+
+import FlagIcon from '@mui/icons-material/Flag';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+import { useContext, useState } from 'react';
+
+import { BUILDER } from '@graasp/translations';
+
+import { BUTTON_TYPES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
-  buildItemMenu,
-  buildItemMenuButtonId,
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
+  buildItemMenu,
+  buildItemMenuButtonId,
 } from '../../config/selectors';
-import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
-import { FlagItemModalContext } from '../context/FlagItemModalContext';
-import MoveButton from '../common/MoveButton';
-import CopyButton from './CopyButton';
-import RecycleButton from '../common/RecycleButton';
-import HideButton from '../common/HideButton';
-import PinButton from '../common/PinButton';
 import CollapseButton from '../common/CollapseButton';
 import FavoriteButton from '../common/FavoriteButton';
-import { BUTTON_TYPES } from '../../config/constants';
+import HideButton from '../common/HideButton';
+import MoveButton from '../common/MoveButton';
+import PinButton from '../common/PinButton';
+import RecycleButton from '../common/RecycleButton';
+import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { CurrentUserContext } from '../context/CurrentUserContext';
+import { FlagItemModalContext } from '../context/FlagItemModalContext';
+import CopyButton from './CopyButton';
 
 const ItemMenu = ({ item, canEdit }) => {
   const { data: member } = useContext(CurrentUserContext);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const { t } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { t: translateBuilder } = useBuilderTranslation();
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
@@ -60,14 +65,20 @@ const ItemMenu = ({ item, canEdit }) => {
     }
     return [
       <MoveButton
+        key="move"
         type={BUTTON_TYPES.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
       />,
-      <HideButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
-      <PinButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
-      <CollapseButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <HideButton key="hide" type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <PinButton key="pin" type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <CollapseButton
+        key="collapse"
+        type={BUTTON_TYPES.MENU_ITEM}
+        item={item}
+      />,
       <RecycleButton
+        key="recycle"
         type={BUTTON_TYPES.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
@@ -80,8 +91,13 @@ const ItemMenu = ({ item, canEdit }) => {
       return null;
     }
     return [
-      <FavoriteButton type={BUTTON_TYPES.MENU_ITEM} item={item} />,
+      <FavoriteButton
+        key="favorite"
+        type={BUTTON_TYPES.MENU_ITEM}
+        item={item}
+      />,
       <CopyButton
+        key="copy"
         type={BUTTON_TYPES.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
@@ -115,7 +131,7 @@ const ItemMenu = ({ item, canEdit }) => {
             <ListItemIcon>
               <LabelImportantIcon />
             </ListItemIcon>
-            {t('Create Shortcut')}
+            {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
           </MenuItem>
           <MenuItem
             onClick={handleFlag}
@@ -124,7 +140,7 @@ const ItemMenu = ({ item, canEdit }) => {
             <ListItemIcon>
               <FlagIcon />
             </ListItemIcon>
-            {t('Flag')}
+            {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
           </MenuItem>
         </Menu>
       )}

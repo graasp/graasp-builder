@@ -1,3 +1,6 @@
+/**
+ * @deprecated use graasp sdk
+ */
 const PERMISSION_LEVELS = {
   READ: 'read',
   WRITE: 'write',
@@ -5,5 +8,7 @@ const PERMISSION_LEVELS = {
 };
 
 Object.freeze(PERMISSION_LEVELS);
-
+/**
+ * @deprecated use graasp sdk
+ */
 export default PERMISSION_LEVELS;

@@ -1,50 +1,42 @@
-import React, { useContext } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import EditIcon from '@material-ui/icons/Edit';
 import { Map, Record } from 'immutable';
-import InfoIcon from '@material-ui/icons/Info';
-import Tooltip from '@material-ui/core/Tooltip';
-import ForumIcon from '@material-ui/icons/Forum';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import ModeButton from './ModeButton';
-import { ITEM_TYPES } from '../../../enums';
-import { LayoutContext } from '../../context/LayoutContext';
+import PropTypes from 'prop-types';
+
+import EditIcon from '@mui/icons-material/Edit';
+import InfoIcon from '@mui/icons-material/Info';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useContext } from 'react';
+
+import { BUILDER } from '@graasp/translations';
+import { ChatboxButton } from '@graasp/ui';
+
+import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
+import { hooks } from '../../../config/queryClient';
 import {
-  buildEditButtonId,
   ITEM_CHATBOX_BUTTON_ID,
   ITEM_INFORMATION_BUTTON_ID,
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
+  buildEditButtonId,
 } from '../../../config/selectors';
-import ShareButton from '../../common/ShareButton';
-import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
-import ItemSettingsButton from '../settings/ItemSettingsButton';
-import PlayerViewButton from '../../common/PlayerViewButton';
+import { ITEM_TYPES } from '../../../enums';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
-import { hooks } from '../../../config/queryClient';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
+import PlayerViewButton from '../../common/PlayerViewButton';
 import PublishButton from '../../common/PublishButton';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: theme.spacing(1),
-  },
-  buttons: {
-    display: 'flex',
-  },
-}));
+import ShareButton from '../../common/ShareButton';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { LayoutContext } from '../../context/LayoutContext';
+import ItemSettingsButton from '../settings/ItemSettingsButton';
+import ModeButton from './ModeButton';
 
 const { useItemMemberships } = hooks;
 
 const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const {
     setEditingItemId,
     editingItemId,
@@ -72,7 +64,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       const activeActions = (
         <>
           {showEditButton && (
-            <Tooltip title={t('Edit')}>
+            <Tooltip title={translateBuilder(BUILDER.EDIT_BUTTON_TOOLTIP)}>
               <IconButton
                 aria-label="edit"
                 onClick={() => {
@@ -85,11 +77,13 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
             </Tooltip>
           )}
           <ShareButton itemId={id} />
-          <PublishButton itemId={id} />
+          <ChatboxButton
+            tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+            id={ITEM_CHATBOX_BUTTON_ID}
+            onClick={onClickChatbox}
+          />
           <PlayerViewButton itemId={id} />
-          <IconButton id={ITEM_CHATBOX_BUTTON_ID} onClick={onClickChatbox}>
-            <ForumIcon />
-          </IconButton>
+          <PublishButton itemId={id} />
           {canEdit && <AnalyticsDashboardButton id={id} />}
         </>
       );
@@ -113,21 +107,23 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
   };
 
   return (
-    <div className={classes.buttons}>
+    <Box sx={{ display: 'flex' }}>
       {renderItemActions()}
       {renderTableActions()}
       {id && (
-        <IconButton
-          id={ITEM_INFORMATION_BUTTON_ID}
-          onClick={onClickMetadata}
-          className={clsx({
-            [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
-          })}
-        >
-          <InfoIcon />
-        </IconButton>
+        <Tooltip title={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}>
+          <IconButton
+            id={ITEM_INFORMATION_BUTTON_ID}
+            onClick={onClickMetadata}
+            className={clsx({
+              [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
+            })}
+          >
+            <InfoIcon />
+          </IconButton>
+        </Tooltip>
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -138,7 +134,9 @@ ItemHeaderActions.propTypes = {
 };
 
 ItemHeaderActions.defaultProps = {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClickMetadata: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClickChatbox: () => {},
   item: Map(),
 };

@@ -1,21 +1,24 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import Tooltip from '@material-ui/core/Tooltip';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import PropTypes from 'prop-types';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+
+import { BUTTON_TYPES } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
+import { useMutation } from '../../config/queryClient';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
   ITEM_RECYCLE_BUTTON_CLASS,
 } from '../../config/selectors';
-import { useMutation } from '../../config/queryClient';
-import { BUTTON_TYPES } from '../../config/constants';
 
 const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: recycleItems } = useMutation(MUTATION_KEYS.RECYCLE_ITEMS);
 
   const handleClick = () => {
@@ -23,7 +26,7 @@ const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
     onClick?.();
   };
 
-  const text = t('Recycle');
+  const text = translateBuilder(BUILDER.RECYCLE_ITEM_BUTTON);
 
   switch (type) {
     case BUTTON_TYPES.MENU_ITEM:

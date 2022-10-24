@@ -1,45 +1,30 @@
-import React, { useState } from 'react';
+import { List, Record } from 'immutable';
 import PropTypes from 'prop-types';
-import { Button } from '@graasp/ui';
-import IconButton from '@material-ui/core/IconButton';
-import { Record, List } from 'immutable';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Grid, makeStyles, TextField } from '@material-ui/core';
-import { MUTATION_KEYS, routines } from '@graasp/query-client';
-import { useTranslation } from 'react-i18next';
 import validator from 'validator';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { Grid, TextField } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+
+import { useState } from 'react';
+
+import { MUTATION_KEYS, routines } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+import { Button } from '@graasp/ui';
+
+import { useBuilderTranslation } from '../../../config/i18n';
+import notifier from '../../../config/notifier';
 import { useMutation } from '../../../config/queryClient';
 import {
-  SHARE_ITEM_EMAIL_INPUT_ID,
   CREATE_MEMBERSHIP_FORM_ID,
+  SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../config/selectors';
-import ItemMembershipSelect from './ItemMembershipSelect';
 import { buildInvitation } from '../../../utils/invitation';
-import notifier from '../../../config/notifier';
+import ItemMembershipSelect from './ItemMembershipSelect';
 
 const { shareItemRoutine } = routines;
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-  },
-  dialogContent: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  shortInputField: {
-    width: '50%',
-  },
-  addedMargin: {
-    marginTop: theme.spacing(2),
-  },
-  emailInput: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-}));
 
 // todo: handle multiple invitations
 const CreateItemMembershipForm = ({ item, members }) => {
@@ -47,8 +32,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
   const [error, setError] = useState(false);
 
   const { mutateAsync: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
   const [invitation, setInvitation] = useState(buildInvitation());
@@ -56,14 +40,20 @@ const CreateItemMembershipForm = ({ item, members }) => {
   const isInvitationInvalid = ({ email }) => {
     // check mail validity
     if (!email) {
-      return t('The mail cannot be empty');
+      return translateBuilder(
+        BUILDER.SHARE_ITEM_FORM_INVITATION_EMPTY_EMAIL_MESSAGE,
+      );
     }
     if (!validator.isEmail(email)) {
-      return t('This mail is not valid');
+      return translateBuilder(
+        BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE,
+      );
     }
     // check mail does not already exist
     if (members.find(({ email: thisEmail }) => thisEmail === email)) {
-      return t('This user already has access to this item');
+      return translateBuilder(
+        BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
+      );
     }
     return false;
   };
@@ -130,9 +120,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
 
   const renderInvitationStatus = () => (
     <Tooltip
-      title={t(
-        'Non-registered users will receive a personal link to register on the platform.',
-      )}
+      title={translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
     >
       <IconButton aria-label="status">
         <ErrorOutlineIcon />
@@ -148,21 +136,24 @@ const CreateItemMembershipForm = ({ item, members }) => {
         disabled={disabled}
         id={SHARE_ITEM_SHARE_BUTTON_ID}
       >
-        {t('Share')}
+        {translateBuilder(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
       </Button>
     );
   };
 
   return (
-    <Grid container spacing={1} id={CREATE_MEMBERSHIP_FORM_ID}>
-      <Grid container alignItems="center" justify="center">
+    <Grid container id={CREATE_MEMBERSHIP_FORM_ID}>
+      <Grid container alignItems="center" justifyContent="center" spacing={1}>
         <Grid item xs={5}>
           <TextField
             value={invitation.email}
-            className={classes.emailInput}
+            sx={{
+              width: '100%',
+              marginTop: 1,
+            }}
             id={SHARE_ITEM_EMAIL_INPUT_ID}
             variant="outlined"
-            label={t('Email')}
+            label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
             error={Boolean(error)}
             helperText={error}
             onChange={onChangeEmail}

@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { DownloadButton as Button } from '@graasp/ui';
 import PropTypes from 'prop-types';
+
+import { useEffect } from 'react';
+
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
+import { DownloadButton as Button } from '@graasp/ui';
+
+import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 
 export const DownloadButton = ({ id, name }) => {
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const {
     mutate: downloadItem,
@@ -34,7 +38,7 @@ export const DownloadButton = ({ id, name }) => {
     <Button
       handleDownload={handleDownload}
       isLoading={isDownloading}
-      title={t('Download')}
+      title={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
     />
   );
 };

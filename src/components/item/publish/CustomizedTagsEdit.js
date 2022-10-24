@@ -1,35 +1,32 @@
-import React, { useContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
-import { Loader, Button } from '@graasp/ui';
-import { useTranslation } from 'react-i18next';
-import { Typography, TextField, Chip, makeStyles } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
+import PropTypes from 'prop-types';
+
+import { Chip, TextField, Typography } from '@mui/material';
+
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { useMutation } from '../../../config/queryClient';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { BUILDER, COMMON } from '@graasp/translations';
+import { Loader, SaveButton } from '@graasp/ui';
+
 import {
-  buildCustomizedTagsSelector,
+  useBuilderTranslation,
+  useCommonTranslation,
+} from '../../../config/i18n';
+import { useMutation } from '../../../config/queryClient';
+import {
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
+  buildCustomizedTagsSelector,
 } from '../../../config/selectors';
-
-const useStyles = makeStyles((theme) => ({
-  title: {
-    marginTop: theme.spacing(2),
-  },
-  button: {
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-  },
-}));
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 const CustomizedTagsEdit = ({ item }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
 
   // user
@@ -71,34 +68,42 @@ const CustomizedTagsEdit = ({ item }) => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.title}>
-        {t('Tags')}
+      <Typography variant="h6" mt={2}>
+        {translateBuilder(BUILDER.ITEM_TAGS_TITLE)}
       </Typography>
       <Typography variant="body1">
-        {t('Please seperate tags by comma. ')}
-        {t('Eg. English, Biology, Lab, Plants, ..., Demo')}
+        {translateBuilder(BUILDER.ITEM_TAGS_INFORMATION)}
       </Typography>
       <TextField
         variant="outlined"
-        label={t('Tags')}
         multiline
         maxRows={5}
         defaultValue={displayValues}
         onChange={handleChange}
         id={ITEM_TAGS_EDIT_INPUT_ID}
+        sx={{ mt: 1, mb: 1 }}
       />
-      <Button
+      <SaveButton
         onClick={handleSubmit}
-        className={classes.button}
-        startIcon={<SaveIcon />}
+        sx={{ marginTop: 1, marginLeft: 2 }}
         id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
-      >
-        {t('Save')}
-      </Button>
-      <Typography variant="subtitle1">{t('Tags Preview')}</Typography>
-      {settings?.tags?.map((tag, index) => (
-        <Chip label={tag} id={buildCustomizedTagsSelector(index)} />
-      ))}
+        text={translateCommon(COMMON.SAVE_BUTTON)}
+        hasChanges
+      />
+      {settings?.tags?.size && (
+        <>
+          <Typography variant="subtitle1">
+            {translateBuilder(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
+          </Typography>
+          {settings?.tags?.map((tag, index) => (
+            <Chip
+              key={tag}
+              label={tag}
+              id={buildCustomizedTagsSelector(index)}
+            />
+          ))}
+        </>
+      )}
     </>
   );
 };

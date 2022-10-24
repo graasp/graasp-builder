@@ -1,26 +1,23 @@
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import {
-  DEFAULT_ITEM_LAYOUT_MODE,
-  ROOT_ID,
-  SHARED_ROOT_ID,
-} from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-
-import {
-  buildItemPath,
   HOME_PATH,
   SHARED_ITEMS_PATH,
+  buildItemPath,
 } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowIdAttribute,
-  buildItemMenu,
+  EDIT_ITEM_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
+  TREE_MODAL_MY_ITEMS_ID,
+  TREE_MODAL_SHARED_ITEMS_ID,
+  buildItemMenu,
   buildItemMenuButtonId,
   buildItemsTableId,
-  EDIT_ITEM_BUTTON_CLASS,
+  buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const copyItem = ({ id, toItemPath, rootId }) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
@@ -88,7 +85,7 @@ describe('Copy Item in List', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    copyItem({ id: copyItemId, toItemPath: ROOT_ID });
+    copyItem({ id: copyItemId, toItemPath: TREE_MODAL_MY_ITEMS_ID });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
@@ -111,7 +108,11 @@ describe('Copy Item in List', () => {
 
     // copy
     const { id: copyItemId } = SHARED_ITEMS.items[1];
-    copyItem({ id: copyItemId, toItemPath: path, rootId: SHARED_ROOT_ID });
+    copyItem({
+      id: copyItemId,
+      toItemPath: path,
+      rootId: TREE_MODAL_SHARED_ITEMS_ID,
+    });
 
     cy.wait('@copyItems').then(() => {
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');

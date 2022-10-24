@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { hooks } from '../../config/queryClient';
-import i18n from '../../config/i18n';
 
-const CurrentUserContext = React.createContext();
+import { createContext, useEffect, useMemo } from 'react';
+
+import i18n from '../../config/i18n';
+import { hooks } from '../../config/queryClient';
+
+const CurrentUserContext = createContext();
 
 const { useCurrentMember } = hooks;
 const CurrentUserContextProvider = ({ children }) => {

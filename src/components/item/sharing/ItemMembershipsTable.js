@@ -1,12 +1,20 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Record } from 'immutable';
-import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
-import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
+
+import { Typography } from '@mui/material';
+
+import { useMemo } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
+
+import {
+  MEMBERSHIP_TABLE_HEIGHT,
+  MEMBERSHIP_TABLE_ROW_HEIGHT,
+} from '../../../config/constants';
+import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,
@@ -14,30 +22,15 @@ import {
 } from '../../../config/selectors';
 import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
 import TableRowPermissionRenderer from './TableRowPermissionRenderer';
-import {
-  MEMBERSHIP_TABLE_HEIGHT,
-  MEMBERSHIP_TABLE_ROW_HEIGHT,
-} from '../../../config/constants';
 
-const useStyles = makeStyles(() => ({
-  row: {
-    display: 'flex',
-    alignItems: 'center',
+const rowStyle = {
+  display: 'flex',
+  alignItems: 'center',
 
-    '& > div': {
-      width: '100%',
-    },
+  '& > div': {
+    width: '100%',
   },
-  actionCell: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  permission: {
-    overflow: 'visible',
-    textAlign: 'right',
-  },
-}));
+};
 
 const NameRenderer = (users) => {
   const ChildComponent = ({ data: membership }) => {
@@ -75,8 +68,7 @@ const ItemMembershipsTable = ({
   emptyMessage,
   showEmail,
 }) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: users, isLoading } = hooks.useMembers(
     memberships.map(({ memberId }) => memberId),
   );
@@ -99,8 +91,8 @@ const ItemMembershipsTable = ({
       item,
       onDelete,
       buildIdFunction: buildItemMembershipRowDeleteButtonId,
-      tooltip: t(
-        'This membership is defined in the parent item and cannot be deleted here.',
+      tooltip: translateBuilder(
+        BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
       ),
     });
     const PermissionRenderer = TableRowPermissionRenderer({
@@ -129,10 +121,12 @@ const ItemMembershipsTable = ({
       columns.push({
         headerCheckboxSelection: true,
         checkboxSelection: true,
-        headerName: t('Mail'),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER,
+        ),
         cellRenderer: EmailCellRenderer,
         field: 'email',
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 2,
         tooltipField: 'email',
         resizable: true,
@@ -141,31 +135,44 @@ const ItemMembershipsTable = ({
 
     return columns.concat([
       {
-        headerName: t('Name'),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER,
+        ),
         cellRenderer: NameCellRenderer,
         field: 'memberId',
-        cellClass: classes.row,
+        cellStyle: rowStyle,
         flex: 2,
         tooltipField: 'name',
       },
       {
-        headerName: t('Permission'),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER,
+        ),
         cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
         sort: true,
         type: 'rightAligned',
         field: 'permission',
         flex: 1,
-        cellClass: classes.permission,
+        cellStyle: {
+          overflow: 'visible',
+          textAlign: 'right',
+        },
       },
       {
         field: 'actions',
         cellRenderer: ActionRenderer,
-        headerName: t('Actions'),
+        headerName: translateBuilder(
+          BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER,
+        ),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
-        cellClass: classes.actionCell,
+        cellStyle: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        },
         flex: 1,
       },
     ]);
@@ -176,7 +183,9 @@ const ItemMembershipsTable = ({
     return <Loader />;
   }
   const countTextFunction = (selected) =>
-    t('itemSelected', { count: selected.length });
+    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
+      count: selected.length,
+    });
 
   return (
     <GraaspTable

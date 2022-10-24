@@ -1,4 +1,5 @@
-import { buildSignInPath, Context } from '@graasp/sdk';
+import { Context, buildSignInPath } from '@graasp/sdk';
+
 import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
 import env from '../env.json';
 
@@ -11,7 +12,6 @@ const {
   HIDDEN_ITEM_TAG_ID: ENV_HIDDEN_ITEM_TAG_ID,
   GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
   H5P_INTEGRATION_URL: ENV_H5P_INTEGRATION_URL,
-  DOMAIN: ENV_DOMAIN,
 } = env;
 
 export const APP_NAME = 'Graasp';
@@ -68,7 +68,7 @@ export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 export const HIDDEN_ITEM_TAG_ID =
   ENV_HIDDEN_ITEM_TAG_ID || process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || false;
 
-export const DOMAIN = ENV_DOMAIN || process.env.REACT_APP_DOMAIN;
+export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -79,10 +79,6 @@ export const DEFAULT_IMAGE_SRC =
 
 // time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
 export const DOUBLE_CLICK_DELAY_MS = 500;
-
-// root used for tree item menu
-export const ROOT_ID = 'root-id';
-export const SHARED_ROOT_ID = 'shared-root-id';
 
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
@@ -140,7 +136,7 @@ export const SETTINGS = {
       USERNAME_AND_PASSWORD: 'username+password',
     },
     SIGN_IN_MODE: {
-      PSEUDONYME: 'pseudonyme',
+      PSEUDONYM: 'pseudonym',
       MEMBER_ID: 'memberId',
     },
   },
@@ -161,11 +157,6 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME;
 
 export const USER_ITEM_ORDER = 'user_order';
-
-export const SHARING_LINK_TYPES = {
-  BUILDER: 'builder',
-  PLAYER: 'player',
-};
 
 export const ITEM_TYPES_WITH_CAPTIONS = [
   ITEM_TYPES.FOLDER,
@@ -192,7 +183,7 @@ export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
-export const ITEMS_TABLE_CONTAINER_HEIGHT = '55vh';
+export const ITEMS_TABLE_CONTAINER_HEIGHT = '65vh';
 
 export const DRAG_ICON_SIZE = 18;
 
@@ -282,3 +273,10 @@ export const ITEM_ACTION_TABS = {
   LIBRARY: 'library',
   SHARING: 'sharing',
 };
+
+export const THUMBNAIL_SIZES = {
+  SMALL: 'small',
+};
+
+export const ITEM_HEADER_ICON_HEIGHT = 30;
+export const AVATAR_ICON_HEIGHT = 30;

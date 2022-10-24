@@ -1,10 +1,11 @@
+import { CATEGORY_TYPE_TITLES } from '../../../../src/config/constants';
+import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildCategoriesSelectionValueSelector,
-  buildCategoryMenuOptions,
+  LIBRARY_SETTINGS_CATEGORIES_ID,
   buildCategorySelectionId,
+  buildCategorySelectionOptionId,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
-import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_WITH_CATEGORIES,
   SAMPLE_CATEGORIES,
@@ -12,117 +13,113 @@ import {
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
-import { CATEGORY_TYPE_TITLES } from '../../../../src/config/constants';
+import { PUBLISH_TAB_LOADING_TIME } from '../../../support/constants';
 
 const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
+  cy.wait(PUBLISH_TAB_LOADING_TIME);
 };
 
-const findCategoryNameById = (id) =>
-  SAMPLE_CATEGORIES.find((entry) => entry.id === id)?.name;
+const toggleOption = (id, categoryType) => {
+  cy.get(`#${buildCategorySelectionId(categoryType)}`).click();
 
-export const deleteOption = (index) => {
-  cy.get(`#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`).click();
-  cy.get(
-    buildCategoryMenuOptions(
-      buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL),
-      index,
-    ),
-  ).click();
-};
-
-export const addOption = (index) => {
-  cy.get(
-    `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.DISCIPLINE)}`,
-  ).click();
-  cy.get(
-    buildCategoryMenuOptions(
-      buildCategorySelectionId(CATEGORY_TYPE_TITLES.DISCIPLINE),
-      index,
-    ),
-  ).click();
+  cy.get(`#${buildCategorySelectionOptionId(categoryType, id)}`).click();
 };
 
 describe('Categories', () => {
-  const item = ITEM_WITH_CATEGORIES;
-  beforeEach(() => {
-    cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
-    cy.visit(buildItemPath(item.id));
-    openPublishItemTab(item.id);
+  describe('Item without category', () => {
+    it('Display item without category', () => {
+      const item = { ...ITEM_WITH_CATEGORIES, categories: [] };
+      cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
+      cy.visit(buildItemPath(item.id));
+      openPublishItemTab(item.id);
+
+      // check for not displaying if no categories
+      cy.get(`#${LIBRARY_SETTINGS_CATEGORIES_ID} .MuiChip-label`).should(
+        'not.exist',
+      );
+    });
   });
 
-  it('Display Item Categories', () => {
-    // check for displaying value
-    const levelValue = cy.get(
-      buildCategoriesSelectionValueSelector(CATEGORY_TYPE_TITLES.LEVEL),
-    );
-    levelValue
-      .first()
-      .contains(findCategoryNameById(item.categories[0].categoryId));
-  });
+  describe('Item with category', () => {
+    const item = ITEM_WITH_CATEGORIES;
+    beforeEach(() => {
+      cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
+      cy.visit(buildItemPath(item.id));
+      openPublishItemTab(item.id);
+    });
 
-  it('Display item without category', () => {
-    // check for not displaying if no categories
-    const disciplineValue = cy.get(
-      `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.DISCIPLINE)}`,
-    );
-    disciplineValue.should('be.empty');
-  });
-
-  it('Delete a category option', () => {
-    // delete selection
-    const optionIndex = 0;
-    deleteOption(optionIndex);
-    cy.wait('@deleteItemCategory').then((data) => {
-      const entryId = item.categories[optionIndex].id;
+    it('Display item category', () => {
+      // check for displaying value
       const {
-        request: { url },
-      } = data;
-      expect(url.split('/')).contains(entryId);
+        categories: [{ categoryId }],
+      } = item;
+      const { type, name } = SAMPLE_CATEGORIES.find(
+        ({ id }) => id === categoryId,
+      );
+      const categoryContent = cy.get(`#${LIBRARY_SETTINGS_CATEGORIES_ID}`);
+      categoryContent.contains(name);
     });
-  });
 
-  it('Add a category option', () => {
-    const optionIndex = 0;
-    addOption(optionIndex);
-    cy.wait('@postItemCategory').then((data) => {
+    it('Delete a category', () => {
       const {
-        request: { url },
-      } = data;
-      expect(url.split('/')).contains(item.id);
+        categories: [itemCategory],
+      } = item;
+      const { categoryId, id } = itemCategory;
+      const categoryType = SAMPLE_CATEGORIES.find(
+        ({ id: cId }) => cId === categoryId,
+      ).type;
+      toggleOption(categoryId, categoryType);
+      cy.wait('@deleteItemCategory').then((data) => {
+        const {
+          request: { url },
+        } = data;
+        expect(url.split('/')).contains(id);
+      });
+    });
+
+    it('Add a category', () => {
+      const { type, id } = SAMPLE_CATEGORIES[1];
+      toggleOption(id, type);
+      cy.wait('@postItemCategory').then((data) => {
+        const {
+          request: { url },
+        } = data;
+        expect(url.split('/')).contains(item.id);
+      });
     });
   });
-});
 
-// users without permission will not see the sections
-describe('Categories permissions', () => {
-  it('User signed out cannot edit category level', () => {
-    const item = PUBLISHED_ITEM;
-    cy.setUpApi({
-      items: [item],
-      currentMember: SIGNED_OUT_MEMBER,
-      tags: DEFAULT_TAGS,
+  // users without permission will not see the sections
+  describe('Categories permissions', () => {
+    it('User signed out cannot edit category level', () => {
+      const item = PUBLISHED_ITEM;
+      cy.setUpApi({
+        items: [item],
+        currentMember: SIGNED_OUT_MEMBER,
+        tags: DEFAULT_TAGS,
+      });
+      cy.visit(buildItemPath(item.id));
+      openPublishItemTab(item.id);
+      const levelValue = cy.get(
+        `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
+      );
+      levelValue.should('not.exist');
     });
-    cy.visit(buildItemPath(item.id));
-    openPublishItemTab(item.id);
-    const levelValue = cy.get(
-      `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
-    );
-    levelValue.should('not.exist');
-  });
 
-  it('Read-only user cannot edit category level', () => {
-    const item = PUBLISHED_ITEM;
-    cy.setUpApi({
-      items: [item],
-      currentMember: MEMBERS.BOB,
-      tags: DEFAULT_TAGS,
+    it('Read-only user cannot edit category level', () => {
+      const item = PUBLISHED_ITEM;
+      cy.setUpApi({
+        items: [item],
+        currentMember: MEMBERS.BOB,
+        tags: DEFAULT_TAGS,
+      });
+      cy.visit(buildItemPath(item.id));
+      openPublishItemTab(item.id);
+      const levelValue = cy.get(
+        `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
+      );
+      levelValue.should('not.exist');
     });
-    cy.visit(buildItemPath(item.id));
-    openPublishItemTab(item.id);
-    const levelValue = cy.get(
-      `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
-    );
-    levelValue.should('not.exist');
   });
 });

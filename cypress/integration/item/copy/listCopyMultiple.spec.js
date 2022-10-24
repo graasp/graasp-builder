@@ -1,14 +1,11 @@
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  DEFAULT_ITEM_LAYOUT_MODE,
-  ROOT_ID,
-} from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
-import {
-  buildItemsTableRowIdAttribute,
   ITEMS_TABLE_COPY_SELECTED_ITEMS_ID,
+  TREE_MODAL_MY_ITEMS_ID,
+  buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
@@ -90,7 +87,7 @@ describe('Copy items in List', () => {
 
     // copy
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    copyItems({ itemIds, toItemPath: ROOT_ID });
+    copyItems({ itemIds, toItemPath: TREE_MODAL_MY_ITEMS_ID });
 
     cy.wait('@copyItems').then(({ response: { body } }) => {
       itemIds.forEach((id) => {

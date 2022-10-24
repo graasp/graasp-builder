@@ -2,5 +2,10 @@
   "trailingComma": "all",
   "tabWidth": 2,
   "semi": true,
-  "singleQuote": true
+  "singleQuote": true,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "importOrder": ["^@mui", "^react", "^@?graasp", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

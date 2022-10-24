@@ -1,9 +1,9 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
+  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   buildItemMembershipRowSelector,
   buildMemberAvatarClass,
   buildShareButtonId,
-  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
 } from '../../../src/config/selectors';
 import { membershipsWithoutUser } from '../../../src/utils/membership';
 import { CURRENT_USER, MEMBERS } from '../../fixtures/members';
