@@ -8,7 +8,7 @@ import ReactGA from 'react-ga4';
 import { hasAcceptedCookies } from '@graasp/sdk';
 import '@graasp/ui/dist/bundle.css';
 
-import Root from './components/Root';
+// import Root from './components/Root';
 import {
   ENV,
   GA_MEASUREMENT_ID,
@@ -37,9 +37,4 @@ if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
   ReactGA.send('pageview');
 }
 
-ReactDOM.render(
-  <StrictMode>
-    <Root />
-  </StrictMode>,
-  document.getElementById('root'),
-);
+ReactDOM.render(<StrictMode />, document.getElementById('root'));

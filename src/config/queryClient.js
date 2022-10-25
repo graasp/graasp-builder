@@ -9,7 +9,6 @@ const {
   hooks,
   useMutation,
   ReactQueryDevtools,
-  API_ROUTES,
 } = configureQueryClient({
   API_HOST,
   notifier,
@@ -30,5 +29,4 @@ export {
   hooks,
   useMutation,
   ReactQueryDevtools,
-  API_ROUTES,
 };

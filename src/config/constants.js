@@ -4,7 +4,6 @@ import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
 import env from '../env.json';
 
 const {
-  API_HOST: ENV_API_HOST,
   SHOW_NOTIFICATIONS: ENV_SHOW_NOTIFICATIONS,
   GRAASP_PERFORM_HOST: ENV_GRAASP_PERFORM_HOST,
   AUTHENTICATION_HOST: ENV_AUTHENTICATION_HOST,
@@ -31,7 +30,7 @@ export const NODE_ENV =
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 
 export const API_HOST =
-  ENV_API_HOST || process.env.REACT_APP_API_HOST || 'http://localhost:3111';
+  process.env.REACT_APP_API_HOST || 'http://localhost:3111';
 
 export const SHOW_NOTIFICATIONS =
   ENV_SHOW_NOTIFICATIONS ||

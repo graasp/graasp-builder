@@ -1,7 +1,7 @@
 // synchronous functions to manage items from redux
 import { useEffect, useState } from 'react';
-import { RecordOf } from 'immutable'
-import { Member, Item, ItemMembership, ItemType } from '@graasp/sdk'
+
+import { Item, ItemMembership, ItemType } from '@graasp/sdk'
 import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
 import { Invitation } from '../config/types'
 import {
@@ -49,7 +49,7 @@ export const getDirectParentId = (path: string): string => {
   return ids[parentIdx];
 };
 
-export const isChild = (id: string): ({ path }: { path: string }) => boolean => {
+export const isChild = (id: string): ({ path }: { path: string }) => RegExpMatchArray => {
   const reg = new RegExp(`${transformIdForPath(id)}(?=\\.[^\\.]*$)`);
   return ({ path }) => path.match(reg);
 };
@@ -121,20 +121,7 @@ export const getItemImage = ({ url, extra, useDefault = true }: { url: string, e
   return null;
 };
 
-export const isItemFavorite = (item: RecordOf<Item>, member: RecordOf<Member>): boolean =>
-  member?.extra?.favoriteItems?.includes(item.id);
-
-// todo: find other possible solutions
-export const getExistingItems = (items: T): T =>
-  items.filter((item) => !item.statusCode);
-
-export const containsNonExistingItems = (items: T): boolean =>
-  items.some((item) => item.statusCode);
-
-export const getErrorItemIds = (items: T): T =>
-  items.filter((item) => item.statusCode).map((item) => item.data);
-
-export const getChildrenOrderFromFolderExtra = (item: Item): string[] =>
+export const getChildrenOrderFromFolderExtra = (item: Item<{ folder: { childrenOrder: string[] } }>): string[] =>
   item?.extra?.folder?.childrenOrder ?? [];
 
 export const stripHtml = (str?: string): string => str?.replace(/<[^>]*>?/gm, '');
@@ -158,8 +145,3 @@ export const useIsParentInstance = ({ instance, item }: { instance: Invitation |
 
   return isParentMembership;
 };
-
-export const textComparator = (text1: string, text2: string): boolean =>
-  text1.localeCompare(text2, undefined, { sensitivity: 'base' });
-
-export const dateComparator = (d1: Date, d2: Date): number => new Date(d1) - new Date(d2);

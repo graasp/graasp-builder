@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { FC, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { MentionButton } from '@graasp/chatbox';
+// import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Context } from '@graasp/sdk';
 import { GraaspLogo, Main as GraaspMain, Navigation } from '@graasp/ui';
@@ -77,14 +77,14 @@ const Main: FC<Props> = ({ children }) => {
   const rightContent = (
     <Grid container>
       <Grid item>
-        <MentionButton
+        {/* <MentionButton
           color="secondary"
           useMentions={hooks.useMentions}
           useMembers={hooks.useMembers}
           patchMentionFunction={patchMentionFunction}
           deleteMentionFunction={deleteMentionFunction}
           clearAllMentionsFunction={clearAllMentionsFunction}
-        />
+        /> */}
       </Grid>
       <Grid item>
         <UserSwitchWrapper />

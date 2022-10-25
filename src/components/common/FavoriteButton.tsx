@@ -12,7 +12,6 @@ import { FavoriteButton as GraaspFavoriteButton } from '@graasp/ui';
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { isItemFavorite } from '../../utils/item';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
@@ -21,6 +20,11 @@ type Props = {
   onClick?: () => void;
   size?: IconButtonProps['size'];
 };
+
+export const isItemFavorite = (
+  item: RecordOf<Item>,
+  member: RecordOf<Member>,
+): boolean => member?.extra?.favoriteItems?.includes(item.id);
 
 const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
   const { data: member } = useContext(CurrentUserContext);

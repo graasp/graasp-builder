@@ -15,6 +15,7 @@ export type ItemCategory = {
 export type Invitation = {
   id: string,
   email: string,
+  itemPath: string,
   permission: string,
   createdAt: string,
   updatedAt: string,
