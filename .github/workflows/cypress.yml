@@ -1,21 +1,29 @@
 name: cypress tests
 on: [push]
+
+env:
+  # Allows to increase Node's max heap size
+  NODE_OPTIONS: '--max_old_space_size=8192'
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: set up node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           #cache: 'yarn'
 
       - name: install yarn
         # avoid checksum errors with github packages
         run: YARN_CHECKSUM_BEHAVIOR=update yarn
+
+      - name: type checking
+        run: tsc --noEmit
 
       - name: cypress run
         uses: cypress-io/github-action@v2

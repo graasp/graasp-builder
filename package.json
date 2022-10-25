@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git#56-update-yarn",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox.git",
     "@graasp/query-client": "github:graasp/graasp-query-client.git",
     "@graasp/sdk": "github:graasp/graasp-sdk.git",
     "@graasp/translations": "github:graasp/graasp-translations.git",
@@ -51,7 +51,7 @@
     "validator": "13.7.0"
   },
   "scripts": {
-    "pre-commit": "yarn prettier:check && yarn lint",
+    "pre-commit": "npx tsc --noEmit && yarn prettier:check && yarn lint",
     "hooks:uninstall": "husky uninstall",
     "hooks:install": "husky install",
     "start": "env-cmd -f ./.env.local react-app-rewired start",

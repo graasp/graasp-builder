@@ -2191,9 +2191,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox.git#56-update-yarn":
+"@graasp/chatbox@github:graasp/graasp-chatbox.git":
   version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=2f1e5710c83b39fb6233fa6c70c18f634b8e9def"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=c82510eb40a7eae632fa94134137c6189f33f4e8"
   dependencies:
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
@@ -11144,7 +11144,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git#56-update-yarn"
+    "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
