@@ -21,7 +21,7 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../config/selectors';
-import { buildInvitation } from '../../../utils/invitation';
+import { PERMISSION_LEVELS } from '../../../enums';
 import ItemMembershipSelect from './ItemMembershipSelect';
 
 const { shareItemRoutine } = routines;
@@ -35,7 +35,9 @@ const CreateItemMembershipForm = ({ item, members }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
-  const [invitation, setInvitation] = useState(buildInvitation());
+  const [invitation, setInvitation] = useState({
+    permission: PERMISSION_LEVELS.READ,
+  });
 
   const isInvitationInvalid = ({ email }) => {
     // check mail validity

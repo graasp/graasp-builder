@@ -2,6 +2,7 @@ import { SelectProps } from '@mui/material';
 
 import { FC, useEffect, useState } from 'react';
 
+import { PermissionLevel } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Select } from '@graasp/ui';
 
@@ -13,7 +14,6 @@ import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   buildPermissionOptionId,
 } from '../../../config/selectors';
-import { PERMISSION_LEVELS } from '../../../enums';
 
 type Props = {
   value: string;
@@ -47,7 +47,7 @@ const ItemMembershipSelect: FC<Props> = ({
   return (
     <Select
       label={label}
-      values={Object.values(PERMISSION_LEVELS).map((v) => ({
+      values={Object.values(PermissionLevel).map((v) => ({
         value: v,
         text: enumT(v),
       }))}

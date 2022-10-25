@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { Map, Record } from 'immutable';
 import PropTypes from 'prop-types';
 
@@ -115,9 +114,9 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
           <IconButton
             id={ITEM_INFORMATION_BUTTON_ID}
             onClick={onClickMetadata}
-            className={clsx({
-              [ITEM_INFORMATION_ICON_IS_OPEN_CLASS]: isItemMetadataMenuOpen,
-            })}
+            className={
+              isItemMetadataMenuOpen ? ITEM_INFORMATION_ICON_IS_OPEN_CLASS : ''
+            }
           >
             <InfoIcon />
           </IconButton>

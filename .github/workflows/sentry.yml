@@ -3,6 +3,11 @@ on:
   push:
     tags:  
       - '*'           # Push events to every tag not containing /
+
+env:
+  # Allows to increase Node's max heap size
+  NODE_OPTIONS: '--max_old_space_size=8192'
+  
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
