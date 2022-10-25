@@ -7,11 +7,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { useState } from 'react';
 
-import { BUILDER, COMMON } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
 
 import { TREE_VIEW_MAX_WIDTH } from '../../config/constants';
-import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
   TREE_MODAL_CONFIRM_BUTTON_ID,
@@ -21,13 +21,13 @@ import {
 } from '../../config/selectors';
 import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
 import { getParentsIdsFromPath } from '../../utils/item';
+import CancelButton from '../common/CancelButton';
 
 const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { t: translateCommon } = useCommonTranslation();
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
   // todo: get only shared items with write/admin rights
   // otherwise choosing an item without the write rights will result in an error
@@ -165,9 +165,7 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
       <DialogTitle id={dialogId}>{title}</DialogTitle>
       <DialogContent>{tree}</DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} variant="text">
-          {translateCommon(COMMON.CANCEL_BUTTON)}
-        </Button>
+        <CancelButton onClick={handleClose} />
         <Button
           onClick={onClickConfirm}
           disabled={!selectedId}

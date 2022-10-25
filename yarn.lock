@@ -11193,7 +11193,7 @@ __metadata:
     filesize: 9.0.11
     http-status-codes: 2.2.0
     husky: 7.0.4
-    i18next: 21.6.14
+    i18next: 21.8.1
     immutable: 4.1.0
     istanbul-lib-coverage: 3.2.0
     katex: 0.16.0
@@ -11774,15 +11774,6 @@ __metadata:
     uuid: ^8.3.2
     uuid-parse: ^1.1.0
   checksum: 311b286c35d2d9b6807e13c47afe151d90586c6a57076b5a69125f1945a953b6ca3afa9bcffa57f19f1afd989181b8ed33cedd1ce25dec1587198d78c1d91ed2
-  languageName: node
-  linkType: hard
-
-"i18next@npm:21.6.14":
-  version: 21.6.14
-  resolution: "i18next@npm:21.6.14"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-  checksum: bc6e117874d9b69a39d6ad322851d25f75908c7fa977c8771b98ba7b0273aceba96e82326ed0855b8db098b1490c5a0decbe62b4f61dac84fdc677c2fdc52bb8
   languageName: node
   linkType: hard
 

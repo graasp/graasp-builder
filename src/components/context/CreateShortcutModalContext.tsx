@@ -13,7 +13,7 @@ import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal from '../main/TreeModal';
 
 const CreateShortcutModalContext = createContext({
-  openModal: () => {
+  openModal: (newItem: RecordOf<Item>) => {
     // do nothing
   },
 });
@@ -30,7 +30,7 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<RecordOf<Item>>();
 
-  const openModal = (newItem) => {
+  const openModal = (newItem: RecordOf<Item>) => {
     setOpen(true);
     setItem(newItem);
   };
@@ -47,11 +47,9 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
       }),
       extra: buildShortcutExtra(target[0]),
       type: ItemType.SHORTCUT,
+      // set parent id if not root
+      parentId: to !== TREE_MODAL_MY_ITEMS_ID ? to : undefined,
     };
-    // set parent id if not root
-    if (to !== TREE_MODAL_MY_ITEMS_ID) {
-      shortcut.parentId = to;
-    }
     createShortcut(shortcut);
 
     onClose();

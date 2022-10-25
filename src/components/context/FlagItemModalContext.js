@@ -11,16 +11,17 @@ import Typography from '@mui/material/Typography';
 import { createContext, useMemo, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { BUILDER, COMMON } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { FLAG_LIST_MAX_HEIGHT } from '../../config/constants';
-import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
+import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   FLAG_ITEM_BUTTON_ID,
   buildFlagListItemId,
 } from '../../config/selectors';
+import CancelButton from '../common/CancelButton';
 
 const { useFlags } = hooks;
 
@@ -28,7 +29,6 @@ const FlagItemModalContext = createContext();
 
 const FlagItemModalProvider = ({ children }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { t: translateCommon } = useCommonTranslation();
   const { mutate: postFlagItem } = useMutation(MUTATION_KEYS.POST_ITEM_FLAG);
   const [open, setOpen] = useState(false);
   const [selectedFlag, setSelectedFlag] = useState(false);
@@ -90,9 +90,7 @@ const FlagItemModalProvider = ({ children }) => {
           </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} variant="text">
-            {translateCommon(COMMON.CANCEL_BUTTON)}
-          </Button>
+          <CancelButton onClick={onClose} />
           <Button
             onClick={onFlag}
             id={FLAG_ITEM_BUTTON_ID}

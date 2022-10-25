@@ -5,7 +5,7 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import { FC, useContext } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { Item, Member } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { FavoriteButton as GraaspFavoriteButton } from '@graasp/ui';
 
@@ -23,7 +23,7 @@ type Props = {
 
 export const isItemFavorite = (
   item: RecordOf<Item>,
-  member: RecordOf<Member>,
+  member: RecordOf<Member<{ favoriteItems: string[] }>>,
 ): boolean => member?.extra?.favoriteItems?.includes(item.id);
 
 const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {

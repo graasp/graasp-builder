@@ -10,20 +10,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ACCOUNT, COMMON } from '@graasp/translations';
+import { ACCOUNT } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
-import { useAccountTranslation, useCommonTranslation } from '../../config/i18n';
+import { useAccountTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import {
   CONFIRM_DELETE_BUTTON_ID,
   DELETE_MEMBER_BUTTON_ID,
 } from '../../config/selectors';
+import CancelButton from '../common/CancelButton';
 
 const DeleteMemberDialog = ({ id }) => {
   const { t: translateAccount } = useAccountTranslation();
-  const { t: translateCommon } = useCommonTranslation();
-
   const [open, setOpen] = useState(false);
   const { mutate: deleteMember } = useMutation(MUTATION_KEYS.DELETE_MEMBER);
 
@@ -47,9 +46,7 @@ const DeleteMemberDialog = ({ id }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} color="primary" variant="text">
-            {translateCommon(COMMON.CANCEL_BUTTON)}
-          </Button>
+          <CancelButton onClick={() => setOpen(false)} color="primary" />
           <Button
             id={CONFIRM_DELETE_BUTTON_ID}
             onClick={() => deleteMember({ id })}

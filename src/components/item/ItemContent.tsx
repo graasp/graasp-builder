@@ -2,7 +2,7 @@ import { RecordOf } from 'immutable';
 
 import { Container, styled } from '@mui/material';
 
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import { Item, PermissionLevel } from '@graasp/sdk';
@@ -54,9 +54,11 @@ type Props = {
 
 const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   const { id: itemId, type: itemType } = item;
-  const { mutate: editItem, mutateAsync: editItemAsync } = useMutation(
-    MUTATION_KEYS.EDIT_ITEM,
-  );
+  const { mutate: editItem, mutateAsync: editItemAsync } = useMutation<
+    any,
+    any,
+    any
+  >(MUTATION_KEYS.EDIT_ITEM);
   const { editingItemId, setEditingItemId } = useContext(LayoutContext);
 
   // provide user to app

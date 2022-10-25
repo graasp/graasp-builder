@@ -40,10 +40,13 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
   const { mutate: switchMember } = useMutation<any, any, any>(
     MUTATION_KEYS.SWITCH_MEMBER,
   );
+  // todo: fix in query client and ui
+  const switchMemberFn = switchMember as (args: {
+    memberId: string;
+    domain: string;
+  }) => Promise<void>;
 
-  const renderAvatar: FC<{ m: RecordOf<Member> }> = (m) => (
-    <MemberAvatar id={member.id} />
-  );
+  const renderAvatar = (m: RecordOf<Member>) => <MemberAvatar id={m.id} />;
 
   return (
     <GraaspUserSwitch
@@ -54,7 +57,7 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
       isCurrentMemberLoading={isLoading}
       isCurrentMemberSuccess={isSuccessUser}
       useAvatar={hooks.useAvatar}
-      switchMember={switchMember}
+      switchMember={switchMemberFn}
       seeProfileText={translateBuilder(BUILDER.USER_SWITCH_PROFILE_BUTTON)}
       signedOutTooltipText={translateBuilder(
         BUILDER.USER_SWITCH_SIGNED_OUT_TOOLTIP,
