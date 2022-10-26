@@ -1,16 +1,16 @@
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../../src/config/constants';
 import {
-  buildEditButtonId,
-  buildFileItemId,
-  buildPlayerButtonId,
-  buildSettingsButtonId,
-  buildShareButtonId,
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_HEADER_ID,
   ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
   TEXT_EDITOR_CLASS,
+  buildEditButtonId,
+  buildFileItemId,
+  buildPlayerButtonId,
+  buildSettingsButtonId,
+  buildShareButtonId,
 } from '../../../../src/config/selectors';
 import {
   getDocumentExtra,
@@ -106,7 +106,7 @@ export const expectLinkViewScreenLayout = ({
   item,
   currentMember = CURRENT_USER,
 }) => {
-  const { id, name, extra, creator, description } = item;
+  const { id, name, extra, creator, description, settings } = item;
   const { url, html } = getEmbeddedLinkExtra(extra);
 
   // embedded element
@@ -116,7 +116,7 @@ export const expectLinkViewScreenLayout = ({
       const parsedHtml = element.html().replaceAll('=""', '');
       expect(parsedHtml).to.contain(html);
     });
-  } else {
+  } else if (settings?.showLinkIframe) {
     cy.get(`iframe#${id}`).should('have.attr', 'src', url);
   }
 

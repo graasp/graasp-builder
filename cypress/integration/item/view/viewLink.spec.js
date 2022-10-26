@@ -1,10 +1,20 @@
 import { buildItemPath } from '../../../../src/config/paths';
-import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
+import {
+  GRAASP_LINK_ITEM,
+  GRAASP_LINK_ITEM_BUTTON_ONLY,
+  YOUTUBE_LINK_ITEM,
+} from '../../../fixtures/links';
 import { expectLinkViewScreenLayout } from './utils';
 
 describe('Links', () => {
   beforeEach(() => {
-    cy.setUpApi({ items: [GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM] });
+    cy.setUpApi({
+      items: [
+        GRAASP_LINK_ITEM,
+        GRAASP_LINK_ITEM_BUTTON_ONLY,
+        YOUTUBE_LINK_ITEM,
+      ],
+    });
   });
 
   it('view some link', () => {
@@ -16,6 +26,17 @@ describe('Links', () => {
 
     expectLinkViewScreenLayout({ item: GRAASP_LINK_ITEM });
   });
+
+  it('view some link without iframe', () => {
+    const { id } = GRAASP_LINK_ITEM_BUTTON_ONLY;
+    cy.visit(buildItemPath(id));
+
+    // should get current item
+    cy.wait('@getItem');
+
+    expectLinkViewScreenLayout({ item: GRAASP_LINK_ITEM_BUTTON_ONLY });
+  });
+
   it('view youtube', () => {
     const { id } = YOUTUBE_LINK_ITEM;
     cy.visit(buildItemPath(id));

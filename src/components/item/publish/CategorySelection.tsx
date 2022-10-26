@@ -14,7 +14,7 @@ import {
 } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
-import { Category } from '../../../config/types';
+import { Category, ItemCategory } from '../../../config/types';
 import { sortByName } from '../../../utils/item';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import DropdownMenu from './DropdownMenu';
@@ -111,11 +111,11 @@ const CategorySelection: FC = () => {
         {translateBuilder(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
       </Typography>
       {categoryTypes?.map(({ id, name }) => {
-        const values =
-          categoriesMap
-            ?.get(id)
-            ?.toArray()
-            ?.map((c) => ({ ...c, name: translateCategories(c.name) }))
+        let values = categoriesMap?.get(id)?.toJS() as ItemCategory[];
+
+        values =
+          values
+            .map((c) => ({ ...c, name: translateCategories(c.name) }))
             ?.sort(sortByName) ?? ([] as Category[]);
 
         if (!values.length) {
