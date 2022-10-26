@@ -36,7 +36,7 @@ import {
   buildAppItemLinkForTest,
   buildGetAppData,
 } from '../fixtures/apps';
-import { buildInvitation } from '../fixtures/invitation';
+import { buildInvitation } from '../fixtures/invitations';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { ID_FORMAT, parseStringToRegExp } from './utils';
