@@ -9,7 +9,7 @@ on:
 jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Builder
-    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@aa50e1e7b2b0ab6352ab9c2d3e8048f21b2804d1
+    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@v1
     with:
       build-folder: 'build'
       tag: ${{ github.event.client_payload.tag }}
