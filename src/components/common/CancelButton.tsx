@@ -1,3 +1,5 @@
+import { ButtonProps } from '@mui/material/Button';
+
 import { FC, MouseEventHandler } from 'react';
 
 import { COMMON } from '@graasp/translations';
@@ -7,6 +9,7 @@ import { useCommonTranslation } from '../../config/i18n';
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
+  color?: ButtonProps['color'];
 };
 
 const CancelButton: FC<Props> = ({ onClick, color }) => {

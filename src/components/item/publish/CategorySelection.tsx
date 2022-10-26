@@ -72,7 +72,7 @@ const CategorySelection: FC = () => {
   }
 
   const handleChange =
-    (valueList: Category[]) =>
+    (_valueList: Category[]) =>
     (
       event: SyntheticEvent,
       _values: Category[],
@@ -83,15 +83,16 @@ const CategorySelection: FC = () => {
         return;
       }
 
+      const target = event.target as HTMLOptionElement;
       if (reason === SELECT_OPTION) {
         // post new category
-        const newCategoryId = event.target.getAttribute('data-id');
+        const newCategoryId = target.getAttribute('data-id');
         createItemCategory({
           itemId,
           categoryId: newCategoryId,
         });
       } else if (reason === REMOVE_OPTION) {
-        const deletedCategoryId = event.target.getAttribute('data-id');
+        const deletedCategoryId = target.getAttribute('data-id');
         const itemCategoryIdToDelete = itemCategories.find(
           ({ categoryId }) => categoryId === deletedCategoryId,
         )?.id;
@@ -113,7 +114,7 @@ const CategorySelection: FC = () => {
         const values =
           categoriesMap
             ?.get(id)
-            ?.toJS()
+            ?.toArray()
             ?.map((c) => ({ ...c, name: translateCategories(c.name) }))
             ?.sort(sortByName) ?? ([] as Category[]);
 
@@ -127,7 +128,8 @@ const CategorySelection: FC = () => {
             title={translateCategories(name)}
             handleChange={handleChange(values)}
             values={values}
-            selectedValues={itemCategories}
+            // todo: fix with query client
+            selectedValues={itemCategories as any}
             typeId={id}
           />
         );

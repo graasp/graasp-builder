@@ -1,4 +1,4 @@
-import { RecordOf } from 'immutable';
+import { List, RecordOf } from 'immutable';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -51,34 +51,42 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
   const { itemId } = useParams();
 
   // item validation
-  const { mutate: validateItem } = useMutation(POST_ITEM_VALIDATION);
+  const { mutate: validateItem } = useMutation<any, any, any>(
+    POST_ITEM_VALIDATION,
+  );
 
   // get map of item validation and review statuses
   const { data: ivStatuses } = useItemValidationStatuses();
   const { data: ivrStatuses } = useItemValidationReviewStatuses();
   const validationStatusesMap = new Map(
-    ivStatuses?.concat(ivrStatuses)?.map((entry) => [entry?.id, entry?.name]),
+    // todo: fix with query client
+    (ivStatuses as List<any>)
+      ?.concat(ivrStatuses)
+      ?.map((entry) => [entry?.id, entry?.name]),
   );
 
   // get item validation data
   const { data: itemValidationData, isLoading } =
     useItemValidationAndReview(itemId);
+  // todo: fix with query client
+  const itemValidationDataTyped = itemValidationData as any;
   // check if validation is still valid
   const iVId =
-    new Date(itemValidationData?.createdAt) >= new Date(item?.updatedAt)
-      ? itemValidationData?.itemValidationId
+    new Date(itemValidationDataTyped?.createdAt) >= new Date(item?.updatedAt)
+      ? itemValidationDataTyped?.itemValidationId
       : null;
   // get item validation groups
   const { data: itemValidationGroups } = useItemValidationGroups(iVId);
-
+  // todo: fix with query client
+  const itemValidationGroupsTyped = itemValidationGroups as List<any>;
   // group iv records by item validation status
-  const ivByStatus = itemValidationGroups?.groupBy(
+  const ivByStatus = itemValidationGroupsTyped?.groupBy(
     ({ statusId }) => validationStatusesMap[statusId],
   );
 
-  const [itemValidationStatus, setItemValidationStatus] = useState(
-    VALIDATION_STATUS_NAMES.NOT_VALIDATED,
-  );
+  const [itemValidationStatus, setItemValidationStatus] = useState<
+    string | boolean
+  >(VALIDATION_STATUS_NAMES.NOT_VALIDATED);
 
   useEffect(() => {
     // process when we fetch the item validation and review records
@@ -87,7 +95,7 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
         getValidationStatusFromItemValidations(
           ivByStatus,
           validationStatusesMap,
-          itemValidationData,
+          itemValidationDataTyped,
         ),
       );
     }
@@ -216,7 +224,7 @@ const ItemPublishConfiguration: FC<Props> = ({ item }) => {
       </Typography>
       <Box mx={3}>
         <CoEditorSettings item={item} />
-        <CategorySelection item={item} />
+        <CategorySelection />
         <CustomizedTagsEdit item={item} />
       </Box>
     </>

@@ -1,3 +1,5 @@
+import { RecordOf } from 'immutable';
+
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Skeleton from '@mui/material/Skeleton';
@@ -90,7 +92,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
           clearOnBlur={false}
           onChange={handleAppSelection}
           onInputChange={handleAppInput}
-          renderOption={(props: unknown, option: App) => (
+          renderOption={(props: Record<string, unknown>, option: App) => (
             <li
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...props}

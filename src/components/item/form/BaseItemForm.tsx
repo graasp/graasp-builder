@@ -11,7 +11,7 @@ import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 type Props = {
   updatedProperties: Partial<Item>;
   onChange: (props: Partial<Item>) => void;
-  item: Item;
+  item: Partial<Item>;
 };
 
 const BaseForm: FC<Props> = ({ onChange, item, updatedProperties }) => {

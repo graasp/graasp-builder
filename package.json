@@ -51,7 +51,6 @@
     "validator": "13.7.0"
   },
   "scripts": {
-    "pre-commit": "npx tsc --noEmit && yarn prettier:check && yarn lint",
     "hooks:uninstall": "husky uninstall",
     "hooks:install": "husky install",
     "start": "env-cmd -f ./.env.local react-app-rewired start",
@@ -62,10 +61,9 @@
     "build:local": "env-cmd -f ./.env.local react-app-rewired build",
     "dist": "env-cmd -f ./.env.production react-app-rewired build",
     "dist:dev": "env-cmd -f ./.env.development react-app-rewired build",
-    "test": "env-cmd -f ./.env.test react-app-rewired test",
-    "test:once": "env-cmd -f ./.env.test react-app-rewired test --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint .",
+    "type-check": "tsc --noEmit",
     "prettier:check": "prettier --check src/**/*.{js,json}",
     "prettier:write": "prettier --write src/**/*.{js,json}",
     "cypress:open": "env-cmd -f ./.env.test cypress open",

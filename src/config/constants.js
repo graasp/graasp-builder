@@ -1,17 +1,6 @@
 import { Context, buildSignInPath } from '@graasp/sdk';
 
 import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
-import env from '../env.json';
-
-const {
-  SHOW_NOTIFICATIONS: ENV_SHOW_NOTIFICATIONS,
-  GRAASP_PERFORM_HOST: ENV_GRAASP_PERFORM_HOST,
-  AUTHENTICATION_HOST: ENV_AUTHENTICATION_HOST,
-  NODE_ENV: ENV_NODE_ENV,
-  HIDDEN_ITEM_TAG_ID: ENV_HIDDEN_ITEM_TAG_ID,
-  GRAASP_EXPLORE_HOST: ENV_GRAASP_EXPLORE_HOST,
-  H5P_INTEGRATION_URL: ENV_H5P_INTEGRATION_URL,
-} = env;
 
 export const APP_NAME = 'Graasp';
 
@@ -22,10 +11,7 @@ export const ENV = {
 };
 
 export const NODE_ENV =
-  ENV_NODE_ENV ||
-  process.env.REACT_APP_NODE_ENV ||
-  process.env.NODE_ENV ||
-  ENV.DEVELOPMENT;
+  process.env.REACT_APP_NODE_ENV || process.env.NODE_ENV || ENV.DEVELOPMENT;
 
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 
@@ -33,28 +19,18 @@ export const API_HOST =
   process.env.REACT_APP_API_HOST || 'http://localhost:3111';
 
 export const SHOW_NOTIFICATIONS =
-  ENV_SHOW_NOTIFICATIONS ||
-  process.env.REACT_APP_SHOW_NOTIFICATIONS === 'true' ||
-  false;
+  process.env.REACT_APP_SHOW_NOTIFICATIONS === 'true' || false;
 
 export const AUTHENTICATION_HOST =
-  ENV_AUTHENTICATION_HOST ||
-  process.env.REACT_APP_AUTHENTICATION_HOST ||
-  'http://localhost:3001';
+  process.env.REACT_APP_AUTHENTICATION_HOST || 'http://localhost:3001';
 
 export const GRAASP_PERFORM_HOST =
-  ENV_GRAASP_PERFORM_HOST ||
-  process.env.REACT_APP_GRAASP_PERFORM_HOST ||
-  'http://localhost:3112';
+  process.env.REACT_APP_GRAASP_PERFORM_HOST || 'http://localhost:3112';
 export const GRAASP_LIBRARY_HOST =
-  ENV_GRAASP_EXPLORE_HOST ||
-  process.env.REACT_APP_GRAASP_EXPLORE_HOST ||
-  'http://localhost:3005';
+  process.env.REACT_APP_GRAASP_EXPLORE_HOST || 'http://localhost:3005';
 
 export const H5P_INTEGRATION_URL =
-  ENV_H5P_INTEGRATION_URL ||
-  process.env.REACT_APP_H5P_INTEGRATION_URL ||
-  `${API_HOST}/p/h5p-integration`;
+  process.env.REACT_APP_H5P_INTEGRATION_URL || `${API_HOST}/p/h5p-integration`;
 
 export const GRAASP_ANALYZER_HOST =
   process.env.REACT_APP_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
@@ -65,7 +41,7 @@ export const buildGraaspAnalyzerLink = (id) =>
 export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 
 export const HIDDEN_ITEM_TAG_ID =
-  ENV_HIDDEN_ITEM_TAG_ID || process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || false;
+  process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || false;
 
 export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 
@@ -242,6 +218,10 @@ export const HOST_MAP = {
   [Context.BUILDER]: '/',
   [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
   [Context.PLAYER]: GRAASP_PERFORM_HOST,
+  [Context.ANALYTICS]: '',
+
+  [Context.ANALYZER]: '',
+  [Context.EXPLORER]: '',
 };
 
 export const BUTTON_TYPES = {

@@ -42,7 +42,6 @@ const EmailPreferenceSwitch: FC<EmailPreferenceSwitchProps> = ({
   return (
     <Select
       id={id}
-      native
       defaultValue={emailFreq}
       onChange={handleChange}
       buildOptionId={buildEmailFrequencyOptionId}

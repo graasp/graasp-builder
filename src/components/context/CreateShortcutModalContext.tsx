@@ -13,7 +13,7 @@ import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal from '../main/TreeModal';
 
 const CreateShortcutModalContext = createContext({
-  openModal: (newItem: RecordOf<Item>) => {
+  openModal: (_newItem: RecordOf<Item>) => {
     // do nothing
   },
 });

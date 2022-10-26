@@ -57,7 +57,7 @@ const DropdownMenu: FC<Props> = ({
         id={buildCategorySelectionId(typeId)}
         value={selected}
         options={values}
-        getOptionLabel={(option) => option.name}
+        getOptionLabel={(option: Category) => option.name}
         onChange={handleChange}
         renderInput={(params) => (
           <TextField
@@ -67,7 +67,7 @@ const DropdownMenu: FC<Props> = ({
             placeholder={translateBuilder(BUILDER.DROP_DOWN_PLACEHOLDER)}
           />
         )}
-        renderOption={(props: unknown, option: Category) => (
+        renderOption={(props: Record<string, unknown>, option: Category) => (
           <li
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}

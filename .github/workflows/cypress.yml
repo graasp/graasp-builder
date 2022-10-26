@@ -23,7 +23,7 @@ jobs:
         run: YARN_CHECKSUM_BEHAVIOR=update yarn
 
       - name: type checking
-        run: tsc --noEmit
+        run: yarn type-check
 
       - name: cypress run
         uses: cypress-io/github-action@v2

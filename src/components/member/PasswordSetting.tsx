@@ -30,8 +30,10 @@ const PasswordSetting: FC = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState<string>();
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string>();
+  const [newPasswordError, setNewPasswordError] = useState<string | boolean>();
+  const [confirmPasswordError, setConfirmPasswordError] = useState<
+    string | boolean
+  >();
   const { mutate: updatePassword } = useMutation<any, any, any>(
     MUTATION_KEYS.UPDATE_PASSWORD,
   );
@@ -116,7 +118,7 @@ const PasswordSetting: FC = () => {
               label={translateAccount(ACCOUNT.PASSWORD_SETTINGS_NEW_LABEL)}
               variant="outlined"
               value={newPassword}
-              error={newPasswordError}
+              error={Boolean(newPasswordError)}
               helperText={newPasswordError}
               onChange={handleNewPasswordInput}
               id={USER_NEW_PASSWORD_INPUT_ID}
@@ -130,7 +132,7 @@ const PasswordSetting: FC = () => {
               )}
               variant="outlined"
               value={confirmPassword}
-              error={confirmPasswordError}
+              error={Boolean(confirmPasswordError)}
               helperText={confirmPasswordError}
               onChange={handleConfirmPasswordInput}
               id={USER_CONFIRM_PASSWORD_INPUT_ID}
@@ -153,8 +155,8 @@ const PasswordSetting: FC = () => {
               id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
               variant="contained"
               color="primary"
-              my={1}
               onClick={() => handleChangePassword()}
+              sx={{ my: 1 }}
             >
               {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_BUTTON)}
             </Button>

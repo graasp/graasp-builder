@@ -72,7 +72,7 @@ export const isUrlValid = (str: string): boolean => {
   return str && pattern.test(str);
 };
 
-export const isItemValid = (item: Item): boolean => {
+export const isItemValid = (item: Partial<Item>): boolean => {
   if (!item) {
     return false;
   }
