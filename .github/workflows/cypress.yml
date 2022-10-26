@@ -1,63 +1,23 @@
-name: cypress tests
-on: [push]
+name: Cypress CI
 
-env:
-  # Allows to increase Node's max heap size
-  NODE_OPTIONS: '--max_old_space_size=8192'
+# Control when the action will run
+on:
+  # Triggers the workflow on push events except for the main branch
+  push:
+    branches: [ $default-branch ]
 
+# This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: set up node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          #cache: 'yarn'
-
-      - name: install yarn
-        # avoid checksum errors with github packages
-        run: YARN_CHECKSUM_BEHAVIOR=update yarn
-
-      - name: type checking
-        run: yarn type-check
-
-      - name: cypress run
-        uses: cypress-io/github-action@v2
-        env:
-          REACT_APP_API_HOST: ${{ secrets.REACT_APP_API_HOST }}
-          REACT_APP_NODE_ENV: test
-          REACT_APP_HIDDEN_ITEM_TAG_ID: 12345678-1234-1234-1234-123456789012
-        with:
-          install: false
-          config: baseUrl=http://localhost:3000
-          start: yarn start:ci
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 180
-          browser: chrome
-          headless: true
-          quiet: true
-
-      # after the test run completes
-      # store videos and any screenshots
-      # NOTE: screenshots will be generated only if E2E test failed
-      # thus we store screenshots only on failures
-      # Alternative: create and commit an empty cypress/screenshots folder
-      # to always have something to upload
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-      # Test run video was always captured, so this action uses "always()" condition
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: cypress-videos
-          path: cypress/videos
-
-      - name: coverage report
-        run: npx nyc report --reporter=text-summary
+  graasp-deploy-cypress-workflow:
+    # Replace with repository name
+    name: Cypress caller template
+    # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
+    # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
+    uses: graasp/graasp-deploy/.github/workflows/cypress.yml@aa50e1e7b2b0ab6352ab9c2d3e8048f21b2804d1
+    with:
+      # Test values
+      node-env-test: test
+      hidden-item-tag-id-test: 12345678-1234-1234-1234-123456789012
+    # Insert required secrets based on repository with the following format: ${{ secrets.SECRET_NAME }}
+    secrets:
+      api-host-test: ${{ secrets.REACT_APP_API_HOST }}
