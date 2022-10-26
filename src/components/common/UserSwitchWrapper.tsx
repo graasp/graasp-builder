@@ -1,7 +1,6 @@
 import { RecordOf } from 'immutable';
 
 import { FC, useContext } from 'react';
-import { useNavigate } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Member } from '@graasp/sdk';
@@ -23,7 +22,7 @@ import { CurrentUserContext } from '../context/CurrentUserContext';
 import MemberAvatar from './MemberAvatar';
 
 type Props = {
-  ButtonContent: JSX.Element;
+  ButtonContent?: JSX.Element;
 };
 
 const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
@@ -32,7 +31,6 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     isLoading,
     isSuccess: isSuccessUser,
   } = useContext(CurrentUserContext);
-  const navigate = useNavigate();
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = useMutation<any, any, any>(
     MUTATION_KEYS.SIGN_OUT,
@@ -41,20 +39,17 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     MUTATION_KEYS.SWITCH_MEMBER,
   );
 
-  const renderAvatar: FC<{ m: RecordOf<Member> }> = (m) => (
-    <MemberAvatar id={member.id} />
-  );
+  const renderAvatar = (m: RecordOf<Member>) => <MemberAvatar id={m.id} />;
 
   return (
     <GraaspUserSwitch
       ButtonContent={ButtonContent}
-      navigate={navigate}
       signOut={signOut}
       currentMember={member}
       isCurrentMemberLoading={isLoading}
       isCurrentMemberSuccess={isSuccessUser}
-      useAvatar={hooks.useAvatar}
-      switchMember={switchMember}
+      // fix in query client
+      switchMember={switchMember as any}
       seeProfileText={translateBuilder(BUILDER.USER_SWITCH_PROFILE_BUTTON)}
       signedOutTooltipText={translateBuilder(
         BUILDER.USER_SWITCH_SIGNED_OUT_TOOLTIP,

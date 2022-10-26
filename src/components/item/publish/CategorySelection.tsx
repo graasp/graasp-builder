@@ -14,7 +14,7 @@ import {
 } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
-import { Category } from '../../../config/types';
+import { Category, ItemCategory } from '../../../config/types';
 import { sortByName } from '../../../utils/item';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import DropdownMenu from './DropdownMenu';
@@ -72,7 +72,7 @@ const CategorySelection: FC = () => {
   }
 
   const handleChange =
-    (valueList: Category[]) =>
+    (_valueList: Category[]) =>
     (
       event: SyntheticEvent,
       _values: Category[],
@@ -83,15 +83,16 @@ const CategorySelection: FC = () => {
         return;
       }
 
+      const target = event.target as HTMLOptionElement;
       if (reason === SELECT_OPTION) {
         // post new category
-        const newCategoryId = event.target.getAttribute('data-id');
+        const newCategoryId = target.getAttribute('data-id');
         createItemCategory({
           itemId,
           categoryId: newCategoryId,
         });
       } else if (reason === REMOVE_OPTION) {
-        const deletedCategoryId = event.target.getAttribute('data-id');
+        const deletedCategoryId = target.getAttribute('data-id');
         const itemCategoryIdToDelete = itemCategories.find(
           ({ categoryId }) => categoryId === deletedCategoryId,
         )?.id;
@@ -110,11 +111,11 @@ const CategorySelection: FC = () => {
         {translateBuilder(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
       </Typography>
       {categoryTypes?.map(({ id, name }) => {
-        const values =
-          categoriesMap
-            ?.get(id)
-            ?.toJS()
-            ?.map((c) => ({ ...c, name: translateCategories(c.name) }))
+        let values = categoriesMap?.get(id)?.toJS() as ItemCategory[];
+
+        values =
+          values
+            .map((c) => ({ ...c, name: translateCategories(c.name) }))
             ?.sort(sortByName) ?? ([] as Category[]);
 
         if (!values.length) {
@@ -127,7 +128,8 @@ const CategorySelection: FC = () => {
             title={translateCategories(name)}
             handleChange={handleChange(values)}
             values={values}
-            selectedValues={itemCategories}
+            // todo: fix with query client
+            selectedValues={itemCategories as any}
             typeId={id}
           />
         );

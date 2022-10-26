@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn pre-commit
+yarn type-check
+yarn prettier:check
+yarn lint

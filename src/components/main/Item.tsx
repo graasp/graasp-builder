@@ -59,7 +59,8 @@ const Item: FC<Props> = ({ item, memberships }) => {
       thumbnailSrc={getEmbeddedLinkExtra(extra)?.thumbnails?.get(0)}
       alt={alt}
       defaultValue={defaultValueComponent}
-      useThumbnail={hooks.useItemThumbnail}
+      // todo: fix in ui
+      useThumbnail={hooks.useItemThumbnail as any}
     />
   );
 
@@ -76,7 +77,7 @@ const Item: FC<Props> = ({ item, memberships }) => {
       {member && member.id && <FavoriteButton size="small" item={item} />}
       {enableEdition && (
         <>
-          <EditButton item={item.toJS()} />
+          <EditButton item={item.toJS() as GraaspItem} />
           <DownloadButton id={id} name={name} />
         </>
       )}

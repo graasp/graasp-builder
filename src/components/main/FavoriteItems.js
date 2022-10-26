@@ -14,17 +14,22 @@ import {
   FAVORITE_ITEMS_ERROR_ALERT_ID,
   FAVORITE_ITEMS_ID,
 } from '../../config/selectors';
-import {
-  containsNonExistingItems,
-  getErrorItemIds,
-  getExistingItems,
-} from '../../utils/item';
 import { getFavoriteItems } from '../../utils/member';
 import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import Main from './Main';
+
+// todo: find other possible solutions
+export const getExistingItems = (items) =>
+  items.filter((item) => !item.statusCode);
+
+export const containsNonExistingItems = (items) =>
+  items.some((item) => item.statusCode);
+
+export const getErrorItemIds = (items) =>
+  items.filter((item) => item.statusCode).map((item) => item.data);
 
 const FavoriteItems = () => {
   const { t: translateBuilder } = useBuilderTranslation();

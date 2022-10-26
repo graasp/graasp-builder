@@ -8,13 +8,11 @@ import {
   DialogTitle,
 } from '@mui/material';
 
-import { BUILDER, COMMON } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
-import {
-  useBuilderTranslation,
-  useCommonTranslation,
-} from '../../../config/i18n';
+import { useBuilderTranslation } from '../../../config/i18n';
+import CancelButton from '../../common/CancelButton';
 
 const CCLicenseDialog = ({
   open,
@@ -23,7 +21,6 @@ const CCLicenseDialog = ({
   buttonName,
   handleSubmit,
 }) => {
-  const { t: translateCommon } = useCommonTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleClickOpen = () => {
@@ -54,9 +51,7 @@ const CCLicenseDialog = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus variant="text">
-            {translateCommon(COMMON.CANCEL_BUTTON)}
-          </Button>
+          <CancelButton onClick={handleClose} />
           <Button onClick={handleSubmit}>
             {translateBuilder(BUILDER.CONFIRM_BUTTON)}
           </Button>

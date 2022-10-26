@@ -8,7 +8,7 @@ import { FC, useState } from 'react';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemType } from '@graasp/sdk';
+import { Item, ItemType } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -22,6 +22,7 @@ import {
 } from '../../config/selectors';
 import { InternalItemType, NewItemTabType } from '../../config/types';
 import { isItemValid } from '../../utils/item';
+import CancelButton from '../common/CancelButton';
 import FileDashboardUploader from '../file/FileDashboardUploader';
 import AppForm from '../item/form/AppForm';
 import DocumentForm from '../item/form/DocumentForm';
@@ -51,7 +52,9 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
     ItemType.FOLDER,
   );
   const [initialItem] = useState({});
-  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
+  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState<
+    Record<string, Partial<Item>>
+  >({
     [ItemType.FOLDER]: { type: ItemType.FOLDER },
     [ItemType.LINK]: { type: ItemType.LINK },
     [ItemType.APP]: { type: ItemType.APP },
@@ -79,10 +82,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
 
     setConfirmButtonDisabled(true);
     postItem({ parentId, ...updatedPropertiesPerType[selectedItemType] });
-    setUpdatedPropertiesPerType({
-      ...updatedPropertiesPerType,
-      [selectedItemType]: { type: selectedItemType },
-    });
+
     // schedule button disable state reset AFTER end of click event handling
     setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
     return handleClose();
@@ -130,13 +130,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
           />
         );
       case ItemType.LINK:
-        return (
-          <LinkForm
-            onChange={updateItem}
-            item={initialItem}
-            updatedProperties={updatedPropertiesPerType[ItemType.LINK]}
-          />
-        );
+        return <LinkForm onChange={updateItem} item={initialItem} />;
       case ItemType.DOCUMENT:
         return (
           <DocumentForm
@@ -158,9 +152,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
       case ItemType.DOCUMENT:
         return (
           <>
-            <Button onClick={handleClose} variant="text">
-              {translateCommon(COMMON.CANCEL_BUTTON)}
-            </Button>
+            <CancelButton onClick={handleClose} />
             <Button
               onClick={submit}
               id={ITEM_FORM_CONFIRM_BUTTON_ID}

@@ -16,6 +16,7 @@ import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { isItemValid } from '../../utils/item';
+import CancelButton from '../common/CancelButton';
 import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
 import FolderForm from '../item/form/FolderForm';
@@ -123,9 +124,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
         {renderForm()}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} variant="text">
-          {translateCommon(COMMON.CANCEL_BUTTON)}
-        </Button>
+        <CancelButton onClick={onClose} />
         <Button
           // should not allow users to save if the item is not valid
           disabled={

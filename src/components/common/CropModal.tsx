@@ -15,6 +15,7 @@ import { Button } from '@graasp/ui';
 import { THUMBNAIL_ASPECT } from '../../config/constants';
 import { CROP_MODAL_CONFIRM_BUTTON_CLASSNAME } from '../../config/selectors';
 import { getCroppedImg } from '../../utils/image';
+import CancelButton from './CancelButton';
 
 type Props = {
   open: boolean;
@@ -115,9 +116,7 @@ class CropModal extends Component<Props, State> {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} variant="text">
-            {t(BUILDER.CANCEL_BUTTON)}
-          </Button>
+          <CancelButton onClick={onClose} />
           <Button
             onClick={this.handleOnConfirm}
             className={CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}

@@ -2,10 +2,10 @@ import { RecordOf } from 'immutable';
 
 import { Container, styled } from '@mui/material';
 
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
-import { Item, PermissionLevel } from '@graasp/sdk';
+import { Item, ItemType, PermissionLevel } from '@graasp/sdk';
 import {
   AppItem,
   DocumentItem,
@@ -18,6 +18,7 @@ import {
 import {
   API_HOST,
   CONTEXT_BUILDER,
+  DEFAULT_LINK_SHOW_IFRAME,
   H5P_INTEGRATION_URL,
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
@@ -29,7 +30,6 @@ import {
   buildItemsTableId,
   buildSaveButtonId,
 } from '../../config/selectors';
-import { ITEM_TYPES } from '../../enums';
 import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
 import ErrorAlert from '../common/ErrorAlert';
 import { CurrentUserContext } from '../context/CurrentUserContext';
@@ -47,14 +47,15 @@ const FileWrapper = styled(Container)(() => ({
 }));
 
 type Props = {
-  item: RecordOf<Item>;
+  // todo: not ideal but this item is really flexible
+  item: RecordOf<Item<any>>;
   enableEditing?: boolean;
   permission: PermissionLevel;
 };
 
 const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   const { id: itemId, type: itemType } = item;
-  const { mutate: editItem, mutateAsync: editItemAsync } = useMutation(
+  const { mutate: editItem } = useMutation<any, any, any>(
     MUTATION_KEYS.EDIT_ITEM,
   );
   const { editingItemId, setEditingItemId } = useContext(LayoutContext);
@@ -66,7 +67,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   // display children
   const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {
     ordered: true,
-    enabled: item?.type === ITEM_TYPES.FOLDER,
+    enabled: item?.type === ItemType.FOLDER,
   });
 
   const { data: content, isLoading: isLoadingFileContent } = useFileContent(
@@ -74,7 +75,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
     {
       enabled:
         item &&
-        (itemType === ITEM_TYPES.FILE || itemType === ITEM_TYPES.S3_FILE),
+        (itemType === ItemType.LOCAL_FILE || itemType === ItemType.S3_FILE),
     },
   );
   const isEditing = enableEditing && editingItemId === itemId;
@@ -110,21 +111,22 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   const saveButtonId = buildSaveButtonId(itemId);
 
   switch (itemType) {
-    case ITEM_TYPES.FILE:
-    case ITEM_TYPES.S3_FILE:
+    case ItemType.LOCAL_FILE:
+    case ItemType.S3_FILE:
       return (
         <FileWrapper>
           <FileItem
             id={buildFileItemId(itemId)}
             editCaption={isEditing}
             item={item}
-            content={content}
+            // todo: fix with graasp query client
+            content={content as Blob}
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
           />
         </FileWrapper>
       );
-    case ITEM_TYPES.LINK:
+    case ItemType.LINK:
       return (
         <FileWrapper>
           <LinkItem
@@ -134,12 +136,14 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
             height={ITEM_DEFAULT_HEIGHT}
-            showButton={item.settings?.showLinkButton}
-            showIframe={item.settings?.showLinkIframe}
+            showButton={item.settings?.showLinkButton === 'true'}
+            showIframe={Boolean(
+              item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
+            )}
           />
         </FileWrapper>
       );
-    case ITEM_TYPES.DOCUMENT:
+    case ItemType.DOCUMENT:
       return (
         <FileWrapper>
           <DocumentItem
@@ -153,7 +157,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
           />
         </FileWrapper>
       );
-    case ITEM_TYPES.APP:
+    case ItemType.APP:
       return (
         <AppItem
           isResizable
@@ -162,7 +166,6 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
           editCaption={isEditing}
           onSaveCaption={onSaveCaption}
           saveButtonId={saveButtonId}
-          onSettingsUpdate={editItemAsync}
           member={member}
           height={ITEM_DEFAULT_HEIGHT}
           permission={permission}
@@ -170,7 +173,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
           context={CONTEXT_BUILDER}
         />
       );
-    case ITEM_TYPES.FOLDER:
+    case ItemType.FOLDER:
       return (
         <>
           <Items
@@ -179,7 +182,6 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
             title={item.name}
             items={children}
             isEditing={isEditing}
-            onSaveCaption={onSaveCaption}
             headerElements={
               enableEditing
                 ? [<NewItemButton key="newButton" fontSize="small" />]
@@ -189,7 +191,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
           />
         </>
       );
-    case ITEM_TYPES.H5P: {
+    case ItemType.H5P: {
       const contentId = item.extra?.h5p?.contentId;
       if (!contentId) {
         return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;

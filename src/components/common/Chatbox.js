@@ -47,6 +47,7 @@ const Chatbox = ({ item }) => {
   const isAdmin =
     itemPermissions?.find((perms) => perms.memberId === currentMember.id)
       ?.permission === PERMISSION_LEVELS.ADMIN;
+
   return (
     <GraaspChatbox
       id={CHATBOX_ID}

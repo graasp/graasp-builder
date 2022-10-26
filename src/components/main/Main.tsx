@@ -31,7 +31,7 @@ const StyledLink = styled(Link)(() => ({
   display: 'flex',
   alignItems: 'center',
 }));
-type Props = { children: JSX.Element | JSX.Element[] };
+type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main: FC<Props> = ({ children }) => {
   const { isMainMenuOpen } = useContext(LayoutContext);

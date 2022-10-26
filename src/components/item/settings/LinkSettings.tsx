@@ -9,6 +9,7 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
+import { DEFAULT_LINK_SHOW_IFRAME } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
@@ -62,7 +63,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
       <Switch
         id={SETTINGS_LINK_SHOW_IFRAME_ID}
         onChange={handleIframeSetting}
-        checked={Boolean(settings?.showLinkIframe ?? true)}
+        checked={Boolean(settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME)}
         color="primary"
       />
     );

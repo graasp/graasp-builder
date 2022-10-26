@@ -31,6 +31,7 @@ import {
   SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
 } from '../../../config/selectors';
+import { Invitation } from '../../../config/types';
 import { PERMISSION_LEVELS } from '../../../enums';
 
 const label = 'shareItemFromCsvLabel';
@@ -64,26 +65,28 @@ const CsvInputParser: FC<Props> = ({ item }) => {
 
   const handleFileChange = (e) => {
     if (e.target.files.length) {
-      const inputFile = e.target.files[0];
-      const reader = new FileReader();
+      const file = e.target.files[0];
 
-      // Event listener on reader when the file loads
-      reader.onload = async ({ target }) => {
-        if (target?.result) {
-          const csv = Papa.parse(target.result, { header: true });
-          const parsedData = csv?.data;
+      if (file) {
+        Papa.parse(file, {
+          header: true,
+          dynamicTyping: true,
+          complete: ({ data: parsedData }) => {
+            // add current item path and default permission read
+            const dataWithItemPath = parsedData.map(
+              (d: Partial<Invitation>) => ({
+                permission: PERMISSION_LEVELS.READ,
+                ...d,
+                itemPath,
+              }),
+            );
 
-          // add current item path and default permission read
-          const dataWithItemPath = parsedData.map((d) => ({
-            permission: PERMISSION_LEVELS.READ,
-            ...d,
-            itemPath,
-          }));
-
-          share({ data: dataWithItemPath, itemId });
-        }
-      };
-      reader.readAsText(inputFile);
+            share({ data: dataWithItemPath, itemId });
+          },
+        });
+      } else {
+        translateBuilder('Please select a file to upload.');
+      }
     }
   };
 
@@ -113,7 +116,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     if (genericErrors?.length) {
       return genericErrors.map((err) => (
         <Alert key={err.message} severity="error">
-          {t(err.message)}
+          {translateBuilder(err.message)}
         </Alert>
       ));
     }

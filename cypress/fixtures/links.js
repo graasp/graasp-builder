@@ -1,6 +1,6 @@
 import { ITEM_TYPES } from '../../src/enums';
-import { CURRENT_USER } from './members';
 import { buildEmbeddedLinkExtra } from '../../src/utils/itemExtra';
+import { CURRENT_USER } from './members';
 
 export const GRAASP_LINK_ITEM = {
   id: 'ecafbd2a-5688-11eb-ae91-0242ac130002',
@@ -16,6 +16,14 @@ export const GRAASP_LINK_ITEM = {
       'https://graasp.eu/cdn/img/epfl/favicons/favicon-32x32.png?v=yyxJ380oWY',
     ],
   }),
+};
+
+export const GRAASP_LINK_ITEM_BUTTON_ONLY = {
+  ...GRAASP_LINK_ITEM,
+  id: 'ecafbd2a-5688-11eb-ae91-0242ac130122',
+  settings: {
+    showLinkIframe: false,
+  },
 };
 
 export const YOUTUBE_LINK_ITEM = {

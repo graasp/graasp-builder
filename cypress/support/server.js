@@ -1,8 +1,23 @@
-import { v4 as uuidv4, v4 } from 'uuid';
 import { StatusCodes } from 'http-status-codes';
 import qs from 'querystring';
-import { FAILURE_MESSAGES } from '@graasp/translations';
+import { v4 as uuidv4, v4 } from 'uuid';
+
 import { API_ROUTES } from '@graasp/query-client';
+import { FAILURE_MESSAGES } from '@graasp/translations';
+
+import {
+  DEFAULT_DELETE,
+  DEFAULT_GET,
+  DEFAULT_PATCH,
+  DEFAULT_POST,
+  DEFAULT_PUT,
+} from '../../src/api/utils';
+import {
+  SETTINGS,
+  SIGN_IN_PATH,
+  THUMBNAIL_EXTENSION,
+} from '../../src/config/constants';
+import { PERMISSION_LEVELS } from '../../src/enums';
 import {
   getItemById,
   getParentsIdsFromPath,
@@ -10,34 +25,21 @@ import {
   isRootItem,
   transformIdForPath,
 } from '../../src/utils/item';
-import { CURRENT_USER, MEMBERS } from '../fixtures/members';
-import { ID_FORMAT, parseStringToRegExp } from './utils';
 import {
-  DEFAULT_PATCH,
-  DEFAULT_GET,
-  DEFAULT_POST,
-  DEFAULT_DELETE,
-  DEFAULT_PUT,
-} from '../../src/api/utils';
-import {
+  buildItemLoginSchemaExtra,
   getItemLoginExtra,
   getItemLoginSchema,
-  buildItemLoginSchemaExtra,
 } from '../../src/utils/itemExtra';
-import {
-  SETTINGS,
-  SIGN_IN_PATH,
-  THUMBNAIL_EXTENSION,
-} from '../../src/config/constants';
-import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { getMemberById } from '../../src/utils/member';
-import { PERMISSION_LEVELS } from '../../src/enums';
 import {
   buildAppApiAccessTokenRoute,
   buildAppItemLinkForTest,
   buildGetAppData,
 } from '../fixtures/apps';
-import { buildInvitation } from '../../src/utils/invitation';
+import { buildInvitation } from '../fixtures/invitations';
+import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
+import { CURRENT_USER, MEMBERS } from '../fixtures/members';
+import { ID_FORMAT, parseStringToRegExp } from './utils';
 
 const {
   buildAppListRoute,
@@ -90,8 +92,8 @@ const {
   buildDeleteInvitationRoute,
   buildPatchInvitationRoute,
   buildResendInvitationRoute,
-  buildItemPublishRoute, 
-  buildUpdateMemberPassword
+  buildItemPublishRoute,
+  buildUpdateMemberPassword,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
