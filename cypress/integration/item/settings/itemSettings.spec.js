@@ -113,7 +113,7 @@ describe('Item Settings', () => {
     });
   });
 
-  describe.only('Link Settings', () => {
+  describe('Link Settings', () => {
     it('Does not show link settings for folder item', () => {
       const itemId = ITEMS_SETTINGS.items[0].id;
 
