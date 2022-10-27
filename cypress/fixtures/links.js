@@ -18,11 +18,12 @@ export const GRAASP_LINK_ITEM = {
   }),
 };
 
-export const GRAASP_LINK_ITEM_BUTTON_ONLY = {
+export const GRAASP_LINK_ITEM_IFRAME_ONLY = {
   ...GRAASP_LINK_ITEM,
   id: 'ecafbd2a-5688-11eb-ae91-0242ac130122',
   settings: {
-    showLinkIframe: false,
+    showLinkIframe: true,
+    showLinkButton: false,
   },
 };
 

@@ -1,4 +1,8 @@
-import { ITEM_TYPES_WITH_CAPTIONS } from '../../../../src/config/constants';
+import {
+  DEFAULT_LINK_SHOW_BUTTON,
+  DEFAULT_LINK_SHOW_IFRAME,
+  ITEM_TYPES_WITH_CAPTIONS,
+} from '../../../../src/config/constants';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_HEADER_ID,
@@ -116,8 +120,12 @@ export const expectLinkViewScreenLayout = ({
       const parsedHtml = element.html().replaceAll('=""', '');
       expect(parsedHtml).to.contain(html);
     });
-  } else if (settings?.showLinkIframe) {
+  } else if (settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME) {
     cy.get(`iframe#${id}`).should('have.attr', 'src', url);
+  }
+
+  if (!html && (settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON)) {
+    cy.get('[data-testid="OpenInNewIcon"]').should('be.visible');
   }
 
   if (description) {
