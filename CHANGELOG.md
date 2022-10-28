@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.2.0 (2022-10-28)
+
+
+### Features
+
+* link iframe are disabled by default ([#473](https://github.com/graasp/graasp-builder/issues/473)) ([570f94a](https://github.com/graasp/graasp-builder/commit/570f94a1752fac5d7cb42d7dac3a372f0fcde4bb))
+
 ### 0.1.7 (2022-09-27)
 
 
