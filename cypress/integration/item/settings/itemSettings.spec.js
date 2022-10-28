@@ -130,7 +130,7 @@ describe('Item Settings', () => {
       cy.visit(buildItemPath(itemId));
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
 
-      cy.get(`#${SETTINGS_LINK_SHOW_IFRAME_ID}`).should('be.checked');
+      cy.get(`#${SETTINGS_LINK_SHOW_IFRAME_ID}`).should('not.be.checked');
 
       cy.get(`#${SETTINGS_LINK_SHOW_IFRAME_ID}`).click();
 
@@ -140,7 +140,7 @@ describe('Item Settings', () => {
             body: { settings },
           },
         }) => {
-          expect(settings.showLinkIframe).equals(false);
+          expect(settings.showLinkIframe).equals(true);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.get('@getItem').its('response.url').should('contain', itemId);
         },
@@ -152,7 +152,7 @@ describe('Item Settings', () => {
       cy.visit(buildItemPath(itemId));
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
 
-      cy.get(`#${SETTINGS_LINK_SHOW_BUTTON_ID}`).should('not.be.checked');
+      cy.get(`#${SETTINGS_LINK_SHOW_BUTTON_ID}`).should('be.checked');
 
       cy.get(`#${SETTINGS_LINK_SHOW_BUTTON_ID}`).click();
 
@@ -162,7 +162,7 @@ describe('Item Settings', () => {
             body: { settings },
           },
         }) => {
-          expect(settings.showLinkButton).equals(true);
+          expect(settings.showLinkButton).equals(false);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.get('@getItem').its('response.url').should('contain', itemId);
         },

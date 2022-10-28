@@ -9,7 +9,10 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
-import { DEFAULT_LINK_SHOW_IFRAME } from '../../../config/constants';
+import {
+  DEFAULT_LINK_SHOW_BUTTON,
+  DEFAULT_LINK_SHOW_IFRAME,
+} from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import {
@@ -80,7 +83,7 @@ const LinkSettings: FC<Props> = ({ item }) => {
       <Switch
         id={SETTINGS_LINK_SHOW_BUTTON_ID}
         onChange={handleButtonSetting}
-        checked={Boolean(settings?.showLinkButton) ?? false}
+        checked={Boolean(settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON)}
         color="primary"
       />
     );

@@ -18,6 +18,7 @@ import {
 import {
   API_HOST,
   CONTEXT_BUILDER,
+  DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
   H5P_INTEGRATION_URL,
   ITEM_DEFAULT_HEIGHT,
@@ -136,7 +137,9 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
             onSaveCaption={onSaveCaption}
             saveButtonId={saveButtonId}
             height={ITEM_DEFAULT_HEIGHT}
-            showButton={item.settings?.showLinkButton === 'true'}
+            showButton={Boolean(
+              item.settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON,
+            )}
             showIframe={Boolean(
               item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
             )}
