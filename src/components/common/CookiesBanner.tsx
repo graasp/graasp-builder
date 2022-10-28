@@ -4,6 +4,7 @@ import { COOKIE_KEYS } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { CookiesBanner } from '@graasp/ui';
 
+import { DOMAIN } from '../../config/constants';
 import { useCommonTranslation } from '../../config/i18n';
 
 const Component: FC = () => {
@@ -15,6 +16,7 @@ const Component: FC = () => {
       declineButtonText={t(COMMON.COOKIE_BANNER_DECLINE_BUTTON)}
       cookieName={COOKIE_KEYS.ACCEPT_COOKIES_KEY}
       text={t(COMMON.COOKIE_BANNER_TEXT)}
+      domain={DOMAIN}
     />
   );
 };
