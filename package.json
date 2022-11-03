@@ -144,6 +144,7 @@
     "@graasp/sdk": "github:graasp/graasp-sdk.git",
     "glob-parent": "5.1.2",
     "browserslist": "4.16.5",
+    "typescript": "4.8.4",
     "ansi-html": "0.0.8",
     "react-error-overlay": "6.0.9",
     "@mui/icons-material": "5.10.9",
