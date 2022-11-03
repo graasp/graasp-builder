@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#v1.0.0",
     "@graasp/query-client": "github:graasp/graasp-query-client.git",
     "@graasp/sdk": "github:graasp/graasp-sdk.git",
     "@graasp/translations": "github:graasp/graasp-translations.git",

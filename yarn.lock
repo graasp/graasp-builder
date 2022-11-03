@@ -2185,9 +2185,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox.git":
-  version: 0.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=71e7c7d692136152e27a49c67efd48aa2bb9baa7"
+"@graasp/chatbox@github:graasp/graasp-chatbox#v1.0.0":
+  version: 1.0.0
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e60e47fba5aba08f4247959e996a0e31cfee659c"
   dependencies:
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
@@ -2210,11 +2210,10 @@ __metadata:
     "@mui/icons-material": "*"
     "@mui/lab": "*"
     "@mui/material": "*"
-    "@testing-library/dom": "*"
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 5e3778e9600f5c7ed9827990df93ce19311e34d739f6f3e909c2a410b6dd6fd8a538b67272ad90cdff43ff389765f2e54f8e47bb3e0e1476ce3b2d2fc4e48809
+  checksum: abb875228b93bd258aae249ac2191f4fded0340d650eead8371e05fc72a2681e37e2a472c75ca4b44ee81a57acac149a414250fb189a7febfae2c8db1ad17da0
   languageName: node
   linkType: hard
 
@@ -10932,7 +10931,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
-    "@graasp/chatbox": "github:graasp/graasp-chatbox.git"
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#v1.0.0"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/sdk": "github:graasp/graasp-sdk.git"
     "@graasp/translations": "github:graasp/graasp-translations.git"
@@ -21164,11 +21163,11 @@ __metadata:
 
 "typescript@patch:typescript@4.8.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>":
   version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=a1c5e5"
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 563a0ef47abae6df27a9a3ab38f75fc681f633ccf1a3502b1108e252e187787893de689220f4544aaf95a371a4eb3141e4a337deb9895de5ac3c1ca76430e5f0
+  checksum: 301459fc3eb3b1a38fe91bf96d98eb55da88a9cb17b4ef80b4d105d620f4d547ba776cc27b44cc2ef58b66eda23fe0a74142feb5e79a6fb99f54fc018a696afa
   languageName: node
   linkType: hard
 
