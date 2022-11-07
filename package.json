@@ -10,7 +10,7 @@
     "@graasp/query-client": "github:graasp/graasp-query-client.git",
     "@graasp/sdk": "github:graasp/graasp-sdk.git",
     "@graasp/translations": "github:graasp/graasp-translations.git",
-    "@graasp/ui": "github:graasp/graasp-ui.git#v0.3.0",
+    "@graasp/ui": "github:graasp/graasp-ui.git#v0",
     "@mui/icons-material": "5.10.9",
     "@mui/lab": "5.0.0-alpha.104",
     "@mui/material": "5.10.12",

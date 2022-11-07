@@ -191,6 +191,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
                 : undefined
             }
             ToolbarActions={ItemActions}
+            showCreator
           />
         </>
       );
