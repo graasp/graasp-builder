@@ -1,8 +1,0 @@
-{
-  "baseUrl": "http://localhost:3111",
-  "video": false,
-  "retries": {
-    "runMode": 2
-  },
-  "chromeWebSecurity": false
-}
