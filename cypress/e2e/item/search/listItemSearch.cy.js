@@ -1,7 +1,7 @@
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowIdAttribute,
   ITEM_SEARCH_INPUT_ID,
+  buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 

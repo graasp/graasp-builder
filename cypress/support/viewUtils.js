@@ -2,7 +2,7 @@ import {
   DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
   ITEM_TYPES_WITH_CAPTIONS,
-} from '../../../../src/config/constants';
+} from '../../src/config/constants';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_HEADER_ID,
@@ -15,16 +15,16 @@ import {
   buildPlayerButtonId,
   buildSettingsButtonId,
   buildShareButtonId,
-} from '../../../../src/config/selectors';
+} from '../../src/config/selectors';
 import {
   getDocumentExtra,
   getEmbeddedLinkExtra,
   getFileExtra,
   getS3FileExtra,
-} from '../../../../src/utils/itemExtra';
-import { getMemberById } from '../../../../src/utils/member';
-import { isSettingsEditionAllowedForUser } from '../../../../src/utils/membership';
-import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
+} from '../../src/utils/itemExtra';
+import { getMemberById } from '../../src/utils/member';
+import { isSettingsEditionAllowedForUser } from '../../src/utils/membership';
+import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 
 const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
   cy.openMetadataPanel();

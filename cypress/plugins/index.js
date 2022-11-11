@@ -31,6 +31,7 @@ module.exports = (on, config) => {
       HIDDEN_ITEM_TAG_ID: process.env.REACT_APP_HIDDEN_ITEM_TAG_ID,
     },
   };
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   require('@cypress/code-coverage/task')(on, newConfig);
   return newConfig;
 };

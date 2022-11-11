@@ -54,9 +54,7 @@ describe('Categories', () => {
       const {
         categories: [{ categoryId }],
       } = item;
-      const { type, name } = SAMPLE_CATEGORIES.find(
-        ({ id }) => id === categoryId,
-      );
+      const { name } = SAMPLE_CATEGORIES.find(({ id }) => id === categoryId);
       const categoryContent = cy.get(`#${LIBRARY_SETTINGS_CATEGORIES_ID}`);
       categoryContent.contains(name);
     });

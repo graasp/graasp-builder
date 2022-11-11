@@ -1,4 +1,3 @@
-import { ITEM_TYPES } from '../../../../src/enums';
 import {
   CREATE_ITEM_APP_ID,
   CREATE_ITEM_BUTTON_ID,
@@ -6,11 +5,12 @@ import {
   CREATE_ITEM_DOCUMENT_ID,
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_LINK_ID,
-  DASHBOARD_UPLOADER_ID,
   CREATE_ITEM_ZIP_ID,
+  DASHBOARD_UPLOADER_ID,
   ZIP_DASHBOARD_UPLOADER_ID,
-} from '../../../../src/config/selectors';
-import { getS3FileExtra } from '../../../../src/utils/itemExtra';
+} from '../../src/config/selectors';
+import { ITEM_TYPES } from '../../src/enums';
+import { getS3FileExtra } from '../../src/utils/itemExtra';
 
 // eslint-disable-next-line import/prefer-default-export
 export const createItem = (payload, options) => {

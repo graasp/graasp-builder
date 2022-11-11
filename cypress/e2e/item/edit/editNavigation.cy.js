@@ -2,7 +2,7 @@ import { buildItemPath } from '../../../../src/config/paths';
 import { buildEditButtonId } from '../../../../src/config/selectors';
 import { FOLDER_WITH_TWO_DOCUMENTS } from '../../../fixtures/navigationItems';
 import { CAPTION_EDIT_PAUSE } from '../../../support/constants';
-import { expectDocumentViewScreenLayout } from '../view/utils';
+import { expectDocumentViewScreenLayout } from '../../../support/viewUtils';
 
 describe('Edit Navigation', () => {
   beforeEach(() => {

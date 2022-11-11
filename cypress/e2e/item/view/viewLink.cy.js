@@ -4,7 +4,7 @@ import {
   GRAASP_LINK_ITEM_IFRAME_ONLY,
   YOUTUBE_LINK_ITEM,
 } from '../../../fixtures/links';
-import { expectLinkViewScreenLayout } from './utils';
+import { expectLinkViewScreenLayout } from '../../../support/viewUtils';
 
 describe('Links', () => {
   beforeEach(() => {

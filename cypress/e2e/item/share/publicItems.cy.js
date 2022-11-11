@@ -2,7 +2,7 @@ import { buildItemPath } from '../../../../src/config/paths';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../../../src/config/selectors';
 import { SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
-import { expectFolderViewScreenLayout } from '../view/utils';
+import { expectFolderViewScreenLayout } from '../../../support/viewUtils';
 
 describe('Public Items', () => {
   describe('Enabled', () => {

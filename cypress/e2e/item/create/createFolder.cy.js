@@ -1,10 +1,10 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { buildItemsTableRowIdAttribute } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { CREATED_ITEM, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
-import { createItem } from './utils';
+import { createItem } from '../../../support/createUtils';
 
 describe('Create Folder', () => {
   describe('List', () => {

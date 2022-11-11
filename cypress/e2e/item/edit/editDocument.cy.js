@@ -1,6 +1,11 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
+import {
+  TEXT_EDITOR_CLASS,
+  buildEditButtonId,
+  buildSaveButtonId,
+} from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildDocumentExtra,
   getDocumentExtra,
@@ -17,12 +22,7 @@ import {
   CAPTION_EDIT_PAUSE,
   EDIT_ITEM_PAUSE,
 } from '../../../support/constants';
-import { editItem } from './utils';
-import {
-  buildEditButtonId,
-  buildSaveButtonId,
-  TEXT_EDITOR_CLASS,
-} from '../../../../src/config/selectors';
+import { editItem } from '../../../support/editUtils';
 
 const content = 'new text';
 const newFields = {

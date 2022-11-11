@@ -1,11 +1,11 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, INVALID_LINK_ITEM } from '../../../fixtures/links';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
-import { createItem } from './utils';
+import { createItem } from '../../../support/createUtils';
 
 describe('Create Link', () => {
   it('create link on Home', () => {

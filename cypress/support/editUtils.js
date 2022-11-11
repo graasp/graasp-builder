@@ -1,14 +1,11 @@
-import { ITEM_TYPES, ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import {
   TEXT_EDITOR_CLASS,
-  buildSaveButtonId,
   buildEditButtonId,
-} from '../../../../src/config/selectors';
-import {
-  CAPTION_EDIT_PAUSE,
-  TABLE_ITEM_RENDER_TIME,
-} from '../../../support/constants';
+  buildSaveButtonId,
+} from '../../src/config/selectors';
+import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../src/enums';
+import { CAPTION_EDIT_PAUSE, TABLE_ITEM_RENDER_TIME } from './constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {

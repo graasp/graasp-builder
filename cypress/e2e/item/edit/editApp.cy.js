@@ -1,17 +1,17 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { buildAppExtra } from '../../../../src/utils/itemExtra';
 import {
   GRAASP_APP_CHILDREN_ITEM,
   GRAASP_APP_ITEM,
-  GRAASP_APP_PARENT_FOLDER,
   GRAASP_APP_ITEMS_FIXTURE,
+  GRAASP_APP_PARENT_FOLDER,
 } from '../../../fixtures/apps';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
-import { editCaptionFromViewPage, editItem } from './utils';
+import { editCaptionFromViewPage, editItem } from '../../../support/editUtils';
 
 const url = 'http://localhost:3334';
 const newFields = {

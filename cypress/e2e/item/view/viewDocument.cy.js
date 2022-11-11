@@ -1,6 +1,6 @@
 import { buildItemPath } from '../../../../src/config/paths';
 import { GRAASP_DOCUMENT_ITEM } from '../../../fixtures/documents';
-import { expectDocumentViewScreenLayout } from './utils';
+import { expectDocumentViewScreenLayout } from '../../../support/viewUtils';
 
 describe('View Document', () => {
   describe('Grid', () => {

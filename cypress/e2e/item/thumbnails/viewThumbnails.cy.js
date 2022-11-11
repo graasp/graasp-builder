@@ -1,9 +1,9 @@
 import { DEFAULT_IMAGE_SRC } from '../../../../src/config/constants';
 import { HOME_PATH, SHARED_ITEMS_PATH } from '../../../../src/config/paths';
 import {
+  HEADER_MEMBER_MENU_BUTTON_ID,
   buildItemCard,
   buildNameCellRendererId,
-  HEADER_MEMBER_MENU_BUTTON_ID,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
@@ -12,8 +12,6 @@ import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 // THESE TESTS ARE SKIPPED SINCE THEY FAIL IN CI
 describe('View Thumbnails', () => {
-  beforeEach(() => {});
-
   it(`display thumbnail icons`, () => {
     cy.setUpApi(SAMPLE_ITEMS_WITH_THUMBNAILS);
 

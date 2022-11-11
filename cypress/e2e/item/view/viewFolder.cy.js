@@ -28,7 +28,7 @@ import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { CURRENT_USER } from '../../../fixtures/members';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
-import { expectFolderViewScreenLayout } from './utils';
+import { expectFolderViewScreenLayout } from '../../../support/viewUtils';
 
 const translateBuilder = (key) => i18n.t(key, { ns: namespaces.builder });
 

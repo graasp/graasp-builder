@@ -1,5 +1,5 @@
-import {Context} from '@graasp/sdk'
-import { SETTINGS, SHARING_LINK_TYPES } from '../../../../src/config/constants';
+import { Context } from '@graasp/sdk'
+import { SETTINGS } from '../../../../src/config/constants';
 import {
   buildGraaspBuilderView,
   buildGraaspPlayerView,
@@ -28,7 +28,7 @@ const openShareItemTab = (id) => {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export const changeVisibility = (value) => {
+export const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
   cy.get(`li[data-value="${value}"]`).click();
 };
@@ -77,7 +77,8 @@ describe('Share Item', () => {
 
   it('Public Item', () => {
     cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS, tags: DEFAULT_TAGS });
-    const item = SAMPLE_PUBLIC_ITEMS.items[0];
+    // todo: improve type
+    const item = SAMPLE_PUBLIC_ITEMS.items[0] as any;
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
 
@@ -109,7 +110,8 @@ describe('Share Item', () => {
   });
 
   it('Pseudonymized Item', () => {
-    const item = ITEM_LOGIN_ITEMS.items[0];
+    // todo: improve types
+    const item = ITEM_LOGIN_ITEMS.items[0] as any;
     cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);

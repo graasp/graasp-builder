@@ -4,7 +4,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { EDITED_FIELDS, SHORTCUT } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
-import { editItem } from './utils';
+import { editItem } from '../../../support/editUtils';
 
 describe('Edit Shortcut', () => {
   beforeEach(() => {

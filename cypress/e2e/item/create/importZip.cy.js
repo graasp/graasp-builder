@@ -1,10 +1,10 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { ZIP_DEFAULT } from '../../../fixtures/files';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../../../src/config/selectors';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
-import { createItem } from './utils';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ZIP_DEFAULT } from '../../../fixtures/files';
+import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { createItem } from '../../../support/createUtils';
 
 describe('Import Zip', () => {
   it('import zip on Home', () => {

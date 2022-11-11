@@ -3,7 +3,7 @@ import { APP_USING_CONTEXT_ITEM } from '../../../fixtures/apps';
 
 describe('Apps', () => {
   it('App should request context', () => {
-    const { extra, id, name } = APP_USING_CONTEXT_ITEM;
+    const { id, name } = APP_USING_CONTEXT_ITEM;
     cy.setUpApi({ items: [APP_USING_CONTEXT_ITEM] });
     cy.visit(buildItemPath(id));
 

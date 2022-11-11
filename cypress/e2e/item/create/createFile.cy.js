@@ -1,10 +1,10 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
 import { IMAGE_ITEM_DEFAULT, IMAGE_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
-import { createItem } from './utils';
+import { createItem } from '../../../support/createUtils';
 
 describe('Create File', () => {
   it('create file on Home', () => {
