@@ -1,11 +1,12 @@
 import Papa from 'papaparse';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildShareButtonId,
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
   SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR,
   SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
+  buildShareButtonId,
 } from '../../../../src/config/selectors';
 import { ITEMS_WITH_INVITATIONS } from '../../../fixtures/invitations';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -14,7 +15,7 @@ import { MEMBERS } from '../../../fixtures/members';
 const shareItem = ({ id, fixture }) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
   cy.get(`#${SHARE_ITEM_CSV_PARSER_BUTTON_ID}`).click();
-  cy.get(`#${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR}`).attachFile(fixture);
+  cy.get(`#${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR}`).selectFile(fixture);
 };
 
 describe('Share Item From CSV', () => {

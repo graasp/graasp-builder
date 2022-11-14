@@ -7973,15 +7973,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-file-upload@npm:5.0.8":
-  version: 5.0.8
-  resolution: "cypress-file-upload@npm:5.0.8"
-  peerDependencies:
-    cypress: ">3.0.0"
-  checksum: 9c70ca7e0bb137d0ec0b8d38987219ce15b26ac3a40e3ed4e78e6ad4690392eab905586848eec6ad8edd42ee480e68ccc63007b2ebd0a02f4b3eca116ff017e3
-  languageName: node
-  linkType: hard
-
 "cypress-localstorage-commands@npm:2.2.1":
   version: 2.2.1
   resolution: "cypress-localstorage-commands@npm:2.2.1"
@@ -7991,9 +7982,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.11.0":
-  version: 10.11.0
-  resolution: "cypress@npm:10.11.0"
+"cypress@npm:11.0.1":
+  version: 11.0.1
+  resolution: "cypress@npm:11.0.1"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -8039,7 +8030,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 938cc6a20f7eeace5c8e850d234904ee1651cbb36d94666fe600cf17ce964e73d4f7d8d944aab677491702a57364e6aceeb4fe8bcbd96147ff5e2b575a956fb2
+  checksum: 417763449c0688d45506eb492431c87d9fbc3ce6e0690c386533b2319081cf9c41672ce6f35c056fccf2aa045bf9592c46349d3d508908d188f65c4f43069c54
   languageName: node
   linkType: hard
 
@@ -11027,8 +11018,7 @@ __metadata:
     ag-grid-community: 27.3.0
     ag-grid-react: 27.3.0
     concurrently: 7.5.0
-    cypress: 10.11.0
-    cypress-file-upload: 5.0.8
+    cypress: 11.0.1
     cypress-localstorage-commands: 2.2.1
     env-cmd: 10.1.0
     eslint: ^7.31.0

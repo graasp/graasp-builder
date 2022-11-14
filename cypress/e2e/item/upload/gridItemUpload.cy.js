@@ -1,7 +1,7 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { UPLOADER_ID } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const ICON_FILEPATH = 'files/icon.png';
@@ -11,7 +11,7 @@ const dragUploadItem = (filenames) => {
   const files = filenames.map((filePath) => ({ filePath }));
   return cy
     .get(`#${UPLOADER_ID} button`)
-    .attachFile(files, { subjectType: 'drag-n-drop' });
+    .selectFile(files, { action: 'drag-drop' });
 };
 
 describe('Upload Item in Grid', () => {

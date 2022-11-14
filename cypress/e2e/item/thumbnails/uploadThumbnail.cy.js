@@ -1,12 +1,12 @@
 import {
-  buildItemPath,
   MEMBER_PROFILE_PATH,
+  buildItemPath,
 } from '../../../../src/config/paths';
 import {
-  ITEM_SETTINGS_BUTTON_CLASS,
-  THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME,
   CROP_MODAL_CONFIRM_BUTTON_CLASSNAME,
+  ITEM_SETTINGS_BUTTON_CLASS,
   MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME,
+  THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
 import { FILE_LOADING_PAUSE } from '../../../support/constants';
@@ -24,9 +24,9 @@ describe('Upload Thumbnails', () => {
     // change item thumbnail
     cy.fixture('thumbnails/medium', 'binary')
       .then(Cypress.Blob.binaryStringToBlob)
-      .then((fileContent) => {
-        cy.get(`.${THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}`).attachFile({
-          fileContent,
+      .then((contents) => {
+        cy.get(`.${THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}`).selectFile({
+          contents,
           fileName: 'testPicture',
         });
         cy.wait(FILE_LOADING_PAUSE);
@@ -41,9 +41,9 @@ describe('Upload Thumbnails', () => {
     // change item thumbnail
     cy.fixture('thumbnails/medium', 'binary')
       .then(Cypress.Blob.binaryStringToBlob)
-      .then((fileContent) => {
-        cy.get(`.${MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}`).attachFile({
-          fileContent,
+      .then((contents) => {
+        cy.get(`.${MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}`).selectFile({
+          contents,
           fileName: 'testPicture',
         });
         cy.wait(FILE_LOADING_PAUSE);
