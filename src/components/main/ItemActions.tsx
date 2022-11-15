@@ -17,17 +17,17 @@ const ItemActionsRenderer: FC<Props> = ({ selectedIds }) => (
   <>
     <MoveButton
       id={ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}
-      color="primary"
+      color="secondary"
       itemIds={selectedIds}
     />
     <CopyButton
       id={ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}
-      color="primary"
+      color="secondary"
       itemIds={selectedIds}
     />
     <RecycleButton
       id={ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID}
-      color="primary"
+      color="secondary"
       itemIds={selectedIds}
     />
   </>
