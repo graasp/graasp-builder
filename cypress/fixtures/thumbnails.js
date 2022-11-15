@@ -3,6 +3,8 @@ import { FIXTURES_THUMBNAILS_FOLDER } from '../support/constants';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { MEMBERS } from './members';
 
+export const THUMBNAIL_MEDIUM_PATH = 'cypress/fixtures/thumbnails/medium.jpeg';
+
 // eslint-disable-next-line import/prefer-default-export
 export const SAMPLE_ITEMS_WITH_THUMBNAILS = {
   items: [

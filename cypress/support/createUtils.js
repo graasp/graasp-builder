@@ -28,12 +28,12 @@ export const createItem = (payload, options) => {
       cy.get(`#${CREATE_ITEM_FILE_ID}`).click();
 
       // drag-drop a file in the uploader
-      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).selectFile(
-        file,
-        {
-          subjectType: 'drag-drop',
-        },
-      );
+      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`)
+        .first()
+        .selectFile(file, {
+          action: 'drag-drop',
+          force: true,
+        });
       if (confirm) {
         cy.get(`#${CREATE_ITEM_CLOSE_BUTTON_ID}`).click();
       }

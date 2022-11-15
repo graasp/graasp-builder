@@ -8,7 +8,10 @@ import {
   MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME,
   THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME,
 } from '../../../../src/config/selectors';
-import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
+import {
+  SAMPLE_ITEMS_WITH_THUMBNAILS,
+  THUMBNAIL_MEDIUM_PATH,
+} from '../../../fixtures/thumbnails';
 import { FILE_LOADING_PAUSE } from '../../../support/constants';
 
 describe('Upload Thumbnails', () => {
@@ -22,33 +25,23 @@ describe('Upload Thumbnails', () => {
     cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
 
     // change item thumbnail
-    cy.fixture('thumbnails/medium', 'binary')
-      .then(Cypress.Blob.binaryStringToBlob)
-      .then((contents) => {
-        cy.get(`.${THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}`).selectFile({
-          contents,
-          fileName: 'testPicture',
-        });
-        cy.wait(FILE_LOADING_PAUSE);
-        cy.get(`.${CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}`).click();
-        cy.wait(`@uploadItemThumbnail`);
-      });
+    cy.get(`.${THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}`).selectFile(
+      THUMBNAIL_MEDIUM_PATH,
+    );
+    cy.wait(FILE_LOADING_PAUSE);
+    cy.get(`.${CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}`).click();
+    cy.wait(`@uploadItemThumbnail`);
   });
 
   it(`upload member avatar`, () => {
     cy.visit(MEMBER_PROFILE_PATH);
 
     // change item thumbnail
-    cy.fixture('thumbnails/medium', 'binary')
-      .then(Cypress.Blob.binaryStringToBlob)
-      .then((contents) => {
-        cy.get(`.${MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}`).selectFile({
-          contents,
-          fileName: 'testPicture',
-        });
-        cy.wait(FILE_LOADING_PAUSE);
-        cy.get(`.${CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}`).click();
-        cy.wait(`@uploadAvatar`);
-      });
+    cy.get(`.${MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}`).selectFile(
+      THUMBNAIL_MEDIUM_PATH,
+    );
+    cy.wait(FILE_LOADING_PAUSE);
+    cy.get(`.${CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}`).click();
+    cy.wait(`@uploadAvatar`);
   });
 });

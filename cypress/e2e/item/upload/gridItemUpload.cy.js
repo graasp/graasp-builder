@@ -2,17 +2,13 @@ import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { UPLOADER_ID } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ICON_FILEPATH, TEXT_FILEPATH } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const ICON_FILEPATH = 'files/icon.png';
-const TEXT_FILEPATH = 'files/sometext.txt';
-
-const dragUploadItem = (filenames) => {
-  const files = filenames.map((filePath) => ({ filePath }));
-  return cy
-    .get(`#${UPLOADER_ID} button`)
-    .selectFile(files, { action: 'drag-drop' });
-};
+const dragUploadItem = (filenames) =>
+  cy
+    .get(`#${UPLOADER_ID} button input`)
+    .selectFile(filenames, { action: 'drag-drop', force: true });
 
 describe('Upload Item in Grid', () => {
   beforeEach(() => {

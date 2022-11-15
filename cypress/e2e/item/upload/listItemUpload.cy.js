@@ -5,12 +5,10 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { ICON_FILEPATH, TEXT_FILEPATH } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const dragUploadItem = (filenames) => {
-  const files = filenames.map((filePath) => ({ filePath }));
-  return cy
-    .get(`#${UPLOADER_ID} button`)
-    .selectFile(files, { subjectType: 'drag-drop' });
-};
+const dragUploadItem = (filenames) =>
+  cy
+    .get(`#${UPLOADER_ID} button input`)
+    .selectFile(filenames, { subjectType: 'drag-drop', force: true });
 
 describe('Upload Item in List', () => {
   beforeEach(() => {
