@@ -6,9 +6,10 @@ import { ICON_FILEPATH, TEXT_FILEPATH } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const dragUploadItem = (filenames) =>
-  cy
-    .get(`#${UPLOADER_ID} button input`)
-    .selectFile(filenames, { subjectType: 'drag-drop', force: true });
+  cy.attachFiles(cy.get(`#${UPLOADER_ID} button input`), filenames, {
+    subjectType: 'drag-drop',
+    force: true,
+  });
 
 describe('Upload Item in List', () => {
   beforeEach(() => {

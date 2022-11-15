@@ -25,7 +25,8 @@ describe('Upload Thumbnails', () => {
     cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
 
     // change item thumbnail
-    cy.get(`.${THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}`).selectFile(
+    cy.attachFile(
+      cy.get(`.${THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}`),
       THUMBNAIL_MEDIUM_PATH,
     );
     cy.wait(FILE_LOADING_PAUSE);
@@ -37,7 +38,8 @@ describe('Upload Thumbnails', () => {
     cy.visit(MEMBER_PROFILE_PATH);
 
     // change item thumbnail
-    cy.get(`.${MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}`).selectFile(
+    cy.attachFile(
+      cy.get(`.${MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}`),
       THUMBNAIL_MEDIUM_PATH,
     );
     cy.wait(FILE_LOADING_PAUSE);

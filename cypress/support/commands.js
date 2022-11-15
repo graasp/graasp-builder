@@ -372,3 +372,14 @@ Cypress.Commands.add('openMetadataPanel', () => {
     }
   });
 });
+
+Cypress.Commands.add('attachFile', (selector, file, options = {}) => {
+  selector.selectFile(`cypress/fixtures/${file}`, options);
+});
+
+Cypress.Commands.add('attachFiles', (selector, filenames, options = {}) => {
+  const correctFilenames = filenames.map(
+    (filename) => `cypress/fixtures/${filename}`,
+  );
+  selector.selectFile(correctFilenames, options);
+});

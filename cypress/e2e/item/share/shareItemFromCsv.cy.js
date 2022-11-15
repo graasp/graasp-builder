@@ -15,7 +15,11 @@ import { MEMBERS } from '../../../fixtures/members';
 const shareItem = ({ id, fixture }) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
   cy.get(`#${SHARE_ITEM_CSV_PARSER_BUTTON_ID}`).click();
-  cy.get(`#${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR}`).selectFile(fixture);
+  cy.attachFile(
+    cy.get(`#${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR}`),
+    fixture,
+    { force: true },
+  );
 };
 
 describe('Share Item From CSV', () => {

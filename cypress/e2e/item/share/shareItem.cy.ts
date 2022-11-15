@@ -127,7 +127,7 @@ describe('Share Item', () => {
       'have.value',
       SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
     );
-    // item login edition is done in itemLogin.spec.js
+    // item login edition is done in itemLogin.cy.js
 
     // change pseudonymized -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);

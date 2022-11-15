@@ -28,12 +28,14 @@ export const createItem = (payload, options) => {
       cy.get(`#${CREATE_ITEM_FILE_ID}`).click();
 
       // drag-drop a file in the uploader
-      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`)
-        .first()
-        .selectFile(file, {
+      cy.attachFile(
+        cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).first(),
+        file,
+        {
           action: 'drag-drop',
           force: true,
-        });
+        },
+      );
       if (confirm) {
         cy.get(`#${CREATE_ITEM_CLOSE_BUTTON_ID}`).click();
       }
@@ -44,7 +46,8 @@ export const createItem = (payload, options) => {
       cy.get(`#${CREATE_ITEM_ZIP_ID}`).click();
 
       // drag-drop a file in the uploader
-      cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).selectFile(
+      cy.attachFile(
+        cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`),
         file,
         {
           subjectType: 'drag-drop',
