@@ -1,9 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'cypress-file-upload';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import 'cypress-localstorage-commands';
+
 import { COOKIE_KEYS } from '@graasp/sdk';
-import { ITEM_LAYOUT_MODES } from '../../src/enums';
+
 import {
   ITEM_INFORMATION_BUTTON_ID,
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
@@ -11,95 +10,96 @@ import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../src/config/selectors';
-import {
-  mockGetAppListRoute,
-  mockCopyItem,
-  mockCopyItems,
-  mockDeleteItem,
-  mockGetChildren,
-  mockGetItem,
-  mockGetOwnItems,
-  mockMoveItem,
-  mockMoveItems,
-  mockPostItem,
-  mockEditItem,
-  mockPostItemMembership,
-  mockGetMember,
-  mockGetMembersBy,
-  mockDeleteItems,
-  mockDefaultDownloadFile,
-  mockUploadItem,
-  mockGetCurrentMember,
-  mockSignInRedirection,
-  mockSignOut,
-  mockPostItemLogin,
-  mockGetItemLogin,
-  mockGetItemMembershipsForItem,
-  mockGetItemTags,
-  mockGetTags,
-  mockPostItemTag,
-  mockPutItemLogin,
-  mockEditMember,
-  mockGetSharedItems,
-  mockEditItemMembershipForItem,
-  mockDeleteItemMembershipForItem,
-  mockGetPublicItem,
-  mockGetPublicChildren,
-  mockGetItems,
-  mockGetFlags,
-  mockPostItemFlag,
-  mockGetItemChat,
-  mockPostItemChatMessage,
-  mockGetAppLink,
-  mockAppApiAccessToken,
-  mockGetAppData,
-  mockPostAppData,
-  mockDeleteAppData,
-  mockPatchAppData,
-  mockRecycleItems,
-  mockGetRecycledItems,
-  mockDeleteItemTag,
-  mockRestoreItems,
-  mockGetMembers,
-  mockGetItemThumbnail,
-  mockGetAvatar,
-  mockPostItemThumbnail,
-  mockPostAvatar,
-  mockImportZip,
-  mockGetCategoryTypes,
-  mockGetCategories,
-  mockGetItemCategories,
-  mockPostItemCategory,
-  mockDeleteItemCategory,
-  mockGetItemValidationAndReview,
-  mockGetItemValidationStatuses,
-  mockGetItemValidationReviewStatuses,
-  mockPostItemValidation,
-  mockGetItemValidationGroups,
-  mockPostInvitations,
-  mockGetItemInvitations,
-  mockPatchInvitation,
-  mockDeleteInvitation,
-  mockPublishItem,
-  mockUpdatePassword,
-  mockPostManyItemMemberships,
-  mockGetMemberMentions,
-} from './server';
-import './commands/item';
-import './commands/navigation';
-import { CURRENT_USER, MEMBERS } from '../fixtures/members';
-import { SAMPLE_FLAGS } from '../fixtures/flags';
+import { ITEM_LAYOUT_MODES } from '../../src/enums';
 import { APPS_LIST } from '../fixtures/apps/apps';
 import {
   SAMPLE_CATEGORIES,
   SAMPLE_CATEGORY_TYPES,
 } from '../fixtures/categories';
+import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
+import { SAMPLE_FLAGS } from '../fixtures/flags';
+import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import {
   ITEM_VALIDATION_AND_REVIEW,
   ITEM_VALIDATION_GROUPS,
   SAMPLE_STATUSES,
 } from '../fixtures/validations';
-import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
+import './commands/item';
+import './commands/navigation';
+import {
+  mockAppApiAccessToken,
+  mockCopyItem,
+  mockCopyItems,
+  mockDefaultDownloadFile,
+  mockDeleteAppData,
+  mockDeleteInvitation,
+  mockDeleteItem,
+  mockDeleteItemCategory,
+  mockDeleteItemMembershipForItem,
+  mockDeleteItemTag,
+  mockDeleteItems,
+  mockEditItem,
+  mockEditItemMembershipForItem,
+  mockEditMember,
+  mockGetAppData,
+  mockGetAppLink,
+  mockGetAppListRoute,
+  mockGetAvatar,
+  mockGetCategories,
+  mockGetCategoryTypes,
+  mockGetChildren,
+  mockGetCurrentMember,
+  mockGetFlags,
+  mockGetItem,
+  mockGetItemCategories,
+  mockGetItemChat,
+  mockGetItemInvitations,
+  mockGetItemLogin,
+  mockGetItemMembershipsForItem,
+  mockGetItemTags,
+  mockGetItemThumbnail,
+  mockGetItemValidationAndReview,
+  mockGetItemValidationGroups,
+  mockGetItemValidationReviewStatuses,
+  mockGetItemValidationStatuses,
+  mockGetItems,
+  mockGetMember,
+  mockGetMemberMentions,
+  mockGetMembers,
+  mockGetMembersBy,
+  mockGetOwnItems,
+  mockGetPublicChildren,
+  mockGetPublicItem,
+  mockGetRecycledItems,
+  mockGetSharedItems,
+  mockGetTags,
+  mockImportZip,
+  mockMoveItem,
+  mockMoveItems,
+  mockPatchAppData,
+  mockPatchInvitation,
+  mockPostAppData,
+  mockPostAvatar,
+  mockPostInvitations,
+  mockPostItem,
+  mockPostItemCategory,
+  mockPostItemChatMessage,
+  mockPostItemFlag,
+  mockPostItemLogin,
+  mockPostItemMembership,
+  mockPostItemTag,
+  mockPostItemThumbnail,
+  mockPostItemValidation,
+  mockPostManyItemMemberships,
+  mockPublishItem,
+  mockPutItemLogin,
+  mockRecycleItems,
+  mockRestoreItems,
+  mockSignInRedirection,
+  mockSignOut,
+  mockUpdatePassword,
+  mockUploadItem,
+} from './server';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -371,4 +371,15 @@ Cypress.Commands.add('openMetadataPanel', () => {
       cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
     }
   });
+});
+
+Cypress.Commands.add('attachFile', (selector, file, options = {}) => {
+  selector.selectFile(`cypress/fixtures/${file}`, options);
+});
+
+Cypress.Commands.add('attachFiles', (selector, filenames, options = {}) => {
+  const correctFilenames = filenames.map(
+    (filename) => `cypress/fixtures/${filename}`,
+  );
+  selector.selectFile(correctFilenames, options);
 });
