@@ -47,10 +47,11 @@ export const createItem = (payload, options) => {
 
       // drag-drop a file in the uploader
       cy.attachFile(
-        cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`),
+        cy.get(`#${ZIP_DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).first(),
         file,
         {
-          subjectType: 'drag-drop',
+          action: 'drag-drop',
+          force: true,
         },
       );
       break;
