@@ -30,6 +30,7 @@ jobs:
       domain: ${{ secrets.REACT_APP_DOMAIN_DEV }}
       ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_DEV }}
       graasp-analyzer-host: ${{ secrets.ANALYZER_CLIENT_HOST_DEV }}
+      graasp-assets-url: ${{ secrets.REACT_APP_GRAASP_ASSETS_URL_DEV }}
       graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_DEV }}
       graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_DEV }}
       h5p-integration-url: ${{ secrets.H5P_INTEGRATION_URL_DEV }}

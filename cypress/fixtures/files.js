@@ -1,8 +1,10 @@
 import { ITEM_TYPES, MIME_TYPES } from '../../src/enums';
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
+import { MOCK_IMAGE_URL, MOCK_PDF_URL, MOCK_VIDEO_URL } from './fileLinks';
 import { CURRENT_USER } from './members';
 
 export const ICON_FILEPATH = 'files/icon.png';
+export const VIDEO_FILEPATH = 'files/video.mp4';
 export const TEXT_FILEPATH = 'files/sometext.txt';
 
 export const IMAGE_ITEM_DEFAULT = {
@@ -21,8 +23,9 @@ export const IMAGE_ITEM_DEFAULT = {
     encoding: '7bit',
     mimetype: 'image/png',
   }),
-  // for testing
-  filepath: 'files/icon.png',
+  // for testing: creating needs a fixture, reading needs an url
+  createFilepath: ICON_FILEPATH,
+  readFilepath: MOCK_IMAGE_URL,
 };
 
 export const VIDEO_ITEM_DEFAULT = {
@@ -41,8 +44,9 @@ export const VIDEO_ITEM_DEFAULT = {
     encoding: '7bit',
     mimetype: MIME_TYPES.VIDEO[0],
   }),
-  // for testing
-  filepath: 'files/video.mp4',
+  // for testing: creating needs a fixture, reading needs an url
+  createFilepath: VIDEO_FILEPATH,
+  readFilepath: MOCK_VIDEO_URL,
 };
 
 export const PDF_ITEM_DEFAULT = {
@@ -61,8 +65,9 @@ export const PDF_ITEM_DEFAULT = {
     encoding: '7bit',
     mimetype: MIME_TYPES.PDF[0],
   }),
-  // for testing
-  filepath: 'files/doc.pdf',
+  // for testing: creating needs a fixture, reading needs an url
+  createFilepath: ICON_FILEPATH,
+  readFilepath: MOCK_PDF_URL,
 };
 
 export const ZIP_DEFAULT = {
@@ -80,10 +85,13 @@ export const IMAGE_ITEM_S3 = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildS3FileExtra({
-    path: 'files/icon.png', // for testing
+    path: MOCK_IMAGE_URL, // for testing
     size: 32439,
     mimetype: 'image/png',
   }),
+  // for testing: creating needs a fixture, reading needs an url
+  createFilepath: ICON_FILEPATH,
+  readFilepath: MOCK_IMAGE_URL,
 };
 
 export const VIDEO_ITEM_S3 = {
@@ -96,10 +104,13 @@ export const VIDEO_ITEM_S3 = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildS3FileExtra({
-    path: 'files/video.mp4', // for testing
+    path: MOCK_VIDEO_URL, // for testing
     size: 52345,
     mimetype: MIME_TYPES.VIDEO[0],
   }),
+  // for testing: creating needs a fixture, reading needs an url
+  createFilepath: VIDEO_FILEPATH,
+  readFilepath: MOCK_VIDEO_URL,
 };
 
 export const PDF_ITEM_S3 = {
@@ -112,8 +123,11 @@ export const PDF_ITEM_S3 = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   extra: buildS3FileExtra({
-    path: 'files/doc.pdf', // for testing
+    path: MOCK_PDF_URL, // for testing
     size: 54321,
     mimetype: MIME_TYPES.PDF[0],
   }),
+  // for testing: creating needs a fixture, reading needs an url
+  createFilepath: ICON_FILEPATH,
+  readFilepath: MOCK_PDF_URL,
 };

@@ -10,7 +10,6 @@ import {
   ZIP_DASHBOARD_UPLOADER_ID,
 } from '../../src/config/selectors';
 import { ITEM_TYPES } from '../../src/enums';
-import { getS3FileExtra } from '../../src/utils/itemExtra';
 
 // eslint-disable-next-line import/prefer-default-export
 export const createItem = (payload, options) => {
@@ -24,7 +23,7 @@ export const createItem = (payload, options) => {
     case ITEM_TYPES.S3_FILE:
     case ITEM_TYPES.FILE: {
       const { confirm = true } = options;
-      const file = [payload?.filepath || getS3FileExtra(payload?.extra)?.path];
+      const file = [payload?.createFilepath];
       cy.get(`#${CREATE_ITEM_FILE_ID}`).click();
 
       // drag-drop a file in the uploader

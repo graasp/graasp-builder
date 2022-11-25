@@ -795,7 +795,7 @@ export const mockDefaultDownloadFile = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(`${API_HOST}/${buildDownloadFilesRoute(ID_FORMAT)}$`),
+      url: new RegExp(`${API_HOST}/${buildDownloadFilesRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
       if (shouldThrowError) {
@@ -804,8 +804,16 @@ export const mockDefaultDownloadFile = (items, shouldThrowError) => {
       }
 
       const id = url.slice(API_HOST.length).split('/')[2];
-      const { filepath } = items.find(({ id: thisId }) => id === thisId);
-      reply({ fixture: filepath });
+      const { readFilepath } = items.find(({ id: thisId }) => id === thisId);
+      const { replyUrl } = qs.parse(url.slice(url.indexOf('?') + 1));
+
+      // either return the file url or the fixture data
+      // info: we don't test fixture data anymore since the frontend uses url only
+      if (replyUrl) {
+        reply({ url: readFilepath });
+      } else {
+        reply({ fixture: readFilepath });
+      }
     },
   ).as('downloadFile');
 };

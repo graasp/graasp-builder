@@ -5,7 +5,12 @@ import { Container, styled } from '@mui/material';
 import { FC, useContext } from 'react';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType, PermissionLevel } from '@graasp/sdk';
+import {
+  Item,
+  ItemType,
+  PermissionLevel,
+  buildPdfViewerLink,
+} from '@graasp/sdk';
 import {
   AppItem,
   DocumentItem,
@@ -20,6 +25,7 @@ import {
   CONTEXT_BUILDER,
   DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
+  GRAASP_ASSETS_URL,
   H5P_INTEGRATION_URL,
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
@@ -71,12 +77,13 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
     enabled: item?.type === ItemType.FOLDER,
   });
 
-  const { data: content, isLoading: isLoadingFileContent } = useFileContent(
+  const { data: fileData, isLoading: isLoadingFileContent } = useFileContent(
     itemId,
     {
       enabled:
         item &&
         (itemType === ItemType.LOCAL_FILE || itemType === ItemType.S3_FILE),
+      replyUrl: true,
     },
   );
   const isEditing = enableEditing && editingItemId === itemId;
@@ -113,20 +120,23 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
 
   switch (itemType) {
     case ItemType.LOCAL_FILE:
-    case ItemType.S3_FILE:
+    case ItemType.S3_FILE: {
+      // todo: remove when query client is correctly typed
+      const file = fileData as Record<string, string>;
       return (
         <FileWrapper>
           <FileItem
-            id={buildFileItemId(itemId)}
             editCaption={isEditing}
+            fileUrl={file?.url}
+            id={buildFileItemId(itemId)}
             item={item}
-            // todo: fix with graasp query client
-            content={content as Blob}
             onSaveCaption={onSaveCaption}
+            pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
             saveButtonId={saveButtonId}
           />
         </FileWrapper>
       );
+    }
     case ItemType.LINK:
       return (
         <FileWrapper>
