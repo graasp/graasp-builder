@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.2.3 (2022-11-28)
+
+
+### Features
+
+* use pdf viewer ([#504](https://github.com/graasp/graasp-builder/issues/504)) ([3157958](https://github.com/graasp/graasp-builder/commit/315795806a45decb06a8c30c82cf23034f3c6403))
+
 ### 0.2.2 (2022-11-03)
 
 ### 0.2.1 (2022-10-28)
