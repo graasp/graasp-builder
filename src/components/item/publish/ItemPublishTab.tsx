@@ -284,8 +284,8 @@ const ItemPublishTab: FC<Props> = ({
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON)}
         </Button>
         {displayItemValidationMessage()}
-        <Typography variant="h6" mt={2}>
-          <Looks3Icon color="primary" mt={2} mr={2} />
+        <Typography variant="h6" mt={2} mr={2}>
+          <Looks3Icon color="primary" />
           {translateBuilder(
             BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_TITLE,
           )}

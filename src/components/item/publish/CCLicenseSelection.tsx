@@ -1,26 +1,15 @@
 import { RecordOf } from 'immutable';
 
-import HelpIcon from '@mui/icons-material/Help';
-import {
-  FormControlLabel,
-  IconButton,
-  Radio,
-  RadioGroup,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
 import { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, redirect } from '@graasp/sdk';
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { CCLicenseIcon, Loader } from '@graasp/ui';
 
-import {
-  CC_LICENSE_ABOUT_URL,
-  CC_LICENSE_ADAPTION_OPTIONS,
-} from '../../../config/constants';
+import { CC_LICENSE_ADAPTION_OPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
