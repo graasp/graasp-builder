@@ -255,6 +255,9 @@ const ItemPublishTab: FC<Props> = ({
           <LooksOneIcon color="primary" />
           {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
         </Typography>
+        <Typography variant="body1">
+          {translateBuilder(BUILDER.LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS)}
+        </Typography>
         <VisibilitySelect item={item} edit={canEdit} />
         <Typography variant="h6" mt={2} mr={2}>
           <LooksTwoIcon color="primary" />
