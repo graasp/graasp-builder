@@ -28,7 +28,7 @@ import {
 const { DELETE_ITEM_TAG, PUBLISH_ITEM } = MUTATION_KEYS;
 const { useTags, useItemTags } = hooks;
 
-const ItemPublishButton = ({ item, isValidated }) => {
+const ItemPublishButton = ({ item, isValidated, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   // current item
@@ -98,7 +98,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
   return (
     <>
       <Button
-        disabled={isDisabled || !isValidated}
+        disabled={disabled || isDisabled || !isValidated || isPublished}
         onClick={handlePublish}
         sx={{
           mr: 2,
@@ -109,7 +109,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
         {translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
       </Button>
       <Button
-        disabled={!isPublished}
+        disabled={disabled || !isPublished}
         onClick={handleUnpublish}
         id={ITEM_UNPUBLISH_BUTTON_ID}
       >
@@ -124,6 +124,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
               checked={emailNotification}
               onChange={toggleEmailNotification}
               color="primary"
+              disabled={disabled}
             />
           }
           label={translateBuilder(
@@ -143,6 +144,7 @@ const ItemPublishButton = ({ item, isValidated }) => {
 ItemPublishButton.propTypes = {
   item: PropTypes.instanceOf(Record).isRequired,
   isValidated: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default ItemPublishButton;

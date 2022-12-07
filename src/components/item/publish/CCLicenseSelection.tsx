@@ -37,9 +37,10 @@ enum CCLicenseAdaption {
 
 type Props = {
   item: RecordOf<Item>;
+  disabled: boolean;
 };
 
-const CCLicenseSelection: FC<Props> = ({ item }) => {
+const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: updateCCLicense } = useMutation<
     any,
@@ -74,11 +75,6 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
     setOptionValue(event.target.value as CCLicenseAdaption);
   };
 
-  const handleClick = () => {
-    const url = CC_LICENSE_ABOUT_URL;
-    redirect(url, { openInNewTab: true });
-  };
-
   const handleSubmit = (event: SubmitEvent) => {
     event.preventDefault();
     if (optionValue) {
@@ -95,19 +91,6 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
 
   return (
     <>
-      <Typography variant="h6" mt={2}>
-        {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_TITLE)}
-        <Tooltip
-          title={translateBuilder(
-            BUILDER.ITEM_SETTINGS_CC_LICENSE_MORE_INFORMATIONS,
-          )}
-          arrow
-        >
-          <IconButton aria-label="info" onClick={handleClick}>
-            <HelpIcon />
-          </IconButton>
-        </Tooltip>
-      </Typography>
       <Typography variant="body1">
         {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_INFORMATIONS)}
       </Typography>
@@ -120,20 +103,24 @@ const CCLicenseSelection: FC<Props> = ({ item }) => {
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALLOW}
           control={<Radio color="primary" />}
+          disabled={disabled}
           label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALLOW_LABEL)}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.ALIKE}
           control={<Radio color="primary" />}
+          disabled={disabled}
           label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_ALIKE_LABEL)}
         />
         <FormControlLabel
           value={CC_LICENSE_ADAPTION_OPTIONS.NONE}
           control={<Radio color="primary" />}
+          disabled={disabled}
           label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_NONE_LABEL)}
         />
       </RadioGroup>
       <CCLicenseDialog
+        disabled={disabled}
         open={open}
         setOpen={setOpen}
         buttonName={translateBuilder(

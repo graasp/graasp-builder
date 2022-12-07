@@ -20,6 +20,7 @@ import {
 import { Category, ItemCategory } from '../../../config/types';
 
 type Props = {
+  disabled: boolean;
   typeId: string;
   title: string;
   values: Category[];
@@ -32,6 +33,7 @@ type Props = {
 };
 
 const DropdownMenu: FC<Props> = ({
+  disabled,
   typeId,
   title,
   handleChange,
@@ -51,7 +53,7 @@ const DropdownMenu: FC<Props> = ({
       </Typography>
       <Autocomplete
         sx={{ width: 'auto', maxWidth: '85%' }}
-        disabled={!values}
+        disabled={disabled || !values}
         multiple
         disableClearable
         id={buildCategorySelectionId(typeId)}

@@ -24,7 +24,7 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
-const CustomizedTagsEdit = ({ item }) => {
+const CustomizedTagsEdit = ({ item, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
@@ -82,13 +82,14 @@ const CustomizedTagsEdit = ({ item }) => {
         onChange={handleChange}
         id={ITEM_TAGS_EDIT_INPUT_ID}
         sx={{ mt: 1, mb: 1 }}
+        disabled={disabled}
       />
       <SaveButton
         onClick={handleSubmit}
         sx={{ marginTop: 1, marginLeft: 2 }}
         id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
         text={translateCommon(COMMON.SAVE_BUTTON)}
-        hasChanges
+        hasChanges={!disabled}
       />
       {settings?.tags?.size && (
         <>
@@ -110,6 +111,7 @@ const CustomizedTagsEdit = ({ item }) => {
 
 CustomizedTagsEdit.propTypes = {
   item: PropTypes.instanceOf(Record).isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default CustomizedTagsEdit;

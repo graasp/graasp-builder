@@ -25,7 +25,11 @@ const { POST_ITEM_CATEGORY, DELETE_ITEM_CATEGORY } = MUTATION_KEYS;
 const SELECT_OPTION = 'selectOption';
 const REMOVE_OPTION = 'removeOption';
 
-const CategorySelection: FC = () => {
+type Props = {
+  disabled: boolean;
+};
+
+const CategorySelection: FC<Props> = ({ disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCategories } = useCategoriesTranslation();
   const { mutate: createItemCategory } = useMutation<
@@ -125,6 +129,7 @@ const CategorySelection: FC = () => {
         return (
           <DropdownMenu
             key={id}
+            disabled={disabled}
             title={translateCategories(name)}
             handleChange={handleChange(values)}
             values={values}

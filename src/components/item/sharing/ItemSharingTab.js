@@ -123,6 +123,9 @@ const ItemSharingTab = ({ item }) => {
         {translateBuilder(BUILDER.SHARING_TITLE)}
       </Typography>
       <SharingLink itemId={item.id} />
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
+      </Typography>
       <VisibilitySelect item={item} edit={canEdit} />
       {renderMembershipSettings()}
     </Container>
