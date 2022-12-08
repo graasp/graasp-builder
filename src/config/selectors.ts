@@ -9,7 +9,8 @@ export const ITEM_FORM_CONFIRM_BUTTON_ID = 'newItemConfirmButton';
 export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
 export const buildItemLink = (id: string): string => `itemLink-${id}`;
 export const NAVIGATION_HOME_LINK_ID = 'navigationHomeLink';
-export const buildNavigationLink = (id: string): string => `navigationLink-${id}`;
+export const buildNavigationLink = (id: string): string =>
+  `navigationLink-${id}`;
 export const ITEM_MENU_MOVE_BUTTON_CLASS = 'itemMenuMoveButton';
 export const ITEM_MENU_BUTTON_CLASS = 'itemMenuButton';
 export const ITEM_MENU_COPY_BUTTON_CLASS = 'itemMenuCopyButton';
@@ -17,7 +18,8 @@ export const ITEM_MENU_RECYCLE_BUTTON_CLASS = 'itemMenuRecycleButton';
 export const buildItemMenu = (id: string): string => `itemMenu-${id}`;
 export const TREE_MODAL_MY_ITEMS_ID = 'treeModalMyItems';
 export const TREE_MODAL_SHARED_ITEMS_ID = 'treeModalSharedItems';
-export const buildTreeItemId = (id: string, treeRootId: string): string => `${treeRootId}-${id}`;
+export const buildTreeItemId = (id: string, treeRootId: string): string =>
+  `${treeRootId}-${id}`;
 export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
@@ -29,7 +31,8 @@ export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const PUBLISH_ITEM_BUTTON_CLASS = 'publishItemButton';
 export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
 export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
-export const buildPermissionOptionId = (id: string): string => `permission-${id}`;
+export const buildPermissionOptionId = (id: string): string =>
+  `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 export const MODE_LIST_BUTTON_ID = 'modeListButton';
 export const DELETE_MEMBER_BUTTON_ID = 'deleteMemberButton';
@@ -40,7 +43,8 @@ export const FAVORITE_ITEMS_ID = 'favoriteItems';
 export const OWNED_ITEMS_ID = 'ownedItems';
 export const ITEMS_TABLE_BODY = 'itemsTableBody';
 export const ITEMS_TABLE_ROW = '.ag-row';
-export const buildItemsTableRowId = (id: string): string => `itemsTableRow-${id}`;
+export const buildItemsTableRowId = (id: string): string =>
+  `itemsTableRow-${id}`;
 export const buildItemsTableRowSelector = (id: string): string =>
   `[row-id="${buildItemsTableRowId(id)}"]`;
 export const buildItemsTableRowIdAttribute = (id: string): string =>
@@ -110,9 +114,11 @@ export const MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID =
   'memberProfileMemberIdCopyButton';
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
-export const buildMemberAvatarClass = (id?: string): string => `memberAvatar-${id}`;
+export const buildMemberAvatarClass = (id?: string): string =>
+  `memberAvatar-${id}`;
 export const ITEM_SETTINGS_BUTTON_CLASS = 'itemSettingsButton';
-export const buildItemMembershipRowId = (id: string): string => `itemMembershipRow-${id}`;
+export const buildItemMembershipRowId = (id: string): string =>
+  `itemMembershipRow-${id}`;
 export const buildItemMembershipRowSelector = (id: string): string =>
   `[row-id="${buildItemMembershipRowId(id)}"]`;
 export const ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS =
@@ -135,12 +141,15 @@ export const buildItemsGridPaginationButtonSelected = (page: number): string =>
 export const ITEM_HEADER_ID = 'itemHeader';
 export const ROW_DRAGGER_CLASS = `drag-cell-class-name`;
 export const buildShareButtonId = (id: string): string => `shareButton-${id}`;
-export const buildPublishButtonId = (id: string): string => `publishButton-${id}`;
+export const buildPublishButtonId = (id: string): string =>
+  `publishButton-${id}`;
 export const buildDeleteButtonId = (id: string): string => `deleteButton-${id}`;
-export const buildItemMenuButtonId = (id: string): string => `itemMenuButton-${id}`;
+export const buildItemMenuButtonId = (id: string): string =>
+  `itemMenuButton-${id}`;
 export const buildPlayerButtonId = (id: string): string => `playerButton-${id}`;
 export const buildEditButtonId = (id: string): string => `editButton-${id}`;
-export const buildSettingsButtonId = (id: string): string => `settingsButton-${id}`;
+export const buildSettingsButtonId = (id: string): string =>
+  `settingsButton-${id}`;
 export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';
 export const INVITE_ITEM_EMAIL_INPUT_ID = 'inviteItemEmailInput';
 export const INVITE_ITEM_BUTTON_ID = 'inviteItemButton';
@@ -169,7 +178,8 @@ export const SETTINGS_COLLAPSE_TOGGLE_ID = 'settingsCollapseToggle';
 export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
   'itemsTableRestoreSelectedItems';
 export const FOLDER_FORM_DESCRIPTION_ID = 'folderFormDescription';
-export const buildNameCellRendererId = (id: string): string => `nameCellRenderer-${id}`;
+export const buildNameCellRendererId = (id: string): string =>
+  `nameCellRenderer-${id}`;
 export const ITEM_CARD_MEDIA_CLASSNAME = 'itemCardMedia';
 export const ITEM_CARD_HEADER_CLASSNAME = 'itemCardHeader';
 export const THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME =
@@ -188,14 +198,19 @@ export const buildCustomizedTagsSelector = (index: string): string =>
 export const buildCategoriesSelectionValueSelector = (title: string): string =>
   `#${buildCategorySelectionTitleId(title)}+div span`;
 
-export const buildCategoryMenuOptionSelector = (menuName: string, _optionIndex: number): string =>
-  `#${menuName} .MuiAutocomplete-option`;
-export const buildDashboardButtonId = (id: string): string => `dashboard-button-${id}`;
-export const buildGraaspAnalyzerId = (id: string): string => `graasp-analyzer-${id}`;
+export const buildCategoryMenuOptionSelector = (
+  menuName: string,
+  _optionIndex: number,
+): string => `#${menuName} .MuiAutocomplete-option`;
+export const buildDashboardButtonId = (id: string): string =>
+  `dashboard-button-${id}`;
+export const buildGraaspAnalyzerId = (id: string): string =>
+  `graasp-analyzer-${id}`;
 export const buildPlayerTabName = (id: string): string => `builder-tab-${id}`;
 
 export const ITEM_PUBLISH_SECTION_TITLE_ID = 'itemPublishSectionTitle';
 export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
+export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_DROP_DOWN_ID = 'appNavigationDropDown';
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';
@@ -204,7 +219,8 @@ export const buildItemInvitationRowDeleteButtonId = (id: string): string =>
   `itemInvitationRowDeleteButton-${id}`;
 export const buildInvitationEmailTableRowId = (id: string): string =>
   `invitationEmailTableRow-${id}`;
-export const buildInvitationTableRowId = (id: string): string => `invitationTableRow-${id}`;
+export const buildInvitationTableRowId = (id: string): string =>
+  `invitationTableRow-${id}`;
 export const buildInvitationTableRowSelector = (id: string): string =>
   `[row-id="${buildInvitationTableRowId(id)}"]`;
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
@@ -217,7 +233,8 @@ export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
 
 export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
   'headerMemberMenuSignOutButton';
-export const buildMemberMenuItemId = (id: string): string => `memberMenuItem-${id}`;
+export const buildMemberMenuItemId = (id: string): string =>
+  `memberMenuItem-${id}`;
 export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
 export const buildCoEditorSettingsRadioButtonId = (id: string): string =>
   `coEditorSettingsRadioButton-${id}`;
@@ -241,7 +258,12 @@ export const SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID =
   'shareItemFromCsvResultFailures';
 export const SETTINGS_LINK_SHOW_IFRAME_ID = 'settingsLinkShowIframe';
 export const SETTINGS_LINK_SHOW_BUTTON_ID = 'settingsLinkShowButton';
-export const buildCategorySelectionOptionId = (typeId: string, id: string): string => `category-${typeId}-option-${id}`
-export const LIBRARY_SETTINGS_CATEGORIES_ID = 'librarySettingsCategories'
-export const buildLanguageOptionId = (value: string): string => `languageOption-${value}`
-export const buildEmailFrequencyOptionId = (value: string): string => `emailFrequencyOption-${value}`
+export const buildCategorySelectionOptionId = (
+  typeId: string,
+  id: string,
+): string => `category-${typeId}-option-${id}`;
+export const LIBRARY_SETTINGS_CATEGORIES_ID = 'librarySettingsCategories';
+export const buildLanguageOptionId = (value: string): string =>
+  `languageOption-${value}`;
+export const buildEmailFrequencyOptionId = (value: string): string =>
+  `emailFrequencyOption-${value}`;

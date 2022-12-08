@@ -2314,15 +2314,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations.git#82-publish-visibility-info":
-  version: 1.0.1
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=3195b94a9059f7625fa3c18ab6aa2f8f1843704e"
-  dependencies:
-    i18next: 21.8.1
-  checksum: d85521a85568d174745cb4fce1c953223af166b288115517c8306daf8cf9503f5a3b1c416b118820ce8f4e142813375440525d5c72b6fbfed7da5203d4ba99a4
-  languageName: node
-  linkType: hard
-
 "@graasp/ui@github:graasp/graasp-ui#v0.3.0":
   version: 0.3.0
   resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=1babf3c6781328391a357e746d4755c61859347f"
@@ -11104,7 +11095,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox#v1.0.0"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/sdk": "github:graasp/graasp-sdk.git#60-pdf-link"
-    "@graasp/translations": "github:graasp/graasp-translations.git#82-publish-visibility-info"
+    "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/ui": "github:graasp/graasp-ui.git#v0.4.1"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.10.9

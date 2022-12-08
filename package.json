@@ -9,7 +9,7 @@
     "@graasp/chatbox": "github:graasp/graasp-chatbox#v1.0.0",
     "@graasp/query-client": "github:graasp/graasp-query-client.git",
     "@graasp/sdk": "github:graasp/graasp-sdk.git#60-pdf-link",
-    "@graasp/translations": "github:graasp/graasp-translations.git#82-publish-visibility-info",
+    "@graasp/translations": "github:graasp/graasp-translations.git",
     "@graasp/ui": "github:graasp/graasp-ui.git#v0.4.1",
     "@mui/icons-material": "5.10.9",
     "@mui/lab": "5.0.0-alpha.104",

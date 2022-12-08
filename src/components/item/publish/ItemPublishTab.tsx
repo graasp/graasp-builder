@@ -29,6 +29,7 @@ import { hooks, queryClient, useMutation } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
+  ITEM_VALIDATION_REFRESH_BUTTON_ID,
 } from '../../../config/selectors';
 import { isItemPublic } from '../../../utils/itemTag';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
@@ -279,6 +280,7 @@ const ItemPublishTab: FC<Props> = ({
           )}
         </Button>
         <Button
+          id={ITEM_VALIDATION_REFRESH_BUTTON_ID}
           variant="outlined"
           onClick={handleRefresh}
           color="primary"

@@ -1,7 +1,10 @@
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../../src/config/constants';
+import { SETTINGS } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
+  ITEM_VALIDATION_BUTTON_ID,
+  ITEM_VALIDATION_REFRESH_BUTTON_ID,
   buildCoEditorSettingsRadioButtonId,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
@@ -10,6 +13,7 @@ import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
+import { changeVisibility } from '../share/shareItem.cy';
 
 const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
@@ -39,7 +43,14 @@ describe('Co-editor Setting', () => {
     visitItemPage(item);
 
     const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
-    cy.get(`#${buildCoEditorSettingsRadioButtonId(newOptionValue)}`).click();
+
+    changeVisibility(SETTINGS.ITEM_PUBLIC.name);
+    cy.get(`#${ITEM_VALIDATION_BUTTON_ID}`).click();
+    cy.get(`#${ITEM_VALIDATION_REFRESH_BUTTON_ID}`).click();
+    cy.wait('@getItemValidationAndReview').then(() => {
+      cy.get(`#${buildCoEditorSettingsRadioButtonId(newOptionValue)}`).click();
+    });
+
     cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
       const {
         request: { url, body },
