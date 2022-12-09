@@ -15,6 +15,8 @@ export const DEFAULT_FOLDER_ITEM = {
   extra: {},
   creator: CURRENT_USER.id,
   type: ITEM_TYPES.FOLDER,
+  createdAt: new Date('2020-01-01T01:01:01Z'),
+  updatedAt: new Date('2020-01-02T01:01:01Z'),
 };
 
 export const CREATED_ITEM = {

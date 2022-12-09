@@ -17,7 +17,6 @@ import {
   SETTINGS_PINNED_TOGGLE_ID,
 } from '../../../config/selectors';
 import { ITEM_TYPES } from '../../../enums';
-import CCLicenseSelection from '../publish/CCLicenseSelection';
 import LinkSettings from './LinkSettings';
 import ThumbnailSetting from './ThumbnailSetting';
 
@@ -140,7 +139,6 @@ const ItemSettings = ({ item }) => {
       </FormGroup>
       {item.type === ITEM_TYPES.LINK && <LinkSettings item={item} />}
       <ThumbnailSetting item={item} />
-      <CCLicenseSelection item={item} />
     </Container>
   );
 };

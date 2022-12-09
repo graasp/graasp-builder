@@ -20,7 +20,7 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
-const CoEditorSettings = ({ item }) => {
+const CoEditorSettings = ({ item, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: updateDisplayCoEditors } = useMutation(EDIT_ITEM);
 
@@ -79,6 +79,7 @@ const CoEditorSettings = ({ item }) => {
             value={option.value}
             control={<Radio color="primary" />}
             label={translateBuilder(option.label)}
+            disabled={disabled}
           />
         ))}
       </RadioGroup>
@@ -88,6 +89,7 @@ const CoEditorSettings = ({ item }) => {
 
 CoEditorSettings.propTypes = {
   item: PropTypes.instanceOf(Record).isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default CoEditorSettings;

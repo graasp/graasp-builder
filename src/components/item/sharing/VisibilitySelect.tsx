@@ -241,9 +241,6 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
 
   return (
     <>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
-      </Typography>
       {edit && (
         <Select
           value={tagValue?.name || SETTINGS.ITEM_PRIVATE.name}
