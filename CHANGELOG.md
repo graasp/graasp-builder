@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.2.4 (2022-12-12)
+
+
+### Features
+
+* improve publish settings ([#511](https://github.com/graasp/graasp-builder/issues/511)) ([4982c56](https://github.com/graasp/graasp-builder/commit/4982c5698cab78346973f0d6287d17230264b013))
+
 ### 0.2.3 (2022-11-28)
 
 
