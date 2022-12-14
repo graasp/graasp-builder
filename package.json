@@ -7,13 +7,13 @@
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@graasp/chatbox": "github:graasp/graasp-chatbox#v1.0.0",
-    "@graasp/query-client": "github:graasp/graasp-query-client.git",
-    "@graasp/sdk": "github:graasp/graasp-sdk.git#60-pdf-link",
-    "@graasp/translations": "github:graasp/graasp-translations.git",
-    "@graasp/ui": "github:graasp/graasp-ui.git#v0.4.1",
-    "@mui/icons-material": "5.10.9",
+    "@graasp/query-client": "github:graasp/graasp-query-client",
+    "@graasp/sdk": "github:graasp/graasp-sdk#v0",
+    "@graasp/translations": "1.1.0",
+    "@graasp/ui": "github:graasp/graasp-ui.git#v0",
+    "@mui/icons-material": "5.10.14",
     "@mui/lab": "5.0.0-alpha.104",
-    "@mui/material": "5.10.12",
+    "@mui/material": "5.10.14",
     "@sentry/react": "7.17.4",
     "@sentry/tracing": "7.17.4",
     "@uppy/core": "2.1.6",
@@ -132,7 +132,7 @@
     "prettier": "2.7.1",
     "react-app-rewired": "2.2.1",
     "standard-version": "9.5.0",
-    "typescript": "4.8.4",
+    "typescript": "4.8.2",
     "wait-on": "6.0.1"
   },
   "resolutions": {
@@ -140,12 +140,15 @@
     "nth-check": "2.0.1",
     "i18next": "21.8.1",
     "immer": "9.0.6",
+    "immutable": "4.1.0",
     "glob-parent": "5.1.2",
     "browserslist": "4.16.5",
     "ansi-html": "0.0.8",
+    "@graasp/translations": "1.1.0",
+    "@graasp/sdk": "github:graasp/graasp-sdk#v0",
     "react-error-overlay": "6.0.9",
-    "@mui/icons-material": "5.10.9",
-    "@mui/material": "5.10.10"
+    "@mui/icons-material": "5.10.14",
+    "@mui/material": "5.10.14"
   },
   "packageManager": "yarn@3.2.4"
 }

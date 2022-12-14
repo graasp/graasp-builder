@@ -2,23 +2,23 @@ import { TextField } from '@mui/material';
 
 import { ChangeEvent, FC } from 'react';
 
-import { Item } from '@graasp/sdk';
+import { Item, UnknownExtra, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 
 type Props = {
-  updatedProperties: Partial<Item>;
-  onChange: (props: Partial<Item>) => void;
-  item: Partial<Item>;
+  updatedProperties: Partial<Item<UnknownExtra>>;
+  onChange: (props: Partial<Item<UnknownExtra>>) => void;
+  item: Partial<Item<UnknownExtra>>;
 };
 
 const BaseForm: FC<Props> = ({ onChange, item, updatedProperties }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
-    onChange({ ...updatedProperties, name: event.target.value });
+    onChange(convertJs({ ...updatedProperties, name: event.target.value }));
   };
 
   return (

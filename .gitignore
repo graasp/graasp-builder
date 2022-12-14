@@ -33,6 +33,9 @@ cypress/videos
 # jetbrains
 .idea
 
+# vscode
+.vscode
+
 # yarn
 .yarn/*
 !.yarn/patches

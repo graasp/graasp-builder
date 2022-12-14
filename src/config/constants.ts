@@ -35,7 +35,7 @@ export const H5P_INTEGRATION_URL =
 export const GRAASP_ANALYZER_HOST =
   process.env.REACT_APP_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
 
-export const buildGraaspAnalyzerLink = (id) =>
+export const buildGraaspAnalyzerLink = (id: string): string =>
   `${GRAASP_ANALYZER_HOST}/embedded/${id}`;
 
 export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
@@ -75,6 +75,11 @@ export const emailFrequency = {
   // daily: 'Receive email notifications once per day',
   never: 'Disable email notifications',
 };
+
+export const DEFAULT_SHOW_CHATBOX_SETTING = false;
+export const DEFAULT_PINNED_SETTING = false;
+export const DEFAULT_COLLAPSIBLE_SETTING = false;
+export const DEFAULT_RESIZE_SETTING = false;
 
 export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.READ;
 
@@ -129,7 +134,7 @@ export const SETTINGS = {
 
 export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
 export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
-  SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME;
+  SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM;
 
 export const USER_ITEM_ORDER = 'user_order';
 

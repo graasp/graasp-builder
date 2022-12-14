@@ -18,7 +18,6 @@ import CCLicenseDialog from './CCLicenseDialog';
 const { EDIT_ITEM } = MUTATION_KEYS;
 
 // TODO: export in graasp sdk
-// eslint-disable-next-line
 enum CCLicenseAdaption {
   ALLOW = 'allow',
   ALIKE = 'alike',

@@ -2,7 +2,7 @@ import { Button, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -74,14 +74,14 @@ const PasswordSetting: FC = () => {
     }
   };
 
-  const handleCurrentPasswordInput = (event) => {
+  const handleCurrentPasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentPassword(event.target.value);
   };
-  const handleNewPasswordInput = (event) => {
+  const handleNewPasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
     setNewPassword(event.target.value);
     setNewPasswordError(passwordValidator(event.target.value));
   };
-  const handleConfirmPasswordInput = (event) => {
+  const handleConfirmPasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value);
     setConfirmPasswordError(passwordValidator(event.target.value));
   };

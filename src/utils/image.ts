@@ -1,8 +1,13 @@
 import { PixelCrop } from 'react-image-crop';
+
 import { THUMBNAIL_EXTENSION } from '../config/constants';
 
 // eslint-disable-next-line import/prefer-default-export
-export const getCroppedImg = (image: HTMLImageElement, crop: PixelCrop, extension = THUMBNAIL_EXTENSION): Promise<Blob> => {
+export const getCroppedImg = (
+  image: HTMLImageElement,
+  crop: PixelCrop,
+  extension = THUMBNAIL_EXTENSION,
+): Promise<Blob> => {
   const canvas = document.createElement('canvas');
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
@@ -11,7 +16,7 @@ export const getCroppedImg = (image: HTMLImageElement, crop: PixelCrop, extensio
   canvas.width = crop.width * scaleX;
   canvas.height = crop.height * scaleY;
 
-  ctx.drawImage(
+  ctx?.drawImage(
     image,
     crop.x * scaleX,
     crop.y * scaleY,

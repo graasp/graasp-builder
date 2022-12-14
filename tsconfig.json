@@ -6,11 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "skipLibCheck": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
@@ -24,10 +20,8 @@
     "sourceRoot": "/",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": ["cypress", "*.test.ts", "*.test.js"]
+  "include": ["src"],
+  "exclude": ["node_modules", "cypress", "*.test.ts", "*.test.js", "**/.*/"]
 }

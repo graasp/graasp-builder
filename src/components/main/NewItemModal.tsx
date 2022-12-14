@@ -8,7 +8,7 @@ import { FC, useState } from 'react';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType } from '@graasp/sdk';
+import { Item, ItemType, UnknownExtra } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -40,7 +40,7 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
 }));
 
 type Props = {
-  open?: boolean;
+  open: boolean;
   handleClose: () => void;
 };
 
@@ -51,10 +51,10 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
   );
-  const [initialItem] = useState({});
-  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState<
-    Record<string, Partial<Item>>
-  >({
+  const [initialItem] = useState<Partial<Item<UnknownExtra>>>({});
+  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState<{
+    [key: string]: Partial<Item<UnknownExtra>>;
+  }>({
     [ItemType.FOLDER]: { type: ItemType.FOLDER },
     [ItemType.LINK]: { type: ItemType.LINK },
     [ItemType.APP]: { type: ItemType.APP },
@@ -88,7 +88,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
     return handleClose();
   };
 
-  const updateItem = (item) => {
+  const updateItem = (item: Partial<Item<UnknownExtra>>) => {
     // update content given current type
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,

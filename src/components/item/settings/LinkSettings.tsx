@@ -1,12 +1,10 @@
-import { RecordOf } from 'immutable';
-
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { ChangeEvent, FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/query-client/dist/types';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -21,7 +19,7 @@ import {
 } from '../../../config/selectors';
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
 };
 
 const LinkSettings: FC<Props> = ({ item }) => {
