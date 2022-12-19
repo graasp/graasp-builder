@@ -1,5 +1,7 @@
-import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../../src/config/constants';
-import { SETTINGS } from '../../../../src/config/constants';
+import {
+  DISPLAY_CO_EDITORS_OPTIONS,
+  SETTINGS,
+} from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
