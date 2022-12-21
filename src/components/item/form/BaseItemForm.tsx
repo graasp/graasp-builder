@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 
 import { ChangeEvent, FC } from 'react';
 
-import { Item, UnknownExtra, convertJs } from '@graasp/sdk';
+import { Item, UnknownExtra } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -18,7 +18,7 @@ const BaseForm: FC<Props> = ({ onChange, item, updatedProperties }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
-    onChange(convertJs({ ...updatedProperties, name: event.target.value }));
+    onChange({ ...updatedProperties, name: event.target.value });
   };
 
   return (

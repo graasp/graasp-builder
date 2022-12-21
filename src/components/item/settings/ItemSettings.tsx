@@ -50,7 +50,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
   useEffect(
     () => {
       // this is used because we get a response where the setting only contains the modified setting
-      // so it make the toggles ficker.
+      // so it make the toggles flicker.
       // by only overriding keys that changes we are able to remove the flicker effect
       setSettingLocal({ ...settingLocal, ...settings });
     },

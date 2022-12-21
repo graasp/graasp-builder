@@ -87,6 +87,12 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
             }
             return option.url;
           }}
+          filterOptions={(options, state) => {
+            const filteredOptionsByName = options.filter((opt) =>
+              opt.name.includes(state.inputValue),
+            );
+            return filteredOptionsByName;
+          }}
           value={url}
           clearOnBlur={false}
           onChange={handleAppSelection}
