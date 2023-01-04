@@ -97,6 +97,8 @@ export const DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR = `#${DOCUMENT_ITEM_TEXT_EDITOR_
 export const CREATE_ITEM_APP_ID = 'createItemApp';
 export const CREATE_ITEM_ZIP_ID = 'createItemZip';
 export const CREATE_ITEM_H5P_ID = 'createItemH5P';
+export const CREATE_ITEM_ETHERPAD_ID = 'createItemEtherpad';
+export const ITEM_FORM_ETHERPAD_NAME_INPUT_ID = 'itemFormEtherpadNameInputId';
 export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
 export const buildItemFormAppOptionId = (name?: string): string =>
   `${name?.replaceAll(/\s/g, '-')}`;

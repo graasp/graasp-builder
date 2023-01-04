@@ -2251,11 +2251,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client.git":
+"@graasp/query-client@github:graasp/graasp-query-client.git#etherpad":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=a20ef7df4108d26bfcf09c2da2e6e168706cbd4e"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=f8e578f36f93b30f01122aeb29dc4426d4981782"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk"
+    "@graasp/sdk": "github:graasp/graasp-sdk#etherpad"
     "@graasp/translations": "github:graasp/graasp-translations.git"
     "@graasp/utils": "github:graasp/graasp-utils.git"
     axios: 0.27.2
@@ -2267,11 +2267,28 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: e81ea32c292e225c9472ad7d69dc6ad7f30a6a61b6a4cd7be66e2cdfb3db6583f0e14efa2f2cfb32c7dad8ddd668ed77fb5213b9517e1c7c1ee5ed1f62a6a2fb
+  checksum: 78f055bd26edd4c3ad88e87cbc24244c47b928a4bfe16754c3840055e2fc6e59b07c78c5dd00fa38ff33a4fb6238a0780780affaa83473b81e5d07d801626231
   languageName: node
   linkType: hard
 
-"@graasp/sdk@github:graasp/graasp-sdk, @graasp/sdk@github:graasp/graasp-sdk.git":
+"@graasp/sdk@github:graasp/graasp-sdk#etherpad, @graasp/sdk@github:graasp/graasp-sdk.git#etherpad":
+  version: 0.1.0
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=0848359adacd8249aa684a81b00615988e5a0de7"
+  dependencies:
+    "@fastify/secure-session": 5.2.0
+    aws-sdk: 2.1111.0
+    fastify: 3.29.1
+    fluent-json-schema: 3.1.0
+    immutable: 4.1.0
+    js-cookie: 3.0.1
+    qs: 6.11.0
+    slonik: 28.1.1
+    uuid: 8.3.2
+  checksum: f3f6a6f33c524bcd11b04853d3553dd8bfae39fdacbe0c1696d032cac8e8aa9f58aeb3d1acfbc8405d2a1df6aec0d06217dda3f2fa9d5d37d3bd6fa464d0da6d
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@github:graasp/graasp-sdk.git":
   version: 0.1.0
   resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=55a43441b82e4601a67c56e34648851f96a25408"
   dependencies:
@@ -2285,23 +2302,6 @@ __metadata:
     slonik: 28.1.1
     uuid: 8.3.2
   checksum: 1e40cf031c0346dcc494cb816b749cca0464b69a38381b58253e44d13653a7efccd5a6b5c30e0e0ed8adfc05ab72a7077706117387048fe40b373b63ab712600
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@github:graasp/graasp-sdk.git#60-pdf-link":
-  version: 0.1.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=6d0233290343ce0cdcfb342f9cac70d8c4d6e2df"
-  dependencies:
-    "@fastify/secure-session": 5.2.0
-    aws-sdk: 2.1111.0
-    fastify: 3.29.1
-    fluent-json-schema: 3.1.0
-    immutable: 4.1.0
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 8.3.2
-  checksum: 968ec515bc633121056f92e735355a927751576e6d4a85eaa039e696431370b28647316d64a8baef5a30640aa26cb714d99eba925154c8ad17162904bf3cddcc
   languageName: node
   linkType: hard
 
@@ -2320,6 +2320,15 @@ __metadata:
   dependencies:
     i18next: 21.8.1
   checksum: a814e0516d8b707bd4444fec12115e1490c731f7e59e3b93dea35a95ed4cb304eab538af5dfe5241b7074b62ac04abbfdc88f35a84a96c7c33a2bba24b81dbe9
+  languageName: node
+  linkType: hard
+
+"@graasp/translations@github:graasp/graasp-translations.git#etherpad":
+  version: 1.1.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=26034d442c16eb4ab9f9c33898d017babd2440e8"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 647361c0b1a15b6dc493aa8a4257611a88a2e6793a85a055f243b73ffab7adfe6b977c41c90fd54b79b17403e95ada9355e6ad8b5b13c70bd9b0c7007b358613
   languageName: node
   linkType: hard
 
@@ -2361,11 +2370,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git#v0.4.1":
-  version: 0.4.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=b149f001be54097916816f622bb8dfdf3f3a9cfb"
+"@graasp/ui@github:graasp/graasp-ui.git#etherpad":
+  version: 0.6.0
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=30db45e9caae2389793e8ec6b83f47bb81ad33e8"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk.git"
+    "@graasp/sdk": "github:graasp/graasp-sdk#etherpad"
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.1.0
@@ -2396,13 +2405,13 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 1fc82519ef9d544934c30c9378592e9bd2de33d1a18adea91bba7ba7f260d261696340f3a3b740753ec2e6b60c83d34115439540c4498c2dbe8efbc2e2b00b8f
+  checksum: b976d23988f56f00accd8b07b2a7e4bd70951a18483ebf12ea5e26816dcdf315244781eb77f1f8b2a0d54a8f5db2cde67d242a3532dd6425faa7c5b0caeaf26f
   languageName: node
   linkType: hard
 
 "@graasp/utils@github:graasp/graasp-utils.git":
   version: 0.1.0
-  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=55a43441b82e4601a67c56e34648851f96a25408"
+  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=08cadf0216fc011dd01d6bb23547a3cf1b363732"
   dependencies:
     "@fastify/secure-session": 5.2.0
     aws-sdk: 2.1111.0
@@ -2413,7 +2422,7 @@ __metadata:
     qs: 6.11.0
     slonik: 28.1.1
     uuid: 8.3.2
-  checksum: 1914dc440a0edcb4d047b0e97a16408596f9d8e78bdefcc643b211d23725fa7bdc80b1a9fb0a6eb2f53ea346c2d8aa8235f066129508aa732d43f447d29c24c2
+  checksum: 738ec54971550ffda9e654b0da23a6f99878abf514f847230d134fe1f82b402b3fb5244066fa20226fd9a9ec0b1a935d07816ae45cf5750743dec275359cef1e
   languageName: node
   linkType: hard
 
@@ -11102,10 +11111,10 @@ __metadata:
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graasp/chatbox": "github:graasp/graasp-chatbox#v1.0.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client.git"
-    "@graasp/sdk": "github:graasp/graasp-sdk.git#60-pdf-link"
-    "@graasp/translations": "github:graasp/graasp-translations.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git#v0.4.1"
+    "@graasp/query-client": "github:graasp/graasp-query-client.git#etherpad"
+    "@graasp/sdk": "github:graasp/graasp-sdk.git#etherpad"
+    "@graasp/translations": "github:graasp/graasp-translations.git#etherpad"
+    "@graasp/ui": "github:graasp/graasp-ui.git#etherpad"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.10.9
     "@mui/lab": 5.0.0-alpha.104
