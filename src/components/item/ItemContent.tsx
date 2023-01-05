@@ -91,11 +91,16 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
 
   const etherpadQuery = useEtherpad(item, 'write'); // server will return read view if no write access allowed
 
-  if (isLoadingFileContent || isLoadingUser || isLoadingChildren || etherpadQuery?.isLoading) {
+  if (
+    isLoadingFileContent ||
+    isLoadingUser ||
+    isLoadingChildren ||
+    etherpadQuery?.isLoading
+  ) {
     return <Loader />;
   }
 
-  if (!item || !itemId) {
+  if (!item || !itemId || etherpadQuery?.isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
@@ -225,11 +230,12 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
     }
 
     case ItemType.ETHERPAD: {
-      if (!etherpadQuery?.data) {
+      if (!etherpadQuery?.data?.padUrl) {
         return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
       }
-      const { padUrl } = etherpadQuery.data;
-      return <EtherpadItem itemId={itemId} padUrl={padUrl} />;
+      return (
+        <EtherpadItem itemId={itemId} padUrl={etherpadQuery.data.padUrl} />
+      );
     }
 
     default:

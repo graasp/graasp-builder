@@ -68,7 +68,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const { mutate: postItem } = useMutation<any, any, any>(
     MUTATION_KEYS.POST_ITEM,
   );
-  const { mutate: postEtherpad } = useMutation(MUTATION_KEYS.POST_ETHERPAD);
+  const { mutate: postEtherpad } = useMutation<any, any, any>(MUTATION_KEYS.POST_ETHERPAD);
 
   const match = useMatch(buildItemPath());
   const parentId = match?.params?.itemId;
