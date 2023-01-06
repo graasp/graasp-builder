@@ -1,4 +1,4 @@
-import { ItemType } from "@graasp/sdk";
+import { ItemType } from '@graasp/sdk';
 
 // todo: use graasp sdk
 export type Category = {
@@ -13,15 +13,17 @@ export type ItemCategory = {
 };
 
 export type Invitation = {
-  id: string,
-  email: string,
-  itemPath: string,
-  permission: string,
-  createdAt: string,
-  updatedAt: string,
-}
+  id: string;
+  email: string;
+  itemPath: string;
+  permission: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 // eslint-disable-next-line no-shadow
-export enum InternalItemType { ZIP = 'zip' }
+export enum InternalItemType {
+  ZIP = 'zip',
+}
 
-export type NewItemTabType = ItemType | InternalItemType.ZIP
+export type NewItemTabType = ItemType | InternalItemType.ZIP;
