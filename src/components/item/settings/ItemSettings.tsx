@@ -10,7 +10,11 @@ import {
   ItemRecord,
   ItemSettingsRecord,
 } from '@graasp/query-client/dist/types';
-import { ItemSettings as ItemSettingsType, ItemType } from '@graasp/sdk';
+import {
+  ItemSettings as ItemSettingsType,
+  ItemType,
+  convertJs,
+} from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -44,15 +48,21 @@ const ItemSettings: FC<Props> = ({ item }) => {
   >(MUTATION_KEYS.EDIT_ITEM);
 
   const { settings } = item;
+
   const [settingLocal, setSettingLocal] =
     useState<ItemSettingsRecord>(settings);
 
   useEffect(
     () => {
-      // this is used because we get a response where the setting only contains the modified setting
-      // so it make the toggles flicker.
-      // by only overriding keys that changes we are able to remove the flicker effect
-      setSettingLocal({ ...settingLocal, ...settings });
+      if (settings) {
+        // this is used because we get a response where the setting only contains the modified setting
+        // so it make the toggles flicker.
+        // by only overriding keys that changes we are able to remove the flicker effect
+
+        setSettingLocal((previousSettings) =>
+          convertJs({ ...previousSettings?.toJS(), ...settings.toJS() }),
+        );
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [settings],
@@ -63,10 +73,12 @@ const ItemSettings: FC<Props> = ({ item }) => {
     settingKey: string,
   ): void => {
     const newValue = event.target.checked;
-    setSettingLocal({
-      ...settingLocal,
-      [settingKey]: newValue,
-    } as ItemSettingsRecord);
+    setSettingLocal(
+      convertJs({
+        ...settingLocal?.toJS(),
+        [settingKey]: newValue,
+      }),
+    );
     editItem({
       id: item.id,
       name: item.name,
