@@ -11,6 +11,7 @@ import {
   ItemMembership,
   ItemType,
   Member,
+  ShortcutItemExtra,
 } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -114,9 +115,7 @@ const ItemsTable: FC<Props> = ({
 
       // redirect to target if shortcut
       if (data.type === ItemType.SHORTCUT) {
-        targetId = getShortcutTarget(
-          data.extra as { [ItemType.SHORTCUT]: { target: string } },
-        );
+        targetId = getShortcutTarget(data.extra as ShortcutItemExtra);
       }
       navigate(buildItemPath(targetId));
     }
@@ -124,7 +123,7 @@ const ItemsTable: FC<Props> = ({
 
   const hasOrderChanged = (rowIds: string[]) => {
     const childrenOrder = getChildrenOrderFromFolderExtra(
-      parentItem as unknown as Item<FolderItemExtra>,
+      parentItem.extra.toJS() as FolderItemExtra,
     );
 
     return (

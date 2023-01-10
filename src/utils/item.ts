@@ -129,8 +129,8 @@ export const isItemValid = (item: Partial<Item>): boolean => {
 };
 
 export const getChildrenOrderFromFolderExtra = (
-  item?: Item<FolderItemExtra>,
-): string[] => item?.extra?.folder?.childrenOrder ?? [];
+  extra: FolderItemExtra,
+): string[] => extra[ItemType.FOLDER]?.childrenOrder ?? [];
 
 export const stripHtml = (str?: string): string =>
   str?.replace(/<[^>]*>?/gm, '') || '';
