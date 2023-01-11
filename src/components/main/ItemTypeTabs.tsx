@@ -11,6 +11,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import {
   CREATE_ITEM_APP_ID,
   CREATE_ITEM_DOCUMENT_ID,
+  CREATE_ITEM_ETHERPAD_ID,
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_FOLDER_ID,
   CREATE_ITEM_H5P_ID,
@@ -131,6 +132,18 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_H5P_TAB_TEXT)}
             type={ItemType.H5P}
+            sx={{ mb: 0 }}
+          />
+        }
+      />
+      <Tab
+        id={CREATE_ITEM_ETHERPAD_ID}
+        value={ItemType.ETHERPAD}
+        label={translateBuilder(BUILDER.NEW_ITEM_ETHERPAD_TAB_TEXT)}
+        icon={
+          <ItemIcon
+            alt={translateBuilder(BUILDER.NEW_ITEM_ETHERPAD_TAB_TEXT)}
+            type={ItemType.ETHERPAD}
             sx={{ mb: 0 }}
           />
         }
