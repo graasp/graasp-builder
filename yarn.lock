@@ -2253,7 +2253,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client.git":
   version: 0.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=f92986b049319bad07afc6c80dbd7bb6027d4b68"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7df1deaaad2ebe3c60b5bb92580f9e2e288ff6d9"
   dependencies:
     "@graasp/sdk": 0.2.0
     "@graasp/translations": 1.1.0
@@ -2267,7 +2267,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 8d1ba95ea4da61bea29ae92450d799332de1c95b366993bcfab2dba8e6269955aad911c66ff215a49ba38fc2ce82b4630c554240d0db55ceecf3309fa65a6da6
+  checksum: e1805784c783f4a29c6c2a9a3772d0e1e2f9e6da534e33a50b20b816d06d41c19a4ae324360c2839fa75551c0f8cbb80cb1cdc0a97e7f2d5b67fac45d6520c20
   languageName: node
   linkType: hard
 
@@ -2323,12 +2323,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@graasp/translations@npm:1.2.0"
+"@graasp/translations@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@graasp/translations@npm:1.2.1"
   dependencies:
     i18next: 21.8.1
-  checksum: 44e36b44be24071f1ef5e1b5f2fdab16ff2c7102aa1f58b69a11093cf0bd1aa54b25422faa4f9f841fdd0013450e04dac9669b599f6e27b1a01402f855baa3a8
+  checksum: 24e17531b1023b41773bd97dad93031ee7da914ef712b83cfa1ee20da3a16aa7c4fb5784213398ecc4872b3ef9e79b6696f61876ac6c572cb182e6ea564edfef
   languageName: node
   linkType: hard
 
@@ -11113,7 +11113,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox#v1.0.0"
     "@graasp/query-client": "github:graasp/graasp-query-client.git"
     "@graasp/sdk": 0.2.0
-    "@graasp/translations": 1.2.0
+    "@graasp/translations": 1.2.1
     "@graasp/ui": 0.7.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.10.9
