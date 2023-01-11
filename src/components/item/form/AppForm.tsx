@@ -88,12 +88,12 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
             return option.url;
           }}
           filterOptions={(options, state) => {
-            const filteredOptionsByName = options.filter((opt) =>
+            const filteredOptionsByName = options.filter((opt: RecordOf<App>) =>
               opt.name.includes(state.inputValue),
             );
             return filteredOptionsByName;
           }}
-          value={url}
+          value={data.find((app) => app.url === url) || url}
           clearOnBlur={false}
           onChange={handleAppSelection}
           onInputChange={handleAppInput}
