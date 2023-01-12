@@ -5,7 +5,14 @@ import { FC, useCallback, useContext, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemMembership, ItemType, Member } from '@graasp/sdk';
+import {
+  FolderItemExtra,
+  Item,
+  ItemMembership,
+  ItemType,
+  Member,
+  ShortcutItemExtra,
+} from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -83,11 +90,7 @@ const ItemsTable: FC<Props> = ({
     any,
     {
       id: string;
-      extra: {
-        folder: {
-          childrenOrder: string[];
-        };
-      };
+      extra: FolderItemExtra;
     }
   >(MUTATION_KEYS.EDIT_ITEM);
 
@@ -112,14 +115,16 @@ const ItemsTable: FC<Props> = ({
 
       // redirect to target if shortcut
       if (data.type === ItemType.SHORTCUT) {
-        targetId = getShortcutTarget(data.extra);
+        targetId = getShortcutTarget(data.extra as ShortcutItemExtra);
       }
       navigate(buildItemPath(targetId));
     }
   };
 
   const hasOrderChanged = (rowIds: string[]) => {
-    const childrenOrder = getChildrenOrderFromFolderExtra(parentItem);
+    const childrenOrder = getChildrenOrderFromFolderExtra(
+      parentItem.extra.toJS() as FolderItemExtra,
+    );
 
     return (
       rowIds.length !== childrenOrder.length ||

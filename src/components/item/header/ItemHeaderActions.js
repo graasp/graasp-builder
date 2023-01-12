@@ -1,4 +1,4 @@
-import { Map, Record } from 'immutable';
+import { Record } from 'immutable';
 import PropTypes from 'prop-types';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -137,7 +137,7 @@ ItemHeaderActions.defaultProps = {
   onClickMetadata: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClickChatbox: () => {},
-  item: Map(),
+  item: Record({})(),
 };
 
 export default ItemHeaderActions;

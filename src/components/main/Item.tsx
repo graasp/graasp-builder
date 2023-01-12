@@ -1,10 +1,14 @@
 import { RecordOf } from 'immutable';
 import truncate from 'lodash.truncate';
 
-import { CSSProperties, FC, useContext } from 'react';
+import { CSSProperties, FC, PropsWithChildren, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Item as GraaspItem, ItemMembership } from '@graasp/sdk';
+import {
+  EmbeddedLinkItemExtra,
+  Item as GraaspItem,
+  ItemMembership,
+} from '@graasp/sdk';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import {
@@ -23,15 +27,20 @@ import { CurrentUserContext } from '../context/CurrentUserContext';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
-const NameWrapper =
-  ({ id, style }: { id: string; style: CSSProperties }) =>
-  // eslint-disable-next-line react/prop-types, react/display-name
-  ({ children }: { children: JSX.Element }) =>
-    (
-      <Link to={buildItemPath(id)} id={buildItemLink(id)} style={style}>
-        {children}
-      </Link>
-    );
+const NameWrapper = ({
+  id,
+  style,
+}: {
+  id: string;
+  style: CSSProperties;
+}): FC => {
+  const NameComponent: FC<PropsWithChildren<unknown>> = ({ children }) => (
+    <Link to={buildItemPath(id)} id={buildItemLink(id)} style={style}>
+      {children}
+    </Link>
+  );
+  return NameComponent;
+};
 
 type Props = {
   item: RecordOf<GraaspItem>;
@@ -56,7 +65,9 @@ const Item: FC<Props> = ({ item, memberships }) => {
   const ThumbnailComponent = (
     <Thumbnail
       id={item.id}
-      thumbnailSrc={getEmbeddedLinkExtra(extra)?.thumbnails?.get(0)}
+      thumbnailSrc={
+        getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra)?.thumbnails[0]
+      }
       alt={alt}
       defaultValue={defaultValueComponent}
       // todo: fix in ui

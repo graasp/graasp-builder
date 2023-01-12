@@ -171,9 +171,9 @@ Cypress.Commands.add('dragAndDrop', (subject, x, y) => {
   cy.get(subject)
     .first()
     // eslint-disable-next-line no-shadow
-    .then((subject) => {
-      const coordsDrag = subject[0].getBoundingClientRect();
-      cy.wrap(subject)
+    .then((target) => {
+      const coordsDrag = target[0].getBoundingClientRect();
+      cy.wrap(target)
         .trigger('mousedown', {
           button: 0,
           clientX: coordsDrag.x,

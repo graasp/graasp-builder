@@ -105,6 +105,8 @@ const ItemPublishTab: FC<Props> = ({
   const validationStatusesMap = new Map(
     // todo: fix with query client
     (ivStatuses as List<any>)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       ?.concat(ivrStatuses)
       ?.map((entry) => [entry?.id, entry?.name]),
   );

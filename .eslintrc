@@ -1,11 +1,12 @@
 {
   "extends": [
-    "react-app", 
-    "airbnb", 
+    "react-app",
+    "airbnb",
     "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"],
+    "plugin:@typescript-eslint/recommended"
+  ],
   "plugins": ["import", "jsx-a11y", "react", "@typescript-eslint"],
   "env": {
     "browser": true,
@@ -56,17 +57,20 @@
     "react/react-in-jsx-scope": "off",
     "no-console": [1, { "allow": ["error"] }],
     "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          "js": "never",
-          "jsx": "never",
-          "ts": "never",
-          "tsx": "never"
-        }
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
     ],
     "react/prop-types": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    // eslint rule reports false error
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "overrides": [
     {
@@ -98,5 +102,5 @@
       }
     }
   },
-  // "ignorePatterns": ["cypress/*"]
+  "ignorePatterns": ["node_modules/*"]
 }

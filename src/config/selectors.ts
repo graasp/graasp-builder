@@ -176,6 +176,7 @@ export const buildItemsTableId = (id: string): string => `itemsTable-${id}`;
 export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
 export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
 export const SETTINGS_COLLAPSE_TOGGLE_ID = 'settingsCollapseToggle';
+export const SETTINGS_RESIZE_TOGGLE_ID = 'settingsResizeToggle';
 
 export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
   'itemsTableRestoreSelectedItems';

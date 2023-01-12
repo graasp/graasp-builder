@@ -15,22 +15,22 @@ import {
 
 // TODO: get from graasp client
 type ErrorPayload = {
-  failure?: unknown[],
-  error?: { response?: { data?: { message: string } } }
-}
+  failure?: unknown[];
+  error?: { response?: { data?: { message: string } } };
+};
 
 type SuccessPayload = {
-  message?: string
-}
+  message?: string;
+};
 
-type Payload = ErrorPayload & SuccessPayload
+type Payload = ErrorPayload & SuccessPayload;
 
 const i18n = buildI18n();
 
 const getErrorMessageFromPayload = (payload: ErrorPayload) =>
   i18n.t(
     payload?.error?.response?.data?.message ??
-    FAILURE_MESSAGES.UNEXPECTED_ERROR,
+      FAILURE_MESSAGES.UNEXPECTED_ERROR,
   );
 
 const getSuccessMessageFromPayload = (payload: SuccessPayload) =>
@@ -66,7 +66,13 @@ const {
   shareItemRoutine,
 } = routines;
 
-export default ({ type, payload }: { type: string, payload: Payload }): void => {
+export default ({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: Payload;
+}): void => {
   let message = null;
   switch (type) {
     // error messages

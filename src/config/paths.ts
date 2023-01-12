@@ -10,7 +10,8 @@ export const REDIRECT_PATH = '/redirect';
 export const MEMBER_PROFILE_PATH = '/profile';
 export const buildItemSettingsPath = (id = ':itemId'): string =>
   `${ITEMS_PATH}/${id}/settings`;
-export const buildGraaspPlayerView = (id: string): string => `${GRAASP_PERFORM_HOST}/${id}`;
+export const buildGraaspPlayerView = (id: string): string =>
+  `${GRAASP_PERFORM_HOST}/${id}`;
 export const buildGraaspBuilderView = (id: string): string =>
   `${window.location.origin}${buildItemPath(id)}`;
 export const RECYCLE_BIN_PATH = '/recycle-bin';

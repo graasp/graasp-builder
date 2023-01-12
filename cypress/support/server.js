@@ -900,6 +900,7 @@ export const mockPutItemLogin = (items, shouldThrowError) => {
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
 
+      // todo: is it intentionnal to erase any extras present before ?
       item.extra = buildItemLoginSchemaExtra(body.loginSchema);
 
       reply(item);

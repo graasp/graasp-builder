@@ -1,5 +1,4 @@
-import { NODE_ENV, ENV } from './constants';
-
+import { ENV, NODE_ENV } from './constants';
 
 const generateSentryConfig = () => {
   let SENTRY_ENVIRONMENT = ENV.DEVELOPMENT;

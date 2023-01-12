@@ -5,9 +5,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 
-import { FC, useState } from 'react';
+import { FC, HTMLAttributes, useState } from 'react';
 
-import { Item } from '@graasp/sdk';
+import { AppItemExtra, Item, UnknownExtra } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -30,18 +30,9 @@ type App = {
 };
 
 type Props = {
-  onChange: (item: Partial<Item>) => void;
-  item: Partial<Item>;
-  updatedProperties: Partial<
-    | Item
-    | {
-        extra: {
-          app: {
-            url: string;
-          };
-        };
-      }
-  >;
+  onChange: (item: Partial<Item<UnknownExtra>>) => void;
+  item: Partial<Item<UnknownExtra>>;
+  updatedProperties: Partial<Item<UnknownExtra>>;
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
@@ -49,10 +40,13 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const [newName, setNewName] = useState(item?.name);
 
   // todo: not clear if newValue is a string or object
-  const handleAppSelection = (_event: any, newValue: RecordOf<App>) => {
+  const handleAppSelection = (_event: any, newValue: RecordOf<App> | null) => {
     const url = newValue?.url;
     const name = newValue?.name ?? item?.name;
-    const props = { ...item, extra: buildAppExtra({ url }) };
+    const props = {
+      ...item,
+      extra: buildAppExtra({ url }),
+    };
     if (name) {
       setNewName(name);
       props.name = name;
@@ -68,7 +62,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const { useApps } = hooks;
   const { data, isLoading: isAppsLoading } = useApps();
 
-  const url = getAppExtra(item?.extra)?.url;
+  const url = getAppExtra(item?.extra as AppItemExtra)?.url;
 
   return (
     <div>
@@ -87,12 +81,26 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
         <Autocomplete
           id={ITEM_FORM_APP_URL_ID}
           options={data?.toArray() ?? []}
-          getOptionLabel={(option) => option.url ?? option}
-          value={url}
+          getOptionLabel={(option) => {
+            if (typeof option === 'string') {
+              return option;
+            }
+            return option.url;
+          }}
+          filterOptions={(options, state) => {
+            const filteredOptionsByName = options.filter((opt: RecordOf<App>) =>
+              opt.name.includes(state.inputValue),
+            );
+            return filteredOptionsByName;
+          }}
+          value={data.find((app) => app.url === url) || url}
           clearOnBlur={false}
           onChange={handleAppSelection}
           onInputChange={handleAppInput}
-          renderOption={(props: Record<string, unknown>, option: App) => (
+          renderOption={(
+            props: HTMLAttributes<HTMLLIElement>,
+            option: RecordOf<App>,
+          ) => (
             <li
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...props}
