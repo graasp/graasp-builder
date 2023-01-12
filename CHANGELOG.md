@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/graasp/graasp-builder/compare/v0.2.5...v0.3.0) (2023-01-11)
+
+
+### Features
+
+* add etherpad creation form and item display ([#521](https://github.com/graasp/graasp-builder/issues/521)) ([31b44f3](https://github.com/graasp/graasp-builder/commit/31b44f3ca03a034c00a1b39a4d59ecb021fe0ab1))
+
 ### 0.2.5 (2022-12-19)
 
 ### 0.2.4 (2022-12-12)

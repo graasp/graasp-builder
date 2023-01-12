@@ -14,6 +14,7 @@ import {
 import {
   AppItem,
   DocumentItem,
+  EtherpadItem,
   FileItem,
   H5PItem,
   LinkItem,
@@ -45,7 +46,7 @@ import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
 
-const { useChildren, useFileContent } = hooks;
+const { useChildren, useFileContent, useEtherpad } = hooks;
 
 const FileWrapper = styled(Container)(() => ({
   textAlign: 'center',
@@ -88,11 +89,18 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   );
   const isEditing = enableEditing && editingItemId === itemId;
 
-  if (isLoadingFileContent || isLoadingUser || isLoadingChildren) {
+  const etherpadQuery = useEtherpad(item, 'write'); // server will return read view if no write access allowed
+
+  if (
+    isLoadingFileContent ||
+    isLoadingUser ||
+    isLoadingChildren ||
+    etherpadQuery?.isLoading
+  ) {
     return <Loader />;
   }
 
-  if (!item || !itemId) {
+  if (!item || !itemId || etherpadQuery?.isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
@@ -205,6 +213,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
           />
         </>
       );
+
     case ItemType.H5P: {
       const contentId = item.extra?.h5p?.contentId;
       if (!contentId) {
@@ -217,6 +226,15 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
           contentId={contentId}
           integrationUrl={H5P_INTEGRATION_URL}
         />
+      );
+    }
+
+    case ItemType.ETHERPAD: {
+      if (!etherpadQuery?.data?.padUrl) {
+        return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+      }
+      return (
+        <EtherpadItem itemId={itemId} padUrl={etherpadQuery.data.padUrl} />
       );
     }
 

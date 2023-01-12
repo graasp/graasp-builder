@@ -26,6 +26,7 @@ import CancelButton from '../common/CancelButton';
 import FileDashboardUploader from '../file/FileDashboardUploader';
 import AppForm from '../item/form/AppForm';
 import DocumentForm from '../item/form/DocumentForm';
+import useEtherpadForm from '../item/form/EtherpadForm';
 import FolderForm from '../item/form/FolderForm';
 import LinkForm from '../item/form/LinkForm';
 import ImportH5P from './ImportH5P';
@@ -47,6 +48,9 @@ type Props = {
 const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
+
+  const { padName, EtherpadForm } = useEtherpadForm();
+
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
@@ -60,11 +64,28 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
     [ItemType.APP]: { type: ItemType.APP },
     [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
   });
+
   const { mutate: postItem } = useMutation<any, any, any>(
     MUTATION_KEYS.POST_ITEM,
   );
+  const { mutate: postEtherpad } = useMutation<any, any, any>(
+    MUTATION_KEYS.POST_ETHERPAD,
+  );
+
   const match = useMatch(buildItemPath());
   const parentId = match?.params?.itemId;
+
+  const submitAndDisableConfirmButtonFor = (
+    submitFn: () => void | boolean,
+    durationMs: number,
+  ) => {
+    setConfirmButtonDisabled(true);
+    submitFn();
+
+    // schedule button disable state reset AFTER end of click event handling
+    setTimeout(() => setConfirmButtonDisabled(false), durationMs);
+    return handleClose();
+  };
 
   const submit = () => {
     if (isConfirmButtonDisabled) {
@@ -80,12 +101,22 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
       return false;
     }
 
-    setConfirmButtonDisabled(true);
-    postItem({ parentId, ...updatedPropertiesPerType[selectedItemType] });
+    return submitAndDisableConfirmButtonFor(
+      () =>
+        postItem({ parentId, ...updatedPropertiesPerType[selectedItemType] }),
+      DOUBLE_CLICK_DELAY_MS,
+    );
+  };
 
-    // schedule button disable state reset AFTER end of click event handling
-    setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
-    return handleClose();
+  const submitEtherpad = () => {
+    if (!padName) {
+      return false;
+    }
+
+    return submitAndDisableConfirmButtonFor(
+      () => postEtherpad({ parentId, name: padName }),
+      DOUBLE_CLICK_DELAY_MS,
+    );
   };
 
   const updateItem = (item: Partial<Item<UnknownExtra>>) => {
@@ -121,6 +152,8 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
         return <ImportZip />;
       case ItemType.H5P:
         return <ImportH5P />;
+      case ItemType.ETHERPAD:
+        return <EtherpadForm />;
       case ItemType.APP:
         return (
           <AppForm
@@ -146,6 +179,19 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
 
   const renderActions = () => {
     switch (selectedItemType) {
+      case ItemType.ETHERPAD:
+        return (
+          <>
+            <CancelButton onClick={handleClose} />
+            <Button
+              onClick={submitEtherpad}
+              id={ITEM_FORM_CONFIRM_BUTTON_ID}
+              disabled={!padName}
+            >
+              {translateBuilder(BUILDER.CREATE_ITEM_ADD_BUTTON)}
+            </Button>
+          </>
+        );
       case ItemType.FOLDER:
       case ItemType.APP:
       case ItemType.LINK:

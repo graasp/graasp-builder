@@ -1,13 +1,13 @@
 {
   "name": "graasp-builder",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "private": true,
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@graasp/chatbox": "1.0.0",
-    "@graasp/query-client": "github:graasp/graasp-query-client",
+    "@graasp/query-client": "0.1.0",
     "@graasp/sdk": "0.2.0",
     "@graasp/translations": "1.2.0",
     "@graasp/ui": "0.7.0",
