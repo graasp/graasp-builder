@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/graasp/graasp-builder/compare/v0.3.0...v0.4.0) (2023-01-16)
+
+
+### Features
+
+* add Resizable item setting ([#514](https://github.com/graasp/graasp-builder/issues/514)) ([80795c9](https://github.com/graasp/graasp-builder/commit/80795c9916187cb665f6efe7a7428901779fee9b))
+
+
+### Bug Fixes
+
+* case-insensitive autocomplete comparison ([#529](https://github.com/graasp/graasp-builder/issues/529)) ([2f496bb](https://github.com/graasp/graasp-builder/commit/2f496bb69a0143256e5ade14941d8cfbd2c36491))
+* filtering option in app auto-complete ([80795c9](https://github.com/graasp/graasp-builder/commit/80795c9916187cb665f6efe7a7428901779fee9b))
+* show isResizable setting on app item only ([2f496bb](https://github.com/graasp/graasp-builder/commit/2f496bb69a0143256e5ade14941d8cfbd2c36491))
+
+
+### Tests
+
+* adapt tests to item settings refactor and types ([80795c9](https://github.com/graasp/graasp-builder/commit/80795c9916187cb665f6efe7a7428901779fee9b))
+
 ## [0.3.0](https://github.com/graasp/graasp-builder/compare/v0.2.5...v0.3.0) (2023-01-11)
 
 
