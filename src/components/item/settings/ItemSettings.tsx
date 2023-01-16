@@ -183,8 +183,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
         {renderPinSetting()}
         {renderChatSetting()}
         {renderCollapseSetting()}
-        {/* todo: change itemType to app */}
-        {item.type === ItemType.FOLDER && renderResizeSetting()}
+        {item.type === ItemType.APP && renderResizeSetting()}
       </FormGroup>
       {item.type === ItemType.LINK && <LinkSettings item={item} />}
       <ThumbnailSetting item={item} />

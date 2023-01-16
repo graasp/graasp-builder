@@ -89,7 +89,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
           }}
           filterOptions={(options, state) => {
             const filteredOptionsByName = options.filter((opt: RecordOf<App>) =>
-              opt.name.includes(state.inputValue),
+              opt.name.toLowerCase().includes(state.inputValue.toLowerCase()),
             );
             return filteredOptionsByName;
           }}
