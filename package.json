@@ -10,7 +10,7 @@
     "@graasp/query-client": "0.1.0",
     "@graasp/sdk": "0.2.0",
     "@graasp/translations": "1.2.0",
-    "@graasp/ui": "0.7.0",
+    "@graasp/ui": "github:graasp/graasp-ui#hotfix/h5p-iframe",
     "@mui/icons-material": "5.10.14",
     "@mui/lab": "5.0.0-alpha.104",
     "@mui/material": "5.10.14",
