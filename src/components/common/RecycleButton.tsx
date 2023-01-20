@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-
 import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
+
+import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -17,9 +17,25 @@ import {
   ITEM_RECYCLE_BUTTON_CLASS,
 } from '../../config/selectors';
 
-const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
+type Props = {
+  itemIds: string[];
+  color?: IconButtonProps['color'];
+  id?: string;
+  type?: string;
+  onClick?: () => void;
+};
+
+const RecycleButton: FC<Props> = ({
+  itemIds,
+  color = 'default',
+  id,
+  type = BUTTON_TYPES.ICON_BUTTON,
+  onClick,
+}) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: recycleItems } = useMutation(MUTATION_KEYS.RECYCLE_ITEMS);
+  const { mutate: recycleItems } = useMutation<unknown, unknown, string[]>(
+    MUTATION_KEYS.RECYCLE_ITEMS,
+  );
 
   const handleClick = () => {
     recycleItems(itemIds);
@@ -58,21 +74,6 @@ const RecycleButton = ({ itemIds, color, id, type, onClick }) => {
         </Tooltip>
       );
   }
-};
-
-RecycleButton.propTypes = {
-  itemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  color: PropTypes.string,
-  id: PropTypes.string,
-  type: PropTypes.string,
-  onClick: PropTypes.func,
-};
-
-RecycleButton.defaultProps = {
-  color: 'default',
-  id: '',
-  type: BUTTON_TYPES.ICON_BUTTON,
-  onClick: null,
 };
 
 export default RecycleButton;

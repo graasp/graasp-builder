@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-
 import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
-import IconButton from '@mui/material/IconButton';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+
+import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -11,9 +11,17 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
 
-const RestoreButton = ({ itemIds, color, id }) => {
+type Props = {
+  itemIds: string[];
+  color?: IconButtonProps['color'];
+  id?: string;
+};
+
+const RestoreButton: FC<Props> = ({ itemIds, color = 'default', id }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: restoreItems } = useMutation(MUTATION_KEYS.RESTORE_ITEMS);
+  const { mutate: restoreItems } = useMutation<unknown, unknown, string[]>(
+    MUTATION_KEYS.RESTORE_ITEMS,
+  );
 
   const onClick = () => {
     // restore items
@@ -37,16 +45,6 @@ const RestoreButton = ({ itemIds, color, id }) => {
       </span>
     </Tooltip>
   );
-};
-
-RestoreButton.propTypes = {
-  itemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  color: PropTypes.string,
-  id: PropTypes.string,
-};
-RestoreButton.defaultProps = {
-  color: 'default',
-  id: null,
 };
 
 export default RestoreButton;

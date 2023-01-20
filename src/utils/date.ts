@@ -1,35 +1,44 @@
 /* eslint-disable import/no-duplicates */
-import { intlFormatDistance, intlFormat, differenceInDays } from 'date-fns';
+import { differenceInDays, intlFormat, intlFormatDistance } from 'date-fns';
+
 import { DEFAULT_LOCALE } from '../config/constants';
 
 // todo: move to sdk
 // eslint-disable-next-line import/prefer-default-export
-export const formatDate = (d: string, args: { locale?: string, defaultValue?: string } = { locale: DEFAULT_LOCALE, defaultValue: 'Unknown' }): string => {
-  const { locale, defaultValue } = args
+export const formatDate = (
+  d: string,
+  args: { locale?: string; defaultValue?: string } = {
+    locale: DEFAULT_LOCALE,
+    defaultValue: 'Unknown',
+  },
+): string => {
+  const { locale, defaultValue } = args;
   if (!d) {
-    return defaultValue
+    return defaultValue;
   }
   try {
     const datetime = new Date(d);
-    const now = new Date()
+    const now = new Date();
 
     // return human readable date if less than a month ago
     if (differenceInDays(now, datetime) < 7) {
-      return intlFormatDistance(
-        datetime, now, { locale }
-      )
+      return intlFormatDistance(datetime, now, { locale });
     }
 
     // compute best intl date
-    return intlFormat(datetime, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
-    }, { locale })
+    return intlFormat(
+      datetime,
+      {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      },
+      { locale },
+    );
   } catch (e) {
-    console.error(e)
-    return defaultValue
+    console.error(e);
+    return defaultValue;
   }
 };

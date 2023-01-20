@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -7,7 +7,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
+import { FC } from 'react';
+
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { BUTTON_TYPES, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
@@ -15,12 +18,28 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
-const HideButton = ({ item, type, onClick }) => {
+type Props = {
+  item: RecordOf<Item>;
+  type?: string;
+  onClick?: () => void;
+};
+
+const HideButton: FC<Props> = ({
+  item,
+  type = BUTTON_TYPES.ICON_BUTTON,
+  onClick,
+}) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { data: tags } = hooks.useItemTags(item.id);
-  const addTag = useMutation(MUTATION_KEYS.POST_ITEM_TAG);
-  const removeTag = useMutation(MUTATION_KEYS.DELETE_ITEM_TAG);
+  const addTag = useMutation<unknown, unknown, { id: string; tagId: string }>(
+    MUTATION_KEYS.POST_ITEM_TAG,
+  );
+  const removeTag = useMutation<
+    unknown,
+    unknown,
+    { id: string; tagId: string }
+  >(MUTATION_KEYS.DELETE_ITEM_TAG);
   const hiddenTag = tags
     ?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID)
     ?.first();
@@ -94,20 +113,6 @@ const HideButton = ({ item, type, onClick }) => {
         </Tooltip>
       );
   }
-};
-
-HideButton.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
-  }).isRequired,
-  type: PropTypes.string,
-  onClick: PropTypes.func,
-};
-
-HideButton.defaultProps = {
-  type: BUTTON_TYPES.ICON_BUTTON,
-  onClick: null,
 };
 
 export default HideButton;

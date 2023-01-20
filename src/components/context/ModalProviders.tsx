@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 
 import { CopyItemModalProvider } from './CopyItemModalContext';
 import { CreateShortcutModalProvider } from './CreateShortcutModalContext';
@@ -7,7 +7,9 @@ import { FlagItemModalProvider } from './FlagItemModalContext';
 import { LayoutContextProvider } from './LayoutContext';
 import { MoveItemModalProvider } from './MoveItemModalContext';
 
-const ModalProviders = ({ children }) => (
+type Props = { children: JSX.Element };
+
+const ModalProviders: FC<Props> = ({ children }) => (
   <LayoutContextProvider>
     <EditItemModalProvider>
       <CopyItemModalProvider>
@@ -20,13 +22,5 @@ const ModalProviders = ({ children }) => (
     </EditItemModalProvider>
   </LayoutContextProvider>
 );
-
-ModalProviders.propTypes = {
-  children: PropTypes.node,
-};
-
-ModalProviders.defaultProps = {
-  children: null,
-};
 
 export default ModalProviders;

@@ -7,7 +7,7 @@
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@graasp/chatbox": "1.0.0",
-    "@graasp/query-client": "0.1.1",
+    "@graasp/query-client": "github:graasp/graasp-query-client#227-item-tag-type",
     "@graasp/sdk": "0.2.0",
     "@graasp/translations": "github:graasp/graasp-translations#96-unknown-date",
     "@graasp/ui": "0.7.1",

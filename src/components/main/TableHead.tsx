@@ -1,17 +1,30 @@
-import PropTypes from 'prop-types';
-
 import Checkbox from '@mui/material/Checkbox';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
+
+import { FC } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ORDERING } from '../../enums';
 
-const CustomTableHead = (props) => {
+type Props = {
+  classes: {
+    visuallyHidden: string;
+  };
+  numSelected: number;
+  onRequestSort: (event: Event, property: string) => void;
+  onSelectAllClick: () => void;
+  order: 'asc' | 'desc';
+  orderBy: string;
+  rowCount: number;
+  headCells: (TableCellProps & { id: string; label: string })[];
+};
+
+const CustomTableHead: FC<Props> = (props) => {
   const {
     classes,
     onSelectAllClick,
@@ -45,11 +58,11 @@ const CustomTableHead = (props) => {
           <TableCell
             key={headCell.id}
             align={headCell.align}
-            sortDirection={orderBy === headCell.id ? order : false}
+            sortDirection={orderBy === headCell.id ? order : null}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : ORDERING.ASC}
+              direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
@@ -66,19 +79,6 @@ const CustomTableHead = (props) => {
       </TableRow>
     </TableHead>
   );
-};
-
-CustomTableHead.propTypes = {
-  classes: PropTypes.shape({
-    visuallyHidden: PropTypes.string.isRequired,
-  }).isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(Object.values(ORDERING)).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-  headCells: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
 };
 
 export default CustomTableHead;

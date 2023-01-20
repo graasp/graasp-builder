@@ -41,7 +41,7 @@ export const buildGraaspAnalyzerLink = (id: string): string =>
 export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 
 export const HIDDEN_ITEM_TAG_ID =
-  process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || false;
+  process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || 'hidden-tag-id';
 
 export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 

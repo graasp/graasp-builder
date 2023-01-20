@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+
+import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -20,17 +20,33 @@ const descriptionId = 'alert-dialog-description';
 
 const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 
-const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
+type Props = {
+  open?: boolean;
+  handleClose: () => void;
+  itemIds: string[];
+};
+
+const DeleteItemDialog: FC<Props> = ({
+  itemIds,
+  open = false,
+  handleClose,
+}) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: deleteItems } = useMutation(DELETE_ITEMS);
-  const { mutate: deleteItem } = useMutation(DELETE_ITEM);
+  const { mutate: deleteItems } = useMutation<unknown, unknown, string[]>(
+    DELETE_ITEMS,
+  );
+  const { mutate: deleteItem } = useMutation<unknown, unknown, string>(
+    DELETE_ITEM,
+  );
 
   const onDelete = () => {
     if (itemIds.length > 1) {
       deleteItems(itemIds);
     } else {
-      deleteItem(itemIds);
+      // we still use this call because it has feedback
+      // remove when deleteItems will have feedback
+      deleteItem(itemIds as unknown as string);
     }
     handleClose();
   };
@@ -66,16 +82,6 @@ const DeleteItemDialog = ({ itemIds, open, handleClose }) => {
       </DialogActions>
     </Dialog>
   );
-};
-
-DeleteItemDialog.propTypes = {
-  open: PropTypes.bool,
-  handleClose: PropTypes.func.isRequired,
-  itemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-DeleteItemDialog.defaultProps = {
-  open: false,
 };
 
 export default DeleteItemDialog;

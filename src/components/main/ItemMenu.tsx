@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
 import FlagIcon from '@mui/icons-material/Flag';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
@@ -8,8 +8,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-import { useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { BUTTON_TYPES } from '../../config/constants';
@@ -32,7 +33,12 @@ import { CurrentUserContext } from '../context/CurrentUserContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
 
-const ItemMenu = ({ item, canEdit }) => {
+type Props = {
+  item: RecordOf<Item>;
+  canEdit?: boolean;
+};
+
+const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
   const { data: member } = useContext(CurrentUserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const { t: translateBuilder } = useBuilderTranslation();
@@ -146,15 +152,6 @@ const ItemMenu = ({ item, canEdit }) => {
       )}
     </>
   );
-};
-
-ItemMenu.propTypes = {
-  item: PropTypes.shape({ id: PropTypes.string.isRequired }).isRequired,
-  canEdit: PropTypes.bool,
-};
-
-ItemMenu.defaultProps = {
-  canEdit: false,
 };
 
 export default ItemMenu;

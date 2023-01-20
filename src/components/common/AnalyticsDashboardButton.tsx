@@ -1,11 +1,9 @@
-import PropTypes from 'prop-types';
-
 import CloseIcon from '@mui/icons-material/Close';
 import PieChartIcon from '@mui/icons-material/PieChart';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
@@ -14,7 +12,11 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { buildDashboardButtonId } from '../../config/selectors';
 import { LayoutContext } from '../context/LayoutContext';
 
-const AnalyticsDashboardButton = ({ id }) => {
+type Props = {
+  id: string;
+};
+
+const AnalyticsDashboardButton: FC<Props> = ({ id }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
 
@@ -41,10 +43,6 @@ const AnalyticsDashboardButton = ({ id }) => {
       </IconButton>
     </Tooltip>
   );
-};
-
-AnalyticsDashboardButton.propTypes = {
-  id: PropTypes.string.isRequired,
 };
 
 export default AnalyticsDashboardButton;
