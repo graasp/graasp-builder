@@ -145,6 +145,8 @@
     "browserslist": "4.16.5",
     "ansi-html": "0.0.8",
     "react-error-overlay": "6.0.9",
+    "@mui/icons-material": "5.10.14",
+    "@mui/material": "5.10.14",
     "@graasp/sdk": "0.2.0"
   },
   "packageManager": "yarn@3.2.4"
