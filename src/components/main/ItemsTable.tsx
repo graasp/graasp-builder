@@ -17,7 +17,7 @@ import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
-import {
+import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
   useEnumsTranslation,
@@ -79,7 +79,7 @@ const ItemsTable: FC<Props> = ({
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
-  const { t: TranslateEnums } = useEnumsTranslation();
+  const { t: translateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
@@ -151,7 +151,10 @@ const ItemsTable: FC<Props> = ({
   };
 
   const dateColumnFormatter = ({ value }: { value: string }) =>
-    formatDate(value);
+    formatDate(value, {
+      locale: i18n.language,
+      defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
+    });
 
   const itemRowDragText = (params: IRowDragItem) =>
     params?.rowNode?.data?.name ??
@@ -181,7 +184,7 @@ const ItemsTable: FC<Props> = ({
         field: 'type',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
         type: 'rightAligned',
-        cellRenderer: ({ data }: { data: Item }) => TranslateEnums(data.type),
+        cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
         flex: 2,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.type,

@@ -10,9 +10,12 @@ import Typography from '@mui/material/Typography';
 
 import { useContext } from 'react';
 
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, COMMON } from '@graasp/translations';
 
-import { useBuilderTranslation } from '../../config/i18n';
+import i18n, {
+  useBuilderTranslation,
+  useCommonTranslation,
+} from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
   ITEM_PANEL_NAME_ID,
@@ -28,6 +31,7 @@ const { useMember } = hooks;
 
 const ItemMetadataContent = ({ item }) => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
 
   const { setIsItemSharingOpen } = useContext(LayoutContext);
   const { data: creator } = useMember(item.creator);
@@ -100,13 +104,23 @@ const ItemMetadataContent = ({ item }) => {
               <TableCell align="left">
                 {translateBuilder(BUILDER.ITEM_METADATA_CREATED_AT_TITLE)}
               </TableCell>
-              <TableCell align="right">{formatDate(item.createdAt)}</TableCell>
+              <TableCell align="right">
+                {formatDate(item.createdAt, {
+                  locale: i18n.language,
+                  defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
+                })}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="left">
                 {translateBuilder(BUILDER.ITEM_METADATA_UPDATED_AT_TITLE)}
               </TableCell>
-              <TableCell align="right">{formatDate(item.updatedAt)}</TableCell>
+              <TableCell align="right">
+                {formatDate(item.updatedAt, {
+                  locale: i18n.language,
+                  defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
+                })}
+              </TableCell>
             </TableRow>
             {renderLink()}
           </TableBody>

@@ -2276,13 +2276,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@graasp/query-client@npm:0.1.0"
+"@graasp/query-client@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@graasp/query-client@npm:0.1.1"
   dependencies:
     "@graasp/sdk": 0.2.0
     "@graasp/translations": 1.1.0
-    "@graasp/utils": "github:graasp/graasp-utils"
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
@@ -2292,7 +2291,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 3f2312930e8356d2395a643275590bd69f7b31c15bc86d80b03bbdb56491f4ab1aacf7e4f4cb93f4c4fa299d80bf1462f2ada8db46af399832e8165c37f94072
+  checksum: 307536e2655f0d30cb3249f8a315ba9651d5bf9a87905020707e6443755b46b80e244f21297ae168d17bb0ef650cad9f617a18a25ee5ec1f0ae6187fa0142ae8
   languageName: node
   linkType: hard
 
@@ -2322,21 +2321,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/translations@github:graasp/graasp-translations#96-unknown-date":
+  version: 1.2.1
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=0e0e6320018893eecfecfbf6284e0f1add1f1051"
+  dependencies:
+    i18next: 21.8.1
+  checksum: a81eeb7c7205239d04129e92e8a6e9d93e8ac2ee637ca8974afc50692023ea47e4be378e51ac8958b227aa738ef0006574850f6c7e9b7bdaab7aa6985b73770a
+  languageName: node
+  linkType: hard
+
 "@graasp/translations@npm:1.1.0":
   version: 1.1.0
   resolution: "@graasp/translations@npm:1.1.0"
   dependencies:
     i18next: 21.8.1
   checksum: 1d6fabce21ef205146c4f74b9b4b5dafc5969cf13a78cd7c4947a9b882cb22d48f3832ad6e20c21cc905b41b4809a1c2efa7ba629b12cd79bd2067df6ebd2f22
-  languageName: node
-  linkType: hard
-
-"@graasp/translations@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@graasp/translations@npm:1.2.0"
-  dependencies:
-    i18next: 21.8.1
-  checksum: 44e36b44be24071f1ef5e1b5f2fdab16ff2c7102aa1f58b69a11093cf0bd1aa54b25422faa4f9f841fdd0013450e04dac9669b599f6e27b1a01402f855baa3a8
   languageName: node
   linkType: hard
 
@@ -2414,23 +2413,6 @@ __metadata:
     ag-grid-react:
       optional: true
   checksum: b09b2adaa1f72b82c35dc86d2bb9fc578336c9b2858fee18302ed82c79046143ac371ce8415ad01a9385ece40e9a8634a53f9aee67d33b2e3752052b59eac5bb
-  languageName: node
-  linkType: hard
-
-"@graasp/utils@github:graasp/graasp-utils":
-  version: 0.2.0
-  resolution: "@graasp/utils@https://github.com/graasp/graasp-utils.git#commit=a82c39b5ccfebb91ac9bfad978b549712ba193da"
-  dependencies:
-    "@fastify/secure-session": 5.2.0
-    aws-sdk: 2.1111.0
-    fastify: 3.29.1
-    fluent-json-schema: 3.1.0
-    immutable: 4.1.0
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 8.3.2
-  checksum: 3eb934876453e069fe80da1f59f0298d9c99a87a816fd353ba71b41c3271f332ac6f7aedbe97979dca1390c1902a6532a2f6d4f93de126cdf976b54f0a7afef5
   languageName: node
   linkType: hard
 
@@ -8258,7 +8240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.29.1":
+"date-fns@npm:2.29.3, date-fns@npm:^2.29.1":
   version: 2.29.3
   resolution: "date-fns@npm:2.29.3"
   checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
@@ -11193,9 +11175,9 @@ __metadata:
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graasp/chatbox": 1.0.0
-    "@graasp/query-client": 0.1.0
+    "@graasp/query-client": 0.1.1
     "@graasp/sdk": 0.2.0
-    "@graasp/translations": 1.2.0
+    "@graasp/translations": "github:graasp/graasp-translations#96-unknown-date"
     "@graasp/ui": 0.7.1
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.10.14
@@ -11228,6 +11210,7 @@ __metadata:
     concurrently: 7.6.0
     cypress: 12.3.0
     cypress-localstorage-commands: 2.2.1
+    date-fns: 2.29.3
     env-cmd: 10.1.0
     eslint: ^7.31.0
     eslint-config-airbnb: 18.2.1

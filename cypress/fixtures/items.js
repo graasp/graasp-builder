@@ -41,6 +41,8 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      createdAt: '2023-01-16T16:00:50.968Z',
+      updatedAt: '2023-01-18T16:00:52.655Z',
       memberships: [
         {
           itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
@@ -57,6 +59,8 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      createdAt: '2021-05-16T16:00:50.968Z',
+      updatedAt: '2021-06-16T16:00:52.655Z',
       memberships: [
         {
           itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
@@ -78,6 +82,8 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      createdAt: '2022-12-16T16:00:50.968Z',
+      updatedAt: '2022-12-18T16:00:52.655Z',
       memberships: [
         {
           itemPath: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
@@ -126,6 +132,8 @@ export const SAMPLE_ITEMS = {
       extra: {
         image: 'someimageurl',
       },
+      createdAt: '2022-12-16T16:00:50.968Z',
+      updatedAt: '2022-12-18T16:00:52.655Z',
       memberships: [
         {
           itemPath: 'fdf09f5a_5688_11eb_ae93_0242ac130006',
