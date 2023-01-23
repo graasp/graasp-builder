@@ -23,8 +23,7 @@ const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 type Props = {
   open?: boolean;
   handleClose: () => void;
-  // TODO: change to use only array
-  itemIds: string | string[];
+  itemIds: string[];
 };
 
 const DeleteItemDialog: FC<Props> = ({
@@ -37,12 +36,12 @@ const DeleteItemDialog: FC<Props> = ({
   const { mutate: deleteItems } = useMutation<unknown, unknown, string[]>(
     DELETE_ITEMS,
   );
-  const { mutate: deleteItem } = useMutation<unknown, unknown, string>(
+  const { mutate: deleteItem } = useMutation<unknown, unknown, string[]>(
     DELETE_ITEM,
   );
 
   const onDelete = () => {
-    if (Array.isArray(itemIds)) {
+    if (itemIds.length > 1) {
       deleteItems(itemIds);
     } else {
       // we still use this call because it has feedback
