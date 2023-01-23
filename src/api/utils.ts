@@ -1,3 +1,5 @@
+// TODO: remove this file whenever possible
+
 export const DEFAULT_GET = {
   credentials: 'include',
   method: 'GET',
@@ -27,7 +29,8 @@ export const DEFAULT_PUT = {
   credentials: 'include',
 };
 
-export const failOnError = (res) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const failOnError = (res: any): any => {
   if (!res.ok) {
     throw new Error(res.statusText);
   }

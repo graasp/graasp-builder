@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
-
 import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -12,7 +10,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
 import NewItemModal from './NewItemModal';
 
-const NewItemButton = ({ fontSize }) => {
+const NewItemButton: FC = () => {
   const [open, setOpen] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -33,7 +31,6 @@ const NewItemButton = ({ fontSize }) => {
       >
         <Button
           id={CREATE_ITEM_BUTTON_ID}
-          fontSize={fontSize}
           onClick={handleClickOpen}
           sx={{
             cursor: 'pointer',
@@ -45,22 +42,9 @@ const NewItemButton = ({ fontSize }) => {
           {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
         </Button>
       </Tooltip>
-      <NewItemModal
-        open={open}
-        setOpen={setOpen}
-        handleClickOpen={handleClickOpen}
-        handleClose={handleClose}
-      />
+      <NewItemModal open={open} handleClose={handleClose} />
     </>
   );
-};
-
-NewItemButton.propTypes = {
-  fontSize: PropTypes.string,
-};
-
-NewItemButton.defaultProps = {
-  fontSize: 'large',
 };
 
 export default NewItemButton;

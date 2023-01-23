@@ -204,9 +204,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
             items={children}
             isEditing={isEditing}
             headerElements={
-              enableEditing
-                ? [<NewItemButton key="newButton" fontSize="small" />]
-                : undefined
+              enableEditing ? [<NewItemButton key="newButton" />] : undefined
             }
             ToolbarActions={ItemActions}
             showCreator

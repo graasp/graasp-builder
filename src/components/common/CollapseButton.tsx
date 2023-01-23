@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { RecordOf } from 'immutable';
 
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -7,26 +7,39 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
-import { BUTTON_TYPES } from '../../config/constants';
+import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
-const CollapseButton = ({ item, type, onClick }) => {
+type Props = {
+  item: RecordOf<Item>;
+  type?: ButtonType;
+  onClick?: () => void;
+};
+
+const CollapseButton: FC<Props> = ({
+  item,
+  type = ButtonType.ICON_BUTTON,
+  onClick,
+}) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: editItem } = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = useMutation<unknown, unknown, Partial<Item>>(
+    MUTATION_KEYS.EDIT_ITEM,
+  );
   const [isCollapsible, setIsCollapsible] = useState(
-    item?.settings?.isCollapsible,
+    item?.settings?.isCollapsible ?? false,
   );
 
   useEffect(() => {
-    setIsCollapsible(item?.settings?.isCollapsible);
+    setIsCollapsible(item?.settings?.isCollapsible ?? false);
   }, [item]);
 
   const handleCollapse = () => {
@@ -46,7 +59,7 @@ const CollapseButton = ({ item, type, onClick }) => {
     : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
 
   switch (type) {
-    case BUTTON_TYPES.MENU_ITEM:
+    case ButtonType.MENU_ITEM:
       return (
         <MenuItem
           key={text}
@@ -58,7 +71,7 @@ const CollapseButton = ({ item, type, onClick }) => {
         </MenuItem>
       );
     default:
-    case BUTTON_TYPES.ICON_BUTTON:
+    case ButtonType.ICON_BUTTON:
       return (
         <Tooltip title={text}>
           <IconButton
@@ -71,28 +84,6 @@ const CollapseButton = ({ item, type, onClick }) => {
         </Tooltip>
       );
   }
-};
-
-CollapseButton.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    settings: PropTypes.shape({
-      isCollapsible: PropTypes.bool,
-    }),
-  }),
-  type: PropTypes.string,
-  onClick: PropTypes.func,
-};
-
-CollapseButton.defaultProps = {
-  item: {
-    settings: {
-      isCollapsible: false,
-    },
-  },
-  type: BUTTON_TYPES.ICON_BUTTON,
-  onClick: null,
 };
 
 export default CollapseButton;

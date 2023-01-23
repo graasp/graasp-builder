@@ -40,9 +40,7 @@ const Home: FC = () => {
             id={OWNED_ITEMS_ID}
             title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
             items={ownItems}
-            headerElements={[
-              <NewItemButton key="newButton" fontSize="small" />,
-            ]}
+            headerElements={[<NewItemButton key="newButton" />]}
             ToolbarActions={ItemActionsRenderer}
           />
         </Box>

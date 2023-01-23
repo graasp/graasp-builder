@@ -2,9 +2,10 @@ import { List } from 'immutable';
 
 import Box from '@mui/material/Box';
 
-import { useContext, useEffect } from 'react';
+import { FC, useContext, useEffect } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -22,16 +23,23 @@ import Items from './Items';
 import Main from './Main';
 
 // todo: find other possible solutions
-export const getExistingItems = (items) =>
-  items.filter((item) => !item.statusCode);
+// todo: improve types with refactor
+export const getExistingItems = (
+  items: List<Item & { statusCode?: number }>,
+): List<Item> => items.filter((item) => !item.statusCode);
 
-export const containsNonExistingItems = (items) =>
-  items.some((item) => item.statusCode);
+// todo: improve types with refactor
+export const containsNonExistingItems = (
+  items: List<Item & { statusCode?: number }>,
+): boolean => items.some((item) => Boolean(item.statusCode));
 
-export const getErrorItemIds = (items) =>
+// todo: improve types with refactor
+export const getErrorItemIds = (
+  items: List<Item & { data?: Error; statusCode?: number }>,
+): List<Error> =>
   items.filter((item) => item.statusCode).map((item) => item.data);
 
-const FavoriteItems = () => {
+const FavoriteItems: FC = () => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
     data: member,
@@ -43,7 +51,16 @@ const FavoriteItems = () => {
     isLoading: isItemsLoading,
     isError: isItemsError,
   } = hooks.useItems(getFavoriteItems(member.extra).toJS());
-  const mutation = useMutation(MUTATION_KEYS.EDIT_MEMBER);
+  const mutation = useMutation<
+    unknown,
+    unknown,
+    {
+      id: string;
+      extra: {
+        favoriteItems: string[];
+      };
+    }
+  >(MUTATION_KEYS.EDIT_MEMBER);
 
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them
   // this effect does not take effect if there is only one (deleted) item

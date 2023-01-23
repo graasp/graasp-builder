@@ -3,11 +3,14 @@ import { Box, Grid, IconButton, Typography } from '@mui/material';
 
 import { useContext } from 'react';
 
-import { ACCOUNT } from '@graasp/translations';
+import { ACCOUNT, COMMON } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { DEFAULT_EMAIL_FREQUENCY, DEFAULT_LANG } from '../../config/constants';
-import { useAccountTranslation } from '../../config/i18n';
+import i18n, {
+  useAccountTranslation,
+  useCommonTranslation,
+} from '../../config/i18n';
 import notifier from '../../config/notifier';
 import {
   MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
@@ -31,6 +34,7 @@ import PasswordSetting from './PasswordSetting';
 
 const MemberProfileScreen = () => {
   const { t } = useAccountTranslation();
+  const { t: translateCommon } = useCommonTranslation();
   const { data: member, isLoading } = useContext(CurrentUserContext);
 
   if (isLoading) {
@@ -89,7 +93,10 @@ const MemberProfileScreen = () => {
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_INSCRIPTION_DATE_ID}>
-                  {formatDate(member.createdAt)}
+                  {formatDate(member.createdAt, {
+                    locale: i18n.language,
+                    defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
+                  })}
                 </Typography>
               </Grid>
             </Grid>

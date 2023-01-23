@@ -14,7 +14,7 @@ import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 type Props = {
   type?: string;
   item: RecordOf<Item>;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const PinButton: FC<Props> = ({ item, type, onClick }) => {
