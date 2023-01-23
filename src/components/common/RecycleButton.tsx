@@ -21,7 +21,7 @@ type Props = {
   itemIds: string[];
   color?: IconButtonProps['color'];
   id?: string;
-  type?: string;
+  type?: ButtonType;
   onClick?: () => void;
 };
 

@@ -20,7 +20,7 @@ import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
   item: RecordOf<Item>;
-  type?: string;
+  type?: ButtonType;
   onClick?: () => void;
 };
 
