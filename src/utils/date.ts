@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 import { differenceInDays, intlFormat, intlFormatDistance } from 'date-fns';
 
 import { DEFAULT_LOCALE } from '../config/constants';

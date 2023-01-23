@@ -13,7 +13,7 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
-import { BUTTON_TYPES } from '../../config/constants';
+import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
@@ -26,7 +26,7 @@ type Props = {
 
 const CollapseButton: FC<Props> = ({
   item,
-  type = BUTTON_TYPES.ICON_BUTTON,
+  type = ButtonType.ICON_BUTTON,
   onClick,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -59,7 +59,7 @@ const CollapseButton: FC<Props> = ({
     : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
 
   switch (type) {
-    case BUTTON_TYPES.MENU_ITEM:
+    case ButtonType.MENU_ITEM:
       return (
         <MenuItem
           key={text}
@@ -71,7 +71,7 @@ const CollapseButton: FC<Props> = ({
         </MenuItem>
       );
     default:
-    case BUTTON_TYPES.ICON_BUTTON:
+    case ButtonType.ICON_BUTTON:
       return (
         <Tooltip title={text}>
           <IconButton

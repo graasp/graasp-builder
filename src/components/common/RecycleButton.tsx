@@ -9,7 +9,7 @@ import { FC } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
-import { BUTTON_TYPES } from '../../config/constants';
+import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import {
@@ -29,7 +29,7 @@ const RecycleButton: FC<Props> = ({
   itemIds,
   color = 'default',
   id,
-  type = BUTTON_TYPES.ICON_BUTTON,
+  type = ButtonType.ICON_BUTTON,
   onClick,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -45,7 +45,7 @@ const RecycleButton: FC<Props> = ({
   const text = translateBuilder(BUILDER.RECYCLE_ITEM_BUTTON);
 
   switch (type) {
-    case BUTTON_TYPES.MENU_ITEM:
+    case ButtonType.MENU_ITEM:
       return (
         <MenuItem
           key={text}
@@ -59,7 +59,7 @@ const RecycleButton: FC<Props> = ({
         </MenuItem>
       );
     default:
-    case BUTTON_TYPES.ICON_BUTTON:
+    case ButtonType.ICON_BUTTON:
       return (
         <Tooltip title={text}>
           <IconButton

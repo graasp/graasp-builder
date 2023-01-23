@@ -2276,9 +2276,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#227-item-tag-type":
-  version: 0.1.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=81f39b9c631a9f25b893adff7e7b31da0b686b2f"
+"@graasp/query-client@npm:0.1.2":
+  version: 0.1.2
+  resolution: "@graasp/query-client@npm:0.1.2"
   dependencies:
     "@graasp/sdk": 0.2.0
     "@graasp/translations": 1.1.0
@@ -2291,7 +2291,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 178187349f56a82f02de9513d4e3229b210bb5a44b06b264d94dfe0e281ee0fd99f0194498682efece666e479129135343eeae471b4f42f17207663198616355
+  checksum: 6b60ff37cb2788a25eff3c6c91947eccd4af7bd280e1e53251d24bbe6f038c284df232398f730f78dac94af6f5d3cb7c9a8b4c33fb563b8a6e32c1deb989eac8
   languageName: node
   linkType: hard
 
@@ -2321,21 +2321,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations#96-unknown-date":
-  version: 1.2.1
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=0e0e6320018893eecfecfbf6284e0f1add1f1051"
-  dependencies:
-    i18next: 21.8.1
-  checksum: a81eeb7c7205239d04129e92e8a6e9d93e8ac2ee637ca8974afc50692023ea47e4be378e51ac8958b227aa738ef0006574850f6c7e9b7bdaab7aa6985b73770a
-  languageName: node
-  linkType: hard
-
 "@graasp/translations@npm:1.1.0":
   version: 1.1.0
   resolution: "@graasp/translations@npm:1.1.0"
   dependencies:
     i18next: 21.8.1
   checksum: 1d6fabce21ef205146c4f74b9b4b5dafc5969cf13a78cd7c4947a9b882cb22d48f3832ad6e20c21cc905b41b4809a1c2efa7ba629b12cd79bd2067df6ebd2f22
+  languageName: node
+  linkType: hard
+
+"@graasp/translations@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@graasp/translations@npm:1.3.0"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 4117ea7763835caa77014e6ea3b36238fba6e6413aed5b732fc81dfd7cf214a9cb4b6331964d75d2a8918304b14e20715859bee0a672a8e81735b4727b7b7e8b
   languageName: node
   linkType: hard
 
@@ -11175,9 +11175,9 @@ __metadata:
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graasp/chatbox": 1.0.0
-    "@graasp/query-client": "github:graasp/graasp-query-client#227-item-tag-type"
+    "@graasp/query-client": 0.1.2
     "@graasp/sdk": 0.2.0
-    "@graasp/translations": "github:graasp/graasp-translations#96-unknown-date"
+    "@graasp/translations": 1.3.0
     "@graasp/ui": 0.7.1
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.10.14

@@ -13,7 +13,7 @@ import { FC, useContext, useState } from 'react';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
-import { BUTTON_TYPES } from '../../config/constants';
+import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_BUTTON_CLASS,
@@ -72,20 +72,16 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
     return [
       <MoveButton
         key="move"
-        type={BUTTON_TYPES.MENU_ITEM}
+        type={ButtonType.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
       />,
-      <HideButton key="hide" type={BUTTON_TYPES.MENU_ITEM} item={item} />,
-      <PinButton key="pin" type={BUTTON_TYPES.MENU_ITEM} item={item} />,
-      <CollapseButton
-        key="collapse"
-        type={BUTTON_TYPES.MENU_ITEM}
-        item={item}
-      />,
+      <HideButton key="hide" type={ButtonType.MENU_ITEM} item={item} />,
+      <PinButton key="pin" type={ButtonType.MENU_ITEM} item={item} />,
+      <CollapseButton key="collapse" type={ButtonType.MENU_ITEM} item={item} />,
       <RecycleButton
         key="recycle"
-        type={BUTTON_TYPES.MENU_ITEM}
+        type={ButtonType.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
       />,
@@ -97,14 +93,10 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
       return null;
     }
     return [
-      <FavoriteButton
-        key="favorite"
-        type={BUTTON_TYPES.MENU_ITEM}
-        item={item}
-      />,
+      <FavoriteButton key="favorite" type={ButtonType.MENU_ITEM} item={item} />,
       <CopyButton
         key="copy"
-        type={BUTTON_TYPES.MENU_ITEM}
+        type={ButtonType.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
       />,

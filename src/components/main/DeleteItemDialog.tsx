@@ -23,7 +23,8 @@ const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 type Props = {
   open?: boolean;
   handleClose: () => void;
-  itemIds: string[];
+  // TODO: change to use only array
+  itemIds: string | string[];
 };
 
 const DeleteItemDialog: FC<Props> = ({
@@ -41,12 +42,12 @@ const DeleteItemDialog: FC<Props> = ({
   );
 
   const onDelete = () => {
-    if (itemIds.length > 1) {
+    if (Array.isArray(itemIds)) {
       deleteItems(itemIds);
     } else {
       // we still use this call because it has feedback
       // remove when deleteItems will have feedback
-      deleteItem(itemIds as unknown as string);
+      deleteItem(itemIds);
     }
     handleClose();
   };

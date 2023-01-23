@@ -13,7 +13,7 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
-import { BUTTON_TYPES, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
+import { ButtonType, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
@@ -26,7 +26,7 @@ type Props = {
 
 const HideButton: FC<Props> = ({
   item,
-  type = BUTTON_TYPES.ICON_BUTTON,
+  type = ButtonType.ICON_BUTTON,
   onClick,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -73,7 +73,7 @@ const HideButton: FC<Props> = ({
   const icon = hiddenTag ? <VisibilityOff /> : <Visibility />;
 
   switch (type) {
-    case BUTTON_TYPES.MENU_ITEM: {
+    case ButtonType.MENU_ITEM: {
       const menuItem = (
         <MenuItem
           key={text}
@@ -97,7 +97,7 @@ const HideButton: FC<Props> = ({
       );
     }
     default:
-    case BUTTON_TYPES.ICON_BUTTON:
+    case ButtonType.ICON_BUTTON:
       return (
         <Tooltip title={tooltip}>
           <span>

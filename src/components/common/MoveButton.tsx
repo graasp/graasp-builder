@@ -5,7 +5,7 @@ import { FC, useContext } from 'react';
 import { BUILDER } from '@graasp/translations';
 import { MoveButton as GraaspMoveButton } from '@graasp/ui';
 
-import { BUTTON_TYPES } from '../../config/constants';
+import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
@@ -25,7 +25,7 @@ const MoveButton: FC<MoveButtonProps> = ({
   itemIds,
   color = 'default',
   id,
-  type = BUTTON_TYPES.ICON_BUTTON,
+  type = ButtonType.ICON_BUTTON,
   onClick,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
