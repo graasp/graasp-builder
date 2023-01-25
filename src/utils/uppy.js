@@ -40,7 +40,7 @@ const configureUppy = ({
     withCredentials: true,
     formData: true,
     fieldName,
-    metaFields: [],
+    allowedMetaFields: [],
   });
 
   // todo: pre process file and check beforehand the user remaining storage
