@@ -5,10 +5,8 @@ import {
   buildNameCellRendererId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import defaultImage from '../../../../src/resources/avatar.png';
 import { MEMBERS } from '../../../fixtures/members';
 import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 // THESE TESTS ARE SKIPPED SINCE THEY FAIL IN CI
 describe('View Thumbnails', () => {
@@ -16,7 +14,6 @@ describe('View Thumbnails', () => {
     cy.setUpApi(SAMPLE_ITEMS_WITH_THUMBNAILS);
 
     cy.visit(HOME_PATH);
-    cy.wait(TABLE_ITEM_RENDER_TIME);
 
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
 
@@ -29,10 +26,9 @@ describe('View Thumbnails', () => {
 
     // GRID
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`#${buildItemCard(items[0].id)} img`)
       .should('have.attr', 'src')
-      .and('contain', defaultImage);
+      .and('contain', 'data:');
 
     cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
@@ -46,7 +42,6 @@ describe('View Thumbnails', () => {
     });
 
     cy.visit(HOME_PATH);
-    cy.wait(TABLE_ITEM_RENDER_TIME);
 
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
 
@@ -59,7 +54,6 @@ describe('View Thumbnails', () => {
 
     // check bob avatar in shared items, grid mode
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
       .and('contain', 'blob:');

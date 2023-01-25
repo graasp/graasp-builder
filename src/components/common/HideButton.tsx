@@ -96,8 +96,8 @@ const HideButton: FC<Props> = ({
         </Tooltip>
       );
     }
-    default:
     case ButtonType.ICON_BUTTON:
+    default:
       return (
         <Tooltip title={tooltip}>
           <span>

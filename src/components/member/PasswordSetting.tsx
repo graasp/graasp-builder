@@ -87,83 +87,81 @@ const PasswordSetting: FC = () => {
   };
 
   return (
-    <>
-      <Grid container spacing={1} direction="column" my={1}>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            {translateAccount(ACCOUNT.PASSWORD_SETTINGS_TITLE)}
-          </Typography>
-          <Typography variant="body1">
-            {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_INFORMATION)}
+    <Grid container spacing={1} direction="column" my={1}>
+      <Grid item xs={12}>
+        <Typography variant="h5">
+          {translateAccount(ACCOUNT.PASSWORD_SETTINGS_TITLE)}
+        </Typography>
+        <Typography variant="body1">
+          {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_INFORMATION)}
+        </Typography>
+      </Grid>
+      <Grid container spacing={2} my={1}>
+        <Grid item xs={12} sm={12}>
+          <TextField
+            required
+            label={translateAccount(ACCOUNT.PASSWORD_SETTINGS_CURRENT_LABEL)}
+            variant="outlined"
+            value={currentPassword}
+            onChange={handleCurrentPasswordInput}
+            id={USER_CURRENT_PASSWORD_INPUT_ID}
+            type="password"
+          />
+          <Typography variant="subtitle2">
+            {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CURRENT_INFORMATION)}
           </Typography>
         </Grid>
-        <Grid container spacing={2} my={1}>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              required
-              label={translateAccount(ACCOUNT.PASSWORD_SETTINGS_CURRENT_LABEL)}
-              variant="outlined"
-              value={currentPassword}
-              onChange={handleCurrentPasswordInput}
-              id={USER_CURRENT_PASSWORD_INPUT_ID}
-              type="password"
-            />
-            <Typography variant="subtitle2">
-              {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CURRENT_INFORMATION)}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              label={translateAccount(ACCOUNT.PASSWORD_SETTINGS_NEW_LABEL)}
-              variant="outlined"
-              value={newPassword}
-              error={Boolean(newPasswordError)}
-              helperText={newPasswordError}
-              onChange={handleNewPasswordInput}
-              id={USER_NEW_PASSWORD_INPUT_ID}
-              type="password"
-              sx={{ mr: 2 }}
-            />
-            <TextField
-              required
-              label={translateAccount(
-                ACCOUNT.PASSWORD_SETTINGS_NEW_CONFIRM_LABEL,
-              )}
-              variant="outlined"
-              value={confirmPassword}
-              error={Boolean(confirmPasswordError)}
-              helperText={confirmPasswordError}
-              onChange={handleConfirmPasswordInput}
-              id={USER_CONFIRM_PASSWORD_INPUT_ID}
-              type="password"
-            />
-          </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            label={translateAccount(ACCOUNT.PASSWORD_SETTINGS_NEW_LABEL)}
+            variant="outlined"
+            value={newPassword}
+            error={Boolean(newPasswordError)}
+            helperText={newPasswordError}
+            onChange={handleNewPasswordInput}
+            id={USER_NEW_PASSWORD_INPUT_ID}
+            type="password"
+            sx={{ mr: 2 }}
+          />
+          <TextField
+            required
+            label={translateAccount(
+              ACCOUNT.PASSWORD_SETTINGS_NEW_CONFIRM_LABEL,
+            )}
+            variant="outlined"
+            value={confirmPassword}
+            error={Boolean(confirmPasswordError)}
+            helperText={confirmPasswordError}
+            onChange={handleConfirmPasswordInput}
+            id={USER_CONFIRM_PASSWORD_INPUT_ID}
+            type="password"
+          />
+        </Grid>
 
-          <Grid item xs={12}>
-            <Button
-              id={CONFIRM_RESET_PASSWORD_BUTTON_ID}
-              variant="outlined"
-              disabled
-              sx={{ mr: 2 }}
-              // TO DO:
-              // onClick={() => handleChangePassword()}
-            >
-              {translateAccount(ACCOUNT.PASSWORD_SETTINGS_REQUEST_RESET_BUTTON)}
-            </Button>
-            <Button
-              id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
-              variant="contained"
-              color="primary"
-              onClick={() => handleChangePassword()}
-              sx={{ my: 1 }}
-            >
-              {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_BUTTON)}
-            </Button>
-          </Grid>
+        <Grid item xs={12}>
+          <Button
+            id={CONFIRM_RESET_PASSWORD_BUTTON_ID}
+            variant="outlined"
+            disabled
+            sx={{ mr: 2 }}
+            // TO DO:
+            // onClick={() => handleChangePassword()}
+          >
+            {translateAccount(ACCOUNT.PASSWORD_SETTINGS_REQUEST_RESET_BUTTON)}
+          </Button>
+          <Button
+            id={CONFIRM_CHANGE_PASSWORD_BUTTON_ID}
+            variant="contained"
+            color="primary"
+            onClick={() => handleChangePassword()}
+            sx={{ my: 1 }}
+          >
+            {translateAccount(ACCOUNT.PASSWORD_SETTINGS_CONFIRM_BUTTON)}
+          </Button>
         </Grid>
       </Grid>
-    </>
+    </Grid>
   );
 };
 
