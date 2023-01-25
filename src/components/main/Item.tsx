@@ -11,13 +11,11 @@ import {
 } from '@graasp/sdk';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
-import {
-  DEFAULT_IMAGE_SRC,
-  DESCRIPTION_MAX_LENGTH,
-} from '../../config/constants';
+import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
+import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
 import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
@@ -58,7 +56,7 @@ const Item: FC<Props> = ({ item, memberships }) => {
         height: '100%',
         objectFit: 'cover',
       }}
-      src={DEFAULT_IMAGE_SRC}
+      src={defaultImage}
       alt={alt}
     />
   );
