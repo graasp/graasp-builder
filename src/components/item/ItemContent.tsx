@@ -196,20 +196,18 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
       );
     case ItemType.FOLDER:
       return (
-        <>
-          <Items
-            parentId={itemId}
-            id={buildItemsTableId(itemId)}
-            title={item.name}
-            items={children}
-            isEditing={isEditing}
-            headerElements={
-              enableEditing ? [<NewItemButton key="newButton" />] : undefined
-            }
-            ToolbarActions={ItemActions}
-            showCreator
-          />
-        </>
+        <Items
+          parentId={itemId}
+          id={buildItemsTableId(itemId)}
+          title={item.name}
+          items={children}
+          isEditing={isEditing}
+          headerElements={
+            enableEditing ? [<NewItemButton key="newButton" />] : undefined
+          }
+          ToolbarActions={ItemActions}
+          showCreator
+        />
       );
 
     case ItemType.H5P: {

@@ -70,8 +70,8 @@ const CollapseButton: FC<Props> = ({
           {text}
         </MenuItem>
       );
-    default:
     case ButtonType.ICON_BUTTON:
+    default:
       return (
         <Tooltip title={text}>
           <IconButton
