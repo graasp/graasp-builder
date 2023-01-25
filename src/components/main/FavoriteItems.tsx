@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { FC, useContext, useEffect } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { ItemRecord } from '@graasp/query-client/dist/types';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
@@ -25,8 +26,8 @@ import Main from './Main';
 // todo: find other possible solutions
 // todo: improve types with refactor
 export const getExistingItems = (
-  items: List<Item & { statusCode?: number }>,
-): List<Item> => items.filter((item) => !item.statusCode);
+  items: List<ItemRecord & { statusCode?: number }>,
+): List<ItemRecord> => items.filter((item) => !item.statusCode);
 
 // todo: improve types with refactor
 export const containsNonExistingItems = (

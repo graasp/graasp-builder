@@ -1,4 +1,3 @@
-import { PERMISSION_LEVELS } from '../../../src/enums';
 import { buildItemPath } from '../../../src/config/paths';
 import {
   buildItemMembershipRowSelector,
@@ -6,6 +5,7 @@ import {
   buildShareButtonId,
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
 } from '../../../src/config/selectors';
+import { PERMISSION_LEVELS } from '../../fixtures/enum';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
 import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 

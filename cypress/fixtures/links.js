@@ -1,4 +1,4 @@
-import { ITEM_TYPES } from '../../src/enums';
+import { ITEM_TYPES } from './enum';
 import { buildEmbeddedLinkExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER } from './members';
 

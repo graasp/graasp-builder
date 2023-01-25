@@ -12,7 +12,7 @@ import {
 } from '../../../fixtures/files';
 import { expectFileViewScreenLayout } from '../../../support/viewUtils';
 
-describe('Files', () => {
+describe('View Files', () => {
   describe('default server', () => {
     beforeEach(() => {
       cy.setUpApi({

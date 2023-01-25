@@ -1,40 +1,50 @@
 import '@uppy/drag-drop/dist/style.css';
 import { DragDrop } from '@uppy/react';
 
-import { Container, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 import { useContext, useEffect, useState } from 'react';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
-import { FILE_UPLOAD_MAX_FILES, HEADER_HEIGHT } from '../../config/constants';
+import {
+  DRAWER_WIDTH,
+  FILE_UPLOAD_MAX_FILES,
+  HEADER_HEIGHT,
+} from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { UPLOADER_ID } from '../../config/selectors';
 import { humanFileSize } from '../../utils/uppy';
+import { LayoutContext } from '../context/LayoutContext';
 import { UppyContext } from './UppyContext';
 
-const StyledContainer = styled(Container)(({ theme }) => ({
+const StyledContainer = styled(Box)(({ theme, isMainMenuOpen }) => ({
   display: 'none',
   height: '100vh',
   width: '100%',
   boxSizing: 'border-box',
-  position: 'absolute',
+  position: 'fixed',
   top: 0,
-  padding: `${HEADER_HEIGHT + theme.spacing(3)}px ${theme.spacing(
-    3,
-  )}px ${theme.spacing(3)}px`,
   left: 0,
   // show above drawer
   zIndex: theme.zIndex.drawer + 1,
   opacity: 0.8,
 
-  '& div': {
+  '& > div': {
     width: '100%',
+    paddingLeft: `${
+      Number(theme.spacing(2).slice(0, -2)) +
+      (isMainMenuOpen ? DRAWER_WIDTH : 0)
+    }px`,
+    paddingTop: `${Number(theme.spacing(2).slice(0, -2)) + HEADER_HEIGHT}px`,
+    paddingBottom: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
 }));
 
 const FileUploader = () => {
+  const { isMainMenuOpen } = useContext(LayoutContext);
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
@@ -118,6 +128,7 @@ const FileUploader = () => {
       onDragEnd={(e) => handleDragEnd(e)}
       onDragLeave={(e) => handleDragEnd(e)}
       onDrop={handleDrop}
+      isMainMenuOpen={isMainMenuOpen}
     >
       <DragDrop
         uppy={uppy}

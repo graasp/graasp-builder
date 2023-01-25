@@ -32,7 +32,6 @@ import {
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
 } from '../../../config/selectors';
 import { Invitation } from '../../../config/types';
-import { PERMISSION_LEVELS } from '../../../enums';
 
 const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');
@@ -75,7 +74,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
             // add current item path and default permission read
             const dataWithItemPath = parsedData.map(
               (d: Partial<Invitation>) => ({
-                permission: PERMISSION_LEVELS.READ,
+                permission: PermissionLevel.Read,
                 ...d,
                 itemPath,
               }),

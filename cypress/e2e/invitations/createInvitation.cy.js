@@ -5,7 +5,7 @@ import {
   SHARE_ITEM_SHARE_BUTTON_ID,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import { PERMISSION_LEVELS } from '../../../src/enums';
+import { PERMISSION_LEVELS } from '../../fixtures/enum';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
