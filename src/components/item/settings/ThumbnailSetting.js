@@ -15,9 +15,9 @@ import {
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import defaultImage from '../../../config/logo.jpeg';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
+import defaultImage from '../../../resources/avatar.png';
 import { getEmbeddedLinkExtra } from '../../../utils/itemExtra';
 import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal from '../../common/CropModal';

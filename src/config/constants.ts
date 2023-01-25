@@ -47,11 +47,6 @@ export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
-// todo: use local image
-// this might require a webpack configuration for cypress
-export const DEFAULT_IMAGE_SRC =
-  'https://pbs.twimg.com/profile_images/1300707321262346240/IsQAyu7q_400x400.jpg';
-
 // time to be considered between 2 clicks for a double-click (https://en.wikipedia.org/wiki/Double-click#Speed_and_timing)
 export const DOUBLE_CLICK_DELAY_MS = 500;
 

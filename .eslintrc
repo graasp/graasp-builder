@@ -26,6 +26,10 @@
     "no-restricted-syntax": "off",
     // disable the rule for all files
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function" }
+    ],
     "jsx-a11y/anchor-is-valid": [
       "error",
       {

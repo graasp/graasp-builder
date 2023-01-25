@@ -1,4 +1,3 @@
-import { DEFAULT_IMAGE_SRC } from '../../../../src/config/constants';
 import { HOME_PATH, SHARED_ITEMS_PATH } from '../../../../src/config/paths';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
@@ -6,6 +5,7 @@ import {
   buildNameCellRendererId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import defaultImage from '../../../../src/resources/avatar.png';
 import { MEMBERS } from '../../../fixtures/members';
 import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
@@ -32,7 +32,7 @@ describe('View Thumbnails', () => {
     cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`#${buildItemCard(items[0].id)} img`)
       .should('have.attr', 'src')
-      .and('contain', DEFAULT_IMAGE_SRC);
+      .and('contain', defaultImage);
 
     cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
