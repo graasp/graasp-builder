@@ -1,11 +1,11 @@
-import { PERMISSION_LEVELS } from '../../../src/enums';
 import { buildItemPath } from '../../../src/config/paths';
 import {
-  buildShareButtonId,
   CREATE_MEMBERSHIP_FORM_ID,
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
+  buildShareButtonId,
 } from '../../../src/config/selectors';
+import { PERMISSION_LEVELS } from '../../fixtures/enums';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 

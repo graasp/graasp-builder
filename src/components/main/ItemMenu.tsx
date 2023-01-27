@@ -1,5 +1,3 @@
-import { RecordOf } from 'immutable';
-
 import FlagIcon from '@mui/icons-material/Flag';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -10,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { FC, useContext, useState } from 'react';
 
-import { Item } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { ButtonType } from '../../config/constants';
@@ -29,17 +27,17 @@ import MoveButton from '../common/MoveButton';
 import PinButton from '../common/PinButton';
 import RecycleButton from '../common/RecycleButton';
 import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
   canEdit?: boolean;
 };
 
 const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const { t: translateBuilder } = useBuilderTranslation();
   const { openModal: openCreateShortcutModal } = useContext(

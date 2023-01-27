@@ -1,7 +1,7 @@
-import { ITEM_TYPES } from '../../src/enums';
 import { buildDocumentExtra } from '../../src/utils/itemExtra';
-import { CURRENT_USER } from './members';
+import { ITEM_TYPES } from './enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
+import { CURRENT_USER } from './members';
 
 export const GRAASP_DOCUMENT_ITEM = {
   id: 'ecafbd2a-5688-12eb-ae91-0242ac130002',

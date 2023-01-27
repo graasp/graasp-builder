@@ -1,23 +1,27 @@
-import PropTypes from 'prop-types';
-
 import { useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { Invitation, MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
-import { PERMISSION_LEVELS } from '../../../enums';
 
-const ResendInvitationRenderer = (item) => {
+type ChildProps = {
+  data: Invitation;
+};
+
+const ResendInvitationRenderer = (
+  itemId: string,
+): (({ data }: ChildProps) => JSX.Element) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const itemId = item.id;
-  const { mutate: resendInvitation } = useMutation(
-    MUTATION_KEYS.RESEND_INVITATION,
-  );
+  const { mutate: resendInvitation } = useMutation<
+    unknown,
+    unknown,
+    { itemId: string; id: string }
+  >(MUTATION_KEYS.RESEND_INVITATION);
 
-  const ChildComponent = ({ data: invitation }) => {
+  const ChildComponent = ({ data: invitation }: ChildProps) => {
     const [clicked, setClicked] = useState(false);
 
     const resendEmail = () => {
@@ -32,15 +36,6 @@ const ResendInvitationRenderer = (item) => {
     );
   };
 
-  ChildComponent.propTypes = {
-    data: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      itemPath: PropTypes.string.isRequired,
-      permission: PropTypes.oneOf(Object.values(PERMISSION_LEVELS)).isRequired,
-      email: PropTypes.string.isRequired,
-      name: PropTypes.string,
-    }).isRequired,
-  };
   return ChildComponent;
 };
 

@@ -3,14 +3,14 @@ import PieChartIcon from '@mui/icons-material/PieChart';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
 import { ITEM_ACTION_TABS } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { buildDashboardButtonId } from '../../config/selectors';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
   id: string;
@@ -18,7 +18,7 @@ type Props = {
 
 const AnalyticsDashboardButton: FC<Props> = ({ id }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
 
   const onClick = () => {
     setOpenedActionTabId(

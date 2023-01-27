@@ -19,9 +19,9 @@ export const parseStringToRegExp = (
   string,
   { characters = ['?', '.'], parseQueryString = false } = {},
 ) => {
-  const [originalPathname, ...querystrings] = string.split('?');
+  const [originalPathname, ...queryStrings] = string.split('?');
   let pathname = originalPathname;
-  let querystring = querystrings.join('?');
+  let querystring = queryStrings.join('?');
   characters.forEach((c) => {
     pathname = pathname.replaceAll(c, `\\${c}`);
   });

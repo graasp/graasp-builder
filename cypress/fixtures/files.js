@@ -1,5 +1,5 @@
-import { ITEM_TYPES, MIME_TYPES } from '../../src/enums';
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
+import { ITEM_TYPES, MIME_TYPES } from './enums';
 import { MOCK_IMAGE_URL, MOCK_PDF_URL, MOCK_VIDEO_URL } from './fileLinks';
 import { CURRENT_USER } from './members';
 

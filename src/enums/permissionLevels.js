@@ -1,14 +1,14 @@
 /**
  * @deprecated use graasp sdk
  */
-const PERMISSION_LEVELS = {
+const PermissionLevel = {
   READ: 'read',
   WRITE: 'write',
   ADMIN: 'admin',
 };
 
-Object.freeze(PERMISSION_LEVELS);
+Object.freeze(PermissionLevel);
 /**
  * @deprecated use graasp sdk
  */
-export default PERMISSION_LEVELS;
+export default PermissionLevel;

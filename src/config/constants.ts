@@ -1,6 +1,11 @@
-import { Context, buildSignInPath } from '@graasp/sdk';
+import {
+  Context,
+  ItemType,
+  PermissionLevel,
+  buildSignInPath,
+} from '@graasp/sdk';
 
-import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
+import { ITEM_LAYOUT_MODES } from '../enums';
 
 export const APP_NAME = 'Graasp';
 
@@ -76,13 +81,13 @@ export const DEFAULT_PINNED_SETTING = false;
 export const DEFAULT_COLLAPSIBLE_SETTING = false;
 export const DEFAULT_RESIZE_SETTING = false;
 
-export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.READ;
+export const DEFAULT_PERMISSION_LEVEL = PermissionLevel.Read;
 
 export const DEFAULT_ANALYZER_HEIGHT = 2300;
 
 export const PERMISSIONS_EDITION_ALLOWED = [
-  PERMISSION_LEVELS.WRITE,
-  PERMISSION_LEVELS.ADMIN,
+  PermissionLevel.Write,
+  PermissionLevel.Admin,
 ];
 
 export const DEFAULT_ITEM_LAYOUT_MODE = ITEM_LAYOUT_MODES.LIST;
@@ -134,12 +139,12 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 export const USER_ITEM_ORDER = 'user_order';
 
 export const ITEM_TYPES_WITH_CAPTIONS = [
-  ITEM_TYPES.FOLDER,
-  ITEM_TYPES.S3_FILE,
-  ITEM_TYPES.FILE,
-  ITEM_TYPES.APP,
-  ITEM_TYPES.LINK,
-  ITEM_TYPES.DOCUMENT,
+  ItemType.FOLDER,
+  ItemType.S3_FILE,
+  ItemType.LOCAL_FILE,
+  ItemType.APP,
+  ItemType.LINK,
+  ItemType.DOCUMENT,
 ];
 
 export const MIN_SCREEN_WIDTH = 1000;
@@ -153,7 +158,7 @@ export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
 
 /* possible choices for number of items per page in grid,
    (must be common multiple for possible row counts of 1,2,3,4,6) */
-export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
+export const GRID_ITEMS_PER_PAGE_CHOICES: number[] = [12, 24, 36, 48];
 
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Box, Divider, Typography, styled } from '@mui/material';
 
-import { useContext } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { DrawerHeader } from '@graasp/ui';
 
@@ -12,7 +10,7 @@ import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
 import Chatbox from '../common/Chatbox';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import ItemMetadataContent from './ItemMetadataContent';
 import ItemPanel from './ItemPanel';
 import ItemHeader from './header/ItemHeader';
@@ -56,7 +54,7 @@ const ItemMain = ({ id, children, item }) => {
     setIsItemMetadataMenuOpen,
     isChatboxMenuOpen,
     setIsChatboxMenuOpen,
-  } = useContext(LayoutContext);
+  } = useLayoutContext();
 
   const handleToggleMetadataMenu = () => {
     setIsItemMetadataMenuOpen(!isItemMetadataMenuOpen);

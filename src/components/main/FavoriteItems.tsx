@@ -2,10 +2,11 @@ import { List } from 'immutable';
 
 import Box from '@mui/material/Box';
 
-import { FC, useContext, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -17,7 +18,7 @@ import {
 } from '../../config/selectors';
 import { getFavoriteItems } from '../../utils/member';
 import ErrorAlert from '../common/ErrorAlert';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import Main from './Main';
@@ -25,8 +26,8 @@ import Main from './Main';
 // todo: find other possible solutions
 // todo: improve types with refactor
 export const getExistingItems = (
-  items: List<Item & { statusCode?: number }>,
-): List<Item> => items.filter((item) => !item.statusCode);
+  items: List<ItemRecord & { statusCode?: number }>,
+): List<ItemRecord> => items.filter((item) => !item.statusCode);
 
 // todo: improve types with refactor
 export const containsNonExistingItems = (
@@ -35,8 +36,8 @@ export const containsNonExistingItems = (
 
 // todo: improve types with refactor
 export const getErrorItemIds = (
-  items: List<Item & { data?: Error; statusCode?: number }>,
-): List<Error> =>
+  items: List<Item & { data?: string; statusCode?: number }>,
+): List<string> =>
   items.filter((item) => item.statusCode).map((item) => item.data);
 
 const FavoriteItems: FC = () => {
@@ -45,12 +46,12 @@ const FavoriteItems: FC = () => {
     data: member,
     isLoading: isMemberLoading,
     isError: isMemberError,
-  } = useContext(CurrentUserContext);
+  } = useCurrentUserContext();
   const {
     data: favoriteItems = List(),
     isLoading: isItemsLoading,
     isError: isItemsError,
-  } = hooks.useItems(getFavoriteItems(member.extra).toJS());
+  } = hooks.useItems(getFavoriteItems(member).toArray());
   const mutation = useMutation<
     unknown,
     unknown,
@@ -70,9 +71,9 @@ const FavoriteItems: FC = () => {
       mutation.mutate({
         id: member.id,
         extra: {
-          favoriteItems: member.extra.favoriteItems?.filter(
-            (id) => !errorIds.includes(id),
-          ),
+          favoriteItems: member.extra.favoriteItems
+            ?.filter((id) => !errorIds.includes(id))
+            .toArray(),
         },
       });
     }

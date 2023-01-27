@@ -1,14 +1,11 @@
-import { RecordOf } from 'immutable';
+import { List, RecordOf } from 'immutable';
 import truncate from 'lodash.truncate';
 
-import { CSSProperties, FC, PropsWithChildren, useContext } from 'react';
+import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  EmbeddedLinkItemExtra,
-  Item as GraaspItem,
-  ItemMembership,
-} from '@graasp/sdk';
+import { EmbeddedLinkItemExtra, Item as GraaspItem } from '@graasp/sdk';
+import { ItemMembershipRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
@@ -21,7 +18,7 @@ import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
@@ -42,7 +39,7 @@ const NameWrapper = ({
 
 type Props = {
   item: RecordOf<GraaspItem>;
-  memberships: RecordOf<ItemMembership>[];
+  memberships: List<ItemMembershipRecord>;
 };
 
 const Item: FC<Props> = ({ item, memberships }) => {
@@ -73,7 +70,7 @@ const Item: FC<Props> = ({ item, memberships }) => {
     />
   );
 
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
   const enableEdition = isItemUpdateAllowedForUser({
     memberships,
     memberId: member?.id,

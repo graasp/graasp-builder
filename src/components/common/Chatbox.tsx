@@ -1,20 +1,20 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
-import { useContext } from 'react';
-
 import GraaspChatbox from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { PermissionLevel } from '@graasp/sdk';
+import { ChatMessage, ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
 import { hooks, useMutation } from '../../config/queryClient';
 import { CHATBOX_ID, CHATBOX_INPUT_BOX_ID } from '../../config/selectors';
-import { PERMISSION_LEVELS } from '../../enums';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItemChat, useMembers, useAvatar, useItemMemberships } = hooks;
 
-const Chatbox = ({ item }) => {
+type Props = {
+  item: ItemRecord;
+};
+
+const Chatbox = ({ item }: Props): JSX.Element => {
   const { data: chat, isLoading: isChatLoading } = useItemChat(item.id);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     useItemMemberships(item.id);
@@ -22,17 +22,22 @@ const Chatbox = ({ item }) => {
     itemPermissions?.map((m) => m.memberId)?.toArray() || [],
   );
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
-    useContext(CurrentUserContext);
-  const { mutate: sendMessage } = useMutation(
-    MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE,
-  );
-  const { mutate: editMessage } = useMutation(
-    MUTATION_KEYS.PATCH_ITEM_CHAT_MESSAGE,
-  );
-  const { mutate: deleteMessage } = useMutation(
-    MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE,
-  );
-  const { mutate: clearChat } = useMutation(MUTATION_KEYS.CLEAR_ITEM_CHAT);
+    useCurrentUserContext();
+  const { mutate: sendMessage } = useMutation<
+    unknown,
+    unknown,
+    Pick<ChatMessage, 'chatId' | 'body'>
+  >(MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE);
+  const { mutate: editMessage } = useMutation<
+    unknown,
+    unknown,
+    Pick<ChatMessage, 'chatId' | 'id' | 'body'>
+  >(MUTATION_KEYS.PATCH_ITEM_CHAT_MESSAGE);
+  const { mutate: deleteMessage } = useMutation<
+    unknown,
+    unknown,
+    Pick<ChatMessage, 'id'>
+  >(MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE);
 
   if (
     isChatLoading ||
@@ -46,7 +51,7 @@ const Chatbox = ({ item }) => {
   // only show export chat when user has admin right on the item
   const isAdmin =
     itemPermissions?.find((perms) => perms.memberId === currentMember.id)
-      ?.permission === PERMISSION_LEVELS.ADMIN;
+      ?.permission === PermissionLevel.Admin;
 
   return (
     <GraaspChatbox
@@ -61,14 +66,9 @@ const Chatbox = ({ item }) => {
       sendMessageFunction={sendMessage}
       deleteMessageFunction={deleteMessage}
       editMessageFunction={editMessage}
-      clearChatFunction={clearChat}
       useAvatarHook={useAvatar}
     />
   );
-};
-
-Chatbox.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default Chatbox;

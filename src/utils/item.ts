@@ -1,4 +1,6 @@
 // synchronous functions to manage items from redux
+import { List } from 'immutable';
+
 import { useEffect, useState } from 'react';
 
 import {
@@ -10,6 +12,7 @@ import {
   ItemMembership,
   ItemType,
 } from '@graasp/sdk';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 
 import { UUID_LENGTH } from '../config/constants';
 import { Invitation } from '../config/types';
@@ -103,7 +106,7 @@ export const isItemValid = (item: Partial<Item>): boolean => {
 
   // item should have a type
   let hasValidTypeProperties =
-    itemType && Object.values(ItemType).includes(itemType);
+    itemType && Object.values<string>(ItemType).includes(itemType);
   switch (itemType) {
     case ItemType.LINK: {
       const { url } =
@@ -129,8 +132,8 @@ export const isItemValid = (item: Partial<Item>): boolean => {
 };
 
 export const getChildrenOrderFromFolderExtra = (
-  extra: FolderItemExtra,
-): string[] => extra[ItemType.FOLDER]?.childrenOrder ?? [];
+  extra: ImmutableCast<FolderItemExtra>,
+): List<string> => extra[ItemType.FOLDER]?.childrenOrder ?? List();
 
 export const stripHtml = (str?: string): string =>
   str?.replace(/<[^>]*>?/gm, '') || '';

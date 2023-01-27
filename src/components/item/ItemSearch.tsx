@@ -1,10 +1,10 @@
-import { List, RecordOf } from 'immutable';
+import { List } from 'immutable';
 
 import Typography from '@mui/material/Typography';
 
 import { ChangeEvent, FC, useState } from 'react';
 
-import { Item } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { SearchInput } from '@graasp/ui';
 
@@ -30,9 +30,9 @@ export const NoItemSearchResult: FC = () => {
 };
 
 export const useItemSearch = (
-  items: List<RecordOf<Item>>,
+  items: List<ItemRecord>,
 ): {
-  results: List<RecordOf<Item>>;
+  results: List<ItemRecord>;
   text: string;
   input: JSX.Element;
 } => {

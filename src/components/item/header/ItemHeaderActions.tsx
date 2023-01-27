@@ -1,14 +1,11 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import EditIcon from '@mui/icons-material/Edit';
 import InfoIcon from '@mui/icons-material/Info';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useContext } from 'react';
-
+import { ItemType } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
 
@@ -21,31 +18,42 @@ import {
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
   buildEditButtonId,
 } from '../../../config/selectors';
-import { ITEM_TYPES } from '../../../enums';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 import PlayerViewButton from '../../common/PlayerViewButton';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { LayoutContext } from '../../context/LayoutContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
+import { useLayoutContext } from '../../context/LayoutContext';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
 const { useItemMemberships } = hooks;
 
-const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
+type Props = {
+  item: ItemRecord;
+  onClickMetadata?: () => void;
+  onClickChatbox?: () => void;
+};
+
+const ItemHeaderActions = ({
+  onClickMetadata,
+  onClickChatbox,
+  item,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
     setEditingItemId,
     editingItemId,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     isItemSettingsOpen,
     isItemMetadataMenuOpen,
-  } = useContext(LayoutContext);
+  } = useLayoutContext();
   const id = item?.id;
   const type = item?.type;
 
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
 
   const { data: memberships } = useItemMemberships(id);
   const canEdit = isItemUpdateAllowedForUser({
@@ -99,7 +107,7 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
 
   const renderTableActions = () => {
     // show only for content with tables : root or folders
-    if (type === ITEM_TYPES.FOLDER || !id) {
+    if (type === ItemType.FOLDER || !id) {
       return <ModeButton />;
     }
     return null;
@@ -124,20 +132,6 @@ const ItemHeaderActions = ({ onClickMetadata, onClickChatbox, item }) => {
       )}
     </Box>
   );
-};
-
-ItemHeaderActions.propTypes = {
-  onClickMetadata: PropTypes.func,
-  onClickChatbox: PropTypes.func,
-  item: PropTypes.instanceOf(Record),
-};
-
-ItemHeaderActions.defaultProps = {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onClickMetadata: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onClickChatbox: () => {},
-  item: Record({})(),
 };
 
 export default ItemHeaderActions;

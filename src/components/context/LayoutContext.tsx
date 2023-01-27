@@ -1,22 +1,24 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
-import { CHAT_STATUS, ITEM_LAYOUT_MODES } from '../../enums';
+import { ITEM_LAYOUT_MODES } from '../../enums';
+import { ChatStatus } from '../../enums/chatbox';
 
 interface LayoutContextInterface {
   mode: string;
-  setMode: Function;
+  setMode: (mode: string) => void;
   editingItemId: string | null;
-  setEditingItemId: Function;
+  setEditingItemId: (itemid: string) => void;
   isMainMenuOpen: boolean;
-  setIsMainMenuOpen: Function;
+  setIsMainMenuOpen: (isOpen: boolean) => void;
   openedActionTabId: string | null;
-  setOpenedActionTabId: Function;
+  setOpenedActionTabId: (action: string) => void;
   isItemMetadataMenuOpen: boolean;
-  setIsItemMetadataMenuOpen: Function;
+  setIsItemMetadataMenuOpen: (isOpen: boolean) => void;
   isChatboxMenuOpen: boolean;
-  setIsChatboxMenuOpen: Function;
+  setIsChatboxMenuOpen: (isOpen: boolean) => void;
+  isItemSharingOpen: boolean;
+  setIsItemSharingOpen: (isOpen: boolean) => void;
 }
 
 const LayoutContext = createContext<LayoutContextInterface>({
@@ -44,9 +46,13 @@ const LayoutContext = createContext<LayoutContextInterface>({
   setIsChatboxMenuOpen: () => {
     // do nothing
   },
+  isItemSharingOpen: false,
+  setIsItemSharingOpen: () => {
+    // do nothing
+  },
 });
 
-const LayoutContextProvider = ({
+export const LayoutContextProvider = ({
   children,
 }: {
   children: JSX.Element;
@@ -63,12 +69,12 @@ const LayoutContextProvider = ({
   const [openedActionTabId, setOpenedActionTabId] = useState(null);
 
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
+  const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);
 
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
   // check query params to see if chat should be open
   const chatIsOpen =
-    new URLSearchParams(window.location.search).get('chat') ===
-    CHAT_STATUS.OPEN;
+    new URLSearchParams(window.location.search).get('chat') === ChatStatus.OPEN;
   const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(chatIsOpen);
 
   const value: LayoutContextInterface = useMemo(
@@ -85,6 +91,8 @@ const LayoutContextProvider = ({
       setIsItemMetadataMenuOpen,
       isChatboxMenuOpen,
       setIsChatboxMenuOpen,
+      isItemSharingOpen,
+      setIsItemSharingOpen,
     }),
     [
       editingItemId,
@@ -93,6 +101,7 @@ const LayoutContextProvider = ({
       isMainMenuOpen,
       mode,
       openedActionTabId,
+      isItemSharingOpen,
     ],
   );
 
@@ -101,4 +110,5 @@ const LayoutContextProvider = ({
   );
 };
 
-export { LayoutContext, LayoutContextProvider };
+export const useLayoutContext = (): LayoutContextInterface =>
+  useContext(LayoutContext);

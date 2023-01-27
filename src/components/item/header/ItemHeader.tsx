@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 
 import { useMatch } from 'react-router';
@@ -14,7 +12,17 @@ import ItemHeaderActions from './ItemHeaderActions';
 
 const { useItem } = hooks;
 
-const ItemHeader = ({ onClickMetadata, onClickChatbox, showNavigation }) => {
+type Props = {
+  onClickChatbox?: () => void;
+  onClickMetadata?: () => void;
+  showNavigation: boolean;
+};
+
+const ItemHeader = ({
+  onClickMetadata = () => null,
+  onClickChatbox,
+  showNavigation = true,
+}: Props): JSX.Element => {
   const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
@@ -42,20 +50,6 @@ const ItemHeader = ({ onClickMetadata, onClickChatbox, showNavigation }) => {
       />
     </Box>
   );
-};
-
-ItemHeader.propTypes = {
-  onClickMetadata: PropTypes.func,
-  onClickChatbox: PropTypes.func,
-  showNavigation: PropTypes.bool,
-};
-
-ItemHeader.defaultProps = {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onClickMetadata: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onClickChatbox: () => {},
-  showNavigation: true,
 };
 
 export default ItemHeader;

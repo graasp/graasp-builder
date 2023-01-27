@@ -1,18 +1,22 @@
-import { ColDef, IRowDragItem } from 'ag-grid-community';
+import { ColDef, Column, IRowDragItem } from 'ag-grid-community';
 import { List, RecordOf } from 'immutable';
 
-import { FC, useCallback, useContext, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   FolderItemExtra,
   Item,
-  ItemMembership,
   ItemType,
   Member,
   ShortcutItemExtra,
 } from '@graasp/sdk';
+import {
+  FolderItemTypeRecord,
+  ItemMembershipRecord,
+  ItemRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -28,7 +32,7 @@ import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
 import { getChildrenOrderFromFolderExtra } from '../../utils/item';
 import { getShortcutTarget } from '../../utils/itemExtra';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
@@ -38,22 +42,20 @@ import ItemsToolbar from './ItemsToolbar';
 const { useItem } = hooks;
 
 type Props = {
-  items: List<RecordOf<Item>>;
-  memberships: List<RecordOf<ItemMembership>>;
-  tableTitle: string;
   id?: string;
+  items: List<ItemRecord>;
+  manyMemberships: List<List<ItemMembershipRecord>>;
+  tableTitle: string;
   headerElements: JSX.Element[];
   isSearching?: boolean;
-  actions?: JSX.Element;
-  ToolbarActions?: React.FC<{
-    selectedIds: string[];
-  }>;
+  actions?: ({ data }: { data: { id: string } }) => JSX.Element;
+  ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;
   clickable?: boolean;
-  defaultSortedColumn?: {
-    updatedAt: 'desc' | 'asc' | null | undefined;
-    createdAt: 'desc' | 'asc' | null | undefined;
-    type: 'desc' | 'asc' | null | undefined;
-    name: 'desc' | 'asc' | null | undefined;
+  defaultSortedColumn: {
+    updatedAt?: 'desc' | 'asc';
+    createdAt?: 'desc' | 'asc';
+    type?: 'desc' | 'asc';
+    name?: 'desc' | 'asc';
   };
   isEditing?: boolean;
   showThumbnails?: boolean;
@@ -65,7 +67,7 @@ const ItemsTable: FC<Props> = ({
   tableTitle,
   id: tableId = '',
   items: rows = List(),
-  memberships = List(),
+  manyMemberships = List(),
   headerElements = [],
   isSearching = false,
   actions,
@@ -82,8 +84,8 @@ const ItemsTable: FC<Props> = ({
   const { t: translateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
   const { itemId } = useParams();
-  const { data: parentItem } = useItem(itemId);
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: parentItem }: { data: FolderItemTypeRecord } = useItem(itemId);
+  const { data: member } = useCurrentUserContext();
 
   const mutation = useMutation<
     any,
@@ -103,14 +105,8 @@ const ItemsTable: FC<Props> = ({
   const getRowNodeId = ({ data }: { data: Item }) =>
     buildItemsTableRowId(data.id);
 
-  const onCellClicked = ({
-    column,
-    data,
-  }: {
-    column: { colId: string };
-    data: Item;
-  }) => {
-    if (column.colId !== 'actions') {
+  const onCellClicked = ({ column, data }: { column: Column; data: Item }) => {
+    if (column.getColId() !== 'actions') {
       let targetId = data.id;
 
       // redirect to target if shortcut
@@ -122,12 +118,10 @@ const ItemsTable: FC<Props> = ({
   };
 
   const hasOrderChanged = (rowIds: string[]) => {
-    const childrenOrder = getChildrenOrderFromFolderExtra(
-      parentItem.extra.toJS() as FolderItemExtra,
-    );
+    const childrenOrder = getChildrenOrderFromFolderExtra(parentItem.extra);
 
     return (
-      rowIds.length !== childrenOrder.length ||
+      rowIds.length !== childrenOrder.size ||
       !childrenOrder.every((id, i) => id === rowIds[i])
     );
   };
@@ -161,7 +155,7 @@ const ItemsTable: FC<Props> = ({
     translateBuilder(BUILDER.ITEMS_TABLE_DRAG_DEFAULT_MESSAGE);
 
   const ActionComponent = ActionsCellRenderer({
-    memberships,
+    manyMemberships,
     items: rows,
     member,
   });

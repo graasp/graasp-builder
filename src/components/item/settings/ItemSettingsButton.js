@@ -5,8 +5,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useContext } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 
 import { ITEM_ACTION_TABS } from '../../../config/constants';
@@ -15,10 +13,10 @@ import {
   ITEM_SETTINGS_BUTTON_CLASS,
   buildSettingsButtonId,
 } from '../../../config/selectors';
-import { LayoutContext } from '../../context/LayoutContext';
+import { useLayoutContext } from '../../context/LayoutContext';
 
 const ItemSettingsButton = ({ id }) => {
-  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
   const { t: translateBuilder } = useBuilderTranslation();
 
   const onClickSettings = () => {

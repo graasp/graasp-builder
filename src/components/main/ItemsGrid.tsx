@@ -1,5 +1,4 @@
 import { List } from 'immutable';
-import PropTypes from 'prop-types';
 
 import { Box, Typography, styled } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -7,8 +6,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
 import Select from '@mui/material/Select';
 
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
@@ -31,17 +31,30 @@ const StyledBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
 }));
 
-const ItemsGrid = (props) => {
-  const {
-    items = List(),
-    title,
-    itemSearch,
-    headerElements,
-    memberships,
-    isEditing,
-    parentId,
-  } = props;
+type Props = {
+  id?: string;
+  items?: List<ItemRecord>;
+  manyMemberships: List<List<ItemMembershipRecord>>;
+  title: string;
+  itemSearch?: {
+    text: string;
+    // input: PropTypes.instanceOf(ItemSearchInput),
+  };
+  headerElements: ReactElement[];
+  parentId?: string;
+  isEditing?: boolean;
+};
 
+const ItemsGrid = ({
+  id: gridId = '',
+  items = List(),
+  title,
+  itemSearch,
+  headerElements = [],
+  manyMemberships,
+  isEditing = false,
+  parentId,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(
@@ -76,14 +89,18 @@ const ItemsGrid = (props) => {
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
         <Item
           item={item}
-          memberships={getMembershipsForItem({ items, memberships, item })}
+          memberships={getMembershipsForItem({
+            items,
+            manyMemberships,
+            item,
+          })}
         />
       </Grid>
     ));
   };
 
   return (
-    <div>
+    <div id={gridId}>
       <ItemsToolbar title={title} headerElements={headerElements} />
       <FolderDescription itemId={parentId} isEditing={isEditing} />
       <Grid container spacing={2}>
@@ -98,7 +115,7 @@ const ItemsGrid = (props) => {
             labelId={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID}
             id={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID}
             value={itemsPerPage}
-            onChange={(e) => setItemsPerPage(e.target.value)}
+            onChange={(e) => setItemsPerPage(e.target.value as number)}
             label={translateBuilder(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
           >
             {GRID_ITEMS_PER_PAGE_CHOICES.map((v) => (
@@ -109,36 +126,15 @@ const ItemsGrid = (props) => {
           </Select>
         </StyledBox>
         <Pagination
-          p={2}
-          alignItems="center"
+          sx={{ p: 2, alignItems: 'center' }}
           id={ITEMS_GRID_PAGINATION_ID}
           count={pagesCount}
           page={page}
-          onChange={(e, v) => setPage(v)}
+          onChange={(_, v) => setPage(v)}
         />
       </Box>
     </div>
   );
-};
-
-ItemsGrid.propTypes = {
-  items: PropTypes.instanceOf(List).isRequired,
-  memberships: PropTypes.instanceOf(List).isRequired,
-  title: PropTypes.string.isRequired,
-  itemSearch: PropTypes.shape({
-    text: PropTypes.string,
-    // input: PropTypes.instanceOf(ItemSearchInput),
-  }),
-  headerElements: PropTypes.arrayOf(PropTypes.element),
-  parentId: PropTypes.string,
-  isEditing: PropTypes.bool,
-};
-
-ItemsGrid.defaultProps = {
-  itemSearch: null,
-  headerElements: [],
-  isEditing: false,
-  parentId: null,
 };
 
 export default ItemsGrid;

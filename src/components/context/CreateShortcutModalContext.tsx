@@ -40,7 +40,7 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
     setItem(null);
   };
 
-  const onConfirm = ({ id: target, to }) => {
+  const onConfirm = ({ ids: target, to }: { ids: string[]; to: string }) => {
     const shortcut = {
       name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {
         name: item.name,

@@ -1,5 +1,3 @@
-import PropTypes, { arrayOf } from 'prop-types';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,6 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { useState } from 'react';
 
+import { ItemType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
 
@@ -19,14 +18,30 @@ import {
   TREE_MODAL_SHARED_ITEMS_ID,
   buildTreeItemId,
 } from '../../config/selectors';
-import { ITEM_TYPES, TREE_PREVENT_SELECTION } from '../../enums';
+import { TreePreventSelection } from '../../enums';
 import { getParentsIdsFromPath } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 
 const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
-const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
+type Props = {
+  onConfirm: ({ ids, to }: { ids: string[]; to: string }) => void;
+  onClose: ({ id, open }: { id: string; open: boolean }) => void;
+  title: string;
+  itemIds?: string[];
+  open?: boolean;
+  prevent?: TreePreventSelection;
+};
+
+const TreeModal = ({
+  title,
+  onClose,
+  onConfirm,
+  open = false,
+  itemIds = [],
+  prevent = TreePreventSelection.NONE,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
   // todo: get only shared items with write/admin rights
@@ -34,7 +49,7 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   const { data: sharedItems, isLoading: isSharedItemsLoading } =
     useSharedItems();
   const [selectedId, setSelectedId] = useState(null);
-  const { data: items, isItemLoading } = useItems(itemIds);
+  const { data: items, isLoading: isItemLoading } = useItems(itemIds);
 
   // build the expanded item ids list for a given tree (with treeRootId as id)
   // by default, we expand all parents of items
@@ -78,11 +93,11 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   // it depends on the prevent mode and the previous items
   const isTreeItemDisabled = ({ itemId: iId, parentIsDisabled }) => {
     switch (prevent) {
-      case TREE_PREVENT_SELECTION.SELF_AND_CHILDREN:
+      case TreePreventSelection.SELF_AND_CHILDREN:
         // if the previous item is disabled, its children will be disabled
         // and prevent selection on self
         return parentIsDisabled || itemIds.find((x) => x === iId);
-      case TREE_PREVENT_SELECTION.NONE:
+      case TreePreventSelection.NONE:
       default:
         return false;
     }
@@ -93,7 +108,7 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
   };
 
   const onClickConfirm = () => {
-    onConfirm({ id: itemIds, to: selectedId });
+    onConfirm({ ids: itemIds, to: selectedId });
     handleClose();
   };
 
@@ -105,7 +120,7 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
     }
   };
 
-  const isFolder = (i) => i.type === ITEM_TYPES.FOLDER;
+  const isFolder = (i) => i.type === ItemType.FOLDER;
 
   // compute tree only when the modal is open
   const tree = !open ? null : (
@@ -125,11 +140,12 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
         showCheckbox
         rootLabel={translateBuilder(BUILDER.ITEMS_TREE_OWN_ITEMS_LABEL)}
         rootId={TREE_MODAL_MY_ITEMS_ID}
-        rootClassName={buildTreeItemId(TREE_MODAL_MY_ITEMS_ID)}
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemId={buildTreeItemId}
+        buildTreeItemClass={(id: string) =>
+          buildTreeItemId(id, TREE_MODAL_MY_ITEMS_ID)
+        }
       />
       <DynamicTreeView
         id={TREE_MODAL_SHARED_ITEMS_ID}
@@ -146,11 +162,12 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
         showCheckbox
         rootLabel={translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE)}
         rootId={TREE_MODAL_SHARED_ITEMS_ID}
-        rootClassName={buildTreeItemId(TREE_MODAL_SHARED_ITEMS_ID)}
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemId={buildTreeItemId}
+        buildTreeItemClass={(id: string) =>
+          buildTreeItemId(id, TREE_MODAL_MY_ITEMS_ID)
+        }
       />
     </>
   );
@@ -176,21 +193,6 @@ const TreeModal = ({ itemIds, open, title, onClose, onConfirm, prevent }) => {
       </DialogActions>
     </Dialog>
   );
-};
-
-TreeModal.propTypes = {
-  onConfirm: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  prevent: PropTypes.oneOf(Object.values(TREE_PREVENT_SELECTION)),
-  itemIds: arrayOf(PropTypes.string),
-  open: PropTypes.bool,
-};
-
-TreeModal.defaultProps = {
-  prevent: TREE_PREVENT_SELECTION.NONE,
-  itemIds: null,
-  open: false,
 };
 
 export default TreeModal;

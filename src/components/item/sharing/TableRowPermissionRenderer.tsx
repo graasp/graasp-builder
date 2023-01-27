@@ -1,10 +1,23 @@
-import PropTypes from 'prop-types';
+import { Invitation } from '@graasp/query-client';
+import { ItemMembership } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 
-import { PERMISSION_LEVELS } from '../../../enums';
 import { useIsParentInstance } from '../../../utils/item';
 import ItemMembershipSelect from './ItemMembershipSelect';
 
-const TableRowPermissionRenderer = ({ item, editFunction, createFunction }) => {
+type Props = {
+  item: ItemRecord;
+  editFunction;
+  createFunction;
+};
+
+type ChildProps = Invitation | ItemMembership;
+
+const TableRowPermissionRenderer = ({
+  item,
+  editFunction,
+  createFunction,
+}: Props): (({ data }: { data: ChildProps }) => JSX.Element) => {
   // todo: use typescript to precise data is one of Invitation or Membership
   const ChildComponent = ({ data: instance }) => {
     const isParentMembership = useIsParentInstance({
@@ -30,13 +43,7 @@ const TableRowPermissionRenderer = ({ item, editFunction, createFunction }) => {
       />
     );
   };
-  ChildComponent.propTypes = {
-    data: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      permission: PropTypes.oneOf(Object.values(PERMISSION_LEVELS)).isRequired,
-      itemPath: PropTypes.string.isRequired,
-    }).isRequired,
-  };
+
   return ChildComponent;
 };
 export default TableRowPermissionRenderer;

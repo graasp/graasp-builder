@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid';
 import { FC, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { Item, PermissionLevel } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
@@ -32,7 +32,6 @@ import {
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
 } from '../../../config/selectors';
 import { Invitation } from '../../../config/types';
-import { PERMISSION_LEVELS } from '../../../enums';
 
 const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');
@@ -63,7 +62,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     setIsOpen(false);
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files.length) {
       const file = e.target.files[0];
 
@@ -75,7 +74,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
             // add current item path and default permission read
             const dataWithItemPath = parsedData.map(
               (d: Partial<Invitation>) => ({
-                permission: PERMISSION_LEVELS.READ,
+                permission: PermissionLevel.Read,
                 ...d,
                 itemPath,
               }),
@@ -122,7 +121,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     }
 
     // does not show errors if results is not defined
-    // or if there is no failure with menaningful data
+    // or if there is no failure with meaningful data
     // this won't show membership already exists error
     const failureToShow = results.failure.filter(
       (e) => e?.data?.email || e?.data?.name,

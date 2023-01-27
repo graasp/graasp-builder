@@ -1,15 +1,14 @@
-import { Record } from 'immutable';
+import { List } from 'immutable';
 import partition from 'lodash.partition';
-import PropTypes from 'prop-types';
 
 import { Divider } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { useContext } from 'react';
-
+import { ItemLogin } from '@graasp/query-client/dist/types';
 import { isPseudonymizedMember } from '@graasp/sdk';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -17,7 +16,7 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
 import CsvInputParser from './CsvInputParser';
 import InvitationsTable from './InvitationsTable';
@@ -25,13 +24,17 @@ import ItemMembershipsTable from './ItemMembershipsTable';
 import SharingLink from './SharingLink';
 import VisibilitySelect from './VisibilitySelect';
 
-const ItemSharingTab = ({ item }) => {
+type Props = {
+  item: ItemRecord;
+  memberships: List<ItemMembershipRecord>;
+};
+
+const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: memberships } = hooks.useItemMemberships(item?.id);
-  const { data: currentMember, isLoadingCurrentMember } =
-    useContext(CurrentUserContext);
+  const { data: currentMember, isLoading: isLoadingCurrentMember } =
+    useCurrentUserContext();
   const { data: members } = hooks.useMembers(
-    memberships?.map(({ memberId }) => memberId),
+    memberships?.map(({ memberId }) => memberId).toArray(),
   );
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 
@@ -80,7 +83,7 @@ const ItemSharingTab = ({ item }) => {
         {/* show authenticated members if login schema is defined
         todo: show only if item is pseudomized
         */}
-        {getItemLoginSchema(item?.extra) && (
+        {getItemLoginSchema(item?.extra as { itemLogin?: ItemLogin }) && (
           <>
             <Divider sx={{ my: 3 }} />
             <Typography variant="h5" m={0} p={0}>
@@ -118,7 +121,7 @@ const ItemSharingTab = ({ item }) => {
   };
 
   return (
-    <Container disableGutters mt={2}>
+    <Container disableGutters sx={{ mt: 2 }}>
       <Typography variant="h4">
         {translateBuilder(BUILDER.SHARING_TITLE)}
       </Typography>
@@ -130,9 +133,6 @@ const ItemSharingTab = ({ item }) => {
       {renderMembershipSettings()}
     </Container>
   );
-};
-ItemSharingTab.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemSharingTab;

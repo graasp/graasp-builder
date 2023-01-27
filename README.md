@@ -42,3 +42,7 @@ REACT_APP_H5P_INTEGRATION_URL=
 
 Run `yarn cypress`. This should run every tests headlessly.
 You can run `yarn cypress:open` to access the framework and visually display the tests' processes.
+
+## Developing
+
+While developing you can run `yarn check` to perform prettier formatting checks, type checks and eslint rule checking.

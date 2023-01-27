@@ -1,7 +1,8 @@
-import { useContext, useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { ItemType } from '@graasp/sdk';
 import { ItemLoginAuthorization } from '@graasp/ui';
 
 import {
@@ -16,11 +17,10 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
-import { ITEM_TYPES } from '../../enums';
 import { getHighestPermissionForMemberFromMemberships } from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
-import { CurrentUserContext } from '../context/CurrentUserContext';
-import { LayoutContext } from '../context/LayoutContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import FileUploader from '../file/FileUploader';
 import { UppyContextProvider } from '../file/UppyContext';
 import ItemContent from '../item/ItemContent';
@@ -34,13 +34,13 @@ import Main from './Main';
 
 const { useItem, useCurrentMember, useItemLogin, useItemMemberships } = hooks;
 
-const ItemScreen = () => {
+const ItemScreen = (): JSX.Element => {
   const { itemId } = useParams();
   const { data: item, isError } = useItem(itemId);
 
   const { setEditingItemId, openedActionTabId, setOpenedActionTabId } =
-    useContext(LayoutContext);
-  const { data: currentMember } = useContext(CurrentUserContext);
+    useLayoutContext();
+  const { data: currentMember } = useCurrentUserContext();
   const { data: memberships } = useItemMemberships(itemId);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const ItemScreen = () => {
   }
 
   const itemMembership = getHighestPermissionForMemberFromMemberships({
-    memberships: memberships?.toJS(),
+    memberships,
     memberId: currentMember?.id,
   });
   const permission = itemMembership?.permission;
@@ -89,18 +89,20 @@ const ItemScreen = () => {
   return (
     <Main>
       <UppyContextProvider enable={enableEditing} itemId={itemId}>
-        {item.type === ITEM_TYPES.FOLDER && <FileUploader />}
+        {item.type === ItemType.FOLDER && <FileUploader />}
         <ItemMain item={item}>{content}</ItemMain>
       </UppyContextProvider>
     </Main>
   );
 };
 
-const WrappedItemScreen = () => {
+const WrappedItemScreen = (): ReactElement => {
   const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
-  const { mutate: itemLoginSignIn } = useMutation(
-    MUTATION_KEYS.POST_ITEM_LOGIN,
-  );
+  const { mutate: itemLoginSignIn } = useMutation<
+    unknown,
+    unknown,
+    { itemId: string }
+  >(MUTATION_KEYS.POST_ITEM_LOGIN);
   const { itemId } = useParams();
 
   const ForbiddenContent = <ItemForbiddenScreen />;

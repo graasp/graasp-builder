@@ -3,7 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { BUILDER } from '@graasp/translations';
@@ -16,13 +16,13 @@ import {
   RECYCLE_BIN_PATH,
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const MainMenu: FC = () => {
   const { t: translateBuilder } = useBuilderTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
 
   const goTo = (path: string) => {
     navigate(path);

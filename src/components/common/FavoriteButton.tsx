@@ -1,33 +1,31 @@
-import { RecordOf } from 'immutable';
-
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, Member } from '@graasp/sdk';
+import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { FavoriteButton as GraaspFavoriteButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
   type?: string;
   onClick?: () => void;
   size?: IconButtonProps['size'];
 };
 
 export const isItemFavorite = (
-  item: RecordOf<Item>,
-  member: RecordOf<Member<{ favoriteItems: string[] }>>,
-): boolean => member?.extra?.favoriteItems?.includes(item.id);
+  item: ItemRecord,
+  member: MemberRecord,
+): boolean => (member?.extra?.favoriteItems as string[]).includes(item.id);
 
 const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
   const mutation = useMutation<any, any, any>(MUTATION_KEYS.EDIT_MEMBER);
 

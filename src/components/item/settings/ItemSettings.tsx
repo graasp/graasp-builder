@@ -7,14 +7,11 @@ import { FC, useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import {
-  ItemRecord,
-  ItemSettingsRecord,
-} from '@graasp/query-client/dist/types';
-import {
   ItemSettings as ItemSettingsType,
   ItemType,
   convertJs,
 } from '@graasp/sdk';
+import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -50,7 +47,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
   const { settings } = item;
 
   const [settingLocal, setSettingLocal] =
-    useState<ItemSettingsRecord>(settings);
+    useState<ImmutableCast<ItemSettingsType>>(settings);
 
   useEffect(
     () => {

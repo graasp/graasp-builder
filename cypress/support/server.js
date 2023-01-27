@@ -17,7 +17,6 @@ import {
   SIGN_IN_PATH,
   THUMBNAIL_EXTENSION,
 } from '../../src/config/constants';
-import { PERMISSION_LEVELS } from '../../src/enums';
 import {
   getItemById,
   getParentsIdsFromPath,
@@ -36,6 +35,7 @@ import {
   buildAppItemLinkForTest,
   buildGetAppData,
 } from '../fixtures/apps';
+import { PERMISSION_LEVELS } from '../fixtures/enums';
 import { buildInvitation } from '../fixtures/invitations';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';

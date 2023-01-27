@@ -1,7 +1,7 @@
 import { Grid, Typography, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { MentionButton } from '@graasp/chatbox';
@@ -22,7 +22,7 @@ import {
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import MainMenu from './MainMenu';
 
 const StyledLink = styled(Link)(() => ({
@@ -34,7 +34,7 @@ const StyledLink = styled(Link)(() => ({
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main: FC<Props> = ({ children }) => {
-  const { isMainMenuOpen } = useContext(LayoutContext);
+  const { isMainMenuOpen } = useLayoutContext();
   const { data: currentMember } = hooks.useCurrentMember();
   const memberId = currentMember?.get('id');
   // mutations to handle the mentions
@@ -79,7 +79,13 @@ const Main: FC<Props> = ({ children }) => {
       <Grid item>
         <MentionButton
           color="secondary"
+          // todo: remove with an update to the type of the prop in chatbox
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           useMentions={hooks.useMentions}
+          // todo: remove with an update to the type of the prop in chatbox
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           useMembers={hooks.useMembers}
           patchMentionFunction={patchMentionFunction}
           deleteMentionFunction={deleteMentionFunction}

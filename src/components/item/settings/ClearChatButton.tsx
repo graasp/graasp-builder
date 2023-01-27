@@ -1,31 +1,40 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-
+import { DeleteForever } from '@mui/icons-material';
 import {
   Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Tooltip,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import { DeleteForever } from '@material-ui/icons';
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+
+import { useState } from 'react';
 
 import buildI18n, { CHATBOX, namespaces } from '@graasp/translations';
 import { Button } from '@graasp/ui';
+
 import {
-  CLEAR_CHAT_SETTING_ID,
   CLEAR_CHAT_CANCEL_BUTTON_ID,
   CLEAR_CHAT_CONFIRM_BUTTON_ID,
   CLEAR_CHAT_DIALOG_ID,
+  CLEAR_CHAT_SETTING_ID,
 } from '../../../config/selectors';
-
+import { ButtonVariants } from '../../../enums/chatbox';
 import DownloadChatButton from './DownloadChatButton';
-import { BUTTON_VARIANTS } from '../../../enums';
 
-const ClearChatButton = ({ chatId, clearChat, variant }) => {
+type Props = {
+  chatId: string;
+  clearChat?: (chatId: string) => void;
+  variant: ButtonVariants;
+};
+
+const ClearChatButton = ({
+  chatId,
+  clearChat,
+  variant = ButtonVariants.BUTTON,
+}: Props): JSX.Element => {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const { t } = buildI18n(namespaces.chatbox);
 
@@ -41,7 +50,7 @@ const ClearChatButton = ({ chatId, clearChat, variant }) => {
     const text = t(CHATBOX.CLEAR_ALL_CHAT);
 
     switch (contentType) {
-      case BUTTON_VARIANTS.ICON:
+      case ButtonVariants.ICON:
         return (
           <Tooltip title={text}>
             <IconButton
@@ -52,8 +61,8 @@ const ClearChatButton = ({ chatId, clearChat, variant }) => {
             </IconButton>
           </Tooltip>
         );
+      case ButtonVariants.BUTTON:
       default:
-      case BUTTON_VARIANTS.BUTTON:
         return (
           <Button
             id={CLEAR_CHAT_SETTING_ID}
@@ -76,7 +85,10 @@ const ClearChatButton = ({ chatId, clearChat, variant }) => {
         <DialogContent>
           <Box display="flex" flexDirection="column" alignItems="center">
             <Typography>{t(CHATBOX.CLEAR_ALL_CHAT_CONTENT)}</Typography>
-            <DownloadChatButton variant="button" chatId={chatId} />
+            <DownloadChatButton
+              variant={ButtonVariants.BUTTON}
+              chatId={chatId}
+            />
           </Box>
         </DialogContent>
         <DialogActions>
@@ -103,17 +115,6 @@ const ClearChatButton = ({ chatId, clearChat, variant }) => {
       </Dialog>
     </div>
   );
-};
-
-ClearChatButton.propTypes = {
-  chatId: PropTypes.string.isRequired,
-  clearChat: PropTypes.func.isRequired,
-  // exportChat: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf([BUTTON_VARIANTS.ICON, BUTTON_VARIANTS.BUTTON]),
-};
-
-ClearChatButton.defaultProps = {
-  variant: BUTTON_VARIANTS.BUTTON,
 };
 
 export default ClearChatButton;

@@ -1,6 +1,6 @@
 import { SETTINGS } from '../../src/config/constants';
-import { ITEM_TYPES, PERMISSION_LEVELS } from '../../src/enums';
 import { buildItemLoginSchemaExtra } from '../../src/utils/itemExtra';
+import { ITEM_TYPES, PERMISSION_LEVELS } from './enums';
 import {
   DEFAULT_TAGS,
   ITEM_LOGIN_TAG,

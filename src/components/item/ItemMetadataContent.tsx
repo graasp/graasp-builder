@@ -1,6 +1,3 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,8 +5,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-import { useContext } from 'react';
-
+import { ItemType, LocalFileItemExtra, S3FileItemExtra } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 
 import i18n, {
@@ -21,32 +18,37 @@ import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
-import { ITEM_TYPES } from '../../enums';
 import { formatDate } from '../../utils/date';
 import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import ItemMemberships from './ItemMemberships';
 
 const { useMember } = hooks;
 
-const ItemMetadataContent = ({ item }) => {
+type Props = {
+  item: ItemRecord;
+};
+
+const ItemMetadataContent = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
-  const { setIsItemSharingOpen } = useContext(LayoutContext);
+  const { setIsItemSharingOpen } = useLayoutContext();
   const { data: creator } = useMember(item.creator);
 
   const onClick = () => {
     setIsItemSharingOpen(true);
   };
 
-  let { type } = item;
+  let { type }: { type: ItemType | string } = item;
   let size = null;
-  if (type === ITEM_TYPES.S3_FILE) {
-    const extra = getS3FileExtra(item.extra);
+  if (type === ItemType.S3_FILE) {
+    // todo: improve type of itemRecord with extras
+    const extra = getS3FileExtra(item.extra as unknown as S3FileItemExtra);
     ({ mimetype: type, size } = extra);
-  } else if (type === ITEM_TYPES.FILE) {
-    const extra = getFileExtra(item.extra);
+  } else if (type === ItemType.LOCAL_FILE) {
+    // todo: improve type of itemRecord with extras
+    const extra = getFileExtra(item.extra as unknown as LocalFileItemExtra);
     ({ mimetype: type, size } = extra);
   }
 
@@ -59,11 +61,11 @@ const ItemMetadataContent = ({ item }) => {
         <TableCell align="right">{link}</TableCell>
       </TableRow>
     );
-    if (type === ITEM_TYPES.APP) {
-      return buildTableRow(item.extra[ITEM_TYPES.APP].url);
+    if (type === ItemType.APP) {
+      return buildTableRow(item.extra[ItemType.APP].url);
     }
-    if (type === ITEM_TYPES.LINK) {
-      return buildTableRow(item.extra[ITEM_TYPES.LINK].url);
+    if (type === ItemType.LINK) {
+      return buildTableRow(item.extra[ItemType.LINK].url);
     }
     return null;
   };
@@ -129,10 +131,6 @@ const ItemMetadataContent = ({ item }) => {
       <ItemMemberships id={item.id} maxAvatar={5} onClick={onClick} />
     </>
   );
-};
-
-ItemMetadataContent.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ItemMetadataContent;

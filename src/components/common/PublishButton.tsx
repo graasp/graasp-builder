@@ -3,7 +3,7 @@ import ExploreIcon from '@mui/icons-material/Explore';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
@@ -13,7 +13,7 @@ import {
   PUBLISH_ITEM_BUTTON_CLASS,
   buildPublishButtonId,
 } from '../../config/selectors';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
   itemId: string;
@@ -21,7 +21,7 @@ type Props = {
 
 const PublishButton: FC<Props> = ({ itemId }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
 
   const onClick = () => {
     setOpenedActionTabId(

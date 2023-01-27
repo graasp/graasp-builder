@@ -1,5 +1,5 @@
-import { PERMISSION_LEVELS } from '../../src/enums';
 import { FIXTURES_THUMBNAILS_FOLDER } from '../support/constants';
+import { PERMISSION_LEVELS } from './enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { MEMBERS } from './members';
 

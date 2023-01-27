@@ -1,5 +1,4 @@
-import { List, Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { List } from 'immutable';
 import validator from 'validator';
 
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -9,7 +8,9 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useState } from 'react';
 
-import { MUTATION_KEYS, routines } from '@graasp/query-client';
+import { Invitation, MUTATION_KEYS, routines } from '@graasp/query-client';
+import { PermissionLevel } from '@graasp/sdk';
+import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -21,25 +22,37 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../config/selectors';
-import { PERMISSION_LEVELS } from '../../../enums';
 import ItemMembershipSelect from './ItemMembershipSelect';
 
 const { shareItemRoutine } = routines;
+type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
+type Props = {
+  item: ItemRecord;
+  members?: List<MemberRecord>;
+};
 
 // todo: handle multiple invitations
-const CreateItemMembershipForm = ({ item, members }) => {
+const CreateItemMembershipForm = ({
+  item,
+  members = List(),
+}: Props): JSX.Element => {
   const itemId = item.id;
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string>('');
 
-  const { mutateAsync: shareItem } = useMutation(MUTATION_KEYS.SHARE_ITEM);
+  const { mutateAsync: shareItem } = useMutation<
+    { failure?: { message: string }[] },
+    unknown,
+    { itemId: string; data: Partial<Invitation>[] }
+  >(MUTATION_KEYS.SHARE_ITEM);
   const { t: translateBuilder } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
-  const [invitation, setInvitation] = useState({
-    permission: PERMISSION_LEVELS.READ,
+  const [invitation, setInvitation] = useState<InvitationFieldInfoType>({
+    email: '',
+    permission: PermissionLevel.Read,
   });
 
-  const isInvitationInvalid = ({ email }) => {
+  const isInvitationInvalid = ({ email }: { email: string }): string => {
     // check mail validity
     if (!email) {
       return translateBuilder(
@@ -57,7 +70,7 @@ const CreateItemMembershipForm = ({ item, members }) => {
         BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
       );
     }
-    return false;
+    return '';
   };
 
   const onChangePermission = (e) => {
@@ -172,14 +185,6 @@ const CreateItemMembershipForm = ({ item, members }) => {
       </Grid>
     </Grid>
   );
-};
-
-CreateItemMembershipForm.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  members: PropTypes.instanceOf(List),
-};
-CreateItemMembershipForm.defaultProps = {
-  members: List(),
 };
 
 export default CreateItemMembershipForm;

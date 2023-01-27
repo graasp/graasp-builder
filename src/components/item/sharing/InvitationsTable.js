@@ -75,7 +75,7 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
     },
   });
 
-  const InvitationRenderer = ResendInvitationRenderer(item);
+  const InvitationRenderer = ResendInvitationRenderer(item.id);
 
   // never changes, so we can use useMemo
   const columnDefs = useMemo(

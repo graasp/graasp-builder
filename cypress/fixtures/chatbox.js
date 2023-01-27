@@ -1,6 +1,6 @@
+import { PERMISSION_LEVELS } from './enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER, MEMBERS } from './members';
-import { PERMISSION_LEVELS } from '../../src/enums';
 
 export const ITEM_WITH_CHATBOX_MESSAGES = {
   ...DEFAULT_FOLDER_ITEM,

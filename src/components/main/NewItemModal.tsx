@@ -8,7 +8,7 @@ import { FC, useState } from 'react';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType, UnknownExtra } from '@graasp/sdk';
+import { Item, ItemBase, ItemType, UnknownExtra } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -55,9 +55,14 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
   );
-  const [initialItem] = useState<Partial<Item<UnknownExtra>>>({});
+  const [initialItem] = useState<Partial<ItemBase>>({});
+
+  // todo: find a way to create this type of literal from the enum values instead of like this...
   const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState<{
-    [key: string]: Partial<Item<UnknownExtra>>;
+    [ItemType.FOLDER]: { type: 'folder' };
+    [ItemType.APP]: { type: 'app' };
+    [ItemType.LINK]: { type: 'embeddedLink' };
+    [ItemType.DOCUMENT]: { type: 'document' };
   }>({
     [ItemType.FOLDER]: { type: ItemType.FOLDER },
     [ItemType.LINK]: { type: ItemType.LINK },
