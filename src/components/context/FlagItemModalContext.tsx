@@ -27,7 +27,7 @@ import CancelButton from '../common/CancelButton';
 const { useFlags } = hooks;
 
 const FlagItemModalContext = createContext<{
-  openModal?: (ids: string[]) => void;
+  openModal?: (id: string) => void;
 }>({});
 
 const FlagItemModalProvider = ({
