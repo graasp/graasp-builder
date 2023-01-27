@@ -10,7 +10,11 @@ import { useMutation } from '../../config/queryClient';
 import { TREE_PREVENT_SELECTION } from '../../enums';
 import TreeModal from '../main/TreeModal';
 
-const MoveItemModalContext = createContext({});
+type Value = {
+  openModal?: (ids: string[]) => void;
+};
+
+const MoveItemModalContext = createContext<Value>({});
 
 const MoveItemModalProvider = ({
   children,
@@ -60,7 +64,7 @@ const MoveItemModalProvider = ({
     );
   };
 
-  const value = useMemo(() => ({ openModal }), []);
+  const value = useMemo<Value>(() => ({ openModal }), []);
 
   return (
     <MoveItemModalContext.Provider value={value}>

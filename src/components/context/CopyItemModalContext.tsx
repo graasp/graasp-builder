@@ -9,7 +9,9 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import TreeModal from '../main/TreeModal';
 
-const CopyItemModalContext = createContext({});
+const CopyItemModalContext = createContext<{
+  openModal?: (ids: string[]) => void;
+}>({});
 
 const CopyItemModalProvider = ({
   children,

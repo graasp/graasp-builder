@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid';
 import { FC, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { Item, PermissionLevel } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
