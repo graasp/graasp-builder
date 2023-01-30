@@ -26,8 +26,7 @@ const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 type Props = {
-  // we use id for shortcut, and ids for multiple operations (copy, delete...)
-  onConfirm: (args: { id?: string[]; ids?: string[]; to: string }) => void;
+  onConfirm: (args: { ids: string[]; to: string }) => void;
   onClose: (ags: { id: null | string; open: boolean }) => void;
   title: string;
   prevent?: string; // TREE_PREVENT_SELECTION
