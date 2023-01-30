@@ -33,6 +33,8 @@ const StyledContainer = styled(Box)(({ theme, isMainMenuOpen }) => ({
 
   '& > div': {
     width: '100%',
+    height: '100vh',
+    boxSizing: 'border-box',
     paddingLeft: `${
       Number(theme.spacing(2).slice(0, -2)) +
       (isMainMenuOpen ? DRAWER_WIDTH : 0)
@@ -40,18 +42,27 @@ const StyledContainer = styled(Box)(({ theme, isMainMenuOpen }) => ({
     paddingTop: `${Number(theme.spacing(2).slice(0, -2)) + HEADER_HEIGHT}px`,
     paddingBottom: theme.spacing(2),
     paddingRight: theme.spacing(2),
+
+    '& > div': {
+      boxSizing: 'border-box',
+      height: '100vh',
+      // container's top and bottom padding
+      paddingBottom: `${
+        Number(theme.spacing(4).slice(0, -2)) + HEADER_HEIGHT
+      }px`,
+    },
   },
 }));
 
 const FileUploader = () => {
   const { isMainMenuOpen } = useContext(LayoutContext);
   const { uppy } = useContext(UppyContext);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(true);
   const [isValid, setIsValid] = useState(true);
   const { t: translateBuilder, i18n } = useBuilderTranslation();
 
   const closeUploader = () => {
-    setIsDragging(false);
+    // setIsDragging(false);
   };
 
   useEffect(() => {
@@ -61,7 +72,7 @@ const FileUploader = () => {
   }, [uppy]);
 
   const handleWindowDragEnter = () => {
-    setIsDragging(true);
+    // setIsDragging(true);
   };
 
   const handleDragEnd = () => {
