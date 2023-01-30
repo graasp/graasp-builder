@@ -25,7 +25,7 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
   };
 
   const { url } =
-    (item.extra[ItemType.LINK] as EmbeddedLinkItemExtraProperties) || {};
+    (item?.extra?.[ItemType.LINK] as EmbeddedLinkItemExtraProperties) || {};
   const isLinkInvalid = url?.length && !isUrlValid(url);
 
   return (
