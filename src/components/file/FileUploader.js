@@ -57,12 +57,12 @@ const StyledContainer = styled(Box)(({ theme, isMainMenuOpen }) => ({
 const FileUploader = () => {
   const { isMainMenuOpen } = useContext(LayoutContext);
   const { uppy } = useContext(UppyContext);
-  const [isDragging, setIsDragging] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const { t: translateBuilder, i18n } = useBuilderTranslation();
 
   const closeUploader = () => {
-    // setIsDragging(false);
+    setIsDragging(false);
   };
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const FileUploader = () => {
   }, [uppy]);
 
   const handleWindowDragEnter = () => {
-    // setIsDragging(true);
+    setIsDragging(true);
   };
 
   const handleDragEnd = () => {
