@@ -7,8 +7,9 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildShortcutExtra } from '../../../../src/utils/itemExtra';
+import { ITEM_TYPES } from '../../../fixtures/enum';
 import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';

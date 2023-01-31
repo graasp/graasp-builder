@@ -2,7 +2,7 @@
 import { createContext, useMemo, useState } from 'react';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
-import { CHAT_STATUS, ITEM_LAYOUT_MODES } from '../../enums';
+import { ChatStatus, ITEM_LAYOUT_MODES } from '../../enums';
 
 interface LayoutContextInterface {
   mode: string;
@@ -67,8 +67,7 @@ const LayoutContextProvider = ({
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
   // check query params to see if chat should be open
   const chatIsOpen =
-    new URLSearchParams(window.location.search).get('chat') ===
-    CHAT_STATUS.OPEN;
+    new URLSearchParams(window.location.search).get('chat') === ChatStatus.OPEN;
   const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(chatIsOpen);
 
   const value: LayoutContextInterface = useMemo(

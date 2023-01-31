@@ -150,7 +150,9 @@ export const useIsParentInstance = ({
   instance,
   item,
 }: {
-  instance: Invitation | ItemMembership;
+  instance:
+    | Pick<Partial<Invitation>, 'itemPath'>
+    | Pick<Partial<ItemMembership>, 'itemPath'>;
   item: Item;
 }): boolean => {
   const [isParentMembership, setIsParentMembership] = useState(false);

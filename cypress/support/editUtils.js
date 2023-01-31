@@ -4,7 +4,8 @@ import {
   buildEditButtonId,
   buildSaveButtonId,
 } from '../../src/config/selectors';
-import { ITEM_LAYOUT_MODES, ITEM_TYPES } from '../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../src/enums';
+import { ITEM_TYPES } from '../fixtures/enum';
 import { CAPTION_EDIT_PAUSE, TABLE_ITEM_RENDER_TIME } from './constants';
 
 // eslint-disable-next-line import/prefer-default-export
