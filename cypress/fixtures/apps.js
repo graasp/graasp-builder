@@ -1,5 +1,5 @@
 import { APP_NAME } from './apps/apps';
-import { ITEM_TYPES } from '../../src/enums';
+import { ITEM_TYPES } from './enum';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
 

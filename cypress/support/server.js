@@ -17,7 +17,7 @@ import {
   SIGN_IN_PATH,
   THUMBNAIL_EXTENSION,
 } from '../../src/config/constants';
-import { PERMISSION_LEVELS } from '../../src/enums';
+import { PERMISSION_LEVELS } from '../fixtures/enum';
 import {
   getItemById,
   getParentsIdsFromPath,

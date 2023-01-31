@@ -5,11 +5,11 @@ import { useContext } from 'react';
 
 import GraaspChatbox from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { PermissionLevel } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { hooks, useMutation } from '../../config/queryClient';
 import { CHATBOX_ID, CHATBOX_INPUT_BOX_ID } from '../../config/selectors';
-import { PERMISSION_LEVELS } from '../../enums';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItemChat, useMembers, useAvatar, useItemMemberships } = hooks;
@@ -46,7 +46,7 @@ const Chatbox = ({ item }) => {
   // only show export chat when user has admin right on the item
   const isAdmin =
     itemPermissions?.find((perms) => perms.memberId === currentMember.id)
-      ?.permission === PERMISSION_LEVELS.ADMIN;
+      ?.permission === PermissionLevel.Admin;
 
   return (
     <GraaspChatbox

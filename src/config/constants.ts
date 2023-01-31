@@ -1,6 +1,11 @@
-import { Context, buildSignInPath } from '@graasp/sdk';
+import {
+  Context,
+  ItemType,
+  PermissionLevel,
+  buildSignInPath,
+} from '@graasp/sdk';
 
-import { ITEM_LAYOUT_MODES, ITEM_TYPES, PERMISSION_LEVELS } from '../enums';
+import { ITEM_LAYOUT_MODES } from '../enums';
 
 export const APP_NAME = 'Graasp';
 
@@ -59,7 +64,7 @@ export const MIME_TYPES = {
   AUDIO: ['audio/mpeg', 'audio/mp3'],
   PDF: ['application/pdf'],
 };
-export const DRAWER_WIDTH = 300;
+export const DRAWER_WIDTH = 240;
 export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_EMAIL_FREQUENCY = 'always';
@@ -76,13 +81,13 @@ export const DEFAULT_PINNED_SETTING = false;
 export const DEFAULT_COLLAPSIBLE_SETTING = false;
 export const DEFAULT_RESIZE_SETTING = false;
 
-export const DEFAULT_PERMISSION_LEVEL = PERMISSION_LEVELS.READ;
+export const DEFAULT_PERMISSION_LEVEL = PermissionLevel.Read;
 
 export const DEFAULT_ANALYZER_HEIGHT = 2300;
 
 export const PERMISSIONS_EDITION_ALLOWED = [
-  PERMISSION_LEVELS.WRITE,
-  PERMISSION_LEVELS.ADMIN,
+  PermissionLevel.Write,
+  PermissionLevel.Admin,
 ];
 
 export const DEFAULT_ITEM_LAYOUT_MODE = ITEM_LAYOUT_MODES.LIST;
@@ -134,12 +139,12 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 export const USER_ITEM_ORDER = 'user_order';
 
 export const ITEM_TYPES_WITH_CAPTIONS = [
-  ITEM_TYPES.FOLDER,
-  ITEM_TYPES.S3_FILE,
-  ITEM_TYPES.FILE,
-  ITEM_TYPES.APP,
-  ITEM_TYPES.LINK,
-  ITEM_TYPES.DOCUMENT,
+  ItemType.FOLDER,
+  ItemType.S3_FILE,
+  ItemType.LOCAL_FILE,
+  ItemType.APP,
+  ItemType.LINK,
+  ItemType.DOCUMENT,
 ];
 
 export const MIN_SCREEN_WIDTH = 1000;

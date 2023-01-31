@@ -1,14 +1,11 @@
-import { RecordOf } from 'immutable';
+import { List, RecordOf } from 'immutable';
 import truncate from 'lodash.truncate';
 
 import { CSSProperties, FC, PropsWithChildren, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  EmbeddedLinkItemExtra,
-  Item as GraaspItem,
-  ItemMembership,
-} from '@graasp/sdk';
+import { ItemMembershipRecord } from '@graasp/query-client/dist/types';
+import { EmbeddedLinkItemExtra, Item as GraaspItem } from '@graasp/sdk';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
@@ -42,7 +39,7 @@ const NameWrapper = ({
 
 type Props = {
   item: RecordOf<GraaspItem>;
-  memberships: RecordOf<ItemMembership>[];
+  memberships: List<ItemMembershipRecord>;
 };
 
 const Item: FC<Props> = ({ item, memberships }) => {

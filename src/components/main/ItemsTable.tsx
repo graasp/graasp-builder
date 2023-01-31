@@ -6,9 +6,12 @@ import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import {
+  ItemMembershipRecord,
+  ItemRecord,
+} from '@graasp/query-client/dist/types';
+import {
   FolderItemExtra,
   Item,
-  ItemMembership,
   ItemType,
   Member,
   ShortcutItemExtra,
@@ -38,8 +41,8 @@ import ItemsToolbar from './ItemsToolbar';
 const { useItem } = hooks;
 
 type Props = {
-  items: List<RecordOf<Item>>;
-  memberships: List<RecordOf<ItemMembership>>;
+  items: List<ItemRecord>;
+  membershipLists: List<List<ItemMembershipRecord>>;
   tableTitle: string;
   id?: string;
   headerElements: JSX.Element[];
@@ -50,10 +53,10 @@ type Props = {
   }>;
   clickable?: boolean;
   defaultSortedColumn?: {
-    updatedAt: 'desc' | 'asc' | null | undefined;
-    createdAt: 'desc' | 'asc' | null | undefined;
-    type: 'desc' | 'asc' | null | undefined;
-    name: 'desc' | 'asc' | null | undefined;
+    updatedAt?: 'desc' | 'asc' | null;
+    createdAt?: 'desc' | 'asc' | null;
+    type?: 'desc' | 'asc' | null;
+    name?: 'desc' | 'asc' | null;
   };
   isEditing?: boolean;
   showThumbnails?: boolean;
@@ -65,7 +68,7 @@ const ItemsTable: FC<Props> = ({
   tableTitle,
   id: tableId = '',
   items: rows = List(),
-  memberships = List(),
+  membershipLists = List(),
   headerElements = [],
   isSearching = false,
   actions,
@@ -161,7 +164,7 @@ const ItemsTable: FC<Props> = ({
     translateBuilder(BUILDER.ITEMS_TABLE_DRAG_DEFAULT_MESSAGE);
 
   const ActionComponent = ActionsCellRenderer({
-    memberships,
+    membershipLists,
     items: rows,
     member,
   });
@@ -211,6 +214,8 @@ const ItemsTable: FC<Props> = ({
           textAlign: 'right',
         },
         sortable: false,
+        // prevent ellipsis for small screens
+        minWidth: 165,
       },
     ];
 
