@@ -9,9 +9,9 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   GraaspLogo,
   Main as GraaspMain,
-  HostsMapper,
   Platform,
   PlatformSwitch,
+  defaultHostsMapper,
   usePlatformNavigation,
 } from '@graasp/ui';
 
@@ -36,15 +36,11 @@ const StyledLink = styled(Link)(() => ({
 }));
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase + s.slice(1);
-
 // small converter for HOST_MAP into a usePlatformNavigation mapper
-export const PlatformsHostsMapper = Object.fromEntries(
-  Object.entries(HOST_MAP).map(([context, hostname]) => [
-    capitalize(context),
-    hostname,
-  ]),
-) as unknown as HostsMapper;
+export const platformsHostsMap = defaultHostsMapper({
+  [Platform.Player]: HOST_MAP.player,
+  [Platform.Library]: HOST_MAP.library,
+});
 
 const Main: FC<Props> = ({ children }) => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);
@@ -71,7 +67,7 @@ const Main: FC<Props> = ({ children }) => {
   );
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
 
-  const navigate = usePlatformNavigation(PlatformsHostsMapper);
+  const navigate = usePlatformNavigation(platformsHostsMap);
 
   const redirects = Object.fromEntries(
     [Platform.Player, Platform.Library].map((platform) => [
