@@ -6,8 +6,14 @@ import { Link } from 'react-router-dom';
 
 import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Context } from '@graasp/sdk';
-import { GraaspLogo, Main as GraaspMain, Navigation } from '@graasp/ui';
+import {
+  GraaspLogo,
+  Main as GraaspMain,
+  HostsMapper,
+  Platform,
+  PlatformSwitch,
+  usePlatformNavigation,
+} from '@graasp/ui';
 
 import {
   APP_NAME,
@@ -16,10 +22,7 @@ import {
 } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
-import {
-  APP_NAVIGATION_DROP_DOWN_ID,
-  HEADER_APP_BAR_ID,
-} from '../../config/selectors';
+import { HEADER_APP_BAR_ID } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { LayoutContext } from '../context/LayoutContext';
@@ -32,6 +35,16 @@ const StyledLink = styled(Link)(() => ({
   alignItems: 'center',
 }));
 type Props = { children: JSX.Element | (JSX.Element & string) };
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase + s.slice(1);
+
+// small converter for HOST_MAP into a usePlatformNavigation mapper
+export const PlatformsHostsMapper = Object.fromEntries(
+  Object.entries(HOST_MAP).map(([context, hostname]) => [
+    capitalize(context),
+    hostname,
+  ]),
+) as unknown as HostsMapper;
 
 const Main: FC<Props> = ({ children }) => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);
@@ -58,6 +71,15 @@ const Main: FC<Props> = ({ children }) => {
   );
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
 
+  const navigate = usePlatformNavigation(PlatformsHostsMapper);
+
+  const redirects = Object.fromEntries(
+    [Platform.Player, Platform.Library].map((platform) => [
+      platform,
+      { onClick: () => navigate(platform) },
+    ]),
+  );
+
   const leftContent = (
     <Box display="flex" ml={2}>
       <StyledLink to={HOME_PATH}>
@@ -66,10 +88,14 @@ const Main: FC<Props> = ({ children }) => {
           {APP_NAME}
         </Typography>
       </StyledLink>
-      <Navigation
-        id={APP_NAVIGATION_DROP_DOWN_ID}
-        hostMap={HOST_MAP}
-        currentValue={Context.BUILDER}
+      <PlatformSwitch
+        selected={Platform.Builder}
+        size={32}
+        platformsProps={{
+          ...redirects,
+          [Platform.Analytics]: { disabled: true },
+        }}
+        disabledColor="#999"
       />
     </Box>
   );
