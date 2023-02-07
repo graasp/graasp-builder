@@ -1,4 +1,5 @@
 # Graasp Builder
+[![All Contributors](https://img.shields.io/github/all-contributors/projectOwner/projectName?color=ee8449&style=flat-square)](#contributors)
 
 ## Installation
 
@@ -42,3 +43,14 @@ REACT_APP_H5P_INTEGRATION_URL=
 
 Run `yarn cypress`. This should run every tests headlessly.
 You can run `yarn cypress:open` to access the framework and visually display the tests' processes.
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
