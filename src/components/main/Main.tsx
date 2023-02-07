@@ -22,7 +22,11 @@ import {
 } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
-import { HEADER_APP_BAR_ID } from '../../config/selectors';
+import {
+  APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
+  APP_NAVIGATION_PLATFORM_SWITCH_ID,
+  HEADER_APP_BAR_ID,
+} from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { LayoutContext } from '../context/LayoutContext';
@@ -68,14 +72,25 @@ const Main: FC<Props> = ({ children }) => {
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
 
   const { itemId } = useParams();
-  const navigate = usePlatformNavigation(platformsHostsMap, itemId);
+  const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
 
-  const redirects = Object.fromEntries(
-    [Platform.Player, Platform.Library].map((platform) => [
-      platform,
-      { onClick: () => navigate(platform) },
-    ]),
-  );
+  const platformProps = {
+    [Platform.Builder]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Builder],
+    },
+    [Platform.Player]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Player],
+      ...getNavigationEvents(Platform.Player),
+    },
+    [Platform.Library]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Library],
+      ...getNavigationEvents(Platform.Library),
+    },
+    [Platform.Analytics]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Analytics],
+      disabled: true,
+    },
+  };
 
   const leftContent = (
     <Box display="flex" ml={2}>
@@ -86,11 +101,9 @@ const Main: FC<Props> = ({ children }) => {
         </Typography>
       </StyledLink>
       <PlatformSwitch
+        id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
         selected={Platform.Builder}
-        platformsProps={{
-          ...redirects,
-          [Platform.Analytics]: { disabled: true },
-        }}
+        platformsProps={platformProps}
         disabledColor="#999"
       />
     </Box>
