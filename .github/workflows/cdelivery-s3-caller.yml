@@ -7,13 +7,12 @@ on:
     types: [staging-deployment]
 
 jobs:
-
-  # abort previous deployment if a newer one is in progress
-  concurrency:
-    group: deploy-staging
-    cancel-in-progress: true
-
   graasp-deploy-s3-workflow:
+    # abort previous deployment if a newer one is in progress
+    concurrency:
+      group: deploy-staging
+      cancel-in-progress: true
+      
     name: Graasp Builder
     uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@v1
     with:
