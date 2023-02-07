@@ -269,5 +269,7 @@ export const DEFAULT_LINK_SHOW_BUTTON = true;
 
 export const GRAASP_ASSETS_URL = process.env.REACT_APP_GRAASP_ASSETS_URL;
 
+// TODO: refer from specific endpoint /tutorials?
 export const TUTORIALS_LINK =
   'https://player.graasp.org/9d80d81f-ec9d-4bfb-836a-1c6b125aef2f';
+
