@@ -8,7 +8,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { FC, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import { BUILDER } from '@graasp/translations';
 import { MainMenu as GraaspMainMenu, MenuItem } from '@graasp/ui';
@@ -23,7 +22,7 @@ import {
 } from '../../config/paths';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled('a')(({ theme }) => ({
   position: 'absolute',
   bottom: 0,
   width: '100%',
@@ -33,6 +32,11 @@ const StyledLink = styled(Link)(({ theme }) => ({
   boxSizing: 'border-box',
   color: 'grey',
   textDecoration: 'none',
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
+}));
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   '&:hover': {
     color: theme.palette.primary.main,
   },
@@ -50,7 +54,7 @@ const MainMenu: FC = () => {
   };
 
   const resourcesLink = (
-    <StyledLink to={TUTORIALS_LINK}>
+    <StyledLink href={TUTORIALS_LINK} target="_blank">
       <ListItemIcon>
         <AutoStoriesIcon />
       </ListItemIcon>
@@ -61,7 +65,7 @@ const MainMenu: FC = () => {
   const renderAuthenticatedMemberMenuItems = () => {
     if (!member || !member.id) {
       return (
-        <MenuItem
+        <StyledMenuItem
           disabled
           text={translateBuilder(BUILDER.HOME_TITLE)}
           icon={<FolderIcon />}
