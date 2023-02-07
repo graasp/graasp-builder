@@ -1,5 +1,5 @@
 # Graasp Builder
-[![All Contributors](https://img.shields.io/github/all-contributors/projectOwner/projectName?color=ee8449&style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/github/all-contributors/graasp/graasp-builder?color=ee8449&style=flat-square)](#contributors)
 
 ## Installation
 
