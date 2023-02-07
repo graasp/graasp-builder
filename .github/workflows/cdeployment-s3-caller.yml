@@ -8,6 +8,11 @@ on:
 
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
+  # abort previous deployment if a newer one is in progress
+  concurrency:
+    group: deploy-production
+    cancel-in-progress: true
+
   graasp-deploy-s3-workflow:
     # Replace with repository name
     name: Graasp Builder

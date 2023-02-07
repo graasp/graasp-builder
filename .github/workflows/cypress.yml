@@ -10,6 +10,12 @@ on:
 
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
+
+  # only cancel in-progress jobs or runs for the current workflow
+  concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
   graasp-deploy-cypress-workflow:
     # Replace with repository name
     name: Cypress caller template
