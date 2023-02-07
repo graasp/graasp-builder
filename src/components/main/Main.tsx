@@ -87,7 +87,6 @@ const Main: FC<Props> = ({ children }) => {
       </StyledLink>
       <PlatformSwitch
         selected={Platform.Builder}
-        size={32}
         platformsProps={{
           ...redirects,
           [Platform.Analytics]: { disabled: true },

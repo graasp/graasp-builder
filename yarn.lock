@@ -2525,9 +2525,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#215-platform-switch":
-  version: 0.8.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=10d701e4276b512d4c14bce18763c53dc1484b03"
+"@graasp/ui@npm:0.10.0":
+  version: 0.10.0
+  resolution: "@graasp/ui@npm:0.10.0"
   dependencies:
     "@graasp/sdk": 0.2.0
     clsx: 1.1.1
@@ -2560,7 +2560,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 0dc2e0aeff16efee4e09fbd3c6b1169c7458c9d2dc328a5a69e431540dfee263372f38ff44ca8f685b8fd8274bb1bfa95846ddcf1839f50f8951cb7aecdc1a68
+  checksum: de710848735db409bc03f949bcecfef515a46bc90418eb1fbd34d58f33901300a80fb2310cd29289b2bb7dce99f062d4cf1e95c638b6f0d858343e209004627c
   languageName: node
   linkType: hard
 
@@ -10142,7 +10142,7 @@ __metadata:
     "@graasp/query-client": 0.1.3
     "@graasp/sdk": 0.3.0
     "@graasp/translations": 1.3.0
-    "@graasp/ui": "github:graasp/graasp-ui#215-platform-switch"
+    "@graasp/ui": 0.10.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117
