@@ -2,7 +2,7 @@ import { Grid, Typography, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { FC, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -67,7 +67,8 @@ const Main: FC<Props> = ({ children }) => {
   );
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
 
-  const navigate = usePlatformNavigation(platformsHostsMap);
+  const { itemId } = useParams();
+  const navigate = usePlatformNavigation(platformsHostsMap, itemId);
 
   const redirects = Object.fromEntries(
     [Platform.Player, Platform.Library].map((platform) => [

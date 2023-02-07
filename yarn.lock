@@ -2527,7 +2527,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#215-platform-switch":
   version: 0.8.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=1ada545cba435d6ef0430c64d533e992c0f05b89"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=10d701e4276b512d4c14bce18763c53dc1484b03"
   dependencies:
     "@graasp/sdk": 0.2.0
     clsx: 1.1.1
@@ -2560,7 +2560,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 6ddd1734aa2bce9f957572a76119925432be6494f8197e6b32be1c6cae92eb1ff7670bf8686a188d6bdd810a43cba078bbda0c32426d9577048c27c9b361fafd
+  checksum: 0dc2e0aeff16efee4e09fbd3c6b1169c7458c9d2dc328a5a69e431540dfee263372f38ff44ca8f685b8fd8274bb1bfa95846ddcf1839f50f8951cb7aecdc1a68
   languageName: node
   linkType: hard
 
