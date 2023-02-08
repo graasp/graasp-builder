@@ -1,6 +1,6 @@
 # Graasp Builder
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Installation
@@ -54,7 +54,8 @@ You can run `yarn cypress:open` to access the framework and visually display the
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="http://pyphilia.com"><img src="https://avatars.githubusercontent.com/u/11229627?v=4?s=100" width="100px;" alt="Kim Lan Phan Hoang"/><br /><sub><b>Kim Lan Phan Hoang</b></sub></a><br /><a href="https://github.com/graasp/graasp-builder/commits?author=pyphilia" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/kim-lan-phan-hoang-a457bb130"><img src="https://avatars.githubusercontent.com/u/11229627?v=4?s=100" width="100px;" alt="Kim Lan Phan Hoang"/><br /><sub><b>Kim Lan Phan Hoang</b></sub></a><br /><a href="https://github.com/graasp/graasp-builder/commits?author=pyphilia" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/chau-alexandre/"><img src="https://avatars.githubusercontent.com/u/14943421?v=4?s=100" width="100px;" alt="Alexandre Chau"/><br /><sub><b>Alexandre Chau</b></sub></a><br /><a href="https://github.com/graasp/graasp-builder/commits?author=dialexo" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
