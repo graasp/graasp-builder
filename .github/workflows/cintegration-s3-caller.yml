@@ -13,9 +13,7 @@ on:
 
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
-
   graasp-deploy-s3-workflow:
-
     # abort previous deployment if a newer one is in progress
     concurrency:
       group: deploy-development
