@@ -2373,24 +2373,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#213-improve-itemloginauthorization-child-comp-type-to-allow-functional-components-to-be-used":
-  version: 0.8.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=56999426da3b84299229449465a6a0c2aad94819"
+"@graasp/ui@github:graasp/graasp-ui#225-update-for-exporthook-pr":
+  version: 0.10.2
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=39aba1eea41aab6c27304f6e80acea16b1bc48c8"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#74-afine-item-type-with-discriminated-union"
-    clsx: 1.2.1
+    clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.1.0
-    katex: 0.16.4
+    katex: 0.16.0
     lodash.truncate: 4.4.2
-    qs: 6.11.0
+    qs: 6.10.5
     quill-emoji: 0.2.0
-    react-cookie-consent: 8.0.1
-    react-i18next: 12.1.4
-    react-quill: 2.0.0
-    react-rnd: 10.4.1
-    react-text-mask: 5.5.0
-    uuid: 9.0.0
+    react-cookie-consent: 7.4.1
+    react-i18next: 11.17.0
+    react-quill: 2.0.0-beta.4
+    react-rnd: 10.3.7
+    react-text-mask: 5.4.3
+    uuid: 8.3.2
   peerDependencies:
     "@emotion/react": 11.10.4
     "@emotion/styled": 11.10.4
@@ -2408,7 +2408,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: b749763634b1edc8a3110e1689157592315e4e91246fe4ce0f8505c3e4b68d379d2611cce4b1f84bbe51e9e31a39ce03c25623f03b61f0b76bad5fdb5e217196
+  checksum: a2bf82f3c71e9ba6ccc41d8e54a3083820b32a8a1db1d54ca49b318554e450e2a149e7ab9db7b3a2dcf004ec54781457109786df709bea2a13b2f72f07837ae3
   languageName: node
   linkType: hard
 
@@ -6294,6 +6294,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:1.1.1":
+  version: 1.1.1
+  resolution: "clsx@npm:1.1.1"
+  checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
+  languageName: node
+  linkType: hard
+
 "clsx@npm:1.2.1, clsx@npm:^1.1.1, clsx@npm:^1.2.1":
   version: 1.2.1
   resolution: "clsx@npm:1.2.1"
@@ -9843,7 +9850,7 @@ __metadata:
     "@graasp/query-client": "github:graasp/graasp-query-client#202/exportChatHook"
     "@graasp/sdk": "github:graasp/graasp-sdk#74-afine-item-type-with-discriminated-union"
     "@graasp/translations": 1.3.0
-    "@graasp/ui": "github:graasp/graasp-ui#213-improve-itemloginauthorization-child-comp-type-to-allow-functional-components-to-be-used"
+    "@graasp/ui": "github:graasp/graasp-ui#225-update-for-exporthook-pr"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117
@@ -12110,17 +12117,6 @@ __metadata:
   bin:
     katex: cli.js
   checksum: 0e094523544b3c921e55da8cf1a9ea2718213c621af508af9fc03859b97dc73280f478fbfede5a8b32948210c3596c5a637dd64e0e28e31d6c617b5d50c29762
-  languageName: node
-  linkType: hard
-
-"katex@npm:0.16.4":
-  version: 0.16.4
-  resolution: "katex@npm:0.16.4"
-  dependencies:
-    commander: ^8.0.0
-  bin:
-    katex: cli.js
-  checksum: 94eaf1fbd8365792308527695c09baa6d2d84e2d0170e4af44fb12be3ed403fb3430caff2410117f2f1a9dfdb329f61ab9611d97e645d9c89ee60940698a45cc
   languageName: node
   linkType: hard
 
@@ -15614,7 +15610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.0.0, prop-types@npm:^15.5.6, prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.0.0, prop-types@npm:^15.5.6, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -15905,14 +15901,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-cookie-consent@npm:8.0.1":
-  version: 8.0.1
-  resolution: "react-cookie-consent@npm:8.0.1"
+"react-cookie-consent@npm:7.4.1":
+  version: 7.4.1
+  resolution: "react-cookie-consent@npm:7.4.1"
   dependencies:
     js-cookie: ^2.2.1
+    prop-types: ^15.7.2
   peerDependencies:
-    react: ">=16"
-  checksum: c99f3e40e3091c439956498158b5b8906cce170763836d6fade98a06ce667eca25aaf3bc407e10a6fb72fc44e5178a2ebf14cbbe4e1b5684a74b7d7f484bd359
+    react: ^16.13.1 || ^17.0.0 || ^18.0.0
+  checksum: 05ab24f7e028da89160baa51c1c2eb62156a98c8e0b55d6548fc95aba8a7e325b06637c1aa1a974b9456f2f1316082dda73ac3b6448fd79ac4cccecda195e4ed
   languageName: node
   linkType: hard
 
@@ -15968,16 +15965,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-draggable@npm:4.4.5":
-  version: 4.4.5
-  resolution: "react-draggable@npm:4.4.5"
+"react-draggable@npm:4.4.4":
+  version: 4.4.4
+  resolution: "react-draggable@npm:4.4.4"
   dependencies:
     clsx: ^1.1.1
-    prop-types: ^15.8.1
+    prop-types: ^15.6.0
   peerDependencies:
     react: ">= 16.3.0"
     react-dom: ">= 16.3.0"
-  checksum: 21c3775db086e13020967627c20acd41d1ddbc7c7d7fca51491a5bbb54a0aa7e1730a4bc9af17141eb50a4954e547a5e25b2368f5f54b70db6f2686a897bacf2
+  checksum: b8258a58938c261a79f1b9ffd67774283c1ac732423c1c9c9f5fe4d17a06886edd659891e445ba089828ca59f1885e5b909262e24cf60640b8ed05c8499c88bb
   languageName: node
   linkType: hard
 
@@ -16029,24 +16026,6 @@ __metadata:
     react-native:
       optional: true
   checksum: f523d7ec5dcb7f5fd36efc9385639d01160071f4dadbbc5a3f1daa64b0f332f709347bdd3bc68f5aefbd72c8742233aa715b308b1ca87179ad501acc19c72068
-  languageName: node
-  linkType: hard
-
-"react-i18next@npm:12.1.4":
-  version: 12.1.4
-  resolution: "react-i18next@npm:12.1.4"
-  dependencies:
-    "@babel/runtime": ^7.20.6
-    html-parse-stringify: ^3.0.1
-  peerDependencies:
-    i18next: ">= 19.0.0"
-    react: ">= 16.8.0"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 6f0f8a47f0bf7da2c9ac383c88b6ef02446d9d1aa2609cfcc98d8a28999da85361f065fbe7f7f4af910df4e8d53af7879db4b9cd681274d582fc7bdd1b07813b
   languageName: node
   linkType: hard
 
@@ -16141,20 +16120,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-quill@npm:2.0.0":
-  version: 2.0.0
-  resolution: "react-quill@npm:2.0.0"
-  dependencies:
-    "@types/quill": ^1.3.10
-    lodash: ^4.17.4
-    quill: ^1.3.7
-  peerDependencies:
-    react: ^16 || ^17 || ^18
-    react-dom: ^16 || ^17 || ^18
-  checksum: 568e28656ae3a40944d5c4cc9d35accc21834cf15b61a74af4566d8772eb152ce65c0d5ea6da65918cb5c9453c1a2041c60c4a19819bf319bee2e067b613d32b
-  languageName: node
-  linkType: hard
-
 "react-quill@npm:2.0.0-beta.4":
   version: 2.0.0-beta.4
   resolution: "react-quill@npm:2.0.0-beta.4"
@@ -16197,17 +16162,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-rnd@npm:10.4.1":
-  version: 10.4.1
-  resolution: "react-rnd@npm:10.4.1"
+"react-rnd@npm:10.3.7":
+  version: 10.3.7
+  resolution: "react-rnd@npm:10.3.7"
   dependencies:
     re-resizable: 6.9.6
-    react-draggable: 4.4.5
+    react-draggable: 4.4.4
     tslib: 2.3.1
   peerDependencies:
     react: ">=16.3.0"
     react-dom: ">=16.3.0"
-  checksum: 65741a091dab3c22093f27d89036a2989d09e1701c08bf7dc3c8322b14c92bf9a78e38a47e7cf2c4873dd5e90fae0666a9e5a9b75e843685dc49ea6392232cca
+  checksum: 312c08f21b6ef9dcfa2e4823ebf63a3142793168b02b2cd54327587ad8159d409577428c6c363e3805ba437403dcfc708df39ebc83b423e9d71002e3fca3f3fc
   languageName: node
   linkType: hard
 
@@ -16326,14 +16291,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-text-mask@npm:5.5.0":
-  version: 5.5.0
-  resolution: "react-text-mask@npm:5.5.0"
+"react-text-mask@npm:5.4.3":
+  version: 5.4.3
+  resolution: "react-text-mask@npm:5.4.3"
   dependencies:
     prop-types: ^15.5.6
   peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: ccfd425a66cf074fd3e4823bf4d1a4f07caf81309f7c1461e524c32ae53b17a666855a8dcc1c73206e9d8e4a6a9460f66f767aac6ba18034b663521848294c5c
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0
+  checksum: ee9c560f47d2f67d0193636eeea36852503d6d7bfd16d75ecb8170256606923d786bbb3511971deedbd01136340acf597fe2b6ba0be3cddb2a17a602767eb7b9
   languageName: node
   linkType: hard
 
@@ -19038,21 +19003,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uuid@npm:8.3.2, uuid@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
 "uuid@npm:9.0.0":
   version: 9.0.0
   resolution: "uuid@npm:9.0.0"
   bin:
     uuid: dist/bin/uuid
   checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
   languageName: node
   linkType: hard
 
