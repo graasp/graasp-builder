@@ -5,7 +5,7 @@ import { PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
 import { hooks, useMutation } from '../../../config/queryClient';
-import { ButtonVariants } from '../../../enums/chatbox';
+import { ButtonVariants } from '../../../enums';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import ClearChatButton from './ClearChatButton';
 import DownloadChatButton from './DownloadChatButton';
@@ -34,12 +34,12 @@ const AdminChatSettings = ({ item }: Props): JSX.Element => {
   return (
     <Stack direction="column" spacing={1}>
       <DownloadChatButton
-        variant={ButtonVariants.BUTTON}
+        variant={ButtonVariants.Button}
         chatId={itemId}
         showInfo
       />
       <ClearChatButton
-        variant={ButtonVariants.BUTTON}
+        variant={ButtonVariants.Button}
         chatId={itemId}
         clearChat={clearChatHook}
       />

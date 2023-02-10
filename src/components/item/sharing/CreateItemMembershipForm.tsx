@@ -28,21 +28,21 @@ const { shareItemRoutine } = routines;
 type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
 type Props = {
   item: ItemRecord;
-  members?: List<MemberRecord>;
+  members: List<MemberRecord>;
 };
 
 // todo: handle multiple invitations
-const CreateItemMembershipForm = ({
-  item,
-  members = List(),
-}: Props): JSX.Element => {
+const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
   const itemId = item.id;
   const [error, setError] = useState<string>('');
 
   const { mutateAsync: shareItem } = useMutation<
     { failure?: { message: string }[] },
     unknown,
-    { itemId: string; data: Partial<Invitation>[] }
+    {
+      itemId: string;
+      data: { id: string; email: string; permission: PermissionLevel }[];
+    }
   >(MUTATION_KEYS.SHARE_ITEM);
   const { t: translateBuilder } = useBuilderTranslation();
 

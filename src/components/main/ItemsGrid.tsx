@@ -126,11 +126,10 @@ const ItemsGrid = ({
           </Select>
         </StyledBox>
         <Pagination
-          sx={{ p: 2, alignItems: 'center' }}
           id={ITEMS_GRID_PAGINATION_ID}
           count={pagesCount}
           page={page}
-          onChange={(_, v) => setPage(v)}
+          onChange={(_e, v) => setPage(v)}
         />
       </Box>
     </div>

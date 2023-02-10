@@ -69,7 +69,6 @@ const Items = ({
     case ITEM_LAYOUT_MODES.GRID:
       return (
         <ItemsGrid
-          id={id}
           parentId={parentId}
           title={title}
           items={itemSearch.results}
@@ -77,7 +76,6 @@ const Items = ({
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
-          // clickable={clickable}
           isEditing={isEditing}
         />
       );

@@ -1,22 +1,27 @@
-import PropTypes from 'prop-types';
-
 import { Box, Typography } from '@mui/material';
 
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 import { buildNameCellRendererId } from '../../config/selectors';
 import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 
-const ItemNameCellRenderer = (showThumbnails) => {
-  const Component = ({ data: item }) => {
+type ChildProps = { data: ItemRecord };
+
+const ItemNameCellRenderer = (
+  showThumbnails: boolean,
+): ((props: ChildProps) => JSX.Element) => {
+  const Component = ({ data: item }: ChildProps): JSX.Element => {
+    // TODO: improve types
+    const linkExtra = getEmbeddedLinkExtra(item.extra as any);
+
     const alt = item.name;
     const defaultValueComponent = (
       <ItemIcon
         type={item.type}
-        id={item.id}
-        iconSrc={getEmbeddedLinkExtra(item.extra)?.icons?.[0]}
-        name={item.name}
+        iconSrc={linkExtra?.icons?.[0]}
+        alt={item.name}
       />
     );
 
@@ -29,12 +34,12 @@ const ItemNameCellRenderer = (showThumbnails) => {
         {showThumbnails && (
           <Thumbnail
             id={item.id}
-            thumbnailSrc={getEmbeddedLinkExtra(item.extra)?.thumbnails?.[0]}
+            thumbnailSrc={linkExtra?.thumbnails?.[0]}
             maxWidth={30}
             maxHeight={30}
             alt={alt}
             defaultValue={defaultValueComponent}
-            useThumbnail={hooks.useItemThumbnail}
+            useThumbnail={hooks.useItemThumbnail as any}
           />
         )}
         <Typography noWrap ml={1}>
@@ -42,15 +47,6 @@ const ItemNameCellRenderer = (showThumbnails) => {
         </Typography>
       </Box>
     );
-  };
-
-  Component.propTypes = {
-    data: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      extra: PropTypes.shape({}).isRequired,
-      type: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   };
 
   return Component;

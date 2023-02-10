@@ -40,12 +40,12 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
     setItem(null);
   };
 
-  const onConfirm = ({ ids: target, to }: { ids: string[]; to: string }) => {
+  const onConfirm = ({ ids: [target], to }: { ids: string[]; to: string }) => {
     const shortcut = {
       name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {
         name: item.name,
       }),
-      extra: buildShortcutExtra(target[0]),
+      extra: buildShortcutExtra(target),
       type: ItemType.SHORTCUT,
       // set parent id if not root
       parentId: to !== TREE_MODAL_MY_ITEMS_ID ? to : undefined,

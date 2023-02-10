@@ -1,17 +1,26 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import { DocumentItemType, ItemType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { TextEditor } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
-import { buildDocumentExtra, getDocumentExtra } from '../../../utils/itemExtra';
+import { buildDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
 
-const DocumentForm = ({ onChange, item, updatedProperties }) => {
+type Props = {
+  onChange: (item: Partial<DocumentItemType>) => void;
+  item: Partial<DocumentItemType>;
+  updatedProperties: Partial<DocumentItemType>;
+};
+
+const DocumentForm = ({
+  onChange,
+  item,
+  updatedProperties,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleOnChange = (content) => {
@@ -22,8 +31,8 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
   };
 
   const value =
-    getDocumentExtra(updatedProperties?.extra)?.content ||
-    getDocumentExtra(item?.extra)?.content;
+    (updatedProperties?.extra?.[ItemType.DOCUMENT]?.content as string) ||
+    (item?.extra?.[ItemType.DOCUMENT]?.content as string);
 
   return (
     <>
@@ -47,16 +56,6 @@ const DocumentForm = ({ onChange, item, updatedProperties }) => {
       </Box>
     </>
   );
-};
-
-DocumentForm.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  item: PropTypes.shape({
-    extra: PropTypes.shape({}),
-  }).isRequired,
-  updatedProperties: PropTypes.shape({
-    extra: PropTypes.shape({}),
-  }).isRequired,
 };
 
 export default DocumentForm;

@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { ItemLogin } from '@graasp/query-client/dist/types';
+import { InvitationRecord, ItemLogin } from '@graasp/query-client/dist/types';
 import { isPseudonymizedMember } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -34,7 +34,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentUserContext();
   const { data: members } = hooks.useMembers(
-    memberships?.map(({ memberId }) => memberId).toArray(),
+    memberships?.map(({ memberId }) => memberId)?.toArray(),
   );
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 
@@ -83,6 +83,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
         {/* show authenticated members if login schema is defined
         todo: show only if item is pseudomized
         */}
+        {/* // todo: this will change with the refactor */}
         {getItemLoginSchema(item?.extra as { itemLogin?: ItemLogin }) && (
           <>
             <Divider sx={{ my: 3 }} />
@@ -108,7 +109,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
             </Typography>
             <InvitationsTable
               item={item}
-              invitations={invitations}
+              invitations={invitations as List<InvitationRecord>}
               emptyMessage={translateBuilder(
                 BUILDER.SHARING_INVITATIONS_EMPTY_MESSAGE,
               )}
@@ -121,7 +122,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   };
 
   return (
-    <Container disableGutters sx={{ mt: 2 }}>
+    <Container disableGutters component="div">
       <Typography variant="h4">
         {translateBuilder(BUILDER.SHARING_TITLE)}
       </Typography>

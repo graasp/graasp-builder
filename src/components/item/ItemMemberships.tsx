@@ -16,7 +16,7 @@ import MemberAvatar from '../common/MemberAvatar';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
-  id: string;
+  id?: string;
   onClick: () => void;
   maxAvatar?: number;
 };
@@ -49,12 +49,7 @@ const ItemMemberships = ({
   }
 
   return (
-    <Grid
-      container
-      alignItems="center"
-      justifyContent="space-between"
-      id={ITEM_MEMBERSHIPS_CONTENT_ID}
-    >
+    <Grid container alignItems="center" id={ITEM_MEMBERSHIPS_CONTENT_ID}>
       <Grid item>
         <Tooltip
           title={translateBuilder(BUILDER.SHARED_MEMBERS_TOOLTIP, {

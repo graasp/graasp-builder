@@ -13,13 +13,13 @@ import ItemHeaderActions from './ItemHeaderActions';
 const { useItem } = hooks;
 
 type Props = {
-  onClickChatbox?: () => void;
   onClickMetadata?: () => void;
-  showNavigation: boolean;
+  onClickChatbox?: () => void;
+  showNavigation?: boolean;
 };
 
 const ItemHeader = ({
-  onClickMetadata = () => null,
+  onClickMetadata,
   onClickChatbox,
   showNavigation = true,
 }: Props): JSX.Element => {

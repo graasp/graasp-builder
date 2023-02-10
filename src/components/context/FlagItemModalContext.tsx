@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import { List as ImmutableList } from 'immutable';
 
-import { ListItem, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemText } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { createContext, useMemo, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { FlagRecord } from '@graasp/query-client/dist/types';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -25,16 +26,27 @@ import CancelButton from '../common/CancelButton';
 
 const { useFlags } = hooks;
 
-const FlagItemModalContext = createContext();
+const FlagItemModalContext = createContext<{
+  openModal?: (id: string) => void;
+}>({});
 
-const FlagItemModalProvider = ({ children }) => {
+const FlagItemModalProvider = ({
+  children,
+}: {
+  children: JSX.Element | JSX.Element[];
+}): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: postFlagItem } = useMutation(MUTATION_KEYS.POST_ITEM_FLAG);
+  const { mutate: postFlagItem } = useMutation<
+    unknown,
+    unknown,
+    { flagId: string; itemId: string }
+  >(MUTATION_KEYS.POST_ITEM_FLAG);
   const [open, setOpen] = useState(false);
-  const [selectedFlag, setSelectedFlag] = useState(false);
-  const [itemId, setItemId] = useState(false);
+  const [selectedFlag, setSelectedFlag] = useState<FlagRecord | null>(null);
+  const [itemId, setItemId] = useState<string | null>(null);
 
-  const { data: flags } = useFlags();
+  const { data } = useFlags();
+  const flags = data as ImmutableList<FlagRecord>;
 
   const openModal = (newItemId) => {
     setOpen(true);
@@ -77,15 +89,14 @@ const FlagItemModalProvider = ({ children }) => {
             }}
           >
             {flags?.map((flag) => (
-              <ListItem
+              <ListItemButton
                 key={flag.id}
                 id={buildFlagListItemId(flag.id)}
-                button
-                selected={selectedFlag.id === flag.id}
+                selected={selectedFlag?.id === flag.id}
                 onClick={handleSelect(flag)}
               >
                 <ListItemText primary={flag.name} />
-              </ListItem>
+              </ListItemButton>
             ))}
           </List>
         </DialogContent>
@@ -103,14 +114,6 @@ const FlagItemModalProvider = ({ children }) => {
       {children}
     </FlagItemModalContext.Provider>
   );
-};
-
-FlagItemModalProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-FlagItemModalProvider.defaultProps = {
-  children: null,
 };
 
 export { FlagItemModalProvider, FlagItemModalContext };

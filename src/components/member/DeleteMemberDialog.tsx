@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { Grid, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -21,10 +19,18 @@ import {
 } from '../../config/selectors';
 import CancelButton from '../common/CancelButton';
 
-const DeleteMemberDialog = ({ id }) => {
+type Props = {
+  id: string;
+};
+
+const DeleteMemberDialog = ({ id }: Props): JSX.Element => {
   const { t: translateAccount } = useAccountTranslation();
   const [open, setOpen] = useState(false);
-  const { mutate: deleteMember } = useMutation(MUTATION_KEYS.DELETE_MEMBER);
+  const { mutate: deleteMember } = useMutation<
+    unknown,
+    unknown,
+    { id: string }
+  >(MUTATION_KEYS.DELETE_MEMBER);
 
   const alertDialogTitle = 'alert-dialog-title';
   const alertDialogDescription = 'alert-dialog-description';
@@ -87,7 +93,6 @@ const DeleteMemberDialog = ({ id }) => {
               id={DELETE_MEMBER_BUTTON_ID}
               variant="contained"
               color="error"
-              my={1}
               onClick={() => setOpen(true)}
             >
               {translateAccount(ACCOUNT.PROFILE_DELETE_ACCOUNT_BUTTON)}
@@ -100,10 +105,6 @@ const DeleteMemberDialog = ({ id }) => {
       </Grid>
     </>
   );
-};
-
-DeleteMemberDialog.propTypes = {
-  id: PropTypes.string.isRequired,
 };
 
 export default DeleteMemberDialog;

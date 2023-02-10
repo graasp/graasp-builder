@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.2](https://github.com/graasp/graasp-builder/compare/v0.4.1...v0.4.2) (2023-01-31)
+
+
+### Bug Fixes
+
+* fix file drop placement depending on mainmenu ([#536](https://github.com/graasp/graasp-builder/issues/536)) ([879ffaa](https://github.com/graasp/graasp-builder/commit/879ffaa29dfec0c30803861d6085106e4a53d372))
+* replace broken default image ([9d9a60f](https://github.com/graasp/graasp-builder/commit/9d9a60f8fadbf2f0aebb4df098f307aaa9b7f596))
+* update @graasp/query-client ([#541](https://github.com/graasp/graasp-builder/issues/541)) ([2b680b0](https://github.com/graasp/graasp-builder/commit/2b680b0f5b4f7d2b1499acb536638d5103dd3b8c))
+
 ## [0.4.1](https://github.com/graasp/graasp-builder/compare/v0.4.0...v0.4.1) (2023-01-19)
 
 

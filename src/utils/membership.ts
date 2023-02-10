@@ -47,17 +47,18 @@ export const getHighestPermissionForMemberFromMemberships = ({
   const sorted = itemMemberships?.sort((a, b) =>
     a.itemPath.length > b.itemPath.length ? 1 : -1,
   );
-  return sorted.get(0);
+
+  return sorted.first();
 };
 
 export const isSettingsEditionAllowedForUser = ({
   memberships,
   memberId,
 }: {
-  memberships?: List<ItemMembershipRecord>;
+  memberships: List<ItemMembershipRecord>;
   memberId: string;
-}): ItemMembershipRecord | undefined =>
-  memberships?.find(
+}): boolean =>
+  memberships?.some(
     ({ memberId: mId, permission }) =>
       mId === memberId && PermissionLevel.Admin === permission,
   );

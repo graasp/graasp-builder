@@ -30,7 +30,7 @@ import EmailPreferenceSwitch from './EmailPreferenceSwitch';
 import LanguageSwitch from './LanguageSwitch';
 import PasswordSetting from './PasswordSetting';
 
-const MemberProfileScreen = () => {
+const MemberProfileScreen = (): JSX.Element => {
   const { t } = useAccountTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { data: member, isLoading } = useCurrentUserContext();
@@ -106,7 +106,7 @@ const MemberProfileScreen = () => {
                 <LanguageSwitch
                   id={MEMBER_PROFILE_LANGUAGE_SWITCH_ID}
                   memberId={member.id}
-                  lang={member.extra?.lang || DEFAULT_LANG}
+                  lang={(member.extra?.lang as string) || DEFAULT_LANG}
                 />
               </Grid>
             </Grid>
@@ -120,7 +120,10 @@ const MemberProfileScreen = () => {
                 <EmailPreferenceSwitch
                   id={MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID}
                   memberId={member.id}
-                  emailFreq={member.extra?.emailFreq || DEFAULT_EMAIL_FREQUENCY}
+                  emailFreq={
+                    (member.extra?.emailFreq as string) ||
+                    DEFAULT_EMAIL_FREQUENCY
+                  }
                 />
               </Grid>
             </Grid>
@@ -128,7 +131,7 @@ const MemberProfileScreen = () => {
         </Grid>
 
         <AvatarSetting user={member} />
-        <PasswordSetting user={member} />
+        <PasswordSetting />
         <DeleteMemberDialog id={member?.id} />
       </Box>
     </Main>

@@ -33,23 +33,24 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
-  const { setIsItemSharingOpen } = useLayoutContext();
+  const { setIsItemMetadataMenuOpen } = useLayoutContext();
   const { data: creator } = useMember(item.creator);
 
   const onClick = () => {
-    setIsItemSharingOpen(true);
+    setIsItemMetadataMenuOpen(true);
   };
 
-  let { type }: { type: ItemType | string } = item;
+  const { type }: { type: ItemType | string } = item;
   let size = null;
+  let mimetype = null;
   if (type === ItemType.S3_FILE) {
     // todo: improve type of itemRecord with extras
-    const extra = getS3FileExtra(item.extra as unknown as S3FileItemExtra);
-    ({ mimetype: type, size } = extra);
+    const extra = getS3FileExtra(item.extra as S3FileItemExtra);
+    ({ mimetype, size } = extra);
   } else if (type === ItemType.LOCAL_FILE) {
     // todo: improve type of itemRecord with extras
-    const extra = getFileExtra(item.extra as unknown as LocalFileItemExtra);
-    ({ mimetype: type, size } = extra);
+    const extra = getFileExtra(item.extra as LocalFileItemExtra);
+    ({ mimetype, size } = extra);
   }
 
   const renderLink = () => {
@@ -86,7 +87,7 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
               <TableCell component="th" scope="row">
                 {translateBuilder(BUILDER.ITEM_METADATA_TYPE_TITLE)}
               </TableCell>
-              <TableCell align="right">{type}</TableCell>
+              <TableCell align="right">{mimetype ?? type}</TableCell>
             </TableRow>
             {size && (
               <TableRow>

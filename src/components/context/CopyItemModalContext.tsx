@@ -28,7 +28,7 @@ export const CopyItemModalProvider = ({ children }: Props): JSX.Element => {
     unknown,
     { ids: string[]; to: string }
   >(MUTATION_KEYS.COPY_ITEMS);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [itemIds, setItemIds] = useState<string[]>([]);
 
   const openModal = (newItemIds: string[]) => {

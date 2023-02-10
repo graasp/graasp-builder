@@ -23,7 +23,7 @@ import {
   CLEAR_CHAT_DIALOG_ID,
   CLEAR_CHAT_SETTING_ID,
 } from '../../../config/selectors';
-import { ButtonVariants } from '../../../enums/chatbox';
+import { ButtonVariants } from '../../../enums';
 import DownloadChatButton from './DownloadChatButton';
 
 type Props = {
@@ -35,7 +35,7 @@ type Props = {
 const ClearChatButton = ({
   chatId,
   clearChat,
-  variant = ButtonVariants.BUTTON,
+  variant = ButtonVariants.Button,
 }: Props): JSX.Element => {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const { t } = useChatboxTranslation();
@@ -52,7 +52,7 @@ const ClearChatButton = ({
     const text = t(CHATBOX.CLEAR_ALL_CHAT);
 
     switch (contentType) {
-      case ButtonVariants.ICON:
+      case ButtonVariants.IconButton:
         return (
           <Tooltip title={text}>
             <IconButton
@@ -63,7 +63,7 @@ const ClearChatButton = ({
             </IconButton>
           </Tooltip>
         );
-      case ButtonVariants.BUTTON:
+      case ButtonVariants.Button:
       default:
         return (
           <Button
@@ -97,7 +97,7 @@ const ClearChatButton = ({
               {t(CHATBOX.CLEAR_ALL_CHAT_CONTENT)}
             </Typography>
             <DownloadChatButton
-              variant={ButtonVariants.BUTTON}
+              variant={ButtonVariants.Button}
               chatId={chatId}
               showInfo={false}
             />

@@ -18,6 +18,7 @@ import {
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
   buildEditButtonId,
 } from '../../../config/selectors';
+import { ItemActionTabs } from '../../../enums';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 import PlayerViewButton from '../../common/PlayerViewButton';
@@ -32,18 +33,22 @@ const { useItemMemberships } = hooks;
 
 type Props = {
   item: ItemRecord;
-  onClickMetadata?: () => void;
-  onClickChatbox?: () => void;
+  onClickMetadata: () => void;
+  onClickChatbox: () => void;
 };
 
 const ItemHeaderActions = ({
+  item,
   onClickMetadata,
   onClickChatbox,
-  item,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { setEditingItemId, editingItemId, isItemMetadataMenuOpen } =
-    useLayoutContext();
+  const {
+    setEditingItemId,
+    editingItemId,
+    openedActionTabId,
+    isItemMetadataMenuOpen,
+  } = useLayoutContext();
   const id = item?.id;
   const type = item?.type;
 
@@ -91,7 +96,7 @@ const ItemHeaderActions = ({
 
       return (
         <>
-          {activeActions}
+          {openedActionTabId !== ItemActionTabs.Settings && activeActions}
           {canEdit && <ItemSettingsButton id={id} />}
         </>
       );

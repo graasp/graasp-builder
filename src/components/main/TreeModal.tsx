@@ -26,8 +26,8 @@ const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 type Props = {
-  onConfirm: ({ ids, to }: { ids: string[]; to: string }) => void;
-  onClose: ({ id, open }: { id: string; open: boolean }) => void;
+  onConfirm: (args: { ids: string[]; to: string }) => void;
+  onClose: (args: { id: string; open: boolean }) => void;
   title: string;
   itemIds?: string[];
   open?: boolean;
@@ -143,9 +143,8 @@ const TreeModal = ({
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemClass={(id: string) =>
-          buildTreeItemId(id, TREE_MODAL_MY_ITEMS_ID)
-        }
+        // todo: change graasp-ui
+        buildTreeItemClass={buildTreeItemId as any}
       />
       <DynamicTreeView
         id={TREE_MODAL_SHARED_ITEMS_ID}
@@ -165,9 +164,8 @@ const TreeModal = ({
         showItemFilter={isFolder}
         shouldFetchChildrenForItem={isFolder}
         isTreeItemDisabled={isTreeItemDisabled}
-        buildTreeItemClass={(id: string) =>
-          buildTreeItemId(id, TREE_MODAL_MY_ITEMS_ID)
-        }
+        // todo: change graasp-ui
+        buildTreeItemClass={buildTreeItemId as any}
       />
     </>
   );

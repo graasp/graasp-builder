@@ -1,14 +1,13 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
-import { ITEM_LAYOUT_MODES } from '../../enums';
-import { ChatStatus } from '../../enums/chatbox';
+import { ChatStatus, ITEM_LAYOUT_MODES } from '../../enums';
 
 interface LayoutContextInterface {
   mode: string;
   setMode: (mode: string) => void;
   editingItemId: string | null;
-  setEditingItemId: (itemid: string) => void;
+  setEditingItemId: (itemId: string) => void;
   isMainMenuOpen: boolean;
   setIsMainMenuOpen: (isOpen: boolean) => void;
   openedActionTabId: string | null;
@@ -62,11 +61,11 @@ export const LayoutContextProvider = ({
 
   // item screen editing id
   // todo: separate in item specific context
-  const [editingItemId, setEditingItemId] = useState(null);
+  const [editingItemId, setEditingItemId] = useState<string>('');
 
   // item settings page open
   // todo: separate in item specific context
-  const [openedActionTabId, setOpenedActionTabId] = useState(null);
+  const [openedActionTabId, setOpenedActionTabId] = useState<string>(null);
 
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
   const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);

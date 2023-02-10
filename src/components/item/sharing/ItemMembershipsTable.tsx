@@ -1,11 +1,10 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import { Typography } from '@mui/material';
 
 import { useMemo } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { ItemMembership } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -33,53 +32,66 @@ const rowStyle = {
 };
 
 const NameRenderer = (users) => {
-  const ChildComponent = ({ data: membership }) => {
+  const ChildComponent = ({
+    data: membership,
+  }: {
+    data: Pick<ItemMembership, 'memberId'>;
+  }) => {
     const user = users?.find(({ id }) => id === membership.memberId);
 
     return <Typography noWrap>{user?.name ?? ''}</Typography>;
-  };
-  ChildComponent.propTypes = {
-    data: PropTypes.shape({
-      memberId: PropTypes.string.isRequired,
-    }).isRequired,
   };
   return ChildComponent;
 };
 
 const EmailRenderer = (users) => {
-  const ChildComponent = ({ data: membership }) => {
+  const ChildComponent = ({
+    data: membership,
+  }: {
+    data: Pick<ItemMembership, 'memberId'>;
+  }) => {
     const user = users?.find(({ id }) => id === membership.memberId);
 
     return <Typography noWrap>{user?.email ?? ''}</Typography>;
-  };
-  ChildComponent.propTypes = {
-    data: PropTypes.shape({
-      memberId: PropTypes.string.isRequired,
-    }).isRequired,
   };
   return ChildComponent;
 };
 
 const getRowId = ({ data }) => buildItemMembershipRowId(data.id);
 
+type Props = {
+  item: ItemRecord;
+  memberships: ItemMembership[];
+  emptyMessage?: string;
+  showEmail?: boolean;
+};
+
 const ItemMembershipsTable = ({
   memberships,
   item,
   emptyMessage,
-  showEmail,
-}) => {
+  showEmail = true,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: users, isLoading } = hooks.useMembers(
     memberships.map(({ memberId }) => memberId),
   );
 
-  const { mutate: deleteItemMembership } = useMutation(
-    MUTATION_KEYS.DELETE_ITEM_MEMBERSHIP,
-  );
-  const { mutate: editItemMembership } = useMutation(
-    MUTATION_KEYS.EDIT_ITEM_MEMBERSHIP,
-  );
-  const { mutate: shareItem } = useMutation(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
+  const { mutate: deleteItemMembership } = useMutation<
+    unknown,
+    unknown,
+    { itemId: string; id: string }
+  >(MUTATION_KEYS.DELETE_ITEM_MEMBERSHIP);
+  const { mutate: editItemMembership } = useMutation<
+    unknown,
+    unknown,
+    Partial<ItemMembership & { itemId: string }>
+  >(MUTATION_KEYS.EDIT_ITEM_MEMBERSHIP);
+  const { mutate: shareItem } = useMutation<
+    unknown,
+    unknown,
+    Partial<ItemMembership> & { email: string }
+  >(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
 
   const onDelete = ({ instance }) => {
     deleteItemMembership({ itemId: item.id, id: instance.id });
@@ -199,18 +211,6 @@ const ItemMembershipsTable = ({
       countTextFunction={countTextFunction}
     />
   );
-};
-
-ItemMembershipsTable.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  memberships: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  emptyMessage: PropTypes.string,
-  showEmail: PropTypes.bool,
-};
-
-ItemMembershipsTable.defaultProps = {
-  emptyMessage: null,
-  showEmail: true,
 };
 
 export default ItemMembershipsTable;

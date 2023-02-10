@@ -64,7 +64,7 @@ export const MIME_TYPES = {
   AUDIO: ['audio/mpeg', 'audio/mp3'],
   PDF: ['application/pdf'],
 };
-export const DRAWER_WIDTH = 300;
+export const DRAWER_WIDTH = 240;
 export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_EMAIL_FREQUENCY = 'always';
@@ -270,3 +270,7 @@ export const EXPORT_CSV_HEADERS = [
   { label: 'creator_name', key: 'creatorName' },
   { label: 'message_content', key: 'body' },
 ];
+
+// TODO: refer from specific endpoint /tutorials?
+export const TUTORIALS_LINK =
+  'https://player.graasp.org/9d80d81f-ec9d-4bfb-836a-1c6b125aef2f';

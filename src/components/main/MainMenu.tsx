@@ -1,7 +1,10 @@
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
+import { styled } from '@mui/material';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -9,6 +12,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { BUILDER } from '@graasp/translations';
 import { MainMenu as GraaspMainMenu, MenuItem } from '@graasp/ui';
 
+import { TUTORIALS_LINK } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
@@ -17,6 +21,26 @@ import {
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+
+const StyledLink = styled('a')(({ theme }) => ({
+  position: 'absolute',
+  bottom: 0,
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(2),
+  boxSizing: 'border-box',
+  color: 'grey',
+  textDecoration: 'none',
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
+}));
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
+}));
 
 const MainMenu: FC = () => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -28,10 +52,19 @@ const MainMenu: FC = () => {
     navigate(path);
   };
 
+  const resourcesLink = (
+    <StyledLink href={TUTORIALS_LINK} target="_blank">
+      <ListItemIcon>
+        <AutoStoriesIcon />
+      </ListItemIcon>
+      {translateBuilder('Tutorials')}
+    </StyledLink>
+  );
+
   const renderAuthenticatedMemberMenuItems = () => {
     if (!member || !member.id) {
       return (
-        <MenuItem
+        <StyledMenuItem
           disabled
           text={translateBuilder(BUILDER.HOME_TITLE)}
           icon={<FolderIcon />}
@@ -70,7 +103,10 @@ const MainMenu: FC = () => {
   };
 
   return (
-    <GraaspMainMenu>{renderAuthenticatedMemberMenuItems()}</GraaspMainMenu>
+    <GraaspMainMenu fullHeight>
+      {renderAuthenticatedMemberMenuItems()}
+      {resourcesLink}
+    </GraaspMainMenu>
   );
 };
 

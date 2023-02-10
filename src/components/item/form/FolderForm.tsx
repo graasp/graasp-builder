@@ -1,13 +1,22 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 
+import { Item } from '@graasp/sdk';
 import { TextEditor } from '@graasp/ui';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 
-const FolderForm = ({ onChange, item, updatedProperties }) => {
+type Props = {
+  onChange: (item: Partial<Item>) => void;
+  item: Partial<Item>;
+  updatedProperties: Partial<Item>;
+};
+
+const FolderForm = ({
+  onChange,
+  item,
+  updatedProperties,
+}: Props): JSX.Element => {
   const onCaptionChange = (content) => {
     onChange({
       ...updatedProperties,
@@ -34,29 +43,6 @@ const FolderForm = ({ onChange, item, updatedProperties }) => {
       </Box>
     </>
   );
-};
-
-FolderForm.propTypes = {
-  updatedProperties: PropTypes.shape({
-    extra: PropTypes.shape({
-      image: PropTypes.string,
-    }),
-    description: PropTypes.string,
-  }),
-  onChange: PropTypes.func.isRequired,
-  item: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    type: PropTypes.string,
-    extra: PropTypes.shape({
-      image: PropTypes.string,
-    }),
-  }),
-};
-
-FolderForm.defaultProps = {
-  item: {},
-  updatedProperties: {},
 };
 
 export default FolderForm;

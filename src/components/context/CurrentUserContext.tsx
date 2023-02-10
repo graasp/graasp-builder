@@ -11,7 +11,7 @@ type CurrentUserContextType = QueryObserverResult<MemberRecord> | null;
 const CurrentUserContext = createContext<CurrentUserContextType>(null);
 
 type Props = {
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 };
 
 const { useCurrentMember } = hooks;

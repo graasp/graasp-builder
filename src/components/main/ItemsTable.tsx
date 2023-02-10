@@ -51,11 +51,11 @@ type Props = {
   actions?: ({ data }: { data: { id: string } }) => JSX.Element;
   ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;
   clickable?: boolean;
-  defaultSortedColumn: {
-    updatedAt?: 'desc' | 'asc';
-    createdAt?: 'desc' | 'asc';
-    type?: 'desc' | 'asc';
-    name?: 'desc' | 'asc';
+  defaultSortedColumn?: {
+    updatedAt?: 'desc' | 'asc' | null;
+    createdAt?: 'desc' | 'asc' | null;
+    type?: 'desc' | 'asc' | null;
+    name?: 'desc' | 'asc' | null;
   };
   isEditing?: boolean;
   showThumbnails?: boolean;
@@ -205,6 +205,8 @@ const ItemsTable: FC<Props> = ({
           textAlign: 'right',
         },
         sortable: false,
+        // prevent ellipsis for small screens
+        minWidth: 165,
       },
     ];
 

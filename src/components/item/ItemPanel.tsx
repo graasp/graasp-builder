@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { Toolbar, styled } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 
@@ -17,7 +15,9 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   },
 }));
 
-const ItemPanel = ({ open, children }) => (
+type Props = { open: boolean; children: JSX.Element | JSX.Element[] };
+
+const ItemPanel = ({ open, children }: Props): JSX.Element => (
   <StyledDrawer
     id={ITEM_PANEL_ID}
     anchor="right"
@@ -28,17 +28,5 @@ const ItemPanel = ({ open, children }) => (
     {children}
   </StyledDrawer>
 );
-
-ItemPanel.propTypes = {
-  open: PropTypes.bool.isRequired,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
-};
-
-ItemPanel.defaultProps = {
-  children: null,
-};
 
 export default ItemPanel;

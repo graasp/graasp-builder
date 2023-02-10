@@ -1,8 +1,6 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import { Box, Divider, Typography, styled } from '@mui/material';
 
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { DrawerHeader } from '@graasp/ui';
 
@@ -15,7 +13,7 @@ import ItemMetadataContent from './ItemMetadataContent';
 import ItemPanel from './ItemPanel';
 import ItemHeader from './header/ItemHeader';
 
-const StyledContainer = styled(Box)(({ theme, open }) => {
+const StyledContainer = styled(Box)<{ open: boolean }>(({ theme, open }) => {
   const openStyles = open
     ? {
         transition: theme.transitions.create('margin', {
@@ -47,7 +45,13 @@ const StyledContainer = styled(Box)(({ theme, open }) => {
   };
 });
 
-const ItemMain = ({ id, children, item }) => {
+type Props = {
+  children: JSX.Element | JSX.Element[];
+  item: ItemRecord;
+  id?: string;
+};
+
+const ItemMain = ({ id, children, item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
     isItemMetadataMenuOpen,
@@ -110,16 +114,6 @@ const ItemMain = ({ id, children, item }) => {
       </StyledContainer>
     </div>
   );
-};
-
-ItemMain.propTypes = {
-  children: PropTypes.node.isRequired,
-  item: PropTypes.instanceOf(Record).isRequired,
-  id: PropTypes.string,
-};
-
-ItemMain.defaultProps = {
-  id: null,
 };
 
 export default ItemMain;

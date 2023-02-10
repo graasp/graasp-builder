@@ -19,7 +19,7 @@ const TableRowPermissionRenderer = ({
   createFunction,
 }: Props): (({ data }: { data: ChildProps }) => JSX.Element) => {
   // todo: use typescript to precise data is one of Invitation or Membership
-  const ChildComponent = ({ data: instance }) => {
+  const ChildComponent = ({ data: instance }: { data: ChildProps }) => {
     const isParentMembership = useIsParentInstance({
       instance,
       item,

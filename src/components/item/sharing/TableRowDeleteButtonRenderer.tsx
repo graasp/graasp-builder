@@ -1,18 +1,27 @@
-import PropTypes from 'prop-types';
-
 import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
+import { Invitation } from '@graasp/query-client/dist/types';
+import { Item, ItemMembership } from '@graasp/sdk';
+
 import { useIsParentInstance } from '../../../utils/item';
+
+type Props = {
+  item: Item;
+  buildIdFunction: (id: string) => string;
+  tooltip?: string;
+  color?: IconButtonProps['color'];
+  onDelete?: (args: { instance: Invitation | ItemMembership }) => void;
+};
 
 const TableRowDeleteButtonRenderer = ({
   item,
   buildIdFunction,
   tooltip,
-  color,
+  color = 'default',
   onDelete,
-}) => {
+}: Props): ((args: { data: Invitation | ItemMembership }) => JSX.Element) => {
   // todo: use typescript to precise data is one of Invitation or Membership
   const ChildComponent = ({ data }) => {
     const isFromParent = useIsParentInstance({
@@ -52,26 +61,7 @@ const TableRowDeleteButtonRenderer = ({
     return renderButton();
   };
 
-  ChildComponent.propTypes = {
-    data: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      itemPath: PropTypes.string.isRequired,
-    }).isRequired,
-  };
   return ChildComponent;
-};
-
-TableRowDeleteButtonRenderer.propTypes = {
-  disabled: PropTypes.bool,
-  tooltip: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-  color: PropTypes.string,
-};
-
-TableRowDeleteButtonRenderer.defaultProps = {
-  tooltip: null,
-  color: 'default',
-  disabled: false,
 };
 
 export default TableRowDeleteButtonRenderer;

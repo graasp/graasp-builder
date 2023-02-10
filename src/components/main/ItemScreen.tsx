@@ -1,9 +1,10 @@
-import { ReactElement, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemType } from '@graasp/sdk';
 import { ItemLoginAuthorization, Loader } from '@graasp/ui';
+import { SignInPropertiesType } from '@graasp/ui/dist/itemLogin/ItemLoginScreen';
 
 import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
 import { hooks, useMutation } from '../../config/queryClient';
@@ -102,12 +103,12 @@ const ItemScreen = (): JSX.Element => {
   );
 };
 
-const WrappedItemScreen = (): ReactElement => {
+const WrappedItemScreen = (): JSX.Element => {
   const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
   const { mutate: itemLoginSignIn } = useMutation<
     unknown,
     unknown,
-    { itemId: string }
+    { itemId: string } & SignInPropertiesType
   >(MUTATION_KEYS.POST_ITEM_LOGIN);
   const { itemId } = useParams();
 
@@ -126,7 +127,7 @@ const WrappedItemScreen = (): ReactElement => {
     signInButtonId: ITEM_LOGIN_SIGN_IN_BUTTON_ID,
     passwordInputId: ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
     modeSelectId: ITEM_LOGIN_SIGN_IN_MODE_ID,
-  })(ItemScreen);
+  })(ItemScreen); // todo: improve type
   return <Component />;
 };
 

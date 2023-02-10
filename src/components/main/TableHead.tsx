@@ -9,7 +9,7 @@ import { FC } from 'react';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { ORDERING } from '../../enums';
+import { Ordering } from '../../enums';
 
 type Props = {
   classes: {
@@ -68,7 +68,7 @@ const CustomTableHead: FC<Props> = (props) => {
               {headCell.label}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
-                  {order === ORDERING.DESC
+                  {order === Ordering.DESC
                     ? translateBuilder(BUILDER.TABLE_DESC_SORT_LABEL)
                     : translateBuilder(BUILDER.TABLE_ASC_SORT_LABEL)}
                 </span>

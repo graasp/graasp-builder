@@ -11,7 +11,7 @@ import { Button } from '@graasp/ui';
 import { EXPORT_CSV_HEADERS } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import { DOWNLOAD_CHAT_BUTTON_ID } from '../../../config/selectors';
-import { ButtonVariants } from '../../../enums/chatbox';
+import { ButtonVariants } from '../../../enums';
 
 const StyledCSVLink = styled(CsvLink)({
   textDecoration: 'none',
@@ -27,7 +27,7 @@ type Props = {
 // todo: convert this into a backend call
 const DownloadChatButton = ({
   chatId,
-  variant = ButtonVariants.ICON,
+  variant = ButtonVariants.IconButton,
   showInfo = true,
 }: Props): JSX.Element => {
   const [filename, setFilename] = useState('');
@@ -59,7 +59,7 @@ const DownloadChatButton = ({
   const getContent = (contentVariant) => {
     const contentText = t('Download Chat');
     switch (contentVariant) {
-      case ButtonVariants.ICON:
+      case ButtonVariants.IconButton:
         return (
           <Tooltip title={contentText}>
             <IconButton>
@@ -67,7 +67,7 @@ const DownloadChatButton = ({
             </IconButton>
           </Tooltip>
         );
-      case ButtonVariants.BUTTON:
+      case ButtonVariants.Button:
         return (
           <Button variant="outlined" startIcon={<GetApp />}>
             {contentText}

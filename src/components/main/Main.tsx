@@ -34,7 +34,7 @@ const StyledLink = styled(Link)(() => ({
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main: FC<Props> = ({ children }) => {
-  const { isMainMenuOpen } = useLayoutContext();
+  const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
   const { data: currentMember } = hooks.useCurrentMember();
   const memberId = currentMember?.get('id');
   // mutations to handle the mentions
@@ -100,6 +100,12 @@ const Main: FC<Props> = ({ children }) => {
 
   return (
     <GraaspMain
+      handleDrawerOpen={() => {
+        setIsMainMenuOpen(true);
+      }}
+      handleDrawerClose={() => {
+        setIsMainMenuOpen(false);
+      }}
       headerId={HEADER_APP_BAR_ID}
       headerLeftContent={leftContent}
       headerRightContent={rightContent}

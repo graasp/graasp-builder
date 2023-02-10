@@ -1,7 +1,18 @@
 /**
  * @deprecated use graasp sdk
+ * this object only exists for tests
  */
-const ITEM_TYPES = {
+export const PERMISSION_LEVELS = {
+  READ: 'read',
+  WRITE: 'write',
+  ADMIN: 'admin',
+};
+
+/**
+ * @deprecated use graasp sdk
+ * this object only exists for tests
+ */
+export const ITEM_TYPES = {
   FOLDER: 'folder',
   FILE: 'file',
   S3_FILE: 's3File',
@@ -14,9 +25,3 @@ const ITEM_TYPES = {
   // but is used for the creation modal
   ZIP: 'zip',
 };
-
-Object.freeze(ITEM_TYPES);
-/**
- * @deprecated use graasp sdk
- */
-export default ITEM_TYPES;

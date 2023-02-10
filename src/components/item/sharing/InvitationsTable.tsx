@@ -1,9 +1,10 @@
-import { List, Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { List } from 'immutable';
 
 import { useMemo } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Invitation } from '@graasp/query-client/dist/types';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -26,17 +27,35 @@ const rowStyle = {
   alignItems: 'center',
 };
 
-const InvitationsTable = ({ invitations, item, emptyMessage }) => {
+type Props = {
+  item: ItemRecord;
+  invitations: List<Invitation>;
+  emptyMessage?: string;
+};
+
+const InvitationsTable = ({
+  invitations,
+  item,
+  emptyMessage,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: editInvitation } = useMutation(
-    MUTATION_KEYS.PATCH_INVITATION,
-  );
-  const { mutate: postInvitations } = useMutation(
-    MUTATION_KEYS.POST_INVITATIONS,
-  );
-  const { mutate: deleteInvitation } = useMutation(
-    MUTATION_KEYS.DELETE_INVITATION,
-  );
+  const { mutate: editInvitation } = useMutation<
+    unknown,
+    unknown,
+    Partial<Invitation> & {
+      itemId: string;
+    }
+  >(MUTATION_KEYS.PATCH_INVITATION);
+  const { mutate: postInvitations } = useMutation<
+    unknown,
+    unknown,
+    { itemId: string; invitations: Partial<Invitation>[] }
+  >(MUTATION_KEYS.POST_INVITATIONS);
+  const { mutate: deleteInvitation } = useMutation<
+    unknown,
+    unknown,
+    { itemId: string; id: string }
+  >(MUTATION_KEYS.DELETE_INVITATION);
 
   const getRowId = ({ data }) => buildInvitationTableRowId(data.id);
 
@@ -144,16 +163,6 @@ const InvitationsTable = ({ invitations, item, emptyMessage }) => {
       countTextFunction={countTextFunction}
     />
   );
-};
-
-InvitationsTable.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  invitations: PropTypes.instanceOf(List).isRequired,
-  emptyMessage: PropTypes.string,
-};
-
-InvitationsTable.defaultProps = {
-  emptyMessage: null,
 };
 
 export default InvitationsTable;

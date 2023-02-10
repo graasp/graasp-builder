@@ -35,7 +35,7 @@ import {
   buildAppItemLinkForTest,
   buildGetAppData,
 } from '../fixtures/apps';
-import { PERMISSION_LEVELS } from '../fixtures/enums';
+import { PERMISSION_LEVELS } from '../fixtures/enum';
 import { buildInvitation } from '../fixtures/invitations';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
