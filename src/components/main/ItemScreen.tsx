@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemType } from '@graasp/sdk';
-import { ItemLoginAuthorization } from '@graasp/ui';
+import { ItemLoginAuthorization, Loader } from '@graasp/ui';
 
 import {
   ITEM_ACTION_TABS,
@@ -41,7 +41,11 @@ const ItemScreen = (): JSX.Element => {
   const { setEditingItemId, openedActionTabId, setOpenedActionTabId } =
     useLayoutContext();
   const { data: currentMember } = useCurrentUserContext();
-  const { data: memberships } = useItemMemberships(itemId);
+  const {
+    data: memberships,
+    isLoading: isLoadingItemMemberships,
+    isError: isErrorItemMemberships,
+  } = useItemMemberships(itemId);
 
   useEffect(() => {
     setEditingItemId(null);
@@ -49,8 +53,12 @@ const ItemScreen = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
-  if (!itemId || !item || isError) {
+  if (!itemId || !item || isError || isErrorItemMemberships) {
     return <ErrorAlert />;
+  }
+
+  if (isLoadingItemMemberships) {
+    return <Loader />;
   }
 
   const itemMembership = getHighestPermissionForMemberFromMemberships({

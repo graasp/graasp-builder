@@ -58,7 +58,7 @@ export const LayoutContextProvider = ({
   children: JSX.Element;
 }): JSX.Element => {
   // layout mode: grid or list
-  const [mode, setMode] = useState(DEFAULT_ITEM_LAYOUT_MODE);
+  const [mode, setMode] = useState<string>(DEFAULT_ITEM_LAYOUT_MODE);
 
   // item screen editing id
   // todo: separate in item specific context

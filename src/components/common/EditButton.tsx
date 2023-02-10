@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { ItemBase } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { EditButton as GraaspEditButton } from '@graasp/ui';
 
@@ -12,7 +12,7 @@ import {
 import { EditItemModalContext } from '../context/EditItemModalContext';
 
 type Props = {
-  item: ItemRecord;
+  item: ItemBase;
 };
 
 const EditButton: FC<Props> = ({ item }) => {

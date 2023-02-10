@@ -7,7 +7,8 @@ import { FC, createContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType } from '@graasp/sdk';
+import { ItemType } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -26,7 +27,7 @@ type Props = {
 };
 
 const EditItemModalContext = createContext({
-  openModal: (_newItem: Item) => {
+  openModal: (_newItem: ItemRecord) => {
     // do nothing
   },
 });
@@ -44,9 +45,9 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState<Item | null>(null);
+  const [item, setItem] = useState<ItemRecord | null>(null);
 
-  const openModal = (newItem: Item) => {
+  const openModal = (newItem: ItemRecord) => {
     setOpen(true);
     setItem(newItem);
   };

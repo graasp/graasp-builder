@@ -4,7 +4,7 @@ import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { EDITED_FIELDS, SAMPLE_ITEMS } from '../../../fixtures/items';
 import {
   EDIT_ITEM_PAUSE,

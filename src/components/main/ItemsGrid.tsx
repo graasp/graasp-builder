@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
 import Select from '@mui/material/Select';
 
-import { ReactElement, useState } from 'react';
+import { useState } from 'react';
 
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -40,7 +40,7 @@ type Props = {
     text: string;
     // input: PropTypes.instanceOf(ItemSearchInput),
   };
-  headerElements: ReactElement[];
+  headerElements?: JSX.Element[];
   parentId?: string;
   isEditing?: boolean;
 };

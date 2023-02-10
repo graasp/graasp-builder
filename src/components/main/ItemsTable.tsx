@@ -46,7 +46,7 @@ type Props = {
   items: List<ItemRecord>;
   manyMemberships: List<List<ItemMembershipRecord>>;
   tableTitle: string;
-  headerElements: JSX.Element[];
+  headerElements?: JSX.Element[];
   isSearching?: boolean;
   actions?: ({ data }: { data: { id: string } }) => JSX.Element;
   ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;

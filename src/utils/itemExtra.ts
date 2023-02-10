@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import {
   AppItemExtra,
   AppItemExtraProperties,
@@ -54,18 +52,6 @@ export const buildShortcutExtra = (
 export const getShortcutTarget = (extra: {
   shortcut: { target: string };
 }): string => extra?.[ItemType.SHORTCUT]?.target;
-
-export const fileExtraPropTypes = PropTypes.shape({
-  mimetype: PropTypes.string.isRequired,
-});
-
-export const s3FileExtraPropTypes = PropTypes.shape({
-  contenttype: PropTypes.string.isRequired,
-});
-
-export const linkExtraPropTypes = PropTypes.shape({
-  icons: PropTypes.arrayOf(PropTypes.string),
-});
 
 // todo: improve extra typing
 export const buildItemLoginSchemaExtra = (

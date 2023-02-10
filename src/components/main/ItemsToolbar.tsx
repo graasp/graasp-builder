@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types';
-
 import { Grid, Typography } from '@mui/material';
 
-const ItemsToolbar = ({ title, headerElements }) => (
+type Props = {
+  title: string;
+  headerElements?: JSX.Element[];
+};
+const ItemsToolbar = ({ title, headerElements = null }: Props): JSX.Element => (
   <Grid container mt={1} mb={2}>
     <Grid item md={8}>
       <Typography variant="h4" noWrap>
@@ -14,14 +16,5 @@ const ItemsToolbar = ({ title, headerElements }) => (
     </Grid>
   </Grid>
 );
-
-ItemsToolbar.propTypes = {
-  title: PropTypes.string.isRequired,
-  headerElements: PropTypes.arrayOf(PropTypes.element),
-};
-
-ItemsToolbar.defaultProps = {
-  headerElements: null,
-};
 
 export default ItemsToolbar;

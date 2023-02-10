@@ -37,7 +37,7 @@ const Items = ({
   id,
   items,
   title,
-  headerElements,
+  headerElements = [],
   actions,
   ToolbarActions,
   clickable = true,

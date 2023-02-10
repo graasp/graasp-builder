@@ -1,11 +1,11 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
-  buildItemsTableRowIdAttribute,
   ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID,
   RESTORE_ITEMS_BUTTON_CLASS,
+  buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { DATABASE_WITH_RECYCLE_BIN } from '../../../fixtures/recycleBin';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 

@@ -5,7 +5,6 @@ import {
   buildEditButtonId,
   buildSaveButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import {
   buildDocumentExtra,
   getDocumentExtra,
@@ -16,6 +15,7 @@ import {
   GRAASP_DOCUMENT_ITEMS_FIXTURE,
   GRAASP_DOCUMENT_PARENT_FOLDER,
 } from '../../../fixtures/documents';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import {

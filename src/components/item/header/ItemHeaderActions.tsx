@@ -42,14 +42,8 @@ const ItemHeaderActions = ({
   item,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const {
-    setEditingItemId,
-    editingItemId,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    isItemSettingsOpen,
-    isItemMetadataMenuOpen,
-  } = useLayoutContext();
+  const { setEditingItemId, editingItemId, isItemMetadataMenuOpen } =
+    useLayoutContext();
   const id = item?.id;
   const type = item?.type;
 
@@ -97,7 +91,7 @@ const ItemHeaderActions = ({
 
       return (
         <>
-          {!isItemSettingsOpen && activeActions}
+          {activeActions}
           {canEdit && <ItemSettingsButton id={id} />}
         </>
       );

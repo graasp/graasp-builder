@@ -1,11 +1,11 @@
-import { List, RecordOf } from 'immutable';
+import { List } from 'immutable';
 import truncate from 'lodash.truncate';
 
 import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { EmbeddedLinkItemExtra, Item as GraaspItem } from '@graasp/sdk';
-import { ItemMembershipRecord } from '@graasp/sdk/frontend';
+import { EmbeddedLinkItemExtra } from '@graasp/sdk';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
@@ -38,7 +38,7 @@ const NameWrapper = ({
 };
 
 type Props = {
-  item: RecordOf<GraaspItem>;
+  item: ItemRecord;
   memberships: List<ItemMembershipRecord>;
 };
 
@@ -83,7 +83,13 @@ const Item: FC<Props> = ({ item, memberships }) => {
       {member && member.id && <FavoriteButton size="small" item={item} />}
       {enableEdition && (
         <>
-          <EditButton item={item.toJS() as GraaspItem} />
+          <EditButton
+            item={
+              // DO NOT REMOVE cast
+              // here we cast explicitly to be equivalent to the grid which does not let us use Records
+              item.toJS()
+            }
+          />
           <DownloadButton id={id} name={name} />
         </>
       )}

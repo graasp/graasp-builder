@@ -47,8 +47,7 @@ export const getHighestPermissionForMemberFromMemberships = ({
   const sorted = itemMemberships?.sort((a, b) =>
     a.itemPath.length > b.itemPath.length ? 1 : -1,
   );
-
-  return sorted[0];
+  return sorted.get(0);
 };
 
 export const isSettingsEditionAllowedForUser = ({

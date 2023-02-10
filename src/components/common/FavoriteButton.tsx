@@ -22,7 +22,7 @@ type Props = {
 export const isItemFavorite = (
   item: ItemRecord,
   member: MemberRecord,
-): boolean => (member?.extra?.favoriteItems as string[]).includes(item.id);
+): boolean => member.extra?.favoriteItems?.includes(item.id) || false;
 
 const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
   const { data: member } = useCurrentUserContext();
