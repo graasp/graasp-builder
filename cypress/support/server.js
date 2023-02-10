@@ -64,6 +64,7 @@ const {
   buildPostItemLoginSignInRoute,
   buildGetItemLoginRoute,
   buildGetItemMembershipsForItemsRoute,
+  buildGetPublicItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
   GET_TAGS_ROUTE,
   buildPutItemLoginSchema,
@@ -970,6 +971,30 @@ export const mockGetItemMembershipsForItem = (items, currentMember) => {
       reply(allMemberships);
     },
   ).as('getItemMemberships');
+};
+
+export const mockGetPublicItemMembershipsForItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildGetPublicItemMembershipsForItemsRoute([]),
+        )}`,
+      ),
+    },
+    ({ reply, url }) => {
+      const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
+      const selectedItems = items.filter(({ id }) => itemId.includes(id));
+      const allMemberships = selectedItems.map(({ memberships, tags }) =>
+        // if item is public return the memberships of the item otherwise return unauthorized
+        tags?.find((t) => t.tagId === ITEM_PUBLIC_TAG.id)
+          ? memberships
+          : [{ statusCode: StatusCodes.UNAUTHORIZED }],
+      );
+      reply(allMemberships);
+    },
+  ).as('getPublicItemMemberships');
 };
 
 export const mockEditItemMembershipForItem = () => {

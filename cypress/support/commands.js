@@ -72,6 +72,7 @@ import {
   mockGetOwnItems,
   mockGetPublicChildren,
   mockGetPublicItem,
+  mockGetPublicItemMembershipsForItem,
   mockGetRecycledItems,
   mockGetSharedItems,
   mockGetTags,
@@ -226,6 +227,8 @@ Cypress.Commands.add(
     mockPutItemLogin(items, putItemLoginError);
 
     mockGetItemMembershipsForItem(items, currentMember);
+
+    mockGetPublicItemMembershipsForItem(items);
 
     mockGetTags(tags);
 
