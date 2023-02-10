@@ -2,8 +2,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { Invitation } from '@graasp/query-client/dist/types';
 import { Item, ItemMembership } from '@graasp/sdk';
+import { Invitation } from '@graasp/sdk/frontend';
 
 import { useIsParentInstance } from '../../../utils/item';
 

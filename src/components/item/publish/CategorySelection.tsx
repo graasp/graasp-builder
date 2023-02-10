@@ -5,6 +5,7 @@ import { FC, SyntheticEvent } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Category } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -14,7 +15,6 @@ import {
 } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
-import { Category } from '../../../config/types';
 import { sortByName } from '../../../utils/item';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import DropdownMenu from './DropdownMenu';

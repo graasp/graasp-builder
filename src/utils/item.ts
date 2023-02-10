@@ -12,10 +12,9 @@ import {
   ItemMembership,
   ItemType,
 } from '@graasp/sdk';
-import { ImmutableCast } from '@graasp/sdk/frontend';
+import { ImmutableCast, Invitation } from '@graasp/sdk/frontend';
 
 import { UUID_LENGTH } from '../config/constants';
-import { Invitation } from '../config/types';
 import {
   getAppExtra,
   getDocumentExtra,

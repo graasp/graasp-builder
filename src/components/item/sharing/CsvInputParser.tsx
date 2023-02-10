@@ -16,6 +16,7 @@ import { FC, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item, PermissionLevel } from '@graasp/sdk';
+import { Invitation } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
@@ -31,7 +32,6 @@ import {
   SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
 } from '../../../config/selectors';
-import { Invitation } from '../../../config/types';
 
 const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');

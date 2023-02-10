@@ -2355,7 +2355,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#202/exportChatHook":
   version: 0.1.4
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7275c4b7f321bea9e18b15b92a5538acd469a237"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=190792cf930e2a1e16fb3b6c2f54e3c6a1add845"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#74-afine-item-type-with-discriminated-union"
     "@graasp/translations": 1.3.0
@@ -2368,13 +2368,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 6afa8e1364befa776c0ee31c7a7b5fc893892414dc815335293653e06881d6c7ee6b43bdf10dd99cadae09cfcdbc1f4c7caa8126d5d28a81c5908538845ae7a0
+  checksum: f89e1b0e886f729e9ebceb143ac5b02973b6bc7ac13f4bc86801410108049e3330e8004320376b1e498616a0d906c61042564c4ddc15250f805f81b233697a22
   languageName: node
   linkType: hard
 
 "@graasp/sdk@github:graasp/graasp-sdk#74-afine-item-type-with-discriminated-union":
   version: 0.3.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=d35dbebbd26384a24fb90c24f0d98ab4a306c921"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=084fd56a618ecf77eb7d8333aa8992cd9cf3105e"
   dependencies:
     "@fastify/secure-session": 5.3.0
     aws-sdk: 2.1310.0
@@ -2385,7 +2385,7 @@ __metadata:
     qs: 6.11.0
     slonik: 28.1.1
     uuid: 9.0.0
-  checksum: 5c1da0694f1a0dfa230eb1bd63ad296e891f7bc3dbf9a2dcf9258926dd32ea2ac9aa13cebd3807dc5c5076f72dcf089a34afc27b87a5938db7008889e668cddc
+  checksum: 7835b2f7c63bcea54ece7593bbb94c8cc480770e2c98f7b0a7865af9d71e6d94a88494350fa6827dd4d78ed25eca61027eee4737e7a24ab86c8151e6efad5b4c
   languageName: node
   linkType: hard
 
