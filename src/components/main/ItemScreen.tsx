@@ -5,10 +5,7 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemType } from '@graasp/sdk';
 import { ItemLoginAuthorization, Loader } from '@graasp/ui';
 
-import {
-  ITEM_ACTION_TABS,
-  PERMISSIONS_EDITION_ALLOWED,
-} from '../../config/constants';
+import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
@@ -17,6 +14,7 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
+import { ItemActionTabs } from '../../enums';
 import { getHighestPermissionForMemberFromMemberships } from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
@@ -69,18 +67,18 @@ const ItemScreen = (): JSX.Element => {
   const enableEditing = PERMISSIONS_EDITION_ALLOWED.includes(permission);
 
   const content = (() => {
-    if (openedActionTabId === ITEM_ACTION_TABS.SETTINGS && enableEditing) {
+    if (openedActionTabId === ItemActionTabs.Settings && enableEditing) {
       return <ItemSettings item={item} />;
     }
 
     switch (openedActionTabId) {
-      case ITEM_ACTION_TABS.SHARING: {
+      case ItemActionTabs.Sharing: {
         return <ItemSharingTab item={item} memberships={memberships} />;
       }
-      case ITEM_ACTION_TABS.DASHBOARD: {
+      case ItemActionTabs.Dashboard: {
         return <GraaspAnalyzer item={item} />;
       }
-      case ITEM_ACTION_TABS.LIBRARY: {
+      case ItemActionTabs.Library: {
         return <ItemPublishTab item={item} permission={permission} />;
       }
       default:

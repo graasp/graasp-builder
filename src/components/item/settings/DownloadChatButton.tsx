@@ -1,5 +1,5 @@
 import { GetApp } from '@mui/icons-material';
-import { IconButton, Tooltip, styled } from '@mui/material';
+import { IconButton, Stack, Tooltip, Typography, styled } from '@mui/material';
 
 import { useState } from 'react';
 import { CSVLink as CsvLink } from 'react-csv';
@@ -18,12 +18,17 @@ const StyledCSVLink = styled(CsvLink)({
   width: 'fit-content',
 });
 
-type Props = { chatId: string; variant: ButtonVariants };
+type Props = {
+  chatId: string;
+  variant?: ButtonVariants;
+  showInfo?: boolean;
+};
 
 // todo: convert this into a backend call
 const DownloadChatButton = ({
   chatId,
   variant = ButtonVariants.ICON,
+  showInfo = true,
 }: Props): JSX.Element => {
   const [filename, setFilename] = useState('');
   const { t } = useTranslation();
@@ -63,28 +68,39 @@ const DownloadChatButton = ({
           </Tooltip>
         );
       case ButtonVariants.BUTTON:
-        return <Button variant="outlined">{contentText}</Button>;
+        return (
+          <Button variant="outlined" startIcon={<GetApp />}>
+            {contentText}
+          </Button>
+        );
       default:
         return null;
     }
   };
 
   return (
-    <StyledCSVLink
-      id={DOWNLOAD_CHAT_BUTTON_ID}
-      // add a property to pass the fileName
-      // this property will have a value after clicking the button
-      data-cy-filename={filename}
-      headers={EXPORT_CSV_HEADERS}
-      data={csvMessages}
-      filename={filename}
-      asyncOnClick
-      onClick={onClick}
-      // this removes the BOM for better parsing
-      uFEFF={false}
-    >
-      {getContent(variant)}
-    </StyledCSVLink>
+    <Stack direction="row" spacing={2} alignItems="center">
+      <StyledCSVLink
+        id={DOWNLOAD_CHAT_BUTTON_ID}
+        // add a property to pass the fileName
+        // this property will have a value after clicking the button
+        data-cy-filename={filename}
+        headers={EXPORT_CSV_HEADERS}
+        data={csvMessages}
+        filename={filename}
+        asyncOnClick
+        onClick={onClick}
+        // this removes the BOM for better parsing
+        uFEFF={false}
+      >
+        {getContent(variant)}
+      </StyledCSVLink>
+      {showInfo && (
+        <Typography variant="body1">
+          {t('Download the chat to CSV format.')}
+        </Typography>
+      )}
+    </Stack>
   );
 };
 

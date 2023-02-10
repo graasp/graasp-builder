@@ -7,12 +7,12 @@ import { FC } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
-import { ITEM_ACTION_TABS } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   PUBLISH_ITEM_BUTTON_CLASS,
   buildPublishButtonId,
 } from '../../config/selectors';
+import { ItemActionTabs } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
@@ -25,9 +25,9 @@ const PublishButton: FC<Props> = ({ itemId }) => {
 
   const onClick = () => {
     setOpenedActionTabId(
-      openedActionTabId === ITEM_ACTION_TABS.LIBRARY
+      openedActionTabId === ItemActionTabs.Library
         ? null
-        : ITEM_ACTION_TABS.LIBRARY,
+        : ItemActionTabs.Library,
     );
   };
 
@@ -41,7 +41,7 @@ const PublishButton: FC<Props> = ({ itemId }) => {
         onClick={onClick}
         id={buildPublishButtonId(itemId)}
       >
-        {openedActionTabId === ITEM_ACTION_TABS.LIBRARY ? (
+        {openedActionTabId === ItemActionTabs.Library ? (
           <CloseIcon />
         ) : (
           <ExploreIcon />

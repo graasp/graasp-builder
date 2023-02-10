@@ -1,7 +1,4 @@
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-
-import { useTranslation } from 'react-i18next';
+import { Stack } from '@mui/material';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { PermissionLevel } from '@graasp/sdk';
@@ -18,7 +15,6 @@ type Props = {
 };
 
 const AdminChatSettings = ({ item }: Props): JSX.Element => {
-  const { t } = useTranslation();
   const itemId = item.id;
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     hooks.useItemMemberships(item.id);
@@ -35,52 +31,19 @@ const AdminChatSettings = ({ item }: Props): JSX.Element => {
     return null;
   }
 
-  const downloadChat = (
-    <DownloadChatButton variant={ButtonVariants.BUTTON} chatId={itemId} />
-  );
   return (
-    <Grid container direction="column">
-      {downloadChat && (
-        <Grid
-          item
-          xs={12}
-          container
-          direction="row"
-          justifyItems="flex-start"
-          alignItems="center"
-        >
-          <Grid item>{downloadChat}</Grid>
-          <Grid item>
-            <Typography variant="body1">
-              {t('Download the chat to CSV format.')}
-            </Typography>
-          </Grid>
-        </Grid>
-      )}
-      <Grid
-        item
-        xs={12}
-        container
-        direction="row"
-        justifyItems="flex-start"
-        alignItems="center"
-      >
-        <Grid item>
-          <ClearChatButton
-            variant={ButtonVariants.BUTTON}
-            chatId={itemId}
-            clearChat={clearChatHook}
-          />
-        </Grid>
-        <Grid item xs>
-          <Typography variant="body1">
-            {t(
-              'Careful, this will delete all the messages in this item. Make sure you have a backup (using the button bellow before permanently deleting.',
-            )}
-          </Typography>
-        </Grid>
-      </Grid>
-    </Grid>
+    <Stack direction="column" spacing={1}>
+      <DownloadChatButton
+        variant={ButtonVariants.BUTTON}
+        chatId={itemId}
+        showInfo
+      />
+      <ClearChatButton
+        variant={ButtonVariants.BUTTON}
+        chatId={itemId}
+        clearChat={clearChatHook}
+      />
+    </Stack>
   );
 };
 

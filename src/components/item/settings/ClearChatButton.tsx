@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Stack,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -12,9 +13,10 @@ import IconButton from '@mui/material/IconButton';
 
 import { useState } from 'react';
 
-import buildI18n, { CHATBOX, namespaces } from '@graasp/translations';
+import { CHATBOX } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
+import { useChatboxTranslation } from '../../../config/i18n';
 import {
   CLEAR_CHAT_CANCEL_BUTTON_ID,
   CLEAR_CHAT_CONFIRM_BUTTON_ID,
@@ -36,7 +38,7 @@ const ClearChatButton = ({
   variant = ButtonVariants.BUTTON,
 }: Props): JSX.Element => {
   const [openConfirmation, setOpenConfirmation] = useState(false);
-  const { t } = buildI18n(namespaces.chatbox);
+  const { t } = useChatboxTranslation();
 
   if (!clearChat) {
     return null;
@@ -66,9 +68,9 @@ const ClearChatButton = ({
         return (
           <Button
             id={CLEAR_CHAT_SETTING_ID}
-            startIcon={<DeleteForever color="secondary" />}
-            variant="contained"
-            color="primary"
+            startIcon={<DeleteForever />}
+            variant="outlined"
+            color="error"
             onClick={() => setOpenConfirmation(true)}
           >
             {text}
@@ -78,18 +80,28 @@ const ClearChatButton = ({
   };
 
   return (
-    <div>
-      {getContent(variant)}
+    <>
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <Box width="max-content">{getContent(variant)}</Box>
+        <Typography variant="body1" textAlign="center">
+          {t(
+            'Careful, this will delete all the messages in this item. Make sure you have a backup',
+          )}
+        </Typography>
+      </Stack>
       <Dialog open={openConfirmation} id={CLEAR_CHAT_DIALOG_ID}>
         <DialogTitle>{t(CHATBOX.CLEAR_ALL_CHAT_TITLE)}</DialogTitle>
         <DialogContent>
-          <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography>{t(CHATBOX.CLEAR_ALL_CHAT_CONTENT)}</Typography>
+          <Stack flexDirection="column" alignItems="center" spacing={1}>
+            <Typography textAlign="justify">
+              {t(CHATBOX.CLEAR_ALL_CHAT_CONTENT)}
+            </Typography>
             <DownloadChatButton
               variant={ButtonVariants.BUTTON}
               chatId={chatId}
+              showInfo={false}
             />
-          </Box>
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button
@@ -104,6 +116,7 @@ const ClearChatButton = ({
           <Button
             id={CLEAR_CHAT_CONFIRM_BUTTON_ID}
             variant="outlined"
+            color="error"
             onClick={() => {
               setOpenConfirmation(false);
               handleClearChat();
@@ -113,7 +126,7 @@ const ClearChatButton = ({
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

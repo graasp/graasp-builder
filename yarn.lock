@@ -2295,12 +2295,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@npm:1.0.1":
+"@graasp/chatbox@github:graasp/graasp-chatbox#73-update-types":
   version: 1.0.1
-  resolution: "@graasp/chatbox@npm:1.0.1"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=704f9ad1ae200e7135d101601174120ec8bfa1e8"
   dependencies:
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
+    "@graasp/query-client": "github:graasp/graasp-query-client#202/exportChatHook"
+    "@graasp/sdk": "github:graasp/graasp-sdk#74-afine-item-type-with-discriminated-union"
     "@graasp/translations": 1.3.0
     "@graasp/ui": 0.7.1
     clsx: 1.2.1
@@ -2324,7 +2326,7 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: ad74ea0cb12d3eefc05f0e06e572d5596d82dde08c651cd73bca0fd85c3418a345e1dce53a25aa08495f5458225a8de25eb357f8858c9b507806e191837e3dee
+  checksum: 24782796b509a5be635fda0557e51d1c99d9ea3fdcc6090e55049d90443666c422be8c43bda00ca19bb060eaf5d53167d8bf802e6e2ac2992f7e804695def57d
   languageName: node
   linkType: hard
 
@@ -9846,7 +9848,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
-    "@graasp/chatbox": 1.0.1
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#73-update-types"
     "@graasp/query-client": "github:graasp/graasp-query-client#202/exportChatHook"
     "@graasp/sdk": "github:graasp/graasp-sdk#74-afine-item-type-with-discriminated-union"
     "@graasp/translations": 1.3.0

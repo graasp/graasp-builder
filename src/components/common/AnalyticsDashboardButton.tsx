@@ -7,9 +7,9 @@ import { FC } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
-import { ITEM_ACTION_TABS } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { buildDashboardButtonId } from '../../config/selectors';
+import { ItemActionTabs } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
@@ -22,9 +22,9 @@ const AnalyticsDashboardButton: FC<Props> = ({ id }) => {
 
   const onClick = () => {
     setOpenedActionTabId(
-      openedActionTabId === ITEM_ACTION_TABS.DASHBOARD
+      openedActionTabId === ItemActionTabs.Dashboard
         ? null
-        : ITEM_ACTION_TABS.DASHBOARD,
+        : ItemActionTabs.Dashboard,
     );
   };
 
@@ -35,7 +35,7 @@ const AnalyticsDashboardButton: FC<Props> = ({ id }) => {
         onClick={onClick}
         id={buildDashboardButtonId(id)}
       >
-        {openedActionTabId === ITEM_ACTION_TABS.DASHBOARD ? (
+        {openedActionTabId === ItemActionTabs.Dashboard ? (
           <CloseIcon />
         ) : (
           <PieChartIcon />

@@ -12,4 +12,11 @@ export enum ITEM_LAYOUT_MODES {
   LIST = 'list',
 }
 
+export enum ItemActionTabs {
+  Settings = 'settings',
+  Dashboard = 'dashboard',
+  Library = 'library',
+  Sharing = 'sharing',
+}
+
 export { ITEM_DATA_TYPES, MIME_TYPES, ORDERING };

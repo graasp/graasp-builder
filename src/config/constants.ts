@@ -251,13 +251,6 @@ export const DISPLAY_CO_EDITORS_OPTIONS = {
   },
 };
 
-export const ITEM_ACTION_TABS = {
-  SETTINGS: 'settings',
-  DASHBOARD: 'dashboard',
-  LIBRARY: 'library',
-  SHARING: 'sharing',
-};
-
 export const THUMBNAIL_SIZES = {
   SMALL: 'small',
 };

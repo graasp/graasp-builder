@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
-    "@graasp/chatbox": "1.0.1",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#73-update-types",
     "@graasp/query-client": "github:graasp/graasp-query-client#202/exportChatHook",
     "@graasp/sdk": "github:graasp/graasp-sdk#74-afine-item-type-with-discriminated-union",
     "@graasp/translations": "1.3.0",
