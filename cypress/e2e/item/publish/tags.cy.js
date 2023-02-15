@@ -1,5 +1,6 @@
 import { buildItemPath } from '../../../../src/config/paths';
 import {
+  ITEM_HEADER_ID,
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
   buildCustomizedTagsSelector,
@@ -69,6 +70,7 @@ describe('Tags permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
 
+    cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
     // signed out user can not see the publish menu
     cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
     cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('not.exist');
@@ -83,8 +85,8 @@ describe('Tags permissions', () => {
     });
     cy.visit(buildItemPath(item.id));
 
-    // read-only user user can not see the publish menu
-    cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
+    cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
+    openPublishItemTab(item.id);
     cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('not.exist');
   });
 });
