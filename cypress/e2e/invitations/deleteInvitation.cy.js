@@ -3,12 +3,13 @@ import {
   buildItemInvitationRowDeleteButtonId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 import { ITEMS_WITH_INVITATIONS } from '../../fixtures/invitations';
+
+// import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 
 const deleteInvitation = ({ id, itemId }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
-  cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
+  // cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
   cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).click();
 };
 

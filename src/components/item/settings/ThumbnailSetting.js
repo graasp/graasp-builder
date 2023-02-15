@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useRef, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { getLinkExtra } from '@graasp/sdk';
+import { getEmbeddedLinkExtra } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Thumbnail } from '@graasp/ui';
 
@@ -131,7 +131,9 @@ const ThumbnailSetting = ({ item }) => {
         <Grid item sm={6} textAlign="right">
           <Thumbnail
             id={itemId}
-            thumbnailSrc={getLinkExtra(item?.extra)?.thumbnails?.first()}
+            thumbnailSrc={getEmbeddedLinkExtra(
+              item?.extra,
+            )?.thumbnails?.first()}
             alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}

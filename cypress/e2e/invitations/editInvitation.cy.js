@@ -7,11 +7,12 @@ import {
 } from '../../../src/config/selectors';
 import { PERMISSION_LEVELS } from '../../fixtures/enums';
 import { ITEMS_WITH_INVITATIONS } from '../../fixtures/invitations';
-import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
+
+// import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 
 const editInvitation = ({ itemId, id, permission }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
-  cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
+  // cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
   const select = cy.get(
     `${buildInvitationTableRowSelector(
       id,

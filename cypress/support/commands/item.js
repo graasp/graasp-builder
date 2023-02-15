@@ -1,4 +1,8 @@
-import { getAppExtra, getDocumentExtra, getLinkExtra } from '@graasp/sdk';
+import {
+  getAppExtra,
+  getDocumentExtra,
+  getEmbeddedLinkExtra,
+} from '@graasp/sdk';
 
 import {
   FOLDER_FORM_DESCRIPTION_ID,
@@ -110,7 +114,7 @@ Cypress.Commands.add(
   ({ extra = {} }, { confirm = true } = {}) => {
     cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`).type(
       // first select all the text and then remove it to have a clear field, then type new text
-      `{selectall}{backspace}${getLinkExtra(extra)?.url}`,
+      `{selectall}{backspace}${getEmbeddedLinkExtra(extra)?.url}`,
     );
 
     if (confirm) {

@@ -1,5 +1,5 @@
 import { ColDef, Column, IRowDragItem } from 'ag-grid-community';
-import { List, RecordOf } from 'immutable';
+import { List } from 'immutable';
 
 import { FC, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
@@ -9,11 +9,14 @@ import {
   FolderItemExtra,
   Item,
   ItemType,
-  Member,
   getFolderExtra,
   getShortcutExtra,
 } from '@graasp/sdk';
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
+import {
+  ItemMembershipRecord,
+  ItemRecord,
+  MemberRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -55,7 +58,7 @@ type Props = {
   isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
-  creators: List<RecordOf<Member>>;
+  creators: List<MemberRecord>;
 };
 
 const ItemsTable: FC<Props> = ({
@@ -83,8 +86,8 @@ const ItemsTable: FC<Props> = ({
   const { data: member } = useCurrentUserContext();
 
   const mutation = useMutation<
-    any,
-    any,
+    unknown,
+    unknown,
     {
       id: string;
       extra: FolderItemExtra;
@@ -114,16 +117,14 @@ const ItemsTable: FC<Props> = ({
 
   const hasOrderChanged = (rowIds: string[]) => {
     if (parentItem.type === ItemType.FOLDER) {
-      const { childrenOrder } = getFolderExtra(parentItem.extra);
-      const numberOfChildrenItems = Array.isArray(childrenOrder)
-        ? childrenOrder.length
-        : childrenOrder.size;
+      const { childrenOrder = List<string>() } =
+        getFolderExtra(parentItem.extra) || {};
       return (
-        rowIds.length !== numberOfChildrenItems ||
+        rowIds.length !== childrenOrder.size ||
         !childrenOrder.every((id, i) => id === rowIds[i])
       );
     }
-    return false;
+    return true;
   };
 
   const onDragEnd = (displayRows: { data: Item }[]) => {

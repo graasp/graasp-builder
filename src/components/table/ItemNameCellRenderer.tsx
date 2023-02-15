@@ -1,3 +1,5 @@
+import { isList } from 'immutable';
+
 import { Box, Typography } from '@mui/material';
 
 import { ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
@@ -19,12 +21,14 @@ const ItemNameCellRenderer = (
         : undefined;
 
     const alt = item.name;
+    const iconSrc = isList(linkExtra?.icons)
+      ? linkExtra?.icons?.first()
+      : linkExtra?.icons?.[0];
+    const thumbnailSrc = isList(linkExtra?.thumbnails)
+      ? linkExtra?.thumbnails?.first()
+      : linkExtra?.thumbnails?.[0];
     const defaultValueComponent = (
-      <ItemIcon
-        type={item.type}
-        iconSrc={linkExtra?.icons?.first()}
-        alt={item.name}
-      />
+      <ItemIcon type={item.type} iconSrc={iconSrc} alt={alt} />
     );
 
     return (
@@ -36,7 +40,7 @@ const ItemNameCellRenderer = (
         {showThumbnails && (
           <Thumbnail
             id={item.id}
-            thumbnailSrc={linkExtra?.thumbnails?.first()}
+            thumbnailSrc={thumbnailSrc}
             maxWidth={30}
             maxHeight={30}
             alt={alt}

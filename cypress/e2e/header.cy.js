@@ -13,7 +13,8 @@ import {
   buildMemberMenuItemId,
 } from '../../src/config/selectors';
 import { MOCK_SESSIONS } from '../fixtures/members';
-import { PAGE_LOAD_WAITING_PAUSE } from '../support/constants';
+
+// import { PAGE_LOAD_WAITING_PAUSE } from '../support/constants';
 
 describe('Header', () => {
   it('App Navigation', () => {
@@ -21,7 +22,7 @@ describe('Header', () => {
     cy.visit(HOME_PATH);
     // check navigation and display and interface doesn't crash
     cy.get(`#${APP_NAVIGATION_DROP_DOWN_ID}`).click();
-    cy.wait(3000);
+    // cy.wait(3000);
     cy.get(`#${APP_NAVIGATION_DROP_DOWN_ID}`).should('exist');
   });
 
@@ -52,7 +53,7 @@ describe('Header', () => {
     it('Switch users', () => {
       cy.setUpApi({ storedSessions: MOCK_SESSIONS });
       cy.visit(HOME_PATH);
-      cy.wait(PAGE_LOAD_WAITING_PAUSE);
+      // cy.wait(PAGE_LOAD_WAITING_PAUSE);
       cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
 
       MOCK_SESSIONS.forEach(({ id }) => {

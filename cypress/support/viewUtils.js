@@ -1,7 +1,7 @@
 import {
   getDocumentExtra,
+  getEmbeddedLinkExtra,
   getFileExtra,
-  getLinkExtra,
   getS3FileExtra,
 } from '@graasp/sdk';
 
@@ -112,7 +112,7 @@ export const expectLinkViewScreenLayout = ({
   currentMember = CURRENT_USER,
 }) => {
   const { id, name, extra, creator, description, settings } = item;
-  const { url, html } = getLinkExtra(extra);
+  const { url, html } = getEmbeddedLinkExtra(extra);
 
   // embedded element
   if (html) {
