@@ -65,14 +65,14 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
     if (isConfirmButtonDisabled) {
       return;
     }
-    if (!isItemValid({ ...(item.toJS() as Item), ...updatedProperties })) {
+    if (!isItemValid({ ...(item?.toJS() as Item), ...updatedProperties })) {
       toast.error(translateBuilder(BUILDER.EDIT_ITEM_ERROR_MESSAGE));
       return;
     }
 
     setConfirmButtonDisabled(true);
     // add id to changed properties
-    editItem({ id: item.id, ...updatedProperties });
+    editItem({ id: item?.id, ...updatedProperties });
     onClose();
   };
 
@@ -132,7 +132,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
             // maybe we do not need the state variable and can just check the item
             isConfirmButtonDisabled ||
             // isItem Valid checks a full item, so we add the updated properties to the item to check
-            !isItemValid({ ...(item.toJS() as Item), ...updatedProperties })
+            !isItemValid({ ...(item?.toJS() as Item), ...updatedProperties })
           }
           onClick={submit}
           id={ITEM_FORM_CONFIRM_BUTTON_ID}
