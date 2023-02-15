@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import { FC, useEffect } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
@@ -31,12 +30,12 @@ export const getExistingItems = (
 
 // todo: improve types with refactor
 export const containsNonExistingItems = (
-  items: List<Item & { statusCode?: number }>,
+  items: List<ItemRecord & { statusCode?: number }>,
 ): boolean => items.some((item) => Boolean(item.statusCode));
 
 // todo: improve types with refactor
 export const getErrorItemIds = (
-  items: List<Item & { data?: string; statusCode?: number }>,
+  items: List<ItemRecord & { data?: string; statusCode?: number }>,
 ): List<string> =>
   items.filter((item) => item.statusCode).map((item) => item.data);
 

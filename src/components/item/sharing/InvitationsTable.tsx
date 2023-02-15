@@ -3,7 +3,8 @@ import { List } from 'immutable';
 import { useMemo } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Invitation, ItemRecord } from '@graasp/sdk/frontend';
+import { Invitation } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 

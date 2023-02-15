@@ -4,7 +4,7 @@ import truncate from 'lodash.truncate';
 import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { EmbeddedLinkItemExtra } from '@graasp/sdk';
+import { Item, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
@@ -14,7 +14,6 @@ import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
 import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
-import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
@@ -42,8 +41,8 @@ type Props = {
   memberships: List<ItemMembershipRecord>;
 };
 
-const Item: FC<Props> = ({ item, memberships }) => {
-  const { id, name, description, extra } = item;
+const ItemComponent: FC<Props> = ({ item, memberships }) => {
+  const { id, name, description } = item;
 
   const alt = name;
   const defaultValueComponent = (
@@ -61,12 +60,13 @@ const Item: FC<Props> = ({ item, memberships }) => {
     <Thumbnail
       id={item.id}
       thumbnailSrc={
-        getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra)?.thumbnails[0]
+        item.type === ItemType.LINK
+          ? getEmbeddedLinkExtra(item.extra)?.thumbnails?.first()
+          : undefined
       }
       alt={alt}
       defaultValue={defaultValueComponent}
-      // todo: fix in ui
-      useThumbnail={hooks.useItemThumbnail as any}
+      useThumbnail={hooks.useItemThumbnail}
     />
   );
 
@@ -87,7 +87,7 @@ const Item: FC<Props> = ({ item, memberships }) => {
             item={
               // DO NOT REMOVE cast
               // here we cast explicitly to be equivalent to the grid which does not let us use Records
-              item.toJS()
+              item.toJS() as Item
             }
           />
           <DownloadButton id={id} name={name} />
@@ -104,7 +104,7 @@ const Item: FC<Props> = ({ item, memberships }) => {
       Actions={Actions}
       name={name}
       creator={member?.name}
-      ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
+      ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
       NameWrapper={NameWrapper({
@@ -118,4 +118,4 @@ const Item: FC<Props> = ({ item, memberships }) => {
   );
 };
 
-export default Item;
+export default ItemComponent;

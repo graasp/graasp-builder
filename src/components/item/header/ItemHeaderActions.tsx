@@ -19,7 +19,10 @@ import {
   buildEditButtonId,
 } from '../../../config/selectors';
 import { ItemActionTabs } from '../../../enums';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import {
+  getHighestPermissionForMemberFromMemberships,
+  isItemUpdateAllowedForUser,
+} from '../../../utils/membership';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 import PlayerViewButton from '../../common/PlayerViewButton';
 import PublishButton from '../../common/PublishButton';
@@ -59,6 +62,10 @@ const ItemHeaderActions = ({
     memberships,
     memberId: member?.id,
   });
+  const canAdmin = getHighestPermissionForMemberFromMemberships({
+    memberships,
+    memberId: member?.id,
+  });
 
   const renderItemActions = () => {
     // if id is defined, we are looking at an item
@@ -89,7 +96,7 @@ const ItemHeaderActions = ({
             onClick={onClickChatbox}
           />
           <PlayerViewButton itemId={id} />
-          <PublishButton itemId={id} />
+          {canAdmin && <PublishButton itemId={id} />}
           {canEdit && <AnalyticsDashboardButton id={id} />}
         </>
       );

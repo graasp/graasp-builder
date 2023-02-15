@@ -11,10 +11,8 @@ import {
   LocalFileItemExtra,
   S3FileItemExtra,
 } from '@graasp/sdk';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 import { ItemLogin, ItemLoginSchema } from '@graasp/ui/dist/types';
-
-export const getFileExtra = (extra: LocalFileItemExtra): FileItemProperties =>
-  extra?.[ItemType.LOCAL_FILE];
 
 export const buildFileExtra = (
   file: FileItemProperties,
@@ -22,18 +20,11 @@ export const buildFileExtra = (
   [ItemType.LOCAL_FILE]: file,
 });
 
-export const getS3FileExtra = (extra: S3FileItemExtra): FileItemProperties =>
-  extra?.[ItemType.S3_FILE];
-
 export const buildS3FileExtra = (
   s3File: FileItemProperties,
 ): S3FileItemExtra => ({
   [ItemType.S3_FILE]: s3File,
 });
-
-export const getEmbeddedLinkExtra = (
-  extra: EmbeddedLinkItemExtra,
-): EmbeddedLinkItemExtraProperties => extra?.[ItemType.LINK];
 
 export const buildEmbeddedLinkExtra = (
   embeddedLink: EmbeddedLinkItemExtraProperties,
@@ -47,11 +38,6 @@ export const buildShortcutExtra = (
 ): { shortcut: { target: string } } => ({
   [ItemType.SHORTCUT]: { target },
 });
-
-// todo: put types in sdk
-export const getShortcutTarget = (extra: {
-  shortcut: { target: string };
-}): string => extra?.[ItemType.SHORTCUT]?.target;
 
 // todo: improve extra typing
 export const buildItemLoginSchemaExtra = (
@@ -79,9 +65,11 @@ export const buildDocumentExtra = (
 ): DocumentItemExtra => ({
   [ItemType.DOCUMENT]: text,
 });
-
+/**
+ * @deprecated
+ */
 export const getDocumentExtra = (
-  extra: DocumentItemExtra,
+  extra: DocumentItemExtra | ImmutableCast<DocumentItemExtra>,
 ): DocumentItemExtraProperties => extra?.[ItemType.DOCUMENT];
 
 export const buildAppExtra = ({

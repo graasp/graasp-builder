@@ -1,5 +1,4 @@
-import { Invitation } from '@graasp/query-client';
-import { ItemMembership } from '@graasp/sdk';
+import { Invitation, ItemMembership } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
 import { useIsParentInstance } from '../../../utils/item';

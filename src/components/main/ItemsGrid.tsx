@@ -92,7 +92,7 @@ const ItemsGrid = ({
           memberships={getMembershipsForItem({
             items,
             manyMemberships,
-            item,
+            itemId: item.id,
           })}
         />
       </Grid>

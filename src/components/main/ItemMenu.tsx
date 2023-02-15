@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { FC, useContext, useState } from 'react';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { Item, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { ButtonType } from '../../config/constants';
@@ -32,7 +32,7 @@ import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
 
 type Props = {
-  item: ItemRecord;
+  item: Item;
   canEdit?: boolean;
 };
 
@@ -91,7 +91,11 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
       return null;
     }
     return [
-      <FavoriteButton key="favorite" type={ButtonType.MENU_ITEM} item={item} />,
+      <FavoriteButton
+        key="favorite"
+        type={ButtonType.MENU_ITEM}
+        item={convertJs(item)}
+      />,
       <CopyButton
         key="copy"
         type={ButtonType.MENU_ITEM}

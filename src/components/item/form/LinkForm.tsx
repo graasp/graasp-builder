@@ -2,6 +2,7 @@ import { TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { EmbeddedLinkItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -11,7 +12,7 @@ import { buildEmbeddedLinkExtra } from '../../../utils/itemExtra';
 
 type Props = {
   onChange: (item: Partial<EmbeddedLinkItemType>) => void;
-  item: Partial<EmbeddedLinkItemType>;
+  item: Partial<EmbeddedLinkItemTypeRecord>;
 };
 
 const LinkForm = ({ onChange, item }: Props): JSX.Element => {
@@ -30,7 +31,7 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
     });
   };
 
-  const { url } = getEmbeddedLinkExtra(item.extra) || {};
+  const { url } = getEmbeddedLinkExtra(item?.extra) || {};
   const isLinkInvalid = url?.length && !isUrlValid(url);
 
   return (

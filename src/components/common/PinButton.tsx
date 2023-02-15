@@ -1,6 +1,4 @@
-import { RecordOf } from 'immutable';
-
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
@@ -13,11 +11,11 @@ import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
   type?: string;
-  item: RecordOf<Item>;
+  item: Item;
   onClick?: () => void;
 };
 
-const PinButton: FC<Props> = ({ item, type, onClick }) => {
+const PinButton = ({ item, type, onClick }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const editItem = useMutation<any, any, any>(MUTATION_KEYS.EDIT_ITEM);

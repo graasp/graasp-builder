@@ -2,6 +2,7 @@ import { List } from 'immutable';
 
 import { useEffect, useState } from 'react';
 
+import { Item } from '@graasp/sdk';
 import {
   ItemMembershipRecord,
   ItemRecord,
@@ -23,7 +24,7 @@ type Props = {
 };
 
 type ChildCompProps = {
-  data: ItemRecord;
+  data: Item;
 };
 
 // items and memberships match by index
@@ -45,7 +46,7 @@ const ActionsCellRenderer = ({
         setCanEdit(
           isItemUpdateAllowedForUser({
             memberships: getMembershipsForItem({
-              item,
+              itemId: item.id,
               manyMemberships,
               items,
             }),

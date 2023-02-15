@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { FC, HTMLAttributes, useState } from 'react';
 
 import { AppItemExtra, AppItemType } from '@graasp/sdk';
+import { AppItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -31,7 +32,7 @@ type App = {
 
 type Props = {
   onChange: (item: Partial<AppItemType>) => void;
-  item: Partial<AppItemType>;
+  item: Partial<AppItemTypeRecord>;
   updatedProperties: Partial<AppItemType>;
 };
 
@@ -71,7 +72,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
       </Typography>
       <BaseItemForm
         onChange={onChange}
-        item={{ ...item, name: newName }}
+        item={item.update('name', () => newName)}
         updatedProperties={updatedProperties}
       />
 

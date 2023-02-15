@@ -10,13 +10,10 @@ import {
   Item,
   ItemType,
   Member,
-  ShortcutItemExtra,
+  getFolderExtra,
+  getShortcutExtra,
 } from '@graasp/sdk';
-import {
-  FolderItemTypeRecord,
-  ItemMembershipRecord,
-  ItemRecord,
-} from '@graasp/sdk/frontend';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -30,8 +27,6 @@ import { buildItemPath } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
-import { getChildrenOrderFromFolderExtra } from '../../utils/item';
-import { getShortcutTarget } from '../../utils/itemExtra';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
@@ -84,7 +79,7 @@ const ItemsTable: FC<Props> = ({
   const { t: translateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
   const { itemId } = useParams();
-  const { data: parentItem }: { data: FolderItemTypeRecord } = useItem(itemId);
+  const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
 
   const mutation = useMutation<
@@ -111,19 +106,24 @@ const ItemsTable: FC<Props> = ({
 
       // redirect to target if shortcut
       if (data.type === ItemType.SHORTCUT) {
-        targetId = getShortcutTarget(data.extra as ShortcutItemExtra);
+        targetId = getShortcutExtra(data.extra).target;
       }
       navigate(buildItemPath(targetId));
     }
   };
 
   const hasOrderChanged = (rowIds: string[]) => {
-    const childrenOrder = getChildrenOrderFromFolderExtra(parentItem.extra);
-
-    return (
-      rowIds.length !== childrenOrder.size ||
-      !childrenOrder.every((id, i) => id === rowIds[i])
-    );
+    if (parentItem.type === ItemType.FOLDER) {
+      const { childrenOrder } = getFolderExtra(parentItem.extra);
+      const numberOfChildrenItems = Array.isArray(childrenOrder)
+        ? childrenOrder.length
+        : childrenOrder.size;
+      return (
+        rowIds.length !== numberOfChildrenItems ||
+        !childrenOrder.every((id, i) => id === rowIds[i])
+      );
+    }
+    return false;
   };
 
   const onDragEnd = (displayRows: { data: Item }[]) => {

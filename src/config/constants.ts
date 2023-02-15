@@ -138,7 +138,7 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 
 export const USER_ITEM_ORDER = 'user_order';
 
-export const ITEM_TYPES_WITH_CAPTIONS = [
+export const ITEM_TYPES_WITH_CAPTIONS: string[] = [
   ItemType.FOLDER,
   ItemType.S3_FILE,
   ItemType.LOCAL_FILE,

@@ -1,11 +1,9 @@
-import { RecordOf } from 'immutable';
-
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { CCLicenseIcon, Loader } from '@graasp/ui';
 
@@ -24,7 +22,7 @@ enum CCLicenseAdaption {
 }
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
   disabled: boolean;
 };
 

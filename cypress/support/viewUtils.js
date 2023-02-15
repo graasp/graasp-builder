@@ -1,4 +1,11 @@
 import {
+  getDocumentExtra,
+  getFileExtra,
+  getLinkExtra,
+  getS3FileExtra,
+} from '@graasp/sdk';
+
+import {
   DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
   ITEM_TYPES_WITH_CAPTIONS,
@@ -16,12 +23,6 @@ import {
   buildSettingsButtonId,
   buildShareButtonId,
 } from '../../src/config/selectors';
-import {
-  getDocumentExtra,
-  getEmbeddedLinkExtra,
-  getFileExtra,
-  getS3FileExtra,
-} from '../../src/utils/itemExtra';
 import { getMemberById } from '../../src/utils/member';
 import { isSettingsEditionAllowedForUser } from '../../src/utils/membership';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
@@ -111,7 +112,7 @@ export const expectLinkViewScreenLayout = ({
   currentMember = CURRENT_USER,
 }) => {
   const { id, name, extra, creator, description, settings } = item;
-  const { url, html } = getEmbeddedLinkExtra(extra);
+  const { url, html } = getLinkExtra(extra);
 
   // embedded element
   if (html) {

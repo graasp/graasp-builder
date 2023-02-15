@@ -83,15 +83,15 @@ export const getMembership = (
 };
 
 export const getMembershipsForItem = ({
-  item,
+  itemId,
   manyMemberships,
   items,
 }: {
-  item: ItemRecord;
+  itemId: string;
   manyMemberships: List<List<ItemMembershipRecord>>;
   items: List<ItemRecord>;
 }): List<ItemMembershipRecord> | undefined => {
-  const index = items.findKey(({ id }) => id === item.id);
+  const index = items.findKey(({ id }) => id === itemId);
   const m = manyMemberships?.get(index);
   if (isError(m)) {
     return undefined;

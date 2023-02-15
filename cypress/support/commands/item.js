@@ -1,3 +1,5 @@
+import { getAppExtra, getDocumentExtra, getLinkExtra } from '@graasp/sdk';
+
 import {
   FOLDER_FORM_DESCRIPTION_ID,
   ITEM_FORM_APP_URL_ID,
@@ -15,11 +17,6 @@ import {
   buildTreeItemId,
 } from '../../../src/config/selectors';
 import { getParentsIdsFromPath } from '../../../src/utils/item';
-import {
-  getAppExtra,
-  getDocumentExtra,
-  getEmbeddedLinkExtra,
-} from '../../../src/utils/itemExtra';
 import { NEW_APP_NAME } from '../../fixtures/apps/apps';
 import { TREE_VIEW_PAUSE } from '../constants';
 
@@ -113,7 +110,7 @@ Cypress.Commands.add(
   ({ extra = {} }, { confirm = true } = {}) => {
     cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`).type(
       // first select all the text and then remove it to have a clear field, then type new text
-      `{selectall}{backspace}${getEmbeddedLinkExtra(extra)?.url}`,
+      `{selectall}{backspace}${getLinkExtra(extra)?.url}`,
     );
 
     if (confirm) {

@@ -5,7 +5,11 @@ import { UseQueryResult } from 'react-query';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import { ItemType, PermissionLevel, buildPdfViewerLink } from '@graasp/sdk';
-import { EtherpadRecord, ItemRecord } from '@graasp/sdk/frontend';
+import {
+  DocumentItemTypeRecord,
+  EtherpadRecord,
+  ItemRecord,
+} from '@graasp/sdk/frontend';
 import {
   AppItem,
   DocumentItem,
@@ -110,7 +114,9 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
 
   const onSaveDocument = (text) => {
     // edit item only when description has changed
-    if (text !== getDocumentExtra(item?.extra).content) {
+    if (
+      text !== getDocumentExtra((item as DocumentItemTypeRecord)?.extra).content
+    ) {
       editItem({ id: itemId, extra: buildDocumentExtra({ content: text }) });
     }
     setEditingItemId(null);

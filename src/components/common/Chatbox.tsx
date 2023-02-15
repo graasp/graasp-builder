@@ -1,7 +1,11 @@
-import GraaspChatbox from '@graasp/chatbox';
+import GraaspChatbox, {
+  DeleteMessageFunctionParamType,
+  EditMessageFunctionParamType,
+  SendMessageFunctionParamType,
+} from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { PermissionLevel } from '@graasp/sdk';
-import { ChatMessage, ItemRecord, MessageBodyType } from '@graasp/sdk/frontend';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
 import { hooks, useMutation } from '../../config/queryClient';
@@ -26,17 +30,17 @@ const Chatbox = ({ item }: Props): JSX.Element => {
   const { mutate: sendMessage } = useMutation<
     unknown,
     unknown,
-    Pick<ChatMessage, 'chatId'> & { body: MessageBodyType }
+    SendMessageFunctionParamType
   >(MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE);
   const { mutate: editMessage } = useMutation<
     unknown,
     unknown,
-    Pick<ChatMessage, 'chatId' | 'id'> & { body: MessageBodyType }
+    EditMessageFunctionParamType
   >(MUTATION_KEYS.PATCH_ITEM_CHAT_MESSAGE);
   const { mutate: deleteMessage } = useMutation<
     unknown,
     unknown,
-    Pick<ChatMessage, 'chatId' | 'id'>
+    DeleteMessageFunctionParamType
   >(MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE);
 
   if (

@@ -1,4 +1,3 @@
-import { RecordOf } from 'immutable';
 import Papa from 'papaparse';
 
 import PublishIcon from '@mui/icons-material/Publish';
@@ -15,8 +14,8 @@ import Grid from '@mui/material/Grid';
 import { FC, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, PermissionLevel } from '@graasp/sdk';
-import { Invitation } from '@graasp/sdk/frontend';
+import { Invitation, PermissionLevel } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
@@ -37,7 +36,7 @@ const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
 };
 
 const CsvInputParser: FC<Props> = ({ item }) => {

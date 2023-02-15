@@ -7,7 +7,7 @@ import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { ItemLogin, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -146,7 +146,7 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
         deletePublishedAndPublicTags();
         postNewTag();
         // post login schema if it does not exist
-        if (!getItemLoginSchema(item?.extra)) {
+        if (!getItemLoginSchema(item?.extra as { itemLogin?: ItemLogin })) {
           putItemLoginSchema({
             itemId,
             loginSchema: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,

@@ -5,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-import { ItemType, LocalFileItemExtra, S3FileItemExtra } from '@graasp/sdk';
+import { ItemType, getFileExtra, getS3FileExtra } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 
@@ -19,7 +19,6 @@ import {
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
-import { getFileExtra, getS3FileExtra } from '../../utils/itemExtra';
 import { useLayoutContext } from '../context/LayoutContext';
 import ItemMemberships from './ItemMemberships';
 
@@ -40,16 +39,15 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
     setIsItemMetadataMenuOpen(true);
   };
 
-  const { type }: { type: ItemType | string } = item;
   let size = null;
   let mimetype = null;
-  if (type === ItemType.S3_FILE) {
+  if (item.type === ItemType.S3_FILE) {
     // todo: improve type of itemRecord with extras
-    const extra = getS3FileExtra(item.extra as S3FileItemExtra);
+    const extra = getS3FileExtra(item.extra);
     ({ mimetype, size } = extra);
-  } else if (type === ItemType.LOCAL_FILE) {
+  } else if (item.type === ItemType.LOCAL_FILE) {
     // todo: improve type of itemRecord with extras
-    const extra = getFileExtra(item.extra as LocalFileItemExtra);
+    const extra = getFileExtra(item.extra);
     ({ mimetype, size } = extra);
   }
 
@@ -62,10 +60,10 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
         <TableCell align="right">{link}</TableCell>
       </TableRow>
     );
-    if (type === ItemType.APP) {
+    if (item.type === ItemType.APP) {
       return buildTableRow(item.extra[ItemType.APP].url);
     }
-    if (type === ItemType.LINK) {
+    if (item.type === ItemType.LINK) {
       return buildTableRow(item.extra[ItemType.LINK].url);
     }
     return null;
@@ -87,7 +85,7 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
               <TableCell component="th" scope="row">
                 {translateBuilder(BUILDER.ITEM_METADATA_TYPE_TITLE)}
               </TableCell>
-              <TableCell align="right">{mimetype ?? type}</TableCell>
+              <TableCell align="right">{mimetype ?? item.type}</TableCell>
             </TableRow>
             {size && (
               <TableRow>

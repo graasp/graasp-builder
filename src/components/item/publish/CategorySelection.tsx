@@ -5,7 +5,7 @@ import { FC, SyntheticEvent } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Category } from '@graasp/sdk/frontend';
+import { Category } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 

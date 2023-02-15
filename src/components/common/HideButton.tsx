@@ -1,13 +1,9 @@
-import { RecordOf } from 'immutable';
-
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
-
-import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
@@ -19,16 +15,16 @@ import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
-  item: RecordOf<Item>;
+  item: Item;
   type?: ButtonType;
   onClick?: () => void;
 };
 
-const HideButton: FC<Props> = ({
+const HideButton = ({
   item,
   type = ButtonType.ICON_BUTTON,
   onClick,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { data: tags } = hooks.useItemTags(item.id);
