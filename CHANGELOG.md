@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/graasp/graasp-builder/compare/v0.4.2...v0.5.0) (2023-02-14)
+
+
+### Features
+
+* add tutorial footer menu item ([#546](https://github.com/graasp/graasp-builder/issues/546)) ([9454fdc](https://github.com/graasp/graasp-builder/commit/9454fdc95deecd86dcd6d1b090ffcdcfe56ccf64))
+* improve accessibility for mainmenu and table ([#555](https://github.com/graasp/graasp-builder/issues/555)) ([9cdac8d](https://github.com/graasp/graasp-builder/commit/9cdac8d11a8f2bbfc86858735143d4f09cb2e1eb))
+
+
+### Documentation
+
+* add dialexo as a contributor for code ([#553](https://github.com/graasp/graasp-builder/issues/553)) ([3ebef91](https://github.com/graasp/graasp-builder/commit/3ebef91c96ceb6ecd96d10c89957d6a4fd6550b7))
+* add pyphilia as a contributor for code ([#551](https://github.com/graasp/graasp-builder/issues/551)) ([e858257](https://github.com/graasp/graasp-builder/commit/e85825700154c71d0d929eea6d83b83fe6805c65))
+* add spaenleh as a contributor for code ([#552](https://github.com/graasp/graasp-builder/issues/552)) ([c70e240](https://github.com/graasp/graasp-builder/commit/c70e240a8d038d1b50fd65e3e3bfb616fe880e03))
+
 ## [0.4.2](https://github.com/graasp/graasp-builder/compare/v0.4.1...v0.4.2) (2023-01-31)
 
 
