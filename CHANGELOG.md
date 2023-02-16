@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/graasp/graasp-builder/compare/v0.5.0...v0.6.0) (2023-02-16)
+
+
+### Features
+
+* add platform switch to builder ([#544](https://github.com/graasp/graasp-builder/issues/544)) ([c48a40f](https://github.com/graasp/graasp-builder/commit/c48a40fa67a6273143d2e6e07accb687fd76cffb))
+
 ## [0.5.0](https://github.com/graasp/graasp-builder/compare/v0.4.2...v0.5.0) (2023-02-14)
 
 
