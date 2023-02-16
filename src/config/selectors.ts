@@ -1,3 +1,5 @@
+import { Platform } from '@graasp/ui';
+
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
 export const ITEM_MOVE_BUTTON_CLASS = 'itemMoveButton';
@@ -214,7 +216,13 @@ export const buildPlayerTabName = (id: string): string => `builder-tab-${id}`;
 export const ITEM_PUBLISH_SECTION_TITLE_ID = 'itemPublishSectionTitle';
 export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
 export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
-export const APP_NAVIGATION_DROP_DOWN_ID = 'appNavigationDropDown';
+export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
+export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
+  [Platform.Builder]: 'appNavigationPlatformSwitchButtonBuilder',
+  [Platform.Player]: 'appNavigationPlatformSwitchButtonPlayer',
+  [Platform.Library]: 'appNavigationPlatformSwitchButtonLibrary',
+  [Platform.Analytics]: 'appNavigationPlatformSwitchButtonAnalytics',
+};
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';
 export const ITEM_UNPUBLISH_BUTTON_ID = 'itemUnpublishButton';

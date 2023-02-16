@@ -2525,30 +2525,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#226-table-menu-a11y":
-  version: 0.10.2
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=a6e8bee0e668e8a7332b6489548cd08c8a354444"
+"@graasp/ui@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@graasp/ui@npm:0.11.1"
   dependencies:
-    "@graasp/sdk": 0.2.0
+    "@graasp/sdk": 0.4.0
     clsx: 1.1.1
     http-status-codes: 2.2.0
-    immutable: 4.1.0
+    immutable: 4.2.4
     katex: 0.16.0
     lodash.truncate: 4.4.2
-    qs: 6.10.5
+    qs: 6.11.0
     quill-emoji: 0.2.0
     react-cookie-consent: 7.4.1
     react-i18next: 11.17.0
     react-quill: 2.0.0-beta.4
     react-rnd: 10.3.7
     react-text-mask: 5.4.3
-    uuid: 8.3.2
+    uuid: 9.0.0
   peerDependencies:
-    "@emotion/react": 11.10.4
-    "@emotion/styled": 11.10.4
-    "@mui/icons-material": 5.8.3
-    "@mui/lab": ~5.0.0-alpha.85
-    "@mui/material": 5.10.7
+    "@emotion/react": ~11.10.5
+    "@emotion/styled": ~11.10.5
+    "@mui/icons-material": ~5.11.0
+    "@mui/lab": ~5.0.0-alpha.120
+    "@mui/material": ~5.11.9
     ag-grid-community: 28.1.1
     ag-grid-react: 28.1.1
     i18next: ~21.8.9
@@ -2560,7 +2560,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: dec2af8df6186414fe5b6822dd6dc78e59245143243863afa1edcd84669000bfb2ab85a9dcd151a872d943322686820f00deabe8f4d23506c61e566760701663
+  checksum: 599961399ee145e1a82555e6de86a927ae5408b4e145cc88de4eb0da3a22bc9b896b4145d44982e615a61d680b16c40832034f321d738458ea42266874c11627
   languageName: node
   linkType: hard
 
@@ -10142,7 +10142,7 @@ __metadata:
     "@graasp/query-client": 0.1.3
     "@graasp/sdk": 0.3.0
     "@graasp/translations": 1.3.0
-    "@graasp/ui": "github:graasp/graasp-ui#226-table-menu-a11y"
+    "@graasp/ui": 0.11.1
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117

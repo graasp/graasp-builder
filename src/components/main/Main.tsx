@@ -2,12 +2,18 @@ import { Grid, Typography, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { FC, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Context } from '@graasp/sdk';
-import { GraaspLogo, Main as GraaspMain, Navigation } from '@graasp/ui';
+import {
+  GraaspLogo,
+  Main as GraaspMain,
+  Platform,
+  PlatformSwitch,
+  defaultHostsMapper,
+  usePlatformNavigation,
+} from '@graasp/ui';
 
 import {
   APP_NAME,
@@ -17,7 +23,8 @@ import {
 import { HOME_PATH } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
-  APP_NAVIGATION_DROP_DOWN_ID,
+  APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
+  APP_NAVIGATION_PLATFORM_SWITCH_ID,
   HEADER_APP_BAR_ID,
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
@@ -32,6 +39,12 @@ const StyledLink = styled(Link)(() => ({
   alignItems: 'center',
 }));
 type Props = { children: JSX.Element | (JSX.Element & string) };
+
+// small converter for HOST_MAP into a usePlatformNavigation mapper
+export const platformsHostsMap = defaultHostsMapper({
+  [Platform.Player]: HOST_MAP.player,
+  [Platform.Library]: HOST_MAP.library,
+});
 
 const Main: FC<Props> = ({ children }) => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useContext(LayoutContext);
@@ -58,6 +71,27 @@ const Main: FC<Props> = ({ children }) => {
   );
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
 
+  const { itemId } = useParams();
+  const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
+
+  const platformProps = {
+    [Platform.Builder]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Builder],
+    },
+    [Platform.Player]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Player],
+      ...getNavigationEvents(Platform.Player),
+    },
+    [Platform.Library]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Library],
+      ...getNavigationEvents(Platform.Library),
+    },
+    [Platform.Analytics]: {
+      id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Analytics],
+      disabled: true,
+    },
+  };
+
   const leftContent = (
     <Box display="flex" ml={2}>
       <StyledLink to={HOME_PATH}>
@@ -66,10 +100,11 @@ const Main: FC<Props> = ({ children }) => {
           {APP_NAME}
         </Typography>
       </StyledLink>
-      <Navigation
-        id={APP_NAVIGATION_DROP_DOWN_ID}
-        hostMap={HOST_MAP}
-        currentValue={Context.BUILDER}
+      <PlatformSwitch
+        id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
+        selected={Platform.Builder}
+        platformsProps={platformProps}
+        disabledColor="#999"
       />
     </Box>
   );
