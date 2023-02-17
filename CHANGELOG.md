@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.1](https://github.com/graasp/graasp-builder/compare/v0.6.0...v0.6.1) (2023-02-17)
+
+
+### Bug Fixes
+
+* hide etherpad chat ([#560](https://github.com/graasp/graasp-builder/issues/560)) ([94b46d6](https://github.com/graasp/graasp-builder/commit/94b46d68c9556f5b9e92b4c01b056084c24f8762))
+
 ## [0.6.0](https://github.com/graasp/graasp-builder/compare/v0.5.0...v0.6.0) (2023-02-16)
 
 
