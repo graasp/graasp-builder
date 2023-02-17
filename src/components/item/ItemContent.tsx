@@ -1,16 +1,19 @@
 import { RecordOf } from 'immutable';
 
-import { Container, styled } from '@mui/material';
+import { Button, Container, styled } from '@mui/material';
 
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import {
+  DocumentItemExtra,
+  DocumentItemExtraProperties,
   Item,
   ItemType,
   PermissionLevel,
   buildPdfViewerLink,
 } from '@graasp/sdk';
+import { COMMON } from '@graasp/translations';
 import {
   AppItem,
   DocumentItem,
@@ -19,6 +22,7 @@ import {
   H5PItem,
   LinkItem,
   Loader,
+  SaveButton,
 } from '@graasp/ui';
 
 import {
@@ -30,6 +34,7 @@ import {
   H5P_INTEGRATION_URL,
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
+import { useCommonTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
@@ -45,10 +50,11 @@ import { LayoutContext } from '../context/LayoutContext';
 import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
+import { DocumentExtraForm } from './form/DocumentForm';
 
 const { useChildren, useFileContent, useEtherpad } = hooks;
 
-const FileWrapper = styled(Container)(() => ({
+const StyledContainer = styled(Container)(() => ({
   textAlign: 'center',
   height: '80vh',
   flexGrow: 1,
@@ -62,6 +68,8 @@ type Props = {
 };
 
 const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
+  const { t: translateCommon } = useCommonTranslation();
+
   const { id: itemId, type: itemType } = item;
   const { mutate: editItem } = useMutation<any, any, any>(
     MUTATION_KEYS.EDIT_ITEM,
@@ -89,6 +97,14 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   );
   const isEditing = enableEditing && editingItemId === itemId;
 
+  const maybeDocumentExtra = getDocumentExtra(item?.extra);
+  const [content, setContent] = useState<
+    DocumentItemExtraProperties['content']
+  >(maybeDocumentExtra.content);
+  const [flavor, setFlavor] = useState<DocumentItemExtraProperties['flavor']>(
+    maybeDocumentExtra.flavor,
+  );
+
   const etherpadQuery = useEtherpad(item, 'write'); // server will return read view if no write access allowed
 
   if (
@@ -112,11 +128,11 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
     setEditingItemId(null);
   };
 
-  const onSaveDocument = (text) => {
-    // edit item only when description has changed
-    if (text !== getDocumentExtra(item?.extra).content) {
-      editItem({ id: itemId, extra: buildDocumentExtra({ content: text }) });
-    }
+  const onSaveDocument = () => {
+    editItem({
+      id: itemId,
+      extra: buildDocumentExtra({ content, flavor }),
+    });
     setEditingItemId(null);
   };
 
@@ -132,7 +148,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
       // todo: remove when query client is correctly typed
       const file = fileData as Record<string, string>;
       return (
-        <FileWrapper>
+        <StyledContainer>
           <FileItem
             editCaption={isEditing}
             fileUrl={file?.url}
@@ -142,12 +158,12 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
             pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
             saveButtonId={saveButtonId}
           />
-        </FileWrapper>
+        </StyledContainer>
       );
     }
     case ItemType.LINK:
       return (
-        <FileWrapper>
+        <StyledContainer>
           <LinkItem
             isResizable
             item={item}
@@ -162,21 +178,45 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
               item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
             )}
           />
-        </FileWrapper>
+        </StyledContainer>
       );
     case ItemType.DOCUMENT:
       return (
-        <FileWrapper>
-          <DocumentItem
-            id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
-            item={item}
-            edit={isEditing}
-            onSave={onSaveDocument}
-            onCancel={onCancel}
-            saveButtonId={saveButtonId}
-            maxHeight="70vh"
-          />
-        </FileWrapper>
+        <StyledContainer>
+          {isEditing ? (
+            <>
+              <DocumentExtraForm
+                documentItemId={DOCUMENT_ITEM_TEXT_EDITOR_ID}
+                extra={{ content, flavor }}
+                maxHeight="70vh"
+                onCancel={onCancel}
+                onContentChange={setContent}
+                onContentSave={onSaveDocument}
+                onFlavorChange={(f) => setFlavor(f || undefined)}
+                saveButtonId={saveButtonId}
+              />
+              <Button onClick={onCancel} variant="text" sx={{ m: 1 }}>
+                {translateCommon(COMMON.CANCEL_BUTTON)}
+              </Button>
+              <SaveButton
+                sx={{ m: 1 }}
+                id={saveButtonId}
+                onClick={onSaveDocument}
+                text={translateCommon(COMMON.SAVE_BUTTON)}
+                hasChanges={
+                  content !== maybeDocumentExtra.content ||
+                  flavor !== maybeDocumentExtra.flavor
+                }
+              />
+            </>
+          ) : (
+            <DocumentItem
+              id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
+              item={item}
+              maxHeight="70vh"
+            />
+          )}
+        </StyledContainer>
       );
     case ItemType.APP:
       return (

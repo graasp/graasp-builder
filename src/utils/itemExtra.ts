@@ -89,9 +89,9 @@ export const getItemLoginSchema = (extra: { itemLogin?: ItemLogin }): string =>
   getItemLoginExtra(extra)?.loginSchema;
 
 export const buildDocumentExtra = (
-  text: DocumentItemExtraProperties,
+  document: DocumentItemExtraProperties,
 ): DocumentItemExtra => ({
-  [ItemType.DOCUMENT]: text,
+  [ItemType.DOCUMENT]: document,
 });
 
 export const getDocumentExtra = (

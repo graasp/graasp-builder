@@ -2411,6 +2411,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/cookie@npm:^8.0.0":
+  version: 8.3.0
+  resolution: "@fastify/cookie@npm:8.3.0"
+  dependencies:
+    cookie: ^0.5.0
+    fastify-plugin: ^4.0.0
+  checksum: d5dfb5c85d4ae02188aad63c8cf055d3b904287bc2750964ee0b8589c5b5ae32850e8fc9456a8830e9f4e9f24d5059e54dac084835d6ef4cbba7fa4b9c4673b3
+  languageName: node
+  linkType: hard
+
 "@fastify/error@npm:^2.0.0":
   version: 2.0.0
   resolution: "@fastify/error@npm:2.0.0"
@@ -2428,6 +2438,19 @@ __metadata:
   bin:
     secure-session: genkey.js
   checksum: 3366155760af949e677cf41ad37863e49cac60ab98c519767c6aeafcce7147c2cb2594909ea03513885ff758b082db3f4ccd00ec5906af09a4a4ceabca3f7852
+  languageName: node
+  linkType: hard
+
+"@fastify/secure-session@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@fastify/secure-session@npm:5.3.0"
+  dependencies:
+    "@fastify/cookie": ^8.0.0
+    fastify-plugin: ^4.0.0
+    sodium-native: ^3.0.0
+  bin:
+    secure-session: genkey.js
+  checksum: 584d9321f26ade63b8913758f65693b14400c9babfe23e26ded715e4b97ee26e01bf49df2562630b35f588beccdaff38f016a2c66c0e1357708588aa93a058d0
   languageName: node
   linkType: hard
 
@@ -2490,9 +2513,43 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:0.3.0":
-  version: 0.3.0
-  resolution: "@graasp/sdk@npm:0.3.0"
+"@graasp/sdk@github:graasp/graasp-sdk#81-document-flavor":
+  version: 0.4.1
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=b09a7812eb9b07d0d35612d485ae3b84394b30a1"
+  dependencies:
+    "@fastify/secure-session": 5.3.0
+    aws-sdk: 2.1310.0
+    fastify: 3.29.5
+    fluent-json-schema: 3.1.0
+    immutable: 4.2.4
+    js-cookie: 3.0.1
+    qs: 6.11.0
+    slonik: 28.1.1
+    uuid: 9.0.0
+  checksum: 073438ce9a70f89b84a9371fb08ab654fb6818871203da95a7237004f347b5c8f1ba410a68f1ae85f507b3ca06f6f1fddff53bdbb4ec39d3ce71a8442e2917d2
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@github:graasp/graasp-sdk.git":
+  version: 0.4.1
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=75e7833bbedda2b5c8002dc6e2decc4e8610d885"
+  dependencies:
+    "@fastify/secure-session": 5.3.0
+    aws-sdk: 2.1310.0
+    fastify: 3.29.5
+    fluent-json-schema: 3.1.0
+    immutable: 4.2.4
+    js-cookie: 3.0.1
+    qs: 6.11.0
+    slonik: 28.1.1
+    uuid: 9.0.0
+  checksum: 0c5235e5c3039e19ad484d08c096a8e5508494803a9f483fb0f7b3121c98593ec3dc9493f296b9cce3c45e1a207686bcc3286c77e5e69bbc15f87515de36ed7e
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@graasp/sdk@npm:0.2.0"
   dependencies:
     "@fastify/secure-session": 5.2.0
     aws-sdk: 2.1111.0
@@ -2503,7 +2560,7 @@ __metadata:
     qs: 6.11.0
     slonik: 28.1.1
     uuid: 8.3.2
-  checksum: 9204d48d08ebf5b1ed3b37000c8b3398a6f1ae2420ce5a474da0ba115494e14156aee106d3850eb7d892255d668bb0e018efd60359b674fa4b88d195419f77cb
+  checksum: 95a76c69dd4577f8a0eb51197d83fdb5c61c58c1c6a7c895e7ca543d4883603bc7deb534fd5b7bc4f61b5f15cd0b6c403bf165e6a6a4a756707f9ad877961339
   languageName: node
   linkType: hard
 
@@ -2525,11 +2582,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:0.11.1":
+"@graasp/ui@github:graasp/graasp-ui#240-document-flavor":
   version: 0.11.1
-  resolution: "@graasp/ui@npm:0.11.1"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=fef5ff3a608678367844c648b258c90c2d9cc5dc"
   dependencies:
-    "@graasp/sdk": 0.4.0
+    "@graasp/sdk": "github:graasp/graasp-sdk#81-document-flavor"
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.2.4
@@ -2560,7 +2617,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 599961399ee145e1a82555e6de86a927ae5408b4e145cc88de4eb0da3a22bc9b896b4145d44982e615a61d680b16c40832034f321d738458ea42266874c11627
+  checksum: 8b6f764cacee9af30a6a034a3a2a33106b828f54929a9efffc448f1aeee245dc4f31a0497faa86cbdd35fbf80142e30aec19f819cb669c98636a395cb95b7f83
   languageName: node
   linkType: hard
 
@@ -5688,6 +5745,24 @@ __metadata:
     uuid: 3.3.2
     xml2js: 0.4.19
   checksum: 1e918377e23704b1656aa5b9072ef8d8166198b14a4cdfd313745f7d4a3f826e3c14f4806e5b985fd67139a2a4cf30d65a0024cec16fbb6daa3ae99287951b76
+  languageName: node
+  linkType: hard
+
+"aws-sdk@npm:2.1310.0":
+  version: 2.1310.0
+  resolution: "aws-sdk@npm:2.1310.0"
+  dependencies:
+    buffer: 4.9.2
+    events: 1.1.1
+    ieee754: 1.1.13
+    jmespath: 0.16.0
+    querystring: 0.2.0
+    sax: 1.2.1
+    url: 0.10.3
+    util: ^0.12.4
+    uuid: 8.0.0
+    xml2js: 0.4.19
+  checksum: 648141461eaaaac1bcd8a2f1df460bb4603176541a28ed0aa7c344cc9fe19d69b2a463cb975c767bfb913ebc462103474fcd0315d07918c5fa35b0fef5f00f56
   languageName: node
   linkType: hard
 
@@ -9159,6 +9234,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-content-type-parse@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "fast-content-type-parse@npm:1.0.0"
+  checksum: 9e9187be17bea18a2ee715c5737b983181cbe84f286a291db0595e421e04b578da10ca10845639be08664a4db6a793f7709822935cf38cfdf9ecba38d84ead9e
+  languageName: node
+  linkType: hard
+
 "fast-decode-uri-component@npm:^1.0.1":
   version: 1.0.1
   resolution: "fast-decode-uri-component@npm:1.0.1"
@@ -9293,6 +9375,30 @@ __metadata:
     semver: ^7.3.2
     tiny-lru: ^8.0.1
   checksum: 8f9e9c9f837135b82c58f4bf8d0ddfad703275ff48827e37eccdb0f8b0366e043a2111da4ee8d35ae1bc78512b52ac15140790bbe314b51deced535cff9fefe5
+  languageName: node
+  linkType: hard
+
+"fastify@npm:3.29.5":
+  version: 3.29.5
+  resolution: "fastify@npm:3.29.5"
+  dependencies:
+    "@fastify/ajv-compiler": ^1.0.0
+    "@fastify/error": ^2.0.0
+    abstract-logging: ^2.0.0
+    avvio: ^7.1.2
+    fast-content-type-parse: ^1.0.0
+    fast-json-stringify: ^2.5.2
+    find-my-way: ^4.5.0
+    flatstr: ^1.0.12
+    light-my-request: ^4.2.0
+    pino: ^6.13.0
+    process-warning: ^1.0.0
+    proxy-addr: ^2.0.7
+    rfdc: ^1.1.4
+    secure-json-parse: ^2.0.0
+    semver: ^7.3.2
+    tiny-lru: ^8.0.1
+  checksum: 6f97e67c25c509c584529aad2ffe0d4bf8943a860f09d847bf34a4736586cf73f5748bde154e0199c022b97ff76aba35c3094006e62b07100ab10c63205541e3
   languageName: node
   linkType: hard
 
@@ -10140,9 +10246,9 @@ __metadata:
     "@emotion/styled": 11.10.5
     "@graasp/chatbox": 1.0.1
     "@graasp/query-client": 0.1.3
-    "@graasp/sdk": 0.3.0
+    "@graasp/sdk": "github:graasp/graasp-sdk#81-document-flavor"
     "@graasp/translations": 1.3.0
-    "@graasp/ui": 0.11.1
+    "@graasp/ui": "github:graasp/graasp-ui#240-document-flavor"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117
@@ -11042,6 +11148,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-generator-function@npm:^1.0.7":
+  version: 1.0.10
+  resolution: "is-generator-function@npm:1.0.10"
+  dependencies:
+    has-tostringtag: ^1.0.0
+  checksum: d54644e7dbaccef15ceb1e5d91d680eb5068c9ee9f9eb0a9e04173eb5542c9b51b5ab52c5537f5703e48d5fddfd376817c1ca07a84a407b7115b769d4bdde72b
+  languageName: node
+  linkType: hard
+
 "is-glob@npm:^4.0.0, is-glob@npm:^4.0.1, is-glob@npm:^4.0.3, is-glob@npm:~4.0.1":
   version: 4.0.3
   resolution: "is-glob@npm:4.0.3"
@@ -11242,7 +11357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-typed-array@npm:^1.1.10":
+"is-typed-array@npm:^1.1.10, is-typed-array@npm:^1.1.3":
   version: 1.1.10
   resolution: "is-typed-array@npm:1.1.10"
   dependencies:
@@ -19227,6 +19342,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"util@npm:^0.12.4":
+  version: 0.12.5
+  resolution: "util@npm:0.12.5"
+  dependencies:
+    inherits: ^2.0.3
+    is-arguments: ^1.0.4
+    is-generator-function: ^1.0.7
+    is-typed-array: ^1.1.3
+    which-typed-array: ^1.1.2
+  checksum: 705e51f0de5b446f4edec10739752ac25856541e0254ea1e7e45e5b9f9b0cb105bc4bd415736a6210edc68245a7f903bf085ffb08dd7deb8a0e847f60538a38a
+  languageName: node
+  linkType: hard
+
 "utila@npm:~0.4":
   version: 0.4.0
   resolution: "utila@npm:0.4.0"
@@ -19254,6 +19382,15 @@ __metadata:
   bin:
     uuid: ./bin/uuid
   checksum: 8793629d2799f500aeea9fcd0aec6c4e9fbcc4d62ed42159ad96be345c3fffac1bbf61a23e18e2782600884fee05e6d4012ce4b70d0037c8e987533ae6a77870
+  languageName: node
+  linkType: hard
+
+"uuid@npm:8.0.0":
+  version: 8.0.0
+  resolution: "uuid@npm:8.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 56d4e23aa7ac26fa2db6bd1778db34cb8c9f5a10df1770a27167874bf6705fc8f14a4ac414af58a0d96c7653b2bd4848510b29d1c2ef8c91ccb17429c1872b5e
   languageName: node
   linkType: hard
 
@@ -19690,7 +19827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"which-typed-array@npm:^1.1.8":
+"which-typed-array@npm:^1.1.2, which-typed-array@npm:^1.1.8":
   version: 1.1.9
   resolution: "which-typed-array@npm:1.1.9"
   dependencies:
