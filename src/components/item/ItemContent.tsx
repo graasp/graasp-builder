@@ -233,7 +233,11 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
         return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
       }
       return (
-        <EtherpadItem itemId={itemId} padUrl={etherpadQuery.data.padUrl} />
+        <EtherpadItem
+          itemId={itemId}
+          padUrl={etherpadQuery.data.padUrl}
+          options={{ showChat: false }}
+        />
       );
     }
 

@@ -1,9 +1,11 @@
 import { getCurrentSession } from '@graasp/sdk';
+import { Platform } from '@graasp/ui';
 
 import { SIGN_IN_PATH } from '../../src/config/constants';
 import { HOME_PATH } from '../../src/config/paths';
 import {
-  APP_NAVIGATION_DROP_DOWN_ID,
+  APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
+  APP_NAVIGATION_PLATFORM_SWITCH_ID,
   HEADER_MEMBER_MENU_BUTTON_ID,
   HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID,
   HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID,
@@ -21,9 +23,10 @@ describe('Header', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
     // check navigation and display and interface doesn't crash
-    cy.get(`#${APP_NAVIGATION_DROP_DOWN_ID}`).click();
-    // cy.wait(3000);
-    cy.get(`#${APP_NAVIGATION_DROP_DOWN_ID}`).should('exist');
+    cy.get(
+      `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Builder]}`,
+    ).click();
+    cy.get(`#${APP_NAVIGATION_PLATFORM_SWITCH_ID}`).should('exist');
   });
 
   describe('User Menu', () => {

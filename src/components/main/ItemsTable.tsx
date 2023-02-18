@@ -196,6 +196,7 @@ const ItemsTable: FC<Props> = ({
       {
         field: 'actions',
         cellRenderer: actions ?? ActionComponent,
+        suppressKeyboardEvent: GraaspTable.suppressKeyboardEventForParentCell,
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
