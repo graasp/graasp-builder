@@ -127,7 +127,7 @@ const WrappedItemScreen = (): JSX.Element => {
     signInButtonId: ITEM_LOGIN_SIGN_IN_BUTTON_ID,
     passwordInputId: ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
     modeSelectId: ITEM_LOGIN_SIGN_IN_MODE_ID,
-  })(ItemScreen); // todo: improve type
+  })(ItemScreen);
   return <Component />;
 };
 

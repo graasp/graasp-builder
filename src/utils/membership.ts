@@ -69,19 +69,6 @@ export const membershipsWithoutUser = (
 ): List<ItemMembershipRecord> =>
   memberships?.filter(({ memberId }) => memberId !== userId);
 
-// todo: Is this used ? Can we remove it ?
-// util function to get the first membership from useMemberships
-// this is necessary to detect errors
-export const getMembership = (
-  memberships?: List<ItemMembershipRecord>,
-): ItemMembershipRecord | undefined => {
-  if (isError(memberships?.get(0))) {
-    return undefined;
-  }
-
-  return memberships?.get(0);
-};
-
 export const getMembershipsForItem = ({
   itemId,
   manyMemberships,
