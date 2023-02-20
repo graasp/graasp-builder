@@ -6,7 +6,6 @@ import { FC, useContext, useState } from 'react';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import {
-  DocumentItemExtra,
   DocumentItemExtraProperties,
   Item,
   ItemType,
@@ -100,9 +99,9 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   const maybeDocumentExtra = getDocumentExtra(item?.extra);
   const [content, setContent] = useState<
     DocumentItemExtraProperties['content']
-  >(maybeDocumentExtra.content);
+  >(maybeDocumentExtra?.content);
   const [flavor, setFlavor] = useState<DocumentItemExtraProperties['flavor']>(
-    maybeDocumentExtra.flavor,
+    maybeDocumentExtra?.flavor,
   );
 
   const etherpadQuery = useEtherpad(item, 'write'); // server will return read view if no write access allowed
