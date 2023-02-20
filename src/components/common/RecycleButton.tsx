@@ -62,15 +62,17 @@ const RecycleButton: FC<Props> = ({
     default:
       return (
         <Tooltip title={text}>
-          <IconButton
-            id={id}
-            color={color}
-            className={ITEM_RECYCLE_BUTTON_CLASS}
-            aria-label={text}
-            onClick={handleClick}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              id={id}
+              color={color}
+              className={ITEM_RECYCLE_BUTTON_CLASS}
+              aria-label={text}
+              onClick={handleClick}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       );
   }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
 import { ChatStatus, ITEM_LAYOUT_MODES } from '../../enums';
@@ -11,7 +11,7 @@ interface LayoutContextInterface {
   isMainMenuOpen: boolean;
   setIsMainMenuOpen: (isOpen: boolean) => void;
   openedActionTabId: string | null;
-  setOpenedActionTabId: (action: string) => void;
+  setOpenedActionTabId: (action: string | null) => void;
   isItemMetadataMenuOpen: boolean;
   setIsItemMetadataMenuOpen: (isOpen: boolean) => void;
   isChatboxMenuOpen: boolean;
@@ -20,7 +20,7 @@ interface LayoutContextInterface {
   setIsItemSharingOpen: (isOpen: boolean) => void;
 }
 
-const LayoutContext = createContext<LayoutContextInterface>({
+export const LayoutContext = createContext<LayoutContextInterface>({
   mode: ITEM_LAYOUT_MODES.LIST,
   setMode: () => {
     // do nothing
@@ -65,7 +65,9 @@ export const LayoutContextProvider = ({
 
   // item settings page open
   // todo: separate in item specific context
-  const [openedActionTabId, setOpenedActionTabId] = useState<string>(null);
+  const [openedActionTabId, setOpenedActionTabId] = useState<string | null>(
+    null,
+  );
 
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
   const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);
@@ -110,4 +112,4 @@ export const LayoutContextProvider = ({
 };
 
 export const useLayoutContext = (): LayoutContextInterface =>
-  useContext(LayoutContext);
+  useContext<LayoutContextInterface>(LayoutContext);

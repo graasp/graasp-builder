@@ -31,13 +31,15 @@ const PlayerViewButton: FC<Props> = ({ itemId }) => {
 
   return (
     <Tooltip title={translateBuilder(BUILDER.PLAY_BUTTON_TOOLTIP)}>
-      <IconButton
-        aria-label={translateBuilder(BUILDER.PLAY_BUTTON_TOOLTIP)}
-        onClick={onClick}
-        id={buildPlayerButtonId(itemId)}
-      >
-        <PlayIcon size={ITEM_HEADER_ICON_HEIGHT} primaryColor="grey" />
-      </IconButton>
+      <span>
+        <IconButton
+          aria-label={translateBuilder(BUILDER.PLAY_BUTTON_TOOLTIP)}
+          onClick={onClick}
+          id={buildPlayerButtonId(itemId)}
+        >
+          <PlayIcon size={ITEM_HEADER_ICON_HEIGHT} primaryColor="grey" />
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };

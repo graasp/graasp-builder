@@ -1,5 +1,5 @@
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { Box, SelectChangeEvent, styled } from '@mui/material';
+import { SelectChangeEvent, Stack, styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,15 +32,12 @@ import {
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../../types/clipboard';
 import { copyToClipboard } from '../../../utils/clipboard';
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Stack)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   borderWidth: SHARE_LINK_CONTAINER_BORDER_WIDTH,
   borderStyle: SHARE_LINK_CONTAINER_BORDER_STYLE,
   padding: theme.spacing(1),
   margin: theme.spacing(1, 'auto'),
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
   width: '80%',
   position: 'relative',
 }));
@@ -48,7 +45,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const StyledLink = styled(Link)(() => ({
   color: SHARE_LINK_COLOR,
   textDecoration: 'none !important',
-  width: '70%',
+  textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
 }));
@@ -88,10 +85,20 @@ const SharingLink: FC<Props> = ({ itemId }) => {
     if (link) {
       copyToClipboard(link, {
         onSuccess: () => {
-          notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS, payload: {} });
+          notifier({
+            type: COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS,
+            payload: { message: translateBuilder('Link copied to clipboard') },
+          });
         },
         onError: () => {
-          notifier({ type: COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE, payload: {} });
+          notifier({
+            type: COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE,
+            payload: {
+              message: translateBuilder(
+                'There was an error copying the link to the clipboard',
+              ),
+            },
+          });
         },
       });
     }
@@ -102,11 +109,15 @@ const SharingLink: FC<Props> = ({ itemId }) => {
   };
 
   return (
-    <StyledBox>
+    <StyledBox
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <StyledLink href={link} target="_blank" id={SHARE_ITEM_DIALOG_LINK_ID}>
         {link}
       </StyledLink>
-      <div>
+      <Stack direction="row" alignItems="center">
         <Select
           sx={{ ml: 1, textTransform: 'capitalize' }}
           value={linkType}
@@ -128,11 +139,13 @@ const SharingLink: FC<Props> = ({ itemId }) => {
           </MenuItem>
         </Select>
         <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>
-          <IconButton onClick={handleCopy} sx={{ p: 0, ml: 1 }}>
-            <FileCopyIcon />
-          </IconButton>
+          <span>
+            <IconButton onClick={handleCopy}>
+              <FileCopyIcon />
+            </IconButton>
+          </span>
         </Tooltip>
-      </div>
+      </Stack>
     </StyledBox>
   );
 };

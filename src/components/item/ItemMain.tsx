@@ -60,14 +60,6 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
     setIsChatboxMenuOpen,
   } = useLayoutContext();
 
-  const handleToggleMetadataMenu = () => {
-    setIsItemMetadataMenuOpen(!isItemMetadataMenuOpen);
-    setIsChatboxMenuOpen(false);
-  };
-  const handleToggleChatboxMenu = () => {
-    setIsChatboxMenuOpen(!isChatboxMenuOpen);
-    setIsItemMetadataMenuOpen(false);
-  };
   return (
     <div id={id} className={ITEM_MAIN_CLASS}>
       {isChatboxMenuOpen && (
@@ -104,11 +96,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
       </ItemPanel>
 
       <StyledContainer open={isChatboxMenuOpen || isItemMetadataMenuOpen}>
-        <ItemHeader
-          showNavigation
-          onClickMetadata={handleToggleMetadataMenu}
-          onClickChatbox={handleToggleChatboxMenu}
-        />
+        <ItemHeader showNavigation />
 
         {children}
       </StyledContainer>
