@@ -52,7 +52,11 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
     permission: PermissionLevel.Read,
   });
 
-  const isInvitationInvalid = ({ email }: { email: string }): string => {
+  const checkForInvitationError = ({
+    email,
+  }: {
+    email: string;
+  }): string | null => {
     // check mail validity
     if (!email) {
       return translateBuilder(
@@ -70,7 +74,7 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
         BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
       );
     }
-    return '';
+    return null;
   };
 
   const onChangePermission = (e) => {
@@ -79,10 +83,10 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
 
   const handleShare = async () => {
     // not good to check email for multiple invitations at once
-    const isInvalid = isInvitationInvalid(invitation);
+    const invitationError = checkForInvitationError(invitation);
 
-    if (isInvalid) {
-      return setError(isInvalid);
+    if (invitationError) {
+      return setError(invitationError);
     }
 
     let returnedValue;
@@ -128,7 +132,7 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
     };
     setInvitation(newInvitation);
     if (error) {
-      const isInvalid = isInvitationInvalid(newInvitation);
+      const isInvalid = checkForInvitationError(newInvitation);
       setError(isInvalid);
     }
   };

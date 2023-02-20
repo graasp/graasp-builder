@@ -1,6 +1,4 @@
 import {
-  AppItemExtra,
-  AppItemExtraProperties,
   DocumentItemExtra,
   DocumentItemExtraProperties,
   EmbeddedLinkItemExtra,
@@ -11,7 +9,6 @@ import {
   LocalFileItemExtra,
   S3FileItemExtra,
 } from '@graasp/sdk';
-import { ImmutableCast } from '@graasp/sdk/frontend';
 import { ItemLogin, ItemLoginSchema } from '@graasp/ui/dist/types';
 
 export const buildFileExtra = (
@@ -57,20 +54,15 @@ export const getItemLoginExtra = (extra: {
   itemLogin?: ItemLogin;
 }): ItemLogin => extra?.itemLogin;
 
-export const getItemLoginSchema = (extra: { itemLogin?: ItemLogin }): string =>
-  getItemLoginExtra(extra)?.loginSchema;
+export const getItemLoginSchema = (extra: {
+  itemLogin?: ItemLogin;
+}): string | undefined => extra?.itemLogin?.loginSchema;
 
 export const buildDocumentExtra = (
   text: DocumentItemExtraProperties,
 ): DocumentItemExtra => ({
   [ItemType.DOCUMENT]: text,
 });
-/**
- * @deprecated
- */
-export const getDocumentExtra = (
-  extra: DocumentItemExtra | ImmutableCast<DocumentItemExtra>,
-): DocumentItemExtraProperties => extra?.[ItemType.DOCUMENT];
 
 export const buildAppExtra = ({
   url,
@@ -81,7 +73,3 @@ export const buildAppExtra = ({
 }): { app: { url: string; settings: ItemSettings } } => ({
   [ItemType.APP]: { url, settings },
 });
-
-export const getAppExtra = (
-  extra: AppItemExtra,
-): AppItemExtraProperties | undefined => extra?.[ItemType.APP];

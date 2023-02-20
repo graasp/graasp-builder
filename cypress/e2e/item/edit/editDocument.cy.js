@@ -1,3 +1,5 @@
+import { getDocumentExtra } from '@graasp/sdk';
+
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
@@ -5,10 +7,7 @@ import {
   buildEditButtonId,
   buildSaveButtonId,
 } from '../../../../src/config/selectors';
-import {
-  buildDocumentExtra,
-  getDocumentExtra,
-} from '../../../../src/utils/itemExtra';
+import { buildDocumentExtra } from '../../../../src/utils/itemExtra';
 import {
   GRAASP_DOCUMENT_CHILDREN_ITEM,
   GRAASP_DOCUMENT_ITEM,

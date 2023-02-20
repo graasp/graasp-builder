@@ -18,11 +18,8 @@ import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 
-// import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
-
 const copyItem = ({ id, toItemPath, rootId }) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  // cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
   cy.fillTreeModal(toItemPath, rootId);

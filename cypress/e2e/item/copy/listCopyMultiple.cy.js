@@ -8,16 +8,12 @@ import {
 import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-// import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
-
 const copyItems = ({ itemIds, toItemPath }) => {
   // check selected ids
   itemIds.forEach((id) => {
-    // cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`${buildItemsTableRowIdAttribute(id)} input`).click();
   });
 
-  // cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}`).click();
   cy.fillTreeModal(toItemPath);
 };
@@ -104,7 +100,7 @@ describe('Copy items in List', () => {
   });
 
   describe('Error handling', () => {
-    it.only('error while copying item does not create in interface', () => {
+    it('error while copying item does not create in interface', () => {
       cy.setUpApi({ ...SAMPLE_ITEMS, copyItemsError: true });
       const { id: start } = SAMPLE_ITEMS.items[0];
 

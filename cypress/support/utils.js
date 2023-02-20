@@ -39,7 +39,7 @@ const validateCsvData = (data, numMessages) => {
   expect(data).to.have.length(numMessages);
 };
 
-const validateHeaders = (headers) => {
+const validateCsvHeaders = (headers) => {
   const expectedHeader = EXPORT_CSV_HEADERS.map((h) => h.label);
   expect(headers).to.deep.equal(expectedHeader);
 };
@@ -51,7 +51,7 @@ export const verifyDownloadedChat = (name, numMessages) => {
   cy.readFile(filename, 'utf-8').then((csvString) => {
     // parse CSV data with headers
     const { data, meta } = Papa.parse(csvString, { header: true });
-    validateHeaders(meta.fields);
+    validateCsvHeaders(meta.fields);
     validateCsvData(data, numMessages);
   });
 };

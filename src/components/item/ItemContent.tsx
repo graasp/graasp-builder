@@ -4,7 +4,12 @@ import { FC } from 'react';
 import { UseQueryResult } from 'react-query';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
-import { ItemType, PermissionLevel, buildPdfViewerLink } from '@graasp/sdk';
+import {
+  ItemType,
+  PermissionLevel,
+  buildPdfViewerLink,
+  getDocumentExtra,
+} from '@graasp/sdk';
 import {
   DocumentItemTypeRecord,
   EtherpadRecord,
@@ -37,7 +42,7 @@ import {
   buildItemsTableId,
   buildSaveButtonId,
 } from '../../config/selectors';
-import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
+import { buildDocumentExtra } from '../../utils/itemExtra';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useLayoutContext } from '../context/LayoutContext';

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { FC, HTMLAttributes, useState } from 'react';
 
-import { AppItemExtra, AppItemType } from '@graasp/sdk';
+import { AppItemType, getAppExtra } from '@graasp/sdk';
 import { AppItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
@@ -17,7 +17,7 @@ import {
   ITEM_FORM_APP_URL_ID,
   buildItemFormAppOptionId,
 } from '../../../config/selectors';
-import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
+import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
 
 // todo: use from graasp-sdk
@@ -63,7 +63,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const { useApps } = hooks;
   const { data, isLoading: isAppsLoading } = useApps();
 
-  const url = getAppExtra(item?.extra as AppItemExtra)?.url;
+  const url = getAppExtra(item?.extra)?.url;
 
   return (
     <div>

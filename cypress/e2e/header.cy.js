@@ -16,8 +16,6 @@ import {
 } from '../../src/config/selectors';
 import { MOCK_SESSIONS } from '../fixtures/members';
 
-// import { PAGE_LOAD_WAITING_PAUSE } from '../support/constants';
-
 describe('Header', () => {
   it('App Navigation', () => {
     cy.setUpApi();
@@ -56,7 +54,6 @@ describe('Header', () => {
     it('Switch users', () => {
       cy.setUpApi({ storedSessions: MOCK_SESSIONS });
       cy.visit(HOME_PATH);
-      // cy.wait(PAGE_LOAD_WAITING_PAUSE);
       cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
 
       MOCK_SESSIONS.forEach(({ id }) => {
