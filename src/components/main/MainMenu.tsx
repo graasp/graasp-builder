@@ -2,6 +2,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
+import PublicIcon from '@mui/icons-material/Public';
 import Star from '@mui/icons-material/Star';
 import { styled } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -16,6 +17,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
+  PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
@@ -90,6 +92,12 @@ const MainMenu = (): JSX.Element => {
           selected={pathname === FAVORITE_ITEMS_PATH}
           text={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
           icon={<Star />}
+        />
+        <MenuItem
+          onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
+          selected={pathname === PUBLISHED_ITEMS_PATH}
+          text="Published items"
+          icon={<PublicIcon />}
         />
         <MenuItem
           onClick={() => goTo(RECYCLE_BIN_PATH)}

@@ -10,6 +10,7 @@ import {
   HOME_PATH,
   ITEMS_PATH,
   MEMBER_PROFILE_PATH,
+  PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
   REDIRECT_PATH,
   SHARED_ITEMS_PATH,
@@ -21,6 +22,7 @@ import { useCurrentUserContext } from './context/CurrentUserContext';
 import FavoriteItems from './main/FavoriteItems';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
+import PublishedItems from './main/PublishedItems';
 import Redirect from './main/Redirect';
 import MemberProfileScreen from './member/MemberProfileScreen';
 
@@ -57,6 +59,10 @@ const App = (): JSX.Element => {
     RecycleBinScreen,
     withAuthorizationProps,
   );
+  const PublishedWithAuthorization = withAuthorization(
+    PublishedItems,
+    withAuthorizationProps,
+  );
 
   return (
     <Routes>
@@ -65,6 +71,10 @@ const App = (): JSX.Element => {
       <Route
         path={FAVORITE_ITEMS_PATH}
         element={<FavoriteWithAuthorization />}
+      />
+      <Route
+        path={PUBLISHED_ITEMS_PATH}
+        element={<PublishedWithAuthorization />}
       />
       <Route path={buildItemPath()} element={<ItemScreen />} />
       <Route path={MEMBER_PROFILE_PATH} element={<MemberWithAuthorization />} />
