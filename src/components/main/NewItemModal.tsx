@@ -238,13 +238,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   };
 
   return (
-    <Dialog
-      scroll="body"
-      open={open}
-      onClose={handleClose}
-      maxWidth="md"
-      fullWidth
-    >
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <StyledDialogContent>
         <ItemTypeTabs
           onTypeChange={setSelectedItemType}

@@ -54,6 +54,7 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
   return (
     <StyledTabs
       centered
+      scrollButtons="auto"
       orientation="vertical"
       value={value}
       onChange={handleChange}
