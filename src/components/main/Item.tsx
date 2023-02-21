@@ -80,7 +80,7 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
   // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {member && member.id && <FavoriteButton size="small" item={item} />}
+      {member && member.id && <FavoriteButton size="medium" item={item} />}
       {enableEdition && (
         <>
           <EditButton
