@@ -65,16 +65,11 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const [initialItem] = useState<ItemRecord>(convertJs({}));
 
   // todo: find a way to create this type of literal from the enum values instead of like this...
-  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState<{
-    [ItemType.FOLDER]: { type: 'folder' };
-    [ItemType.APP]: { type: 'app' };
-    [ItemType.LINK]: { type: 'embeddedLink' };
-    [ItemType.DOCUMENT]: { type: 'document' };
-  }>({
-    [ItemType.FOLDER]: { type: ItemType.FOLDER },
-    [ItemType.LINK]: { type: ItemType.LINK },
-    [ItemType.APP]: { type: ItemType.APP },
-    [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
+  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
+    [ItemType.FOLDER]: { type: ItemType.FOLDER as const },
+    [ItemType.LINK]: { type: ItemType.LINK as const },
+    [ItemType.APP]: { type: ItemType.APP as const },
+    [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT as const },
   });
 
   const { mutate: postItem } = useMutation<any, any, any>(
