@@ -8,8 +8,12 @@ import { ChatboxButton } from '@graasp/ui';
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
+import { ITEM_CHATBOX_BUTTON_ID } from '../../../config/selectors';
 import { ItemActionTabs } from '../../../enums';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import {
+  getHighestPermissionForMemberFromMemberships,
+  isItemUpdateAllowedForUser,
+} from '../../../utils/membership';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 import EditItemCaptionButton from '../../common/EditItemCaptionButton';
 import ItemMetadataButton from '../../common/ItemMetadataButton';

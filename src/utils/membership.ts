@@ -18,7 +18,7 @@ export const isItemUpdateAllowedForUser = ({
   memberships,
   memberId,
 }: {
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
   memberId: string;
 }): boolean =>
   Boolean(
@@ -79,7 +79,7 @@ export const getMembershipsForItem = ({
   items: List<ItemRecord>;
 }): List<ItemMembershipRecord> | undefined => {
   const index = items.findKey(({ id }) => id === itemId);
-  const m = manyMemberships?.get(index);
+  const m = manyMemberships?.get(index as number);
   if (isError(m)) {
     return undefined;
   }
