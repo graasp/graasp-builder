@@ -5,18 +5,15 @@ import {
   TREE_MODAL_MY_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const copyItems = ({ itemIds, toItemPath }) => {
   // check selected ids
   itemIds.forEach((id) => {
-    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`${buildItemsTableRowIdAttribute(id)} input`).click();
   });
 
-  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}`).click();
   cy.fillTreeModal(toItemPath);
 };
@@ -104,7 +101,7 @@ describe('Copy items in List', () => {
 
   describe('Error handling', () => {
     it('error while copying item does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemsError: true });
       const { id: start } = SAMPLE_ITEMS.items[0];
 
       // go to children item
@@ -118,16 +115,12 @@ describe('Copy items in List', () => {
       const { path: toItemPath } = SAMPLE_ITEMS.items[0];
       copyItems({ itemIds, toItemPath });
 
-      cy.wait('@copyItems').then(({ response: { body } }) => {
+      cy.wait('@copyItems').then(({ response: { statusCode } }) => {
         // check item is still existing in parent
         itemIds.forEach((id) => {
           cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
         });
-        body.forEach((item) => {
-          cy.get(`${buildItemsTableRowIdAttribute(item.id)}`).should(
-            'not.exist',
-          );
-        });
+        expect(statusCode).to.equal(400);
       });
     });
   });

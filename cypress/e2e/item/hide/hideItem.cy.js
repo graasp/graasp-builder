@@ -1,16 +1,16 @@
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  HIDDEN_ITEM,
-  ITEMS_SETTINGS,
-  CHILD_HIDDEN_ITEM,
-} from '../../../fixtures/items';
-import { buildItemPath, HOME_PATH } from '../../../../src/config/paths';
-import {
+  HIDDEN_ITEM_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
-  HIDDEN_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
+import {
+  CHILD_HIDDEN_ITEM,
+  HIDDEN_ITEM,
+  ITEMS_SETTINGS,
+} from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 
 const toggleHideButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);

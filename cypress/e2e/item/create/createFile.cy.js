@@ -1,6 +1,6 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { IMAGE_ITEM_DEFAULT, IMAGE_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';

@@ -5,6 +5,7 @@ import {
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
+  ITEM_HEADER_ID,
   ITEM_VALIDATION_BUTTON_ID,
   ITEM_VALIDATION_REFRESH_BUTTON_ID,
   buildCoEditorSettingsRadioButtonId,
@@ -72,7 +73,10 @@ describe('Co-editor setting permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
-    openPublishItemTab(item.id);
+
+    cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
+    // signed-out user should not see publish button on public item
+    cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
     cy.get(`#${CO_EDITOR_SETTINGS_RADIO_GROUP_ID}`).should('not.exist');
   });
 
@@ -84,6 +88,8 @@ describe('Co-editor setting permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
+
+    cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
     openPublishItemTab(item.id);
     cy.get(`#${CO_EDITOR_SETTINGS_RADIO_GROUP_ID}`).should('not.exist');
   });

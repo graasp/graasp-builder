@@ -3,8 +3,8 @@ import { Typography } from '@mui/material';
 import { useMemo } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemRecord } from '@graasp/query-client/dist/types';
 import { ItemMembership } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';

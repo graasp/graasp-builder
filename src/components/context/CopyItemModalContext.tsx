@@ -1,6 +1,6 @@
 import { validate } from 'uuid';
 
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -9,31 +9,39 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import TreeModal from '../main/TreeModal';
 
-const CopyItemModalContext = createContext<{
-  openModal?: (ids: string[]) => void;
-}>({});
+type CopyItemModalContextType = {
+  openModal: (newItemIds: string[]) => void;
+};
 
-const CopyItemModalProvider = ({
-  children,
-}: {
-  children: JSX.Element | JSX.Element[];
-}): JSX.Element => {
+const CopyItemModalContext = createContext<CopyItemModalContextType>({
+  openModal: () => null,
+});
+
+type Props = {
+  children: JSX.Element;
+};
+
+export const CopyItemModalProvider = ({ children }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: copyItems } = useMutation(MUTATION_KEYS.COPY_ITEMS);
+  const { mutate: copyItems } = useMutation<
+    unknown,
+    unknown,
+    { ids: string[]; to: string }
+  >(MUTATION_KEYS.COPY_ITEMS);
   const [open, setOpen] = useState<boolean>(false);
-  const [itemIds, setItemIds] = useState<string[] | null>(null);
+  const [itemIds, setItemIds] = useState<string[]>([]);
 
-  const openModal = (newItemIds) => {
+  const openModal = (newItemIds: string[]) => {
     setOpen(true);
     setItemIds(newItemIds);
   };
 
   const onClose = () => {
     setOpen(false);
-    setItemIds(null);
+    setItemIds([]);
   };
 
-  const onConfirm = (payload) => {
+  const onConfirm = (payload: { ids: string[]; to: string }) => {
     // change item's root id to null
     const newPayload = {
       ...payload,
@@ -44,7 +52,7 @@ const CopyItemModalProvider = ({
   };
 
   const renderModal = () => {
-    if (!itemIds || !itemIds.length) {
+    if (!itemIds.length) {
       return null;
     }
 
@@ -69,4 +77,5 @@ const CopyItemModalProvider = ({
   );
 };
 
-export { CopyItemModalProvider, CopyItemModalContext };
+export const useCopyItemModalContext = (): CopyItemModalContextType =>
+  useContext(CopyItemModalContext);

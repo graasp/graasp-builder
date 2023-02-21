@@ -1,16 +1,18 @@
 import { TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { EmbeddedLinkItemExtraProperties, Item, ItemType } from '@graasp/sdk';
+import { EmbeddedLinkItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
 import { isUrlValid } from '../../../utils/item';
+import { buildEmbeddedLinkExtra } from '../../../utils/itemExtra';
 
 type Props = {
-  onChange: (item: Partial<Item>) => void;
-  item: Partial<Item>;
+  onChange: (item: Partial<EmbeddedLinkItemType>) => void;
+  item: Partial<EmbeddedLinkItemTypeRecord>;
 };
 
 const LinkForm = ({ onChange, item }: Props): JSX.Element => {
@@ -20,12 +22,16 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
     onChange({
       ...item,
       name: translateBuilder(BUILDER.LINK_DEFAULT_NAME), // todo: this is replaced by iframely
-      extra: { [ItemType.LINK]: { url: event.target.value } },
+      extra: buildEmbeddedLinkExtra({
+        url: event.target.value,
+        html: '',
+        thumbnails: [],
+        icons: [],
+      }),
     });
   };
 
-  const { url } =
-    (item?.extra?.[ItemType.LINK] as EmbeddedLinkItemExtraProperties) || {};
+  const { url } = getEmbeddedLinkExtra(item?.extra) || {};
   const isLinkInvalid = url?.length && !isUrlValid(url);
 
   return (

@@ -5,8 +5,6 @@ import Badge from '@mui/material/Badge';
 import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useContext } from 'react';
-
 import { PermissionLevel } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
@@ -15,12 +13,12 @@ import { hooks } from '../../config/queryClient';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
 import { membershipsWithoutUser } from '../../utils/membership';
 import MemberAvatar from '../common/MemberAvatar';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
-  maxAvatar?: number;
   id?: string;
-  onClick?: () => void;
+  onClick: () => void;
+  maxAvatar?: number;
 };
 
 const ItemMemberships = ({
@@ -30,7 +28,7 @@ const ItemMemberships = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: memberships, isError } = hooks.useItemMemberships(id);
-  const { data: currentUser } = useContext(CurrentUserContext);
+  const { data: currentUser } = useCurrentUserContext();
 
   if (!id) {
     return null;

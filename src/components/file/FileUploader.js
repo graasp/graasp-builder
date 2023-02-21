@@ -16,7 +16,7 @@ import {
 import { useBuilderTranslation } from '../../config/i18n';
 import { UPLOADER_ID } from '../../config/selectors';
 import { humanFileSize } from '../../utils/uppy';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import { UppyContext } from './UppyContext';
 
 const StyledContainer = styled(Box)(({ theme, isMainMenuOpen }) => ({
@@ -55,7 +55,7 @@ const StyledContainer = styled(Box)(({ theme, isMainMenuOpen }) => ({
 }));
 
 const FileUploader = () => {
-  const { isMainMenuOpen } = useContext(LayoutContext);
+  const { isMainMenuOpen } = useLayoutContext();
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);

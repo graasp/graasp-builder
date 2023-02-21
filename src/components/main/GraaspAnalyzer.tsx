@@ -1,8 +1,7 @@
-import { RecordOf } from 'immutable';
+import { FC, useEffect } from 'react';
 
-import { FC, useContext, useEffect } from 'react';
-
-import { Context, Item } from '@graasp/sdk';
+import { Context } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 
 import {
   DEFAULT_ANALYZER_HEIGHT,
@@ -10,16 +9,16 @@ import {
 } from '../../config/constants';
 import { useEnumsTranslation } from '../../config/i18n';
 import { buildGraaspAnalyzerId } from '../../config/selectors';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
 };
 
 // todo: use as component
 const GraaspAnalyzer: FC<Props> = ({ item }) => {
   const { t } = useEnumsTranslation();
-  const { setOpenedActionTabId } = useContext(LayoutContext);
+  const { setOpenedActionTabId } = useLayoutContext();
   const { id } = item;
 
   // close tab on unmount
@@ -38,7 +37,7 @@ const GraaspAnalyzer: FC<Props> = ({ item }) => {
       title={`Graasp ${t(Context.ANALYTICS)}`}
       src={buildGraaspAnalyzerLink(id)}
       id={buildGraaspAnalyzerId(id)}
-      frameBorder="0"
+      style={{ border: '0px' }}
     />
   );
 };

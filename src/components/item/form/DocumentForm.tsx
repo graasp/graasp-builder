@@ -1,7 +1,8 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { DocumentItemExtra, Item, ItemType } from '@graasp/sdk';
+import { DocumentItemType, ItemType } from '@graasp/sdk';
+import { DocumentItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { TextEditor } from '@graasp/ui';
 
@@ -11,9 +12,9 @@ import { buildDocumentExtra } from '../../../utils/itemExtra';
 import BaseForm from './BaseItemForm';
 
 type Props = {
-  onChange: (item: Partial<Item>) => void;
-  item: Partial<Item>;
-  updatedProperties: Partial<Item>;
+  onChange: (item: Partial<DocumentItemType>) => void;
+  item: Partial<DocumentItemTypeRecord>;
+  updatedProperties: Partial<DocumentItemType>;
 };
 
 const DocumentForm = ({
@@ -31,10 +32,9 @@ const DocumentForm = ({
   };
 
   const value =
-    ((updatedProperties?.extra?.[ItemType.DOCUMENT] as DocumentItemExtra)
-      ?.content as string) ||
-    ((item?.extra?.[ItemType.DOCUMENT] as DocumentItemExtra)
-      ?.content as string);
+    updatedProperties?.extra?.[ItemType.DOCUMENT]?.content ||
+    item?.extra?.[ItemType.DOCUMENT]?.content ||
+    '';
 
   return (
     <>

@@ -1,11 +1,13 @@
+import { isList } from 'immutable';
+
 import { Box, Typography } from '@mui/material';
 
-import { ItemRecord } from '@graasp/query-client/dist/types';
+import { ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 import { buildNameCellRendererId } from '../../config/selectors';
-import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 
 type ChildProps = { data: ItemRecord };
 
@@ -13,16 +15,20 @@ const ItemNameCellRenderer = (
   showThumbnails: boolean,
 ): ((props: ChildProps) => JSX.Element) => {
   const Component = ({ data: item }: ChildProps): JSX.Element => {
-    // TODO: improve types
-    const linkExtra = getEmbeddedLinkExtra(item.extra as any);
+    const linkExtra =
+      item.type === ItemType.LINK
+        ? getEmbeddedLinkExtra(item.extra)
+        : undefined;
 
     const alt = item.name;
+    const iconSrc = isList(linkExtra?.icons)
+      ? linkExtra?.icons?.first()
+      : linkExtra?.icons?.[0];
+    const thumbnailSrc = isList(linkExtra?.thumbnails)
+      ? linkExtra?.thumbnails?.first()
+      : linkExtra?.thumbnails?.[0];
     const defaultValueComponent = (
-      <ItemIcon
-        type={item.type}
-        iconSrc={linkExtra?.icons?.[0]}
-        alt={item.name}
-      />
+      <ItemIcon type={item.type} iconSrc={iconSrc} alt={alt} />
     );
 
     return (
@@ -34,12 +40,12 @@ const ItemNameCellRenderer = (
         {showThumbnails && (
           <Thumbnail
             id={item.id}
-            thumbnailSrc={linkExtra?.thumbnails?.[0]}
+            thumbnailSrc={thumbnailSrc}
             maxWidth={30}
             maxHeight={30}
             alt={alt}
             defaultValue={defaultValueComponent}
-            useThumbnail={hooks.useItemThumbnail as any}
+            useThumbnail={hooks.useItemThumbnail}
           />
         )}
         <Typography noWrap ml={1}>

@@ -1,10 +1,6 @@
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 
-import { useContext } from 'react';
-import { QueryObserverResult } from 'react-query';
-
-import { MemberRecord } from '@graasp/query-client/dist/types';
 import { ACCOUNT, COMMON } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -26,7 +22,7 @@ import {
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import { copyToClipboard } from '../../utils/clipboard';
 import { formatDate } from '../../utils/date';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import Main from '../main/Main';
 import AvatarSetting from './AvatarSetting';
 import DeleteMemberDialog from './DeleteMemberDialog';
@@ -37,8 +33,7 @@ import PasswordSetting from './PasswordSetting';
 const MemberProfileScreen = (): JSX.Element => {
   const { t } = useAccountTranslation();
   const { t: translateCommon } = useCommonTranslation();
-  const { data: member, isLoading } =
-    useContext<QueryObserverResult<MemberRecord>>(CurrentUserContext);
+  const { data: member, isLoading } = useCurrentUserContext();
 
   if (isLoading) {
     return <Loader />;

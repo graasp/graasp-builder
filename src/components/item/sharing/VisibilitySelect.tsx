@@ -1,15 +1,13 @@
-import { RecordOf } from 'immutable';
-
 import { SelectChangeEvent } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { ItemLogin, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -25,7 +23,7 @@ import {
   getTagByName,
   getVisibilityTagAndItemTag,
 } from '../../../utils/itemTag';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
@@ -42,15 +40,14 @@ type ItemTag = {
 };
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
   edit?: boolean;
 };
 
 const VisibilitySelect: FC<Props> = ({ item, edit }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   // user
-  const { data: user, isLoading: isMemberLoading } =
-    useContext(CurrentUserContext);
+  const { data: user, isLoading: isMemberLoading } = useCurrentUserContext();
 
   // current item
   const { itemId } = useParams();
@@ -149,7 +146,7 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
         deletePublishedAndPublicTags();
         postNewTag();
         // post login schema if it does not exist
-        if (!getItemLoginSchema(item?.extra)) {
+        if (!getItemLoginSchema(item?.extra as { itemLogin?: ItemLogin })) {
           putItemLoginSchema({
             itemId,
             loginSchema: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,

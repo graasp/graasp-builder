@@ -9,7 +9,7 @@ import {
   DASHBOARD_UPLOADER_ID,
   ZIP_DASHBOARD_UPLOADER_ID,
 } from '../../src/config/selectors';
-import { ITEM_TYPES } from '../fixtures/enum';
+import { ITEM_TYPES } from '../fixtures/enums';
 
 // eslint-disable-next-line import/prefer-default-export
 export const createItem = (payload, options) => {

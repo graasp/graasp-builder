@@ -8,10 +8,7 @@ import Select from '@mui/material/Select';
 
 import { useState } from 'react';
 
-import {
-  ItemMembershipRecord,
-  ItemRecord,
-} from '@graasp/query-client/dist/types';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
@@ -35,29 +32,29 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 type Props = {
-  items: List<ItemRecord>;
-  membershipLists: List<List<ItemMembershipRecord>>;
+  id?: string;
+  items?: List<ItemRecord>;
+  manyMemberships: List<List<ItemMembershipRecord>>;
   title: string;
   itemSearch?: {
-    text?: string;
+    text: string;
     // input: PropTypes.instanceOf(ItemSearchInput),
   };
-  headerElements: JSX.Element[];
+  headerElements?: JSX.Element[];
   parentId?: string;
   isEditing?: boolean;
 };
 
-const ItemsGrid = (props: Props): JSX.Element => {
-  const {
-    items = List(),
-    title,
-    itemSearch,
-    membershipLists,
-    parentId,
-    headerElements = [],
-    isEditing = false,
-  } = props;
-
+const ItemsGrid = ({
+  id: gridId = '',
+  items = List(),
+  title,
+  itemSearch,
+  headerElements = [],
+  manyMemberships,
+  isEditing = false,
+  parentId,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(
@@ -92,14 +89,18 @@ const ItemsGrid = (props: Props): JSX.Element => {
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
         <Item
           item={item}
-          memberships={getMembershipsForItem({ items, membershipLists, item })}
+          memberships={getMembershipsForItem({
+            items,
+            manyMemberships,
+            itemId: item.id,
+          })}
         />
       </Grid>
     ));
   };
 
   return (
-    <div>
+    <div id={gridId}>
       <ItemsToolbar title={title} headerElements={headerElements} />
       <FolderDescription itemId={parentId} isEditing={isEditing} />
       <Grid container spacing={2}>

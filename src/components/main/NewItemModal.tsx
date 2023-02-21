@@ -8,7 +8,14 @@ import { FC, useState } from 'react';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType, UnknownExtra } from '@graasp/sdk';
+import { Item, ItemType, UnknownExtra, convertJs } from '@graasp/sdk';
+import {
+  AppItemTypeRecord,
+  DocumentItemTypeRecord,
+  EmbeddedLinkItemTypeRecord,
+  FolderItemTypeRecord,
+  ItemRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -55,14 +62,14 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
   );
-  const [initialItem] = useState<Partial<Item<UnknownExtra>>>({});
-  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState<{
-    [key: string]: Partial<Item<UnknownExtra>>;
-  }>({
-    [ItemType.FOLDER]: { type: ItemType.FOLDER },
-    [ItemType.LINK]: { type: ItemType.LINK },
-    [ItemType.APP]: { type: ItemType.APP },
-    [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
+  const [initialItem] = useState<ItemRecord>(convertJs({}));
+
+  // todo: find a way to create this type of literal from the enum values instead of like this...
+  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
+    [ItemType.FOLDER]: { type: ItemType.FOLDER as const },
+    [ItemType.LINK]: { type: ItemType.LINK as const },
+    [ItemType.APP]: { type: ItemType.APP as const },
+    [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT as const },
   });
 
   const { mutate: postItem } = useMutation<any, any, any>(
@@ -140,7 +147,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
             </Typography>
             <FolderForm
               onChange={updateItem}
-              item={initialItem}
+              item={initialItem as FolderItemTypeRecord}
               updatedProperties={updatedPropertiesPerType[ItemType.FOLDER]}
             />
           </>
@@ -158,17 +165,22 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
         return (
           <AppForm
             onChange={updateItem}
-            item={initialItem}
+            item={initialItem as AppItemTypeRecord}
             updatedProperties={updatedPropertiesPerType[ItemType.APP]}
           />
         );
       case ItemType.LINK:
-        return <LinkForm onChange={updateItem} item={initialItem} />;
+        return (
+          <LinkForm
+            onChange={updateItem}
+            item={initialItem as EmbeddedLinkItemTypeRecord}
+          />
+        );
       case ItemType.DOCUMENT:
         return (
           <DocumentForm
             onChange={updateItem}
-            item={initialItem}
+            item={initialItem as DocumentItemTypeRecord}
             updatedProperties={updatedPropertiesPerType[ItemType.DOCUMENT]}
           />
         );

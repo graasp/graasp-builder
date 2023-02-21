@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useRef, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { getEmbeddedLinkExtra } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Thumbnail } from '@graasp/ui';
 
@@ -18,7 +19,6 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
 import defaultImage from '../../../resources/avatar.png';
-import { getEmbeddedLinkExtra } from '../../../utils/itemExtra';
 import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
@@ -131,7 +131,9 @@ const ThumbnailSetting = ({ item }) => {
         <Grid item sm={6} textAlign="right">
           <Thumbnail
             id={itemId}
-            thumbnailSrc={getEmbeddedLinkExtra(item?.extra)?.thumbnails?.get(0)}
+            thumbnailSrc={getEmbeddedLinkExtra(
+              item?.extra,
+            )?.thumbnails?.first()}
             alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
