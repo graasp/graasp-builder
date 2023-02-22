@@ -7298,9 +7298,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.4.0":
-  version: 12.4.0
-  resolution: "cypress@npm:12.4.0"
+"cypress@npm:12.6.0":
+  version: 12.6.0
+  resolution: "cypress@npm:12.6.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -7319,7 +7319,7 @@ __metadata:
     commander: ^5.1.0
     common-tags: ^1.8.0
     dayjs: ^1.10.4
-    debug: ^4.3.2
+    debug: ^4.3.4
     enquirer: ^2.3.6
     eventemitter2: 6.4.7
     execa: 4.1.0
@@ -7346,7 +7346,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 34eeb48547e3bea3312e71147ddc87a08fe90cef92434194621a9bf7747026471b01e41f1ded3a406db4fbb2e70c03d7e5d0df011227f969882550fe64a7d5d1
+  checksum: 716afdc7bd83d14d9ad31aba9f757a5dfccc1a693c57273a6b2281ddc1b201a432fae5c5ae8f049088384e3bcc3bda530910870ff8604a0233e1b96abc069850
   languageName: node
   linkType: hard
 
@@ -9900,7 +9900,7 @@ __metadata:
     ag-grid-community: 29.0.0
     ag-grid-react: 29.0.0
     concurrently: 7.6.0
-    cypress: 12.4.0
+    cypress: 12.6.0
     cypress-localstorage-commands: 2.2.2
     date-fns: 2.29.3
     env-cmd: 10.1.0
