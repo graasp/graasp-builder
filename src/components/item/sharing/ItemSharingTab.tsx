@@ -16,7 +16,10 @@ import { Loader } from '@graasp/ui';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import {
+  isItemUpdateAllowedForUser,
+  isSettingsEditionAllowedForUser,
+} from '../../../utils/membership';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
 import CsvInputParser from './CsvInputParser';
@@ -40,6 +43,11 @@ const ItemSharingTab = ({ item }: Props): JSX.Element => {
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 
   const canEdit = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: currentMember?.id,
+  });
+
+  const canEditSettings = isSettingsEditionAllowedForUser({
     memberships,
     memberId: currentMember?.id,
   });
@@ -70,9 +78,11 @@ const ItemSharingTab = ({ item }: Props): JSX.Element => {
           <Typography variant="h5" m={0} p={0}>
             {translateBuilder(BUILDER.SHARING_AUTHORIZED_MEMBERS_TITLE)}
           </Typography>
-          {canEdit && <CsvInputParser item={item} />}
+          {canEditSettings && <CsvInputParser item={item} />}
         </Grid>
-        {canEdit && <CreateItemMembershipForm item={item} members={members} />}
+        {canEditSettings && (
+          <CreateItemMembershipForm item={item} members={members} />
+        )}
         <ItemMembershipsTable
           item={item}
           emptyMessage={translateBuilder(
