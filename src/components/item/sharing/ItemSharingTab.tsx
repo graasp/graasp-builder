@@ -109,6 +109,7 @@ const ItemSharingTab = ({ item }: Props): JSX.Element => {
                 BUILDER.SHARING_AUTHENTICATED_MEMBERS_EMPTY_MESSAGE,
               )}
               showEmail={false}
+              readOnly={!canEditSettings}
             />
           </>
         )}
@@ -142,7 +143,7 @@ const ItemSharingTab = ({ item }: Props): JSX.Element => {
       <Typography variant="h6">
         {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
       </Typography>
-      <VisibilitySelect item={item} edit={canEdit} />
+      <VisibilitySelect item={item} edit={canEditSettings} />
       {renderMembershipSettings()}
     </Container>
   );
