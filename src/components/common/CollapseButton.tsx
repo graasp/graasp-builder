@@ -1,5 +1,3 @@
-import { RecordOf } from 'immutable';
-
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +5,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
@@ -19,16 +17,16 @@ import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
-  item: RecordOf<Item>;
+  item: Item;
   type?: ButtonType;
   onClick?: () => void;
 };
 
-const CollapseButton: FC<Props> = ({
+const CollapseButton = ({
   item,
   type = ButtonType.ICON_BUTTON,
   onClick,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = useMutation<unknown, unknown, Partial<Item>>(

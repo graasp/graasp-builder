@@ -1,15 +1,15 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import { ShareButton as GraaspShareButton } from '@graasp/ui';
 
-import { ITEM_ACTION_TABS } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   SHARE_ITEM_BUTTON_CLASS,
   buildShareButtonId,
 } from '../../config/selectors';
-import { LayoutContext } from '../context/LayoutContext';
+import { ItemActionTabs } from '../../enums';
+import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
   itemId: string;
@@ -17,13 +17,13 @@ type Props = {
 
 const ShareButton: FC<Props> = ({ itemId }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { openedActionTabId, setOpenedActionTabId } = useContext(LayoutContext);
+  const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
 
   const onClick = () => {
     setOpenedActionTabId(
-      openedActionTabId === ITEM_ACTION_TABS.SHARING
+      openedActionTabId === ItemActionTabs.Sharing
         ? null
-        : ITEM_ACTION_TABS.SHARING,
+        : ItemActionTabs.Sharing,
     );
   };
 
@@ -33,7 +33,7 @@ const ShareButton: FC<Props> = ({ itemId }) => {
       ariaLabel={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
       className={SHARE_ITEM_BUTTON_CLASS}
       onClick={onClick}
-      open={openedActionTabId === ITEM_ACTION_TABS.SHARING}
+      open={openedActionTabId === ItemActionTabs.Sharing}
       id={buildShareButtonId(itemId)}
     />
   );

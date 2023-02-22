@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -16,7 +16,7 @@ import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
   buildCoEditorSettingsRadioButtonId,
 } from '../../../config/selectors';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
 
@@ -25,7 +25,7 @@ const CoEditorSettings = ({ item, disabled }) => {
   const { mutate: updateDisplayCoEditors } = useMutation(EDIT_ITEM);
 
   // user
-  const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
+  const { isLoading: isMemberLoading } = useCurrentUserContext();
 
   // current item
   const itemId = item?.id;

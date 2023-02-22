@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -7,7 +7,7 @@ import { TextEditor } from '@graasp/ui';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import { buildSaveButtonId } from '../../config/selectors';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
   itemId: string;
@@ -21,7 +21,7 @@ const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
     any,
     { id: string; description: string }
   >(MUTATION_KEYS.EDIT_ITEM);
-  const { setEditingItemId } = useContext(LayoutContext);
+  const { setEditingItemId } = useLayoutContext();
   const { data: parentItem } = hooks.useItem(itemId);
 
   const onDescriptionSave = (str: string) => {

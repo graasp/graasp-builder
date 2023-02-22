@@ -1,15 +1,18 @@
 import { List } from 'immutable';
 
-import { ItemMembershipRecord } from '@graasp/query-client/dist/types';
 import { PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/ui/dist/types';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 
 import { PERMISSIONS_EDITION_ALLOWED } from '../config/constants';
 
 // todo: better check with typescript
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const isError = (membership: any): boolean =>
-  Boolean(membership?.statusCode);
+export const isError = (
+  membership?:
+    | ItemMembershipRecord
+    | List<ItemMembershipRecord>
+    | { statusCode: unknown },
+): boolean | undefined =>
+  membership && typeof membership === 'object' && 'statusCode' in membership;
 
 export const isItemUpdateAllowedForUser = ({
   memberships,
@@ -31,9 +34,9 @@ export const getHighestPermissionForMemberFromMemberships = ({
   memberships,
   memberId,
 }: {
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
   memberId: string;
-}): ItemMembershipRecord => {
+}): null | ItemMembershipRecord => {
   const itemMemberships = memberships?.filter(
     ({ memberId: mId }) => mId === memberId,
   );
@@ -66,29 +69,17 @@ export const membershipsWithoutUser = (
 ): List<ItemMembershipRecord> =>
   memberships?.filter(({ memberId }) => memberId !== userId);
 
-// util function to get the first membership from useMemberships
-// this is necessary to detect errors
-export const getMembership = (
-  memberships: List<ItemMembershipRecord>,
-): ItemMembershipRecord => {
-  if (isError(memberships?.get(0))) {
-    return undefined;
-  }
-
-  return memberships?.get(0);
-};
-
 export const getMembershipsForItem = ({
-  item,
-  membershipLists,
+  itemId,
+  manyMemberships,
   items,
 }: {
-  item: ItemRecord;
+  itemId: string;
+  manyMemberships: List<List<ItemMembershipRecord>>;
   items: List<ItemRecord>;
-  membershipLists: List<List<ItemMembershipRecord>>;
 }): List<ItemMembershipRecord> | undefined => {
-  const index = items.findKey(({ id }) => id === item.id);
-  const m = membershipLists?.get(index);
+  const index = items.findKey(({ id }) => id === itemId);
+  const m = manyMemberships?.get(index);
   if (isError(m)) {
     return undefined;
   }

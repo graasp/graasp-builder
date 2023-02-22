@@ -28,6 +28,7 @@ import './commands/item';
 import './commands/navigation';
 import {
   mockAppApiAccessToken,
+  mockClearItemChat,
   mockCopyItem,
   mockCopyItems,
   mockDefaultDownloadFile,
@@ -38,6 +39,7 @@ import {
   mockDeleteItemMembershipForItem,
   mockDeleteItemTag,
   mockDeleteItems,
+  mockDownloadItemChat,
   mockEditItem,
   mockEditItemMembershipForItem,
   mockEditMember,
@@ -70,6 +72,7 @@ import {
   mockGetOwnItems,
   mockGetPublicChildren,
   mockGetPublicItem,
+  mockGetPublicItemMembershipsForItem,
   mockGetRecycledItems,
   mockGetSharedItems,
   mockGetTags,
@@ -225,6 +228,8 @@ Cypress.Commands.add(
 
     mockGetItemMembershipsForItem(items, currentMember);
 
+    mockGetPublicItemMembershipsForItem(items);
+
     mockGetTags(tags);
 
     mockGetItemTags(items);
@@ -251,7 +256,11 @@ Cypress.Commands.add(
 
     mockGetItemChat({ items }, getItemChatError);
 
+    mockDownloadItemChat({ items }, getItemChatError);
+
     mockPostItemChatMessage();
+
+    mockClearItemChat({ items });
 
     mockGetMemberMentions({ mentions });
 

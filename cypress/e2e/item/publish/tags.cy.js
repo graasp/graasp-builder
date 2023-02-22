@@ -1,16 +1,17 @@
+import { buildItemPath } from '../../../../src/config/paths';
 import {
-  buildCustomizedTagsSelector,
-  buildPublishButtonId,
+  ITEM_HEADER_ID,
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
+  buildCustomizedTagsSelector,
+  buildPublishButtonId,
 } from '../../../../src/config/selectors';
-import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_WITH_CATEGORIES,
   NEW_CUSTOMIZED_TAG,
 } from '../../../fixtures/categories';
-import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { DEFAULT_TAGS } from '../../../fixtures/itemTags';
+import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 
@@ -68,9 +69,11 @@ describe('Tags permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
-    openPublishItemTab(item.id);
-    const tagsEdit = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
-    tagsEdit.should('not.exist');
+
+    cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
+    // signed out user can not see the publish menu
+    cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
+    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('not.exist');
   });
 
   it('Read-only user cannot edit tags', () => {
@@ -81,8 +84,9 @@ describe('Tags permissions', () => {
       tags: DEFAULT_TAGS,
     });
     cy.visit(buildItemPath(item.id));
+
+    cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
     openPublishItemTab(item.id);
-    const tagsEdit = cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`);
-    tagsEdit.should('not.exist');
+    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('not.exist');
   });
 });

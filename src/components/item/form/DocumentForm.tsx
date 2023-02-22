@@ -5,11 +5,11 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
 import {
-  DocumentItemExtra,
   DocumentItemExtraProperties,
-  Item,
+  DocumentItemType,
   ItemType,
 } from '@graasp/sdk';
+import { DocumentItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { DocumentItem } from '@graasp/ui';
 
@@ -84,9 +84,9 @@ export const DocumentExtraForm = ({
 );
 
 type Props = {
-  onChange: (item: Partial<Item>) => void;
-  item: Partial<Item>;
-  updatedProperties: Partial<Item>;
+  onChange: (item: Partial<DocumentItemType>) => void;
+  item: Partial<DocumentItemTypeRecord>;
+  updatedProperties: Partial<DocumentItemType>;
 };
 
 const DocumentForm = ({

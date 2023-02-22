@@ -2,11 +2,12 @@ import { List } from 'immutable';
 
 import { useEffect, useState } from 'react';
 
+import { Item } from '@graasp/sdk';
 import {
   ItemMembershipRecord,
   ItemRecord,
   MemberRecord,
-} from '@graasp/query-client/dist/types';
+} from '@graasp/sdk/frontend';
 
 import {
   getMembershipsForItem,
@@ -17,42 +18,44 @@ import DownloadButton from '../main/DownloadButton';
 import ItemMenu from '../main/ItemMenu';
 
 type Props = {
-  membershipLists: List<List<ItemMembershipRecord>>;
   items: List<ItemRecord>;
+  manyMemberships: List<List<ItemMembershipRecord>>;
   member: MemberRecord;
 };
 
-type ChildProps = { data: ItemRecord };
+type ChildCompProps = {
+  data: Item;
+};
 
 // items and memberships match by index
 const ActionsCellRenderer = ({
-  membershipLists,
+  manyMemberships,
   items,
   member,
-}: Props): ((props: ChildProps) => JSX.Element) => {
-  const ChildComponent = ({ data: item }: ChildProps) => {
+}: Props): ((arg: ChildCompProps) => JSX.Element) => {
+  const ChildComponent = ({ data: item }: ChildCompProps) => {
     const [canEdit, setCanEdit] = useState(false);
 
     useEffect(() => {
       if (
         items &&
-        membershipLists &&
-        !membershipLists.isEmpty() &&
+        manyMemberships &&
+        !manyMemberships.isEmpty() &&
         !items.isEmpty()
       ) {
         setCanEdit(
           isItemUpdateAllowedForUser({
             memberships: getMembershipsForItem({
-              item,
+              itemId: item.id,
+              manyMemberships,
               items,
-              membershipLists,
             }),
             memberId: member?.id,
           }),
         );
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [items, membershipLists, item, member]);
+    }, [items, manyMemberships, item, member]);
 
     const renderAnyoneActions = () => (
       <ItemMenu item={item} canEdit={canEdit} />
@@ -78,7 +81,6 @@ const ActionsCellRenderer = ({
       </>
     );
   };
-
   return ChildComponent;
 };
 

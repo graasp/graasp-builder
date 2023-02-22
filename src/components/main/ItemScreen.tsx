@@ -1,15 +1,12 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemType } from '@graasp/sdk';
-import { ItemLoginAuthorization } from '@graasp/ui';
+import { ItemLoginAuthorization, Loader } from '@graasp/ui';
 import { SignInPropertiesType } from '@graasp/ui/dist/itemLogin/ItemLoginScreen';
 
-import {
-  ITEM_ACTION_TABS,
-  PERMISSIONS_EDITION_ALLOWED,
-} from '../../config/constants';
+import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
@@ -18,10 +15,11 @@ import {
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '../../config/selectors';
+import { ItemActionTabs } from '../../enums';
 import { getHighestPermissionForMemberFromMemberships } from '../../utils/membership';
 import ErrorAlert from '../common/ErrorAlert';
-import { CurrentUserContext } from '../context/CurrentUserContext';
-import { LayoutContext } from '../context/LayoutContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import FileUploader from '../file/FileUploader';
 import { UppyContextProvider } from '../file/UppyContext';
 import ItemContent from '../item/ItemContent';
@@ -40,9 +38,13 @@ const ItemScreen = (): JSX.Element => {
   const { data: item, isError } = useItem(itemId);
 
   const { setEditingItemId, openedActionTabId, setOpenedActionTabId } =
-    useContext(LayoutContext);
-  const { data: currentMember } = useContext(CurrentUserContext);
-  const { data: memberships } = useItemMemberships(itemId);
+    useLayoutContext();
+  const { data: currentMember } = useCurrentUserContext();
+  const {
+    data: memberships,
+    isLoading: isLoadingItemMemberships,
+    isError: isErrorItemMemberships,
+  } = useItemMemberships(itemId);
 
   useEffect(() => {
     setEditingItemId(null);
@@ -50,8 +52,12 @@ const ItemScreen = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
-  if (!itemId || !item || isError) {
+  if (!itemId || !item || isError || isErrorItemMemberships) {
     return <ErrorAlert />;
+  }
+
+  if (isLoadingItemMemberships) {
+    return <Loader />;
   }
 
   const itemMembership = getHighestPermissionForMemberFromMemberships({
@@ -62,18 +68,18 @@ const ItemScreen = (): JSX.Element => {
   const enableEditing = PERMISSIONS_EDITION_ALLOWED.includes(permission);
 
   const content = (() => {
-    if (openedActionTabId === ITEM_ACTION_TABS.SETTINGS && enableEditing) {
+    if (openedActionTabId === ItemActionTabs.Settings && enableEditing) {
       return <ItemSettings item={item} />;
     }
 
     switch (openedActionTabId) {
-      case ITEM_ACTION_TABS.SHARING: {
-        return <ItemSharingTab item={item} />;
+      case ItemActionTabs.Sharing: {
+        return <ItemSharingTab item={item} memberships={memberships} />;
       }
-      case ITEM_ACTION_TABS.DASHBOARD: {
+      case ItemActionTabs.Dashboard: {
         return <GraaspAnalyzer item={item} />;
       }
-      case ITEM_ACTION_TABS.LIBRARY: {
+      case ItemActionTabs.Library: {
         return <ItemPublishTab item={item} permission={permission} />;
       }
       default:
@@ -121,7 +127,7 @@ const WrappedItemScreen = (): JSX.Element => {
     signInButtonId: ITEM_LOGIN_SIGN_IN_BUTTON_ID,
     passwordInputId: ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
     modeSelectId: ITEM_LOGIN_SIGN_IN_MODE_ID,
-  })(ItemScreen as any); // todo: improve type
+  })(ItemScreen);
   return <Component />;
 };
 

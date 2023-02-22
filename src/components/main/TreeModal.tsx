@@ -18,7 +18,7 @@ import {
   TREE_MODAL_SHARED_ITEMS_ID,
   buildTreeItemId,
 } from '../../config/selectors';
-import { TREE_PREVENT_SELECTION } from '../../enums';
+import { TreePreventSelection } from '../../enums';
 import { getParentsIdsFromPath } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 
@@ -27,21 +27,20 @@ const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 type Props = {
   onConfirm: (args: { ids: string[]; to: string }) => void;
-  onClose: (ags: { id: null | string; open: boolean }) => void;
+  onClose: (args: { id: string; open: boolean }) => void;
   title: string;
-  prevent?: string; // TREE_PREVENT_SELECTION
   itemIds?: string[];
-  open: boolean;
+  open?: boolean;
+  prevent?: TreePreventSelection;
 };
 
 const TreeModal = ({
-  itemIds,
   title,
   onClose,
   onConfirm,
-  prevent = TREE_PREVENT_SELECTION.NONE,
-
   open = false,
+  itemIds = [],
+  prevent = TreePreventSelection.NONE,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
@@ -94,11 +93,11 @@ const TreeModal = ({
   // it depends on the prevent mode and the previous items
   const isTreeItemDisabled = ({ itemId: iId, parentIsDisabled }) => {
     switch (prevent) {
-      case TREE_PREVENT_SELECTION.SELF_AND_CHILDREN:
+      case TreePreventSelection.SELF_AND_CHILDREN:
         // if the previous item is disabled, its children will be disabled
         // and prevent selection on self
         return parentIsDisabled || itemIds.find((x) => x === iId);
-      case TREE_PREVENT_SELECTION.NONE:
+      case TreePreventSelection.NONE:
       default:
         return false;
     }

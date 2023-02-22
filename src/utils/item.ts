@@ -1,23 +1,21 @@
 // synchronous functions to manage items from redux
+import { List } from 'immutable';
+
 import { useEffect, useState } from 'react';
 
 import {
-  AppItemExtra,
-  DocumentItemExtra,
-  EmbeddedLinkItemExtra,
   FolderItemExtra,
+  Invitation,
   Item,
   ItemMembership,
   ItemType,
-} from '@graasp/sdk';
-
-import { UUID_LENGTH } from '../config/constants';
-import { Invitation } from '../config/types';
-import {
   getAppExtra,
   getDocumentExtra,
   getEmbeddedLinkExtra,
-} from './itemExtra';
+} from '@graasp/sdk';
+import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
+
+import { UUID_LENGTH } from '../config/constants';
 
 export const transformIdForPath = (id: string): string =>
   // eslint-disable-next-line no-useless-escape
@@ -103,21 +101,20 @@ export const isItemValid = (item: Partial<Item>): boolean => {
 
   // item should have a type
   let hasValidTypeProperties =
-    itemType && Object.values(ItemType).includes(itemType);
+    itemType && Object.values<string>(ItemType).includes(itemType);
   switch (itemType) {
     case ItemType.LINK: {
-      const { url } =
-        getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra) || {};
+      const { url } = getEmbeddedLinkExtra(extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
     case ItemType.APP: {
-      const { url } = getAppExtra(extra as AppItemExtra) || {};
+      const { url } = getAppExtra(extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
     case ItemType.DOCUMENT: {
-      const { content } = getDocumentExtra(extra as DocumentItemExtra) || {};
+      const { content } = getDocumentExtra(extra) || {};
       hasValidTypeProperties = content?.length > 0;
       break;
     }
@@ -129,8 +126,8 @@ export const isItemValid = (item: Partial<Item>): boolean => {
 };
 
 export const getChildrenOrderFromFolderExtra = (
-  extra: FolderItemExtra,
-): string[] => extra[ItemType.FOLDER]?.childrenOrder ?? [];
+  extra: ImmutableCast<FolderItemExtra>,
+): List<string> => extra[ItemType.FOLDER]?.childrenOrder ?? List();
 
 export const stripHtml = (str?: string): string =>
   str?.replace(/<[^>]*>?/gm, '') || '';
@@ -153,7 +150,7 @@ export const useIsParentInstance = ({
   instance:
     | Pick<Partial<Invitation>, 'itemPath'>
     | Pick<Partial<ItemMembership>, 'itemPath'>;
-  item: Item;
+  item: ItemRecord;
 }): boolean => {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {

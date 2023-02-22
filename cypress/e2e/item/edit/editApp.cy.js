@@ -1,6 +1,5 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildAppExtra } from '../../../../src/utils/itemExtra';
 import {
   GRAASP_APP_CHILDREN_ITEM,
@@ -8,6 +7,7 @@ import {
   GRAASP_APP_ITEMS_FIXTURE,
   GRAASP_APP_PARENT_FOLDER,
 } from '../../../fixtures/apps';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';

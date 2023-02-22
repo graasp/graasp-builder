@@ -1,7 +1,7 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { ZIP_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { createItem } from '../../../support/createUtils';

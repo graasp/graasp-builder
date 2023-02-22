@@ -7,14 +7,11 @@ import { FC, useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import {
-  ItemRecord,
-  ItemSettingsRecord,
-} from '@graasp/query-client/dist/types';
-import {
   ItemSettings as ItemSettingsType,
   ItemType,
   convertJs,
 } from '@graasp/sdk';
+import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -31,6 +28,7 @@ import {
   SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_RESIZE_TOGGLE_ID,
 } from '../../../config/selectors';
+import AdminChatSettings from './AdminChatSettings';
 import LinkSettings from './LinkSettings';
 import ThumbnailSetting from './ThumbnailSetting';
 
@@ -50,7 +48,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
   const { settings } = item;
 
   const [settingLocal, setSettingLocal] =
-    useState<ItemSettingsRecord>(settings);
+    useState<ImmutableCast<ItemSettingsType>>(settings);
 
   useEffect(
     () => {
@@ -181,12 +179,13 @@ const ItemSettings: FC<Props> = ({ item }) => {
 
       <FormGroup>
         {renderPinSetting()}
-        {renderChatSetting()}
         {renderCollapseSetting()}
         {item.type === ItemType.APP && renderResizeSetting()}
+        {renderChatSetting()}
       </FormGroup>
       {item.type === ItemType.LINK && <LinkSettings item={item} />}
       <ThumbnailSetting item={item} />
+      <AdminChatSettings item={item} />
     </Container>
   );
 };

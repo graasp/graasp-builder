@@ -1,13 +1,35 @@
 import ChatStatus from './chatbox';
-import ITEM_LAYOUT_MODES from './itemLayoutModes';
 import MIME_TYPES from './mimeTypes';
 import Ordering from './orderingTypes';
-import TREE_PREVENT_SELECTION from './treePreventSelection';
+
+enum TreePreventSelection {
+  NONE = 'none',
+  SELF_AND_CHILDREN = 'selfAndChildren',
+}
+
+enum ITEM_LAYOUT_MODES {
+  GRID = 'grid',
+  LIST = 'list',
+}
+
+enum ItemActionTabs {
+  Settings = 'settings',
+  Dashboard = 'dashboard',
+  Library = 'library',
+  Sharing = 'sharing',
+}
+
+enum ButtonVariants {
+  IconButton = 'icon',
+  Button = 'button',
+}
 
 export {
   ITEM_LAYOUT_MODES,
   MIME_TYPES,
   Ordering,
-  TREE_PREVENT_SELECTION,
+  ItemActionTabs,
+  TreePreventSelection,
   ChatStatus,
+  ButtonVariants,
 };

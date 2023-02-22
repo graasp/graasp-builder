@@ -1,9 +1,17 @@
+import { List } from 'immutable';
+
 import { Typography } from '@mui/material';
 
-import { ItemRecord } from '@graasp/query-client/dist/types';
+import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 
-type Props = { users; defaultValue };
-type ChildProps = { data: ItemRecord };
+type Props = {
+  users: List<MemberRecord>;
+  defaultValue: string;
+};
+
+type ChildProps = {
+  data: ItemRecord;
+};
 
 const MemberNameCellRenderer = ({
   users,

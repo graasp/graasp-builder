@@ -1,18 +1,16 @@
-import { RecordOf } from 'immutable';
-
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
-import { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { CCLicenseIcon, Loader } from '@graasp/ui';
 
 import { CC_LICENSE_ADAPTION_OPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CCLicenseDialog from './CCLicenseDialog';
 
 const { EDIT_ITEM } = MUTATION_KEYS;
@@ -24,7 +22,7 @@ enum CCLicenseAdaption {
 }
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
   disabled: boolean;
 };
 
@@ -43,7 +41,7 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   const [open, setOpen] = useState(false);
 
   // user
-  const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
+  const { isLoading: isMemberLoading } = useCurrentUserContext();
 
   // itemId
   const itemId = item?.id;

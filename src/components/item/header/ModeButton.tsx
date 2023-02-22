@@ -3,8 +3,6 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useContext } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -13,11 +11,11 @@ import {
   MODE_LIST_BUTTON_ID,
 } from '../../../config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../enums';
-import { LayoutContext } from '../../context/LayoutContext';
+import { useLayoutContext } from '../../context/LayoutContext';
 
 const ModeButton = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mode, setMode } = useContext(LayoutContext);
+  const { mode, setMode } = useLayoutContext();
 
   const handleOnClick = (value) => {
     setMode(value);

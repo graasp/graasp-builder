@@ -1,17 +1,17 @@
-import { RecordOf } from 'immutable';
-
 import { Button, Container, styled } from '@mui/material';
 
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
+import { UseQueryResult } from 'react-query';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import {
   DocumentItemExtraProperties,
-  Item,
   ItemType,
   PermissionLevel,
   buildPdfViewerLink,
+  getDocumentExtra,
 } from '@graasp/sdk';
+import { EtherpadRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { COMMON } from '@graasp/translations';
 import {
   AppItem,
@@ -42,10 +42,10 @@ import {
   buildItemsTableId,
   buildSaveButtonId,
 } from '../../config/selectors';
-import { buildDocumentExtra, getDocumentExtra } from '../../utils/itemExtra';
+import { buildDocumentExtra } from '../../utils/itemExtra';
 import ErrorAlert from '../common/ErrorAlert';
-import { CurrentUserContext } from '../context/CurrentUserContext';
-import { LayoutContext } from '../context/LayoutContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
@@ -60,8 +60,7 @@ const StyledContainer = styled(Container)(() => ({
 }));
 
 type Props = {
-  // todo: not ideal but this item is really flexible
-  item: RecordOf<Item<any>>;
+  item: ItemRecord;
   enableEditing?: boolean;
   permission: PermissionLevel;
 };
@@ -73,11 +72,10 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   const { mutate: editItem } = useMutation<any, any, any>(
     MUTATION_KEYS.EDIT_ITEM,
   );
-  const { editingItemId, setEditingItemId } = useContext(LayoutContext);
+  const { editingItemId, setEditingItemId } = useLayoutContext();
 
   // provide user to app
-  const { data: member, isLoading: isLoadingUser } =
-    useContext(CurrentUserContext);
+  const { data: member, isLoading: isLoadingUser } = useCurrentUserContext();
 
   // display children
   const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {
@@ -104,7 +102,10 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
     maybeDocumentExtra?.flavor,
   );
 
-  const etherpadQuery = useEtherpad(item, 'write'); // server will return read view if no write access allowed
+  const etherpadQuery: UseQueryResult<EtherpadRecord> = useEtherpad(
+    item,
+    'write',
+  ); // server will return read view if no write access allowed
 
   if (
     isLoadingFileContent ||
@@ -164,6 +165,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
       return (
         <StyledContainer>
           <LinkItem
+            memberId={member.id}
             isResizable
             item={item}
             editCaption={isEditing}
@@ -269,7 +271,11 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
         return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
       }
       return (
-        <EtherpadItem itemId={itemId} padUrl={etherpadQuery.data.padUrl} />
+        <EtherpadItem
+          itemId={itemId}
+          padUrl={etherpadQuery.data.padUrl}
+          options={{ showChat: false }}
+        />
       );
     }
 

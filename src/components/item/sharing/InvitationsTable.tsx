@@ -3,7 +3,8 @@ import { List } from 'immutable';
 import { useMemo } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Invitation, ItemRecord } from '@graasp/query-client/dist/types';
+import { Invitation } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -93,7 +94,7 @@ const InvitationsTable = ({
     },
   });
 
-  const InvitationRenderer = ResendInvitationRenderer(item);
+  const InvitationRenderer = ResendInvitationRenderer(item.id);
 
   // never changes, so we can use useMemo
   const columnDefs = useMemo(

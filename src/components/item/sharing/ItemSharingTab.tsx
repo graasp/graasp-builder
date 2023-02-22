@@ -6,10 +6,13 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { useContext } from 'react';
-
-import { InvitationRecord, ItemRecord } from '@graasp/query-client/dist/types';
 import { isPseudonymizedMember } from '@graasp/sdk';
+import {
+  InvitationRecord,
+  ItemLogin,
+  ItemMembershipRecord,
+  ItemRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -17,7 +20,7 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
 import CsvInputParser from './CsvInputParser';
 import InvitationsTable from './InvitationsTable';
@@ -27,13 +30,13 @@ import VisibilitySelect from './VisibilitySelect';
 
 type Props = {
   item: ItemRecord;
+  memberships: List<ItemMembershipRecord>;
 };
 
-const ItemSharingTab = ({ item }: Props): JSX.Element => {
+const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: memberships } = hooks.useItemMemberships(item?.id);
-  const { data: currentMember, isLoadingCurrentMember } =
-    useContext(CurrentUserContext);
+  const { data: currentMember, isLoading: isLoadingCurrentMember } =
+    useCurrentUserContext();
   const { data: members } = hooks.useMembers(
     memberships?.map(({ memberId }) => memberId)?.toArray(),
   );
@@ -85,7 +88,7 @@ const ItemSharingTab = ({ item }: Props): JSX.Element => {
         todo: show only if item is pseudomized
         */}
         {/* // todo: this will change with the refactor */}
-        {getItemLoginSchema(item?.extra as any) && (
+        {getItemLoginSchema(item?.extra as { itemLogin?: ItemLogin }) && (
           <>
             <Divider sx={{ my: 3 }} />
             <Typography variant="h5" m={0} p={0}>

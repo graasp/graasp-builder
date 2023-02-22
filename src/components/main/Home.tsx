@@ -36,8 +36,8 @@ const Home: FC = () => {
         <Box mx={2}>
           <ItemHeader showNavigation={false} />
           <Items
-            defaultSortedColumn={{ updatedAt: 'desc' }}
             id={OWNED_ITEMS_ID}
+            defaultSortedColumn={{ updatedAt: 'desc' }}
             title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
             items={ownItems}
             headerElements={[<NewItemButton key="newButton" />]}

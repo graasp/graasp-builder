@@ -1,21 +1,22 @@
-import { ColDef, IRowDragItem } from 'ag-grid-community';
-import { List, RecordOf } from 'immutable';
+import { ColDef, Column, IRowDragItem } from 'ag-grid-community';
+import { List } from 'immutable';
 
-import { FC, useCallback, useContext, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import {
-  ItemMembershipRecord,
-  ItemRecord,
-} from '@graasp/query-client/dist/types';
-import {
   FolderItemExtra,
   Item,
   ItemType,
-  Member,
-  ShortcutItemExtra,
+  getFolderExtra,
+  getShortcutExtra,
 } from '@graasp/sdk';
+import {
+  ItemMembershipRecord,
+  ItemRecord,
+  MemberRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -29,9 +30,7 @@ import { buildItemPath } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
-import { getChildrenOrderFromFolderExtra } from '../../utils/item';
-import { getShortcutTarget } from '../../utils/itemExtra';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
@@ -41,16 +40,14 @@ import ItemsToolbar from './ItemsToolbar';
 const { useItem } = hooks;
 
 type Props = {
-  items: List<ItemRecord>;
-  membershipLists: List<List<ItemMembershipRecord>>;
-  tableTitle: string;
   id?: string;
-  headerElements: JSX.Element[];
+  items: List<ItemRecord>;
+  manyMemberships: List<List<ItemMembershipRecord>>;
+  tableTitle: string;
+  headerElements?: JSX.Element[];
   isSearching?: boolean;
-  actions?: JSX.Element;
-  ToolbarActions?: React.FC<{
-    selectedIds: string[];
-  }>;
+  actions?: ({ data }: { data: { id: string } }) => JSX.Element;
+  ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;
   clickable?: boolean;
   defaultSortedColumn?: {
     updatedAt?: 'desc' | 'asc' | null;
@@ -61,14 +58,14 @@ type Props = {
   isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
-  creators: List<RecordOf<Member>>;
+  creators: List<MemberRecord>;
 };
 
 const ItemsTable: FC<Props> = ({
   tableTitle,
   id: tableId = '',
   items: rows = List(),
-  membershipLists = List(),
+  manyMemberships = List(),
   headerElements = [],
   isSearching = false,
   actions,
@@ -86,11 +83,11 @@ const ItemsTable: FC<Props> = ({
   const navigate = useNavigate();
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
 
   const mutation = useMutation<
-    any,
-    any,
+    unknown,
+    unknown,
     {
       id: string;
       extra: FolderItemExtra;
@@ -106,33 +103,28 @@ const ItemsTable: FC<Props> = ({
   const getRowNodeId = ({ data }: { data: Item }) =>
     buildItemsTableRowId(data.id);
 
-  const onCellClicked = ({
-    column,
-    data,
-  }: {
-    column: { colId: string };
-    data: Item;
-  }) => {
-    if (column.colId !== 'actions') {
+  const onCellClicked = ({ column, data }: { column: Column; data: Item }) => {
+    if (column.getColId() !== 'actions') {
       let targetId = data.id;
 
       // redirect to target if shortcut
       if (data.type === ItemType.SHORTCUT) {
-        targetId = getShortcutTarget(data.extra as ShortcutItemExtra);
+        targetId = getShortcutExtra(data.extra).target;
       }
       navigate(buildItemPath(targetId));
     }
   };
 
   const hasOrderChanged = (rowIds: string[]) => {
-    const childrenOrder = getChildrenOrderFromFolderExtra(
-      parentItem.extra.toJS() as FolderItemExtra,
-    );
-
-    return (
-      rowIds.length !== childrenOrder.length ||
-      !childrenOrder.every((id, i) => id === rowIds[i])
-    );
+    if (parentItem.type === ItemType.FOLDER) {
+      const { childrenOrder = List<string>() } =
+        getFolderExtra(parentItem.extra) || {};
+      return (
+        rowIds.length !== childrenOrder.size ||
+        !childrenOrder.every((id, i) => id === rowIds[i])
+      );
+    }
+    return true;
   };
 
   const onDragEnd = (displayRows: { data: Item }[]) => {
@@ -164,7 +156,7 @@ const ItemsTable: FC<Props> = ({
     translateBuilder(BUILDER.ITEMS_TABLE_DRAG_DEFAULT_MESSAGE);
 
   const ActionComponent = ActionsCellRenderer({
-    membershipLists,
+    manyMemberships,
     items: rows,
     member,
   });

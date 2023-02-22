@@ -4,17 +4,12 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useContext } from 'react';
-
-import { ItemRecord } from '@graasp/query-client/dist/types';
 import { ItemType } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
 
-import {
-  ITEM_ACTION_TABS,
-  ITEM_TYPES_WITH_CAPTIONS,
-} from '../../../config/constants';
+import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import {
@@ -23,28 +18,32 @@ import {
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
   buildEditButtonId,
 } from '../../../config/selectors';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import { ItemActionTabs } from '../../../enums';
+import {
+  getHighestPermissionForMemberFromMemberships,
+  isItemUpdateAllowedForUser,
+} from '../../../utils/membership';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 import PlayerViewButton from '../../common/PlayerViewButton';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { LayoutContext } from '../../context/LayoutContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
+import { useLayoutContext } from '../../context/LayoutContext';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
 const { useItemMemberships } = hooks;
 
 type Props = {
+  item: ItemRecord;
   onClickMetadata: () => void;
   onClickChatbox: () => void;
-  item: ItemRecord;
 };
 
 const ItemHeaderActions = ({
+  item,
   onClickMetadata,
   onClickChatbox,
-  item,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
@@ -52,14 +51,18 @@ const ItemHeaderActions = ({
     editingItemId,
     openedActionTabId,
     isItemMetadataMenuOpen,
-  } = useContext(LayoutContext);
+  } = useLayoutContext();
   const id = item?.id;
   const type = item?.type;
 
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
 
   const { data: memberships } = useItemMemberships(id);
   const canEdit = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: member?.id,
+  });
+  const canAdmin = getHighestPermissionForMemberFromMemberships({
     memberships,
     memberId: member?.id,
   });
@@ -93,14 +96,14 @@ const ItemHeaderActions = ({
             onClick={onClickChatbox}
           />
           <PlayerViewButton itemId={id} />
-          <PublishButton itemId={id} />
+          {canAdmin && <PublishButton itemId={id} />}
           {canEdit && <AnalyticsDashboardButton id={id} />}
         </>
       );
 
       return (
         <>
-          {openedActionTabId !== ITEM_ACTION_TABS.SETTINGS && activeActions}
+          {openedActionTabId !== ItemActionTabs.Settings && activeActions}
           {canEdit && <ItemSettingsButton id={id} />}
         </>
       );

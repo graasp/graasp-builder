@@ -1,4 +1,11 @@
 import {
+  getDocumentExtra,
+  getEmbeddedLinkExtra,
+  getFileExtra,
+  getS3FileExtra,
+} from '@graasp/sdk';
+
+import {
   DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
   ITEM_TYPES_WITH_CAPTIONS,
@@ -16,12 +23,6 @@ import {
   buildSettingsButtonId,
   buildShareButtonId,
 } from '../../src/config/selectors';
-import {
-  getDocumentExtra,
-  getEmbeddedLinkExtra,
-  getFileExtra,
-  getS3FileExtra,
-} from '../../src/utils/itemExtra';
 import { getMemberById } from '../../src/utils/member';
 import { isSettingsEditionAllowedForUser } from '../../src/utils/membership';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';

@@ -1,13 +1,11 @@
 import { List } from 'immutable';
 
-import { useContext } from 'react';
-
-import { ItemRecord } from '@graasp/query-client/dist/types';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ItemsGrid from './ItemsGrid';
 import ItemsTable from './ItemsTable';
@@ -15,52 +13,47 @@ import ItemsTable from './ItemsTable';
 const { useManyItemMemberships } = hooks;
 
 type Props = {
+  id: string;
   items: List<ItemRecord>;
   title: string;
-  id?: string;
   headerElements?: JSX.Element[];
-  // eslint-disable-next-line react/forbid-prop-types
-  actions?: any;
-  ToolbarActions?: React.FC<{
-    selectedIds: string[];
-  }>;
+  actions?: ({ data }: { data: { id: string } }) => JSX.Element;
+  ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;
   clickable?: boolean;
   defaultSortedColumn?: {
-    updatedAt?: 'desc' | 'asc' | null;
-    createdAt?: 'desc' | 'asc' | null;
-    type?: 'desc' | 'asc' | null;
-    name?: 'desc' | 'asc' | null;
+    updatedAt?: 'desc' | 'asc';
+    createdAt?: 'desc' | 'asc';
+    type?: 'desc' | 'asc';
+    name?: 'desc' | 'asc';
   };
-  isEditing?: boolean;
   parentId?: string;
+  isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
   enableMemberships?: boolean;
 };
 
 const Items = ({
-  actions,
-  clickable = true,
-  defaultSortedColumn,
-  enableMemberships = true,
-  headerElements = [],
   id,
-  isEditing = false,
   items,
-  parentId,
-  showCreator = false,
-  showThumbnails = true,
   title,
+  headerElements = [],
+  actions,
   ToolbarActions,
+  clickable = true,
+  parentId,
+  defaultSortedColumn,
+  isEditing = false,
+  showThumbnails = true,
+  showCreator = false,
+  enableMemberships = true,
 }: Props): JSX.Element => {
-  const { mode } = useContext(LayoutContext);
+  const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
-  const { data: memberships, isLoading: isMembershipsLoading } =
+  const { data: manyMemberships, isLoading: isMembershipsLoading } =
     useManyItemMemberships(
       enableMemberships
-        ? (itemSearch?.results
-            ?.map(({ id: itemId }) => itemId)
-            .toJS() as string[])
+        ? itemSearch?.results?.map(({ id: itemId }) => itemId).toArray()
         : [],
     );
   // todo: disable depending on showCreator
@@ -79,7 +72,7 @@ const Items = ({
           parentId={parentId}
           title={title}
           items={itemSearch.results}
-          membershipLists={memberships}
+          manyMemberships={manyMemberships}
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
@@ -95,7 +88,7 @@ const Items = ({
           tableTitle={title}
           defaultSortedColumn={defaultSortedColumn}
           items={itemSearch.results}
-          membershipLists={memberships}
+          manyMemberships={manyMemberships}
           headerElements={[itemSearch.input, ...headerElements]}
           isSearching={Boolean(itemSearch.text)}
           ToolbarActions={ToolbarActions}

@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 
 import { FC, HTMLAttributes, useState } from 'react';
 
-import { AppItemExtra, Item, UnknownExtra } from '@graasp/sdk';
+import { AppItemType, getAppExtra } from '@graasp/sdk';
+import { AppItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -16,7 +17,7 @@ import {
   ITEM_FORM_APP_URL_ID,
   buildItemFormAppOptionId,
 } from '../../../config/selectors';
-import { buildAppExtra, getAppExtra } from '../../../utils/itemExtra';
+import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
 
 // todo: use from graasp-sdk
@@ -30,9 +31,9 @@ type App = {
 };
 
 type Props = {
-  onChange: (item: Partial<Item<UnknownExtra>>) => void;
-  item: Partial<Item<UnknownExtra>>;
-  updatedProperties: Partial<Item<UnknownExtra>>;
+  onChange: (item: Partial<AppItemType>) => void;
+  item: Partial<AppItemTypeRecord>;
+  updatedProperties: Partial<AppItemType>;
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
@@ -62,7 +63,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const { useApps } = hooks;
   const { data, isLoading: isAppsLoading } = useApps();
 
-  const url = getAppExtra(item?.extra as AppItemExtra)?.url;
+  const url = getAppExtra(item?.extra)?.url;
 
   return (
     <div>
@@ -71,7 +72,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
       </Typography>
       <BaseItemForm
         onChange={onChange}
-        item={{ ...item, name: newName }}
+        item={item.update('name', () => newName)}
         updatedProperties={updatedProperties}
       />
 

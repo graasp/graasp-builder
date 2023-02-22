@@ -1,4 +1,4 @@
-import { PERMISSION_LEVELS } from './enum';
+import { PERMISSION_LEVELS } from './enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { MEMBERS } from './members';
 

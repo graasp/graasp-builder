@@ -2,13 +2,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { Invitation } from '@graasp/query-client/dist/types';
-import { Item, ItemMembership } from '@graasp/sdk';
+import { Invitation, ItemMembership } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 
 import { useIsParentInstance } from '../../../utils/item';
 
 type Props = {
-  item: Item;
+  item: ItemRecord;
   buildIdFunction: (id: string) => string;
   tooltip?: string;
   color?: IconButtonProps['color'];

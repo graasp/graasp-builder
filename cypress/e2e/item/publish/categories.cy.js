@@ -98,11 +98,12 @@ describe('Categories', () => {
         tags: DEFAULT_TAGS,
       });
       cy.visit(buildItemPath(item.id));
-      openPublishItemTab(item.id);
-      const levelValue = cy.get(
-        `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
+
+      // signed out user should not be able to see the publish button
+      cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
+      cy.get(`#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`).should(
+        'not.exist',
       );
-      levelValue.should('not.exist');
     });
 
     it('Read-only user cannot edit category level', () => {
@@ -113,11 +114,12 @@ describe('Categories', () => {
         tags: DEFAULT_TAGS,
       });
       cy.visit(buildItemPath(item.id));
-      openPublishItemTab(item.id);
-      const levelValue = cy.get(
-        `#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`,
+
+      // signed out user should not be able to see the publish button
+      cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
+      cy.get(`#${buildCategorySelectionId(CATEGORY_TYPE_TITLES.LEVEL)}`).should(
+        'not.exist',
       );
-      levelValue.should('not.exist');
     });
   });
 });

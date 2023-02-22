@@ -17,7 +17,6 @@ import {
   SIGN_IN_PATH,
   THUMBNAIL_EXTENSION,
 } from '../../src/config/constants';
-import { PERMISSION_LEVELS } from '../fixtures/enum';
 import {
   getItemById,
   getParentsIdsFromPath,
@@ -36,6 +35,7 @@ import {
   buildAppItemLinkForTest,
   buildGetAppData,
 } from '../fixtures/apps';
+import { PERMISSION_LEVELS } from '../fixtures/enum';
 import { buildInvitation } from '../fixtures/invitations';
 import { ITEM_LOGIN_TAG, ITEM_PUBLIC_TAG } from '../fixtures/itemTags';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
@@ -64,6 +64,7 @@ const {
   buildPostItemLoginSignInRoute,
   buildGetItemLoginRoute,
   buildGetItemMembershipsForItemsRoute,
+  buildGetPublicItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
   GET_TAGS_ROUTE,
   buildPutItemLoginSchema,
@@ -75,7 +76,9 @@ const {
   buildPostItemFlagRoute,
   GET_FLAGS_ROUTE,
   buildGetItemChatRoute,
+  buildExportItemChatRoute,
   buildPostItemChatMessageRoute,
+  buildClearItemChatRoute,
   GET_RECYCLED_ITEMS_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
@@ -970,6 +973,30 @@ export const mockGetItemMembershipsForItem = (items, currentMember) => {
   ).as('getItemMemberships');
 };
 
+export const mockGetPublicItemMembershipsForItem = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(
+          buildGetPublicItemMembershipsForItemsRoute([]),
+        )}`,
+      ),
+    },
+    ({ reply, url }) => {
+      const { itemId } = qs.parse(url.slice(url.indexOf('?') + 1));
+      const selectedItems = items.filter(({ id }) => itemId.includes(id));
+      const allMemberships = selectedItems.map(({ memberships, tags }) =>
+        // if item is public return the memberships of the item otherwise return unauthorized
+        tags?.find((t) => t.tagId === ITEM_PUBLIC_TAG.id)
+          ? memberships
+          : [{ statusCode: StatusCodes.UNAUTHORIZED }],
+      );
+      reply(allMemberships);
+    },
+  ).as('getPublicItemMemberships');
+};
+
 export const mockEditItemMembershipForItem = () => {
   cy.intercept(
     {
@@ -1139,6 +1166,33 @@ export const mockGetItemChat = ({ items }, shouldThrowError) => {
   ).as('getItemChat');
 };
 
+export const mockDownloadItemChat = ({ items }, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildExportItemChatRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+
+      const messages = item?.chat?.map((c) => ({
+        ...c,
+        creatorName: Object.values(MEMBERS).find((m) => m.id === c.creator)
+          ?.name,
+      }));
+      return reply({
+        id: itemId,
+        messages,
+      });
+    },
+  ).as('downloadItemChat');
+};
+
 export const mockPostItemChatMessage = (shouldThrowError) => {
   cy.intercept(
     {
@@ -1154,6 +1208,24 @@ export const mockPostItemChatMessage = (shouldThrowError) => {
       return reply(body);
     },
   ).as('postItemChatMessage');
+};
+
+export const mockClearItemChat = ({ items }, shouldThrowError) => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      url: new RegExp(`${API_HOST}/${buildClearItemChatRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+      return reply({ id: itemId, messages: item?.chat });
+    },
+  ).as('clearItemChat');
 };
 
 export const mockGetMemberMentions = ({ mentions }, shouldThrowError) => {

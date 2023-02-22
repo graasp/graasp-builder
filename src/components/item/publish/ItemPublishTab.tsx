@@ -1,4 +1,4 @@
-import { List, RecordOf } from 'immutable';
+import { List } from 'immutable';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -11,11 +11,12 @@ import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import UpdateIcon from '@mui/icons-material/Update';
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
-import { Item, PermissionLevel, redirect } from '@graasp/sdk';
+import { PermissionLevel, redirect } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -34,7 +35,7 @@ import {
 import { isItemPublic } from '../../../utils/itemTag';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import VisibilitySelect from '../sharing/VisibilitySelect';
 import CCLicenseSelection from './CCLicenseSelection';
 import CategorySelection from './CategorySelection';
@@ -54,7 +55,7 @@ const {
 const { useTags, useItemTags } = hooks;
 
 type Props = {
-  item: RecordOf<Item>;
+  item: ItemRecord;
   permission?: PermissionLevel;
 };
 
@@ -79,8 +80,8 @@ const ItemPublishTab: FC<Props> = ({
 
   const { data: memberships, isLoading: isMembershipsLoading } =
     hooks.useItemMemberships(item?.id);
-  const { data: currentMember, isLoadingCurrentMember } =
-    useContext(CurrentUserContext);
+  const { data: currentMember, isLoading: isLoadingCurrentMember } =
+    useCurrentUserContext();
 
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
