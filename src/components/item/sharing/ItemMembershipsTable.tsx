@@ -176,11 +176,11 @@ const ItemMembershipsTable = ({
         },
       },
       {
-        field: 'actions',
+        field: readOnly ? null : 'actions',
         cellRenderer: ActionRenderer,
-        headerName: translateBuilder(
-          BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER,
-        ),
+        headerName: readOnly
+          ? null
+          : translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
@@ -193,7 +193,7 @@ const ItemMembershipsTable = ({
       },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, users, showEmail]);
+  }, [item, users, showEmail, readOnly]);
 
   if (isLoading) {
     return <Loader />;
