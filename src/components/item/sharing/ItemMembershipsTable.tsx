@@ -64,6 +64,7 @@ type Props = {
   memberships: ItemMembership[];
   emptyMessage?: string;
   showEmail?: boolean;
+  readOnly?: boolean;
 };
 
 const ItemMembershipsTable = ({
@@ -71,6 +72,7 @@ const ItemMembershipsTable = ({
   item,
   emptyMessage,
   showEmail = true,
+  readOnly = true,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: users, isLoading } = hooks.useMembers(
@@ -99,14 +101,16 @@ const ItemMembershipsTable = ({
 
   // never changes, so we can use useMemo
   const columnDefs = useMemo(() => {
-    const ActionRenderer = TableRowDeleteButtonRenderer({
-      item,
-      onDelete,
-      buildIdFunction: buildItemMembershipRowDeleteButtonId,
-      tooltip: translateBuilder(
-        BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
-      ),
-    });
+    const ActionRenderer = readOnly
+      ? null
+      : TableRowDeleteButtonRenderer({
+          item,
+          onDelete,
+          buildIdFunction: buildItemMembershipRowDeleteButtonId,
+          tooltip: translateBuilder(
+            BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+          ),
+        });
     const PermissionRenderer = TableRowPermissionRenderer({
       item,
       editFunction: ({ value, instance }) => {

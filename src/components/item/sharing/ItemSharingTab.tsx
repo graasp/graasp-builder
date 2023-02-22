@@ -89,6 +89,7 @@ const ItemSharingTab = ({ item }: Props): JSX.Element => {
             BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE,
           )}
           memberships={authorizedMemberships}
+          readOnly={!canEditSettings}
         />
 
         {/* show authenticated members if login schema is defined
