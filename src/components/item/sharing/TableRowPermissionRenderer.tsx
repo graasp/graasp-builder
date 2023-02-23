@@ -1,3 +1,5 @@
+import Typography from '@mui/material/Typography';
+
 import { Invitation, ItemMembership } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
