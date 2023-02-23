@@ -1,6 +1,6 @@
 import '@uppy/core/dist/style.css';
-import 'ag-grid-community/dist/styles/ag-grid.min.css';
-import 'ag-grid-community/dist/styles/ag-theme-material.min.css';
+import 'ag-grid-community/styles/ag-grid.min.css';
+import 'ag-grid-community/styles/ag-theme-material.min.css';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 

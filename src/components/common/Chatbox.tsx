@@ -1,20 +1,24 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
-import { useContext } from 'react';
-
-import GraaspChatbox from '@graasp/chatbox';
+import GraaspChatbox, {
+  DeleteMessageFunctionParamType,
+  EditMessageFunctionParamType,
+  SendMessageFunctionParamType,
+} from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { PermissionLevel } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
 import { hooks, useMutation } from '../../config/queryClient';
 import { CHATBOX_ID, CHATBOX_INPUT_BOX_ID } from '../../config/selectors';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItemChat, useMembers, useAvatar, useItemMemberships } = hooks;
 
-const Chatbox = ({ item }) => {
+type Props = {
+  item: ItemRecord;
+};
+
+const Chatbox = ({ item }: Props): JSX.Element => {
   const { data: chat, isLoading: isChatLoading } = useItemChat(item.id);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     useItemMemberships(item.id);
@@ -22,17 +26,22 @@ const Chatbox = ({ item }) => {
     itemPermissions?.map((m) => m.memberId)?.toArray() || [],
   );
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
-    useContext(CurrentUserContext);
-  const { mutate: sendMessage } = useMutation(
-    MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE,
-  );
-  const { mutate: editMessage } = useMutation(
-    MUTATION_KEYS.PATCH_ITEM_CHAT_MESSAGE,
-  );
-  const { mutate: deleteMessage } = useMutation(
-    MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE,
-  );
-  const { mutate: clearChat } = useMutation(MUTATION_KEYS.CLEAR_ITEM_CHAT);
+    useCurrentUserContext();
+  const { mutate: sendMessage } = useMutation<
+    unknown,
+    unknown,
+    SendMessageFunctionParamType
+  >(MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE);
+  const { mutate: editMessage } = useMutation<
+    unknown,
+    unknown,
+    EditMessageFunctionParamType
+  >(MUTATION_KEYS.PATCH_ITEM_CHAT_MESSAGE);
+  const { mutate: deleteMessage } = useMutation<
+    unknown,
+    unknown,
+    DeleteMessageFunctionParamType
+  >(MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE);
 
   if (
     isChatLoading ||
@@ -61,14 +70,9 @@ const Chatbox = ({ item }) => {
       sendMessageFunction={sendMessage}
       deleteMessageFunction={deleteMessage}
       editMessageFunction={editMessage}
-      clearChatFunction={clearChat}
       useAvatarHook={useAvatar}
     />
   );
-};
-
-Chatbox.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default Chatbox;

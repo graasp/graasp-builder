@@ -1,5 +1,3 @@
-import { RecordOf } from 'immutable';
-
 import { FC, createContext, useMemo, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
@@ -13,7 +11,7 @@ import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal from '../main/TreeModal';
 
 const CreateShortcutModalContext = createContext({
-  openModal: (_newItem: RecordOf<Item>) => {
+  openModal: (_newItem: Item) => {
     // do nothing
   },
 });
@@ -28,9 +26,9 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
     MUTATION_KEYS.POST_ITEM,
   );
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState<RecordOf<Item>>();
+  const [item, setItem] = useState<Item>();
 
-  const openModal = (newItem: RecordOf<Item>) => {
+  const openModal = (newItem: Item) => {
     setOpen(true);
     setItem(newItem);
   };
@@ -40,7 +38,7 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
     setItem(null);
   };
 
-  const onConfirm = ({ ids: [target], to }) => {
+  const onConfirm = ({ ids: [target], to }: { ids: string[]; to: string }) => {
     const shortcut = {
       name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {
         name: item.name,

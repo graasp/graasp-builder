@@ -1,4 +1,10 @@
 import {
+  getAppExtra,
+  getDocumentExtra,
+  getEmbeddedLinkExtra,
+} from '@graasp/sdk';
+
+import {
   FOLDER_FORM_DESCRIPTION_ID,
   ITEM_FORM_APP_URL_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
@@ -15,11 +21,6 @@ import {
   buildTreeItemId,
 } from '../../../src/config/selectors';
 import { getParentsIdsFromPath } from '../../../src/utils/item';
-import {
-  getAppExtra,
-  getDocumentExtra,
-  getEmbeddedLinkExtra,
-} from '../../../src/utils/itemExtra';
 import { NEW_APP_NAME } from '../../fixtures/apps/apps';
 import { TREE_VIEW_PAUSE } from '../constants';
 

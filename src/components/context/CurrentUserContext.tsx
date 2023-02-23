@@ -1,18 +1,24 @@
-import PropTypes from 'prop-types';
+import { createContext, useContext, useEffect, useMemo } from 'react';
+import { QueryObserverResult } from 'react-query';
 
-import { createContext, useEffect, useMemo } from 'react';
+import { MemberRecord } from '@graasp/sdk/frontend';
 
 import i18n from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 
-const CurrentUserContext = createContext(null);
+type CurrentUserContextType = QueryObserverResult<MemberRecord> | null;
+
+const CurrentUserContext = createContext<CurrentUserContextType>(null);
 
 type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
 const { useCurrentMember } = hooks;
-const CurrentUserContextProvider = ({ children }: Props): JSX.Element => {
+
+export const CurrentUserContextProvider = ({
+  children,
+}: Props): JSX.Element => {
   const query = useCurrentMember();
 
   // update language depending on user setting
@@ -33,12 +39,5 @@ const CurrentUserContextProvider = ({ children }: Props): JSX.Element => {
   );
 };
 
-CurrentUserContextProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-CurrentUserContextProvider.defaultProps = {
-  children: null,
-};
-
-export { CurrentUserContext, CurrentUserContextProvider };
+export const useCurrentUserContext = (): CurrentUserContextType =>
+  useContext(CurrentUserContext);

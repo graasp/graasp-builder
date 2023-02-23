@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 
-import { Item } from '@graasp/sdk';
+import { FolderItemType, Item } from '@graasp/sdk';
+import { FolderItemTypeRecord } from '@graasp/sdk/frontend';
 import { TextEditor } from '@graasp/ui';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
@@ -8,8 +9,8 @@ import BaseItemForm from './BaseItemForm';
 
 type Props = {
   onChange: (item: Partial<Item>) => void;
-  item: Partial<Item>;
-  updatedProperties: Partial<Item>;
+  item: Partial<FolderItemTypeRecord>;
+  updatedProperties: Partial<FolderItemType>;
 };
 
 const FolderForm = ({

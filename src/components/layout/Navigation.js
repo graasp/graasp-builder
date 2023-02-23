@@ -5,7 +5,7 @@ import { styled } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useMatch } from 'react-router-dom';
 
 import { BUILDER } from '@graasp/translations';
@@ -27,7 +27,7 @@ import {
   buildNavigationLink,
 } from '../../config/selectors';
 import { getParentsIdsFromPath } from '../../utils/item';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItem, useParents } = hooks;
 
@@ -58,7 +58,7 @@ const Navigation = () => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { pathname } = useLocation();
   const match = useMatch(buildItemPath());
-  const { data: currentMember } = useContext(CurrentUserContext);
+  const { data: currentMember } = useCurrentUserContext();
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;

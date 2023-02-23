@@ -1,7 +1,7 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Grid } from '@mui/material';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
@@ -11,11 +11,11 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import Main from './Main';
 
 const ItemForbiddenScreen: FC = () => {
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
   const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
   const { t: translateBuilder } = useBuilderTranslation();
 

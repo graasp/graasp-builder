@@ -5,7 +5,7 @@ type Props = {
   headerElements?: JSX.Element[];
 };
 
-const ItemsToolbar = ({ title, headerElements }: Props): JSX.Element => (
+const ItemsToolbar = ({ title, headerElements = null }: Props): JSX.Element => (
   <Grid container mt={1} mb={2}>
     <Grid item md={8}>
       <Typography variant="h4" noWrap>

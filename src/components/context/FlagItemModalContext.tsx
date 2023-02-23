@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { createContext, useMemo, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { FlagRecord } from '@graasp/query-client/dist/types';
+import { FlagRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 

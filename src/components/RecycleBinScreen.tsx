@@ -12,6 +12,7 @@ import { hooks } from '../config/queryClient';
 import {
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
   ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID,
+  RECYCLED_ITEMS_ID,
 } from '../config/selectors';
 import DeleteButton from './common/DeleteButton';
 import ErrorAlert from './common/ErrorAlert';
@@ -75,6 +76,7 @@ const RecycleBinScreen: FC = () => {
       <Box mx={2}>
         <ItemHeader showNavigation={false} />
         <Items
+          id={RECYCLED_ITEMS_ID}
           clickable={false}
           title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
           items={List(items)}

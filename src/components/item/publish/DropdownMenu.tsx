@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 
 import { FC, SyntheticEvent } from 'react';
 
+import { Category, ItemCategory } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -17,7 +18,6 @@ import {
   buildCategorySelectionOptionId,
   buildCategorySelectionTitleId,
 } from '../../../config/selectors';
-import { Category, ItemCategory } from '../../../config/types';
 
 type Props = {
   disabled: boolean;

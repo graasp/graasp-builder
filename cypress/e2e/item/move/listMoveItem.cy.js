@@ -12,7 +12,7 @@ import {
   buildItemMenuButtonId,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';

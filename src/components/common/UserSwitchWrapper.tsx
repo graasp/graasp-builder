@@ -1,6 +1,6 @@
 import { RecordOf } from 'immutable';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Member } from '@graasp/sdk';
@@ -18,7 +18,7 @@ import {
   HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID,
   buildMemberMenuItemId,
 } from '../../config/selectors';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import MemberAvatar from './MemberAvatar';
 
 type Props = {
@@ -30,7 +30,7 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     data: member,
     isLoading,
     isSuccess: isSuccessUser,
-  } = useContext(CurrentUserContext);
+  } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = useMutation<any, any, any>(
     MUTATION_KEYS.SIGN_OUT,

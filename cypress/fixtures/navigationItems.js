@@ -1,5 +1,5 @@
-import { ITEM_TYPES } from './enum';
 import { buildDocumentExtra } from '../../src/utils/itemExtra';
+import { ITEM_TYPES } from './enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
 

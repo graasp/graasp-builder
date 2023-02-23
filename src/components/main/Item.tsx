@@ -1,11 +1,11 @@
-import { List, RecordOf } from 'immutable';
+import { List } from 'immutable';
 import truncate from 'lodash.truncate';
 
-import { CSSProperties, FC, PropsWithChildren, useContext } from 'react';
+import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ItemMembershipRecord } from '@graasp/query-client/dist/types';
-import { EmbeddedLinkItemExtra, Item as GraaspItem } from '@graasp/sdk';
+import { Item, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
@@ -14,11 +14,10 @@ import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
 import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
-import { getEmbeddedLinkExtra } from '../../utils/itemExtra';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { useCurrentUserContext } from '../context/CurrentUserContext';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
@@ -38,12 +37,12 @@ const NameWrapper = ({
 };
 
 type Props = {
-  item: RecordOf<GraaspItem>;
+  item: ItemRecord;
   memberships: List<ItemMembershipRecord>;
 };
 
-const Item: FC<Props> = ({ item, memberships }) => {
-  const { id, name, description, extra } = item;
+const ItemComponent: FC<Props> = ({ item, memberships }) => {
+  const { id, name, description } = item;
 
   const alt = name;
   const defaultValueComponent = (
@@ -61,16 +60,17 @@ const Item: FC<Props> = ({ item, memberships }) => {
     <Thumbnail
       id={item.id}
       thumbnailSrc={
-        getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra)?.thumbnails[0]
+        item.type === ItemType.LINK
+          ? getEmbeddedLinkExtra(item.extra)?.thumbnails?.first()
+          : undefined
       }
       alt={alt}
       defaultValue={defaultValueComponent}
-      // todo: fix in ui
-      useThumbnail={hooks.useItemThumbnail as any}
+      useThumbnail={hooks.useItemThumbnail}
     />
   );
 
-  const { data: member } = useContext(CurrentUserContext);
+  const { data: member } = useCurrentUserContext();
   const enableEdition = isItemUpdateAllowedForUser({
     memberships,
     memberId: member?.id,
@@ -83,7 +83,13 @@ const Item: FC<Props> = ({ item, memberships }) => {
       {member && member.id && <FavoriteButton size="small" item={item} />}
       {enableEdition && (
         <>
-          <EditButton item={item.toJS() as GraaspItem} />
+          <EditButton
+            item={
+              // DO NOT REMOVE cast
+              // here we cast explicitly to be equivalent to the grid which does not let us use Records
+              item.toJS() as Item
+            }
+          />
           <DownloadButton id={id} name={name} />
         </>
       )}
@@ -98,7 +104,7 @@ const Item: FC<Props> = ({ item, memberships }) => {
       Actions={Actions}
       name={name}
       creator={member?.name}
-      ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
+      ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
       NameWrapper={NameWrapper({
@@ -112,4 +118,4 @@ const Item: FC<Props> = ({ item, memberships }) => {
   );
 };
 
-export default Item;
+export default ItemComponent;

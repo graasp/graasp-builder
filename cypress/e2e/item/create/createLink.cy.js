@@ -1,7 +1,7 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, INVALID_LINK_ITEM } from '../../../fixtures/links';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';

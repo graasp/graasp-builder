@@ -1,3 +1,5 @@
+import { PermissionLevel } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../src/config/paths';
 import {
   CREATE_MEMBERSHIP_FORM_ID,
@@ -5,11 +7,20 @@ import {
   SHARE_ITEM_SHARE_BUTTON_ID,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import { PERMISSION_LEVELS } from '../../fixtures/enum';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
-const inviteItem = ({ id, email, permission, submit }) => {
+const inviteItem = ({
+  id,
+  email,
+  permission,
+  submit,
+}: {
+  id: string;
+  email: string;
+  permission: string;
+  submit?: boolean;
+}) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
 
   cy.fillShareForm({
@@ -29,7 +40,7 @@ describe('Create Invitation', () => {
 
     // invite
     const email = 'mock@email.com';
-    const permission = PERMISSION_LEVELS.READ;
+    const permission = PermissionLevel.Read;
     inviteItem({ id, email, permission });
 
     cy.wait('@postInvitations').then(({ request: { url, body } }) => {
@@ -51,7 +62,7 @@ describe('Create Invitation', () => {
 
     // invite
     const { email } = MEMBERS.ANNA;
-    const permission = PERMISSION_LEVELS.READ;
+    const permission = PermissionLevel.Read;
     inviteItem({ id, email, permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
@@ -65,7 +76,7 @@ describe('Create Invitation', () => {
 
     // invite
     const email = 'mock';
-    const permission = PERMISSION_LEVELS.READ;
+    const permission = PermissionLevel.Read;
     inviteItem({ id, email, permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');

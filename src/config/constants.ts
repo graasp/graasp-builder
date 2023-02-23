@@ -138,7 +138,7 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 
 export const USER_ITEM_ORDER = 'user_order';
 
-export const ITEM_TYPES_WITH_CAPTIONS = [
+export const ITEM_TYPES_WITH_CAPTIONS: string[] = [
   ItemType.FOLDER,
   ItemType.S3_FILE,
   ItemType.LOCAL_FILE,
@@ -158,7 +158,7 @@ export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
 
 /* possible choices for number of items per page in grid,
    (must be common multiple for possible row counts of 1,2,3,4,6) */
-export const GRID_ITEMS_PER_PAGE_CHOICES = [12, 24, 36, 48];
+export const GRID_ITEMS_PER_PAGE_CHOICES: number[] = [12, 24, 36, 48];
 
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
@@ -251,13 +251,6 @@ export const DISPLAY_CO_EDITORS_OPTIONS = {
   },
 };
 
-export const ITEM_ACTION_TABS = {
-  SETTINGS: 'settings',
-  DASHBOARD: 'dashboard',
-  LIBRARY: 'library',
-  SHARING: 'sharing',
-};
-
 export const THUMBNAIL_SIZES = {
   SMALL: 'small',
 };
@@ -268,6 +261,15 @@ export const DEFAULT_LINK_SHOW_IFRAME = false;
 export const DEFAULT_LINK_SHOW_BUTTON = true;
 
 export const GRAASP_ASSETS_URL = process.env.REACT_APP_GRAASP_ASSETS_URL;
+export const EXPORT_CSV_HEADERS = [
+  { label: 'message_id', key: 'id' },
+  { label: 'item_id', key: 'chatId' },
+  { label: 'created_at', key: 'createdAt' },
+  { label: 'updated_at', key: 'updatedAt' },
+  { label: 'creator_id', key: 'creator' },
+  { label: 'creator_name', key: 'creatorName' },
+  { label: 'message_content', key: 'body' },
+];
 
 // TODO: refer from specific endpoint /tutorials?
 export const TUTORIALS_LINK =

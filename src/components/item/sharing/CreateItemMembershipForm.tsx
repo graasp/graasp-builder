@@ -8,13 +8,9 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useState } from 'react';
 
-import { MUTATION_KEYS, routines } from '@graasp/query-client';
-import {
-  Invitation,
-  ItemRecord,
-  MemberRecord,
-} from '@graasp/query-client/dist/types';
+import { Invitation, MUTATION_KEYS, routines } from '@graasp/query-client';
 import { PermissionLevel } from '@graasp/sdk';
+import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -29,13 +25,16 @@ import {
 import ItemMembershipSelect from './ItemMembershipSelect';
 
 const { shareItemRoutine } = routines;
-
-type Props = { item: ItemRecord; members: List<MemberRecord> };
+type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
+type Props = {
+  item: ItemRecord;
+  members: List<MemberRecord>;
+};
 
 // todo: handle multiple invitations
 const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
   const itemId = item.id;
-  const [error, setError] = useState<string | boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const { mutateAsync: shareItem } = useMutation<
     { failure?: { message: string }[] },
@@ -47,12 +46,17 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
   >(MUTATION_KEYS.SHARE_ITEM);
   const { t: translateBuilder } = useBuilderTranslation();
 
-  // todo: use an array to later allow sending multiple invitations
-  const [invitation, setInvitation] = useState<Partial<Invitation>>({
+  // use an array to later allow sending multiple invitations
+  const [invitation, setInvitation] = useState<InvitationFieldInfoType>({
+    email: '',
     permission: PermissionLevel.Read,
   });
 
-  const isInvitationInvalid = ({ email }: { email?: string }) => {
+  const checkForInvitationError = ({
+    email,
+  }: {
+    email: string;
+  }): string | null => {
     // check mail validity
     if (!email) {
       return translateBuilder(
@@ -70,7 +74,7 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
         BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
       );
     }
-    return false;
+    return null;
   };
 
   const onChangePermission = (e) => {
@@ -79,10 +83,10 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
 
   const handleShare = async () => {
     // not good to check email for multiple invitations at once
-    const isInvalid = isInvitationInvalid(invitation);
+    const invitationError = checkForInvitationError(invitation);
 
-    if (isInvalid) {
-      return setError(isInvalid);
+    if (invitationError) {
+      return setError(invitationError);
     }
 
     let returnedValue;
@@ -128,7 +132,7 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
     };
     setInvitation(newInvitation);
     if (error) {
-      const isInvalid = isInvitationInvalid(newInvitation);
+      const isInvalid = checkForInvitationError(newInvitation);
       setError(isInvalid);
     }
   };

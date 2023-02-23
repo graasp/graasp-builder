@@ -1,28 +1,26 @@
-import { Typography } from '@mui/material';
-
-import { PermissionLevel } from '@graasp/sdk';
+import { Invitation, ItemMembership } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 
 import { useIsParentInstance } from '../../../utils/item';
 import ItemMembershipSelect from './ItemMembershipSelect';
 
-type Props = { item; editFunction; createFunction; readOnly? };
-
-type ChildProps = {
-  data: {
-    id: string;
-    permission: PermissionLevel;
-    itemPath: string;
-  };
+type Props = {
+  item: ItemRecord;
+  editFunction;
+  createFunction;
+  readOnly?;
 };
+
+type ChildProps = Invitation | ItemMembership;
 
 const TableRowPermissionRenderer = ({
   item,
   editFunction,
   createFunction,
   readOnly = false,
-}: Props): ((props: ChildProps) => JSX.Element) => {
+}: Props): (({ data }: { data: ChildProps }) => JSX.Element) => {
   // todo: use typescript to precise data is one of Invitation or Membership
-  const ChildComponent = ({ data: instance }: ChildProps) => {
+  const ChildComponent = ({ data: instance }: { data: ChildProps }) => {
     const isParentMembership = useIsParentInstance({
       instance,
       item,

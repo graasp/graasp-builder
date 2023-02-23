@@ -7,7 +7,7 @@ import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
-import { TREE_PREVENT_SELECTION } from '../../enums';
+import { TreePreventSelection } from '../../enums';
 import TreeModal from '../main/TreeModal';
 
 type Value = {
@@ -54,7 +54,7 @@ const MoveItemModalProvider = ({
 
     return (
       <TreeModal
-        prevent={TREE_PREVENT_SELECTION.SELF_AND_CHILDREN}
+        prevent={TreePreventSelection.SELF_AND_CHILDREN}
         onClose={onClose}
         open={open}
         itemIds={itemIds}

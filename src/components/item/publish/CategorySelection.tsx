@@ -1,10 +1,11 @@
 import { AutocompleteChangeReason, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { FC, SyntheticEvent, useContext } from 'react';
+import { FC, SyntheticEvent } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Category } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -14,9 +15,8 @@ import {
 } from '../../../config/i18n';
 import { hooks, useMutation } from '../../../config/queryClient';
 import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
-import { Category } from '../../../config/types';
 import { sortByName } from '../../../utils/item';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import DropdownMenu from './DropdownMenu';
 
 const { useCategoryTypes, useCategories, useItemCategories } = hooks;
@@ -50,7 +50,7 @@ const CategorySelection: FC<Props> = ({ disabled }) => {
   >(DELETE_ITEM_CATEGORY);
 
   // user
-  const { isLoading: isMemberLoading } = useContext(CurrentUserContext);
+  const { isLoading: isMemberLoading } = useCurrentUserContext();
 
   // current item
   const { itemId } = useParams();

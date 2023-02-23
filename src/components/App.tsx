@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useLocation } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ import {
 } from '../config/paths';
 import RecycleBinScreen from './RecycleBinScreen';
 import SharedItems from './SharedItems';
-import { CurrentUserContext } from './context/CurrentUserContext';
+import { useCurrentUserContext } from './context/CurrentUserContext';
 import FavoriteItems from './main/FavoriteItems';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
@@ -27,7 +27,7 @@ import MemberProfileScreen from './member/MemberProfileScreen';
 
 const App: FC = () => {
   const { pathname } = useLocation();
-  const { data: currentMember, isLoading } = useContext(CurrentUserContext);
+  const { data: currentMember, isLoading } = useCurrentUserContext();
 
   if (isLoading) {
     return <Loader />;

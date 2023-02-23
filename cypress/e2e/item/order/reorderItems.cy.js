@@ -6,14 +6,13 @@ import {
   buildItemsTableRowSelector,
 } from '../../../../src/config/selectors';
 import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
-import { ROW_HEIGHT, TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
+import { ROW_HEIGHT } from '../../../support/constants';
 
 const reorderAndCheckItem = (id, currentPosition, newPosition) => {
   const dragIcon = `${buildItemsTableRowSelector(
     id,
   )} .${ROW_DRAGGER_CLASS} svg`;
 
-  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.dragAndDrop(dragIcon, 0, (newPosition - currentPosition) * ROW_HEIGHT);
 
   cy.wait('@editItem').then(
@@ -72,7 +71,6 @@ describe('Order Items', () => {
 
       cy.visit(buildItemPath(ITEM_REORDER_ITEMS.parent.id));
 
-      cy.wait(TABLE_ITEM_RENDER_TIME);
       const tableBody = `#${buildItemsTableId(ITEM_REORDER_ITEMS.parent.id)}`;
 
       ITEM_REORDER_ITEMS.children.forEach(({ id }, index) => {

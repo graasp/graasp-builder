@@ -5,16 +5,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-import { useContext } from 'react';
-
-import { ItemRecord } from '@graasp/query-client/dist/types';
-import {
-  AppItemExtra,
-  EmbeddedLinkItemExtra,
-  ItemType,
-  LocalFileItemExtra,
-  S3FileItemExtra,
-} from '@graasp/sdk';
+import { ItemType, getFileExtra, getS3FileExtra } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 
 import i18n, {
@@ -27,31 +19,36 @@ import {
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
-import { LayoutContext } from '../context/LayoutContext';
+import { useLayoutContext } from '../context/LayoutContext';
 import ItemMemberships from './ItemMemberships';
 
 const { useMember } = hooks;
 
-type Props = { item: ItemRecord };
+type Props = {
+  item: ItemRecord;
+};
 
 const ItemMetadataContent = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
-  const { setIsItemMetadataMenuOpen } = useContext(LayoutContext);
+  const { setIsItemMetadataMenuOpen } = useLayoutContext();
   const { data: creator } = useMember(item.creator);
 
   const onClick = () => {
     setIsItemMetadataMenuOpen(true);
   };
 
-  const { type, extra } = item;
   let size = null;
   let mimetype = null;
-  if (type === ItemType.S3_FILE) {
-    ({ mimetype, size } = extra[ItemType.S3_FILE] as S3FileItemExtra);
-  } else if (type === ItemType.LOCAL_FILE) {
-    ({ mimetype, size } = extra[ItemType.LOCAL_FILE] as LocalFileItemExtra);
+  if (item.type === ItemType.S3_FILE) {
+    // todo: improve type of itemRecord with extras
+    const extra = getS3FileExtra(item.extra);
+    ({ mimetype, size } = extra);
+  } else if (item.type === ItemType.LOCAL_FILE) {
+    // todo: improve type of itemRecord with extras
+    const extra = getFileExtra(item.extra);
+    ({ mimetype, size } = extra);
   }
 
   const renderLink = () => {
@@ -63,13 +60,11 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
         <TableCell align="right">{link}</TableCell>
       </TableRow>
     );
-    if (type === ItemType.APP) {
-      return buildTableRow((item.extra[ItemType.APP] as AppItemExtra).url);
+    if (item.type === ItemType.APP) {
+      return buildTableRow(item.extra[ItemType.APP].url);
     }
-    if (type === ItemType.LINK) {
-      return buildTableRow(
-        (item.extra[ItemType.LINK] as EmbeddedLinkItemExtra).url,
-      );
+    if (item.type === ItemType.LINK) {
+      return buildTableRow(item.extra[ItemType.LINK].url);
     }
     return null;
   };
@@ -90,7 +85,7 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
               <TableCell component="th" scope="row">
                 {translateBuilder(BUILDER.ITEM_METADATA_TYPE_TITLE)}
               </TableCell>
-              <TableCell align="right">{mimetype ?? type}</TableCell>
+              <TableCell align="right">{mimetype ?? item.type}</TableCell>
             </TableRow>
             {size && (
               <TableRow>

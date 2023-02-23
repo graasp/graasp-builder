@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { ChangeEvent, FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemRecord } from '@graasp/query-client/dist/types';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import {
