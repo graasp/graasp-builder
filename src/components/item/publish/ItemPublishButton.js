@@ -26,7 +26,7 @@ import {
 } from '../../../utils/itemTag';
 
 const { DELETE_ITEM_TAG, PUBLISH_ITEM } = MUTATION_KEYS;
-const { useTags, useItemTags } = hooks;
+const { useItemTags } = hooks;
 
 const ItemPublishButton = ({ item, isValidated, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -38,7 +38,6 @@ const ItemPublishButton = ({ item, isValidated, disabled }) => {
   const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
   const { mutate: publishItem } = useMutation(PUBLISH_ITEM);
 
-  const { data: tags, isLoading: isTagsLoading } = useTags();
   const {
     data: itemTags,
     isLoading: isItemTagsLoading,
@@ -49,9 +48,12 @@ const ItemPublishButton = ({ item, isValidated, disabled }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [emailNotification, setEmailNotification] = useState(false);
 
+  // TODO
+  const tags = [{ name: 'MYTAG' }];
+
   // update state variables depending on fetch values
   useEffect(() => {
-    if (tags && itemTags) {
+    if (itemTags) {
       const { tag, itemTag } = getVisibilityTagAndItemTag({ tags, itemTags });
       setIsPublished(isItemPublished({ tags, itemTags }));
 
@@ -61,9 +63,9 @@ const ItemPublishButton = ({ item, isValidated, disabled }) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tags, itemTags, item]);
+  }, [itemTags, item]);
 
-  if (isTagsLoading || isItemTagsLoading) {
+  if (isItemTagsLoading) {
     return <Loader />;
   }
 

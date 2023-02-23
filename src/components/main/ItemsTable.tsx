@@ -8,15 +8,13 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   FolderItemExtra,
   Item,
+  ItemMembership,
   ItemType,
+  Member,
   getFolderExtra,
   getShortcutExtra,
 } from '@graasp/sdk';
-import {
-  ItemMembershipRecord,
-  ItemRecord,
-  MemberRecord,
-} from '@graasp/sdk/frontend';
+import { ItemRecord, MemberRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -42,7 +40,7 @@ const { useItem } = hooks;
 type Props = {
   id?: string;
   items: List<ItemRecord>;
-  manyMemberships: List<List<ItemMembershipRecord>>;
+  manyMemberships: ResultOfRecord<ItemMembership[]>;
   tableTitle: string;
   headerElements?: JSX.Element[];
   isSearching?: boolean;
@@ -58,14 +56,14 @@ type Props = {
   isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
-  creators: List<MemberRecord>;
+  creators: ResultOfRecord<Member>;
 };
 
 const ItemsTable: FC<Props> = ({
   tableTitle,
   id: tableId = '',
   items: rows = List(),
-  manyMemberships = List(),
+  manyMemberships,
   headerElements = [],
   isSearching = false,
   actions,
@@ -75,7 +73,7 @@ const ItemsTable: FC<Props> = ({
   isEditing = false,
   showThumbnails = true,
   showCreator = false,
-  creators = List(),
+  creators,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -157,7 +155,6 @@ const ItemsTable: FC<Props> = ({
 
   const ActionComponent = ActionsCellRenderer({
     manyMemberships,
-    items: rows,
     member,
   });
 

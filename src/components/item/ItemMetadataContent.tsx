@@ -25,7 +25,7 @@ import ItemMemberships from './ItemMemberships';
 const { useMember } = hooks;
 
 type Props = {
-  item: ItemRecord;
+  item?: ItemRecord;
 };
 
 const ItemMetadataContent = ({ item }: Props): JSX.Element => {
@@ -33,7 +33,7 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
 
   const { setIsItemMetadataMenuOpen } = useLayoutContext();
-  const { data: creator } = useMember(item.creator);
+  const { data: creator } = useMember(item?.creator?.id);
 
   const onClick = () => {
     setIsItemMetadataMenuOpen(true);

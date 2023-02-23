@@ -35,7 +35,7 @@ const { useItem, useCurrentMember, useItemLogin, useItemMemberships } = hooks;
 
 const ItemScreen = (): JSX.Element => {
   const { itemId } = useParams();
-  const { data: item, isError } = useItem(itemId);
+  const { data: item, isError, isLoading } = useItem(itemId);
 
   const { setEditingItemId, openedActionTabId, setOpenedActionTabId } =
     useLayoutContext();
@@ -52,12 +52,12 @@ const ItemScreen = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
-  if (!itemId || !item || isError || isErrorItemMemberships) {
-    return <ErrorAlert />;
+  if (isLoading || isLoadingItemMemberships) {
+    return <Loader />;
   }
 
-  if (isLoadingItemMemberships) {
-    return <Loader />;
+  if (!itemId || !item || isError || isErrorItemMemberships) {
+    return <ErrorAlert />;
   }
 
   const itemMembership = getHighestPermissionForMemberFromMemberships({

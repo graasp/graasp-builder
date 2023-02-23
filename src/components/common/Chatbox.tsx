@@ -22,9 +22,7 @@ const Chatbox = ({ item }: Props): JSX.Element => {
   const { data: chat, isLoading: isChatLoading } = useItemChat(item.id);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     useItemMemberships(item.id);
-  const { data: members, isLoading: isMembersLoading } = useMembers(
-    itemPermissions?.map((m) => m.memberId)?.toArray() || [],
-  );
+  const members = itemPermissions?.map(({ member }) => member);
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentUserContext();
   const { mutate: sendMessage } = useMutation<
@@ -43,12 +41,7 @@ const Chatbox = ({ item }: Props): JSX.Element => {
     DeleteMessageFunctionParamType
   >(MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE);
 
-  if (
-    isChatLoading ||
-    isMembersLoading ||
-    isLoadingItemPermissions ||
-    isLoadingCurrentMember
-  ) {
+  if (isChatLoading || isLoadingItemPermissions || isLoadingCurrentMember) {
     return <Loader />;
   }
 

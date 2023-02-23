@@ -47,10 +47,11 @@ const FavoriteItems: FC = () => {
     isError: isMemberError,
   } = useCurrentUserContext();
   const {
-    data: favoriteItems = List(),
+    data,
     isLoading: isItemsLoading,
     isError: isItemsError,
   } = hooks.useItems(getFavoriteItems(member).toArray());
+  const favoriteItems = data?.data?.toSeq()?.toList();
   const mutation = useMutation<
     unknown,
     unknown,
@@ -65,7 +66,7 @@ const FavoriteItems: FC = () => {
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them
   // this effect does not take effect if there is only one (deleted) item
   useEffect(() => {
-    if (!favoriteItems.isEmpty() && containsNonExistingItems(favoriteItems)) {
+    if (!favoriteItems && containsNonExistingItems(favoriteItems)) {
       const errorIds = getErrorItemIds(favoriteItems);
       mutation.mutate({
         id: member.id,

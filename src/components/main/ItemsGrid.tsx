@@ -8,7 +8,8 @@ import Select from '@mui/material/Select';
 
 import { useState } from 'react';
 
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
+import { ItemMembership } from '@graasp/sdk';
+import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
@@ -34,7 +35,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 type Props = {
   id?: string;
   items?: List<ItemRecord>;
-  manyMemberships: List<List<ItemMembershipRecord>>;
+  manyMemberships: ResultOfRecord<ItemMembership[]>;
   title: string;
   itemSearch?: {
     text: string;
@@ -90,7 +91,6 @@ const ItemsGrid = ({
         <Item
           item={item}
           memberships={getMembershipsForItem({
-            items,
             manyMemberships,
             itemId: item.id,
           })}

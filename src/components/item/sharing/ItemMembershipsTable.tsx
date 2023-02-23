@@ -6,7 +6,6 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemMembership } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
-import { Loader } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import {
@@ -14,7 +13,7 @@ import {
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, useMutation } from '../../../config/queryClient';
+import { useMutation } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
@@ -36,11 +35,7 @@ const NameRenderer = (users) => {
     data: membership,
   }: {
     data: Pick<ItemMembership, 'memberId'>;
-  }) => {
-    const user = users?.find(({ id }) => id === membership.memberId);
-
-    return <Typography noWrap>{user?.name ?? ''}</Typography>;
-  };
+  }) => <Typography noWrap>{membership?.member?.name ?? ''}</Typography>;
   return ChildComponent;
 };
 
@@ -49,11 +44,7 @@ const EmailRenderer = (users) => {
     data: membership,
   }: {
     data: Pick<ItemMembership, 'memberId'>;
-  }) => {
-    const user = users?.find(({ id }) => id === membership.memberId);
-
-    return <Typography noWrap>{user?.email ?? ''}</Typography>;
-  };
+  }) => <Typography noWrap>{membership?.member?.email ?? ''}</Typography>;
   return ChildComponent;
 };
 
@@ -73,9 +64,6 @@ const ItemMembershipsTable = ({
   showEmail = true,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: users, isLoading } = hooks.useMembers(
-    memberships.map(({ memberId }) => memberId),
-  );
 
   const { mutate: deleteItemMembership } = useMutation<
     unknown,
@@ -117,7 +105,7 @@ const ItemMembershipsTable = ({
         });
       },
       createFunction: ({ value, instance }) => {
-        const email = users?.find(({ id }) => id === instance.memberId)?.email;
+        const { email } = instance.member;
         shareItem({
           id: item.id,
           email,
@@ -125,11 +113,11 @@ const ItemMembershipsTable = ({
         });
       },
     });
-    const NameCellRenderer = NameRenderer(users);
+    const NameCellRenderer = NameRenderer([]);
 
     const columns = [];
     if (showEmail) {
-      const EmailCellRenderer = EmailRenderer(users);
+      const EmailCellRenderer = EmailRenderer([]);
       columns.push({
         headerCheckboxSelection: true,
         checkboxSelection: true,
@@ -189,11 +177,8 @@ const ItemMembershipsTable = ({
       },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, users, showEmail]);
+  }, [item, memberships, showEmail]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
   const countTextFunction = (selected) =>
     translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
       count: selected.length,

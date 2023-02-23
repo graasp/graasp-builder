@@ -37,9 +37,6 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentUserContext();
-  const { data: members } = hooks.useMembers(
-    memberships?.map(({ memberId }) => memberId)?.toArray(),
-  );
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 
   const canEdit = isItemUpdateAllowedForUser({
@@ -59,10 +56,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
 
     const [authenticatedMemberships, authorizedMemberships] = partition(
       memberships.toJS(),
-      ({ memberId }) => {
-        const member = members?.find(({ id: mId }) => mId === memberId);
-        return member?.email && isPseudonymizedMember(member.email);
-      },
+      ({ member }) => member?.email && isPseudonymizedMember(member.email),
     );
 
     return (

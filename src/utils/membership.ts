@@ -1,7 +1,7 @@
 import { List } from 'immutable';
 
-import { PermissionLevel } from '@graasp/sdk';
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
+import { PermissionLevel, ItemMembership } from '@graasp/sdk';
+import { ItemMembershipRecord, ResultOfRecord, } from '@graasp/sdk/frontend';
 
 import { PERMISSIONS_EDITION_ALLOWED } from '../config/constants';
 
@@ -23,7 +23,7 @@ export const isItemUpdateAllowedForUser = ({
 }): boolean =>
   Boolean(
     memberships?.find(
-      ({ memberId: mId, permission }) =>
+      ({ member: { id: mId }, permission }) =>
         mId === memberId && PERMISSIONS_EDITION_ALLOWED.includes(permission),
     ),
   );
@@ -38,14 +38,14 @@ export const getHighestPermissionForMemberFromMemberships = ({
   memberId: string;
 }): null | ItemMembershipRecord => {
   const itemMemberships = memberships?.filter(
-    ({ memberId: mId }) => mId === memberId,
+    ({ member: { id: mId } }) => mId === memberId,
   );
   if (!itemMemberships) {
     return null;
   }
 
   const sorted = itemMemberships?.sort((a, b) =>
-    a.itemPath.length > b.itemPath.length ? 1 : -1,
+    a.item.path.length > b.item.path.length ? 1 : -1,
   );
 
   return sorted.first();
@@ -72,16 +72,7 @@ export const membershipsWithoutUser = (
 export const getMembershipsForItem = ({
   itemId,
   manyMemberships,
-  items,
 }: {
   itemId: string;
-  manyMemberships: List<List<ItemMembershipRecord>>;
-  items: List<ItemRecord>;
-}): List<ItemMembershipRecord> | undefined => {
-  const index = items.findKey(({ id }) => id === itemId);
-  const m = manyMemberships?.get(index);
-  if (isError(m)) {
-    return undefined;
-  }
-  return m;
-};
+  manyMemberships: ResultOfRecord<ItemMembership[]>;
+}): List<ItemMembershipRecord> | undefined => manyMemberships?.data?.[itemId];

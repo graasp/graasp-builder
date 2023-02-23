@@ -55,12 +55,13 @@ const TreeModal = ({
   // by default, we expand all parents of items
   // all other tree roots should be closed
   const buildExpandedItems = (treeRootId) => {
-    if (!items || items.isEmpty()) {
+    if (!items || !items.data) {
       return [];
     }
 
     // suppose all items are in the same parent
-    const parentIds = getParentsIdsFromPath(items.first().path) || [];
+    const parentIds =
+      getParentsIdsFromPath(items.data.toSeq().first().path) || [];
     if (!parentIds.length) {
       return [];
     }

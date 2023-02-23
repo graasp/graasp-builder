@@ -59,7 +59,7 @@ const FileWrapper = styled(Container)(() => ({
 }));
 
 type Props = {
-  item: ItemRecord;
+  item?: ItemRecord;
   enableEditing?: boolean;
   permission: PermissionLevel;
 };

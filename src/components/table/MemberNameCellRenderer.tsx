@@ -1,11 +1,10 @@
-import { List } from 'immutable';
-
 import { Typography } from '@mui/material';
 
-import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
+import { Member } from '@graasp/sdk';
+import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 
 type Props = {
-  users: List<MemberRecord>;
+  users: ResultOfRecord<Member>;
   defaultValue: string;
 };
 
@@ -19,7 +18,7 @@ const MemberNameCellRenderer = ({
 }: Props): ((childProps: ChildProps) => JSX.Element) => {
   const ChildComponent = ({ data: item }: ChildProps): JSX.Element => {
     // users might contain null users
-    const user = users?.find(({ id }) => id === item.creator);
+    const user = users?.data?.[item.creator.id];
 
     return <Typography noWrap>{user?.name ?? defaultValue}</Typography>;
   };
