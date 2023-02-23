@@ -128,6 +128,7 @@ const ItemMembershipsTable = ({
           permission: value,
         });
       },
+      readOnly,
     });
     const NameCellRenderer = NameRenderer(users);
 
@@ -135,8 +136,8 @@ const ItemMembershipsTable = ({
     if (showEmail) {
       const EmailCellRenderer = EmailRenderer(users);
       columns.push({
-        headerCheckboxSelection: true,
-        checkboxSelection: true,
+        headerCheckboxSelection: !readOnly,
+        checkboxSelection: !readOnly,
         headerName: translateBuilder(
           BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER,
         ),
@@ -170,10 +171,21 @@ const ItemMembershipsTable = ({
         type: 'rightAligned',
         field: 'permission',
         flex: 1,
-        cellStyle: {
-          overflow: 'visible',
-          textAlign: 'right',
-        },
+        cellStyle: readOnly
+          ? {
+              display: 'flex',
+              textAlign: 'right',
+              alignItems: 'center',
+              justifyContent: 'right',
+
+              '& > div': {
+                width: '100%',
+              },
+            }
+          : {
+              overflow: 'visible',
+              textAlign: 'right',
+            },
       },
       {
         field: readOnly ? null : 'actions',

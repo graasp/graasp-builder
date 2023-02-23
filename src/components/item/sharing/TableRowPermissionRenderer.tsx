@@ -1,9 +1,11 @@
+import { Typography } from '@mui/material';
+
 import { PermissionLevel } from '@graasp/sdk';
 
 import { useIsParentInstance } from '../../../utils/item';
 import ItemMembershipSelect from './ItemMembershipSelect';
 
-type Props = { item; editFunction; createFunction };
+type Props = { item; editFunction; createFunction; readOnly? };
 
 type ChildProps = {
   data: {
@@ -17,6 +19,7 @@ const TableRowPermissionRenderer = ({
   item,
   editFunction,
   createFunction,
+  readOnly = false,
 }: Props): ((props: ChildProps) => JSX.Element) => {
   // todo: use typescript to precise data is one of Invitation or Membership
   const ChildComponent = ({ data: instance }: ChildProps) => {
@@ -35,7 +38,9 @@ const TableRowPermissionRenderer = ({
       }
     };
 
-    return (
+    return readOnly ? (
+      <Typography noWrap>{instance.permission}</Typography>
+    ) : (
       <ItemMembershipSelect
         value={instance.permission}
         showLabel={false}
