@@ -72,7 +72,7 @@ const ItemMembershipsTable = ({
   item,
   emptyMessage,
   showEmail = true,
-  readOnly = true,
+  readOnly = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: users, isLoading } = hooks.useMembers(
@@ -101,16 +101,14 @@ const ItemMembershipsTable = ({
 
   // never changes, so we can use useMemo
   const columnDefs = useMemo(() => {
-    const ActionRenderer = readOnly
-      ? null
-      : TableRowDeleteButtonRenderer({
-          item,
-          onDelete,
-          buildIdFunction: buildItemMembershipRowDeleteButtonId,
-          tooltip: translateBuilder(
-            BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
-          ),
-        });
+    const ActionRenderer = TableRowDeleteButtonRenderer({
+      item,
+      onDelete,
+      buildIdFunction: buildItemMembershipRowDeleteButtonId,
+      tooltip: translateBuilder(
+        BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+      ),
+    });
     const PermissionRenderer = TableRowPermissionRenderer({
       item,
       editFunction: ({ value, instance }) => {
@@ -174,13 +172,7 @@ const ItemMembershipsTable = ({
         cellStyle: readOnly
           ? {
               display: 'flex',
-              textAlign: 'right',
-              alignItems: 'center',
               justifyContent: 'right',
-
-              '& > div': {
-                width: '100%',
-              },
             }
           : {
               overflow: 'visible',
@@ -189,7 +181,7 @@ const ItemMembershipsTable = ({
       },
       {
         field: readOnly ? null : 'actions',
-        cellRenderer: ActionRenderer,
+        cellRenderer: readOnly ? null : ActionRenderer,
         headerName: readOnly
           ? null
           : translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER),
