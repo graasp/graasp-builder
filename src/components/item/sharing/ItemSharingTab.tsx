@@ -126,6 +126,7 @@ const ItemSharingTab = ({ item }: Props): JSX.Element => {
               emptyMessage={translateBuilder(
                 BUILDER.SHARING_INVITATIONS_EMPTY_MESSAGE,
               )}
+              readOnly={!canEditSettings}
             />
             <Divider sx={{ my: 3 }} />
           </>
