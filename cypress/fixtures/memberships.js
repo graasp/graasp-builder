@@ -1,6 +1,6 @@
 import { PERMISSION_LEVELS } from './enums';
 import { DEFAULT_FOLDER_ITEM } from './items';
-import { CURRENT_USER, MEMBERS } from './members';
+import { MEMBERS } from './members';
 
 // eslint-disable-next-line import/prefer-default-export
 export const ITEMS_WITH_MEMBERSHIPS = {
@@ -80,8 +80,7 @@ export const ITEM_WITH_WRITE_ACCESS = {
     {
       ...DEFAULT_FOLDER_ITEM,
       id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
-      creator:
-        CURRENT_USER.id === MEMBERS.ANNA.id ? MEMBERS.BOB.id : MEMBERS.ANNA.id,
+      creator: MEMBERS.BOB.id,
       name: 'own_item_name1',
       path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
       extra: {
@@ -92,19 +91,13 @@ export const ITEM_WITH_WRITE_ACCESS = {
           id: 'ecafbd2a-5688-11eb-be93-0242ac130002',
           itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
           permission: PERMISSION_LEVELS.ADMIN,
-          memberId:
-            CURRENT_USER.id === MEMBERS.ANNA.id
-              ? MEMBERS.BOB.id
-              : MEMBERS.ANNA.id,
+          memberId: MEMBERS.BOB.id,
         },
         {
           id: 'ecafbd2a-5688-11eb-be92-0242ac130002',
           itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
           permission: PERMISSION_LEVELS.WRITE,
-          memberId:
-            CURRENT_USER.id === MEMBERS.ANNA.id
-              ? MEMBERS.ANNA.id
-              : MEMBERS.BOB.id,
+          memberId: MEMBERS.ANNA.id,
         },
         {
           id: 'ecafbd1a-5688-11eb-be93-0242ac130002',
