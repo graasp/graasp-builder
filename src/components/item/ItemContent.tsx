@@ -225,7 +225,7 @@ const DocumentContent = ({
 /**
  * Helper component to render typed app items
  */
-export const AppContent = ({
+const AppContent = ({
   item,
   member,
   permission,
@@ -258,7 +258,7 @@ export const AppContent = ({
 /**
  * Helper component to render typed folder items
  */
-export const FolderContent = ({
+const FolderContent = ({
   item,
   isEditing,
   enableEditing,
@@ -302,11 +302,7 @@ export const FolderContent = ({
 /**
  * Helper component to render typed H5P items
  */
-export const H5PContent = ({
-  item,
-}: {
-  item: H5PItemTypeRecord;
-}): JSX.Element => {
+const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
   const { contentId } = getH5PExtra(item?.extra);
 
   if (!contentId) {
@@ -325,7 +321,7 @@ export const H5PContent = ({
 /**
  * Helper component to render typed Etherpad items
  */
-export const EtherpadContent = ({
+const EtherpadContent = ({
   item,
 }: {
   item: EtherpadItemTypeRecord;

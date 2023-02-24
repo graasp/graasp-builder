@@ -1,8 +1,8 @@
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
+import Star from '@mui/icons-material/Star';
 import { styled } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
@@ -90,7 +90,7 @@ const MainMenu: FC = () => {
           onClick={() => goTo(FAVORITE_ITEMS_PATH)}
           selected={pathname === FAVORITE_ITEMS_PATH}
           text={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-          icon={<FavoriteIcon />}
+          icon={<Star />}
         />
         <MenuItem
           onClick={() => goTo(RECYCLE_BIN_PATH)}

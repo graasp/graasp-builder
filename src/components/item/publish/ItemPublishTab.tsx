@@ -324,9 +324,11 @@ const ItemPublishTab: FC<Props> = ({
             )}
             arrow
           >
-            <IconButton aria-label="info" onClick={handleClick}>
-              <HelpIcon />
-            </IconButton>
+            <span>
+              <IconButton aria-label="info" onClick={handleClick}>
+                <HelpIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         </Typography>
         <CCLicenseSelection

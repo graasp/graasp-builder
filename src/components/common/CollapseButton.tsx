@@ -72,13 +72,15 @@ const CollapseButton = ({
     default:
       return (
         <Tooltip title={text}>
-          <IconButton
-            aria-label={text}
-            className={COLLAPSE_ITEM_BUTTON_CLASS}
-            onClick={handleCollapse}
-          >
-            {icon}
-          </IconButton>
+          <span>
+            <IconButton
+              aria-label={text}
+              className={COLLAPSE_ITEM_BUTTON_CLASS}
+              onClick={handleCollapse}
+            >
+              {icon}
+            </IconButton>
+          </span>
         </Tooltip>
       );
   }

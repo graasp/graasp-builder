@@ -160,7 +160,9 @@ const ItemSettings: FC<Props> = ({ item }) => {
         placement="right"
         sx={{ m: 0, p: 0 }}
       >
-        <InfoIcon htmlColor="gray" sx={{ mb: -0.5 }} fontSize="small" />
+        <span>
+          <InfoIcon htmlColor="gray" sx={{ mb: -0.5 }} fontSize="small" />
+        </span>
       </Tooltip>
     ) : null;
     return (
