@@ -19,7 +19,9 @@ import { humanFileSize } from '../../utils/uppy';
 import { useLayoutContext } from '../context/LayoutContext';
 import { UppyContext } from './UppyContext';
 
-const StyledContainer = styled(Box)(({ theme, isMainMenuOpen }) => ({
+const StyledContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'color' && prop !== 'myProp',
+})(({ theme, isMainMenuOpen }) => ({
   display: 'none',
   height: '100vh',
   width: '100%',

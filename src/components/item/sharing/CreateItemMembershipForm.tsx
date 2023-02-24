@@ -141,9 +141,11 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
     <Tooltip
       title={translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
     >
-      <IconButton aria-label="status">
-        <ErrorOutlineIcon />
-      </IconButton>
+      <span>
+        <IconButton aria-label="status">
+          <ErrorOutlineIcon />
+        </IconButton>
+      </span>
     </Tooltip>
   );
 

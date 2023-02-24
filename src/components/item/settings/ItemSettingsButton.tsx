@@ -31,17 +31,19 @@ const ItemSettingsButton = ({ id }: Props): JSX.Element => {
 
   return (
     <Tooltip title={translateBuilder(BUILDER.SETTINGS_TITLE)}>
-      <IconButton
-        onClick={onClickSettings}
-        className={ITEM_SETTINGS_BUTTON_CLASS}
-        id={buildSettingsButtonId(id)}
-      >
-        {openedActionTabId === ItemActionTabs.Settings ? (
-          <CloseIcon />
-        ) : (
-          <SettingsIcon />
-        )}
-      </IconButton>
+      <span>
+        <IconButton
+          onClick={onClickSettings}
+          className={ITEM_SETTINGS_BUTTON_CLASS}
+          id={buildSettingsButtonId(id)}
+        >
+          {openedActionTabId === ItemActionTabs.Settings ? (
+            <CloseIcon />
+          ) : (
+            <SettingsIcon />
+          )}
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };

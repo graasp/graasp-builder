@@ -92,6 +92,7 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
     }
     return [
       <FavoriteButton
+        size="medium"
         key="favorite"
         type={ButtonType.MENU_ITEM}
         item={convertJs(item)}

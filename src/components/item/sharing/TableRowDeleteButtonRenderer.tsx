@@ -7,12 +7,14 @@ import { ItemRecord } from '@graasp/sdk/frontend';
 
 import { useIsParentInstance } from '../../../utils/item';
 
+type ChildCompProps = { data: Invitation | ItemMembership };
+
 type Props = {
   item: ItemRecord;
   buildIdFunction: (id: string) => string;
   tooltip?: string;
   color?: IconButtonProps['color'];
-  onDelete?: (args: { instance: Invitation | ItemMembership }) => void;
+  onDelete?: (args: { instance: ChildCompProps['data'] }) => void;
 };
 
 const TableRowDeleteButtonRenderer = ({
@@ -21,9 +23,8 @@ const TableRowDeleteButtonRenderer = ({
   tooltip,
   color = 'default',
   onDelete,
-}: Props): ((args: { data: Invitation | ItemMembership }) => JSX.Element) => {
-  // todo: use typescript to precise data is one of Invitation or Membership
-  const ChildComponent = ({ data }) => {
+}: Props): ((args: ChildCompProps) => JSX.Element) => {
+  const ChildComponent = ({ data }: ChildCompProps) => {
     const isFromParent = useIsParentInstance({
       instance: data,
       item,
@@ -53,7 +54,7 @@ const TableRowDeleteButtonRenderer = ({
 
       return (
         <Tooltip title={tooltip}>
-          <div>{button}</div>
+          <span>{button}</span>
         </Tooltip>
       );
     };

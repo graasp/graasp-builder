@@ -255,7 +255,7 @@ export const THUMBNAIL_SIZES = {
   SMALL: 'small',
 };
 
-export const ITEM_HEADER_ICON_HEIGHT = 30;
+export const ITEM_HEADER_ICON_HEIGHT = 24;
 export const AVATAR_ICON_HEIGHT = 30;
 export const DEFAULT_LINK_SHOW_IFRAME = false;
 export const DEFAULT_LINK_SHOW_BUTTON = true;
