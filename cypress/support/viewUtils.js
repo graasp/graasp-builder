@@ -19,7 +19,6 @@ import {
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
   buildFileItemId,
-  buildPlayerButtonId,
   buildSettingsButtonId,
   buildShareButtonId,
 } from '../../src/config/selectors';
@@ -53,7 +52,6 @@ export const expectItemHeaderLayout = ({
   const header = cy.get(`#${ITEM_HEADER_ID}`);
 
   header.get(`#${buildShareButtonId(id)}`).should('exist');
-  header.get(`#${buildPlayerButtonId(id)}`).should('exist');
 
   if (
     isSettingsEditionAllowedForUser({
