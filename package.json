@@ -122,7 +122,7 @@
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "concurrently": "7.6.0",
-    "cypress": "12.4.0",
+    "cypress": "12.6.0",
     "cypress-localstorage-commands": "2.2.2",
     "env-cmd": "10.1.0",
     "eslint": "^8.32.0",

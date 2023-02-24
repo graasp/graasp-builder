@@ -23,6 +23,12 @@ import { InternalItemType, NewItemTabType } from '../../config/types';
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.divider}`,
   maxWidth: 150,
+
+  '& .MuiTabs-scrollButtons svg': {
+    background: theme.palette.primary.main,
+    borderRadius: '50px',
+    color: 'white',
+  },
 }));
 
 type Props = {
@@ -53,7 +59,8 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
 
   return (
     <StyledTabs
-      centered
+      variant="scrollable"
+      scrollButtons="auto"
       orientation="vertical"
       value={value}
       onChange={handleChange}
