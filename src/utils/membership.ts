@@ -1,7 +1,7 @@
 import { List } from 'immutable';
 
-import { PermissionLevel, ItemMembership } from '@graasp/sdk';
-import { ItemMembershipRecord, ResultOfRecord, } from '@graasp/sdk/frontend';
+import { ItemMembership, PermissionLevel } from '@graasp/sdk';
+import { ItemMembershipRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 
 import { PERMISSIONS_EDITION_ALLOWED } from '../config/constants';
 
