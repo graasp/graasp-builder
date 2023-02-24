@@ -54,8 +54,8 @@ describe('View Invitations Read-Only Mode', () => {
       cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).should(
         'not.exist',
       );
-    });
 
-    // todo: check permission
+      // todo: invitation button should not exist
+    });
   });
 });
