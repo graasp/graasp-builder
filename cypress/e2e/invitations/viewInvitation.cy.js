@@ -54,11 +54,6 @@ describe('View Invitations Read-Only Mode', () => {
       cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).should(
         'not.exist',
       );
-
-      // resend invitation button should not exist
-      cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).should(
-        'not.exist',
-      );
     });
 
     // todo: check permission
