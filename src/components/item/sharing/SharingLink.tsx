@@ -9,7 +9,11 @@ import Tooltip from '@mui/material/Tooltip';
 import { FC, useEffect, useState } from 'react';
 
 import { Context } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
+import {
+  BUILDER,
+  FAILURE_MESSAGES,
+  SUCCESS_MESSAGES,
+} from '@graasp/translations';
 
 import {
   SHARE_LINK_COLOR,
@@ -19,6 +23,7 @@ import {
 import {
   useBuilderTranslation,
   useEnumsTranslation,
+  useMessagesTranslation,
 } from '../../../config/i18n';
 import notifier from '../../../config/notifier';
 import {
@@ -55,6 +60,7 @@ type Props = {
 };
 
 const SharingLink: FC<Props> = ({ itemId }) => {
+  const { t: translateMessages } = useMessagesTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
 
@@ -87,15 +93,19 @@ const SharingLink: FC<Props> = ({ itemId }) => {
         onSuccess: () => {
           notifier({
             type: COPY_ITEM_LINK_TO_CLIPBOARD.SUCCESS,
-            payload: { message: translateBuilder('Link copied to clipboard') },
+            payload: {
+              message: translateMessages(
+                SUCCESS_MESSAGES.COPY_LINK_TO_CLIPBOARD,
+              ),
+            },
           });
         },
         onError: () => {
           notifier({
             type: COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE,
             payload: {
-              message: translateBuilder(
-                'There was an error copying the link to the clipboard',
+              message: translateMessages(
+                FAILURE_MESSAGES.COPY_LINK_TO_CLIPBOARD_ERROR,
               ),
             },
           });
