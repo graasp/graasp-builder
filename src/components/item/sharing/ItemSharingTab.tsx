@@ -69,7 +69,9 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
           </Typography>
           {canEdit && <CsvInputParser item={item} />}
         </Grid>
-        {canEdit && <CreateItemMembershipForm item={item} members={members} />}
+        {canEdit && (
+          <CreateItemMembershipForm item={item} memberships={memberships} />
+        )}
         <ItemMembershipsTable
           item={item}
           emptyMessage={translateBuilder(

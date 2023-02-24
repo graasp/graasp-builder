@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Invitation } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { InvitationRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -29,7 +29,7 @@ const rowStyle = {
 
 type Props = {
   item: ItemRecord;
-  invitations: List<Invitation>;
+  invitations: List<InvitationRecord>;
   emptyMessage?: string;
 };
 

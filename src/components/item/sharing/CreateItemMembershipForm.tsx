@@ -8,9 +8,13 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useState } from 'react';
 
-import { Invitation, MUTATION_KEYS, routines } from '@graasp/query-client';
-import { PermissionLevel } from '@graasp/sdk';
-import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
+import { MUTATION_KEYS, routines } from '@graasp/query-client';
+import { Invitation, PermissionLevel } from '@graasp/sdk';
+import {
+  ItemMembershipRecord,
+  ItemRecord,
+  MemberRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -28,11 +32,14 @@ const { shareItemRoutine } = routines;
 type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
 type Props = {
   item: ItemRecord;
-  members: List<MemberRecord>;
+  memberships: List<ItemMembershipRecord>;
 };
 
 // todo: handle multiple invitations
-const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
+const CreateItemMembershipForm = ({
+  item,
+  memberships,
+}: Props): JSX.Element => {
   const itemId = item.id;
   const [error, setError] = useState<string>('');
 
@@ -69,7 +76,11 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
       );
     }
     // check mail does not already exist
-    if (members.find(({ email: thisEmail }) => thisEmail === email)) {
+    if (
+      memberships.find(
+        ({ member: { email: thisEmail } }) => thisEmail === email,
+      )
+    ) {
       return translateBuilder(
         BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
       );

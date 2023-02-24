@@ -59,7 +59,7 @@ export const isSettingsEditionAllowedForUser = ({
   memberId: string;
 }): boolean =>
   memberships?.some(
-    ({ memberId: mId, permission }) =>
+    ({ member: { id: mId }, permission }) =>
       mId === memberId && PermissionLevel.Admin === permission,
   );
 
@@ -67,7 +67,7 @@ export const membershipsWithoutUser = (
   memberships: List<ItemMembershipRecord>,
   userId: string,
 ): List<ItemMembershipRecord> =>
-  memberships?.filter(({ memberId }) => memberId !== userId);
+  memberships?.filter(({ member: { id: memberId } }) => memberId !== userId);
 
 export const getMembershipsForItem = ({
   itemId,

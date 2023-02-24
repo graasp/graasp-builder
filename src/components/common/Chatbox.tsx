@@ -12,7 +12,7 @@ import { hooks, useMutation } from '../../config/queryClient';
 import { CHATBOX_ID, CHATBOX_INPUT_BOX_ID } from '../../config/selectors';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
-const { useItemChat, useMembers, useAvatar, useItemMemberships } = hooks;
+const { useItemChat, useAvatar, useItemMemberships } = hooks;
 
 type Props = {
   item: ItemRecord;
@@ -47,7 +47,7 @@ const Chatbox = ({ item }: Props): JSX.Element => {
 
   // only show export chat when user has admin right on the item
   const isAdmin =
-    itemPermissions?.find((perms) => perms.memberId === currentMember.id)
+    itemPermissions?.find((perms) => perms.member.id === currentMember.id)
       ?.permission === PermissionLevel.Admin;
 
   return (

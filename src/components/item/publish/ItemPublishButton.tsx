@@ -1,69 +1,56 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
-import { SETTINGS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, useMutation } from '../../../config/queryClient';
+import { hooks, mutations } from '../../../config/queryClient';
 import {
   EMAIL_NOTIFICATION_CHECKBOX,
   ITEM_PUBLISH_BUTTON_ID,
   ITEM_UNPUBLISH_BUTTON_ID,
 } from '../../../config/selectors';
-import {
-  getTagByName,
-  getVisibilityTagAndItemTag,
-  isItemPublished,
-} from '../../../utils/itemTag';
 
-const { DELETE_ITEM_TAG, PUBLISH_ITEM } = MUTATION_KEYS;
-const { useItemTags } = hooks;
+const { useItemPublishedInformation } = hooks;
+const { useUnpublishItem, usePublishItem } = mutations;
 
-const ItemPublishButton = ({ item, isValidated, disabled }) => {
+type Props = { item: ItemRecord; isValidated: boolean; disabled: boolean };
+
+const ItemPublishButton = ({
+  item,
+  isValidated,
+  disabled,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  // current item
-  const { itemId } = useParams();
-
   // item tags
-  const { mutate: deleteItemTag } = useMutation(DELETE_ITEM_TAG);
-  const { mutate: publishItem } = useMutation(PUBLISH_ITEM);
+  const { mutate: unpublish } = useUnpublishItem();
+  const { mutate: publishItem } = usePublishItem();
 
   const {
-    data: itemTags,
+    data: itemPublishedEntry,
     isLoading: isItemTagsLoading,
     isError,
-  } = useItemTags(itemId);
+  } = useItemPublishedInformation({ itemId: item.id });
 
   const [isPublished, setIsPublished] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [emailNotification, setEmailNotification] = useState(false);
-
-  // TODO
-  const tags = [{ name: 'MYTAG' }];
+  const [emailNotification, setEmailNotification] = useState(null);
 
   // update state variables depending on fetch values
   useEffect(() => {
-    if (itemTags) {
-      const { tag, itemTag } = getVisibilityTagAndItemTag({ tags, itemTags });
-      setIsPublished(isItemPublished({ tags, itemTags }));
+    if (itemPublishedEntry) {
+      setIsPublished(Boolean(itemPublishedEntry));
 
       // disable setting if any visiblity is set on any ancestor items
-      setIsDisabled(
-        tag && itemTag?.itemPath && itemTag?.itemPath !== item?.path,
-      );
+      setIsDisabled(itemPublishedEntry?.item?.path !== item?.path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemTags, item]);
+  }, [itemPublishedEntry, item]);
 
   if (isItemTagsLoading) {
     return <Loader />;
@@ -77,19 +64,15 @@ const ItemPublishButton = ({ item, isValidated, disabled }) => {
     // Prevent resend request if item is already published
     if (!isPublished) {
       publishItem({
-        id: itemId,
+        id: item.id,
         notification: emailNotification,
       });
     }
   };
 
   const handleUnpublish = () => {
-    const publishedTag = getTagByName(tags, SETTINGS.ITEM_PUBLISHED.name);
-    const publishedItemTag = itemTags.find(
-      ({ tagId }) => tagId === publishedTag.id,
-    );
-    if (publishedItemTag) {
-      deleteItemTag({ id: itemId, tagId: publishedItemTag.id });
+    if (itemPublishedEntry) {
+      unpublish({ id: item.id });
     }
   };
 
@@ -141,12 +124,6 @@ const ItemPublishButton = ({ item, isValidated, disabled }) => {
       )}
     </>
   );
-};
-
-ItemPublishButton.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  isValidated: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool,
 };
 
 export default ItemPublishButton;

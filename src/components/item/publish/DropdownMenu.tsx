@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 
 import { FC, SyntheticEvent } from 'react';
 
-import { Category, ItemCategory } from '@graasp/sdk';
+import { Category, CategoryType, ItemCategory } from '@graasp/sdk';
+import { CategoryRecord, ItemCategoryRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -21,10 +22,10 @@ import {
 
 type Props = {
   disabled: boolean;
-  typeId: string;
+  type: CategoryType;
   title: string;
-  values: Category[];
-  selectedValues?: List<ItemCategory>;
+  values: List<CategoryRecord>;
+  selectedValues?: List<ItemCategoryRecord>;
   handleChange: (
     _event: SyntheticEvent,
     value: Category[],
@@ -34,7 +35,7 @@ type Props = {
 
 const DropdownMenu: FC<Props> = ({
   disabled,
-  typeId,
+  type,
   title,
   handleChange,
   values,
@@ -42,13 +43,17 @@ const DropdownMenu: FC<Props> = ({
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
+  if (!values.size) {
+    return null;
+  }
+
   const selected = values.filter(({ id }) =>
-    selectedValues?.find(({ categoryId }) => categoryId === id),
+    selectedValues?.find(({ category }) => category.id === id),
   );
 
   return (
     <Box mt={2}>
-      <Typography variant="body1" id={buildCategorySelectionTitleId(typeId)}>
+      <Typography variant="body1" id={buildCategorySelectionTitleId(type)}>
         {title}
       </Typography>
       <Autocomplete
@@ -56,9 +61,9 @@ const DropdownMenu: FC<Props> = ({
         disabled={disabled || !values}
         multiple
         disableClearable
-        id={buildCategorySelectionId(typeId)}
-        value={selected}
-        options={values}
+        id={buildCategorySelectionId(type)}
+        value={selected.toArray()}
+        options={values.toArray()}
         getOptionLabel={(option: Category) => option.name}
         onChange={handleChange}
         renderInput={(params) => (
@@ -75,7 +80,7 @@ const DropdownMenu: FC<Props> = ({
             {...props}
             // necessary for test
             data-id={option.id}
-            id={buildCategorySelectionOptionId(typeId, option.id)}
+            id={buildCategorySelectionOptionId(type, option.id)}
           >
             {option.name}
           </li>

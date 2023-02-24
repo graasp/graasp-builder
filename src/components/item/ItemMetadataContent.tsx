@@ -106,7 +106,7 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
                 {translateBuilder(BUILDER.ITEM_METADATA_CREATED_AT_TITLE)}
               </TableCell>
               <TableCell align="right">
-                {formatDate(item.createdAt, {
+                {formatDate(item.createdAt as unknown as string, {
                   locale: i18n.language,
                   defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
                 })}
@@ -117,7 +117,7 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
                 {translateBuilder(BUILDER.ITEM_METADATA_UPDATED_AT_TITLE)}
               </TableCell>
               <TableCell align="right">
-                {formatDate(item.updatedAt, {
+                {formatDate(item.updatedAt as unknown as string, {
                   locale: i18n.language,
                   defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
                 })}

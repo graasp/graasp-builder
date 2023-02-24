@@ -2332,7 +2332,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#typeorm":
   version: 0.3.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1fa40f23525e0f638440f618b1921ba81a8f4750"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=53df870e08ceee53128f564a35b6a3fbbcec45a7"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     "@graasp/translations": 1.4.0
@@ -2345,13 +2345,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: e08977256e2a6e695ba72e7f5f1301fd7270d67e0f9b10eb879ca29bd2c81e0d55ba80d73e210382667a0ada683ed576697ab10ba4ced34437079213535e9be6
+  checksum: 5118b15a80fec120e498655d3950e771e2da784ab08d7bb1c8087243c23316030a563593f1eab04811d9413f8790c8924b3d2be627e2cb43e14c36f8e58ca351
   languageName: node
   linkType: hard
 
 "@graasp/sdk@github:graasp/graasp-sdk#typeorm":
   version: 0.4.1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=4e4b47a30ea8ff9012df7b1cbe0923c30dd3ead9"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=f2b7fa6774865aeadb4f5f759800b6ec30920f4f"
   dependencies:
     "@fastify/secure-session": 5.3.0
     aws-sdk: 2.1310.0
@@ -2363,41 +2363,7 @@ __metadata:
     slonik: 28.1.1
     typeorm: 0.3.12
     uuid: 9.0.0
-  checksum: eb385ec8484f76916c29f244af5f5ae328a3dfeae1831db7e682788bebb290776e24200a79e5df3dc21aed217315b6b84f20bd4e2b194abd2809c8901ac05af4
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:0.4.0":
-  version: 0.4.0
-  resolution: "@graasp/sdk@npm:0.4.0"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 9.0.0
-  checksum: cf57c9e782b00c6406fbd4563e56b797bd78e8928cc4e1624601968541f6f72b7784c9d9e66bbcc46180030a7ff31f8089d8aca4ae393e57d3d5f1e8e6c614d6
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:0.4.1":
-  version: 0.4.1
-  resolution: "@graasp/sdk@npm:0.4.1"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 9.0.0
-  checksum: dc65bdad6db5d8647c5753fa03c7d88cd894b3e3dc9da55c19e92da4bbc77cd85b542beb93ec5db46b75a8a7ac65ba8901258a667a3bedccb8fdfa6b4f13df14
+  checksum: ba5715ed3b2a3107217b723fc1f072f3e5b7816c01bf5cfe75c4c7684bb219f8ccf593417e5554399aa7ae740951f76ee98aa0415189cfdb6505c51d3363e70a
   languageName: node
   linkType: hard
 
@@ -2410,11 +2376,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@graasp/ui@npm:0.11.1"
+"@graasp/ui@github:graasp/graasp-ui#typeorm":
+  version: 0.12.0
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=24a620be591121f10626ce7b0bd05160663303e4"
   dependencies:
-    "@graasp/sdk": 0.4.0
+    "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.2.4
@@ -2429,9 +2395,9 @@ __metadata:
     react-text-mask: 5.4.3
     uuid: 9.0.0
   peerDependencies:
-    "@emotion/react": ~11.10.5
-    "@emotion/styled": ~11.10.5
-    "@mui/icons-material": ~5.11.0
+    "@emotion/react": ~11.10.6
+    "@emotion/styled": ~11.10.6
+    "@mui/icons-material": ~5.11.9
     "@mui/lab": ~5.0.0-alpha.120
     "@mui/material": ~5.11.9
     ag-grid-community: 28.1.1
@@ -2445,7 +2411,46 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 599961399ee145e1a82555e6de86a927ae5408b4e145cc88de4eb0da3a22bc9b896b4145d44982e615a61d680b16c40832034f321d738458ea42266874c11627
+  checksum: 911f891ec9730d49cc9bbc785916a4ec83e824d2d46ea8fbd344de61169c0a98d71a63dafff35deb7830723cf96a3b9e6f45f8d468b848b7db78c09377f24789
+  languageName: node
+  linkType: hard
+
+"@graasp/ui@npm:0.10.5":
+  version: 0.10.5
+  resolution: "@graasp/ui@npm:0.10.5"
+  dependencies:
+    "@graasp/sdk": 0.2.0
+    clsx: 1.1.1
+    http-status-codes: 2.2.0
+    immutable: 4.1.0
+    katex: 0.16.0
+    lodash.truncate: 4.4.2
+    qs: 6.10.5
+    quill-emoji: 0.2.0
+    react-cookie-consent: 7.4.1
+    react-i18next: 11.17.0
+    react-quill: 2.0.0-beta.4
+    react-rnd: 10.3.7
+    react-text-mask: 5.4.3
+    uuid: 8.3.2
+  peerDependencies:
+    "@emotion/react": 11.10.4
+    "@emotion/styled": 11.10.4
+    "@mui/icons-material": 5.8.3
+    "@mui/lab": ~5.0.0-alpha.85
+    "@mui/material": 5.10.7
+    ag-grid-community: 28.1.1
+    ag-grid-react: 28.1.1
+    i18next: ~21.8.9
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-router-dom: 6.2.2
+  peerDependenciesMeta:
+    ag-grid-community:
+      optional: true
+    ag-grid-react:
+      optional: true
+  checksum: 922cf6a9de9402178b906eda12081eb571feaecc240e621fceed3f0937b82c052c8a2700a414488f99d6da39deb7ba02b4f23343124ea4df01b55717ba17d51e
   languageName: node
   linkType: hard
 
@@ -15851,6 +15856,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qs@npm:6.10.5":
+  version: 6.10.5
+  resolution: "qs@npm:6.10.5"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: b3873189a11bcf48445864b3ba66f7a76db0d9d874955d197779f561addfa604884f7b107971526ce1eca02c99bf7d1e47f28a3e7e6e29204d798fb279164226
+  languageName: node
+  linkType: hard
+
 "qs@npm:6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
@@ -19293,21 +19307,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uuid@npm:8.3.2, uuid@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
 "uuid@npm:9.0.0, uuid@npm:^9.0.0":
   version: 9.0.0
   resolution: "uuid@npm:9.0.0"
   bin:
     uuid: dist/bin/uuid
   checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
   languageName: node
   linkType: hard
 

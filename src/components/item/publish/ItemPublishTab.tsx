@@ -12,10 +12,9 @@ import UpdateIcon from '@mui/icons-material/Update';
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 
-import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
-import { PermissionLevel, redirect } from '@graasp/sdk';
+import { DATA_KEYS } from '@graasp/query-client';
+import { ItemTagType, PermissionLevel, redirect } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
@@ -26,13 +25,12 @@ import {
   VALIDATION_STATUS_NAMES,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, queryClient, useMutation } from '../../../config/queryClient';
+import { hooks, mutations, queryClient } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
   ITEM_VALIDATION_REFRESH_BUTTON_ID,
 } from '../../../config/selectors';
-import { isItemPublic } from '../../../utils/itemTag';
 import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
@@ -43,16 +41,16 @@ import CoEditorSettings from './CoEditorSettings';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
 import ItemPublishButton from './ItemPublishButton';
 
-const { POST_ITEM_VALIDATION } = MUTATION_KEYS;
 const { buildItemValidationAndReviewKey } = DATA_KEYS;
 const {
   useItemValidationAndReview,
   useItemValidationGroups,
   useItemValidationStatuses,
   useItemValidationReviewStatuses,
+  useItemTags,
 } = hooks;
 
-const { useTags, useItemTags } = hooks;
+const { usePostItemValidation } = mutations;
 
 type Props = {
   item: ItemRecord;
@@ -73,7 +71,6 @@ const ItemPublishTab: FC<Props> = ({
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.id,
   );
@@ -88,17 +85,12 @@ const ItemPublishTab: FC<Props> = ({
     memberId: currentMember?.id,
   });
 
-  const isPublic = isItemPublic({ tags, itemTags });
+  const isPublic = itemTags?.find(({ type }) => type === ItemTagType.PUBLIC);
 
   const canAdmin = permission === PermissionLevel.Admin;
 
-  // current item
-  const { itemId } = useParams();
-
   // item validation
-  const { mutate: validateItem } = useMutation<any, any, any>(
-    POST_ITEM_VALIDATION,
-  );
+  const { mutate: validateItem } = usePostItemValidation();
 
   // get map of item validation and review statuses
   const { data: ivStatuses } = useItemValidationStatuses();
@@ -113,13 +105,15 @@ const ItemPublishTab: FC<Props> = ({
   );
 
   // get item validation data
-  const { data: itemValidationData, isLoading } =
-    useItemValidationAndReview(itemId);
+  const { data: itemValidationData, isLoading } = useItemValidationAndReview(
+    item?.id,
+  );
   // todo: fix with query client
   const itemValidationDataTyped = itemValidationData as any;
   // check if validation is still valid
   const iVId =
-    new Date(itemValidationDataTyped?.createdAt) >= new Date(item?.updatedAt)
+    new Date(itemValidationDataTyped?.createdAt) >=
+    new Date(item?.updatedAt as unknown as string)
       ? itemValidationDataTyped?.itemValidationId
       : null;
   // get item validation groups
@@ -163,7 +157,6 @@ const ItemPublishTab: FC<Props> = ({
     isLoading ||
     isMembershipsLoading ||
     isLoadingCurrentMember ||
-    isTagsLoading ||
     isItemTagsLoading
   ) {
     return <Loader />;
@@ -182,13 +175,13 @@ const ItemPublishTab: FC<Props> = ({
   const handleValidate = () => {
     // prevent re-send request if the item is already successfully validated
     if (!(itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS)) {
-      validateItem({ itemId });
+      validateItem({ itemId: item.id });
     }
     setItemValidationStatus(VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC);
   };
 
   const handleRefresh = () => {
-    queryClient.invalidateQueries(buildItemValidationAndReviewKey(itemId));
+    queryClient.invalidateQueries(buildItemValidationAndReviewKey(item.id));
   };
 
   // display icon indicating current status of given item

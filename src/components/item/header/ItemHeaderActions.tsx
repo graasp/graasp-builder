@@ -58,7 +58,6 @@ const ItemHeaderActions = ({
   const { data: member } = useCurrentUserContext();
 
   const { data: memberships } = useItemMemberships(id);
-  console.log(memberships, id);
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
     memberId: member?.id,

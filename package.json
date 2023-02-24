@@ -147,7 +147,6 @@
     "wait-on": "7.0.1"
   },
   "resolutions": {
-    "@graasp/ui": "0.11.1",
     "@mui/icons-material": "5.11.0",
     "@mui/material": "5.11.6",
     "ansi-html": "0.0.8",
@@ -159,7 +158,9 @@
     "node-forge": "1.3.0",
     "nth-check": "2.0.1",
     "react-error-overlay": "6.0.9",
-    "@graasp/translations": "1.4.0"
+    "@graasp/translations": "1.4.0",
+    "@graasp/query-client": "github:graasp/graasp-query-client#typeorm",
+    "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
   },
   "packageManager": "yarn@3.4.1"
 }

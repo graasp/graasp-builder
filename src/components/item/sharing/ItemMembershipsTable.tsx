@@ -30,20 +30,20 @@ const rowStyle = {
   },
 };
 
-const NameRenderer = (users) => {
+const NameRenderer = () => {
   const ChildComponent = ({
     data: membership,
   }: {
-    data: Pick<ItemMembership, 'memberId'>;
+    data: Pick<ItemMembership, 'member'>;
   }) => <Typography noWrap>{membership?.member?.name ?? ''}</Typography>;
   return ChildComponent;
 };
 
-const EmailRenderer = (users) => {
+const EmailRenderer = () => {
   const ChildComponent = ({
     data: membership,
   }: {
-    data: Pick<ItemMembership, 'memberId'>;
+    data: Pick<ItemMembership, 'member'>;
   }) => <Typography noWrap>{membership?.member?.email ?? ''}</Typography>;
   return ChildComponent;
 };
@@ -113,11 +113,11 @@ const ItemMembershipsTable = ({
         });
       },
     });
-    const NameCellRenderer = NameRenderer([]);
+    const NameCellRenderer = NameRenderer();
 
     const columns = [];
     if (showEmail) {
-      const EmailCellRenderer = EmailRenderer([]);
+      const EmailCellRenderer = EmailRenderer();
       columns.push({
         headerCheckboxSelection: true,
         checkboxSelection: true,

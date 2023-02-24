@@ -22,23 +22,6 @@ import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import Main from './Main';
 
-// todo: find other possible solutions
-// todo: improve types with refactor
-export const getExistingItems = (
-  items: List<ItemRecord & { statusCode?: number }>,
-): List<ItemRecord> => items.filter((item) => !item.statusCode);
-
-// todo: improve types with refactor
-export const containsNonExistingItems = (
-  items: List<ItemRecord & { statusCode?: number }>,
-): boolean => items.some((item) => Boolean(item.statusCode));
-
-// todo: improve types with refactor
-export const getErrorItemIds = (
-  items: List<ItemRecord & { data?: string; statusCode?: number }>,
-): List<string> =>
-  items.filter((item) => item.statusCode).map((item) => item.data);
-
 const FavoriteItems: FC = () => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
@@ -51,7 +34,7 @@ const FavoriteItems: FC = () => {
     isLoading: isItemsLoading,
     isError: isItemsError,
   } = hooks.useItems(getFavoriteItems(member).toArray());
-  const favoriteItems = data?.data?.toSeq()?.toList();
+  const favoriteItems = data?.data?.toSeq()?.toList() as List<ItemRecord>;
   const mutation = useMutation<
     unknown,
     unknown,
@@ -62,23 +45,24 @@ const FavoriteItems: FC = () => {
       };
     }
   >(MUTATION_KEYS.EDIT_MEMBER);
-
+  console.log(favoriteItems);
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them
   // this effect does not take effect if there is only one (deleted) item
   useEffect(() => {
-    if (!favoriteItems && containsNonExistingItems(favoriteItems)) {
-      const errorIds = getErrorItemIds(favoriteItems);
-      mutation.mutate({
-        id: member.id,
-        extra: {
-          favoriteItems: member.extra.favoriteItems
-            ?.filter((id) => !errorIds.includes(id))
-            .toArray(),
-        },
-      });
+    if (data?.errors) {
+      // TODO: REMOVE errors ??
+      // const errorIds = getErrorItemIds(favoriteItems);
+      // mutation.mutate({
+      //   id: member.id,
+      //   extra: {
+      //     favoriteItems: member.extra.favoriteItems
+      //       ?.filter((id) => !errorIds.includes(id))
+      //       .toArray(),
+      //   },
+      // });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favoriteItems]);
+  }, [data]);
 
   const renderContent = () => {
     if (isMemberError || isItemsError) {
@@ -92,7 +76,7 @@ const FavoriteItems: FC = () => {
       <Items
         id={FAVORITE_ITEMS_ID}
         title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-        items={getExistingItems(favoriteItems)}
+        items={favoriteItems}
       />
     );
   };
