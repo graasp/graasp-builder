@@ -1,6 +1,7 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
+  ITEM_RESEND_INVITATION_BUTTON_CLASS,
   buildInvitationTableRowSelector,
   buildItemInvitationRowDeleteButtonId,
   buildShareButtonId,
@@ -35,6 +36,12 @@ describe('View Invitations', () => {
           id,
         )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
       ).should('have.value', permission);
+
+      cy.get(
+        `${buildInvitationTableRowSelector(
+          id,
+        )} .${ITEM_RESEND_INVITATION_BUTTON_CLASS}`,
+      ).should('exist');
     });
 
     // todo: check permission
@@ -69,7 +76,12 @@ describe('View Invitations Read-Only Mode', () => {
         )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
       ).should('not.exist');
 
-      // todo: invitation button should not exist
+      // resend invitation button should not exist
+      cy.get(
+        `${buildInvitationTableRowSelector(
+          id,
+        )} .${ITEM_RESEND_INVITATION_BUTTON_CLASS}`,
+      ).should('not.exist');
     });
   });
 });

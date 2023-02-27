@@ -6,6 +6,7 @@ import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { useMutation } from '../../../config/queryClient';
+import { ITEM_RESEND_INVITATION_BUTTON_CLASS } from '../../../config/selectors';
 
 type ChildProps = {
   data: Invitation;
@@ -30,7 +31,12 @@ const ResendInvitationRenderer = (
     };
 
     return (
-      <Button variant="outlined" onClick={resendEmail} disabled={clicked}>
+      <Button
+        variant="outlined"
+        onClick={resendEmail}
+        disabled={clicked}
+        className={ITEM_RESEND_INVITATION_BUTTON_CLASS}
+      >
         {translateBuilder(BUILDER.SHARING_INVITATIONS_RESEND_BUTTON)}
       </Button>
     );
