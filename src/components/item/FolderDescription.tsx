@@ -25,7 +25,13 @@ const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
   const { data: parentItem } = hooks.useItem(itemId);
 
   const onDescriptionSave = (str: string) => {
-    editItem({ id: itemId, description: str });
+    let description = str;
+    // check that the content is just empty
+    // this is added by quills internal model based on deltas https://quilljs.com/docs/delta/
+    if (str === '<p><br></p>') {
+      description = '';
+    }
+    editItem({ id: itemId, description });
     setEditingItemId(null);
   };
 
