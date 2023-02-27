@@ -1,5 +1,6 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
+  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   buildInvitationTableRowSelector,
   buildItemInvitationRowDeleteButtonId,
   buildShareButtonId,
@@ -20,7 +21,7 @@ describe('View Invitations', () => {
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    invitations.forEach(({ itemPath, id, email }) => {
+    invitations.forEach(({ itemPath, id, email, permission }) => {
       cy.get(buildInvitationTableRowSelector(id)).should('contain', email);
 
       if (itemPath !== item.path) {
@@ -28,6 +29,12 @@ describe('View Invitations', () => {
           'be.disabled',
         );
       }
+
+      cy.get(
+        `${buildInvitationTableRowSelector(
+          id,
+        )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
+      ).should('have.value', permission);
     });
 
     // todo: check permission
@@ -54,6 +61,13 @@ describe('View Invitations Read-Only Mode', () => {
       cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).should(
         'not.exist',
       );
+
+      // check no permission select component exists
+      cy.get(
+        `${buildInvitationTableRowSelector(
+          id,
+        )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
+      ).should('not.exist');
 
       // todo: invitation button should not exist
     });
