@@ -8,6 +8,7 @@ import {
 import { ITEM_LAYOUT_MODES } from '../enums';
 
 export const APP_NAME = 'Graasp';
+export const PLATFORM_NAME = 'GraaspBuilder';
 
 export const ENV = {
   DEVELOPMENT: 'development',
@@ -19,6 +20,8 @@ export const NODE_ENV =
   process.env.REACT_APP_NODE_ENV || process.env.NODE_ENV || ENV.DEVELOPMENT;
 
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
+
+export const APP_VERSION = process.env.REACT_APP_VERSION || 'latest';
 
 export const API_HOST =
   process.env.REACT_APP_API_HOST || 'http://localhost:3111';
