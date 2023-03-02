@@ -20,7 +20,6 @@ import {
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
 import './index.css';
 
-console.log(`${pkg.name}@${APP_VERSION}`);
 if (SENTRY_DSN) {
   Sentry.init({
     dsn: SENTRY_DSN,

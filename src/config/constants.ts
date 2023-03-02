@@ -8,7 +8,6 @@ import {
 import { ITEM_LAYOUT_MODES } from '../enums';
 
 export const APP_NAME = 'Graasp';
-export const PLATFORM_NAME = 'GraaspBuilder';
 
 export const ENV = {
   DEVELOPMENT: 'development',
