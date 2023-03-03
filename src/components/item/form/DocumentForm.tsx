@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
 import {
+  DocumentItemExtraFlavor,
   DocumentItemExtraProperties,
   DocumentItemType,
   ItemType,
@@ -40,48 +41,56 @@ export const DocumentExtraForm = ({
   placeholder?: string;
   saveButtonId?: string;
   showActions?: boolean;
-}): JSX.Element => (
-  <>
-    <Box sx={{ width: '100%' }}>
-      <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
-        <InputLabel shrink>Flavor</InputLabel>
-        <Select
-          variant="standard"
-          label="flavor"
-          value={extra.flavor}
-          onChange={(event) =>
-            onFlavorChange(
-              event.target.value === ''
-                ? undefined
-                : (event.target.value as DocumentItemExtraProperties['flavor']),
-            )
-          }
-        >
-          <MenuItem value="">None</MenuItem>
-          {['info', 'warning', 'error', 'success'].map((f) => (
-            <MenuItem key={f} value={f}>
-              {f}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
-    <Box sx={{ mt: 2 }}>
-      <DocumentItem
-        edit
-        id={documentItemId}
-        item={{ extra: buildDocumentExtra(extra) }}
-        maxHeight={maxHeight}
-        onCancel={onCancel}
-        onChange={onContentChange}
-        onSave={onContentSave}
-        placeholderText={placeholder}
-        saveButtonId={saveButtonId}
-        showActions={showActions}
-      />
-    </Box>
-  </>
-);
+}): JSX.Element => {
+  const { t } = useBuilderTranslation();
+  const flavorsTranslations = Object.values(DocumentItemExtraFlavor).map(
+    (f) => [f, t(BUILDER[`DOCUMENT_FLAVOR_${f.toUpperCase()}`])],
+  );
+
+  return (
+    <>
+      <Box sx={{ width: '100%' }}>
+        <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
+          <InputLabel shrink>Flavor</InputLabel>
+          <Select
+            variant="standard"
+            label="flavor"
+            value={extra.flavor}
+            onChange={(event) =>
+              onFlavorChange(
+                event.target.value === ''
+                  ? undefined
+                  : (event.target
+                      .value as DocumentItemExtraProperties['flavor']),
+              )
+            }
+          >
+            <MenuItem value="">None</MenuItem>
+            {flavorsTranslations.map(([f, name]) => (
+              <MenuItem key={f} value={f}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+      <Box sx={{ mt: 2 }}>
+        <DocumentItem
+          edit
+          id={documentItemId}
+          item={{ extra: buildDocumentExtra(extra) }}
+          maxHeight={maxHeight}
+          onCancel={onCancel}
+          onChange={onContentChange}
+          onSave={onContentSave}
+          placeholderText={placeholder}
+          saveButtonId={saveButtonId}
+          showActions={showActions}
+        />
+      </Box>
+    </>
+  );
+};
 
 type Props = {
   onChange: (item: Partial<DocumentItemType>) => void;

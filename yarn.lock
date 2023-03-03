@@ -2370,7 +2370,7 @@ __metadata:
 
 "@graasp/sdk@github:graasp/graasp-sdk#81-document-flavor":
   version: 0.4.1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=2fdaddd15d48014215192af280b47ddbcef51b3c"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=4db009347156d2efc5b43ed56d5a54c1446dca26"
   dependencies:
     "@fastify/secure-session": 5.3.0
     aws-sdk: 2.1310.0
@@ -2381,7 +2381,7 @@ __metadata:
     qs: 6.11.0
     slonik: 28.1.1
     uuid: 9.0.0
-  checksum: 59e99ba5933013d095d04540e76b46491f5a29c86a14ec9ae67bdae5bc44ad537b25dcd9746b848d5851de8be4a510373147ad0f107fa9be04b0770a9e1c16ba
+  checksum: 74462fbc8081aa3ae3fef06e930b18bd4ce56d138a01f917707f05d1f73111fe398aeb4b11b5d566b05e56c1558ea5fe66269a3723ea14f10f6619ad7d6fc1d3
   languageName: node
   linkType: hard
 
@@ -2419,21 +2419,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/translations@github:graasp/graasp-translations#116-document-styles":
+  version: 1.6.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=a9188a1e605f17cbaf44e011ec32bcf283390d3e"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 508a298c1b159fc79e99fce36d0543b955430bbb3582f1a92496c5491c5504d60f4b9f6b65e2fc6aca4a6caf3863437740532bfdcdfcfc5fae0391a2a4c9c2a3
+  languageName: node
+  linkType: hard
+
 "@graasp/translations@npm:1.4.0":
   version: 1.4.0
   resolution: "@graasp/translations@npm:1.4.0"
   dependencies:
     i18next: 21.8.1
   checksum: ca787604906c4531eded20941e968667a13f7c2fb5b4c2c03a149123ce6994ec685d1b5e125e37f420fa5d6b8edf4cbd0bb48452c554cde07d81bc0309b5dc1f
-  languageName: node
-  linkType: hard
-
-"@graasp/translations@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@graasp/translations@npm:1.5.0"
-  dependencies:
-    i18next: 21.8.1
-  checksum: e5e3e00b334cab2a71776c6a13dce0284239ed83fcc5622d5b31df791616c82ad4dda40a9a829bc5ed0d46457ecdf7d28ff0aa568d977ce7f66f7dab4c89580e
   languageName: node
   linkType: hard
 
@@ -9933,7 +9933,7 @@ __metadata:
     "@graasp/chatbox": 1.0.3
     "@graasp/query-client": 0.2.1
     "@graasp/sdk": "github:graasp/graasp-sdk#81-document-flavor"
-    "@graasp/translations": 1.5.0
+    "@graasp/translations": "github:graasp/graasp-translations#116-document-styles"
     "@graasp/ui": "github:graasp/graasp-ui#240-document-flavor"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0

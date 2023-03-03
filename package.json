@@ -15,7 +15,7 @@
     "@graasp/chatbox": "1.0.3",
     "@graasp/query-client": "0.2.1",
     "@graasp/sdk": "github:graasp/graasp-sdk#81-document-flavor",
-    "@graasp/translations": "1.5.0",
+    "@graasp/translations": "github:graasp/graasp-translations#116-document-styles",
     "@graasp/ui": "github:graasp/graasp-ui#240-document-flavor",
     "@mui/icons-material": "5.11.0",
     "@mui/lab": "5.0.0-alpha.117",
