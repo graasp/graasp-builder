@@ -30,7 +30,6 @@ describe('View Invitations', () => {
           'be.disabled',
         );
       }
-
       cy.get(
         `${buildInvitationTableRowSelector(
           id,
@@ -43,8 +42,6 @@ describe('View Invitations', () => {
         )} .${ITEM_RESEND_INVITATION_BUTTON_CLASS}`,
       ).should('exist');
     });
-
-    // todo: check permission
   });
 });
 
