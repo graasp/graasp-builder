@@ -17,7 +17,6 @@ import {
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 import EditItemCaptionButton from '../../common/EditItemCaptionButton';
 import ItemMetadataButton from '../../common/ItemMetadataButton';
-import PlayerViewButton from '../../common/PlayerViewButton';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
@@ -76,7 +75,6 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
             id={ITEM_CHATBOX_BUTTON_ID}
             onClick={onClickChatbox}
           />
-          <PlayerViewButton itemId={id} />
           {canAdmin && <PublishButton itemId={id} />}
           {canEdit && <AnalyticsDashboardButton id={id} />}
         </>

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/graasp/graasp-builder/compare/v0.6.1...v0.7.0) (2023-02-24)
+
+
+### Features
+
+* add admin chat settings (export and clear) ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* move types to `@graasp/sdk` and export chat ([#440](https://github.com/graasp/graasp-builder/issues/440)) ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **ui:** change `Share` icon and improve layout of item header actions ([#566](https://github.com/graasp/graasp-builder/issues/566)) ([5238321](https://github.com/graasp/graasp-builder/commit/523832141f4a9ebb974320e234b694370775210d))
+
+
+### Bug Fixes
+
+* add scrollable tabs to new item modal ([#565](https://github.com/graasp/graasp-builder/issues/565)) ([12e3a2f](https://github.com/graasp/graasp-builder/commit/12e3a2f17c3beea59a705b2a6e77401ff91a0de8))
+* move a lot of files to TS ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* possible null item in editItemModalContext ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **test:** add item-memberships public stub ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **test:** remove waits ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **test:** signed out user should not be able to open publish settings ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* use enums from sdk ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* use ItemRecord as the default type for items inside the app ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* use sdk types instead of query-client ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+
 ## [0.6.1](https://github.com/graasp/graasp-builder/compare/v0.6.0...v0.6.1) (2023-02-17)
 
 
