@@ -8,21 +8,22 @@ import Tooltip from '@mui/material/Tooltip';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
+import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
-import { ButtonType, HIDDEN_ITEM_TAG_ID } from '../../config/constants';
+import { HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
   item: Item;
-  type?: ButtonType;
+  type?: ActionButtonVariant;
   onClick?: () => void;
 };
 
 const HideButton = ({
   item,
-  type = ButtonType.ICON_BUTTON,
+  type = ActionButton.ICON_BUTTON,
   onClick,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -69,7 +70,7 @@ const HideButton = ({
   const icon = hiddenTag ? <VisibilityOff /> : <Visibility />;
 
   switch (type) {
-    case ButtonType.MENU_ITEM: {
+    case ActionButton.MENU_ITEM: {
       const menuItem = (
         <MenuItem
           key={text}
@@ -92,7 +93,7 @@ const HideButton = ({
         </Tooltip>
       );
     }
-    case ButtonType.ICON_BUTTON:
+    case ActionButton.ICON_BUTTON:
     default:
       return (
         <Tooltip title={tooltip}>

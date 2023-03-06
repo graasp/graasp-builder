@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
-import { PinButton as GraaspPinButton } from '@graasp/ui';
+import { ActionButtonVariant, PinButton as GraaspPinButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
-  type?: string;
+  type?: ActionButtonVariant;
   item: Item;
   onClick?: () => void;
 };

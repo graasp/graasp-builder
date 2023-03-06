@@ -3,9 +3,12 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import { FC, useContext } from 'react';
 
 import { BUILDER } from '@graasp/translations';
-import { MoveButton as GraaspMoveButton } from '@graasp/ui';
+import {
+  ActionButton,
+  ActionButtonVariant,
+  MoveButton as GraaspMoveButton,
+} from '@graasp/ui';
 
-import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
@@ -17,7 +20,7 @@ type MoveButtonProps = {
   itemIds: string[];
   color?: IconButtonProps['color'];
   id?: string;
-  type?: ButtonType;
+  type?: ActionButtonVariant;
   onClick?: () => void;
 };
 
@@ -25,7 +28,7 @@ const MoveButton: FC<MoveButtonProps> = ({
   itemIds,
   color = 'default',
   id,
-  type = ButtonType.ICON_BUTTON,
+  type = ActionButton.ICON_BUTTON,
   onClick,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();

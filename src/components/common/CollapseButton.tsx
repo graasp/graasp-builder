@@ -10,21 +10,21 @@ import { useEffect, useState } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
+import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
-import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
   item: Item;
-  type?: ButtonType;
+  type?: ActionButtonVariant;
   onClick?: () => void;
 };
 
 const CollapseButton = ({
   item,
-  type = ButtonType.ICON_BUTTON,
+  type = ActionButton.ICON_BUTTON,
   onClick,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -57,7 +57,7 @@ const CollapseButton = ({
     : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
 
   switch (type) {
-    case ButtonType.MENU_ITEM:
+    case ActionButton.MENU_ITEM:
       return (
         <MenuItem
           key={text}
@@ -68,7 +68,7 @@ const CollapseButton = ({
           {text}
         </MenuItem>
       );
-    case ButtonType.ICON_BUTTON:
+    case ActionButton.ICON_BUTTON:
     default:
       return (
         <Tooltip title={text}>
