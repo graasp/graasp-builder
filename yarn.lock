@@ -2349,9 +2349,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:0.2.1":
-  version: 0.2.1
-  resolution: "@graasp/query-client@npm:0.2.1"
+"@graasp/query-client@npm:0.3.0":
+  version: 0.3.0
+  resolution: "@graasp/query-client@npm:0.3.0"
   dependencies:
     "@graasp/sdk": 0.4.1
     "@graasp/translations": 1.4.0
@@ -2364,7 +2364,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 63337026c3fe71d9a772cc5a9f2144fc523fa1682db29bb3718fb096e1a8dd9945ae32eef900a129baa32979ca5c89d9457956bf95552d06977e4f1ecd0505a2
+  checksum: 6d52a706f7b6418e4c67d4ca0835107c27b113d54fe090503694d6908f6ee1d48dd25fc00eac3d6d4436f14aa30f460ea1e9e300fd0e0a68398214bbaca00eef
   languageName: node
   linkType: hard
 
@@ -2402,6 +2402,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/sdk@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@graasp/sdk@npm:0.6.0"
+  dependencies:
+    "@fastify/secure-session": 5.3.0
+    aws-sdk: 2.1310.0
+    fastify: 3.29.5
+    fluent-json-schema: 3.1.0
+    immutable: 4.2.4
+    js-cookie: 3.0.1
+    qs: 6.11.0
+    slonik: 28.1.1
+    uuid: 9.0.0
+  checksum: 450ec10d93b2139ea21728b6ce633e6947092707b1caa66055a0a251607b0c2b28ed03d3c9baa1864e930a460289927209256aef7509e7b8ff4973d17703a2ba
+  languageName: node
+  linkType: hard
+
 "@graasp/translations@npm:1.4.0":
   version: 1.4.0
   resolution: "@graasp/translations@npm:1.4.0"
@@ -2411,12 +2428,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@graasp/translations@npm:1.5.0"
+"@graasp/translations@npm:1.7.0":
+  version: 1.7.0
+  resolution: "@graasp/translations@npm:1.7.0"
   dependencies:
     i18next: 21.8.1
-  checksum: e5e3e00b334cab2a71776c6a13dce0284239ed83fcc5622d5b31df791616c82ad4dda40a9a829bc5ed0d46457ecdf7d28ff0aa568d977ce7f66f7dab4c89580e
+  checksum: fa4b2e3b6ea86d42c1c3fb928762b708dc0fc7bcb960654eff6e810b9fd97baecdee54cb43564ae47650e20878833035ac52564ca2e4f9ee8745322bc952d49c
   languageName: node
   linkType: hard
 
@@ -2459,11 +2476,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:0.13.0":
-  version: 0.13.0
-  resolution: "@graasp/ui@npm:0.13.0"
+"@graasp/ui@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@graasp/ui@npm:2.0.0"
   dependencies:
-    "@graasp/sdk": 0.4.1
+    "@graasp/sdk": 0.6.0
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.2.4
@@ -2494,7 +2511,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 2188c3b23c3c9751e0255c355671abaad5ac4801c92e29798e6b517dda65b47ad0be5467a3abf646a1c6b1624aa2bc10e9895306dbc131912493732b8c39ad14
+  checksum: 0bfd67465c0b572732329e8d4b493f5113d8dfb4a5a51ec5a5b541f11f8425b2dd38032c5f54eccf798f400998a9effb8ed5a0526c2dd0fc6a6d31e26c87a42c
   languageName: node
   linkType: hard
 
@@ -9038,7 +9055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify@npm:3.29.5, fastify@npm:^3.29.1":
+"fastify@npm:3.29.5":
   version: 3.29.5
   resolution: "fastify@npm:3.29.5"
   dependencies:
@@ -9059,6 +9076,29 @@ __metadata:
     semver: ^7.3.2
     tiny-lru: ^8.0.1
   checksum: 6f97e67c25c509c584529aad2ffe0d4bf8943a860f09d847bf34a4736586cf73f5748bde154e0199c022b97ff76aba35c3094006e62b07100ab10c63205541e3
+  languageName: node
+  linkType: hard
+
+"fastify@npm:^3.29.1":
+  version: 3.29.3
+  resolution: "fastify@npm:3.29.3"
+  dependencies:
+    "@fastify/ajv-compiler": ^1.0.0
+    "@fastify/error": ^2.0.0
+    abstract-logging: ^2.0.0
+    avvio: ^7.1.2
+    fast-json-stringify: ^2.5.2
+    find-my-way: ^4.5.0
+    flatstr: ^1.0.12
+    light-my-request: ^4.2.0
+    pino: ^6.13.0
+    process-warning: ^1.0.0
+    proxy-addr: ^2.0.7
+    rfdc: ^1.1.4
+    secure-json-parse: ^2.0.0
+    semver: ^7.3.2
+    tiny-lru: ^8.0.1
+  checksum: a3edd89ff5dd0efae43989f18a6ab2270b9b8fc11c6fc7cca6e8cfe3647dc4b0bb5b20104fe2c8468efbaad57af03113e4c592fafae8c619b8edc9a9e1ae98f4
   languageName: node
   linkType: hard
 
@@ -9891,10 +9931,10 @@ __metadata:
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graasp/chatbox": 1.0.3
-    "@graasp/query-client": 0.2.1
-    "@graasp/sdk": 0.4.1
-    "@graasp/translations": 1.5.0
-    "@graasp/ui": 0.13.0
+    "@graasp/query-client": 0.3.0
+    "@graasp/sdk": 0.6.0
+    "@graasp/translations": 1.7.0
+    "@graasp/ui": 2.0.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117

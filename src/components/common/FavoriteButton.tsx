@@ -5,7 +5,10 @@ import { FC } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
-import { FavoriteButton as GraaspFavoriteButton } from '@graasp/ui';
+import {
+  ActionButtonVariant,
+  FavoriteButton as GraaspFavoriteButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
@@ -14,7 +17,7 @@ import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
   item: ItemRecord;
-  type?: string;
+  type?: ActionButtonVariant;
   onClick?: () => void;
   size?: IconButtonProps['size'];
 };

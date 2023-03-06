@@ -3,7 +3,10 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import { FC, useState } from 'react';
 
 import { BUILDER } from '@graasp/translations';
-import { DeleteButton as GraaspDeleteButton } from '@graasp/ui';
+import {
+  ActionButtonVariant,
+  DeleteButton as GraaspDeleteButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
@@ -13,7 +16,7 @@ type Props = {
   itemIds: string[];
   color?: IconButtonProps['color'];
   id?: string;
-  type?: string;
+  type?: ActionButtonVariant;
   onClick?: () => void;
 };
 

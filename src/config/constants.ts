@@ -231,11 +231,6 @@ export const HOST_MAP = {
   [Context.EXPLORER]: '',
 };
 
-export enum ButtonType {
-  MENU_ITEM = 'menuItem',
-  ICON_BUTTON = 'iconButton',
-}
-
 export const MEMBERSHIP_TABLE_HEIGHT = 400;
 export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
 
