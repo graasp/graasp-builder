@@ -2349,9 +2349,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:0.2.1":
-  version: 0.2.1
-  resolution: "@graasp/query-client@npm:0.2.1"
+"@graasp/query-client@npm:0.3.0":
+  version: 0.3.0
+  resolution: "@graasp/query-client@npm:0.3.0"
   dependencies:
     "@graasp/sdk": 0.4.1
     "@graasp/translations": 1.4.0
@@ -2364,24 +2364,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 63337026c3fe71d9a772cc5a9f2144fc523fa1682db29bb3718fb096e1a8dd9945ae32eef900a129baa32979ca5c89d9457956bf95552d06977e4f1ecd0505a2
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@github:graasp/graasp-sdk#81-document-flavor":
-  version: 0.4.1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=4db009347156d2efc5b43ed56d5a54c1446dca26"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 9.0.0
-  checksum: 74462fbc8081aa3ae3fef06e930b18bd4ce56d138a01f917707f05d1f73111fe398aeb4b11b5d566b05e56c1558ea5fe66269a3723ea14f10f6619ad7d6fc1d3
+  checksum: 6d52a706f7b6418e4c67d4ca0835107c27b113d54fe090503694d6908f6ee1d48dd25fc00eac3d6d4436f14aa30f460ea1e9e300fd0e0a68398214bbaca00eef
   languageName: node
   linkType: hard
 
@@ -2419,12 +2402,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations#116-document-styles":
-  version: 1.6.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=a9188a1e605f17cbaf44e011ec32bcf283390d3e"
+"@graasp/sdk@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@graasp/sdk@npm:0.6.0"
   dependencies:
-    i18next: 21.8.1
-  checksum: 508a298c1b159fc79e99fce36d0543b955430bbb3582f1a92496c5491c5504d60f4b9f6b65e2fc6aca4a6caf3863437740532bfdcdfcfc5fae0391a2a4c9c2a3
+    "@fastify/secure-session": 5.3.0
+    aws-sdk: 2.1310.0
+    fastify: 3.29.5
+    fluent-json-schema: 3.1.0
+    immutable: 4.2.4
+    js-cookie: 3.0.1
+    qs: 6.11.0
+    slonik: 28.1.1
+    uuid: 9.0.0
+  checksum: 450ec10d93b2139ea21728b6ce633e6947092707b1caa66055a0a251607b0c2b28ed03d3c9baa1864e930a460289927209256aef7509e7b8ff4973d17703a2ba
   languageName: node
   linkType: hard
 
@@ -2437,42 +2428,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#240-document-flavor":
-  version: 0.11.2
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=79c12b980ec34fb89f3092d868efabe6a75f9823"
+"@graasp/translations@npm:1.7.0":
+  version: 1.7.0
+  resolution: "@graasp/translations@npm:1.7.0"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk#81-document-flavor"
-    clsx: 1.1.1
-    http-status-codes: 2.2.0
-    immutable: 4.2.4
-    katex: 0.16.0
-    lodash.truncate: 4.4.2
-    qs: 6.11.0
-    quill-emoji: 0.2.0
-    react-cookie-consent: 7.4.1
-    react-i18next: 11.17.0
-    react-quill: 2.0.0-beta.4
-    react-rnd: 10.3.7
-    react-text-mask: 5.4.3
-    uuid: 9.0.0
-  peerDependencies:
-    "@emotion/react": ~11.10.6
-    "@emotion/styled": ~11.10.6
-    "@mui/icons-material": ~5.11.9
-    "@mui/lab": ~5.0.0-alpha.120
-    "@mui/material": ~5.11.9
-    ag-grid-community: 28.1.1
-    ag-grid-react: 28.1.1
-    i18next: ~21.8.9
-    react: 17.0.2
-    react-dom: 17.0.2
-    react-router-dom: 6.2.2
-  peerDependenciesMeta:
-    ag-grid-community:
-      optional: true
-    ag-grid-react:
-      optional: true
-  checksum: f5f6ae4ac98ae749d9241773aae54656dca620667b16c93aa26e96407b17573cd7700ae64473ae8fe2790d647146b7c25d6fc33f96867c27f7f3cc76509e54c8
+    i18next: 21.8.1
+  checksum: fa4b2e3b6ea86d42c1c3fb928762b708dc0fc7bcb960654eff6e810b9fd97baecdee54cb43564ae47650e20878833035ac52564ca2e4f9ee8745322bc952d49c
   languageName: node
   linkType: hard
 
@@ -2512,6 +2473,45 @@ __metadata:
     ag-grid-react:
       optional: true
   checksum: 922cf6a9de9402178b906eda12081eb571feaecc240e621fceed3f0937b82c052c8a2700a414488f99d6da39deb7ba02b4f23343124ea4df01b55717ba17d51e
+  languageName: node
+  linkType: hard
+
+"@graasp/ui@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@graasp/ui@npm:1.0.0"
+  dependencies:
+    "@graasp/sdk": 0.6.0
+    clsx: 1.1.1
+    http-status-codes: 2.2.0
+    immutable: 4.2.4
+    katex: 0.16.0
+    lodash.truncate: 4.4.2
+    qs: 6.11.0
+    quill-emoji: 0.2.0
+    react-cookie-consent: 7.4.1
+    react-i18next: 11.17.0
+    react-quill: 2.0.0-beta.4
+    react-rnd: 10.3.7
+    react-text-mask: 5.4.3
+    uuid: 9.0.0
+  peerDependencies:
+    "@emotion/react": ~11.10.6
+    "@emotion/styled": ~11.10.6
+    "@mui/icons-material": ~5.11.9
+    "@mui/lab": ~5.0.0-alpha.120
+    "@mui/material": ~5.11.9
+    ag-grid-community: 28.1.1
+    ag-grid-react: 28.1.1
+    i18next: ~21.8.9
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-router-dom: 6.2.2
+  peerDependenciesMeta:
+    ag-grid-community:
+      optional: true
+    ag-grid-react:
+      optional: true
+  checksum: 717c6ce2c03abd338fc13a7e98c85117b520aeff716824940bf63cf1902e608b9910f4c30b6be061e440c113ea0e7f4772c9ac94ee4bd665cec0828ef4b4f9fe
   languageName: node
   linkType: hard
 
@@ -9931,10 +9931,10 @@ __metadata:
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graasp/chatbox": 1.0.3
-    "@graasp/query-client": 0.2.1
-    "@graasp/sdk": "github:graasp/graasp-sdk#81-document-flavor"
-    "@graasp/translations": "github:graasp/graasp-translations#116-document-styles"
-    "@graasp/ui": "github:graasp/graasp-ui#240-document-flavor"
+    "@graasp/query-client": 0.3.0
+    "@graasp/sdk": 0.6.0
+    "@graasp/translations": 1.7.0
+    "@graasp/ui": 1.0.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117
