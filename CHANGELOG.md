@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/graasp/graasp-builder/compare/v0.7.0...v0.8.0) (2023-03-06)
+
+
+### Features
+
+* add document styles ([#562](https://github.com/graasp/graasp-builder/issues/562)) ([747f95c](https://github.com/graasp/graasp-builder/commit/747f95cee59424d354929cb695c1aa5dacc1297b))
+
+
+### Bug Fixes
+
+* **ci:** sentry version uses `REACT_APP_VERSION` ([#581](https://github.com/graasp/graasp-builder/issues/581)) ([6dea58c](https://github.com/graasp/graasp-builder/commit/6dea58cb7e6db3f9b0c347dc1da0dacda802354e))
+* **quill:** save empty string when content is empty ([#578](https://github.com/graasp/graasp-builder/issues/578)) ([c62de5d](https://github.com/graasp/graasp-builder/commit/c62de5d98b4a8d0b5148185ef3f947bdddc80186))
+* remove player button from item header actions ([#575](https://github.com/graasp/graasp-builder/issues/575)) ([c7ec487](https://github.com/graasp/graasp-builder/commit/c7ec4873ec5937dca6c76db1f6c20368c06197ad))
+
 ## [0.7.0](https://github.com/graasp/graasp-builder/compare/v0.6.1...v0.7.0) (2023-02-24)
 
 
