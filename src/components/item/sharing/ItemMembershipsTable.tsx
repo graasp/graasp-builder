@@ -64,6 +64,7 @@ type Props = {
   memberships: ItemMembership[];
   emptyMessage?: string;
   showEmail?: boolean;
+  readOnly?: boolean;
 };
 
 const ItemMembershipsTable = ({
@@ -71,6 +72,7 @@ const ItemMembershipsTable = ({
   item,
   emptyMessage,
   showEmail = true,
+  readOnly = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: users, isLoading } = hooks.useMembers(
@@ -124,6 +126,7 @@ const ItemMembershipsTable = ({
           permission: value,
         });
       },
+      readOnly,
     });
     const NameCellRenderer = NameRenderer(users);
 
@@ -131,8 +134,8 @@ const ItemMembershipsTable = ({
     if (showEmail) {
       const EmailCellRenderer = EmailRenderer(users);
       columns.push({
-        headerCheckboxSelection: true,
-        checkboxSelection: true,
+        headerCheckboxSelection: !readOnly,
+        checkboxSelection: !readOnly,
         headerName: translateBuilder(
           BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER,
         ),
@@ -166,17 +169,22 @@ const ItemMembershipsTable = ({
         type: 'rightAligned',
         field: 'permission',
         flex: 1,
-        cellStyle: {
-          overflow: 'visible',
-          textAlign: 'right',
-        },
+        cellStyle: readOnly
+          ? {
+              display: 'flex',
+              justifyContent: 'right',
+            }
+          : {
+              overflow: 'visible',
+              textAlign: 'right',
+            },
       },
       {
-        field: 'actions',
-        cellRenderer: ActionRenderer,
-        headerName: translateBuilder(
-          BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER,
-        ),
+        field: readOnly ? null : 'actions',
+        cellRenderer: readOnly ? null : ActionRenderer,
+        headerName: readOnly
+          ? null
+          : translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
@@ -189,7 +197,7 @@ const ItemMembershipsTable = ({
       },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, users, showEmail]);
+  }, [item, users, showEmail, readOnly]);
 
   if (isLoading) {
     return <Loader />;

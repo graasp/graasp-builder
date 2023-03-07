@@ -72,3 +72,49 @@ export const ITEMS_WITH_INVITATIONS = {
   ],
   members: [MEMBERS.FANNY, MEMBERS.ANNA, MEMBERS.EVAN],
 };
+
+export const ITEM_WITH_INVITATIONS_WRITE_ACCESS = {
+  items: [
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+      name: 'own_item_name1',
+      creator: MEMBERS.BOB.id,
+      path: 'bcafbd2a_5688_11eb_ae93_0242ac130002.ecafbd2a_5688_11eb_ae93_0242ac130002',
+      extra: {
+        image: 'someimageurl',
+      },
+      // for tests only
+      memberships: [
+        {
+          id: 'ecafbd2a-5688-11eb-be93-0242ac130002',
+          itemPath: 'bcafbd2a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.WRITE,
+          memberId: MEMBERS.ANNA.id,
+        },
+        {
+          id: 'ecafbd2a-5688-11eb-be93-0242ac130004',
+          itemPath: 'bcafbd2a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.ADMIN,
+          email: MEMBERS.BOB.email,
+        },
+      ],
+      invitations: [
+        {
+          id: 'ecafbd2a-5688-11eb-be92-0242ac130005',
+          itemPath: 'bcafbd2a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.WRITE,
+          email: MEMBERS.CEDRIC.email,
+        },
+        {
+          id: 'ecafbd1a-5688-11eb-be93-0242ac130006',
+          itemPath:
+            'bcafbd2a_5688_11eb_ae93_0242ac130002.ecafbd2a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.READ,
+          email: MEMBERS.DAVID.email,
+        },
+      ],
+    },
+  ],
+  members: [MEMBERS.ANNA, MEMBERS.BOB],
+};

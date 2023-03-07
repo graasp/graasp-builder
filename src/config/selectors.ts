@@ -240,6 +240,7 @@ export const buildInvitationTableRowId = (id: string): string =>
   `invitationTableRow-${id}`;
 export const buildInvitationTableRowSelector = (id: string): string =>
   `[row-id="${buildInvitationTableRowId(id)}"]`;
+export const ITEM_RESEND_INVITATION_BUTTON_CLASS = 'itemResendInvitationButton';
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
 export const NAVIGATION_ROOT_ID = 'navigationRoot';
 export const HEADER_MEMBER_MENU_BUTTON_ID = 'headerMemberMenuButton';
