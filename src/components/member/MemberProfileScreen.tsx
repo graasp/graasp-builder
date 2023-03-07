@@ -1,15 +1,28 @@
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { Box, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Grid,
+  IconButton,
+  Switch,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 
+import { MUTATION_KEYS } from '@graasp/query-client';
 import { ACCOUNT, COMMON } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
-import { DEFAULT_EMAIL_FREQUENCY, DEFAULT_LANG } from '../../config/constants';
+import {
+  DEFAULT_EMAIL_FREQUENCY,
+  DEFAULT_LANG,
+  DEFAULT_MEMBER_PROFILE_SAVE_ACTIONS_SETTING,
+} from '../../config/constants';
 import i18n, {
   useAccountTranslation,
   useCommonTranslation,
 } from '../../config/i18n';
 import notifier from '../../config/notifier';
+import { useMutation } from '../../config/queryClient';
 import {
   MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
   MEMBER_PROFILE_EMAIL_ID,
@@ -18,6 +31,7 @@ import {
   MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID,
   MEMBER_PROFILE_MEMBER_ID_ID,
   MEMBER_PROFILE_MEMBER_NAME_ID,
+  MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID,
 } from '../../config/selectors';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import { copyToClipboard } from '../../utils/clipboard';
@@ -34,6 +48,11 @@ const MemberProfileScreen = (): JSX.Element => {
   const { t } = useAccountTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { data: member, isLoading } = useCurrentUserContext();
+  const { mutate: editMember } = useMutation<
+    any,
+    any,
+    { id: string; extra: { enableSaveActions: boolean } }
+  >(MUTATION_KEYS.EDIT_MEMBER);
 
   if (isLoading) {
     return <Loader />;
@@ -46,6 +65,15 @@ const MemberProfileScreen = (): JSX.Element => {
       },
       onError: () => {
         notifier({ type: COPY_MEMBER_ID_TO_CLIPBOARD.FAILURE, payload: {} });
+      },
+    });
+  };
+
+  const handleOnToggle = (event: { target: { checked: boolean } }): void => {
+    editMember({
+      id: member.id,
+      extra: {
+        enableSaveActions: event.target.checked,
       },
     });
   };
@@ -125,6 +153,27 @@ const MemberProfileScreen = (): JSX.Element => {
                     DEFAULT_EMAIL_FREQUENCY
                   }
                 />
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center">
+              <Grid item xs={4}>
+                <Typography>{t(ACCOUNT.PROFILE_SAVE_ACTIONS_TITLE)}</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Tooltip title="Coming soon!">
+                  <span>
+                    <Switch
+                      id={MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID}
+                      onChange={handleOnToggle}
+                      checked={
+                        member.extra?.enableSaveActions ||
+                        DEFAULT_MEMBER_PROFILE_SAVE_ACTIONS_SETTING
+                      }
+                      color="primary"
+                      disabled
+                    />
+                  </span>
+                </Tooltip>
               </Grid>
             </Grid>
           </Grid>

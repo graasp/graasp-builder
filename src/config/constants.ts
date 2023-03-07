@@ -82,6 +82,9 @@ export const DEFAULT_SHOW_CHATBOX_SETTING = false;
 export const DEFAULT_PINNED_SETTING = false;
 export const DEFAULT_COLLAPSIBLE_SETTING = false;
 export const DEFAULT_RESIZE_SETTING = false;
+export const DEFAULT_SAVE_ACTIONS_SETTING = true;
+
+export const DEFAULT_MEMBER_PROFILE_SAVE_ACTIONS_SETTING = true;
 
 export const DEFAULT_PERMISSION_LEVEL = PermissionLevel.Read;
 
