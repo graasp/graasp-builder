@@ -177,7 +177,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
 
   const renderSaveActionsSetting = () => {
     const control = (
-      <Tooltip title="Coming soon!">
+      <Tooltip title={translateBuilder(BUILDER.SAVE_ACTIONS_TOGGLE_TOOLTIP)}>
         <span>
           <Switch
             id={SETTINGS_SAVE_ACTIONS_TOGGLE_ID}

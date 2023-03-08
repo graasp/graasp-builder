@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ACCOUNT, COMMON } from '@graasp/translations';
+import { ACCOUNT, BUILDER, COMMON } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import {
@@ -19,6 +19,7 @@ import {
 } from '../../config/constants';
 import i18n, {
   useAccountTranslation,
+  useBuilderTranslation,
   useCommonTranslation,
 } from '../../config/i18n';
 import notifier from '../../config/notifier';
@@ -47,6 +48,7 @@ import PasswordSetting from './PasswordSetting';
 const MemberProfileScreen = (): JSX.Element => {
   const { t } = useAccountTranslation();
   const { t: translateCommon } = useCommonTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { data: member, isLoading } = useCurrentUserContext();
   const { mutate: editMember } = useMutation<
     any,
@@ -160,7 +162,9 @@ const MemberProfileScreen = (): JSX.Element => {
                 <Typography>{t(ACCOUNT.PROFILE_SAVE_ACTIONS_TITLE)}</Typography>
               </Grid>
               <Grid item xs={8}>
-                <Tooltip title="Coming soon!">
+                <Tooltip
+                  title={translateBuilder(BUILDER.SAVE_ACTIONS_TOGGLE_TOOLTIP)}
+                >
                   <span>
                     <Switch
                       id={MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID}
