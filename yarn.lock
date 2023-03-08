@@ -2409,6 +2409,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/sdk@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@graasp/sdk@npm:0.6.0"
+  dependencies:
+    "@fastify/secure-session": 5.3.0
+    aws-sdk: 2.1310.0
+    fastify: 3.29.5
+    fluent-json-schema: 3.1.0
+    immutable: 4.2.4
+    js-cookie: 3.0.1
+    qs: 6.11.0
+    slonik: 28.1.1
+    uuid: 9.0.0
+  checksum: 450ec10d93b2139ea21728b6ce633e6947092707b1caa66055a0a251607b0c2b28ed03d3c9baa1864e930a460289927209256aef7509e7b8ff4973d17703a2ba
+  languageName: node
+  linkType: hard
+
 "@graasp/sdk@npm:0.7.0":
   version: 0.7.0
   resolution: "@graasp/sdk@npm:0.7.0"
