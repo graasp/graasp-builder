@@ -1,5 +1,6 @@
+import { ItemType, MimeTypes } from '@graasp/sdk';
+
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
-import { ITEM_TYPES, MIME_TYPES } from './enums';
 import { MOCK_IMAGE_URL, MOCK_PDF_URL, MOCK_VIDEO_URL } from './fileLinks';
 import { CURRENT_USER } from './members';
 
@@ -11,7 +12,7 @@ export const IMAGE_ITEM_DEFAULT = {
   id: 'bd5519a2-5ba9-4305-b221-185facbe6a99',
   name: 'icon.png',
   description: 'a default image description',
-  type: ITEM_TYPES.FILE,
+  type: ItemType.LOCAL_FILE,
   path: 'bd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
@@ -32,7 +33,7 @@ export const VIDEO_ITEM_DEFAULT = {
   id: 'qd5519a2-5ba9-4305-b221-185facbe6a99',
   name: 'video.mp4',
   description: 'a default video description',
-  type: ITEM_TYPES.FILE,
+  type: ItemType.LOCAL_FILE,
   path: 'qd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
@@ -42,7 +43,7 @@ export const VIDEO_ITEM_DEFAULT = {
     path: '9a95/e2e1/2a7b-1615910428274',
     size: 52345,
     encoding: '7bit',
-    mimetype: MIME_TYPES.VIDEO[0],
+    mimetype: MimeTypes.Video.MP4,
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: VIDEO_FILEPATH,
@@ -53,7 +54,7 @@ export const PDF_ITEM_DEFAULT = {
   id: 'cd5519a2-5ba9-4305-b221-185facbe6a99',
   name: 'doc.pdf',
   description: 'a default pdf description',
-  type: ITEM_TYPES.FILE,
+  type: ItemType.LOCAL_FILE,
   path: 'cd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
@@ -63,7 +64,7 @@ export const PDF_ITEM_DEFAULT = {
     path: '9a95/e2e1/2a7b-1615910428274',
     size: 54321,
     encoding: '7bit',
-    mimetype: MIME_TYPES.PDF[0],
+    mimetype: MimeTypes.PDF,
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -71,7 +72,7 @@ export const PDF_ITEM_DEFAULT = {
 };
 
 export const ZIP_DEFAULT = {
-  type: ITEM_TYPES.ZIP,
+  type: ItemType.ZIP,
   filepath: 'files/graasp.zip',
 };
 
@@ -79,7 +80,7 @@ export const IMAGE_ITEM_S3 = {
   id: 'ad5519a2-5ba9-4305-b221-185facbe6a99',
   name: 'icon.png',
   description: 'a default image description',
-  type: ITEM_TYPES.S3_FILE,
+  type: ItemType.S3_FILE,
   path: 'ad5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
@@ -98,7 +99,7 @@ export const VIDEO_ITEM_S3 = {
   id: 'qd5519a2-5ba9-4305-b221-185facbe6a93',
   name: 'video.mp4',
   description: 'a default video description',
-  type: ITEM_TYPES.S3_FILE,
+  type: ItemType.S3_FILE,
   path: 'qd5519a2_5ba9_4305_b221_185facbe6a93',
   creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
@@ -106,7 +107,7 @@ export const VIDEO_ITEM_S3 = {
   extra: buildS3FileExtra({
     path: MOCK_VIDEO_URL, // for testing
     size: 52345,
-    mimetype: MIME_TYPES.VIDEO[0],
+    mimetype: MimeTypes.Video.MP4,
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: VIDEO_FILEPATH,
@@ -117,7 +118,7 @@ export const PDF_ITEM_S3 = {
   id: 'bd5519a2-5ba9-4305-b221-185facbe6a99',
   name: 'doc.pdf',
   description: 'a default pdf description',
-  type: ITEM_TYPES.S3_FILE,
+  type: ItemType.S3_FILE,
   path: 'bd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER.id,
   createdAt: '2021-03-16T16:00:50.968Z',
@@ -125,7 +126,7 @@ export const PDF_ITEM_S3 = {
   extra: buildS3FileExtra({
     path: MOCK_PDF_URL, // for testing
     size: 54321,
-    mimetype: MIME_TYPES.PDF[0],
+    mimetype: MimeTypes.PDF,
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,

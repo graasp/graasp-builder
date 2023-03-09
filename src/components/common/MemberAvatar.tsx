@@ -1,9 +1,10 @@
 import { FC } from 'react';
 
+import { ThumbnailSize } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Avatar } from '@graasp/ui';
 
-import { AVATAR_ICON_HEIGHT, THUMBNAIL_SIZES } from '../../config/constants';
+import { AVATAR_ICON_HEIGHT } from '../../config/constants';
 import { useCommonTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { buildMemberAvatarClass } from '../../config/selectors';
@@ -21,7 +22,7 @@ const MemberAvatar: FC<Props> = ({ id }) => {
     isFetching: isFetchingAvatar,
   } = hooks.useAvatar({
     id,
-    size: THUMBNAIL_SIZES.SMALL,
+    size: ThumbnailSize.Small,
   });
 
   return (

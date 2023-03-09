@@ -60,12 +60,6 @@ export const DOUBLE_CLICK_DELAY_MS = 500;
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
 
-export const MIME_TYPES = {
-  IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
-  VIDEO: ['video/mp4'],
-  AUDIO: ['audio/mpeg', 'audio/mp3'],
-  PDF: ['application/pdf'],
-};
 export const DRAWER_WIDTH = 240;
 export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_LANG = 'en';
@@ -246,10 +240,6 @@ export const DISPLAY_CO_EDITORS_OPTIONS = {
     value: false,
     label: 'No',
   },
-};
-
-export const THUMBNAIL_SIZES = {
-  SMALL: 'small',
 };
 
 export const ITEM_HEADER_ICON_HEIGHT = 24;

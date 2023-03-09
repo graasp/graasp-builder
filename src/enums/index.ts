@@ -1,5 +1,4 @@
 import ChatStatus from './chatbox';
-import MIME_TYPES from './mimeTypes';
 import Ordering from './orderingTypes';
 
 enum TreePreventSelection {
@@ -26,7 +25,6 @@ enum ButtonVariants {
 
 export {
   ITEM_LAYOUT_MODES,
-  MIME_TYPES,
   Ordering,
   ItemActionTabs,
   TreePreventSelection,
