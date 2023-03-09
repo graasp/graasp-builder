@@ -170,7 +170,7 @@ const MemberProfileScreen = (): JSX.Element => {
                       id={MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID}
                       onChange={handleOnToggle}
                       checked={
-                        member.extra?.enableSaveActions ||
+                        member.extra?.enableSaveActions ??
                         DEFAULT_MEMBER_PROFILE_SAVE_ACTIONS_SETTING
                       }
                       color="primary"

@@ -183,7 +183,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
             id={SETTINGS_SAVE_ACTIONS_TOGGLE_ID}
             onChange={(e) => handleOnToggle(e, 'enableSaveActions')}
             checked={
-              settingLocal?.enableSaveActions || DEFAULT_SAVE_ACTIONS_SETTING
+              settingLocal?.enableSaveActions ?? DEFAULT_SAVE_ACTIONS_SETTING
             }
             color="primary"
             disabled
