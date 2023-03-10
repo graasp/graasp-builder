@@ -214,7 +214,7 @@ describe('Item Settings', () => {
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
 
       cy.get(`#${SETTINGS_SAVE_ACTIONS_TOGGLE_ID}`)
-        .should('be.exist')
+        .should('exist')
         .should('be.disabled')
         .should('not.be.checked');
     });

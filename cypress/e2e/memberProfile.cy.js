@@ -49,7 +49,7 @@ describe('Member Profile', () => {
       emailFrequency[extra.emailFreq],
     );
     cy.get(`#${MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID}`)
-      .should('be.exist')
+      .should('exist')
       .should('be.disabled')
       .should('not.be.checked');
     cy.get(`#${USER_CURRENT_PASSWORD_INPUT_ID}`).should('be.visible');
