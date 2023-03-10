@@ -1,11 +1,6 @@
 import validator from 'validator';
 
-import {
-  PASSWORD_CONFIRM_ERROR,
-  PASSWORD_EMPTY_ERROR,
-  PASSWORD_EQUAL_ERROR,
-  PASSWORD_WEAK_ERROR,
-} from '../config/messages';
+import { FAILURE_MESSAGES } from '@graasp/translations';
 
 export const strengthValidator = (password) => {
   if (
@@ -17,7 +12,7 @@ export const strengthValidator = (password) => {
       minSymbols: 0,
     })
   ) {
-    throw PASSWORD_WEAK_ERROR;
+    throw FAILURE_MESSAGES.PASSWORD_WEAK_ERROR;
   }
   return true;
 };
@@ -25,7 +20,7 @@ export const strengthValidator = (password) => {
 export const passwordValidator = (password) => {
   let res = false;
   if (validator.isEmpty(password)) {
-    res = PASSWORD_EMPTY_ERROR;
+    res = FAILURE_MESSAGES.PASSWORD_EMPTY_ERROR;
   }
   return res;
 };
@@ -36,10 +31,10 @@ export const newPasswordValidator = (
   confirmPassword,
 ) => {
   if (currentPassword === newPassword) {
-    throw PASSWORD_EQUAL_ERROR;
+    throw FAILURE_MESSAGES.PASSWORD_EQUAL_ERROR;
   }
   if (newPassword !== confirmPassword) {
-    throw PASSWORD_CONFIRM_ERROR;
+    throw FAILURE_MESSAGES.PASSWORD_CONFIRM_ERROR;
   }
   return true;
 };

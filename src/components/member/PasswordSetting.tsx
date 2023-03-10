@@ -6,10 +6,9 @@ import { ChangeEvent, FC, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ACCOUNT } from '@graasp/translations';
+import { ACCOUNT, FAILURE_MESSAGES } from '@graasp/translations';
 
 import { useAccountTranslation } from '../../config/i18n';
-import { PASSWORD_EMPTY_ERROR } from '../../config/messages';
 import { useMutation } from '../../config/queryClient';
 import {
   CONFIRM_CHANGE_PASSWORD_BUTTON_ID,
@@ -45,7 +44,7 @@ const PasswordSetting: FC = () => {
     setConfirmPasswordError(checkingConfirmPassword);
     // throw error if one of the password fields is empty
     if (checkingNewPassword || checkingConfirmPassword) {
-      throw PASSWORD_EMPTY_ERROR;
+      throw FAILURE_MESSAGES.PASSWORD_EMPTY_ERROR;
     }
   };
 

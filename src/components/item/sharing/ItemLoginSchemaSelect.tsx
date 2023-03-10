@@ -32,7 +32,7 @@ const ItemLoginSchemaSelect = ({
     const newLoginSchema = event.target.value as ItemLoginSchemaType;
     putItemLoginSchema({
       itemId,
-      loginSchema: newLoginSchema,
+      type: newLoginSchema,
     });
   };
 

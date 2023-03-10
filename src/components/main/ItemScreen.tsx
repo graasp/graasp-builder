@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemType } from '@graasp/sdk';
 import { ItemLoginAuthorization, Loader } from '@graasp/ui';
-import { SignInPropertiesType } from '@graasp/ui/dist/itemLogin/ItemLoginScreen';
 
 import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
@@ -31,7 +29,12 @@ import GraaspAnalyzer from './GraaspAnalyzer';
 import ItemForbiddenScreen from './ItemForbiddenScreen';
 import Main from './Main';
 
-const { useItem, useCurrentMember, useItemLogin, useItemMemberships } = hooks;
+const {
+  useItem,
+  useCurrentMember,
+  useItemLoginSchemaType,
+  useItemMemberships,
+} = hooks;
 
 const ItemScreen = (): JSX.Element => {
   const { itemId } = useParams();
@@ -104,12 +107,8 @@ const ItemScreen = (): JSX.Element => {
 };
 
 const WrappedItemScreen = (): JSX.Element => {
-  const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
-  const { mutate: itemLoginSignIn } = useMutation<
-    unknown,
-    unknown,
-    { itemId: string } & SignInPropertiesType
-  >(MUTATION_KEYS.POST_ITEM_LOGIN);
+  const { mutate: signOut } = mutations.useSignOut();
+  const { mutate: itemLoginSignIn } = mutations.usePostItemLogin();
   const { itemId } = useParams();
 
   const ForbiddenContent = <ItemForbiddenScreen />;
@@ -120,7 +119,7 @@ const WrappedItemScreen = (): JSX.Element => {
     itemId,
     useCurrentMember,
     useItem,
-    useItemLogin,
+    useItemLoginSchemaType,
     ForbiddenContent,
     memberIdInputId: ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
     usernameInputId: ITEM_LOGIN_SIGN_IN_USERNAME_ID,

@@ -1,17 +1,12 @@
 import { toast } from 'react-toastify';
 
 import { routines } from '@graasp/query-client';
-import buildI18n, { FAILURE_MESSAGES } from '@graasp/translations';
+import buildI18n, { FAILURE_MESSAGES, REQUEST_MESSAGES } from '@graasp/translations';
 
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
   COPY_MEMBER_ID_TO_CLIPBOARD,
 } from '../types/clipboard';
-import {
-  IMPORT_H5P_PROGRESS_MESSAGE,
-  IMPORT_ZIP_PROGRESS_MESSAGE,
-  UPLOAD_FILES_PROGRESS_MESSAGE,
-} from './messages';
 
 // TODO: get from graasp client
 type ErrorPayload = {
@@ -30,7 +25,7 @@ const i18n = buildI18n();
 const getErrorMessageFromPayload = (payload: ErrorPayload) =>
   i18n.t(
     payload?.error?.response?.data?.message ??
-      FAILURE_MESSAGES.UNEXPECTED_ERROR,
+    FAILURE_MESSAGES.UNEXPECTED_ERROR,
   );
 
 const getSuccessMessageFromPayload = (payload: SuccessPayload) =>
@@ -147,19 +142,19 @@ export default ({
     // progress messages
     // todo: this might be handled differently
     case uploadFileRoutine.REQUEST: {
-      toast.info(i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE));
+      toast.info(i18n.t(REQUEST_MESSAGES.UPLOAD_FILES));
       break;
     }
     case uploadItemThumbnailRoutine.REQUEST: {
-      toast.info(i18n.t(UPLOAD_FILES_PROGRESS_MESSAGE));
+      toast.info(i18n.t(REQUEST_MESSAGES.UPLOAD_FILES));
       break;
     }
     case importZipRoutine.REQUEST: {
-      toast.info(i18n.t(IMPORT_ZIP_PROGRESS_MESSAGE));
+      toast.info(i18n.t(REQUEST_MESSAGES.IMPORT_ZIP));
       break;
     }
     case importH5PRoutine.REQUEST: {
-      toast.info(i18n.t(IMPORT_H5P_PROGRESS_MESSAGE));
+      toast.info(i18n.t(REQUEST_MESSAGES.IMPORT_H5P));
       break;
     }
     default:
@@ -170,6 +165,8 @@ export default ({
   }
   // success notification
   else if (message) {
+    // TODO: enable if not websockets
+    // allow resend invitation
     toast.success(i18n.t(message));
   }
 };

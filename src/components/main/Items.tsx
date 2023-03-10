@@ -56,10 +56,6 @@ const Items = ({
         ? itemSearch?.results?.map(({ id: itemId }) => itemId).toArray()
         : [],
     );
-  // todo: disable depending on showCreator
-  const { data: creators } = hooks.useMembers(
-    Object.keys(items?.groupBy((item) => item.creator.id)?.toJS() ?? []),
-  );
 
   if (isMembershipsLoading) {
     return <Loader />;
@@ -96,7 +92,6 @@ const Items = ({
           isEditing={isEditing}
           showThumbnails={showThumbnails}
           showCreator={showCreator}
-          creators={creators}
         />
       );
   }

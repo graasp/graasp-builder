@@ -195,27 +195,7 @@ export const CC_LICENSE_ADAPTION_OPTIONS = {
 export const CC_LICENSE_ABOUT_URL =
   'https://creativecommons.org/about/cclicenses/';
 
-export const CONTEXT_BUILDER = 'builder';
 
-export const ITEM_VALIDATION_STATUSES = {
-  SUCCESS: 'success',
-  FAILURE: 'failure',
-  PENDING: 'pending',
-};
-
-export const ITEM_VALIDATION_REVIEW_STATUSES = {
-  ACCEPTED: 'accepted',
-  REJECTED: 'rejected',
-  PENDING: 'pending',
-};
-
-export const VALIDATION_STATUS_NAMES = {
-  NOT_VALIDATED: 'not-validated',
-  SUCCESS: 'success',
-  FAILURE: 'failure',
-  PENDING_AUTOMATIC: 'pending-automatic',
-  PENDING_MANUAL: 'pending-manual',
-};
 
 export const ADMIN_CONTACT = 'admin@graasp.org';
 

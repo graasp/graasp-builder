@@ -1,9 +1,8 @@
-import { List } from 'immutable';
-
 import { Box } from '@mui/material';
 
 import { FC } from 'react';
 
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -61,7 +60,11 @@ const ToolbarActions: FC<ToolbarActionsProps> = ({
 
 const RecycleBinScreen: FC = () => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: items, isLoading, isError } = hooks.useRecycledItems();
+  const {
+    data: recycledEntries,
+    isLoading,
+    isError,
+  } = hooks.useRecycledItemsData();
 
   if (isError) {
     return <ErrorAlert />;
@@ -71,6 +74,7 @@ const RecycleBinScreen: FC = () => {
     return <Loader />;
   }
 
+  console.log(recycledEntries);
   return (
     <Main>
       <Box mx={2}>
@@ -79,7 +83,7 @@ const RecycleBinScreen: FC = () => {
           id={RECYCLED_ITEMS_ID}
           clickable={false}
           title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-          items={List(items)}
+          items={recycledEntries.map(({ item }) => item as ItemRecord)}
           actions={RowActions}
           ToolbarActions={ToolbarActions}
           showThumbnails={false}

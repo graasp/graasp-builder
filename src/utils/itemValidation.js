@@ -1,8 +1,4 @@
-import {
-  ITEM_VALIDATION_REVIEW_STATUSES,
-  ITEM_VALIDATION_STATUSES,
-  VALIDATION_STATUS_NAMES,
-} from '../config/constants';
+import { ItemValidationReviewStatus, ItemValidationStatus } from '@graasp/sdk';
 
 export const processFailureValidations = (
   validationStatusesMap,
@@ -11,12 +7,12 @@ export const processFailureValidations = (
   switch (
     validationStatusesMap?.get(itemValidationData?.get('reviewStatusId'))
   ) {
-    case ITEM_VALIDATION_REVIEW_STATUSES.PENDING:
-      return VALIDATION_STATUS_NAMES.PENDING_MANUAL;
-    case ITEM_VALIDATION_REVIEW_STATUSES.REJECTED:
-      return VALIDATION_STATUS_NAMES.SUCCESS;
-    case ITEM_VALIDATION_REVIEW_STATUSES.ACCEPTED:
-      return VALIDATION_STATUS_NAMES.FAILURE;
+    case ItemValidationReviewStatus.PENDING:
+      return ItemValidationStatus.PendingManual;
+    case ItemValidationReviewStatus.REJECTED:
+      return ItemValidationStatus.SUCCESS;
+    case ItemValidationReviewStatus.ACCEPTED:
+      return ItemValidationStatus.FAILURE;
     default:
       return false;
   }
@@ -28,15 +24,15 @@ export const getValidationStatusFromItemValidations = (
   itemValidationData,
 ) => {
   // first check if there exist any pending entry
-  if (ivByStatus.get(ITEM_VALIDATION_STATUSES.PENDING))
-    return VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC;
+  if (ivByStatus.get(ItemValidationStatus.Pending))
+    return ItemValidationStatus.PENDING_AUTOMATIC;
 
-  const failureValidations = ivByStatus.get(ITEM_VALIDATION_STATUSES.FAILURE);
+  const failureValidations = ivByStatus.get(ItemValidationStatus.Failure);
   // only process when there is failed item validation records
   if (failureValidations) {
     return processFailureValidations(validationStatusesMap, itemValidationData);
   }
 
   // if no pending and no failed entry, validation is successful
-  return VALIDATION_STATUS_NAMES.SUCCESS;
+  return ItemValidationStatus.SUCCESS;
 };

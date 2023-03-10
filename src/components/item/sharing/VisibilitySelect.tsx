@@ -111,7 +111,7 @@ const useVisibility = (item: ItemRecord) => {
       }
 
       if (publicTag) {
-        deleteItemTag({ id: itemId, type: ItemTagType.PUBLIC });
+        deleteItemTag({ itemId, type: ItemTagType.PUBLIC });
       }
     };
 
@@ -133,7 +133,7 @@ const useVisibility = (item: ItemRecord) => {
         deletePublishedAndPublic();
         putItemLoginSchema({
           itemId,
-          loginSchema: ItemLoginSchemaType.USERNAME,
+          type: ItemLoginSchemaType.USERNAME,
         });
         break;
       }
@@ -173,7 +173,6 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
     isLoading,
     handleChange,
   } = useVisibility(item);
-
   if (isLoading) {
     return <Loader />;
   }

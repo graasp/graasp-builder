@@ -5,6 +5,7 @@ import { UseQueryResult } from 'react-query';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import {
+  Context,
   ItemType,
   PermissionLevel,
   buildPdfViewerLink,
@@ -27,7 +28,6 @@ import {
 
 import {
   API_HOST,
-  CONTEXT_BUILDER,
   DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
   GRAASP_ASSETS_URL,
@@ -50,7 +50,7 @@ import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
 
-const { useChildren, useFileContent, useEtherpad } = hooks;
+const { useChildren, useFileUrl, useEtherpad } = hooks;
 
 const FileWrapper = styled(Container)(() => ({
   textAlign: 'center',
@@ -80,13 +80,12 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
     enabled: item?.type === ItemType.FOLDER,
   });
 
-  const { data: fileData, isLoading: isLoadingFileContent } = useFileContent(
+  const { data: fileUrl, isLoading: isLoadingFileContent } = useFileUrl(
     itemId,
     {
       enabled:
         item &&
         (itemType === ItemType.LOCAL_FILE || itemType === ItemType.S3_FILE),
-      replyUrl: true,
     },
   );
   const isEditing = enableEditing && editingItemId === itemId;
@@ -136,13 +135,11 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
   switch (itemType) {
     case ItemType.LOCAL_FILE:
     case ItemType.S3_FILE: {
-      // todo: remove when query client is correctly typed
-      const file = fileData as Record<string, string>;
       return (
         <FileWrapper>
           <FileItem
             editCaption={isEditing}
-            fileUrl={file?.url}
+            fileUrl={fileUrl}
             id={buildFileItemId(itemId)}
             item={item}
             onSaveCaption={onSaveCaption}
@@ -199,7 +196,7 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
           height={ITEM_DEFAULT_HEIGHT}
           permission={permission}
           requestApiAccessToken={Api.requestApiAccessToken}
-          context={CONTEXT_BUILDER}
+          context={Context.BUILDER}
         />
       );
     case ItemType.FOLDER:

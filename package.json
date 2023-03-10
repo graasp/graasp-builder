@@ -15,7 +15,7 @@
     "@graasp/chatbox": "1.0.3",
     "@graasp/query-client": "github:graasp/graasp-query-client#typeorm",
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm",
-    "@graasp/translations": "1.3.0",
+    "@graasp/translations": "github:graasp/graasp-translations#89-email",
     "@graasp/ui": "github:graasp/graasp-ui#typeorm",
     "@mui/icons-material": "5.11.0",
     "@mui/lab": "5.0.0-alpha.117",
@@ -157,10 +157,7 @@
     "immutable": "4.2.4",
     "node-forge": "1.3.0",
     "nth-check": "2.0.1",
-    "react-error-overlay": "6.0.9",
-    "@graasp/translations": "1.4.0",
-    "@graasp/query-client": "github:graasp/graasp-query-client#typeorm",
-    "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
+    "react-error-overlay": "6.0.9"
   },
   "packageManager": "yarn@3.4.1"
 }

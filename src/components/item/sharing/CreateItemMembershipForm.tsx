@@ -10,11 +10,7 @@ import { useState } from 'react';
 
 import { MUTATION_KEYS, routines } from '@graasp/query-client';
 import { Invitation, PermissionLevel } from '@graasp/sdk';
-import {
-  ItemMembershipRecord,
-  ItemRecord,
-  MemberRecord,
-} from '@graasp/sdk/frontend';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -115,6 +111,7 @@ const CreateItemMembershipForm = ({
 
       // manually notify error
       if (result?.failure?.length) {
+        console.log('weiofmk', result);
         notifier({
           type: shareItemRoutine.FAILURE,
           payload: {

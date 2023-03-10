@@ -56,7 +56,6 @@ type Props = {
   isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
-  creators: ResultOfRecord<Member>;
 };
 
 const ItemsTable: FC<Props> = ({
@@ -73,7 +72,6 @@ const ItemsTable: FC<Props> = ({
   isEditing = false,
   showThumbnails = true,
   showCreator = false,
-  creators,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -217,7 +215,6 @@ const ItemsTable: FC<Props> = ({
         colId: 'creator',
         type: 'rightAligned',
         cellRenderer: MemberNameCellRenderer({
-          users: creators,
           defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
         }),
         cellStyle: {
@@ -230,7 +227,6 @@ const ItemsTable: FC<Props> = ({
     return columns;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    creators,
     showCreator,
     translateBuilder,
     defaultSortedColumn,

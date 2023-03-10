@@ -18,7 +18,7 @@ import CancelButton from '../common/CancelButton';
 const labelId = 'alert-dialog-title';
 const descriptionId = 'alert-dialog-description';
 
-const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
+const { DELETE_ITEMS } = MUTATION_KEYS;
 
 type Props = {
   open?: boolean;
@@ -36,18 +36,9 @@ const DeleteItemDialog: FC<Props> = ({
   const { mutate: deleteItems } = useMutation<unknown, unknown, string[]>(
     DELETE_ITEMS,
   );
-  const { mutate: deleteItem } = useMutation<unknown, unknown, string[]>(
-    DELETE_ITEM,
-  );
 
   const onDelete = () => {
-    if (itemIds.length > 1) {
-      deleteItems(itemIds);
-    } else {
-      // we still use this call because it has feedback
-      // remove when deleteItems will have feedback
-      deleteItem(itemIds);
-    }
+    deleteItems(itemIds);
     handleClose();
   };
 
