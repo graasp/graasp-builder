@@ -1,13 +1,10 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { useEffect, useRef, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { getEmbeddedLinkExtra } from '@graasp/sdk';
+import { ItemType } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Thumbnail } from '@graasp/ui';
 
@@ -16,24 +13,27 @@ import {
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, useMutation } from '../../../config/queryClient';
+import { hooks, mutations } from '../../../config/queryClient';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
 import defaultImage from '../../../resources/avatar.png';
 import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
 
-const ThumbnailSetting = ({ item }) => {
-  const inputRef = useRef();
+type Props = { item: ItemRecord };
+
+const ThumbnailSetting = ({ item }: Props): JSX.Element => {
+  const inputRef = useRef<HTMLInputElement>();
   const [uppy, setUppy] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
-  const [fileSource, setFileSource] = useState(false);
+  const [fileSource, setFileSource] = useState<string>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: onFileUploadComplete } = useMutation(
-    MUTATION_KEYS.FILE_UPLOAD,
-  );
+  const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
   const itemId = item.id;
+  const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
+    id: itemId,
+  });
 
   useEffect(() => {
     setUppy(
@@ -73,7 +73,9 @@ const ThumbnailSetting = ({ item }) => {
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => setFileSource(reader.result));
+      reader.addEventListener('load', () =>
+        setFileSource(reader.result as string),
+      );
       reader.readAsDataURL(e.target.files[0]);
       setShowCropModal(true);
     }
@@ -81,7 +83,9 @@ const ThumbnailSetting = ({ item }) => {
 
   const onClose = () => {
     setShowCropModal(false);
-    inputRef.current.value = null;
+    if (inputRef.current) {
+      inputRef.current.value = null;
+    }
   };
 
   const onConfirmCrop = (croppedImage) => {
@@ -115,7 +119,7 @@ const ThumbnailSetting = ({ item }) => {
           <Typography variant="h5">
             {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
           </Typography>
-          <Typography variant="body">
+          <Typography variant="body1">
             {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
           </Typography>
           <input
@@ -131,14 +135,14 @@ const ThumbnailSetting = ({ item }) => {
         <Grid item sm={6} textAlign="right">
           <Thumbnail
             id={itemId}
-            thumbnailSrc={getEmbeddedLinkExtra(
-              item?.extra,
-            )?.thumbnails?.first()}
+            isLoading={isLoading}
+            url={
+              thumbnailUrl ?? item?.extra?.[ItemType.LINK]?.thumbnails?.first()
+            }
             alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-            useThumbnail={hooks.useItemThumbnail}
-            defaultValue={defaultImageComponent}
+            defaultComponent={defaultImageComponent}
           />
         </Grid>
       </Grid>
@@ -150,10 +154,6 @@ const ThumbnailSetting = ({ item }) => {
       />
     </>
   );
-};
-
-ThumbnailSetting.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default ThumbnailSetting;

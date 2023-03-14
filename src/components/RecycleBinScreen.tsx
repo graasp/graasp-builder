@@ -74,7 +74,6 @@ const RecycleBinScreen: FC = () => {
     return <Loader />;
   }
 
-  console.log(recycledEntries);
   return (
     <Main>
       <Box mx={2}>

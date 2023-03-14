@@ -6,12 +6,11 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { FC } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
 import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
   ITEM_RECYCLE_BUTTON_CLASS,
@@ -33,9 +32,7 @@ const RecycleButton: FC<Props> = ({
   onClick,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: recycleItems } = useMutation<unknown, unknown, string[]>(
-    MUTATION_KEYS.RECYCLE_ITEMS,
-  );
+  const { mutate: recycleItems } = mutations.useRecycleItems();
 
   const handleClick = () => {
     recycleItems(itemIds);

@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 import { FC, SyntheticEvent } from 'react';
 
-import { Category, CategoryType, ItemCategory } from '@graasp/sdk';
+import { Category, CategoryType } from '@graasp/sdk';
 import { CategoryRecord, ItemCategoryRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 

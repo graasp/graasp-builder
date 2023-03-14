@@ -10,11 +10,10 @@ import {
   Item,
   ItemMembership,
   ItemType,
-  Member,
   getFolderExtra,
   getShortcutExtra,
 } from '@graasp/sdk';
-import { ItemRecord, MemberRecord, ResultOfRecord } from '@graasp/sdk/frontend';
+import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 

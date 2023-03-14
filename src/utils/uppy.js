@@ -101,11 +101,11 @@ export const configureFileUppy = ({
 // because the backend needs to send the sizes
 export const configureThumbnailUppy = ({
   itemId,
-  onFilesAdded,
+  onFilesAdded = null,
   onUpload,
   onComplete,
   onError,
-  onProgress,
+  onProgress = null,
 }) =>
   configureUppy({
     itemId,

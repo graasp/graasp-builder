@@ -4,15 +4,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { Component } from 'react';
-import { withTranslation } from 'react-i18next';
+import { useState } from 'react';
 import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import { BUILDER, namespaces } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { THUMBNAIL_ASPECT } from '../../config/constants';
+import { useBuilderTranslation } from '../../config/i18n';
 import { CROP_MODAL_CONFIRM_BUTTON_CLASSNAME } from '../../config/selectors';
 import { getCroppedImg } from '../../utils/image';
 import CancelButton from './CancelButton';
@@ -20,33 +20,24 @@ import CancelButton from './CancelButton';
 type Props = {
   open: boolean;
   onClose: () => void;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  t: Function;
   src: string;
   onConfirm: (blob: Blob | null) => void;
 };
 
-type State = {
-  crop: PixelCrop;
-  imageRef: HTMLImageElement | null;
-};
-
-class CropModal extends Component<Props, State> {
-  state = {
-    crop: {} as PixelCrop,
-    imageRef: null,
-  };
-
-  handleOnConfirm = async () => {
-    const { onConfirm } = this.props;
-    const { crop } = this.state;
-    const final = await this.makeClientCrop(crop);
-    onConfirm(final);
-  };
+const CropModal = ({ open, onClose, src, onConfirm }: Props): JSX.Element => {
+  const [crop, setCrop] = useState<PixelCrop>({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    unit: 'px',
+  });
+  const [imageRef, setImageRef] = useState<HTMLImageElement>();
+  const { t } = useBuilderTranslation();
 
   // If you setState the crop in here you should return false.
-  onImageLoaded = (img: HTMLImageElement) => {
-    this.setState({ imageRef: img });
+  const onImageLoaded = (img: HTMLImageElement) => {
+    setImageRef(img);
     const { width: imgWidth, height: imgHeight } = img;
 
     const aspect = THUMBNAIL_ASPECT;
@@ -65,7 +56,7 @@ class CropModal extends Component<Props, State> {
     const y = Math.floor((imgHeight - height) / 2);
     const x = Math.floor((imgWidth - width) / 2);
 
-    const crop = {
+    const newCrop = {
       width,
       height,
       x,
@@ -73,60 +64,56 @@ class CropModal extends Component<Props, State> {
       aspect,
       unit: 'px',
     } as PixelCrop;
-    this.setState({
-      crop,
-    });
+    setCrop(newCrop);
 
     return false; // Return false if you set crop state in here.
   };
 
-  onCropChange = (crop: Crop, _percentageCrop: Crop) => {
-    this.setState({ crop: crop as PixelCrop });
+  const onCropChange = (c: Crop, _percentageCrop: Crop) => {
+    setCrop(c as PixelCrop);
   };
 
-  async makeClientCrop(crop: PixelCrop) {
-    const { imageRef } = this.state;
-    if (imageRef && crop.width && crop.height) {
-      const croppedImage = await getCroppedImg(imageRef, crop);
+  const makeClientCrop = async (c: PixelCrop) => {
+    if (imageRef && c.width && c.height) {
+      const croppedImage = await getCroppedImg(imageRef, c);
       return croppedImage;
     }
     return null;
-  }
+  };
 
-  render() {
-    const { open, onClose, t, src } = this.props;
-    const { crop } = this.state;
-    const label = 'crop-modal-title';
+  const handleOnConfirm = async () => {
+    const final = await makeClientCrop(crop);
+    onConfirm(final);
+  };
 
-    return (
-      <Dialog open={open} onClose={onClose} aria-labelledby={label}>
-        <DialogTitle id={label}>
-          {t(BUILDER.CROP_IMAGE_MODAL_TITLE)}
-        </DialogTitle>
-        <DialogContent sx={{ textAlign: 'center' }}>
-          <DialogContentText>
-            {t(BUILDER.CROP_IMAGE_MODAL_CONTENT_TEXT)}
-          </DialogContentText>
-          <ReactCrop
-            src={src}
-            crop={crop}
-            ruleOfThirds
-            onImageLoaded={this.onImageLoaded}
-            onChange={this.onCropChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <CancelButton onClick={onClose} />
-          <Button
-            onClick={this.handleOnConfirm}
-            className={CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}
-          >
-            {t(BUILDER.CONFIRM_BUTTON)}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-}
+  const label = 'crop-modal-title';
 
-export default withTranslation(namespaces.builder)(CropModal);
+  return (
+    <Dialog open={open} onClose={onClose} aria-labelledby={label}>
+      <DialogTitle id={label}>{t(BUILDER.CROP_IMAGE_MODAL_TITLE)}</DialogTitle>
+      <DialogContent sx={{ textAlign: 'center' }}>
+        <DialogContentText>
+          {t(BUILDER.CROP_IMAGE_MODAL_CONTENT_TEXT)}
+        </DialogContentText>
+        <ReactCrop
+          src={src}
+          crop={crop}
+          ruleOfThirds
+          onImageLoaded={onImageLoaded}
+          onChange={onCropChange}
+        />
+      </DialogContent>
+      <DialogActions>
+        <CancelButton onClick={onClose} />
+        <Button
+          onClick={handleOnConfirm}
+          className={CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}
+        >
+          {t(BUILDER.CONFIRM_BUTTON)}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default CropModal;

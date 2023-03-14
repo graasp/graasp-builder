@@ -31,6 +31,10 @@ const ItemNameCellRenderer = (
       <ItemIcon type={item.type} iconSrc={iconSrc} alt={alt} />
     );
 
+    const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
+      id: item.id,
+    });
+
     return (
       <Box
         display="flex"
@@ -39,13 +43,12 @@ const ItemNameCellRenderer = (
       >
         {showThumbnails && (
           <Thumbnail
-            id={item.id}
-            thumbnailSrc={thumbnailSrc}
+            url={thumbnailUrl ?? thumbnailSrc}
             maxWidth={30}
             maxHeight={30}
             alt={alt}
-            defaultValue={defaultValueComponent}
-            useThumbnail={hooks.useItemThumbnail}
+            isLoading={isLoading}
+            defaultComponent={defaultValueComponent}
           />
         )}
         <Typography noWrap ml={1}>

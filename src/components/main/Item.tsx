@@ -4,7 +4,7 @@ import truncate from 'lodash.truncate';
 import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Item, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import { Item, ItemType } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
@@ -42,7 +42,8 @@ type Props = {
 };
 
 const ItemComponent: FC<Props> = ({ item, memberships }) => {
-  const { id, name, description } = item;
+  const { id, name, description, extra } = item;
+  const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({ id });
 
   const alt = name;
   const defaultValueComponent = (
@@ -59,14 +60,14 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
   const ThumbnailComponent = (
     <Thumbnail
       id={item.id}
-      thumbnailSrc={
-        item.type === ItemType.LINK
-          ? getEmbeddedLinkExtra(item.extra)?.thumbnails?.first()
+      isLoading={isLoading}
+      url={
+        thumbnailUrl ?? item.type === ItemType.LINK
+          ? extra?.[ItemType.LINK]?.thumbnails?.first()
           : undefined
       }
       alt={alt}
-      defaultValue={defaultValueComponent}
-      useThumbnail={hooks.useItemThumbnail}
+      defaultComponent={defaultValueComponent}
     />
   );
 

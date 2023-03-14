@@ -8,18 +8,17 @@ import { useEffect, useRef, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ACCOUNT } from '@graasp/translations';
-import { Avatar } from '@graasp/ui';
 
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../config/constants';
 import { useAccountTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import { useMutation } from '../../config/queryClient';
 import { MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME } from '../../config/selectors';
-import defaultImage from '../../resources/avatar.png';
 import { configureAvatarUppy } from '../../utils/uppy';
 import CropModal from '../common/CropModal';
+import MemberAvatar from '../common/MemberAvatar';
 import StatusBar from '../file/StatusBar';
 
 const AvatarSetting = ({ user }) => {
@@ -132,14 +131,11 @@ const AvatarSetting = ({ user }) => {
           />
         </Grid>
         <Grid item sm={6} xs={12}>
-          <Avatar
-            id={userId}
-            extra={user?.extra}
-            alt={t(ACCOUNT.PROFILE_AVATAR_CURRENT_ALT)}
+          <MemberAvatar
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-            useAvatar={hooks.useAvatar}
-            defaultImage={defaultImage}
+            id={userId}
+            component="image"
           />
         </Grid>
       </Grid>

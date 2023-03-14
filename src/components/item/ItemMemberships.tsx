@@ -58,7 +58,7 @@ const ItemMemberships = ({
           aria-label={translateBuilder(BUILDER.SHARED_MEMBERS_LABEL)}
         >
           <AvatarGroup max={maxAvatar} spacing={3} onClick={onClick}>
-            {filteredMemberships.map(({ memberId, permission }) => {
+            {filteredMemberships.map(({ member, permission }) => {
               const badgeContent =
                 permission === PermissionLevel.Read ? (
                   <VisibilityIcon fontSize="small" />
@@ -68,7 +68,7 @@ const ItemMemberships = ({
 
               return (
                 <Badge
-                  key={memberId}
+                  key={member.id}
                   overlap="circular"
                   anchorOrigin={{
                     vertical: 'bottom',
@@ -77,7 +77,7 @@ const ItemMemberships = ({
                   badgeContent={badgeContent}
                   sx={{ border: 'none' }}
                 >
-                  <MemberAvatar id={memberId} />
+                  <MemberAvatar id={member.id} />
                 </Badge>
               );
             })}
