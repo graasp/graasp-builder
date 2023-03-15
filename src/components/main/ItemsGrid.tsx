@@ -11,7 +11,6 @@ import { useState } from 'react';
 import {
   ItemMembershipRecord,
   ItemRecord,
-  ItemTagRecord,
   TagRecord,
 } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -40,7 +39,6 @@ type Props = {
   id?: string;
   items?: List<ItemRecord>;
   manyMemberships?: List<List<ItemMembershipRecord>>;
-  manyTags?: List<List<ItemTagRecord>>;
   tagList?: List<TagRecord>;
   title: string;
   itemSearch?: {
@@ -59,7 +57,6 @@ const ItemsGrid = ({
   itemSearch,
   headerElements = [],
   manyMemberships = List(),
-  manyTags = List(),
   tagList = List(),
   isEditing = false,
   parentId,
@@ -80,7 +77,6 @@ const ItemsGrid = ({
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const itemsInPage = items.slice(start, end);
-  const tagsInPage = manyTags.slice(start, end);
 
   const renderItems = () => {
     if (!itemsInPage || !itemsInPage.size) {
@@ -95,7 +91,7 @@ const ItemsGrid = ({
       );
     }
 
-    return itemsInPage.map((item, idx) => (
+    return itemsInPage.map((item) => (
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
         <ItemCard
           item={item}
@@ -104,7 +100,6 @@ const ItemsGrid = ({
             manyMemberships,
             itemId: item.id,
           })}
-          itemTags={tagsInPage.get(idx)}
           tagList={tagList}
         />
       </Grid>

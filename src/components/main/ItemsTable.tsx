@@ -15,7 +15,6 @@ import {
 import {
   ItemMembershipRecord,
   ItemRecord,
-  ItemTagRecord,
   MemberRecord,
   TagRecord,
 } from '@graasp/sdk/frontend';
@@ -46,7 +45,6 @@ type Props = {
   id?: string;
   items: List<ItemRecord>;
   manyMemberships?: List<List<ItemMembershipRecord>>;
-  manyTags?: List<List<ItemTagRecord>>;
   tagList?: List<TagRecord>;
   tableTitle: string;
   headerElements?: JSX.Element[];
@@ -71,7 +69,6 @@ const ItemsTable: FC<Props> = ({
   id: tableId = '',
   items: rows = List(),
   manyMemberships = List(),
-  manyTags = List(),
   tagList = List(),
   headerElements = [],
   isSearching = false,
@@ -169,9 +166,7 @@ const ItemsTable: FC<Props> = ({
   });
 
   const BadgesComponent = BadgesCellRenderer({
-    manyTags,
     tagList,
-    items: rows,
   });
 
   // never changes, so we can use useMemo
@@ -269,6 +264,7 @@ const ItemsTable: FC<Props> = ({
     translateBuilder,
     defaultSortedColumn,
     ActionComponent,
+    BadgesComponent,
     actions,
     showThumbnails,
   ]);

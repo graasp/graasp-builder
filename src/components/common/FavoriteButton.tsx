@@ -58,7 +58,7 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
     onClick?.();
   };
 
-  const tooltip = isFavorite
+  const text = isFavorite
     ? translateBuilder(BUILDER.FAVORITE_ITEM_REMOVE_TEXT)
     : translateBuilder(BUILDER.FAVORITE_ITEM_ADD_TEXT);
 
@@ -66,12 +66,13 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
     <GraaspFavoriteButton
       isFavorite={isFavorite}
       className={FAVORITE_ITEM_BUTTON_CLASS}
-      ariaLabel={tooltip}
+      ariaLabel={text}
       handleUnfavorite={handleUnfavorite}
       handleFavorite={handleFavorite}
-      tooltip={tooltip}
+      tooltip={text}
       type={type}
       size={size}
+      text={text}
     />
   );
 };

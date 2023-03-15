@@ -8,10 +8,9 @@ import { Item, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
 import {
   ItemMembershipRecord,
   ItemRecord,
-  ItemTagRecord,
   TagRecord,
 } from '@graasp/sdk/frontend';
-import { Card as GraaspCard, ItemBadges, Thumbnail } from '@graasp/ui';
+import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemPath } from '../../config/paths';
@@ -19,15 +18,11 @@ import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
 import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
-import {
-  isItemHidden,
-  isItemPublic,
-  isItemPublished,
-} from '../../utils/itemTag';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import BadgesCellRenderer from '../table/BadgesCellRenderer';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
@@ -49,14 +44,11 @@ const NameWrapper = ({
 type Props = {
   item: ItemRecord;
   memberships: List<ItemMembershipRecord>;
-  itemTags?: List<ItemTagRecord>;
   tagList?: List<TagRecord>;
 };
 
-const ItemComponent: FC<Props> = ({ item, memberships, itemTags, tagList }) => {
-  const { id, name, description } = item;
-
-  const alt = name;
+const ItemComponent: FC<Props> = ({ item, memberships, tagList }) => {
+  const alt = item.name;
   const defaultValueComponent = (
     <img
       style={{
@@ -102,38 +94,28 @@ const ItemComponent: FC<Props> = ({ item, memberships, itemTags, tagList }) => {
               item.toJS() as Item
             }
           />
-          <DownloadButton id={id} name={name} />
+          <DownloadButton id={item.id} name={item.name} />
         </>
       )}
     </>
   );
-
-  const isHidden = isItemHidden({ tags: tagList, itemTags });
-  const isPublic = isItemPublic({ tags: tagList, itemTags });
-  const isPublished = isItemPublished({ tags: tagList, itemTags });
-  const isPinned = Boolean(item?.settings?.isPinned);
+  // here we use the same component as the table this is why it is instantiated a bit weirdly
+  const Badges = BadgesCellRenderer({ tagList });
 
   return (
     <GraaspCard
-      description={truncate(stripHtml(description), {
+      description={truncate(stripHtml(item.description), {
         length: DESCRIPTION_MAX_LENGTH,
       })}
       Actions={Actions}
-      Badges={
-        <ItemBadges
-          isHidden={isHidden}
-          isPublic={isPublic}
-          isPublished={isPublished}
-          isPinned={isPinned}
-        />
-      }
-      name={name}
+      Badges={<Badges data={item} />}
+      name={item.name}
       creator={member?.name}
       ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
-      cardId={buildItemCard(id)}
+      cardId={buildItemCard(item.id)}
       NameWrapper={NameWrapper({
-        id,
+        id: item.id,
         style: {
           textDecoration: 'none',
           color: 'inherit',
