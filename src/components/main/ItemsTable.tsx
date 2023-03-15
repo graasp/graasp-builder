@@ -15,7 +15,9 @@ import {
 import {
   ItemMembershipRecord,
   ItemRecord,
+  ItemTagRecord,
   MemberRecord,
+  TagRecord,
 } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -33,6 +35,7 @@ import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
+import BadgesCellRenderer from '../table/BadgesCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
@@ -42,7 +45,9 @@ const { useItem } = hooks;
 type Props = {
   id?: string;
   items: List<ItemRecord>;
-  manyMemberships: List<List<ItemMembershipRecord>>;
+  manyMemberships?: List<List<ItemMembershipRecord>>;
+  manyTags?: List<List<ItemTagRecord>>;
+  tagList?: List<TagRecord>;
   tableTitle: string;
   headerElements?: JSX.Element[];
   isSearching?: boolean;
@@ -66,6 +71,8 @@ const ItemsTable: FC<Props> = ({
   id: tableId = '',
   items: rows = List(),
   manyMemberships = List(),
+  manyTags = List(),
+  tagList = List(),
   headerElements = [],
   isSearching = false,
   actions,
@@ -161,6 +168,12 @@ const ItemsTable: FC<Props> = ({
     member,
   });
 
+  const BadgesComponent = BadgesCellRenderer({
+    manyTags,
+    tagList,
+    items: rows,
+  });
+
   // never changes, so we can use useMemo
   const columnDefs = useMemo(() => {
     const columns: ColDef[] = [
@@ -180,18 +193,35 @@ const ItemsTable: FC<Props> = ({
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
         type: 'rightAligned',
         cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
-        flex: 2,
+        // flex: 2,
+        minWidth: 90,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.type,
       },
       {
         field: 'updatedAt',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
-        flex: 2,
+        // flex: 2,
+        maxWidth: 160,
+        minWidth: 80,
         type: 'rightAligned',
         valueFormatter: dateColumnFormatter,
         comparator: GraaspTable.dateComparator,
         sort: defaultSortedColumn?.updatedAt,
+      },
+      {
+        field: 'tags',
+        cellRenderer: BadgesComponent,
+        type: 'rightAligned',
+        flex: 1,
+        suppressAutoSize: true,
+        maxWidth: 100,
+        cellStyle: {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
       },
       {
         field: 'actions',
@@ -200,15 +230,16 @@ const ItemsTable: FC<Props> = ({
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
-        flex: 3,
+        // flex: 3,
         cellStyle: {
           paddingLeft: '0!important',
           paddingRight: '0!important',
           textAlign: 'right',
         },
         sortable: false,
+        suppressAutoSize: true,
         // prevent ellipsis for small screens
-        minWidth: 165,
+        minWidth: 140,
       },
     ];
 

@@ -5,8 +5,13 @@ import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Item, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
-import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
+import {
+  ItemMembershipRecord,
+  ItemRecord,
+  ItemTagRecord,
+  TagRecord,
+} from '@graasp/sdk/frontend';
+import { Card as GraaspCard, ItemBadges, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemPath } from '../../config/paths';
@@ -14,6 +19,11 @@ import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
 import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
+import {
+  isItemHidden,
+  isItemPublic,
+  isItemPublished,
+} from '../../utils/itemTag';
 import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
@@ -39,9 +49,11 @@ const NameWrapper = ({
 type Props = {
   item: ItemRecord;
   memberships: List<ItemMembershipRecord>;
+  itemTags?: List<ItemTagRecord>;
+  tagList?: List<TagRecord>;
 };
 
-const ItemComponent: FC<Props> = ({ item, memberships }) => {
+const ItemComponent: FC<Props> = ({ item, memberships, itemTags, tagList }) => {
   const { id, name, description } = item;
 
   const alt = name;
@@ -96,12 +108,25 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
     </>
   );
 
+  const isHidden = isItemHidden({ tags: tagList, itemTags });
+  const isPublic = isItemPublic({ tags: tagList, itemTags });
+  const isPublished = isItemPublished({ tags: tagList, itemTags });
+  const isPinned = Boolean(item?.settings?.isPinned);
+
   return (
     <GraaspCard
       description={truncate(stripHtml(description), {
         length: DESCRIPTION_MAX_LENGTH,
       })}
       Actions={Actions}
+      Badges={
+        <ItemBadges
+          isHidden={isHidden}
+          isPublic={isPublic}
+          isPublished={isPublished}
+          isPinned={isPinned}
+        />
+      }
       name={name}
       creator={member?.name}
       ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}

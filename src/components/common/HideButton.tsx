@@ -13,7 +13,10 @@ import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 import { HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
-import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import {
+  HIDDEN_ITEM_BUTTON_CLASS,
+  buildHideButtonId,
+} from '../../config/selectors';
 
 type Props = {
   item: Item;
@@ -77,6 +80,7 @@ const HideButton = ({
           onClick={handleToggleHide}
           className={HIDDEN_ITEM_BUTTON_CLASS}
           disabled={!isOriginalHiddenItem}
+          data-cy={buildHideButtonId(Boolean(hiddenTag))}
         >
           <ListItemIcon>{icon}</ListItemIcon>
           {text}

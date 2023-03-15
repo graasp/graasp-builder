@@ -10,7 +10,7 @@ import { useItemSearch } from '../item/ItemSearch';
 import ItemsGrid from './ItemsGrid';
 import ItemsTable from './ItemsTable';
 
-const { useManyItemMemberships } = hooks;
+const { useManyItemMemberships, useItemsTags, useTags } = hooks;
 
 type Props = {
   id: string;
@@ -56,12 +56,16 @@ const Items = ({
         ? itemSearch?.results?.map(({ id: itemId }) => itemId).toArray()
         : [],
     );
+  const { data: manyTags, isLoading: isLoadingTags } = useItemsTags(
+    items.map(({ id: itemId }) => itemId).toArray(),
+  );
+  const { data: tagList, isLoading: isLoadingTagList } = useTags();
   // todo: disable depending on showCreator
   const { data: creators } = hooks.useMembers(
     Object.keys(items?.groupBy(({ creator }) => creator)?.toJS() ?? []),
   );
 
-  if (isMembershipsLoading) {
+  if (isMembershipsLoading || isLoadingTags || isLoadingTagList) {
     return <Loader />;
   }
 
@@ -73,6 +77,8 @@ const Items = ({
           title={title}
           items={itemSearch.results}
           manyMemberships={manyMemberships}
+          manyTags={manyTags}
+          tagList={tagList}
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
@@ -89,6 +95,8 @@ const Items = ({
           defaultSortedColumn={defaultSortedColumn}
           items={itemSearch.results}
           manyMemberships={manyMemberships}
+          manyTags={manyTags}
+          tagList={tagList}
           headerElements={[itemSearch.input, ...headerElements]}
           isSearching={Boolean(itemSearch.text)}
           ToolbarActions={ToolbarActions}

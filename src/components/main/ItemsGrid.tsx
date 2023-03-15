@@ -8,7 +8,12 @@ import Select from '@mui/material/Select';
 
 import { useState } from 'react';
 
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
+import {
+  ItemMembershipRecord,
+  ItemRecord,
+  ItemTagRecord,
+  TagRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
@@ -22,7 +27,7 @@ import { getMembershipsForItem } from '../../utils/membership';
 import FolderDescription from '../item/FolderDescription';
 import { NoItemSearchResult } from '../item/ItemSearch';
 import EmptyItem from './EmptyItem';
-import Item from './Item';
+import ItemCard from './ItemCard';
 import ItemsToolbar from './ItemsToolbar';
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -34,7 +39,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
 type Props = {
   id?: string;
   items?: List<ItemRecord>;
-  manyMemberships: List<List<ItemMembershipRecord>>;
+  manyMemberships?: List<List<ItemMembershipRecord>>;
+  manyTags?: List<List<ItemTagRecord>>;
+  tagList?: List<TagRecord>;
   title: string;
   itemSearch?: {
     text: string;
@@ -51,7 +58,9 @@ const ItemsGrid = ({
   title,
   itemSearch,
   headerElements = [],
-  manyMemberships,
+  manyMemberships = List(),
+  manyTags = List(),
+  tagList = List(),
   isEditing = false,
   parentId,
 }: Props): JSX.Element => {
@@ -71,6 +80,7 @@ const ItemsGrid = ({
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const itemsInPage = items.slice(start, end);
+  const tagsInPage = manyTags.slice(start, end);
 
   const renderItems = () => {
     if (!itemsInPage || !itemsInPage.size) {
@@ -85,15 +95,17 @@ const ItemsGrid = ({
       );
     }
 
-    return itemsInPage.map((item) => (
+    return itemsInPage.map((item, idx) => (
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
-        <Item
+        <ItemCard
           item={item}
           memberships={getMembershipsForItem({
             items,
             manyMemberships,
             itemId: item.id,
           })}
+          itemTags={tagsInPage.get(idx)}
+          tagList={tagList}
         />
       </Grid>
     ));

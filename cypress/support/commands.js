@@ -65,6 +65,7 @@ import {
   mockGetItemValidationReviewStatuses,
   mockGetItemValidationStatuses,
   mockGetItems,
+  mockGetItemsTags,
   mockGetMember,
   mockGetMemberMentions,
   mockGetMembers,
@@ -233,6 +234,8 @@ Cypress.Commands.add(
     mockGetTags(tags);
 
     mockGetItemTags(items);
+
+    mockGetItemsTags(items);
 
     mockPostItemTag(items, postItemTagError);
 
