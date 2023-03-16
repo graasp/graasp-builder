@@ -174,7 +174,7 @@ export const DRAG_ICON_SIZE = 18;
 
 export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
-export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
+export const THUMBNAIL_SETTING_MAX_WIDTH = 200;
 export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
 
 export const H5P_FILE_DOT_EXTENSION = '.h5p';

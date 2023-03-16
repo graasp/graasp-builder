@@ -155,6 +155,12 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
             defaultImage={defaultImage}
+            component="avatar"
+            sx={{
+              height: THUMBNAIL_SETTING_MAX_HEIGHT,
+              width: THUMBNAIL_SETTING_MAX_WIDTH,
+            }}
+            variant="circular"
           />
         </Grid>
       </Grid>
