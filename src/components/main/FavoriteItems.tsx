@@ -50,7 +50,7 @@ const FavoriteItems: FC = () => {
     data: favoriteItems = List(),
     isLoading: isItemsLoading,
     isError: isItemsError,
-  } = hooks.useItems(getFavoriteItems(member).toArray());
+  } = hooks.useItems([...new Set(getFavoriteItems(member).toArray())]);
   const mutation = useMutation<
     unknown,
     unknown,
