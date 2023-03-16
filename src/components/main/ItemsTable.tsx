@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import {
+  DiscriminatedItem,
   FolderItemExtra,
   Item,
   ItemType,
@@ -107,7 +108,13 @@ const ItemsTable: FC<Props> = ({
   const getRowNodeId = ({ data }: { data: Item }) =>
     buildItemsTableRowId(data.id);
 
-  const onCellClicked = ({ column, data }: { column: Column; data: Item }) => {
+  const onCellClicked = ({
+    column,
+    data,
+  }: {
+    column: Column;
+    data: DiscriminatedItem;
+  }) => {
     if (column.getColId() !== 'actions') {
       let targetId = data.id;
 
@@ -173,41 +180,22 @@ const ItemsTable: FC<Props> = ({
   const columnDefs = useMemo(() => {
     const columns: ColDef[] = [
       {
+        field: 'name',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
         headerCheckboxSelection: true,
         checkboxSelection: true,
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
         cellRenderer: NameCellRenderer(showThumbnails),
         flex: 4,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.name,
-        field: 'name',
         tooltipField: 'name',
       },
       {
-        field: 'type',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
-        type: 'rightAligned',
-        cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
-        // flex: 2,
-        minWidth: 90,
-        comparator: GraaspTable.textComparator,
-        sort: defaultSortedColumn?.type,
-      },
-      {
-        field: 'updatedAt',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
-        // flex: 2,
-        maxWidth: 160,
-        minWidth: 80,
-        type: 'rightAligned',
-        valueFormatter: dateColumnFormatter,
-        comparator: GraaspTable.dateComparator,
-        sort: defaultSortedColumn?.updatedAt,
-      },
-      {
-        field: 'tags',
+        field: 'status',
+        // todo: add translation of of header
+        // headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
         cellRenderer: BadgesComponent,
-        type: 'rightAligned',
+        type: 'centerAligned',
         flex: 1,
         suppressAutoSize: true,
         maxWidth: 100,
@@ -219,13 +207,32 @@ const ItemsTable: FC<Props> = ({
         },
       },
       {
+        field: 'type',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
+        type: 'rightAligned',
+        cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
+        minWidth: 90,
+        maxWidth: 120,
+        comparator: GraaspTable.textComparator,
+        sort: defaultSortedColumn?.type,
+      },
+      {
+        field: 'updatedAt',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
+        maxWidth: 160,
+        minWidth: 80,
+        type: 'rightAligned',
+        valueFormatter: dateColumnFormatter,
+        comparator: GraaspTable.dateComparator,
+        sort: defaultSortedColumn?.updatedAt,
+      },
+      {
         field: 'actions',
         cellRenderer: actions ?? ActionComponent,
         suppressKeyboardEvent: GraaspTable.suppressKeyboardEventForParentCell,
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
-        // flex: 3,
         cellStyle: {
           paddingLeft: '0!important',
           paddingRight: '0!important',

@@ -12,11 +12,11 @@
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
-    "@graasp/chatbox": "1.0.4",
-    "@graasp/query-client": "0.3.2",
-    "@graasp/sdk": "0.8.1",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#82-change-border-color-of-notification-button",
+    "@graasp/query-client": "0.4.0",
+    "@graasp/sdk": "0.9.2",
     "@graasp/translations": "1.8.0",
-    "@graasp/ui": "2.1.0",
+    "@graasp/ui": "2.2.0",
     "@mui/icons-material": "5.11.0",
     "@mui/lab": "5.0.0-alpha.117",
     "@mui/material": "5.11.6",
@@ -147,7 +147,6 @@
     "@mui/icons-material": "5.11.0",
     "@mui/material": "5.11.6",
     "immer": "9.0.6",
-    "@graasp/ui": "2.1.0",
     "immutable": "4.2.4",
     "@svgr/webpack": "6.5.1"
   },

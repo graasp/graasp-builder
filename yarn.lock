@@ -2339,15 +2339,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@npm:1.0.4":
+"@graasp/chatbox@github:graasp/graasp-chatbox#82-change-border-color-of-notification-button":
   version: 1.0.4
-  resolution: "@graasp/chatbox@npm:1.0.4"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=d3236a53f3edd060a8373d0ac7e5c8bcb6648345"
   dependencies:
     "@emotion/react": 11.10.6
     "@emotion/styled": 11.10.6
-    "@graasp/sdk": 0.5.0
-    "@graasp/translations": 1.6.0
-    "@graasp/ui": 0.13.0
+    "@graasp/sdk": 0.9.2
+    "@graasp/translations": 1.8.0
+    "@graasp/ui": 2.2.0
     clsx: 1.2.1
     i18next: 21.8.1
     immutable: 4.2.4
@@ -2370,15 +2370,15 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 120b1c35e8c00be3243c67cd79d03b3afd5068685fedce2e12be44c1eb1ab3675bfcb73564a129acb8c0aa5eedae54837476eb0beecd3f92f56e22976b14a3ab
+  checksum: 281b63f273f8e9d72a72ea70053776c0e910f7501757f14d23ff849c99257366c9f39f6c05736e5ddfda759c3f0e2fcc5ad7bd227150d2e9a5bf54a1e7123b87
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:0.3.2":
-  version: 0.3.2
-  resolution: "@graasp/query-client@npm:0.3.2"
+"@graasp/query-client@npm:0.4.0":
+  version: 0.4.0
+  resolution: "@graasp/query-client@npm:0.4.0"
   dependencies:
-    "@graasp/sdk": 0.8.1
+    "@graasp/sdk": 0.9.2
     "@graasp/translations": 1.8.0
     axios: 0.27.2
     crypto-js: 4.1.1
@@ -2389,13 +2389,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 454c0e8e943efccb75e740995376dc713bdf0b8d7f619f59f1df35e4b4d7dc12c24430491f431494f94942356ac743c968bffd364275f73d531b67e30795d41f
+  checksum: 11086df2caefd00e9421952aea253d0c6e045da595fea8e5d5039ab128d0b6e293052561a6ae1135b59fe1f9e674f83c8f55990e9e8824e23b6282da2e6acfe4
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:0.5.0":
-  version: 0.5.0
-  resolution: "@graasp/sdk@npm:0.5.0"
+"@graasp/sdk@npm:0.9.2":
+  version: 0.9.2
+  resolution: "@graasp/sdk@npm:0.9.2"
   dependencies:
     "@fastify/secure-session": 5.3.0
     aws-sdk: 2.1310.0
@@ -2406,33 +2406,7 @@ __metadata:
     qs: 6.11.0
     slonik: 28.1.1
     uuid: 9.0.0
-  checksum: 2f021d5b8a725e089f8ca473384e0d397f8a2680ec62e5ef290bd5601cb6bd44c59010b80a628d33a8ef5141c7bfa128cc1b78573c9652e605439571f69ebac0
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:0.8.1":
-  version: 0.8.1
-  resolution: "@graasp/sdk@npm:0.8.1"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 9.0.0
-  checksum: b2e8dec4aa624faef523e3452d117d6d565c474b5a51edbd4c98de0d1d0cf515fa067d5e47ffe57ac84a76668e15b473363df181cfcdf07cd0942f82a2c9281e
-  languageName: node
-  linkType: hard
-
-"@graasp/translations@npm:1.6.0":
-  version: 1.6.0
-  resolution: "@graasp/translations@npm:1.6.0"
-  dependencies:
-    i18next: 21.8.1
-  checksum: 4decfc135055ab65462cab9f2ba56efb257c836c6ad367d3a81762a4521dd9ff87d031c282eaf49e082a6b1fe385dd6e1b4d4b0ef38be400c68e39199a95b940
+  checksum: 49daf48b8877b1a0bdd0612c5a88be22860de4e94c494978732add26d38b5d0a6784df8eb8caedd7972b2767c78258c056c89889c73eeeb3971f2ff989a7f1e0
   languageName: node
   linkType: hard
 
@@ -2445,11 +2419,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@graasp/ui@npm:2.1.0"
+"@graasp/ui@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@graasp/ui@npm:2.2.0"
   dependencies:
-    "@graasp/sdk": 0.8.1
+    "@graasp/sdk": 0.9.2
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.2.4
@@ -2480,7 +2454,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 569a01f77d9a5b9b7bf28930b60f0199e2dadb911e831d709f04b40c7a46cc0f32392085e3edb0447d1eb16684d0e1e6a2556dcb0787b5fdfb348e158e41d34d
+  checksum: 0c87e2a73c223430723fabe02a5186ea44e3815f665bc0c5ba0213eb382925d9437ae3369c715dab02ee1441321ae02a1de233e303e29dd512b58016ff9976cc
   languageName: node
   linkType: hard
 
@@ -9860,11 +9834,11 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
-    "@graasp/chatbox": 1.0.4
-    "@graasp/query-client": 0.3.2
-    "@graasp/sdk": 0.8.1
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#82-change-border-color-of-notification-button"
+    "@graasp/query-client": 0.4.0
+    "@graasp/sdk": 0.9.2
     "@graasp/translations": 1.8.0
-    "@graasp/ui": 2.1.0
+    "@graasp/ui": 2.2.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117

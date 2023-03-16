@@ -11,13 +11,12 @@ import {
   HIDDEN_ITEM,
   ITEMS_SETTINGS,
 } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const toggleHideButton = (itemId, isHidden = false) => {
-  // cy.wait(TABLE_ITEM_RENDER_TIME);
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
-  cy.wait('@getItemsTags');
+
+  cy.wait('@getItemTags');
   cy.get(`#${buildItemMenu(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`)
     .should('have.attr', 'data-cy', buildHideButtonId(isHidden))
     .click();
