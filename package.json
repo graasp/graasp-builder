@@ -12,11 +12,11 @@
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
-    "@graasp/chatbox": "1.0.3",
-    "@graasp/query-client": "0.3.2",
-    "@graasp/sdk": "0.9.1",
+    "@graasp/chatbox": "1.1.0",
+    "@graasp/query-client": "0.4.0",
+    "@graasp/sdk": "0.9.2",
     "@graasp/translations": "1.8.0",
-    "@graasp/ui": "2.1.0",
+    "@graasp/ui": "2.2.0",
     "@mui/icons-material": "5.11.0",
     "@mui/lab": "5.0.0-alpha.117",
     "@mui/material": "5.11.6",
@@ -144,7 +144,6 @@
     "wait-on": "7.0.1"
   },
   "resolutions": {
-    "@graasp/sdk": "0.9.1",
     "@mui/icons-material": "5.11.0",
     "@mui/material": "5.11.6",
     "immer": "9.0.6",
