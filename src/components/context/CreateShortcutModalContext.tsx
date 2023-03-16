@@ -1,7 +1,7 @@
 import { FC, createContext, useMemo, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -11,7 +11,7 @@ import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal from '../main/TreeModal';
 
 const CreateShortcutModalContext = createContext({
-  openModal: (_newItem: Item) => {
+  openModal: (_newItem: DiscriminatedItem) => {
     // do nothing
   },
 });
@@ -26,9 +26,9 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
     MUTATION_KEYS.POST_ITEM,
   );
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState<Item>();
+  const [item, setItem] = useState<DiscriminatedItem>();
 
-  const openModal = (newItem: Item) => {
+  const openModal = (newItem: DiscriminatedItem) => {
     setOpen(true);
     setItem(newItem);
   };

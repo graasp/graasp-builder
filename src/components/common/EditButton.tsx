@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react';
 
-import { Item } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { EditButton as GraaspEditButton } from '@graasp/ui';
 
@@ -12,7 +12,7 @@ import {
 import { EditItemModalContext } from '../context/EditItemModalContext';
 
 type Props = {
-  item: Item;
+  item: DiscriminatedItem;
 };
 
 const EditButton: FC<Props> = ({ item }) => {
