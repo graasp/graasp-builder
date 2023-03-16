@@ -2261,16 +2261,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/cookie@npm:^7.0.0":
-  version: 7.4.0
-  resolution: "@fastify/cookie@npm:7.4.0"
-  dependencies:
-    cookie: ^0.5.0
-    fastify-plugin: ^4.0.0
-  checksum: cf710f8fcf07d1655bdd76b86076e32d343fdea9291534e0b87b909d978520333663c2aed63609f84c2eec46ac0e9068f462a4b63b5d124e3d31c873adaa66d7
-  languageName: node
-  linkType: hard
-
 "@fastify/cookie@npm:^8.0.0":
   version: 8.3.0
   resolution: "@fastify/cookie@npm:8.3.0"
@@ -2285,19 +2275,6 @@ __metadata:
   version: 2.0.0
   resolution: "@fastify/error@npm:2.0.0"
   checksum: ecf0834966b2bfb33ff834e3d55fe4dc04cbe9f822fda6c937b12cce4f162be4f8b0577ee665bc856d7012b1640c12472a1829a22ae38d287342c90b0f33a595
-  languageName: node
-  linkType: hard
-
-"@fastify/secure-session@npm:5.2.0":
-  version: 5.2.0
-  resolution: "@fastify/secure-session@npm:5.2.0"
-  dependencies:
-    "@fastify/cookie": ^7.0.0
-    fastify-plugin: ^3.0.0
-    sodium-native: ^3.0.0
-  bin:
-    secure-session: genkey.js
-  checksum: 3366155760af949e677cf41ad37863e49cac60ab98c519767c6aeafcce7147c2cb2594909ea03513885ff758b082db3f4ccd00ec5906af09a4a4ceabca3f7852
   languageName: node
   linkType: hard
 
@@ -2356,12 +2333,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:0.3.0":
-  version: 0.3.0
-  resolution: "@graasp/query-client@npm:0.3.0"
+"@graasp/query-client@npm:0.3.2":
+  version: 0.3.2
+  resolution: "@graasp/query-client@npm:0.3.2"
   dependencies:
-    "@graasp/sdk": 0.4.1
-    "@graasp/translations": 1.4.0
+    "@graasp/sdk": 0.8.1
+    "@graasp/translations": 1.8.0
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
@@ -2371,30 +2348,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 6d52a706f7b6418e4c67d4ca0835107c27b113d54fe090503694d6908f6ee1d48dd25fc00eac3d6d4436f14aa30f460ea1e9e300fd0e0a68398214bbaca00eef
+  checksum: 454c0e8e943efccb75e740995376dc713bdf0b8d7f619f59f1df35e4b4d7dc12c24430491f431494f94942356ac743c968bffd364275f73d531b67e30795d41f
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@graasp/sdk@npm:0.2.0"
-  dependencies:
-    "@fastify/secure-session": 5.2.0
-    aws-sdk: 2.1111.0
-    fastify: 3.29.1
-    fluent-json-schema: 3.1.0
-    immutable: 4.1.0
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 8.3.2
-  checksum: 95a76c69dd4577f8a0eb51197d83fdb5c61c58c1c6a7c895e7ca543d4883603bc7deb534fd5b7bc4f61b5f15cd0b6c403bf165e6a6a4a756707f9ad877961339
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:0.4.1":
-  version: 0.4.1
-  resolution: "@graasp/sdk@npm:0.4.1"
+"@graasp/sdk@npm:0.9.1":
+  version: 0.9.1
+  resolution: "@graasp/sdk@npm:0.9.1"
   dependencies:
     "@fastify/secure-session": 5.3.0
     aws-sdk: 2.1310.0
@@ -2405,41 +2365,7 @@ __metadata:
     qs: 6.11.0
     slonik: 28.1.1
     uuid: 9.0.0
-  checksum: dc65bdad6db5d8647c5753fa03c7d88cd894b3e3dc9da55c19e92da4bbc77cd85b542beb93ec5db46b75a8a7ac65ba8901258a667a3bedccb8fdfa6b4f13df14
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:0.6.0":
-  version: 0.6.0
-  resolution: "@graasp/sdk@npm:0.6.0"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 9.0.0
-  checksum: 450ec10d93b2139ea21728b6ce633e6947092707b1caa66055a0a251607b0c2b28ed03d3c9baa1864e930a460289927209256aef7509e7b8ff4973d17703a2ba
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@graasp/sdk@npm:0.7.0"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 9.0.0
-  checksum: 61b29e801c4ff4f55a5ce36b54e5ca10c05578e9f8a667692a100b7d052e5681366552c4de3a09f149d829aa27dcb558cc288cf7068df45eb837adb2217433c6
+  checksum: 28498b43bb23a4844aaea9e42301e97ce90758a338a6e54c3cb85f023ffff92e99f976728dd7670a09643b162ad912786e483e0d4a31066b9ea1afc821f389c2
   languageName: node
   linkType: hard
 
@@ -2500,11 +2426,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@graasp/ui@npm:2.0.0"
+"@graasp/ui@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@graasp/ui@npm:2.1.0"
   dependencies:
-    "@graasp/sdk": 0.6.0
+    "@graasp/sdk": 0.8.1
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.2.4
@@ -2535,7 +2461,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 0bfd67465c0b572732329e8d4b493f5113d8dfb4a5a51ec5a5b541f11f8425b2dd38032c5f54eccf798f400998a9effb8ed5a0526c2dd0fc6a6d31e26c87a42c
+  checksum: 569a01f77d9a5b9b7bf28930b60f0199e2dadb911e831d709f04b40c7a46cc0f32392085e3edb0447d1eb16684d0e1e6a2556dcb0787b5fdfb348e158e41d34d
   languageName: node
   linkType: hard
 
@@ -5505,23 +5431,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:2.1111.0":
-  version: 2.1111.0
-  resolution: "aws-sdk@npm:2.1111.0"
-  dependencies:
-    buffer: 4.9.2
-    events: 1.1.1
-    ieee754: 1.1.13
-    jmespath: 0.16.0
-    querystring: 0.2.0
-    sax: 1.2.1
-    url: 0.10.3
-    uuid: 3.3.2
-    xml2js: 0.4.19
-  checksum: 1e918377e23704b1656aa5b9072ef8d8166198b14a4cdfd313745f7d4a3f826e3c14f4806e5b985fd67139a2a4cf30d65a0024cec16fbb6daa3ae99287951b76
-  languageName: node
-  linkType: hard
-
 "aws-sdk@npm:2.1310.0":
   version: 2.1310.0
   resolution: "aws-sdk@npm:2.1310.0"
@@ -7360,9 +7269,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.6.0":
-  version: 12.6.0
-  resolution: "cypress@npm:12.6.0"
+"cypress@npm:12.7.0":
+  version: 12.7.0
+  resolution: "cypress@npm:12.7.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -7408,7 +7317,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 716afdc7bd83d14d9ad31aba9f757a5dfccc1a693c57273a6b2281ddc1b201a432fae5c5ae8f049088384e3bcc3bda530910870ff8604a0233e1b96abc069850
+  checksum: a9489f7f254dcee1b8a374d14d175c8f8681a3388e4c02181e0486f064f4de59bfc79dec1f401605332d3a5869bf2ba06b3a1653a5c287e447810d756d470078
   languageName: node
   linkType: hard
 
@@ -9057,29 +8966,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify@npm:3.29.1":
-  version: 3.29.1
-  resolution: "fastify@npm:3.29.1"
-  dependencies:
-    "@fastify/ajv-compiler": ^1.0.0
-    "@fastify/error": ^2.0.0
-    abstract-logging: ^2.0.0
-    avvio: ^7.1.2
-    fast-json-stringify: ^2.5.2
-    find-my-way: ^4.5.0
-    flatstr: ^1.0.12
-    light-my-request: ^4.2.0
-    pino: ^6.13.0
-    process-warning: ^1.0.0
-    proxy-addr: ^2.0.7
-    rfdc: ^1.1.4
-    secure-json-parse: ^2.0.0
-    semver: ^7.3.2
-    tiny-lru: ^8.0.1
-  checksum: 8f9e9c9f837135b82c58f4bf8d0ddfad703275ff48827e37eccdb0f8b0366e043a2111da4ee8d35ae1bc78512b52ac15140790bbe314b51deced535cff9fefe5
-  languageName: node
-  linkType: hard
-
 "fastify@npm:3.29.5":
   version: 3.29.5
   resolution: "fastify@npm:3.29.5"
@@ -9956,10 +9842,10 @@ __metadata:
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
     "@graasp/chatbox": 1.0.3
-    "@graasp/query-client": 0.3.0
-    "@graasp/sdk": 0.7.0
+    "@graasp/query-client": 0.3.2
+    "@graasp/sdk": 0.9.1
     "@graasp/translations": 1.8.0
-    "@graasp/ui": 2.0.0
+    "@graasp/ui": 2.1.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117
@@ -9991,7 +9877,7 @@ __metadata:
     ag-grid-community: 29.0.0
     ag-grid-react: 29.0.0
     concurrently: 7.6.0
-    cypress: 12.6.0
+    cypress: 12.7.0
     cypress-localstorage-commands: 2.2.2
     date-fns: 2.29.3
     env-cmd: 10.1.0
@@ -19057,15 +18943,6 @@ __metadata:
   version: 1.1.0
   resolution: "uuid-parse@npm:1.1.0"
   checksum: e522c23c2c348eacd880ec78a832f59c1feaccce6c062a5c7127af2f9e7d6cb079d3f06f059fd7e4779cd332091aa038a3bfa26c35d06d23c6f58be21b6461d5
-  languageName: node
-  linkType: hard
-
-"uuid@npm:3.3.2":
-  version: 3.3.2
-  resolution: "uuid@npm:3.3.2"
-  bin:
-    uuid: ./bin/uuid
-  checksum: 8793629d2799f500aeea9fcd0aec6c4e9fbcc4d62ed42159ad96be345c3fffac1bbf61a23e18e2782600884fee05e6d4012ce4b70d0037c8e987533ae6a77870
   languageName: node
   linkType: hard
 

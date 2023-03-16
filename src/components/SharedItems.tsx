@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import Box from '@mui/material/Box';
 
 import { FC } from 'react';
@@ -37,7 +35,7 @@ const SharedItems: FC = () => {
         <Items
           id={SHARED_ITEMS_ID}
           title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-          items={List(sharedItems)}
+          items={sharedItems}
           showCreator
         />
       </Box>

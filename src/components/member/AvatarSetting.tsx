@@ -1,12 +1,11 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { useEffect, useRef, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { ThumbnailSize } from '@graasp/sdk';
+import { MemberRecord } from '@graasp/sdk/frontend';
 import { ACCOUNT } from '@graasp/translations';
 import { Avatar } from '@graasp/ui';
 
@@ -22,16 +21,28 @@ import { configureAvatarUppy } from '../../utils/uppy';
 import CropModal from '../common/CropModal';
 import StatusBar from '../file/StatusBar';
 
-const AvatarSetting = ({ user }) => {
-  const inputRef = useRef();
+type Props = {
+  user: MemberRecord;
+};
+
+const AvatarSetting = ({ user }: Props): JSX.Element => {
+  const inputRef = useRef<HTMLInputElement>();
   const [uppy, setUppy] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
-  const [fileSource, setFileSource] = useState(false);
+  const [fileSource, setFileSource] = useState<string>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t } = useAccountTranslation();
-  const { mutate: onUploadAvatar } = useMutation(MUTATION_KEYS.UPLOAD_AVATAR);
+  const { data: avatarBlob, isLoading: isLoadingAvatar } = hooks.useAvatar({
+    id: user.id,
+    size: ThumbnailSize.Large,
+  });
+  const { mutate: onUploadAvatar } = useMutation<
+    unknown,
+    unknown,
+    { id: string; error?: unknown; data?: unknown }
+  >(MUTATION_KEYS.UPLOAD_AVATAR);
 
-  const userId = user?.id;
+  const userId = user.id;
 
   useEffect(() => {
     setUppy(
@@ -53,6 +64,7 @@ const AvatarSetting = ({ user }) => {
 
           return false;
         },
+        onFilesAdded: () => null,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,7 +74,7 @@ const AvatarSetting = ({ user }) => {
     return null;
   }
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -73,7 +85,9 @@ const AvatarSetting = ({ user }) => {
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => setFileSource(reader.result));
+      reader.addEventListener('load', () =>
+        setFileSource(reader.result as string),
+      );
       reader.readAsDataURL(e.target.files[0]);
       setShowCropModal(true);
     }
@@ -81,7 +95,9 @@ const AvatarSetting = ({ user }) => {
 
   const onClose = () => {
     setShowCropModal(false);
-    inputRef.current.value = null;
+    if (inputRef.current) {
+      inputRef.current.value = null;
+    }
   };
 
   const onConfirmCrop = (croppedImage) => {
@@ -133,12 +149,11 @@ const AvatarSetting = ({ user }) => {
         </Grid>
         <Grid item sm={6} xs={12}>
           <Avatar
-            id={userId}
-            extra={user?.extra}
+            blob={avatarBlob}
+            isLoading={isLoadingAvatar}
             alt={t(ACCOUNT.PROFILE_AVATAR_CURRENT_ALT)}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-            useAvatar={hooks.useAvatar}
             defaultImage={defaultImage}
           />
         </Grid>
@@ -151,10 +166,6 @@ const AvatarSetting = ({ user }) => {
       />
     </>
   );
-};
-
-AvatarSetting.propTypes = {
-  user: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default AvatarSetting;
