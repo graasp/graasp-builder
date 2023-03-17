@@ -115,13 +115,8 @@ const Main: FC<Props> = ({ children }) => {
       <Grid item>
         <MentionButton
           color="secondary"
-          // todo: remove with an update to the type of the prop in chatbox
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+          badgeColor="primary"
           useMentions={hooks.useMentions}
-          // todo: remove with an update to the type of the prop in chatbox
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           useMembers={hooks.useMembers}
           patchMentionFunction={patchMentionFunction}
           deleteMentionFunction={deleteMentionFunction}
