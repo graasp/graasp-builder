@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
@@ -17,7 +17,7 @@ import { useMutation } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
-  item: Item;
+  item: DiscriminatedItem;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };
@@ -29,9 +29,11 @@ const CollapseButton = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: editItem } = useMutation<unknown, unknown, Partial<Item>>(
-    MUTATION_KEYS.EDIT_ITEM,
-  );
+  const { mutate: editItem } = useMutation<
+    unknown,
+    unknown,
+    Partial<DiscriminatedItem>
+  >(MUTATION_KEYS.EDIT_ITEM);
   const [isCollapsible, setIsCollapsible] = useState(
     item?.settings?.isCollapsible ?? false,
   );

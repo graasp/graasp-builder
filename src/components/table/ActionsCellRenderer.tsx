@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 import { useEffect, useState } from 'react';
 
-import { Item } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import {
   ItemMembershipRecord,
   ItemRecord,
@@ -24,7 +24,7 @@ type Props = {
 };
 
 type ChildCompProps = {
-  data: Item;
+  data: DiscriminatedItem;
 };
 
 // items and memberships match by index

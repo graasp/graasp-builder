@@ -6,8 +6,8 @@ import { useNavigate, useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import {
+  DiscriminatedItem,
   FolderItemExtra,
-  Item,
   ItemType,
   getFolderExtra,
   getShortcutExtra,
@@ -100,10 +100,16 @@ const ItemsTable: FC<Props> = ({
     [isFolder, isSearching],
   );
 
-  const getRowNodeId = ({ data }: { data: Item }) =>
+  const getRowNodeId = ({ data }: { data: DiscriminatedItem }) =>
     buildItemsTableRowId(data.id);
 
-  const onCellClicked = ({ column, data }: { column: Column; data: Item }) => {
+  const onCellClicked = ({
+    column,
+    data,
+  }: {
+    column: Column;
+    data: DiscriminatedItem;
+  }) => {
     if (column.getColId() !== 'actions') {
       let targetId = data.id;
 
@@ -127,7 +133,7 @@ const ItemsTable: FC<Props> = ({
     return true;
   };
 
-  const onDragEnd = (displayRows: { data: Item }[]) => {
+  const onDragEnd = (displayRows: { data: DiscriminatedItem }[]) => {
     if (!itemId) {
       console.error('no item id defined');
     } else {
@@ -179,7 +185,8 @@ const ItemsTable: FC<Props> = ({
         field: 'type',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
         type: 'rightAligned',
-        cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
+        cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
+          translateEnums(data.type),
         flex: 2,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.type,
@@ -255,7 +262,7 @@ const ItemsTable: FC<Props> = ({
         id={tableId}
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
-        rowData={rows.toJS() as Item[]}
+        rowData={rows.toJS() as DiscriminatedItem[]}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
         onCellClicked={onCellClicked}

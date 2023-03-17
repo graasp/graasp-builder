@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButtonVariant, PinButton as GraaspPinButton } from '@graasp/ui';
 
@@ -11,7 +11,7 @@ import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
   type?: ActionButtonVariant;
-  item: Item;
+  item: DiscriminatedItem;
   onClick?: () => void;
 };
 
