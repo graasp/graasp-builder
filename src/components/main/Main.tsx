@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
+import { Context } from '@graasp/sdk';
 import {
   GraaspLogo,
   Main as GraaspMain,
@@ -135,6 +136,7 @@ const Main: FC<Props> = ({ children }) => {
 
   return (
     <GraaspMain
+      context={Context.BUILDER}
       handleDrawerOpen={() => {
         setIsMainMenuOpen(true);
       }}
