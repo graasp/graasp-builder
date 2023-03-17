@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/graasp/graasp-builder/compare/v0.9.0...v0.10.0) (2023-03-17)
+
+
+### Features
+
+* add colorful headers ([#593](https://github.com/graasp/graasp-builder/issues/593)) ([41ddacb](https://github.com/graasp/graasp-builder/commit/41ddacbf382609d8914694985ce89d062f8583ca))
+
 ## [0.9.0](https://github.com/graasp/graasp-builder/compare/v0.8.0...v0.9.0) (2023-03-16)
 
 
