@@ -2332,7 +2332,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#typeorm":
   version: 0.3.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=289f1a849d9b99d837fc56d514107884fe14c4f4"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=fadac91d8b6089703a7a1fda27814a2efc6d4a4e"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     "@graasp/translations": "github:graasp/graasp-translations#89-email"
@@ -2345,7 +2345,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: dba419dbca7a9650f406e4b81bbdbf849691bf3e2bfc89518b3648db27fa8df62663c0b578913d8a588a9b78534d7402b7a20a7d720e9d09053d9d20ac615c63
+  checksum: 71f87ec0c73870681182e8841e58fbd7ec39feddc72baa765d6f4ce21c796965e63a9c3258781bfe8a2f8b8ab4c43cd1224e789f5ad28eaf9cb938885004b6d9
   languageName: node
   linkType: hard
 
@@ -2404,7 +2404,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#typeorm":
   version: 0.12.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ce828403010eb615d23388261f0c070f150d7aaf"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=c5f570099f5d2c3ee53c03f62159c6af75db3a75"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     clsx: 1.1.1
@@ -2437,7 +2437,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 861c80b9c96c407d185c444ce1f6091121584e9700bc218f2a40b0e90e3d31aa30e1802af6c2ce3b9bfa7f24710ef37488bd9cf2addf5d9018b3dba79e57ff97
+  checksum: 0b136a2be26f776236c83154dfbc2b96a2ef4a6404ba9eb7ddac65d04da0df125bf38d534addc62de172693ba33b78afd94b35c078944a0f1fbf28a7706c97c7
   languageName: node
   linkType: hard
 

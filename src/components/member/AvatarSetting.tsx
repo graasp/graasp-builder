@@ -1,12 +1,9 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { useEffect, useRef, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { MemberRecord } from '@graasp/sdk/frontend';
 import { ACCOUNT } from '@graasp/translations';
 
 import {
@@ -14,21 +11,23 @@ import {
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../config/constants';
 import { useAccountTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME } from '../../config/selectors';
 import { configureAvatarUppy } from '../../utils/uppy';
 import CropModal from '../common/CropModal';
 import MemberAvatar from '../common/MemberAvatar';
 import StatusBar from '../file/StatusBar';
 
-const AvatarSetting = ({ user }) => {
-  const inputRef = useRef();
+type Props = { user: MemberRecord };
+
+const AvatarSetting = ({ user }: Props): JSX.Element => {
+  const inputRef = useRef<HTMLInputElement>();
   const [uppy, setUppy] = useState(null);
   const [showCropModal, setShowCropModal] = useState(false);
-  const [fileSource, setFileSource] = useState(false);
+  const [fileSource, setFileSource] = useState<string>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t } = useAccountTranslation();
-  const { mutate: onUploadAvatar } = useMutation(MUTATION_KEYS.UPLOAD_AVATAR);
+  const { mutate: onUploadAvatar } = mutations.useUploadAvatar();
 
   const userId = user?.id;
 
@@ -72,7 +71,9 @@ const AvatarSetting = ({ user }) => {
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => setFileSource(reader.result));
+      reader.addEventListener('load', () =>
+        setFileSource(reader.result as string),
+      );
       reader.readAsDataURL(e.target.files[0]);
       setShowCropModal(true);
     }
@@ -80,7 +81,9 @@ const AvatarSetting = ({ user }) => {
 
   const onClose = () => {
     setShowCropModal(false);
-    inputRef.current.value = null;
+    if (inputRef.current) {
+      inputRef.current.value = null;
+    }
   };
 
   const onConfirmCrop = (croppedImage) => {
@@ -147,10 +150,6 @@ const AvatarSetting = ({ user }) => {
       />
     </>
   );
-};
-
-AvatarSetting.propTypes = {
-  user: PropTypes.instanceOf(Record).isRequired,
 };
 
 export default AvatarSetting;

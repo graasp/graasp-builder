@@ -127,7 +127,7 @@ export const configureThumbnailUppy = ({
 
 export const configureAvatarUppy = ({
   itemId,
-  onFilesAdded,
+  onFilesAdded = null,
   onUpload,
   onComplete,
   onError,
