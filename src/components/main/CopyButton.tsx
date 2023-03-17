@@ -3,7 +3,10 @@ import { IconButtonProps } from '@mui/material';
 import { FC, MouseEventHandler } from 'react';
 
 import { BUILDER } from '@graasp/translations';
-import { CopyButton as GraaspCopyButton } from '@graasp/ui';
+import {
+  ActionButtonVariant,
+  CopyButton as GraaspCopyButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -16,7 +19,7 @@ export type Props = {
   color?: IconButtonProps['color'];
   id?: string;
   onClick?: MouseEventHandler<HTMLButtonElement | HTMLLIElement>;
-  type?: string;
+  type?: ActionButtonVariant;
   itemIds: string[];
 };
 

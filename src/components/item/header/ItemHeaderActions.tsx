@@ -1,8 +1,4 @@
-import EditIcon from '@mui/icons-material/Edit';
-import InfoIcon from '@mui/icons-material/Info';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import { Stack } from '@mui/material';
 
 import { ItemType } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
@@ -12,19 +8,15 @@ import { ChatboxButton } from '@graasp/ui';
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
-import {
-  ITEM_CHATBOX_BUTTON_ID,
-  ITEM_INFORMATION_BUTTON_ID,
-  ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
-  buildEditButtonId,
-} from '../../../config/selectors';
+import { ITEM_CHATBOX_BUTTON_ID } from '../../../config/selectors';
 import { ItemActionTabs } from '../../../enums';
 import {
   getHighestPermissionForMemberFromMemberships,
   isItemUpdateAllowedForUser,
 } from '../../../utils/membership';
 import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
-import PlayerViewButton from '../../common/PlayerViewButton';
+import EditItemCaptionButton from '../../common/EditItemCaptionButton';
+import ItemMetadataButton from '../../common/ItemMetadataButton';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
@@ -36,21 +28,16 @@ const { useItemMemberships } = hooks;
 
 type Props = {
   item: ItemRecord;
-  onClickMetadata: () => void;
-  onClickChatbox: () => void;
 };
 
-const ItemHeaderActions = ({
-  item,
-  onClickMetadata,
-  onClickChatbox,
-}: Props): JSX.Element => {
+const ItemHeaderActions = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
-    setEditingItemId,
     editingItemId,
     openedActionTabId,
-    isItemMetadataMenuOpen,
+    isChatboxMenuOpen,
+    setIsChatboxMenuOpen,
+    setIsItemMetadataMenuOpen,
   } = useLayoutContext();
   const id = item?.id;
   const type = item?.type;
@@ -67,6 +54,11 @@ const ItemHeaderActions = ({
     memberId: member?.id,
   });
 
+  const onClickChatbox = () => {
+    setIsChatboxMenuOpen(!isChatboxMenuOpen);
+    setIsItemMetadataMenuOpen(false);
+  };
+
   const renderItemActions = () => {
     // if id is defined, we are looking at an item
     if (id) {
@@ -76,26 +68,13 @@ const ItemHeaderActions = ({
 
       const activeActions = (
         <>
-          {showEditButton && (
-            <Tooltip title={translateBuilder(BUILDER.EDIT_BUTTON_TOOLTIP)}>
-              <IconButton
-                aria-label="edit"
-                onClick={() => {
-                  setEditingItemId(id);
-                }}
-                id={buildEditButtonId(id)}
-              >
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-          )}
+          {showEditButton && <EditItemCaptionButton itemId={id} />}
           <ShareButton itemId={id} />
           <ChatboxButton
             tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
             id={ITEM_CHATBOX_BUTTON_ID}
             onClick={onClickChatbox}
           />
-          <PlayerViewButton itemId={id} />
           {canAdmin && <PublishButton itemId={id} />}
           {canEdit && <AnalyticsDashboardButton id={id} />}
         </>
@@ -111,32 +90,15 @@ const ItemHeaderActions = ({
     return null;
   };
 
-  const renderTableActions = () => {
-    // show only for content with tables : root or folders
-    if (type === ItemType.FOLDER || !id) {
-      return <ModeButton />;
-    }
-    return null;
-  };
-
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Stack direction="row">
       {renderItemActions()}
-      {renderTableActions()}
-      {id && (
-        <Tooltip title={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}>
-          <IconButton
-            id={ITEM_INFORMATION_BUTTON_ID}
-            onClick={onClickMetadata}
-            className={
-              isItemMetadataMenuOpen ? ITEM_INFORMATION_ICON_IS_OPEN_CLASS : ''
-            }
-          >
-            <InfoIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Box>
+      {
+        // show only for content with tables : root or folders
+        (type === ItemType.FOLDER || !id) && <ModeButton />
+      }
+      {id && <ItemMetadataButton />}
+    </Stack>
   );
 };
 

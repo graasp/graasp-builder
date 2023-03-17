@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import ExploreIcon from '@mui/icons-material/Explore';
+import ShareIcon from '@mui/icons-material/Share';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -35,18 +35,20 @@ const PublishButton: FC<Props> = ({ itemId }) => {
 
   return (
     <Tooltip title={title}>
-      <IconButton
-        aria-label={title}
-        className={PUBLISH_ITEM_BUTTON_CLASS}
-        onClick={onClick}
-        id={buildPublishButtonId(itemId)}
-      >
-        {openedActionTabId === ItemActionTabs.Library ? (
-          <CloseIcon />
-        ) : (
-          <ExploreIcon />
-        )}
-      </IconButton>
+      <span>
+        <IconButton
+          aria-label={title}
+          className={PUBLISH_ITEM_BUTTON_CLASS}
+          onClick={onClick}
+          id={buildPublishButtonId(itemId)}
+        >
+          {openedActionTabId === ItemActionTabs.Library ? (
+            <CloseIcon />
+          ) : (
+            <ShareIcon />
+          )}
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };

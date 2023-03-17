@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Item, ItemMembership } from '@graasp/sdk';
+import { DiscriminatedItem, ItemMembership } from '@graasp/sdk';
 import { MemberRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 
 import {
@@ -17,7 +17,7 @@ type Props = {
 };
 
 type ChildCompProps = {
-  data: Item;
+  data: DiscriminatedItem;
 };
 
 // items and memberships match by index

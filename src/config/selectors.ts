@@ -117,6 +117,8 @@ export const MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID =
   'memberProfileEmailFreqSwitch';
 export const MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID =
   'memberProfileMemberIdCopyButton';
+export const MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID =
+  'memberProfileSaveActionsToggle';
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
 export const buildMemberAvatarClass = (id?: string): string =>
@@ -180,6 +182,7 @@ export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
 export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
 export const SETTINGS_COLLAPSE_TOGGLE_ID = 'settingsCollapseToggle';
 export const SETTINGS_RESIZE_TOGGLE_ID = 'settingsResizeToggle';
+export const SETTINGS_SAVE_ACTIONS_TOGGLE_ID = 'settingsSaveActionsToggle';
 
 export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
   'itemsTableRestoreSelectedItems';
@@ -240,6 +243,7 @@ export const buildInvitationTableRowId = (id: string): string =>
   `invitationTableRow-${id}`;
 export const buildInvitationTableRowSelector = (id: string): string =>
   `[row-id="${buildInvitationTableRowId(id)}"]`;
+export const ITEM_RESEND_INVITATION_BUTTON_CLASS = 'itemResendInvitationButton';
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
 export const NAVIGATION_ROOT_ID = 'navigationRoot';
 export const HEADER_MEMBER_MENU_BUTTON_ID = 'headerMemberMenuButton';

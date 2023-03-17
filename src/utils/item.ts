@@ -4,9 +4,9 @@ import { List } from 'immutable';
 import { useEffect, useState } from 'react';
 
 import {
+  DiscriminatedItem,
   FolderItemExtra,
   Invitation,
-  Item,
   ItemMembership,
   ItemType,
   getAppExtra,
@@ -53,7 +53,10 @@ export const buildPath = ({
   ids: string[];
 }): string => `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
 
-export const getItemById = (items: Item[], id: string): Item | undefined =>
+export const getItemById = (
+  items: DiscriminatedItem[],
+  id: string,
+): DiscriminatedItem | undefined =>
   items.find(({ id: thisId }) => id === thisId);
 
 export const getDirectParentId = (path: string): string | null => {
@@ -72,8 +75,10 @@ export const isChild = (
   return ({ path }) => path.match(reg);
 };
 
-export const getChildren = (items: Item[], id: string): Item[] =>
-  items.filter(isChild(id));
+export const getChildren = (
+  items: DiscriminatedItem[],
+  id: string,
+): DiscriminatedItem[] => items.filter(isChild(id));
 
 export const isRootItem = ({ path }: { path: string }): boolean =>
   path.length === UUID_LENGTH;
@@ -91,7 +96,7 @@ export const isUrlValid = (str: string): boolean => {
   return Boolean(str) && pattern.test(str);
 };
 
-export const isItemValid = (item: Partial<Item>): boolean => {
+export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
   if (!item) {
     return false;
   }

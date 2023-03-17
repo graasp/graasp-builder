@@ -4,7 +4,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
@@ -24,20 +24,29 @@ type Props = {
   onConfirm: (blob: Blob | null) => void;
 };
 
-const CropModal = ({ open, onClose, src, onConfirm }: Props): JSX.Element => {
-  const [crop, setCrop] = useState<PixelCrop>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-    unit: 'px',
-  });
-  const [imageRef, setImageRef] = useState<HTMLImageElement>();
+const CropModal = ({ onConfirm, open, onClose, src }: Props): JSX.Element => {
+  const [crop, setCrop] = useState<PixelCrop>();
+  const imageRef = useRef<HTMLImageElement>();
   const { t } = useBuilderTranslation();
+
+  const makeClientCrop = async (newCrop: PixelCrop) => {
+    if (imageRef.current && newCrop.width && newCrop.height) {
+      const croppedImage = await getCroppedImg(imageRef.current, newCrop);
+      return croppedImage;
+    }
+    return null;
+  };
+
+  const handleOnConfirm = async () => {
+    const final = await makeClientCrop(crop);
+    onConfirm(final);
+  };
 
   // If you setState the crop in here you should return false.
   const onImageLoaded = (img: HTMLImageElement) => {
-    setImageRef(img);
+    if (!imageRef.current) {
+      imageRef.current = img;
+    }
     const { width: imgWidth, height: imgHeight } = img;
 
     const aspect = THUMBNAIL_ASPECT;
@@ -69,21 +78,8 @@ const CropModal = ({ open, onClose, src, onConfirm }: Props): JSX.Element => {
     return false; // Return false if you set crop state in here.
   };
 
-  const onCropChange = (c: Crop, _percentageCrop: Crop) => {
-    setCrop(c as PixelCrop);
-  };
-
-  const makeClientCrop = async (c: PixelCrop) => {
-    if (imageRef && c.width && c.height) {
-      const croppedImage = await getCroppedImg(imageRef, c);
-      return croppedImage;
-    }
-    return null;
-  };
-
-  const handleOnConfirm = async () => {
-    const final = await makeClientCrop(crop);
-    onConfirm(final);
+  const onCropChange = (newCrop: Crop, _percentageCrop: Crop) => {
+    setCrop(newCrop as PixelCrop);
   };
 
   const label = 'crop-modal-title';

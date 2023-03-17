@@ -19,7 +19,10 @@ import { Loader } from '@graasp/ui';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { getItemLoginSchema } from '../../../utils/itemExtra';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
+import {
+  isItemUpdateAllowedForUser,
+  isSettingsEditionAllowedForUser,
+} from '../../../utils/membership';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
 import CsvInputParser from './CsvInputParser';
@@ -40,6 +43,11 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 
   const canEdit = isItemUpdateAllowedForUser({
+    memberships,
+    memberId: currentMember?.id,
+  });
+
+  const canEditSettings = isSettingsEditionAllowedForUser({
     memberships,
     memberId: currentMember?.id,
   });
@@ -67,9 +75,9 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
           <Typography variant="h5" m={0} p={0}>
             {translateBuilder(BUILDER.SHARING_AUTHORIZED_MEMBERS_TITLE)}
           </Typography>
-          {canEdit && <CsvInputParser item={item} />}
+          {canEditSettings && <CsvInputParser item={item} />}
         </Grid>
-        {canEdit && (
+        {canEditSettings && (
           <CreateItemMembershipForm item={item} memberships={memberships} />
         )}
         <ItemMembershipsTable
@@ -78,6 +86,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
             BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE,
           )}
           memberships={authorizedMemberships}
+          readOnly={!canEditSettings}
         />
 
         {/* show authenticated members if login schema is defined
@@ -97,6 +106,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
                 BUILDER.SHARING_AUTHENTICATED_MEMBERS_EMPTY_MESSAGE,
               )}
               showEmail={false}
+              readOnly={!canEditSettings}
             />
           </>
         )}
@@ -113,6 +123,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
               emptyMessage={translateBuilder(
                 BUILDER.SHARING_INVITATIONS_EMPTY_MESSAGE,
               )}
+              readOnly={!canEditSettings}
             />
             <Divider sx={{ my: 3 }} />
           </>
@@ -130,7 +141,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
       <Typography variant="h6">
         {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
       </Typography>
-      <VisibilitySelect item={item} edit={canEdit} />
+      <VisibilitySelect item={item} edit={canEditSettings} />
       {renderMembershipSettings()}
     </Container>
   );

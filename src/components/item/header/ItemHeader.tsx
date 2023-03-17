@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 
 import { useMatch } from 'react-router';
 
@@ -13,16 +13,10 @@ import ItemHeaderActions from './ItemHeaderActions';
 const { useItem } = hooks;
 
 type Props = {
-  onClickMetadata?: () => void;
-  onClickChatbox?: () => void;
   showNavigation?: boolean;
 };
 
-const ItemHeader = ({
-  onClickMetadata,
-  onClickChatbox,
-  showNavigation = true,
-}: Props): JSX.Element => {
+const ItemHeader = ({ showNavigation = true }: Props): JSX.Element => {
   const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
@@ -32,23 +26,17 @@ const ItemHeader = ({
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
+    <Stack
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
       mb={1}
       id={ITEM_HEADER_ID}
     >
       {/* display empty div to render actions on the right */}
       {showNavigation ? <Navigation /> : <div />}
-      <ItemHeaderActions
-        item={item}
-        onClickChatbox={onClickChatbox}
-        onClickMetadata={onClickMetadata}
-      />
-    </Box>
+      <ItemHeaderActions item={item} />
+    </Stack>
   );
 };
 

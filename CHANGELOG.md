@@ -2,6 +2,74 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/graasp/graasp-builder/compare/v0.9.0...v0.10.0) (2023-03-17)
+
+
+### Features
+
+* add colorful headers ([#593](https://github.com/graasp/graasp-builder/issues/593)) ([41ddacb](https://github.com/graasp/graasp-builder/commit/41ddacbf382609d8914694985ce89d062f8583ca))
+
+## [0.9.0](https://github.com/graasp/graasp-builder/compare/v0.8.0...v0.9.0) (2023-03-16)
+
+
+### Features
+
+* add switch of actions saving ([6027d90](https://github.com/graasp/graasp-builder/commit/6027d908bf3a730fc8e175c14f8482d2092f442a))
+* adds read-only mode to sharing menu ([def82e5](https://github.com/graasp/graasp-builder/commit/def82e5b7a1e39614a8d1e36523aff4fe2a79d82))
+
+
+### Bug Fixes
+
+* favoriteItem screen shows error ([080d24f](https://github.com/graasp/graasp-builder/commit/080d24fc134e9eb1e7a5adf39af7c4afa6b39674))
+* fix condition to use default settings ([e0ff7da](https://github.com/graasp/graasp-builder/commit/e0ff7dab9ddd02e6b367c91ff9251e52ab46f71f))
+* fix tests ([93c7860](https://github.com/graasp/graasp-builder/commit/93c7860a5314f9efb5a6b79f7ca02c54b0f0b1b1))
+* profile picture does not show ([#592](https://github.com/graasp/graasp-builder/issues/592)) ([080d24f](https://github.com/graasp/graasp-builder/commit/080d24fc134e9eb1e7a5adf39af7c4afa6b39674))
+* update packages' version ([5ff89eb](https://github.com/graasp/graasp-builder/commit/5ff89ebe84e30ee169693fc1248a34d8aa5676c3))
+* update yarn.lock ([666c544](https://github.com/graasp/graasp-builder/commit/666c544a13d2b75692864ba40f422d3999ca1f67))
+* use `CustomInitialLoader` on first load ([#588](https://github.com/graasp/graasp-builder/issues/588)) ([822383e](https://github.com/graasp/graasp-builder/commit/822383e5f12d4c49f3cc595b4ce76188d729627c))
+* use translation for the text in tooltip ([7651325](https://github.com/graasp/graasp-builder/commit/765132559087b32cd1b6534e61215c911f138572))
+
+
+### Tests
+
+* add tests for enable analytics toggles ([b3983cf](https://github.com/graasp/graasp-builder/commit/b3983cfb2a0ff3f1b3145f3fa181a2947550b0cc))
+
+## [0.8.0](https://github.com/graasp/graasp-builder/compare/v0.7.0...v0.8.0) (2023-03-06)
+
+
+### Features
+
+* add document styles ([#562](https://github.com/graasp/graasp-builder/issues/562)) ([747f95c](https://github.com/graasp/graasp-builder/commit/747f95cee59424d354929cb695c1aa5dacc1297b))
+
+
+### Bug Fixes
+
+* **ci:** sentry version uses `REACT_APP_VERSION` ([#581](https://github.com/graasp/graasp-builder/issues/581)) ([6dea58c](https://github.com/graasp/graasp-builder/commit/6dea58cb7e6db3f9b0c347dc1da0dacda802354e))
+* **quill:** save empty string when content is empty ([#578](https://github.com/graasp/graasp-builder/issues/578)) ([c62de5d](https://github.com/graasp/graasp-builder/commit/c62de5d98b4a8d0b5148185ef3f947bdddc80186))
+* remove player button from item header actions ([#575](https://github.com/graasp/graasp-builder/issues/575)) ([c7ec487](https://github.com/graasp/graasp-builder/commit/c7ec4873ec5937dca6c76db1f6c20368c06197ad))
+
+## [0.7.0](https://github.com/graasp/graasp-builder/compare/v0.6.1...v0.7.0) (2023-02-24)
+
+
+### Features
+
+* add admin chat settings (export and clear) ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* move types to `@graasp/sdk` and export chat ([#440](https://github.com/graasp/graasp-builder/issues/440)) ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **ui:** change `Share` icon and improve layout of item header actions ([#566](https://github.com/graasp/graasp-builder/issues/566)) ([5238321](https://github.com/graasp/graasp-builder/commit/523832141f4a9ebb974320e234b694370775210d))
+
+
+### Bug Fixes
+
+* add scrollable tabs to new item modal ([#565](https://github.com/graasp/graasp-builder/issues/565)) ([12e3a2f](https://github.com/graasp/graasp-builder/commit/12e3a2f17c3beea59a705b2a6e77401ff91a0de8))
+* move a lot of files to TS ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* possible null item in editItemModalContext ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **test:** add item-memberships public stub ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **test:** remove waits ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* **test:** signed out user should not be able to open publish settings ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* use enums from sdk ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* use ItemRecord as the default type for items inside the app ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+* use sdk types instead of query-client ([2fd5a36](https://github.com/graasp/graasp-builder/commit/2fd5a36e0cde73ce1bcc9a9a3aeec1c02ad64260))
+
 ## [0.6.1](https://github.com/graasp/graasp-builder/compare/v0.6.0...v0.6.1) (2023-02-17)
 
 

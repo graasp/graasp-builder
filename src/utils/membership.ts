@@ -18,7 +18,7 @@ export const isItemUpdateAllowedForUser = ({
   memberships,
   memberId,
 }: {
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
   memberId: string;
 }): boolean =>
   Boolean(

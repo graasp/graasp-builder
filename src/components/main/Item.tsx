@@ -4,7 +4,7 @@ import truncate from 'lodash.truncate';
 import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Item, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
@@ -81,14 +81,14 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
   // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {member && member.id && <FavoriteButton size="small" item={item} />}
+      {member && member.id && <FavoriteButton size="medium" item={item} />}
       {enableEdition && (
         <>
           <EditButton
             item={
               // DO NOT REMOVE cast
               // here we cast explicitly to be equivalent to the grid which does not let us use Records
-              item.toJS() as Item
+              item.toJS() as DiscriminatedItem
             }
           />
           <DownloadButton id={id} name={name} />
@@ -105,7 +105,12 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
       Actions={Actions}
       name={name}
       creator={member?.name}
-      ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}
+      ItemMenu={
+        <ItemMenu
+          item={item.toJS() as DiscriminatedItem}
+          canEdit={enableEdition}
+        />
+      }
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
       NameWrapper={NameWrapper({

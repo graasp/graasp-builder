@@ -30,17 +30,19 @@ const AnalyticsDashboardButton: FC<Props> = ({ id }) => {
 
   return (
     <Tooltip title={translateBuilder(BUILDER.ANALYTICS_DASHBOARD_LABEL)}>
-      <IconButton
-        aria-label={translateBuilder(BUILDER.ANALYTICS_DASHBOARD_LABEL)}
-        onClick={onClick}
-        id={buildDashboardButtonId(id)}
-      >
-        {openedActionTabId === ItemActionTabs.Dashboard ? (
-          <CloseIcon />
-        ) : (
-          <PieChartIcon />
-        )}
-      </IconButton>
+      <span>
+        <IconButton
+          aria-label={translateBuilder(BUILDER.ANALYTICS_DASHBOARD_LABEL)}
+          onClick={onClick}
+          id={buildDashboardButtonId(id)}
+        >
+          {openedActionTabId === ItemActionTabs.Dashboard ? (
+            <CloseIcon />
+          ) : (
+            <PieChartIcon />
+          )}
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };

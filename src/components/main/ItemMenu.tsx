@@ -8,10 +8,10 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { FC, useContext, useState } from 'react';
 
-import { Item, convertJs } from '@graasp/sdk';
+import { DiscriminatedItem, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
+import { ActionButton } from '@graasp/ui';
 
-import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_BUTTON_CLASS,
@@ -32,7 +32,7 @@ import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
 
 type Props = {
-  item: Item;
+  item: DiscriminatedItem;
   canEdit?: boolean;
 };
 
@@ -70,16 +70,20 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
     return [
       <MoveButton
         key="move"
-        type={ButtonType.MENU_ITEM}
+        type={ActionButton.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
       />,
-      <HideButton key="hide" type={ButtonType.MENU_ITEM} item={item} />,
-      <PinButton key="pin" type={ButtonType.MENU_ITEM} item={item} />,
-      <CollapseButton key="collapse" type={ButtonType.MENU_ITEM} item={item} />,
+      <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />,
+      <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
+      <CollapseButton
+        key="collapse"
+        type={ActionButton.MENU_ITEM}
+        item={item}
+      />,
       <RecycleButton
         key="recycle"
-        type={ButtonType.MENU_ITEM}
+        type={ActionButton.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
       />,
@@ -92,13 +96,14 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
     }
     return [
       <FavoriteButton
+        size="medium"
         key="favorite"
-        type={ButtonType.MENU_ITEM}
+        type={ActionButton.MENU_ITEM}
         item={convertJs(item)}
       />,
       <CopyButton
         key="copy"
-        type={ButtonType.MENU_ITEM}
+        type={ActionButton.MENU_ITEM}
         itemIds={[item.id]}
         onClick={handleClose}
       />,

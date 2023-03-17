@@ -31,12 +31,14 @@ type Props = {
   item: ItemRecord;
   invitations: List<InvitationRecord>;
   emptyMessage?: string;
+  readOnly?: boolean;
 };
 
 const InvitationsTable = ({
   invitations,
   item,
   emptyMessage,
+  readOnly = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: editInvitation } = useMutation<
@@ -92,6 +94,7 @@ const InvitationsTable = ({
         ],
       });
     },
+    readOnly,
   });
 
   const InvitationRenderer = ResendInvitationRenderer(item.id);
@@ -100,8 +103,8 @@ const InvitationsTable = ({
   const columnDefs = useMemo(
     () => [
       {
-        headerCheckboxSelection: true,
-        checkboxSelection: true,
+        headerCheckboxSelection: !readOnly,
+        checkboxSelection: !readOnly,
         comparator: GraaspTable.textComparator,
         headerName: translateBuilder(BUILDER.INVITATIONS_TABLE_EMAIL_HEADER),
         field: 'email',
@@ -114,10 +117,10 @@ const InvitationsTable = ({
           BUILDER.INVITATIONS_TABLE_INVITATION_HEADER,
         ),
         sortable: false,
-        cellRenderer: InvitationRenderer,
+        cellRenderer: readOnly ? null : InvitationRenderer,
         cellStyle: rowStyle,
         flex: 1,
-        field: 'email',
+        field: readOnly ? null : 'email',
       },
       {
         headerName: translateBuilder(
@@ -127,11 +130,19 @@ const InvitationsTable = ({
         comparator: GraaspTable.textComparator,
         type: 'rightAligned',
         field: 'permission',
+        cellStyle: readOnly
+          ? {
+              display: 'flex',
+              justifyContent: 'right',
+            }
+          : null,
       },
       {
-        field: 'actions',
-        cellRenderer: ActionRenderer,
-        headerName: translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
+        field: readOnly ? null : 'actions',
+        cellRenderer: readOnly ? null : ActionRenderer,
+        headerName: readOnly
+          ? null
+          : translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
@@ -143,7 +154,13 @@ const InvitationsTable = ({
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [translateBuilder, InvitationRenderer, PermissionRenderer, ActionRenderer],
+    [
+      translateBuilder,
+      InvitationRenderer,
+      PermissionRenderer,
+      ActionRenderer,
+      readOnly,
+    ],
   );
 
   const countTextFunction = (selected) =>

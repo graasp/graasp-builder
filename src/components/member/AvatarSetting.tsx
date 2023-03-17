@@ -18,7 +18,9 @@ import CropModal from '../common/CropModal';
 import MemberAvatar from '../common/MemberAvatar';
 import StatusBar from '../file/StatusBar';
 
-type Props = { user: MemberRecord };
+type Props = {
+  user: MemberRecord;
+};
 
 const AvatarSetting = ({ user }: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>();
@@ -51,6 +53,7 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
 
           return false;
         },
+        onFilesAdded: () => null,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +63,7 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
     return null;
   }
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_event, reason) => {
     if (reason === 'clickaway') {
       return;
     }

@@ -8,8 +8,10 @@ import ReactGA from 'react-ga4';
 import { hasAcceptedCookies } from '@graasp/sdk';
 import '@graasp/ui/dist/bundle.css';
 
+import pkg from '../package.json';
 import Root from './components/Root';
 import {
+  APP_VERSION,
   ENV,
   GA_MEASUREMENT_ID,
   NODE_ENV,
@@ -23,7 +25,7 @@ if (SENTRY_DSN) {
     dsn: SENTRY_DSN,
     integrations: [new BrowserTracing()],
     environment: SENTRY_ENVIRONMENT,
-    release: `${process.env.npm_package_name}@v${process.env.npm_package_version}`,
+    release: `${pkg.name}@v${APP_VERSION}`,
 
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.

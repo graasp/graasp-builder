@@ -20,6 +20,8 @@ export const NODE_ENV =
 
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 
+export const APP_VERSION = process.env.REACT_APP_VERSION || 'latest';
+
 export const API_HOST =
   process.env.REACT_APP_API_HOST || 'http://localhost:3111';
 
@@ -80,6 +82,9 @@ export const DEFAULT_SHOW_CHATBOX_SETTING = false;
 export const DEFAULT_PINNED_SETTING = false;
 export const DEFAULT_COLLAPSIBLE_SETTING = false;
 export const DEFAULT_RESIZE_SETTING = false;
+export const DEFAULT_SAVE_ACTIONS_SETTING = true;
+
+export const DEFAULT_MEMBER_PROFILE_SAVE_ACTIONS_SETTING = true;
 
 export const DEFAULT_PERMISSION_LEVEL = PermissionLevel.Read;
 
@@ -169,7 +174,7 @@ export const DRAG_ICON_SIZE = 18;
 
 export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
-export const THUMBNAIL_SETTING_MAX_WIDTH = 300;
+export const THUMBNAIL_SETTING_MAX_WIDTH = 200;
 export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
 
 export const H5P_FILE_DOT_EXTENSION = '.h5p';
@@ -209,11 +214,6 @@ export const HOST_MAP = {
   [Context.EXPLORER]: '',
 };
 
-export enum ButtonType {
-  MENU_ITEM = 'menuItem',
-  ICON_BUTTON = 'iconButton',
-}
-
 export const MEMBERSHIP_TABLE_HEIGHT = 400;
 export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
 
@@ -235,7 +235,7 @@ export const THUMBNAIL_SIZES = {
   SMALL: 'small',
 };
 
-export const ITEM_HEADER_ICON_HEIGHT = 30;
+export const ITEM_HEADER_ICON_HEIGHT = 24;
 export const AVATAR_ICON_HEIGHT = 30;
 export const DEFAULT_LINK_SHOW_IFRAME = false;
 export const DEFAULT_LINK_SHOW_BUTTON = true;

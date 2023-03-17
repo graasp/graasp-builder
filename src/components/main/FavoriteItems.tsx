@@ -1,11 +1,7 @@
-import { List } from 'immutable';
-
 import Box from '@mui/material/Box';
 
 import { FC, useEffect } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -33,19 +29,7 @@ const FavoriteItems: FC = () => {
     data,
     isLoading: isItemsLoading,
     isError: isItemsError,
-  } = hooks.useItems(getFavoriteItems(member).toArray());
-  const favoriteItems = data?.data?.toSeq()?.toList() as List<ItemRecord>;
-  const mutation = useMutation<
-    unknown,
-    unknown,
-    {
-      id: string;
-      extra: {
-        favoriteItems: string[];
-      };
-    }
-  >(MUTATION_KEYS.EDIT_MEMBER);
-  console.log(favoriteItems);
+  } = hooks.useItems([...new Set(getFavoriteItems(member).toArray())]);
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them
   // this effect does not take effect if there is only one (deleted) item
   useEffect(() => {

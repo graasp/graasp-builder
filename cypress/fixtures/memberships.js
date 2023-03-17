@@ -74,3 +74,38 @@ export const ITEMS_WITH_MEMBERSHIPS = {
     },
   ],
 };
+
+export const ITEM_WITH_WRITE_ACCESS = {
+  items: [
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+      creator: MEMBERS.BOB.id,
+      name: 'own_item_name1',
+      path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+      extra: {
+        image: 'someimageurl',
+      },
+      memberships: [
+        {
+          id: 'ecafbd2a-5688-11eb-be93-0242ac130002',
+          itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.ADMIN,
+          memberId: MEMBERS.BOB.id,
+        },
+        {
+          id: 'ecafbd2a-5688-11eb-be92-0242ac130002',
+          itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.WRITE,
+          memberId: MEMBERS.ANNA.id,
+        },
+        {
+          id: 'ecafbd1a-5688-11eb-be93-0242ac130002',
+          itemPath: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+          permission: PERMISSION_LEVELS.READ,
+          memberId: MEMBERS.CEDRIC.id,
+        },
+      ],
+    },
+  ],
+};

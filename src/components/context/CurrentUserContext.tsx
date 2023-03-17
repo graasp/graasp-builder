@@ -6,9 +6,9 @@ import { MemberRecord } from '@graasp/sdk/frontend';
 import i18n from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 
-type CurrentUserContextType = QueryObserverResult<MemberRecord> | null;
+type CurrentUserContextType = QueryObserverResult<MemberRecord> | undefined;
 
-const CurrentUserContext = createContext<CurrentUserContextType>(null);
+const CurrentUserContext = createContext<CurrentUserContextType>(undefined);
 
 type Props = {
   children: JSX.Element | JSX.Element[];

@@ -8,7 +8,12 @@ import { FC, useState } from 'react';
 import { useMatch } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType, UnknownExtra, convertJs } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemType,
+  UnknownExtra,
+  convertJs,
+} from '@graasp/sdk';
 import {
   AppItemTypeRecord,
   DocumentItemTypeRecord,
@@ -126,7 +131,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
     );
   };
 
-  const updateItem = (item: Partial<Item<UnknownExtra>>) => {
+  const updateItem = (item: Partial<DiscriminatedItem<UnknownExtra>>) => {
     // update content given current type
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,

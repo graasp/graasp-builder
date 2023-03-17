@@ -9,6 +9,7 @@ import {
   SETTINGS_LINK_SHOW_BUTTON_ID,
   SETTINGS_LINK_SHOW_IFRAME_ID,
   SETTINGS_PINNED_TOGGLE_ID,
+  SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
 } from '../../../../src/config/selectors';
 import {
   ITEM_WITH_CHATBOX_MESSAGES,
@@ -203,6 +204,19 @@ describe('Item Settings', () => {
           cy.get('@getItem').its('response.url').should('contain', itemId);
         },
       );
+    });
+  });
+
+  describe('Analytics Settings', () => {
+    it('Layout', () => {
+      const itemId = ITEMS_SETTINGS.items[2].id;
+      cy.visit(buildItemPath(itemId));
+      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+
+      cy.get(`#${SETTINGS_SAVE_ACTIONS_TOGGLE_ID}`)
+        .should('exist')
+        .should('be.disabled')
+        .should('not.be.checked');
     });
   });
 

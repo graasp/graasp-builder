@@ -674,6 +674,7 @@ export const ITEMS_SETTINGS = {
       settings: {
         isPinned: false,
         showChatbox: false,
+        enableSaveActions: false,
       },
       memberships: [
         {

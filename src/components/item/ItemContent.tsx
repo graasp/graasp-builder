@@ -1,21 +1,32 @@
-import { Container, styled } from '@mui/material';
+import { Button, Container, styled } from '@mui/material';
 
-import { FC } from 'react';
+import { useState } from 'react';
 import { UseQueryResult } from 'react-query';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import {
   Context,
+  DocumentItemExtraProperties,
   ItemType,
   PermissionLevel,
   buildPdfViewerLink,
   getDocumentExtra,
+  getH5PExtra,
 } from '@graasp/sdk';
 import {
+  AppItemTypeRecord,
   DocumentItemTypeRecord,
+  EmbeddedLinkItemTypeRecord,
+  EtherpadItemTypeRecord,
   EtherpadRecord,
+  FolderItemTypeRecord,
+  H5PItemTypeRecord,
   ItemRecord,
+  LocalFileItemTypeRecord,
+  MemberRecord,
+  S3FileItemTypeRecord,
 } from '@graasp/sdk/frontend';
+import { COMMON } from '@graasp/translations';
 import {
   AppItem,
   DocumentItem,
@@ -24,6 +35,7 @@ import {
   H5PItem,
   LinkItem,
   Loader,
+  SaveButton,
 } from '@graasp/ui';
 
 import {
@@ -34,7 +46,8 @@ import {
   H5P_INTEGRATION_URL,
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
-import { hooks, useMutation } from '../../config/queryClient';
+import { useCommonTranslation } from '../../config/i18n';
+import { hooks, mutations, useMutation } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
@@ -49,80 +62,334 @@ import { useLayoutContext } from '../context/LayoutContext';
 import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
+import { DocumentExtraForm } from './form/DocumentForm';
 
-const { useChildren, useFileUrl, useEtherpad } = hooks;
+const { useChildren, useFileContentUrl, useEtherpad } = hooks;
 
-const FileWrapper = styled(Container)(() => ({
+const StyledContainer = styled(Container)(() => ({
   textAlign: 'center',
   height: '80vh',
   flexGrow: 1,
 }));
 
+/**
+ * Helper component to render typed file items
+ */
+const FileContent = ({
+  item,
+  isEditing,
+  onSaveCaption,
+  saveButtonId,
+}: {
+  item: LocalFileItemTypeRecord | S3FileItemTypeRecord;
+  isEditing: boolean;
+  onSaveCaption: (text: string) => void;
+  saveButtonId: string;
+}): JSX.Element => {
+  const { data: fileUrl, isLoading, isError } = useFileContentUrl(item.id);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+  }
+
+  return (
+    <StyledContainer>
+      <FileItem
+        editCaption={isEditing}
+        fileUrl={fileUrl}
+        id={buildFileItemId(item.id)}
+        item={item}
+        onSaveCaption={onSaveCaption}
+        pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
+        saveButtonId={saveButtonId}
+      />
+    </StyledContainer>
+  );
+};
+
+/**
+ * Helper component to render typed link items
+ */
+const LinkContent = ({
+  item,
+  member,
+  isEditing,
+  onSaveCaption,
+  saveButtonId,
+}: {
+  item: EmbeddedLinkItemTypeRecord;
+  member: MemberRecord;
+  isEditing: boolean;
+  onSaveCaption: (caption: string) => void;
+  saveButtonId: string;
+}): JSX.Element => (
+  <StyledContainer>
+    <LinkItem
+      memberId={member.id}
+      isResizable
+      item={item}
+      editCaption={isEditing}
+      onSaveCaption={onSaveCaption}
+      saveButtonId={saveButtonId}
+      height={ITEM_DEFAULT_HEIGHT}
+      showButton={Boolean(
+        item.settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON,
+      )}
+      showIframe={Boolean(
+        item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
+      )}
+    />
+  </StyledContainer>
+);
+
+/**
+ * Helper component to render typed document items
+ */
+const DocumentContent = ({
+  item,
+  isEditing,
+  onSaveDocument,
+  onCancel,
+  saveButtonId,
+}: {
+  item: DocumentItemTypeRecord;
+  isEditing: boolean;
+  onSaveDocument: (update: DocumentItemExtraProperties) => void;
+  onCancel: () => void;
+  saveButtonId: string;
+}): JSX.Element => {
+  const { t: translateCommon } = useCommonTranslation();
+
+  const extra = getDocumentExtra(item?.extra);
+
+  const [content, setContent] = useState<
+    DocumentItemExtraProperties['content']
+  >(extra?.content ?? '');
+  const [flavor, setFlavor] = useState<DocumentItemExtraProperties['flavor']>(
+    extra?.flavor,
+  );
+
+  const newExtra = { content, flavor };
+
+  const onSave = () => onSaveDocument(newExtra);
+
+  return (
+    <StyledContainer>
+      {isEditing ? (
+        <>
+          <DocumentExtraForm
+            documentItemId={DOCUMENT_ITEM_TEXT_EDITOR_ID}
+            extra={newExtra}
+            maxHeight="70vh"
+            onCancel={onCancel}
+            onContentChange={setContent}
+            onContentSave={onSave}
+            onFlavorChange={(f) => setFlavor(f || undefined)}
+            saveButtonId={saveButtonId}
+          />
+          <Button onClick={onCancel} variant="text" sx={{ m: 1 }}>
+            {translateCommon(COMMON.CANCEL_BUTTON)}
+          </Button>
+          <SaveButton
+            sx={{ m: 1 }}
+            id={saveButtonId}
+            onClick={onSave}
+            text={translateCommon(COMMON.SAVE_BUTTON)}
+            hasChanges={content !== extra?.content || flavor !== extra?.flavor}
+          />
+        </>
+      ) : (
+        <DocumentItem
+          id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
+          item={item}
+          maxHeight="70vh"
+        />
+      )}
+    </StyledContainer>
+  );
+};
+
+/**
+ * Helper component to render typed app items
+ */
+const AppContent = ({
+  item,
+  member,
+  permission,
+  isEditing,
+  onSaveCaption,
+  saveButtonId,
+}: {
+  item: AppItemTypeRecord;
+  member: MemberRecord;
+  permission: PermissionLevel;
+  isEditing: boolean;
+  onSaveCaption: (caption: string) => void;
+  saveButtonId: string;
+}): JSX.Element => (
+  <AppItem
+    isResizable
+    item={item}
+    apiHost={API_HOST}
+    editCaption={isEditing}
+    onSaveCaption={onSaveCaption}
+    saveButtonId={saveButtonId}
+    member={member}
+    height={ITEM_DEFAULT_HEIGHT}
+    permission={permission}
+    requestApiAccessToken={Api.requestApiAccessToken}
+    context={Context.BUILDER}
+  />
+);
+
+/**
+ * Helper component to render typed folder items
+ */
+const FolderContent = ({
+  item,
+  isEditing,
+  enableEditing,
+}: {
+  item: FolderItemTypeRecord;
+  isEditing: boolean;
+  enableEditing: boolean;
+}): JSX.Element => {
+  const {
+    data: children,
+    isLoading,
+    isError,
+  } = useChildren(item.id, {
+    ordered: true,
+  });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+  }
+
+  return (
+    <Items
+      parentId={item.id}
+      id={buildItemsTableId(item.id)}
+      title={item.name}
+      items={children}
+      isEditing={isEditing}
+      headerElements={
+        enableEditing ? [<NewItemButton key="newButton" />] : undefined
+      }
+      ToolbarActions={ItemActions}
+      showCreator
+    />
+  );
+};
+
+/**
+ * Helper component to render typed H5P items
+ */
+const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
+  const { contentId } = getH5PExtra(item?.extra);
+
+  if (!contentId) {
+    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+  }
+
+  return (
+    <H5PItem
+      itemId={item.id}
+      contentId={contentId}
+      integrationUrl={H5P_INTEGRATION_URL}
+    />
+  );
+};
+
+/**
+ * Helper component to render typed Etherpad items
+ */
+const EtherpadContent = ({
+  item,
+}: {
+  item: EtherpadItemTypeRecord;
+}): JSX.Element => {
+  const {
+    data: etherpad,
+    isLoading,
+    isError,
+  }: UseQueryResult<EtherpadRecord> = useEtherpad(
+    item,
+    'write', // server will return read view if no write access allowed
+  );
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!etherpad?.padUrl || isError) {
+    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
+  }
+
+  return (
+    <EtherpadItem
+      itemId={item.id}
+      padUrl={etherpad.padUrl}
+      options={{ showChat: false }}
+    />
+  );
+};
+
+/**
+ * Props for {@see ItemContent}
+ */
 type Props = {
   item?: ItemRecord;
   enableEditing?: boolean;
   permission: PermissionLevel;
 };
 
-const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
-  const { id: itemId, type: itemType } = item;
+/**
+ * Main item renderer component
+ */
+const ItemContent = ({
+  item,
+  enableEditing,
+  permission,
+}: Props): JSX.Element => {
   const { mutate: editItem } = useMutation<any, any, any>(
     MUTATION_KEYS.EDIT_ITEM,
   );
   const { editingItemId, setEditingItemId } = useLayoutContext();
 
-  // provide user to app
-  const { data: member, isLoading: isLoadingUser } = useCurrentUserContext();
+  const { data: member, isLoading, isError } = useCurrentUserContext();
 
-  // display children
-  const { data: children, isLoading: isLoadingChildren } = useChildren(itemId, {
-    ordered: true,
-    enabled: item?.type === ItemType.FOLDER,
-  });
+  const isEditing = enableEditing && editingItemId === item.id;
 
-  const { data: fileUrl, isLoading: isLoadingFileContent } = useFileUrl(
-    itemId,
-    {
-      enabled:
-        item &&
-        (itemType === ItemType.LOCAL_FILE || itemType === ItemType.S3_FILE),
-    },
-  );
-  const isEditing = enableEditing && editingItemId === itemId;
-
-  const etherpadQuery: UseQueryResult<EtherpadRecord> = useEtherpad(
-    item,
-    'write',
-  ); // server will return read view if no write access allowed
-
-  if (
-    isLoadingFileContent ||
-    isLoadingUser ||
-    isLoadingChildren ||
-    etherpadQuery?.isLoading
-  ) {
+  if (isLoading) {
     return <Loader />;
   }
 
-  if (!item || !itemId || etherpadQuery?.isError) {
+  if (!item || !item.id || isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
-  const onSaveCaption = (caption) => {
+  const onSaveCaption = (caption: string) => {
     // edit item only when description has changed
     if (caption !== item.description) {
-      editItem({ id: itemId, description: caption });
+      editItem({ id: item.id, description: caption });
     }
     setEditingItemId(null);
   };
 
-  const onSaveDocument = (text) => {
-    // edit item only when description has changed
-    if (
-      text !== getDocumentExtra((item as DocumentItemTypeRecord)?.extra).content
-    ) {
-      editItem({ id: itemId, extra: buildDocumentExtra({ content: text }) });
-    }
+  const onSaveDocument = ({ content, flavor }: DocumentItemExtraProperties) => {
+    editItem({
+      id: item.id,
+      extra: buildDocumentExtra({ content, flavor }),
+    });
     setEditingItemId(null);
   };
 
@@ -130,117 +397,66 @@ const ItemContent: FC<Props> = ({ item, enableEditing, permission }) => {
     setEditingItemId(null);
   };
 
-  const saveButtonId = buildSaveButtonId(itemId);
+  const saveButtonId = buildSaveButtonId(item.id);
 
-  switch (itemType) {
+  switch (item.type) {
     case ItemType.LOCAL_FILE:
     case ItemType.S3_FILE: {
       return (
-        <FileWrapper>
-          <FileItem
-            editCaption={isEditing}
-            fileUrl={fileUrl}
-            id={buildFileItemId(itemId)}
-            item={item}
-            onSaveCaption={onSaveCaption}
-            pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
-            saveButtonId={saveButtonId}
-          />
-        </FileWrapper>
+        <FileContent
+          item={item}
+          isEditing={isEditing}
+          onSaveCaption={onSaveCaption}
+          saveButtonId={saveButtonId}
+        />
       );
     }
     case ItemType.LINK:
       return (
-        <FileWrapper>
-          <LinkItem
-            memberId={member.id}
-            isResizable
-            item={item}
-            editCaption={isEditing}
-            onSaveCaption={onSaveCaption}
-            saveButtonId={saveButtonId}
-            height={ITEM_DEFAULT_HEIGHT}
-            showButton={Boolean(
-              item.settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON,
-            )}
-            showIframe={Boolean(
-              item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
-            )}
-          />
-        </FileWrapper>
+        <LinkContent
+          item={item}
+          member={member}
+          isEditing={isEditing}
+          onSaveCaption={onSaveCaption}
+          saveButtonId={saveButtonId}
+        />
       );
     case ItemType.DOCUMENT:
       return (
-        <FileWrapper>
-          <DocumentItem
-            id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
-            item={item}
-            edit={isEditing}
-            onSave={onSaveDocument}
-            onCancel={onCancel}
-            saveButtonId={saveButtonId}
-            maxHeight="70vh"
-          />
-        </FileWrapper>
+        <DocumentContent
+          item={item}
+          isEditing={isEditing}
+          onSaveDocument={onSaveDocument}
+          onCancel={onCancel}
+          saveButtonId={saveButtonId}
+        />
       );
     case ItemType.APP:
       return (
-        <AppItem
-          isResizable
+        <AppContent
           item={item}
-          apiHost={API_HOST}
-          editCaption={isEditing}
+          member={member}
+          isEditing={isEditing}
           onSaveCaption={onSaveCaption}
           saveButtonId={saveButtonId}
-          member={member}
-          height={ITEM_DEFAULT_HEIGHT}
           permission={permission}
-          requestApiAccessToken={Api.requestApiAccessToken}
-          context={Context.BUILDER}
         />
       );
     case ItemType.FOLDER:
       return (
-        <Items
-          parentId={itemId}
-          id={buildItemsTableId(itemId)}
-          title={item.name}
-          items={children}
+        <FolderContent
+          item={item}
           isEditing={isEditing}
-          headerElements={
-            enableEditing ? [<NewItemButton key="newButton" />] : undefined
-          }
-          ToolbarActions={ItemActions}
-          showCreator
+          enableEditing={enableEditing}
         />
       );
 
     case ItemType.H5P: {
-      const contentId = item.extra?.h5p?.contentId;
-      if (!contentId) {
-        return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
-      }
-
-      return (
-        <H5PItem
-          itemId={itemId}
-          contentId={contentId}
-          integrationUrl={H5P_INTEGRATION_URL}
-        />
-      );
+      return <H5PContent item={item} />;
     }
 
     case ItemType.ETHERPAD: {
-      if (!etherpadQuery?.data?.padUrl) {
-        return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
-      }
-      return (
-        <EtherpadItem
-          itemId={itemId}
-          padUrl={etherpadQuery.data.padUrl}
-          options={{ showChat: false }}
-        />
-      );
+      return <EtherpadContent item={item} />;
     }
 
     default:

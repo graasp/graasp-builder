@@ -11,6 +11,7 @@ import {
   MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID,
   MEMBER_PROFILE_MEMBER_ID_ID,
   MEMBER_PROFILE_MEMBER_NAME_ID,
+  MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID,
   USER_CONFIRM_PASSWORD_INPUT_ID,
   USER_CURRENT_PASSWORD_INPUT_ID,
   USER_NEW_PASSWORD_INPUT_ID,
@@ -47,6 +48,10 @@ describe('Member Profile', () => {
       'contain',
       emailFrequency[extra.emailFreq],
     );
+    cy.get(`#${MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID}`)
+      .should('exist')
+      .should('be.disabled')
+      .should('not.be.checked');
     cy.get(`#${USER_CURRENT_PASSWORD_INPUT_ID}`).should('be.visible');
     cy.get(`#${USER_NEW_PASSWORD_INPUT_ID}`).should('be.visible');
     cy.get(`#${USER_CONFIRM_PASSWORD_INPUT_ID}`).should('be.visible');

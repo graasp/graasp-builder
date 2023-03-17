@@ -18,6 +18,7 @@ import {
   DEFAULT_COLLAPSIBLE_SETTING,
   DEFAULT_PINNED_SETTING,
   DEFAULT_RESIZE_SETTING,
+  DEFAULT_SAVE_ACTIONS_SETTING,
   DEFAULT_SHOW_CHATBOX_SETTING,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -27,6 +28,7 @@ import {
   SETTINGS_COLLAPSE_TOGGLE_ID,
   SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_RESIZE_TOGGLE_ID,
+  SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
 } from '../../../config/selectors';
 import AdminChatSettings from './AdminChatSettings';
 import LinkSettings from './LinkSettings';
@@ -160,7 +162,9 @@ const ItemSettings: FC<Props> = ({ item }) => {
         placement="right"
         sx={{ m: 0, p: 0 }}
       >
-        <InfoIcon htmlColor="gray" sx={{ mb: -0.5 }} fontSize="small" />
+        <span>
+          <InfoIcon htmlColor="gray" sx={{ mb: -0.5 }} fontSize="small" />
+        </span>
       </Tooltip>
     ) : null;
     return (
@@ -168,6 +172,30 @@ const ItemSettings: FC<Props> = ({ item }) => {
         {formLabel}
         {tooltip}
       </div>
+    );
+  };
+
+  const renderSaveActionsSetting = () => {
+    const control = (
+      <Tooltip title={translateBuilder(BUILDER.SAVE_ACTIONS_TOGGLE_TOOLTIP)}>
+        <span>
+          <Switch
+            id={SETTINGS_SAVE_ACTIONS_TOGGLE_ID}
+            onChange={(e) => handleOnToggle(e, 'enableSaveActions')}
+            checked={
+              settingLocal?.enableSaveActions ?? DEFAULT_SAVE_ACTIONS_SETTING
+            }
+            color="primary"
+            disabled
+          />
+        </span>
+      </Tooltip>
+    );
+    return (
+      <FormControlLabel
+        label={translateBuilder(BUILDER.SETTINGS_SAVE_ACTIONS)}
+        control={control}
+      />
     );
   };
 
@@ -182,6 +210,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
         {renderCollapseSetting()}
         {item.type === ItemType.APP && renderResizeSetting()}
         {renderChatSetting()}
+        {renderSaveActionsSetting()}
       </FormGroup>
       {item.type === ItemType.LINK && <LinkSettings item={item} />}
       <ThumbnailSetting item={item} />

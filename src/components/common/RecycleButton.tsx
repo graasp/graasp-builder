@@ -7,8 +7,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { FC } from 'react';
 
 import { BUILDER } from '@graasp/translations';
+import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
-import { ButtonType } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import {
@@ -20,7 +20,7 @@ type Props = {
   itemIds: string[];
   color?: IconButtonProps['color'];
   id?: string;
-  type?: ButtonType;
+  type?: ActionButtonVariant;
   onClick?: () => void;
 };
 
@@ -28,7 +28,7 @@ const RecycleButton: FC<Props> = ({
   itemIds,
   color = 'default',
   id,
-  type = ButtonType.ICON_BUTTON,
+  type = ActionButton.ICON_BUTTON,
   onClick,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -42,7 +42,7 @@ const RecycleButton: FC<Props> = ({
   const text = translateBuilder(BUILDER.RECYCLE_ITEM_BUTTON);
 
   switch (type) {
-    case ButtonType.MENU_ITEM:
+    case ActionButton.MENU_ITEM:
       return (
         <MenuItem
           key={text}
@@ -55,19 +55,21 @@ const RecycleButton: FC<Props> = ({
           {text}
         </MenuItem>
       );
-    case ButtonType.ICON_BUTTON:
+    case ActionButton.ICON_BUTTON:
     default:
       return (
         <Tooltip title={text}>
-          <IconButton
-            id={id}
-            color={color}
-            className={ITEM_RECYCLE_BUTTON_CLASS}
-            aria-label={text}
-            onClick={handleClick}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              id={id}
+              color={color}
+              className={ITEM_RECYCLE_BUTTON_CLASS}
+              aria-label={text}
+              onClick={handleClick}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       );
   }

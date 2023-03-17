@@ -11,6 +11,7 @@ export const MEMBERS = {
     extra: {
       lang: 'fr',
       emailFreq: 'never',
+      enableSaveActions: false,
     },
   },
   BOB: {
