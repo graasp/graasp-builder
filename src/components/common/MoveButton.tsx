@@ -43,7 +43,7 @@ const MoveButton: FC<MoveButtonProps> = ({
   return (
     <GraaspMoveButton
       color={color}
-      type={type}
+      type={type as ActionButtonVariant}
       id={id}
       onClick={handleMove}
       text={translateBuilder(BUILDER.MOVE_BUTTON)}
