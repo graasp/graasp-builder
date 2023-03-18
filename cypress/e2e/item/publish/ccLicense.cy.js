@@ -9,7 +9,7 @@ import {
     CC_REQUIRE_ATTRIBUTION_CONTROL_ID,
     CC_SHARE_ALIKE_CONTROL_ID,
 } from "../../../../src/config/selectors";
-import { PUBLISHED_ITEM } from "../../../fixtures/items";
+import { PUBLISHED_ITEMS } from "../../../fixtures/items";
 import { DEFAULT_TAGS } from "../../../fixtures/itemTags";
 
 const openPublishItemTab = (id) => {
@@ -30,23 +30,32 @@ const ensureRadioCheckedState = (parentId, shouldBeChecked) =>
 
 describe('Creative Commons License', () => {
   it('Current license is selected', () => {
-    visitItemPage(PUBLISHED_ITEM);
-    
-    const requireAttribution = PUBLISHED_ITEM.settings.ccLicenseAdaption.includes('BY');
-    const noncommercial = PUBLISHED_ITEM.settings.ccLicenseAdaption.includes('NC');
-    const shareAlike = PUBLISHED_ITEM.settings.ccLicenseAdaption.includes('SA');
-    const noDerivative = PUBLISHED_ITEM.settings.ccLicenseAdaption.includes('ND');
+    for (const publishedItem of PUBLISHED_ITEMS) {
+        visitItemPage(publishedItem);
+        
+        const requireAttribution = publishedItem.settings.ccLicenseAdaption.includes('BY');
+        const noncommercial = publishedItem.settings.ccLicenseAdaption.includes('NC');
+        const shareAlike = publishedItem.settings.ccLicenseAdaption.includes('SA');
+        const noDerivative = publishedItem.settings.ccLicenseAdaption.includes('ND');
 
-    ensureRadioCheckedState(CC_REQUIRE_ATTRIBUTION_CONTROL_ID, requireAttribution);
-    ensureRadioCheckedState(CC_CC0_CONTROL_ID, !requireAttribution);
+        ensureRadioCheckedState(CC_REQUIRE_ATTRIBUTION_CONTROL_ID, requireAttribution);
+        ensureRadioCheckedState(CC_CC0_CONTROL_ID, !requireAttribution);
 
-    if (requireAttribution) {
-        ensureRadioCheckedState(CC_ALLOW_COMMERCIAL_CONTROL_ID, !noncommercial);
-        ensureRadioCheckedState(CC_DISALLOW_COMMERCIAL_CONTROL_ID, noncommercial);
+        if (requireAttribution) {
+            ensureRadioCheckedState(CC_ALLOW_COMMERCIAL_CONTROL_ID, !noncommercial);
+            ensureRadioCheckedState(CC_DISALLOW_COMMERCIAL_CONTROL_ID, noncommercial);
 
-        ensureRadioCheckedState(CC_NO_DERIVATIVE_CONTROL_ID, noDerivative);
-        ensureRadioCheckedState(CC_SHARE_ALIKE_CONTROL_ID, shareAlike);
-        ensureRadioCheckedState(CC_DERIVATIVE_CONTROL_ID, !shareAlike && !noDerivative);
+            ensureRadioCheckedState(CC_NO_DERIVATIVE_CONTROL_ID, noDerivative);
+            ensureRadioCheckedState(CC_SHARE_ALIKE_CONTROL_ID, shareAlike);
+            ensureRadioCheckedState(CC_DERIVATIVE_CONTROL_ID, !shareAlike && !noDerivative);
+        }
+        else {
+            cy.get(`#${CC_ALLOW_COMMERCIAL_CONTROL_ID}`).should('not.exist');
+            cy.get(`#${CC_DISALLOW_COMMERCIAL_CONTROL_ID}`).should('not.exist');
+            cy.get(`#${CC_NO_DERIVATIVE_CONTROL_ID}`).should('not.exist');
+            cy.get(`#${CC_SHARE_ALIKE_CONTROL_ID}`).should('not.exist');
+            cy.get(`#${CC_DERIVATIVE_CONTROL_ID}`).should('not.exist');
+        }
     }
   });
 });

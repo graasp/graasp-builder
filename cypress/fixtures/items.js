@@ -613,6 +613,22 @@ export const PUBLISHED_ITEM = {
   ],
 };
 
+export const PUBLISHED_ITEMS = [
+    PUBLISHED_ITEM,
+    {
+        ...PUBLISHED_ITEM,
+        settings: {
+          ccLicenseAdaption: 'CC0',
+        }
+    },
+    {
+        ...PUBLISHED_ITEM,
+        settings: {
+          ccLicenseAdaption: 'CC BY-NC-ND',
+        }
+    }
+]
+
 export const HIDDEN_ITEM = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130001',
