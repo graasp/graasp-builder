@@ -3,7 +3,10 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import { FC, useState } from 'react';
 
 import { BUILDER } from '@graasp/translations';
-import { DeleteButton as GraaspDeleteButton } from '@graasp/ui';
+import {
+  ActionButtonVariant,
+  DeleteButton as GraaspDeleteButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
@@ -46,7 +49,7 @@ const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
         aria-label={text}
         id={id}
         color={color}
-        type={type}
+        type={type as ActionButtonVariant}
         className={ITEM_DELETE_BUTTON_CLASS}
       />
       <DeleteItemDialog

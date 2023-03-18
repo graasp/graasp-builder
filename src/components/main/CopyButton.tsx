@@ -3,7 +3,10 @@ import { IconButtonProps } from '@mui/material';
 import { FC, MouseEventHandler } from 'react';
 
 import { BUILDER } from '@graasp/translations';
-import { CopyButton as GraaspCopyButton } from '@graasp/ui';
+import {
+  ActionButtonVariant,
+  CopyButton as GraaspCopyButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -34,7 +37,7 @@ const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
 
   return (
     <GraaspCopyButton
-      type={type}
+      type={type as ActionButtonVariant}
       id={id}
       text={translateBuilder(BUILDER.ITEM_COPY_BUTTON)}
       color={color}

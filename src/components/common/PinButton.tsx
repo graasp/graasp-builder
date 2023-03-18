@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
-import { PinButton as GraaspPinButton } from '@graasp/ui';
+import { ActionButtonVariant, PinButton as GraaspPinButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
@@ -39,7 +39,7 @@ const PinButton = ({ item, type, onClick }: Props): JSX.Element => {
 
   return (
     <GraaspPinButton
-      type={type}
+      type={type as ActionButtonVariant}
       onClick={handlePin}
       isPinned={isPinned}
       pinText={pinText}

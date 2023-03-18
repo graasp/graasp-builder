@@ -17,6 +17,9 @@ export const DEFAULT_FOLDER_ITEM = {
   type: ITEM_TYPES.FOLDER,
   createdAt: new Date('2020-01-01T01:01:01Z'),
   updatedAt: new Date('2020-01-02T01:01:01Z'),
+  settings: {
+    ccLicenseAdaption: 'CC BY',
+  }
 };
 
 export const CREATED_ITEM = {
@@ -73,6 +76,9 @@ export const SAMPLE_ITEMS = {
           memberId: MEMBERS.BOB.id,
         },
       ],
+      settings: {
+        ccLicenseAdaption: 'CC BY-NC',
+      }
     },
     {
       ...DEFAULT_FOLDER_ITEM,
@@ -81,6 +87,7 @@ export const SAMPLE_ITEMS = {
       path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
       extra: {
         image: 'someimageurl',
+        ccLicenseAdaption: 'CC BY-NC',
       },
       createdAt: '2022-12-16T16:00:50.968Z',
       updatedAt: '2022-12-18T16:00:52.655Z',
@@ -107,6 +114,9 @@ export const SAMPLE_ITEMS = {
           memberId: MEMBERS.ANNA.id,
         },
       ],
+      settings: {
+        ccLicenseAdaption: 'CC0',
+      }
     },
     {
       ...DEFAULT_FOLDER_ITEM,
@@ -123,6 +133,9 @@ export const SAMPLE_ITEMS = {
           memberId: MEMBERS.ANNA.id,
         },
       ],
+      settings: {
+        ccLicenseAdaption: 'CC BY-NC-SA',
+      }
     },
     {
       ...DEFAULT_FOLDER_ITEM,
@@ -141,6 +154,9 @@ export const SAMPLE_ITEMS = {
           memberId: MEMBERS.ANNA.id,
         },
       ],
+      settings: {
+        ccLicenseAdaption: 'CC BY-NC-ND',
+      }
     },
   ],
   memberships: [],

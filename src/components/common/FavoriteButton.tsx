@@ -5,7 +5,10 @@ import { FC } from 'react';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
-import { FavoriteButton as GraaspFavoriteButton } from '@graasp/ui';
+import {
+  ActionButtonVariant,
+  FavoriteButton as GraaspFavoriteButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
@@ -67,7 +70,7 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
       handleUnfavorite={handleUnfavorite}
       handleFavorite={handleFavorite}
       tooltip={text}
-      type={type}
+      type={type as ActionButtonVariant}
       size={size}
       text={text}
     />
