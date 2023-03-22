@@ -2,7 +2,6 @@ import { TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { EmbeddedLinkItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
-import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -12,7 +11,7 @@ import { buildEmbeddedLinkExtra } from '../../../utils/itemExtra';
 
 type Props = {
   onChange: (item: Partial<EmbeddedLinkItemType>) => void;
-  item: Partial<EmbeddedLinkItemTypeRecord>;
+  item: Partial<EmbeddedLinkItemType>;
 };
 
 const LinkForm = ({ onChange, item }: Props): JSX.Element => {

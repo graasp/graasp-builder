@@ -136,8 +136,10 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
           <Thumbnail
             id={itemId}
             isLoading={isLoading}
+            // TODO: fix type
             url={
-              thumbnailUrl ?? item?.extra?.[ItemType.LINK]?.thumbnails?.first()
+              thumbnailUrl ??
+              (item?.extra?.[ItemType.LINK] as any)?.thumbnails?.first()
             }
             alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}

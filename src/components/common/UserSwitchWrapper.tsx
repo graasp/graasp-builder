@@ -1,9 +1,9 @@
-import { RecordOf } from 'immutable';
+import { List } from 'immutable';
 
 import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Member } from '@graasp/sdk';
+import { MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
@@ -39,7 +39,7 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     MUTATION_KEYS.SWITCH_MEMBER,
   );
 
-  const renderAvatar = (m: RecordOf<Member>) => <MemberAvatar id={m.id} />;
+  const renderAvatar = (m: MemberRecord) => <MemberAvatar id={m.id} />;
 
   return (
     <GraaspUserSwitch

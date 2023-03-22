@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { FC, HTMLAttributes, useState } from 'react';
 
-import { AppItemType, getAppExtra } from '@graasp/sdk';
+import { DiscriminatedItem, UnknownExtra, getAppExtra } from '@graasp/sdk';
 import { AppItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
@@ -31,9 +31,9 @@ type App = {
 };
 
 type Props = {
-  onChange: (item: Partial<AppItemType>) => void;
+  onChange: (item: Partial<DiscriminatedItem<UnknownExtra>>) => void;
   item: Partial<AppItemTypeRecord>;
-  updatedProperties: Partial<AppItemType>;
+  updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
@@ -44,10 +44,11 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const handleAppSelection = (_event: any, newValue: RecordOf<App> | null) => {
     const url = newValue?.url;
     const name = newValue?.name ?? item?.name;
+    // TODO: improve types
     const props = {
       ...item,
       extra: buildAppExtra({ url }),
-    };
+    } as unknown as DiscriminatedItem<UnknownExtra>;
     if (name) {
       setNewName(name);
       props.name = name;
@@ -56,7 +57,11 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   };
   // todo: not clear if newValue is a string or object
   const handleAppInput = (_event: any, url: string) => {
-    const props = { ...item, extra: buildAppExtra({ url }) };
+    // TODO: improve types
+    const props = {
+      ...item,
+      extra: buildAppExtra({ url }),
+    } as unknown as DiscriminatedItem<UnknownExtra>;
     onChange(props);
   };
 
@@ -118,7 +123,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
                   margin: 8,
                   height: '30px',
                 }}
-                src={option.extra?.image}
+                src={option.extra?.image as string}
                 alt={option.name}
               />
               <Typography variant="body1" pr={1}>

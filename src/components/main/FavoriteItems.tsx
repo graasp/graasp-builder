@@ -1,12 +1,15 @@
+import { List } from 'immutable';
+
 import Box from '@mui/material/Box';
 
 import { FC, useEffect } from 'react';
 
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks } from '../../config/queryClient';
 import {
   FAVORITE_ITEMS_ERROR_ALERT_ID,
   FAVORITE_ITEMS_ID,
@@ -60,7 +63,7 @@ const FavoriteItems: FC = () => {
       <Items
         id={FAVORITE_ITEMS_ID}
         title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-        items={favoriteItems}
+        items={data?.data?.toSeq()?.toList() as List<ItemRecord>}
       />
     );
   };

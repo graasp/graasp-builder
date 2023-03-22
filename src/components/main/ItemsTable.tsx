@@ -8,6 +8,7 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   DiscriminatedItem,
   FolderItemExtra,
+  ItemMembership,
   ItemType,
   getFolderExtra,
   getShortcutExtra,

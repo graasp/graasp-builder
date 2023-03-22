@@ -9,8 +9,8 @@ import {
   DocumentItemExtraProperties,
   DocumentItemType,
   ItemType,
+  convertJs,
 } from '@graasp/sdk';
-import { DocumentItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { DocumentItem } from '@graasp/ui';
 
@@ -78,7 +78,9 @@ export const DocumentExtraForm = ({
         <DocumentItem
           edit
           id={documentItemId}
-          item={{ extra: buildDocumentExtra(extra) }}
+          item={convertJs({
+            extra: buildDocumentExtra(extra),
+          })}
           maxHeight={maxHeight}
           onCancel={onCancel}
           onChange={onContentChange}
@@ -94,7 +96,7 @@ export const DocumentExtraForm = ({
 
 type Props = {
   onChange: (item: Partial<DocumentItemType>) => void;
-  item: Partial<DocumentItemTypeRecord>;
+  item: Partial<DocumentItemType>;
   updatedProperties: Partial<DocumentItemType>;
 };
 

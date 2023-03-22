@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import { isPseudonymizedMember } from '@graasp/sdk';
 import {
   InvitationRecord,
-  ItemLogin,
   ItemMembershipRecord,
   ItemRecord,
 } from '@graasp/sdk/frontend';
@@ -18,7 +17,6 @@ import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
-import { getItemLoginSchema } from '../../../utils/itemExtra';
 import {
   isItemUpdateAllowedForUser,
   isSettingsEditionAllowedForUser,
@@ -41,6 +39,8 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentUserContext();
   const { data: invitations } = hooks.useItemInvitations(item?.id);
+  const { data: itemLoginSchema, isLoading: isItemLoginLoading } =
+    hooks.useItemLoginSchema({ itemId: item.id });
 
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
@@ -52,7 +52,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
     memberId: currentMember?.id,
   });
 
-  if (isLoadingCurrentMember) {
+  if (isLoadingCurrentMember && isItemLoginLoading) {
     return <Loader />;
   }
 
@@ -61,7 +61,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
     if (!memberships || !canEdit) {
       return null;
     }
-
+    console.log(memberships);
     const [authenticatedMemberships, authorizedMemberships] = partition(
       memberships.toJS(),
       ({ member }) => member?.email && isPseudonymizedMember(member.email),
@@ -92,8 +92,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
         {/* show authenticated members if login schema is defined
         todo: show only if item is pseudomized
         */}
-        {/* // todo: this will change with the refactor */}
-        {getItemLoginSchema(item?.extra as { itemLogin?: ItemLogin }) && (
+        {itemLoginSchema && (
           <>
             <Divider sx={{ my: 3 }} />
             <Typography variant="h5" m={0} p={0}>

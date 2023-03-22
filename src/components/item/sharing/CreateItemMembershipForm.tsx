@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useState } from 'react';
 
-import { MUTATION_KEYS, routines } from '@graasp/query-client';
+import { routines } from '@graasp/query-client';
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -16,7 +16,7 @@ import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import notifier from '../../../config/notifier';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   CREATE_MEMBERSHIP_FORM_ID,
   SHARE_ITEM_EMAIL_INPUT_ID,
@@ -39,14 +39,8 @@ const CreateItemMembershipForm = ({
   const itemId = item.id;
   const [error, setError] = useState<string>('');
 
-  const { mutateAsync: shareItem } = useMutation<
-    { failure?: { message: string }[] },
-    unknown,
-    {
-      itemId: string;
-      data: { id: string; email: string; permission: PermissionLevel }[];
-    }
-  >(MUTATION_KEYS.SHARE_ITEM);
+  const { mutateAsync: shareItem } = mutations.useShareItem();
+
   const { t: translateBuilder } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
@@ -110,13 +104,12 @@ const CreateItemMembershipForm = ({
       });
 
       // manually notify error
-      if (result?.failure?.length) {
-        console.log('weiofmk', result);
+      if (result?.errors?.size) {
         notifier({
           type: shareItemRoutine.FAILURE,
           payload: {
             error: {
-              response: { data: { message: result?.failure?.[0].message } },
+              response: { data: { message: result?.errors?.first().message } },
             },
           },
         });

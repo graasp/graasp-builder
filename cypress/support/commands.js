@@ -29,7 +29,6 @@ import './commands/navigation';
 import {
   mockAppApiAccessToken,
   mockClearItemChat,
-  mockCopyItem,
   mockCopyItems,
   mockDefaultDownloadFile,
   mockDeleteAppData,
@@ -48,10 +47,8 @@ import {
   mockGetAppListRoute,
   mockGetAvatar,
   mockGetCategories,
-  mockGetCategoryTypes,
   mockGetChildren,
   mockGetCurrentMember,
-  mockGetFlags,
   mockGetItem,
   mockGetItemCategories,
   mockGetItemChat,
@@ -63,21 +60,15 @@ import {
   mockGetItemValidationAndReview,
   mockGetItemValidationGroups,
   mockGetItemValidationReviewStatuses,
-  mockGetItemValidationStatuses,
   mockGetItems,
   mockGetMember,
   mockGetMemberMentions,
   mockGetMembers,
   mockGetMembersBy,
   mockGetOwnItems,
-  mockGetPublicChildren,
-  mockGetPublicItem,
-  mockGetPublicItemMembershipsForItem,
   mockGetRecycledItems,
   mockGetSharedItems,
-  mockGetTags,
   mockImportZip,
-  mockMoveItem,
   mockMoveItems,
   mockPatchAppData,
   mockPatchInvitation,
@@ -191,11 +182,7 @@ Cypress.Commands.add(
 
     mockGetChildren({ items: cachedItems, currentMember });
 
-    mockMoveItem(cachedItems, moveItemError);
-
     mockMoveItems(cachedItems, moveItemsError);
-
-    mockCopyItem(cachedItems, copyItemError);
 
     mockCopyItems(cachedItems, copyItemsError);
 
@@ -228,10 +215,6 @@ Cypress.Commands.add(
 
     mockGetItemMembershipsForItem(items, currentMember);
 
-    mockGetPublicItemMembershipsForItem(items);
-
-    mockGetTags(tags);
-
     mockGetItemTags(items);
 
     mockPostItemTag(items, postItemTagError);
@@ -244,13 +227,7 @@ Cypress.Commands.add(
 
     mockDeleteItemMembershipForItem();
 
-    mockGetFlags(flags);
-
     mockPostItemFlag(items, postItemFlagError);
-
-    mockGetPublicItem(items);
-
-    mockGetPublicChildren(items);
 
     mockGetItems({ items, currentMember });
 
@@ -292,8 +269,6 @@ Cypress.Commands.add(
 
     mockImportZip(importZipError);
 
-    mockGetCategoryTypes(categoryTypes);
-
     mockGetCategories(categories, getCategoriesError);
 
     mockGetItemCategories(items, getItemCategoriesError);
@@ -301,8 +276,6 @@ Cypress.Commands.add(
     mockPostItemCategory(postItemCategoryError);
 
     mockDeleteItemCategory(deleteItemCategoryError);
-
-    mockGetItemValidationStatuses(statuses);
 
     mockGetItemValidationReviewStatuses(statuses);
 

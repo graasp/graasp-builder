@@ -106,11 +106,9 @@ const ItemPublishTab: FC<Props> = ({
 
   useEffect(() => {
     // TODO check if validation is still valid
-    console.log('lastItemValidationGroup', lastItemValidationGroup);
     const mapByStatus = (
       lastItemValidationGroup as any
     )?.itemValidations?.groupBy(({ status }) => status);
-    console.log(mapByStatus);
     let status;
     if (mapByStatus?.get(ItemValidationStatus.Failure)) {
       status = ItemValidationStatus.Failure;
@@ -119,7 +117,6 @@ const ItemPublishTab: FC<Props> = ({
     } else if (mapByStatus?.get(ItemValidationStatus.Success)) {
       status = ItemValidationStatus.Success;
     }
-    console.log(status);
     setValidationStatus(status);
   }, [lastItemValidationGroup]);
 

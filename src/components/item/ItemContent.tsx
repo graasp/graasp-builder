@@ -47,7 +47,7 @@ import {
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
 import { useCommonTranslation } from '../../config/i18n';
-import { hooks, mutations, useMutation } from '../../config/queryClient';
+import { hooks, useMutation } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,

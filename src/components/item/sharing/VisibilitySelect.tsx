@@ -84,10 +84,6 @@ const useVisibility = (item: ItemRecord) => {
   const [visibility, setVisibility] = useState(null);
   useEffect(() => {
     switch (true) {
-      case Boolean(itemPublishEntry): {
-        setVisibility(SETTINGS.ITEM_PUBLISHED.name);
-        break;
-      }
       case Boolean(publicTag): {
         setVisibility(SETTINGS.ITEM_PUBLIC.name);
         break;

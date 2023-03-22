@@ -99,7 +99,7 @@ const CategorySelection: FC<Props> = ({ disabled }) => {
       {List(categoriesMap)?.map(([type, categories]) => {
         const values =
           categories
-            .map((c) => ({ ...c, name: translateCategories(c.name) }))
+            .map((c) => c.set('name', translateCategories(c.name)))
             ?.sort(sortByName) ?? List();
 
         return (

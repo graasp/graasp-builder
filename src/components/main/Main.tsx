@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { MentionButton } from '@graasp/chatbox';
+// import { MentionButton } from '@graasp/chatbox';
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { Context } from '@graasp/sdk';
 import {
@@ -113,7 +113,8 @@ const Main: FC<Props> = ({ children }) => {
   const rightContent = (
     <Grid container>
       <Grid item>
-        <MentionButton
+        {/* TODO */}
+        {/* <MentionButton
           color="secondary"
           badgeColor="primary"
           useMentions={hooks.useMentions}
@@ -121,7 +122,7 @@ const Main: FC<Props> = ({ children }) => {
           patchMentionFunction={patchMentionFunction}
           deleteMentionFunction={deleteMentionFunction}
           clearAllMentionsFunction={clearAllMentionsFunction}
-        />
+        /> */}
       </Grid>
       <Grid item>
         <UserSwitchWrapper />

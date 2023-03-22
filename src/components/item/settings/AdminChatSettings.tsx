@@ -21,7 +21,7 @@ const AdminChatSettings = ({ item }: Props): JSX.Element => {
   const { data: currentMember } = useCurrentUserContext();
   // only show export chat when user has admin right on the item
   const isAdmin =
-    itemPermissions?.find((perms) => perms.memberId === currentMember.id)
+    itemPermissions?.find((perms) => perms.member.id === currentMember.id)
       ?.permission === PermissionLevel.Admin;
   const { mutate: clearChatHook } = useMutation<unknown, unknown, string>(
     MUTATION_KEYS.CLEAR_ITEM_CHAT,
