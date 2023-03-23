@@ -190,11 +190,10 @@ const ItemsTable: FC<Props> = ({
         tooltipField: 'name',
       },
       {
-        field: 'status',
         // todo: add translation of of header
         // headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
         cellRenderer: BadgesComponent,
-        type: 'centerAligned',
+        type: 'rightAligned',
         flex: 1,
         suppressAutoSize: true,
         maxWidth: 100,
@@ -246,9 +245,8 @@ const ItemsTable: FC<Props> = ({
     ];
 
     if (showCreator) {
-      columns.splice(1, 0, {
+      columns.splice(2, 0, {
         field: 'creator',
-        flex: 3,
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
         colId: 'creator',
         type: 'rightAligned',
