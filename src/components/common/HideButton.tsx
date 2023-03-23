@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
@@ -19,7 +19,7 @@ import {
 } from '../../config/selectors';
 
 type Props = {
-  item: Item;
+  item: DiscriminatedItem;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };

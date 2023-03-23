@@ -8,7 +8,6 @@ import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   DiscriminatedItem,
   FolderItemExtra,
-  Item,
   ItemType,
   getFolderExtra,
   getShortcutExtra,
@@ -105,7 +104,7 @@ const ItemsTable: FC<Props> = ({
     [isFolder, isSearching],
   );
 
-  const getRowNodeId = ({ data }: { data: Item }) =>
+  const getRowNodeId = ({ data }: { data: DiscriminatedItem }) =>
     buildItemsTableRowId(data.id);
 
   const onCellClicked = ({
@@ -138,7 +137,7 @@ const ItemsTable: FC<Props> = ({
     return true;
   };
 
-  const onDragEnd = (displayRows: { data: Item }[]) => {
+  const onDragEnd = (displayRows: { data: DiscriminatedItem }[]) => {
     if (!itemId) {
       console.error('no item id defined');
     } else {
@@ -210,7 +209,8 @@ const ItemsTable: FC<Props> = ({
         field: 'type',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
         type: 'rightAligned',
-        cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
+        cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
+          translateEnums(data.type),
         minWidth: 90,
         maxWidth: 120,
         comparator: GraaspTable.textComparator,
@@ -289,7 +289,7 @@ const ItemsTable: FC<Props> = ({
         id={tableId}
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
-        rowData={rows.toJS() as Item[]}
+        rowData={rows.toJS() as DiscriminatedItem[]}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
         // todo: use DiscriminatedItem in ui

@@ -7,7 +7,7 @@ import { FC, createContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { DiscriminatedItem, Item, ItemType, convertJs } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, convertJs } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -27,7 +27,7 @@ type Props = {
 };
 
 const EditItemModalContext = createContext({
-  openModal: (_newItem: Item) => {
+  openModal: (_newItem: DiscriminatedItem) => {
     // do nothing
   },
 });
@@ -47,7 +47,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<ItemRecord | null>(null);
 
-  const openModal = (newItem: Item) => {
+  const openModal = (newItem: DiscriminatedItem) => {
     setOpen(true);
     setItem(convertJs(newItem));
   };
