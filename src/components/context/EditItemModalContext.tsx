@@ -7,7 +7,7 @@ import { FC, createContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { Item, ItemType, convertJs } from '@graasp/sdk';
+import { DiscriminatedItem, Item, ItemType, convertJs } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -65,7 +65,12 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
     if (isConfirmButtonDisabled) {
       return;
     }
-    if (!isItemValid({ ...(item?.toJS() as Item), ...updatedProperties })) {
+    if (
+      !isItemValid({
+        ...(item?.toJS() as DiscriminatedItem),
+        ...updatedProperties,
+      })
+    ) {
       toast.error(translateBuilder(BUILDER.EDIT_ITEM_ERROR_MESSAGE));
       return;
     }
@@ -132,7 +137,10 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
             // maybe we do not need the state variable and can just check the item
             isConfirmButtonDisabled ||
             // isItem Valid checks a full item, so we add the updated properties to the item to check
-            !isItemValid({ ...(item?.toJS() as Item), ...updatedProperties })
+            !isItemValid({
+              ...(item?.toJS() as DiscriminatedItem),
+              ...updatedProperties,
+            })
           }
           onClick={submit}
           id={ITEM_FORM_CONFIRM_BUTTON_ID}

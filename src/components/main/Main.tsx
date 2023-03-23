@@ -115,7 +115,7 @@ const Main: FC<Props> = ({ children }) => {
       <Grid item>
         <MentionButton
           color="secondary"
-          badgeColor='primary'
+          badgeColor="primary"
           useMentions={hooks.useMentions}
           useMembers={hooks.useMembers}
           patchMentionFunction={patchMentionFunction}

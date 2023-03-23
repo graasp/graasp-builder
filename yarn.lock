@@ -2339,9 +2339,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox#82-change-border-color-of-notification-button":
-  version: 1.0.4
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=d3236a53f3edd060a8373d0ac7e5c8bcb6648345"
+"@graasp/chatbox@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@graasp/chatbox@npm:1.1.0"
   dependencies:
     "@emotion/react": 11.10.6
     "@emotion/styled": 11.10.6
@@ -2370,7 +2370,7 @@ __metadata:
     eslint: "*"
     react: "*"
     react-dom: "*"
-  checksum: 281b63f273f8e9d72a72ea70053776c0e910f7501757f14d23ff849c99257366c9f39f6c05736e5ddfda759c3f0e2fcc5ad7bd227150d2e9a5bf54a1e7123b87
+  checksum: f46e4883075096132c9558c83170d68f69b23f425ce3cf1e436bc11d8f92b3dc1f9e53eba8b4b2bf220b9e0774c8ccb9d1488929ff1cdfe7c8cba61b4555bc99
   languageName: node
   linkType: hard
 
@@ -2393,9 +2393,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:0.9.2":
-  version: 0.9.2
-  resolution: "@graasp/sdk@npm:0.9.2"
+"@graasp/sdk@npm:0.9.3":
+  version: 0.9.3
+  resolution: "@graasp/sdk@npm:0.9.3"
   dependencies:
     "@fastify/secure-session": 5.3.0
     aws-sdk: 2.1310.0
@@ -2406,7 +2406,16 @@ __metadata:
     qs: 6.11.0
     slonik: 28.1.1
     uuid: 9.0.0
-  checksum: 49daf48b8877b1a0bdd0612c5a88be22860de4e94c494978732add26d38b5d0a6784df8eb8caedd7972b2767c78258c056c89889c73eeeb3971f2ff989a7f1e0
+  checksum: 222e8d7e00f5c4fbfb23d596899edd0afcaa0640c540ae90f85d6cd6f92b1bb7832bf50504fecd4aafe1a185b79ecae42a75163bd5fca5975e535fbeb84c3049
+  languageName: node
+  linkType: hard
+
+"@graasp/translations@npm:1.10.0":
+  version: 1.10.0
+  resolution: "@graasp/translations@npm:1.10.0"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 96c5b1f7612082846c92ef46dbd6392a2233a62a1ec4d987cc66b689af51a3f30707545501ab49f282687adbb52d81919711e0eee2cac8566571059a04638093
   languageName: node
   linkType: hard
 
@@ -3284,82 +3293,92 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:7.39.0":
-  version: 7.39.0
-  resolution: "@sentry/browser@npm:7.39.0"
+"@sentry-internal/tracing@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry-internal/tracing@npm:7.44.2"
   dependencies:
-    "@sentry/core": 7.39.0
-    "@sentry/replay": 7.39.0
-    "@sentry/types": 7.39.0
-    "@sentry/utils": 7.39.0
+    "@sentry/core": 7.44.2
+    "@sentry/types": 7.44.2
+    "@sentry/utils": 7.44.2
     tslib: ^1.9.3
-  checksum: e4b83ae3640df6d22774e8d02c65c51bf747e810285c8d39b4d5eead47b25b32736cd3b3f68d20145c023b11391c66105204620e26acdfb79e216363b4d74fae
+  checksum: f8e3a3fa2b7262859f2d677eb46230dfe58167f9fa1f651994e1532a5b4e435c4e6ea378f0d9ea18c2eeb5c4bded158bf5cb6865649ad2be884b36d14b41753f
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:7.39.0":
-  version: 7.39.0
-  resolution: "@sentry/core@npm:7.39.0"
+"@sentry/browser@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry/browser@npm:7.44.2"
   dependencies:
-    "@sentry/types": 7.39.0
-    "@sentry/utils": 7.39.0
+    "@sentry-internal/tracing": 7.44.2
+    "@sentry/core": 7.44.2
+    "@sentry/replay": 7.44.2
+    "@sentry/types": 7.44.2
+    "@sentry/utils": 7.44.2
     tslib: ^1.9.3
-  checksum: b00095a339fac77d17932e097d78c1e701cda63751e0a13f7be2f4cbdcf28ce6dcefd46f8c1e9ee85b15361b8884ca7d27d7e34cebae45b514f678e3ac49994c
+  checksum: d6e4e8f013ce2bfada2670cfe09285d3b1060cdea158fa700f6384a4dd5e3cd8f7d4210e2e541c2a44eec366d573d8b5c0d0e655dab9effeb21ca8667701bec4
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:7.39.0":
-  version: 7.39.0
-  resolution: "@sentry/react@npm:7.39.0"
+"@sentry/core@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry/core@npm:7.44.2"
   dependencies:
-    "@sentry/browser": 7.39.0
-    "@sentry/types": 7.39.0
-    "@sentry/utils": 7.39.0
+    "@sentry/types": 7.44.2
+    "@sentry/utils": 7.44.2
+    tslib: ^1.9.3
+  checksum: 2efcb9a09d0419ce7960c154d31dd017640dee203a7cf5681c0cd31b9ce116e34e05e20096d24bf5d2ff827afa016c02c287bf3808c900cec9e4906d6a8a57a5
+  languageName: node
+  linkType: hard
+
+"@sentry/react@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry/react@npm:7.44.2"
+  dependencies:
+    "@sentry/browser": 7.44.2
+    "@sentry/types": 7.44.2
+    "@sentry/utils": 7.44.2
     hoist-non-react-statics: ^3.3.2
     tslib: ^1.9.3
   peerDependencies:
     react: 15.x || 16.x || 17.x || 18.x
-  checksum: b2ff10027c86199081f82659e805d49fd0ecd787b5b8b49c6a2a429e27d29eee4c4dedd2f67c71cae1384202561d20276943c3131e01eec15b7b07c61c9afae3
+  checksum: b03f4cdb08ec6b6fce8646de782745bbaf8512b05cf5a8bfdb5b09ce781428899c475cfe023d958afbf9e844c0a552caac2b00d036cc06e564ad8eb911bb5817
   languageName: node
   linkType: hard
 
-"@sentry/replay@npm:7.39.0":
-  version: 7.39.0
-  resolution: "@sentry/replay@npm:7.39.0"
+"@sentry/replay@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry/replay@npm:7.44.2"
   dependencies:
-    "@sentry/core": 7.39.0
-    "@sentry/types": 7.39.0
-    "@sentry/utils": 7.39.0
-  checksum: f522147680e3e805d6d1ccb2317646f45abb662878405905b5bc270b78ac82f26d9708b0e53bce741c30146cd250b3e85743b957621721d5baae1774d3f6edf6
+    "@sentry/core": 7.44.2
+    "@sentry/types": 7.44.2
+    "@sentry/utils": 7.44.2
+  checksum: 2159043af713c45c03e6cd07ec3e262dbf7357edda6a0ef6bda8f8e1e40484af767f73e71cd1d4cbed6cf39f481040ff7867bc2ec9db33390bc0407827852dc1
   languageName: node
   linkType: hard
 
-"@sentry/tracing@npm:7.39.0":
-  version: 7.39.0
-  resolution: "@sentry/tracing@npm:7.39.0"
+"@sentry/tracing@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry/tracing@npm:7.44.2"
   dependencies:
-    "@sentry/core": 7.39.0
-    "@sentry/types": 7.39.0
-    "@sentry/utils": 7.39.0
+    "@sentry-internal/tracing": 7.44.2
+  checksum: 19465abd4f0ec914d9b1c865de65a38df495a80d2994613643069785d4a1a1850882da1432b40df5d088a889421eb828a386c3693490d4905e3e8f5a98eab64c
+  languageName: node
+  linkType: hard
+
+"@sentry/types@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry/types@npm:7.44.2"
+  checksum: 33c14f4089b1554f42d8f31dd9b9ae0d1960d470ce1f2d5b49899125b3dd20814eb4ec96418e93dc0471856bbe2a7cfac29bcc4a5ecd63a6e0f3ac53a929949a
+  languageName: node
+  linkType: hard
+
+"@sentry/utils@npm:7.44.2":
+  version: 7.44.2
+  resolution: "@sentry/utils@npm:7.44.2"
+  dependencies:
+    "@sentry/types": 7.44.2
     tslib: ^1.9.3
-  checksum: ee9945ddfbbcc53feffed72510acbbf176bf0cd3c36bb5cd75179423ffb0d2700e4d367abf8b57fe289dc0f19939e52b9c4d4bf91492905c1413571bd1f3b73e
-  languageName: node
-  linkType: hard
-
-"@sentry/types@npm:7.39.0":
-  version: 7.39.0
-  resolution: "@sentry/types@npm:7.39.0"
-  checksum: 7d8b3f5fdb033240750bfdd4398b596b24bb6963d1e923b9fe6c5226b19dd965e53cec9790bbf13340641e0006b8f3d0958613a8561b42ae3ff22da1c419df27
-  languageName: node
-  linkType: hard
-
-"@sentry/utils@npm:7.39.0":
-  version: 7.39.0
-  resolution: "@sentry/utils@npm:7.39.0"
-  dependencies:
-    "@sentry/types": 7.39.0
-    tslib: ^1.9.3
-  checksum: 620c41f9fca3efb48e137f6d9635a0c11bd47262c68997dba13ca78296faaf0c60dc0e5c2d3f548d9eae3d57cc7ed165bd870de0e9ca3c9ce97ffc705a217fca
+  checksum: 726b0900e9e8d0aaf01adc5b6684e1ab4d07e63329ccac932b8fffd27209c56c3cd16b03f1290b4c57ed4fbb52aa4ca3d91f1c8c9822c78f30818fcedbabfb21
   languageName: node
   linkType: hard
 
@@ -9834,17 +9853,17 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
-    "@graasp/chatbox": "github:graasp/graasp-chatbox#82-change-border-color-of-notification-button"
+    "@graasp/chatbox": 1.1.0
     "@graasp/query-client": 0.4.0
-    "@graasp/sdk": 0.9.2
-    "@graasp/translations": 1.8.0
+    "@graasp/sdk": 0.9.3
+    "@graasp/translations": 1.10.0
     "@graasp/ui": 2.2.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.117
     "@mui/material": 5.11.6
-    "@sentry/react": 7.39.0
-    "@sentry/tracing": 7.39.0
+    "@sentry/react": 7.44.2
+    "@sentry/tracing": 7.44.2
     "@testing-library/jest-dom": ^5.16.3
     "@testing-library/react": ^12.1.4
     "@testing-library/user-event": ^13.5.0

@@ -4,6 +4,7 @@ import { List } from 'immutable';
 import { useEffect, useState } from 'react';
 
 import {
+  DiscriminatedItem,
   FolderItemExtra,
   Invitation,
   Item,
@@ -91,30 +92,29 @@ export const isUrlValid = (str: string): boolean => {
   return Boolean(str) && pattern.test(str);
 };
 
-export const isItemValid = (item: Partial<Item>): boolean => {
+export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
   if (!item) {
     return false;
   }
 
-  const { name, type: itemType, extra } = item;
-  const shouldHaveName = Boolean(name);
+  const shouldHaveName = Boolean(item.name);
 
   // item should have a type
   let hasValidTypeProperties =
-    itemType && Object.values<string>(ItemType).includes(itemType);
-  switch (itemType) {
+    item.type && Object.values<string>(ItemType).includes(item.type);
+  switch (item.type) {
     case ItemType.LINK: {
-      const { url } = getEmbeddedLinkExtra(extra) || {};
+      const { url } = getEmbeddedLinkExtra(item.extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
     case ItemType.APP: {
-      const { url } = getAppExtra(extra) || {};
+      const { url } = getAppExtra(item.extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
     case ItemType.DOCUMENT: {
-      const { content } = getDocumentExtra(extra) || {};
+      const { content } = getDocumentExtra(item.extra) || {};
       hasValidTypeProperties = content?.length > 0;
       break;
     }
