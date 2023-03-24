@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/graasp/graasp-builder/compare/v0.10.0...v0.11.0) (2023-03-24)
+
+
+### Features
+
+* **ui:** show item status with badges in table and cards ([#591](https://github.com/graasp/graasp-builder/issues/591)) ([bde9dd9](https://github.com/graasp/graasp-builder/commit/bde9dd9f3b9cb8250121eeb7902430afb95aa10f))
+
 ## [0.10.0](https://github.com/graasp/graasp-builder/compare/v0.9.0...v0.10.0) (2023-03-17)
 
 
