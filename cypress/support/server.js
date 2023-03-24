@@ -66,6 +66,7 @@ const {
   buildGetItemMembershipsForItemsRoute,
   buildGetPublicItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
+  buildGetItemsTagsRoute,
   GET_TAGS_ROUTE,
   buildPutItemLoginSchema,
   buildPostItemTagRoute,
@@ -1039,6 +1040,28 @@ export const mockGetItemTags = (items) => {
       reply(result);
     },
   ).as('getItemTags');
+};
+
+export const mockGetItemsTags = (items) => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/items/tags?id=*`,
+    },
+    ({ reply, url }) => {
+      let { id: ids } = qs.parse(url.split('?')[1]);
+      if (typeof ids === 'string') {
+        ids = [ids];
+      }
+      const result = ids?.map(
+        (itemId) =>
+          items.find(({ id }) => id === itemId)?.tags || [
+            { statusCode: StatusCodes.NOT_FOUND },
+          ],
+      );
+      reply(result);
+    },
+  ).as('getItemsTags');
 };
 
 export const mockGetTags = (tags) => {

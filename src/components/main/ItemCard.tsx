@@ -5,7 +5,11 @@ import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DiscriminatedItem, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
+import {
+  ItemMembershipRecord,
+  ItemRecord,
+  TagRecord,
+} from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
@@ -18,6 +22,7 @@ import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import BadgesCellRenderer from '../table/BadgesCellRenderer';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
@@ -39,12 +44,11 @@ const NameWrapper = ({
 type Props = {
   item: ItemRecord;
   memberships: List<ItemMembershipRecord>;
+  tagList?: List<TagRecord>;
 };
 
-const ItemComponent: FC<Props> = ({ item, memberships }) => {
-  const { id, name, description } = item;
-
-  const alt = name;
+const ItemComponent: FC<Props> = ({ item, memberships, tagList }) => {
+  const alt = item.name;
   const defaultValueComponent = (
     <img
       style={{
@@ -90,19 +94,22 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
               item.toJS() as DiscriminatedItem
             }
           />
-          <DownloadButton id={id} name={name} />
+          <DownloadButton id={item.id} name={item.name} />
         </>
       )}
     </>
   );
+  // here we use the same component as the table this is why it is instantiated a bit weirdly
+  const Badges = BadgesCellRenderer({ tagList });
 
   return (
     <GraaspCard
-      description={truncate(stripHtml(description), {
+      description={truncate(stripHtml(item.description), {
         length: DESCRIPTION_MAX_LENGTH,
       })}
       Actions={Actions}
-      name={name}
+      Badges={<Badges data={item} />}
+      name={item.name}
       creator={member?.name}
       ItemMenu={
         <ItemMenu
@@ -111,9 +118,9 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
         />
       }
       Thumbnail={ThumbnailComponent}
-      cardId={buildItemCard(id)}
+      cardId={buildItemCard(item.id)}
       NameWrapper={NameWrapper({
-        id,
+        id: item.id,
         style: {
           textDecoration: 'none',
           color: 'inherit',

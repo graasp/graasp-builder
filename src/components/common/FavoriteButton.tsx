@@ -64,7 +64,7 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
 
   return (
     <GraaspFavoriteButton
-      key={text}
+      isFavorite={isFavorite}
       className={FAVORITE_ITEM_BUTTON_CLASS}
       ariaLabel={text}
       handleUnfavorite={handleUnfavorite}

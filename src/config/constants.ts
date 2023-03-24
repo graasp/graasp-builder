@@ -170,8 +170,6 @@ export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
 export const ITEMS_TABLE_CONTAINER_HEIGHT = '65vh';
 
-export const DRAG_ICON_SIZE = 18;
-
 export const THUMBNAIL_ASPECT = 1;
 export const THUMBNAIL_EXTENSION = 'image/jpeg';
 export const THUMBNAIL_SETTING_MAX_WIDTH = 200;

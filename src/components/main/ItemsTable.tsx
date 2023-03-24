@@ -16,6 +16,7 @@ import {
   ItemMembershipRecord,
   ItemRecord,
   MemberRecord,
+  TagRecord,
 } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -33,6 +34,7 @@ import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
+import BadgesCellRenderer from '../table/BadgesCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
@@ -42,7 +44,8 @@ const { useItem } = hooks;
 type Props = {
   id?: string;
   items: List<ItemRecord>;
-  manyMemberships: List<List<ItemMembershipRecord>>;
+  manyMemberships?: List<List<ItemMembershipRecord>>;
+  tagList?: List<TagRecord>;
   tableTitle: string;
   headerElements?: JSX.Element[];
   isSearching?: boolean;
@@ -66,6 +69,7 @@ const ItemsTable: FC<Props> = ({
   id: tableId = '',
   items: rows = List(),
   manyMemberships = List(),
+  tagList = List(),
   headerElements = [],
   isSearching = false,
   actions,
@@ -167,19 +171,38 @@ const ItemsTable: FC<Props> = ({
     member,
   });
 
+  const BadgesComponent = BadgesCellRenderer({
+    tagList,
+  });
+
   // never changes, so we can use useMemo
   const columnDefs = useMemo(() => {
     const columns: ColDef[] = [
       {
+        field: 'name',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
         headerCheckboxSelection: true,
         checkboxSelection: true,
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
         cellRenderer: NameCellRenderer(showThumbnails),
         flex: 4,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.name,
-        field: 'name',
         tooltipField: 'name',
+      },
+      {
+        // todo: add translation of of header
+        // headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
+        cellRenderer: BadgesComponent,
+        type: 'rightAligned',
+        flex: 1,
+        suppressAutoSize: true,
+        maxWidth: 100,
+        cellStyle: {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
       },
       {
         field: 'type',
@@ -187,14 +210,16 @@ const ItemsTable: FC<Props> = ({
         type: 'rightAligned',
         cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
           translateEnums(data.type),
-        flex: 2,
+        minWidth: 90,
+        maxWidth: 120,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.type,
       },
       {
         field: 'updatedAt',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
-        flex: 2,
+        maxWidth: 160,
+        minWidth: 80,
         type: 'rightAligned',
         valueFormatter: dateColumnFormatter,
         comparator: GraaspTable.dateComparator,
@@ -207,22 +232,21 @@ const ItemsTable: FC<Props> = ({
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
-        flex: 3,
         cellStyle: {
           paddingLeft: '0!important',
           paddingRight: '0!important',
           textAlign: 'right',
         },
         sortable: false,
+        suppressAutoSize: true,
         // prevent ellipsis for small screens
-        minWidth: 165,
+        minWidth: 140,
       },
     ];
 
     if (showCreator) {
-      columns.splice(1, 0, {
+      columns.splice(2, 0, {
         field: 'creator',
-        flex: 3,
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
         colId: 'creator',
         type: 'rightAligned',
@@ -245,6 +269,7 @@ const ItemsTable: FC<Props> = ({
     translateBuilder,
     defaultSortedColumn,
     ActionComponent,
+    BadgesComponent,
     actions,
     showThumbnails,
   ]);
@@ -265,6 +290,9 @@ const ItemsTable: FC<Props> = ({
         rowData={rows.toJS() as DiscriminatedItem[]}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
+        // todo: use DiscriminatedItem in ui
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         onCellClicked={onCellClicked}
         getRowId={getRowNodeId}
         isClickable={clickable}

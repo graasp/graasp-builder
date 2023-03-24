@@ -29,6 +29,8 @@ export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const COLLAPSE_ITEM_BUTTON_CLASS = 'collapseButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
+export const buildHideButtonId = (hidden: boolean): string =>
+  `hideButton-${hidden ? 'hidden' : 'visible'}`;
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const PUBLISH_ITEM_BUTTON_CLASS = 'publishItemButton';
 export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
