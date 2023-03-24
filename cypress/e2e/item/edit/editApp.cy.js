@@ -33,6 +33,8 @@ describe('Edit App', () => {
         expect(body?.description).to.contain(caption);
       });
     });
+
+    // todo: add test for cancel caption edition
   });
 
   describe('List', () => {

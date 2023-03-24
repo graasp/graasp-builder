@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 
 import { FC, SyntheticEvent } from 'react';
 
-import { Category, ItemCategory } from '@graasp/sdk';
+import { Category } from '@graasp/sdk';
+import { ItemCategoryRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -24,7 +25,7 @@ type Props = {
   typeId: string;
   title: string;
   values: Category[];
-  selectedValues?: List<ItemCategory>;
+  selectedValues?: List<ItemCategoryRecord>;
   handleChange: (
     _event: SyntheticEvent,
     value: Category[],

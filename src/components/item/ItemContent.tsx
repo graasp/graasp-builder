@@ -50,7 +50,7 @@ import { useCommonTranslation } from '../../config/i18n';
 import { hooks, useMutation } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
-  ITEM_SCREEN_ERROR_ALERT_ID,
+  ITEM_SCREEN_ERROR_ALERT_ID, // buildCancelButtonId,
   buildFileItemId,
   buildItemsTableId,
   buildSaveButtonId,
@@ -79,11 +79,13 @@ const FileContent = ({
   item,
   isEditing,
   onSaveCaption,
+  onCancelCaption,
   saveButtonId,
 }: {
   item: LocalFileItemTypeRecord | S3FileItemTypeRecord;
   isEditing: boolean;
   onSaveCaption: (text: string) => void;
+  onCancelCaption: (text: string) => void;
   saveButtonId: string;
 }): JSX.Element => {
   const {
@@ -113,6 +115,7 @@ const FileContent = ({
         id={buildFileItemId(item.id)}
         item={item}
         onSaveCaption={onSaveCaption}
+        onCancelCaption={onCancelCaption}
         pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
         saveButtonId={saveButtonId}
       />
@@ -143,6 +146,8 @@ const LinkContent = ({
       item={item}
       editCaption={isEditing}
       onSaveCaption={onSaveCaption}
+      // todo: add in ui
+      // onCancelCaption={onCancelCaption}
       saveButtonId={saveButtonId}
       height={ITEM_DEFAULT_HEIGHT}
       showButton={Boolean(
@@ -231,6 +236,7 @@ const AppContent = ({
   permission,
   isEditing,
   onSaveCaption,
+  // onCancelCaption,
   saveButtonId,
 }: {
   item: AppItemTypeRecord;
@@ -238,6 +244,7 @@ const AppContent = ({
   permission: PermissionLevel;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
+  // onCancelCaption: (caption: string) => void;
   saveButtonId: string;
 }): JSX.Element => (
   <AppItem
@@ -246,6 +253,8 @@ const AppContent = ({
     apiHost={API_HOST}
     editCaption={isEditing}
     onSaveCaption={onSaveCaption}
+    // todo: add in ui
+    // onCancelCaption={onCancelCaption}
     saveButtonId={saveButtonId}
     member={member}
     height={ITEM_DEFAULT_HEIGHT}
@@ -394,6 +403,10 @@ const ItemContent = ({
     setEditingItemId(null);
   };
 
+  const onCancelCaption = (_caption: string) => {
+    setEditingItemId(null);
+  };
+
   const onSaveDocument = ({ content, flavor }: DocumentItemExtraProperties) => {
     editItem({
       id: item.id,
@@ -407,6 +420,7 @@ const ItemContent = ({
   };
 
   const saveButtonId = buildSaveButtonId(item.id);
+  // const cancelButtonId = buildCancelButtonId(item.id);
 
   switch (item.type) {
     case ItemType.LOCAL_FILE:
@@ -416,7 +430,9 @@ const ItemContent = ({
           item={item}
           isEditing={isEditing}
           onSaveCaption={onSaveCaption}
+          onCancelCaption={onCancelCaption}
           saveButtonId={saveButtonId}
+          // cancelButtonId={cancelButtonId}
         />
       );
     }
@@ -427,7 +443,9 @@ const ItemContent = ({
           member={member}
           isEditing={isEditing}
           onSaveCaption={onSaveCaption}
+          // onCancelCaption={onCancelCaption}
           saveButtonId={saveButtonId}
+          // cancelButtonId={cancelButtonId}
         />
       );
     case ItemType.DOCUMENT:
@@ -438,6 +456,7 @@ const ItemContent = ({
           onSaveDocument={onSaveDocument}
           onCancel={onCancel}
           saveButtonId={saveButtonId}
+          // cancelButtonId={cancelButtonId}
         />
       );
     case ItemType.APP:
@@ -447,7 +466,9 @@ const ItemContent = ({
           member={member}
           isEditing={isEditing}
           onSaveCaption={onSaveCaption}
+          // onCancelCaption={onCancelCaption}
           saveButtonId={saveButtonId}
+          // cancelButtonId={cancelButtonId}
           permission={permission}
         />
       );

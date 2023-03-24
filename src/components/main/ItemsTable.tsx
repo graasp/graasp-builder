@@ -290,9 +290,6 @@ const ItemsTable: FC<Props> = ({
         rowData={rows.toJS() as DiscriminatedItem[]}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
-        // todo: use DiscriminatedItem in ui
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         onCellClicked={onCellClicked}
         getRowId={getRowNodeId}
         isClickable={clickable}
