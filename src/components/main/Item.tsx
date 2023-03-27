@@ -42,7 +42,7 @@ type Props = {
 };
 
 const ItemComponent: FC<Props> = ({ item, memberships }) => {
-  const { id, name, description, extra } = item;
+  const { id, name, description } = item;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({ id });
 
   const alt = name;
@@ -57,15 +57,17 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
       alt={alt}
     />
   );
+
+  const linkUrl =
+    item.type === ItemType.LINK
+      ? item?.extra?.[ItemType.LINK]?.thumbnails?.first()
+      : undefined;
+
   const ThumbnailComponent = (
     <Thumbnail
       id={item.id}
       isLoading={isLoading}
-      url={
-        thumbnailUrl ?? item.type === ItemType.LINK
-          ? extra?.[ItemType.LINK]?.thumbnails?.first()
-          : undefined
-      }
+      url={thumbnailUrl ?? linkUrl}
       alt={alt}
       defaultComponent={defaultValueComponent}
     />

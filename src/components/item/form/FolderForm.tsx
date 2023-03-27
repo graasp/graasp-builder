@@ -9,7 +9,7 @@ import BaseItemForm from './BaseItemForm';
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
-  item: Partial<FolderItemTypeRecord>;
+  item?: FolderItemTypeRecord;
   updatedProperties: Partial<FolderItemType>;
 };
 

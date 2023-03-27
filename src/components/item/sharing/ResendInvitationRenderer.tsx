@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { Invitation, MUTATION_KEYS } from '@graasp/query-client';
+import { MUTATION_KEYS } from '@graasp/query-client';
+import { Invitation } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 

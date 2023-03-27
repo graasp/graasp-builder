@@ -3,6 +3,7 @@ import { TextField } from '@mui/material';
 import { ChangeEvent, FC } from 'react';
 
 import { DiscriminatedItem, UnknownExtra } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -11,7 +12,7 @@ import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 type Props = {
   updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
   onChange: (props: Partial<DiscriminatedItem>) => void;
-  item: Partial<DiscriminatedItem>;
+  item?: ItemRecord;
 };
 
 const BaseForm: FC<Props> = ({ onChange, item, updatedProperties }) => {

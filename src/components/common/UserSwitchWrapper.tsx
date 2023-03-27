@@ -1,8 +1,5 @@
-import { List } from 'immutable';
-
 import { FC } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
@@ -10,7 +7,7 @@ import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 import { DOMAIN, SIGN_IN_PATH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { MEMBER_PROFILE_PATH } from '../../config/paths';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
   HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID,
@@ -32,12 +29,8 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
     isSuccess: isSuccessUser,
   } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutateAsync: signOut } = useMutation<any, any, any>(
-    MUTATION_KEYS.SIGN_OUT,
-  );
-  const { mutate: switchMember } = useMutation<any, any, any>(
-    MUTATION_KEYS.SWITCH_MEMBER,
-  );
+  const { mutateAsync: signOut } = mutations.useSignOut();
+  const { mutate: switchMember } = mutations.useSwitchMember();
 
   const renderAvatar = (m: MemberRecord) => <MemberAvatar id={m.id} />;
 

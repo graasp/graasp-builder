@@ -32,7 +32,7 @@ type App = {
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem<UnknownExtra>>) => void;
-  item: Partial<AppItemTypeRecord>;
+  item?: AppItemTypeRecord;
   updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
 };
 

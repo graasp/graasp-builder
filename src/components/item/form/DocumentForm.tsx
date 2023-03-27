@@ -11,6 +11,7 @@ import {
   ItemType,
   convertJs,
 } from '@graasp/sdk';
+import { DocumentItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { DocumentItem } from '@graasp/ui';
 
@@ -96,7 +97,7 @@ export const DocumentExtraForm = ({
 
 type Props = {
   onChange: (item: Partial<DocumentItemType>) => void;
-  item: Partial<DocumentItemType>;
+  item?: DocumentItemTypeRecord;
   updatedProperties: Partial<DocumentItemType>;
 };
 

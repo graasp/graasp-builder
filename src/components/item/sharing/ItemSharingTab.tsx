@@ -61,7 +61,6 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
     if (!memberships || !canEdit) {
       return null;
     }
-    console.log(memberships);
     const [authenticatedMemberships, authorizedMemberships] = partition(
       memberships.toJS(),
       ({ member }) => member?.email && isPseudonymizedMember(member.email),

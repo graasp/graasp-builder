@@ -62,7 +62,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
     return null;
   }
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_event, reason) => {
     if (reason === 'clickaway') {
       return;
     }

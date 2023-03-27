@@ -11,7 +11,7 @@ import { buildEmbeddedLinkExtra } from '../../../utils/itemExtra';
 
 type Props = {
   onChange: (item: Partial<EmbeddedLinkItemType>) => void;
-  item: Partial<EmbeddedLinkItemType>;
+  item?: EmbeddedLinkItemType;
 };
 
 const LinkForm = ({ onChange, item }: Props): JSX.Element => {

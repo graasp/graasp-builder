@@ -59,7 +59,7 @@ const {
   buildGetItemLoginRoute,
   buildGetItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
-  buildPutItemLoginSchema,
+  buildPutItemLoginSchemaRoute,
   buildPostItemTagRoute,
   buildPatchMember,
   SHARED_ITEM_WITH_ROUTE,
@@ -781,7 +781,9 @@ export const mockPutItemLogin = (items, shouldThrowError) => {
   cy.intercept(
     {
       method: DEFAULT_PUT.method,
-      url: new RegExp(`${API_HOST}/${buildPutItemLoginSchema(ID_FORMAT)}$`),
+      url: new RegExp(
+        `${API_HOST}/${buildPutItemLoginSchemaRoute(ID_FORMAT)}$`,
+      ),
     },
     ({ reply, url, body }) => {
       if (shouldThrowError) {
