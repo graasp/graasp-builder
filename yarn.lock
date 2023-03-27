@@ -2430,9 +2430,9 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#main":
   version: 2.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=f6fda1136472cc58b4e8f020d90af9af82d35b77"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=bab320e39917e320db636e49665078d9099925b5"
   dependencies:
-    "@graasp/sdk": 0.9.2
+    "@graasp/sdk": 0.9.3
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.2.4
@@ -2463,7 +2463,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 4522c5b07eee929987cf24a2d1fa383d93fcedc974bb2704bf5ce0645f1c8f4c36f5f1b049ac0a48f6f056b6204478a3e987a29fd15878363191836859f6e287
+  checksum: 624451e2c03eedb952f2bd193ff2d0c8776cbca250459aabe158353c00930c58345fc788f753659a268f9368d0bbabe5bbcf937a6a6f33f8d531101d7615b244
   languageName: node
   linkType: hard
 
