@@ -188,6 +188,7 @@ const ItemPublishTab: FC<Props> = ({
   };
 
   const handleRefresh = () => {
+    // todo: useQueryClient instead here
     queryClient.invalidateQueries(buildItemValidationAndReviewKey(itemId));
   };
 

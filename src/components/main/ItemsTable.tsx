@@ -31,6 +31,11 @@ import { buildItemPath } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
+import {
+  isItemHidden,
+  isItemPublic,
+  isItemPublished,
+} from '../../utils/itemTag';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
@@ -39,7 +44,7 @@ import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
 
-const { useItem } = hooks;
+const { useItem, useItemsTags } = hooks;
 
 type Props = {
   id?: string;
@@ -88,6 +93,22 @@ const ItemsTable: FC<Props> = ({
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
+
+  const { data: itemsTags } = useItemsTags(rows.map((r) => r.id).toJS());
+  const noStatusesToShow = !rows
+    .map((r) => {
+      const { showChatbox, isPinned, isCollapsible } = r.settings;
+      return showChatbox || isPinned || isCollapsible;
+    })
+    .concat(
+      itemsTags?.map(
+        (itemTags) =>
+          isItemHidden({ tags: tagList, itemTags }) ||
+          isItemPublic({ tags: tagList, itemTags }) ||
+          isItemPublished({ tags: tagList, itemTags }),
+      ),
+    )
+    .some((e) => e === true);
 
   const mutation = useMutation<
     unknown,
@@ -191,8 +212,10 @@ const ItemsTable: FC<Props> = ({
       },
       {
         // todo: add translation of of header
+        field: 'status',
         // headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
         cellRenderer: BadgesComponent,
+        hide: noStatusesToShow,
         type: 'rightAligned',
         flex: 1,
         suppressAutoSize: true,
