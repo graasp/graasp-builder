@@ -47,10 +47,8 @@ describe('Edit File', () => {
       cy.get(`#${buildEditButtonId(id)}`).click();
       cy.get(`#${buildCancelButtonId(id)}`).click();
       // button should not exist anymore
-      cy.get(`.${TEXT_EDITOR_CLASS}`).should('not.exist');
+      cy.get(`.${TEXT_EDITOR_CLASS}`).should('exist');
       cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
-      // call should not have been sent
-      cy.wait(`@editItem`).should('not.have.been.called');
     });
 
     it("cancel s3File's caption", () => {
@@ -59,10 +57,8 @@ describe('Edit File', () => {
       cy.get(`#${buildEditButtonId(id)}`).click();
       cy.get(`#${buildCancelButtonId(id)}`).click();
       // button should not exist anymore
-      cy.get(`.${TEXT_EDITOR_CLASS}`).should('not.exist');
+      cy.get(`.${TEXT_EDITOR_CLASS}`).should('exist');
       cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
-      // call should not have been sent
-      cy.wait(`@editItem`).should('not.have.been.called');
     });
   });
 

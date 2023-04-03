@@ -1,5 +1,10 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
+import {
+  TEXT_EDITOR_CLASS,
+  buildCancelButtonId,
+  buildEditButtonId,
+} from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../fixtures/enums';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
@@ -28,7 +33,17 @@ describe('Edit Link', () => {
       });
     });
 
-    // todo: add test for cancel caption edition
+    it('cancel caption', () => {
+      const { id, description } = GRAASP_LINK_ITEM;
+      cy.visit(buildItemPath(id));
+      cy.get(`#${buildEditButtonId(id)}`).click();
+      cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}{backspace}`);
+      cy.get(`#${buildCancelButtonId(id)}`).click();
+      cy.get(`.${TEXT_EDITOR_CLASS}`)
+        .should('exist')
+        .and('contain.text', description);
+      cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
+    });
   });
 
   describe('List', () => {

@@ -16,7 +16,7 @@
     "@graasp/query-client": "0.4.0",
     "@graasp/sdk": "0.9.3",
     "@graasp/translations": "1.10.0",
-    "@graasp/ui": "github:graasp/graasp-ui#main",
+    "@graasp/ui": "2.2.1",
     "@mui/icons-material": "5.11.0",
     "@mui/lab": "5.0.0-alpha.117",
     "@mui/material": "5.11.6",
@@ -147,10 +147,10 @@
     "@mui/icons-material": "5.11.0",
     "@mui/material": "5.11.6",
     "immer": "9.0.6",
-    "@graasp/ui": "github:graasp/graasp-ui#main",
+    "@graasp/ui": "2.2.1",
     "@graasp/sdk": "0.9.3",
     "immutable": "4.2.4",
     "@svgr/webpack": "6.5.1"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.5.0"
 }
