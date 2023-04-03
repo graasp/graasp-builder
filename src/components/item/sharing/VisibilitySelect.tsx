@@ -7,7 +7,12 @@ import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemLogin, ItemRecord } from '@graasp/sdk/frontend';
+import {
+  ItemLogin,
+  ItemRecord,
+  ItemTagRecord,
+  TagRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -28,16 +33,6 @@ import { useCurrentUserContext } from '../../context/CurrentUserContext';
 const { DELETE_ITEM_TAG, POST_ITEM_TAG, PUT_ITEM_LOGIN } = MUTATION_KEYS;
 
 const { useTags, useItemTags, useItemLogin } = hooks;
-
-// todo: use graasp sdk
-type Tag = {
-  name: string;
-};
-// todo: use graasp sdk
-type ItemTag = {
-  tagId: string;
-  id: string;
-};
 
 type Props = {
   item: ItemRecord;
@@ -67,8 +62,8 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
     isError,
   } = useItemTags(itemId);
   const { data: itemLogin } = useItemLogin(itemId);
-  const [itemTagValue, setItemTagValue] = useState<ItemTag>();
-  const [tagValue, setTagValue] = useState<Tag>();
+  const [itemTagValue, setItemTagValue] = useState<ItemTagRecord>();
+  const [tagValue, setTagValue] = useState<TagRecord>();
   const [isDisabled, setIsDisabled] = useState(false);
 
   // update state variables depending on fetch values

@@ -109,6 +109,7 @@ export const buildItemFormAppOptionId = (name?: string): string =>
   `${name?.replaceAll(/\s/g, '-')}`;
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
+export const buildCancelButtonId = (id: string): string => `cancelButton-${id}`;
 export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';
 export const MEMBER_PROFILE_MEMBER_NAME_ID = 'memberProfileMemberName';
 export const MEMBER_PROFILE_EMAIL_ID = 'memberProfileEmail';

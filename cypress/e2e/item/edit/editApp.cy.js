@@ -1,5 +1,10 @@
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
+import {
+  TEXT_EDITOR_CLASS,
+  buildCancelButtonId,
+  buildEditButtonId,
+} from '../../../../src/config/selectors';
 import { buildAppExtra } from '../../../../src/utils/itemExtra';
 import {
   GRAASP_APP_CHILDREN_ITEM,
@@ -21,10 +26,14 @@ const newFields = {
 
 describe('Edit App', () => {
   describe('View Page', () => {
-    it('edit caption', () => {
+    beforeEach(() => {
       const { id } = GRAASP_APP_ITEM;
       cy.setUpApi({ items: [GRAASP_APP_ITEM] });
       cy.visit(buildItemPath(id));
+    });
+
+    it('edit caption', () => {
+      const { id } = GRAASP_APP_ITEM;
       const caption = 'new caption';
       editCaptionFromViewPage({ id, caption });
       cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
@@ -32,6 +41,17 @@ describe('Edit App', () => {
         // caption content might be wrapped with html tags
         expect(body?.description).to.contain(caption);
       });
+    });
+
+    it('cancel caption', () => {
+      const { id, description } = GRAASP_APP_ITEM;
+      cy.get(`#${buildEditButtonId(id)}`).click();
+      cy.get(`.${TEXT_EDITOR_CLASS}`).type('{selectall}{backspace}');
+      cy.get(`#${buildCancelButtonId(id)}`).click();
+      cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
+      cy.get(`.${TEXT_EDITOR_CLASS}`)
+        .should('be.visible')
+        .and('contain.text', description);
     });
   });
 
