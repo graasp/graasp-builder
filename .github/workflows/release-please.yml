@@ -49,26 +49,7 @@ jobs:
           client-payload: ${{steps.set-tag.outputs.json}}
 
       - name: Auto Tag
-        id: auto-tag
-        if: ${{ steps.release.outputs.releases_created }}
-        run: |
-          gh label create ${{ env.TAG_NAME }} -f --color 0E8A16 --repo ${{ env.REPO }};
-          echo '### `${{ env.TAG_NAME }}` :rocket:' >> $GITHUB_STEP_SUMMARY;
-          echo 'Tag all ${{ env.PRE_LABEL_NAME }} issues and prs as ${{ env.TAG_NAME }}';
-          for cmd in issue pr;
-          do
-            for nbr in $(gh $cmd list -l ${{ env.PRE_LABEL_NAME }} -s all --json number --jq '.[].number' --repo ${{ env.REPO }} );
-            do
-              URL=$(gh $cmd edit $nbr --add-label ${{ env.TAG_NAME }} --remove-label ${{ env.PRE_LABEL_NAME }} --repo ${{ env.REPO }} );
-              echo "- $cmd #$nbr $URL" >> $GITHUB_STEP_SUMMARY;
-            done
-          done
-          echo '' >> $GITHUB_STEP_SUMMARY;
-          echo ':rocket: All related issues and prs tagged !' >> $GITHUB_STEP_SUMMARY;
-          echo ':scroll: Check out [the created release](${{ env.RELEASE_URL }}) !' >> $GITHUB_STEP_SUMMARY;
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          TAG_NAME: ${{ steps.release.outputs.tag_name }}
-          PRE_LABEL_NAME: un-released
-          REPO: ${{ github.event.repository.full_name }}
-          RELEASE_URL: ${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs.tag_name }}
+        uses: graasp/graasp-deploy/.github/actions/auto-tag-after-release@v1
+        with:
+          releases_created: ${{ steps.release.outputs.releases_created }}
+          tag_name: ${{ steps.release.outputs.tag_name }}
