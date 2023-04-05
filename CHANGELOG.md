@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.1](https://github.com/graasp/graasp-builder/compare/v0.11.0...v0.11.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* close caption on click cancel ([#606](https://github.com/graasp/graasp-builder/issues/606)) ([604318b](https://github.com/graasp/graasp-builder/commit/604318bd39d927515874f786e47e827c096cc79f))
+* update publishing icon to use the library logo with the settings cog ([#609](https://github.com/graasp/graasp-builder/issues/609)) ([aae3842](https://github.com/graasp/graasp-builder/commit/aae38423d6c235221253d4dc5afbd7112fcd1f83))
+
 ## [0.11.0](https://github.com/graasp/graasp-builder/compare/v0.10.0...v0.11.0) (2023-03-24)
 
 
