@@ -23,14 +23,14 @@ jobs:
       # creates minor and major tags that follow the latest release
       - name: Tag major and minor versions
         uses: jacobsvante/tag-major-minor-action@v0.1
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.release.outputs.releases_created }}
         with:
           major: ${{ steps.release.outputs.major }}
           minor: ${{ steps.release.outputs.minor }}
 
       # put created tag in an env variable to be sent to the dispatch
       - name: Set tag
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.release.outputs.releases_created }}
         id: set-tag
         run: |
           REPOSITORY=$(echo '${{ github.repository }}')
@@ -40,10 +40,16 @@ jobs:
 
       # Trigger an 'on: repository_dispatch' workflow to run in graasp-deploy repository
       - name: Push tag to Graasp Deploy (Staging)
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.release.outputs.releases_created }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: graasp/graasp-deploy
           event-type: update-staging-version
           client-payload: ${{steps.set-tag.outputs.json}}
+
+      - name: Auto Tag
+        uses: graasp/graasp-deploy/.github/actions/auto-tag-after-release@v1
+        with:
+          releases_created: ${{ steps.release.outputs.releases_created }}
+          tag_name: ${{ steps.release.outputs.tag_name }}
