@@ -1,14 +1,14 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
+import { IconButtonProps } from '@mui/material/IconButton';
 
 import { FC } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
-import { ActionButton, ActionButtonVariant } from '@graasp/ui';
+import {
+  ActionButton,
+  ActionButtonVariant,
+  RecycleButton as GraaspRecycleButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
@@ -18,16 +18,16 @@ import {
 } from '../../config/selectors';
 
 type Props = {
-  itemIds: string[];
   color?: IconButtonProps['color'];
+  itemIds: string[];
   id?: string;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };
 
 const RecycleButton: FC<Props> = ({
+  color,
   itemIds,
-  color = 'default',
   id,
   type = ActionButton.ICON_BUTTON,
   onClick,
@@ -42,40 +42,17 @@ const RecycleButton: FC<Props> = ({
     onClick?.();
   };
 
-  const text = translateBuilder(BUILDER.RECYCLE_ITEM_BUTTON);
-
-  switch (type) {
-    case ActionButton.MENU_ITEM:
-      return (
-        <MenuItem
-          key={text}
-          onClick={handleClick}
-          className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
-        >
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          {text}
-        </MenuItem>
-      );
-    case ActionButton.ICON_BUTTON:
-    default:
-      return (
-        <Tooltip title={text}>
-          <span>
-            <IconButton
-              id={id}
-              color={color}
-              className={ITEM_RECYCLE_BUTTON_CLASS}
-              aria-label={text}
-              onClick={handleClick}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </span>
-        </Tooltip>
-      );
-  }
+  return (
+    <GraaspRecycleButton
+      type={type}
+      iconId={id}
+      color={color}
+      menuItemClassName={ITEM_MENU_RECYCLE_BUTTON_CLASS}
+      iconClassName={ITEM_RECYCLE_BUTTON_CLASS}
+      onClick={handleClick}
+      text={translateBuilder(BUILDER.RECYCLE_ITEM_BUTTON)}
+    />
+  );
 };
 
 export default RecycleButton;
