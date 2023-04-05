@@ -1,16 +1,13 @@
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
-
 import { useEffect, useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
-import { ActionButton, ActionButtonVariant } from '@graasp/ui';
+import {
+  ActionButton,
+  ActionButtonVariant,
+  CollapseButton as GraaspCollapseButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { useMutation } from '../../config/queryClient';
@@ -53,39 +50,17 @@ const CollapseButton = ({
     onClick?.();
   };
 
-  const icon = isCollapsible ? <ExpandLessIcon /> : <ExpandMoreIcon />;
-  const text = isCollapsible
-    ? translateBuilder(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)
-    : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
-
-  switch (type) {
-    case ActionButton.MENU_ITEM:
-      return (
-        <MenuItem
-          key={text}
-          onClick={handleCollapse}
-          className={COLLAPSE_ITEM_BUTTON_CLASS}
-        >
-          <ListItemIcon>{icon}</ListItemIcon>
-          {text}
-        </MenuItem>
-      );
-    case ActionButton.ICON_BUTTON:
-    default:
-      return (
-        <Tooltip title={text}>
-          <span>
-            <IconButton
-              aria-label={text}
-              className={COLLAPSE_ITEM_BUTTON_CLASS}
-              onClick={handleCollapse}
-            >
-              {icon}
-            </IconButton>
-          </span>
-        </Tooltip>
-      );
-  }
+  return (
+    <GraaspCollapseButton
+      type={type}
+      collapseText={translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT)}
+      unCollapseText={translateBuilder(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)}
+      menuItemClassName={COLLAPSE_ITEM_BUTTON_CLASS}
+      iconClassName={COLLAPSE_ITEM_BUTTON_CLASS}
+      isCollapsed={isCollapsible}
+      onClick={handleCollapse}
+    />
+  );
 };
 
 export default CollapseButton;
