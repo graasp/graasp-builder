@@ -1,16 +1,13 @@
-import FlagIcon from '@mui/icons-material/Flag';
-import LabelImportantIcon from '@mui/icons-material/LabelImportant';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-
 import { FC, useContext, useState } from 'react';
 
 import { DiscriminatedItem, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
-import { ActionButton } from '@graasp/ui';
+import {
+  ActionButton,
+  FlagButton as GraaspFlagButton,
+  ItemMenu as GraaspItemMenu,
+  ShortcutButton as GraaspShortcutButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -38,19 +35,15 @@ type Props = {
 
 const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
   const { data: member } = useCurrentUserContext();
-  const [anchorEl, setAnchorEl] = useState(null);
   const { t: translateBuilder } = useBuilderTranslation();
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setMenuOpen(!isMenuOpen);
   };
 
   const handleCreateShortcut = () => {
@@ -67,89 +60,81 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
     if (!canEdit) {
       return null;
     }
-    return [
-      <MoveButton
-        key="move"
-        type={ActionButton.MENU_ITEM}
-        itemIds={[item.id]}
-        onClick={handleClose}
-      />,
-      <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />,
-      <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
-      <CollapseButton
-        key="collapse"
-        type={ActionButton.MENU_ITEM}
-        item={item}
-      />,
-      <RecycleButton
-        key="recycle"
-        type={ActionButton.MENU_ITEM}
-        itemIds={[item.id]}
-        onClick={handleClose}
-      />,
-    ];
+    return (
+      <>
+        <MoveButton
+          key="move"
+          type={ActionButton.MENU_ITEM}
+          itemIds={[item.id]}
+          onClick={handleClose}
+        />
+        <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />
+        <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />
+        <CollapseButton
+          key="collapse"
+          type={ActionButton.MENU_ITEM}
+          item={item}
+        />
+        <RecycleButton
+          key="recycle"
+          type={ActionButton.MENU_ITEM}
+          itemIds={[item.id]}
+          onClick={handleClose}
+        />
+      </>
+    );
   };
 
   const renderAuthenticatedActions = () => {
     if (!member || !member.id) {
       return null;
     }
-    return [
-      <FavoriteButton
-        size="medium"
-        key="favorite"
-        type={ActionButton.MENU_ITEM}
-        item={convertJs(item)}
-      />,
-      <CopyButton
-        key="copy"
-        type={ActionButton.MENU_ITEM}
-        itemIds={[item.id]}
-        onClick={handleClose}
-      />,
-    ];
+    return (
+      <>
+        <FavoriteButton
+          size="medium"
+          key="favorite"
+          type={ActionButton.MENU_ITEM}
+          item={convertJs(item)}
+        />
+        <CopyButton
+          key="copy"
+          type={ActionButton.MENU_ITEM}
+          itemIds={[item.id]}
+          onClick={handleClose}
+        />
+      </>
+    );
   };
 
-  return (
+  const renderDefaultActions = () => (
     <>
-      <IconButton
-        id={buildItemMenuButtonId(item.id)}
-        className={ITEM_MENU_BUTTON_CLASS}
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
-      {Boolean(anchorEl) && (
-        <Menu
-          id={buildItemMenu(item.id)}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {renderAuthenticatedActions()}
-          {renderEditorActions()}
-          <MenuItem
-            onClick={handleCreateShortcut}
-            className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
-          >
-            <ListItemIcon>
-              <LabelImportantIcon />
-            </ListItemIcon>
-            {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
-          </MenuItem>
-          <MenuItem
-            onClick={handleFlag}
-            className={ITEM_MENU_FLAG_BUTTON_CLASS}
-          >
-            <ListItemIcon>
-              <FlagIcon />
-            </ListItemIcon>
-            {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
-          </MenuItem>
-        </Menu>
-      )}
+      <GraaspShortcutButton
+        onClick={handleCreateShortcut}
+        type={ActionButton.MENU_ITEM}
+        menuItemClassName={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+        text={translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
+      />
+      <GraaspFlagButton
+        onClick={handleFlag}
+        type={ActionButton.MENU_ITEM}
+        menuItemClassName={ITEM_MENU_FLAG_BUTTON_CLASS}
+        text={translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
+      />
     </>
+  );
+
+  return (
+    <GraaspItemMenu
+      menuButtonId={buildItemMenuButtonId(item.id)}
+      menuButtonClassName={ITEM_MENU_BUTTON_CLASS}
+      menuId={buildItemMenu(item.id)}
+      isOpen={isMenuOpen}
+    >
+      {renderAuthenticatedActions()}
+      {renderEditorActions()}
+      {renderDefaultActions()}
+    </GraaspItemMenu>
   );
 };
 
