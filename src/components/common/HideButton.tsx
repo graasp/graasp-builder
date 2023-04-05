@@ -1,14 +1,13 @@
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
+import { useState } from 'react';
 
 import { MUTATION_KEYS } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
-import { ActionButton, ActionButtonVariant } from '@graasp/ui';
+import {
+  ActionButton,
+  ActionButtonVariant,
+  HideButton as GraaspHideButton,
+} from '@graasp/ui';
 
 import { HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
@@ -46,8 +45,11 @@ const HideButton = ({
   // since children items are hidden because parent is hidden, the hidden tag should be removed from the root item
   // if hiddenTag is undefined -> the item is not hidden
   const isOriginalHiddenItem = !hiddenTag || hiddenTag?.itemPath === item.path;
+  const [isHidden, setHidden] = useState(hiddenTag !== undefined);
 
   const handleToggleHide = () => {
+    setHidden(!isHidden);
+
     if (hiddenTag) {
       removeTag.mutate({
         id: item.id,
@@ -62,58 +64,22 @@ const HideButton = ({
     onClick?.();
   };
 
-  const text = hiddenTag
-    ? translateBuilder(BUILDER.HIDE_ITEM_SHOW_TEXT)
-    : translateBuilder(BUILDER.HIDE_ITEM_HIDE_TEXT);
-  let tooltip = text;
-  if (hiddenTag && !isOriginalHiddenItem) {
-    tooltip = translateBuilder(BUILDER.HIDE_ITEM_HIDDEN_PARENT_INFORMATION);
-  }
-
-  const icon = hiddenTag ? <VisibilityOff /> : <Visibility />;
-
-  switch (type) {
-    case ActionButton.MENU_ITEM: {
-      const menuItem = (
-        <MenuItem
-          key={text}
-          onClick={handleToggleHide}
-          className={HIDDEN_ITEM_BUTTON_CLASS}
-          disabled={!isOriginalHiddenItem}
-          data-cy={buildHideButtonId(Boolean(hiddenTag))}
-        >
-          <ListItemIcon>{icon}</ListItemIcon>
-          {text}
-        </MenuItem>
-      );
-
-      // show tooltip only on disabled
-      if (isOriginalHiddenItem) {
-        return menuItem;
-      }
-      return (
-        <Tooltip title={tooltip} placement="left">
-          <span>{menuItem}</span>
-        </Tooltip>
-      );
-    }
-    case ActionButton.ICON_BUTTON:
-    default:
-      return (
-        <Tooltip title={tooltip}>
-          <span>
-            <IconButton
-              aria-label={text}
-              className={HIDDEN_ITEM_BUTTON_CLASS}
-              onClick={handleToggleHide}
-              disabled={!isOriginalHiddenItem}
-            >
-              {icon}
-            </IconButton>
-          </span>
-        </Tooltip>
-      );
-  }
+  return (
+    <GraaspHideButton
+      type={type}
+      onClick={handleToggleHide}
+      isHiddenRootItem={isOriginalHiddenItem}
+      menuItemClassName={HIDDEN_ITEM_BUTTON_CLASS}
+      iconClassName={HIDDEN_ITEM_BUTTON_CLASS}
+      isHidden={isHidden}
+      hideText={translateBuilder(BUILDER.HIDE_ITEM_HIDE_TEXT)}
+      showText={translateBuilder(BUILDER.HIDE_ITEM_SHOW_TEXT)}
+      hiddenParentText={translateBuilder(
+        BUILDER.HIDE_ITEM_HIDDEN_PARENT_INFORMATION,
+      )}
+      testData={buildHideButtonId(Boolean(hiddenTag))}
+    />
+  );
 };
 
 export default HideButton;
