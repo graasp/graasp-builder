@@ -14,9 +14,9 @@
     "@emotion/styled": "11.10.5",
     "@graasp/chatbox": "1.1.0",
     "@graasp/query-client": "0.4.0",
-    "@graasp/sdk": "0.9.3",
+    "@graasp/sdk": "0.10.0",
     "@graasp/translations": "1.10.0",
-    "@graasp/ui": "2.2.1",
+    "@graasp/ui": "2.3.0",
     "@mui/icons-material": "5.11.0",
     "@mui/lab": "5.0.0-alpha.117",
     "@mui/material": "5.11.6",
@@ -146,9 +146,9 @@
   "resolutions": {
     "@mui/icons-material": "5.11.0",
     "@mui/material": "5.11.6",
+    "@graasp/sdk": "0.10.0",
+    "@graasp/ui": "2.3.0",
     "immer": "9.0.6",
-    "@graasp/ui": "2.2.1",
-    "@graasp/sdk": "0.9.3",
     "immutable": "4.2.4",
     "@svgr/webpack": "6.5.1"
   },
