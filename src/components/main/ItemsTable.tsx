@@ -97,7 +97,15 @@ const ItemsTable: FC<Props> = ({
   const { data: itemsTags } = useItemsTags(rows.map((r) => r.id).toJS());
   const noStatusesToShow = !rows
     .map((r) => {
-      const { showChatbox, isPinned, isCollapsible } = r.settings;
+      const {
+        showChatbox = false,
+        isPinned = false,
+        isCollapsible = false,
+      } = r.settings || {
+        showChatbox: false,
+        isPinned: false,
+        isCollapsible: false,
+      };
       return showChatbox || isPinned || isCollapsible;
     })
     .concat(

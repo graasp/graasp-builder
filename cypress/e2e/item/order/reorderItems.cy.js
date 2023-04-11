@@ -13,6 +13,14 @@ const reorderAndCheckItem = (id, currentPosition, newPosition) => {
     id,
   )} .${ROW_DRAGGER_CLASS} svg`;
 
+  cy.wait([
+    '@getItem',
+    '@getChildren',
+    '@getItemMemberships',
+    '@getItemTags',
+    '@downloadItemThumbnail',
+  ]);
+
   cy.dragAndDrop(dragIcon, 0, (newPosition - currentPosition) * ROW_HEIGHT);
 
   cy.wait('@editItem').then(

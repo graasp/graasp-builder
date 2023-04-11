@@ -30,6 +30,8 @@ const BadgesCellRenderer = ({
     const isPublic = isItemPublic({ tags: tagList, itemTags });
     const isPublished = isItemPublished({ tags: tagList, itemTags });
     const isPinned = Boolean(item?.settings?.isPinned);
+    const isCollapsible = Boolean(item?.settings?.isCollapsible);
+    const showChatbox = Boolean(item?.settings?.showChatbox);
 
     return (
       <ItemBadges
@@ -37,6 +39,8 @@ const BadgesCellRenderer = ({
         isHidden={isHidden}
         isPublic={isPublic}
         isPublished={isPublished}
+        isCollapsible={isCollapsible}
+        showChatbox={showChatbox}
       />
     );
   };

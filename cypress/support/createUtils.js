@@ -13,7 +13,7 @@ import { ITEM_TYPES } from '../fixtures/enums';
 
 // eslint-disable-next-line import/prefer-default-export
 export const createItem = (payload, options) => {
-  cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
+  cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
 
   switch (payload.type) {
     case ITEM_TYPES.LINK:
