@@ -17,7 +17,6 @@ const reorderAndCheckItem = (id, currentPosition, newPosition) => {
     '@getItem',
     '@getChildren',
     '@getItemMemberships',
-    '@getItemTags',
     '@downloadItemThumbnail',
   ]);
 

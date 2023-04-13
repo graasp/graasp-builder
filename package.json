@@ -15,7 +15,7 @@
     "@graasp/chatbox": "github:graasp/graasp-chatbox#test-reduce-bundle",
     "@graasp/query-client": "github:graasp/graasp-query-client#264-invalidate-multiple-items-queries-when-single-item-query-is-refetched",
     "@graasp/sdk": "0.10.0",
-    "@graasp/translations": "github:graasp/graasp-translations#145-add-notification-translations",
+    "@graasp/translations": "github:graasp/graasp-translations#147-add-builder-status-translations",
     "@graasp/ui": "2.3.1",
     "@mui/icons-material": "5.11.16",
     "@mui/lab": "5.0.0-alpha.117",

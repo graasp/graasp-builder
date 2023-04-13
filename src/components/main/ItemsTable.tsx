@@ -219,9 +219,8 @@ const ItemsTable: FC<Props> = ({
         tooltipField: 'name',
       },
       {
-        // todo: add translation of of header
         field: 'status',
-        // headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
         cellRenderer: BadgesComponent,
         hide: noStatusesToShow,
         type: 'rightAligned',

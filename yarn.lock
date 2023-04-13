@@ -2416,12 +2416,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations#145-add-notification-translations":
+"@graasp/translations@github:graasp/graasp-translations#147-add-builder-status-translations":
   version: 1.10.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=de329f31f6000b623121eca09b53261555d6114b"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=cc68c29d8345a0a60a422036824a976258019af1"
   dependencies:
     i18next: 21.8.1
-  checksum: 2c7cc7657d386a27d3252949c0a25c865e7c678db1d83ded6e4f51e4a78a3b85960ac7f39bc4f904f779499e4a73952d07402e492472c7d154d3b8825c2bd1f7
+  checksum: 5d2308370baf07ca1fc0fdbfb522d999068001fe7f1dcdbf1821b75de8a98d1236c6e79f14839ae59ce1ba7c0c21633bd3ccfd95f19e736d22fe5cd46c641a11
   languageName: node
   linkType: hard
 
@@ -9576,7 +9576,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox#test-reduce-bundle"
     "@graasp/query-client": "github:graasp/graasp-query-client#264-invalidate-multiple-items-queries-when-single-item-query-is-refetched"
     "@graasp/sdk": 0.10.0
-    "@graasp/translations": "github:graasp/graasp-translations#145-add-notification-translations"
+    "@graasp/translations": "github:graasp/graasp-translations#147-add-builder-status-translations"
     "@graasp/ui": 2.3.1
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
