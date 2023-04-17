@@ -24,8 +24,6 @@ import App from './App';
 import { CurrentUserContextProvider } from './context/CurrentUserContext';
 import ModalProviders from './context/ModalProviders';
 
-// const theme = createTheme(GraaspTheme);
-
 const Root: FC = () => (
   <QueryClientProvider client={queryClient}>
     <I18nextProvider i18n={i18nConfig}>

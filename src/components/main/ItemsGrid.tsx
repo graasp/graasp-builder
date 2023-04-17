@@ -8,11 +8,7 @@ import Select from '@mui/material/Select';
 
 import { useState } from 'react';
 
-import {
-  ItemMembershipRecord,
-  ItemRecord,
-  TagRecord,
-} from '@graasp/sdk/frontend';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
@@ -25,6 +21,7 @@ import {
 import { getMembershipsForItem } from '../../utils/membership';
 import FolderDescription from '../item/FolderDescription';
 import { NoItemSearchResult } from '../item/ItemSearch';
+import { ItemsStatuses } from '../table/BadgesCellRenderer';
 import EmptyItem from './EmptyItem';
 import ItemCard from './ItemCard';
 import ItemsToolbar from './ItemsToolbar';
@@ -39,7 +36,7 @@ type Props = {
   id?: string;
   items?: List<ItemRecord>;
   manyMemberships?: List<List<ItemMembershipRecord>>;
-  tagList?: List<TagRecord>;
+  itemsStatuses?: ItemsStatuses;
   title: string;
   itemSearch?: {
     text: string;
@@ -57,7 +54,7 @@ const ItemsGrid = ({
   itemSearch,
   headerElements = [],
   manyMemberships = List(),
-  tagList = List(),
+  itemsStatuses,
   isEditing = false,
   parentId,
 }: Props): JSX.Element => {
@@ -100,7 +97,7 @@ const ItemsGrid = ({
             manyMemberships,
             itemId: item.id,
           })}
-          tagList={tagList}
+          itemsStatuses={itemsStatuses}
         />
       </Grid>
     ));

@@ -5,11 +5,7 @@ import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DiscriminatedItem, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
-import {
-  ItemMembershipRecord,
-  ItemRecord,
-  TagRecord,
-} from '@graasp/sdk/frontend';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
@@ -22,7 +18,7 @@ import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
-import BadgesCellRenderer from '../table/BadgesCellRenderer';
+import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
@@ -44,10 +40,10 @@ const NameWrapper = ({
 type Props = {
   item: ItemRecord;
   memberships: List<ItemMembershipRecord>;
-  tagList?: List<TagRecord>;
+  itemsStatuses?: ItemsStatuses;
 };
 
-const ItemComponent: FC<Props> = ({ item, memberships, tagList }) => {
+const ItemComponent: FC<Props> = ({ item, memberships, itemsStatuses }) => {
   const alt = item.name;
   const defaultValueComponent = (
     <img
@@ -100,7 +96,7 @@ const ItemComponent: FC<Props> = ({ item, memberships, tagList }) => {
     </>
   );
   // here we use the same component as the table this is why it is instantiated a bit weirdly
-  const Badges = BadgesCellRenderer({ tagList });
+  const Badges = BadgesCellRenderer({ itemsStatuses });
 
   return (
     <GraaspCard

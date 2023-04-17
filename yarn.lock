@@ -2349,13 +2349,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox#test-reduce-bundle":
-  version: 1.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=466c300a699c6fc598970d32f9e7414ceee109b8"
+"@graasp/chatbox@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@graasp/chatbox@npm:1.2.1"
   dependencies:
-    "@graasp/query-client": 0.4.0
-    "@graasp/sdk": 0.10.0
-    "@graasp/ui": 2.3.1
     i18next: 21.8.1
     lodash.truncate: 4.4.2
     moment: 2.29.4
@@ -2369,20 +2366,38 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.10.6
     "@emotion/styled": ^11.10.6
-    "@graasp/translations": 1.10.0
+    "@graasp/query-client": ^0.4.0
+    "@graasp/sdk": ^0.10.0
+    "@graasp/translations": ^1.10.0
+    "@graasp/ui": ^2.3.1
     "@mui/icons-material": ^5.11.11
     "@mui/lab": ^5.0.0-alpha.121
     "@mui/material": ^5.11.11
     react: ^17.0.0
     react-dom: "*"
     react-i18next: ^12.0.0
-  checksum: 02e127cde3a83c863d7a0ccb2f7d432711ef54d1fd3cb3093a7760d1099e6055bf0fd6be9d9c9754d915f5a933d95f124062f416f72527077df08c4d2ebd75a0
+  checksum: 7d358f2e1969038cd29ce0d0ac8ed768303ef46ce410c771c229be6acbe15a36f4f3d50da8a541bb29521ca623950c372dd5d456effb4b69c9926feb2ede2a18
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#264-invalidate-multiple-items-queries-when-single-item-query-is-refetched":
-  version: 0.4.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=04e64692ca89d976e3ca96f8043270209f456eba"
+"@graasp/plugin-websockets@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@graasp/plugin-websockets@npm:1.0.0"
+  dependencies:
+    "@fastify/websocket": 5.0.1
+    "@graasp/sdk": 0.9.0
+    ajv: 8.12.0
+    dotenv: 16.0.3
+    fastify: 3.29.5
+    fastify-plugin: 3.0.1
+    ioredis: 5.3.1
+  checksum: 409cb28c9e48fb1e4cadfe56b33731b93bbfc9e54c88f00241e0b51654e638d5f1be629368b0b6fa4789e5309d9ad76decae8e6c9ce189ac652ddd77bb09bbbf
+  languageName: node
+  linkType: hard
+
+"@graasp/query-client@npm:0.4.1":
+  version: 0.4.1
+  resolution: "@graasp/query-client@npm:0.4.1"
   dependencies:
     "@graasp/sdk": 0.10.0
     "@graasp/translations": 1.8.0
@@ -2395,33 +2410,33 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: dc0c0583a63b6174b983ed9c5ae1824ee533a9d14b875b5421a547f22600b2df4eea474fbe61b70995985749822c77462ede310db1251587bfdf56533b7e9301
+  checksum: 5ab2f261582838f822ee330d97e936163b0b222bafa113d9a8a417bebe17bdf9c645541ba682c09af480ab9747d9dbd16811a5feea9890fb0d17558234f7a14c
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:0.10.0":
-  version: 0.10.0
-  resolution: "@graasp/sdk@npm:0.10.0"
+"@graasp/sdk@npm:0.10.1":
+  version: 0.10.1
+  resolution: "@graasp/sdk@npm:0.10.1"
   dependencies:
     "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
+    aws-sdk: 2.1356.0
     fastify: 3.29.5
     fluent-json-schema: 3.1.0
-    immutable: 4.2.4
+    immutable: 4.3.0
     js-cookie: 3.0.1
-    qs: 6.11.0
+    qs: 6.11.1
     slonik: 28.1.1
     uuid: 9.0.0
-  checksum: 5b7d89d72c12be75d9fcba69c9545be4d5caf38685270f66934c9b0c221968d33f4ee20c4c18573e3ed89641461faa12ae28acfcb9511ca45f50b61bb6068631
+  checksum: 481c739ccd1e2dff23f04278c9d07393b53723708be768b3d66d7a1dab82c773aa45f3d6f656112b9b0d43fd3916a54ef7351dbe0b8609fbc1d2d8433d723561
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations#147-add-builder-status-translations":
-  version: 1.10.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=cc68c29d8345a0a60a422036824a976258019af1"
+"@graasp/translations@npm:1.11.0":
+  version: 1.11.0
+  resolution: "@graasp/translations@npm:1.11.0"
   dependencies:
     i18next: 21.8.1
-  checksum: 5d2308370baf07ca1fc0fdbfb522d999068001fe7f1dcdbf1821b75de8a98d1236c6e79f14839ae59ce1ba7c0c21633bd3ccfd95f19e736d22fe5cd46c641a11
+  checksum: 83bba8432cc5b2f83cfa88278fc61387821d421e8a3e9f6a3a1b28ce8c2789e9c8f20832305c13aa0d554d8a20824644ce968d7e6fa5b643676164eb1a3c230c
   languageName: node
   linkType: hard
 
@@ -2470,21 +2485,6 @@ __metadata:
     ag-grid-react:
       optional: true
   checksum: adaaf8629f4d6aacb7273d50f37bc696363640e02c30185e0704c105db93d8469e3ef2cd405ea87b937d1e3bb84a9d5520cc4f123e4cbb634c974f081dfc8887
-  languageName: node
-  linkType: hard
-
-"@graasp/websockets@github:graasp/graasp-websockets.git":
-  version: 1.0.0
-  resolution: "@graasp/websockets@https://github.com/graasp/graasp-websockets.git#commit=87127da6f7b90df34e94e72102b383e26db6d0e1"
-  dependencies:
-    "@fastify/websocket": 5.0.1
-    "@graasp/sdk": 0.9.0
-    ajv: 8.12.0
-    dotenv: 16.0.3
-    fastify: 3.29.5
-    fastify-plugin: 3.0.1
-    ioredis: 5.3.1
-  checksum: 74b8a2dec68fd4457dda59a33ba9d96b72117d226cd03cc04805d4a4f728e30dbc798d9ec3ba9cc2e52ac2726d44a9692e06edf33e9219d31964f7fb56a082da
   languageName: node
   linkType: hard
 
@@ -4047,6 +4047,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.partition@npm:4.6.7":
+  version: 4.6.7
+  resolution: "@types/lodash.partition@npm:4.6.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 9a97f7b58bed499074854642b7baa6642978665be0b01b46b4031419d6f2c1e115da354a6e655dabca8d624d0242065820638b12da1a085fbf2a06539e65c276
+  languageName: node
+  linkType: hard
+
 "@types/lodash.truncate@npm:4.4.7":
   version: 4.4.7
   resolution: "@types/lodash.truncate@npm:4.4.7"
@@ -5480,9 +5489,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:2.1310.0":
-  version: 2.1310.0
-  resolution: "aws-sdk@npm:2.1310.0"
+"aws-sdk@npm:2.1356.0":
+  version: 2.1356.0
+  resolution: "aws-sdk@npm:2.1356.0"
   dependencies:
     buffer: 4.9.2
     events: 1.1.1
@@ -5493,8 +5502,8 @@ __metadata:
     url: 0.10.3
     util: ^0.12.4
     uuid: 8.0.0
-    xml2js: 0.4.19
-  checksum: 648141461eaaaac1bcd8a2f1df460bb4603176541a28ed0aa7c344cc9fe19d69b2a463cb975c767bfb913ebc462103474fcd0315d07918c5fa35b0fef5f00f56
+    xml2js: 0.5.0
+  checksum: 5e7c2f1c339305e95247d31ef012c5be02129d9688ac68465b8af6a3039c6bad86075e2a2f8582f0da80b31a0a8ffe99e043c0f23b9a136e1fe3de505859046d
   languageName: node
   linkType: hard
 
@@ -9573,12 +9582,12 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.5
     "@emotion/styled": 11.10.5
-    "@graasp/chatbox": "github:graasp/graasp-chatbox#test-reduce-bundle"
-    "@graasp/query-client": "github:graasp/graasp-query-client#264-invalidate-multiple-items-queries-when-single-item-query-is-refetched"
-    "@graasp/sdk": 0.10.0
-    "@graasp/translations": "github:graasp/graasp-translations#147-add-builder-status-translations"
+    "@graasp/chatbox": 1.2.1
+    "@graasp/plugin-websockets": 1.0.0
+    "@graasp/query-client": 0.4.1
+    "@graasp/sdk": 0.10.1
+    "@graasp/translations": 1.11.0
     "@graasp/ui": 2.3.1
-    "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.117
     "@mui/material": 5.12.0
@@ -9589,6 +9598,7 @@ __metadata:
     "@testing-library/user-event": ^13.5.0
     "@trivago/prettier-plugin-sort-imports": 4.0.0
     "@types/jest": 29.0.3
+    "@types/lodash.partition": 4.6.7
     "@types/lodash.truncate": 4.4.7
     "@types/node": 18.7.21
     "@types/papaparse": 5.3.7
@@ -15292,6 +15302,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qs@npm:6.11.1":
+  version: 6.11.1
+  resolution: "qs@npm:6.11.1"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
+  languageName: node
+  linkType: hard
+
 "qs@npm:~6.10.3":
   version: 6.10.4
   resolution: "qs@npm:6.10.4"
@@ -19271,20 +19290,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml2js@npm:0.4.19":
-  version: 0.4.19
-  resolution: "xml2js@npm:0.4.19"
+"xml2js@npm:0.5.0":
+  version: 0.5.0
+  resolution: "xml2js@npm:0.5.0"
   dependencies:
     sax: ">=0.6.0"
-    xmlbuilder: ~9.0.1
-  checksum: ca8b2fee430d450a18947786bfd7cd1a353ee00fc6fd550acbc8a8e65f1b4df5e9786fcb2990c1a5514ecd554d445fb74e1d716b3a4fcfffc10554aeb5db482b
+    xmlbuilder: ~11.0.0
+  checksum: 1aa71d62e5bc2d89138e3929b9ea46459157727759cbc62ef99484b778641c0cd21fb637696c052d901a22f82d092a3e740a16b4ce218e81ac59b933535124ea
   languageName: node
   linkType: hard
 
-"xmlbuilder@npm:~9.0.1":
-  version: 9.0.7
-  resolution: "xmlbuilder@npm:9.0.7"
-  checksum: 8193bb323806a002764f013bea0c6e9ff2dc26fd29109408761b16b59a8ad2214c2abe8e691755fd8b525586e3a0e1efeb92335947d7b0899032b779f1705a53
+"xmlbuilder@npm:~11.0.0":
+  version: 11.0.1
+  resolution: "xmlbuilder@npm:11.0.1"
+  checksum: 7152695e16f1a9976658215abab27e55d08b1b97bca901d58b048d2b6e106b5af31efccbdecf9b07af37c8377d8e7e821b494af10b3a68b0ff4ae60331b415b0
   languageName: node
   linkType: hard
 

@@ -16,7 +16,6 @@ import {
   ItemMembershipRecord,
   ItemRecord,
   MemberRecord,
-  TagRecord,
 } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -31,26 +30,21 @@ import { buildItemPath } from '../../config/paths';
 import { hooks, useMutation } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
-import {
-  isItemHidden,
-  isItemPublic,
-  isItemPublished,
-} from '../../utils/itemTag';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
-import BadgesCellRenderer from '../table/BadgesCellRenderer';
+import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
 
-const { useItem, useItemsTags } = hooks;
+const { useItem } = hooks;
 
 type Props = {
   id?: string;
   items: List<ItemRecord>;
   manyMemberships?: List<List<ItemMembershipRecord>>;
-  tagList?: List<TagRecord>;
+  itemsStatuses?: ItemsStatuses;
   tableTitle: string;
   headerElements?: JSX.Element[];
   isSearching?: boolean;
@@ -74,7 +68,7 @@ const ItemsTable: FC<Props> = ({
   id: tableId = '',
   items: rows = List(),
   manyMemberships = List(),
-  tagList = List(),
+  itemsStatuses,
   headerElements = [],
   isSearching = false,
   actions,
@@ -94,28 +88,8 @@ const ItemsTable: FC<Props> = ({
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
 
-  const { data: itemsTags } = useItemsTags(rows.map((r) => r.id).toJS());
-  const noStatusesToShow = !rows
-    .map((r) => {
-      const {
-        showChatbox = false,
-        isPinned = false,
-        isCollapsible = false,
-      } = r.settings || {
-        showChatbox: false,
-        isPinned: false,
-        isCollapsible: false,
-      };
-      return showChatbox || isPinned || isCollapsible;
-    })
-    .concat(
-      itemsTags?.map(
-        (itemTags) =>
-          isItemHidden({ tags: tagList, itemTags }) ||
-          isItemPublic({ tags: tagList, itemTags }) ||
-          isItemPublished({ tags: tagList, itemTags }),
-      ),
-    )
+  const noStatusesToShow = !Object.values(itemsStatuses)
+    .map((obj) => Object.values(obj).some((e) => e === true))
     .some((e) => e === true);
 
   const mutation = useMutation<
@@ -201,7 +175,7 @@ const ItemsTable: FC<Props> = ({
   });
 
   const BadgesComponent = BadgesCellRenderer({
-    tagList,
+    itemsStatuses,
   });
 
   // never changes, so we can use useMemo

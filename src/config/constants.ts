@@ -106,11 +106,7 @@ export const HEADER_HEIGHT = 64;
 export const FILE_UPLOAD_MAX_FILES = 15;
 export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
 
-export const ITEM_ICON_MAX_SIZE = 25;
-
 export const ITEM_NAME_MAX_LENGTH = 15;
-
-export const SHARE_ITEM_MODAL_MIN_WIDTH = 120;
 
 export const LOADING_CONTENT = '…';
 export const SETTINGS = {
@@ -155,6 +151,9 @@ export const ITEM_TYPES_WITH_CAPTIONS: string[] = [
 export const MIN_SCREEN_WIDTH = 1000;
 export const SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR = 8;
 
+/**
+ * @deprecated use ui constant
+ */
 export const FLAG_LIST_MAX_HEIGHT = 250;
 
 export const SHARE_LINK_COLOR = 'black';

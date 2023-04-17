@@ -16,7 +16,6 @@ const toggleHideButton = (itemId, isHidden = false) => {
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
 
-  cy.wait('@getItemTags');
   cy.get(`#${buildItemMenu(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`)
     .should('have.attr', 'data-cy', buildHideButtonId(isHidden))
     .click();

@@ -13,6 +13,7 @@ import { ITEM_TYPES } from '../fixtures/enums';
 
 // eslint-disable-next-line import/prefer-default-export
 export const createItem = (payload, options) => {
+  // click is forced to avoid errors with tooltips covering the button
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
 
   switch (payload.type) {
