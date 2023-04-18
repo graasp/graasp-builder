@@ -19,11 +19,19 @@ export type Props = {
   color?: IconButtonProps['color'];
   id?: string;
   onClick?: MouseEventHandler<HTMLButtonElement | HTMLLIElement>;
+  onClose?: () => void;
   type?: ActionButtonVariant;
   itemIds: string[];
 };
 
-const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
+const CopyButton: FC<Props> = ({
+  itemIds,
+  color,
+  id,
+  type,
+  onClick,
+  onClose,
+}) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { openModal: openCopyModal } = useCopyItemModalContext();
@@ -33,6 +41,7 @@ const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
   ) => {
     openCopyModal(itemIds);
     onClick?.(e);
+    onClose?.();
   };
 
   return (
