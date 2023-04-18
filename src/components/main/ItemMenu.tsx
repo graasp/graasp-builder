@@ -1,10 +1,9 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext } from 'react';
 
 import { DiscriminatedItem, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import {
   ActionButton,
-  FlagButton as GraaspFlagButton,
   ItemMenu as GraaspItemMenu,
   ShortcutButton as GraaspShortcutButton,
 } from '@graasp/ui';
@@ -12,20 +11,19 @@ import {
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_BUTTON_CLASS,
-  ITEM_MENU_FLAG_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../config/selectors';
 import CollapseButton from '../common/CollapseButton';
 import FavoriteButton from '../common/FavoriteButton';
+import FlagButton from '../common/FlagButton';
 import HideButton from '../common/HideButton';
 import MoveButton from '../common/MoveButton';
 import PinButton from '../common/PinButton';
 import RecycleButton from '../common/RecycleButton';
 import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
-import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
 
 type Props = {
@@ -39,21 +37,14 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
-  const { openModal: openFlagModal } = useContext(FlagItemModalContext);
-  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const handleClose = () => {
-    setMenuOpen(!isMenuOpen);
+    // eslint-disable-next-line
+    console.log('hej');
   };
 
   const handleCreateShortcut = () => {
     openCreateShortcutModal(item);
-    handleClose();
-  };
-
-  const handleFlag = () => {
-    openFlagModal(item.id);
-    handleClose();
   };
 
   const renderEditorActions = () => {
@@ -101,7 +92,6 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
           key="copy"
           type={ActionButton.MENU_ITEM}
           itemIds={[item.id]}
-          onClick={handleClose}
         />
       </>
     );
@@ -110,17 +100,13 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
   const renderDefaultActions = () => (
     <>
       <GraaspShortcutButton
+        key="shortcut"
         onClick={handleCreateShortcut}
         type={ActionButton.MENU_ITEM}
         menuItemClassName={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
         text={translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
       />
-      <GraaspFlagButton
-        onClick={handleFlag}
-        type={ActionButton.MENU_ITEM}
-        menuItemClassName={ITEM_MENU_FLAG_BUTTON_CLASS}
-        text={translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
-      />
+      <FlagButton key="flag" type={ActionButton.MENU_ITEM} itemId={item.id} />
     </>
   );
 
@@ -129,7 +115,6 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
       menuButtonId={buildItemMenuButtonId(item.id)}
       menuButtonClassName={ITEM_MENU_BUTTON_CLASS}
       menuId={buildItemMenu(item.id)}
-      isOpen={isMenuOpen}
     >
       {renderAuthenticatedActions()}
       {renderEditorActions()}
