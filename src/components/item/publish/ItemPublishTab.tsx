@@ -12,6 +12,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 
 import { FC, useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
 
 import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
@@ -26,7 +27,7 @@ import {
   VALIDATION_STATUS_NAMES,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, queryClient, useMutation } from '../../../config/queryClient';
+import { hooks, useMutation } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
@@ -72,6 +73,7 @@ const ItemPublishTab: FC<Props> = ({
   permission = PermissionLevel.Read,
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const queryClient = useQueryClient();
 
   const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(

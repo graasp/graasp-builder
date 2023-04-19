@@ -16,7 +16,6 @@ import {
   ItemMembershipRecord,
   ItemRecord,
   MemberRecord,
-  TagRecord,
 } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -34,7 +33,7 @@ import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
-import BadgesCellRenderer from '../table/BadgesCellRenderer';
+import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
@@ -45,7 +44,7 @@ type Props = {
   id?: string;
   items: List<ItemRecord>;
   manyMemberships?: List<List<ItemMembershipRecord>>;
-  tagList?: List<TagRecord>;
+  itemsStatuses?: ItemsStatuses;
   tableTitle: string;
   headerElements?: JSX.Element[];
   isSearching?: boolean;
@@ -69,7 +68,7 @@ const ItemsTable: FC<Props> = ({
   id: tableId = '',
   items: rows = List(),
   manyMemberships = List(),
-  tagList = List(),
+  itemsStatuses,
   headerElements = [],
   isSearching = false,
   actions,
@@ -88,6 +87,10 @@ const ItemsTable: FC<Props> = ({
   const { itemId } = useParams();
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
+
+  const noStatusesToShow = !Object.values(itemsStatuses)
+    .map((obj) => Object.values(obj).some((e) => e === true))
+    .some((e) => e === true);
 
   const mutation = useMutation<
     unknown,
@@ -172,7 +175,7 @@ const ItemsTable: FC<Props> = ({
   });
 
   const BadgesComponent = BadgesCellRenderer({
-    tagList,
+    itemsStatuses,
   });
 
   // never changes, so we can use useMemo
@@ -190,9 +193,10 @@ const ItemsTable: FC<Props> = ({
         tooltipField: 'name',
       },
       {
-        // todo: add translation of of header
-        // headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
+        field: 'status',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
         cellRenderer: BadgesComponent,
+        hide: noStatusesToShow,
         type: 'rightAligned',
         flex: 1,
         suppressAutoSize: true,
