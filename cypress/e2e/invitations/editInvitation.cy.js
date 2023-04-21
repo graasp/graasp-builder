@@ -1,3 +1,5 @@
+import { PermissionLevel } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../src/config/paths';
 import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
@@ -5,7 +7,6 @@ import {
   buildPermissionOptionId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import { PERMISSION_LEVELS } from '../../fixtures/enums';
 import { ITEMS_WITH_INVITATIONS } from '../../fixtures/invitations';
 
 const editInvitation = ({ itemId, id, permission }) => {
@@ -28,7 +29,7 @@ describe('Edit Invitation', () => {
     cy.visit(buildItemPath(id));
 
     // update membership
-    const permission = PERMISSION_LEVELS.READ;
+    const permission = PermissionLevel.Read;
     const { id: iId } = invitations[1];
     editInvitation({ itemId: id, id: iId, permission });
 
@@ -46,7 +47,7 @@ describe('Edit Invitation', () => {
     cy.visit(buildItemPath(id));
 
     // update membership
-    const permission = PERMISSION_LEVELS.ADMIN;
+    const permission = PermissionLevel.Admin;
     const { id: iId } = invitations[0];
     editInvitation({ itemId: id, id: iId, permission });
 

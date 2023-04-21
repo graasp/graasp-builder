@@ -169,6 +169,7 @@ const VisibilitySelect: FC<Props> = ({ item, edit }) => {
     isLoading,
     handleChange,
   } = useVisibility(item);
+
   if (isLoading) {
     return <Loader />;
   }

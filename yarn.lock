@@ -2374,56 +2374,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@portal:/Users/kim/git/graasp-query-client::locator=graasp-builder%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@graasp/query-client@portal:/Users/kim/git/graasp-query-client::locator=graasp-builder%40workspace%3A."
+"@graasp/query-client@github:graasp/graasp-query-client#typeorm":
+  version: 0.4.0
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=bce5e06598332e748b26e2d353f0b5750d94ee41"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     "@graasp/translations": "github:graasp/graasp-translations#89-email"
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
-    immutable: 4.2.4
+    immutable: 4.3.0
     qs: 6.11.0
     react-query: 3.39.3
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  languageName: node
-  linkType: soft
-
-"@graasp/sdk@github:graasp/graasp-sdk#typeorm":
-  version: 0.9.2
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=c5ac997a75dba48c6696748fec381161d7fba4aa"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    typeorm: 0.3.12
-    uuid: 9.0.0
-  checksum: 192978578690c471914fe07f7a8f1afbdc5c59d574dd063e7afb42f4b31759857ad8de39176f28ec8cf322bb9444f90aeb12b34748cd9a05ced900c8280e3657
+  checksum: 3f9691833bfc63747600ecaf1b7e1635ce73535f847f245790c14f0347abbe61cf5232ccbdef2f8454ebdcb440b4aedfde99444d0580ff05c4060b3a0536d0b2
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:0.9.2":
-  version: 0.9.2
-  resolution: "@graasp/sdk@npm:0.9.2"
+"@graasp/sdk@github:graasp/graasp-sdk#typeorm":
+  version: 0.10.1
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=11583106ee3b14bf3cec79ab88ffce73f1666fcd"
   dependencies:
     "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
+    aws-sdk: 2.1356.0
     fastify: 3.29.5
     fluent-json-schema: 3.1.0
-    immutable: 4.2.4
+    immutable: 4.3.0
     js-cookie: 3.0.1
-    qs: 6.11.0
+    qs: 6.11.1
     slonik: 28.1.1
+    typeorm: 0.3.12
     uuid: 9.0.0
-  checksum: 49daf48b8877b1a0bdd0612c5a88be22860de4e94c494978732add26d38b5d0a6784df8eb8caedd7972b2767c78258c056c89889c73eeeb3971f2ff989a7f1e0
+  checksum: 2c604fc94b1193a1b8632daaf9421108c13483c0f417b551c28de2a3c133b6085a2433dcb4a5f439d4b3dc74101fe97681e3687f59b019e24b504445f312ca02
   languageName: node
   linkType: hard
 
@@ -4124,7 +4108,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*":
+"@types/qs@npm:*, @types/qs@npm:6.9.7":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
@@ -5471,9 +5455,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:2.1310.0":
-  version: 2.1310.0
-  resolution: "aws-sdk@npm:2.1310.0"
+"aws-sdk@npm:2.1356.0":
+  version: 2.1356.0
+  resolution: "aws-sdk@npm:2.1356.0"
   dependencies:
     buffer: 4.9.2
     events: 1.1.1
@@ -5484,8 +5468,8 @@ __metadata:
     url: 0.10.3
     util: ^0.12.4
     uuid: 8.0.0
-    xml2js: 0.4.19
-  checksum: 648141461eaaaac1bcd8a2f1df460bb4603176541a28ed0aa7c344cc9fe19d69b2a463cb975c767bfb913ebc462103474fcd0315d07918c5fa35b0fef5f00f56
+    xml2js: 0.5.0
+  checksum: 5e7c2f1c339305e95247d31ef012c5be02129d9688ac68465b8af6a3039c6bad86075e2a2f8582f0da80b31a0a8ffe99e043c0f23b9a136e1fe3de505859046d
   languageName: node
   linkType: hard
 
@@ -9933,6 +9917,7 @@ __metadata:
     "@types/lodash.truncate": 4.4.7
     "@types/node": 18.7.21
     "@types/papaparse": 5.3.7
+    "@types/qs": 6.9.7
     "@types/react": ^17.0.2
     "@types/react-dom": ^17.0.2
     "@types/uuid": 9.0.0
@@ -9966,7 +9951,7 @@ __metadata:
     http-status-codes: 2.2.0
     husky: 8.0.3
     i18next: 21.8.1
-    immutable: 4.2.4
+    immutable: 4.3.0
     istanbul-lib-coverage: 3.2.0
     katex: 0.16.0
     lodash.partition: 4.6.0
@@ -10546,10 +10531,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immutable@npm:4.2.4":
-  version: 4.2.4
-  resolution: "immutable@npm:4.2.4"
-  checksum: 3be84eded37b05e65cad57bfba630bc1bf170c498b7472144bc02d2650cc9baef79daf03574a9c2e41d195ebb55a1c12c9b312f41ee324b653927b24ad8bcaa7
+"immutable@npm:4.3.0":
+  version: 4.3.0
+  resolution: "immutable@npm:4.3.0"
+  checksum: bbd7ea99e2752e053323543d6ff1cc71a4b4614fa6121f321ca766db2bd2092f3f1e0a90784c5431350b7344a4f792fa002eac227062d59b9377b6c09063b58b
   languageName: node
   linkType: hard
 
@@ -15782,6 +15767,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qs@npm:6.11.1":
+  version: 6.11.1
+  resolution: "qs@npm:6.11.1"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
+  languageName: node
+  linkType: hard
+
 "qs@npm:~6.10.3":
   version: 6.10.4
   resolution: "qs@npm:6.10.4"
@@ -19956,13 +19950,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml2js@npm:0.4.19":
-  version: 0.4.19
-  resolution: "xml2js@npm:0.4.19"
+"xml2js@npm:0.5.0":
+  version: 0.5.0
+  resolution: "xml2js@npm:0.5.0"
   dependencies:
     sax: ">=0.6.0"
-    xmlbuilder: ~9.0.1
-  checksum: ca8b2fee430d450a18947786bfd7cd1a353ee00fc6fd550acbc8a8e65f1b4df5e9786fcb2990c1a5514ecd554d445fb74e1d716b3a4fcfffc10554aeb5db482b
+    xmlbuilder: ~11.0.0
+  checksum: 1aa71d62e5bc2d89138e3929b9ea46459157727759cbc62ef99484b778641c0cd21fb637696c052d901a22f82d092a3e740a16b4ce218e81ac59b933535124ea
   languageName: node
   linkType: hard
 
@@ -19980,13 +19974,6 @@ __metadata:
   version: 11.0.1
   resolution: "xmlbuilder@npm:11.0.1"
   checksum: 7152695e16f1a9976658215abab27e55d08b1b97bca901d58b048d2b6e106b5af31efccbdecf9b07af37c8377d8e7e821b494af10b3a68b0ff4ae60331b415b0
-  languageName: node
-  linkType: hard
-
-"xmlbuilder@npm:~9.0.1":
-  version: 9.0.7
-  resolution: "xmlbuilder@npm:9.0.7"
-  checksum: 8193bb323806a002764f013bea0c6e9ff2dc26fd29109408761b16b59a8ad2214c2abe8e691755fd8b525586e3a0e1efeb92335947d7b0899032b779f1705a53
   languageName: node
   linkType: hard
 

@@ -1,10 +1,9 @@
 import { Stack } from '@mui/material';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
-import { hooks, useMutation } from '../../../config/queryClient';
+import { hooks, mutations } from '../../../config/queryClient';
 import { ButtonVariants } from '../../../enums';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import ClearChatButton from './ClearChatButton';
@@ -23,9 +22,7 @@ const AdminChatSettings = ({ item }: Props): JSX.Element => {
   const isAdmin =
     itemPermissions?.find((perms) => perms.member.id === currentMember.id)
       ?.permission === PermissionLevel.Admin;
-  const { mutate: clearChatHook } = useMutation<unknown, unknown, string>(
-    MUTATION_KEYS.CLEAR_ITEM_CHAT,
-  );
+  const { mutate: clearChatHook } = mutations.useClearItemChat();
 
   if (!isAdmin || isLoadingItemPermissions) {
     return null;

@@ -5,7 +5,7 @@ import {
   buildSignInPath,
 } from '@graasp/sdk';
 
-import { ITEM_LAYOUT_MODES } from '../enums';
+import ITEM_LAYOUT_MODES from '../enums/itemLayoutModes';
 
 export const APP_NAME = 'Graasp';
 
@@ -47,9 +47,6 @@ export const buildGraaspAnalyzerLink = (id: string): string =>
 
 export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 
-export const HIDDEN_ITEM_TAG_ID =
-  process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || 'hidden-tag-id';
-
 export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
@@ -60,12 +57,6 @@ export const DOUBLE_CLICK_DELAY_MS = 500;
 export const TREE_VIEW_MAX_WIDTH = 400;
 export const UUID_LENGTH = 36;
 
-export const MIME_TYPES = {
-  IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
-  VIDEO: ['video/mp4'],
-  AUDIO: ['audio/mpeg', 'audio/mp3'],
-  PDF: ['application/pdf'],
-};
 export const DRAWER_WIDTH = 240;
 export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_LANG = 'en';
@@ -123,6 +114,7 @@ export const SETTINGS = {
     SIGN_IN_MODE: {
       PSEUDONYM: 'pseudonym',
       MEMBER_ID: 'memberId',
+      USERNAME_AND_PASSWORD: 'username+password',
     },
   },
   ITEM_PUBLIC: {
@@ -179,18 +171,6 @@ export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
 
 export const H5P_FILE_DOT_EXTENSION = '.h5p';
 
-export const CATEGORY_TYPES = {
-  LEVEL: 'level',
-  DISCIPLINE: 'discipline',
-  LANGUAGE: 'language',
-};
-
-export const CATEGORY_TYPE_TITLES = {
-  LEVEL: 'Level',
-  DISCIPLINE: 'Discipline',
-  LANGUAGE: 'Language',
-};
-
 export const CC_LICENSE_ADAPTION_OPTIONS = {
   ALLOW: 'allow',
   ALIKE: 'alike',
@@ -200,8 +180,6 @@ export const CC_LICENSE_ADAPTION_OPTIONS = {
 export const CC_LICENSE_ABOUT_URL =
   'https://creativecommons.org/about/cclicenses/';
 
-
-
 export const ADMIN_CONTACT = 'admin@graasp.org';
 
 export const HOST_MAP = {
@@ -209,9 +187,6 @@ export const HOST_MAP = {
   [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
   [Context.PLAYER]: GRAASP_PERFORM_HOST,
   [Context.ANALYTICS]: '',
-
-  [Context.ANALYZER]: '',
-  [Context.EXPLORER]: '',
 };
 
 export const MEMBERSHIP_TABLE_HEIGHT = 400;
@@ -229,10 +204,6 @@ export const DISPLAY_CO_EDITORS_OPTIONS = {
     value: false,
     label: 'No',
   },
-};
-
-export const THUMBNAIL_SIZES = {
-  SMALL: 'small',
 };
 
 export const ITEM_HEADER_ICON_HEIGHT = 24;

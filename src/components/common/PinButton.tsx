@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButtonVariant, PinButton as GraaspPinButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
@@ -18,7 +17,7 @@ type Props = {
 const PinButton = ({ item, type, onClick }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const editItem = useMutation<any, any, any>(MUTATION_KEYS.EDIT_ITEM);
+  const editItem = mutations.useEditItem();
   const [isPinned, setPinned] = useState(item?.settings?.isPinned);
 
   const handlePin = () => {

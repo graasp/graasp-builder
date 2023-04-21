@@ -13,7 +13,6 @@ import Grid from '@mui/material/Grid';
 
 import { FC, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
@@ -24,7 +23,7 @@ import {
   useCommonTranslation,
   useMessagesTranslation,
 } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
   SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID,
@@ -52,7 +51,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     isError,
     data: results,
     error,
-  } = useMutation<any, any, any>(MUTATION_KEYS.SHARE_ITEM);
+  } = mutations.useShareItem();
 
   const openModal = () => {
     setIsOpen(true);

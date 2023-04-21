@@ -1,4 +1,4 @@
-import { Context } from '@graasp/sdk'
+import { Context, ItemTagType } from '@graasp/sdk'
 import { SETTINGS } from '../../../../src/config/constants';
 import {
   buildGraaspBuilderView,
@@ -12,11 +12,6 @@ import {
   SHARE_ITEM_VISIBILITY_SELECT_ID,
   buildShareButtonId,
 } from '../../../../src/config/selectors';
-import {
-  DEFAULT_TAGS,
-  ITEM_LOGIN_TAG,
-  ITEM_PUBLIC_TAG,
-} from '../../../fixtures/itemTags';
 import {
   ITEM_LOGIN_ITEMS,
   SAMPLE_ITEMS,
@@ -35,7 +30,7 @@ export const changeVisibility = (value: string): void => {
 
 describe('Share Item', () => {
   it('Default Private Item', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, tags: DEFAULT_TAGS });
+    cy.setUpApi({ ...SAMPLE_ITEMS, });
     const item = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
@@ -63,7 +58,7 @@ describe('Share Item', () => {
     changeVisibility(SETTINGS.ITEM_PUBLIC.name);
     cy.wait('@postItemTag').then(({ request: { body } }) => {
       expect(body?.itemPath).to.equal(item.path);
-      expect(body?.tagId).to.equal(ITEM_PUBLIC_TAG.id);
+      expect(body?.type).to.equal(ItemTagType.PUBLIC);
     });
 
     // change public -> private
@@ -76,7 +71,7 @@ describe('Share Item', () => {
   });
 
   it('Public Item', () => {
-    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS, tags: DEFAULT_TAGS });
+    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS, });
     // todo: improve type
     const item = SAMPLE_PUBLIC_ITEMS.items[0] as any;
     cy.visit(buildItemPath(item.id));
@@ -105,14 +100,14 @@ describe('Share Item', () => {
       const {
         request: { body },
       } = data[1];
-      expect(body?.tagId).to.equal(ITEM_LOGIN_TAG.id);
+      expect(body?.type).to.equal(ItemTagType.PUBLIC); // originally item login
     });
   });
 
   it('Pseudonymized Item', () => {
     // todo: improve types
     const item = ITEM_LOGIN_ITEMS.items[0] as any;
-    cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
+    cy.setUpApi({ items: [item], });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
 

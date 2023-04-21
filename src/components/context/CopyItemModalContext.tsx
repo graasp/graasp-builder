@@ -2,11 +2,10 @@ import { validate } from 'uuid';
 
 import { createContext, useContext, useMemo, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import TreeModal from '../main/TreeModal';
 
 type CopyItemModalContextType = {
@@ -23,11 +22,7 @@ type Props = {
 
 export const CopyItemModalProvider = ({ children }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: copyItems } = useMutation<
-    unknown,
-    unknown,
-    { ids: string[]; to: string }
-  >(MUTATION_KEYS.COPY_ITEMS);
+  const { mutate: copyItems } = mutations.useCopyItems();
   const [open, setOpen] = useState<boolean>(false);
   const [itemIds, setItemIds] = useState<string[]>([]);
 

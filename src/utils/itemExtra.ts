@@ -55,8 +55,6 @@ export const getItemLoginExtra = (extra: {
   itemLogin?: ItemLogin;
 }): ItemLogin => extra?.itemLogin;
 
-
-
 export const buildDocumentExtra = (
   document: DocumentItemExtraProperties,
 ): DocumentItemExtra => ({

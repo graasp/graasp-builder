@@ -3,12 +3,11 @@ import { Grid } from '@mui/material';
 
 import { FC } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { Button, ForbiddenContent } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
@@ -16,7 +15,7 @@ import Main from './Main';
 
 const ItemForbiddenScreen: FC = () => {
   const { data: member } = useCurrentUserContext();
-  const { mutate: signOut } = useMutation(MUTATION_KEYS.SIGN_OUT);
+  const { mutate: signOut } = mutations.useSignOut();
   const { t: translateBuilder } = useBuilderTranslation();
 
   const ButtonContent = (

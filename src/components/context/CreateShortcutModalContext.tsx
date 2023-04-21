@@ -1,11 +1,10 @@
 import { FC, createContext, useMemo, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { TREE_MODAL_MY_ITEMS_ID } from '../../config/selectors';
 import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal from '../main/TreeModal';
@@ -22,9 +21,7 @@ type Props = {
 
 const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: createShortcut } = useMutation<any, any, any>(
-    MUTATION_KEYS.POST_ITEM,
-  );
+  const { mutate: createShortcut } = mutations.usePostItem();
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<DiscriminatedItem>();
 

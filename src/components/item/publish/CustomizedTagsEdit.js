@@ -6,7 +6,6 @@ import { Chip, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Loader, SaveButton } from '@graasp/ui';
 
@@ -14,7 +13,7 @@ import {
   useBuilderTranslation,
   useCommonTranslation,
 } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   ITEM_TAGS_EDIT_INPUT_ID,
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
@@ -22,12 +21,10 @@ import {
 } from '../../../config/selectors';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
-const { EDIT_ITEM } = MUTATION_KEYS;
-
 const CustomizedTagsEdit = ({ item, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
-  const { mutate: updateCustomizedTags } = useMutation(EDIT_ITEM);
+  const { mutate: updateCustomizedTags } = mutations.useEditItem();
 
   // user
   const { isLoading: isMemberLoading } = useCurrentUserContext();

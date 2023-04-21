@@ -2,8 +2,6 @@ import { List } from 'immutable';
 
 import { useMemo } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { Invitation } from '@graasp/sdk';
 import { InvitationRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -13,7 +11,7 @@ import {
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   buildInvitationTableRowId,
   buildItemInvitationRowDeleteButtonId,
@@ -41,23 +39,9 @@ const InvitationsTable = ({
   readOnly = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: editInvitation } = useMutation<
-    unknown,
-    unknown,
-    Partial<Invitation> & {
-      itemId: string;
-    }
-  >(MUTATION_KEYS.PATCH_INVITATION);
-  const { mutate: postInvitations } = useMutation<
-    unknown,
-    unknown,
-    { itemId: string; invitations: Partial<Invitation>[] }
-  >(MUTATION_KEYS.POST_INVITATIONS);
-  const { mutate: deleteInvitation } = useMutation<
-    unknown,
-    unknown,
-    { itemId: string; id: string }
-  >(MUTATION_KEYS.DELETE_INVITATION);
+  const { mutate: editInvitation } = mutations.usePatchInvitation();
+  const { mutate: postInvitations } = mutations.usePostInvitations();
+  const { mutate: deleteInvitation } = mutations.useDeleteInvitation();
 
   const getRowId = ({ data }) => buildInvitationTableRowId(data.id);
 

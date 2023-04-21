@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 
 import { FC, useEffect, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   ItemSettings as ItemSettingsType,
   ItemType,
@@ -22,7 +21,7 @@ import {
   DEFAULT_SHOW_CHATBOX_SETTING,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_COLLAPSE_TOGGLE_ID,
@@ -41,11 +40,7 @@ type Props = {
 const ItemSettings: FC<Props> = ({ item }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: editItem } = useMutation<
-    unknown,
-    unknown,
-    { id: string; name: string; settings: ItemSettingsType }
-  >(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = mutations.useEditItem();
 
   const { settings } = item;
 

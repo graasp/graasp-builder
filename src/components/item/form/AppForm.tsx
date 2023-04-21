@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { FC, HTMLAttributes, useState } from 'react';
 
-import { DiscriminatedItem, UnknownExtra, getAppExtra } from '@graasp/sdk';
+import { App, DiscriminatedItem, UnknownExtra, getAppExtra } from '@graasp/sdk';
 import { AppItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
@@ -19,16 +19,6 @@ import {
 } from '../../../config/selectors';
 import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
-
-// todo: use from graasp-sdk
-type App = {
-  name: string;
-  description: string;
-  url: string;
-  extra: {
-    image: string;
-  };
-};
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem<UnknownExtra>>) => void;

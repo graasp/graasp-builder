@@ -1,11 +1,10 @@
 import { FC } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { TextEditor } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import { buildSaveButtonId } from '../../config/selectors';
 import { useLayoutContext } from '../context/LayoutContext';
 
@@ -16,11 +15,7 @@ type Props = {
 
 const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: editItem } = useMutation<
-    any,
-    any,
-    { id: string; description: string }
-  >(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = mutations.useEditItem();
   const { setEditingItemId } = useLayoutContext();
   const { data: parentItem } = hooks.useItem(itemId);
 

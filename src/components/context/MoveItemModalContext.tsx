@@ -2,11 +2,10 @@ import { validate } from 'uuid';
 
 import { createContext, useMemo, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { TreePreventSelection } from '../../enums';
 import TreeModal from '../main/TreeModal';
 
@@ -22,7 +21,7 @@ const MoveItemModalProvider = ({
   children: JSX.Element | JSX.Element[];
 }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: moveItems } = useMutation(MUTATION_KEYS.MOVE_ITEMS);
+  const { mutate: moveItems } = mutations.useMoveItems();
 
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState<string[] | null>(null);

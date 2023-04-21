@@ -6,7 +6,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FC, createContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { DiscriminatedItem, ItemType, convertJs } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
@@ -14,7 +13,7 @@ import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
@@ -35,9 +34,7 @@ const EditItemModalContext = createContext({
 const EditItemModalProvider: FC<Props> = ({ children }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
-  const { mutate: editItem } = useMutation<any, any, any>(
-    MUTATION_KEYS.EDIT_ITEM,
-  );
+  const { mutate: editItem } = mutations.useEditItem();
 
   // updated properties are separated from the original item
   // so only necessary properties are sent when editing

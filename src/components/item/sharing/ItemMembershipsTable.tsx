@@ -2,7 +2,6 @@ import { Typography } from '@mui/material';
 
 import { useMemo } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemMembership } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -13,7 +12,7 @@ import {
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
@@ -67,24 +66,12 @@ const ItemMembershipsTable = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: deleteItemMembership } = useMutation<
-    unknown,
-    unknown,
-    { itemId: string; id: string }
-  >(MUTATION_KEYS.DELETE_ITEM_MEMBERSHIP);
-  const { mutate: editItemMembership } = useMutation<
-    unknown,
-    unknown,
-    Partial<ItemMembership & { itemId: string }>
-  >(MUTATION_KEYS.EDIT_ITEM_MEMBERSHIP);
-  const { mutate: shareItem } = useMutation<
-    unknown,
-    unknown,
-    Partial<ItemMembership> & { email: string }
-  >(MUTATION_KEYS.POST_ITEM_MEMBERSHIP);
+  const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
+  const { mutate: editItemMembership } = mutations.useEditItemMembership();
+  const { mutate: shareItem } = mutations.usePostItemMembership();
 
   const onDelete = ({ instance }) => {
-    deleteItemMembership({ itemId: item.id, id: instance.id });
+    deleteItemMembership({ id: instance.id });
   };
 
   // never changes, so we can use useMemo
@@ -101,7 +88,6 @@ const ItemMembershipsTable = ({
       item,
       editFunction: ({ value, instance }) => {
         editItemMembership({
-          itemId: item.id,
           id: instance.id,
           permission: value,
         });

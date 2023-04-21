@@ -4,7 +4,6 @@ import { List } from 'immutable';
 import { FC, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   DiscriminatedItem,
   FolderItemExtra,
@@ -24,7 +23,7 @@ import i18n, {
   useEnumsTranslation,
 } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
@@ -80,14 +79,7 @@ const ItemsTable: FC<Props> = ({
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
 
-  const mutation = useMutation<
-    unknown,
-    unknown,
-    {
-      id: string;
-      extra: FolderItemExtra;
-    }
-  >(MUTATION_KEYS.EDIT_ITEM);
+  const mutation = mutations.useEditItem();
 
   const isFolder = useCallback(() => Boolean(itemId), [itemId]);
   const canDrag = useCallback(

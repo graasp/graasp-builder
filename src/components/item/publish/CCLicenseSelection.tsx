@@ -2,18 +2,15 @@ import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { CCLicenseIcon, Loader } from '@graasp/ui';
 
 import { CC_LICENSE_ADAPTION_OPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CCLicenseDialog from './CCLicenseDialog';
-
-const { EDIT_ITEM } = MUTATION_KEYS;
 
 // TODO: export in graasp sdk
 enum CCLicenseAdaption {
@@ -28,15 +25,7 @@ type Props = {
 
 const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: updateCCLicense } = useMutation<
-    any,
-    any,
-    {
-      id: string;
-      name: string;
-      settings: { ccLicenseAdaption: CCLicenseAdaption };
-    }
-  >(EDIT_ITEM);
+  const { mutate: updateCCLicense } = mutations.useEditItem();
   const [optionValue, setOptionValue] = useState<CCLicenseAdaption>();
   const [open, setOpen] = useState(false);
 

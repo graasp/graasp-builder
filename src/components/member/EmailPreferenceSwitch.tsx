@@ -2,11 +2,10 @@ import { SelectChangeEvent } from '@mui/material';
 
 import { FC } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { Select } from '@graasp/ui';
 
 import { emailFrequency } from '../../config/constants';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { buildEmailFrequencyOptionId } from '../../config/selectors';
 
 type EmailPreferenceSwitchProps = {
@@ -20,11 +19,7 @@ const EmailPreferenceSwitch: FC<EmailPreferenceSwitchProps> = ({
   memberId,
   emailFreq,
 }) => {
-  const { mutate: editMember } = useMutation<
-    any,
-    any,
-    { id: string; extra: { emailFreq: string } }
-  >(MUTATION_KEYS.EDIT_MEMBER);
+  const { mutate: editMember } = mutations.useEditMember();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     if (event.target.value) {

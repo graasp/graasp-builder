@@ -2,7 +2,6 @@ import { IconButtonProps } from '@mui/material/IconButton';
 
 import { FC } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import {
@@ -11,7 +10,7 @@ import {
 } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
@@ -30,7 +29,7 @@ export const isItemFavorite = (
 const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
   const { data: member } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
-  const mutation = useMutation<any, any, any>(MUTATION_KEYS.EDIT_MEMBER);
+  const mutation = mutations.useEditMember();
 
   const isFavorite = isItemFavorite(item, member);
 

@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@mui/material';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ACCOUNT, BUILDER, COMMON } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -23,7 +22,7 @@ import i18n, {
   useCommonTranslation,
 } from '../../config/i18n';
 import notifier from '../../config/notifier';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID,
   MEMBER_PROFILE_EMAIL_ID,
@@ -50,11 +49,7 @@ const MemberProfileScreen = (): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: member, isLoading } = useCurrentUserContext();
-  const { mutate: editMember } = useMutation<
-    any,
-    any,
-    { id: string; extra: { enableSaveActions: boolean } }
-  >(MUTATION_KEYS.EDIT_MEMBER);
+  const { mutate: editMember } = mutations.useEditMember();
 
   if (isLoading) {
     return <Loader />;

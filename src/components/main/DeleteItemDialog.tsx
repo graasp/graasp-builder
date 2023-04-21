@@ -6,19 +6,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { FC } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
 import CancelButton from '../common/CancelButton';
 
 const labelId = 'alert-dialog-title';
 const descriptionId = 'alert-dialog-description';
-
-const { DELETE_ITEMS } = MUTATION_KEYS;
 
 type Props = {
   open?: boolean;
@@ -33,9 +30,7 @@ const DeleteItemDialog: FC<Props> = ({
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: deleteItems } = useMutation<unknown, unknown, string[]>(
-    DELETE_ITEMS,
-  );
+  const { mutate: deleteItems } = mutations.useDeleteIems();
 
   const onDelete = () => {
     deleteItems(itemIds);

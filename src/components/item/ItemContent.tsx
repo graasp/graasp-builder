@@ -3,7 +3,7 @@ import { Button, Container, styled } from '@mui/material';
 import { useState } from 'react';
 import { UseQueryResult } from 'react-query';
 
-import { Api, MUTATION_KEYS } from '@graasp/query-client';
+import { Api } from '@graasp/query-client';
 import {
   Context,
   DocumentItemExtraProperties,
@@ -47,7 +47,7 @@ import {
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
 import { useCommonTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
@@ -360,9 +360,7 @@ const ItemContent = ({
   enableEditing,
   permission,
 }: Props): JSX.Element => {
-  const { mutate: editItem } = useMutation<any, any, any>(
-    MUTATION_KEYS.EDIT_ITEM,
-  );
+  const { mutate: editItem } = mutations.useEditItem();
   const { editingItemId, setEditingItemId } = useLayoutContext();
 
   const { data: member, isLoading, isError } = useCurrentUserContext();

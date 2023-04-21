@@ -1,18 +1,18 @@
-import GraaspChatbox, {
-  DeleteMessageFunctionParamType,
-  EditMessageFunctionParamType,
-  SendMessageFunctionParamType,
-} from '@graasp/chatbox';
-import { MUTATION_KEYS } from '@graasp/query-client';
+import GraaspChatbox from '@graasp/chatbox';
 import { PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import { CHATBOX_ID, CHATBOX_INPUT_BOX_ID } from '../../config/selectors';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItemChat, useAvatar, useItemMemberships } = hooks;
+const {
+  usePostItemChatMessage,
+  usePatchItemChatMessage,
+  useDeleteItemChatMessage,
+} = mutations;
 
 type Props = {
   item: ItemRecord;
@@ -25,21 +25,9 @@ const Chatbox = ({ item }: Props): JSX.Element => {
   const members = itemPermissions?.map(({ member }) => member);
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentUserContext();
-  const { mutate: sendMessage } = useMutation<
-    unknown,
-    unknown,
-    SendMessageFunctionParamType
-  >(MUTATION_KEYS.POST_ITEM_CHAT_MESSAGE);
-  const { mutate: editMessage } = useMutation<
-    unknown,
-    unknown,
-    EditMessageFunctionParamType
-  >(MUTATION_KEYS.PATCH_ITEM_CHAT_MESSAGE);
-  const { mutate: deleteMessage } = useMutation<
-    unknown,
-    unknown,
-    DeleteMessageFunctionParamType
-  >(MUTATION_KEYS.DELETE_ITEM_CHAT_MESSAGE);
+  const { mutate: sendMessage } = usePostItemChatMessage();
+  const { mutate: editMessage } = usePatchItemChatMessage();
+  const { mutate: deleteMessage } = useDeleteItemChatMessage();
 
   if (isChatLoading || isLoadingItemPermissions || isLoadingCurrentMember) {
     return <Loader />;

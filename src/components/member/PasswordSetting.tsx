@@ -5,11 +5,10 @@ import Typography from '@mui/material/Typography';
 import { ChangeEvent, FC, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ACCOUNT, FAILURE_MESSAGES } from '@graasp/translations';
 
 import { useAccountTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   CONFIRM_CHANGE_PASSWORD_BUTTON_ID,
   CONFIRM_RESET_PASSWORD_BUTTON_ID,
@@ -33,9 +32,7 @@ const PasswordSetting: FC = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     string | boolean
   >();
-  const { mutate: updatePassword } = useMutation<any, any, any>(
-    MUTATION_KEYS.UPDATE_PASSWORD,
-  );
+  const { mutate: updatePassword } = mutations.useUpdatePassword();
 
   const verifyEmptyPassword = () => {
     const checkingNewPassword = passwordValidator(newPassword);

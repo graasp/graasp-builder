@@ -90,7 +90,8 @@ export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'favoriteItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
 export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const ITEM_MENU_FLAG_BUTTON_CLASS = 'itemMenuFlagButton';
-export const buildFlagListItemId = (id: string): string => `flagListItem-${id}`;
+export const buildFlagListItemId = (type: string): string =>
+  `flagListItem-${type}`;
 export const FLAG_ITEM_BUTTON_ID = 'flagItemButton';
 export const CREATE_ITEM_DOCUMENT_ID = 'createItemDocument';
 export const ITEM_FORM_DOCUMENT_TEXT_ID = 'itemFormDocumentText';
@@ -206,7 +207,7 @@ export const H5P_DASHBOARD_UPLOADER_ID = 'h5pDashboardUploader';
 
 export const ITEM_TAGS_EDIT_INPUT_ID = 'itemTagsEditInput';
 export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton';
-export const buildCustomizedTagsSelector = (index: string): string =>
+export const buildCustomizedTagsSelector = (index: number): string =>
   `customizedTagsPreview-${index}`;
 
 export const buildCategoriesSelectionValueSelector = (title: string): string =>

@@ -1,7 +1,10 @@
 import { toast } from 'react-toastify';
 
 import { routines } from '@graasp/query-client';
-import buildI18n, { FAILURE_MESSAGES, REQUEST_MESSAGES } from '@graasp/translations';
+import buildI18n, {
+  FAILURE_MESSAGES,
+  REQUEST_MESSAGES,
+} from '@graasp/translations';
 
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
@@ -25,7 +28,7 @@ const i18n = buildI18n();
 const getErrorMessageFromPayload = (payload: ErrorPayload) =>
   i18n.t(
     payload?.error?.response?.data?.message ??
-    FAILURE_MESSAGES.UNEXPECTED_ERROR,
+      FAILURE_MESSAGES.UNEXPECTED_ERROR,
   );
 
 const getSuccessMessageFromPayload = (payload: SuccessPayload) =>

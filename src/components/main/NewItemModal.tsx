@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import { FC, useState } from 'react';
 import { useMatch } from 'react-router';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { DiscriminatedItem, ItemType, UnknownExtra } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -15,7 +14,7 @@ import { Button } from '@graasp/ui';
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
@@ -64,12 +63,8 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
     [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT as const },
   });
 
-  const { mutate: postItem } = useMutation<any, any, any>(
-    MUTATION_KEYS.POST_ITEM,
-  );
-  const { mutate: postEtherpad } = useMutation<any, any, any>(
-    MUTATION_KEYS.POST_ETHERPAD,
-  );
+  const { mutate: postItem } = mutations.usePostItem();
+  const { mutate: postEtherpad } = mutations.usePostEtherpad();
 
   const match = useMatch(buildItemPath());
   const parentId = match?.params?.itemId;

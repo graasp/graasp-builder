@@ -5,7 +5,6 @@ import { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 // import { MentionButton } from '@graasp/chatbox';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { Context } from '@graasp/sdk';
 import {
   GraaspLogo,
@@ -22,7 +21,7 @@ import {
   HOST_MAP,
 } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
@@ -52,9 +51,7 @@ const Main: FC<Props> = ({ children }) => {
   const { data: currentMember } = hooks.useCurrentMember();
   const memberId = currentMember?.get('id');
   // mutations to handle the mentions
-  const { mutate: patchMentionMutate } = useMutation<any, any, any>(
-    MUTATION_KEYS.PATCH_MENTION,
-  );
+  const { mutate: patchMentionMutate } = mutations.usePatchMention();
   const patchMentionFunction = ({
     id,
     status,
@@ -62,14 +59,10 @@ const Main: FC<Props> = ({ children }) => {
     id: string;
     status: string;
   }) => patchMentionMutate({ memberId, id, status });
-  const { mutate: deleteMentionMutate } = useMutation<any, any, any>(
-    MUTATION_KEYS.DELETE_MENTION,
-  );
+  const { mutate: deleteMentionMutate } = mutations.useDeleteMention();
   const deleteMentionFunction = (mentionId: string) =>
     deleteMentionMutate({ memberId, mentionId });
-  const { mutate: clearAllMentionsMutate } = useMutation<any, any, any>(
-    MUTATION_KEYS.CLEAR_MENTIONS,
-  );
+  const { mutate: clearAllMentionsMutate } = mutations.useClearMentions();
   const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
 
   const { itemId } = useParams();

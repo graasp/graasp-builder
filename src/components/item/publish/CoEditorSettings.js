@@ -5,24 +5,21 @@ import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
   buildCoEditorSettingsRadioButtonId,
 } from '../../../config/selectors';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
-const { EDIT_ITEM } = MUTATION_KEYS;
-
 const CoEditorSettings = ({ item, disabled }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: updateDisplayCoEditors } = useMutation(EDIT_ITEM);
+  const { mutate: updateDisplayCoEditors } = mutations.useEditItem();
 
   // user
   const { isLoading: isMemberLoading } = useCurrentUserContext();
