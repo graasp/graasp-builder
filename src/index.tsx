@@ -25,7 +25,7 @@ if (SENTRY_DSN) {
     dsn: SENTRY_DSN,
     integrations: [new BrowserTracing()],
     environment: SENTRY_ENVIRONMENT,
-    release: `${pkg.name}@v${APP_VERSION}`,
+    release: `${pkg.name}@${APP_VERSION}`,
 
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
