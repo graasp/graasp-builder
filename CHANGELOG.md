@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.2](https://github.com/graasp/graasp-builder/compare/v0.11.1...v0.11.2) (2023-04-24)
+
+
+### Bug Fixes
+
+* add new collapsible and showchatbox ([ffb6cc5](https://github.com/graasp/graasp-builder/commit/ffb6cc517b3df81d731b4191753148b18ebeb954))
+* check if status column is empty and don't show it ([ffb6cc5](https://github.com/graasp/graasp-builder/commit/ffb6cc517b3df81d731b4191753148b18ebeb954))
+* improve status column display ([#611](https://github.com/graasp/graasp-builder/issues/611)) ([ffb6cc5](https://github.com/graasp/graasp-builder/commit/ffb6cc517b3df81d731b4191753148b18ebeb954))
+* remove duplicated `v` in release property ([#618](https://github.com/graasp/graasp-builder/issues/618)) ([d07d093](https://github.com/graasp/graasp-builder/commit/d07d0933013c87013c5c5a85d1105892e3aad4e4))
+
 ## [0.11.1](https://github.com/graasp/graasp-builder/compare/v0.11.0...v0.11.1) (2023-04-05)
 
 
