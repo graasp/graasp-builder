@@ -108,6 +108,7 @@
     "@cypress/code-coverage": "3.10.4",
     "@cypress/instrument-cra": "1.4.0",
     "@graasp/websockets": "github:graasp/graasp-websockets.git",
+    "@playwright/test": "1.33.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
