@@ -21,9 +21,7 @@ describe('Search Item in Grid', () => {
 
     // visit child
     cy.visit(buildItemPath(id));
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // should get children
     cy.wait('@getChildren').then(({ response: { body } }) => {
@@ -57,9 +55,7 @@ describe('Search Item in Grid', () => {
 
     // visit child
     cy.visit(buildItemPath(id));
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // should get children
     cy.wait('@getChildren').then(({ response: { body } }) => {
@@ -84,9 +80,7 @@ describe('Search Item in Grid', () => {
 
     // visit child
     cy.visit(buildItemPath(id));
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // should be empty
     cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
@@ -107,9 +101,7 @@ describe('Search Item in Grid', () => {
 
     // visit home
     cy.visit(HOME_PATH);
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
     // go to page 2
     cy.get(`#${ITEMS_GRID_PAGINATION_ID} > ul > li`)

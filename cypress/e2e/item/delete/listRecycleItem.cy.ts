@@ -22,9 +22,7 @@ describe('Recycle Item in List', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     const { id } = SAMPLE_ITEMS.items[0];
 
@@ -44,9 +42,7 @@ describe('Recycle Item in List', () => {
     // go to children item
     cy.visit(buildItemPath(id));
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // delete
     recycleItem(idToDelete);
@@ -64,9 +60,7 @@ describe('Recycle Item in List', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // delete
       recycleItem(idToDelete);

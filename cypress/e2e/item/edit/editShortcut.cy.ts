@@ -15,9 +15,7 @@ describe('Edit Shortcut', () => {
     it('edit shortcut on Home', () => {
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       const itemToEdit = SHORTCUT;
 

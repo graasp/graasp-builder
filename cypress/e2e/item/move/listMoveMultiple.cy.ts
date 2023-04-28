@@ -26,9 +26,8 @@ describe('Move Items in List', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[5].id];
@@ -52,9 +51,8 @@ describe('Move Items in List', () => {
     // go to children item
     cy.visit(buildItemPath(start));
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
@@ -74,9 +72,8 @@ describe('Move Items in List', () => {
     // go to children item
     cy.visit(buildItemPath(start));
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
@@ -101,9 +98,8 @@ describe('Move Items in List', () => {
       // go to children item
       cy.visit(buildItemPath(start));
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // move
       const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];

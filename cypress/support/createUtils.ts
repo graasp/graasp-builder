@@ -1,4 +1,4 @@
-import { AppItemType, DocumentItemType, EmbeddedLinkItemType, FileItemType, FolderItemType, ItemType, S3FileItemType } from '@graasp/sdk';
+import { AppItemType, DocumentItemType, EmbeddedLinkItemType, ItemType } from '@graasp/sdk';
 
 import {
   CREATE_ITEM_APP_ID,

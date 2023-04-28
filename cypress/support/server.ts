@@ -16,7 +16,6 @@ import {
 import {
   SETTINGS,
   SIGN_IN_PATH,
-  THUMBNAIL_EXTENSION,
 } from '../../src/config/constants';
 import {
   getItemById,
@@ -37,6 +36,7 @@ import { buildInvitation } from '../fixtures/invitations';
 import { CURRENT_USER, MEMBERS, } from '../fixtures/members';
 import { ID_FORMAT, parseStringToRegExp } from './utils';
 import { ItemForTest, MemberForTest } from './types';
+import { AVATAR_LINK, ITEM_THUMBNAIL_LINK } from '../fixtures/thumbnails/links';
 
 const {
   buildAppListRoute,
@@ -96,7 +96,7 @@ const checkMembership = ({ item, currentMember }) => {
   const creator = item?.creator;
   const haveMembership =
     creator === currentMember.id ||
-    item.memberships?.find(({ memberId }) => memberId === currentMember.id);
+    item.memberships?.find(({ member }) => member.id === currentMember.id);
 
   return haveMembership;
 };
@@ -207,25 +207,25 @@ export const mockPostItem = (items: ItemForTest[], shouldThrowError: boolean): v
   ).as('postItem');
 };
 
-export const mockDeleteItem = (items: ItemForTest[], shouldThrowError: boolean): void => {
-  cy.intercept(
-    {
-      method: DEFAULT_DELETE.method,
-      url: new RegExp(`${API_HOST}/${buildDeleteItemRoute(ID_FORMAT)}$`),
-    },
-    ({ url, reply }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
-      }
+// export const mockDeleteItem = (items: ItemForTest[], shouldThrowError: boolean): void => {
+//   cy.intercept(
+//     {
+//       method: DEFAULT_DELETE.method,
+//       url: new RegExp(`${API_HOST}/${buildDeleteItemRoute(ID_FORMAT)}$`),
+//     },
+//     ({ url, reply }) => {
+//       if (shouldThrowError) {
+//         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
+//       }
 
-      const id = url.slice(API_HOST.length).split('/')[2];
-      return reply({
-        statusCode: StatusCodes.OK,
-        body: getItemById(items, id),
-      });
-    },
-  ).as('deleteItem');
-};
+//       const id = url.slice(API_HOST.length).split('/')[2];
+//       return reply({
+//         statusCode: StatusCodes.OK,
+//         body: getItemById(items, id),
+//       });
+//     },
+//   ).as('deleteItem');
+// };
 
 export const mockDeleteItems = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
@@ -344,7 +344,7 @@ export const mockGetItems = ({ items, currentMember }: { items: ItemForTest[], c
         const haveMembership =
           creator === currentMember.id ||
           item?.memberships?.find(
-            ({ memberId }) => memberId === currentMember.id,
+            ({ member }) => member.id === currentMember.id,
           );
 
         if (!haveMembership) {
@@ -368,7 +368,8 @@ export const mockGetChildren = ({ items, currentMember }: { items: ItemForTest[]
   cy.intercept(
     {
       method: DEFAULT_GET.method,
-      url: new RegExp(`${API_HOST}/${buildGetChildrenRoute(ID_FORMAT, true)}`),
+      // TODO: use build url
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/children`),
     },
     ({ url, reply }) => {
       const id = url.slice(API_HOST.length).split('/')[2];
@@ -703,7 +704,7 @@ export const mockDefaultDownloadFile = (items: ItemForTest[], shouldThrowError: 
       // either return the file url or the fixture data
       // info: we don't test fixture data anymore since the frontend uses url only
       if (replyUrl) {
-        reply({ url: readFilepath });
+        reply(readFilepath);
       } else {
         reply({ fixture: readFilepath });
       }
@@ -777,7 +778,7 @@ export const mockPostItemLogin = (items: ItemForTest[], shouldThrowError: boolea
   ).as('postItemLogin');
 };
 
-export const mockPutItemLogin = (items: ItemForTest[], shouldThrowError: boolean): void => {
+export const mockPutItemLoginSchema = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
       method: DEFAULT_PUT.method,
@@ -800,32 +801,33 @@ export const mockPutItemLogin = (items: ItemForTest[], shouldThrowError: boolean
 
       reply(item);
     },
-  ).as('putItemLogin');
+  ).as('putItemLoginSchema');
 };
 
-// export const mockGetItemLogin = (items: ItemForTest[]): void => {
-//   cy.intercept(
-//     {
-//       method: DEFAULT_GET.method,
-//       url: new RegExp(`${API_HOST}/${buildGetItemLoginSchemaRoute(ID_FORMAT)}$`),
-//     },
-//     ({ reply, url }) => {
-//       const itemId = url.slice(API_HOST.length).split('/')[2];
-//       const item = items.find(({ id }) => itemId === id);
-//       reply({
-//         body: item?.itemLoginSchema?.[0] ?? {},
-//         status: StatusCodes.OK,
-//       });
-//     },
-//   ).as('getItemLogin');
-// };
+export const mockGetItemLogin = (items: ItemForTest[]): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetItemLoginSchemaRoute(ID_FORMAT)}$`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+      const item = items.find(({ id }) => itemId === id);
+      reply({
+        body: item?.itemLoginSchema?.[0] ?? {},
+        status: StatusCodes.OK,
+      });
+    },
+  ).as('getItemLogin');
+};
 
 export const mockGetItemLoginSchema = (items: ItemForTest[]): void => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
+      // TODO: use build url
       url: new RegExp(
-        `${API_HOST}/${buildGetItemLoginSchemaRoute(ID_FORMAT)}$`,
+        `${API_HOST}/items/${ID_FORMAT}/login\\-schema$`,
       ),
     },
     ({ reply, url }) => {
@@ -850,7 +852,7 @@ export const mockGetItemLoginSchemaType = (items: ItemForTest[]): void => {
     {
       method: DEFAULT_GET.method,
       url: new RegExp(
-        `${API_HOST}/${buildGetItemLoginSchemaTypeRoute(ID_FORMAT)}$`,
+        `${API_HOST}/items/${ID_FORMAT}/login\\-schema\\-type$`,
       ),
     },
     ({ reply, url }) => {
@@ -885,34 +887,38 @@ export const mockGetItemMembershipsForItem = (items: ItemForTest[], currentMembe
     ({ reply, url }) => {
       const itemId = qs.parse(url.slice(url.indexOf('?') + 1)).itemId as string;
       const selectedItems = items.filter(({ id }) => itemId.includes(id));
-      const allMemberships = selectedItems.map(
-        ({ creator, id, memberships }) => {
+      // todo: use reduce
+      const result = { data: {}, errors: [] }
+      selectedItems.forEach(
+        (item) => {
+          const { creator, id, memberships } = item;
           // build default membership depending on current member
           // if the current member is the creator, it has membership
           // otherwise it should return an error
-          const defaultMembership =
+          const isCreator =
             creator.id === currentMember?.id
-              ? [
-                {
-                  permission: PermissionLevel.Admin,
-                  memberId: creator,
-                  itemId: id,
-                },
-              ]
-              : { statusCode: StatusCodes.UNAUTHORIZED };
 
           // if the defined memberships does not contain currentMember, it should throw
           const currentMemberHasMembership = memberships?.find(
             ({ member }) => member.id === currentMember?.id,
           );
-          if (!currentMemberHasMembership) {
-            return defaultMembership;
+          // no membership
+          if (!currentMemberHasMembership && !isCreator) {
+            result.errors.push({ statusCode: StatusCodes.UNAUTHORIZED })
           }
 
-          return memberships || defaultMembership;
+          // return defined memberships or default membership
+          result.data[id] = memberships || [
+            {
+              permission: PermissionLevel.Admin,
+              member: creator,
+              item,
+            },
+          ]
+
         },
       );
-      reply(allMemberships);
+      reply(result);
     },
   ).as('getItemMemberships');
 };
@@ -1234,42 +1240,43 @@ export const mockPatchAppData = (shouldThrowError: boolean): void => {
 };
 
 export const mockGetItemThumbnail = (items: ItemForTest[], shouldThrowError: boolean): void => {
-  cy.intercept(
-    {
-      method: DEFAULT_GET.method,
-      url: new RegExp(
-        `${API_HOST}/${ITEMS_ROUTE}/${ID_FORMAT}/thumbnails/size`,
-      ),
-    },
-    ({ reply, url }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST });
-      }
+  // cy.intercept(
+  //   {
+  //     method: DEFAULT_GET.method,
+  //     url: new RegExp(
+  //       `${API_HOST}/${ITEMS_ROUTE}/${ID_FORMAT}/thumbnails/size`,
+  //     ),
+  //   },
+  //   ({ reply, url }) => {
+  //     if (shouldThrowError) {
+  //       return reply({ statusCode: StatusCodes.BAD_REQUEST });
+  //     }
 
-      const [link, querystrings] = url.split('?');
-      const id = link.slice(API_HOST.length).split('/')[3];
-      const { size } = qs.parse(querystrings);
+  //     const [link, querystrings] = url.split('?');
+  //     const id = link.slice(API_HOST.length).split('/')[3];
+  //     const { size } = qs.parse(querystrings);
 
-      const thumbnails = items.find(
-        ({ id: thisId }) => id === thisId,
-      )?.thumbnails;
-      if (!thumbnails) {
-        return reply({ statusCode: StatusCodes.NOT_FOUND });
-      }
-      return reply({
-        fixture: `${thumbnails}/${size}`,
-        headers: { 'content-type': THUMBNAIL_EXTENSION },
-      });
-    },
-  ).as('downloadItemThumbnail');
+  //     const thumbnails = items.find(
+  //       ({ id: thisId }) => id === thisId,
+  //     )?.thumbnails;
+  //     if (!thumbnails) {
+  //       return reply({ statusCode: StatusCodes.NOT_FOUND });
+  //     }
+  //     return reply({
+  //       fixture: `${thumbnails}/${size}`,
+  //       headers: { 'content-type': THUMBNAIL_EXTENSION },
+  //     });
+  //   },
+  // ).as('downloadItemThumbnail');
 };
 
 export const mockGetItemThumbnailUrl = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
+      // TODO: handle blob endpoint
       url: new RegExp(
-        `${API_HOST}/${ITEMS_ROUTE}/${ID_FORMAT}/thumbnails/size?replyUrl=true`,
+        `${API_HOST}/${ITEMS_ROUTE}/${ID_FORMAT}/thumbnails`,
       ),
     },
     ({ reply, url }) => {
@@ -1288,10 +1295,7 @@ export const mockGetItemThumbnailUrl = (items: ItemForTest[], shouldThrowError: 
         return reply({ statusCode: StatusCodes.NOT_FOUND });
       }
       // TODO: RETURN URL
-      return reply({
-        fixture: `${thumbnails}/${size}`,
-        headers: { 'content-type': THUMBNAIL_EXTENSION },
-      });
+      return reply(ITEM_THUMBNAIL_LINK);
     },
   ).as('downloadItemThumbnailUrl');
 };
@@ -1312,42 +1316,13 @@ export const mockPostItemThumbnail = (items: ItemForTest[], shouldThrowError: bo
   ).as('uploadItemThumbnail');
 };
 
-export const mockGetAvatar = (members: MemberForTest[], shouldThrowError: boolean): void => {
-  cy.intercept(
-    {
-      method: DEFAULT_GET.method,
-      url: new RegExp(
-        `${API_HOST}/members/avatars/${ID_FORMAT}/download\\?size\\=`,
-      ),
-    },
-    ({ reply, url }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST });
-      }
-
-      const [link, querystrings] = url.split('?');
-      const id = link.slice(API_HOST.length).split('/')[3];
-      const { size } = qs.parse(querystrings);
-
-      const { thumbnails } = members.find(({ id: thisId }) => id === thisId);
-      if (!thumbnails) {
-        return reply({ statusCode: StatusCodes.NOT_FOUND });
-      }
-
-      return reply({
-        fixture: `${thumbnails}/${size}.jpeg`,
-        headers: { 'content-type': THUMBNAIL_EXTENSION },
-      });
-    },
-  ).as('downloadAvatar');
-};
-
 export const mockGetAvatarUrl = (members: MemberForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
+      // TODO: include all sizes
       url: new RegExp(
-        `${API_HOST}/members/${ID_FORMAT}/avatar/size\\?replyUrl\\=true`,
+        `${API_HOST}/members/${ID_FORMAT}/avatar/small\\?replyUrl\\=true`,
       ),
     },
     ({ reply, url }) => {
@@ -1356,18 +1331,15 @@ export const mockGetAvatarUrl = (members: MemberForTest[], shouldThrowError: boo
       }
 
       const [link, querystrings] = url.split('?');
-      const id = link.slice(API_HOST.length).split('/')[3];
+      const id = link.slice(API_HOST.length).split('/')[2];
       const { size } = qs.parse(querystrings);
 
-      const { thumbnails } = members.find(({ id: thisId }) => id === thisId);
+      const { thumbnails } = members.find(({ id: thisId }) => id === thisId) ?? {};
       if (!thumbnails) {
         return reply({ statusCode: StatusCodes.NOT_FOUND });
       }
       // TODO: REPLY URL
-      return reply({
-        fixture: `${thumbnails}/${size}.jpeg`,
-        headers: { 'content-type': THUMBNAIL_EXTENSION },
-      });
+      return reply(AVATAR_LINK);
     },
   ).as('downloadAvatarUrl');
 };

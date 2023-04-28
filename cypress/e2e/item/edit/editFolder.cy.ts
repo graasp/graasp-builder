@@ -21,9 +21,7 @@ describe('Edit Folder', () => {
         cy.setUpApi({ items: [item] });
         cy.visit(buildItemPath(id));
 
-        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-          cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-        }
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
         const caption = 'new caption';
         editCaptionFromViewPage({ id, caption });
@@ -62,9 +60,7 @@ describe('Edit Folder', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       const itemToEdit = SAMPLE_ITEMS.items[0];
       const newDescription = 'new description';
@@ -99,9 +95,7 @@ describe('Edit Folder', () => {
       // go to children item
       cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       const itemToEdit = SAMPLE_ITEMS.items[2];
 
@@ -140,9 +134,7 @@ describe('Edit Folder', () => {
         cy.setUpApi({ items: [item] });
         cy.visit(buildItemPath(id));
 
-        if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
-          cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-        }
+        cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
         const caption = 'new caption';
         editCaptionFromViewPage({ id, caption });

@@ -128,7 +128,7 @@ const ItemMembershipsTable = ({
           BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER,
         ),
         cellRenderer: NameCellRenderer,
-        field: 'memberId',
+        field: 'memberId', // TODO: CHANGE?
         cellStyle: rowStyle,
         flex: 2,
         tooltipField: 'name',

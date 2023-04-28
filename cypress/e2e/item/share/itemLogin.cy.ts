@@ -68,7 +68,7 @@ const checkItemLoginSetting = ({ isEnabled, mode, disabled = false }) => {
 const editItemLoginSetting = (mode) => {
   cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}`).click();
   cy.get(`li[data-value="${mode}"]`).click();
-  cy.wait('@putItemLogin').then(({ request: { body } }) => {
+  cy.wait('@putItemLoginSchema').then(({ request: { body } }) => {
     expect(body?.loginSchema).to.equal(
       SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,
     );

@@ -26,9 +26,7 @@ describe('Import Zip', () => {
     const { id } = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(id));
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // create
     createItem(ZIP_DEFAULT);
@@ -43,9 +41,7 @@ describe('Import Zip', () => {
     const { id } = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(id));
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // create
     createItem(ZIP_DEFAULT);

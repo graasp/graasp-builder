@@ -52,9 +52,9 @@ describe('Categories', () => {
     it('Display item category', () => {
       // check for displaying value
       const {
-        categories: [{ categoryId }],
+        categories: [{ category }],
       } = item;
-      const { name } = SAMPLE_CATEGORIES.find(({ id }) => id === categoryId);
+      const { name } = SAMPLE_CATEGORIES.find(({ id }) => id === category.id);
       const categoryContent = cy.get(`#${LIBRARY_SETTINGS_CATEGORIES_ID}`);
       categoryContent.contains(name);
     });
@@ -63,11 +63,11 @@ describe('Categories', () => {
       const {
         categories: [itemCategory],
       } = item;
-      const { categoryId, id } = itemCategory;
+      const { category, id } = itemCategory;
       const categoryType = SAMPLE_CATEGORIES.find(
-        ({ id: cId }) => cId === categoryId,
+        ({ id: cId }) => cId === category.id,
       ).type;
-      toggleOption(categoryId, categoryType);
+      toggleOption(category.id, categoryType);
       cy.wait('@deleteItemCategory').then((data) => {
         const {
           request: { url },

@@ -29,8 +29,8 @@ export const SHARED_ITEMS: ApiConfig = {
           permission: PermissionLevel.Admin,
           member: MEMBERS.ANNA,
           creator: MEMBERS.ANNA,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date('2021-04-13 14:56:34.749946'),
+          updatedAt: new Date('2021-04-13 14:56:34.749946'),
           id: 'e51797ec-c639-44c2-8681-2bb024a96db5'
         },
       ],
@@ -43,8 +43,8 @@ export const SHARED_ITEMS: ApiConfig = {
           permission: PermissionLevel.Admin,
           member: MEMBERS.ANNA,
           creator: MEMBERS.ANNA,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date('2021-04-13 14:56:34.749946'),
+          updatedAt: new Date('2021-04-13 14:56:34.749946'),
           id: 'e51797ec-c639-14c2-8681-2bb024a96db5'
         },
         {
@@ -52,8 +52,8 @@ export const SHARED_ITEMS: ApiConfig = {
           permission: PermissionLevel.Read,
           member: MEMBERS.BOB,
           creator: MEMBERS.ANNA,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date('2021-04-13 14:56:34.749946'),
+          updatedAt: new Date('2021-04-13 14:56:34.749946'),
           id: 'e51797ec-c639-44c2-4681-2bb024a96db5'
         },
       ],

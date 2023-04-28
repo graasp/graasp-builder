@@ -5,18 +5,17 @@ import { DEFAULT_LOCALE } from '../config/constants';
 // todo: move to sdk
 // eslint-disable-next-line import/prefer-default-export
 export const formatDate = (
-  d: string,
+  datetime: Date,
   args: { locale?: string; defaultValue?: string } = {
     locale: DEFAULT_LOCALE,
     defaultValue: 'Unknown',
   },
 ): string => {
   const { locale, defaultValue } = args;
-  if (!d) {
+  if (!datetime) {
     return defaultValue;
   }
   try {
-    const datetime = new Date(d);
     const now = new Date();
 
     // return human readable date if less than a month ago

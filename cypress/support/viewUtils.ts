@@ -1,4 +1,7 @@
 import {
+  FileItemExtra,
+  LocalFileItemExtra,
+  Member,
   getDocumentExtra,
   getEmbeddedLinkExtra,
   getFileExtra,
@@ -26,13 +29,13 @@ import { getMemberById } from '../../src/utils/member';
 import { isSettingsEditionAllowedForUser } from '../../src/utils/membership';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 
-const expectPanelLayout = ({ name, extra, creator, mimetype }) => {
+const expectPanelLayout = ({ name, extra, creator, mimetype }: { name: string, extra?: LocalFileItemExtra | S3FileItemExtra, creator: Member, mimetype?: string }) => {
   cy.openMetadataPanel();
 
   const panel = cy.get(`#${ITEM_PANEL_ID}`);
   panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
 
-  const creatorName = getMemberById(Object.values(MEMBERS), creator).name;
+  const creatorName = getMemberById(Object.values(MEMBERS), creator.id).name;
 
   panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
 

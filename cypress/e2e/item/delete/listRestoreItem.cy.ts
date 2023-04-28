@@ -6,7 +6,7 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { DATABASE_WITH_RECYCLE_BIN } from '../../../fixtures/recycleBin';
+import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const restoreItem = (id) => {
@@ -28,14 +28,12 @@ const restoreItems = (itemIds) => {
 
 describe('Restore Items in List', () => {
   it('restore one item', () => {
-    cy.setUpApi(DATABASE_WITH_RECYCLE_BIN);
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(RECYCLE_BIN_PATH);
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
-    const { id } = DATABASE_WITH_RECYCLE_BIN.recycledItems[0];
+    const { id } = SAMPLE_ITEMS.items[0];
 
     // restore
     restoreItem(id);
@@ -46,15 +44,13 @@ describe('Restore Items in List', () => {
   });
 
   it('restore multiple items', () => {
-    cy.setUpApi(DATABASE_WITH_RECYCLE_BIN);
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(RECYCLE_BIN_PATH);
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // restore
-    const itemIds = DATABASE_WITH_RECYCLE_BIN.recycledItems.map(({ id }) => id);
+    const itemIds = SAMPLE_ITEMS.items.map(({ id }) => id);
     restoreItems(itemIds);
     cy.wait('@restoreItems').then(({ request: { url } }) => {
       for (const id of itemIds) {
@@ -66,15 +62,13 @@ describe('Restore Items in List', () => {
 
   describe('Error handling', () => {
     it('error while restoring item does not delete in interface', () => {
-      cy.setUpApi({ ...DATABASE_WITH_RECYCLE_BIN, restoretItemsError: true });
-      const { id } = DATABASE_WITH_RECYCLE_BIN.recycledItems[0];
+      cy.setUpApi({ ...SAMPLE_ITEMS, restoretItemsError: true });
+      const { id } = SAMPLE_ITEMS.recycledItems[0];
 
       // go to children item
       cy.visit(RECYCLE_BIN_PATH);
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // restore
       restoreItem(id);

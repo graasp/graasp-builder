@@ -1,4 +1,3 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
   CONFIRM_DELETE_BUTTON_ID,
@@ -6,7 +5,7 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { DATABASE_WITH_RECYCLE_BIN } from '../../../fixtures/recycleBin';
+import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const deleteItems = (itemIds) => {
@@ -22,16 +21,14 @@ const deleteItems = (itemIds) => {
 
 describe('Delete Items in List', () => {
   const itemIds = [
-    DATABASE_WITH_RECYCLE_BIN.recycledItems[0].id,
-    DATABASE_WITH_RECYCLE_BIN.recycledItems[1].id,
+    SAMPLE_ITEMS.items[0].id,
+    SAMPLE_ITEMS.items[1].id,
   ];
   it('delete items', () => {
-    cy.setUpApi(DATABASE_WITH_RECYCLE_BIN);
+    cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(RECYCLE_BIN_PATH);
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // delete
     deleteItems(itemIds);
@@ -45,14 +42,12 @@ describe('Delete Items in List', () => {
 
   describe('Error handling', () => {
     it('error while deleting items does not delete in interface', () => {
-      cy.setUpApi({ ...DATABASE_WITH_RECYCLE_BIN, deleteItemError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, deleteItemsError: true });
 
       // go to children item
       cy.visit(RECYCLE_BIN_PATH);
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // delete
       deleteItems(itemIds);

@@ -44,7 +44,7 @@ describe('Favorite Item', () => {
         ...SAMPLE_ITEMS,
         currentMember: buildMemberWithFavorites(favoriteItems),
       });
-      i18n.changeLanguage(CURRENT_USER.extra.lang);
+      i18n.changeLanguage(CURRENT_USER.extra.lang as string);
       cy.visit(HOME_PATH);
     });
 

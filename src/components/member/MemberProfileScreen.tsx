@@ -116,8 +116,7 @@ const MemberProfileScreen = (): JSX.Element => {
               </Grid>
               <Grid item xs={8}>
                 <Typography id={MEMBER_PROFILE_INSCRIPTION_DATE_ID}>
-                  {/* TODO: improve typing */}
-                  {formatDate(member.createdAt as unknown as string, {
+                  {formatDate(member.createdAt, {
                     locale: i18n.language,
                     defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
                   })}

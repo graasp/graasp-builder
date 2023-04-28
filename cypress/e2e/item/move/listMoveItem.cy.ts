@@ -33,9 +33,7 @@ describe('Move Item in List', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[0];
@@ -55,9 +53,8 @@ describe('Move Item in List', () => {
     // go to children item
     cy.visit(buildItemPath(id));
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
@@ -77,9 +74,7 @@ describe('Move Item in List', () => {
     // go to children item
     cy.visit(buildItemPath(id));
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
@@ -98,9 +93,8 @@ describe('Move Item in List', () => {
     // go to children item
     cy.visit(SHARED_ITEMS_PATH);
 
-    if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
+
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
     const { path: toItemPath, id: toItemId } = SHARED_ITEMS.items[0];
@@ -121,9 +115,8 @@ describe('Move Item in List', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // move
       const { id: movedItem } = SAMPLE_ITEMS.items[2];

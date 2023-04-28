@@ -1,3 +1,4 @@
+import { ItemMembership, convertJs } from '@graasp/sdk';
 import { buildItemPath } from '../../../src/config/paths';
 import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
@@ -25,15 +26,15 @@ describe('View Memberships', () => {
     cy.openMetadataPanel();
 
     const filteredMemberships = membershipsWithoutUser(
-      memberships,
+      convertJs(memberships),
       CURRENT_USER.id,
     );
 
     // panel only contains 2 avatars: one user, one +x
     // check contains member avatar
-    const [first, second] = filteredMemberships;
-    cy.get(`.${buildMemberAvatarClass(first.memberId)}`).should('be.visible');
-    cy.get(`.${buildMemberAvatarClass(second.memberId)}`).should('be.visible');
+    const [first, second] = filteredMemberships.toJS() as ItemMembership[];
+    cy.get(`.${buildMemberAvatarClass(first.member.id)}`).should('be.visible');
+    cy.get(`.${buildMemberAvatarClass(second.member.id)}`).should('be.visible');
 
     // todo: check permission level
   });
@@ -45,15 +46,15 @@ describe('View Memberships', () => {
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
     const filteredMemberships = membershipsWithoutUser(
-      memberships,
+      convertJs(memberships),
       CURRENT_USER.id,
     );
 
     // panel only contains 2 avatars: one user, one +x
     // check contains member avatar
-    for (const { permission, memberId, id } of filteredMemberships) {
+    for (const { permission, member, id } of filteredMemberships.toJS() as ItemMembership[]) {
       const { name, email } = Object.values(MEMBERS).find(
-        ({ id: mId }) => mId === memberId,
+        ({ id: mId }) => mId === member.id,
       );
       // check name and mail
       cy.get(buildItemMembershipRowSelector(id))
@@ -87,9 +88,9 @@ describe('View Memberships Read-Only Mode', () => {
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
     // check contains member avatar
-    for (const { permission, memberId, id } of memberships) {
+    for (const { permission, member, id } of memberships) {
       const { name, email } = Object.values(MEMBERS).find(
-        ({ id: mId }) => mId === memberId,
+        ({ id: mId }) => mId === member.id,
       );
       // check name, mail and permission
       cy.get(buildItemMembershipRowSelector(id))

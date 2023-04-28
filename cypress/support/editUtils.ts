@@ -28,7 +28,7 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
   }
 
   switch (type) {
-    case ItemType.FILE:
+    case ItemType.LOCAL_FILE:
     case ItemType.S3_FILE:
     case ItemType.LINK:
     case ItemType.SHORTCUT:

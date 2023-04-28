@@ -1,4 +1,5 @@
 import { langs } from '@graasp/translations';
+import { EmailFrequency } from '@graasp/sdk';
 
 import { emailFrequency } from '../../src/config/constants';
 import { MEMBER_PROFILE_PATH } from '../../src/config/paths';
@@ -38,15 +39,15 @@ describe('Member Profile', () => {
     cy.get(`#${MEMBER_PROFILE_EMAIL_ID}`).should('contain', email);
     cy.get(`#${MEMBER_PROFILE_INSCRIPTION_DATE_ID}`).should(
       'contain',
-      formatDate(createdAt, { locale: CURRENT_USER.extra.lang }),
+      formatDate(createdAt, { locale: CURRENT_USER.extra.lang as string }),
     );
     cy.get(`#${MEMBER_PROFILE_LANGUAGE_SWITCH_ID}`).should(
       'contain',
-      langs[extra.lang],
+      langs[extra.lang as string],
     );
     cy.get(`#${MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID}`).should(
       'contain',
-      emailFrequency[extra.emailFreq],
+      emailFrequency[extra.emailFreq as EmailFrequency],
     );
     cy.get(`#${MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID}`)
       .should('exist')

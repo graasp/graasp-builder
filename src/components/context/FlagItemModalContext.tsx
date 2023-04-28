@@ -1,12 +1,12 @@
+import { List } from 'immutable';
+
 import { createContext, useMemo, useState } from 'react';
 
 import { FlagType } from '@graasp/sdk';
 import { ItemFlagDialog } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { hooks, mutations } from '../../config/queryClient';
-
-const { useFlags } = hooks;
+import { mutations } from '../../config/queryClient';
 
 const FlagItemModalContext = createContext<{
   openModal?: (id: string) => void;
@@ -21,8 +21,6 @@ const FlagItemModalProvider = ({
   const { mutate: postItemFlag } = mutations.usePostItemFlag();
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState<string | null>(null);
-
-  const { data: flags } = useFlags();
 
   const openModal = (newItemId) => {
     setOpen(true);
@@ -47,7 +45,7 @@ const FlagItemModalProvider = ({
   return (
     <FlagItemModalContext.Provider value={value}>
       <ItemFlagDialog
-        flags={flags}
+        flags={List(Object.values(FlagType))}
         onFlag={onFlag}
         open={open}
         onClose={onClose}

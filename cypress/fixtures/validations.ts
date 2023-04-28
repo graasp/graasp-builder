@@ -29,8 +29,8 @@ export const ITEM_VALIDATIONS: ItemValidation[] = [
     process: ItemValidationProcess.BadWordsDetection,
     status: ItemValidationStatus.Success,
     result: '',
-    updatedAt: new Date(),
-    createdAt: new Date(),
+    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: new Date('2021-04-13 14:56:34.749946'),
   },
   {
     id: 'id1',
@@ -39,7 +39,7 @@ export const ITEM_VALIDATIONS: ItemValidation[] = [
     process: ItemValidationProcess.ImageChecking,
     status: ItemValidationStatus.Success,
     result: '',
-    updatedAt: new Date(),
-    createdAt: new Date(),
+    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: new Date('2021-04-13 14:56:34.749946'),
   },
 ];

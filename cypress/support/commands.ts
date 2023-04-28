@@ -27,7 +27,6 @@ import {
   mockDefaultDownloadFile,
   mockDeleteAppData,
   mockDeleteInvitation,
-  mockDeleteItem,
   mockDeleteItemCategory,
   mockDeleteItemMembershipForItem,
   mockDeleteItemTag,
@@ -39,7 +38,7 @@ import {
   mockGetAppData,
   mockGetAppLink,
   mockGetAppListRoute,
-  mockGetAvatar,
+  mockGetAvatarUrl,
   mockGetCategories,
   mockGetChildren,
   mockGetCurrentMember,
@@ -78,13 +77,13 @@ import {
   mockPostItemValidation,
   mockPostManyItemMemberships,
   mockPublishItem,
-  mockPutItemLogin,
+  mockPutItemLoginSchema,
   mockRecycleItems,
   mockRestoreItems,
   mockSignInRedirection,
   mockSignOut,
-  mockUpdatePassword,
-  mockUploadItem,
+  mockUpdatePassword, mockGetItemThumbnailUrl,
+  mockUploadItem, mockGetItemLoginSchemaType
 } from './server';
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import ITEM_LAYOUT_MODES from '../../src/enums/itemLayoutModes';
@@ -101,7 +100,6 @@ Cypress.Commands.add(
     categories = SAMPLE_CATEGORIES,
     itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
     itemValidationGroups = ITEM_VALIDATIONS,
-    deleteItemError = false,
     deleteItemsError = false,
     postItemError = false,
     moveItemsError = false,
@@ -124,7 +122,7 @@ Cypress.Commands.add(
     deleteItemTagError = false,
     restoreItemsError = false,
     getItemThumbnailError = false,
-    getAvatarError = false,
+    getAvatarUrlError = false,
     postItemThumbnailError = false,
     postAvatarError = false,
     importZipError = false,
@@ -168,8 +166,6 @@ Cypress.Commands.add(
 
     mockPostItem(cachedItems, postItemError);
 
-    mockDeleteItem(allItems, deleteItemError);
-
     mockDeleteItems(allItems, deleteItemsError);
 
     mockGetItem(
@@ -206,9 +202,11 @@ Cypress.Commands.add(
 
     // mockGetItemLogin(items);
 
+    mockGetItemLoginSchemaType(items)
+
     mockPostItemLogin(items, postItemLoginError);
 
-    mockPutItemLogin(items, putItemLoginError);
+    mockPutItemLoginSchema(items, putItemLoginError);
 
     mockGetItemMembershipsForItem(items, currentMember);
 
@@ -257,8 +255,9 @@ Cypress.Commands.add(
     mockRestoreItems(recycledItems, restoreItemsError);
 
     mockGetItemThumbnail(items, getItemThumbnailError);
+    mockGetItemThumbnailUrl(items, getItemThumbnailError);
 
-    mockGetAvatar(members, getAvatarError);
+    mockGetAvatarUrl(members, getAvatarUrlError);
 
     mockPostItemThumbnail(items, postItemThumbnailError);
 
@@ -295,7 +294,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('switchMode', (mode) => {
-  if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.GRID) {
+  if (DEFAULT_ITEM_LAYOUT_MODE !== mode) {
     switch (mode) {
       case ITEM_LAYOUT_MODES.GRID:
         cy.get(`#${MODE_GRID_BUTTON_ID}`).click({ force: true });

@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router';
 
 import {
   DiscriminatedItem,
-  FolderItemExtra,
   ItemMembership,
   ItemType,
   getFolderExtra,

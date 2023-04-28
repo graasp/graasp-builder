@@ -10,15 +10,10 @@ import {
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
-const inviteItem = ({
-  id,
-  email,
-  permission,
-  submit,
-}: {
+const inviteItem = ({ id, email, permission, submit }: {
   id: string;
   email: string;
-  permission: string;
+  permission: PermissionLevel;
   submit?: boolean;
 }) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
@@ -53,6 +48,7 @@ describe('Create Invitation', () => {
     // check that the email field is emptied after sharing completes
     cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).should('be.empty');
   });
+
   it('cannot invite member with membership', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 

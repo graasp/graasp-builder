@@ -41,9 +41,7 @@ describe('Edit App', () => {
       cy.setUpApi({ items: [itemToEdit, GRAASP_LINK_ITEM] });
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // edit
       editItem(
@@ -76,9 +74,7 @@ describe('Edit App', () => {
       // go to children item
       cy.visit(buildItemPath(parent.id));
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // edit
       editItem(

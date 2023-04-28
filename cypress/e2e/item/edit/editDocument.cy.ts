@@ -35,9 +35,7 @@ describe('Edit Document', () => {
       cy.setUpApi({ items: [GRAASP_DOCUMENT_ITEM, GRAASP_LINK_ITEM] });
       cy.visit(HOME_PATH);
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       const itemToEdit = GRAASP_DOCUMENT_ITEM;
 
@@ -72,9 +70,7 @@ describe('Edit Document', () => {
       // go to children item
       cy.visit(buildItemPath(parent.id));
 
-      if (DEFAULT_ITEM_LAYOUT_MODE !== ITEM_LAYOUT_MODES.LIST) {
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       const itemToEdit = GRAASP_DOCUMENT_CHILDREN_ITEM;
 
