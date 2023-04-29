@@ -37,7 +37,7 @@ const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
 
   return (
     <GraaspCopyButton
-      type={type as ActionButtonVariant}
+      type={type}
       id={id}
       text={translateBuilder(BUILDER.ITEM_COPY_BUTTON)}
       color={color}

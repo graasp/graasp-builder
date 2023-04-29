@@ -39,7 +39,7 @@ const PinButton = ({ item, type, onClick }: Props): JSX.Element => {
 
   return (
     <GraaspPinButton
-      type={type as ActionButtonVariant}
+      type={type}
       onClick={handlePin}
       isPinned={isPinned}
       pinText={pinText}

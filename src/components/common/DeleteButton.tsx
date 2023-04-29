@@ -49,7 +49,7 @@ const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
         aria-label={text}
         id={id}
         color={color}
-        type={type as ActionButtonVariant}
+        type={type}
         className={ITEM_DELETE_BUTTON_CLASS}
       />
       <DeleteItemDialog

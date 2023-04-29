@@ -88,7 +88,7 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   useEffect(() => {
     if (settings?.ccLicenseAdaption) {
       // Handles old license formats.
-      if (['alike', 'allow'].includes(settings?.ccLicenseAdaption as string)) {
+      if (['alike', 'allow'].includes(settings?.ccLicenseAdaption as CCLicenseAdaption)) {
         setRequireAttributionValue('yes');
         setAllowCommercialValue('no');
         setAllowSharingValue(
@@ -153,12 +153,12 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   return (
     <Box mx={3}>
       <Typography variant="body1">
-        Do you want attribution for your work?
+        {translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
       </Typography>
       <Box mx={3}>
         <RadioGroup
-          aria-label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
-          name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
+          aria-label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
+          name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
           value={requireAttributionValue}
           onChange={handleAttributionChange}
         >
@@ -167,28 +167,28 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
             value="yes"
             control={<Radio color="primary" />}
             disabled={disabled}
-            label="Yes. Anyone using my work must include proper attribution."
+            label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_REQUIRE_ATTRIBUTION_OPTION_LABEL)}
           />
           <FormControlLabel
             id={CC_CC0_CONTROL_ID}
             value="no"
             control={<Radio color="primary" />}
             disabled={disabled}
-            label="No. Anyone can use my work, even without giving me attribution."
+            label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_CC0_OPTION_LABEL)}
           />
         </RadioGroup>
       </Box>
       {requireAttributionValue === 'yes' && (
         <>
           <Typography variant="body1">
-            Do you want to allow others to use your work commercially?
+            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE)}
           </Typography>
           <Box mx={3}>
             <RadioGroup
               aria-label={translateBuilder(
-                BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL,
+                BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE,
               )}
-              name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
+              name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE)}
               value={allowCommercialValue}
               onChange={handleCommercialChange}
             >
@@ -197,20 +197,19 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
                 value="yes"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label="Yes. Others can use my work, even for commercial purposes."
+                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ALLOW_COMMERCIAL_OPTION_LABEL)}
               />
               <FormControlLabel
                 id={CC_DISALLOW_COMMERCIAL_CONTROL_ID}
                 value="no"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label="No. Others can not use my work for commercial purposes."
+                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_DISALLOW_COMMERCIAL_OPTION_LABEL)}
               />
             </RadioGroup>
           </Box>
           <Typography variant="body1">
-            Do you want to allow others to remix, adapt, or build upon your
-            work?
+            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_REMIX_TITLE)}
           </Typography>
           <Box mx={3}>
             <RadioGroup
@@ -226,21 +225,21 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
                 value="yes"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label="Yes. Others can remix, adapt, or build upon my work."
+                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ALLOW_REMIX_OPTION_LABEL)}
               />
               <FormControlLabel
                 id={CC_SHARE_ALIKE_CONTROL_ID}
                 value="alike"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label="Yes, as long as others share alike in a compatible license."
+                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ALLOW_SHARE_ALIKE_REMIX_OPTION_LABEL)}
               />
               <FormControlLabel
                 id={CC_NO_DERIVATIVE_CONTROL_ID}
                 value="no"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label="No. Others may only use my work in unadapted form."
+                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_DISALLOW_REMIX_OPTION_LABEL)}
               />
             </RadioGroup>
           </Box>

@@ -2410,6 +2410,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/translations@https://github.com/graasp/graasp-translations.git#138-cc-translation":
+  version: 1.9.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=68479c061d3bbca63fad622d33871affb05718f6"
+  dependencies:
+    i18next: 21.8.1
+  checksum: 968fdbdc530a219efae4482aa7eb6d2caf710ada03fd109d8a0edb2868ca195af18338920a72f242827f5210df4bed294767b552997339a30f8150290a5c11e2
+  languageName: node
+  linkType: hard
+
 "@graasp/translations@npm:1.8.0":
   version: 1.8.0
   resolution: "@graasp/translations@npm:1.8.0"
@@ -9876,7 +9885,7 @@ __metadata:
     "@graasp/chatbox": 1.1.0
     "@graasp/query-client": 0.4.0
     "@graasp/sdk": 0.9.2
-    "@graasp/translations": 1.8.0
+    "@graasp/translations": "https://github.com/graasp/graasp-translations.git#138-cc-translation"
     "@graasp/ui": "https://github.com/graasp/graasp-ui.git#280-creative-commons"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.0

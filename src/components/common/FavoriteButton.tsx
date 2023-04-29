@@ -70,7 +70,7 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
       handleUnfavorite={handleUnfavorite}
       handleFavorite={handleFavorite}
       tooltip={text}
-      type={type as ActionButtonVariant}
+      type={type}
       size={size}
       text={text}
     />
