@@ -1,4 +1,4 @@
-import { FolderItemExtra, Item, ItemLoginSchemaType, ItemSettings, ItemTagType, ItemType, Member, PermissionLevel, ShortcutItemType } from '@graasp/sdk';
+import { FolderItemExtra, Item, ItemLoginSchemaType, ItemSettings, ItemTagType, ItemType, Member, PermissionLevel, RecycledItemData, ShortcutItemType } from '@graasp/sdk';
 
 import { CURRENT_USER, MEMBERS } from './members';
 import { ApiConfig, ItemForTest } from '../support/types';
@@ -172,6 +172,29 @@ export const SAMPLE_ITEMS: ApiConfig = {
   ],
   // memberships: [],
 };
+
+export const RECYCLED_ITEM_DATA: RecycledItemData[] = [
+
+  {
+    id: 'fdf09f5a-5688-22eb-ae93-0242ac130005',
+    creator: CURRENT_USER, createdAt: new Date(),
+    item: {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'fdf09f5a-5688-11eb-ae93-0242ac130005',
+      name: 'recycled item 1',
+      path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130005',
+    }
+  }, {
+    id: 'fdf12f5a-5688-22eb-ae93-0242ac130005',
+    creator: CURRENT_USER, createdAt: new Date(),
+    item: {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'ecafbd2a-5688-11eb-ae93-0242ac130006',
+      name: 'recycled item 2',
+      path: 'ecafbd2a_5688_11eb_ae93_0242ac130006',
+
+    }
+  }]
 
 export const generateOwnItems = (number: number): ItemForTest[] => {
   const id = (i) => `cafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;

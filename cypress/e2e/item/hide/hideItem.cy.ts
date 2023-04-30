@@ -1,3 +1,4 @@
+import { ItemTagType } from '@graasp/sdk';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   HIDDEN_ITEM_BUTTON_CLASS,
@@ -19,7 +20,6 @@ const toggleHideButton = (itemId) => {
   cy.get(`#${buildItemMenu(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`).click();
 };
 
-const HIDDEN_ITEM_TAG_ID = 'tochange';
 
 describe('Hiding Item', () => {
   describe('Successfully hide item in List', () => {
@@ -33,13 +33,14 @@ describe('Hiding Item', () => {
 
       toggleHideButton(item.id);
 
-      cy.wait(`@postItemTag`).then(
+      cy.wait(`@postItemTag-${ItemTagType.HIDDEN}`).then(
         ({
           request: {
-            body: { tagId },
+            url
           },
         }) => {
-          expect(tagId).to.equals(HIDDEN_ITEM_TAG_ID);
+          expect(url).to.contain(ItemTagType.HIDDEN);
+          expect(url).to.contain(item.id);
         },
       );
     });
@@ -51,8 +52,9 @@ describe('Hiding Item', () => {
       cy.wait(5000);
       toggleHideButton(item.id);
 
-      cy.wait('@deleteItemTag').then(({ request: { url } }) => {
-        expect(url).to.contain(item.tags[1].id);
+      cy.wait(`@deleteItemTag-${ItemTagType.HIDDEN}`).then(({ request: { url } }) => {
+        expect(url).to.contain(ItemTagType.HIDDEN);
+        expect(url).to.contain(item.id);
       });
     });
 
@@ -82,13 +84,14 @@ describe('Hiding Item', () => {
 
       toggleHideButton(item.id);
 
-      cy.wait(`@postItemTag`).then(
+      cy.wait(`@postItemTag-${ItemTagType.HIDDEN}`).then(
         ({
           request: {
-            body: { tagId },
+            url,
           },
         }) => {
-          expect(tagId).to.equals(HIDDEN_ITEM_TAG_ID);
+          expect(url).to.contain(ItemTagType.HIDDEN);
+          expect(url).to.contain(item.id);
         },
       );
     });
@@ -100,8 +103,9 @@ describe('Hiding Item', () => {
 
       toggleHideButton(item.id);
 
-      cy.wait('@deleteItemTag').then(({ request: { url } }) => {
-        expect(url).to.contain(item.tags[1].id);
+      cy.wait(`@deleteItemTag-${ItemTagType.HIDDEN}`).then(({ request: { url } }) => {
+        expect(url).to.contain(item.id);
+        expect(url).to.contain(ItemTagType.HIDDEN);
       });
     });
 

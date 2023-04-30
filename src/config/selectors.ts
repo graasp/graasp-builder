@@ -227,11 +227,12 @@ export const ITEM_PUBLISH_SECTION_TITLE_ID = 'itemPublishSectionTitle';
 export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
 export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
+// cannot use graasp ui because it slows down a lot cypress
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
-  'builder': 'appNavigationPlatformSwitchButtonBuilder',
-  'player': 'appNavigationPlatformSwitchButtonPlayer',
-  'library': 'appNavigationPlatformSwitchButtonLibrary',
-  'analytics': 'appNavigationPlatformSwitchButtonAnalytics',
+  builder: 'appNavigationPlatformSwitchButtonBuilder',
+  player: 'appNavigationPlatformSwitchButtonPlayer',
+  library: 'appNavigationPlatformSwitchButtonLibrary',
+  analytics: 'appNavigationPlatformSwitchButtonAnalytics',
 };
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';

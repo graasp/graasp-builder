@@ -20,8 +20,6 @@ import {
 } from './config/constants';
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
 import './index.css';
-import { SAMPLE_ITEMS as mockData } from './mockData/data';
-import mockServer from './server';
 
 const renderApp = () => {
   if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
@@ -37,21 +35,7 @@ const renderApp = () => {
   );
 };
 
-if (typeof window.getDatabase === 'function') {
-  window.getDatabase().then((d) => {
-    mockServer({ urlPrefix: API_HOST, database: d });
-
-    renderApp();
-  });
-} else {
-  // TODO
-  console.log('wefo');
-  if (process.env.REACT_APP_ENABLE_MOCK_API) {
-    console.log('rthrt');
-    mockServer({ urlPrefix: API_HOST, database: mockData });
-  }
-  renderApp();
-}
+renderApp();
 
 // if (SENTRY_DSN) {
 //   Sentry.init({

@@ -92,7 +92,7 @@ Cypress.Commands.add(
   'setUpApi',
   ({
     items = [],
-    recycledItems = [],
+    recycledItemData = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     mentions = SAMPLE_MENTIONS,
@@ -147,7 +147,7 @@ Cypress.Commands.add(
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
-    const allItems = [...cachedItems, ...recycledItems];
+    const allItems = [...cachedItems];
 
     cy.setCookie(COOKIE_KEYS.SESSION_KEY, currentMember ? 'somecookie' : null);
     cy.setCookie(
@@ -250,9 +250,9 @@ Cypress.Commands.add(
 
     mockRecycleItems(items, recycleItemsError);
 
-    mockGetRecycledItems(recycledItems);
+    mockGetRecycledItems(recycledItemData);
 
-    mockRestoreItems(recycledItems, restoreItemsError);
+    mockRestoreItems(recycledItemData, restoreItemsError);
 
     mockGetItemThumbnail(items, getItemThumbnailError);
     mockGetItemThumbnailUrl(items, getItemThumbnailError);

@@ -22,8 +22,7 @@ export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 
 export const APP_VERSION = process.env.REACT_APP_VERSION || 'latest';
 
-export const HOST =
-  process.env.REACT_APP_HOST || 'http://localhost:3111';
+export const HOST = process.env.REACT_APP_HOST || 'http://localhost:3111';
 
 export const API_HOST =
   process.env.REACT_APP_API_HOST || 'http://localhost:3111';

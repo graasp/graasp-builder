@@ -65,7 +65,6 @@ const RecycleBinScreen: FC = () => {
     isLoading,
     isError,
   } = hooks.useRecycledItemsData();
-
   if (isError) {
     return <ErrorAlert />;
   }

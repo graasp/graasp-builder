@@ -30,7 +30,7 @@ const DeleteItemDialog: FC<Props> = ({
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: deleteItems } = mutations.useDeleteIems();
+  const { mutate: deleteItems } = mutations.useDeleteItems();
 
   const onDelete = () => {
     deleteItems(itemIds);

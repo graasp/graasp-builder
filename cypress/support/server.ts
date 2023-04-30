@@ -3,7 +3,7 @@ import * as qs from 'qs';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { API_ROUTES } from '@graasp/query-client';
-import { App, Category, ChatMention, ItemTagType, ItemValidationGroup, ItemValidationReview, Member, PermissionLevel } from '@graasp/sdk';
+import { App, Category, ChatMention, ItemTagType, ItemValidationGroup, ItemValidationReview, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import {
@@ -155,14 +155,14 @@ export const mockGetOwnItems = (items: ItemForTest[]): void => {
   ).as('getOwnItems');
 };
 
-export const mockGetRecycledItems = (items: ItemForTest[]): void => {
+export const mockGetRecycledItems = (recycledItemData: RecycledItemData[]): void => {
   cy.intercept(
     {
       method: DEFAULT_GET.method,
       url: `${API_HOST}/${GET_RECYCLED_ITEMS_DATA_ROUTE}`,
     },
     (req) => {
-      req.reply(items);
+      req.reply(recycledItemData);
     },
   ).as('getRecycledItems');
 };
@@ -333,8 +333,10 @@ export const mockGetItems = ({ items, currentMember }: { items: ItemForTest[], c
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}\\?id\\=`),
     },
     ({ url, reply }) => {
-      const itemIds = qs.parse(url.slice(url.indexOf('?') + 1)).id as string[];
-
+      let itemIds = qs.parse(url.slice(url.indexOf('?') + 1)).id as string[];
+      if (!Array.isArray(itemIds)) {
+        itemIds = [itemIds];
+      }
       const result = { data: {}, errors: [] };
       itemIds.forEach((id) => {
         const item = getItemById(items, id);
@@ -984,17 +986,17 @@ export const mockPostItemTag = (items: ItemForTest[], currentMember: Member, sho
         const itemId = url.slice(API_HOST.length).split('/')[2];
         const item = items.find(({ id }) => itemId === id);
 
-        if (!item?.tags) {
-          item.tags = [];
-        }
-        item.tags.push({
-          id: v4(),
-          // dynamic ???
-          type: ItemTagType.HIDDEN,
-          item,
-          createdAt: new Date(),
-          creator: currentMember
-        });
+        // if (!item?.tags) {
+        //   item.tags = [];
+        // }
+        // item.tags.push({
+        //   id: v4(),
+        //   // dynamic ???
+        //   type: ItemTagType.HIDDEN,
+        //   item,
+        //   createdAt: new Date(),
+        //   creator: currentMember
+        // });
         reply(body);
       },
       // TODO
