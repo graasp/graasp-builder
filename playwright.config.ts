@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -24,7 +25,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'http://localhost:3111',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -69,9 +70,9 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'yarn start:test',
-    url: 'http://127.0.0.1:3111',
-    reuseExistingServer: !process.env.CI,
-  },
+  // webServer: {
+  //   command: 'yarn start:test',
+  //   url: 'http://127.0.0.1:3111',
+  //   reuseExistingServer: !process.env.CI,
+  // },
 });

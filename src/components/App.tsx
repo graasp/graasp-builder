@@ -29,8 +29,6 @@ const App: FC = () => {
   const { pathname } = useLocation();
   const { data: currentMember, isLoading } = useCurrentUserContext();
 
-  console.log(currentMember);
-
   if (isLoading) {
     return <CustomInitialLoader />;
   }

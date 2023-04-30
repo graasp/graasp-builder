@@ -11,6 +11,7 @@ import '@graasp/ui/dist/bundle.css';
 import pkg from '../package.json';
 import Root from './components/Root';
 import {
+  API_HOST,
   APP_VERSION,
   ENV,
   GA_MEASUREMENT_ID,
@@ -19,29 +20,49 @@ import {
 } from './config/constants';
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
 import './index.css';
+import { SAMPLE_ITEMS as mockData } from './mockData/data';
+import mockServer from './server';
 
-if (SENTRY_DSN) {
-  Sentry.init({
-    dsn: SENTRY_DSN,
-    integrations: [new BrowserTracing()],
-    environment: SENTRY_ENVIRONMENT,
-    release: `${pkg.name}@v${APP_VERSION}`,
+const renderApp = () => {
+  if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
+    ReactGA.initialize(GA_MEASUREMENT_ID);
+    ReactGA.send('pageview');
+  }
 
-    // Set tracesSampleRate to 1.0 to capture 100%
-    // of transactions for performance monitoring.
-    // We recommend adjusting this value in production
-    tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
+  ReactDOM.render(
+    <StrictMode>
+      <Root />
+    </StrictMode>,
+    document.getElementById('root'),
+  );
+};
+
+if (typeof window.getDatabase === 'function') {
+  window.getDatabase().then((d) => {
+    mockServer({ urlPrefix: API_HOST, database: d });
+
+    renderApp();
   });
+} else {
+  // TODO
+  console.log('wefo');
+  if (process.env.REACT_APP_ENABLE_MOCK_API) {
+    console.log('rthrt');
+    mockServer({ urlPrefix: API_HOST, database: mockData });
+  }
+  renderApp();
 }
 
-if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
-  ReactGA.initialize(GA_MEASUREMENT_ID);
-  ReactGA.send('pageview');
-}
+// if (SENTRY_DSN) {
+//   Sentry.init({
+//     dsn: SENTRY_DSN,
+//     integrations: [new BrowserTracing()],
+//     environment: SENTRY_ENVIRONMENT,
+//     release: `${pkg.name}@v${APP_VERSION}`,
 
-ReactDOM.render(
-  <StrictMode>
-    <Root />
-  </StrictMode>,
-  document.getElementById('root'),
-);
+//     // Set tracesSampleRate to 1.0 to capture 100%
+//     // of transactions for performance monitoring.
+//     // We recommend adjusting this value in production
+//     tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
+//   });
+// }

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>My page title</title>
+  </head>
+
+  <body>
+    <div>
+      <button id="requestContext">Request Context</button>
+      <span id="requestContext-message"></span>
+    </div>
+    <div>
+      <button id="requestToken">Request Token</button>
+      <span id="requestToken-message"></span>
+    </div>
+    <div>
+      <button id="createAppData">Get app data</button>
+    </div>
+    <div>
+      <button id="postAppData">Post app data</button>
+    </div>
+    <div>
+      <button id="deleteAppData">Delete app data</button>
+    </div>
+    <div>
+      <button id="patchAppData">Patch app data</button>
+    </div>
+    <ul></ul>
+  </body>
+  <script>
+    var requestContextButton = document.getElementById('requestContext');
+    var requestTokenButton = document.getElementById('requestToken');
+    var createAppDataButton = document.getElementById('createAppData');
+    var postAppDataButton = document.getElementById('postAppData');
+    var deleteAppDataDelete = document.getElementById('deleteAppData');
+    var patchAppDataButton = document.getElementById('patchAppData');
+    var list = document.querySelector('ul');
+
+    requestContextButton.addEventListener('click', requestContext);
+    requestTokenButton.addEventListener('click', requestApiToken);
+    createAppDataButton.addEventListener('click', getAppData);
+    postAppDataButton.addEventListener('click', postAppData);
+    deleteAppDataDelete.addEventListener('click', deleteAppData);
+    patchAppDataButton.addEventListener('click', patchAppData);
+
+    var params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    var port2;
+    var authToken;
+    var itemId = params.itemId;
+
+    function failOnError(response) {
+      if (!response.ok) return Promise.reject('An unexpected error happened.');
+      return response.json();
+    }
+
+    function printAppData(appData) {
+      console.log(appData);
+      var listItem = document.createElement('li');
+      listItem.textContent = JSON.stringify(appData);
+      list.appendChild(listItem);
+    }
+
+    function checkTokenExists() {
+      if (!authToken) {
+        return console.log('No auth token available to use API');
+      }
+    }
+
+    // Listen for the intial port transfer message
+    window.addEventListener('message', initPort);
+
+    // Setup the transfered port
+    function initPort(e) {
+      port2 = e.ports[0];
+      port2.onmessage = onMessage;
+      itemId = JSON.parse(e.data).payload.itemId;
+      document.getElementById('requestContext-message').innerHTML = itemId;
+    }
+
+    // Handle messages received on port2
+    function onMessage(e) {
+      const { payload } = JSON.parse(e.data);
+
+      // write message in list
+      var listItem = document.createElement('li');
+      listItem.textContent = e.data;
+      list.appendChild(listItem);
+
+      if (payload?.token) {
+        authToken = payload.token;
+        console.log('Token received!');
+      }
+    }
+
+    // Request context and message channel port
+    function requestContext(e) {
+      e.preventDefault();
+      window.parent.postMessage(
+        JSON.stringify({
+          type: 'GET_CONTEXT' + '_' + itemId,
+        }),
+        '*',
+      );
+    }
+
+    // Request auth token
+    function requestApiToken(e) {
+      e.preventDefault();
+      port2.postMessage(
+        JSON.stringify({
+          type: 'GET_AUTH_TOKEN' + '_' + itemId,
+          payload: {
+            // false data
+            app: '500fe32d-af45-4b23-8cd2-093e46289505',
+            origin: 'origin',
+          },
+        }),
+      );
+    }
+
+    // Get app data
+    function getAppData(e) {
+      e.preventDefault();
+      checkTokenExists();
+
+      fetch(`/app-items/${itemId}/app-data`, {
+        headers: {
+          Authorization: 'Bearer ' + authToken,
+        },
+        credentials: 'include',
+        method: 'GET',
+      })
+        .then(failOnError)
+        .then(printAppData);
+    }
+
+    // Post app data
+    function postAppData(e) {
+      e.preventDefault();
+      checkTokenExists();
+
+      fetch(`/app-items/${itemId}/app-data`, {
+        headers: {
+          Authorization: 'Bearer ' + authToken,
+        },
+        credentials: 'include',
+        method: 'POST',
+      })
+        .then(failOnError)
+        .then(printAppData);
+    }
+
+    // delete app data
+    function deleteAppData(e) {
+      e.preventDefault();
+      checkTokenExists();
+
+      fetch(`/app-items/${itemId}/app-data`, {
+        headers: {
+          Authorization: 'Bearer ' + authToken,
+        },
+        credentials: 'include',
+        method: 'DELETE',
+      })
+        .then(failOnError)
+        .then(printAppData);
+    }
+
+    // patch app data
+    function patchAppData(e) {
+      e.preventDefault();
+      checkTokenExists();
+
+      fetch(`/app-items/${itemId}/app-data`, {
+        headers: {
+          Authorization: 'Bearer ' + authToken,
+        },
+        credentials: 'include',
+        method: 'PATCH',
+      })
+        .then(failOnError)
+        .then(printAppData);
+    }
+  </script>
+</html>

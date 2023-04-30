@@ -1,0 +1,45 @@
+import { Item, ItemValidation, ItemValidationGroup, ItemValidationProcess, ItemValidationStatus } from '@graasp/sdk';
+import { SAMPLE_PUBLIC_ITEMS } from './items';
+
+export const VALIDATED_ITEM: Item = {
+  ...SAMPLE_PUBLIC_ITEMS.items[0],
+  updatedAt: new Date('2019-07-27T07:45:00Z'),
+};
+
+export const ITEM_VALIDATION_AND_REVIEW = {
+  itemValidationId: '6cbe87b9-0098-412f-a1ab-93e140ae1659',
+  reviewStatusId: '',
+  reviewReason: '',
+  createdAt: new Date('2023-07-27T07:45:00Z'),
+};
+
+
+export const iVG: ItemValidationGroup = {
+  id: '65c57d69-0e59-4569-a422-f330c31c995c',
+  item: VALIDATED_ITEM,
+  createdAt: new Date(),
+  itemValidations: []
+}
+
+export const ITEM_VALIDATIONS: ItemValidation[] = [
+  {
+    id: 'id1',
+    item: VALIDATED_ITEM,
+    itemValidationGroup: iVG,
+    process: ItemValidationProcess.BadWordsDetection,
+    status: ItemValidationStatus.Success,
+    result: '',
+    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: new Date('2021-04-13 14:56:34.749946'),
+  },
+  {
+    id: 'id1',
+    item: VALIDATED_ITEM,
+    itemValidationGroup: iVG,
+    process: ItemValidationProcess.ImageChecking,
+    status: ItemValidationStatus.Success,
+    result: '',
+    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: new Date('2021-04-13 14:56:34.749946'),
+  },
+];

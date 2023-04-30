@@ -1,5 +1,6 @@
-import { Platform } from '@graasp/ui';
+// import { Platform } from '@graasp/ui';
 
+export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
 export const ITEM_MOVE_BUTTON_CLASS = 'itemMoveButton';
@@ -72,7 +73,6 @@ export const CREATE_ITEM_FILE_ID = 'createItemFile';
 export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';
 export const DASHBOARD_UPLOADER_ID = 'dashboardUploader';
 export const CREATE_ITEM_CLOSE_BUTTON_ID = 'createItemCloseButton';
-export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const USER_MENU_SIGN_OUT_OPTION_ID = 'userMenuSignOutOption';
 export const NAVIGATION_HIDDEN_PARENTS_ID = 'navigationHiddenParents';
 export const ITEM_LOGIN_SCREEN_ID = 'itemLoginScreen';
@@ -228,10 +228,10 @@ export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
 export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
-  [Platform.Builder]: 'appNavigationPlatformSwitchButtonBuilder',
-  [Platform.Player]: 'appNavigationPlatformSwitchButtonPlayer',
-  [Platform.Library]: 'appNavigationPlatformSwitchButtonLibrary',
-  [Platform.Analytics]: 'appNavigationPlatformSwitchButtonAnalytics',
+  'builder': 'appNavigationPlatformSwitchButtonBuilder',
+  'player': 'appNavigationPlatformSwitchButtonPlayer',
+  'library': 'appNavigationPlatformSwitchButtonLibrary',
+  'analytics': 'appNavigationPlatformSwitchButtonAnalytics',
 };
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';

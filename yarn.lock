@@ -2841,6 +2841,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@miragejs/pretender-node-polyfill@npm:^0.1.0":
+  version: 0.1.2
+  resolution: "@miragejs/pretender-node-polyfill@npm:0.1.2"
+  checksum: bb55983a253dc0d4162acac090b062500595c9844bfbd21fe25bc1f926808d0070d710e622aa6285fa16c673a65cf3e05f4b32e888c469f1bde8888a7934ee44
+  languageName: node
+  linkType: hard
+
 "@mui/base@npm:5.0.0-alpha.115":
   version: 5.0.0-alpha.115
   resolution: "@mui/base@npm:5.0.0-alpha.115"
@@ -9010,6 +9017,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fake-xml-http-request@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "fake-xml-http-request@npm:2.1.2"
+  checksum: 7b1ebea1955c46cbda0e0c3308716cc82beca7bb6c549f1d1c2a8134203c9d6c5a21194e2c1e17650ff073ecbcd3e56cf1e21f248a86cbcb3567fd7a9ca4850e
+  languageName: node
+  linkType: hard
+
 "fast-content-type-parse@npm:^1.0.0":
   version: 1.0.0
   resolution: "fast-content-type-parse@npm:1.0.0"
@@ -10063,8 +10077,10 @@ __metadata:
     immutable: 4.3.0
     istanbul-lib-coverage: 3.2.0
     katex: 0.16.6
+    lodash.groupby: 4.6.0
     lodash.partition: 4.6.0
     lodash.truncate: 4.4.2
+    miragejs: 0.1.47
     npm-run-all: 4.1.5
     nyc: 15.1.0
     papaparse: 5.4.1
@@ -10687,6 +10703,13 @@ __metadata:
   version: 1.0.4
   resolution: "infer-owner@npm:1.0.4"
   checksum: 181e732764e4a0611576466b4b87dac338972b839920b2a8cde43642e4ed6bd54dc1fb0b40874728f2a2df9a1b097b8ff83b56d5f8f8e3927f837fdcb47d8a89
+  languageName: node
+  linkType: hard
+
+"inflected@npm:^2.0.4":
+  version: 2.1.0
+  resolution: "inflected@npm:2.1.0"
+  checksum: 1e3fb2d24ec6c774977dd5ed884c6097b6525f66edecfdca0845ab4023d35f02af1057de50cd69cdc5829d0bd5ba69fd7fb41d4d8abdf85ee243bf2bbf65995d
   languageName: node
   linkType: hard
 
@@ -12542,10 +12565,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.assign@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lodash.assign@npm:4.2.0"
+  checksum: 75bbc6733c9f577c448031b4051f990f068802708891f94be9d4c2faffd6a9ec67a2c49671dafc908a068d35687765464853282842b4560b662e6c903d11cc90
+  languageName: node
+  linkType: hard
+
 "lodash.camelcase@npm:^4.3.0":
   version: 4.3.0
   resolution: "lodash.camelcase@npm:4.3.0"
   checksum: cb9227612f71b83e42de93eccf1232feeb25e705bdb19ba26c04f91e885bfd3dd5c517c4a97137658190581d3493ea3973072ca010aab7e301046d90740393d1
+  languageName: node
+  linkType: hard
+
+"lodash.clonedeep@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.clonedeep@npm:4.5.0"
+  checksum: 92c46f094b064e876a23c97f57f81fbffd5d760bf2d8a1c61d85db6d1e488c66b0384c943abee4f6af7debf5ad4e4282e74ff83177c9e63d8ff081a4837c3489
+  languageName: node
+  linkType: hard
+
+"lodash.compact@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "lodash.compact@npm:3.0.1"
+  checksum: 75039eddfa5ef2ea0da1fc3d36515e92227241f94258b3dcf771196e741c878698ce5b79c0cb7fe758841c9dfd0e6fa222888985aadc0384fd79bbc9680dd829
   languageName: node
   linkType: hard
 
@@ -12563,6 +12607,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.find@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.find@npm:4.6.0"
+  checksum: b737f849a4fe36f5c3664ea636780dda2fde18335021faf80cdfdcb300ed75441da6f55cfd6de119092d8bb2ddbc4433f4a8de4b99c0b9c8640465b0901c717c
+  languageName: node
+  linkType: hard
+
 "lodash.flatten@npm:^4.4.0":
   version: 4.4.0
   resolution: "lodash.flatten@npm:4.4.0"
@@ -12577,6 +12628,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.forin@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.forin@npm:4.4.0"
+  checksum: c9c8e6c3204029fe0610efb8c74113b00a3d5a92b1d8defbf3f5cbc2d0f7663c680dff62e2950ed9406bb6d06e882fa39568c607bc44229d53fd93a9fd6c07b7
+  languageName: node
+  linkType: hard
+
+"lodash.get@npm:^4.4.2":
+  version: 4.4.2
+  resolution: "lodash.get@npm:4.4.2"
+  checksum: e403047ddb03181c9d0e92df9556570e2b67e0f0a930fcbbbd779370972368f5568e914f913e93f3b08f6d492abc71e14d4e9b7a18916c31fa04bd2306efe545
+  languageName: node
+  linkType: hard
+
+"lodash.groupby@npm:4.6.0":
+  version: 4.6.0
+  resolution: "lodash.groupby@npm:4.6.0"
+  checksum: e2d4d13d12790a1cacab3f5f120b7c072a792224e83b2f403218866d18efde76024b2579996dfebb230a61ce06469332e16639103669a35a605287e19ced6b9b
+  languageName: node
+  linkType: hard
+
+"lodash.has@npm:^4.5.2":
+  version: 4.5.2
+  resolution: "lodash.has@npm:4.5.2"
+  checksum: b3ec829a86852331d48b3730ff06088a283d128a3965aa521ffd942bcf5c82e06bed3164ff7a7751d11e768d88f0d7bab316192091489caf20f452d42f7055d5
+  languageName: node
+  linkType: hard
+
+"lodash.invokemap@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.invokemap@npm:4.6.0"
+  checksum: 646ceebbefbcb6da301f8c2868254680fd0bcdc6ada470495d9ae49c9c32938829c1b38a38c95d0258409a9655f85db404b16e648381c7450b7ed3d9c52d8808
+  languageName: node
+  linkType: hard
+
 "lodash.isarguments@npm:^3.1.0":
   version: 3.1.0
   resolution: "lodash.isarguments@npm:3.1.0"
@@ -12584,10 +12670,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.isempty@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.isempty@npm:4.4.0"
+  checksum: a8118f23f7ed72a1dbd176bf27f297d1e71aa1926288449cb8f7cef99ba1bc7527eab52fe7899ab080fa1dc150aba6e4a6367bf49fa4e0b78da1ecc095f8d8c5
+  languageName: node
+  linkType: hard
+
+"lodash.isequal@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.isequal@npm:4.5.0"
+  checksum: da27515dc5230eb1140ba65ff8de3613649620e8656b19a6270afe4866b7bd461d9ba2ac8a48dcc57f7adac4ee80e1de9f965d89d4d81a0ad52bb3eec2609644
+  languageName: node
+  linkType: hard
+
 "lodash.isfunction@npm:^3.0.9":
   version: 3.0.9
   resolution: "lodash.isfunction@npm:3.0.9"
   checksum: 99e54c34b1e8a9ba75c034deb39cedbd2aca7af685815e67a2a8ec4f73ec9748cda6ebee5a07d7de4b938e90d421fd280e9c385cc190f903ac217ac8aff30314
+  languageName: node
+  linkType: hard
+
+"lodash.isinteger@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "lodash.isinteger@npm:4.0.4"
+  checksum: 6034821b3fc61a2ffc34e7d5644bb50c5fd8f1c0121c554c21ac271911ee0c0502274852845005f8651d51e199ee2e0cfebfe40aaa49c7fe617f603a8a0b1691
   languageName: node
   linkType: hard
 
@@ -12609,6 +12716,27 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.kebabcase@npm:4.1.1"
   checksum: 5a6c59161914e1bae23438a298c7433e83d935e0f59853fa862e691164696bc07f6dfa4c313d499fbf41ba8d53314e9850416502376705a357d24ee6ca33af78
+  languageName: node
+  linkType: hard
+
+"lodash.lowerfirst@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "lodash.lowerfirst@npm:4.3.1"
+  checksum: e1688e18873777d394db4994d150dfc14cf01bf450169cf8296af4d84ecd7c3c4ae4dab3746f77f8719a093e4fff58bee3ae73ae7e23ef508b7d970b189d9952
+  languageName: node
+  linkType: hard
+
+"lodash.map@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.map@npm:4.6.0"
+  checksum: 7369a41d7d24d15ce3bbd02a7faa3a90f6266c38184e64932571b9b21b758bd10c04ffd117d1859be1a44156f29b94df5045eff172bf8a97fddf68bf1002d12f
+  languageName: node
+  linkType: hard
+
+"lodash.mapvalues@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.mapvalues@npm:4.6.0"
+  checksum: 0ff1b252fda318fc36e47c296984925e98fbb0fc5a2ecc4ef458f3c739a9476d47e40c95ac653e8314d132aa59c746d4276527b99d6e271940555c6e12d2babd
   languageName: node
   linkType: hard
 
@@ -12644,6 +12772,13 @@ __metadata:
   version: 4.6.0
   resolution: "lodash.partition@npm:4.6.0"
   checksum: 57c01e3b790c4c4352bffd8be281bd98ed09f6076985d764163478b5a27db3183454cc8c9c25231210d3c69ae2bea37b78911a794bc82c296865eba8b6bd314f
+  languageName: node
+  linkType: hard
+
+"lodash.pick@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.pick@npm:4.4.0"
+  checksum: 2c36cab7da6b999a20bd3373b40e31a3ef81fa264f34a6979c852c5bc8ac039379686b27380f0cb8e3781610844fafec6949c6fbbebc059c98f8fa8570e3675f
   languageName: node
   linkType: hard
 
@@ -12699,10 +12834,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.uniqby@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "lodash.uniqby@npm:4.7.0"
+  checksum: 659264545a95726d1493123345aad8cbf56e17810fa9a0b029852c6d42bc80517696af09d99b23bef1845d10d95e01b8b4a1da578f22aeba7a30d3e0022a4938
+  languageName: node
+  linkType: hard
+
 "lodash.upperfirst@npm:^4.3.1":
   version: 4.3.1
   resolution: "lodash.upperfirst@npm:4.3.1"
   checksum: cadec6955900afe1928cc60cdc4923a79c2ef991e42665419cc81630ed9b4f952a1093b222e0141ab31cbc4dba549f97ec28ff67929d71e01861c97188a5fa83
+  languageName: node
+  linkType: hard
+
+"lodash.values@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "lodash.values@npm:4.3.0"
+  checksum: 857e122ddf6edb50137887f0b834d471f96d66692ebb5de8b048ed277c8a3dd1bc8f85d82cf31b0f5c6dbc5b72c036a591205f76eec86bb11818a1a6f7e5a28c
   languageName: node
   linkType: hard
 
@@ -13664,6 +13813,40 @@ __metadata:
     minipass: ^3.0.0
     yallist: ^4.0.0
   checksum: f1fdeac0b07cf8f30fcf12f4b586795b97be856edea22b5e9072707be51fc95d41487faec3f265b42973a304fe3a64acd91a44a3826a963e37b37bafde0212c3
+  languageName: node
+  linkType: hard
+
+"miragejs@npm:0.1.47":
+  version: 0.1.47
+  resolution: "miragejs@npm:0.1.47"
+  dependencies:
+    "@miragejs/pretender-node-polyfill": ^0.1.0
+    inflected: ^2.0.4
+    lodash.assign: ^4.2.0
+    lodash.camelcase: ^4.3.0
+    lodash.clonedeep: ^4.5.0
+    lodash.compact: ^3.0.1
+    lodash.find: ^4.6.0
+    lodash.flatten: ^4.4.0
+    lodash.forin: ^4.4.0
+    lodash.get: ^4.4.2
+    lodash.has: ^4.5.2
+    lodash.invokemap: ^4.6.0
+    lodash.isempty: ^4.4.0
+    lodash.isequal: ^4.5.0
+    lodash.isfunction: ^3.0.9
+    lodash.isinteger: ^4.0.4
+    lodash.isplainobject: ^4.0.6
+    lodash.lowerfirst: ^4.3.1
+    lodash.map: ^4.6.0
+    lodash.mapvalues: ^4.6.0
+    lodash.pick: ^4.4.0
+    lodash.snakecase: ^4.1.1
+    lodash.uniq: ^4.5.0
+    lodash.uniqby: ^4.7.0
+    lodash.values: ^4.3.0
+    pretender: ^3.4.7
+  checksum: b50cd640c07bdd2a05df20c5113685818c3c6c63a00af2b9ac59f7ba3bd1da4e2fbe5a9cf11ca7c635c4b2e66d5585704f1dae2d48d06096b9d58d0c57ebf087
   languageName: node
   linkType: hard
 
@@ -15692,6 +15875,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pretender@npm:^3.4.7":
+  version: 3.4.7
+  resolution: "pretender@npm:3.4.7"
+  dependencies:
+    fake-xml-http-request: ^2.1.2
+    route-recognizer: ^0.3.3
+  checksum: ca767dfa3fdb5e49cec8f272de1c7d489f53986a9f58dd0caf379b6365b1f1241bbb03bea6fe4421ce3e2aaa894d6c7349a5ef603283710be2babca49f1ad6fb
+  languageName: node
+  linkType: hard
+
 "prettier@npm:2.8.7":
   version: 2.8.7
   resolution: "prettier@npm:2.8.7"
@@ -17100,6 +17293,13 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
+  languageName: node
+  linkType: hard
+
+"route-recognizer@npm:^0.3.3":
+  version: 0.3.4
+  resolution: "route-recognizer@npm:0.3.4"
+  checksum: 9586704491b26716eba1bdbb4a386893ecaab80c6dbf34e394957063b941ebf336ca09222f0892c9d118c609fa9b972d6e73e454abd4382acdc34dbb878e87f2
   languageName: node
   linkType: hard
 
