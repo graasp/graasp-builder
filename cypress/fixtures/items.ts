@@ -1,4 +1,4 @@
-import { FolderItemExtra, Item, ItemLoginSchemaType, ItemSettings, ItemTagType, ItemType, Member, PermissionLevel, RecycledItemData, ShortcutItemType } from '@graasp/sdk';
+import { FolderItemExtra, Item, ItemLoginSchemaType, ItemSettings, ItemTagType, ItemType, ItemValidation, ItemValidationProcess, ItemValidationStatus, Member, PermissionLevel, RecycledItemData, ShortcutItemType } from '@graasp/sdk';
 
 import { CURRENT_USER, MEMBERS } from './members';
 import { ApiConfig, ItemForTest } from '../support/types';
@@ -666,6 +666,35 @@ export const PUBLISHED_ITEM: ItemForTest = {
     },
   ],
 };
+export const PUBLISHED_ITEM_VALIDATIONS = [
+  {
+    id: '65c57d69-0e59-4569-a422-f330c31c995c',
+    item: PUBLISHED_ITEM,
+    createdAt: new Date(),
+    itemValidations: [{
+      id: 'id1',
+      item: PUBLISHED_ITEM,
+      // itemValidationGroup: iVG,
+      process: ItemValidationProcess.BadWordsDetection,
+      status: ItemValidationStatus.Success,
+      result: '',
+      updatedAt: new Date('2021-04-13 14:56:34.749946'),
+      createdAt: new Date('2021-04-13 14:56:34.749946'),
+    },
+    {
+      id: 'id2',
+      item: PUBLISHED_ITEM,
+      // itemValidationGroup: iVG,
+      process: ItemValidationProcess.ImageChecking,
+      status: ItemValidationStatus.Success,
+      result: '',
+      updatedAt: new Date('2021-04-13 14:56:34.749946'),
+      createdAt: new Date('2021-04-13 14:56:34.749946'),
+    },
+    ] as ItemValidation[]
+
+  }
+]
 
 const hiddenItem: Item = {
   ...DEFAULT_FOLDER_ITEM,

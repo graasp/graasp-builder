@@ -8,6 +8,7 @@ import {
 } from '../../../../src/config/selectors';
 import {
   PUBLISHED_ITEM,
+  PUBLISHED_ITEM_VALIDATIONS,
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
@@ -24,7 +25,7 @@ export const publishItem = (): void => {
 
 describe('Public Item', () => {
   it('Validate item', () => {
-    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
+    cy.setUpApi(SAMPLE_PUBLIC_ITEMS);
     const item = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
@@ -44,7 +45,7 @@ describe('Public Item', () => {
 describe('Published Item', () => {
   const item = PUBLISHED_ITEM;
   beforeEach(() => {
-    cy.setUpApi({ items: [item] });
+    cy.setUpApi({ items: [item], itemValidationGroups: PUBLISHED_ITEM_VALIDATIONS });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
   });

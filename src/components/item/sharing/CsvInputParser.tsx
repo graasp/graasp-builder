@@ -105,8 +105,6 @@ const CsvInputParser: FC<Props> = ({ item }) => {
       return null;
     }
 
-    console.log('results', results.toJS());
-
     // show generic network/axios errors
     const genericErrors: Error[] = results?.errors?.filter(
       (e: { code?: string; message?: string; data?: unknown }) =>

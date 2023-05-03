@@ -3,6 +3,7 @@ import { AppItemType, FolderItemType, Item, ItemType, PermissionLevel } from '@g
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER, MEMBERS } from './members';
 import { ItemForTest } from '../support/types';
+import { APPS_LIST } from './apps/apps';
 
 const API_HOST = Cypress.env('API_HOST');
 
@@ -19,7 +20,7 @@ export const GRAASP_APP_ITEM: AppItemType = {
   description: 'my app description',
   type: ItemType.APP,
   extra: {
-    [ItemType.APP]: { url: 'http://localhost.com:3333', },
+    [ItemType.APP]: { url: APPS_LIST[0].url, },
   },
   creator: CURRENT_USER,
 };

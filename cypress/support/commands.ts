@@ -16,7 +16,6 @@ import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import {
   ITEM_VALIDATION_AND_REVIEW,
-  ITEM_VALIDATIONS,
 } from '../fixtures/validations';
 import './commands/item';
 import './commands/navigation';
@@ -99,7 +98,7 @@ Cypress.Commands.add(
     storedSessions = [],
     categories = SAMPLE_CATEGORIES,
     itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
-    itemValidationGroups = ITEM_VALIDATIONS,
+    itemValidationGroups = [],
     deleteItemsError = false,
     postItemError = false,
     moveItemsError = false,

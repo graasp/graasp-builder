@@ -22,7 +22,7 @@ import {
   buildTreeItemId,
 } from '../../../src/config/selectors';
 import { getParentsIdsFromPath } from '../../../src/utils/item';
-import { NEW_APP_NAME } from '../../fixtures/apps/apps';
+import { APP_NAME, NEW_APP_NAME } from '../../fixtures/apps/apps';
 import { TREE_VIEW_PAUSE } from '../constants';
 
 Cypress.Commands.add(
@@ -149,11 +149,11 @@ Cypress.Commands.add(
     if (type) {
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
     } else {
-      cy.get(`#${buildItemFormAppOptionId(getAppExtra(extra)?.name)}`).click();
+      cy.get(`#${buildItemFormAppOptionId(APP_NAME)}`).click();
       // check name get added automatically
       cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should(
         'have.value',
-        getAppExtra(extra)?.name,
+        APP_NAME,
       );
       // edit the app name
       cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`)

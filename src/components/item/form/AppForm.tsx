@@ -67,7 +67,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
       </Typography>
       <BaseItemForm
         onChange={onChange}
-        item={item.update('name', () => newName)}
+        item={item?.update('name', () => newName)}
         updatedProperties={updatedProperties}
       />
 

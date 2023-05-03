@@ -35,7 +35,7 @@ describe('Delete Item in List', () => {
 
   describe('Error handling', () => {
     it('error while deleting item does not delete in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, deleteItemsError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, recycledItemData: RECYCLED_ITEM_DATA, deleteItemsError: true });
       const { id } = RECYCLED_ITEM_DATA[0].item;
 
       // go to children item

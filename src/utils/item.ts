@@ -22,7 +22,7 @@ export const transformIdForPath = (id: string): string =>
   id.replace(/\-/g, '_');
 
 export const getParentsIdsFromPath = (
-  path: string,
+  path?: string,
   { ignoreSelf = false } = {},
 ): string[] => {
   if (!path) {

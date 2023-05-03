@@ -27,7 +27,6 @@ const TableRowPermissionRenderer = ({
       instance,
       item,
     });
-
     const onChangePermission = (e) => {
       const { value } = e.target;
       // editing a parent's instance from a child should create a new instance

@@ -39,7 +39,7 @@ const FavoriteItems: FC = () => {
   // this effect does not take effect if there is only one (deleted) item
   useEffect(() => {
     if (data?.errors) {
-      // TODO: REMOVE errors ??
+      // remove errors from array
       const errorIds = data.errors
         .toJS()
         .map((e: GraaspError) => (e?.data as any)?.id);

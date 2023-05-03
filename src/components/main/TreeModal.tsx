@@ -61,7 +61,7 @@ const TreeModal = ({
 
     // suppose all items are in the same parent
     const parentIds =
-      getParentsIdsFromPath(items.data.toSeq().first().path) || [];
+      getParentsIdsFromPath(items.data.toSeq().first()?.path) || [];
     if (!parentIds.length) {
       return [];
     }

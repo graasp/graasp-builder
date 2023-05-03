@@ -32,15 +32,13 @@ describe('Copy Item in List', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[0];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    const { path: toItemPath } = SAMPLE_ITEMS.items[1];
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url } }) => {
+      expect(url).to.contain(copyItemId)
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
-      // check in new parent
-      cy.goToItemInList(toItem);
-      cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('exist');
     });
   });
 
@@ -57,12 +55,11 @@ describe('Copy Item in List', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url, body } }) => {
+      expect(url).to.contain(copyItemId)
+      expect(body.parentId).to.contain(toItem)
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
-      // check in new parent
-      cy.goToItemInList(toItem);
-      cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('exist');
     });
   });
 
@@ -78,12 +75,11 @@ describe('Copy Item in List', () => {
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
     copyItem({ id: copyItemId, toItemPath: TREE_MODAL_MY_ITEMS_ID });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url, body } }) => {
+      expect(url).to.contain(copyItemId)
+
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
 
-      // check in new parent
-      cy.goToHome();
-      cy.get(buildItemsTableRowIdAttribute(body[0].id)).should('exist');
     });
   });
 

@@ -39,7 +39,7 @@ export const createLink = (payload: EmbeddedLinkItemType, options?: { confirm?: 
 
 export const createFile = (payload: FileItemForTest, options?: { confirm?: boolean }): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
-  const { confirm = true } = options;
+  const { confirm = true } = options ?? {};
   cy.get(`#${CREATE_ITEM_FILE_ID}`).click();
 
   // drag-drop a file in the uploader

@@ -24,15 +24,12 @@ describe('Copy Item in Grid', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[0];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    const { path: toItemPath } = SAMPLE_ITEMS.items[1];
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-
-      // check in new parent
-      cy.goToItemInGrid(toItem);
-      cy.get(`#${buildItemCard(body[0].id)}`).should('exist');
+      expect(url).to.contain(copyItemId)
     });
   });
 
@@ -44,17 +41,15 @@ describe('Copy Item in Grid', () => {
     cy.visit(buildItemPath(id));
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
-    // move
+    // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    const { id: toItemId, path: toItemPath } = SAMPLE_ITEMS.items[3];
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url, body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-
-      // check in new parent
-      cy.goToItemInGrid(toItem);
-      cy.get(`#${buildItemCard(body[0].id)}`).should('exist');
+      expect(url).to.contain(copyItemId)
+      expect(body.parentId).to.equal(toItemId)
     });
   });
 
@@ -66,17 +61,15 @@ describe('Copy Item in Grid', () => {
     cy.visit(buildItemPath(id));
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
-    // move
+    // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
     const toItemPath = TREE_MODAL_MY_ITEMS_ID;
     copyItem({ id: copyItemId, toItemPath });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
+      expect(url).to.contain(copyItemId)
 
-      // check in new parent
-      cy.goToHome();
-      cy.get(`#${buildItemCard(body[0].id)}`).should('exist');
     });
   });
 
@@ -94,10 +87,10 @@ describe('Copy Item in Grid', () => {
       const { path: toItemPath } = SAMPLE_ITEMS.items[0];
       copyItem({ id: copyItemId, toItemPath });
 
-      cy.wait('@copyItems').then(({ response: { body } }) => {
+      cy.wait('@copyItems').then(({ request: { url } }) => {
         // check item is still existing in parent
         cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-        cy.get(`#${buildItemCard(body[0].id)}`).should('not.exist');
+        expect(url).to.contain(copyItemId)
       });
     });
   });

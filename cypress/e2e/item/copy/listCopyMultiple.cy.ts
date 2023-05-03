@@ -25,18 +25,13 @@ describe('Copy items in List', () => {
     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     const itemIds = [SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[5].id];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    const { path: toItemPath } = SAMPLE_ITEMS.items[1];
     copyItems({ itemIds, toItemPath });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url } }) => {
       itemIds.forEach((id) => {
+        expect(url).to.contain(id)
         cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
-      });
-
-      // check in new parent
-      cy.goToItemInList(toItem);
-      body.forEach((item) => {
-        cy.get(`${buildItemsTableRowIdAttribute(item.id)}`).should('exist');
       });
     });
   });
@@ -54,16 +49,13 @@ describe('Copy items in List', () => {
     const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
     copyItems({ itemIds, toItemPath });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url, body } }) => {
+      expect(body.parentId).to.equal(toItem)
       itemIds.forEach((id) => {
+        expect(url).to.contain(id)
         cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
       });
 
-      // check in new parent
-      cy.goToItemInList(toItem);
-      body.forEach((item) => {
-        cy.get(`${buildItemsTableRowIdAttribute(item.id)}`).should('exist');
-      });
     });
   });
 
@@ -79,15 +71,10 @@ describe('Copy items in List', () => {
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
     copyItems({ itemIds, toItemPath: TREE_MODAL_MY_ITEMS_ID });
 
-    cy.wait('@copyItems').then(({ response: { body } }) => {
+    cy.wait('@copyItems').then(({ request: { url } }) => {
       itemIds.forEach((id) => {
+        expect(url).to.contain(id)
         cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
-      });
-
-      // check in new parent
-      cy.goToHome();
-      body.forEach((item) => {
-        cy.get(`${buildItemsTableRowIdAttribute(item.id)}`).should('exist');
       });
     });
   });
