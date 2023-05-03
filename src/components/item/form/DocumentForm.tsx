@@ -142,6 +142,7 @@ const DocumentForm = ({
         <BaseForm
           onChange={onChange}
           item={item}
+          required
           updatedProperties={updatedProperties}
         />
       </Box>
