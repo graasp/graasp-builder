@@ -1,7 +1,8 @@
-import { AppItemType, FolderItemType, ItemType } from '@graasp/sdk';
+import { AppItemType, FolderItemType, Item, ItemType, PermissionLevel } from '@graasp/sdk';
 
 import { DEFAULT_FOLDER_ITEM } from './items';
-import { CURRENT_USER } from './members';
+import { CURRENT_USER, MEMBERS } from './members';
+import { ItemForTest } from '../support/types';
 
 const API_HOST = Cypress.env('API_HOST');
 
@@ -44,8 +45,7 @@ export const GRAASP_APP_CHILDREN_ITEM: AppItemType = {
   },
   creator: CURRENT_USER,
 };
-
-export const APP_USING_CONTEXT_ITEM: AppItemType = {
+const app: Item = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-12eb-ae91-0272ac130002',
   path: 'ecafbd2a_5688_12eb_ae91_0272ac130002',
@@ -58,6 +58,19 @@ export const APP_USING_CONTEXT_ITEM: AppItemType = {
     },
   },
   creator: CURRENT_USER,
+}
+
+export const APP_USING_CONTEXT_ITEM: ItemForTest = {
+  ...app,
+  memberships: [{
+    item: app,
+    permission: PermissionLevel.Admin,
+    member: MEMBERS.ANNA,
+    creator: MEMBERS.ANNA,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    id: '2d44cae9-592a-417a-86d3-99432b223c18'
+  },]
 };
 
 export const GRAASP_APP_ITEMS_FIXTURE = [

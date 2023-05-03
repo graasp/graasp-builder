@@ -2315,7 +2315,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#typeorm":
   version: 0.4.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=dceaefee77d5df6695b5cc7cc75681eca617f66e"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=e7a3a977276b76df6077edb381386b63257a14ad"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     "@graasp/translations": "github:graasp/graasp-translations#89-email"
@@ -2328,7 +2328,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: d4fca7b6e853ed4c0e2759588c1e6449ba6b529606a015648e7d43fd38cceb15c466645fd8d6e71a4d05faf2edfab4b3da2016bc7be7f4c7df860d524f30db6b
+  checksum: 1a9c9f1b4c1a4511c3dbe5460c0a808bb0607682fa748764b2b6e3be64f19159c630a85e8193da1fcc0161cdc8ddb1d8a32bb2f30c02b4a5b5920d4de1b1c271
   languageName: node
   linkType: hard
 

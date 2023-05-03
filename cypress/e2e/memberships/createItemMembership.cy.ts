@@ -10,7 +10,12 @@ import {
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
-const shareItem = ({ id, member, permission, submit }) => {
+const shareItem = ({ id, member, permission, submit }: {
+  member: { email: string },
+  permission: PermissionLevel,
+  submit?: boolean,
+  id: string,
+}) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
 
   cy.fillShareForm({

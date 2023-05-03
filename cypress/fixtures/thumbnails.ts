@@ -4,6 +4,7 @@ import { FIXTURES_THUMBNAILS_FOLDER } from '../support/constants';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { MEMBERS } from './members';
 import { ApiConfig } from '../support/types';
+import { ITEM_THUMBNAIL_LINK } from './thumbnails/links';
 
 export const THUMBNAIL_MEDIUM_PATH = 'thumbnails/medium.jpeg';
 
@@ -75,7 +76,7 @@ export const SAMPLE_ITEMS_WITH_THUMBNAILS: ApiConfig = {
           updatedAt: new Date()
         },
       ],
-      thumbnails: FIXTURES_THUMBNAILS_FOLDER,
+      thumbnails: ITEM_THUMBNAIL_LINK,
     },
     {
       ...sampleItems[2],

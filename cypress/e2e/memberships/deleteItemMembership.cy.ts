@@ -28,6 +28,7 @@ describe('Delete Membership', () => {
       expect(url).to.contain(mId);
     });
   });
+
   it('cannot delete item membership from parent', () => {
     cy.setUpApi({ ...ITEMS_WITH_MEMBERSHIPS });
 

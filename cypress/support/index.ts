@@ -8,8 +8,8 @@ declare global {
       fillShareForm(args: {
         member: { email: string },
         permission: PermissionLevel,
-        submit,
-        selector: string,
+        submit?: boolean,
+        selector?: string,
       }): void
 
       clickElementInIframe(iframeSelector: string, elementSelector: string): void

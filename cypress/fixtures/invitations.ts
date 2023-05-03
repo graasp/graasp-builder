@@ -51,12 +51,15 @@ export const ITEMS_WITH_INVITATIONS: ApiConfig = {
           creator: MEMBERS.ANNA
 
         },
-        // {
-        //   id: 'ecafbd2a-5688-11eb-be93-0242ac130004',
-        //   item: itemsWithInvitations[0],
-        //   permission: PermissionLevel.Admin,
-        //   email: MEMBERS.ANNA.email,
-        // },
+        {
+          id: 'ecafbd2a-5688-11eb-be93-0212ac130002',
+          item: itemsWithInvitations[0],
+          permission: PermissionLevel.Admin,
+          member: MEMBERS.ANNA,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          creator: MEMBERS.ANNA
+        },
       ],
       invitations: [
         {

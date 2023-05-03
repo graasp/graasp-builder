@@ -67,7 +67,6 @@ const Main: FC<Props> = ({ children }) => {
 
   const { itemId } = useParams();
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
-
   const platformProps = {
     [Platform.Builder]: {
       id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Builder],

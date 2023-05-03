@@ -92,7 +92,6 @@ export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const ITEM_MENU_FLAG_BUTTON_CLASS = 'itemMenuFlagButton';
 export const buildFlagListItemId = (type: string): string =>
   `flagListItem-${type}`;
-export const FLAG_ITEM_BUTTON_ID = 'flagItemButton';
 export const CREATE_ITEM_DOCUMENT_ID = 'createItemDocument';
 export const ITEM_FORM_DOCUMENT_TEXT_ID = 'itemFormDocumentText';
 export const ITEM_FORM_DOCUMENT_TEXT_SELECTOR = `#${ITEM_FORM_DOCUMENT_TEXT_ID} .ql-editor`;
@@ -229,10 +228,10 @@ export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
 // cannot use graasp ui because it slows down a lot cypress
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
-  builder: 'appNavigationPlatformSwitchButtonBuilder',
-  player: 'appNavigationPlatformSwitchButtonPlayer',
-  library: 'appNavigationPlatformSwitchButtonLibrary',
-  analytics: 'appNavigationPlatformSwitchButtonAnalytics',
+  Builder: 'appNavigationPlatformSwitchButtonBuilder',
+  Player: 'appNavigationPlatformSwitchButtonPlayer',
+  Library: 'appNavigationPlatformSwitchButtonLibrary',
+  Analytics: 'appNavigationPlatformSwitchButtonAnalytics',
 };
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';

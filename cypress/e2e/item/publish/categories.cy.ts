@@ -9,6 +9,7 @@ import {
 } from '../../../../src/config/selectors';
 import {
   ITEM_WITH_CATEGORIES,
+  ITEM_WITH_CATEGORIES_CONTEXT,
   SAMPLE_CATEGORIES,
 } from '../../../fixtures/categories';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
@@ -44,7 +45,7 @@ describe('Categories', () => {
   describe('Item with category', () => {
     const item = ITEM_WITH_CATEGORIES;
     beforeEach(() => {
-      cy.setUpApi({ items: [item] });
+      cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
       cy.visit(buildItemPath(item.id));
       openPublishItemTab(item.id);
     });

@@ -1,5 +1,4 @@
 import { getCurrentSession } from '@graasp/sdk';
-import { Platform } from '@graasp/ui';
 
 import { SIGN_IN_PATH } from '../../src/config/constants';
 import { HOME_PATH } from '../../src/config/paths';
@@ -21,8 +20,9 @@ describe('Header', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
     // check navigation and display and interface doesn't crash
+    // cannot use platform from ui
     cy.get(
-      `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Builder]}`,
+      `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Builder}`,
     ).click();
     cy.get(`#${APP_NAVIGATION_PLATFORM_SWITCH_ID}`).should('exist');
   });

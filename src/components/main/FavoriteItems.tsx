@@ -4,12 +4,13 @@ import Box from '@mui/material/Box';
 
 import { FC, useEffect } from 'react';
 
+import { GraaspError } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { hooks } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   FAVORITE_ITEMS_ERROR_ALERT_ID,
   FAVORITE_ITEMS_ID,
@@ -33,20 +34,23 @@ const FavoriteItems: FC = () => {
     isLoading: isItemsLoading,
     isError: isItemsError,
   } = hooks.useItems([...new Set(getFavoriteItems(member).toArray())]);
+  const { mutate: editMember } = mutations.useEditMember();
   // Whenever we have a change in the favorite items, we check for any deleted items and remove them
   // this effect does not take effect if there is only one (deleted) item
   useEffect(() => {
     if (data?.errors) {
       // TODO: REMOVE errors ??
-      // const errorIds = getErrorItemIds(favoriteItems);
-      // mutation.mutate({
-      //   id: member.id,
-      //   extra: {
-      //     favoriteItems: member.extra.favoriteItems
-      //       ?.filter((id) => !errorIds.includes(id))
-      //       .toArray(),
-      //   },
-      // });
+      const errorIds = data.errors
+        .toJS()
+        .map((e: GraaspError) => (e?.data as any)?.id);
+      editMember({
+        id: member.id,
+        extra: {
+          favoriteItems: member.extra.favoriteItems
+            ?.filter((id) => !errorIds.includes(id))
+            .toArray(),
+        },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

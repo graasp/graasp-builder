@@ -1,4 +1,3 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { UPLOADER_ID } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
@@ -22,62 +21,60 @@ describe('Upload Item in List', () => {
         cy.visit(HOME_PATH);
 
         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-      }
       });
 
-    it('upload one file successfully', () => {
-      dragUploadItem([ICON_FILEPATH]).then(() => {
-        cy.wait('@uploadItem').then(() => {
-          // todo: check response
+      it('upload one file successfully', () => {
+        dragUploadItem([ICON_FILEPATH]).then(() => {
+          cy.wait('@uploadItem').then(() => {
+            // todo: check response
 
-          // should update view
-          cy.wait('@getOwnItems');
+            // should update view
+            cy.wait('@getOwnItems');
+          });
+        });
+      });
+
+      it('upload two files successfully', () => {
+        dragUploadItem([ICON_FILEPATH, TEXT_FILEPATH]).then(() => {
+          cy.wait('@uploadItem').then(() => {
+            // todo: check response
+
+            // should update view
+            cy.wait('@getOwnItems');
+          });
         });
       });
     });
+    describe('upload item in item', () => {
+      const { id } = SAMPLE_ITEMS.items[0];
 
-    it('upload two files successfully', () => {
-      dragUploadItem([ICON_FILEPATH, TEXT_FILEPATH]).then(() => {
-        cy.wait('@uploadItem').then(() => {
-          // todo: check response
+      beforeEach(() => {
+        cy.visit(buildItemPath(id));
 
-          // should update view
-          cy.wait('@getOwnItems');
+        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      });
+
+      it('upload one file successfully', () => {
+        dragUploadItem([ICON_FILEPATH]).then(() => {
+          cy.wait('@uploadItem').then(() => {
+            // todo: check response
+
+            // should update view
+            cy.wait('@getItem');
+          });
+        });
+      });
+
+      it('upload two files successfully', () => {
+        dragUploadItem([ICON_FILEPATH, TEXT_FILEPATH]).then(() => {
+          cy.wait('@uploadItem').then(() => {
+            // todo: check response
+
+            // should update view
+            cy.wait('@getItem');
+          });
         });
       });
     });
-  });
-  describe('upload item in item', () => {
-    const { id } = SAMPLE_ITEMS.items[0];
-
-    beforeEach(() => {
-      cy.visit(buildItemPath(id));
-
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
-      });
-
-  it('upload one file successfully', () => {
-    dragUploadItem([ICON_FILEPATH]).then(() => {
-      cy.wait('@uploadItem').then(() => {
-        // todo: check response
-
-        // should update view
-        cy.wait('@getItem');
-      });
-    });
-  });
-
-  it('upload two files successfully', () => {
-    dragUploadItem([ICON_FILEPATH, TEXT_FILEPATH]).then(() => {
-      cy.wait('@uploadItem').then(() => {
-        // todo: check response
-
-        // should update view
-        cy.wait('@getItem');
-      });
-    });
-  });
-});
   });
 });

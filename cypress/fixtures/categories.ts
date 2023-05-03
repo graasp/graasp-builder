@@ -1,7 +1,8 @@
-import { Category, CategoryType, ItemCategory } from '@graasp/sdk';
+import { Category, CategoryType, ItemCategory, ItemValidation, ItemValidationGroup, ItemValidationProcess, ItemValidationStatus } from '@graasp/sdk';
 
 import { PUBLISHED_ITEM } from './items';
 import { MEMBERS } from './members';
+import { ItemForTest } from '../support/types';
 
 export const SAMPLE_CATEGORIES: Category[] = [
   {
@@ -34,7 +35,7 @@ export const CUSTOMIZED_TAGS = ['water', 'ice', 'temperature'];
 
 export const NEW_CUSTOMIZED_TAG = 'newTag';
 
-export const ITEM_WITH_CATEGORIES = {
+export const ITEM_WITH_CATEGORIES: ItemForTest = {
   ...PUBLISHED_ITEM,
   settings: {
     tags: CUSTOMIZED_TAGS,
@@ -43,3 +44,35 @@ export const ITEM_WITH_CATEGORIES = {
   // for tests
   categories: SAMPLE_ITEM_CATEGORIES,
 };
+
+
+export const ITEM_WITH_CATEGORIES_CONTEXT = {
+  items: [ITEM_WITH_CATEGORIES],
+  itemValidationGroups: [{
+    id: '65c57d69-0e59-4569-a422-f330c31c995c',
+    item: ITEM_WITH_CATEGORIES,
+    createdAt: new Date(),
+    itemValidations: [{
+      id: 'id1',
+      item: ITEM_WITH_CATEGORIES,
+      // itemValidationGroup: iVG,
+      process: ItemValidationProcess.BadWordsDetection,
+      status: ItemValidationStatus.Success,
+      result: '',
+      updatedAt: new Date('2021-04-13 14:56:34.749946'),
+      createdAt: new Date('2021-04-13 14:56:34.749946'),
+    },
+    {
+      id: 'id2',
+      item: ITEM_WITH_CATEGORIES,
+      // itemValidationGroup: iVG,
+      process: ItemValidationProcess.ImageChecking,
+      status: ItemValidationStatus.Success,
+      result: '',
+      updatedAt: new Date('2021-04-13 14:56:34.749946'),
+      createdAt: new Date('2021-04-13 14:56:34.749946'),
+    },
+    ] as ItemValidation[]
+
+  }]
+}

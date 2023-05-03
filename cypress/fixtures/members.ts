@@ -1,8 +1,8 @@
 import { Member, MemberType } from '@graasp/sdk';
-import { FIXTURES_THUMBNAILS_FOLDER } from '../support/constants';
 import { MemberForTest } from '../support/types';
+import { AVATAR_LINK } from './thumbnails/links';
 
-export const SIGNED_OUT_MEMBER = undefined;
+export const SIGNED_OUT_MEMBER = null;
 
 
 export const MEMBERS: Record<string, MemberForTest> = {
@@ -28,7 +28,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
     updatedAt: new Date('2021-04-13 14:56:34.749946'),
     extra: { lang: 'en' },
     // this only exists for test
-    thumbnails: FIXTURES_THUMBNAILS_FOLDER,
+    thumbnails: AVATAR_LINK,
   },
   CEDRIC: {
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130006',
@@ -39,7 +39,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
     createdAt: new Date('2021-04-13 14:56:34.749946'),
     updatedAt: new Date('2021-04-13 14:56:34.749946'),
     // this only exists for test
-    thumbnails: FIXTURES_THUMBNAILS_FOLDER,
+    thumbnails: AVATAR_LINK,
   },
   DAVID: {
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130062',

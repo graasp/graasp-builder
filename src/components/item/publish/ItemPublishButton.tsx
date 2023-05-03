@@ -31,11 +31,8 @@ const ItemPublishButton = ({
   const { mutate: unpublish } = useUnpublishItem();
   const { mutate: publishItem } = usePublishItem();
 
-  const {
-    data: itemPublishedEntry,
-    isLoading: isItemTagsLoading,
-    isError,
-  } = useItemPublishedInformation({ itemId: item.id });
+  const { data: itemPublishedEntry, isLoading: isItemTagsLoading } =
+    useItemPublishedInformation({ itemId: item.id });
 
   const [isPublished, setIsPublished] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -56,7 +53,7 @@ const ItemPublishButton = ({
     return <Loader />;
   }
 
-  if (isError) {
+  if (!isValidated) {
     return null;
   }
 

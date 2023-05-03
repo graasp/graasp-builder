@@ -3,7 +3,7 @@ import * as qs from 'qs';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { API_ROUTES } from '@graasp/query-client';
-import { App, Category, ChatMention, ItemTagType, ItemValidationGroup, ItemValidationReview, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
+import { App, Category, ChatMention, Item, ItemTagType, ItemValidation, ItemValidationGroup, ItemValidationProcess, ItemValidationReview, ItemValidationStatus, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import {
@@ -38,11 +38,11 @@ import { ID_FORMAT, parseStringToRegExp } from './utils';
 import { ItemForTest, MemberForTest } from './types';
 import { AVATAR_LINK, ITEM_THUMBNAIL_LINK } from '../fixtures/thumbnails/links';
 
-const {
-  buildAppListRoute,
+const { buildGetItemPublishedInformationRoute,
+  buildAppListRoute, buildGetLastItemValidationGroupRoute,
   buildDeleteItemRoute,
   buildEditItemRoute,
-  buildGetChildrenRoute,
+  buildGetChildrenRoute, buildItemUnpublishRoute,
   buildGetItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
@@ -87,6 +87,7 @@ const {
   buildResendInvitationRoute,
   buildItemPublishRoute,
   buildUpdateMemberPasswordRoute,
+  buildPostItemValidationRoute
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -95,8 +96,8 @@ const checkMembership = ({ item, currentMember }) => {
   // mock membership
   const creator = item?.creator;
   const haveMembership =
-    creator === currentMember.id ||
-    item.memberships?.find(({ member }) => member.id === currentMember.id);
+    creator?.id === currentMember?.id ||
+    item.memberships?.find(({ member }) => member.id === currentMember?.id);
 
   return haveMembership;
 };
@@ -314,7 +315,20 @@ export const mockGetItem = ({ items, currentMember }: { items: ItemForTest[], cu
         });
       }
 
-      if (shouldThrowError || !checkMembership({ item, currentMember })) {
+      if (shouldThrowError) {
+        return reply({
+          statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+        });
+      }
+
+      if (item?.tags?.find(({ type }) => type === ItemTagType.PUBLIC)) {
+        return reply({
+          body: item,
+          statusCode: StatusCodes.OK,
+        });
+      }
+
+      if (!checkMembership({ item, currentMember })) {
         return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
       }
 
@@ -377,14 +391,41 @@ export const mockGetChildren = ({ items, currentMember }: { items: ItemForTest[]
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
 
+      const children = items.filter(isChild(id));
+
+
+      if (item?.tags?.find(({ type }) => type === ItemTagType.PUBLIC)) {
+        return reply(children);
+      }
+
+      if (!checkMembership({ item, currentMember })) {
+        return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
+      }
+      return reply(children);
+    },
+  ).as('getChildren');
+};
+
+export const mockGetParents = ({ items, currentMember }: { items: ItemForTest[], currentMember: Member }): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      // TODO: use build url
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/parents`),
+    },
+    ({ url, reply }) => {
+      const id = url.slice(API_HOST.length).split('/')[2];
+      const item = getItemById(items, id);
+
       if (!checkMembership({ item, currentMember })) {
         return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
       }
 
-      const children = items.filter(isChild(id));
-      return reply(children);
+      // remove 36 from uuid and 1 for the dot
+      const parents = items.filter(i => item.path.includes(i.path) && i.path.length === item.path.length - 37);
+      return reply(parents);
     },
-  ).as('getChildren');
+  ).as('getParents');
 };
 
 export const mockMoveItems = (items: ItemForTest[], shouldThrowError: boolean): void => {
@@ -497,7 +538,8 @@ export const mockPostItemMembership = (items: ItemForTest[], shouldThrowError: b
   ).as('postItemMembership');
 };
 
-export const mockPostManyItemMemberships = (items: ItemForTest[], shouldThrowError: boolean): void => {
+export const mockPostManyItemMemberships = (args: { items: ItemForTest[], members: MemberForTest[] }, shouldThrowError: boolean): void => {
+  const { items, members } = args;
   cy.intercept(
     {
       method: DEFAULT_POST.method,
@@ -516,21 +558,29 @@ export const mockPostManyItemMemberships = (items: ItemForTest[], shouldThrowErr
 
       // return membership or error if membership
       // for member id already exists
-      return reply(
-        body.memberships.map((m) => {
-          const thisM = itemMemberships?.find(
-            ({ member }) => m.member.id === member.id,
-          );
-          if (thisM) {
-            return {
-              statusCode: StatusCodes.BAD_REQUEST,
-              message: 'membership already exists',
-              data: thisM,
-            };
-          }
-          return m;
-        }),
-      );
+      const result = { data: {}, errors: [] }
+
+      body.memberships.forEach((m) => {
+        const thisM = itemMemberships?.find(
+          ({ member }) => m.memberId === member.id,
+        );
+        if (thisM) {
+          result.errors.push({
+            statusCode: StatusCodes.BAD_REQUEST,
+            message: 'membership already exists',
+            data: thisM,
+          });
+        }
+        result.data[m.memberId] = {
+          permission: m.permission,
+          member: members?.find(
+            ({ id }) => m.memberId === id,
+          ), item: items?.find(
+            ({ path }) => m.itemPath === path,
+          )
+        }
+      })
+      return reply(result);
     },
   ).as('postManyItemMemberships');
 };
@@ -623,7 +673,7 @@ export const mockGetMembersBy = (members: Member[], shouldThrowError: boolean): 
         members
           .filter(({ email }) => email === mail)
           .forEach((m) => {
-            result.data[m.id] = m;
+            result.data[m.email] = m;
           });
       });
 
@@ -780,12 +830,36 @@ export const mockPostItemLogin = (items: ItemForTest[], shouldThrowError: boolea
   ).as('postItemLogin');
 };
 
+export const mockDeleteItemLoginSchemaRoute = (items: ItemForTest[]): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_DELETE.method,
+      // TODO: use build url
+      url: new RegExp(
+        `${API_HOST}/items/${ID_FORMAT}/login-schema$`,
+      ),
+    },
+    ({ reply, url, body }) => {
+
+      // check query match item login schema
+      const id = url.slice(API_HOST.length).split('/')[2];
+      const item = getItemById(items, id);
+
+      // TODO: item login is not in extra anymore
+      item.itemLoginSchema = null
+
+      reply(item);
+    },
+  ).as('deleteItemLoginSchema');
+};
+
 export const mockPutItemLoginSchema = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
       method: DEFAULT_PUT.method,
+      // TODO: use build url
       url: new RegExp(
-        `${API_HOST}/${buildPutItemLoginSchemaRoute(ID_FORMAT)}$`,
+        `${API_HOST}/items/${ID_FORMAT}/login-schema$`,
       ),
     },
     ({ reply, url, body }) => {
@@ -798,7 +872,7 @@ export const mockPutItemLoginSchema = (items: ItemForTest[], shouldThrowError: b
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
 
-      // todo: is it intentionnal to erase any extras present before ?
+      // TODO: item login is not in extra anymore
       item.extra = buildItemLoginSchemaExtra(body.loginSchema);
 
       reply(item);
@@ -817,7 +891,7 @@ export const mockGetItemLogin = (items: ItemForTest[]): void => {
       const item = items.find(({ id }) => itemId === id);
       reply({
         body: item?.itemLoginSchema?.[0] ?? {},
-        status: StatusCodes.OK,
+        statusCode: StatusCodes.OK,
       });
     },
   ).as('getItemLogin');
@@ -835,15 +909,15 @@ export const mockGetItemLoginSchema = (items: ItemForTest[]): void => {
     ({ reply, url }) => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
-      const schema = item?.itemLoginSchema?.[0];
+      const schema = item?.itemLoginSchema
       if (!schema) {
         return reply({
-          status: StatusCodes.NOT_FOUND,
+          statusCode: StatusCodes.NOT_FOUND,
         });
       }
       return reply({
         body: schema,
-        status: StatusCodes.OK,
+        statusCode: StatusCodes.OK,
       });
     },
   ).as('getItemLoginSchema');
@@ -861,16 +935,16 @@ export const mockGetItemLoginSchemaType = (items: ItemForTest[]): void => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
 
-      const type = item?.itemLoginSchema?.[0]?.type;
+      const type = item?.itemLoginSchema?.type;
       if (!type) {
         return reply({
-          status: StatusCodes.NOT_FOUND,
+          statusCode: StatusCodes.NOT_FOUND,
         });
       }
 
       return reply({
         body: type,
-        status: StatusCodes.OK,
+        statusCode: StatusCodes.OK,
       });
     },
   ).as('getItemLoginSchemaType');
@@ -935,7 +1009,7 @@ export const mockEditItemMembershipForItem = (): void => {
     },
     ({ reply }) => {
       // this mock intercept does nothing
-      reply(1);
+      reply('true');
     },
   ).as('editItemMembership');
 };
@@ -950,7 +1024,7 @@ export const mockDeleteItemMembershipForItem = (): void => {
     },
     ({ reply }) => {
       // this mock intercept does nothing
-      reply(1);
+      reply('true');
     },
   ).as('deleteItemMembership');
 };
@@ -984,22 +1058,22 @@ export const mockPostItemTag = (items: ItemForTest[], currentMember: Member, sho
           return;
         }
         const itemId = url.slice(API_HOST.length).split('/')[2];
+        const tagType = url.slice(API_HOST.length).split('/')[4] as ItemTagType;
         const item = items.find(({ id }) => itemId === id);
 
-        // if (!item?.tags) {
-        //   item.tags = [];
-        // }
-        // item.tags.push({
-        //   id: v4(),
-        //   // dynamic ???
-        //   type: ItemTagType.HIDDEN,
-        //   item,
-        //   createdAt: new Date(),
-        //   creator: currentMember
-        // });
+        if (!item?.tags) {
+          item.tags = [];
+        }
+        item.tags.push({
+          id: v4(),
+          type: tagType,
+          // avoid circular dependency
+          item: { id: item.id, path: item.path, } as Item,
+          createdAt: new Date(),
+          creator: currentMember
+        });
         reply(body);
       },
-      // TODO
     ).as(`postItemTag-${type}`);
   })
 };
@@ -1287,7 +1361,7 @@ export const mockGetItemThumbnailUrl = (items: ItemForTest[], shouldThrowError: 
       }
 
       const [link, querystrings] = url.split('?');
-      const id = link.slice(API_HOST.length).split('/')[3];
+      const id = link.slice(API_HOST.length).split('/')[2];
       const { size } = qs.parse(querystrings);
 
       const thumbnails = items.find(
@@ -1463,7 +1537,7 @@ export const mockPostItemValidation = (): void => {
   cy.intercept(
     {
       method: DEFAULT_POST.method,
-      url: new RegExp(`${API_HOST}/items/validations/${ID_FORMAT}`),
+      url: new RegExp(`${API_HOST}/${buildPostItemValidationRoute(ID_FORMAT)}`),
     },
     ({ reply, body }) => {
       reply(body);
@@ -1485,19 +1559,20 @@ export const mockPostInvitations = (items: ItemForTest[], shouldThrowError: bool
       const itemId = url.split('/')[4];
       const invitations = items.find(({ id }) => id === itemId)?.invitations;
 
-      return reply(
-        body.invitations.map((inv) => {
-          const thisInv = invitations?.find(({ email }) => email === inv.email);
-          if (thisInv) {
-            return {
-              statusCode: StatusCodes.BAD_REQUEST,
-              message: 'An invitation already exists for this email',
-              data: inv,
-            };
-          }
-          return buildInvitation(inv);
-        }),
-      );
+      const result = { data: {}, errors: [] }
+      body.invitations.forEach((inv) => {
+        const thisInv = invitations?.find(({ email }) => email === inv.email);
+        if (thisInv) {
+          result.errors.push({
+            statusCode: StatusCodes.BAD_REQUEST,
+            message: 'An invitation already exists for this email',
+            data: inv,
+          });
+        } else {
+          result.data[inv.email] = buildInvitation(inv);
+        }
+      })
+      return reply(result);
     },
   ).as('postInvitations');
 };
@@ -1602,7 +1677,7 @@ export const mockDeleteInvitation = (items: ItemForTest[], shouldThrowError: boo
 export const mockPublishItem = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: DEFAULT_POST.method,
       url: new RegExp(`${API_HOST}/${buildItemPublishRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
@@ -1610,6 +1685,60 @@ export const mockPublishItem = (items: ItemForTest[]): void => {
       reply(items.find((item) => item?.id === itemId));
     },
   ).as('publishItem');
+};
+
+export const mockUnpublishItem = (items: ItemForTest[]): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_POST.method,
+      url: new RegExp(`${API_HOST}/${buildItemUnpublishRoute(ID_FORMAT)}`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[3];
+      reply(items.find((item) => item?.id === itemId));
+    },
+  ).as('unpublishItem');
+};
+
+export const mockGetPublishItemInformations = (items: ItemForTest[]): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetItemPublishedInformationRoute(ID_FORMAT)}`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[3];
+      const item = items.find((i) => i?.id === itemId)
+      if (!item?.published) {
+        return reply({ statusCode: StatusCodes.NOT_FOUND })
+      }
+      return reply({ item });
+    },
+  ).as('getPublishItemInformations');
+};
+
+
+export const mockGetLatestValidationGroup = (items: ItemForTest[], itemValidationGroups: ItemValidationGroup[]): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/${buildGetLastItemValidationGroupRoute(ID_FORMAT)}`),
+    },
+    ({ reply, url }) => {
+      const itemId = url.slice(API_HOST.length).split('/')[2];
+
+      const validationGroup = itemValidationGroups?.find(ivg => ivg.item.id === itemId)
+
+      if (!validationGroup) {
+        return reply({ statusCode: StatusCodes.NOT_FOUND });
+      }
+      // TODO: should be dynamic and include failure
+      // const validationGroup: ItemValidationGroup = { id: v4(), item, createdAt: new Date(), itemValidations: [{ item, status: ItemValidationStatus.Success, id: v4(), process: ItemValidationProcess.BadWordsDetection, result: '', createdAt: new Date(), updatedAt: new Date() }] as ItemValidation[] }
+      // TODO: get latest
+
+      return reply(validationGroup);
+    },
+  ).as('getLatestValidationGroup');
 };
 
 export const mockUpdatePassword = (members: Member[], shouldThrowError: boolean): void => {

@@ -11,7 +11,7 @@ import {
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
-import { VALIDATED_ITEM } from '../../../fixtures/validations';
+import { VALIDATED_ITEM, VALIDATED_ITEM_CONTEXT } from '../../../fixtures/validations';
 
 const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
@@ -57,21 +57,21 @@ describe('Published Item', () => {
   });
   it('Unpublish item', () => {
     cy.get(`#${ITEM_UNPUBLISH_BUTTON_ID}`).click();
-    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
+    cy.wait('@unpublishItem').then(({ request: { url } }) => {
       // should contain published tag id
-      expect(url).to.contain(item.tags[1].id);
+      expect(url).to.contain(item.id);
     });
   });
 });
 
 describe('Validated Item', () => {
   it('Publish item', () => {
-    cy.setUpApi({ items: [VALIDATED_ITEM] });
+    cy.setUpApi(VALIDATED_ITEM_CONTEXT);
     const item = VALIDATED_ITEM;
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
 
-    // click validate item button
+    // click publish item button
     cy.get(`#${ITEM_PUBLISH_BUTTON_ID}`).click();
 
     cy.wait('@publishItem').then((data) => {
@@ -84,7 +84,7 @@ describe('Validated Item', () => {
   });
 
   it('Publish item with notification', () => {
-    cy.setUpApi({ items: [VALIDATED_ITEM] });
+    cy.setUpApi(VALIDATED_ITEM_CONTEXT);
     const item = VALIDATED_ITEM;
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);

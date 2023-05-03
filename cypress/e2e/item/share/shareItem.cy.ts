@@ -25,6 +25,7 @@ const openShareItemTab = (id) => {
 // eslint-disable-next-line import/prefer-default-export
 export const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
+  cy.wait(1000)
   cy.get(`li[data-value="${value}"]`).click();
 };
 
@@ -56,14 +57,13 @@ describe('Share Item', () => {
 
     // change private -> public
     changeVisibility(SETTINGS.ITEM_PUBLIC.name);
-    cy.wait('@postItemTag').then(({ request: { body } }) => {
-      expect(body?.itemPath).to.equal(item.path);
-      expect(body?.type).to.equal(ItemTagType.PUBLIC);
+    cy.wait(`@postItemTag-${ItemTagType.PUBLIC}`).then(({ request: { url } }) => {
+      expect(url).to.contain(item.id);
     });
 
     // change public -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait('@deleteItemTag').then(() => {
+    cy.wait(`@deleteItemTag-${ItemTagType.PUBLIC}`).then(() => {
       // we cannot test the select value since the database is not updated
       // eslint-disable-next-line no-unused-expressions
       cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).should('be.visible');
@@ -86,21 +86,18 @@ describe('Share Item', () => {
 
     // change public -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
-      expect(url).to.contain(item.tags[0].id);
+    cy.wait(`@deleteItemTag-${ItemTagType.PUBLIC}`).then(({ request: { url } }) => {
+      expect(url).to.contain(item.id);
     });
     // change public -> item login
+    cy.wait(1000)
     changeVisibility(SETTINGS.ITEM_LOGIN.name);
-    cy.wait(['@deleteItemTag', '@postItemTag']).then((data) => {
+    cy.wait([`@deleteItemTag-${ItemTagType.PUBLIC}`, '@putItemLoginSchema']).then((data) => {
       const {
         request: { url },
       } = data[0];
-      expect(url).to.contain(item.tags[0].id);
-
-      const {
-        request: { body },
-      } = data[1];
-      expect(body?.type).to.equal(ItemTagType.PUBLIC); // originally item login
+      expect(url).to.contain(item.id);
+      expect(url).to.contain(ItemTagType.PUBLIC); // originally item login
     });
   });
 
@@ -126,8 +123,8 @@ describe('Share Item', () => {
 
     // change pseudonymized -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
-      expect(url).to.include(item.tags[0].id);
+    cy.wait(`@deleteItemLoginSchema`).then(({ request: { url } }) => {
+      expect(url).to.include(item.id);
     });
   });
 });

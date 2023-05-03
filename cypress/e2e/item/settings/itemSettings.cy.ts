@@ -30,6 +30,7 @@ describe('Item Settings', () => {
         ITEM_WITH_CHATBOX_MESSAGES,
         ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN,
       ],
+
     });
   });
 

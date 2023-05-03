@@ -493,6 +493,15 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
     },
     {
       ...samplePublicItems[2],
+      tags: [
+        {
+          id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+          type: ItemTagType.PUBLIC,
+          item: samplePublicItems[0],
+          creator: MEMBERS.ANNA,
+          createdAt: new Date(),
+        },
+      ],
       memberships: [
         {
           item: samplePublicItems[2],

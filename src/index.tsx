@@ -11,7 +11,6 @@ import '@graasp/ui/dist/bundle.css';
 import pkg from '../package.json';
 import Root from './components/Root';
 import {
-  API_HOST,
   APP_VERSION,
   ENV,
   GA_MEASUREMENT_ID,
@@ -37,16 +36,16 @@ const renderApp = () => {
 
 renderApp();
 
-// if (SENTRY_DSN) {
-//   Sentry.init({
-//     dsn: SENTRY_DSN,
-//     integrations: [new BrowserTracing()],
-//     environment: SENTRY_ENVIRONMENT,
-//     release: `${pkg.name}@v${APP_VERSION}`,
+if (SENTRY_DSN) {
+  Sentry.init({
+    dsn: SENTRY_DSN,
+    integrations: [new BrowserTracing()],
+    environment: SENTRY_ENVIRONMENT,
+    release: `${pkg.name}@v${APP_VERSION}`,
 
-//     // Set tracesSampleRate to 1.0 to capture 100%
-//     // of transactions for performance monitoring.
-//     // We recommend adjusting this value in production
-//     tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
-//   });
-// }
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
+  });
+}

@@ -48,7 +48,6 @@ type Props = {
   permission?: PermissionLevel;
 };
 
-// https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
 // eslint-disable-next-line no-shadow
 const enum PublishFlow {
   SET_ITEM_VISIBILITY_PUBLIC_STEP,
@@ -85,30 +84,21 @@ const ItemPublishTab: FC<Props> = ({
   // item validation
   const { mutate: validateItem } = usePostItemValidation();
 
-  // get item validation data
-  // const { data: itemValidationData, isLoading } = useItemValidationAndReview(
-  //   item?.id,
-  // );
-  // console.log('itemValidationData', itemValidationData);
-  // todo: fix with query client
-  // const itemValidationDataTyped = itemValidationData as any;
-  // // check if validation is still valid
-  // const iVId =
-  //   new Date(itemValidationDataTyped?.createdAt) >=
-  //   new Date(item?.updatedAt as unknown as string)
-  //     ? itemValidationDataTyped?.itemValidationId
-  //     : null;
-  // console.log('iVId', iVId);
-  // get item validation data
   const { data: lastItemValidationGroup } = useLastItemValidationGroup(
     item?.id,
   );
 
   useEffect(() => {
-    // TODO check if validation is still valid
-    const mapByStatus = (
-      lastItemValidationGroup as any
-    )?.itemValidations?.groupBy(({ status }) => status);
+    // check if validation is still valid
+    const isOutdated = lastItemValidationGroup?.createdAt <= item?.updatedAt;
+    // QUESTION: should this be null instead?
+    if (isOutdated) {
+      setValidationStatus(ItemValidationStatus.Failure);
+    }
+
+    const mapByStatus = lastItemValidationGroup?.itemValidations?.groupBy(
+      ({ status }) => status,
+    );
     let status;
     if (mapByStatus?.get(ItemValidationStatus.Failure)) {
       status = ItemValidationStatus.Failure;

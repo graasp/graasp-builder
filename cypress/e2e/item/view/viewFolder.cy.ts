@@ -44,7 +44,7 @@ describe('View Folder', () => {
           VIDEO_ITEM_S3,
         ],
       });
-      i18n.changeLanguage(CURRENT_USER.extra.lang);
+      i18n.changeLanguage(CURRENT_USER.extra.lang as string);
     });
 
     it('visit Home', () => {
@@ -251,78 +251,76 @@ describe('View Folder', () => {
 
 
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-    }
 
       // should get own items
       cy.wait('@getOwnItems').then(({ response: { body } }) => {
-      // check item is created and displayed
-      for (const item of body) {
-        cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-      }
+        // check item is created and displayed
+        for (const item of body) {
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+        }
+      });
+
+      // visit child
+      const { id: childId } = SAMPLE_ITEMS.items[0];
+      cy.goToItemInList(childId);
+
+      // should get children
+      cy.wait('@getChildren').then(({ response: { body } }) => {
+        // check item is created and displayed
+        for (const item of body) {
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+        }
+      });
+
+      // visit child
+      const { id: childChildId } = SAMPLE_ITEMS.items[2];
+      cy.goToItemInList(childChildId);
+
+      // expect no children
+      cy.get(ITEMS_TABLE_ROW).should('not.exist');
+
+      // return parent with navigation and should display children
+      cy.goToItemWithNavigation(childId);
+      // should get children
+      cy.wait('@getChildren').then(({ response: { body } }) => {
+        // check item is created and displayed
+        for (const item of body) {
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+        }
+      });
     });
 
-    // visit child
-    const { id: childId } = SAMPLE_ITEMS.items[0];
-    cy.goToItemInList(childId);
-
-    // should get children
-    cy.wait('@getChildren').then(({ response: { body } }) => {
-      // check item is created and displayed
-      for (const item of body) {
-        cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-      }
-    });
-
-    // visit child
-    const { id: childChildId } = SAMPLE_ITEMS.items[2];
-    cy.goToItemInList(childChildId);
-
-    // expect no children
-    cy.get(ITEMS_TABLE_ROW).should('not.exist');
-
-    // return parent with navigation and should display children
-    cy.goToItemWithNavigation(childId);
-    // should get children
-    cy.wait('@getChildren').then(({ response: { body } }) => {
-      // check item is created and displayed
-      for (const item of body) {
-        cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-      }
-    });
-  });
-
-  it('visit folder by id', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
-    cy.visit(buildItemPath(id));
+    it('visit folder by id', () => {
+      cy.setUpApi(SAMPLE_ITEMS);
+      const { id } = SAMPLE_ITEMS.items[0];
+      cy.visit(buildItemPath(id));
 
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-  }
+      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // should get current item
       cy.wait('@getItem');
 
-  expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
+      expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
 
-  // should get children
-  cy.wait('@getChildren').then(({ response: { body } }) => {
-    // check item is created and displayed
-    for (const item of body) {
-      cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-    }
-  });
+      // should get children
+      cy.wait('@getChildren').then(({ response: { body } }) => {
+        // check item is created and displayed
+        for (const item of body) {
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+        }
+      });
 
-  // visit home
-  cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
+      // visit home
+      cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
 
-  // should get own items
-  cy.wait('@getOwnItems').then(({ response: { body } }) => {
-    // check item is created and displayed
-    for (const item of body) {
-      cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-    }
-  });
-});
+      // should get own items
+      cy.wait('@getOwnItems').then(({ response: { body } }) => {
+        // check item is created and displayed
+        for (const item of body) {
+          cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+        }
+      });
+    });
   });
 });

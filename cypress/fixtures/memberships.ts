@@ -1,8 +1,20 @@
-import { Item, PermissionLevel } from '@graasp/sdk';
+import { Item, ItemMembership, Member, PermissionLevel } from '@graasp/sdk';
+import { v4 } from 'uuid';
 
 import { DEFAULT_FOLDER_ITEM, } from './items';
 import { MEMBERS } from './members';
 import { ApiConfig } from '../support/types';
+
+export const buildItemMembership = (args: { permission?: PermissionLevel, item: Item, member: Member, creator?: Member }): ItemMembership => ({
+  permission: args.permission ?? PermissionLevel.Admin,
+  member: args.member,
+  item: args.item,
+  creator: args.creator ?? args.member,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  id: v4()
+
+})
 
 const sampleItems: Item[] = [{
   ...DEFAULT_FOLDER_ITEM,
@@ -83,7 +95,7 @@ export const ITEMS_WITH_MEMBERSHIPS: ApiConfig = {
         },
         {
           id: 'ecafbd2a-5688-11eb-be92-0242ac130002',
-          item: sampleItems[1],
+          item: sampleItems[0],
           permission: PermissionLevel.Write,
           member: MEMBERS.BOB,
           creator: MEMBERS.ANNA,

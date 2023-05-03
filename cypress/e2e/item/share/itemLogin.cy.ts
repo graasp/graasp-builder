@@ -15,7 +15,6 @@ import {
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   buildShareButtonId,
 } from '../../../../src/config/selectors';
-import { getItemLoginExtra } from '../../../../src/utils/itemExtra';
 import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
@@ -69,7 +68,7 @@ const editItemLoginSetting = (mode) => {
   cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}`).click();
   cy.get(`li[data-value="${mode}"]`).click();
   cy.wait('@putItemLoginSchema').then(({ request: { body } }) => {
-    expect(body?.loginSchema).to.equal(
+    expect(body?.type).to.equal(
       SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,
     );
   });

@@ -1,4 +1,4 @@
-import Papa from 'papaparse';
+import * as Papa from 'papaparse';
 
 import PublishIcon from '@mui/icons-material/Publish';
 import Alert from '@mui/material/Alert';
@@ -105,12 +105,14 @@ const CsvInputParser: FC<Props> = ({ item }) => {
       return null;
     }
 
+    console.log('results', results.toJS());
+
     // show generic network/axios errors
-    const genericErrors: Error[] = results?.failure?.filter(
+    const genericErrors: Error[] = results?.errors?.filter(
       (e: { code?: string; message?: string; data?: unknown }) =>
         e?.code && e?.message && !e?.data,
     );
-    if (genericErrors?.length) {
+    if (genericErrors?.size) {
       return genericErrors.map((err) => (
         <Alert key={err.message} severity="error">
           {translateBuilder(err.message)}
@@ -121,10 +123,10 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     // does not show errors if results is not defined
     // or if there is no failure with meaningful data
     // this won't show membership already exists error
-    const failureToShow = results.failure.filter(
+    const failureToShow = results.errors.filter(
       (e) => e?.data?.email || e?.data?.name,
     );
-    if (!failureToShow.length && isSuccess) {
+    if (!failureToShow.size && isSuccess) {
       return (
         <Alert severity="success">
           {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_SUCCESS_MESSAGE)}

@@ -1,8 +1,8 @@
 import { FlagType } from '@graasp/sdk';
+import { namespaces } from '@graasp/translations';
 
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
-  FLAG_ITEM_BUTTON_ID,
   ITEM_MENU_FLAG_BUTTON_CLASS,
   buildFlagListItemId,
   buildItemMenu,
@@ -10,6 +10,8 @@ import {
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
+import { CURRENT_USER } from '../../../fixtures/members';
+import i18n from '../../../../src/config/i18n';
 
 const openFlagItemModal = (itemId) => {
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
@@ -30,7 +32,9 @@ const flagItem = (itemId, type) => {
 
   flagListItem.click();
 
-  const flagItemButton = cy.get(`#${FLAG_ITEM_BUTTON_ID}`);
+  i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+  const text = i18n.t('Flag', { ns: namespaces.builder })
+  const flagItemButton = cy.get(`button:contains("${text}")`);
 
   flagItemButton.click();
 };

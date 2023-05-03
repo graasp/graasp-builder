@@ -32,7 +32,7 @@ describe('View Thumbnails', () => {
 
     cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
-      .and('contain', 'blob:');
+      .and('contain', items[1].thumbnails);
   });
 
   it(`display member avatar`, () => {
@@ -48,7 +48,7 @@ describe('View Thumbnails', () => {
     // display member avatar in header
     cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID} img`)
       .should('have.attr', 'src')
-      .and('contain', 'blob:');
+      .and('contain', MEMBERS.BOB.thumbnails);
 
     cy.visit(SHARED_ITEMS_PATH);
 
@@ -56,6 +56,6 @@ describe('View Thumbnails', () => {
     cy.switchMode(ITEM_LAYOUT_MODES.GRID);
     cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
-      .and('contain', 'blob:');
+      .and('contain', MEMBERS.BOB.thumbnails);
   });
 });

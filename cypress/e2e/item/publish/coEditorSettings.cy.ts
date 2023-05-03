@@ -6,12 +6,10 @@ import { buildItemPath } from '../../../../src/config/paths';
 import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
   ITEM_HEADER_ID,
-  ITEM_VALIDATION_BUTTON_ID,
-  ITEM_VALIDATION_REFRESH_BUTTON_ID,
   buildCoEditorSettingsRadioButtonId,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_WITH_CATEGORIES } from '../../../fixtures/categories';
+import { ITEM_WITH_CATEGORIES_CONTEXT } from '../../../fixtures/categories';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
@@ -21,16 +19,16 @@ const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 
-const visitItemPage = (item) => {
-  cy.setUpApi({ items: [item] });
+const visitItemPage = () => {
+  cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
+  const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0]
   cy.visit(buildItemPath(item.id));
   openPublishItemTab(item.id);
 };
 
 describe('Co-editor Setting', () => {
   it('Display choices', () => {
-    const item = ITEM_WITH_CATEGORIES;
-    visitItemPage(item);
+    visitItemPage();
 
     Object.values(DISPLAY_CO_EDITORS_OPTIONS).forEach((option) => {
       const displayTags = cy.get(
@@ -41,15 +39,13 @@ describe('Co-editor Setting', () => {
   });
 
   it('Change choice', () => {
-    const item = ITEM_WITH_CATEGORIES;
-    visitItemPage(item);
+    visitItemPage();
+    const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0]
 
     const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
 
     changeVisibility(SETTINGS.ITEM_PUBLIC.name);
-    cy.get(`#${ITEM_VALIDATION_BUTTON_ID}`).click();
-    cy.get(`#${ITEM_VALIDATION_REFRESH_BUTTON_ID}`).click();
-    cy.wait('@getItemValidationAndReview').then(() => {
+    cy.wait('@getLatestValidationGroup').then(() => {
       cy.get(`#${buildCoEditorSettingsRadioButtonId(newOptionValue)}`).click();
     });
 

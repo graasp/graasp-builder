@@ -79,11 +79,11 @@ import {
   mockPublishItem,
   mockPutItemLoginSchema,
   mockRecycleItems,
-  mockRestoreItems,
+  mockRestoreItems, mockUnpublishItem,
   mockSignInRedirection,
-  mockSignOut,
-  mockUpdatePassword, mockGetItemThumbnailUrl,
-  mockUploadItem, mockGetItemLoginSchemaType
+  mockSignOut, mockGetPublishItemInformations,
+  mockUpdatePassword, mockGetItemThumbnailUrl, mockGetLatestValidationGroup,
+  mockUploadItem, mockGetItemLoginSchemaType, mockGetParents, mockGetItemLoginSchema, mockDeleteItemLoginSchemaRoute
 } from './server';
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import ITEM_LAYOUT_MODES from '../../src/enums/itemLayoutModes';
@@ -148,8 +148,9 @@ Cypress.Commands.add(
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
     const allItems = [...cachedItems];
-
-    cy.setCookie(COOKIE_KEYS.SESSION_KEY, currentMember ? 'somecookie' : null);
+    if (currentMember) {
+      cy.setCookie(COOKIE_KEYS.SESSION_KEY, 'somecookie');
+    }
     cy.setCookie(
       COOKIE_KEYS.STORED_SESSIONS_KEY,
       JSON.stringify(storedSessions),
@@ -172,7 +173,7 @@ Cypress.Commands.add(
       { items: cachedItems, currentMember },
       getItemError || getCurrentMemberError,
     );
-
+    mockGetParents({ items, currentMember })
     mockGetChildren({ items: cachedItems, currentMember });
 
     mockMoveItems(cachedItems, moveItemsError);
@@ -182,7 +183,7 @@ Cypress.Commands.add(
     mockEditItem(cachedItems, editItemError);
 
     mockPostItemMembership(cachedItems, shareItemError);
-    mockPostManyItemMemberships(cachedItems, shareItemError);
+    mockPostManyItemMemberships({ items: cachedItems, members }, shareItemError);
 
     mockGetMember(cachedMembers);
 
@@ -201,6 +202,8 @@ Cypress.Commands.add(
     mockSignOut();
 
     // mockGetItemLogin(items);
+
+    mockGetItemLoginSchema(items)
 
     mockGetItemLoginSchemaType(items)
 
@@ -288,8 +291,15 @@ Cypress.Commands.add(
     mockDeleteInvitation(items, deleteInvitationError);
 
     mockPublishItem(items);
+    mockUnpublishItem(items);
+
+    mockGetPublishItemInformations(items)
+
+    mockGetLatestValidationGroup(items, itemValidationGroups)
 
     mockUpdatePassword(members, updatePasswordError);
+
+    mockDeleteItemLoginSchemaRoute(items)
   },
 );
 
