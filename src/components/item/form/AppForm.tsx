@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { FC, HTMLAttributes, useState } from 'react';
 
-import { App, DiscriminatedItem, UnknownExtra, getAppExtra } from '@graasp/sdk';
+import { App, Item, UnknownExtra, getAppExtra } from '@graasp/sdk';
 import { AppItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
@@ -21,9 +21,9 @@ import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
 
 type Props = {
-  onChange: (item: Partial<DiscriminatedItem<UnknownExtra>>) => void;
+  onChange: (item: Partial<Item<UnknownExtra>>) => void;
   item?: AppItemTypeRecord;
-  updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
+  updatedProperties: Partial<Item<UnknownExtra>>;
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
@@ -38,7 +38,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
     const props = {
       ...item,
       extra: buildAppExtra({ url }),
-    } as unknown as DiscriminatedItem<UnknownExtra>;
+    } as unknown as Item<UnknownExtra>;
     if (name) {
       setNewName(name);
       props.name = name;
@@ -51,7 +51,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
     const props = {
       ...item,
       extra: buildAppExtra({ url }),
-    } as unknown as DiscriminatedItem<UnknownExtra>;
+    } as unknown as Item<UnknownExtra>;
     onChange(props);
   };
 
@@ -59,6 +59,9 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const { data, isLoading: isAppsLoading } = useApps();
 
   const url = getAppExtra(item?.extra)?.url;
+
+  // todo: fix type -> we will change the interface
+  const value = data.find((app) => app.url === url) || (url as any);
 
   return (
     <div>
@@ -89,7 +92,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
             );
             return filteredOptionsByName;
           }}
-          value={data.find((app) => app.url === url) || url}
+          value={value}
           clearOnBlur={false}
           onChange={handleAppSelection}
           onInputChange={handleAppInput}

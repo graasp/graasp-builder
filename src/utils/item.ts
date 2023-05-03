@@ -4,7 +4,7 @@ import { List } from 'immutable';
 import { useEffect, useState } from 'react';
 
 import {
-  DiscriminatedItem,
+  Item,
   FolderItemExtra,
   Invitation,
   ItemMembership,
@@ -54,9 +54,9 @@ export const buildPath = ({
 }): string => `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
 
 export const getItemById = (
-  items: DiscriminatedItem[],
+  items: Item[],
   id: string,
-): DiscriminatedItem | undefined =>
+): Item | undefined =>
   items.find(({ id: thisId }) => id === thisId);
 
 export const getDirectParentId = (path: string): string | null => {
@@ -76,9 +76,9 @@ export const isChild = (
 };
 
 export const getChildren = (
-  items: DiscriminatedItem[],
+  items: Item[],
   id: string,
-): DiscriminatedItem[] => items.filter(isChild(id));
+): Item[] => items.filter(isChild(id));
 
 export const isRootItem = ({ path }: { path: string }): boolean =>
   path.length === UUID_LENGTH;
@@ -86,17 +86,17 @@ export const isRootItem = ({ path }: { path: string }): boolean =>
 export const isUrlValid = (str: string): boolean => {
   const pattern = new RegExp(
     '^(https?:\\/\\/)+' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
   return Boolean(str) && pattern.test(str);
 };
 
-export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
+export const isItemValid = (item: Partial<Item>): boolean => {
   if (!item) {
     return false;
   }
@@ -153,8 +153,8 @@ export const useIsParentInstance = ({
   item,
 }: {
   instance:
-    | Pick<Partial<Invitation>, 'item'>
-    | Pick<Partial<ItemMembership>, 'item'>;
+  | Pick<Partial<Invitation>, 'item'>
+  | Pick<Partial<ItemMembership>, 'item'>;
   item: ItemRecord;
 }): boolean => {
   const [isParentMembership, setIsParentMembership] = useState(false);

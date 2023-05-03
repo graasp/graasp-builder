@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { FC, useContext, useState } from 'react';
 
-import { DiscriminatedItem, convertJs } from '@graasp/sdk';
+import { Item, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton } from '@graasp/ui';
 
@@ -32,7 +32,7 @@ import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: Item;
   canEdit?: boolean;
 };
 

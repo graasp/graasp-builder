@@ -1,6 +1,6 @@
 import { FC, createContext, useMemo, useState } from 'react';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { Item, ItemType, ShortcutItemType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -10,7 +10,7 @@ import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal from '../main/TreeModal';
 
 const CreateShortcutModalContext = createContext({
-  openModal: (_newItem: DiscriminatedItem) => {
+  openModal: (_newItem: Item) => {
     // do nothing
   },
 });
@@ -23,9 +23,9 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: createShortcut } = mutations.usePostItem();
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState<DiscriminatedItem>();
+  const [item, setItem] = useState<Item>();
 
-  const openModal = (newItem: DiscriminatedItem) => {
+  const openModal = (newItem: Item) => {
     setOpen(true);
     setItem(newItem);
   };
@@ -36,7 +36,10 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
   };
 
   const onConfirm = ({ ids: [target], to }: { ids: string[]; to: string }) => {
-    const shortcut = {
+    const shortcut: Partial<ShortcutItemType> &
+      Pick<Item, 'name' | 'type'> & {
+        parentId?: string;
+      } = {
       name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {
         name: item.name,
       }),

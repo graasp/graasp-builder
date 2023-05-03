@@ -41,7 +41,8 @@ const ItemForbiddenScreen: FC = () => {
         height="90%"
       >
         <Grid item>
-          <ForbiddenContent signOut={signOut} user={member} />
+          {/* // TODO: remove hook from prop */}
+          <ForbiddenContent signOut={signOut as any} user={member} />
           <UserSwitchWrapper ButtonContent={ButtonContent} />
         </Grid>
       </Grid>

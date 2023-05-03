@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButtonVariant, PinButton as GraaspPinButton } from '@graasp/ui';
 
@@ -10,7 +10,7 @@ import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
   type?: ActionButtonVariant;
-  item: DiscriminatedItem;
+  item: Item;
   onClick?: () => void;
 };
 

@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid';
 import { FC, useState } from 'react';
 
 import { Invitation, PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
@@ -96,7 +96,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     if (isError) {
       return (
         <Alert id={SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID} severity="error">
-          {translateBuilder(error)}
+          {translateBuilder(error as string)}
         </Alert>
       );
     }
@@ -106,7 +106,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     }
 
     // show generic network/axios errors
-    const genericErrors: Error[] = results?.errors?.filter(
+    const genericErrors: ImmutableCast<Error[]> = results?.errors?.filter(
       (e: { code?: string; message?: string; data?: unknown }) =>
         e?.code && e?.message && !e?.data,
     );
@@ -121,8 +121,9 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     // does not show errors if results is not defined
     // or if there is no failure with meaningful data
     // this won't show membership already exists error
+    // todo: fix type
     const failureToShow = results.errors.filter(
-      (e) => e?.data?.email || e?.data?.name,
+      (e: any) => e?.data && (e?.data?.email || e?.data?.name),
     );
     if (!failureToShow.size && isSuccess) {
       return (
@@ -138,7 +139,8 @@ const CsvInputParser: FC<Props> = ({ item }) => {
           {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_ERROR_MESSAGE)}
         </AlertTitle>
         <Grid container>
-          {failureToShow.map((e) => (
+          {/* todo: fix type */}
+          {failureToShow.map((e: any) => (
             <Grid container key={e}>
               <Grid item xs={4}>
                 {e?.data?.email ?? e?.data?.name}

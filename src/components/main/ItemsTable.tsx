@@ -5,7 +5,7 @@ import { FC, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import {
-  DiscriminatedItem,
+  Item,
   ItemMembership,
   ItemType,
   getFolderExtra,
@@ -78,7 +78,7 @@ const ItemsTable: FC<Props> = ({
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
 
-  const mutation = mutations.useEditItem();
+  const { mutate: editItem } = mutations.useEditItem();
 
   const isFolder = useCallback(() => Boolean(itemId), [itemId]);
   const canDrag = useCallback(
@@ -86,16 +86,10 @@ const ItemsTable: FC<Props> = ({
     [isFolder, isSearching],
   );
 
-  const getRowNodeId = ({ data }: { data: DiscriminatedItem }) =>
+  const getRowNodeId = ({ data }: { data: Item }) =>
     buildItemsTableRowId(data.id);
 
-  const onCellClicked = ({
-    column,
-    data,
-  }: {
-    column: Column;
-    data: DiscriminatedItem;
-  }) => {
+  const onCellClicked = ({ column, data }: { column: Column; data: Item }) => {
     if (column.getColId() !== 'actions') {
       let targetId = data.id;
 
@@ -119,13 +113,13 @@ const ItemsTable: FC<Props> = ({
     return true;
   };
 
-  const onDragEnd = (displayRows: { data: DiscriminatedItem }[]) => {
+  const onDragEnd = (displayRows: { data: Item }[]) => {
     if (!itemId) {
       console.error('no item id defined');
     } else {
       const rowIds = displayRows.map((r) => r.data.id);
       if (canDrag() && hasOrderChanged(rowIds)) {
-        mutation.mutate({
+        editItem({
           id: itemId,
           extra: {
             folder: {
@@ -137,7 +131,7 @@ const ItemsTable: FC<Props> = ({
     }
   };
 
-  const dateColumnFormatter = ({ value }: { value: string }) =>
+  const dateColumnFormatter = ({ value }: { value: Date }) =>
     formatDate(value, {
       locale: i18n.language,
       defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
@@ -170,8 +164,7 @@ const ItemsTable: FC<Props> = ({
         field: 'type',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
         type: 'rightAligned',
-        cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
-          translateEnums(data.type),
+        cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
         flex: 2,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.type,
@@ -245,7 +238,7 @@ const ItemsTable: FC<Props> = ({
         id={tableId}
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
-        rowData={rows.toJS() as DiscriminatedItem[]}
+        rowData={rows.toJS() as Item[]}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
         onCellClicked={onCellClicked}

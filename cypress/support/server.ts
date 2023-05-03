@@ -3,7 +3,7 @@ import * as qs from 'qs';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { API_ROUTES } from '@graasp/query-client';
-import { App, Category, ChatMention, Item, ItemTagType, ItemValidation, ItemValidationGroup, ItemValidationProcess, ItemValidationReview, ItemValidationStatus, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
+import { App, Category, ChatMention, Item, ItemTagType, ItemValidationGroup, ItemValidationProcess, ItemValidationReview, ItemValidationStatus, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import {
@@ -23,9 +23,6 @@ import {
   isRootItem,
   transformIdForPath,
 } from '../../src/utils/item';
-import {
-  buildItemLoginSchemaExtra,
-} from '../../src/utils/itemExtra';
 import { getMemberById } from '../../src/utils/member';
 import {
   buildAppApiAccessTokenRoute,
@@ -40,9 +37,8 @@ import { AVATAR_LINK, ITEM_THUMBNAIL_LINK } from '../fixtures/thumbnails/links';
 
 const { buildGetItemPublishedInformationRoute,
   buildAppListRoute, buildGetLastItemValidationGroupRoute,
-  buildDeleteItemRoute,
   buildEditItemRoute,
-  buildGetChildrenRoute, buildItemUnpublishRoute,
+  buildItemUnpublishRoute,
   buildGetItemRoute,
   buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
@@ -56,10 +52,8 @@ const { buildGetItemPublishedInformationRoute,
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
   buildGetItemLoginSchemaRoute,
-  buildGetItemLoginSchemaTypeRoute,
   buildGetItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
-  buildPutItemLoginSchemaRoute,
   buildPostItemTagRoute,
   buildPatchMember,
   SHARED_ITEM_WITH_ROUTE,
@@ -839,11 +833,11 @@ export const mockDeleteItemLoginSchemaRoute = (items: ItemForTest[]): void => {
         `${API_HOST}/items/${ID_FORMAT}/login-schema$`,
       ),
     },
-    ({ reply, url, body }) => {
+    ({ reply, url }) => {
 
       // check query match item login schema
       const id = url.slice(API_HOST.length).split('/')[2];
-      const item = getItemById(items, id);
+      const item: ItemForTest = getItemById(items, id);
 
       // TODO: item login is not in extra anymore
       item.itemLoginSchema = null
@@ -862,7 +856,7 @@ export const mockPutItemLoginSchema = (items: ItemForTest[], shouldThrowError: b
         `${API_HOST}/items/${ID_FORMAT}/login-schema$`,
       ),
     },
-    ({ reply, url, body }) => {
+    ({ reply, url }) => {
       if (shouldThrowError) {
         reply({ statusCode: StatusCodes.BAD_REQUEST });
         return;
@@ -871,9 +865,6 @@ export const mockPutItemLoginSchema = (items: ItemForTest[], shouldThrowError: b
       // check query match item login schema
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
-
-      // TODO: item login is not in extra anymore
-      item.extra = buildItemLoginSchemaExtra(body.loginSchema);
 
       reply(item);
     },
@@ -1315,7 +1306,7 @@ export const mockPatchAppData = (shouldThrowError: boolean): void => {
   ).as('patchAppData');
 };
 
-export const mockGetItemThumbnail = (items: ItemForTest[], shouldThrowError: boolean): void => {
+export const mockGetItemThumbnail = (): void => {
   // cy.intercept(
   //   {
   //     method: DEFAULT_GET.method,

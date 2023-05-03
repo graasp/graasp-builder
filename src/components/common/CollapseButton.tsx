@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useEffect, useState } from 'react';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
@@ -16,7 +16,7 @@ import { mutations } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: Item;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };

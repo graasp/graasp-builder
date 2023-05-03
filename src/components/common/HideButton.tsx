@@ -5,7 +5,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { DiscriminatedItem, ItemTagType } from '@graasp/sdk';
+import { Item, ItemTagType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
@@ -14,7 +14,7 @@ import { hooks, mutations } from '../../config/queryClient';
 import { HIDDEN_ITEM_BUTTON_CLASS } from '../../config/selectors';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: Item;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };

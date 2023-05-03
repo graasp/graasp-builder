@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FC, createContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { DiscriminatedItem, ItemType, convertJs } from '@graasp/sdk';
+import { Item, ItemType, convertJs } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -26,7 +26,7 @@ type Props = {
 };
 
 const EditItemModalContext = createContext({
-  openModal: (_newItem: DiscriminatedItem) => {
+  openModal: (_newItem: Item) => {
     // do nothing
   },
 });
@@ -44,7 +44,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<ItemRecord | null>(null);
 
-  const openModal = (newItem: DiscriminatedItem) => {
+  const openModal = (newItem: Item) => {
     setOpen(true);
     setItem(convertJs(newItem));
   };
@@ -64,7 +64,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
     }
     if (
       !isItemValid({
-        ...(item?.toJS() as DiscriminatedItem),
+        ...(item?.toJS() as Item),
         ...updatedProperties,
       })
     ) {
@@ -135,7 +135,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
             isConfirmButtonDisabled ||
             // isItem Valid checks a full item, so we add the updated properties to the item to check
             !isItemValid({
-              ...(item?.toJS() as DiscriminatedItem),
+              ...(item?.toJS() as Item),
               ...updatedProperties,
             })
           }

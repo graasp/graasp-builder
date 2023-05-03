@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { FC, useState } from 'react';
 import { useMatch } from 'react-router';
 
-import { DiscriminatedItem, ItemType, UnknownExtra } from '@graasp/sdk';
+import { Item, ItemType, UnknownExtra } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -113,7 +113,7 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
     );
   };
 
-  const updateItem = (item: Partial<DiscriminatedItem<UnknownExtra>>) => {
+  const updateItem = (item: Partial<Item<UnknownExtra>>) => {
     // update content given current type
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,

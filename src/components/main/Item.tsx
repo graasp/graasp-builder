@@ -4,7 +4,7 @@ import truncate from 'lodash.truncate';
 import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { Item, ItemType } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
@@ -90,7 +90,7 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
             item={
               // DO NOT REMOVE cast
               // here we cast explicitly to be equivalent to the grid which does not let us use Records
-              item.toJS() as DiscriminatedItem
+              item.toJS() as Item
             }
           />
           <DownloadButton id={id} name={name} />
@@ -107,12 +107,7 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
       Actions={Actions}
       name={name}
       creator={member?.name}
-      ItemMenu={
-        <ItemMenu
-          item={item.toJS() as DiscriminatedItem}
-          canEdit={enableEdition}
-        />
-      }
+      ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(id)}
       NameWrapper={NameWrapper({

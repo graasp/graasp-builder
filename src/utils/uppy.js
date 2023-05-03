@@ -1,6 +1,6 @@
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
-import fileSize from 'filesize';
+import { filesize } from 'filesize';
 
 import { API_ROUTES } from '@graasp/query-client';
 import {
@@ -195,4 +195,4 @@ export const configureH5PImportUppy = ({
   });
 
 export const humanFileSize = (size) =>
-  fileSize(size, { base: 2, standard: 'jedec' });
+  filesize(size, { base: 2, standard: 'jedec' });

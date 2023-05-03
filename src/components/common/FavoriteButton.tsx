@@ -38,7 +38,7 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
       id: member.id,
       extra: {
         favoriteItems: member?.extra?.favoriteItems
-          ? member.extra.favoriteItems.concat([item.id])
+          ? member.extra.favoriteItems.concat([item.id]).toJS()
           : [item.id],
       },
     });
@@ -49,9 +49,9 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
     mutation.mutate({
       id: member.id,
       extra: {
-        favoriteItems: member?.extra?.favoriteItems?.filter(
-          (id: string) => id !== item.id,
-        ),
+        favoriteItems: member?.extra?.favoriteItems
+          ?.filter((id: string) => id !== item.id)
+          .toJS(),
       },
     });
     onClick?.();
