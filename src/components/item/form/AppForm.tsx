@@ -61,7 +61,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const url = getAppExtra(item?.extra)?.url;
 
   // todo: fix type -> we will change the interface
-  const value = data.find((app) => app.url === url) || (url as any);
+  const value = data?.find((app) => app.url === url) || (url as any);
 
   return (
     <div>

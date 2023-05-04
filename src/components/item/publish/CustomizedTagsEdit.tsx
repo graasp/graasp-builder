@@ -1,11 +1,9 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
-
 import { Chip, TextField, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Loader, SaveButton } from '@graasp/ui';
 
@@ -21,7 +19,9 @@ import {
 } from '../../../config/selectors';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
-const CustomizedTagsEdit = ({ item, disabled }) => {
+type Props = { item: ItemRecord; disabled?: boolean };
+
+const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { mutate: updateCustomizedTags } = mutations.useEditItem();
@@ -33,13 +33,12 @@ const CustomizedTagsEdit = ({ item, disabled }) => {
   const { itemId } = useParams();
 
   const settings = item?.settings;
-  const itemName = item?.name;
 
-  const [displayValues, setDisplayValues] = useState(null);
+  const [displayValues, setDisplayValues] = useState<string>();
 
   useEffect(() => {
     if (settings) {
-      setDisplayValues(settings.tags?.join(', ') || '');
+      setDisplayValues(settings.tags?.join(', '));
     }
   }, [settings]);
 
@@ -53,12 +52,11 @@ const CustomizedTagsEdit = ({ item, disabled }) => {
     event.preventDefault();
     const tagsList =
       displayValues
-        ?.split(',')
+        ?.split(', ')
         ?.map((entry) => entry.trim())
         ?.filter(Boolean) || [];
     updateCustomizedTags({
       id: itemId,
-      name: itemName,
       settings: { tags: tagsList },
     });
   };
@@ -104,11 +102,6 @@ const CustomizedTagsEdit = ({ item, disabled }) => {
       )}
     </>
   );
-};
-
-CustomizedTagsEdit.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  disabled: PropTypes.bool,
 };
 
 export default CustomizedTagsEdit;

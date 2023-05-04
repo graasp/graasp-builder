@@ -206,15 +206,15 @@ Cypress.Commands.add(
 
     mockGetItemLoginSchemaType(items)
 
-    mockPostItemLogin(items, postItemLoginError);
+    mockPostItemLogin(cachedItems, postItemLoginError);
 
-    mockPutItemLoginSchema(items, putItemLoginError);
+    mockPutItemLoginSchema(cachedItems, putItemLoginError);
 
     mockGetItemMembershipsForItem(items, currentMember);
 
     mockGetItemTags(items);
 
-    mockPostItemTag(items, currentMember, postItemTagError);
+    mockPostItemTag(cachedItems, currentMember, postItemTagError);
 
     mockDeleteItemTag(deleteItemTagError);
 
@@ -224,7 +224,7 @@ Cypress.Commands.add(
 
     mockDeleteItemMembershipForItem();
 
-    mockPostItemFlag(items, postItemFlagError);
+    mockPostItemFlag(cachedItems, postItemFlagError);
 
     mockGetItems({ items, currentMember });
 

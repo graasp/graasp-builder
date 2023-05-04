@@ -26,20 +26,25 @@ const visitItemPage = (item) => {
 };
 
 describe('Customized Tags', () => {
-  it('Display tags', () => {
-    const item = ITEM_WITH_CATEGORIES;
-    visitItemPage(item);
-    item.settings.tags.forEach((tag, index) => {
-      const displayTags = cy.get(`#${buildCustomizedTagsSelector(index)}`);
-      displayTags.contains(tag);
-    });
-  });
 
   it('Display item without tags', () => {
     // check for not displaying if no tags
-    visitItemPage(PUBLISHED_ITEM);
+    const item = PUBLISHED_ITEM
+    cy.setUpApi({ items: [item] });
+    cy.visit(buildItemPath(item.id));
+    openPublishItemTab(item.id);
     cy.get(`#${buildCustomizedTagsSelector(0)}`).should('not.exist');
     cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('have.text', '');
+  });
+
+  it('Display tags', () => {
+    const item = ITEM_WITH_CATEGORIES;
+    visitItemPage(item);
+    expect(item.settings.tags).to.have.lengthOf.above(0);
+    item.settings.tags!.forEach((tag, index) => {
+      const displayTags = cy.get(`#${buildCustomizedTagsSelector(index)}`);
+      displayTags.contains(tag);
+    });
   });
 
   it('Edit tags', () => {

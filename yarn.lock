@@ -2332,7 +2332,7 @@ __metadata:
 
 "@graasp/sdk@github:graasp/graasp-sdk#typeorm":
   version: 0.10.1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=7ffc4cba9170164be8ae9853a656c202e77b8bd3"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=657ed209abaf685f99cccca34cf2fd7e25f391d8"
   dependencies:
     aws-sdk: 2.1370.0
     fastify: 4.17.0
@@ -2342,7 +2342,7 @@ __metadata:
     qs: 6.11.1
     typeorm: 0.3.15
     uuid: 9.0.0
-  checksum: 8ad47ce6892fec311adf64af8f1a83288532c68525d8cce4cd77b23410613ccaee697faa872d8cfdd65c54a3ff0bb4f30f723e6fe25740fd74e586265773ebcf
+  checksum: 8b91b59d3985bf992b6d2a13f221e1dd43cfda3002560a4a8baf6c9df35d00043362b566a6c40a7459bc4cb730471336e3ddb3392330f9b0e0144e9dfb4308b8
   languageName: node
   linkType: hard
 
