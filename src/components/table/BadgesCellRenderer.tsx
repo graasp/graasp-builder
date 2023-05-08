@@ -33,7 +33,7 @@ export const useItemsStatuses = ({
   tagList: List<TagRecord>;
 }): ItemsStatuses =>
   items.reduce((acc, r, idx) => {
-    const itemTags = itemsTags?.[idx];
+    const itemTags = itemsTags?.get(idx);
     const {
       showChatbox = false,
       isPinned = false,
