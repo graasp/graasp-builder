@@ -27,7 +27,10 @@ import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { CURRENT_USER } from '../../../fixtures/members';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
-import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
+import {
+  NAVIGATION_LOAD_PAUSE,
+  TABLE_ITEM_RENDER_TIME,
+} from '../../../support/constants';
 import { expectFolderViewScreenLayout } from '../../../support/viewUtils';
 
 const translateBuilder = (key) => i18n.t(key, { ns: namespaces.builder });
@@ -53,6 +56,7 @@ describe('View Folder', () => {
 
       // should get own items
       cy.wait('@getOwnItems').then(({ response: { body } }) => {
+        cy.wait('@getItemMemberships');
         // check item is created and displayed
         for (const item of body) {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
@@ -64,12 +68,14 @@ describe('View Folder', () => {
       cy.goToItemInGrid(childId);
 
       // should get children
-      cy.wait('@getChildren').then(({ response: { body } }) => {
-        // check item is created and displayed
-        for (const item of body) {
-          cy.get(`#${buildItemCard(item.id)}`).should('exist');
-        }
-      });
+      cy.wait('@getChildren', { timeout: TABLE_ITEM_RENDER_TIME }).then(
+        ({ response: { body } }) => {
+          // check item is created and displayed
+          for (const item of body) {
+            cy.get(`#${buildItemCard(item.id)}`).should('exist');
+          }
+        },
+      );
 
       // root title
       cy.get(`#${NAVIGATION_ROOT_ID}`).should(

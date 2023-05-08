@@ -1,4 +1,5 @@
-import { Platform } from '@graasp/ui';
+// todo: this makes tests slow because it compiles ui everytime
+// import { Platform } from '@graasp/ui';
 
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
@@ -29,6 +30,8 @@ export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const COLLAPSE_ITEM_BUTTON_CLASS = 'collapseButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
+export const buildHideButtonId = (hidden: boolean): string =>
+  `hideButton-${hidden ? 'hidden' : 'visible'}`;
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const PUBLISH_ITEM_BUTTON_CLASS = 'publishItemButton';
 export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
@@ -107,6 +110,7 @@ export const buildItemFormAppOptionId = (name?: string): string =>
   `${name?.replaceAll(/\s/g, '-')}`;
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
+export const buildCancelButtonId = (id: string): string => `cancelButton-${id}`;
 export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';
 export const MEMBER_PROFILE_MEMBER_NAME_ID = 'memberProfileMemberName';
 export const MEMBER_PROFILE_EMAIL_ID = 'memberProfileEmail';
@@ -227,10 +231,10 @@ export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
 export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
-  [Platform.Builder]: 'appNavigationPlatformSwitchButtonBuilder',
-  [Platform.Player]: 'appNavigationPlatformSwitchButtonPlayer',
-  [Platform.Library]: 'appNavigationPlatformSwitchButtonLibrary',
-  [Platform.Analytics]: 'appNavigationPlatformSwitchButtonAnalytics',
+  Builder: 'appNavigationPlatformSwitchButtonBuilder',
+  Player: 'appNavigationPlatformSwitchButtonPlayer',
+  Library: 'appNavigationPlatformSwitchButtonLibrary',
+  Analytics: 'appNavigationPlatformSwitchButtonAnalytics',
 };
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';

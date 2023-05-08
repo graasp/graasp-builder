@@ -133,8 +133,7 @@ const CategorySelection: FC<Props> = ({ disabled }) => {
             title={translateCategories(name)}
             handleChange={handleChange(values)}
             values={values}
-            // todo: fix with query client
-            selectedValues={itemCategories as any}
+            selectedValues={itemCategories}
             typeId={id}
           />
         );

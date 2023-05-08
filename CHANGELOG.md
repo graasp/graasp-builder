@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.2](https://github.com/graasp/graasp-builder/compare/v0.11.1...v0.11.2) (2023-04-24)
+
+
+### Bug Fixes
+
+* add new collapsible and showchatbox ([ffb6cc5](https://github.com/graasp/graasp-builder/commit/ffb6cc517b3df81d731b4191753148b18ebeb954))
+* check if status column is empty and don't show it ([ffb6cc5](https://github.com/graasp/graasp-builder/commit/ffb6cc517b3df81d731b4191753148b18ebeb954))
+* improve status column display ([#611](https://github.com/graasp/graasp-builder/issues/611)) ([ffb6cc5](https://github.com/graasp/graasp-builder/commit/ffb6cc517b3df81d731b4191753148b18ebeb954))
+* remove duplicated `v` in release property ([#618](https://github.com/graasp/graasp-builder/issues/618)) ([d07d093](https://github.com/graasp/graasp-builder/commit/d07d0933013c87013c5c5a85d1105892e3aad4e4))
+
+## [0.11.1](https://github.com/graasp/graasp-builder/compare/v0.11.0...v0.11.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* close caption on click cancel ([#606](https://github.com/graasp/graasp-builder/issues/606)) ([604318b](https://github.com/graasp/graasp-builder/commit/604318bd39d927515874f786e47e827c096cc79f))
+* update publishing icon to use the library logo with the settings cog ([#609](https://github.com/graasp/graasp-builder/issues/609)) ([aae3842](https://github.com/graasp/graasp-builder/commit/aae38423d6c235221253d4dc5afbd7112fcd1f83))
+
+## [0.11.0](https://github.com/graasp/graasp-builder/compare/v0.10.0...v0.11.0) (2023-03-24)
+
+
+### Features
+
+* **ui:** show item status with badges in table and cards ([#591](https://github.com/graasp/graasp-builder/issues/591)) ([bde9dd9](https://github.com/graasp/graasp-builder/commit/bde9dd9f3b9cb8250121eeb7902430afb95aa10f))
+
 ## [0.10.0](https://github.com/graasp/graasp-builder/compare/v0.9.0...v0.10.0) (2023-03-17)
 
 

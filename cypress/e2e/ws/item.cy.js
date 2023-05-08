@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { WebSocket } from '@graasp/websockets/test/mock-client';
+import { WebSocket } from '@graasp/plugin-websockets/test/mock-client';
 
 import { SHARED_ITEMS_PATH, buildItemPath } from '../../../src/config/paths';
 import { buildItemsTableRowIdAttribute } from '../../../src/config/selectors';

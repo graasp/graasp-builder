@@ -88,7 +88,11 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   useEffect(() => {
     if (settings?.ccLicenseAdaption) {
       // Handles old license formats.
-      if (['alike', 'allow'].includes(settings?.ccLicenseAdaption as CCLicenseAdaption)) {
+      if (
+        ['alike', 'allow'].includes(
+          settings?.ccLicenseAdaption as CCLicenseAdaption,
+        )
+      ) {
         setRequireAttributionValue('yes');
         setAllowCommercialValue('no');
         setAllowSharingValue(
@@ -157,7 +161,9 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
       </Typography>
       <Box mx={3}>
         <RadioGroup
-          aria-label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
+          aria-label={translateBuilder(
+            BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE,
+          )}
           name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
           value={requireAttributionValue}
           onChange={handleAttributionChange}
@@ -167,7 +173,9 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
             value="yes"
             control={<Radio color="primary" />}
             disabled={disabled}
-            label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_REQUIRE_ATTRIBUTION_OPTION_LABEL)}
+            label={translateBuilder(
+              BUILDER.ITEM_SETTINGS_CC_REQUIRE_ATTRIBUTION_OPTION_LABEL,
+            )}
           />
           <FormControlLabel
             id={CC_CC0_CONTROL_ID}
@@ -197,14 +205,18 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
                 value="yes"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ALLOW_COMMERCIAL_OPTION_LABEL)}
+                label={translateBuilder(
+                  BUILDER.ITEM_SETTINGS_CC_ALLOW_COMMERCIAL_OPTION_LABEL,
+                )}
               />
               <FormControlLabel
                 id={CC_DISALLOW_COMMERCIAL_CONTROL_ID}
                 value="no"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_DISALLOW_COMMERCIAL_OPTION_LABEL)}
+                label={translateBuilder(
+                  BUILDER.ITEM_SETTINGS_CC_DISALLOW_COMMERCIAL_OPTION_LABEL,
+                )}
               />
             </RadioGroup>
           </Box>
@@ -225,21 +237,27 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
                 value="yes"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ALLOW_REMIX_OPTION_LABEL)}
+                label={translateBuilder(
+                  BUILDER.ITEM_SETTINGS_CC_ALLOW_REMIX_OPTION_LABEL,
+                )}
               />
               <FormControlLabel
                 id={CC_SHARE_ALIKE_CONTROL_ID}
                 value="alike"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ALLOW_SHARE_ALIKE_REMIX_OPTION_LABEL)}
+                label={translateBuilder(
+                  BUILDER.ITEM_SETTINGS_CC_ALLOW_SHARE_ALIKE_REMIX_OPTION_LABEL,
+                )}
               />
               <FormControlLabel
                 id={CC_NO_DERIVATIVE_CONTROL_ID}
                 value="no"
                 control={<Radio color="primary" />}
                 disabled={disabled}
-                label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_DISALLOW_REMIX_OPTION_LABEL)}
+                label={translateBuilder(
+                  BUILDER.ITEM_SETTINGS_CC_DISALLOW_REMIX_OPTION_LABEL,
+                )}
               />
             </RadioGroup>
           </Box>

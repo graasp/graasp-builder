@@ -21,8 +21,9 @@ import {
 import { getMembershipsForItem } from '../../utils/membership';
 import FolderDescription from '../item/FolderDescription';
 import { NoItemSearchResult } from '../item/ItemSearch';
+import { ItemsStatuses } from '../table/BadgesCellRenderer';
 import EmptyItem from './EmptyItem';
-import Item from './Item';
+import ItemCard from './ItemCard';
 import ItemsToolbar from './ItemsToolbar';
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -34,7 +35,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
 type Props = {
   id?: string;
   items?: List<ItemRecord>;
-  manyMemberships: List<List<ItemMembershipRecord>>;
+  manyMemberships?: List<List<ItemMembershipRecord>>;
+  itemsStatuses?: ItemsStatuses;
   title: string;
   itemSearch?: {
     text: string;
@@ -51,7 +53,8 @@ const ItemsGrid = ({
   title,
   itemSearch,
   headerElements = [],
-  manyMemberships,
+  manyMemberships = List(),
+  itemsStatuses,
   isEditing = false,
   parentId,
 }: Props): JSX.Element => {
@@ -87,13 +90,14 @@ const ItemsGrid = ({
 
     return itemsInPage.map((item) => (
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
-        <Item
+        <ItemCard
           item={item}
           memberships={getMembershipsForItem({
             items,
             manyMemberships,
             itemId: item.id,
           })}
+          itemsStatuses={itemsStatuses}
         />
       </Grid>
     ));

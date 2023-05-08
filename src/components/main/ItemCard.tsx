@@ -18,6 +18,7 @@ import { isItemUpdateAllowedForUser } from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
@@ -39,12 +40,11 @@ const NameWrapper = ({
 type Props = {
   item: ItemRecord;
   memberships: List<ItemMembershipRecord>;
+  itemsStatuses?: ItemsStatuses;
 };
 
-const ItemComponent: FC<Props> = ({ item, memberships }) => {
-  const { id, name, description } = item;
-
-  const alt = name;
+const ItemComponent: FC<Props> = ({ item, memberships, itemsStatuses }) => {
+  const alt = item.name;
   const defaultValueComponent = (
     <img
       style={{
@@ -90,19 +90,22 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
               item.toJS() as DiscriminatedItem
             }
           />
-          <DownloadButton id={id} name={name} />
+          <DownloadButton id={item.id} name={item.name} />
         </>
       )}
     </>
   );
+  // here we use the same component as the table this is why it is instantiated a bit weirdly
+  const Badges = BadgesCellRenderer({ itemsStatuses });
 
   return (
     <GraaspCard
-      description={truncate(stripHtml(description), {
+      description={truncate(stripHtml(item.description), {
         length: DESCRIPTION_MAX_LENGTH,
       })}
       Actions={Actions}
-      name={name}
+      Badges={<Badges data={item} />}
+      name={item.name}
       creator={member?.name}
       ItemMenu={
         <ItemMenu
@@ -111,9 +114,9 @@ const ItemComponent: FC<Props> = ({ item, memberships }) => {
         />
       }
       Thumbnail={ThumbnailComponent}
-      cardId={buildItemCard(id)}
+      cardId={buildItemCard(item.id)}
       NameWrapper={NameWrapper({
-        id,
+        id: item.id,
         style: {
           textDecoration: 'none',
           color: 'inherit',
