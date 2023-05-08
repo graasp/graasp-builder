@@ -1,4 +1,5 @@
-import { Platform } from '@graasp/ui';
+// todo: this makes tests slow because it compiles ui everytime
+// import { Platform } from '@graasp/ui';
 
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
@@ -230,10 +231,10 @@ export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
 export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
-  [Platform.Builder]: 'appNavigationPlatformSwitchButtonBuilder',
-  [Platform.Player]: 'appNavigationPlatformSwitchButtonPlayer',
-  [Platform.Library]: 'appNavigationPlatformSwitchButtonLibrary',
-  [Platform.Analytics]: 'appNavigationPlatformSwitchButtonAnalytics',
+  Builder: 'appNavigationPlatformSwitchButtonBuilder',
+  Player: 'appNavigationPlatformSwitchButtonPlayer',
+  Library: 'appNavigationPlatformSwitchButtonLibrary',
+  Analytics: 'appNavigationPlatformSwitchButtonAnalytics',
 };
 
 export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';
