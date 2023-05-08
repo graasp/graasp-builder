@@ -5,6 +5,7 @@ import { UseQueryResult } from 'react-query';
 
 import { Api, MUTATION_KEYS } from '@graasp/query-client';
 import {
+  DEFAULT_LANG,
   DocumentItemExtraProperties,
   ItemType,
   PermissionLevel,
@@ -268,17 +269,28 @@ const AppContent = ({
   <AppItem
     isResizable
     item={item}
-    apiHost={API_HOST}
     editCaption={isEditing}
     onSaveCaption={onSaveCaption}
     onCancelCaption={onCancelCaption}
     saveButtonId={saveButtonId}
     cancelButtonId={cancelButtonId}
-    member={member}
     height={ITEM_DEFAULT_HEIGHT}
-    permission={permission}
-    requestApiAccessToken={Api.requestApiAccessToken}
-    context={CONTEXT_BUILDER}
+    requestApiAccessToken={(payload) =>
+      Api.requestApiAccessToken(payload, { API_HOST })
+    }
+    contextPayload={{
+      apiHost: API_HOST,
+      itemId: item.id,
+      memberId: member.id,
+      permission,
+      settings: item.settings,
+      lang:
+        // todo: remove once it is added in ItemSettings type in sdk
+        (item.settings?.lang as string | undefined) ||
+        member.extra?.lang ||
+        DEFAULT_LANG,
+      context: CONTEXT_BUILDER,
+    }}
   />
 );
 
@@ -339,6 +351,7 @@ const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
   return (
     <H5PItem
       itemId={item.id}
+      itemName={item.name}
       contentId={contentId}
       integrationUrl={H5P_INTEGRATION_URL}
     />
