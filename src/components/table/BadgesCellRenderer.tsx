@@ -21,6 +21,15 @@ type ItemStatuses = {
   isPublished: boolean;
 };
 
+const DEFAULT_ITEM_STATUSES: ItemStatuses = {
+  showChatbox: false,
+  isPinned: false,
+  isCollapsible: false,
+  isHidden: false,
+  isPublic: false,
+  isPublished: false,
+};
+
 export type ItemsStatuses = { [key: ItemRecord['id']]: ItemStatuses };
 
 export const useItemsStatuses = ({
@@ -34,11 +43,11 @@ export const useItemsStatuses = ({
 }): ItemsStatuses =>
   items.reduce((acc, r, idx) => {
     const itemTags = itemsTags?.get(idx);
-    const {
-      showChatbox = false,
-      isPinned = false,
-      isCollapsible = false,
-    } = { ...r.settings };
+    const { showChatbox, isPinned, isCollapsible } = {
+      ...DEFAULT_ITEM_STATUSES,
+      // the settings are an immutable
+      ...r.settings?.toJS(),
+    };
     const isHidden = isItemHidden({ tags: tagList, itemTags });
     const isPublic = isItemPublic({ tags: tagList, itemTags });
     const isPublished = isItemPublished({ tags: tagList, itemTags });
@@ -68,7 +77,8 @@ const BadgesCellRenderer = ({
 }: Props): ((arg: ChildCompProps) => JSX.Element) => {
   const ChildComponent = ({ data: item }: ChildCompProps) => {
     const { t } = useBuilderTranslation();
-    const itemStatuses = itemsStatuses[item.id];
+    // this is useful because the item.id we are looking for may not be present and the itemStatuses will be undefined
+    const itemStatuses = itemsStatuses[item.id] || DEFAULT_ITEM_STATUSES;
     const {
       showChatbox,
       isPinned,
