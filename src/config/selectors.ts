@@ -292,3 +292,11 @@ export const buildLanguageOptionId = (value: string): string =>
   `languageOption-${value}`;
 export const buildEmailFrequencyOptionId = (value: string): string =>
   `emailFrequencyOption-${value}`;
+
+export const CC_ALLOW_COMMERCIAL_CONTROL_ID = 'allowCommercialCCSelector';
+export const CC_DISALLOW_COMMERCIAL_CONTROL_ID = 'disallowCommercialCCSelector';
+export const CC_REQUIRE_ATTRIBUTION_CONTROL_ID = 'requireAttributionSelector';
+export const CC_CC0_CONTROL_ID = 'cc0Selector';
+export const CC_SHARE_ALIKE_CONTROL_ID = 'shareAlikeSelector';
+export const CC_NO_DERIVATIVE_CONTROL_ID = 'noDerivativeSelector';
+export const CC_DERIVATIVE_CONTROL_ID = 'derivativeSelector';

@@ -2445,12 +2445,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.11.0":
-  version: 1.11.0
-  resolution: "@graasp/translations@npm:1.11.0"
+"@graasp/translations@npm:1.12.0":
+  version: 1.12.0
+  resolution: "@graasp/translations@npm:1.12.0"
   dependencies:
     i18next: 21.8.1
-  checksum: 83bba8432cc5b2f83cfa88278fc61387821d421e8a3e9f6a3a1b28ce8c2789e9c8f20832305c13aa0d554d8a20824644ce968d7e6fa5b643676164eb1a3c230c
+  checksum: 0c8f21bd9116b9b248575e3b94b0bcfaa431e5ae4af9310423f23341df613a409874dc8f96961781090f018c659e6263b72f75d7b0b55127e62b164425669950
   languageName: node
   linkType: hard
 
@@ -2463,9 +2463,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:2.4.3":
-  version: 2.4.3
-  resolution: "@graasp/ui@npm:2.4.3"
+"@graasp/ui@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@graasp/ui@npm:2.5.0"
   dependencies:
     "@graasp/sdk": 0.12.0
     clsx: 1.1.1
@@ -2498,7 +2498,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 2c1b08152f668116d2654d6ad913722b563f32762b3cf00b343250999b8857ba88740ea1d6d52929133ff50e43edc94eb74780e82febed82ec5e4bbc232ea1e4
+  checksum: 7663e2cf56c1cd3c83faecb2f6565f2738fccc2f472d90cf00e6408654d5ad31bd8ff907eb15820f458b8324373750f8bc45b444d51f61bf5ac66065d9e7ec93
   languageName: node
   linkType: hard
 
@@ -9665,8 +9665,8 @@ __metadata:
     "@graasp/plugin-websockets": 1.0.0
     "@graasp/query-client": 0.4.1
     "@graasp/sdk": 0.12.0
-    "@graasp/translations": 1.11.0
-    "@graasp/ui": 2.4.3
+    "@graasp/translations": 1.12.0
+    "@graasp/ui": 2.5.0
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.117
     "@mui/material": 5.12.0
