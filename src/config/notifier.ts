@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-import { routines } from '@graasp/query-client';
+import { Notifier, routines } from '@graasp/query-client';
 import buildI18n, { FAILURE_MESSAGES } from '@graasp/translations';
 
 import {
@@ -66,13 +66,13 @@ const {
   shareItemRoutine,
 } = routines;
 
-export default ({
+const notifier: Notifier = ({
   type,
   payload,
 }: {
   type: string;
   payload: Payload;
-}): void => {
+}) => {
   let message = null;
   switch (type) {
     // error messages
@@ -173,3 +173,4 @@ export default ({
     toast.success(i18n.t(message));
   }
 };
+export default notifier;

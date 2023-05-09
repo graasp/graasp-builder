@@ -5,7 +5,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { useQueryClient } from 'react-query';
+
+import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
@@ -32,14 +34,24 @@ const HideButton = ({
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { data: tags } = hooks.useItemTags(item.id);
+  const queryClient = useQueryClient();
   const addTag = useMutation<unknown, unknown, { id: string; tagId: string }>(
     MUTATION_KEYS.POST_ITEM_TAG,
+    {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(DATA_KEYS.itemTagsKeys.many());
+      },
+    },
   );
   const removeTag = useMutation<
     unknown,
     unknown,
     { id: string; tagId: string }
-  >(MUTATION_KEYS.DELETE_ITEM_TAG);
+  >(MUTATION_KEYS.DELETE_ITEM_TAG, {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(DATA_KEYS.itemTagsKeys.many());
+    },
+  });
   const hiddenTag = tags
     ?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID)
     ?.first();
