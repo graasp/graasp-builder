@@ -23,6 +23,7 @@ const useEtherpadForm = (): { padName: string; EtherpadForm: FC } => {
         <TextField
           variant="standard"
           autoFocus
+          required
           id={ITEM_FORM_ETHERPAD_NAME_INPUT_ID}
           label={translateBuilder(BUILDER.CREATE_NEW_ITEM_ETHERPAD_LABEL)}
           value={padName}

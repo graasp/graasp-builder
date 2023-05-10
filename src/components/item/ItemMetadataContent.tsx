@@ -42,11 +42,9 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
   let size = null;
   let mimetype = null;
   if (item.type === ItemType.S3_FILE) {
-    // todo: improve type of itemRecord with extras
     const extra = getS3FileExtra(item.extra);
     ({ mimetype, size } = extra);
   } else if (item.type === ItemType.LOCAL_FILE) {
-    // todo: improve type of itemRecord with extras
     const extra = getFileExtra(item.extra);
     ({ mimetype, size } = extra);
   }

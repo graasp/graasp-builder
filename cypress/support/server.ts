@@ -1034,8 +1034,30 @@ export const mockGetItemTags = (items: ItemForTest[]): void => {
   ).as('getItemTags');
 };
 
-export const mockPostItemTag = (items: ItemForTest[], currentMember: Member, shouldThrowError: boolean): void => {
+export const mockGetItemsTags = (items: ItemForTest[]): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: `${API_HOST}/items/tags?id=*`,
+    },
+    ({ reply, url }) => {
+      let { id: ids } = qs.parse(url.split('?')[1]);
+      if (typeof ids === 'string') {
+        ids = [ids];
+      }
+      const result = (ids as string[])?.map(
+        (itemId) =>
+          items.find(({ id }) => id === itemId)?.tags || [
+            { statusCode: StatusCodes.NOT_FOUND },
+          ],
+      );
+      reply(result);
+    },
+  ).as('getItemsTags');
+};
 
+
+export const mockPostItemTag = (items: ItemForTest[], currentMember: Member, shouldThrowError: boolean): void => {
   // mock all tag type
   Object.values(ItemTagType).forEach(type => {
     cy.intercept(

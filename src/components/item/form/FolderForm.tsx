@@ -30,6 +30,7 @@ const FolderForm = ({
       <BaseItemForm
         onChange={onChange}
         item={item}
+        required
         updatedProperties={updatedProperties}
       />
 

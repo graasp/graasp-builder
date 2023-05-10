@@ -5,6 +5,7 @@ import { FC, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import {
+  DiscriminatedItem,
   Item,
   ItemMembership,
   ItemType,
@@ -28,6 +29,7 @@ import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
+import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
@@ -38,6 +40,7 @@ type Props = {
   id?: string;
   items: List<ItemRecord>;
   manyMemberships: ResultOfRecord<ItemMembership[]>;
+  itemsStatuses?: ItemsStatuses;
   tableTitle: string;
   headerElements?: JSX.Element[];
   isSearching?: boolean;
@@ -60,6 +63,7 @@ const ItemsTable: FC<Props> = ({
   id: tableId = '',
   items: rows = List(),
   manyMemberships,
+  itemsStatuses,
   headerElements = [],
   isSearching = false,
   actions,
@@ -80,6 +84,10 @@ const ItemsTable: FC<Props> = ({
 
   const { mutate: editItem } = mutations.useEditItem();
 
+  const noStatusesToShow = !Object.values(itemsStatuses)
+    .map((obj) => Object.values(obj).some((e) => e === true))
+    .some((e) => e === true);
+
   const isFolder = useCallback(() => Boolean(itemId), [itemId]);
   const canDrag = useCallback(
     () => isFolder() && !isSearching,
@@ -89,7 +97,13 @@ const ItemsTable: FC<Props> = ({
   const getRowNodeId = ({ data }: { data: Item }) =>
     buildItemsTableRowId(data.id);
 
-  const onCellClicked = ({ column, data }: { column: Column; data: Item }) => {
+  const onCellClicked = ({
+    column,
+    data,
+  }: {
+    column: Column;
+    data: DiscriminatedItem;
+  }) => {
     if (column.getColId() !== 'actions') {
       let targetId = data.id;
 
@@ -146,33 +160,56 @@ const ItemsTable: FC<Props> = ({
     member,
   });
 
+  const BadgesComponent = BadgesCellRenderer({
+    itemsStatuses,
+  });
+
   // never changes, so we can use useMemo
   const columnDefs = useMemo(() => {
     const columns: ColDef[] = [
       {
+        field: 'name',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
         headerCheckboxSelection: true,
         checkboxSelection: true,
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
         cellRenderer: NameCellRenderer(showThumbnails),
         flex: 4,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.name,
-        field: 'name',
         tooltipField: 'name',
+      },
+      {
+        field: 'status',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
+        cellRenderer: BadgesComponent,
+        hide: noStatusesToShow,
+        type: 'rightAligned',
+        flex: 1,
+        suppressAutoSize: true,
+        maxWidth: 100,
+        cellStyle: {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
       },
       {
         field: 'type',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
         type: 'rightAligned',
-        cellRenderer: ({ data }: { data: Item }) => translateEnums(data.type),
-        flex: 2,
+        cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
+          translateEnums(data.type),
+        minWidth: 90,
+        maxWidth: 120,
         comparator: GraaspTable.textComparator,
         sort: defaultSortedColumn?.type,
       },
       {
         field: 'updatedAt',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
-        flex: 2,
+        maxWidth: 160,
+        minWidth: 80,
         type: 'rightAligned',
         valueFormatter: dateColumnFormatter,
         comparator: GraaspTable.dateComparator,
@@ -185,22 +222,21 @@ const ItemsTable: FC<Props> = ({
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
-        flex: 3,
         cellStyle: {
           paddingLeft: '0!important',
           paddingRight: '0!important',
           textAlign: 'right',
         },
         sortable: false,
+        suppressAutoSize: true,
         // prevent ellipsis for small screens
-        minWidth: 165,
+        minWidth: 140,
       },
     ];
 
     if (showCreator) {
-      columns.splice(1, 0, {
+      columns.splice(2, 0, {
         field: 'creator',
-        flex: 3,
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
         colId: 'creator',
         type: 'rightAligned',
@@ -221,6 +257,7 @@ const ItemsTable: FC<Props> = ({
     translateBuilder,
     defaultSortedColumn,
     ActionComponent,
+    BadgesComponent,
     actions,
     showThumbnails,
   ]);
@@ -238,7 +275,7 @@ const ItemsTable: FC<Props> = ({
         id={tableId}
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
-        rowData={rows.toJS() as Item[]}
+        rowData={rows.toJS() as DiscriminatedItem[]}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
         onCellClicked={onCellClicked}

@@ -2,6 +2,7 @@ import { ItemTagType } from '@graasp/sdk';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   HIDDEN_ITEM_BUTTON_CLASS,
+  buildHideButtonId,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
@@ -11,13 +12,14 @@ import {
   HIDDEN_ITEM,
   ITEMS_SETTINGS,
 } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const toggleHideButton = (itemId) => {
-  cy.wait(TABLE_ITEM_RENDER_TIME);
+const toggleHideButton = (itemId, isHidden = false) => {
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
-  cy.get(`#${buildItemMenu(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`).click();
+
+  cy.get(`#${buildItemMenu(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`)
+    .should('have.attr', 'data-cy', buildHideButtonId(isHidden))
+    .click();
 };
 
 
@@ -31,7 +33,7 @@ describe('Hiding Item', () => {
       cy.visit(HOME_PATH);
       const item = ITEMS_SETTINGS.items[1];
 
-      toggleHideButton(item.id);
+      toggleHideButton(item.id, false);
 
       cy.wait(`@postItemTag-${ItemTagType.HIDDEN}`).then(
         ({
@@ -49,8 +51,8 @@ describe('Hiding Item', () => {
       cy.visit(HOME_PATH);
       const item = HIDDEN_ITEM;
 
-      cy.wait(5000);
-      toggleHideButton(item.id);
+      // make sure to wait for the tags to be fetched
+      toggleHideButton(item.id, true);
 
       cy.wait(`@deleteItemTag-${ItemTagType.HIDDEN}`).then(({ request: { url } }) => {
         expect(url).to.contain(ItemTagType.HIDDEN);
@@ -60,7 +62,6 @@ describe('Hiding Item', () => {
 
     it('Cannot hide child of hidden item', () => {
       cy.visit(buildItemPath(HIDDEN_ITEM.id));
-      cy.wait(TABLE_ITEM_RENDER_TIME);
       cy.get(`#${buildItemMenuButtonId(CHILD_HIDDEN_ITEM.id)}`).click();
       cy.get(
         `#${buildItemMenu(CHILD_HIDDEN_ITEM.id)} .${HIDDEN_ITEM_BUTTON_CLASS}`,
@@ -82,7 +83,7 @@ describe('Hiding Item', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
       const item = ITEMS_SETTINGS.items[1];
 
-      toggleHideButton(item.id);
+      toggleHideButton(item.id, false);
 
       cy.wait(`@postItemTag-${ItemTagType.HIDDEN}`).then(
         ({
@@ -101,7 +102,7 @@ describe('Hiding Item', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
       const item = ITEMS_SETTINGS.items[0];
 
-      toggleHideButton(item.id);
+      toggleHideButton(item.id, true);
 
       cy.wait(`@deleteItemTag-${ItemTagType.HIDDEN}`).then(({ request: { url } }) => {
         expect(url).to.contain(item.id);
@@ -113,7 +114,6 @@ describe('Hiding Item', () => {
       cy.visit(buildItemPath(HIDDEN_ITEM.id));
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
-      cy.wait(TABLE_ITEM_RENDER_TIME);
       cy.get(`#${buildItemMenuButtonId(CHILD_HIDDEN_ITEM.id)}`).click();
       cy.get(
         `#${buildItemMenu(CHILD_HIDDEN_ITEM.id)} .${HIDDEN_ITEM_BUTTON_CLASS}`,

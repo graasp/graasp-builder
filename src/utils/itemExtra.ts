@@ -4,10 +4,11 @@ import {
   EmbeddedLinkItemExtra,
   EmbeddedLinkItemExtraProperties,
   FileItemProperties,
+  ItemLogin,
   ItemSettings,
   ItemType,
   LocalFileItemExtra,
-  S3FileItemExtra, ItemLogin
+  S3FileItemExtra,
 } from '@graasp/sdk';
 
 export const buildFileExtra = (

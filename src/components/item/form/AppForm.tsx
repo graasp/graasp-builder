@@ -30,7 +30,6 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [newName, setNewName] = useState(item?.name);
 
-  // todo: not clear if newValue is a string or object
   const handleAppSelection = (_event: any, newValue: RecordOf<App> | null) => {
     const url = newValue?.url;
     const name = newValue?.name ?? item?.name;
@@ -45,7 +44,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
     }
     onChange(props);
   };
-  // todo: not clear if newValue is a string or object
+
   const handleAppInput = (_event: any, url: string) => {
     // TODO: improve types
     const props = {

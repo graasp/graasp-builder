@@ -1,6 +1,10 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import {
+  TEXT_EDITOR_CLASS,
+  buildCancelButtonId,
+  buildEditButtonId,
+} from '../../../../src/config/selectors';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
@@ -34,6 +38,26 @@ describe('Edit File', () => {
         // caption content might be wrapped with html tags
         expect(body?.description).to.contain(caption);
       });
+    });
+
+    it("cancel file's caption", () => {
+      const { id } = IMAGE_ITEM_DEFAULT;
+      cy.visit(buildItemPath(id));
+      cy.get(`#${buildEditButtonId(id)}`).click();
+      cy.get(`#${buildCancelButtonId(id)}`).click();
+      // button should not exist anymore
+      cy.get(`.${TEXT_EDITOR_CLASS}`).should('exist');
+      cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
+    });
+
+    it("cancel s3File's caption", () => {
+      const { id } = VIDEO_ITEM_S3;
+      cy.visit(buildItemPath(id));
+      cy.get(`#${buildEditButtonId(id)}`).click();
+      cy.get(`#${buildCancelButtonId(id)}`).click();
+      // button should not exist anymore
+      cy.get(`.${TEXT_EDITOR_CLASS}`).should('exist');
+      cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
     });
   });
 

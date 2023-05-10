@@ -6,6 +6,7 @@ import { UseQueryResult } from 'react-query';
 import { Api } from '@graasp/query-client';
 import {
   Context,
+  DEFAULT_LANG,
   DocumentItemExtraProperties,
   ItemType,
   PermissionLevel,
@@ -51,6 +52,7 @@ import { hooks, mutations } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
+  buildCancelButtonId,
   buildFileItemId,
   buildItemsTableId,
   buildSaveButtonId,
@@ -79,12 +81,16 @@ const FileContent = ({
   item,
   isEditing,
   onSaveCaption,
+  onCancelCaption,
   saveButtonId,
+  cancelButtonId,
 }: {
   item: LocalFileItemTypeRecord | S3FileItemTypeRecord;
   isEditing: boolean;
   onSaveCaption: (text: string) => void;
+  onCancelCaption: (text: string) => void;
   saveButtonId: string;
+  cancelButtonId: string;
 }): JSX.Element => {
   const { data: fileUrl, isLoading, isError } = useFileContentUrl(item.id);
 
@@ -104,8 +110,10 @@ const FileContent = ({
         id={buildFileItemId(item.id)}
         item={item}
         onSaveCaption={onSaveCaption}
+        onCancelCaption={onCancelCaption}
         pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
         saveButtonId={saveButtonId}
+        cancelButtonId={cancelButtonId}
       />
     </StyledContainer>
   );
@@ -119,13 +127,17 @@ const LinkContent = ({
   member,
   isEditing,
   onSaveCaption,
+  onCancelCaption,
   saveButtonId,
+  cancelButtonId,
 }: {
   item: EmbeddedLinkItemTypeRecord;
   member: MemberRecord;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
+  onCancelCaption: (caption: string) => void;
   saveButtonId: string;
+  cancelButtonId: string;
 }): JSX.Element => (
   <StyledContainer>
     <LinkItem
@@ -134,7 +146,9 @@ const LinkContent = ({
       item={item}
       editCaption={isEditing}
       onSaveCaption={onSaveCaption}
+      onCancelCaption={onCancelCaption}
       saveButtonId={saveButtonId}
+      cancelButtonId={cancelButtonId}
       height={ITEM_DEFAULT_HEIGHT}
       showButton={Boolean(
         item.settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON,
@@ -155,12 +169,14 @@ const DocumentContent = ({
   onSaveDocument,
   onCancel,
   saveButtonId,
+  cancelButtonId,
 }: {
   item: DocumentItemTypeRecord;
   isEditing: boolean;
   onSaveDocument: (update: DocumentItemExtraProperties) => void;
   onCancel: () => void;
   saveButtonId: string;
+  cancelButtonId: string;
 }): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
 
@@ -190,8 +206,14 @@ const DocumentContent = ({
             onContentSave={onSave}
             onFlavorChange={(f) => setFlavor(f || undefined)}
             saveButtonId={saveButtonId}
+            cancelButtonId={cancelButtonId}
           />
-          <Button onClick={onCancel} variant="text" sx={{ m: 1 }}>
+          <Button
+            id={cancelButtonId}
+            onClick={onCancel}
+            variant="text"
+            sx={{ m: 1 }}
+          >
             {translateCommon(COMMON.CANCEL_BUTTON)}
           </Button>
           <SaveButton
@@ -222,27 +244,42 @@ const AppContent = ({
   permission,
   isEditing,
   onSaveCaption,
+  onCancelCaption,
   saveButtonId,
+  cancelButtonId,
 }: {
   item: AppItemTypeRecord;
   member: MemberRecord;
   permission: PermissionLevel;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
+  onCancelCaption: (caption: string) => void;
   saveButtonId: string;
+  cancelButtonId: string;
 }): JSX.Element => (
   <AppItem
     isResizable
     item={item}
-    apiHost={API_HOST}
     editCaption={isEditing}
     onSaveCaption={onSaveCaption}
+    onCancelCaption={onCancelCaption}
     saveButtonId={saveButtonId}
-    member={member}
+    cancelButtonId={cancelButtonId}
     height={ITEM_DEFAULT_HEIGHT}
-    permission={permission}
-    requestApiAccessToken={Api.requestApiAccessToken}
-    context={Context.Builder}
+    requestApiAccessToken={(payload) =>
+      Api.requestApiAccessToken(payload, { API_HOST })
+    }
+    contextPayload={{
+      apiHost: API_HOST,
+      itemId: item.id,
+      memberId: member.id,
+      permission,
+      settings: item.settings,
+      lang:
+        // todo: remove once it is added in ItemSettings type in sdk
+        item.settings?.lang || member.extra?.lang || DEFAULT_LANG,
+      context: Context.Builder,
+    }}
   />
 );
 
@@ -303,6 +340,7 @@ const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
   return (
     <H5PItem
       itemId={item.id}
+      itemName={item.name}
       contentId={contentId}
       integrationUrl={H5P_INTEGRATION_URL}
     />
@@ -383,6 +421,10 @@ const ItemContent = ({
     setEditingItemId(null);
   };
 
+  const onCancelCaption = (_caption: string) => {
+    setEditingItemId(null);
+  };
+
   const onSaveDocument = ({ content, flavor }: DocumentItemExtraProperties) => {
     editItem({
       id: item.id,
@@ -396,6 +438,7 @@ const ItemContent = ({
   };
 
   const saveButtonId = buildSaveButtonId(item.id);
+  const cancelButtonId = buildCancelButtonId(item.id);
 
   switch (item.type) {
     case ItemType.LOCAL_FILE:
@@ -405,7 +448,9 @@ const ItemContent = ({
           item={item}
           isEditing={isEditing}
           onSaveCaption={onSaveCaption}
+          onCancelCaption={onCancelCaption}
           saveButtonId={saveButtonId}
+          cancelButtonId={cancelButtonId}
         />
       );
     }
@@ -416,7 +461,9 @@ const ItemContent = ({
           member={member}
           isEditing={isEditing}
           onSaveCaption={onSaveCaption}
+          onCancelCaption={onCancelCaption}
           saveButtonId={saveButtonId}
+          cancelButtonId={cancelButtonId}
         />
       );
     case ItemType.DOCUMENT:
@@ -427,6 +474,7 @@ const ItemContent = ({
           onSaveDocument={onSaveDocument}
           onCancel={onCancel}
           saveButtonId={saveButtonId}
+          cancelButtonId={cancelButtonId}
         />
       );
     case ItemType.APP:
@@ -436,7 +484,9 @@ const ItemContent = ({
           member={member}
           isEditing={isEditing}
           onSaveCaption={onSaveCaption}
+          onCancelCaption={onCancelCaption}
           saveButtonId={saveButtonId}
+          cancelButtonId={cancelButtonId}
           permission={permission}
         />
       );

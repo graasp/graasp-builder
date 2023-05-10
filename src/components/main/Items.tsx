@@ -7,10 +7,11 @@ import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
 import { useItemSearch } from '../item/ItemSearch';
+import { useItemsStatuses } from '../table/BadgesCellRenderer';
 import ItemsGrid from './ItemsGrid';
 import ItemsTable from './ItemsTable';
 
-const { useManyItemMemberships } = hooks;
+const { useManyItemMemberships, useItemsTags } = hooks;
 
 type Props = {
   id: string;
@@ -50,14 +51,27 @@ const Items = ({
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
+  const itemsToDisplay = itemSearch.results;
   const { data: manyMemberships, isLoading: isMembershipsLoading } =
     useManyItemMemberships(
       enableMemberships
-        ? itemSearch?.results?.map(({ id: itemId }) => itemId).toArray()
+        ? itemsToDisplay?.map(({ id: itemId }) => itemId).toArray()
         : [],
     );
+  const { data: itemsTags } = useItemsTags(
+    itemsToDisplay.map((r) => r.id).toJS(),
+  );
+  const itemsStatuses = useItemsStatuses({
+    items: itemsToDisplay,
+    itemsTags,
+  });
 
-  if (isMembershipsLoading) {
+  // todo: disable depending on showCreator
+  const { data: creators } = hooks.useMembers(
+    Object.keys(items?.groupBy(({ creator }) => creator)?.toJS() ?? []),
+  );
+
+  if (isMembershipsLoading || isLoadingTagList) {
     return <Loader />;
   }
 
@@ -67,8 +81,9 @@ const Items = ({
         <ItemsGrid
           parentId={parentId}
           title={title}
-          items={itemSearch.results}
+          items={itemsToDisplay}
           manyMemberships={manyMemberships}
+          itemsStatuses={itemsStatuses}
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
@@ -83,8 +98,9 @@ const Items = ({
           actions={actions}
           tableTitle={title}
           defaultSortedColumn={defaultSortedColumn}
-          items={itemSearch.results}
+          items={itemsToDisplay}
           manyMemberships={manyMemberships}
+          itemsStatuses={itemsStatuses}
           headerElements={[itemSearch.input, ...headerElements]}
           isSearching={Boolean(itemSearch.text)}
           ToolbarActions={ToolbarActions}

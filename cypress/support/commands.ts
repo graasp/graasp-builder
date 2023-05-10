@@ -51,6 +51,7 @@ import {
   mockGetItemValidationAndReview,
   mockGetItemValidationGroups,
   mockGetItems,
+  mockGetItemsTags,
   mockGetMember,
   mockGetMemberMentions,
   mockGetMembers,
@@ -214,6 +215,8 @@ Cypress.Commands.add(
 
     mockGetItemTags(items);
 
+    mockGetItemsTags(items)
+
     mockPostItemTag(cachedItems, currentMember, postItemTagError);
 
     mockDeleteItemTag(deleteItemTagError);
@@ -256,7 +259,7 @@ Cypress.Commands.add(
 
     mockRestoreItems(recycledItemData, restoreItemsError);
 
-    mockGetItemThumbnail(items, getItemThumbnailError);
+    // mockGetItemThumbnail(items, getItemThumbnailError);
     mockGetItemThumbnailUrl(items, getItemThumbnailError);
 
     mockGetAvatarUrl(members, getAvatarUrlError);

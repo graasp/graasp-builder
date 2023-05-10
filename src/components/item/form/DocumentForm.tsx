@@ -30,6 +30,7 @@ export const DocumentExtraForm = ({
   onFlavorChange,
   placeholder,
   saveButtonId,
+  cancelButtonId,
   showActions = false,
 }: {
   documentItemId?: string;
@@ -41,6 +42,7 @@ export const DocumentExtraForm = ({
   onFlavorChange?: (text: DocumentItemExtraProperties['flavor']) => void;
   placeholder?: string;
   saveButtonId?: string;
+  cancelButtonId?: string;
   showActions?: boolean;
 }): JSX.Element => {
   const { t } = useBuilderTranslation();
@@ -88,6 +90,7 @@ export const DocumentExtraForm = ({
           onSave={onContentSave}
           placeholderText={placeholder}
           saveButtonId={saveButtonId}
+          cancelButtonId={cancelButtonId}
           showActions={showActions}
         />
       </Box>
@@ -142,6 +145,7 @@ const DocumentForm = ({
         <BaseForm
           onChange={onChange}
           item={item}
+          required
           updatedProperties={updatedProperties}
         />
       </Box>

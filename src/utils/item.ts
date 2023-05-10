@@ -4,9 +4,9 @@ import { List } from 'immutable';
 import { useEffect, useState } from 'react';
 
 import {
-  Item,
   FolderItemExtra,
   Invitation,
+  Item,
   ItemMembership,
   ItemType,
   getAppExtra,
@@ -53,11 +53,12 @@ export const buildPath = ({
   ids: string[];
 }): string => `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
 
-export const getItemById = (
-  items: Item[],
+export function getItemById<T extends Item>(
+  items: T[],
   id: string,
-): Item | undefined =>
-  items.find(({ id: thisId }) => id === thisId);
+): T | undefined {
+  return items.find(({ id: thisId }) => id === thisId);
+}
 
 export const getDirectParentId = (path: string): string | null => {
   const ids = getParentsIdsFromPath(path);
@@ -75,10 +76,8 @@ export const isChild = (
   return ({ path }) => path.match(reg);
 };
 
-export const getChildren = (
-  items: Item[],
-  id: string,
-): Item[] => items.filter(isChild(id));
+export const getChildren = (items: Item[], id: string): Item[] =>
+  items.filter(isChild(id));
 
 export const isRootItem = ({ path }: { path: string }): boolean =>
   path.length === UUID_LENGTH;
@@ -86,11 +85,11 @@ export const isRootItem = ({ path }: { path: string }): boolean =>
 export const isUrlValid = (str: string): boolean => {
   const pattern = new RegExp(
     '^(https?:\\/\\/)+' + // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-    '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
   return Boolean(str) && pattern.test(str);
@@ -101,25 +100,24 @@ export const isItemValid = (item: Partial<Item>): boolean => {
     return false;
   }
 
-  const { name, type: itemType, extra } = item;
-  const shouldHaveName = Boolean(name);
+  const shouldHaveName = Boolean(item.name);
 
   // item should have a type
   let hasValidTypeProperties =
-    itemType && Object.values<string>(ItemType).includes(itemType);
-  switch (itemType) {
+    item.type && Object.values<string>(ItemType).includes(item.type);
+  switch (item.type) {
     case ItemType.LINK: {
-      const { url } = getEmbeddedLinkExtra(extra) || {};
+      const { url } = getEmbeddedLinkExtra(item.extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
     case ItemType.APP: {
-      const { url } = getAppExtra(extra) || {};
+      const { url } = getAppExtra(item.extra) || {};
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
     case ItemType.DOCUMENT: {
-      const { content } = getDocumentExtra(extra) || {};
+      const { content } = getDocumentExtra(item.extra) || {};
       hasValidTypeProperties = content?.length > 0;
       break;
     }
@@ -153,8 +151,8 @@ export const useIsParentInstance = ({
   item,
 }: {
   instance:
-  | Pick<Partial<Invitation>, 'item'>
-  | Pick<Partial<ItemMembership>, 'item'>;
+    | Pick<Partial<Invitation>, 'item'>
+    | Pick<Partial<ItemMembership>, 'item'>;
   item: ItemRecord;
 }): boolean => {
   const [isParentMembership, setIsParentMembership] = useState(false);

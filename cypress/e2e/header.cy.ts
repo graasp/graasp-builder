@@ -20,10 +20,8 @@ describe('Header', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
     // check navigation and display and interface doesn't crash
-    // cannot use platform from ui
-    cy.get(
-      `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Builder}`,
-    ).click();
+    // todo: this is less robust than using the Platform contant from ui, but it was making cypress compile ui which is unnecessary.
+    cy.get(`#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Builder}`).click();
     cy.get(`#${APP_NAVIGATION_PLATFORM_SWITCH_ID}`).should('exist');
   });
 

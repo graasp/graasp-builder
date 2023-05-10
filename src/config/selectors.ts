@@ -1,3 +1,4 @@
+// todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
 
 export const HEADER_APP_BAR_ID = 'headerAppBar';
@@ -30,6 +31,8 @@ export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const COLLAPSE_ITEM_BUTTON_CLASS = 'collapseButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
+export const buildHideButtonId = (hidden: boolean): string =>
+  `hideButton-${hidden ? 'hidden' : 'visible'}`;
 export const SHARE_ITEM_BUTTON_CLASS = 'itemMenuShareButton';
 export const PUBLISH_ITEM_BUTTON_CLASS = 'publishItemButton';
 export const RESTORE_ITEMS_BUTTON_CLASS = 'itemMenuRestoreButton';
@@ -107,6 +110,7 @@ export const buildItemFormAppOptionId = (name?: string): string =>
   `${name?.replaceAll(/\s/g, '-')}`;
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
+export const buildCancelButtonId = (id: string): string => `cancelButton-${id}`;
 export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';
 export const MEMBER_PROFILE_MEMBER_NAME_ID = 'memberProfileMemberName';
 export const MEMBER_PROFILE_EMAIL_ID = 'memberProfileEmail';
@@ -289,3 +293,11 @@ export const buildLanguageOptionId = (value: string): string =>
   `languageOption-${value}`;
 export const buildEmailFrequencyOptionId = (value: string): string =>
   `emailFrequencyOption-${value}`;
+
+export const CC_ALLOW_COMMERCIAL_CONTROL_ID = 'allowCommercialCCSelector';
+export const CC_DISALLOW_COMMERCIAL_CONTROL_ID = 'disallowCommercialCCSelector';
+export const CC_REQUIRE_ATTRIBUTION_CONTROL_ID = 'requireAttributionSelector';
+export const CC_CC0_CONTROL_ID = 'cc0Selector';
+export const CC_SHARE_ALIKE_CONTROL_ID = 'shareAlikeSelector';
+export const CC_NO_DERIVATIVE_CONTROL_ID = 'noDerivativeSelector';
+export const CC_DERIVATIVE_CONTROL_ID = 'derivativeSelector';

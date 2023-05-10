@@ -51,7 +51,7 @@ describe('Item Settings', () => {
             body: { settings },
           },
         }) => {
-          expect(settings.showChatbox).equals(false);
+          expect(settings?.showChatbox).equals(false);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.get('@getItem').its('response.url').should('contain', itemId);
         },
@@ -74,7 +74,7 @@ describe('Item Settings', () => {
             body: { settings },
           },
         }) => {
-          expect(settings.showChatbox).equals(true);
+          expect(settings?.showChatbox).equals(true);
           cy.wait(EDIT_ITEM_PAUSE);
           cy.get('@getItem').its('response.url').should('contain', itemId);
         },
