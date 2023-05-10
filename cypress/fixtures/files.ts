@@ -2,14 +2,13 @@ import { ItemType, MimeTypes } from '@graasp/sdk';
 
 import { InternalItemType } from '../../src/config/types';
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
+import { LocalFileItemForTest, S3FileItemForTest } from '../support/types';
 import { MOCK_IMAGE_URL, MOCK_PDF_URL, MOCK_VIDEO_URL } from './fileLinks';
 import { CURRENT_USER } from './members';
-import { LocalFileItemForTest, S3FileItemForTest } from '../support/types';
 
 export const ICON_FILEPATH = 'files/icon.png';
 export const VIDEO_FILEPATH = 'files/video.mp4';
 export const TEXT_FILEPATH = 'files/sometext.txt';
-
 
 export const IMAGE_ITEM_DEFAULT: LocalFileItemForTest = {
   id: 'bd5519a2-5ba9-4305-b221-185facbe6a99',
@@ -26,6 +25,7 @@ export const IMAGE_ITEM_DEFAULT: LocalFileItemForTest = {
     path: '9a95/e2e1/2a7b-1615910428274',
     size: 32439,
     mimetype: 'image/png',
+    altText: 'myAltText',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -47,6 +47,7 @@ export const VIDEO_ITEM_DEFAULT: LocalFileItemForTest = {
     path: '9a95/e2e1/2a7b-1615910428274',
     size: 52345,
     mimetype: MimeTypes.Video.MP4,
+    altText: 'myAltText',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: VIDEO_FILEPATH,
@@ -68,6 +69,7 @@ export const PDF_ITEM_DEFAULT: LocalFileItemForTest = {
     path: '9a95/e2e1/2a7b-1615910428274',
     size: 54321,
     mimetype: MimeTypes.PDF,
+    altText: 'myAltText',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -93,7 +95,8 @@ export const IMAGE_ITEM_S3: S3FileItemForTest = {
     path: MOCK_IMAGE_URL, // for testing
     size: 32439,
     mimetype: MimeTypes.Image.PNG,
-    name: 'myfile'
+    name: 'myfile',
+    altText: 'myAltText',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -114,7 +117,8 @@ export const VIDEO_ITEM_S3: S3FileItemForTest = {
     path: MOCK_VIDEO_URL, // for testing
     size: 52345,
     mimetype: MimeTypes.Video.MP4,
-    name: 'myfile'
+    name: 'myfile',
+    altText: 'myAltText',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: VIDEO_FILEPATH,
@@ -135,7 +139,8 @@ export const PDF_ITEM_S3: S3FileItemForTest = {
     path: MOCK_PDF_URL, // for testing
     size: 54321,
     mimetype: MimeTypes.PDF,
-    name: 'myfile'
+    name: 'myfile',
+    altText: 'myAltText',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,

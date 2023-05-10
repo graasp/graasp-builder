@@ -5856,16 +5856,16 @@ __metadata:
   linkType: hard
 
 "@smithy/protocol-http@npm:^1.0.1":
-  version: 1.1.0
-  resolution: "@smithy/protocol-http@npm:1.1.0"
+  version: 1.0.1
+  resolution: "@smithy/protocol-http@npm:1.0.1"
   dependencies:
-    "@smithy/types": ^1.1.0
+    "@smithy/types": ^1.0.0
     tslib: ^2.5.0
-  checksum: f912e085a477664abf38ff4cd0c2ac064ef068afc6cc0a09ce9c2849f07bac8be622edf60f19a91e2701184b63daa85cb2898e243d7a2c6fd1613de705b3152c
+  checksum: ba9ac4880fed48eeea0813663c94c765fe5b900f2fdac4f5de6524306bbc6645829f48bc175d202076b83acaccf008ed77f4b5546a4c180315f253e22fe6c89f
   languageName: node
   linkType: hard
 
-"@smithy/types@npm:^1.0.0, @smithy/types@npm:^1.1.0":
+"@smithy/types@npm:^1.0.0":
   version: 1.1.0
   resolution: "@smithy/types@npm:1.1.0"
   dependencies:

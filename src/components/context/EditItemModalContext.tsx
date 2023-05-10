@@ -1,3 +1,4 @@
+import { TextField } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -10,12 +11,22 @@ import { routines } from '@graasp/query-client';
 import {
   DiscriminatedItem,
   DocumentItemType,
+  FileItemProperties,
   FolderItemType,
   Item,
   ItemType,
+  LocalFileItemType,
+  MimeTypes,
+  S3FileItemType,
   convertJs,
+  getFileExtra,
+  getS3FileExtra,
 } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import {
+  ItemRecord,
+  LocalFileItemTypeRecord,
+  S3FileItemTypeRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER, COMMON, FAILURE_MESSAGES } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -23,7 +34,10 @@ import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';
 import { mutations } from '../../config/queryClient';
-import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
+import {
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+  ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID,
+} from '../../config/selectors';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 import BaseItemForm from '../item/form/BaseItemForm';
@@ -100,6 +114,57 @@ const EditItemModalProvider = ({ children }: Props): JSX.Element => {
     onClose();
   };
 
+  const renderFileForm = (
+    fileItem: LocalFileItemTypeRecord | S3FileItemTypeRecord,
+  ) => {
+    const localFileExtra =
+      fileItem.type === ItemType.LOCAL_FILE
+        ? getFileExtra(fileItem.extra)
+        : undefined;
+    const s3FileExtra =
+      fileItem.type === ItemType.S3_FILE
+        ? getS3FileExtra(fileItem.extra)
+        : undefined;
+    const { mimetype, altText } = {
+      ...s3FileExtra?.toJS(),
+      ...localFileExtra?.toJS(),
+    };
+
+    return (
+      <>
+        <BaseItemForm
+          onChange={setUpdatedItem}
+          item={fileItem}
+          updatedProperties={updatedProperties}
+        />
+        {mimetype && MimeTypes.isImage(mimetype) && (
+          <TextField
+            variant="standard"
+            id={ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID}
+            label="Alternative Text (for accessibility purposes)"
+            value={
+              (
+                updatedProperties?.extra?.[fileItem.type] as
+                  | FileItemProperties
+                  | undefined
+              )?.altText ?? altText
+            }
+            onChange={(e) =>
+              setUpdatedItem({
+                ...updatedProperties,
+                extra: { [fileItem.type]: { altText: e.target.value } },
+              } as LocalFileItemType | S3FileItemType)
+            }
+            // always shrink because setting name from defined app does not shrink automatically
+            InputLabelProps={{ shrink: true }}
+            sx={{ width: '50%', my: 1 }}
+            multiline
+          />
+        )}
+      </>
+    );
+  };
+
   const renderForm = () => {
     switch (item?.type) {
       case ItemType.DOCUMENT:
@@ -120,6 +185,7 @@ const EditItemModalProvider = ({ children }: Props): JSX.Element => {
         );
       case ItemType.LOCAL_FILE:
       case ItemType.S3_FILE:
+        return renderFileForm(item);
       case ItemType.LINK:
       case ItemType.SHORTCUT:
       case ItemType.APP:
