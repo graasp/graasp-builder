@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { ItemLoginSchemaType } from '@graasp/sdk';
 import {
   SETTINGS,
   SETTINGS_ITEM_LOGIN_DEFAULT,
@@ -28,7 +29,7 @@ const checkItemLoginScreenLayout = (
   itemLoginSchema = SETTINGS_ITEM_LOGIN_DEFAULT,
 ) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).should('exist');
-  if (itemLoginSchema === SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD) {
+  if (itemLoginSchema === ItemLoginSchemaType.UsernameAndPassword) {
     cy.get(`#${ITEM_LOGIN_SIGN_IN_PASSWORD_ID}`).should('exist');
   }
   cy.get(`#${ITEM_LOGIN_SIGN_IN_BUTTON_ID}`).should('exist');
@@ -69,7 +70,7 @@ const editItemLoginSetting = (mode) => {
   cy.get(`li[data-value="${mode}"]`).click();
   cy.wait('@putItemLoginSchema').then(({ request: { body } }) => {
     expect(body?.type).to.equal(
-      SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,
+      ItemLoginSchemaType.UsernameAndPassword
     );
   });
 };
@@ -167,9 +168,9 @@ describe('Item Login', () => {
 
       checkItemLoginSetting({
         isEnabled: true,
-        mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
+        mode: ItemLoginSchemaType.Username
       });
-      editItemLoginSetting(SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD);
+      editItemLoginSetting(ItemLoginSchemaType.UsernameAndPassword);
 
       // disabled at child level
       const item2 = ITEM_LOGIN_ITEMS.items[5];
@@ -177,7 +178,7 @@ describe('Item Login', () => {
       cy.get(`#${buildShareButtonId(item2.id)}`).click();
       checkItemLoginSetting({
         isEnabled: true,
-        mode: SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD,
+        mode: ItemLoginSchemaType.UsernameAndPassword,
         disabled: true,
       });
     });

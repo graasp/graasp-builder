@@ -108,7 +108,7 @@ const ItemPublishTab: FC<Props> = ({
       status = ItemValidationStatus.Success;
     }
     setValidationStatus(status);
-  }, [lastItemValidationGroup]);
+  }, [lastItemValidationGroup, item?.updatedAt]);
 
   const step = (() => {
     if (!isPublic) {

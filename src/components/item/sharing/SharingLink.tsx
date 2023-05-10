@@ -70,7 +70,7 @@ const SharingLink: FC<Props> = ({ itemId }) => {
   useEffect(() => {
     if (itemId) {
       switch (linkType) {
-        case Context.BUILDER: {
+        case Context.Builder: {
           setLink(buildGraaspBuilderView(itemId));
           break;
         }
@@ -79,7 +79,7 @@ const SharingLink: FC<Props> = ({ itemId }) => {
           break;
         }
         default:
-          setLinkType(Context.BUILDER);
+          setLinkType(Context.Builder);
           break;
       }
     }
@@ -137,9 +137,9 @@ const SharingLink: FC<Props> = ({ itemId }) => {
         >
           <MenuItem
             // sx={{ textTransform: 'capitalize' }}
-            value={Context.BUILDER}
+            value={Context.Builder}
           >
-            {enumT(Context.BUILDER)}
+            {enumT(Context.Builder)}
           </MenuItem>
           <MenuItem
             // sx={{ textTransform: 'capitalize' }}

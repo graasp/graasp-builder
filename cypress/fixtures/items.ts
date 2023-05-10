@@ -1,4 +1,4 @@
-import { FolderItemExtra, Item, ItemLoginSchemaType, ItemSettings, ItemTagType, ItemType, ItemValidation, ItemValidationProcess, ItemValidationStatus, Member, PermissionLevel, RecycledItemData, ShortcutItemType } from '@graasp/sdk';
+import { FolderItemExtra, FolderItemType, Item, ItemLoginSchemaType, ItemSettings, ItemTagType, ItemType, ItemValidation, ItemValidationProcess, ItemValidationStatus, Member, PermissionLevel, RecycledItemData, ShortcutItemType } from '@graasp/sdk';
 
 import { CURRENT_USER, MEMBERS } from './members';
 import { ApiConfig, ItemForTest } from '../support/types';
@@ -22,7 +22,7 @@ export const DEFAULT_FOLDER_ITEM: {
   settings: {}
 };
 
-export const CREATED_ITEM: Partial<Item> = {
+export const CREATED_ITEM: Partial<FolderItemType> = {
   name: 'created item',
   type: ItemType.FOLDER,
   extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
@@ -273,7 +273,7 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
       ...sampleItemsforItemLogin[0],
       itemLoginSchema: {
         item: sampleItemsforItemLogin[0],
-        type: ItemLoginSchemaType.USERNAME,
+        type: ItemLoginSchemaType.Username,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac130002',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -332,7 +332,7 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
       itemLoginSchema:
       {
         item: sampleItemsforItemLogin[3],
-        type: ItemLoginSchemaType.USERNAME_AND_PASSWORD,
+        type: ItemLoginSchemaType.UsernameAndPassword,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac530002',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -362,7 +362,7 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
       itemLoginSchema:
       {
         item: sampleItemsforItemLogin[4],
-        type: ItemLoginSchemaType.USERNAME_AND_PASSWORD,
+        type: ItemLoginSchemaType.UsernameAndPassword,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac130102',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -395,7 +395,7 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
       itemLoginSchema:
       {
         item: sampleItemsforItemLogin[3],
-        type: ItemLoginSchemaType.USERNAME_AND_PASSWORD,
+        type: ItemLoginSchemaType.UsernameAndPassword,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac730002',
         createdAt: new Date(), updatedAt: new Date()
       },

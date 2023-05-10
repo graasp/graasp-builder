@@ -242,7 +242,7 @@ const AppContent = ({
     height={ITEM_DEFAULT_HEIGHT}
     permission={permission}
     requestApiAccessToken={Api.requestApiAccessToken}
-    context={Context.BUILDER}
+    context={Context.Builder}
   />
 );
 

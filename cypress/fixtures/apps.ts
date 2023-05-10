@@ -46,7 +46,7 @@ export const GRAASP_APP_CHILDREN_ITEM: AppItemType = {
   },
   creator: CURRENT_USER,
 };
-const app: Item = {
+const app: AppItemType = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-12eb-ae91-0272ac130002',
   path: 'ecafbd2a_5688_12eb_ae91_0272ac130002',

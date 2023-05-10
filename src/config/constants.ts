@@ -3,6 +3,7 @@ import {
   ItemType,
   PermissionLevel,
   buildSignInPath,
+  ItemLoginSchemaType,
 } from '@graasp/sdk';
 
 import ITEM_LAYOUT_MODES from '../enums/itemLayoutModes';
@@ -109,10 +110,6 @@ export const LOADING_CONTENT = '…';
 export const SETTINGS = {
   ITEM_LOGIN: {
     name: 'item-login',
-    OPTIONS: {
-      USERNAME: 'username',
-      USERNAME_AND_PASSWORD: 'username+password',
-    },
     SIGN_IN_MODE: {
       PSEUDONYM: 'pseudonym',
       MEMBER_ID: 'memberId',
@@ -122,16 +119,13 @@ export const SETTINGS = {
   ITEM_PUBLIC: {
     name: 'public-item',
   },
-  ITEM_PUBLISHED: {
-    name: 'published-item',
-  },
   // this tag doesn't exist but is used if none of the visiblity tag is set
   ITEM_PRIVATE: {
     name: 'private-item',
   },
 };
 
-export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
+export const SETTINGS_ITEM_LOGIN_DEFAULT = ItemLoginSchemaType.Username
 export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM;
 
@@ -185,10 +179,10 @@ export const CC_LICENSE_ABOUT_URL =
 export const ADMIN_CONTACT = 'admin@graasp.org';
 
 export const HOST_MAP = {
-  [Context.BUILDER]: '/',
-  [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
-  [Context.PLAYER]: GRAASP_PERFORM_HOST,
-  [Context.ANALYTICS]: '',
+  [Context.Builder]: '/',
+  [Context.Library]: GRAASP_LIBRARY_HOST,
+  [Context.Player]: GRAASP_PERFORM_HOST,
+  [Context.Analytics]: '',
 };
 
 export const MEMBERSHIP_TABLE_HEIGHT = 400;

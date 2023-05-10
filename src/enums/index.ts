@@ -1,4 +1,3 @@
-import ChatStatus from './chatbox';
 import ITEM_LAYOUT_MODES from './itemLayoutModes';
 import Ordering from './orderingTypes';
 
@@ -23,7 +22,6 @@ export {
   Ordering,
   ItemActionTabs,
   TreePreventSelection,
-  ChatStatus,
   ButtonVariants,
   ITEM_LAYOUT_MODES,
 };

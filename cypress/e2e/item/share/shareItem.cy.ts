@@ -1,4 +1,4 @@
-import { Context, ItemTagType } from '@graasp/sdk'
+import { Context, ItemLoginSchemaType, ItemTagType } from '@graasp/sdk'
 import { SETTINGS } from '../../../../src/config/constants';
 import {
   buildGraaspBuilderView,
@@ -42,7 +42,7 @@ describe('Share Item', () => {
       `${buildGraaspPlayerView(item.id)}`,
     );
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_SELECT_ID}`).click();
-    cy.get(`li[data-value="${Context.BUILDER}"]`).click();
+    cy.get(`li[data-value="${Context.Builder}"]`).click();
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'have.text',
       `${buildGraaspBuilderView(item.id)}`,
@@ -117,7 +117,7 @@ describe('Share Item', () => {
     // change item login schema
     cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID} + input`).should(
       'have.value',
-      SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
+      ItemLoginSchemaType.Username
     );
     // item login edition is done in itemLogin.cy.js
 

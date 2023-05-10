@@ -1,7 +1,9 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
+import { ChatStatus } from '@graasp/sdk';
+
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
-import { ChatStatus, ITEM_LAYOUT_MODES } from '../../enums';
+import { ITEM_LAYOUT_MODES } from '../../enums';
 
 interface LayoutContextInterface {
   mode: string;
@@ -75,7 +77,7 @@ export const LayoutContextProvider = ({
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
   // check query params to see if chat should be open
   const chatIsOpen =
-    new URLSearchParams(window.location.search).get('chat') === ChatStatus.OPEN;
+    new URLSearchParams(window.location.search).get('chat') === ChatStatus.Open;
   const [isChatboxMenuOpen, setIsChatboxMenuOpen] = useState(chatIsOpen);
 
   const value: LayoutContextInterface = useMemo(

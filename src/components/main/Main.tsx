@@ -124,7 +124,7 @@ const Main: FC<Props> = ({ children }) => {
 
   return (
     <GraaspMain
-      context={Context.BUILDER}
+      context={Context.Builder}
       handleDrawerOpen={() => {
         setIsMainMenuOpen(true);
       }}

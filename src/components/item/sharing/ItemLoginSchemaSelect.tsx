@@ -5,7 +5,6 @@ import { ItemLoginSchemaType, UUID } from '@graasp/sdk';
 import { ItemLoginSchemaRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
-import { SETTINGS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { mutations } from '../../../config/queryClient';
 import { SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID } from '../../../config/selectors';
@@ -44,7 +43,7 @@ const ItemLoginSchemaSelect = ({
   if (!edit) {
     return (
       <span style={{ fontWeight: 'bold' }}>
-        {itemLoginSchema?.type === ItemLoginSchemaType.USERNAME
+        {itemLoginSchema?.type === ItemLoginSchemaType.Username
           ? translateBuilder(
               BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL,
             )
@@ -57,17 +56,17 @@ const ItemLoginSchemaSelect = ({
 
   return (
     <Select
-      value={itemLoginSchema?.type || SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME}
+      value={itemLoginSchema?.type || ItemLoginSchemaType.Username}
       onChange={handleLoginSchemaChange}
       disabled={isDisabled}
       id={SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}
     >
-      <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME}>
+      <MenuItem value={ItemLoginSchemaType.Username}>
         {translateBuilder(
           BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL,
         )}
       </MenuItem>
-      <MenuItem value={SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME_AND_PASSWORD}>
+      <MenuItem value={ItemLoginSchemaType.UsernameAndPassword}>
         {translateBuilder(
           BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL,
         )}
