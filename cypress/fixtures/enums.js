@@ -34,14 +34,3 @@ export const ITEM_TYPES = {
   // but is used for the creation modal
   ZIP: 'zip',
 };
-
-/**
- * @deprecated use graasp sdk instead
- * this object only exists for tests
- */
-export const MIME_TYPES = {
-  IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
-  VIDEO: ['video/mp4'],
-  AUDIO: ['audio/mpeg', 'audio/mp3'],
-  PDF: ['application/pdf'],
-};
