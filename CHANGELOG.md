@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/graasp/graasp-builder/compare/v0.11.2...v0.12.0) (2023-05-10)
+
+
+### Features
+
+* adds required symbol for name of folder, document and etherpad ([#620](https://github.com/graasp/graasp-builder/issues/620)) ([0d09736](https://github.com/graasp/graasp-builder/commit/0d0973618e82c793fa880845538c05374d2882f7))
+* improve cc selection ([#596](https://github.com/graasp/graasp-builder/issues/596)) ([64659bc](https://github.com/graasp/graasp-builder/commit/64659bc1cd440528ec7085bfda70dbc3544bb9e7))
+
+
+### Bug Fixes
+
+* bump ui to 2.4.3 ([#627](https://github.com/graasp/graasp-builder/issues/627)) ([60d539b](https://github.com/graasp/graasp-builder/commit/60d539b1282b4973edbf87232a70d9a97c6bb900))
+* item status and query invalidation ([#626](https://github.com/graasp/graasp-builder/issues/626)) ([5bc43ab](https://github.com/graasp/graasp-builder/commit/5bc43ab8aad5e5b3e9845ff819edec36320c8b2d))
+
 ## [0.11.2](https://github.com/graasp/graasp-builder/compare/v0.11.1...v0.11.2) (2023-04-24)
 
 
