@@ -1,6 +1,7 @@
 import { ItemType, MimeTypes } from '@graasp/sdk';
 
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
+import { ITEM_TYPES } from './enums';
 import { MOCK_IMAGE_URL, MOCK_PDF_URL, MOCK_VIDEO_URL } from './fileLinks';
 import { CURRENT_USER } from './members';
 
@@ -72,7 +73,8 @@ export const PDF_ITEM_DEFAULT = {
 };
 
 export const ZIP_DEFAULT = {
-  type: ItemType.ZIP,
+  // todo: move this one to sdk
+  type: ITEM_TYPES.ZIP,
   filepath: 'files/graasp.zip',
 };
 
