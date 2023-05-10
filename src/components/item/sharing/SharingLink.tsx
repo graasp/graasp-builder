@@ -64,7 +64,7 @@ const SharingLink: FC<Props> = ({ itemId }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
 
-  const [linkType, setLinkType] = useState<Context>(Context.PLAYER);
+  const [linkType, setLinkType] = useState<Context>(Context.Player);
   const [link, setLink] = useState<string>();
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const SharingLink: FC<Props> = ({ itemId }) => {
           setLink(buildGraaspBuilderView(itemId));
           break;
         }
-        case Context.PLAYER: {
+        case Context.Player: {
           setLink(buildGraaspPlayerView(itemId));
           break;
         }
@@ -143,9 +143,9 @@ const SharingLink: FC<Props> = ({ itemId }) => {
           </MenuItem>
           <MenuItem
             // sx={{ textTransform: 'capitalize' }}
-            value={Context.PLAYER}
+            value={Context.Player}
           >
-            {enumT(Context.PLAYER)}
+            {enumT(Context.Player)}
           </MenuItem>
         </Select>
         <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>

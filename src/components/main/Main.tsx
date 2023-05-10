@@ -21,7 +21,6 @@ import {
   HOST_MAP,
 } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
-import { hooks, mutations } from '../../config/queryClient';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
@@ -48,22 +47,22 @@ export const platformsHostsMap = defaultHostsMapper({
 
 const Main: FC<Props> = ({ children }) => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
-  const { data: currentMember } = hooks.useCurrentMember();
-  const memberId = currentMember?.get('id');
+  // const { data: currentMember } = hooks.useCurrentMember();
+  // const memberId = currentMember?.get('id');
   // mutations to handle the mentions
-  const { mutate: patchMentionMutate } = mutations.usePatchMention();
-  const patchMentionFunction = ({
-    id,
-    status,
-  }: {
-    id: string;
-    status: string;
-  }) => patchMentionMutate({ memberId, id, status });
-  const { mutate: deleteMentionMutate } = mutations.useDeleteMention();
-  const deleteMentionFunction = (mentionId: string) =>
-    deleteMentionMutate({ memberId, mentionId });
-  const { mutate: clearAllMentionsMutate } = mutations.useClearMentions();
-  const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
+  // const { mutate: patchMentionMutate } = mutations.usePatchMention();
+  // const patchMentionFunction = ({
+  //   id,
+  //   status,
+  // }: {
+  //   id: string;
+  //   status: string;
+  // }) => patchMentionMutate({ memberId, id, status });
+  // const { mutate: deleteMentionMutate } = mutations.useDeleteMention();
+  // const deleteMentionFunction = (mentionId: string) =>
+  //   deleteMentionMutate({ memberId, mentionId });
+  // const { mutate: clearAllMentionsMutate } = mutations.useClearMentions();
+  // const clearAllMentionsFunction = () => clearAllMentionsMutate({ memberId });
 
   const { itemId } = useParams();
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);

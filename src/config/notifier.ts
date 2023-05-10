@@ -14,7 +14,7 @@ import {
 // TODO: get from graasp client
 type ErrorPayload = {
   failure?: unknown[];
-  error?: { response?: { data?: { message: string } } };
+  error?: { message: string };
 };
 
 type SuccessPayload = {
@@ -27,8 +27,8 @@ const i18n = buildI18n();
 
 const getErrorMessageFromPayload = (payload: ErrorPayload) =>
   i18n.t(
-    payload?.error?.response?.data?.message ??
-      FAILURE_MESSAGES.UNEXPECTED_ERROR,
+    payload?.error?.message ??
+    FAILURE_MESSAGES.UNEXPECTED_ERROR,
   );
 
 const getSuccessMessageFromPayload = (payload: SuccessPayload) =>
@@ -69,7 +69,7 @@ const notifier: Notifier = ({
   payload,
 }: {
   type: string;
-  payload: Payload;
+  payload?: Payload;
 }) => {
   let message = null;
   switch (type) {

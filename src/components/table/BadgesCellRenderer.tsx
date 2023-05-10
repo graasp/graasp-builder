@@ -1,16 +1,15 @@
 import { List } from 'immutable';
 
 import { Item } from '@graasp/sdk';
-import { ItemRecord, ItemTagRecord, TagRecord } from '@graasp/sdk/frontend';
+import { ItemRecord, ItemTagRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ItemBadges } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import {
-  isItemHidden,
-  isItemPublic,
-  isItemPublished,
-} from '../../utils/itemTag';
+import { hooks } from '../../config/queryClient';
+import { isItemHidden, isItemPublic } from '../../utils/itemTag';
+
+const { useItemPublishedInformation } = hooks;
 
 type ItemStatuses = {
   showChatbox: boolean;
@@ -38,8 +37,13 @@ export const useItemsStatuses = ({
 }: {
   items: List<ItemRecord>;
   itemsTags: List<List<ItemTagRecord>>;
-}): ItemsStatuses =>
-  items.reduce((acc, r, idx) => {
+}): ItemsStatuses => {
+  // TODO: use MANY PUBLISHED
+  const { data: publishedInformations } = useItemPublishedInformation({
+    itemId: items.first().id,
+  });
+
+  return items.reduce((acc, r, idx) => {
     const itemTags = itemsTags?.get(idx);
     const { showChatbox, isPinned, isCollapsible } = {
       ...DEFAULT_ITEM_STATUSES,
@@ -48,7 +52,7 @@ export const useItemsStatuses = ({
     };
     const isHidden = isItemHidden({ itemTags });
     const isPublic = isItemPublic({ itemTags });
-    const isPublished = isItemPublished({ itemTags });
+
     return {
       ...acc,
       [r.id]: {
@@ -57,10 +61,11 @@ export const useItemsStatuses = ({
         isCollapsible,
         isHidden,
         isPublic,
-        isPublished,
+        isPublished: Boolean(publishedInformations),
       },
     };
   }, {} as ItemsStatuses);
+};
 
 type Props = {
   itemsStatuses: ItemsStatuses;

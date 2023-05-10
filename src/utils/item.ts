@@ -4,6 +4,7 @@ import { List } from 'immutable';
 import { useEffect, useState } from 'react';
 
 import {
+  DiscriminatedItem,
   FolderItemExtra,
   Invitation,
   Item,
@@ -85,17 +86,17 @@ export const isRootItem = ({ path }: { path: string }): boolean =>
 export const isUrlValid = (str: string): boolean => {
   const pattern = new RegExp(
     '^(https?:\\/\\/)+' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
   return Boolean(str) && pattern.test(str);
 };
 
-export const isItemValid = (item: Partial<Item>): boolean => {
+export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
   if (!item) {
     return false;
   }
@@ -151,8 +152,8 @@ export const useIsParentInstance = ({
   item,
 }: {
   instance:
-    | Pick<Partial<Invitation>, 'item'>
-    | Pick<Partial<ItemMembership>, 'item'>;
+  | Pick<Partial<Invitation>, 'item'>
+  | Pick<Partial<ItemMembership>, 'item'>;
   item: ItemRecord;
 }): boolean => {
   const [isParentMembership, setIsParentMembership] = useState(false);

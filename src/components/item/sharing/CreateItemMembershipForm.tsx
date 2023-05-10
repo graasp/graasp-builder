@@ -109,7 +109,8 @@ const CreateItemMembershipForm = ({
           type: shareItemRoutine.FAILURE,
           payload: {
             error: {
-              response: { data: { message: result?.errors?.first().message } },
+              name: 'error',
+              message: result?.errors?.first().message,
             },
           },
         });

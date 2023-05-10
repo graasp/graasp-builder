@@ -34,7 +34,7 @@ const GraaspAnalyzer: FC<Props> = ({ item }) => {
     <iframe
       /* todo: dynamic height */
       height={DEFAULT_ANALYZER_HEIGHT}
-      title={`Graasp ${t(Context.ANALYTICS)}`}
+      title={`Graasp ${t(Context.Analytics)}`}
       src={buildGraaspAnalyzerLink(id)}
       id={buildGraaspAnalyzerId(id)}
       style={{ border: '0px' }}

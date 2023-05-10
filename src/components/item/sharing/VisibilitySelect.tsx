@@ -129,7 +129,7 @@ const useVisibility = (item: ItemRecord) => {
         deletePublishedAndPublic();
         putItemLoginSchema({
           itemId,
-          type: ItemLoginSchemaType.USERNAME,
+          type: ItemLoginSchemaType.Username,
         });
         break;
       }

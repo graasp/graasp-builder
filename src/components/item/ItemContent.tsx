@@ -1,7 +1,7 @@
 import { Button, Container, styled } from '@mui/material';
 
 import { useState } from 'react';
-import { UseQueryResult } from 'react-query';
+import type { UseQueryResult } from 'react-query';
 
 import { Api } from '@graasp/query-client';
 import {

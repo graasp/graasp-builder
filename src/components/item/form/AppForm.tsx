@@ -7,7 +7,14 @@ import Typography from '@mui/material/Typography';
 
 import { FC, HTMLAttributes, useState } from 'react';
 
-import { App, Item, UnknownExtra, getAppExtra } from '@graasp/sdk';
+import {
+  App,
+  AppItemType,
+  DiscriminatedItem,
+  Item,
+  UnknownExtra,
+  getAppExtra,
+} from '@graasp/sdk';
 import { AppItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
@@ -21,9 +28,9 @@ import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
 
 type Props = {
-  onChange: (item: Partial<Item<UnknownExtra>>) => void;
+  onChange: (item: Partial<DiscriminatedItem<UnknownExtra>>) => void;
   item?: AppItemTypeRecord;
-  updatedProperties: Partial<Item<UnknownExtra>>;
+  updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
@@ -37,7 +44,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
     const props = {
       ...item,
       extra: buildAppExtra({ url }),
-    } as unknown as Item<UnknownExtra>;
+    } as unknown as AppItemType;
     if (name) {
       setNewName(name);
       props.name = name;

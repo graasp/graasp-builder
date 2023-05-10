@@ -1,6 +1,11 @@
 import { FC, createContext, useMemo, useState } from 'react';
 
-import { Item, ItemType, ShortcutItemType } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  Item,
+  ItemType,
+  ShortcutItemType,
+} from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -37,7 +42,7 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
 
   const onConfirm = ({ ids: [target], to }: { ids: string[]; to: string }) => {
     const shortcut: Partial<ShortcutItemType> &
-      Pick<Item, 'name' | 'type'> & {
+      Pick<DiscriminatedItem, 'name' | 'type'> & {
         parentId?: string;
       } = {
       name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {

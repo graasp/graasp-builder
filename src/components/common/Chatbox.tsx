@@ -19,7 +19,7 @@ type Props = {
 };
 
 const Chatbox = ({ item }: Props): JSX.Element => {
-  const { data: chat, isLoading: isChatLoading } = useItemChat(item.id);
+  const { data: chatMessages, isLoading: isChatLoading } = useItemChat(item.id);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     useItemMemberships(item.id);
   const members = itemPermissions?.map(({ member }) => member);
@@ -46,11 +46,12 @@ const Chatbox = ({ item }: Props): JSX.Element => {
       sendMessageBoxId={CHATBOX_INPUT_BOX_ID}
       currentMember={currentMember}
       chatId={item.id}
-      messages={chat?.messages}
+      messages={chatMessages}
       showAdminTools={isAdmin}
-      sendMessageFunction={sendMessage}
-      deleteMessageFunction={deleteMessage}
-      editMessageFunction={editMessage}
+      // TODO
+      sendMessageFunction={sendMessage as any}
+      deleteMessageFunction={deleteMessage as any}
+      editMessageFunction={editMessage as any}
       useAvatarHook={useAvatar}
     />
   );

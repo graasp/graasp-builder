@@ -94,7 +94,7 @@ const ItemsTable: FC<Props> = ({
     [isFolder, isSearching],
   );
 
-  const getRowNodeId = ({ data }: { data: Item }) =>
+  const getRowNodeId = ({ data }: { data: DiscriminatedItem }) =>
     buildItemsTableRowId(data.id);
 
   const onCellClicked = ({

@@ -66,12 +66,7 @@ const Items = ({
     itemsTags,
   });
 
-  // todo: disable depending on showCreator
-  const { data: creators } = hooks.useMembers(
-    Object.keys(items?.groupBy(({ creator }) => creator)?.toJS() ?? []),
-  );
-
-  if (isMembershipsLoading || isLoadingTagList) {
+  if (isMembershipsLoading) {
     return <Loader />;
   }
 

@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { isPseudonymizedMember } from '@graasp/sdk';
+import { ItemMembership, isPseudonymizedMember } from '@graasp/sdk';
 import {
   InvitationRecord,
   ItemMembershipRecord,
@@ -62,7 +62,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
       return null;
     }
     const [authenticatedMemberships, authorizedMemberships] = partition(
-      memberships.toJS(),
+      memberships.toJS() as ItemMembership[],
       ({ member }) => member?.email && isPseudonymizedMember(member.email),
     );
 
