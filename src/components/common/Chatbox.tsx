@@ -48,7 +48,7 @@ const Chatbox = ({ item }: Props): JSX.Element => {
       messages={chatMessages}
       showAdminTools={isAdmin}
       // TODO
-      sendMessageFunction={sendMessage as any}
+      sendMessageFunction={sendMessage}
       deleteMessageFunction={deleteMessage as any}
       editMessageFunction={editMessage as any}
       useAvatarUrl={useAvatarUrl}

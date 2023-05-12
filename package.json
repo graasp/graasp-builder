@@ -148,6 +148,7 @@
     "immutable": "4.3.0",
     "node-forge": "1.3.0",
     "@graasp/query-client": "github:graasp/graasp-query-client#typeorm",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#typeorm",
     "@graasp/ui": "github:graasp/graasp-ui#typeorm",
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm",
     "nth-check": "2.0.1",
