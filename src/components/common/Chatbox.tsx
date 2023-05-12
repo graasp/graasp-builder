@@ -7,7 +7,7 @@ import { hooks, mutations } from '../../config/queryClient';
 import { CHATBOX_ID, CHATBOX_INPUT_BOX_ID } from '../../config/selectors';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
-const { useItemChat, useAvatar, useItemMemberships } = hooks;
+const { useItemChat, useAvatarUrl, useItemMemberships } = hooks;
 const {
   usePostItemChatMessage,
   usePatchItemChatMessage,
@@ -41,7 +41,6 @@ const Chatbox = ({ item }: Props): JSX.Element => {
   return (
     <GraaspChatbox
       id={CHATBOX_ID}
-      lang={currentMember.extra?.lang}
       members={members}
       sendMessageBoxId={CHATBOX_INPUT_BOX_ID}
       currentMember={currentMember}
@@ -52,7 +51,7 @@ const Chatbox = ({ item }: Props): JSX.Element => {
       sendMessageFunction={sendMessage as any}
       deleteMessageFunction={deleteMessage as any}
       editMessageFunction={editMessage as any}
-      useAvatarHook={useAvatar}
+      useAvatarUrl={useAvatarUrl}
     />
   );
 };

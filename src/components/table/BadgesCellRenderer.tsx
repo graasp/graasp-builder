@@ -9,7 +9,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { isItemHidden, isItemPublic } from '../../utils/itemTag';
 
-const { useItemPublishedInformation } = hooks;
+const { useManyItemPublishedInformations } = hooks;
 
 type ItemStatuses = {
   showChatbox: boolean;
@@ -39,8 +39,8 @@ export const useItemsStatuses = ({
   itemsTags: List<List<ItemTagRecord>>;
 }): ItemsStatuses => {
   // TODO: use MANY PUBLISHED
-  const { data: publishedInformations } = useItemPublishedInformation({
-    itemId: items.first().id,
+  const { data: publishedInformations } = useManyItemPublishedInformations({
+    itemIds: items.map((i) => i.id).toJS(),
   });
 
   return items.reduce((acc, r, idx) => {
@@ -52,6 +52,7 @@ export const useItemsStatuses = ({
     };
     const isHidden = isItemHidden({ itemTags });
     const isPublic = isItemPublic({ itemTags });
+    const isPublished = Boolean(publishedInformations?.data?.get(r.id));
 
     return {
       ...acc,
@@ -61,7 +62,7 @@ export const useItemsStatuses = ({
         isCollapsible,
         isHidden,
         isPublic,
-        isPublished: Boolean(publishedInformations),
+        isPublished,
       },
     };
   }, {} as ItemsStatuses);

@@ -1508,7 +1508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.3.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.3.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.21.5
   resolution: "@babel/runtime@npm:7.21.5"
   dependencies:
@@ -2345,11 +2345,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@npm:1.2.1":
+"@graasp/chatbox@github:graasp/graasp-chatbox#typeorm":
   version: 1.2.1
-  resolution: "@graasp/chatbox@npm:1.2.1"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=04dfc190566f9b912542b627b0f3ca7ac3a8480c"
   dependencies:
-    i18next: 21.8.1
     lodash.truncate: 4.4.2
     moment: 2.29.4
     prism-react-renderer: 1.3.5
@@ -2369,10 +2368,12 @@ __metadata:
     "@mui/icons-material": ^5.11.11
     "@mui/lab": ^5.0.0-alpha.121
     "@mui/material": ^5.11.11
+    i18next: 21.8.1
+    immutable: ^4.3.0
     react: ^17.0.0
     react-dom: "*"
     react-i18next: ^12.0.0
-  checksum: 7d358f2e1969038cd29ce0d0ac8ed768303ef46ce410c771c229be6acbe15a36f4f3d50da8a541bb29521ca623950c372dd5d456effb4b69c9926feb2ede2a18
+  checksum: f551cf73f0b68e038ac2b6e8c1dbf2a7fb1eb5e4ed2be0bfb72bc0a04b7ad41dbbdc53c2419f9518f3915c78423d75034297b19e7efe173ecddb24c803062d97
   languageName: node
   linkType: hard
 
@@ -2406,7 +2407,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#typeorm":
   version: 0.4.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=74ab851645335bc30af5155f5106762f8434df9e"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=b79f7aec6310607603bfdb5fdf9a52ab1ca030cf"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     "@graasp/translations": 1.13.0
@@ -2419,13 +2420,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 5c7f185d29cc492af05cbaa833b4fe787679c428936e2d4ff9fcf1fa362f8a07ed251af4f1750cf15ee2bf718b2c08731bd971b88d63a1da7bdc990c78294cfb
+  checksum: 845b130a21bd5c302bf24fd9c265fb6fe4da0f32268a3f82174f34c6e1cf8a9a0fd4cf1f5d542f89729c96e743f0eebc5fc325bf8b9bd977260922efaf4528df
   languageName: node
   linkType: hard
 
 "@graasp/sdk@github:graasp/graasp-sdk#typeorm":
   version: 0.12.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=a74a01b65c11fe48d428d224d9dd067e5642f68c"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=0ae4e64a0dfc18eab3aac4f3774ea39b235a068e"
   dependencies:
     "@fastify/secure-session": 5.3.0
     "@graasp/etherpad-api": 2.1.1
@@ -2437,7 +2438,7 @@ __metadata:
     qs: 6.11.1
     typeorm: 0.3.15
     uuid: 9.0.0
-  checksum: 9caae3cb552355b12dcbfa217b521a2eace46a90ba00e139bc1ef58915525e0a56fa9f599714cdb6c3e8830132c1d97eda762e4e75cb5fa2d597f44d9eac08eb
+  checksum: 79494cdbd3380644e2af203c06f52ea5650638606b53c89d97d302134fe8b4bd5d9ec1bf593ab96ed492475b8aaa9a6276645bcd8c7ff6fcceac4af4a4131ff4
   languageName: node
   linkType: hard
 
@@ -9772,7 +9773,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.8
     "@emotion/styled": 11.10.8
-    "@graasp/chatbox": 1.2.1
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#typeorm"
     "@graasp/plugin-websockets": 1.0.0
     "@graasp/query-client": "github:graasp/graasp-query-client#typeorm"
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
@@ -10319,15 +10320,6 @@ __metadata:
   bin:
     husky: lib/bin.js
   checksum: 837bc7e4413e58c1f2946d38fb050f5d7324c6f16b0fd66411ffce5703b294bd21429e8ba58711cd331951ee86ed529c5be4f76805959ff668a337dbfa82a1b0
-  languageName: node
-  linkType: hard
-
-"i18next@npm:21.8.1":
-  version: 21.8.1
-  resolution: "i18next@npm:21.8.1"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-  checksum: d95da86626356d980c7063f41f2dcb3ce82462a11aa968df10bb87eb19e7fa54a2303643551bfef6276c18e6fb12e8e320f6ff914ff2ad4e0b32ff849150fed0
   languageName: node
   linkType: hard
 

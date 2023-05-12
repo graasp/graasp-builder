@@ -26,10 +26,7 @@ type Payload = ErrorPayload & SuccessPayload;
 const i18n = buildI18n();
 
 const getErrorMessageFromPayload = (payload: ErrorPayload) =>
-  i18n.t(
-    payload?.error?.message ??
-    FAILURE_MESSAGES.UNEXPECTED_ERROR,
-  );
+  i18n.t(payload?.error?.message ?? FAILURE_MESSAGES.UNEXPECTED_ERROR);
 
 const getSuccessMessageFromPayload = (payload: SuccessPayload) =>
   i18n.t(payload?.message ?? 'The operation successfully proceeded');

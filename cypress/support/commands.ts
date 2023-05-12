@@ -81,7 +81,7 @@ import {
   mockRecycleItems,
   mockRestoreItems, mockUnpublishItem,
   mockSignInRedirection,
-  mockSignOut, mockGetPublishItemInformations,
+  mockSignOut, mockGetPublishItemInformations, mockGetManyPublishItemInformations,
   mockUpdatePassword, mockGetItemThumbnailUrl, mockGetLatestValidationGroup,
   mockUploadItem, mockGetItemLoginSchemaType, mockGetParents, mockGetItemLoginSchema, mockDeleteItemLoginSchemaRoute
 } from './server';
@@ -296,6 +296,8 @@ Cypress.Commands.add(
     mockUnpublishItem(items);
 
     mockGetPublishItemInformations(items)
+
+    mockGetManyPublishItemInformations(items)
 
     mockGetLatestValidationGroup(items, itemValidationGroups)
 

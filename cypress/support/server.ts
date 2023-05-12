@@ -3,7 +3,7 @@ import * as qs from 'qs';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { API_ROUTES } from '@graasp/query-client';
-import { App, Category, ChatMention, Item, ItemTagType, ItemValidationGroup, ItemValidationProcess, ItemValidationReview, ItemValidationStatus, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
+import { App, Category, ChatMention, Item, ItemTagType, ItemValidationGroup, ItemValidationReview, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import {
@@ -352,7 +352,7 @@ export const mockGetItems = ({ items, currentMember }: { items: ItemForTest[], c
         // mock membership
         const creator = item?.creator;
         const haveMembership =
-          creator === currentMember.id ||
+          creator?.id === currentMember.id ||
           item?.memberships?.find(
             ({ member }) => member.id === currentMember.id,
           );
@@ -1243,7 +1243,7 @@ export const mockGetMemberMentions = ({ mentions }: { mentions: ChatMention[] },
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
-      return reply({ id: CURRENT_USER.id, mentions });
+      return reply(mentions);
     },
   ).as('getMemberMentions');
 };
@@ -1728,6 +1728,34 @@ export const mockGetPublishItemInformations = (items: ItemForTest[]): void => {
       return reply({ item });
     },
   ).as('getPublishItemInformations');
+};
+
+export const mockGetManyPublishItemInformations = (items: ItemForTest[]): void => {
+  cy.intercept(
+    {
+      method: DEFAULT_GET.method,
+      url: new RegExp(`${API_HOST}/items/collections/informations`),
+    },
+    ({ reply, url }) => {
+
+      let itemIds = qs.parse(url.slice(url.indexOf('?') + 1)).itemId as string[];
+      if (!Array.isArray(itemIds)) {
+        itemIds = [itemIds];
+      }
+      const completeItems = items.filter((i) => itemIds.includes(i.id))
+
+      const result = { data: {}, errors: [] }
+      for (const i of completeItems) {
+        if (i.published) {
+          result.data[i.id] = i.published
+        } else {
+          result.errors.push({ statusCode: StatusCodes.NOT_FOUND })
+        }
+      }
+      return reply(result)
+
+    },
+  ).as('getManyPublishItemInformations');
 };
 
 

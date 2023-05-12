@@ -12,7 +12,7 @@
   "dependencies": {
     "@emotion/react": "11.10.8",
     "@emotion/styled": "11.10.8",
-    "@graasp/chatbox": "1.2.1",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#typeorm",
     "@graasp/query-client": "github:graasp/graasp-query-client#typeorm",
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm",
     "@graasp/translations": "1.13.0",
