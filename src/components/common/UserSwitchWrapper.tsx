@@ -28,6 +28,7 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
   } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = mutations.useSignOut();
+  // todo: does not exist on mutations since we use httpOnly Cookie
   // const { mutate: switchMember } = mutations.useSwitchMember();
 
   const renderAvatar = (m?: MemberRecord) => <MemberAvatar id={m?.id} />;
