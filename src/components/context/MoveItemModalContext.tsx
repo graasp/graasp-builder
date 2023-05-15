@@ -7,6 +7,7 @@ import { BUILDER } from '@graasp/translations';
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { TreePreventSelection } from '../../enums';
+import type { TreeModalProps } from '../main/TreeModal';
 import TreeModal from '../main/TreeModal';
 
 type Value = {
@@ -26,7 +27,7 @@ const MoveItemModalProvider = ({
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState<string[] | null>(null);
 
-  const openModal = (newItemIds) => {
+  const openModal = (newItemIds: string[]) => {
     setOpen(true);
     setItemIds(newItemIds);
   };
@@ -36,11 +37,11 @@ const MoveItemModalProvider = ({
     setItemIds(null);
   };
 
-  const onConfirm = (payload) => {
+  const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: !validate(payload.to) ? null : payload.to,
+      to: !validate(payload.to) ? undefined : payload.to,
     };
     moveItems(newPayload);
     onClose();

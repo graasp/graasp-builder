@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useMatch } from 'react-router';
 
-import { Item, ItemType, UnknownExtra } from '@graasp/sdk';
+import { Item, ItemType } from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -113,7 +113,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
     );
   };
 
-  const updateItem = (item: Partial<Item<UnknownExtra>>) => {
+  const updateItem = (item: Partial<Item>) => {
     // update content given current type
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,

@@ -12,7 +12,6 @@ import {
   AppItemType,
   DiscriminatedItem,
   Item,
-  UnknownExtra,
   getAppExtra,
 } from '@graasp/sdk';
 import { AppItemTypeRecord } from '@graasp/sdk/frontend';
@@ -28,9 +27,9 @@ import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
 
 type Props = {
-  onChange: (item: Partial<DiscriminatedItem<UnknownExtra>>) => void;
+  onChange: (item: Partial<DiscriminatedItem>) => void;
   item?: AppItemTypeRecord;
-  updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
+  updatedProperties: Partial<DiscriminatedItem>;
 };
 
 const AppForm = ({
@@ -61,7 +60,7 @@ const AppForm = ({
     const props = {
       ...item,
       extra: buildAppExtra({ url }),
-    } as unknown as Item<UnknownExtra>;
+    } as unknown as Item;
     onChange(props);
   };
 

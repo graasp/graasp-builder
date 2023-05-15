@@ -2347,7 +2347,7 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox#typeorm":
   version: 1.2.1
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=04dfc190566f9b912542b627b0f3ca7ac3a8480c"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e16748b897afaed06050a5452e34ff76d054e562"
   dependencies:
     lodash.truncate: 4.4.2
     moment: 2.29.4
@@ -2373,7 +2373,7 @@ __metadata:
     react: ^17.0.0
     react-dom: "*"
     react-i18next: ^12.0.0
-  checksum: f551cf73f0b68e038ac2b6e8c1dbf2a7fb1eb5e4ed2be0bfb72bc0a04b7ad41dbbdc53c2419f9518f3915c78423d75034297b19e7efe173ecddb24c803062d97
+  checksum: 708af4f3f02c99df1ad73bc18b4dccdcfbf47aeb94928118cd0cfcd45824f6d8a3a1c0a1384c4ceb37286c94e58612834b9d834bacc48a3fa3fdd002cf630bb8
   languageName: node
   linkType: hard
 
@@ -2407,7 +2407,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#typeorm":
   version: 0.4.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=f92899a1b5e6caa78b75bb2207392276b3232b16"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1ec6a893462951c262c3ce6ce2849a9996439d54"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     "@graasp/translations": 1.13.0
@@ -2420,7 +2420,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: bebe468002ced7b60aa4d56d1936c589e3c8d5c94e34ebb3222c0a2b4533bdf0474e02a980980c38afba69a99422370f865947f382234de36ce711b011a1d0a2
+  checksum: 610b8118612728352a98c1a292a8d06414385622357c67a93cd007f0f817b2e1a217d9e058701a2532fffcc118bb1d616de66961b66b7c8bb4ef744db1a06969
   languageName: node
   linkType: hard
 

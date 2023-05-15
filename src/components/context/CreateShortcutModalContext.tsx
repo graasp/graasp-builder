@@ -28,7 +28,7 @@ const CreateShortcutModalProvider = ({ children }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: createShortcut } = mutations.usePostItem();
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState<Item>();
+  const [item, setItem] = useState<Item | null>(null);
 
   const openModal = (newItem: Item) => {
     setOpen(true);
@@ -46,7 +46,7 @@ const CreateShortcutModalProvider = ({ children }: Props): JSX.Element => {
         parentId?: string;
       } = {
       name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {
-        name: item.name,
+        name: item?.name,
       }),
       extra: buildShortcutExtra(target),
       type: ItemType.SHORTCUT,

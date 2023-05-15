@@ -1,7 +1,11 @@
 import { List } from 'immutable';
 
 import { Item } from '@graasp/sdk';
-import { ItemRecord, ItemTagRecord } from '@graasp/sdk/frontend';
+import {
+  ItemRecord,
+  ItemTagRecord,
+  ResultOfRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ItemBadges } from '@graasp/ui';
 
@@ -31,20 +35,27 @@ const DEFAULT_ITEM_STATUSES: ItemStatuses = {
 
 export type ItemsStatuses = { [key: ItemRecord['id']]: ItemStatuses };
 
+type Props = {
+  itemsStatuses?: ItemsStatuses;
+};
+
+type ChildCompProps = {
+  data: Item | ItemRecord;
+};
+
 export const useItemsStatuses = ({
   items,
   itemsTags,
 }: {
   items: List<ItemRecord>;
-  itemsTags: List<List<ItemTagRecord>>;
+  itemsTags: ResultOfRecord<List<ItemTagRecord>>;
 }): ItemsStatuses => {
-  // TODO: use MANY PUBLISHED
   const { data: publishedInformations } = useManyItemPublishedInformations({
     itemIds: items.map((i) => i.id).toJS(),
   });
 
-  return items.reduce((acc, r, idx) => {
-    const itemTags = itemsTags?.get(idx);
+  return items.reduce((acc, r) => {
+    const itemTags = itemsTags?.data?.get(r.id);
     const { showChatbox, isPinned, isCollapsible } = {
       ...DEFAULT_ITEM_STATUSES,
       // the settings are an immutable
@@ -66,14 +77,6 @@ export const useItemsStatuses = ({
       },
     };
   }, {} as ItemsStatuses);
-};
-
-type Props = {
-  itemsStatuses?: ItemsStatuses;
-};
-
-type ChildCompProps = {
-  data: Item | ItemRecord;
 };
 
 const BadgesCellRenderer = ({

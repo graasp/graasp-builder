@@ -25,7 +25,7 @@ import CancelButton from '../common/CancelButton';
 const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
-type Props = {
+export type TreeModalProps = {
   onConfirm: (args: { ids: string[]; to: string }) => void;
   onClose: (args: { id: string; open: boolean }) => void;
   title: string;
@@ -41,7 +41,7 @@ const TreeModal = ({
   open = false,
   itemIds = [],
   prevent = TreePreventSelection.NONE,
-}: Props): JSX.Element => {
+}: TreeModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: ownItems, isLoading: isOwnItemsLoading } = useOwnItems();
   // todo: get only shared items with write/admin rights

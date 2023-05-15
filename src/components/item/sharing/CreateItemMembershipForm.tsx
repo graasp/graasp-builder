@@ -8,14 +8,12 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useState } from 'react';
 
-import { routines } from '@graasp/query-client';
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER, FAILURE_MESSAGES } from '@graasp/translations';
+import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import notifier from '../../../config/notifier';
 import { mutations } from '../../../config/queryClient';
 import {
   CREATE_MEMBERSHIP_FORM_ID,
@@ -26,7 +24,6 @@ import ItemMembershipSelect, {
   ItemMembershipSelectProps,
 } from './ItemMembershipSelect';
 
-const { shareItemRoutine } = routines;
 type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
 type Props = {
   item: ItemRecord;
@@ -110,17 +107,7 @@ const CreateItemMembershipForm = ({
 
       // manually notify error
       if (result?.errors?.size) {
-        notifier({
-          type: shareItemRoutine.FAILURE,
-          payload: {
-            error: {
-              name: 'error',
-              message:
-                result?.errors?.first()?.message ||
-                FAILURE_MESSAGES.UNEXPECTED_ERROR,
-            },
-          },
-        });
+        console.error(result?.errors);
       } else {
         // reset email input
         setInvitation({

@@ -108,15 +108,16 @@ const CategorySelection = ({ disabled }: Props): JSX.Element => {
       <Typography variant="h6" mt={2}>
         {translateBuilder(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
       </Typography>
-      {List(categoriesMap)?.map(([type, categories]) => {
+      {Object.values(CategoryType)?.map((type) => {
         const values =
-          categories
-            .map((c) => c.set('name', translateCategories(c.name)))
+          categoriesMap
+            .get(type)
+            ?.map((c) => c.set('name', translateCategories(c.name)))
             ?.sort(sortByName) ?? List();
 
         return (
           <DropdownMenu
-            key={type as CategoryType}
+            key={type}
             disabled={disabled}
             title={translateCategories(type)}
             handleChange={handleChange}

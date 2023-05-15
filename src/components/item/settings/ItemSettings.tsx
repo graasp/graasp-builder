@@ -44,8 +44,10 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
 
   const { settings } = item;
 
-  const [settingLocal, setSettingLocal] =
-    useState<ImmutableCast<ItemSettingsType>>(settings);
+  // todo: fix type
+  const [settingLocal, setSettingLocal] = useState<
+    ImmutableCast<ItemSettingsType>
+  >(settings as ImmutableCast<ItemSettingsType>);
 
   useEffect(
     () => {

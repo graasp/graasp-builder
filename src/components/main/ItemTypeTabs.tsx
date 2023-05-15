@@ -3,7 +3,7 @@ import { Tab, Tabs, styled } from '@mui/material';
 
 import { useState } from 'react';
 
-import { ItemType } from '@graasp/sdk';
+import { ItemType, MimeTypes } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ItemIcon } from '@graasp/ui';
 
@@ -53,7 +53,7 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
       alt={translateBuilder(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
       type={ItemType.LOCAL_FILE}
       sx={{ mb: 0 }}
-      extra={{ file: { mimetype: 'application/zip' } }}
+      extra={{ file: { mimetype: MimeTypes.ZIP } }}
     />
   );
 

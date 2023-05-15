@@ -1,10 +1,9 @@
 import Uppy from '@uppy/core';
-import { StatusBarProps } from '@uppy/react/src/StatusBar';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { useEffect, useRef, useState } from 'react';
+import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 
 import { MemberRecord } from '@graasp/sdk/frontend';
 import { ACCOUNT } from '@graasp/translations';
@@ -66,11 +65,7 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
     return null;
   }
 
-  const handleClose: StatusBarProps['handleClose'] = (_event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
+  const handleClose: MouseEventHandler<HTMLButtonElement> = (_event) => {
     setOpenStatusBar(false);
   };
 

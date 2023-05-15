@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { theme as GraaspTheme } from '@graasp/ui';
 
-import { ENV, NODE_ENV, SHOW_NOTIFICATIONS } from '../config/constants';
+import { ENV, NODE_ENV } from '../config/constants';
 import i18nConfig from '../config/i18n';
 import {
   QueryClientProvider,
@@ -28,9 +28,7 @@ const Root = (): JSX.Element => (
     <I18nextProvider i18n={i18nConfig}>
       <ThemeProvider theme={GraaspTheme}>
         <CssBaseline />
-        {SHOW_NOTIFICATIONS && (
-          <ToastContainer position="bottom-right" theme="colored" />
-        )}
+        {true && <ToastContainer position="bottom-right" theme="colored" />}
         <Router>
           <ModalProviders>
             <CurrentUserContextProvider>

@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 
 import { useEffect } from 'react';
 
-import { GraaspError } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
@@ -35,20 +34,15 @@ const FavoriteItems = (): JSX.Element => {
     isError: isItemsError,
   } = hooks.useItems([...new Set(getFavoriteItems(member).toArray())]);
   const { mutate: editMember } = mutations.useEditMember();
-  // Whenever we have a change in the favorite items, we check for any deleted items and remove them
-  // this effect does not take effect if there is only one (deleted) item
+  // if we get an error while fetching the favorite items
+  // we replace the favorite item table with the fetched items
+  // bug: this might fail for time out
   useEffect(() => {
-    if (data?.errors) {
-      // remove errors from array
-      const errorIds = data.errors
-        .toJS()
-        .map((e: GraaspError) => (e?.data as any)?.id);
+    if (data?.errors?.size && data?.data) {
       editMember({
         id: member.id,
         extra: {
-          favoriteItems: member.extra.favoriteItems
-            ?.filter((id) => !errorIds.includes(id))
-            .toArray(),
+          favoriteItems: Object.values(data.data.toJS()).map(({ id }) => id),
         },
       });
     }
