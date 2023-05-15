@@ -2,9 +2,9 @@ import { Button, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { ChangeEvent, FC, useState } from 'react';
-import { toast } from 'react-toastify';
+import { ChangeEvent, useState } from 'react';
 
+import { isPasswordStrong } from '@graasp/sdk';
 import { ACCOUNT, FAILURE_MESSAGES } from '@graasp/translations';
 
 import { useAccountTranslation } from '../../config/i18n';
@@ -16,31 +16,30 @@ import {
   USER_CURRENT_PASSWORD_INPUT_ID,
   USER_NEW_PASSWORD_INPUT_ID,
 } from '../../config/selectors';
-import {
-  newPasswordValidator,
-  passwordValidator,
-  strengthValidator,
-} from '../../utils/validation';
 
-const PasswordSetting: FC = () => {
+const PasswordSetting = (): JSX.Element => {
   const { t: translateAccount } = useAccountTranslation();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState<string | boolean>();
+  const [newPasswordError, setNewPasswordError] = useState<string | null>();
   const [confirmPasswordError, setConfirmPasswordError] = useState<
-    string | boolean
+    string | null
   >();
   const { mutate: updatePassword } = mutations.useUpdatePassword();
 
   const verifyEmptyPassword = () => {
-    const checkingNewPassword = passwordValidator(newPassword);
-    const checkingConfirmPassword = passwordValidator(confirmPassword);
-    setNewPasswordError(checkingNewPassword);
-    setConfirmPasswordError(checkingConfirmPassword);
+    const newPasswordIsNotEmpty = Boolean(newPassword);
+    const confirmPasswordIsNotEmpty = Boolean(confirmPassword);
+    setNewPasswordError(
+      newPasswordIsNotEmpty ? null : FAILURE_MESSAGES.PASSWORD_EMPTY_ERROR,
+    );
+    setConfirmPasswordError(
+      confirmPasswordIsNotEmpty ? null : FAILURE_MESSAGES.PASSWORD_EMPTY_ERROR,
+    );
     // throw error if one of the password fields is empty
-    if (checkingNewPassword || checkingConfirmPassword) {
+    if (newPasswordIsNotEmpty || confirmPasswordIsNotEmpty) {
       throw FAILURE_MESSAGES.PASSWORD_EMPTY_ERROR;
     }
   };
@@ -52,22 +51,28 @@ const PasswordSetting: FC = () => {
   };
 
   const handleChangePassword = () => {
-    try {
-      // verify there are no empty inputs
-      verifyEmptyPassword();
-      // perform validation when all fields are filled in
-      newPasswordValidator(currentPassword, newPassword, confirmPassword);
-      // check password strength for new password
-      strengthValidator(newPassword);
-      // perform password update
-      updatePassword({
-        password: newPassword,
-        currentPassword,
-      });
-      onClose();
-    } catch (err) {
-      toast.error(err);
+    // verify there are no empty inputs
+    verifyEmptyPassword();
+    // perform validation when all fields are filled in
+    if (currentPassword === newPassword) {
+      return setNewPassword(FAILURE_MESSAGES.PASSWORD_EQUAL_ERROR);
     }
+    if (newPassword !== confirmPassword) {
+      return setConfirmPasswordError(FAILURE_MESSAGES.PASSWORD_CONFIRM_ERROR);
+    }
+
+    // check password strength for new password
+    if (!isPasswordStrong(newPassword)) {
+      return setNewPassword(FAILURE_MESSAGES.PASSWORD_WEAK_ERROR);
+    }
+
+    // perform password update
+    updatePassword({
+      password: newPassword,
+      currentPassword,
+    });
+
+    return onClose();
   };
 
   const handleCurrentPasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +80,11 @@ const PasswordSetting: FC = () => {
   };
   const handleNewPasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
     setNewPassword(event.target.value);
-    setNewPasswordError(passwordValidator(event.target.value));
+    setNewPasswordError(event.target.value ? null : 'Password is empty');
   };
   const handleConfirmPasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value);
-    setConfirmPasswordError(passwordValidator(event.target.value));
+    setConfirmPasswordError(event.target.value ? null : 'Password is empty');
   };
 
   return (

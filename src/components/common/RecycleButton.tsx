@@ -4,8 +4,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
@@ -24,13 +22,13 @@ type Props = {
   onClick?: () => void;
 };
 
-const RecycleButton: FC<Props> = ({
+const RecycleButton = ({
   itemIds,
   color = 'default',
   id,
   type = ActionButton.ICON_BUTTON,
   onClick,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: recycleItems } = mutations.useRecycleItems();
 

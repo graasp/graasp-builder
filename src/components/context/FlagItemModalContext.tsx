@@ -2,11 +2,15 @@ import { List } from 'immutable';
 
 import { createContext, useMemo, useState } from 'react';
 
+import { routines } from '@graasp/query-client';
 import { FlagType } from '@graasp/sdk';
 import { ItemFlagDialog } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
+import notifier from '../../config/notifier';
 import { mutations } from '../../config/queryClient';
+
+const { postItemFlagRoutine } = routines;
 
 const FlagItemModalContext = createContext<{
   openModal?: (id: string) => void;
@@ -22,7 +26,7 @@ const FlagItemModalProvider = ({
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState<string | null>(null);
 
-  const openModal = (newItemId) => {
+  const openModal = (newItemId: string) => {
     setOpen(true);
     setItemId(newItemId);
   };
@@ -33,10 +37,17 @@ const FlagItemModalProvider = ({
   };
 
   const onFlag = (newFlag?: FlagType) => {
-    postItemFlag({
-      type: newFlag,
-      itemId,
-    });
+    if (!itemId || !newFlag) {
+      notifier({
+        type: postItemFlagRoutine.FAILURE,
+        payload: { error: new Error('item id or flag type is not defined') },
+      });
+    } else {
+      postItemFlag({
+        type: newFlag,
+        itemId,
+      });
+    }
     onClose();
   };
 

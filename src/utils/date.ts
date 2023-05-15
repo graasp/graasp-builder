@@ -6,12 +6,9 @@ import { DEFAULT_LOCALE } from '../config/constants';
 // eslint-disable-next-line import/prefer-default-export
 export const formatDate = (
   datetime: Date,
-  args: { locale?: string; defaultValue?: string } = {
-    locale: DEFAULT_LOCALE,
-    defaultValue: 'Unknown',
-  },
+  args: { locale?: string; defaultValue?: string },
 ): string => {
-  const { locale, defaultValue } = args;
+  const { locale = DEFAULT_LOCALE, defaultValue = 'Unknown' } = args;
   if (!datetime) {
     return defaultValue;
   }

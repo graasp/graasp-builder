@@ -83,7 +83,10 @@ export const getChildren = (items: Item[], id: string): Item[] =>
 export const isRootItem = ({ path }: { path: string }): boolean =>
   path.length === UUID_LENGTH;
 
-export const isUrlValid = (str: string): boolean => {
+export const isUrlValid = (str?: string): boolean => {
+  if (!str) {
+    return false;
+  }
   const pattern = new RegExp(
     '^(https?:\\/\\/)+' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
@@ -93,7 +96,7 @@ export const isUrlValid = (str: string): boolean => {
       '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
-  return Boolean(str) && pattern.test(str);
+  return pattern.test(str);
 };
 
 export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
@@ -119,7 +122,7 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     }
     case ItemType.DOCUMENT: {
       const { content } = getDocumentExtra(item.extra) || {};
-      hasValidTypeProperties = content?.length > 0;
+      hasValidTypeProperties = Boolean(content && content.length > 0);
       break;
     }
     default:
@@ -151,9 +154,7 @@ export const useIsParentInstance = ({
   instance,
   item,
 }: {
-  instance:
-    | Pick<Partial<Invitation>, 'item'>
-    | Pick<Partial<ItemMembership>, 'item'>;
+  instance: Pick<Invitation, 'item'> | Pick<ItemMembership, 'item'>;
   item: ItemRecord;
 }): boolean => {
   const [isParentMembership, setIsParentMembership] = useState(false);

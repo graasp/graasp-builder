@@ -1,7 +1,7 @@
 import { List } from 'immutable';
 import truncate from 'lodash.truncate';
 
-import { CSSProperties, FC, PropsWithChildren } from 'react';
+import { CSSProperties, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Item, ItemType } from '@graasp/sdk';
@@ -22,14 +22,10 @@ import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
-const NameWrapper = ({
-  id,
-  style,
-}: {
-  id: string;
-  style: CSSProperties;
-}): FC => {
-  const NameComponent: FC<PropsWithChildren<unknown>> = ({ children }) => (
+const NameWrapper = ({ id, style }: { id: string; style: CSSProperties }) => {
+  const NameComponent = ({
+    children,
+  }: PropsWithChildren<unknown>): JSX.Element => (
     <Link to={buildItemPath(id)} id={buildItemLink(id)} style={style}>
       {children}
     </Link>
@@ -39,11 +35,15 @@ const NameWrapper = ({
 
 type Props = {
   item: ItemRecord;
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
   itemsStatuses?: ItemsStatuses;
 };
 
-const ItemComponent: FC<Props> = ({ item, memberships, itemsStatuses }) => {
+const ItemComponent = ({
+  item,
+  memberships,
+  itemsStatuses,
+}: Props): JSX.Element => {
   const { id, name } = item;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({ id });
 

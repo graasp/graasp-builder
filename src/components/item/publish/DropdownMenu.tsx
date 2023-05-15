@@ -7,7 +7,7 @@ import Autocomplete, {
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { FC, SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 
 import { Category, CategoryType } from '@graasp/sdk';
 import { CategoryRecord, ItemCategoryRecord } from '@graasp/sdk/frontend';
@@ -33,14 +33,14 @@ type Props = {
   ) => void;
 };
 
-const DropdownMenu: FC<Props> = ({
+const DropdownMenu = ({
   disabled,
   type,
   title,
   handleChange,
   values,
   selectedValues,
-}) => {
+}: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   if (!values.size) {
@@ -74,7 +74,7 @@ const DropdownMenu: FC<Props> = ({
             placeholder={translateBuilder(BUILDER.DROP_DOWN_PLACEHOLDER)}
           />
         )}
-        renderOption={(props: Record<string, unknown>, option: Category) => (
+        renderOption={(props, option) => (
           <li
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}

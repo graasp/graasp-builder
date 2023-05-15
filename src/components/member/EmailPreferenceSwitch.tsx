@@ -1,7 +1,5 @@
 import { SelectChangeEvent } from '@mui/material';
 
-import { FC } from 'react';
-
 import { Select } from '@graasp/ui';
 
 import { emailFrequency } from '../../config/constants';
@@ -14,11 +12,11 @@ type EmailPreferenceSwitchProps = {
   emailFreq: string;
 };
 
-const EmailPreferenceSwitch: FC<EmailPreferenceSwitchProps> = ({
+const EmailPreferenceSwitch = ({
   id,
   memberId,
   emailFreq,
-}) => {
+}: EmailPreferenceSwitchProps): JSX.Element => {
   const { mutate: editMember } = mutations.useEditMember();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {

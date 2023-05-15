@@ -3,8 +3,6 @@ import PieChartIcon from '@mui/icons-material/PieChart';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -16,7 +14,7 @@ type Props = {
   id: string;
 };
 
-const AnalyticsDashboardButton: FC<Props> = ({ id }) => {
+const AnalyticsDashboardButton = ({ id }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
 

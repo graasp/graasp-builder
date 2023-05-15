@@ -1,7 +1,7 @@
 import { ColDef, Column, IRowDragItem } from 'ag-grid-community';
 import { List } from 'immutable';
 
-import { FC, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import {
@@ -58,7 +58,7 @@ type Props = {
   showCreator?: boolean;
 };
 
-const ItemsTable: FC<Props> = ({
+const ItemsTable = ({
   tableTitle,
   id: tableId = '',
   items: rows = List(),
@@ -73,7 +73,7 @@ const ItemsTable: FC<Props> = ({
   isEditing = false,
   showThumbnails = true,
   showCreator = false,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();

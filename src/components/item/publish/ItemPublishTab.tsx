@@ -9,7 +9,7 @@ import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import UpdateIcon from '@mui/icons-material/Update';
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
 import { DATA_KEYS } from '@graasp/query-client';
@@ -56,10 +56,10 @@ const enum PublishFlow {
   PUBLISH_STEP,
 }
 
-const ItemPublishTab: FC<Props> = ({
+const ItemPublishTab = ({
   item,
   permission = PermissionLevel.Read,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const queryClient = useQueryClient();
 
@@ -77,7 +77,8 @@ const ItemPublishTab: FC<Props> = ({
     memberId: currentMember?.id,
   });
 
-  const [validationStatus, setValidationStatus] = useState(null);
+  const [validationStatus, setValidationStatus] =
+    useState<ItemValidationStatus | null>(null);
 
   const isPublic = itemTags?.find(({ type }) => type === ItemTagType.PUBLIC);
 
@@ -92,7 +93,10 @@ const ItemPublishTab: FC<Props> = ({
 
   useEffect(() => {
     // check if validation is still valid
-    const isOutdated = lastItemValidationGroup?.createdAt <= item?.updatedAt;
+    const isOutdated =
+      Boolean(!lastItemValidationGroup) ||
+      Boolean(!lastItemValidationGroup.createdAt) ||
+      lastItemValidationGroup.createdAt <= item?.updatedAt;
     // QUESTION: should this be null instead?
     if (isOutdated) {
       setValidationStatus(ItemValidationStatus.Failure);
@@ -101,7 +105,7 @@ const ItemPublishTab: FC<Props> = ({
     const mapByStatus = lastItemValidationGroup?.itemValidations?.groupBy(
       ({ status }) => status,
     );
-    let status;
+    let status = null;
     if (mapByStatus?.get(ItemValidationStatus.Failure)) {
       status = ItemValidationStatus.Failure;
     } else if (mapByStatus?.get(ItemValidationStatus.Pending)) {

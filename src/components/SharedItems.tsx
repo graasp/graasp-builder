@@ -1,6 +1,6 @@
-import Box from '@mui/material/Box';
+import { List } from 'immutable';
 
-import { FC } from 'react';
+import Box from '@mui/material/Box';
 
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
@@ -16,7 +16,7 @@ import ItemHeader from './item/header/ItemHeader';
 import Items from './main/Items';
 import Main from './main/Main';
 
-const SharedItems: FC = () => {
+const SharedItems = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
 
@@ -35,7 +35,7 @@ const SharedItems: FC = () => {
         <Items
           id={SHARED_ITEMS_ID}
           title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-          items={sharedItems}
+          items={sharedItems ?? List()}
           showCreator
         />
       </Box>

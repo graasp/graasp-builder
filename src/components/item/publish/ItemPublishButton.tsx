@@ -24,7 +24,7 @@ const ItemPublishButton = ({
   item,
   isValidated,
   disabled,
-}: Props): JSX.Element => {
+}: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   // item tags
@@ -36,7 +36,7 @@ const ItemPublishButton = ({
 
   const [isPublished, setIsPublished] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [emailNotification, setEmailNotification] = useState(null);
+  const [emailNotification, setEmailNotification] = useState<boolean>(false);
 
   // update state variables depending on fetch values
   useEffect(() => {

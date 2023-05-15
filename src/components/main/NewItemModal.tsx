@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useMatch } from 'react-router';
 
 import { Item, ItemType, UnknownExtra } from '@graasp/sdk';
@@ -44,7 +44,7 @@ type Props = {
   handleClose: () => void;
 };
 
-const NewItemModal: FC<Props> = ({ open, handleClose }) => {
+const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 

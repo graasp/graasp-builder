@@ -18,7 +18,7 @@ const FolderForm = ({
   item,
   updatedProperties,
 }: Props): JSX.Element => {
-  const onCaptionChange = (content) => {
+  const onCaptionChange = (content: string): void => {
     onChange({
       ...updatedProperties,
       description: content,

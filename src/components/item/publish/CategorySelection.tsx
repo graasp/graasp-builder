@@ -3,22 +3,26 @@ import { List } from 'immutable';
 import { AutocompleteChangeReason, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { FC, SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 import { useParams } from 'react-router';
 
+import { routines } from '@graasp/query-client';
 import { Category, CategoryType } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, FAILURE_MESSAGES } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import {
   useBuilderTranslation,
   useCategoriesTranslation,
 } from '../../../config/i18n';
+import notifier from '../../../config/notifier';
 import { hooks, mutations } from '../../../config/queryClient';
 import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
 import { sortByName } from '../../../utils/item';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import DropdownMenu from './DropdownMenu';
+
+const { postItemCategoryRoutine } = routines;
 
 const { useCategories, useItemCategories } = hooks;
 const { usePostItemCategory, useDeleteItemCategory } = mutations;
@@ -30,7 +34,7 @@ type Props = {
   disabled: boolean;
 };
 
-const CategorySelection: FC<Props> = ({ disabled }) => {
+const CategorySelection = ({ disabled }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCategories } = useCategoriesTranslation();
   const { mutate: createItemCategory } = usePostItemCategory();
@@ -55,7 +59,7 @@ const CategorySelection: FC<Props> = ({ disabled }) => {
     return <Loader />;
   }
 
-  if (!categoriesMap.size) {
+  if (!categoriesMap?.size) {
     return null;
   }
 
@@ -73,13 +77,21 @@ const CategorySelection: FC<Props> = ({ disabled }) => {
     if (reason === SELECT_OPTION) {
       // post new category
       const newCategoryId = target.getAttribute('data-id');
-      createItemCategory({
-        itemId,
-        categoryId: newCategoryId,
-      });
-    } else if (reason === REMOVE_OPTION) {
+      if (!newCategoryId) {
+        notifier({
+          type: postItemCategoryRoutine.FAILURE,
+          payload: { error: new Error(FAILURE_MESSAGES.UNEXPECTED_ERROR) },
+        });
+      } else {
+        createItemCategory({
+          itemId,
+          categoryId: newCategoryId,
+        });
+      }
+    }
+    if (reason === REMOVE_OPTION) {
       const deletedCategoryId = target.getAttribute('data-id');
-      const itemCategoryIdToDelete = itemCategories.find(
+      const itemCategoryIdToDelete = itemCategories?.find(
         ({ category }) => category.id === deletedCategoryId,
       )?.id;
       if (itemCategoryIdToDelete) {

@@ -1,3 +1,6 @@
+import Uppy from '@uppy/core';
+import { StatusBarProps } from '@uppy/react/src/StatusBar';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -14,7 +17,7 @@ import { useAccountTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME } from '../../config/selectors';
 import { configureAvatarUppy } from '../../utils/uppy';
-import CropModal from '../common/CropModal';
+import CropModal, { CropProps } from '../common/CropModal';
 import MemberAvatar from '../common/MemberAvatar';
 import StatusBar from '../file/StatusBar';
 
@@ -24,7 +27,7 @@ type Props = {
 
 const AvatarSetting = ({ user }: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>();
-  const [uppy, setUppy] = useState(null);
+  const [uppy, setUppy] = useState<Uppy>(null);
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState<string>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
@@ -63,7 +66,7 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
     return null;
   }
 
-  const handleClose = (_event, reason) => {
+  const handleClose: StatusBarProps['handleClose'] = (_event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -89,7 +92,7 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
     }
   };
 
-  const onConfirmCrop = (croppedImage) => {
+  const onConfirmCrop: CropProps['onConfirm'] = (croppedImage) => {
     onClose();
 
     // submit cropped image

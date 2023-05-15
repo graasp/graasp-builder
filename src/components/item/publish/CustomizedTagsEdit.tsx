@@ -1,7 +1,7 @@
 import { Chip, TextField, Typography } from '@mui/material';
+import type { TextFieldProps } from '@mui/material';
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { MouseEventHandler, useEffect, useState } from 'react';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
@@ -29,10 +29,8 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
   // user
   const { isLoading: isMemberLoading } = useCurrentUserContext();
 
-  // current item
-  const { itemId } = useParams();
-
   const settings = item?.settings;
+  const itemId = item?.id;
 
   const [displayValues, setDisplayValues] = useState<string>();
 
@@ -44,11 +42,11 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
 
   if (isMemberLoading) return <Loader />;
 
-  const handleChange = (event) => {
+  const handleChange: TextFieldProps['onChange'] = (event) => {
     setDisplayValues(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit: MouseEventHandler = (event) => {
     event.preventDefault();
     const tagsList =
       displayValues

@@ -1,7 +1,6 @@
 import { Button, Container, styled } from '@mui/material';
 
 import { useState } from 'react';
-import type { UseQueryResult } from 'react-query';
 
 import { Api } from '@graasp/query-client';
 import {
@@ -19,7 +18,6 @@ import {
   DocumentItemTypeRecord,
   EmbeddedLinkItemTypeRecord,
   EtherpadItemTypeRecord,
-  EtherpadRecord,
   FolderItemTypeRecord,
   H5PItemTypeRecord,
   ItemRecord,
@@ -132,7 +130,7 @@ const LinkContent = ({
   cancelButtonId,
 }: {
   item: EmbeddedLinkItemTypeRecord;
-  member: MemberRecord;
+  member?: MemberRecord;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
   onCancelCaption: (caption: string) => void;
@@ -141,7 +139,7 @@ const LinkContent = ({
 }): JSX.Element => (
   <StyledContainer>
     <LinkItem
-      memberId={member.id}
+      memberId={member?.id}
       isResizable
       item={item}
       editCaption={isEditing}
@@ -249,7 +247,7 @@ const AppContent = ({
   cancelButtonId,
 }: {
   item: AppItemTypeRecord;
-  member: MemberRecord;
+  member?: MemberRecord;
   permission: PermissionLevel;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
@@ -272,12 +270,12 @@ const AppContent = ({
     contextPayload={{
       apiHost: API_HOST,
       itemId: item.id,
-      memberId: member.id,
+      memberId: member?.id,
       permission,
       settings: item.settings,
       lang:
         // todo: remove once it is added in ItemSettings type in sdk
-        item.settings?.lang || member.extra?.lang || DEFAULT_LANG,
+        item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
       context: Context.Builder,
     }}
   />
@@ -307,7 +305,7 @@ const FolderContent = ({
     return <Loader />;
   }
 
-  if (isError) {
+  if (isError || !children) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
@@ -331,9 +329,9 @@ const FolderContent = ({
  * Helper component to render typed H5P items
  */
 const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
-  const { contentId } = getH5PExtra(item?.extra);
+  const extra = getH5PExtra(item?.extra);
 
-  if (!contentId) {
+  if (!extra?.contentId) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
@@ -341,7 +339,7 @@ const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
     <H5PItem
       itemId={item.id}
       itemName={item.name}
-      contentId={contentId}
+      contentId={extra.contentId}
       integrationUrl={H5P_INTEGRATION_URL}
     />
   );
@@ -359,7 +357,7 @@ const EtherpadContent = ({
     data: etherpad,
     isLoading,
     isError,
-  }: UseQueryResult<EtherpadRecord> = useEtherpad(
+  } = useEtherpad(
     item,
     'write', // server will return read view if no write access allowed
   );
@@ -403,7 +401,7 @@ const ItemContent = ({
 
   const { data: member, isLoading, isError } = useCurrentUserContext();
 
-  const isEditing = enableEditing && editingItemId === item.id;
+  const isEditing = Boolean(enableEditing && editingItemId === item?.id);
 
   if (isLoading) {
     return <Loader />;
@@ -495,7 +493,7 @@ const ItemContent = ({
         <FolderContent
           item={item}
           isEditing={isEditing}
-          enableEditing={enableEditing}
+          enableEditing={enableEditing ?? false}
         />
       );
 

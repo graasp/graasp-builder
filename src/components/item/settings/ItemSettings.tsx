@@ -3,7 +3,7 @@ import { FormControlLabel, FormGroup, Switch, Tooltip } from '@mui/material';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   ItemSettings as ItemSettingsType,
@@ -37,7 +37,7 @@ type Props = {
   item: ItemRecord;
 };
 
-const ItemSettings: FC<Props> = ({ item }) => {
+const ItemSettings = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = mutations.useEditItem();

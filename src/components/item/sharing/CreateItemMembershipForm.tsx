@@ -2,7 +2,7 @@ import { List } from 'immutable';
 import validator from 'validator';
 
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { Grid, TextField } from '@mui/material';
+import { Grid, TextField, TextFieldProps } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { routines } from '@graasp/query-client';
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
+import { BUILDER, FAILURE_MESSAGES } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -22,7 +22,9 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../config/selectors';
-import ItemMembershipSelect from './ItemMembershipSelect';
+import ItemMembershipSelect, {
+  ItemMembershipSelectProps,
+} from './ItemMembershipSelect';
 
 const { shareItemRoutine } = routines;
 type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
@@ -37,7 +39,7 @@ const CreateItemMembershipForm = ({
   memberships,
 }: Props): JSX.Element => {
   const itemId = item.id;
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string | null>();
 
   const { mutateAsync: shareItem } = mutations.useShareItem();
 
@@ -78,8 +80,11 @@ const CreateItemMembershipForm = ({
     return null;
   };
 
-  const onChangePermission = (e) => {
-    setInvitation({ ...invitation, permission: e.target.value });
+  const onChangePermission: ItemMembershipSelectProps['onChange'] = (e) => {
+    setInvitation({
+      ...invitation,
+      permission: e.target.value as PermissionLevel,
+    });
   };
 
   const handleShare = async () => {
@@ -110,7 +115,9 @@ const CreateItemMembershipForm = ({
           payload: {
             error: {
               name: 'error',
-              message: result?.errors?.first().message,
+              message:
+                result?.errors?.first()?.message ||
+                FAILURE_MESSAGES.UNEXPECTED_ERROR,
             },
           },
         });
@@ -127,7 +134,7 @@ const CreateItemMembershipForm = ({
     return returnedValue;
   };
 
-  const onChangeEmail = (event) => {
+  const onChangeEmail: TextFieldProps['onChange'] = (event) => {
     const newInvitation = {
       ...invitation,
       email: event.target.value,

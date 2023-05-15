@@ -12,7 +12,7 @@ import { SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID } from '../../../config/selectors';
 const { usePutItemLoginSchema } = mutations;
 
 type Props = {
-  itemLoginSchema: ItemLoginSchemaRecord;
+  itemLoginSchema?: ItemLoginSchemaRecord;
   isDisabled: boolean;
   itemId: UUID;
   edit?: boolean;
@@ -23,7 +23,7 @@ const ItemLoginSchemaSelect = ({
   itemLoginSchema,
   isDisabled,
   edit = false,
-}: Props): JSX.Element => {
+}: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: putItemLoginSchema } = usePutItemLoginSchema();
 

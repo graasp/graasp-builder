@@ -1,11 +1,11 @@
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { ItemRecord, ItemTagRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -40,7 +40,7 @@ const useVisibility = (item: ItemRecord) => {
   } = useItemTags(itemId);
   const { mutate: postItemTag } = usePostItemTag();
   const { mutate: deleteItemTag } = useDeleteItemTag();
-  const [publicTag, setPublicTag] = useState(null);
+  const [publicTag, setPublicTag] = useState<ItemTagRecord | undefined>();
   useEffect(() => {
     setPublicTag(itemTags?.find(({ type }) => type === ItemTagType.PUBLIC));
   }, [itemTags]);
@@ -61,8 +61,10 @@ const useVisibility = (item: ItemRecord) => {
   useEffect(() => {
     // disable setting if any visiblity is set on any parent items
     setIsDisabled(
-      (itemLoginSchema && itemLoginSchema?.item?.path !== item?.path) ||
-        (publicTag && publicTag?.item?.path !== item?.path),
+      Boolean(
+        (itemLoginSchema && itemLoginSchema?.item?.path !== item?.path) ||
+          (publicTag && publicTag?.item?.path !== item?.path),
+      ),
     );
   }, [publicTag, itemLoginSchema, item]);
 
@@ -81,7 +83,7 @@ const useVisibility = (item: ItemRecord) => {
   }, [isItemTagsError]);
 
   // visibility
-  const [visibility, setVisibility] = useState(null);
+  const [visibility, setVisibility] = useState<string>();
   useEffect(() => {
     switch (true) {
       case Boolean(publicTag?.id): {
@@ -97,7 +99,7 @@ const useVisibility = (item: ItemRecord) => {
     }
   }, [itemPublishEntry, publicTag, itemLoginSchema]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: SelectChangeEvent<string>) => {
     const newTag = event.target.value;
 
     // deletes both public and published tags if they exists
@@ -158,7 +160,7 @@ const useVisibility = (item: ItemRecord) => {
   };
 };
 
-const VisibilitySelect: FC<Props> = ({ item, edit }) => {
+const VisibilitySelect = ({ item, edit }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const {

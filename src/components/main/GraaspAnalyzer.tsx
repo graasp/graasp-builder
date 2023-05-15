@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { Context } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
@@ -16,7 +16,7 @@ type Props = {
 };
 
 // todo: use as component
-const GraaspAnalyzer: FC<Props> = ({ item }) => {
+const GraaspAnalyzer = ({ item }: Props): JSX.Element => {
   const { t } = useEnumsTranslation();
   const { setOpenedActionTabId } = useLayoutContext();
   const { id } = item;

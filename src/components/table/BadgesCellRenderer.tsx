@@ -69,7 +69,7 @@ export const useItemsStatuses = ({
 };
 
 type Props = {
-  itemsStatuses: ItemsStatuses;
+  itemsStatuses?: ItemsStatuses;
 };
 
 type ChildCompProps = {
@@ -82,7 +82,7 @@ const BadgesCellRenderer = ({
   const ChildComponent = ({ data: item }: ChildCompProps) => {
     const { t } = useBuilderTranslation();
     // this is useful because the item.id we are looking for may not be present and the itemStatuses will be undefined
-    const itemStatuses = itemsStatuses[item.id] || DEFAULT_ITEM_STATUSES;
+    const itemStatuses = itemsStatuses?.[item.id] || DEFAULT_ITEM_STATUSES;
     const {
       showChatbox,
       isPinned,

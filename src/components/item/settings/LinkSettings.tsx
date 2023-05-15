@@ -1,7 +1,7 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent } from 'react';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -21,7 +21,7 @@ type Props = {
   item: ItemRecord;
 };
 
-const LinkSettings: FC<Props> = ({ item }) => {
+const LinkSettings = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: editItem } = mutations.useEditItem();

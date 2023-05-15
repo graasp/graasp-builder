@@ -1,12 +1,12 @@
 import FlagIcon from '@mui/icons-material/Flag';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton from '@mui/material/IconButton';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-import { FC, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { Item, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
@@ -36,16 +36,16 @@ type Props = {
   canEdit?: boolean;
 };
 
-const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
+const ItemMenu = ({ item, canEdit = false }: Props): JSX.Element => {
   const { data: member } = useCurrentUserContext();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { t: translateBuilder } = useBuilderTranslation();
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
 
-  const handleClick = (event) => {
+  const handleClick: IconButtonProps['onClick'] = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -59,7 +59,7 @@ const ItemMenu: FC<Props> = ({ item, canEdit = false }) => {
   };
 
   const handleFlag = () => {
-    openFlagModal(item.id);
+    openFlagModal?.(item.id);
     handleClose();
   };
 

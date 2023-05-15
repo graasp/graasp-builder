@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -17,7 +15,7 @@ import Items from './Items';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
 
-const Home: FC = () => {
+const Home = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
 

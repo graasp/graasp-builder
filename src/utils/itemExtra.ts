@@ -38,7 +38,7 @@ export const buildShortcutExtra = (
 
 export const getItemLoginExtra = (extra: {
   itemLogin?: ItemLogin;
-}): ItemLogin => extra?.itemLogin;
+}): ItemLogin | undefined => extra?.itemLogin;
 
 export const buildDocumentExtra = (
   document: DocumentItemExtraProperties,

@@ -1,5 +1,6 @@
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import {
+  Alert,
   Box,
   Grid,
   IconButton,
@@ -53,6 +54,10 @@ const MemberProfileScreen = (): JSX.Element => {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (!member) {
+    return <Alert severity="error">{t('User is not unauthenticated')}</Alert>;
   }
 
   const copyIdToClipboard = () => {

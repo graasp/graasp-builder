@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -53,7 +53,7 @@ const licensePreviewStyle = {
   minWidth: 300,
 };
 
-const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
+const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: updateCCLicense } = mutations.useEditItem();
 

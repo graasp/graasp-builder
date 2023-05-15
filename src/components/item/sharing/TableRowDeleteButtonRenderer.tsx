@@ -9,12 +9,12 @@ import { useIsParentInstance } from '../../../utils/item';
 
 type ChildCompProps = { data: Invitation | ItemMembership };
 
-type Props = {
+export type TableRowDeleteButtonRendererProps = {
   item: ItemRecord;
   buildIdFunction: (id: string) => string;
   tooltip?: string;
   color?: IconButtonProps['color'];
-  onDelete?: (args: { instance: ChildCompProps['data'] }) => void;
+  onDelete: (args: { instance: ChildCompProps['data'] }) => void;
 };
 
 const TableRowDeleteButtonRenderer = ({
@@ -23,7 +23,9 @@ const TableRowDeleteButtonRenderer = ({
   tooltip,
   color = 'default',
   onDelete,
-}: Props): ((args: ChildCompProps) => JSX.Element) => {
+}: TableRowDeleteButtonRendererProps): ((
+  args: ChildCompProps,
+) => JSX.Element) => {
   const ChildComponent = ({ data }: ChildCompProps) => {
     const isFromParent = useIsParentInstance({
       instance: data,

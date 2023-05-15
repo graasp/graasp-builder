@@ -23,7 +23,6 @@ const openChatbox = () => {
   cy.wait('@getItemChat', { timeout: CHATBOX_LOADING_TIME });
 };
 
-// THESE TESTS ARE SKIPPED BECAUSE THEY FAIL IN CI
 describe('Chatbox Scenarios', () => {
   let client;
 

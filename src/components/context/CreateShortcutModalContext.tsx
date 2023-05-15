@@ -1,4 +1,4 @@
-import { FC, createContext, useMemo, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 
 import {
   DiscriminatedItem,
@@ -24,7 +24,7 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
+const CreateShortcutModalProvider = ({ children }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: createShortcut } = mutations.usePostItem();
   const [open, setOpen] = useState(false);

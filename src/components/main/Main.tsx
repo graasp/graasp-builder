@@ -1,10 +1,8 @@
 import { Grid, Typography, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 
-import { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { MentionButton } from '@graasp/chatbox';
 import { Context } from '@graasp/sdk';
 import {
   GraaspLogo,
@@ -21,7 +19,6 @@ import {
   HOST_MAP,
 } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
-import { hooks, mutations } from '../../config/queryClient';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
@@ -31,6 +28,7 @@ import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { useLayoutContext } from '../context/LayoutContext';
 import MainMenu from './MainMenu';
+import NotificationButton from './NotificationButton';
 
 const StyledLink = styled(Link)(() => ({
   textDecoration: 'none',
@@ -46,24 +44,8 @@ export const platformsHostsMap = defaultHostsMapper({
   [Platform.Library]: HOST_MAP.library,
 });
 
-const Main: FC<Props> = ({ children }) => {
+const Main = ({ children }: Props): JSX.Element => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
-  const { data: currentMember } = hooks.useCurrentMember();
-  const memberId = currentMember?.get('id');
-  // mutations to handle the mentions
-  const { mutate: patchMentionMutate } = mutations.usePatchMention();
-  const patchMentionFunction = ({
-    id,
-    status,
-  }: {
-    id: string;
-    status: string;
-  }) => patchMentionMutate({ memberId, id, status });
-  const { mutate: deleteMentionMutate } = mutations.useDeleteMention();
-  const deleteMentionFunction = (mentionId: string) =>
-    deleteMentionMutate(mentionId);
-  const { mutate: clearAllMentionsMutate } = mutations.useClearMentions();
-  const clearAllMentionsFunction = () => clearAllMentionsMutate();
 
   const { itemId } = useParams();
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
@@ -105,14 +87,7 @@ const Main: FC<Props> = ({ children }) => {
   const rightContent = (
     <Grid container>
       <Grid item>
-        <MentionButton
-          color="secondary"
-          badgeColor="primary"
-          useMentions={hooks.useMentions}
-          patchMentionFunction={patchMentionFunction}
-          deleteMentionFunction={deleteMentionFunction}
-          clearAllMentionsFunction={clearAllMentionsFunction}
-        />
+        <NotificationButton />
       </Grid>
       <Grid item>
         <UserSwitchWrapper />

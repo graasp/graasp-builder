@@ -11,7 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
@@ -38,7 +38,7 @@ type Props = {
   item: ItemRecord;
 };
 
-const CsvInputParser: FC<Props> = ({ item }) => {
+const CsvInputParser = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateMessages } = useMessagesTranslation();
   const { t: translateCommon } = useCommonTranslation();

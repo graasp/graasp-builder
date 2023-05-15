@@ -113,7 +113,8 @@ const DocumentForm = ({
 
   const initContent: string =
     updatedProperties?.extra?.[ItemType.DOCUMENT]?.content ||
-    item?.extra?.[ItemType.DOCUMENT]?.content;
+    item?.extra?.[ItemType.DOCUMENT]?.content ||
+    '';
 
   const initFlavor: DocumentItemExtraProperties['flavor'] =
     updatedProperties?.extra?.[ItemType.DOCUMENT]?.flavor ||

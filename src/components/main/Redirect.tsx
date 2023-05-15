@@ -1,11 +1,11 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { redirectToSavedUrl } from '@graasp/sdk';
 import { RedirectionContent } from '@graasp/ui';
 
 import { HOME_PATH } from '../../config/paths';
 
-const Redirect: FC = () => {
+const Redirect = (): JSX.Element => {
   useEffect(() => {
     redirectToSavedUrl(HOME_PATH);
   }, []);

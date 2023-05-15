@@ -1,7 +1,5 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { FC } from 'react';
-
 import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import {
@@ -23,13 +21,22 @@ type Props = {
 
 export const isItemFavorite = (
   item: ItemRecord,
-  member: MemberRecord,
-): boolean => member.extra?.favoriteItems?.includes(item.id) || false;
+  member?: MemberRecord,
+): boolean => member?.extra?.favoriteItems?.includes(item.id) || false;
 
-const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
+const FavoriteButton = ({
+  item,
+  size,
+  type,
+  onClick,
+}: Props): JSX.Element | null => {
   const { data: member } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
   const mutation = mutations.useEditMember();
+
+  if (!member) {
+    return null;
+  }
 
   const isFavorite = isItemFavorite(item, member);
 

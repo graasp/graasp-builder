@@ -2,8 +2,6 @@ import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -16,7 +14,11 @@ type Props = {
   id?: string;
 };
 
-const RestoreButton: FC<Props> = ({ itemIds, color = 'default', id }) => {
+const RestoreButton = ({
+  itemIds,
+  color = 'default',
+  id,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: restoreItems } = mutations.useRestoreItems();
 

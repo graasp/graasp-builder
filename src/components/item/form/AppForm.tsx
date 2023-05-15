@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 
-import { FC, HTMLAttributes, useState } from 'react';
+import { HTMLAttributes, useState } from 'react';
 
 import {
   App,
@@ -33,7 +33,11 @@ type Props = {
   updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
 };
 
-const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
+const AppForm = ({
+  onChange,
+  item,
+  updatedProperties = {},
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [newName, setNewName] = useState(item?.name);
 

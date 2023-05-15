@@ -1,8 +1,10 @@
+import { ColDef } from 'ag-grid-community';
+
 import { Typography } from '@mui/material';
 
 import { useMemo } from 'react';
 
-import { ItemMembership } from '@graasp/sdk';
+import { ItemMembership, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -47,7 +49,8 @@ const EmailRenderer = () => {
   return ChildComponent;
 };
 
-const getRowId = ({ data }) => buildItemMembershipRowId(data.id);
+const getRowId = ({ data }: { data: ItemMembership }) =>
+  buildItemMembershipRowId(data.id);
 
 type Props = {
   item: ItemRecord;
@@ -70,7 +73,7 @@ const ItemMembershipsTable = ({
   const { mutate: editItemMembership } = mutations.useEditItemMembership();
   const { mutate: shareItem } = mutations.usePostItemMembership();
 
-  const onDelete = ({ instance }) => {
+  const onDelete = ({ instance }: { instance: ItemMembership }) => {
     deleteItemMembership({ id: instance.id });
   };
 
@@ -86,13 +89,25 @@ const ItemMembershipsTable = ({
     });
     const PermissionRenderer = TableRowPermissionRenderer({
       item,
-      editFunction: ({ value, instance }) => {
+      editFunction: ({
+        value,
+        instance,
+      }: {
+        value: PermissionLevel;
+        instance: ItemMembership;
+      }) => {
         editItemMembership({
           id: instance.id,
           permission: value,
         });
       },
-      createFunction: ({ value, instance }) => {
+      createFunction: ({
+        value,
+        instance,
+      }: {
+        value: PermissionLevel;
+        instance: ItemMembership;
+      }) => {
         const { email } = instance.member;
         shareItem({
           id: item.id,
@@ -104,7 +119,7 @@ const ItemMembershipsTable = ({
     });
     const NameCellRenderer = NameRenderer();
 
-    const columns = [];
+    const columns: ColDef[] = [];
     if (showEmail) {
       const EmailCellRenderer = EmailRenderer();
       columns.push({
@@ -115,7 +130,8 @@ const ItemMembershipsTable = ({
         ),
         cellRenderer: EmailCellRenderer,
         field: 'email',
-        cellStyle: rowStyle,
+        // bug: force width 100% of child div
+        cellStyle: rowStyle as any,
         flex: 2,
         tooltipField: 'email',
         resizable: true,
@@ -129,7 +145,8 @@ const ItemMembershipsTable = ({
         ),
         cellRenderer: NameCellRenderer,
         field: 'memberId', // TODO: CHANGE?
-        cellStyle: rowStyle,
+        // bug: force width 100% of child div
+        cellStyle: rowStyle as any,
         flex: 2,
         tooltipField: 'name',
       },
@@ -139,7 +156,6 @@ const ItemMembershipsTable = ({
         ),
         cellRenderer: PermissionRenderer,
         comparator: GraaspTable.textComparator,
-        sort: true,
         type: 'rightAligned',
         field: 'permission',
         flex: 1,
@@ -154,10 +170,10 @@ const ItemMembershipsTable = ({
             },
       },
       {
-        field: readOnly ? null : 'actions',
+        field: readOnly ? undefined : 'actions',
         cellRenderer: readOnly ? null : ActionRenderer,
         headerName: readOnly
-          ? null
+          ? undefined
           : translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
@@ -173,7 +189,7 @@ const ItemMembershipsTable = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, showEmail, readOnly]);
 
-  const countTextFunction = (selected) =>
+  const countTextFunction = (selected: string[]) =>
     translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
       count: selected.length,
     });

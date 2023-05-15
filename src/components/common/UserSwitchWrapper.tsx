@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
@@ -22,7 +20,7 @@ type Props = {
   ButtonContent?: JSX.Element;
 };
 
-const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
+const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
   const {
     data: member,
     isLoading,
@@ -30,9 +28,9 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
   } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = mutations.useSignOut();
-  const { mutate: switchMember } = mutations.useSwitchMember();
+  // const { mutate: switchMember } = mutations.useSwitchMember();
 
-  const renderAvatar = (m: MemberRecord) => <MemberAvatar id={m.id} />;
+  const renderAvatar = (m?: MemberRecord) => <MemberAvatar id={m?.id} />;
 
   return (
     <GraaspUserSwitch
@@ -42,13 +40,13 @@ const UserSwitchWrapper: FC<Props> = ({ ButtonContent }) => {
       isCurrentMemberLoading={isLoading}
       isCurrentMemberSuccess={isSuccessUser}
       // fix in query client
-      switchMember={switchMember as any}
+      // switchMember={switchMember as any}
       seeProfileText={translateBuilder(BUILDER.USER_SWITCH_PROFILE_BUTTON)}
       signedOutTooltipText={translateBuilder(
         BUILDER.USER_SWITCH_SIGNED_OUT_TOOLTIP,
       )}
       signOutText={translateBuilder(BUILDER.USER_SWITCH_SIGN_OUT_BUTTON)}
-      switchMemberText={translateBuilder(BUILDER.USER_SWITCH_SWITCH_USER_TEXT)}
+      // switchMemberText={translateBuilder(BUILDER.USER_SWITCH_SWITCH_USER_TEXT)}
       profilePath={MEMBER_PROFILE_PATH}
       domain={DOMAIN}
       redirectPath={SIGN_IN_PATH}

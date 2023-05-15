@@ -4,8 +4,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -23,11 +21,11 @@ type Props = {
   itemIds: string[];
 };
 
-const DeleteItemDialog: FC<Props> = ({
+const DeleteItemDialog = ({
   itemIds,
   open = false,
   handleClose,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: deleteItems } = mutations.useDeleteItems();

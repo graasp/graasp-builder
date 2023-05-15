@@ -9,7 +9,7 @@ interface LayoutContextInterface {
   mode: string;
   setMode: (mode: string) => void;
   editingItemId: string | null;
-  setEditingItemId: (itemId: string) => void;
+  setEditingItemId: (itemId: string | null) => void;
   isMainMenuOpen: boolean;
   setIsMainMenuOpen: (isOpen: boolean) => void;
   openedActionTabId: string | null;
@@ -63,7 +63,7 @@ export const LayoutContextProvider = ({
 
   // item screen editing id
   // todo: separate in item specific context
-  const [editingItemId, setEditingItemId] = useState<string>('');
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
 
   // item settings page open
   // todo: separate in item specific context

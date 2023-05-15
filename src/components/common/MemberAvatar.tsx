@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { ThumbnailSize } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Avatar } from '@graasp/ui';
@@ -17,12 +15,12 @@ type Props = {
   component?: string;
 };
 
-const MemberAvatar: FC<Props> = ({
+const MemberAvatar = ({
   id,
   maxWidth = AVATAR_ICON_HEIGHT,
   maxHeight = AVATAR_ICON_HEIGHT,
   component = 'avatar',
-}) => {
+}: Props): JSX.Element => {
   const { t } = useCommonTranslation();
   const { data: member, isLoading } = hooks.useMember(id);
   const { data: avatarUrl, isLoading: isLoadingAvatar } = hooks.useAvatarUrl({

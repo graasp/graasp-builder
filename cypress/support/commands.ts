@@ -96,7 +96,6 @@ Cypress.Commands.add(
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     mentions = SAMPLE_MENTIONS,
-    storedSessions = [],
     categories = SAMPLE_CATEGORIES,
     itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
     itemValidationGroups = [],
@@ -148,13 +147,6 @@ Cypress.Commands.add(
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
     const allItems = [...cachedItems];
-    if (currentMember) {
-      cy.setCookie(COOKIE_KEYS.SESSION_KEY, 'somecookie');
-    }
-    cy.setCookie(
-      COOKIE_KEYS.STORED_SESSIONS_KEY,
-      JSON.stringify(storedSessions),
-    );
 
     // hide cookie banner by default
     cy.setCookie(COOKIE_KEYS.ACCEPT_COOKIES_KEY, 'true');

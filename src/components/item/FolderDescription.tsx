@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { TextEditor } from '@graasp/ui';
 
@@ -9,15 +7,22 @@ import { buildSaveButtonId } from '../../config/selectors';
 import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
-  itemId: string;
+  itemId?: string;
   isEditing?: boolean;
 };
 
-const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
+const FolderDescription = ({
+  itemId,
+  isEditing = false,
+}: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: editItem } = mutations.useEditItem();
   const { setEditingItemId } = useLayoutContext();
   const { data: parentItem } = hooks.useItem(itemId);
+
+  if (!itemId) {
+    return null;
+  }
 
   const onDescriptionSave = (str: string) => {
     let description = str;
@@ -33,10 +38,6 @@ const FolderDescription: FC<Props> = ({ itemId, isEditing = false }) => {
   const onCancel = () => {
     setEditingItemId(null);
   };
-
-  if (!itemId) {
-    return null;
-  }
 
   return (
     <TextEditor

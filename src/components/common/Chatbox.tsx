@@ -18,7 +18,7 @@ type Props = {
   item: ItemRecord;
 };
 
-const Chatbox = ({ item }: Props): JSX.Element => {
+const Chatbox = ({ item }: Props): JSX.Element | null => {
   const { data: chatMessages, isLoading: isChatLoading } = useItemChat(item.id);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     useItemMemberships(item.id);
@@ -31,6 +31,12 @@ const Chatbox = ({ item }: Props): JSX.Element => {
 
   if (isChatLoading || isLoadingItemPermissions || isLoadingCurrentMember) {
     return <Loader />;
+  }
+
+  // only signed in member can see the chat
+  // TODO: allow public??
+  if (!currentMember) {
+    return null;
   }
 
   // only show export chat when user has admin right on the item

@@ -20,7 +20,6 @@ export type ApiConfig = {
   members?: MemberForTest[],
   currentMember?: Member,
   mentions?: ChatMention[],
-  storedSessions?: unknown[], // TODO
   categories?: Category[],
   // statuses = SAMPLE_STATUSES,
   // itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,

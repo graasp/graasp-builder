@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useLocation } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 
@@ -25,7 +24,7 @@ import ItemScreen from './main/ItemScreen';
 import Redirect from './main/Redirect';
 import MemberProfileScreen from './member/MemberProfileScreen';
 
-const App: FC = () => {
+const App = (): JSX.Element => {
   const { pathname } = useLocation();
   const { data: currentMember, isLoading } = useCurrentUserContext();
 

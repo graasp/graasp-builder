@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import { DownloadButton as Button } from '@graasp/ui';
@@ -11,7 +11,7 @@ type Props = {
   name: string;
 };
 
-export const DownloadButton: FC<Props> = ({ id, name }) => {
+export const DownloadButton = ({ id, name }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const {

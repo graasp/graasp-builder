@@ -1,6 +1,6 @@
 import { SelectProps } from '@mui/material';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { PermissionLevel } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
@@ -15,7 +15,7 @@ import {
   buildPermissionOptionId,
 } from '../../../config/selectors';
 
-type Props = {
+export type ItemMembershipSelectProps = {
   value: string;
   onChange?: SelectProps['onChange'];
   color?: SelectProps['color'];
@@ -23,13 +23,13 @@ type Props = {
   displayEmpty?: boolean;
 };
 
-const ItemMembershipSelect: FC<Props> = ({
+const ItemMembershipSelect = ({
   value,
   onChange,
   color,
   showLabel = true,
   displayEmpty = false,
-}) => {
+}: ItemMembershipSelectProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
   const [permission, setPermission] = useState(value);

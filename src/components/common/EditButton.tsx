@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
@@ -15,7 +15,7 @@ type Props = {
   item: Item;
 };
 
-const EditButton: FC<Props> = ({ item }) => {
+const EditButton = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { openModal } = useContext(EditItemModalContext);
 

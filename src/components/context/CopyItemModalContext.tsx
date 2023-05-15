@@ -40,7 +40,7 @@ export const CopyItemModalProvider = ({ children }: Props): JSX.Element => {
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: !validate(payload.to) ? null : payload.to,
+      to: !validate(payload.to) ? undefined : payload.to,
     };
     copyItems(newPayload);
     onClose();

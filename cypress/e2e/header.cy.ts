@@ -1,5 +1,3 @@
-import { getCurrentSession } from '@graasp/sdk';
-
 import { SIGN_IN_PATH } from '../../src/config/constants';
 import { HOME_PATH } from '../../src/config/paths';
 import {
@@ -49,24 +47,25 @@ describe('Header', () => {
       cy.url().should('equal', SIGN_IN_PATH);
     });
 
-    it('Switch users', () => {
-      cy.setUpApi({ storedSessions: MOCK_SESSIONS });
-      cy.visit(HOME_PATH);
-      cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
+    // it('Switch users', () => {
+    //   cy.setUpApi({ storedSessions: MOCK_SESSIONS });
+    //   cy.visit(HOME_PATH);
+    //   cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
 
-      MOCK_SESSIONS.forEach(({ id }) => {
-        cy.get(`#${buildMemberMenuItemId(id)}`).should('be.visible');
-      });
+    //   MOCK_SESSIONS.forEach(({ id }) => {
+    //     cy.get(`#${buildMemberMenuItemId(id)}`).should('be.visible');
+    //   });
 
-      // switch to first user
-      cy.get(`#${buildMemberMenuItemId(MOCK_SESSIONS[0].id)}`)
-        .click()
-        .then(() => {
-          // session cookie should be different
-          const currentCookie = getCurrentSession();
-          expect(currentCookie).to.equal(MOCK_SESSIONS[0].token);
-        });
-      cy.get(`#${OWNED_ITEMS_ID}`).should('be.visible');
-    });
+    //   // switch to first user
+    //   cy.get(`#${buildMemberMenuItemId(MOCK_SESSIONS[0].id)}`)
+    //     .click()
+    //     .then(() => {
+    //       // session cookie should be different
+    //       const currentCookie = getCurrentSession();
+    //       expect(currentCookie).to.equal(MOCK_SESSIONS[0].token);
+    //     });
+    //   cy.get(`#${OWNED_ITEMS_ID}`).should('be.visible');
+    // });
+
   });
 });

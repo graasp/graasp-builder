@@ -1,7 +1,9 @@
+import { ColDef } from 'ag-grid-community';
 import { List } from 'immutable';
 
 import { useMemo } from 'react';
 
+import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { InvitationRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
@@ -17,7 +19,9 @@ import {
   buildItemInvitationRowDeleteButtonId,
 } from '../../../config/selectors';
 import ResendInvitationRenderer from './ResendInvitationRenderer';
-import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
+import TableRowDeleteButtonRenderer, {
+  TableRowDeleteButtonRendererProps,
+} from './TableRowDeleteButtonRenderer';
 import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 
 const rowStyle = {
@@ -43,9 +47,12 @@ const InvitationsTable = ({
   const { mutate: postInvitations } = mutations.usePostInvitations();
   const { mutate: deleteInvitation } = mutations.useDeleteInvitation();
 
-  const getRowId = ({ data }) => buildInvitationTableRowId(data.id);
+  const getRowId = ({ data }: { data: Invitation }) =>
+    buildInvitationTableRowId(data.id);
 
-  const onDelete = ({ instance }) => {
+  const onDelete: TableRowDeleteButtonRendererProps['onDelete'] = ({
+    instance,
+  }) => {
     deleteInvitation({ itemId: item.id, id: instance.id });
   };
 
@@ -60,14 +67,26 @@ const InvitationsTable = ({
 
   const PermissionRenderer = TableRowPermissionRenderer({
     item,
-    editFunction: ({ instance, value }) => {
+    editFunction: ({
+      instance,
+      value,
+    }: {
+      instance: Invitation;
+      value: PermissionLevel;
+    }) => {
       editInvitation({
         id: instance.id,
         permission: value,
         itemId: item.id,
       });
     },
-    createFunction: ({ instance, value }) => {
+    createFunction: ({
+      instance,
+      value,
+    }: {
+      instance: Invitation;
+      value: PermissionLevel;
+    }) => {
       postInvitations({
         itemId: item.id,
         invitations: [
@@ -84,7 +103,7 @@ const InvitationsTable = ({
   const InvitationRenderer = ResendInvitationRenderer(item.id);
 
   // never changes, so we can use useMemo
-  const columnDefs = useMemo(
+  const columnDefs = useMemo<ColDef[]>(
     () => [
       {
         headerCheckboxSelection: !readOnly,
@@ -104,7 +123,7 @@ const InvitationsTable = ({
         cellRenderer: readOnly ? null : InvitationRenderer,
         cellStyle: rowStyle,
         flex: 1,
-        field: readOnly ? null : 'email',
+        field: readOnly ? undefined : 'email',
       },
       {
         headerName: translateBuilder(
@@ -119,22 +138,23 @@ const InvitationsTable = ({
               display: 'flex',
               justifyContent: 'right',
             }
-          : null,
+          : undefined,
       },
       {
-        field: readOnly ? null : 'actions',
+        field: readOnly ? undefined : 'actions',
         cellRenderer: readOnly ? null : ActionRenderer,
         headerName: readOnly
-          ? null
+          ? undefined
           : translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
+        // bug: force css
         cellStyle: {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
-        },
+        } as any,
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -147,7 +167,7 @@ const InvitationsTable = ({
     ],
   );
 
-  const countTextFunction = (selected) =>
+  const countTextFunction = (selected: string[]) =>
     translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
       count: selected.length,
     });
@@ -156,7 +176,7 @@ const InvitationsTable = ({
     <GraaspTable
       columnDefs={columnDefs}
       tableHeight={MEMBERSHIP_TABLE_HEIGHT}
-      rowData={invitations.toJS()}
+      rowData={invitations.toJS() as Invitation[]}
       emptyMessage={emptyMessage}
       getRowId={getRowId}
       rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}

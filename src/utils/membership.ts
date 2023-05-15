@@ -19,14 +19,20 @@ export const isItemUpdateAllowedForUser = ({
   memberId,
 }: {
   memberships?: List<ItemMembershipRecord>;
-  memberId: string;
-}): boolean =>
-  Boolean(
+  memberId?: string;
+}): boolean => {
+  // the user is not authenticated so he cannot update
+  if (!memberId) {
+    return false;
+  }
+
+  return Boolean(
     memberships?.find(
       ({ member: { id: mId }, permission }) =>
         mId === memberId && PERMISSIONS_EDITION_ALLOWED.includes(permission),
     ),
   );
+};
 
 // get highest permission a member have over an item,
 // longer the itemPath, deeper is the permission, thus highested
@@ -56,7 +62,7 @@ export const isSettingsEditionAllowedForUser = ({
   memberId,
 }: {
   memberships: List<ItemMembershipRecord>;
-  memberId: string;
+  memberId?: string;
 }): boolean =>
   memberships?.some(
     ({ member: { id: mId }, permission }) =>

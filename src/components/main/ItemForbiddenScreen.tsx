@@ -1,8 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Grid } from '@mui/material';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { Button, ForbiddenContent } from '@graasp/ui';
 
@@ -13,7 +11,7 @@ import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import Main from './Main';
 
-const ItemForbiddenScreen: FC = () => {
+const ItemForbiddenScreen = (): JSX.Element => {
   const { data: member } = useCurrentUserContext();
   const { mutate: signOut } = mutations.useSignOut();
   const { t: translateBuilder } = useBuilderTranslation();

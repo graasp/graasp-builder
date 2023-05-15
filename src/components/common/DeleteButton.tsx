@@ -1,6 +1,6 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import {
@@ -24,7 +24,13 @@ type Props = {
  * Delete Button Component
  * This button opens a dialog to confirm the action
  */
-const DeleteButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
+const DeleteButton = ({
+  itemIds,
+  color,
+  id,
+  type,
+  onClick,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const [open, setOpen] = useState(false);

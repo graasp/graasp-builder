@@ -13,18 +13,24 @@ import { Button } from '@graasp/ui';
 
 import { THUMBNAIL_ASPECT } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
+import notifier from '../../config/notifier';
 import { CROP_MODAL_CONFIRM_BUTTON_CLASSNAME } from '../../config/selectors';
 import { getCroppedImg } from '../../utils/image';
 import CancelButton from './CancelButton';
 
-type Props = {
+export type CropProps = {
   open: boolean;
   onClose: () => void;
   src: string;
   onConfirm: (blob: Blob | null) => void;
 };
 
-const CropModal = ({ onConfirm, open, onClose, src }: Props): JSX.Element => {
+const CropModal = ({
+  onConfirm,
+  open,
+  onClose,
+  src,
+}: CropProps): JSX.Element => {
   const [crop, setCrop] = useState<PixelCrop>();
   const imageRef = useRef<HTMLImageElement>();
   const { t } = useBuilderTranslation();
@@ -38,8 +44,15 @@ const CropModal = ({ onConfirm, open, onClose, src }: Props): JSX.Element => {
   };
 
   const handleOnConfirm = async () => {
-    const final = await makeClientCrop(crop);
-    onConfirm(final);
+    if (!crop) {
+      notifier({
+        type: 'crop',
+        payload: { error: new Error('crop is undefined') },
+      });
+    } else {
+      const final = await makeClientCrop(crop);
+      onConfirm(final);
+    }
   };
 
   // If you setState the crop in here you should return false.
@@ -93,7 +106,7 @@ const CropModal = ({ onConfirm, open, onClose, src }: Props): JSX.Element => {
         </DialogContentText>
         <ReactCrop
           src={src}
-          crop={crop}
+          crop={crop ?? {}}
           ruleOfThirds
           onImageLoaded={onImageLoaded}
           onChange={onCropChange}

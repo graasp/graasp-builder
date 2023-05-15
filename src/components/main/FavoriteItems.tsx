@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 import Box from '@mui/material/Box';
 
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { GraaspError } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
@@ -22,7 +22,7 @@ import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import Main from './Main';
 
-const FavoriteItems: FC = () => {
+const FavoriteItems = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
     data: member,

@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { ShareButton as GraaspShareButton } from '@graasp/ui';
 
@@ -15,7 +13,7 @@ type Props = {
   itemId: string;
 };
 
-const ShareButton: FC<Props> = ({ itemId }) => {
+const ShareButton = ({ itemId }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
 
