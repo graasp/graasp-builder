@@ -5,12 +5,8 @@ import Typography from '@mui/material/Typography';
 
 import { FC, useEffect, useState } from 'react';
 
-import {
-  ItemSettings as ItemSettingsType,
-  ItemType,
-  convertJs,
-} from '@graasp/sdk';
-import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
+import { ItemType, convertJs } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -45,7 +41,7 @@ const ItemSettings: FC<Props> = ({ item }) => {
   const { settings } = item;
 
   const [settingLocal, setSettingLocal] =
-    useState<ImmutableCast<ItemSettingsType>>(settings);
+    useState<ItemRecord['settings']>(settings);
 
   useEffect(
     () => {

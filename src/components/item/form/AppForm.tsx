@@ -28,9 +28,9 @@ import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
 
 type Props = {
-  onChange: (item: Partial<DiscriminatedItem<UnknownExtra>>) => void;
+  onChange: (item: Partial<DiscriminatedItem>) => void;
   item?: AppItemTypeRecord;
-  updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
+  updatedProperties: Partial<DiscriminatedItem>;
 };
 
 const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {

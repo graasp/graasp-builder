@@ -8,6 +8,7 @@ import {
 
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
+import { CCLicenseAdaptions } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { CCSharingVariant, CreativeCommons, Loader } from '@graasp/ui';
@@ -25,19 +26,6 @@ import {
 } from '../../../config/selectors';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CCLicenseDialog from './CCLicenseDialog';
-
-// TODO: export in graasp sdk
-enum CCLicenseAdaptions {
-  CC_BY = 'CC BY',
-  CC_BY_NC = 'CC BY-NC',
-  CC_BY_SA = 'CC BY-SA',
-  CC_BY_NC_SA = 'CC BY-NC-SA',
-  CC_BY_ND = 'CC BY-ND',
-  CC_BY_NC_ND = 'CC BY-NC-ND',
-  CC0 = 'CC0',
-}
-
-export type CCLicenseAdaption = CCLicenseAdaptions | `${CCLicenseAdaptions}`;
 
 type CCLicenseChoice = 'yes' | 'no' | '';
 type CCSharingLicenseChoice = CCLicenseChoice | 'alike';
@@ -78,11 +66,7 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   useEffect(() => {
     if (settings?.ccLicenseAdaption) {
       // Handles old license formats.
-      if (
-        ['alike', 'allow'].includes(
-          settings?.ccLicenseAdaption as CCLicenseAdaption,
-        )
-      ) {
+      if (['alike', 'allow'].includes(settings?.ccLicenseAdaption)) {
         setRequireAttributionValue('yes');
         setAllowCommercialValue('no');
         setAllowSharingValue(

@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 
 import { ChangeEvent, FC } from 'react';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -18,7 +18,7 @@ import {
 } from '../../../config/selectors';
 
 type Props = {
-  item: ItemRecord;
+  item: EmbeddedLinkItemTypeRecord;
 };
 
 const LinkSettings: FC<Props> = ({ item }) => {

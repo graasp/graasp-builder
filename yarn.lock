@@ -2347,7 +2347,7 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox#typeorm":
   version: 1.2.1
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=04dfc190566f9b912542b627b0f3ca7ac3a8480c"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e16748b897afaed06050a5452e34ff76d054e562"
   dependencies:
     lodash.truncate: 4.4.2
     moment: 2.29.4
@@ -2373,7 +2373,7 @@ __metadata:
     react: ^17.0.0
     react-dom: "*"
     react-i18next: ^12.0.0
-  checksum: f551cf73f0b68e038ac2b6e8c1dbf2a7fb1eb5e4ed2be0bfb72bc0a04b7ad41dbbdc53c2419f9518f3915c78423d75034297b19e7efe173ecddb24c803062d97
+  checksum: 708af4f3f02c99df1ad73bc18b4dccdcfbf47aeb94928118cd0cfcd45824f6d8a3a1c0a1384c4ceb37286c94e58612834b9d834bacc48a3fa3fdd002cf630bb8
   languageName: node
   linkType: hard
 
@@ -2407,7 +2407,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#typeorm":
   version: 0.4.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=b79f7aec6310607603bfdb5fdf9a52ab1ca030cf"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=361f7a559054ac5bb24db932b9ebb5fd9b81f843"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     "@graasp/translations": 1.13.0
@@ -2420,13 +2420,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 845b130a21bd5c302bf24fd9c265fb6fe4da0f32268a3f82174f34c6e1cf8a9a0fd4cf1f5d542f89729c96e743f0eebc5fc325bf8b9bd977260922efaf4528df
+  checksum: bebe468002ced7b60aa4d56d1936c589e3c8d5c94e34ebb3222c0a2b4533bdf0474e02a980980c38afba69a99422370f865947f382234de36ce711b011a1d0a2
   languageName: node
   linkType: hard
 
 "@graasp/sdk@github:graasp/graasp-sdk#typeorm":
   version: 0.12.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=0ae4e64a0dfc18eab3aac4f3774ea39b235a068e"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=7952338b6cb874db33fb667eff9fafec31b3c17e"
   dependencies:
     "@fastify/secure-session": 5.3.0
     "@graasp/etherpad-api": 2.1.1
@@ -2438,7 +2438,8 @@ __metadata:
     qs: 6.11.1
     typeorm: 0.3.15
     uuid: 9.0.0
-  checksum: 79494cdbd3380644e2af203c06f52ea5650638606b53c89d97d302134fe8b4bd5d9ec1bf593ab96ed492475b8aaa9a6276645bcd8c7ff6fcceac4af4a4131ff4
+    validator: 13.9.0
+  checksum: 5edd36e3e8bc395168f93ba3fcc02c0ad37970f37366e4b2468d2c85e22c72254e3fa11351aff839df91ae1929b842c1e8d558c8c59ebb21a7c8b8403c50be82
   languageName: node
   linkType: hard
 
@@ -2453,7 +2454,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#typeorm":
   version: 2.5.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=277183c0eb8a974da72b74dde827afb181f9e639"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=09ae78cf35d82382c70d960c856a4d5923cebd4f"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     clsx: 1.1.1
@@ -2464,7 +2465,6 @@ __metadata:
     qs: 6.11.0
     quill-emoji: 0.2.0
     react-cookie-consent: 7.4.1
-    react-i18next: 11.17.0
     react-quill: 2.0.0-beta.4
     react-rnd: 10.3.7
     react-text-mask: 5.4.3
@@ -2475,18 +2475,19 @@ __metadata:
     "@mui/icons-material": ~5.11.9
     "@mui/lab": ~5.0.0-alpha.120
     "@mui/material": ~5.11.9
-    ag-grid-community: 28.1.1
-    ag-grid-react: 28.1.1
-    i18next: ~21.8.9
-    react: 17.0.2
-    react-dom: 17.0.2
-    react-router-dom: 6.2.2
+    ag-grid-community: ^28.1.1
+    ag-grid-react: ^28.1.1
+    i18next: ^22.4.15
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-i18next: ^12.2.0
+    react-router-dom: ^6.11.0
   peerDependenciesMeta:
     ag-grid-community:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 6a4f790c8b0d625b99a32eb8e8beb659978b053b5065fea1bf7757291723a1c6c9d8cd2a30e912ffaf8b15435579ce54b119adba98176c208925259ab770c0bf
+  checksum: 7545e03274ff0152cfe3ba20d822d9cd642b09ec0645290d5df1f1d4f9306f6f07eeece5c80e582f9286a590bd7e863ac29269ebddb76c55f37a9a62177595ab
   languageName: node
   linkType: hard
 
@@ -10074,7 +10075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-escaper@npm:^2.0.0, html-escaper@npm:^2.0.2":
+"html-escaper@npm:^2.0.0":
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: d2df2da3ad40ca9ee3a39c5cc6475ef67c8f83c234475f24d8e9ce0dc80a2c82df8e1d6fa78ddd1e9022a586ea1bd247a615e80a5cd9273d90111ddda7d9e974
@@ -15982,25 +15983,6 @@ __metadata:
   version: 2.1.0
   resolution: "react-ga4@npm:2.1.0"
   checksum: f7fb41141418d4ad14756f1126a1e9958db37d4d84ae6cd798043dc03a390b6dba74d69311af0349f0b9580a43bda8930138194ccc29c4100efe446e2d6eb057
-  languageName: node
-  linkType: hard
-
-"react-i18next@npm:11.17.0":
-  version: 11.17.0
-  resolution: "react-i18next@npm:11.17.0"
-  dependencies:
-    "@babel/runtime": ^7.14.5
-    html-escaper: ^2.0.2
-    html-parse-stringify: ^3.0.1
-  peerDependencies:
-    i18next: ">= 19.0.0"
-    react: ">= 16.8.0"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 0ed6823af56f4133bf1664262206be6651cbea95e2f9275411d6346c6b8009e277b32fe60702fd06607d13b8979913bd013da702e25fa3f4e1bd73e403417296
   languageName: node
   linkType: hard
 
