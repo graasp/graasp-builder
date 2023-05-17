@@ -1,4 +1,4 @@
-import { ColDef, Column, IRowDragItem } from 'ag-grid-community';
+import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
 import { List } from 'immutable';
 
 import { useCallback, useMemo } from 'react';
@@ -84,9 +84,11 @@ const ItemsTable = ({
 
   const { mutate: editItem } = mutations.useEditItem();
 
-  const noStatusesToShow = !Object.values(itemsStatuses)
-    .map((obj) => Object.values(obj).some((e) => e === true))
-    .some((e) => e === true);
+  const noStatusesToShow =
+    !itemsStatuses ||
+    !Object.values(itemsStatuses)
+      .map((obj) => Object.values(obj).some((e) => e === true))
+      .some((e) => e === true);
 
   const isFolder = useCallback(() => Boolean(itemId), [itemId]);
   const canDrag = useCallback(
@@ -100,23 +102,20 @@ const ItemsTable = ({
   const onCellClicked = ({
     column,
     data,
-  }: {
-    column: Column;
-    data: DiscriminatedItem;
-  }) => {
+  }: CellClickedEvent<DiscriminatedItem, any>) => {
     if (column.getColId() !== 'actions') {
-      let targetId = data.id;
+      let targetId = data?.id;
 
       // redirect to target if shortcut
-      if (data.type === ItemType.SHORTCUT) {
-        targetId = getShortcutExtra(data.extra).target;
+      if (data && data.type === ItemType.SHORTCUT) {
+        targetId = getShortcutExtra(data.extra)?.target;
       }
       navigate(buildItemPath(targetId));
     }
   };
 
   const hasOrderChanged = (rowIds: string[]) => {
-    if (parentItem.type === ItemType.FOLDER) {
+    if (parentItem && parentItem.type === ItemType.FOLDER) {
       const { childrenOrder = List<string>() } =
         getFolderExtra(parentItem.extra) || {};
       return (

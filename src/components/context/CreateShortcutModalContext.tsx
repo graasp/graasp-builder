@@ -12,7 +12,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { TREE_MODAL_MY_ITEMS_ID } from '../../config/selectors';
 import { buildShortcutExtra } from '../../utils/itemExtra';
-import TreeModal from '../main/TreeModal';
+import TreeModal, { TreeModalProps } from '../main/TreeModal';
 
 const CreateShortcutModalContext = createContext({
   openModal: (_newItem: Item) => {
@@ -40,7 +40,7 @@ const CreateShortcutModalProvider = ({ children }: Props): JSX.Element => {
     setItem(null);
   };
 
-  const onConfirm = ({ ids: [target], to }: { ids: string[]; to: string }) => {
+  const onConfirm: TreeModalProps['onConfirm'] = ({ ids: [target], to }) => {
     const shortcut: Partial<ShortcutItemType> &
       Pick<DiscriminatedItem, 'name' | 'type'> & {
         parentId?: string;

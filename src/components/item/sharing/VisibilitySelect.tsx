@@ -160,7 +160,7 @@ const useVisibility = (item: ItemRecord) => {
   };
 };
 
-const VisibilitySelect = ({ item, edit }: Props): JSX.Element => {
+const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const {

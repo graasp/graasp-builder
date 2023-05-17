@@ -7,7 +7,14 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useMatch } from 'react-router';
 
-import { Item, ItemType } from '@graasp/sdk';
+import {
+  AppItemType,
+  DocumentItemType,
+  EmbeddedLinkItemType,
+  FolderItemType,
+  Item,
+  ItemType,
+} from '@graasp/sdk';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
@@ -39,6 +46,13 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   paddingLeft: 0,
 }));
 
+type PropertiesPerType = {
+  [ItemType.FOLDER]: Partial<FolderItemType>;
+  [ItemType.LINK]: Partial<EmbeddedLinkItemType>;
+  [ItemType.APP]: Partial<AppItemType>;
+  [ItemType.DOCUMENT]: Partial<DocumentItemType>;
+};
+
 type Props = {
   open: boolean;
   handleClose: () => void;
@@ -56,12 +70,13 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   );
 
   // todo: find a way to create this type of literal from the enum values instead of like this...
-  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
-    [ItemType.FOLDER]: { type: ItemType.FOLDER as const },
-    [ItemType.LINK]: { type: ItemType.LINK as const },
-    [ItemType.APP]: { type: ItemType.APP as const },
-    [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT as const },
-  });
+  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] =
+    useState<PropertiesPerType>({
+      [ItemType.FOLDER]: { type: ItemType.FOLDER },
+      [ItemType.LINK]: { type: ItemType.LINK },
+      [ItemType.APP]: { type: ItemType.APP },
+      [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
+    });
 
   const { mutate: postItem } = mutations.usePostItem();
   const { mutate: postEtherpad } = mutations.usePostEtherpad();
@@ -86,18 +101,19 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       console.error('confirm button is disabled');
       return false;
     }
-    if (!isItemValid(updatedPropertiesPerType[selectedItemType])) {
+    const type = selectedItemType as keyof PropertiesPerType;
+    if (!isItemValid(updatedPropertiesPerType[type])) {
       console.error(
         'your item has invalid properties',
-        updatedPropertiesPerType[selectedItemType],
+        updatedPropertiesPerType[type],
       );
       // todo: notify user
       return false;
     }
 
+    // todo: fix types
     return submitAndDisableConfirmButtonFor(
-      () =>
-        postItem({ parentId, ...updatedPropertiesPerType[selectedItemType] }),
+      () => postItem({ parentId, ...(updatedPropertiesPerType[type] as any) }),
       DOUBLE_CLICK_DELAY_MS,
     );
   };
@@ -115,10 +131,11 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
 
   const updateItem = (item: Partial<Item>) => {
     // update content given current type
+    const type = selectedItemType as keyof PropertiesPerType;
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,
-      [selectedItemType]: {
-        ...updatedPropertiesPerType[selectedItemType],
+      [type]: {
+        ...updatedPropertiesPerType[type],
         ...item,
       },
     });

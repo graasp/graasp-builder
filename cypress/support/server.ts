@@ -3,16 +3,9 @@ import * as qs from 'qs';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { API_ROUTES } from '@graasp/query-client';
-import { App, Category, ChatMention, Item, ItemTagType, ItemValidationGroup, ItemValidationReview, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
+import { App, Category, ChatMention, HttpMethod, Item, ItemTagType, ItemValidationGroup, ItemValidationReview, Member, PermissionLevel, RecycledItemData } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
-import {
-  DEFAULT_DELETE,
-  DEFAULT_GET,
-  DEFAULT_PATCH,
-  DEFAULT_POST,
-  DEFAULT_PUT,
-} from '../../src/api/utils';
 import {
   SETTINGS,
   SIGN_IN_PATH,
@@ -105,7 +98,7 @@ export const redirectionReply = {
 export const mockGetAppListRoute = (apps: App[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/${buildAppListRoute}`,
     },
     (req) => {
@@ -120,7 +113,7 @@ export const mockGetCurrentMember = (
 ): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/${GET_CURRENT_MEMBER_ROUTE}`,
     },
     ({ reply }) => {
@@ -140,7 +133,7 @@ export const mockGetCurrentMember = (
 export const mockGetOwnItems = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`,
     },
     (req) => {
@@ -153,7 +146,7 @@ export const mockGetOwnItems = (items: ItemForTest[]): void => {
 export const mockGetRecycledItems = (recycledItemData: RecycledItemData[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/${GET_RECYCLED_ITEMS_DATA_ROUTE}`,
     },
     (req) => {
@@ -165,7 +158,7 @@ export const mockGetRecycledItems = (recycledItemData: RecycledItemData[]): void
 export const mockGetSharedItems = ({ items, member }: { items: ItemForTest[], member: Member }): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/${SHARED_ITEM_WITH_ROUTE}`,
     },
     (req) => {
@@ -178,7 +171,7 @@ export const mockGetSharedItems = ({ items, member }: { items: ItemForTest[], me
 export const mockPostItem = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildPostItemRoute(ID_FORMAT),
@@ -205,7 +198,7 @@ export const mockPostItem = (items: ItemForTest[], shouldThrowError: boolean): v
 // export const mockDeleteItem = (items: ItemForTest[], shouldThrowError: boolean): void => {
 //   cy.intercept(
 //     {
-//       method: DEFAULT_DELETE.method,
+//       method: HttpMethod.DELETE,
 //       url: new RegExp(`${API_HOST}/${buildDeleteItemRoute(ID_FORMAT)}$`),
 //     },
 //     ({ url, reply }) => {
@@ -225,7 +218,7 @@ export const mockPostItem = (items: ItemForTest[], shouldThrowError: boolean): v
 export const mockDeleteItems = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_DELETE.method,
+      method: HttpMethod.DELETE,
       url: new RegExp(`${API_HOST}/${buildDeleteItemsRoute([])}`),
     },
     ({ reply }) => {
@@ -245,7 +238,7 @@ export const mockDeleteItems = (items: ItemForTest[], shouldThrowError: boolean)
 export const mockRecycleItems = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/recycle\\?id\\=`),
       query: { id: new RegExp(ID_FORMAT) },
     },
@@ -270,7 +263,7 @@ export const mockRecycleItems = (items: ItemForTest[], shouldThrowError: boolean
 export const mockRestoreItems = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/restore\\?id\\=`),
       query: { id: new RegExp(ID_FORMAT) },
     },
@@ -295,7 +288,7 @@ export const mockRestoreItems = (items: ItemForTest[], shouldThrowError: boolean
 export const mockGetItem = ({ items, currentMember }: { items: ItemForTest[], currentMember: Member }, shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetItemRoute(ID_FORMAT)}$`),
     },
     ({ url, reply }) => {
@@ -337,7 +330,7 @@ export const mockGetItem = ({ items, currentMember }: { items: ItemForTest[], cu
 export const mockGetItems = ({ items, currentMember }: { items: ItemForTest[], currentMember: Member }): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}\\?id\\=`),
     },
     ({ url, reply }) => {
@@ -377,7 +370,7 @@ export const mockGetItems = ({ items, currentMember }: { items: ItemForTest[], c
 export const mockGetChildren = ({ items, currentMember }: { items: ItemForTest[], currentMember: Member }): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       // TODO: use build url
       url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/children`),
     },
@@ -403,7 +396,7 @@ export const mockGetChildren = ({ items, currentMember }: { items: ItemForTest[]
 export const mockGetParents = ({ items, currentMember }: { items: ItemForTest[], currentMember: Member }): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       // TODO: use build url
       url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/parents`),
     },
@@ -425,7 +418,7 @@ export const mockGetParents = ({ items, currentMember }: { items: ItemForTest[],
 export const mockMoveItems = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/move\\?id\\=`),
     },
     ({ url, reply, body }) => {
@@ -462,7 +455,7 @@ export const mockMoveItems = (items: ItemForTest[], shouldThrowError: boolean): 
 export const mockCopyItems = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/items/copy\\?id\\=`),
     },
     ({ url, reply, body }) => {
@@ -499,7 +492,7 @@ export const mockCopyItems = (items: ItemForTest[], shouldThrowError: boolean): 
 export const mockEditItem = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_PATCH.method,
+      method: HttpMethod.PATCH,
       url: new RegExp(`${API_HOST}/${buildEditItemRoute(ID_FORMAT)}`),
     },
     ({ reply, body }) => {
@@ -515,7 +508,7 @@ export const mockEditItem = (items: ItemForTest[], shouldThrowError: boolean): v
 export const mockPostItemMembership = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildPostItemMembershipRoute(ID_FORMAT),
@@ -536,7 +529,7 @@ export const mockPostManyItemMemberships = (args: { items: ItemForTest[], member
   const { items, members } = args;
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${buildPostManyItemMembershipsRoute(ID_FORMAT)}`,
       ),
@@ -582,7 +575,7 @@ export const mockPostManyItemMemberships = (args: { items: ItemForTest[], member
 export const mockGetMember = (members: Member[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetMember(ID_FORMAT)}$`),
     },
     ({ url, reply }) => {
@@ -607,7 +600,7 @@ export const mockGetMember = (members: Member[]): void => {
 export const mockGetMembers = (members: Member[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/${buildGetMembersRoute([''])}*`,
     },
     ({ url, reply }) => {
@@ -644,7 +637,7 @@ export const mockGetMembers = (members: Member[]): void => {
 export const mockGetMembersBy = (members: Member[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/members/search?email=*`,
     },
     ({ reply, url }) => {
@@ -679,7 +672,7 @@ export const mockGetMembersBy = (members: Member[], shouldThrowError: boolean): 
 export const mockEditMember = (members: Member[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_PATCH.method,
+      method: HttpMethod.PATCH,
       url: new RegExp(`${API_HOST}/${buildPatchMember(ID_FORMAT)}`),
     },
     ({ reply }) => {
@@ -696,7 +689,7 @@ export const mockEditMember = (members: Member[], shouldThrowError: boolean): vo
 export const mockUploadItem = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildUploadFilesRoute(ID_FORMAT),
@@ -716,7 +709,7 @@ export const mockUploadItem = (items: ItemForTest[], shouldThrowError: boolean):
 export const mockImportZip = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(buildImportZipRoute())}`,
       ),
@@ -734,7 +727,7 @@ export const mockImportZip = (shouldThrowError: boolean): void => {
 export const mockDefaultDownloadFile = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildDownloadFilesRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
@@ -761,7 +754,7 @@ export const mockDefaultDownloadFile = (items: ItemForTest[], shouldThrowError: 
 export const mockSignInRedirection = (): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: SIGN_IN_PATH,
     },
     ({ reply }) => {
@@ -773,7 +766,7 @@ export const mockSignInRedirection = (): void => {
 export const mockSignOut = (): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(SIGN_OUT_ROUTE),
     },
     ({ reply }) => {
@@ -785,7 +778,7 @@ export const mockSignOut = (): void => {
 export const mockPostItemLogin = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${buildPostItemLoginSignInRoute(ID_FORMAT)}$`,
       ),
@@ -827,7 +820,7 @@ export const mockPostItemLogin = (items: ItemForTest[], shouldThrowError: boolea
 export const mockDeleteItemLoginSchemaRoute = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_DELETE.method,
+      method: HttpMethod.DELETE,
       // TODO: use build url
       url: new RegExp(
         `${API_HOST}/items/${ID_FORMAT}/login-schema$`,
@@ -850,7 +843,7 @@ export const mockDeleteItemLoginSchemaRoute = (items: ItemForTest[]): void => {
 export const mockPutItemLoginSchema = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_PUT.method,
+      method: HttpMethod.PUT,
       // TODO: use build url
       url: new RegExp(
         `${API_HOST}/items/${ID_FORMAT}/login-schema$`,
@@ -874,7 +867,7 @@ export const mockPutItemLoginSchema = (items: ItemForTest[], shouldThrowError: b
 export const mockGetItemLogin = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetItemLoginSchemaRoute(ID_FORMAT)}$`),
     },
     ({ reply, url }) => {
@@ -891,7 +884,7 @@ export const mockGetItemLogin = (items: ItemForTest[]): void => {
 export const mockGetItemLoginSchema = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       // TODO: use build url
       url: new RegExp(
         `${API_HOST}/items/${ID_FORMAT}/login\\-schema$`,
@@ -917,7 +910,7 @@ export const mockGetItemLoginSchema = (items: ItemForTest[]): void => {
 export const mockGetItemLoginSchemaType = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(
         `${API_HOST}/items/${ID_FORMAT}/login\\-schema\\-type$`,
       ),
@@ -944,7 +937,7 @@ export const mockGetItemLoginSchemaType = (items: ItemForTest[]): void => {
 export const mockGetItemMembershipsForItem = (items: ItemForTest[], currentMember: Member): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildGetItemMembershipsForItemsRoute([]),
@@ -993,7 +986,7 @@ export const mockGetItemMembershipsForItem = (items: ItemForTest[], currentMembe
 export const mockEditItemMembershipForItem = (): void => {
   cy.intercept(
     {
-      method: DEFAULT_PATCH.method,
+      method: HttpMethod.PATCH,
       url: new RegExp(
         `${API_HOST}/${buildEditItemMembershipRoute(ID_FORMAT)}$`,
       ),
@@ -1008,7 +1001,7 @@ export const mockEditItemMembershipForItem = (): void => {
 export const mockDeleteItemMembershipForItem = (): void => {
   cy.intercept(
     {
-      method: DEFAULT_DELETE.method,
+      method: HttpMethod.DELETE,
       url: new RegExp(
         `${API_HOST}/${buildDeleteItemMembershipRoute(ID_FORMAT)}$`,
       ),
@@ -1023,7 +1016,7 @@ export const mockDeleteItemMembershipForItem = (): void => {
 export const mockGetItemTags = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetItemTagsRoute(ID_FORMAT)}$`),
     },
     ({ reply, url }) => {
@@ -1037,7 +1030,7 @@ export const mockGetItemTags = (items: ItemForTest[]): void => {
 export const mockGetItemsTags = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: `${API_HOST}/items/tags?id=*`,
     },
     ({ reply, url }) => {
@@ -1062,7 +1055,7 @@ export const mockPostItemTag = (items: ItemForTest[], currentMember: Member, sho
   Object.values(ItemTagType).forEach(type => {
     cy.intercept(
       {
-        method: DEFAULT_POST.method,
+        method: HttpMethod.POST,
         url: new RegExp(`${API_HOST}/${buildPostItemTagRoute({ itemId: ID_FORMAT, type })}$`),
       },
       ({ reply, url, body }) => {
@@ -1097,7 +1090,7 @@ export const mockDeleteItemTag = (shouldThrowError: boolean): void => {
 
     cy.intercept(
       {
-        method: DEFAULT_DELETE.method,
+        method: HttpMethod.DELETE,
         url: new RegExp(
           `${API_HOST}/${buildDeleteItemTagRoute({
             itemId: ID_FORMAT,
@@ -1121,7 +1114,7 @@ export const mockDeleteItemTag = (shouldThrowError: boolean): void => {
 export const mockPostItemFlag = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildPostItemFlagRoute(ID_FORMAT)}$`),
     },
     ({ reply, body }) => {
@@ -1137,7 +1130,7 @@ export const mockPostItemFlag = (items: ItemForTest[], shouldThrowError: boolean
 export const mockGetAppLink = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildAppItemLinkForTest()}`),
     },
     ({ reply, url }) => {
@@ -1154,7 +1147,7 @@ export const mockGetAppLink = (shouldThrowError: boolean): void => {
 export const mockGetItemChat = ({ items }: { items: ItemForTest[] }, shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetItemChatRoute(ID_FORMAT)}$`),
     },
     ({ reply, url }) => {
@@ -1173,7 +1166,7 @@ export const mockGetItemChat = ({ items }: { items: ItemForTest[] }, shouldThrow
 export const mockDownloadItemChat = ({ items }: { items: ItemForTest[] }, shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildExportItemChatRoute(ID_FORMAT)}$`),
     },
     ({ reply, url }) => {
@@ -1200,7 +1193,7 @@ export const mockDownloadItemChat = ({ items }: { items: ItemForTest[] }, should
 export const mockPostItemChatMessage = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${buildPostItemChatMessageRoute(ID_FORMAT)}$`,
       ),
@@ -1217,7 +1210,7 @@ export const mockPostItemChatMessage = (shouldThrowError: boolean): void => {
 export const mockClearItemChat = ({ items }: { items: ItemForTest[] }, shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_DELETE.method,
+      method: HttpMethod.DELETE,
       url: new RegExp(`${API_HOST}/${buildClearItemChatRoute(ID_FORMAT)}$`),
     },
     ({ reply, url }) => {
@@ -1235,7 +1228,7 @@ export const mockClearItemChat = ({ items }: { items: ItemForTest[] }, shouldThr
 export const mockGetMemberMentions = ({ mentions }: { mentions: ChatMention[] }, shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/items/mentions`),
     },
     ({ reply }) => {
@@ -1251,7 +1244,7 @@ export const mockGetMemberMentions = ({ mentions }: { mentions: ChatMention[] },
 export const mockAppApiAccessToken = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildAppApiAccessTokenRoute(ID_FORMAT)}$`),
     },
     ({ reply }) => {
@@ -1267,7 +1260,7 @@ export const mockAppApiAccessToken = (shouldThrowError: boolean): void => {
 export const mockGetAppData = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
     },
     ({ reply }) => {
@@ -1283,7 +1276,7 @@ export const mockGetAppData = (shouldThrowError: boolean): void => {
 export const mockPostAppData = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
     },
     ({ reply }) => {
@@ -1299,7 +1292,7 @@ export const mockPostAppData = (shouldThrowError: boolean): void => {
 export const mockDeleteAppData = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_DELETE.method,
+      method: HttpMethod.DELETE,
       url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
     },
     ({ reply }) => {
@@ -1315,7 +1308,7 @@ export const mockDeleteAppData = (shouldThrowError: boolean): void => {
 export const mockPatchAppData = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_PATCH.method,
+      method: HttpMethod.PATCH,
       url: new RegExp(`${API_HOST}/${buildGetAppData(ID_FORMAT)}$`),
     },
     ({ reply }) => {
@@ -1331,7 +1324,7 @@ export const mockPatchAppData = (shouldThrowError: boolean): void => {
 export const mockGetItemThumbnail = (): void => {
   // cy.intercept(
   //   {
-  //     method: DEFAULT_GET.method,
+  //     method: HttpMethod.GET,
   //     url: new RegExp(
   //       `${API_HOST}/${ITEMS_ROUTE}/${ID_FORMAT}/thumbnails/size`,
   //     ),
@@ -1362,7 +1355,7 @@ export const mockGetItemThumbnail = (): void => {
 export const mockGetItemThumbnailUrl = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       // TODO: handle blob endpoint
       url: new RegExp(
         `${API_HOST}/${ITEMS_ROUTE}/${ID_FORMAT}/thumbnails`,
@@ -1392,7 +1385,7 @@ export const mockGetItemThumbnailUrl = (items: ItemForTest[], shouldThrowError: 
 export const mockPostItemThumbnail = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${buildUploadItemThumbnailRoute(ID_FORMAT)}`),
     },
     ({ reply }) => {
@@ -1408,7 +1401,7 @@ export const mockPostItemThumbnail = (items: ItemForTest[], shouldThrowError: bo
 export const mockGetAvatarUrl = (members: MemberForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       // TODO: include all sizes
       url: new RegExp(
         `${API_HOST}/members/${ID_FORMAT}/avatar/small\\?replyUrl\\=true`,
@@ -1436,7 +1429,7 @@ export const mockGetAvatarUrl = (members: MemberForTest[], shouldThrowError: boo
 export const mockPostAvatar = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${buildUploadAvatarRoute()}`),
     },
     ({ reply }) => {
@@ -1452,7 +1445,7 @@ export const mockPostAvatar = (shouldThrowError: boolean): void => {
 export const mockGetCategories = (categories: Category[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(buildGetCategoriesRoute())}`,
       ),
@@ -1470,7 +1463,7 @@ export const mockGetCategories = (categories: Category[], shouldThrowError: bool
 export const mockGetItemCategories = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/categories`),
     },
     ({ reply, url }) => {
@@ -1487,7 +1480,7 @@ export const mockGetItemCategories = (items: ItemForTest[], shouldThrowError: bo
 export const mockPostItemCategory = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildPostItemCategoryRoute(ID_FORMAT)}$`),
     },
     ({ reply, body }) => {
@@ -1503,7 +1496,7 @@ export const mockPostItemCategory = (shouldThrowError: boolean): void => {
 export const mockDeleteItemCategory = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_DELETE.method,
+      method: HttpMethod.DELETE,
       url: new RegExp(
         `${API_HOST}/${buildDeleteItemCategoryRoute({
           itemId: ID_FORMAT,
@@ -1525,7 +1518,7 @@ export const mockDeleteItemCategory = (shouldThrowError: boolean): void => {
 export const mockGetItemValidationAndReview = (itemValidationAndReview: ItemValidationReview): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/items/validations/status/${ID_FORMAT}`),
     },
     ({ reply }) => {
@@ -1537,7 +1530,7 @@ export const mockGetItemValidationAndReview = (itemValidationAndReview: ItemVali
 export const mockGetItemValidationGroups = (itemValidationGroups: ItemValidationGroup[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/items/validations/groups/${ID_FORMAT}`),
     },
     ({ reply }) => {
@@ -1549,7 +1542,7 @@ export const mockGetItemValidationGroups = (itemValidationGroups: ItemValidation
 export const mockPostItemValidation = (): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildPostItemValidationRoute(ID_FORMAT)}`),
     },
     ({ reply, body }) => {
@@ -1561,7 +1554,7 @@ export const mockPostItemValidation = (): void => {
 export const mockPostInvitations = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildPostInvitationsRoute(ID_FORMAT)}`),
     },
     ({ reply, body, url }) => {
@@ -1593,7 +1586,7 @@ export const mockPostInvitations = (items: ItemForTest[], shouldThrowError: bool
 export const mockGetItemInvitations = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(
         `${API_HOST}/${buildGetItemInvitationsForItemRoute(ID_FORMAT)}`,
       ),
@@ -1615,7 +1608,7 @@ export const mockGetItemInvitations = (items: ItemForTest[], shouldThrowError: b
 export const mockResendInvitation = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(
         `${API_HOST}/${parseStringToRegExp(
           buildResendInvitationRoute({ itemId: ID_FORMAT, id: ID_FORMAT }),
@@ -1635,7 +1628,7 @@ export const mockResendInvitation = (items: ItemForTest[], shouldThrowError: boo
 export const mockPatchInvitation = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_PATCH.method,
+      method: HttpMethod.PATCH,
       url: new RegExp(
         `${API_HOST}/${buildPatchInvitationRoute({
           itemId: ID_FORMAT,
@@ -1663,7 +1656,7 @@ export const mockPatchInvitation = (items: ItemForTest[], shouldThrowError: bool
 export const mockDeleteInvitation = (items: ItemForTest[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_DELETE.method,
+      method: HttpMethod.DELETE,
       url: new RegExp(
         `${API_HOST}/${buildDeleteInvitationRoute({
           itemId: ID_FORMAT,
@@ -1690,7 +1683,7 @@ export const mockDeleteInvitation = (items: ItemForTest[], shouldThrowError: boo
 export const mockPublishItem = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildItemPublishRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
@@ -1703,7 +1696,7 @@ export const mockPublishItem = (items: ItemForTest[]): void => {
 export const mockUnpublishItem = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_POST.method,
+      method: HttpMethod.POST,
       url: new RegExp(`${API_HOST}/${buildItemUnpublishRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
@@ -1716,7 +1709,7 @@ export const mockUnpublishItem = (items: ItemForTest[]): void => {
 export const mockGetPublishItemInformations = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetItemPublishedInformationRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
@@ -1733,7 +1726,7 @@ export const mockGetPublishItemInformations = (items: ItemForTest[]): void => {
 export const mockGetManyPublishItemInformations = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/items/collections/informations`),
     },
     ({ reply, url }) => {
@@ -1762,7 +1755,7 @@ export const mockGetManyPublishItemInformations = (items: ItemForTest[]): void =
 export const mockGetLatestValidationGroup = (items: ItemForTest[], itemValidationGroups: ItemValidationGroup[]): void => {
   cy.intercept(
     {
-      method: DEFAULT_GET.method,
+      method: HttpMethod.GET,
       url: new RegExp(`${API_HOST}/${buildGetLastItemValidationGroupRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
@@ -1785,7 +1778,7 @@ export const mockGetLatestValidationGroup = (items: ItemForTest[], itemValidatio
 export const mockUpdatePassword = (members: Member[], shouldThrowError: boolean): void => {
   cy.intercept(
     {
-      method: DEFAULT_PATCH.method,
+      method: HttpMethod.PATCH,
       url: new RegExp(`${API_HOST}/${buildUpdateMemberPasswordRoute()}`),
     },
     ({ reply }) => {

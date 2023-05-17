@@ -29,7 +29,7 @@ const DownloadChatButton = ({
   chatId,
   variant = ButtonVariants.IconButton,
   showInfo = true,
-}: Props): JSX.Element => {
+}: Props): JSX.Element | null => {
   const [filename, setFilename] = useState('');
   const { t } = useTranslation();
 
@@ -56,7 +56,7 @@ const DownloadChatButton = ({
     return null;
   }
 
-  const getContent = (contentVariant) => {
+  const getContent = (contentVariant: ButtonVariants): JSX.Element | null => {
     const contentText = t('Download Chat');
     switch (contentVariant) {
       case ButtonVariants.IconButton:

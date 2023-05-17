@@ -4,11 +4,14 @@ import Box from '@mui/material/Box';
 
 import { useEffect } from 'react';
 
+import { routines } from '@graasp/query-client';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
+import notifier from '../../config/notifier';
 import { hooks, mutations } from '../../config/queryClient';
 import {
   FAVORITE_ITEMS_ERROR_ALERT_ID,
@@ -20,6 +23,8 @@ import { useCurrentUserContext } from '../context/CurrentUserContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import Main from './Main';
+
+const { editMemberRoutine } = routines;
 
 const FavoriteItems = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -39,12 +44,21 @@ const FavoriteItems = (): JSX.Element => {
   // bug: this might fail for time out
   useEffect(() => {
     if (data?.errors?.size && data?.data) {
-      editMember({
-        id: member.id,
-        extra: {
-          favoriteItems: Object.values(data.data.toJS()).map(({ id }) => id),
-        },
-      });
+      if (!member) {
+        notifier({
+          type: editMemberRoutine.FAILURE,
+          payload: { error: new Error('member id is not defined') },
+        });
+      } else {
+        editMember({
+          id: member.id,
+          extra: {
+            favoriteItems: (
+              Object.values(data.data.toJS()) as DiscriminatedItem[]
+            ).map(({ id }) => id),
+          },
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

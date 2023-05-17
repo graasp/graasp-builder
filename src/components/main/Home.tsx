@@ -19,12 +19,12 @@ const Home = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
 
-  if (isError) {
-    return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
-  }
-
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (isError || !ownItems) {
+    return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
   }
 
   return (

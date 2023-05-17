@@ -25,7 +25,7 @@ import ItemMemberships from './ItemMemberships';
 const { useMember } = hooks;
 
 type Props = {
-  item?: ItemRecord;
+  item: ItemRecord;
 };
 
 const ItemMetadataContent = ({ item }: Props): JSX.Element => {
@@ -43,14 +43,16 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
   let mimetype = null;
   if (item.type === ItemType.S3_FILE) {
     const extra = getS3FileExtra(item.extra);
-    ({ mimetype, size } = extra);
+    mimetype = extra?.mimetype;
+    size = extra?.size;
   } else if (item.type === ItemType.LOCAL_FILE) {
     const extra = getFileExtra(item.extra);
-    ({ mimetype, size } = extra);
+    mimetype = extra?.mimetype;
+    size = extra?.size;
   }
 
   const renderLink = () => {
-    const buildTableRow = (link) => (
+    const buildTableRow = (link: string) => (
       <TableRow>
         <TableCell align="left">
           {translateBuilder(BUILDER.ITEM_METADATA_LINK_TITLE)}

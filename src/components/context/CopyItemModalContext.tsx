@@ -6,7 +6,7 @@ import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
-import TreeModal from '../main/TreeModal';
+import TreeModal, { TreeModalProps } from '../main/TreeModal';
 
 type CopyItemModalContextType = {
   openModal: (newItemIds: string[]) => void;
@@ -36,11 +36,11 @@ export const CopyItemModalProvider = ({ children }: Props): JSX.Element => {
     setItemIds([]);
   };
 
-  const onConfirm = (payload: { ids: string[]; to: string }) => {
+  const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: !validate(payload.to) ? undefined : payload.to,
+      to: payload.to && validate(payload.to) ? payload.to : undefined,
     };
     copyItems(newPayload);
     onClose();

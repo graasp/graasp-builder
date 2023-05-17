@@ -25,7 +25,7 @@ const ItemMemberships = ({
   id,
   maxAvatar = 2,
   onClick,
-}: Props): JSX.Element => {
+}: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: memberships, isError } = hooks.useItemMemberships(id);
   const { data: currentUser } = useCurrentUserContext();

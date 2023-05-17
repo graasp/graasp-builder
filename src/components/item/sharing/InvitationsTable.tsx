@@ -50,7 +50,7 @@ const InvitationsTable = ({
   const getRowId = ({ data }: { data: Invitation }) =>
     buildInvitationTableRowId(data.id);
 
-  const onDelete: TableRowDeleteButtonRendererProps['onDelete'] = ({
+  const onDelete: TableRowDeleteButtonRendererProps<Invitation>['onDelete'] = ({
     instance,
   }) => {
     deleteInvitation({ itemId: item.id, id: instance.id });

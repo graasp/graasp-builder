@@ -7,6 +7,7 @@ import { Loader } from '@graasp/ui';
 import { buildItemPath } from '../../../config/paths';
 import { hooks } from '../../../config/queryClient';
 import { ITEM_HEADER_ID } from '../../../config/selectors';
+import ErrorAlert from '../../common/ErrorAlert';
 import Navigation from '../../layout/Navigation';
 import ItemHeaderActions from './ItemHeaderActions';
 
@@ -19,10 +20,14 @@ type Props = {
 const ItemHeader = ({ showNavigation = true }: Props): JSX.Element => {
   const match = useMatch(buildItemPath());
   const itemId = match?.params?.itemId;
-  const { data: item, isLoading: isItemLoading } = useItem(itemId);
+  const { data: item, isLoading: isItemLoading, isError } = useItem(itemId);
 
   if (isItemLoading) {
     return <Loader />;
+  }
+
+  if (isError || !item) {
+    return <ErrorAlert />;
   }
 
   return (

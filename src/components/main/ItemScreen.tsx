@@ -68,7 +68,9 @@ const ItemScreen = (): JSX.Element => {
     memberId: currentMember?.id,
   });
   const permission = itemMembership?.permission;
-  const enableEditing = PERMISSIONS_EDITION_ALLOWED.includes(permission);
+  const enableEditing = permission
+    ? PERMISSIONS_EDITION_ALLOWED.includes(permission)
+    : false;
 
   const content = (() => {
     if (openedActionTabId === ItemActionTabs.Settings && enableEditing) {
@@ -112,6 +114,10 @@ const WrappedItemScreen = (): JSX.Element => {
   const { itemId } = useParams();
 
   const ForbiddenContent = <ItemForbiddenScreen />;
+
+  if (!itemId) {
+    return ForbiddenContent;
+  }
 
   const Component = ItemLoginAuthorization({
     signIn: itemLoginSignIn,

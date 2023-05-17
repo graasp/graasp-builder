@@ -49,10 +49,12 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
     memberships,
     memberId: member?.id,
   });
-  const canAdmin = getHighestPermissionForMemberFromMemberships({
-    memberships,
-    memberId: member?.id,
-  });
+  const canAdmin = member?.id
+    ? getHighestPermissionForMemberFromMemberships({
+        memberships,
+        memberId: member?.id,
+      })
+    : false;
 
   const onClickChatbox = () => {
     setIsChatboxMenuOpen(!isChatboxMenuOpen);

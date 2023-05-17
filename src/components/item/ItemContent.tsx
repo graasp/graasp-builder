@@ -239,7 +239,7 @@ const DocumentContent = ({
 const AppContent = ({
   item,
   member,
-  permission,
+  permission = PermissionLevel.Read,
   isEditing,
   onSaveCaption,
   onCancelCaption,
@@ -248,7 +248,7 @@ const AppContent = ({
 }: {
   item: AppItemTypeRecord;
   member?: MemberRecord;
-  permission: PermissionLevel;
+  permission?: PermissionLevel;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
   onCancelCaption: (caption: string) => void;
@@ -385,7 +385,7 @@ const EtherpadContent = ({
 type Props = {
   item?: ItemRecord;
   enableEditing?: boolean;
-  permission: PermissionLevel;
+  permission?: PermissionLevel;
 };
 
 /**

@@ -13,15 +13,16 @@ type Props = {
   item: ItemRecord;
 };
 
-const AdminChatSettings = ({ item }: Props): JSX.Element => {
+const AdminChatSettings = ({ item }: Props): JSX.Element | null => {
   const itemId = item.id;
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     hooks.useItemMemberships(item.id);
   const { data: currentMember } = useCurrentUserContext();
   // only show export chat when user has admin right on the item
-  const isAdmin =
-    itemPermissions?.find((perms) => perms.member.id === currentMember.id)
-      ?.permission === PermissionLevel.Admin;
+  const isAdmin = currentMember
+    ? itemPermissions?.find((perms) => perms.member.id === currentMember.id)
+        ?.permission === PermissionLevel.Admin
+    : false;
   const { mutate: clearChatHook } = mutations.useClearItemChat();
 
   if (!isAdmin || isLoadingItemPermissions) {

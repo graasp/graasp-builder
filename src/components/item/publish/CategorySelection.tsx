@@ -34,7 +34,7 @@ type Props = {
   disabled: boolean;
 };
 
-const CategorySelection = ({ disabled }: Props): JSX.Element => {
+const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCategories } = useCategoriesTranslation();
   const { mutate: createItemCategory } = usePostItemCategory();

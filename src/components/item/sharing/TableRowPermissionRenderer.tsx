@@ -1,33 +1,34 @@
 import Typography from '@mui/material/Typography';
 
-import { Invitation, ItemMembership } from '@graasp/sdk';
+import { Item, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
 import { useIsParentInstance } from '../../../utils/item';
 import ItemMembershipSelect from './ItemMembershipSelect';
+import type { ItemMembershipSelectProps } from './ItemMembershipSelect';
 
-type Props = {
+type TableRowPermissionRendererProps<T> = {
   item: ItemRecord;
-  editFunction;
-  createFunction;
-  readOnly?;
+  editFunction: (args: { value: PermissionLevel; instance: T }) => void;
+  createFunction: (args: { value: PermissionLevel; instance: T }) => void;
+  readOnly?: boolean;
 };
 
-type ChildProps = Invitation | ItemMembership;
-
-const TableRowPermissionRenderer = ({
+function TableRowPermissionRenderer<
+  T extends { permission: PermissionLevel; item: Item },
+>({
   item,
   editFunction,
   createFunction,
   readOnly = false,
-}: Props): (({ data }: { data: ChildProps }) => JSX.Element) => {
-  const ChildComponent = ({ data: instance }: { data: ChildProps }) => {
+}: TableRowPermissionRendererProps<T>): ({ data }: { data: T }) => JSX.Element {
+  const ChildComponent = ({ data: instance }: { data: T }) => {
     const isParentMembership = useIsParentInstance({
       instance,
       item,
     });
-    const onChangePermission = (e) => {
-      const { value } = e.target;
+    const onChangePermission: ItemMembershipSelectProps['onChange'] = (e) => {
+      const value = e.target.value as PermissionLevel;
       // editing a parent's instance from a child should create a new instance
       if (isParentMembership) {
         createFunction({ value, instance });
@@ -48,5 +49,5 @@ const TableRowPermissionRenderer = ({
   };
 
   return ChildComponent;
-};
+}
 export default TableRowPermissionRenderer;

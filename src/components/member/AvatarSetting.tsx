@@ -3,7 +3,13 @@ import Uppy from '@uppy/core';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { MouseEventHandler, useEffect, useRef, useState } from 'react';
+import {
+  FormEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { MemberRecord } from '@graasp/sdk/frontend';
 import { ACCOUNT } from '@graasp/translations';
@@ -24,9 +30,9 @@ type Props = {
   user: MemberRecord;
 };
 
-const AvatarSetting = ({ user }: Props): JSX.Element => {
-  const inputRef = useRef<HTMLInputElement>();
-  const [uppy, setUppy] = useState<Uppy>(null);
+const AvatarSetting = ({ user }: Props): JSX.Element | null => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uppy, setUppy] = useState<Uppy>();
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState<string>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
@@ -42,10 +48,12 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
         onUpload: () => {
           setOpenStatusBar(true);
         },
-        onError: (error) => {
+        onError: (error: Error) => {
           onUploadAvatar({ id: userId, error });
         },
-        onComplete: (result) => {
+        onComplete: (result: {
+          successful: { response: { body: unknown } }[];
+        }) => {
           // update app on complete
           // todo: improve with websockets or by receiving corresponding items
           if (result?.successful?.length) {
@@ -55,7 +63,6 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
 
           return false;
         },
-        onFilesAdded: () => null,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,13 +76,14 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
     setOpenStatusBar(false);
   };
 
-  const onSelectFile = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
+  const onSelectFile: FormEventHandler<HTMLInputElement> = (e) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener('load', () =>
         setFileSource(reader.result as string),
       );
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(target.files[0]);
       setShowCropModal(true);
     }
   };
@@ -83,7 +91,7 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
   const onClose = () => {
     setShowCropModal(false);
     if (inputRef.current) {
-      inputRef.current.value = null;
+      inputRef.current.value = '';
     }
   };
 
@@ -92,6 +100,9 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
 
     // submit cropped image
     try {
+      if (!croppedImage) {
+        throw new Error('cropped image is not defined');
+      }
       // remove waiting files
       uppy.cancelAll();
 
@@ -143,12 +154,14 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
           />
         </Grid>
       </Grid>
-      <CropModal
-        open={showCropModal}
-        onClose={onClose}
-        src={fileSource}
-        onConfirm={onConfirmCrop}
-      />
+      {fileSource && (
+        <CropModal
+          open={showCropModal}
+          onClose={onClose}
+          src={fileSource}
+          onConfirm={onConfirmCrop}
+        />
+      )}
     </>
   );
 };

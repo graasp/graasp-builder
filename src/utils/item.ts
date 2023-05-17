@@ -6,9 +6,7 @@ import { useEffect, useState } from 'react';
 import {
   DiscriminatedItem,
   FolderItemExtra,
-  Invitation,
   Item,
-  ItemMembership,
   ItemType,
   getAppExtra,
   getDocumentExtra,
@@ -150,13 +148,13 @@ export const sortByName = (
 };
 
 // todo: use typescript to precise data is one of Invitation or Membership
-export const useIsParentInstance = ({
+export function useIsParentInstance({
   instance,
   item,
 }: {
-  instance: Pick<Invitation, 'item'> | Pick<ItemMembership, 'item'>;
+  instance: { item: Item };
   item: ItemRecord;
-}): boolean => {
+}): boolean {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {
     setIsParentMembership(instance.item.path !== item.path);
@@ -166,4 +164,4 @@ export const useIsParentInstance = ({
   }, [instance, item]);
 
   return isParentMembership;
-};
+}

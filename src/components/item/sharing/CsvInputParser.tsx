@@ -61,8 +61,9 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files.length) {
-      const file = e.target.files[0];
+    const t = e.target as HTMLInputElement;
+    if (t.files?.length) {
+      const file = t.files?.[0];
 
       if (file) {
         Papa.parse(file, {
@@ -70,13 +71,13 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
           dynamicTyping: true,
           complete: ({ data: parsedData }) => {
             // add current item path and default permission read
-            const dataWithItemPath = parsedData.map(
-              (d: Partial<Invitation>) => ({
+            const dataWithItemPath = parsedData.map<Partial<Invitation>>(
+              (d) => ({
                 permission: PermissionLevel.Read,
-                ...d,
+                ...(d as Partial<Invitation>),
                 itemPath,
               }),
-            );
+            ) as any;
 
             share({ data: dataWithItemPath, itemId });
           },

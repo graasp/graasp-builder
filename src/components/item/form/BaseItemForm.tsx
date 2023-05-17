@@ -9,7 +9,7 @@ import { BUILDER } from '@graasp/translations';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 
-type Props = {
+export type BaseFormProps = {
   updatedProperties: Partial<DiscriminatedItem>;
   onChange: (props: Partial<DiscriminatedItem>) => void;
   item?: Partial<ItemRecord>;
@@ -21,7 +21,7 @@ const BaseForm = ({
   item,
   required,
   updatedProperties,
-}: Props): JSX.Element => {
+}: BaseFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {

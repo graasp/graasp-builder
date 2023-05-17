@@ -7,7 +7,14 @@ import Looks5Icon from '@mui/icons-material/Looks5';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import UpdateIcon from '@mui/icons-material/Update';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 
 import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
@@ -95,8 +102,10 @@ const ItemPublishTab = ({
     // check if validation is still valid
     const isOutdated =
       Boolean(!lastItemValidationGroup) ||
-      Boolean(!lastItemValidationGroup.createdAt) ||
-      lastItemValidationGroup.createdAt <= item?.updatedAt;
+      Boolean(!lastItemValidationGroup?.createdAt) ||
+      (lastItemValidationGroup?.createdAt
+        ? lastItemValidationGroup.createdAt <= item?.updatedAt
+        : true);
     // QUESTION: should this be null instead?
     if (isOutdated) {
       setValidationStatus(ItemValidationStatus.Failure);
@@ -238,27 +247,36 @@ const ItemPublishTab = ({
         <Typography variant="body1">
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_INFORMATIONS)}
         </Typography>
-        <Button
-          id={ITEM_VALIDATION_BUTTON_ID}
-          disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
-          variant="outlined"
-          onClick={handleValidate}
-          color="primary"
-          endIcon={displayItemValidationIcon()}
+        <Stack
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+          spacing={2}
         >
-          {translateBuilder(
-            BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON,
-          )}
-        </Button>
-        <Button
-          id={ITEM_VALIDATION_REFRESH_BUTTON_ID}
-          variant="outlined"
-          onClick={handleRefresh}
-          color="primary"
-          disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
-        >
-          {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON)}
-        </Button>
+          <Button
+            id={ITEM_VALIDATION_BUTTON_ID}
+            disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
+            variant="outlined"
+            onClick={handleValidate}
+            color="primary"
+            endIcon={displayItemValidationIcon()}
+          >
+            {translateBuilder(
+              BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON,
+            )}
+          </Button>
+          <Button
+            id={ITEM_VALIDATION_REFRESH_BUTTON_ID}
+            variant="outlined"
+            onClick={handleRefresh}
+            color="primary"
+            disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
+          >
+            {translateBuilder(
+              BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON,
+            )}
+          </Button>
+        </Stack>
         {displayItemValidationMessage()}
         <Typography variant="h6" mt={2} mr={2}>
           <Looks3Icon color="primary" />

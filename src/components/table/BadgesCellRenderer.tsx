@@ -48,7 +48,7 @@ export const useItemsStatuses = ({
   itemsTags,
 }: {
   items: List<ItemRecord>;
-  itemsTags: ResultOfRecord<List<ItemTagRecord>>;
+  itemsTags?: ResultOfRecord<List<ItemTagRecord>>;
 }): ItemsStatuses => {
   const { data: publishedInformations } = useManyItemPublishedInformations({
     itemIds: items.map((i) => i.id).toJS(),

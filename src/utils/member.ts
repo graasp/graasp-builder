@@ -12,5 +12,5 @@ export const getMemberById = (
   id: string,
 ): Member | undefined => members.find(({ id: thisId }) => id === thisId);
 
-export const getFavoriteItems = (member: MemberRecord): List<string> =>
-  member.extra?.favoriteItems || List();
+export const getFavoriteItems = (member?: MemberRecord): List<string> =>
+  member?.extra?.favoriteItems || List();

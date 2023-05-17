@@ -41,8 +41,12 @@ export const getHighestPermissionForMemberFromMemberships = ({
   memberId,
 }: {
   memberships?: List<ItemMembershipRecord>;
-  memberId: string;
+  memberId?: string;
 }): null | ItemMembershipRecord => {
+  if (!memberId) {
+    return null;
+  }
+
   const itemMemberships = memberships?.filter(
     ({ member: { id: mId } }) => mId === memberId,
   );
@@ -61,17 +65,19 @@ export const isSettingsEditionAllowedForUser = ({
   memberships,
   memberId,
 }: {
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
   memberId?: string;
 }): boolean =>
-  memberships?.some(
-    ({ member: { id: mId }, permission }) =>
-      mId === memberId && PermissionLevel.Admin === permission,
-  );
+  !memberships
+    ? false
+    : memberships.some(
+        ({ member: { id: mId }, permission }) =>
+          mId === memberId && PermissionLevel.Admin === permission,
+      );
 
 export const membershipsWithoutUser = (
   memberships: List<ItemMembershipRecord>,
-  userId: string,
+  userId?: string,
 ): List<ItemMembershipRecord> =>
   memberships?.filter(({ member: { id: memberId } }) => memberId !== userId);
 

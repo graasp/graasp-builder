@@ -1,10 +1,12 @@
+import Uppy from '@uppy/core';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { useEffect, useRef, useState } from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
 import { ItemType } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { EmbeddedLinkItemTypeRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Thumbnail } from '@graasp/ui';
 
@@ -22,9 +24,9 @@ import StatusBar from '../../file/StatusBar';
 
 type Props = { item: ItemRecord };
 
-const ThumbnailSetting = ({ item }: Props): JSX.Element => {
-  const inputRef = useRef<HTMLInputElement>();
-  const [uppy, setUppy] = useState(null);
+const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uppy, setUppy] = useState<Uppy>();
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState<string>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
@@ -42,10 +44,12 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
         onUpload: () => {
           setOpenStatusBar(true);
         },
-        onError: (error) => {
+        onError: (error: Error) => {
           onFileUploadComplete({ id: itemId, error });
         },
-        onComplete: (result) => {
+        onComplete: (result: {
+          successful: { response: { body: unknown } }[];
+        }) => {
           if (result?.successful?.length) {
             const data = result.successful[0].response.body;
             onFileUploadComplete({ id: itemId, data });
@@ -62,7 +66,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
     return null;
   }
 
-  const handleClose = (_event, reason) => {
+  const handleClose = (_event: Event, reason: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -70,13 +74,14 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
     setOpenStatusBar(false);
   };
 
-  const onSelectFile = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
+  const onSelectFile: FormEventHandler<HTMLInputElement> = (e) => {
+    const t = e.target as HTMLInputElement;
+    if (t.files && t.files?.length > 0) {
       const reader = new FileReader();
       reader.addEventListener('load', () =>
         setFileSource(reader.result as string),
       );
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(t.files?.[0]);
       setShowCropModal(true);
     }
   };
@@ -84,13 +89,18 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
   const onClose = () => {
     setShowCropModal(false);
     if (inputRef.current) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       inputRef.current.value = null;
     }
   };
 
-  const onConfirmCrop = (croppedImage) => {
+  const onConfirmCrop = (croppedImage: Blob | null) => {
     onClose();
 
+    if (!croppedImage) {
+      return console.error('croppedImage is not defined');
+    }
     // submit cropped image
     try {
       // remove waiting files
@@ -104,6 +114,8 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
     } catch (error) {
       console.error(error);
     }
+
+    return true;
   };
 
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
@@ -139,7 +151,9 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
             // TODO: fix type
             url={
               thumbnailUrl ??
-              (item?.extra?.[ItemType.LINK] as any)?.thumbnails?.first()
+              (item as EmbeddedLinkItemTypeRecord)?.extra?.[
+                ItemType.LINK
+              ]?.thumbnails?.first()
             }
             alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
@@ -148,12 +162,14 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element => {
           />
         </Grid>
       </Grid>
-      <CropModal
-        open={showCropModal}
-        onClose={onClose}
-        src={fileSource}
-        onConfirm={onConfirmCrop}
-      />
+      {fileSource && (
+        <CropModal
+          open={showCropModal}
+          onClose={onClose}
+          src={fileSource}
+          onConfirm={onConfirmCrop}
+        />
+      )}
     </>
   );
 };

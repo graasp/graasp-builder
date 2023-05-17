@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { useState } from 'react';
 
-import { ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
 
@@ -26,8 +26,8 @@ const dialogId = 'simple-dialog-title';
 const { useItem, useItems, useOwnItems, useChildren, useSharedItems } = hooks;
 
 export type TreeModalProps = {
-  onConfirm: (args: { ids: string[]; to: string }) => void;
-  onClose: (args: { id: string; open: boolean }) => void;
+  onConfirm: (args: { ids: string[]; to?: string }) => void;
+  onClose: (args: { id: string | null; open: boolean }) => void;
   title: string;
   itemIds?: string[];
   open?: boolean;
@@ -48,13 +48,13 @@ const TreeModal = ({
   // otherwise choosing an item without the write rights will result in an error
   const { data: sharedItems, isLoading: isSharedItemsLoading } =
     useSharedItems();
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState<string>();
   const { data: items, isLoading: isItemLoading } = useItems(itemIds);
 
   // build the expanded item ids list for a given tree (with treeRootId as id)
   // by default, we expand all parents of items
   // all other tree roots should be closed
-  const buildExpandedItems = (treeRootId) => {
+  const buildExpandedItems = (treeRootId: string) => {
     if (!items || !items.data) {
       return [];
     }
@@ -70,7 +70,7 @@ const TreeModal = ({
     // define root id depending on whether is the root parent is in the owned items
     const rootItemId = parentIds[0];
     const isRootItemOwned = Boolean(
-      ownItems.find(({ id }) => id === rootItemId),
+      ownItems?.find(({ id }) => id === rootItemId),
     );
     const itemRootId = isRootItemOwned
       ? TREE_MODAL_MY_ITEMS_ID
@@ -92,12 +92,18 @@ const TreeModal = ({
 
   // compute whether the given id tree item is disabled
   // it depends on the prevent mode and the previous items
-  const isTreeItemDisabled = ({ itemId: iId, parentIsDisabled }) => {
+  const isTreeItemDisabled = ({
+    itemId: iId,
+    parentIsDisabled,
+  }: {
+    itemId: string;
+    parentIsDisabled: boolean;
+  }) => {
     switch (prevent) {
       case TreePreventSelection.SELF_AND_CHILDREN:
         // if the previous item is disabled, its children will be disabled
         // and prevent selection on self
-        return parentIsDisabled || itemIds.find((x) => x === iId);
+        return Boolean(parentIsDisabled || itemIds.find((x) => x === iId));
       case TreePreventSelection.NONE:
       default:
         return false;
@@ -113,61 +119,66 @@ const TreeModal = ({
     handleClose();
   };
 
-  const onTreeItemSelect = (nodeId) => {
+  const onTreeItemSelect = (nodeId: string) => {
     if (selectedId === nodeId) {
-      setSelectedId(null);
+      setSelectedId(undefined);
     } else {
       setSelectedId(nodeId);
     }
   };
 
-  const isFolder = (i) => i.type === ItemType.FOLDER;
+  const isFolder = (i: Pick<DiscriminatedItem, 'type'>) =>
+    i.type === ItemType.FOLDER;
 
   // compute tree only when the modal is open
   const tree = !open ? null : (
     <>
-      <DynamicTreeView
-        id={TREE_MODAL_MY_ITEMS_ID}
-        rootSx={{
-          flexGrow: 1,
-          maxWidth: TREE_VIEW_MAX_WIDTH,
-        }}
-        selectedId={selectedId}
-        initialExpendedItems={buildExpandedItems(TREE_MODAL_MY_ITEMS_ID)}
-        items={ownItems}
-        onTreeItemSelect={onTreeItemSelect}
-        useChildren={useChildren}
-        useItem={useItem}
-        showCheckbox
-        rootLabel={translateBuilder(BUILDER.ITEMS_TREE_OWN_ITEMS_LABEL)}
-        rootId={TREE_MODAL_MY_ITEMS_ID}
-        showItemFilter={isFolder}
-        shouldFetchChildrenForItem={isFolder}
-        isTreeItemDisabled={isTreeItemDisabled}
-        // todo: change graasp-ui
-        buildTreeItemClass={buildTreeItemId as any}
-      />
-      <DynamicTreeView
-        id={TREE_MODAL_SHARED_ITEMS_ID}
-        rootSx={{
-          flexGrow: 1,
-          maxWidth: TREE_VIEW_MAX_WIDTH,
-        }}
-        selectedId={selectedId}
-        initialExpendedItems={buildExpandedItems(TREE_MODAL_SHARED_ITEMS_ID)}
-        items={sharedItems}
-        onTreeItemSelect={onTreeItemSelect}
-        useChildren={useChildren}
-        useItem={useItem}
-        showCheckbox
-        rootLabel={translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE)}
-        rootId={TREE_MODAL_SHARED_ITEMS_ID}
-        showItemFilter={isFolder}
-        shouldFetchChildrenForItem={isFolder}
-        isTreeItemDisabled={isTreeItemDisabled}
-        // todo: change graasp-ui
-        buildTreeItemClass={buildTreeItemId as any}
-      />
+      {ownItems && (
+        <DynamicTreeView
+          id={TREE_MODAL_MY_ITEMS_ID}
+          rootSx={{
+            flexGrow: 1,
+            maxWidth: TREE_VIEW_MAX_WIDTH,
+          }}
+          selectedId={selectedId}
+          initialExpendedItems={buildExpandedItems(TREE_MODAL_MY_ITEMS_ID)}
+          items={ownItems}
+          onTreeItemSelect={onTreeItemSelect}
+          useChildren={useChildren}
+          useItem={useItem}
+          showCheckbox
+          rootLabel={translateBuilder(BUILDER.ITEMS_TREE_OWN_ITEMS_LABEL)}
+          rootId={TREE_MODAL_MY_ITEMS_ID}
+          showItemFilter={isFolder}
+          shouldFetchChildrenForItem={isFolder}
+          isTreeItemDisabled={isTreeItemDisabled}
+          // todo: change graasp-ui
+          buildTreeItemClass={buildTreeItemId as any}
+        />
+      )}
+      {sharedItems && (
+        <DynamicTreeView
+          id={TREE_MODAL_SHARED_ITEMS_ID}
+          rootSx={{
+            flexGrow: 1,
+            maxWidth: TREE_VIEW_MAX_WIDTH,
+          }}
+          selectedId={selectedId}
+          initialExpendedItems={buildExpandedItems(TREE_MODAL_SHARED_ITEMS_ID)}
+          items={sharedItems}
+          onTreeItemSelect={onTreeItemSelect}
+          useChildren={useChildren}
+          useItem={useItem}
+          showCheckbox
+          rootLabel={translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE)}
+          rootId={TREE_MODAL_SHARED_ITEMS_ID}
+          showItemFilter={isFolder}
+          shouldFetchChildrenForItem={isFolder}
+          isTreeItemDisabled={isTreeItemDisabled}
+          // todo: change graasp-ui
+          buildTreeItemClass={buildTreeItemId as any}
+        />
+      )}
     </>
   );
 

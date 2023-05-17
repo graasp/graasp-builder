@@ -1,5 +1,3 @@
-import { RecordOf } from 'immutable';
-
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Skeleton from '@mui/material/Skeleton';
@@ -7,14 +5,8 @@ import Typography from '@mui/material/Typography';
 
 import { HTMLAttributes, useState } from 'react';
 
-import {
-  App,
-  AppItemType,
-  DiscriminatedItem,
-  Item,
-  getAppExtra,
-} from '@graasp/sdk';
-import { AppItemTypeRecord } from '@graasp/sdk/frontend';
+import { AppItemType, DiscriminatedItem, Item, getAppExtra } from '@graasp/sdk';
+import { AppItemTypeRecord, AppRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -38,9 +30,13 @@ const AppForm = ({
   updatedProperties = {},
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const [newName, setNewName] = useState(item?.name);
+  const [newName, setNewName] = useState<string>(item?.name ?? '');
 
-  const handleAppSelection = (_event: any, newValue: RecordOf<App> | null) => {
+  const handleAppSelection = (_event: any, newValue: AppRecord | null) => {
+    if (!newValue) {
+      return console.error('new value is undefined');
+    }
+
     const url = newValue?.url;
     const name = newValue?.name ?? item?.name;
     // TODO: improve types
@@ -52,7 +48,7 @@ const AppForm = ({
       setNewName(name);
       props.name = name;
     }
-    onChange(props);
+    return onChange(props);
   };
 
   const handleAppInput = (_event: any, url: string) => {
@@ -96,7 +92,7 @@ const AppForm = ({
             return option.url;
           }}
           filterOptions={(options, state) => {
-            const filteredOptionsByName = options.filter((opt: RecordOf<App>) =>
+            const filteredOptionsByName = options.filter((opt: AppRecord) =>
               opt.name.toLowerCase().includes(state.inputValue.toLowerCase()),
             );
             return filteredOptionsByName;
@@ -107,7 +103,7 @@ const AppForm = ({
           onInputChange={handleAppInput}
           renderOption={(
             props: HTMLAttributes<HTMLLIElement>,
-            option: RecordOf<App>,
+            option: AppRecord,
           ) => (
             <li
               // eslint-disable-next-line react/jsx-props-no-spreading

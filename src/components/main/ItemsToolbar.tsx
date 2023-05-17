@@ -5,7 +5,7 @@ type Props = {
   headerElements?: JSX.Element[];
 };
 
-const ItemsToolbar = ({ title, headerElements = null }: Props): JSX.Element => (
+const ItemsToolbar = ({ title, headerElements }: Props): JSX.Element => (
   <Stack direction="row" justifyContent="space-between" spacing={1}>
     <Box>
       <Typography variant="h4" noWrap>

@@ -11,10 +11,8 @@ import {
   COPY_MEMBER_ID_TO_CLIPBOARD,
 } from '../types/clipboard';
 
-// TODO: get from graasp client
-type ErrorPayload = {
+type ErrorPayload = Parameters<Notifier>[0]['payload'] & {
   failure?: unknown[];
-  error?: { message: string };
 };
 
 type SuccessPayload = {

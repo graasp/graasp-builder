@@ -41,7 +41,7 @@ const MoveItemModalProvider = ({
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: !validate(payload.to) ? undefined : payload.to,
+      to: payload.to && validate(payload.to) ? payload.to : undefined,
     };
     moveItems(newPayload);
     onClose();

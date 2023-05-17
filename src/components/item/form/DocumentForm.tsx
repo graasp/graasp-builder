@@ -18,7 +18,7 @@ import { DocumentItem } from '@graasp/ui';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
-import BaseForm from './BaseItemForm';
+import BaseForm, { BaseFormProps } from './BaseItemForm';
 
 export const DocumentExtraForm = ({
   documentItemId,
@@ -47,6 +47,8 @@ export const DocumentExtraForm = ({
 }): JSX.Element => {
   const { t } = useBuilderTranslation();
   const flavorsTranslations = Object.values(DocumentItemExtraFlavor).map(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     (f) => [f, t(BUILDER[`DOCUMENT_FLAVOR_${f.toUpperCase()}`])],
   );
 
@@ -60,7 +62,7 @@ export const DocumentExtraForm = ({
             label="flavor"
             value={extra.flavor}
             onChange={(event) =>
-              onFlavorChange(
+              onFlavorChange?.(
                 event.target.value === ''
                   ? undefined
                   : (event.target
@@ -99,7 +101,7 @@ export const DocumentExtraForm = ({
 };
 
 type Props = {
-  onChange: (item: Partial<DocumentItemType>) => void;
+  onChange: BaseFormProps['onChange'];
   item?: DocumentItemTypeRecord;
   updatedProperties: Partial<DocumentItemType>;
 };

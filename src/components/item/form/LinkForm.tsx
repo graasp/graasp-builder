@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { EmbeddedLinkItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
@@ -17,7 +17,7 @@ type Props = {
 const LinkForm = ({ onChange, item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const handleLinkInput = (event) => {
+  const handleLinkInput: TextFieldProps['onChange'] = (event) => {
     onChange({
       ...item,
       name: translateBuilder(BUILDER.LINK_DEFAULT_NAME), // todo: this is replaced by iframely
@@ -31,7 +31,7 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
   };
 
   const { url } = getEmbeddedLinkExtra(item?.extra) || {};
-  const isLinkInvalid = url?.length && !isUrlValid(url);
+  const isLinkInvalid = Boolean(url?.length) && !isUrlValid(url);
 
   return (
     <>

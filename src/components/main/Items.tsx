@@ -5,6 +5,7 @@ import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
+import ErrorAlert from '../common/ErrorAlert';
 import { useLayoutContext } from '../context/LayoutContext';
 import { useItemSearch } from '../item/ItemSearch';
 import { useItemsStatuses } from '../table/BadgesCellRenderer';
@@ -68,6 +69,10 @@ const Items = ({
 
   if (isMembershipsLoading) {
     return <Loader />;
+  }
+
+  if (!manyMemberships) {
+    return <ErrorAlert />;
   }
 
   switch (mode) {

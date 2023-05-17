@@ -31,7 +31,7 @@ import VisibilitySelect from './VisibilitySelect';
 
 type Props = {
   item: ItemRecord;
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
 };
 
 const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
