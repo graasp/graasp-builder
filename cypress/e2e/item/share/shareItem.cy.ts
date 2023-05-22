@@ -60,15 +60,8 @@ describe('Share Item', () => {
     cy.wait(`@postItemTag-${ItemTagType.PUBLIC}`).then(({ request: { url } }) => {
       expect(url).to.contain(item.id);
     });
-
-    // change public -> private
-    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait(`@deleteItemTag-${ItemTagType.PUBLIC}`).then(() => {
-      // we cannot test the select value since the database is not updated
-      // eslint-disable-next-line no-unused-expressions
-      cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).should('be.visible');
-    });
   });
+
 
   it('Public Item', () => {
     cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS, });

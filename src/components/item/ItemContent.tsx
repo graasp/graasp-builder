@@ -266,9 +266,11 @@ const AppContent = ({
     saveButtonId={saveButtonId}
     cancelButtonId={cancelButtonId}
     height={ITEM_DEFAULT_HEIGHT}
-    requestApiAccessToken={(payload) =>
-      Api.requestApiAccessToken(payload, { API_HOST })
-    }
+    requestApiAccessToken={(payload: {
+      id: string;
+      key: string;
+      origin: string;
+    }) => Api.requestApiAccessToken(payload, { API_HOST })}
     contextPayload={{
       apiHost: API_HOST,
       itemId: item.id,
@@ -306,7 +308,7 @@ const FolderContent = ({
   if (isLoading) {
     return <Loader />;
   }
-  console.log(children, isLoading, isError);
+
   if (isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }

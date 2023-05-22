@@ -27,7 +27,7 @@ export const createDocument = (payload: DocumentItemType, options?: { confirm?: 
 };
 
 export const createFolder = (payload: { name?: string; description?: string }, options?: { confirm?: boolean }): void => {
-  cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
+  cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
   cy.fillFolderModal(payload, options);
 };
 

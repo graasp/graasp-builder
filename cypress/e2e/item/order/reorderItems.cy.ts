@@ -17,7 +17,6 @@ const reorderAndCheckItem = (id, currentPosition, newPosition) => {
     '@getItem',
     '@getChildren',
     '@getItemMemberships',
-    '@downloadItemThumbnail',
   ]);
 
   cy.dragAndDrop(dragIcon, 0, (newPosition - currentPosition) * ROW_HEIGHT);

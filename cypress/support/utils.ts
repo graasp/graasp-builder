@@ -1,7 +1,6 @@
-import Papa from 'papaparse';
+import * as Papa from 'papaparse';
 
 import { EXPORT_CSV_HEADERS } from '../../src/config/constants';
-import { ItemLogin, ItemLoginSchema } from '@graasp/sdk';
 
 // use simple id format for tests
 export const ID_FORMAT = '(?=.*[0-9])(?=.*[a-zA-Z])([a-z0-9-]+)';

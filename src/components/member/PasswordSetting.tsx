@@ -38,10 +38,8 @@ const PasswordSetting = (): JSX.Element => {
     setConfirmPasswordError(
       confirmPasswordIsNotEmpty ? null : FAILURE_MESSAGES.PASSWORD_EMPTY_ERROR,
     );
-    // throw error if one of the password fields is empty
-    if (newPasswordIsNotEmpty || confirmPasswordIsNotEmpty) {
-      throw FAILURE_MESSAGES.PASSWORD_EMPTY_ERROR;
-    }
+
+    return newPasswordIsNotEmpty || confirmPasswordIsNotEmpty;
   };
 
   const onClose = () => {
@@ -52,25 +50,28 @@ const PasswordSetting = (): JSX.Element => {
 
   const handleChangePassword = () => {
     // verify there are no empty inputs
-    verifyEmptyPassword();
-    // perform validation when all fields are filled in
-    if (currentPassword === newPassword) {
-      return setNewPassword(FAILURE_MESSAGES.PASSWORD_EQUAL_ERROR);
-    }
-    if (newPassword !== confirmPassword) {
-      return setConfirmPasswordError(FAILURE_MESSAGES.PASSWORD_CONFIRM_ERROR);
-    }
+    const isValid = verifyEmptyPassword();
 
-    // check password strength for new password
-    if (!isPasswordStrong(newPassword)) {
-      return setNewPassword(FAILURE_MESSAGES.PASSWORD_WEAK_ERROR);
-    }
+    if (isValid) {
+      // perform validation when all fields are filled in
+      if (currentPassword === newPassword) {
+        return setNewPassword(FAILURE_MESSAGES.PASSWORD_EQUAL_ERROR);
+      }
+      if (newPassword !== confirmPassword) {
+        return setConfirmPasswordError(FAILURE_MESSAGES.PASSWORD_CONFIRM_ERROR);
+      }
 
-    // perform password update
-    updatePassword({
-      password: newPassword,
-      currentPassword,
-    });
+      // check password strength for new password
+      if (!isPasswordStrong(newPassword)) {
+        return setNewPassword(FAILURE_MESSAGES.PASSWORD_WEAK_ERROR);
+      }
+
+      // perform password update
+      updatePassword({
+        password: newPassword,
+        currentPassword,
+      });
+    }
 
     return onClose();
   };

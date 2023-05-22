@@ -1158,7 +1158,7 @@ export const mockGetItemChat = ({ items }: { items: ItemForTest[] }, shouldThrow
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
 
-      return reply({ id: itemId, messages: item?.chat });
+      return reply(item?.chat);
     },
   ).as('getItemChat');
 };

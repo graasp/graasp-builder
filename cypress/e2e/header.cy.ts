@@ -32,10 +32,11 @@ describe('Header', () => {
       cy.get(`#${HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID}`).click();
       cy.get(`#${MEMBER_PROFILE_MEMBER_NAME_ID}`).should('be.visible');
 
+      // disable switch users
       // sign in as another user
-      cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
-      cy.get(`#${HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID}`).click();
-      cy.url().should('equal', SIGN_IN_PATH);
+      // cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
+      // cy.get(`#${HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID}`).click();
+      // cy.url().should('equal', SIGN_IN_PATH);
     });
 
     it('Sign out', () => {

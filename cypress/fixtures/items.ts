@@ -806,3 +806,182 @@ export const ITEMS_SETTINGS: ApiConfig = {
     CHILD_HIDDEN_ITEM,
   ],
 };
+
+const itemCCLicenseCCBY: Item = {
+  ...DEFAULT_FOLDER_ITEM,
+  id: 'ecafbd2a-5688-11eb-ae93-0242ac130012',
+  name: 'public item with cc by',
+  path: 'ecafbd2a_5688_11eb_ae93_0242ac130012',
+  settings: { ccLicenseAdaption: 'CC BY' }
+}
+const itemCCLicenseCCBYNC: Item = {
+  ...DEFAULT_FOLDER_ITEM,
+  id: 'ecafbd2a-5688-11eb-ae93-0242ac130022',
+  name: 'public item with cc by nc',
+  path: 'ecafbd2a_5688_11eb_ae93_0242ac130022',
+  settings: { ccLicenseAdaption: 'CC BY-NC' }
+}
+const itemCCLicenseCCBYSA: Item = {
+  ...DEFAULT_FOLDER_ITEM,
+  id: 'ecafbd2a-5688-11eb-ae93-0242ac130032',
+  name: 'public item with cc by sa',
+  path: 'ecafbd2a_5688_11eb_ae93_0242ac130032',
+  settings: { ccLicenseAdaption: 'CC BY-SA' }
+}
+const itemCCLicenseCCBYNCND: Item = {
+  ...DEFAULT_FOLDER_ITEM,
+  id: 'ecafbd2a-5688-11eb-ae93-0242ac130042',
+  name: 'public item with cc by nc nd',
+  path: 'ecafbd2a_5688_11eb_ae93_0242ac130042',
+  settings: { ccLicenseAdaption: 'CC BY-NC-ND' }
+}
+
+export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [{
+  ...itemCCLicenseCCBY,
+  tags: [
+    {
+      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+      type: ItemTagType.PUBLIC,
+      item,
+      createdAt: new Date(),
+      creator: MEMBERS.ANNA,
+    },
+  ],
+  published: {
+    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+    item,
+    createdAt: new Date(),
+    creator: MEMBERS.ANNA,
+  },
+  memberships: [
+    {
+      item,
+      permission: PermissionLevel.Admin,
+      member: MEMBERS.ANNA,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      item,
+      permission: PermissionLevel.Read,
+      member: MEMBERS.BOB,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ],
+}, {
+  ...itemCCLicenseCCBYNC,
+  tags: [
+    {
+      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+      type: ItemTagType.PUBLIC,
+      item,
+      createdAt: new Date(),
+      creator: MEMBERS.ANNA,
+    },
+  ],
+  published: {
+    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+    item,
+    createdAt: new Date(),
+    creator: MEMBERS.ANNA,
+  },
+  memberships: [
+    {
+      item,
+      permission: PermissionLevel.Admin,
+      member: MEMBERS.ANNA,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      item,
+      permission: PermissionLevel.Read,
+      member: MEMBERS.BOB,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ],
+}, {
+  ...itemCCLicenseCCBYSA,
+  tags: [
+    {
+      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+      type: ItemTagType.PUBLIC,
+      item,
+      createdAt: new Date(),
+      creator: MEMBERS.ANNA,
+    },
+  ],
+  published: {
+    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+    item,
+    createdAt: new Date(),
+    creator: MEMBERS.ANNA,
+  },
+  memberships: [
+    {
+      item,
+      permission: PermissionLevel.Admin,
+      member: MEMBERS.ANNA,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      item,
+      permission: PermissionLevel.Read,
+      member: MEMBERS.BOB,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ],
+}, {
+  ...itemCCLicenseCCBYNCND,
+  tags: [
+    {
+      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+      type: ItemTagType.PUBLIC,
+      item,
+      createdAt: new Date(),
+      creator: MEMBERS.ANNA,
+    },
+  ],
+  published: {
+    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+    item,
+    createdAt: new Date(),
+    creator: MEMBERS.ANNA,
+  },
+  memberships: [
+    {
+      item,
+      permission: PermissionLevel.Admin,
+      member: MEMBERS.ANNA,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      item,
+      permission: PermissionLevel.Read,
+      member: MEMBERS.BOB,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ],
+},]

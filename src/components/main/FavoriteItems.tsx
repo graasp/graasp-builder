@@ -75,7 +75,7 @@ const FavoriteItems = (): JSX.Element => {
       <Items
         id={FAVORITE_ITEMS_ID}
         title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-        items={data?.data?.toSeq()?.toList() as List<ItemRecord>}
+        items={(data?.data?.toSeq()?.toList() as List<ItemRecord>) ?? List()}
       />
     );
   };
