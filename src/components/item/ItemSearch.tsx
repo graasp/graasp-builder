@@ -30,9 +30,9 @@ export const NoItemSearchResult = (): JSX.Element => {
 };
 
 export const useItemSearch = (
-  items: List<ItemRecord>,
+  items?: List<ItemRecord>,
 ): {
-  results: List<ItemRecord>;
+  results?: List<ItemRecord>;
   text: string;
   input: JSX.Element;
 } => {
@@ -44,7 +44,7 @@ export const useItemSearch = (
     setSearchText(text.toLowerCase());
   };
 
-  const results = items.filter((it) =>
+  const results = items?.filter((it) =>
     it?.name?.toLowerCase().includes(searchText),
   );
 

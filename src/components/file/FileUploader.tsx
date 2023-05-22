@@ -3,7 +3,7 @@ import { DragDrop } from '@uppy/react';
 
 import { Box, styled } from '@mui/material';
 
-import { useContext, useEffect, useState } from 'react';
+import { DragEventHandler, useContext, useEffect, useState } from 'react';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
@@ -21,7 +21,7 @@ import { UppyContext } from './UppyContext';
 
 const StyledContainer = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'color' && prop !== 'myProp',
-})(({ theme, isMainMenuOpen }) => ({
+})<{ isMainMenuOpen: boolean }>(({ theme, isMainMenuOpen }) => ({
   display: 'none',
   height: '100vh',
   width: '100%',
@@ -56,7 +56,7 @@ const StyledContainer = styled(Box, {
   },
 }));
 
-const FileUploader = () => {
+const FileUploader = (): JSX.Element | null => {
   const { isMainMenuOpen } = useLayoutContext();
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
@@ -81,7 +81,7 @@ const FileUploader = () => {
     closeUploader();
   };
 
-  const handleDragEnter = (event) => {
+  const handleDragEnter: DragEventHandler<HTMLDivElement> = (event) => {
     // detect whether the dragged files number exceeds limit
     if (event?.dataTransfer?.items) {
       const nbFiles = event.dataTransfer.items.length;
@@ -138,8 +138,8 @@ const FileUploader = () => {
       id={UPLOADER_ID}
       sx={buildSx()}
       onDragEnter={(e) => handleDragEnter(e)}
-      onDragEnd={(e) => handleDragEnd(e)}
-      onDragLeave={(e) => handleDragEnd(e)}
+      onDragEnd={() => handleDragEnd()}
+      onDragLeave={() => handleDragEnd()}
       onDrop={handleDrop}
       isMainMenuOpen={isMainMenuOpen}
     >
@@ -149,9 +149,11 @@ const FileUploader = () => {
           maxFiles: FILE_UPLOAD_MAX_FILES,
           maxSize: humanFileSize(MAX_FILE_SIZE),
         })}
-        locale={{
-          strings: i18n.options.resources[i18n.language].uppy,
-        }}
+        locale={
+          i18n.options.resources && {
+            strings: i18n.options.resources[i18n.language],
+          }
+        }
       />
     </StyledContainer>
   );

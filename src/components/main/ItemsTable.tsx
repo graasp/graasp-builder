@@ -38,7 +38,7 @@ const { useItem } = hooks;
 
 type Props = {
   id?: string;
-  items: List<ItemRecord>;
+  items?: List<ItemRecord>;
   manyMemberships?: ResultOfRecord<ItemMembership[]>;
   itemsStatuses?: ItemsStatuses;
   tableTitle: string;

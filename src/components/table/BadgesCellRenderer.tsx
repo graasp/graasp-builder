@@ -44,10 +44,10 @@ type ChildCompProps = {
 };
 
 export const useItemsStatuses = ({
-  items,
+  items = List(),
   itemsTags,
 }: {
-  items: List<ItemRecord>;
+  items?: List<ItemRecord>;
   itemsTags?: ResultOfRecord<List<ItemTagRecord>>;
 }): ItemsStatuses => {
   const { data: publishedInformations } = useManyItemPublishedInformations({

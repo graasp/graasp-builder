@@ -1,12 +1,9 @@
-import { List } from 'immutable';
-
 import Box from '@mui/material/Box';
 
 import { useEffect } from 'react';
 
 import { routines } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -75,7 +72,7 @@ const FavoriteItems = (): JSX.Element => {
       <Items
         id={FAVORITE_ITEMS_ID}
         title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-        items={(data?.data?.toSeq()?.toList() as List<ItemRecord>) ?? List()}
+        items={data?.data?.toSeq().toList()}
       />
     );
   };

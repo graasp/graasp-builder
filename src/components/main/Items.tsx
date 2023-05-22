@@ -15,7 +15,7 @@ const { useManyItemMemberships, useItemsTags } = hooks;
 
 type Props = {
   id: string;
-  items: List<ItemRecord>;
+  items?: List<ItemRecord>;
   title: string;
   headerElements?: JSX.Element[];
   actions?: ({ data }: { data: { id: string } }) => JSX.Element;
@@ -52,14 +52,11 @@ const Items = ({
   const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
   const itemsToDisplay = itemSearch.results;
+  const itemIds = itemsToDisplay?.map(({ id: itemId }) => itemId).toArray();
   const { data: manyMemberships, isLoading: isMembershipsLoading } =
-    useManyItemMemberships(
-      enableMemberships
-        ? itemsToDisplay?.map(({ id: itemId }) => itemId).toArray()
-        : [],
-    );
+    useManyItemMemberships(enableMemberships ? itemIds : []);
   const { data: itemsTags } = useItemsTags(
-    itemsToDisplay.map((r) => r.id).toJS(),
+    itemsToDisplay?.map((r) => r.id).toJS(),
   );
   const itemsStatuses = useItemsStatuses({
     items: itemsToDisplay,
