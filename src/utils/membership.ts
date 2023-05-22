@@ -86,5 +86,5 @@ export const getMembershipsForItem = ({
   manyMemberships,
 }: {
   itemId: string;
-  manyMemberships: ResultOfRecord<ItemMembership[]>;
+  manyMemberships?: ResultOfRecord<ItemMembership[]>;
 }): List<ItemMembershipRecord> | undefined => manyMemberships?.data?.[itemId];

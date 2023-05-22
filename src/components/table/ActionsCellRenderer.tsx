@@ -12,7 +12,7 @@ import DownloadButton from '../main/DownloadButton';
 import ItemMenu from '../main/ItemMenu';
 
 type Props = {
-  manyMemberships: ResultOfRecord<ItemMembership[]>;
+  manyMemberships?: ResultOfRecord<ItemMembership[]>;
   member?: MemberRecord;
 };
 

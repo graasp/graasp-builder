@@ -26,7 +26,7 @@ const ItemHeader = ({ showNavigation = true }: Props): JSX.Element => {
     return <Loader />;
   }
 
-  if (isError || !item) {
+  if (isError) {
     return <ErrorAlert />;
   }
 

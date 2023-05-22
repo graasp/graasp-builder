@@ -36,7 +36,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 type Props = {
   id?: string;
   items?: List<ItemRecord>;
-  manyMemberships: ResultOfRecord<ItemMembership[]>;
+  manyMemberships?: ResultOfRecord<ItemMembership[]>;
   itemsStatuses?: ItemsStatuses;
   title: string;
   itemSearch?: {

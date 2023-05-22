@@ -27,7 +27,7 @@ import ModeButton from './ModeButton';
 const { useItemMemberships } = hooks;
 
 type Props = {
-  item: ItemRecord;
+  item?: ItemRecord;
 };
 
 const ItemHeaderActions = ({ item }: Props): JSX.Element => {
@@ -66,7 +66,10 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
     if (id) {
       // show edition only for allowed types
       const showEditButton =
-        !editingItemId && ITEM_TYPES_WITH_CAPTIONS.includes(type) && canEdit;
+        !editingItemId &&
+        type &&
+        ITEM_TYPES_WITH_CAPTIONS.includes(type) &&
+        canEdit;
 
       const activeActions = (
         <>

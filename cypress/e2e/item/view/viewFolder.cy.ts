@@ -102,7 +102,7 @@ describe('View Folder', () => {
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {
         // check item is created and displayed
-        for (const item of body) {
+        for (const item of [SAMPLE_ITEMS.items[2], SAMPLE_ITEMS.items[3], SAMPLE_ITEMS.items[4]]) {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
         }
       });

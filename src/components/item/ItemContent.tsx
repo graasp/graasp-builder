@@ -1,3 +1,5 @@
+import { List } from 'immutable';
+
 import { Button, Container, styled } from '@mui/material';
 
 import { useState } from 'react';
@@ -304,8 +306,8 @@ const FolderContent = ({
   if (isLoading) {
     return <Loader />;
   }
-
-  if (isError || !children) {
+  console.log(children, isLoading, isError);
+  if (isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
@@ -314,7 +316,7 @@ const FolderContent = ({
       parentId={item.id}
       id={buildItemsTableId(item.id)}
       title={item.name}
-      items={children}
+      items={children ?? List()}
       isEditing={isEditing}
       headerElements={
         enableEditing ? [<NewItemButton key="newButton" />] : undefined
