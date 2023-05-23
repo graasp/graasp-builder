@@ -44,9 +44,10 @@ export const editItem = (payload, mode = DEFAULT_ITEM_LAYOUT_MODE) => {
   }
 };
 
-export const editCaptionFromViewPage = ({ id, caption }) => {
+export const editCaptionFromViewPage = ({ id, caption }): void => {
   cy.wait(CAPTION_EDIT_PAUSE);
   cy.get(`#${buildEditButtonId(id)}`).click();
+  cy.wait(3000);
   cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}${caption}`);
   cy.get(`#${buildSaveButtonId(id)}`).click();
 };
