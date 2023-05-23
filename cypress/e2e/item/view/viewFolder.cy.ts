@@ -301,7 +301,6 @@ describe('View Folder', () => {
       const { id } = SAMPLE_ITEMS.items[0];
       cy.visit(buildItemPath(id));
 
-
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // should get current item
