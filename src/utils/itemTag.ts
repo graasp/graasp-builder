@@ -8,11 +8,11 @@ export const isItemHidden = ({
 }: {
   itemTags?: List<ItemTagRecord>;
 }): boolean =>
-  Boolean(itemTags?.find(({ type }) => type === ItemTagType.HIDDEN));
+  Boolean(itemTags?.find(({ type }) => type === ItemTagType.Hidden));
 
 export const isItemPublic = ({
   itemTags,
 }: {
   itemTags?: List<ItemTagRecord>;
 }): boolean =>
-  Boolean(itemTags?.find(({ type }) => type === ItemTagType.PUBLIC));
+  Boolean(itemTags?.find(({ type }) => type === ItemTagType.Public));

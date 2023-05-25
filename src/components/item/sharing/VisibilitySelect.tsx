@@ -42,7 +42,7 @@ const useVisibility = (item: ItemRecord) => {
   const { mutate: deleteItemTag } = useDeleteItemTag();
   const [publicTag, setPublicTag] = useState<ItemTagRecord | undefined>();
   useEffect(() => {
-    setPublicTag(itemTags?.find(({ type }) => type === ItemTagType.PUBLIC));
+    setPublicTag(itemTags?.find(({ type }) => type === ItemTagType.Public));
   }, [itemTags]);
 
   // get item published
@@ -109,7 +109,7 @@ const useVisibility = (item: ItemRecord) => {
       }
 
       if (publicTag) {
-        deleteItemTag({ itemId, type: ItemTagType.PUBLIC });
+        deleteItemTag({ itemId, type: ItemTagType.Public });
       }
     };
 
@@ -138,7 +138,7 @@ const useVisibility = (item: ItemRecord) => {
       case SETTINGS.ITEM_PUBLIC.name: {
         postItemTag({
           itemId,
-          type: ItemTagType.PUBLIC,
+          type: ItemTagType.Public,
         });
         deleteLoginSchema();
         break;

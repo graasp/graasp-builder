@@ -1,5 +1,6 @@
 import { SelectChangeEvent } from '@mui/material';
 
+import { MemberExtra } from '@graasp/sdk';
 import { Select } from '@graasp/ui';
 
 import { emailFrequency } from '../../config/constants';
@@ -9,7 +10,7 @@ import { buildEmailFrequencyOptionId } from '../../config/selectors';
 type EmailPreferenceSwitchProps = {
   id?: string;
   memberId: string;
-  emailFreq: string;
+  emailFreq: MemberExtra['emailFreq'];
 };
 
 const EmailPreferenceSwitch = ({
@@ -24,7 +25,7 @@ const EmailPreferenceSwitch = ({
       editMember({
         id: memberId,
         extra: {
-          emailFreq: event.target.value as string,
+          emailFreq: event.target.value as MemberExtra['emailFreq'],
         },
       });
     } else {

@@ -2407,9 +2407,9 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#typeorm":
   version: 0.4.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=0da5f00c33d4fe95ed4795de911a660317169e98"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=02cf59204dfb372d60615e5a87e8a4dea1b5d7cf"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
+    "@graasp/sdk": "github:graasp/graasp-sdk"
     "@graasp/translations": 1.13.0
     axios: 0.27.2
     crypto-js: 4.1.1
@@ -2420,13 +2420,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 0f6f67e99fb2de2c22468aa0198911a6e6800dab13b0370c65e81cbc9f2bf9cd938d98cab690629ccc30bad712ffb84ca7c5f6e4f9d9b9a232cd06b216cfc422
+  checksum: 1dd6486cac6df4645df7f8320b8a7203b4637e46972e4ba95ee746088a7ba370e7aa5ff876ab6abaedc71ce988c405918a315603fed1c7dae382983d3bdb75d2
   languageName: node
   linkType: hard
 
-"@graasp/sdk@github:graasp/graasp-sdk#typeorm":
+"@graasp/sdk@github:graasp/graasp-sdk#168-add-emailfreq-in-memberextra":
   version: 0.12.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=20daac0d8729bf5b5a1681426b6483b67510aaba"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=a99c109f1a7b2ad013dfdbee55deeea1f48c2738"
   dependencies:
     "@fastify/secure-session": 5.3.0
     "@graasp/etherpad-api": 2.1.1
@@ -2439,7 +2439,7 @@ __metadata:
     typeorm: 0.3.15
     uuid: 9.0.0
     validator: 13.9.0
-  checksum: 4b500d891414a2f81fa1021e65de129412cf5ea8e929c4334b2cd803061f61087f1872e64639e868f71dc8d20533c9361feae73385bce84455664373e9f0bc68
+  checksum: b35b0719d85e859ff1200ffd913a43e7abcf9dffcddd43879be65fdcc536e3de3c5fabb9262d640ddd35b3d8115cc9eeaf54a190561292a56528489e7aa31e50
   languageName: node
   linkType: hard
 
@@ -2454,7 +2454,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#typeorm":
   version: 2.5.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=c0c6b351e82c20cb4cf025fab0c29a84ecb53aff"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=0e6f3bdc057c183af61a1fcd9c1a95ee4eb891e7"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
     clsx: 1.2.1
@@ -2487,7 +2487,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: a536c0b78931531c6c4fdc9fe06556b7193e03f026014cf6c703fc55da3578cc6c77eeac1542a9f8d69f3958b9864183df465b752f5372e96aad20f4b6f7cc14
+  checksum: 1c2325208308ded5da1cbc0c09891a8db4b2553092626cfdf7b3ac55da9bc6f5e5196d342b30ba29ec93c88e333cee47551e6c680c36957443d93d388c60189c
   languageName: node
   linkType: hard
 
@@ -9772,7 +9772,7 @@ __metadata:
     "@graasp/chatbox": "github:graasp/graasp-chatbox#typeorm"
     "@graasp/plugin-websockets": 1.0.0
     "@graasp/query-client": "github:graasp/graasp-query-client#typeorm"
-    "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
+    "@graasp/sdk": "github:graasp/graasp-sdk#168-add-emailfreq-in-memberextra"
     "@graasp/translations": 1.13.0
     "@graasp/ui": "github:graasp/graasp-ui#typeorm"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"

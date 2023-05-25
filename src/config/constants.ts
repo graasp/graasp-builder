@@ -1,5 +1,6 @@
 import {
   Context,
+  EmailFrequency,
   ItemLoginSchemaType,
   ItemType,
   PermissionLevel,
@@ -66,10 +67,10 @@ export const DEFAULT_LANG = 'en';
 export const DEFAULT_EMAIL_FREQUENCY = 'always';
 
 export const emailFrequency = {
-  always: 'Always receive email notifications',
+  [EmailFrequency.Always]: 'Always receive email notifications',
   // todo: schedule a digest of the notifications
   // daily: 'Receive email notifications once per day',
-  never: 'Disable email notifications',
+  [EmailFrequency.Never]: 'Disable email notifications',
 };
 
 export const DEFAULT_SHOW_CHATBOX_SETTING = false;

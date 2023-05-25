@@ -87,7 +87,7 @@ const ItemPublishTab = ({
   const [validationStatus, setValidationStatus] =
     useState<ItemValidationStatus | null>(null);
 
-  const isPublic = itemTags?.find(({ type }) => type === ItemTagType.PUBLIC);
+  const isPublic = itemTags?.find(({ type }) => type === ItemTagType.Public);
 
   const canAdmin = permission === PermissionLevel.Admin;
 

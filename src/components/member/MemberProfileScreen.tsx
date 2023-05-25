@@ -150,10 +150,7 @@ const MemberProfileScreen = (): JSX.Element => {
                 <EmailPreferenceSwitch
                   id={MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID}
                   memberId={member.id}
-                  emailFreq={
-                    (member.extra?.emailFreq as string) ||
-                    DEFAULT_EMAIL_FREQUENCY
-                  }
+                  emailFreq={member.extra?.emailFreq || DEFAULT_EMAIL_FREQUENCY}
                 />
               </Grid>
             </Grid>
