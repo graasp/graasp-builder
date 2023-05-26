@@ -308,7 +308,7 @@ export const mockGetItem = ({ items, currentMember }: { items: ItemForTest[], cu
         });
       }
 
-      if (item?.tags?.find(({ type }) => type === ItemTagType.PUBLIC)) {
+      if (item?.tags?.find(({ type }) => type === ItemTagType.Public)) {
         return reply({
           body: item,
           statusCode: StatusCodes.OK,
@@ -381,7 +381,7 @@ export const mockGetChildren = ({ items, currentMember }: { items: ItemForTest[]
       const children = items.filter(isChild(id));
 
 
-      if (item?.tags?.find(({ type }) => type === ItemTagType.PUBLIC)) {
+      if (item?.tags?.find(({ type }) => type === ItemTagType.Public)) {
         return reply(children);
       }
 

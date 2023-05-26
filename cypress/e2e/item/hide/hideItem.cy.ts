@@ -1,4 +1,5 @@
 import { ItemTagType } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   HIDDEN_ITEM_BUTTON_CLASS,
@@ -22,7 +23,6 @@ const toggleHideButton = (itemId, isHidden = false) => {
     .click();
 };
 
-
 describe('Hiding Item', () => {
   describe('Successfully hide item in List', () => {
     beforeEach(() => {
@@ -35,13 +35,9 @@ describe('Hiding Item', () => {
 
       toggleHideButton(item.id, false);
 
-      cy.wait(`@postItemTag-${ItemTagType.HIDDEN}`).then(
-        ({
-          request: {
-            url
-          },
-        }) => {
-          expect(url).to.contain(ItemTagType.HIDDEN);
+      cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
+        ({ request: { url } }) => {
+          expect(url).to.contain(ItemTagType.Hidden);
           expect(url).to.contain(item.id);
         },
       );
@@ -54,10 +50,12 @@ describe('Hiding Item', () => {
       // make sure to wait for the tags to be fetched
       toggleHideButton(item.id, true);
 
-      cy.wait(`@deleteItemTag-${ItemTagType.HIDDEN}`).then(({ request: { url } }) => {
-        expect(url).to.contain(ItemTagType.HIDDEN);
-        expect(url).to.contain(item.id);
-      });
+      cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
+        ({ request: { url } }) => {
+          expect(url).to.contain(ItemTagType.Hidden);
+          expect(url).to.contain(item.id);
+        },
+      );
     });
 
     it('Cannot hide child of hidden item', () => {
@@ -85,13 +83,9 @@ describe('Hiding Item', () => {
 
       toggleHideButton(item.id, false);
 
-      cy.wait(`@postItemTag-${ItemTagType.HIDDEN}`).then(
-        ({
-          request: {
-            url,
-          },
-        }) => {
-          expect(url).to.contain(ItemTagType.HIDDEN);
+      cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
+        ({ request: { url } }) => {
+          expect(url).to.contain(ItemTagType.Hidden);
           expect(url).to.contain(item.id);
         },
       );
@@ -104,10 +98,12 @@ describe('Hiding Item', () => {
 
       toggleHideButton(item.id, true);
 
-      cy.wait(`@deleteItemTag-${ItemTagType.HIDDEN}`).then(({ request: { url } }) => {
-        expect(url).to.contain(item.id);
-        expect(url).to.contain(ItemTagType.HIDDEN);
-      });
+      cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
+        ({ request: { url } }) => {
+          expect(url).to.contain(item.id);
+          expect(url).to.contain(ItemTagType.Hidden);
+        },
+      );
     });
 
     it('Cannot hide child of hidden item', () => {

@@ -79,7 +79,7 @@
     "prettier:write": "prettier --write src/**/*.{js,ts,tsx,json}",
     "cypress:open": "env-cmd -f ./.env.local cypress open",
     "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3111 && yarn cypress:run\"",
-    "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome --spec \"cypress/**/*.cy.js\"",
+    "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome",
     "postinstall": "husky install"
   },
   "browserslist": {

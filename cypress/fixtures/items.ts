@@ -1,17 +1,31 @@
-import { FolderItemExtra, FolderItemType, Item, ItemLoginSchemaType, ItemSettings, ItemTagType, ItemType, ItemValidation, ItemValidationProcess, ItemValidationStatus, Member, PermissionLevel, RecycledItemData, ShortcutItemType } from '@graasp/sdk';
+import {
+  FolderItemExtra,
+  FolderItemType,
+  Item,
+  ItemLoginSchemaType,
+  ItemSettings,
+  ItemTagType,
+  ItemType,
+  ItemValidation,
+  ItemValidationProcess,
+  ItemValidationStatus,
+  Member,
+  PermissionLevel,
+  RecycledItemData,
+  ShortcutItemType,
+} from '@graasp/sdk';
 
-import { CURRENT_USER, MEMBERS } from './members';
 import { ApiConfig, ItemForTest } from '../support/types';
-
+import { CURRENT_USER, MEMBERS } from './members';
 
 export const DEFAULT_FOLDER_ITEM: {
-  extra: FolderItemExtra,
-  type: ItemType.FOLDER,
-  creator: Member,
-  createdAt: Date,
-  updatedAt: Date,
-  description: string
-  settings: ItemSettings
+  extra: FolderItemExtra;
+  type: ItemType.FOLDER;
+  creator: Member;
+  createdAt: Date;
+  updatedAt: Date;
+  description: string;
+  settings: ItemSettings;
 } = {
   extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
   creator: CURRENT_USER,
@@ -19,7 +33,7 @@ export const DEFAULT_FOLDER_ITEM: {
   createdAt: new Date('2020-01-01T01:01:01Z'),
   updatedAt: new Date('2020-01-02T01:01:01Z'),
   description: 'mydescription',
-  settings: {}
+  settings: {},
 };
 
 export const CREATED_ITEM: Partial<FolderItemType> = {
@@ -52,14 +66,12 @@ const sampleItems: Item[] = [
     id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
     name: 'own_item_name3',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
-
   },
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
     name: 'own_item_name4',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
-
   },
   {
     ...DEFAULT_FOLDER_ITEM,
@@ -72,8 +84,8 @@ const sampleItems: Item[] = [
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130006',
     name: 'own_item_name6',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130006',
-  }
-]
+  },
+];
 export const SAMPLE_ITEMS: ApiConfig = {
   items: [
     {
@@ -86,7 +98,7 @@ export const SAMPLE_ITEMS: ApiConfig = {
           id: 'fdf09f5a-5688-11eb-ae93-0242ac130034',
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         },
       ],
     },
@@ -100,7 +112,7 @@ export const SAMPLE_ITEMS: ApiConfig = {
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
           updatedAt: new Date(),
-          id: '2d44caf9-592a-417a-86d3-99432b223c18'
+          id: '2d44caf9-592a-417a-86d3-99432b223c18',
         },
         {
           item: sampleItems[1],
@@ -109,7 +121,7 @@ export const SAMPLE_ITEMS: ApiConfig = {
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
           updatedAt: new Date(),
-          id: '2d44caf9-598a-417a-86d3-99432b223c18'
+          id: '2d44caf9-598a-417a-86d3-99432b223c18',
         },
       ],
     },
@@ -123,7 +135,7 @@ export const SAMPLE_ITEMS: ApiConfig = {
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
           updatedAt: new Date(),
-          id: '2d44caf9-598a-417b-86d3-99432b223c18'
+          id: '2d44caf9-598a-417b-86d3-99432b223c18',
         },
       ],
     },
@@ -137,7 +149,7 @@ export const SAMPLE_ITEMS: ApiConfig = {
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
           updatedAt: new Date(),
-          id: '2d44caf9-598a-317a-86d3-99432b223c18'
+          id: '2d44caf9-598a-317a-86d3-99432b223c18',
         },
       ],
     },
@@ -151,7 +163,7 @@ export const SAMPLE_ITEMS: ApiConfig = {
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
           updatedAt: new Date(),
-          id: '2dd4caf9-598a-317a-86d3-99432b223c18'
+          id: '2dd4caf9-598a-317a-86d3-99432b223c18',
         },
       ],
     },
@@ -165,7 +177,7 @@ export const SAMPLE_ITEMS: ApiConfig = {
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
           updatedAt: new Date(),
-          id: '2dd4caf9-538a-317a-86d3-99432b223c18'
+          id: '2dd4caf9-538a-317a-86d3-99432b223c18',
         },
       ],
     },
@@ -174,27 +186,29 @@ export const SAMPLE_ITEMS: ApiConfig = {
 };
 
 export const RECYCLED_ITEM_DATA: RecycledItemData[] = [
-
   {
     id: 'fdf09f5a-5688-22eb-ae93-0242ac130005',
-    creator: CURRENT_USER, createdAt: new Date(),
+    creator: CURRENT_USER,
+    createdAt: new Date(),
     item: {
       ...DEFAULT_FOLDER_ITEM,
       id: 'fdf09f5a-5688-11eb-ae93-0242ac130005',
       name: 'recycled item 1',
       path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130005',
-    }
-  }, {
+    },
+  },
+  {
     id: 'fdf12f5a-5688-22eb-ae93-0242ac130005',
-    creator: CURRENT_USER, createdAt: new Date(),
+    creator: CURRENT_USER,
+    createdAt: new Date(),
     item: {
       ...DEFAULT_FOLDER_ITEM,
       id: 'ecafbd2a-5688-11eb-ae93-0242ac130006',
       name: 'recycled item 2',
       path: 'ecafbd2a_5688_11eb_ae93_0242ac130006',
-
-    }
-  }]
+    },
+  },
+];
 
 export const generateOwnItems = (number: number): ItemForTest[] => {
   const id = (i) => `cafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;
@@ -208,10 +222,10 @@ export const generateOwnItems = (number: number): ItemForTest[] => {
         id: id(i),
         name: `item ${i}`,
         path: path(i),
-      }
+      };
 
       const mId = `dafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;
-      return ({
+      return {
         ...item,
         memberships: [
           {
@@ -221,51 +235,51 @@ export const generateOwnItems = (number: number): ItemForTest[] => {
             creator: MEMBERS.ANNA,
             createdAt: new Date(),
             updatedAt: new Date(),
-            id: mId
+            id: mId,
           },
         ],
-      })
+      };
     });
 };
 
-const sampleItemsforItemLogin: Item[] = [{
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
-  name: 'item login with username',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-}, {
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
-  name: 'no item login',
-  path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
-}, {
-
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
-  name: 'child of item login with username',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
-
-}, {
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
-  name: 'item login with username and password',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
-}, {
-
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'ega2bd2a-5688-11eb-ae93-0242ac130002',
-  name: 'item login with username and password',
-  path: 'egafbd2a_5688_11eb_ae93_0242ac130002',
-},
-{
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'bdf09f5a-5688-11eb-ae93-0242ac130004',
-  name: 'child of item login with username and password',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004.bdf09f5a_5688_11eb_ae93_0242ac130004',
-
-}
-
-]
+const sampleItemsforItemLogin: Item[] = [
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+    name: 'item login with username',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
+    name: 'no item login',
+    path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
+    name: 'child of item login with username',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
+    name: 'item login with username and password',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'ega2bd2a-5688-11eb-ae93-0242ac130002',
+    name: 'item login with username and password',
+    path: 'egafbd2a_5688_11eb_ae93_0242ac130002',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'bdf09f5a-5688-11eb-ae93-0242ac130004',
+    name: 'child of item login with username and password',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004.bdf09f5a_5688_11eb_ae93_0242ac130004',
+  },
+];
 
 export const ITEM_LOGIN_ITEMS: ApiConfig = {
   items: [
@@ -275,7 +289,8 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
         item: sampleItemsforItemLogin[0],
         type: ItemLoginSchemaType.Username,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac130002',
-        createdAt: new Date(), updatedAt: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
 
       memberships: [
@@ -329,12 +344,12 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
     },
     {
       ...sampleItemsforItemLogin[3],
-      itemLoginSchema:
-      {
+      itemLoginSchema: {
         item: sampleItemsforItemLogin[3],
         type: ItemLoginSchemaType.UsernameAndPassword,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac530002',
-        createdAt: new Date(), updatedAt: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       memberships: [
         {
@@ -359,12 +374,12 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
     },
     {
       ...sampleItemsforItemLogin[4],
-      itemLoginSchema:
-      {
+      itemLoginSchema: {
         item: sampleItemsforItemLogin[4],
         type: ItemLoginSchemaType.UsernameAndPassword,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac130102',
-        createdAt: new Date(), updatedAt: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
 
       memberships: [
@@ -392,56 +407,61 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
           updatedAt: new Date(),
         },
       ],
-      itemLoginSchema:
-      {
+      itemLoginSchema: {
         item: sampleItemsforItemLogin[3],
         type: ItemLoginSchemaType.UsernameAndPassword,
         id: 'efaf3d5a-5688-11eb-ae93-0242ac730002',
-        createdAt: new Date(), updatedAt: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-
     },
   ],
 };
 
-const samplePublicItems: Item[] = [{
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
-  name: 'parent public item',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-}, {
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
-  name: 'private item',
-  path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
-}, {
-
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
-  name: 'child of public item',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
-}, {
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
-  name: 'public item',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
-}, {
-
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'egafbd2a-5688-11eb-ae93-0242ac130002',
-  name: 'public item',
-  path: 'egafbd2a_5688_11eb_ae93_0242ac130002',
-}, {
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'bdf09f5a-5688-11eb-ae93-0242ac130014',
-  name: 'child of public item',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130014.bdf09f5a_5688_11eb_ae93_0242ac130004',
-}, {
-  ...DEFAULT_FOLDER_ITEM,
-  id: 'fdf09f5a-5688-11eb-ae93-0242ac133002',
-  name: 'child of private item',
-  path: 'fdf09f5a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac133002',
-}]
+const samplePublicItems: Item[] = [
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+    name: 'parent public item',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
+    name: 'private item',
+    path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
+    name: 'child of public item',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
+    name: 'public item',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'egafbd2a-5688-11eb-ae93-0242ac130002',
+    name: 'public item',
+    path: 'egafbd2a_5688_11eb_ae93_0242ac130002',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'bdf09f5a-5688-11eb-ae93-0242ac130014',
+    name: 'child of public item',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130014.bdf09f5a_5688_11eb_ae93_0242ac130004',
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'fdf09f5a-5688-11eb-ae93-0242ac133002',
+    name: 'child of private item',
+    path: 'fdf09f5a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac133002',
+  },
+];
 
 export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
   items: [
@@ -450,7 +470,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
       tags: [
         {
           id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-          type: ItemTagType.PUBLIC,
+          type: ItemTagType.Public,
           item: samplePublicItems[0],
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
@@ -496,7 +516,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
       tags: [
         {
           id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-          type: ItemTagType.PUBLIC,
+          type: ItemTagType.Public,
           item: samplePublicItems[0],
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
@@ -518,12 +538,11 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
       ...samplePublicItems[3],
       tags: [
         {
-          type: ItemTagType.PUBLIC,
+          type: ItemTagType.Public,
           item: samplePublicItems[3],
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
           id: 'ecbfbd2a-9644-12db-ae93-0242ac130002',
-
         },
       ],
       memberships: [
@@ -551,7 +570,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
       ...samplePublicItems[4],
       tags: [
         {
-          type: ItemTagType.PUBLIC,
+          type: ItemTagType.Public,
           item: samplePublicItems[4],
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
@@ -563,7 +582,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
       ...samplePublicItems[5],
       tags: [
         {
-          type: ItemTagType.PUBLIC,
+          type: ItemTagType.Public,
           item: samplePublicItems[5],
           creator: MEMBERS.ANNA,
           createdAt: new Date(),
@@ -589,7 +608,9 @@ export const SHORTCUT: ShortcutItemType = {
   name: 'shortcut for own_item_name1',
   path: 'gcafbd2a_5688_11eb_ae92_0242ac130002',
   type: ItemType.SHORTCUT,
-  extra: { [ItemType.SHORTCUT]: { target: 'gcafbd2a-5681-11eb-ae92-0242ac130002' } }
+  extra: {
+    [ItemType.SHORTCUT]: { target: 'gcafbd2a-5681-11eb-ae92-0242ac130002' },
+  },
 };
 
 export const ITEM_REORDER_ITEMS = {
@@ -626,14 +647,14 @@ const item: Item = {
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
   name: 'parent public item',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-}
+};
 
 export const PUBLISHED_ITEM: ItemForTest = {
   ...item,
   tags: [
     {
       id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-      type: ItemTagType.PUBLIC,
+      type: ItemTagType.Public,
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
@@ -671,50 +692,50 @@ export const PUBLISHED_ITEM_VALIDATIONS = [
     id: '65c57d69-0e59-4569-a422-f330c31c995c',
     item: PUBLISHED_ITEM,
     createdAt: new Date(),
-    itemValidations: [{
-      id: 'id1',
-      item: PUBLISHED_ITEM,
-      // itemValidationGroup: iVG,
-      process: ItemValidationProcess.BadWordsDetection,
-      status: ItemValidationStatus.Success,
-      result: '',
-      updatedAt: new Date('2021-04-13 14:56:34.749946'),
-      createdAt: new Date('2021-04-13 14:56:34.749946'),
-    },
-    {
-      id: 'id2',
-      item: PUBLISHED_ITEM,
-      // itemValidationGroup: iVG,
-      process: ItemValidationProcess.ImageChecking,
-      status: ItemValidationStatus.Success,
-      result: '',
-      updatedAt: new Date('2021-04-13 14:56:34.749946'),
-      createdAt: new Date('2021-04-13 14:56:34.749946'),
-    },
-    ] as ItemValidation[]
-
-  }
-]
+    itemValidations: [
+      {
+        id: 'id1',
+        item: PUBLISHED_ITEM,
+        // itemValidationGroup: iVG,
+        process: ItemValidationProcess.BadWordsDetection,
+        status: ItemValidationStatus.Success,
+        result: '',
+        updatedAt: new Date('2021-04-13 14:56:34.749946'),
+        createdAt: new Date('2021-04-13 14:56:34.749946'),
+      },
+      {
+        id: 'id2',
+        item: PUBLISHED_ITEM,
+        // itemValidationGroup: iVG,
+        process: ItemValidationProcess.ImageChecking,
+        status: ItemValidationStatus.Success,
+        result: '',
+        updatedAt: new Date('2021-04-13 14:56:34.749946'),
+        createdAt: new Date('2021-04-13 14:56:34.749946'),
+      },
+    ] as ItemValidation[],
+  },
+];
 
 const hiddenItem: Item = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130001',
   name: 'parent public item',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130001',
-}
+};
 export const HIDDEN_ITEM: ItemForTest = {
   ...hiddenItem,
   tags: [
     {
       id: 'ecbfbd2a-5688-11eb-ae93-0242ac130001',
-      type: ItemTagType.PUBLIC,
+      type: ItemTagType.Public,
       item: hiddenItem,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
     },
     {
       id: 'ecbfbd2a-5688-12eb-ae93-0242ac130001',
-      type: ItemTagType.HIDDEN,
+      type: ItemTagType.Hidden,
       item: hiddenItem,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
@@ -754,7 +775,7 @@ const pinnedItem: Item = {
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
   name: 'parent public item',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-}
+};
 export const PINNED_ITEM: ItemForTest = {
   ...pinnedItem,
   settings: {
@@ -779,7 +800,7 @@ const itemSetting: Item = {
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130003',
   name: 'parent public item',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130003',
-}
+};
 export const ITEMS_SETTINGS: ApiConfig = {
   items: [
     HIDDEN_ITEM,
@@ -812,176 +833,181 @@ const itemCCLicenseCCBY: Item = {
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130012',
   name: 'public item with cc by',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130012',
-  settings: { ccLicenseAdaption: 'CC BY' }
-}
+  settings: { ccLicenseAdaption: 'CC BY' },
+};
 const itemCCLicenseCCBYNC: Item = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130022',
   name: 'public item with cc by nc',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130022',
-  settings: { ccLicenseAdaption: 'CC BY-NC' }
-}
+  settings: { ccLicenseAdaption: 'CC BY-NC' },
+};
 const itemCCLicenseCCBYSA: Item = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130032',
   name: 'public item with cc by sa',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130032',
-  settings: { ccLicenseAdaption: 'CC BY-SA' }
-}
+  settings: { ccLicenseAdaption: 'CC BY-SA' },
+};
 const itemCCLicenseCCBYNCND: Item = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130042',
   name: 'public item with cc by nc nd',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130042',
-  settings: { ccLicenseAdaption: 'CC BY-NC-ND' }
-}
+  settings: { ccLicenseAdaption: 'CC BY-NC-ND' },
+};
 
-export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [{
-  ...itemCCLicenseCCBY,
-  tags: [
-    {
-      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-      type: ItemTagType.PUBLIC,
+export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
+  {
+    ...itemCCLicenseCCBY,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item,
+        createdAt: new Date(),
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
     },
-  ],
-  published: {
-    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-    item,
-    createdAt: new Date(),
-    creator: MEMBERS.ANNA,
+    memberships: [
+      {
+        item,
+        permission: PermissionLevel.Admin,
+        member: MEMBERS.ANNA,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        item,
+        permission: PermissionLevel.Read,
+        member: MEMBERS.BOB,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ],
   },
-  memberships: [
-    {
-      item,
-      permission: PermissionLevel.Admin,
-      member: MEMBERS.ANNA,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      item,
-      permission: PermissionLevel.Read,
-      member: MEMBERS.BOB,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ],
-}, {
-  ...itemCCLicenseCCBYNC,
-  tags: [
-    {
-      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-      type: ItemTagType.PUBLIC,
+  {
+    ...itemCCLicenseCCBYNC,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item,
+        createdAt: new Date(),
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
     },
-  ],
-  published: {
-    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-    item,
-    createdAt: new Date(),
-    creator: MEMBERS.ANNA,
+    memberships: [
+      {
+        item,
+        permission: PermissionLevel.Admin,
+        member: MEMBERS.ANNA,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        item,
+        permission: PermissionLevel.Read,
+        member: MEMBERS.BOB,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ],
   },
-  memberships: [
-    {
-      item,
-      permission: PermissionLevel.Admin,
-      member: MEMBERS.ANNA,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      item,
-      permission: PermissionLevel.Read,
-      member: MEMBERS.BOB,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ],
-}, {
-  ...itemCCLicenseCCBYSA,
-  tags: [
-    {
-      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-      type: ItemTagType.PUBLIC,
+  {
+    ...itemCCLicenseCCBYSA,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item,
+        createdAt: new Date(),
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
     },
-  ],
-  published: {
-    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-    item,
-    createdAt: new Date(),
-    creator: MEMBERS.ANNA,
+    memberships: [
+      {
+        item,
+        permission: PermissionLevel.Admin,
+        member: MEMBERS.ANNA,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        item,
+        permission: PermissionLevel.Read,
+        member: MEMBERS.BOB,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ],
   },
-  memberships: [
-    {
-      item,
-      permission: PermissionLevel.Admin,
-      member: MEMBERS.ANNA,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      item,
-      permission: PermissionLevel.Read,
-      member: MEMBERS.BOB,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ],
-}, {
-  ...itemCCLicenseCCBYNCND,
-  tags: [
-    {
-      id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-      type: ItemTagType.PUBLIC,
+  {
+    ...itemCCLicenseCCBYNCND,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item,
+        createdAt: new Date(),
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
     },
-  ],
-  published: {
-    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-    item,
-    createdAt: new Date(),
-    creator: MEMBERS.ANNA,
+    memberships: [
+      {
+        item,
+        permission: PermissionLevel.Admin,
+        member: MEMBERS.ANNA,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        item,
+        permission: PermissionLevel.Read,
+        member: MEMBERS.BOB,
+        creator: MEMBERS.ANNA,
+        id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ],
   },
-  memberships: [
-    {
-      item,
-      permission: PermissionLevel.Admin,
-      member: MEMBERS.ANNA,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      item,
-      permission: PermissionLevel.Read,
-      member: MEMBERS.BOB,
-      creator: MEMBERS.ANNA,
-      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ],
-},]
+];
