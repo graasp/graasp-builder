@@ -2426,7 +2426,7 @@ __metadata:
 
 "@graasp/sdk@github:graasp/graasp-sdk#168-add-emailfreq-in-memberextra":
   version: 0.12.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=a99c109f1a7b2ad013dfdbee55deeea1f48c2738"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=a2fd2e3258b2c1aa966fd1054144827f434a8f75"
   dependencies:
     "@fastify/secure-session": 5.3.0
     "@graasp/etherpad-api": 2.1.1
@@ -2439,7 +2439,7 @@ __metadata:
     typeorm: 0.3.15
     uuid: 9.0.0
     validator: 13.9.0
-  checksum: b35b0719d85e859ff1200ffd913a43e7abcf9dffcddd43879be65fdcc536e3de3c5fabb9262d640ddd35b3d8115cc9eeaf54a190561292a56528489e7aa31e50
+  checksum: 0da0d52e1d26b90783904cd3967f9ee5baa85a7051931b5d71bc4a421f77b208de4a4b3b67f5b18e2cd2451e4fa5886dc82fe5cf533383e8e3de78c2e4408b85
   languageName: node
   linkType: hard
 

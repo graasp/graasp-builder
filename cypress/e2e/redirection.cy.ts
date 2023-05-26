@@ -1,11 +1,12 @@
 import { saveUrlForRedirection } from '@graasp/sdk';
+
 import { REDIRECT_PATH } from '../../src/config/paths';
 import { OWNED_ITEMS_ID } from '../../src/config/selectors';
 
 describe('Redirection', () => {
   it('Redirection to saved url', () => {
     const link = 'http://somelink.com';
-    saveUrlForRedirection(link);
+    saveUrlForRedirection(link, '.');
 
     cy.setUpApi();
     cy.visit(REDIRECT_PATH);

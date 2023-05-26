@@ -1,3 +1,5 @@
+import { ItemType } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import { buildEditButtonId } from '../../../../src/config/selectors';
 import { FOLDER_WITH_TWO_DOCUMENTS } from '../../../fixtures/navigationItems';
@@ -22,7 +24,8 @@ describe('Edit Navigation', () => {
 
     cy.goToItemWithNavigation(parentItem.id);
     cy.goToItemInList(secondItem.id);
-
-    expectDocumentViewScreenLayout({ item: secondItem });
+    if (secondItem.type === ItemType.DOCUMENT) {
+      expectDocumentViewScreenLayout({ item: secondItem });
+    }
   });
 });

@@ -1,11 +1,11 @@
-import { Item, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { buildDocumentExtra } from '../../src/utils/itemExtra';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
 
 // eslint-disable-next-line import/prefer-default-export
-export const FOLDER_WITH_TWO_DOCUMENTS: Item[] = [
+export const FOLDER_WITH_TWO_DOCUMENTS: DiscriminatedItem[] = [
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',

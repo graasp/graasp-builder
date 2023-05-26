@@ -21,7 +21,7 @@ const openPublishItemTab = (id) => {
 
 const visitItemPage = () => {
   cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
-  const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0]
+  const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
   cy.visit(buildItemPath(item.id));
   openPublishItemTab(item.id);
 };
@@ -40,7 +40,7 @@ describe('Co-editor Setting', () => {
 
   it('Change choice', () => {
     visitItemPage();
-    const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0]
+    const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
 
     const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
 

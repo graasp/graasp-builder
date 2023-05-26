@@ -1,6 +1,5 @@
 import { getDocumentExtra } from '@graasp/sdk';
 
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   TEXT_EDITOR_CLASS,

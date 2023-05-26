@@ -16,7 +16,7 @@ import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { PUBLISH_TAB_LOADING_TIME } from '../../../support/constants';
 
-const openPublishItemTab = (id) => {
+const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
   cy.wait(PUBLISH_TAB_LOADING_TIME);
 };
@@ -67,7 +67,7 @@ describe('Categories', () => {
       const { category, id } = itemCategory;
       const categoryType = SAMPLE_CATEGORIES.find(
         ({ id: cId }) => cId === category.id,
-      ).type;
+      )?.type;
       toggleOption(category.id, categoryType);
       cy.wait('@deleteItemCategory').then((data) => {
         const {
@@ -101,7 +101,7 @@ describe('Categories', () => {
 
       // signed out user should not be able to see the publish button
       cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
-      cy.get(`#${buildCategorySelectionId(CategoryType.LEVEL)}`).should(
+      cy.get(`#${buildCategorySelectionId(CategoryType.Level)}`).should(
         'not.exist',
       );
     });
@@ -116,7 +116,7 @@ describe('Categories', () => {
 
       // signed out user should not be able to see the publish button
       cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
-      cy.get(`#${buildCategorySelectionId(CategoryType.LEVEL)}`).should(
+      cy.get(`#${buildCategorySelectionId(CategoryType.Level)}`).should(
         'not.exist',
       );
     });

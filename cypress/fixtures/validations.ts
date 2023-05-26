@@ -1,8 +1,15 @@
-import { Item, ItemValidation, ItemValidationGroup, ItemValidationProcess, ItemValidationStatus } from '@graasp/sdk';
-import { SAMPLE_PUBLIC_ITEMS } from './items';
-import { ApiConfig } from '../support/types';
+import {
+  DiscriminatedItem,
+  ItemValidation,
+  ItemValidationGroup,
+  ItemValidationProcess,
+  ItemValidationStatus,
+} from '@graasp/sdk';
 
-export const VALIDATED_ITEM: Item = {
+import { ApiConfig } from '../support/types';
+import { SAMPLE_PUBLIC_ITEMS } from './items';
+
+export const VALIDATED_ITEM: DiscriminatedItem = {
   ...SAMPLE_PUBLIC_ITEMS.items[0],
   updatedAt: new Date('2019-07-27T07:45:00Z'),
 };
@@ -14,33 +21,36 @@ export const ITEM_VALIDATION_AND_REVIEW = {
   createdAt: new Date('2023-07-27T07:45:00Z'),
 };
 
-
 export const iVG: ItemValidationGroup = {
   id: '65c57d69-0e59-4569-a422-f330c31c995c',
   item: VALIDATED_ITEM,
   createdAt: new Date(),
-  itemValidations: [{
-    id: 'id1',
-    item: VALIDATED_ITEM,
-    // itemValidationGroup: iVG,
-    process: ItemValidationProcess.BadWordsDetection,
-    status: ItemValidationStatus.Success,
-    result: '',
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-  },
-  {
-    id: 'id2',
-    item: VALIDATED_ITEM,
-    // itemValidationGroup: iVG,
-    process: ItemValidationProcess.ImageChecking,
-    status: ItemValidationStatus.Success,
-    result: '',
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-  },
-  ] as ItemValidation[]
+  itemValidations: [
+    {
+      id: 'id1',
+      item: VALIDATED_ITEM,
+      // itemValidationGroup: iVG,
+      process: ItemValidationProcess.BadWordsDetection,
+      status: ItemValidationStatus.Success,
+      result: '',
+      updatedAt: new Date('2021-04-13 14:56:34.749946'),
+      createdAt: new Date('2021-04-13 14:56:34.749946'),
+    },
+    {
+      id: 'id2',
+      item: VALIDATED_ITEM,
+      // itemValidationGroup: iVG,
+      process: ItemValidationProcess.ImageChecking,
+      status: ItemValidationStatus.Success,
+      result: '',
+      updatedAt: new Date('2021-04-13 14:56:34.749946'),
+      createdAt: new Date('2021-04-13 14:56:34.749946'),
+    },
+    // todo: fix this type issue
+  ] as unknown as ItemValidation[],
+};
 
-}
-
-export const VALIDATED_ITEM_CONTEXT: ApiConfig = { items: [VALIDATED_ITEM], itemValidationGroups: [iVG] }
+export const VALIDATED_ITEM_CONTEXT: ApiConfig = {
+  items: [VALIDATED_ITEM],
+  itemValidationGroups: [iVG],
+};

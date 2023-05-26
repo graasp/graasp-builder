@@ -1,6 +1,5 @@
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  EMAIL_NOTIFICATION_CHECKBOX,
   ITEM_PUBLISH_BUTTON_ID,
   ITEM_UNPUBLISH_BUTTON_ID,
   ITEM_VALIDATION_BUTTON_ID,
@@ -12,7 +11,6 @@ import {
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
-import { VALIDATED_ITEM, VALIDATED_ITEM_CONTEXT } from '../../../fixtures/validations';
 
 const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
@@ -45,7 +43,10 @@ describe('Public Item', () => {
 describe('Published Item', () => {
   const item = PUBLISHED_ITEM;
   beforeEach(() => {
-    cy.setUpApi({ items: [item], itemValidationGroups: PUBLISHED_ITEM_VALIDATIONS });
+    cy.setUpApi({
+      items: [item],
+      itemValidationGroups: PUBLISHED_ITEM_VALIDATIONS,
+    });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
   });

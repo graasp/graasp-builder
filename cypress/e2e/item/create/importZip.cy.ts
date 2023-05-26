@@ -1,4 +1,3 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';

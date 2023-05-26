@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'cypress-localstorage-commands';
 
-import { COOKIE_KEYS, } from '@graasp/sdk';
+import { COOKIE_KEYS } from '@graasp/sdk';
 
+import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import {
   ITEM_INFORMATION_BUTTON_ID,
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
@@ -10,13 +11,12 @@ import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../src/config/selectors';
+import ITEM_LAYOUT_MODES from '../../src/enums/itemLayoutModes';
 import { APPS_LIST } from '../fixtures/apps/apps';
 import { SAMPLE_CATEGORIES } from '../fixtures/categories';
 import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
-import {
-  ITEM_VALIDATION_AND_REVIEW,
-} from '../fixtures/validations';
+import { ITEM_VALIDATION_AND_REVIEW } from '../fixtures/validations';
 import './commands/item';
 import './commands/navigation';
 import {
@@ -27,6 +27,7 @@ import {
   mockDeleteAppData,
   mockDeleteInvitation,
   mockDeleteItemCategory,
+  mockDeleteItemLoginSchemaRoute,
   mockDeleteItemMembershipForItem,
   mockDeleteItemTag,
   mockDeleteItems,
@@ -45,18 +46,24 @@ import {
   mockGetItemCategories,
   mockGetItemChat,
   mockGetItemInvitations,
+  mockGetItemLoginSchema,
+  mockGetItemLoginSchemaType,
   mockGetItemMembershipsForItem,
   mockGetItemTags,
-  mockGetItemThumbnail,
+  mockGetItemThumbnailUrl,
   mockGetItemValidationAndReview,
   mockGetItemValidationGroups,
   mockGetItems,
   mockGetItemsTags,
+  mockGetLatestValidationGroup,
+  mockGetManyPublishItemInformations,
   mockGetMember,
   mockGetMemberMentions,
   mockGetMembers,
   mockGetMembersBy,
   mockGetOwnItems,
+  mockGetParents,
+  mockGetPublishItemInformations,
   mockGetRecycledItems,
   mockGetSharedItems,
   mockImportZip,
@@ -79,14 +86,13 @@ import {
   mockPublishItem,
   mockPutItemLoginSchema,
   mockRecycleItems,
-  mockRestoreItems, mockUnpublishItem,
+  mockRestoreItems,
   mockSignInRedirection,
-  mockSignOut, mockGetPublishItemInformations, mockGetManyPublishItemInformations,
-  mockUpdatePassword, mockGetItemThumbnailUrl, mockGetLatestValidationGroup,
-  mockUploadItem, mockGetItemLoginSchemaType, mockGetParents, mockGetItemLoginSchema, mockDeleteItemLoginSchemaRoute
+  mockSignOut,
+  mockUnpublishItem,
+  mockUpdatePassword,
+  mockUploadItem,
 } from './server';
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
-import ITEM_LAYOUT_MODES from '../../src/enums/itemLayoutModes';
 
 Cypress.Commands.add(
   'setUpApi',
@@ -117,7 +123,7 @@ Cypress.Commands.add(
     postItemFlagError = false,
     getItemChatError = false,
     recycleItemsError = false,
-    getRecycledItemsError = false,
+    // getRecycledItemsError = false,
     deleteItemTagError = false,
     restoreItemsError = false,
     getItemThumbnailError = false,
@@ -165,7 +171,7 @@ Cypress.Commands.add(
       { items: cachedItems, currentMember },
       getItemError || getCurrentMemberError,
     );
-    mockGetParents({ items, currentMember })
+    mockGetParents({ items, currentMember });
     mockGetChildren({ items: cachedItems, currentMember });
 
     mockMoveItems(cachedItems, moveItemsError);
@@ -175,7 +181,10 @@ Cypress.Commands.add(
     mockEditItem(cachedItems, editItemError);
 
     mockPostItemMembership(cachedItems, shareItemError);
-    mockPostManyItemMemberships({ items: cachedItems, members }, shareItemError);
+    mockPostManyItemMemberships(
+      { items: cachedItems, members },
+      shareItemError,
+    );
 
     mockGetMember(cachedMembers);
 
@@ -195,9 +204,9 @@ Cypress.Commands.add(
 
     // mockGetItemLogin(items);
 
-    mockGetItemLoginSchema(items)
+    mockGetItemLoginSchema(items);
 
-    mockGetItemLoginSchemaType(items)
+    mockGetItemLoginSchemaType(items);
 
     mockPostItemLogin(cachedItems, postItemLoginError);
 
@@ -207,7 +216,7 @@ Cypress.Commands.add(
 
     mockGetItemTags(items);
 
-    mockGetItemsTags(items)
+    mockGetItemsTags(items);
 
     mockPostItemTag(cachedItems, currentMember, postItemTagError);
 
@@ -287,15 +296,15 @@ Cypress.Commands.add(
     mockPublishItem(items);
     mockUnpublishItem(items);
 
-    mockGetPublishItemInformations(items)
+    mockGetPublishItemInformations(items);
 
-    mockGetManyPublishItemInformations(items)
+    mockGetManyPublishItemInformations(items);
 
-    mockGetLatestValidationGroup(items, itemValidationGroups)
+    mockGetLatestValidationGroup(items, itemValidationGroups);
 
     mockUpdatePassword(members, updatePasswordError);
 
-    mockDeleteItemLoginSchemaRoute(items)
+    mockDeleteItemLoginSchemaRoute(items);
   },
 );
 

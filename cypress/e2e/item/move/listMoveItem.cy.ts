@@ -1,4 +1,3 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import {
   HOME_PATH,
   SHARED_ITEMS_PATH,
@@ -17,7 +16,15 @@ import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const moveItem = ({ id: movedItemId, toItemPath, rootId }: { id: string, toItemPath: string, rootId?: string }) => {
+const moveItem = ({
+  id: movedItemId,
+  toItemPath,
+  rootId,
+}: {
+  id: string;
+  toItemPath: string;
+  rootId?: string;
+}) => {
   const menuSelector = `#${buildItemMenuButtonId(movedItemId)}`;
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
@@ -52,7 +59,6 @@ describe('Move Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-
 
     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
@@ -93,7 +99,6 @@ describe('Move Item in List', () => {
     // go to children item
     cy.visit(SHARED_ITEMS_PATH);
 
-
     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
@@ -114,7 +119,6 @@ describe('Move Item in List', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-
 
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 

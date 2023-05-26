@@ -1,4 +1,3 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH } from '../../../../src/config/paths';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { EDITED_FIELDS, SHORTCUT } from '../../../fixtures/items';

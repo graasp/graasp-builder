@@ -262,8 +262,9 @@ export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
 export const buildMemberMenuItemId = (id: string): string =>
   `memberMenuItem-${id}`;
 export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
-export const buildCoEditorSettingsRadioButtonId = (id: string): string =>
-  `coEditorSettingsRadioButton-${id}`;
+export const buildCoEditorSettingsRadioButtonId = (
+  id: string | boolean,
+): string => `coEditorSettingsRadioButton-${id}`;
 export const EMAIL_NOTIFICATION_CHECKBOX = 'emailNotificationCheckbox';
 
 export const MEMBER_CURRENT_PASSWORD_ID = 'memberCurrentPassword';

@@ -1,8 +1,15 @@
-import { ChatMention, FolderItemType, Item, ItemType, MentionStatus, PermissionLevel } from '@graasp/sdk';
+import {
+  ChatMention,
+  DiscriminatedItem,
+  FolderItemType,
+  ItemType,
+  MentionStatus,
+  PermissionLevel,
+} from '@graasp/sdk';
 
-import { DEFAULT_FOLDER_ITEM, } from './items';
-import { CURRENT_USER, MEMBERS } from './members';
 import { ItemForTest } from '../support/types';
+import { DEFAULT_FOLDER_ITEM } from './items';
+import { CURRENT_USER, MEMBERS } from './members';
 
 const item: FolderItemType = {
   ...DEFAULT_FOLDER_ITEM,
@@ -11,8 +18,9 @@ const item: FolderItemType = {
   id: 'adf09f5a-5688-11eb-ae93-0242ac130004',
   path: 'adf09f5a_5688_11eb_ae93_0242ac130004',
   name: 'item with chatbox messages',
-  description: 'description', settings: {}
-}
+  description: 'description',
+  settings: {},
+};
 
 export const ITEM_WITH_CHATBOX_MESSAGES: ItemForTest = {
   ...item,
@@ -47,12 +55,14 @@ export const ITEM_WITH_CHATBOX_MESSAGES: ItemForTest = {
   ],
 };
 
-const items: Item[] = [{
-  ...DEFAULT_FOLDER_ITEM,
-  id: '78ad1166-3862-4593-a10c-d380e7b66674',
-  path: '78ad1166-3862-4593-a10c-d380e7b66674',
-  name: 'item with chatbox messages',
-}]
+const items: DiscriminatedItem[] = [
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: '78ad1166-3862-4593-a10c-d380e7b66674',
+    path: '78ad1166-3862-4593-a10c-d380e7b66674',
+    name: 'item with chatbox messages',
+  },
+];
 
 export const ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN: ItemForTest = {
   ...items[0],
@@ -98,14 +108,13 @@ export const ITEM_WITHOUT_CHATBOX_MESSAGES: ItemForTest = {
 export const SAMPLE_MENTIONS: ChatMention[] = [
   {
     id: '7062d5e6-a4a0-4828-b4b9-8bc9e21f7abd',
-    messageId: '3241ca2e-8d79-4d48-b6a9-8124f5a33540',
-    item: ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN,
     member: CURRENT_USER,
-    creator: MEMBERS.BOB,
-    createdAt: new Date, // '2022-07-18T07:48:05.008Z',
-    updatedAt: new Date, // '2022-07-18T07:48:05.008Z',
-    status: MentionStatus.UNREAD,
-    message:
-      '`<!@all>[00000000-0000-4000-8000-000000000000]` this is going to be great !',
+    createdAt: new Date(), // '2022-07-18T07:48:05.008Z',
+    updatedAt: new Date(), // '2022-07-18T07:48:05.008Z',
+    status: MentionStatus.Unread,
+    message: {
+      ...ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN.chat?.[0],
+      body: '`<!@all>[00000000-0000-4000-8000-000000000000]` this is going to be great !',
+    },
   },
 ];

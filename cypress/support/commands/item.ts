@@ -2,7 +2,6 @@ import {
   ItemType,
   getAppExtra,
   getDocumentExtra,
-  getEmbeddedLinkExtra,
 } from '@graasp/sdk';
 
 import {

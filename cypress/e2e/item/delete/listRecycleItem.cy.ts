@@ -1,4 +1,3 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,

@@ -1,7 +1,9 @@
 import {
-  FileItemExtra,
-  LocalFileItemExtra,
+  DocumentItemType,
+  EmbeddedLinkItemType,
+  ItemType,
   Member,
+  convertJs,
   getDocumentExtra,
   getEmbeddedLinkExtra,
   getFileExtra,
@@ -28,9 +30,12 @@ import {
 import { getMemberById } from '../../src/utils/member';
 import { isSettingsEditionAllowedForUser } from '../../src/utils/membership';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
+import { ItemForTest, MemberForTest } from './types';
 
-const expectPanelLayout = ({ name, extra, creator, mimetype }: { name: string, extra?: LocalFileItemExtra | S3FileItemExtra, creator: Member, mimetype?: string }) => {
+const expectPanelLayout = ({ item }: { item: ItemForTest }) => {
   cy.openMetadataPanel();
+
+  const { name, creator } = item;
 
   const panel = cy.get(`#${ITEM_PANEL_ID}`);
   panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
@@ -39,26 +44,31 @@ const expectPanelLayout = ({ name, extra, creator, mimetype }: { name: string, e
 
   panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
 
-  if (mimetype) {
+  if (item.type === ItemType.LOCAL_FILE || item.type === ItemType.S3_FILE) {
+    const { mimetype, size } =
+      item.type === ItemType.LOCAL_FILE
+        ? getFileExtra(item.extra)
+        : getS3FileExtra(item.extra);
     panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
 
-    panel
-      .get(`#${ITEM_PANEL_TABLE_ID}`)
-      .contains(getFileExtra(extra)?.size || getS3FileExtra(extra)?.size);
+    panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(size);
   }
 };
 
 export const expectItemHeaderLayout = ({
   item: { id, type, memberships },
   currentMember,
-}) => {
+}: {
+  item: ItemForTest;
+  currentMember?: Member;
+}): void => {
   const header = cy.get(`#${ITEM_HEADER_ID}`);
 
   header.get(`#${buildShareButtonId(id)}`).should('exist');
 
   if (
     isSettingsEditionAllowedForUser({
-      memberships,
+      memberships: convertJs(memberships),
       memberId: currentMember?.id,
     })
   ) {
@@ -72,16 +82,16 @@ export const expectItemHeaderLayout = ({
 export const expectDocumentViewScreenLayout = ({
   item,
   currentMember = CURRENT_USER,
-}) => {
-  const { name, extra, creator } = item;
+}: {
+  item: DocumentItemType;
+  currentMember?: MemberForTest;
+}): void => {
   cy.get(DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR).then((editor) => {
-    expect(editor.html()).to.contain(getDocumentExtra(extra)?.content);
+    expect(editor.html()).to.contain(getDocumentExtra(item.extra)?.content);
   });
 
   expectPanelLayout({
-    name,
-    extra,
-    creator,
+    item,
   });
 
   expectItemHeaderLayout({ item, currentMember });
@@ -90,20 +100,17 @@ export const expectDocumentViewScreenLayout = ({
 export const expectFileViewScreenLayout = ({
   item,
   currentMember = CURRENT_USER,
-}) => {
-  const { id, name, extra, creator, description } = item;
-  const mimetype =
-    getFileExtra(extra)?.mimetype || getS3FileExtra(extra)?.mimetype;
-
+}: {
+  item: ItemForTest;
+  currentMember?: MemberForTest;
+}): void => {
   // embedded element
-  let selector = null;
-  selector = `#${buildFileItemId(id)}`;
-  cy.get(selector).should('exist');
+  cy.get(`#${buildFileItemId(item.id)}`).should('exist');
 
-  cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', description);
+  cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', item.description);
 
   // table
-  expectPanelLayout({ name, extra, creator, mimetype });
+  expectPanelLayout({ item });
 
   expectItemHeaderLayout({ item, currentMember });
 };
@@ -111,9 +118,12 @@ export const expectFileViewScreenLayout = ({
 export const expectLinkViewScreenLayout = ({
   item,
   currentMember = CURRENT_USER,
-}) => {
-  const { id, name, extra, creator, description, settings } = item;
-  const { url, html } = getEmbeddedLinkExtra(extra);
+}: {
+  item: EmbeddedLinkItemType;
+  currentMember?: MemberForTest;
+}): void => {
+  const { id, description, settings } = item;
+  const { url, html } = getEmbeddedLinkExtra(item.extra);
 
   // embedded element
   if (html) {
@@ -135,7 +145,7 @@ export const expectLinkViewScreenLayout = ({
   }
 
   // table
-  expectPanelLayout({ name, extra, creator });
+  expectPanelLayout({ item });
 
   expectItemHeaderLayout({ item, currentMember });
 };
@@ -143,10 +153,12 @@ export const expectLinkViewScreenLayout = ({
 export const expectFolderViewScreenLayout = ({
   item,
   currentMember = CURRENT_USER,
-}) => {
-  const { name, creator } = item;
+}: {
+  item: ItemForTest;
+  currentMember?: MemberForTest;
+}): void => {
   // table
-  expectPanelLayout({ name, creator });
+  expectPanelLayout({ item });
 
   expectItemHeaderLayout({ item, currentMember });
 };

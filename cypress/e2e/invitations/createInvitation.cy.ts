@@ -10,7 +10,12 @@ import {
 import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
-const inviteItem = ({ id, email, permission, submit }: {
+const inviteItem = ({
+  id,
+  email,
+  permission,
+  submit,
+}: {
   id: string;
   email: string;
   permission: PermissionLevel;
@@ -30,7 +35,7 @@ describe('Create Invitation', () => {
   it('invite one new member', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = SAMPLE_ITEMS.items?.[0];
     cy.visit(buildItemPath(id));
 
     // invite

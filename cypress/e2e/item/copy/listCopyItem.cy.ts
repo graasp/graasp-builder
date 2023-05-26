@@ -17,7 +17,15 @@ import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 
-const copyItem = ({ id, toItemPath, rootId }: { id: string, toItemPath: string, rootId?: string }) => {
+const copyItem = ({
+  id,
+  toItemPath,
+  rootId,
+}: {
+  id: string;
+  toItemPath: string;
+  rootId?: string;
+}) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
@@ -36,9 +44,8 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
-      expect(url).to.contain(copyItemId)
+      expect(url).to.contain(copyItemId);
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
-
     });
   });
 
@@ -56,10 +63,9 @@ describe('Copy Item in List', () => {
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url, body } }) => {
-      expect(url).to.contain(copyItemId)
-      expect(body.parentId).to.contain(toItem)
+      expect(url).to.contain(copyItemId);
+      expect(body.parentId).to.contain(toItem);
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
-
     });
   });
 
@@ -75,11 +81,10 @@ describe('Copy Item in List', () => {
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
     copyItem({ id: copyItemId, toItemPath: TREE_MODAL_MY_ITEMS_ID });
 
-    cy.wait('@copyItems').then(({ request: { url, body } }) => {
-      expect(url).to.contain(copyItemId)
+    cy.wait('@copyItems').then(({ request: { url } }) => {
+      expect(url).to.contain(copyItemId);
 
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
-
     });
   });
 

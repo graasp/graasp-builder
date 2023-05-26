@@ -1,7 +1,7 @@
 import {
+  DiscriminatedItem,
   FolderItemExtra,
   FolderItemType,
-  Item,
   ItemLoginSchemaType,
   ItemSettings,
   ItemTagType,
@@ -45,7 +45,7 @@ export const CREATED_ITEM: Partial<FolderItemType> = {
 export const EDITED_FIELDS = {
   name: 'new name',
 };
-const sampleItems: Item[] = [
+const sampleItems: DiscriminatedItem[] = [
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
@@ -242,7 +242,7 @@ export const generateOwnItems = (number: number): ItemForTest[] => {
     });
 };
 
-const sampleItemsforItemLogin: Item[] = [
+const sampleItemsforItemLogin: DiscriminatedItem[] = [
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
@@ -418,7 +418,7 @@ export const ITEM_LOGIN_ITEMS: ApiConfig = {
   ],
 };
 
-const samplePublicItems: Item[] = [
+const samplePublicItems: DiscriminatedItem[] = [
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
@@ -642,7 +642,7 @@ export const ITEM_REORDER_ITEMS = {
   ],
 };
 
-const item: Item = {
+const item: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
   name: 'parent public item',
@@ -713,11 +713,12 @@ export const PUBLISHED_ITEM_VALIDATIONS = [
         updatedAt: new Date('2021-04-13 14:56:34.749946'),
         createdAt: new Date('2021-04-13 14:56:34.749946'),
       },
-    ] as ItemValidation[],
+      // todo: fix this issue with circular types
+    ] as unknown as ItemValidation[],
   },
 ];
 
-const hiddenItem: Item = {
+const hiddenItem: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130001',
   name: 'parent public item',
@@ -763,14 +764,14 @@ export const HIDDEN_ITEM: ItemForTest = {
   ],
 };
 
-export const CHILD_HIDDEN_ITEM: Item = {
+export const CHILD_HIDDEN_ITEM: DiscriminatedItem = {
   ...HIDDEN_ITEM,
   id: 'ecafbd2a-3688-11eb-ae93-0242ac130003',
   name: 'child of hidden item',
   path: `${HIDDEN_ITEM.path}.ecafbd2a_3688_11eb_ae93_0242ac130003`,
 };
 
-const pinnedItem: Item = {
+const pinnedItem: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
   name: 'parent public item',
@@ -795,7 +796,7 @@ export const PINNED_ITEM: ItemForTest = {
   ],
 };
 
-const itemSetting: Item = {
+const itemSetting: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130003',
   name: 'parent public item',
@@ -828,28 +829,28 @@ export const ITEMS_SETTINGS: ApiConfig = {
   ],
 };
 
-const itemCCLicenseCCBY: Item = {
+const itemCCLicenseCCBY: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130012',
   name: 'public item with cc by',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130012',
   settings: { ccLicenseAdaption: 'CC BY' },
 };
-const itemCCLicenseCCBYNC: Item = {
+const itemCCLicenseCCBYNC: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130022',
   name: 'public item with cc by nc',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130022',
   settings: { ccLicenseAdaption: 'CC BY-NC' },
 };
-const itemCCLicenseCCBYSA: Item = {
+const itemCCLicenseCCBYSA: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130032',
   name: 'public item with cc by sa',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130032',
   settings: { ccLicenseAdaption: 'CC BY-SA' },
 };
-const itemCCLicenseCCBYNCND: Item = {
+const itemCCLicenseCCBYNCND: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-11eb-ae93-0242ac130042',
   name: 'public item with cc by nc nd',

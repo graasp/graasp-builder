@@ -1,4 +1,3 @@
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../../../src/config/constants';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
@@ -26,7 +25,6 @@ describe('Move Items in List', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
-
     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
@@ -51,7 +49,6 @@ describe('Move Items in List', () => {
     // go to children item
     cy.visit(buildItemPath(start));
 
-
     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
     // move
@@ -71,7 +68,6 @@ describe('Move Items in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(start));
-
 
     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
@@ -97,7 +93,6 @@ describe('Move Items in List', () => {
 
       // go to children item
       cy.visit(buildItemPath(start));
-
 
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 

@@ -100,9 +100,13 @@ describe('View Folder', () => {
       cy.wait(NAVIGATION_LOAD_PAUSE);
       cy.goToItemWithNavigation(childId);
       // should get children
-      cy.wait('@getChildren').then(({ response: { body } }) => {
+      cy.wait('@getChildren').then(() => {
         // check item is created and displayed
-        for (const item of [SAMPLE_ITEMS.items[2], SAMPLE_ITEMS.items[3], SAMPLE_ITEMS.items[4]]) {
+        for (const item of [
+          SAMPLE_ITEMS.items[2],
+          SAMPLE_ITEMS.items[3],
+          SAMPLE_ITEMS.items[4],
+        ]) {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
         }
       });
@@ -254,7 +258,6 @@ describe('View Folder', () => {
 
     it('visit Home', () => {
       cy.visit(HOME_PATH);
-
 
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 

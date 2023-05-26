@@ -1,4 +1,5 @@
 import { ItemMembership, convertJs } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../src/config/paths';
 import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
@@ -52,7 +53,11 @@ describe('View Memberships', () => {
 
     // panel only contains 2 avatars: one user, one +x
     // check contains member avatar
-    for (const { permission, member, id } of filteredMemberships.toJS() as ItemMembership[]) {
+    for (const {
+      permission,
+      member,
+      id,
+    } of filteredMemberships.toJS() as ItemMembership[]) {
       const { name, email } = Object.values(MEMBERS).find(
         ({ id: mId }) => mId === member.id,
       );

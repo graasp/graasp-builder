@@ -1,24 +1,25 @@
 import { COOKIE_KEYS } from '@graasp/sdk';
+
+import { SIGN_IN_PATH } from '../../src/config/constants';
 import {
-  buildItemPath,
   HOME_PATH,
   ITEMS_PATH,
   REDIRECT_PATH,
   SHARED_ITEMS_PATH,
+  buildItemPath,
 } from '../../src/config/paths';
 import {
+  CREATE_ITEM_BUTTON_ID,
   HEADER_APP_BAR_ID,
   ITEM_MAIN_CLASS,
-  CREATE_ITEM_BUTTON_ID,
 } from '../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../fixtures/items';
 import { SIGNED_OUT_MEMBER } from '../fixtures/members';
 import {
-  REQUEST_FAILURE_LOADING_TIME,
   PAGE_LOAD_WAITING_PAUSE,
   REDIRECTION_TIME,
+  REQUEST_FAILURE_LOADING_TIME,
 } from '../support/constants';
-import { SIGN_IN_PATH } from '../../src/config/constants';
 
 describe('Authentication', () => {
   describe('Signed Off > Redirect to sign in route', () => {
@@ -65,7 +66,7 @@ describe('Authentication', () => {
         cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
       });
       it('Item', () => {
-        cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
+        cy.visit(buildItemPath(SAMPLE_ITEMS.items?.[0].id));
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
         cy.get(`.${ITEM_MAIN_CLASS}`).should('exist');
       });
@@ -96,11 +97,11 @@ describe('Authentication', () => {
       it('Item', () => {
         cy.setCookie(
           COOKIE_KEYS.REDIRECT_URL_KEY,
-          buildItemPath(SAMPLE_ITEMS.items[0].id),
+          buildItemPath(SAMPLE_ITEMS.items?.[0].id),
         );
         cy.visit(REDIRECT_PATH);
         cy.wait(REDIRECTION_TIME);
-        cy.url().should('include', buildItemPath(SAMPLE_ITEMS.items[0].id));
+        cy.url().should('include', buildItemPath(SAMPLE_ITEMS.items?.[0].id));
       });
     });
   });

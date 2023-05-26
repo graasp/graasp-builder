@@ -73,7 +73,7 @@
     "dist:dev": "env-cmd -f ./.env.development react-scripts build",
     "eject": "react-scripts eject",
     "lint": "eslint --resolve-plugins-relative-to .",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit && tsc --noEmit -p cypress/tsconfig.json",
     "check": "yarn prettier:check && yarn lint && yarn type-check",
     "prettier:check": "prettier --check src/**/*.{js,ts,tsx,json}",
     "prettier:write": "prettier --write src/**/*.{js,ts,tsx,json}",

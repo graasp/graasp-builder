@@ -5,13 +5,9 @@ import {
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
   HEADER_MEMBER_MENU_BUTTON_ID,
   HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID,
-  HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID,
   HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID,
   MEMBER_PROFILE_MEMBER_NAME_ID,
-  OWNED_ITEMS_ID,
-  buildMemberMenuItemId,
 } from '../../src/config/selectors';
-import { MOCK_SESSIONS } from '../fixtures/members';
 
 describe('Header', () => {
   it('App Navigation', () => {
@@ -67,6 +63,5 @@ describe('Header', () => {
     //     });
     //   cy.get(`#${OWNED_ITEMS_ID}`).should('be.visible');
     // });
-
   });
 });

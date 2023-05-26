@@ -1,16 +1,23 @@
-import { AppItemType, FolderItemType, Item, ItemType, PermissionLevel } from '@graasp/sdk';
+import {
+  AppItemType,
+  FolderItemType,
+  ItemType,
+  PermissionLevel,
+} from '@graasp/sdk';
 
-import { DEFAULT_FOLDER_ITEM } from './items';
-import { CURRENT_USER, MEMBERS } from './members';
 import { ItemForTest } from '../support/types';
 import { APPS_LIST } from './apps/apps';
+import { DEFAULT_FOLDER_ITEM } from './items';
+import { CURRENT_USER, MEMBERS } from './members';
 
 const API_HOST = Cypress.env('API_HOST');
 
 export const buildAppApiAccessTokenRoute = (id: string): string =>
   `app-items/${id}/api-access-token`;
-export const buildGetAppData = (id: string): string => `app-items/${id}/app-data`;
-export const buildAppItemLinkForTest = (filename = '.*'): string => `apps/${filename}`;
+export const buildGetAppData = (id: string): string =>
+  `app-items/${id}/app-data`;
+export const buildAppItemLinkForTest = (filename = '.*'): string =>
+  `apps/${filename}`;
 
 export const GRAASP_APP_ITEM: AppItemType = {
   ...DEFAULT_FOLDER_ITEM,
@@ -20,7 +27,7 @@ export const GRAASP_APP_ITEM: AppItemType = {
   description: 'my app description',
   type: ItemType.APP,
   extra: {
-    [ItemType.APP]: { url: APPS_LIST[0].url, },
+    [ItemType.APP]: { url: APPS_LIST[0].url },
   },
   creator: CURRENT_USER,
 };
@@ -59,19 +66,21 @@ const app: AppItemType = {
     },
   },
   creator: CURRENT_USER,
-}
+};
 
 export const APP_USING_CONTEXT_ITEM: ItemForTest = {
   ...app,
-  memberships: [{
-    item: app,
-    permission: PermissionLevel.Admin,
-    member: MEMBERS.ANNA,
-    creator: MEMBERS.ANNA,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    id: '2d44cae9-592a-417a-86d3-99432b223c18'
-  },]
+  memberships: [
+    {
+      item: app,
+      permission: PermissionLevel.Admin,
+      member: MEMBERS.ANNA,
+      creator: MEMBERS.ANNA,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      id: '2d44cae9-592a-417a-86d3-99432b223c18',
+    },
+  ],
 };
 
 export const GRAASP_APP_ITEMS_FIXTURE = [
