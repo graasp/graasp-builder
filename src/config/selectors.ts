@@ -10,6 +10,7 @@ export const buildItemCard = (id: string): string => `itemCard-${id}`;
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
 export const ITEM_FORM_NAME_INPUT_ID = 'newItemNameInput';
 export const ITEM_FORM_CONFIRM_BUTTON_ID = 'newItemConfirmButton';
+export const ITEM_FORM_CANCEL_BUTTON_ID = 'newItemCancelButton';
 export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
 export const buildItemLink = (id: string): string => `itemLink-${id}`;
 export const NAVIGATION_HOME_LINK_ID = 'navigationHomeLink';
@@ -304,3 +305,8 @@ export const CC_CC0_CONTROL_ID = 'cc0Selector';
 export const CC_SHARE_ALIKE_CONTROL_ID = 'shareAlikeSelector';
 export const CC_NO_DERIVATIVE_CONTROL_ID = 'noDerivativeSelector';
 export const CC_DERIVATIVE_CONTROL_ID = 'derivativeSelector';
+
+export const TOUR_NAVIGATION_SIDEBAR_ID = 'tourNavigationSidebar';
+export const TOUR_NAVIGATION_SIDEBAR_CLOSE_BUTTON_ID =
+  'tourNavigationSidebarCloseButton';
+export const TOUR_TUTORIALS_LINK_ID = 'tourTutorialsLink';
