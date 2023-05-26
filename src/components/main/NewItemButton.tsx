@@ -9,6 +9,7 @@ import { Button } from '@graasp/ui';
 import { useBuilderTranslation } from '../../config/i18n';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
 import NewItemModal from './NewItemModal';
+import TourStep from './TourStep';
 
 const NewItemButton = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -24,24 +25,32 @@ const NewItemButton = (): JSX.Element => {
 
   return (
     <>
-      <Tooltip
-        placement="left"
-        title={translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
-        arrow
+      <TourStep
+        step={{
+          target: `#${CREATE_ITEM_BUTTON_ID}`,
+          content: 'this is a nice button',
+          timestamp: 'now',
+        }}
       >
-        <Button
-          id={CREATE_ITEM_BUTTON_ID}
-          onClick={handleClickOpen}
-          sx={{
-            cursor: 'pointer',
-            flex: 'none',
-            ml: 1,
-          }}
+        <Tooltip
+          placement="left"
+          title={translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+          arrow
         >
-          <AddIcon />
-          {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
-        </Button>
-      </Tooltip>
+          <Button
+            id={CREATE_ITEM_BUTTON_ID}
+            onClick={handleClickOpen}
+            sx={{
+              cursor: 'pointer',
+              flex: 'none',
+              ml: 1,
+            }}
+          >
+            <AddIcon />
+            {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+          </Button>
+        </Tooltip>
+      </TourStep>
       <NewItemModal open={open} handleClose={handleClose} />
     </>
   );
