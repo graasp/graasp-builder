@@ -1,6 +1,7 @@
 import { FlagType } from '@graasp/sdk';
 import { namespaces } from '@graasp/translations';
 
+import i18n from '../../../../src/config/i18n';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   ITEM_MENU_FLAG_BUTTON_CLASS,
@@ -9,13 +10,10 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { CURRENT_USER } from '../../../fixtures/members';
-import i18n from '../../../../src/config/i18n';
 
 const openFlagItemModal = (itemId) => {
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
-  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
 
   const menuFlagButton = cy.get(
@@ -33,7 +31,7 @@ const flagItem = (itemId, type) => {
   flagListItem.click();
 
   i18n.changeLanguage(CURRENT_USER.extra.lang as string);
-  const text = i18n.t('Flag', { ns: namespaces.builder })
+  const text = i18n.t('Flag', { ns: namespaces.builder });
   const flagItemButton = cy.get(`button:contains("${text}")`);
 
   flagItemButton.click();
@@ -47,7 +45,7 @@ describe('Flag Item', () => {
 
   it('flag item', () => {
     const item = SAMPLE_ITEMS.items[0];
-    const type = FlagType.FALSE_INFORMATION;
+    const type = FlagType.FalseInformation;
 
     flagItem(item.id, type);
 
