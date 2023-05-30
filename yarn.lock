@@ -2547,11 +2547,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#typeorm":
-  version: 0.4.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=02cf59204dfb372d60615e5a87e8a4dea1b5d7cf"
+"@graasp/query-client@npm:1.0.0-rc1":
+  version: 1.0.0-rc1
+  resolution: "@graasp/query-client@npm:1.0.0-rc1"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk"
+    "@graasp/sdk": 1.0.0-rc1
     "@graasp/translations": 1.13.0
     axios: 0.27.2
     crypto-js: 4.1.1
@@ -2562,13 +2562,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 1dd6486cac6df4645df7f8320b8a7203b4637e46972e4ba95ee746088a7ba370e7aa5ff876ab6abaedc71ce988c405918a315603fed1c7dae382983d3bdb75d2
+  checksum: 7e06c40b7b9375a2c84c703edc301988a0cdd57fa122d549f494f465e98cb719973c6c01fc4cfe0cff05764ee6300ffb09c80b0c4c14438020356f079914221a
   languageName: node
   linkType: hard
 
-"@graasp/sdk@github:graasp/graasp-sdk":
-  version: 0.12.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=985beaaac07eaf7fe6064cad49a35ded05698f85"
+"@graasp/sdk@npm:1.0.0-rc1":
+  version: 1.0.0-rc1
+  resolution: "@graasp/sdk@npm:1.0.0-rc1"
   dependencies:
     "@fastify/secure-session": 5.3.0
     "@graasp/etherpad-api": 2.1.1
@@ -2581,7 +2581,7 @@ __metadata:
     typeorm: 0.3.15
     uuid: 9.0.0
     validator: 13.9.0
-  checksum: 091899e0da9fce0c52f3ed428e766ee0b13b6ea57d7948f9461a909fcc997b0a7a38bfba0c58db57fc959cf9c1f4fc7c0a6b8eb93be722454e5becc12b03cdb0
+  checksum: 7d542c1c92d0846adade40b98c4c9915a3a7c1bf2abc404eae062e2b0dd249bf10d81e19d465bbf5bdfe2d2f4667277b03636ea032ebe616dc90203be7771845
   languageName: node
   linkType: hard
 
@@ -2594,11 +2594,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#typeorm":
-  version: 2.5.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=8f7558a463a0181b2c79755f016bf892215aba43"
+"@graasp/ui@npm:3.0.0-rc1":
+  version: 3.0.0-rc1
+  resolution: "@graasp/ui@npm:3.0.0-rc1"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk"
+    "@graasp/sdk": 1.0.0-rc1
     clsx: 1.2.1
     http-status-codes: 2.2.0
     immutable: 4.3.0
@@ -2629,7 +2629,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 3191f8cea8632665b950547c27c32c409167703a6eea31b38e4acf437a7123da70a1a586b638d547690b226f177f0aa423bb2c10c1b8813412485f8a65762e8a
+  checksum: a9287f96a5409c572aede839a1fc947ecc8cb4af1661efe57343b097c0ec1bd3124a224894f7205c77d78a6dc2d76034f001f196d048273469b992b96dbcc014
   languageName: node
   linkType: hard
 
@@ -9915,10 +9915,10 @@ __metadata:
     "@emotion/styled": 11.10.8
     "@graasp/chatbox": "github:graasp/graasp-chatbox#typeorm"
     "@graasp/plugin-websockets": 1.0.0
-    "@graasp/query-client": "github:graasp/graasp-query-client#typeorm"
+    "@graasp/query-client": 1.0.0-rc1
     "@graasp/sdk": 1.0.0-rc1
     "@graasp/translations": 1.13.0
-    "@graasp/ui": "github:graasp/graasp-ui#typeorm"
+    "@graasp/ui": 3.0.0-rc1
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.129
