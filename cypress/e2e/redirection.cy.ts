@@ -3,10 +3,12 @@ import { saveUrlForRedirection } from '@graasp/sdk';
 import { REDIRECT_PATH } from '../../src/config/paths';
 import { OWNED_ITEMS_ID } from '../../src/config/selectors';
 
+const DOMAIN = Cypress.env('REACT_APP_GRAASP_DOMAIN');
+
 describe('Redirection', () => {
   it('Redirection to saved url', () => {
     const link = 'http://somelink.com';
-    saveUrlForRedirection(link, '.');
+    saveUrlForRedirection(link, DOMAIN);
 
     cy.setUpApi();
     cy.visit(REDIRECT_PATH);
