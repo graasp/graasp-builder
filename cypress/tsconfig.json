@@ -11,7 +11,8 @@
       "cypress",
       "node"
     ],
-    "strict": false
+    "strict": false,
+    "sourceMap": false
   },
   "include": [
     "**/*.ts",
