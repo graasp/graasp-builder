@@ -2487,9 +2487,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox#typeorm":
-  version: 1.2.1
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=e16748b897afaed06050a5452e34ff76d054e562"
+"@graasp/chatbox@npm:2.0.0-rc.1":
+  version: 2.0.0-rc.1
+  resolution: "@graasp/chatbox@npm:2.0.0-rc.1"
   dependencies:
     lodash.truncate: 4.4.2
     moment: 2.29.4
@@ -2503,10 +2503,10 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.10.6
     "@emotion/styled": ^11.10.6
-    "@graasp/query-client": ^0.4.0
-    "@graasp/sdk": ^0.10.0
-    "@graasp/translations": ^1.10.0
-    "@graasp/ui": ^2.3.1
+    "@graasp/query-client": ^1.0.0
+    "@graasp/sdk": ^1.0.0
+    "@graasp/translations": ^1.13.0
+    "@graasp/ui": ^3.0.0
     "@mui/icons-material": ^5.11.11
     "@mui/lab": ^5.0.0-alpha.121
     "@mui/material": ^5.11.11
@@ -2515,7 +2515,7 @@ __metadata:
     react: ^17.0.0
     react-dom: "*"
     react-i18next: ^12.0.0
-  checksum: 708af4f3f02c99df1ad73bc18b4dccdcfbf47aeb94928118cd0cfcd45824f6d8a3a1c0a1384c4ceb37286c94e58612834b9d834bacc48a3fa3fdd002cf630bb8
+  checksum: c5e476d462554c30c1d89f0e2a83e7fbd94fea8e265d0b4d819417bdc38c0b08cabef74432d4b722d4aeb25315ddc6ca4fa7b5ed530acf0dd0e8e1d00b864f5b
   languageName: node
   linkType: hard
 
@@ -9913,7 +9913,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": 11.10.8
     "@emotion/styled": 11.10.8
-    "@graasp/chatbox": "github:graasp/graasp-chatbox#typeorm"
+    "@graasp/chatbox": 2.0.0-rc.1
     "@graasp/plugin-websockets": 1.0.0
     "@graasp/query-client": 1.0.0-rc1
     "@graasp/sdk": 1.0.0-rc1
