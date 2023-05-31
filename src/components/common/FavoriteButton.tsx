@@ -1,6 +1,8 @@
+import { List } from 'immutable';
+
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
+import { ItemFavoriteRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import {
   ActionButtonVariant,
@@ -8,7 +10,7 @@ import {
 } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { mutations } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
@@ -19,11 +21,10 @@ type Props = {
   size?: IconButtonProps['size'];
 };
 
-export const isItemFavorite = (
+const isItemFavorite = (
   item: ItemRecord,
-  member?: MemberRecord,
-): boolean => member?.extra?.favoriteItems?.includes(item.id) || false;
-
+  favorites?: List<ItemFavoriteRecord>,
+): boolean => favorites?.map((f) => f.item.id).contains(item.id) || false;
 const FavoriteButton = ({
   item,
   size,
@@ -31,36 +32,24 @@ const FavoriteButton = ({
   onClick,
 }: Props): JSX.Element | null => {
   const { data: member } = useCurrentUserContext();
+  const { data: favorites } = hooks.useFavoriteItems();
   const { t: translateBuilder } = useBuilderTranslation();
-  const mutation = mutations.useEditMember();
+  const addFavorite = mutations.useFavoriteItem();
+  const deleteFavorite = mutations.useUnfavoriteItem();
 
   if (!member) {
     return null;
   }
 
-  const isFavorite = isItemFavorite(item, member);
+  const isFavorite = isItemFavorite(item, favorites);
 
   const handleFavorite = () => {
-    mutation.mutate({
-      id: member.id,
-      extra: {
-        favoriteItems: member?.extra?.favoriteItems
-          ? member.extra.favoriteItems.concat([item.id]).toJS()
-          : [item.id],
-      },
-    });
+    addFavorite.mutate(item.id);
     onClick?.();
   };
 
   const handleUnfavorite = () => {
-    mutation.mutate({
-      id: member.id,
-      extra: {
-        favoriteItems: member?.extra?.favoriteItems
-          ?.filter((id: string) => id !== item.id)
-          .toJS(),
-      },
-    });
+    deleteFavorite.mutate(item.id);
     onClick?.();
   };
 
