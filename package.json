@@ -16,7 +16,7 @@
     "@graasp/query-client": "1.0.0-rc1",
     "@graasp/sdk": "1.0.0-rc1",
     "@graasp/translations": "1.13.0",
-    "@graasp/ui": "3.0.0-rc1",
+    "@graasp/ui": "3.0.0-rc.2",
     "@mui/icons-material": "5.11.16",
     "@mui/lab": "5.0.0-alpha.129",
     "@mui/material": "5.12.3",
