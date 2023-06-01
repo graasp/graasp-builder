@@ -1,16 +1,19 @@
 import { TextField, Typography } from '@mui/material';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_ETHERPAD_NAME_INPUT_ID } from '../../../config/selectors';
 
-const useEtherpadForm = (): { padName: string; EtherpadForm: FC } => {
+const useEtherpadForm = (): {
+  padName: string;
+  EtherpadForm: () => JSX.Element;
+} => {
   const [padName, setPadName] = useState('');
 
-  const EtherpadForm: FC = () => {
+  const EtherpadForm = (): JSX.Element => {
     const { t: translateBuilder } = useBuilderTranslation();
     return (
       <>

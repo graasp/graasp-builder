@@ -4,14 +4,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC } from 'react';
-
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
   ITEM_RECYCLE_BUTTON_CLASS,
@@ -25,17 +22,15 @@ type Props = {
   onClick?: () => void;
 };
 
-const RecycleButton: FC<Props> = ({
+const RecycleButton = ({
   itemIds,
   color = 'default',
   id,
   type = ActionButton.ICON_BUTTON,
   onClick,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: recycleItems } = useMutation<unknown, unknown, string[]>(
-    MUTATION_KEYS.RECYCLE_ITEMS,
-  );
+  const { mutate: recycleItems } = mutations.useRecycleItems();
 
   const handleClick = () => {
     recycleItems(itemIds);

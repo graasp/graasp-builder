@@ -7,10 +7,10 @@ import Autocomplete, {
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { FC, SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 
-import { Category } from '@graasp/sdk';
-import { ItemCategoryRecord } from '@graasp/sdk/frontend';
+import { Category, CategoryType } from '@graasp/sdk';
+import { CategoryRecord, ItemCategoryRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -22,9 +22,9 @@ import {
 
 type Props = {
   disabled: boolean;
-  typeId: string;
+  type: CategoryType;
   title: string;
-  values: Category[];
+  values: List<CategoryRecord>;
   selectedValues?: List<ItemCategoryRecord>;
   handleChange: (
     _event: SyntheticEvent,
@@ -33,23 +33,27 @@ type Props = {
   ) => void;
 };
 
-const DropdownMenu: FC<Props> = ({
+const DropdownMenu = ({
   disabled,
-  typeId,
+  type,
   title,
   handleChange,
   values,
   selectedValues,
-}) => {
+}: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
+  if (!values.size) {
+    return null;
+  }
+
   const selected = values.filter(({ id }) =>
-    selectedValues?.find(({ categoryId }) => categoryId === id),
+    selectedValues?.find(({ category }) => category.id === id),
   );
 
   return (
     <Box mt={2}>
-      <Typography variant="body1" id={buildCategorySelectionTitleId(typeId)}>
+      <Typography variant="body1" id={buildCategorySelectionTitleId(type)}>
         {title}
       </Typography>
       <Autocomplete
@@ -57,9 +61,9 @@ const DropdownMenu: FC<Props> = ({
         disabled={disabled || !values}
         multiple
         disableClearable
-        id={buildCategorySelectionId(typeId)}
-        value={selected}
-        options={values}
+        id={buildCategorySelectionId(type)}
+        value={selected.toArray()}
+        options={values.toArray()}
         getOptionLabel={(option: Category) => option.name}
         onChange={handleChange}
         renderInput={(params) => (
@@ -70,13 +74,13 @@ const DropdownMenu: FC<Props> = ({
             placeholder={translateBuilder(BUILDER.DROP_DOWN_PLACEHOLDER)}
           />
         )}
-        renderOption={(props: Record<string, unknown>, option: Category) => (
+        renderOption={(props, option) => (
           <li
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
             // necessary for test
             data-id={option.id}
-            id={buildCategorySelectionOptionId(typeId, option.id)}
+            id={buildCategorySelectionOptionId(type, option.id)}
           >
             {option.name}
           </li>

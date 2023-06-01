@@ -1,16 +1,15 @@
-import { List } from 'immutable';
-
 import Box from '@mui/material/Box';
 
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { routines } from '@graasp/query-client';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import notifier from '../../config/notifier';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   FAVORITE_ITEMS_ERROR_ALERT_ID,
   FAVORITE_ITEMS_ID,
@@ -22,24 +21,9 @@ import ItemHeader from '../item/header/ItemHeader';
 import Items from './Items';
 import Main from './Main';
 
-// todo: find other possible solutions
-// todo: improve types with refactor
-export const getExistingItems = (
-  items: List<ItemRecord & { statusCode?: number }>,
-): List<ItemRecord> => items.filter((item) => !item.statusCode);
+const { editMemberRoutine } = routines;
 
-// todo: improve types with refactor
-export const containsNonExistingItems = (
-  items: List<ItemRecord & { statusCode?: number }>,
-): boolean => items.some((item) => Boolean(item.statusCode));
-
-// todo: improve types with refactor
-export const getErrorItemIds = (
-  items: List<ItemRecord & { data?: string; statusCode?: number }>,
-): List<string> =>
-  items.filter((item) => item.statusCode).map((item) => item.data);
-
-const FavoriteItems: FC = () => {
+const FavoriteItems = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
     data: member,
@@ -47,37 +31,34 @@ const FavoriteItems: FC = () => {
     isError: isMemberError,
   } = useCurrentUserContext();
   const {
-    data: favoriteItems = List(),
+    data,
     isLoading: isItemsLoading,
     isError: isItemsError,
   } = hooks.useItems([...new Set(getFavoriteItems(member).toArray())]);
-  const mutation = useMutation<
-    unknown,
-    unknown,
-    {
-      id: string;
-      extra: {
-        favoriteItems: string[];
-      };
-    }
-  >(MUTATION_KEYS.EDIT_MEMBER);
-
-  // Whenever we have a change in the favorite items, we check for any deleted items and remove them
-  // this effect does not take effect if there is only one (deleted) item
+  const { mutate: editMember } = mutations.useEditMember();
+  // if we get an error while fetching the favorite items
+  // we replace the favorite item table with the fetched items
+  // bug: this might fail for time out
   useEffect(() => {
-    if (!favoriteItems.isEmpty() && containsNonExistingItems(favoriteItems)) {
-      const errorIds = getErrorItemIds(favoriteItems);
-      mutation.mutate({
-        id: member.id,
-        extra: {
-          favoriteItems: member.extra.favoriteItems
-            ?.filter((id) => !errorIds.includes(id))
-            .toArray(),
-        },
-      });
+    if (data?.errors?.size && data?.data) {
+      if (!member) {
+        notifier({
+          type: editMemberRoutine.FAILURE,
+          payload: { error: new Error('member id is not defined') },
+        });
+      } else {
+        editMember({
+          id: member.id,
+          extra: {
+            favoriteItems: (
+              Object.values(data.data.toJS()) as DiscriminatedItem[]
+            ).map(({ id }) => id),
+          },
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favoriteItems]);
+  }, [data]);
 
   const renderContent = () => {
     if (isMemberError || isItemsError) {
@@ -91,7 +72,7 @@ const FavoriteItems: FC = () => {
       <Items
         id={FAVORITE_ITEMS_ID}
         title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-        items={getExistingItems(favoriteItems)}
+        items={data?.data?.toSeq().toList()}
       />
     );
   };

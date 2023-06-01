@@ -1,6 +1,6 @@
 import { IconButtonProps } from '@mui/material';
 
-import { FC, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import {
@@ -23,7 +23,13 @@ export type Props = {
   itemIds: string[];
 };
 
-const CopyButton: FC<Props> = ({ itemIds, color, id, type, onClick }) => {
+const CopyButton = ({
+  itemIds,
+  color,
+  id,
+  type,
+  onClick,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { openModal: openCopyModal } = useCopyItemModalContext();

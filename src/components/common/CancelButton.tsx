@@ -1,6 +1,6 @@
 import { ButtonProps } from '@mui/material/Button';
 
-import { FC, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -12,7 +12,7 @@ type Props = {
   color?: ButtonProps['color'];
 };
 
-const CancelButton: FC<Props> = ({ onClick, color }) => {
+const CancelButton = ({ onClick, color }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
   return (
     <Button onClick={onClick} variant="text" color={color}>

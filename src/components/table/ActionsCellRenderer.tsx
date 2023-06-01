@@ -1,13 +1,7 @@
-import { List } from 'immutable';
-
 import { useEffect, useState } from 'react';
 
-import { DiscriminatedItem } from '@graasp/sdk';
-import {
-  ItemMembershipRecord,
-  ItemRecord,
-  MemberRecord,
-} from '@graasp/sdk/frontend';
+import { Item, ItemMembership } from '@graasp/sdk';
+import { MemberRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 
 import {
   getMembershipsForItem,
@@ -18,44 +12,36 @@ import DownloadButton from '../main/DownloadButton';
 import ItemMenu from '../main/ItemMenu';
 
 type Props = {
-  items: List<ItemRecord>;
-  manyMemberships: List<List<ItemMembershipRecord>>;
-  member: MemberRecord;
+  manyMemberships?: ResultOfRecord<ItemMembership[]>;
+  member?: MemberRecord;
 };
 
 type ChildCompProps = {
-  data: DiscriminatedItem;
+  data: Item;
 };
 
 // items and memberships match by index
 const ActionsCellRenderer = ({
   manyMemberships,
-  items,
   member,
 }: Props): ((arg: ChildCompProps) => JSX.Element) => {
   const ChildComponent = ({ data: item }: ChildCompProps) => {
     const [canEdit, setCanEdit] = useState(false);
 
     useEffect(() => {
-      if (
-        items &&
-        manyMemberships &&
-        !manyMemberships.isEmpty() &&
-        !items.isEmpty()
-      ) {
+      if (manyMemberships && manyMemberships.data) {
         setCanEdit(
           isItemUpdateAllowedForUser({
             memberships: getMembershipsForItem({
               itemId: item.id,
               manyMemberships,
-              items,
             }),
             memberId: member?.id,
           }),
         );
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [items, manyMemberships, item, member]);
+    }, [manyMemberships, item, member]);
 
     const renderAnyoneActions = () => (
       <ItemMenu item={item} canEdit={canEdit} />

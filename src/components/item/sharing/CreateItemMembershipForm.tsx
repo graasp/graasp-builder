@@ -2,48 +2,44 @@ import { List } from 'immutable';
 import validator from 'validator';
 
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { Grid, TextField } from '@mui/material';
+import { Grid, TextField, TextFieldProps } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useState } from 'react';
 
-import { Invitation, MUTATION_KEYS, routines } from '@graasp/query-client';
-import { PermissionLevel } from '@graasp/sdk';
-import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
+import { Invitation, PermissionLevel } from '@graasp/sdk';
+import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import notifier from '../../../config/notifier';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   CREATE_MEMBERSHIP_FORM_ID,
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../config/selectors';
-import ItemMembershipSelect from './ItemMembershipSelect';
+import ItemMembershipSelect, {
+  ItemMembershipSelectProps,
+} from './ItemMembershipSelect';
 
-const { shareItemRoutine } = routines;
 type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
 type Props = {
   item: ItemRecord;
-  members: List<MemberRecord>;
+  memberships: List<ItemMembershipRecord>;
 };
 
 // todo: handle multiple invitations
-const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
+const CreateItemMembershipForm = ({
+  item,
+  memberships,
+}: Props): JSX.Element => {
   const itemId = item.id;
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string | null>();
 
-  const { mutateAsync: shareItem } = useMutation<
-    { failure?: { message: string }[] },
-    unknown,
-    {
-      itemId: string;
-      data: { id: string; email: string; permission: PermissionLevel }[];
-    }
-  >(MUTATION_KEYS.SHARE_ITEM);
+  const { mutateAsync: shareItem } = mutations.useShareItem();
+
   const { t: translateBuilder } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
@@ -69,7 +65,11 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
       );
     }
     // check mail does not already exist
-    if (members.find(({ email: thisEmail }) => thisEmail === email)) {
+    if (
+      memberships.find(
+        ({ member: { email: thisEmail } }) => thisEmail === email,
+      )
+    ) {
       return translateBuilder(
         BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
       );
@@ -77,8 +77,11 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
     return null;
   };
 
-  const onChangePermission = (e) => {
-    setInvitation({ ...invitation, permission: e.target.value });
+  const onChangePermission: ItemMembershipSelectProps['onChange'] = (e) => {
+    setInvitation({
+      ...invitation,
+      permission: e.target.value as PermissionLevel,
+    });
   };
 
   const handleShare = async () => {
@@ -103,15 +106,8 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
       });
 
       // manually notify error
-      if (result?.failure?.length) {
-        notifier({
-          type: shareItemRoutine.FAILURE,
-          payload: {
-            error: {
-              response: { data: { message: result?.failure?.[0].message } },
-            },
-          },
-        });
+      if (result?.errors?.size) {
+        console.error(result?.errors);
       } else {
         // reset email input
         setInvitation({
@@ -125,7 +121,7 @@ const CreateItemMembershipForm = ({ item, members }: Props): JSX.Element => {
     return returnedValue;
   };
 
-  const onChangeEmail = (event) => {
+  const onChangeEmail: TextFieldProps['onChange'] = (event) => {
     const newInvitation = {
       ...invitation,
       email: event.target.value,

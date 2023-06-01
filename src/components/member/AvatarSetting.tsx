@@ -1,48 +1,45 @@
+import Uppy from '@uppy/core';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { useEffect, useRef, useState } from 'react';
+import {
+  FormEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { ThumbnailSize } from '@graasp/sdk';
 import { MemberRecord } from '@graasp/sdk/frontend';
 import { ACCOUNT } from '@graasp/translations';
-import { Avatar } from '@graasp/ui';
 
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../config/constants';
 import { useAccountTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME } from '../../config/selectors';
-import defaultImage from '../../resources/avatar.png';
 import { configureAvatarUppy } from '../../utils/uppy';
-import CropModal from '../common/CropModal';
+import CropModal, { CropProps } from '../common/CropModal';
+import MemberAvatar from '../common/MemberAvatar';
 import StatusBar from '../file/StatusBar';
 
 type Props = {
   user: MemberRecord;
 };
 
-const AvatarSetting = ({ user }: Props): JSX.Element => {
-  const inputRef = useRef<HTMLInputElement>();
-  const [uppy, setUppy] = useState(null);
+const AvatarSetting = ({ user }: Props): JSX.Element | null => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uppy, setUppy] = useState<Uppy>();
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState<string>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t } = useAccountTranslation();
-  const { data: avatarBlob, isLoading: isLoadingAvatar } = hooks.useAvatar({
-    id: user.id,
-    size: ThumbnailSize.Large,
-  });
-  const { mutate: onUploadAvatar } = useMutation<
-    unknown,
-    unknown,
-    { id: string; error?: unknown; data?: unknown }
-  >(MUTATION_KEYS.UPLOAD_AVATAR);
+  const { mutate: onUploadAvatar } = mutations.useUploadAvatar();
 
-  const userId = user.id;
+  const userId = user?.id;
 
   useEffect(() => {
     setUppy(
@@ -51,10 +48,12 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
         onUpload: () => {
           setOpenStatusBar(true);
         },
-        onError: (error) => {
+        onError: (error: Error) => {
           onUploadAvatar({ id: userId, error });
         },
-        onComplete: (result) => {
+        onComplete: (result: {
+          successful: { response: { body: unknown } }[];
+        }) => {
           // update app on complete
           // todo: improve with websockets or by receiving corresponding items
           if (result?.successful?.length) {
@@ -64,7 +63,6 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
 
           return false;
         },
-        onFilesAdded: () => null,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,21 +72,18 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
     return null;
   }
 
-  const handleClose = (_event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
+  const handleClose: MouseEventHandler<HTMLButtonElement> = (_event) => {
     setOpenStatusBar(false);
   };
 
-  const onSelectFile = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
+  const onSelectFile: FormEventHandler<HTMLInputElement> = (e) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener('load', () =>
         setFileSource(reader.result as string),
       );
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(target.files[0]);
       setShowCropModal(true);
     }
   };
@@ -96,15 +91,18 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
   const onClose = () => {
     setShowCropModal(false);
     if (inputRef.current) {
-      inputRef.current.value = null;
+      inputRef.current.value = '';
     }
   };
 
-  const onConfirmCrop = (croppedImage) => {
+  const onConfirmCrop: CropProps['onConfirm'] = (croppedImage) => {
     onClose();
 
     // submit cropped image
     try {
+      if (!croppedImage) {
+        throw new Error('cropped image is not defined');
+      }
       // remove waiting files
       uppy.cancelAll();
 
@@ -148,28 +146,22 @@ const AvatarSetting = ({ user }: Props): JSX.Element => {
           />
         </Grid>
         <Grid item sm={6} xs={12}>
-          <Avatar
-            blob={avatarBlob}
-            isLoading={isLoadingAvatar}
-            alt={t(ACCOUNT.PROFILE_AVATAR_CURRENT_ALT)}
+          <MemberAvatar
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-            defaultImage={defaultImage}
-            component="avatar"
-            sx={{
-              height: THUMBNAIL_SETTING_MAX_HEIGHT,
-              width: THUMBNAIL_SETTING_MAX_WIDTH,
-            }}
-            variant="circular"
+            id={userId}
+            component="image"
           />
         </Grid>
       </Grid>
-      <CropModal
-        open={showCropModal}
-        onClose={onClose}
-        src={fileSource}
-        onConfirm={onConfirmCrop}
-      />
+      {fileSource && (
+        <CropModal
+          open={showCropModal}
+          onClose={onClose}
+          src={fileSource}
+          onConfirm={onConfirmCrop}
+        />
+      )}
     </>
   );
 };

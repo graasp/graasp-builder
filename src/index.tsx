@@ -20,6 +20,22 @@ import {
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
 import './index.css';
 
+const renderApp = () => {
+  if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
+    ReactGA.initialize(GA_MEASUREMENT_ID);
+    ReactGA.send('pageview');
+  }
+
+  ReactDOM.render(
+    <StrictMode>
+      <Root />
+    </StrictMode>,
+    document.getElementById('root'),
+  );
+};
+
+renderApp();
+
 if (SENTRY_DSN) {
   Sentry.init({
     dsn: SENTRY_DSN,
@@ -33,15 +49,3 @@ if (SENTRY_DSN) {
     tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
   });
 }
-
-if (GA_MEASUREMENT_ID && hasAcceptedCookies() && NODE_ENV !== ENV.TEST) {
-  ReactGA.initialize(GA_MEASUREMENT_ID);
-  ReactGA.send('pageview');
-}
-
-ReactDOM.render(
-  <StrictMode>
-    <Root />
-  </StrictMode>,
-  document.getElementById('root'),
-);

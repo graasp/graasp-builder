@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Context } from '@graasp/sdk';
 import {
@@ -59,27 +59,27 @@ type Props = {
   itemId?: string;
 };
 
-const SharingLink: FC<Props> = ({ itemId }) => {
+const SharingLink = ({ itemId }: Props): JSX.Element => {
   const { t: translateMessages } = useMessagesTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
 
-  const [linkType, setLinkType] = useState<Context>(Context.PLAYER);
+  const [linkType, setLinkType] = useState<Context>(Context.Player);
   const [link, setLink] = useState<string>();
 
   useEffect(() => {
     if (itemId) {
       switch (linkType) {
-        case Context.BUILDER: {
+        case Context.Builder: {
           setLink(buildGraaspBuilderView(itemId));
           break;
         }
-        case Context.PLAYER: {
+        case Context.Player: {
           setLink(buildGraaspPlayerView(itemId));
           break;
         }
         default:
-          setLinkType(Context.BUILDER);
+          setLinkType(Context.Builder);
           break;
       }
     }
@@ -137,15 +137,15 @@ const SharingLink: FC<Props> = ({ itemId }) => {
         >
           <MenuItem
             // sx={{ textTransform: 'capitalize' }}
-            value={Context.BUILDER}
+            value={Context.Builder}
           >
-            {enumT(Context.BUILDER)}
+            {enumT(Context.Builder)}
           </MenuItem>
           <MenuItem
             // sx={{ textTransform: 'capitalize' }}
-            value={Context.PLAYER}
+            value={Context.Player}
           >
-            {enumT(Context.PLAYER)}
+            {enumT(Context.Player)}
           </MenuItem>
         </Select>
         <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>

@@ -7,12 +7,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ACCOUNT } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useAccountTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   CONFIRM_DELETE_BUTTON_ID,
   DELETE_MEMBER_BUTTON_ID,
@@ -26,11 +25,7 @@ type Props = {
 const DeleteMemberDialog = ({ id }: Props): JSX.Element => {
   const { t: translateAccount } = useAccountTranslation();
   const [open, setOpen] = useState(false);
-  const { mutate: deleteMember } = useMutation<
-    unknown,
-    unknown,
-    { id: string }
-  >(MUTATION_KEYS.DELETE_MEMBER);
+  const { mutate: deleteMember } = mutations.useDeleteMember();
 
   const alertDialogTitle = 'alert-dialog-title';
   const alertDialogDescription = 'alert-dialog-description';

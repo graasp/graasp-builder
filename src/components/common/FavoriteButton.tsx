@@ -1,8 +1,5 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { FC } from 'react';
-
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import {
@@ -11,7 +8,7 @@ import {
 } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
@@ -24,13 +21,22 @@ type Props = {
 
 export const isItemFavorite = (
   item: ItemRecord,
-  member: MemberRecord,
-): boolean => member.extra?.favoriteItems?.includes(item.id) || false;
+  member?: MemberRecord,
+): boolean => member?.extra?.favoriteItems?.includes(item.id) || false;
 
-const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
+const FavoriteButton = ({
+  item,
+  size,
+  type,
+  onClick,
+}: Props): JSX.Element | null => {
   const { data: member } = useCurrentUserContext();
   const { t: translateBuilder } = useBuilderTranslation();
-  const mutation = useMutation<any, any, any>(MUTATION_KEYS.EDIT_MEMBER);
+  const mutation = mutations.useEditMember();
+
+  if (!member) {
+    return null;
+  }
 
   const isFavorite = isItemFavorite(item, member);
 
@@ -39,7 +45,7 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
       id: member.id,
       extra: {
         favoriteItems: member?.extra?.favoriteItems
-          ? member.extra.favoriteItems.concat([item.id])
+          ? member.extra.favoriteItems.concat([item.id]).toJS()
           : [item.id],
       },
     });
@@ -50,9 +56,9 @@ const FavoriteButton: FC<Props> = ({ item, size, type, onClick }) => {
     mutation.mutate({
       id: member.id,
       extra: {
-        favoriteItems: member?.extra?.favoriteItems?.filter(
-          (id: string) => id !== item.id,
-        ),
+        favoriteItems: member?.extra?.favoriteItems
+          ?.filter((id: string) => id !== item.id)
+          .toJS(),
       },
     });
     onClick?.();

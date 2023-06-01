@@ -2,12 +2,12 @@ import { validate } from 'uuid';
 
 import { createContext, useMemo, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { TreePreventSelection } from '../../enums';
+import type { TreeModalProps } from '../main/TreeModal';
 import TreeModal from '../main/TreeModal';
 
 type Value = {
@@ -22,12 +22,12 @@ const MoveItemModalProvider = ({
   children: JSX.Element | JSX.Element[];
 }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: moveItems } = useMutation(MUTATION_KEYS.MOVE_ITEMS);
+  const { mutate: moveItems } = mutations.useMoveItems();
 
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState<string[] | null>(null);
 
-  const openModal = (newItemIds) => {
+  const openModal = (newItemIds: string[]) => {
     setOpen(true);
     setItemIds(newItemIds);
   };
@@ -37,11 +37,11 @@ const MoveItemModalProvider = ({
     setItemIds(null);
   };
 
-  const onConfirm = (payload) => {
+  const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: !validate(payload.to) ? null : payload.to,
+      to: payload.to && validate(payload.to) ? payload.to : undefined,
     };
     moveItems(newPayload);
     onClose();

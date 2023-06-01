@@ -13,11 +13,11 @@ import {
 import { ITEM_LAYOUT_MODES } from '../../../enums';
 import { useLayoutContext } from '../../context/LayoutContext';
 
-const ModeButton = (): JSX.Element => {
+const ModeButton = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mode, setMode } = useLayoutContext();
 
-  const handleOnClick = (value) => {
+  const handleOnClick = (value: string) => {
     setMode(value);
   };
 

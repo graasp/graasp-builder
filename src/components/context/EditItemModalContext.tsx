@@ -3,18 +3,26 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { FC, createContext, useMemo, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { DiscriminatedItem, ItemType, convertJs } from '@graasp/sdk';
+import { routines } from '@graasp/query-client';
+import {
+  DiscriminatedItem,
+  DocumentItemType,
+  FolderItemType,
+  Item,
+  ItemType,
+  convertJs,
+} from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER, COMMON } from '@graasp/translations';
+import { BUILDER, COMMON, FAILURE_MESSAGES } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import notifier from '../../config/notifier';
+import { mutations } from '../../config/queryClient';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
@@ -22,32 +30,34 @@ import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
 import FolderForm from '../item/form/FolderForm';
 
+const { editItemRoutine } = routines;
+
 type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
 const EditItemModalContext = createContext({
-  openModal: (_newItem: DiscriminatedItem) => {
+  openModal: (_newItem: Item) => {
     // do nothing
   },
 });
 
-const EditItemModalProvider: FC<Props> = ({ children }) => {
+const EditItemModalProvider = ({ children }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
-  const { mutate: editItem } = useMutation<any, any, any>(
-    MUTATION_KEYS.EDIT_ITEM,
-  );
+  const { mutate: editItem } = mutations.useEditItem();
 
   // updated properties are separated from the original item
   // so only necessary properties are sent when editing
-  const [updatedProperties, setUpdatedItem] = useState({});
+  const [updatedProperties, setUpdatedItem] = useState<
+    Partial<DiscriminatedItem>
+  >({});
   // eslint-disable-next-line no-unused-vars
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<ItemRecord | null>(null);
 
-  const openModal = (newItem: DiscriminatedItem) => {
+  const openModal = (newItem: Item) => {
     setOpen(true);
     setItem(convertJs(newItem));
   };
@@ -55,7 +65,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
   const onClose = () => {
     setOpen(false);
     setItem(null);
-    setUpdatedItem(null);
+    setUpdatedItem({});
     // schedule button disable state reset AFTER end of click event handling
     // todo: factor out this logic to graasp-ui
     setTimeout(() => setConfirmButtonDisabled(false), DOUBLE_CLICK_DELAY_MS);
@@ -67,7 +77,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
     }
     if (
       !isItemValid({
-        ...(item?.toJS() as DiscriminatedItem),
+        ...(item?.toJS() as Item),
         ...updatedProperties,
       })
     ) {
@@ -77,7 +87,16 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
 
     setConfirmButtonDisabled(true);
     // add id to changed properties
-    editItem({ id: item?.id, ...updatedProperties });
+
+    if (!item?.id) {
+      notifier({
+        type: editItemRoutine.FAILURE,
+        payload: { error: new Error(FAILURE_MESSAGES.UNEXPECTED_ERROR) },
+      });
+    } else {
+      editItem({ id: item?.id, ...updatedProperties });
+    }
+
     onClose();
   };
 
@@ -88,7 +107,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
           <DocumentForm
             onChange={setUpdatedItem}
             item={item}
-            updatedProperties={updatedProperties}
+            updatedProperties={updatedProperties as Partial<DocumentItemType>}
           />
         );
       case ItemType.FOLDER:
@@ -96,7 +115,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
           <FolderForm
             onChange={setUpdatedItem}
             item={item}
-            updatedProperties={updatedProperties}
+            updatedProperties={updatedProperties as Partial<FolderItemType>}
           />
         );
       case ItemType.LOCAL_FILE:
@@ -108,7 +127,8 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
           <BaseItemForm
             onChange={setUpdatedItem}
             item={item}
-            updatedProperties={updatedProperties}
+            // TODO: fix type
+            updatedProperties={updatedProperties as any}
           />
         );
       default:
@@ -138,7 +158,7 @@ const EditItemModalProvider: FC<Props> = ({ children }) => {
             isConfirmButtonDisabled ||
             // isItem Valid checks a full item, so we add the updated properties to the item to check
             !isItemValid({
-              ...(item?.toJS() as DiscriminatedItem),
+              ...(item?.toJS() as Item),
               ...updatedProperties,
             })
           }

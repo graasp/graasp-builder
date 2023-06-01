@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 
 import { createContext, useEffect, useMemo, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { configureFileUppy } from '../../utils/uppy';
 import StatusBar from './StatusBar';
 
@@ -13,9 +11,7 @@ const UppyContext = createContext();
 const UppyContextProvider = ({ enable, itemId, children }) => {
   const [uppy, setUppy] = useState(null);
   const [openStatusBar, setOpenStatusBar] = useState(false);
-  const { mutate: onFileUploadComplete } = useMutation(
-    MUTATION_KEYS.FILE_UPLOAD,
-  );
+  const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {

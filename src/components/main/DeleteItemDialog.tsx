@@ -4,21 +4,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { FC } from 'react';
-
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
 import CancelButton from '../common/CancelButton';
 
 const labelId = 'alert-dialog-title';
 const descriptionId = 'alert-dialog-description';
-
-const { DELETE_ITEMS, DELETE_ITEM } = MUTATION_KEYS;
 
 type Props = {
   open?: boolean;
@@ -26,28 +21,17 @@ type Props = {
   itemIds: string[];
 };
 
-const DeleteItemDialog: FC<Props> = ({
+const DeleteItemDialog = ({
   itemIds,
   open = false,
   handleClose,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: deleteItems } = useMutation<unknown, unknown, string[]>(
-    DELETE_ITEMS,
-  );
-  const { mutate: deleteItem } = useMutation<unknown, unknown, string[]>(
-    DELETE_ITEM,
-  );
+  const { mutate: deleteItems } = mutations.useDeleteItems();
 
   const onDelete = () => {
-    if (itemIds.length > 1) {
-      deleteItems(itemIds);
-    } else {
-      // we still use this call because it has feedback
-      // remove when deleteItems will have feedback
-      deleteItem(itemIds);
-    }
+    deleteItems(itemIds);
     handleClose();
   };
 

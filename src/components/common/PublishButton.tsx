@@ -2,8 +2,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { LibraryIcon } from '@graasp/ui';
 
@@ -19,7 +17,7 @@ type Props = {
   itemId: string;
 };
 
-const PublishButton: FC<Props> = ({ itemId }) => {
+const PublishButton = ({ itemId }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
 

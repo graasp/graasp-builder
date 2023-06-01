@@ -1,14 +1,12 @@
-import { RecordOf } from 'immutable';
-
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 
-import { FC, HTMLAttributes, useState } from 'react';
+import { HTMLAttributes, useState } from 'react';
 
-import { AppItemType, getAppExtra } from '@graasp/sdk';
-import { AppItemTypeRecord } from '@graasp/sdk/frontend';
+import { AppItemType, DiscriminatedItem, Item, getAppExtra } from '@graasp/sdk';
+import { AppItemTypeRecord, AppRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -20,42 +18,45 @@ import {
 import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './BaseItemForm';
 
-// todo: use from graasp-sdk
-type App = {
-  name: string;
-  description: string;
-  url: string;
-  extra: {
-    image: string;
-  };
-};
-
 type Props = {
-  onChange: (item: Partial<AppItemType>) => void;
-  item: Partial<AppItemTypeRecord>;
-  updatedProperties: Partial<AppItemType>;
+  onChange: (item: Partial<DiscriminatedItem>) => void;
+  item?: AppItemTypeRecord;
+  updatedProperties: Partial<DiscriminatedItem>;
 };
 
-const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
+const AppForm = ({
+  onChange,
+  item,
+  updatedProperties = {},
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const [newName, setNewName] = useState(item?.name);
+  const [newName, setNewName] = useState<string>(item?.name ?? '');
 
-  const handleAppSelection = (_event: any, newValue: RecordOf<App> | null) => {
+  const handleAppSelection = (_event: any, newValue: AppRecord | null) => {
+    if (!newValue) {
+      return console.error('new value is undefined');
+    }
+
     const url = newValue?.url;
     const name = newValue?.name ?? item?.name;
+    // TODO: improve types
     const props = {
       ...item,
       extra: buildAppExtra({ url }),
-    };
+    } as unknown as AppItemType;
     if (name) {
       setNewName(name);
       props.name = name;
     }
-    onChange(props);
+    return onChange(props);
   };
 
   const handleAppInput = (_event: any, url: string) => {
-    const props = { ...item, extra: buildAppExtra({ url }) };
+    // TODO: improve types
+    const props = {
+      ...item,
+      extra: buildAppExtra({ url }),
+    } as unknown as Item;
     onChange(props);
   };
 
@@ -64,6 +65,9 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
 
   const url = getAppExtra(item?.extra)?.url;
 
+  // todo: fix type -> we will change the interface
+  const value = data?.find((app) => app.url === url) || (url as any);
+
   return (
     <div>
       <Typography variant="h6">
@@ -71,7 +75,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
       </Typography>
       <BaseItemForm
         onChange={onChange}
-        item={item.update('name', () => newName)}
+        item={item?.update('name', () => newName)}
         updatedProperties={updatedProperties}
       />
 
@@ -88,18 +92,18 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
             return option.url;
           }}
           filterOptions={(options, state) => {
-            const filteredOptionsByName = options.filter((opt: RecordOf<App>) =>
+            const filteredOptionsByName = options.filter((opt: AppRecord) =>
               opt.name.toLowerCase().includes(state.inputValue.toLowerCase()),
             );
             return filteredOptionsByName;
           }}
-          value={data.find((app) => app.url === url) || url}
+          value={value}
           clearOnBlur={false}
           onChange={handleAppSelection}
           onInputChange={handleAppInput}
           renderOption={(
             props: HTMLAttributes<HTMLLIElement>,
-            option: RecordOf<App>,
+            option: AppRecord,
           ) => (
             <li
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -117,7 +121,7 @@ const AppForm: FC<Props> = ({ onChange, item, updatedProperties = {} }) => {
                   margin: 8,
                   height: '30px',
                 }}
-                src={option.extra?.image}
+                src={option.extra?.image as string}
                 alt={option.name}
               />
               <Typography variant="body1" pr={1}>

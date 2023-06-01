@@ -6,10 +6,9 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { isPseudonymizedMember } from '@graasp/sdk';
+import { ItemMembership, isPseudonymizedMember } from '@graasp/sdk';
 import {
   InvitationRecord,
-  ItemLogin,
   ItemMembershipRecord,
   ItemRecord,
 } from '@graasp/sdk/frontend';
@@ -18,7 +17,6 @@ import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
-import { getItemLoginSchema } from '../../../utils/itemExtra';
 import {
   isItemUpdateAllowedForUser,
   isSettingsEditionAllowedForUser,
@@ -33,17 +31,16 @@ import VisibilitySelect from './VisibilitySelect';
 
 type Props = {
   item: ItemRecord;
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
 };
 
 const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentUserContext();
-  const { data: members } = hooks.useMembers(
-    memberships?.map(({ memberId }) => memberId)?.toArray(),
-  );
   const { data: invitations } = hooks.useItemInvitations(item?.id);
+  const { data: itemLoginSchema, isLoading: isItemLoginLoading } =
+    hooks.useItemLoginSchema({ itemId: item.id });
 
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
@@ -55,7 +52,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
     memberId: currentMember?.id,
   });
 
-  if (isLoadingCurrentMember) {
+  if (isLoadingCurrentMember && isItemLoginLoading) {
     return <Loader />;
   }
 
@@ -64,13 +61,9 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
     if (!memberships || !canEdit) {
       return null;
     }
-
     const [authenticatedMemberships, authorizedMemberships] = partition(
-      memberships.toJS(),
-      ({ memberId }) => {
-        const member = members?.find(({ id: mId }) => mId === memberId);
-        return member?.email && isPseudonymizedMember(member.email);
-      },
+      memberships.toJS() as ItemMembership[],
+      ({ member }) => member?.email && isPseudonymizedMember(member.email),
     );
 
     return (
@@ -84,7 +77,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
           {canEditSettings && <CsvInputParser item={item} />}
         </Grid>
         {canEditSettings && (
-          <CreateItemMembershipForm item={item} members={members} />
+          <CreateItemMembershipForm item={item} memberships={memberships} />
         )}
         <ItemMembershipsTable
           item={item}
@@ -98,8 +91,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
         {/* show authenticated members if login schema is defined
         todo: show only if item is pseudomized
         */}
-        {/* // todo: this will change with the refactor */}
-        {getItemLoginSchema(item?.extra as { itemLogin?: ItemLogin }) && (
+        {itemLoginSchema && (
           <>
             <Divider sx={{ my: 3 }} />
             <Typography variant="h5" m={0} p={0}>

@@ -18,7 +18,7 @@ const inviteItem = ({
 }: {
   id: string;
   email: string;
-  permission: string;
+  permission: PermissionLevel;
   submit?: boolean;
 }) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
@@ -35,7 +35,7 @@ describe('Create Invitation', () => {
   it('invite one new member', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = SAMPLE_ITEMS.items?.[0];
     cy.visit(buildItemPath(id));
 
     // invite
@@ -53,6 +53,7 @@ describe('Create Invitation', () => {
     // check that the email field is emptied after sharing completes
     cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).should('be.empty');
   });
+
   it('cannot invite member with membership', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 

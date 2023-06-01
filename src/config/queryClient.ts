@@ -7,8 +7,8 @@ const {
   queryClient,
   QueryClientProvider,
   hooks,
-  useMutation,
   ReactQueryDevtools,
+  mutations,
 } = configureQueryClient({
   API_HOST,
   notifier,
@@ -27,6 +27,6 @@ export {
   queryClient,
   QueryClientProvider,
   hooks,
-  useMutation,
+  mutations,
   ReactQueryDevtools,
 };

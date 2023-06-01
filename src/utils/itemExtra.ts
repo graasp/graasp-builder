@@ -4,13 +4,12 @@ import {
   EmbeddedLinkItemExtra,
   EmbeddedLinkItemExtraProperties,
   FileItemProperties,
-  ItemLoginSchema,
+  ItemLogin,
   ItemSettings,
   ItemType,
   LocalFileItemExtra,
   S3FileItemExtra,
 } from '@graasp/sdk';
-import { ItemLogin } from '@graasp/sdk/frontend';
 
 export const buildFileExtra = (
   file: FileItemProperties,
@@ -37,27 +36,9 @@ export const buildShortcutExtra = (
   [ItemType.SHORTCUT]: { target },
 });
 
-// todo: improve extra typing
-export const buildItemLoginSchemaExtra = (
-  schema?: ItemLoginSchema,
-): { itemLogin?: ItemLogin } => {
-  if (schema) {
-    return {
-      itemLogin: { loginSchema: schema },
-    };
-  }
-
-  // remove setting
-  return {};
-};
-
 export const getItemLoginExtra = (extra: {
   itemLogin?: ItemLogin;
-}): ItemLogin => extra?.itemLogin;
-
-export const getItemLoginSchema = (extra: {
-  itemLogin?: ItemLogin;
-}): string | undefined => extra?.itemLogin?.loginSchema;
+}): ItemLogin | undefined => extra?.itemLogin;
 
 export const buildDocumentExtra = (
   document: DocumentItemExtraProperties,

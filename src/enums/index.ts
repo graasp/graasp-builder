@@ -1,14 +1,9 @@
-import ChatStatus from './chatbox';
+import ITEM_LAYOUT_MODES from './itemLayoutModes';
 import Ordering from './orderingTypes';
 
 enum TreePreventSelection {
   NONE = 'none',
   SELF_AND_CHILDREN = 'selfAndChildren',
-}
-
-enum ITEM_LAYOUT_MODES {
-  GRID = 'grid',
-  LIST = 'list',
 }
 
 enum ItemActionTabs {
@@ -24,10 +19,9 @@ enum ButtonVariants {
 }
 
 export {
-  ITEM_LAYOUT_MODES,
   Ordering,
   ItemActionTabs,
   TreePreventSelection,
-  ChatStatus,
   ButtonVariants,
+  ITEM_LAYOUT_MODES,
 };

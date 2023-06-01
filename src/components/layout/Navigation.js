@@ -91,7 +91,7 @@ const Navigation = () => {
     let text = translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE);
 
     const isParentOwned =
-      (item?.creator ?? parents?.first()?.creator) === currentMemberId;
+      (item?.creator?.id ?? parents?.first()?.creator?.id) === currentMemberId;
 
     // favorite root path
     if (pathname === FAVORITE_ITEMS_PATH) {

@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 
-import { DiscriminatedItem, FolderItemType } from '@graasp/sdk';
+import { FolderItemType, Item } from '@graasp/sdk';
 import { FolderItemTypeRecord } from '@graasp/sdk/frontend';
 import { TextEditor } from '@graasp/ui';
 
@@ -8,8 +8,8 @@ import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
 import BaseItemForm from './BaseItemForm';
 
 type Props = {
-  onChange: (item: Partial<DiscriminatedItem>) => void;
-  item: Partial<FolderItemTypeRecord>;
+  onChange: (item: Partial<Item>) => void;
+  item?: FolderItemTypeRecord;
   updatedProperties: Partial<FolderItemType>;
 };
 
@@ -18,7 +18,7 @@ const FolderForm = ({
   item,
   updatedProperties,
 }: Props): JSX.Element => {
-  const onCaptionChange = (content) => {
+  const onCaptionChange = (content: string): void => {
     onChange({
       ...updatedProperties,
       description: content,

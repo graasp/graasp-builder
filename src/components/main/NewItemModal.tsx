@@ -4,30 +4,24 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useMatch } from 'react-router';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import {
-  DiscriminatedItem,
+  AppItemType,
+  DocumentItemType,
+  EmbeddedLinkItemType,
+  FolderItemType,
+  Item,
   ItemType,
-  UnknownExtra,
-  convertJs,
 } from '@graasp/sdk';
-import {
-  AppItemTypeRecord,
-  DocumentItemTypeRecord,
-  EmbeddedLinkItemTypeRecord,
-  FolderItemTypeRecord,
-  ItemRecord,
-} from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
@@ -52,12 +46,19 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   paddingLeft: 0,
 }));
 
+type PropertiesPerType = {
+  [ItemType.FOLDER]: Partial<FolderItemType>;
+  [ItemType.LINK]: Partial<EmbeddedLinkItemType>;
+  [ItemType.APP]: Partial<AppItemType>;
+  [ItemType.DOCUMENT]: Partial<DocumentItemType>;
+};
+
 type Props = {
   open: boolean;
   handleClose: () => void;
 };
 
-const NewItemModal: FC<Props> = ({ open, handleClose }) => {
+const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
@@ -67,22 +68,18 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
   );
-  const [initialItem] = useState<ItemRecord>(convertJs({}));
 
   // todo: find a way to create this type of literal from the enum values instead of like this...
-  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] = useState({
-    [ItemType.FOLDER]: { type: ItemType.FOLDER as const },
-    [ItemType.LINK]: { type: ItemType.LINK as const },
-    [ItemType.APP]: { type: ItemType.APP as const },
-    [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT as const },
-  });
+  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] =
+    useState<PropertiesPerType>({
+      [ItemType.FOLDER]: { type: ItemType.FOLDER },
+      [ItemType.LINK]: { type: ItemType.LINK },
+      [ItemType.APP]: { type: ItemType.APP },
+      [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
+    });
 
-  const { mutate: postItem } = useMutation<any, any, any>(
-    MUTATION_KEYS.POST_ITEM,
-  );
-  const { mutate: postEtherpad } = useMutation<any, any, any>(
-    MUTATION_KEYS.POST_ETHERPAD,
-  );
+  const { mutate: postItem } = mutations.usePostItem();
+  const { mutate: postEtherpad } = mutations.usePostEtherpad();
 
   const match = useMatch(buildItemPath());
   const parentId = match?.params?.itemId;
@@ -104,18 +101,19 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
       console.error('confirm button is disabled');
       return false;
     }
-    if (!isItemValid(updatedPropertiesPerType[selectedItemType])) {
+    const type = selectedItemType as keyof PropertiesPerType;
+    if (!isItemValid(updatedPropertiesPerType[type])) {
       console.error(
         'your item has invalid properties',
-        updatedPropertiesPerType[selectedItemType],
+        updatedPropertiesPerType[type],
       );
       // todo: notify user
       return false;
     }
 
+    // todo: fix types
     return submitAndDisableConfirmButtonFor(
-      () =>
-        postItem({ parentId, ...updatedPropertiesPerType[selectedItemType] }),
+      () => postItem({ parentId, ...(updatedPropertiesPerType[type] as any) }),
       DOUBLE_CLICK_DELAY_MS,
     );
   };
@@ -131,12 +129,13 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
     );
   };
 
-  const updateItem = (item: Partial<DiscriminatedItem<UnknownExtra>>) => {
+  const updateItem = (item: Partial<Item>) => {
     // update content given current type
+    const type = selectedItemType as keyof PropertiesPerType;
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,
-      [selectedItemType]: {
-        ...updatedPropertiesPerType[selectedItemType],
+      [type]: {
+        ...updatedPropertiesPerType[type],
         ...item,
       },
     });
@@ -152,7 +151,6 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
             </Typography>
             <FolderForm
               onChange={updateItem}
-              item={initialItem as FolderItemTypeRecord}
               updatedProperties={updatedPropertiesPerType[ItemType.FOLDER]}
             />
           </>
@@ -170,22 +168,15 @@ const NewItemModal: FC<Props> = ({ open, handleClose }) => {
         return (
           <AppForm
             onChange={updateItem}
-            item={initialItem as AppItemTypeRecord}
             updatedProperties={updatedPropertiesPerType[ItemType.APP]}
           />
         );
       case ItemType.LINK:
-        return (
-          <LinkForm
-            onChange={updateItem}
-            item={initialItem as EmbeddedLinkItemTypeRecord}
-          />
-        );
+        return <LinkForm onChange={updateItem} />;
       case ItemType.DOCUMENT:
         return (
           <DocumentForm
             onChange={updateItem}
-            item={initialItem as DocumentItemTypeRecord}
             updatedProperties={updatedPropertiesPerType[ItemType.DOCUMENT]}
           />
         );

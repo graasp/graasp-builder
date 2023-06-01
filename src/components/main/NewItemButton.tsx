@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -10,7 +10,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
 import NewItemModal from './NewItemModal';
 
-const NewItemButton: FC = () => {
+const NewItemButton = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
 

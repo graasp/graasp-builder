@@ -1,27 +1,27 @@
 import { TextField } from '@mui/material';
 
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent } from 'react';
 
-import { DiscriminatedItem, UnknownExtra } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 
-type Props = {
-  updatedProperties: Partial<DiscriminatedItem<UnknownExtra>>;
+export type BaseFormProps = {
+  updatedProperties: Partial<DiscriminatedItem>;
   onChange: (props: Partial<DiscriminatedItem>) => void;
-  item: Partial<ItemRecord>;
+  item?: Partial<ItemRecord>;
   required?: boolean;
 };
 
-const BaseForm: FC<Props> = ({
+const BaseForm = ({
   onChange,
   item,
   required,
   updatedProperties,
-}) => {
+}: BaseFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {

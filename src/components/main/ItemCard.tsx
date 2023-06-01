@@ -1,10 +1,10 @@
 import { List } from 'immutable';
 import truncate from 'lodash.truncate';
 
-import { CSSProperties, FC, PropsWithChildren } from 'react';
+import { CSSProperties, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { DiscriminatedItem, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import { Item, ItemType } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
@@ -22,14 +22,10 @@ import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
-const NameWrapper = ({
-  id,
-  style,
-}: {
-  id: string;
-  style: CSSProperties;
-}): FC => {
-  const NameComponent: FC<PropsWithChildren<unknown>> = ({ children }) => (
+const NameWrapper = ({ id, style }: { id: string; style: CSSProperties }) => {
+  const NameComponent = ({
+    children,
+  }: PropsWithChildren<unknown>): JSX.Element => (
     <Link to={buildItemPath(id)} id={buildItemLink(id)} style={style}>
       {children}
     </Link>
@@ -39,12 +35,19 @@ const NameWrapper = ({
 
 type Props = {
   item: ItemRecord;
-  memberships: List<ItemMembershipRecord>;
+  memberships?: List<ItemMembershipRecord>;
   itemsStatuses?: ItemsStatuses;
 };
 
-const ItemComponent: FC<Props> = ({ item, memberships, itemsStatuses }) => {
-  const alt = item.name;
+const ItemComponent = ({
+  item,
+  memberships,
+  itemsStatuses,
+}: Props): JSX.Element => {
+  const { id, name } = item;
+  const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({ id });
+
+  const alt = name;
   const defaultValueComponent = (
     <img
       style={{
@@ -56,17 +59,19 @@ const ItemComponent: FC<Props> = ({ item, memberships, itemsStatuses }) => {
       alt={alt}
     />
   );
+
+  const linkUrl =
+    item.type === ItemType.LINK
+      ? item?.extra?.[ItemType.LINK]?.thumbnails?.first()
+      : undefined;
+
   const ThumbnailComponent = (
     <Thumbnail
       id={item.id}
-      thumbnailSrc={
-        item.type === ItemType.LINK
-          ? getEmbeddedLinkExtra(item.extra)?.thumbnails?.first()
-          : undefined
-      }
+      isLoading={isLoading}
+      url={thumbnailUrl ?? linkUrl}
       alt={alt}
-      defaultValue={defaultValueComponent}
-      useThumbnail={hooks.useItemThumbnail}
+      defaultComponent={defaultValueComponent}
     />
   );
 
@@ -87,7 +92,7 @@ const ItemComponent: FC<Props> = ({ item, memberships, itemsStatuses }) => {
             item={
               // DO NOT REMOVE cast
               // here we cast explicitly to be equivalent to the grid which does not let us use Records
-              item.toJS() as DiscriminatedItem
+              item.toJS() as Item
             }
           />
           <DownloadButton id={item.id} name={item.name} />
@@ -107,12 +112,7 @@ const ItemComponent: FC<Props> = ({ item, memberships, itemsStatuses }) => {
       Badges={<Badges data={item} />}
       name={item.name}
       creator={member?.name}
-      ItemMenu={
-        <ItemMenu
-          item={item.toJS() as DiscriminatedItem}
-          canEdit={enableEdition}
-        />
-      }
+      ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(item.id)}
       NameWrapper={NameWrapper({

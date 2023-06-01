@@ -5,23 +5,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useQueryClient } from 'react-query';
-
-import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
-import { DiscriminatedItem } from '@graasp/sdk';
+import { Item, ItemTagType } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
-import { HIDDEN_ITEM_TAG_ID } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   HIDDEN_ITEM_BUTTON_CLASS,
   buildHideButtonId,
 } from '../../config/selectors';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: Item;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };
@@ -34,41 +30,27 @@ const HideButton = ({
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { data: tags } = hooks.useItemTags(item.id);
-  const queryClient = useQueryClient();
-  const addTag = useMutation<unknown, unknown, { id: string; tagId: string }>(
-    MUTATION_KEYS.POST_ITEM_TAG,
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(DATA_KEYS.itemTagsKeys.many());
-      },
-    },
-  );
-  const removeTag = useMutation<
-    unknown,
-    unknown,
-    { id: string; tagId: string }
-  >(MUTATION_KEYS.DELETE_ITEM_TAG, {
-    onSuccess: async () => {
-      await queryClient.invalidateQueries(DATA_KEYS.itemTagsKeys.many());
-    },
-  });
+  const postTag = mutations.usePostItemTag();
+  const deleteTag = mutations.useDeleteItemTag();
+
   const hiddenTag = tags
-    ?.filter(({ tagId }) => tagId === HIDDEN_ITEM_TAG_ID)
+    ?.filter(({ type: tagType }) => tagType === ItemTagType.Hidden)
     ?.first();
   // since children items are hidden because parent is hidden, the hidden tag should be removed from the root item
   // if hiddenTag is undefined -> the item is not hidden
-  const isOriginalHiddenItem = !hiddenTag || hiddenTag?.itemPath === item.path;
+  const isOriginalHiddenItem =
+    !hiddenTag || hiddenTag?.item?.path === item.path;
 
   const handleToggleHide = () => {
     if (hiddenTag) {
-      removeTag.mutate({
-        id: item.id,
-        tagId: hiddenTag.id,
+      deleteTag.mutate({
+        itemId: item.id,
+        type: ItemTagType.Hidden,
       });
     } else {
-      addTag.mutate({
-        id: item.id,
-        tagId: HIDDEN_ITEM_TAG_ID,
+      postTag.mutate({
+        itemId: item.id,
+        type: ItemTagType.Hidden,
       });
     }
     onClick?.();

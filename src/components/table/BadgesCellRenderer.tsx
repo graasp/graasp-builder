@@ -1,16 +1,19 @@
 import { List } from 'immutable';
 
 import { Item } from '@graasp/sdk';
-import { ItemRecord, ItemTagRecord, TagRecord } from '@graasp/sdk/frontend';
+import {
+  ItemRecord,
+  ItemTagRecord,
+  ResultOfRecord,
+} from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ItemBadges } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import {
-  isItemHidden,
-  isItemPublic,
-  isItemPublished,
-} from '../../utils/itemTag';
+import { hooks } from '../../config/queryClient';
+import { isItemHidden, isItemPublic } from '../../utils/itemTag';
+
+const { useManyItemPublishedInformations } = hooks;
 
 type ItemStatuses = {
   showChatbox: boolean;
@@ -32,25 +35,36 @@ const DEFAULT_ITEM_STATUSES: ItemStatuses = {
 
 export type ItemsStatuses = { [key: ItemRecord['id']]: ItemStatuses };
 
+type Props = {
+  itemsStatuses?: ItemsStatuses;
+};
+
+type ChildCompProps = {
+  data: Item | ItemRecord;
+};
+
 export const useItemsStatuses = ({
-  items,
+  items = List(),
   itemsTags,
-  tagList,
 }: {
-  items: List<ItemRecord>;
-  itemsTags: List<List<ItemTagRecord>>;
-  tagList: List<TagRecord>;
-}): ItemsStatuses =>
-  items.reduce((acc, r, idx) => {
-    const itemTags = itemsTags?.get(idx);
+  items?: List<ItemRecord>;
+  itemsTags?: ResultOfRecord<List<ItemTagRecord>>;
+}): ItemsStatuses => {
+  const { data: publishedInformations } = useManyItemPublishedInformations({
+    itemIds: items.map((i) => i.id).toJS(),
+  });
+
+  return items.reduce((acc, r) => {
+    const itemTags = itemsTags?.data?.get(r.id);
     const { showChatbox, isPinned, isCollapsible } = {
       ...DEFAULT_ITEM_STATUSES,
       // the settings are an immutable
       ...r.settings?.toJS(),
     };
-    const isHidden = isItemHidden({ tags: tagList, itemTags });
-    const isPublic = isItemPublic({ tags: tagList, itemTags });
-    const isPublished = isItemPublished({ tags: tagList, itemTags });
+    const isHidden = isItemHidden({ itemTags });
+    const isPublic = isItemPublic({ itemTags });
+    const isPublished = Boolean(publishedInformations?.data?.get(r.id));
+
     return {
       ...acc,
       [r.id]: {
@@ -63,13 +77,6 @@ export const useItemsStatuses = ({
       },
     };
   }, {} as ItemsStatuses);
-
-type Props = {
-  itemsStatuses: ItemsStatuses;
-};
-
-type ChildCompProps = {
-  data: Item | ItemRecord;
 };
 
 const BadgesCellRenderer = ({
@@ -78,7 +85,7 @@ const BadgesCellRenderer = ({
   const ChildComponent = ({ data: item }: ChildCompProps) => {
     const { t } = useBuilderTranslation();
     // this is useful because the item.id we are looking for may not be present and the itemStatuses will be undefined
-    const itemStatuses = itemsStatuses[item.id] || DEFAULT_ITEM_STATUSES;
+    const itemStatuses = itemsStatuses?.[item.id] || DEFAULT_ITEM_STATUSES;
     const {
       showChatbox,
       isPinned,

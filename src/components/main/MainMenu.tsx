@@ -6,7 +6,6 @@ import Star from '@mui/icons-material/Star';
 import { styled } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { BUILDER } from '@graasp/translations';
@@ -42,7 +41,7 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   },
 }));
 
-const MainMenu: FC = () => {
+const MainMenu = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();

@@ -1,11 +1,13 @@
 import {
   Context,
+  EmailFrequency,
+  ItemLoginSchemaType,
   ItemType,
   PermissionLevel,
   buildSignInPath,
 } from '@graasp/sdk';
 
-import { ITEM_LAYOUT_MODES } from '../enums';
+import ITEM_LAYOUT_MODES from '../enums/itemLayoutModes';
 
 export const APP_NAME = 'Graasp';
 
@@ -21,6 +23,8 @@ export const NODE_ENV =
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 
 export const APP_VERSION = process.env.REACT_APP_VERSION || 'latest';
+
+export const HOST = process.env.REACT_APP_HOST || 'http://localhost:3111';
 
 export const API_HOST =
   process.env.REACT_APP_API_HOST || 'http://localhost:3111';
@@ -47,9 +51,6 @@ export const buildGraaspAnalyzerLink = (id: string): string =>
 
 export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 
-export const HIDDEN_ITEM_TAG_ID =
-  process.env.REACT_APP_HIDDEN_ITEM_TAG_ID || 'hidden-tag-id';
-
 export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
@@ -66,10 +67,10 @@ export const DEFAULT_LANG = 'en';
 export const DEFAULT_EMAIL_FREQUENCY = 'always';
 
 export const emailFrequency = {
-  always: 'Always receive email notifications',
+  [EmailFrequency.Always]: 'Always receive email notifications',
   // todo: schedule a digest of the notifications
   // daily: 'Receive email notifications once per day',
-  never: 'Disable email notifications',
+  [EmailFrequency.Never]: 'Disable email notifications',
 };
 
 export const DEFAULT_SHOW_CHATBOX_SETTING = false;
@@ -106,20 +107,14 @@ export const LOADING_CONTENT = '…';
 export const SETTINGS = {
   ITEM_LOGIN: {
     name: 'item-login',
-    OPTIONS: {
-      USERNAME: 'username',
-      USERNAME_AND_PASSWORD: 'username+password',
-    },
     SIGN_IN_MODE: {
       PSEUDONYM: 'pseudonym',
       MEMBER_ID: 'memberId',
+      USERNAME_AND_PASSWORD: 'username+password',
     },
   },
   ITEM_PUBLIC: {
     name: 'public-item',
-  },
-  ITEM_PUBLISHED: {
-    name: 'published-item',
   },
   // this tag doesn't exist but is used if none of the visiblity tag is set
   ITEM_PRIVATE: {
@@ -127,7 +122,7 @@ export const SETTINGS = {
   },
 };
 
-export const SETTINGS_ITEM_LOGIN_DEFAULT = SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME;
+export const SETTINGS_ITEM_LOGIN_DEFAULT = ItemLoginSchemaType.Username;
 export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
   SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM;
 
@@ -170,18 +165,6 @@ export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
 
 export const H5P_FILE_DOT_EXTENSION = '.h5p';
 
-export const CATEGORY_TYPES = {
-  LEVEL: 'level',
-  DISCIPLINE: 'discipline',
-  LANGUAGE: 'language',
-};
-
-export const CATEGORY_TYPE_TITLES = {
-  LEVEL: 'Level',
-  DISCIPLINE: 'Discipline',
-  LANGUAGE: 'Language',
-};
-
 export const CC_LICENSE_ADAPTION_OPTIONS = {
   ALLOW: 'allow',
   ALIKE: 'alike',
@@ -191,38 +174,13 @@ export const CC_LICENSE_ADAPTION_OPTIONS = {
 export const CC_LICENSE_ABOUT_URL =
   'https://creativecommons.org/about/cclicenses/';
 
-export const CONTEXT_BUILDER = 'builder';
-
-export const ITEM_VALIDATION_STATUSES = {
-  SUCCESS: 'success',
-  FAILURE: 'failure',
-  PENDING: 'pending',
-};
-
-export const ITEM_VALIDATION_REVIEW_STATUSES = {
-  ACCEPTED: 'accepted',
-  REJECTED: 'rejected',
-  PENDING: 'pending',
-};
-
-export const VALIDATION_STATUS_NAMES = {
-  NOT_VALIDATED: 'not-validated',
-  SUCCESS: 'success',
-  FAILURE: 'failure',
-  PENDING_AUTOMATIC: 'pending-automatic',
-  PENDING_MANUAL: 'pending-manual',
-};
-
 export const ADMIN_CONTACT = 'admin@graasp.org';
 
 export const HOST_MAP = {
-  [Context.BUILDER]: '/',
-  [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
-  [Context.PLAYER]: GRAASP_PERFORM_HOST,
-  [Context.ANALYTICS]: '',
-
-  [Context.ANALYZER]: '',
-  [Context.EXPLORER]: '',
+  [Context.Builder]: '/',
+  [Context.Library]: GRAASP_LIBRARY_HOST,
+  [Context.Player]: GRAASP_PERFORM_HOST,
+  [Context.Analytics]: '',
 };
 
 export const MEMBERSHIP_TABLE_HEIGHT = 400;

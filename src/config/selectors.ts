@@ -1,6 +1,7 @@
 // todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
 
+export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
 export const ITEM_MOVE_BUTTON_CLASS = 'itemMoveButton';
@@ -75,7 +76,6 @@ export const CREATE_ITEM_FILE_ID = 'createItemFile';
 export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';
 export const DASHBOARD_UPLOADER_ID = 'dashboardUploader';
 export const CREATE_ITEM_CLOSE_BUTTON_ID = 'createItemCloseButton';
-export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const USER_MENU_SIGN_OUT_OPTION_ID = 'userMenuSignOutOption';
 export const NAVIGATION_HIDDEN_PARENTS_ID = 'navigationHiddenParents';
 export const ITEM_LOGIN_SCREEN_ID = 'itemLoginScreen';
@@ -93,8 +93,8 @@ export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'favoriteItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
 export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const ITEM_MENU_FLAG_BUTTON_CLASS = 'itemMenuFlagButton';
-export const buildFlagListItemId = (id: string): string => `flagListItem-${id}`;
-export const FLAG_ITEM_BUTTON_ID = 'flagItemButton';
+export const buildFlagListItemId = (type: string): string =>
+  `flagListItem-${type}`;
 export const CREATE_ITEM_DOCUMENT_ID = 'createItemDocument';
 export const ITEM_FORM_DOCUMENT_TEXT_ID = 'itemFormDocumentText';
 export const ITEM_FORM_DOCUMENT_TEXT_SELECTOR = `#${ITEM_FORM_DOCUMENT_TEXT_ID} .ql-editor`;
@@ -210,7 +210,7 @@ export const H5P_DASHBOARD_UPLOADER_ID = 'h5pDashboardUploader';
 
 export const ITEM_TAGS_EDIT_INPUT_ID = 'itemTagsEditInput';
 export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton';
-export const buildCustomizedTagsSelector = (index: string): string =>
+export const buildCustomizedTagsSelector = (index: number): string =>
   `customizedTagsPreview-${index}`;
 
 export const buildCategoriesSelectionValueSelector = (title: string): string =>
@@ -230,6 +230,7 @@ export const ITEM_PUBLISH_SECTION_TITLE_ID = 'itemPublishSectionTitle';
 export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
 export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
+// cannot use graasp ui because it slows down a lot cypress
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
   Builder: 'appNavigationPlatformSwitchButtonBuilder',
   Player: 'appNavigationPlatformSwitchButtonPlayer',
@@ -261,8 +262,9 @@ export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
 export const buildMemberMenuItemId = (id: string): string =>
   `memberMenuItem-${id}`;
 export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
-export const buildCoEditorSettingsRadioButtonId = (id: string): string =>
-  `coEditorSettingsRadioButton-${id}`;
+export const buildCoEditorSettingsRadioButtonId = (
+  id: string | boolean,
+): string => `coEditorSettingsRadioButton-${id}`;
 export const EMAIL_NOTIFICATION_CHECKBOX = 'emailNotificationCheckbox';
 
 export const MEMBER_CURRENT_PASSWORD_ID = 'memberCurrentPassword';

@@ -1,22 +1,18 @@
-import { ColDef, Column, IRowDragItem } from 'ag-grid-community';
+import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
 import { List } from 'immutable';
 
-import { FC, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import {
   DiscriminatedItem,
-  FolderItemExtra,
+  Item,
+  ItemMembership,
   ItemType,
   getFolderExtra,
   getShortcutExtra,
 } from '@graasp/sdk';
-import {
-  ItemMembershipRecord,
-  ItemRecord,
-  MemberRecord,
-} from '@graasp/sdk/frontend';
+import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -27,7 +23,7 @@ import i18n, {
   useEnumsTranslation,
 } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
@@ -42,8 +38,8 @@ const { useItem } = hooks;
 
 type Props = {
   id?: string;
-  items: List<ItemRecord>;
-  manyMemberships?: List<List<ItemMembershipRecord>>;
+  items?: List<ItemRecord>;
+  manyMemberships?: ResultOfRecord<ItemMembership[]>;
   itemsStatuses?: ItemsStatuses;
   tableTitle: string;
   headerElements?: JSX.Element[];
@@ -60,14 +56,13 @@ type Props = {
   isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
-  creators: List<MemberRecord>;
 };
 
-const ItemsTable: FC<Props> = ({
+const ItemsTable = ({
   tableTitle,
   id: tableId = '',
   items: rows = List(),
-  manyMemberships = List(),
+  manyMemberships,
   itemsStatuses,
   headerElements = [],
   isSearching = false,
@@ -78,8 +73,7 @@ const ItemsTable: FC<Props> = ({
   isEditing = false,
   showThumbnails = true,
   showCreator = false,
-  creators = List(),
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();
@@ -88,18 +82,13 @@ const ItemsTable: FC<Props> = ({
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
 
-  const noStatusesToShow = !Object.values(itemsStatuses)
-    .map((obj) => Object.values(obj).some((e) => e === true))
-    .some((e) => e === true);
+  const { mutate: editItem } = mutations.useEditItem();
 
-  const mutation = useMutation<
-    unknown,
-    unknown,
-    {
-      id: string;
-      extra: FolderItemExtra;
-    }
-  >(MUTATION_KEYS.EDIT_ITEM);
+  const noStatusesToShow =
+    !itemsStatuses ||
+    !Object.values(itemsStatuses)
+      .map((obj) => Object.values(obj).some((e) => e === true))
+      .some((e) => e === true);
 
   const isFolder = useCallback(() => Boolean(itemId), [itemId]);
   const canDrag = useCallback(
@@ -113,23 +102,20 @@ const ItemsTable: FC<Props> = ({
   const onCellClicked = ({
     column,
     data,
-  }: {
-    column: Column;
-    data: DiscriminatedItem;
-  }) => {
+  }: CellClickedEvent<DiscriminatedItem, any>) => {
     if (column.getColId() !== 'actions') {
-      let targetId = data.id;
+      let targetId = data?.id;
 
       // redirect to target if shortcut
-      if (data.type === ItemType.SHORTCUT) {
-        targetId = getShortcutExtra(data.extra).target;
+      if (data && data.type === ItemType.SHORTCUT) {
+        targetId = getShortcutExtra(data.extra)?.target;
       }
       navigate(buildItemPath(targetId));
     }
   };
 
   const hasOrderChanged = (rowIds: string[]) => {
-    if (parentItem.type === ItemType.FOLDER) {
+    if (parentItem && parentItem.type === ItemType.FOLDER) {
       const { childrenOrder = List<string>() } =
         getFolderExtra(parentItem.extra) || {};
       return (
@@ -140,13 +126,13 @@ const ItemsTable: FC<Props> = ({
     return true;
   };
 
-  const onDragEnd = (displayRows: { data: DiscriminatedItem }[]) => {
+  const onDragEnd = (displayRows: { data: Item }[]) => {
     if (!itemId) {
       console.error('no item id defined');
     } else {
       const rowIds = displayRows.map((r) => r.data.id);
       if (canDrag() && hasOrderChanged(rowIds)) {
-        mutation.mutate({
+        editItem({
           id: itemId,
           extra: {
             folder: {
@@ -158,7 +144,7 @@ const ItemsTable: FC<Props> = ({
     }
   };
 
-  const dateColumnFormatter = ({ value }: { value: string }) =>
+  const dateColumnFormatter = ({ value }: { value: Date }) =>
     formatDate(value, {
       locale: i18n.language,
       defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
@@ -170,7 +156,6 @@ const ItemsTable: FC<Props> = ({
 
   const ActionComponent = ActionsCellRenderer({
     manyMemberships,
-    items: rows,
     member,
   });
 
@@ -255,7 +240,6 @@ const ItemsTable: FC<Props> = ({
         colId: 'creator',
         type: 'rightAligned',
         cellRenderer: MemberNameCellRenderer({
-          users: creators,
           defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
         }),
         cellStyle: {
@@ -268,7 +252,6 @@ const ItemsTable: FC<Props> = ({
     return columns;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    creators,
     showCreator,
     translateBuilder,
     defaultSortedColumn,

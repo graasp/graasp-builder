@@ -1,17 +1,21 @@
-import { FC, createContext, useMemo, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  Item,
+  ItemType,
+  ShortcutItemType,
+} from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { TREE_MODAL_MY_ITEMS_ID } from '../../config/selectors';
 import { buildShortcutExtra } from '../../utils/itemExtra';
-import TreeModal from '../main/TreeModal';
+import TreeModal, { TreeModalProps } from '../main/TreeModal';
 
 const CreateShortcutModalContext = createContext({
-  openModal: (_newItem: DiscriminatedItem) => {
+  openModal: (_newItem: Item) => {
     // do nothing
   },
 });
@@ -20,15 +24,13 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
+const CreateShortcutModalProvider = ({ children }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: createShortcut } = useMutation<any, any, any>(
-    MUTATION_KEYS.POST_ITEM,
-  );
+  const { mutate: createShortcut } = mutations.usePostItem();
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState<DiscriminatedItem>();
+  const [item, setItem] = useState<Item | null>(null);
 
-  const openModal = (newItem: DiscriminatedItem) => {
+  const openModal = (newItem: Item) => {
     setOpen(true);
     setItem(newItem);
   };
@@ -38,10 +40,13 @@ const CreateShortcutModalProvider: FC<Props> = ({ children }) => {
     setItem(null);
   };
 
-  const onConfirm = ({ ids: [target], to }: { ids: string[]; to: string }) => {
-    const shortcut = {
+  const onConfirm: TreeModalProps['onConfirm'] = ({ ids: [target], to }) => {
+    const shortcut: Partial<ShortcutItemType> &
+      Pick<DiscriminatedItem, 'name' | 'type'> & {
+        parentId?: string;
+      } = {
       name: translateBuilder(BUILDER.CREATE_SHORTCUT_DEFAULT_NAME, {
-        name: item.name,
+        name: item?.name,
       }),
       extra: buildShortcutExtra(target),
       type: ItemType.SHORTCUT,

@@ -1,18 +1,17 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 import { DownloadButton as Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 
 type Props = {
   id: string;
   name: string;
 };
 
-export const DownloadButton: FC<Props> = ({ id, name }) => {
+export const DownloadButton = ({ id, name }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const {
@@ -20,7 +19,7 @@ export const DownloadButton: FC<Props> = ({ id, name }) => {
     data,
     isSuccess,
     isLoading: isDownloading,
-  } = useMutation<BlobPart, unknown, { id: string }>(MUTATION_KEYS.EXPORT_ZIP);
+  } = mutations.useExportZip();
 
   useEffect(() => {
     if (isSuccess) {

@@ -4,9 +4,13 @@
     "module": "esnext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
+    "strict": true,
     "skipLibCheck": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
@@ -15,13 +19,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "sourceMap": true,
+    "sourceMap": false,
+    "inlineSourceMap": true,
     "inlineSources": true,
     "sourceRoot": "/",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true
   },
-  "include": ["src"],
-  "exclude": ["cypress", "*.test.ts", "*.test.js", "**/.*/"]
+  "include": [
+    "src"
+  ],
 }

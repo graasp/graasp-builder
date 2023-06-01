@@ -6,15 +6,15 @@ import {
   Typography,
 } from '@mui/material';
 
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
+import { CCLicenseAdaptions } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { CCSharingVariant, CreativeCommons, Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   CC_ALLOW_COMMERCIAL_CONTROL_ID,
   CC_CC0_CONTROL_ID,
@@ -26,21 +26,6 @@ import {
 } from '../../../config/selectors';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CCLicenseDialog from './CCLicenseDialog';
-
-const { EDIT_ITEM } = MUTATION_KEYS;
-
-// TODO: export in graasp sdk
-enum CCLicenseAdaptions {
-  CC_BY = 'CC BY',
-  CC_BY_NC = 'CC BY-NC',
-  CC_BY_SA = 'CC BY-SA',
-  CC_BY_NC_SA = 'CC BY-NC-SA',
-  CC_BY_ND = 'CC BY-ND',
-  CC_BY_NC_ND = 'CC BY-NC-ND',
-  CC0 = 'CC0',
-}
-
-export type CCLicenseAdaption = CCLicenseAdaptions | `${CCLicenseAdaptions}`;
 
 type CCLicenseChoice = 'yes' | 'no' | '';
 type CCSharingLicenseChoice = CCLicenseChoice | 'alike';
@@ -56,17 +41,10 @@ const licensePreviewStyle = {
   minWidth: 300,
 };
 
-const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
+const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: updateCCLicense } = useMutation<
-    any,
-    any,
-    {
-      id: string;
-      name: string;
-      settings: { ccLicenseAdaption: CCLicenseAdaption };
-    }
-  >(EDIT_ITEM);
+  const { mutate: updateCCLicense } = mutations.useEditItem();
+
   const [requireAttributionValue, setRequireAttributionValue] =
     useState<CCLicenseChoice>('');
   const [allowCommercialValue, setAllowCommercialValue] =
@@ -88,11 +66,7 @@ const CCLicenseSelection: FC<Props> = ({ item, disabled }) => {
   useEffect(() => {
     if (settings?.ccLicenseAdaption) {
       // Handles old license formats.
-      if (
-        ['alike', 'allow'].includes(
-          settings?.ccLicenseAdaption as CCLicenseAdaption,
-        )
-      ) {
+      if (['alike', 'allow'].includes(settings?.ccLicenseAdaption)) {
         setRequireAttributionValue('yes');
         setAllowCommercialValue('no');
         setAllowSharingValue(

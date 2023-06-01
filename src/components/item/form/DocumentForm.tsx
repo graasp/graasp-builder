@@ -9,6 +9,7 @@ import {
   DocumentItemExtraProperties,
   DocumentItemType,
   ItemType,
+  convertJs,
 } from '@graasp/sdk';
 import { DocumentItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -17,7 +18,7 @@ import { DocumentItem } from '@graasp/ui';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
-import BaseForm from './BaseItemForm';
+import BaseForm, { BaseFormProps } from './BaseItemForm';
 
 export const DocumentExtraForm = ({
   documentItemId,
@@ -46,6 +47,8 @@ export const DocumentExtraForm = ({
 }): JSX.Element => {
   const { t } = useBuilderTranslation();
   const flavorsTranslations = Object.values(DocumentItemExtraFlavor).map(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     (f) => [f, t(BUILDER[`DOCUMENT_FLAVOR_${f.toUpperCase()}`])],
   );
 
@@ -59,7 +62,7 @@ export const DocumentExtraForm = ({
             label="flavor"
             value={extra.flavor}
             onChange={(event) =>
-              onFlavorChange(
+              onFlavorChange?.(
                 event.target.value === ''
                   ? undefined
                   : (event.target
@@ -80,7 +83,9 @@ export const DocumentExtraForm = ({
         <DocumentItem
           edit
           id={documentItemId}
-          item={{ extra: buildDocumentExtra(extra) }}
+          item={convertJs({
+            extra: buildDocumentExtra(extra),
+          })}
           maxHeight={maxHeight}
           onCancel={onCancel}
           onChange={onContentChange}
@@ -96,8 +101,8 @@ export const DocumentExtraForm = ({
 };
 
 type Props = {
-  onChange: (item: Partial<DocumentItemType>) => void;
-  item: Partial<DocumentItemTypeRecord>;
+  onChange: BaseFormProps['onChange'];
+  item?: DocumentItemTypeRecord;
   updatedProperties: Partial<DocumentItemType>;
 };
 
@@ -110,7 +115,8 @@ const DocumentForm = ({
 
   const initContent: string =
     updatedProperties?.extra?.[ItemType.DOCUMENT]?.content ||
-    item?.extra?.[ItemType.DOCUMENT]?.content;
+    item?.extra?.[ItemType.DOCUMENT]?.content ||
+    '';
 
   const initFlavor: DocumentItemExtraProperties['flavor'] =
     updatedProperties?.extra?.[ItemType.DOCUMENT]?.flavor ||

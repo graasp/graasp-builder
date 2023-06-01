@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { Invitation, MUTATION_KEYS } from '@graasp/query-client';
+import { Invitation } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import { ITEM_RESEND_INVITATION_BUTTON_CLASS } from '../../../config/selectors';
 
 type ChildProps = {
@@ -16,11 +16,7 @@ const ResendInvitationRenderer = (
   itemId: string,
 ): (({ data }: ChildProps) => JSX.Element) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: resendInvitation } = useMutation<
-    unknown,
-    unknown,
-    { itemId: string; id: string }
-  >(MUTATION_KEYS.RESEND_INVITATION);
+  const { mutate: resendInvitation } = mutations.useResendInvitation();
 
   const ChildComponent = ({ data: invitation }: ChildProps) => {
     const [clicked, setClicked] = useState(false);

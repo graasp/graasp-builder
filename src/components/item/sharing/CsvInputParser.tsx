@@ -1,4 +1,4 @@
-import Papa from 'papaparse';
+import * as Papa from 'papaparse';
 
 import PublishIcon from '@mui/icons-material/Publish';
 import Alert from '@mui/material/Alert';
@@ -11,11 +11,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { Invitation, PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
@@ -24,7 +23,7 @@ import {
   useCommonTranslation,
   useMessagesTranslation,
 } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
   SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID,
@@ -39,7 +38,7 @@ type Props = {
   item: ItemRecord;
 };
 
-const CsvInputParser: FC<Props> = ({ item }) => {
+const CsvInputParser = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateMessages } = useMessagesTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -52,7 +51,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     isError,
     data: results,
     error,
-  } = useMutation<any, any, any>(MUTATION_KEYS.SHARE_ITEM);
+  } = mutations.useShareItem();
 
   const openModal = () => {
     setIsOpen(true);
@@ -62,8 +61,9 @@ const CsvInputParser: FC<Props> = ({ item }) => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files.length) {
-      const file = e.target.files[0];
+    const t = e.target as HTMLInputElement;
+    if (t.files?.length) {
+      const file = t.files?.[0];
 
       if (file) {
         Papa.parse(file, {
@@ -71,13 +71,13 @@ const CsvInputParser: FC<Props> = ({ item }) => {
           dynamicTyping: true,
           complete: ({ data: parsedData }) => {
             // add current item path and default permission read
-            const dataWithItemPath = parsedData.map(
-              (d: Partial<Invitation>) => ({
+            const dataWithItemPath = parsedData.map<Partial<Invitation>>(
+              (d) => ({
                 permission: PermissionLevel.Read,
-                ...d,
+                ...(d as Partial<Invitation>),
                 itemPath,
               }),
-            );
+            ) as any;
 
             share({ data: dataWithItemPath, itemId });
           },
@@ -97,7 +97,7 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     if (isError) {
       return (
         <Alert id={SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID} severity="error">
-          {translateBuilder(error)}
+          {translateBuilder(error as string)}
         </Alert>
       );
     }
@@ -107,11 +107,11 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     }
 
     // show generic network/axios errors
-    const genericErrors: Error[] = results?.failure?.filter(
+    const genericErrors: ImmutableCast<Error[]> = results?.errors?.filter(
       (e: { code?: string; message?: string; data?: unknown }) =>
         e?.code && e?.message && !e?.data,
     );
-    if (genericErrors?.length) {
+    if (genericErrors?.size) {
       return genericErrors.map((err) => (
         <Alert key={err.message} severity="error">
           {translateBuilder(err.message)}
@@ -122,10 +122,11 @@ const CsvInputParser: FC<Props> = ({ item }) => {
     // does not show errors if results is not defined
     // or if there is no failure with meaningful data
     // this won't show membership already exists error
-    const failureToShow = results.failure.filter(
-      (e) => e?.data?.email || e?.data?.name,
+    // todo: fix type
+    const failureToShow = results.errors.filter(
+      (e: any) => e?.data && (e?.data?.email || e?.data?.name),
     );
-    if (!failureToShow.length && isSuccess) {
+    if (!failureToShow.size && isSuccess) {
       return (
         <Alert severity="success">
           {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_SUCCESS_MESSAGE)}
@@ -139,7 +140,8 @@ const CsvInputParser: FC<Props> = ({ item }) => {
           {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_ERROR_MESSAGE)}
         </AlertTitle>
         <Grid container>
-          {failureToShow.map((e) => (
+          {/* todo: fix type */}
+          {failureToShow.map((e: any) => (
             <Grid container key={e}>
               <Grid item xs={4}>
                 {e?.data?.email ?? e?.data?.name}

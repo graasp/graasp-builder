@@ -1,4 +1,5 @@
-import { Context } from '@graasp/sdk'
+import { Context, ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
+
 import { SETTINGS } from '../../../../src/config/constants';
 import {
   buildGraaspBuilderView,
@@ -13,11 +14,6 @@ import {
   buildShareButtonId,
 } from '../../../../src/config/selectors';
 import {
-  DEFAULT_TAGS,
-  ITEM_LOGIN_TAG,
-  ITEM_PUBLIC_TAG,
-} from '../../../fixtures/itemTags';
-import {
   ITEM_LOGIN_ITEMS,
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
@@ -30,12 +26,13 @@ const openShareItemTab = (id) => {
 // eslint-disable-next-line import/prefer-default-export
 export const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
+  cy.wait(1000);
   cy.get(`li[data-value="${value}"]`).click();
 };
 
 describe('Share Item', () => {
   it('Default Private Item', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, tags: DEFAULT_TAGS });
+    cy.setUpApi({ ...SAMPLE_ITEMS });
     const item = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
@@ -46,7 +43,7 @@ describe('Share Item', () => {
       `${buildGraaspPlayerView(item.id)}`,
     );
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_SELECT_ID}`).click();
-    cy.get(`li[data-value="${Context.BUILDER}"]`).click();
+    cy.get(`li[data-value="${Context.Builder}"]`).click();
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'have.text',
       `${buildGraaspBuilderView(item.id)}`,
@@ -61,22 +58,15 @@ describe('Share Item', () => {
 
     // change private -> public
     changeVisibility(SETTINGS.ITEM_PUBLIC.name);
-    cy.wait('@postItemTag').then(({ request: { body } }) => {
-      expect(body?.itemPath).to.equal(item.path);
-      expect(body?.tagId).to.equal(ITEM_PUBLIC_TAG.id);
-    });
-
-    // change public -> private
-    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait('@deleteItemTag').then(() => {
-      // we cannot test the select value since the database is not updated
-      // eslint-disable-next-line no-unused-expressions
-      cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).should('be.visible');
-    });
+    cy.wait(`@postItemTag-${ItemTagType.Public}`).then(
+      ({ request: { url } }) => {
+        expect(url).to.contain(item.id);
+      },
+    );
   });
 
   it('Public Item', () => {
-    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS, tags: DEFAULT_TAGS });
+    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
     // todo: improve type
     const item = SAMPLE_PUBLIC_ITEMS.items[0] as any;
     cy.visit(buildItemPath(item.id));
@@ -91,28 +81,30 @@ describe('Share Item', () => {
 
     // change public -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
-      expect(url).to.contain(item.tags[0].id);
-    });
+    cy.wait(`@deleteItemTag-${ItemTagType.Public}`).then(
+      ({ request: { url } }) => {
+        expect(url).to.contain(item.id);
+      },
+    );
     // change public -> item login
+    cy.wait(1000);
     changeVisibility(SETTINGS.ITEM_LOGIN.name);
-    cy.wait(['@deleteItemTag', '@postItemTag']).then((data) => {
+    cy.wait([
+      `@deleteItemTag-${ItemTagType.Public}`,
+      '@putItemLoginSchema',
+    ]).then((data) => {
       const {
         request: { url },
       } = data[0];
-      expect(url).to.contain(item.tags[0].id);
-
-      const {
-        request: { body },
-      } = data[1];
-      expect(body?.tagId).to.equal(ITEM_LOGIN_TAG.id);
+      expect(url).to.contain(item.id);
+      expect(url).to.contain(ItemTagType.Public); // originally item login
     });
   });
 
   it('Pseudonymized Item', () => {
     // todo: improve types
     const item = ITEM_LOGIN_ITEMS.items[0] as any;
-    cy.setUpApi({ items: [item], tags: DEFAULT_TAGS });
+    cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
 
@@ -125,14 +117,14 @@ describe('Share Item', () => {
     // change item login schema
     cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID} + input`).should(
       'have.value',
-      SETTINGS.ITEM_LOGIN.OPTIONS.USERNAME,
+      ItemLoginSchemaType.Username,
     );
     // item login edition is done in itemLogin.cy.js
 
     // change pseudonymized -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait('@deleteItemTag').then(({ request: { url } }) => {
-      expect(url).to.include(item.tags[0].id);
+    cy.wait(`@deleteItemLoginSchema`).then(({ request: { url } }) => {
+      expect(url).to.include(item.id);
     });
   });
 });

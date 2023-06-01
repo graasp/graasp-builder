@@ -2,8 +2,7 @@ import { List } from 'immutable';
 
 import { Box } from '@mui/material';
 
-import { FC } from 'react';
-
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -25,11 +24,7 @@ type RowActionsProps = {
   data: { id: string };
 };
 
-const RowActions: FC<RowActionsProps> = ({
-  data: item,
-}: {
-  data: { id: string };
-}) => (
+const RowActions = ({ data: item }: RowActionsProps): JSX.Element => (
   <>
     <RestoreButton itemIds={[item.id]} />
     <DeleteButton itemIds={[item.id]} />
@@ -40,11 +35,7 @@ type ToolbarActionsProps = {
   selectedIds: string[];
 };
 
-const ToolbarActions: FC<ToolbarActionsProps> = ({
-  selectedIds,
-}: {
-  selectedIds: string[];
-}) => (
+const ToolbarActions = ({ selectedIds }: ToolbarActionsProps): JSX.Element => (
   <>
     <RestoreButton
       itemIds={selectedIds}
@@ -59,10 +50,13 @@ const ToolbarActions: FC<ToolbarActionsProps> = ({
   </>
 );
 
-const RecycleBinScreen: FC = () => {
+const RecycleBinScreen = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: items, isLoading, isError } = hooks.useRecycledItems();
-
+  const {
+    data: recycledEntries,
+    isLoading,
+    isError,
+  } = hooks.useRecycledItemsData();
   if (isError) {
     return <ErrorAlert />;
   }
@@ -79,7 +73,9 @@ const RecycleBinScreen: FC = () => {
           id={RECYCLED_ITEMS_ID}
           clickable={false}
           title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-          items={List(items)}
+          items={
+            recycledEntries?.map(({ item }) => item as ItemRecord) ?? List()
+          }
           actions={RowActions}
           ToolbarActions={ToolbarActions}
           showThumbnails={false}

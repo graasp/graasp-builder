@@ -2,12 +2,11 @@ import { validate } from 'uuid';
 
 import { createContext, useContext, useMemo, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { useMutation } from '../../config/queryClient';
-import TreeModal from '../main/TreeModal';
+import { mutations } from '../../config/queryClient';
+import TreeModal, { TreeModalProps } from '../main/TreeModal';
 
 type CopyItemModalContextType = {
   openModal: (newItemIds: string[]) => void;
@@ -23,11 +22,7 @@ type Props = {
 
 export const CopyItemModalProvider = ({ children }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: copyItems } = useMutation<
-    unknown,
-    unknown,
-    { ids: string[]; to: string }
-  >(MUTATION_KEYS.COPY_ITEMS);
+  const { mutate: copyItems } = mutations.useCopyItems();
   const [open, setOpen] = useState<boolean>(false);
   const [itemIds, setItemIds] = useState<string[]>([]);
 
@@ -41,11 +36,11 @@ export const CopyItemModalProvider = ({ children }: Props): JSX.Element => {
     setItemIds([]);
   };
 
-  const onConfirm = (payload: { ids: string[]; to: string }) => {
+  const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: !validate(payload.to) ? null : payload.to,
+      to: payload.to && validate(payload.to) ? payload.to : undefined,
     };
     copyItems(newPayload);
     onClose();

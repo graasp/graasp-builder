@@ -1,10 +1,9 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -12,22 +11,20 @@ import {
   DEFAULT_LINK_SHOW_IFRAME,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   SETTINGS_LINK_SHOW_BUTTON_ID,
   SETTINGS_LINK_SHOW_IFRAME_ID,
 } from '../../../config/selectors';
 
 type Props = {
-  item: ItemRecord;
+  item: EmbeddedLinkItemTypeRecord;
 };
 
-const LinkSettings: FC<Props> = ({ item }) => {
+const LinkSettings = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: editItem } = useMutation<any, any, any>(
-    MUTATION_KEYS.EDIT_ITEM,
-  );
+  const { mutate: editItem } = mutations.useEditItem();
 
   const { settings } = item;
 

@@ -27,7 +27,7 @@ import ModeButton from './ModeButton';
 const { useItemMemberships } = hooks;
 
 type Props = {
-  item: ItemRecord;
+  item?: ItemRecord;
 };
 
 const ItemHeaderActions = ({ item }: Props): JSX.Element => {
@@ -39,20 +39,20 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
     setIsChatboxMenuOpen,
     setIsItemMetadataMenuOpen,
   } = useLayoutContext();
-  const id = item?.id;
-  const type = item?.type;
 
   const { data: member } = useCurrentUserContext();
 
-  const { data: memberships } = useItemMemberships(id);
+  const { data: memberships } = useItemMemberships(item?.id);
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
     memberId: member?.id,
   });
-  const canAdmin = getHighestPermissionForMemberFromMemberships({
-    memberships,
-    memberId: member?.id,
-  });
+  const canAdmin = member?.id
+    ? getHighestPermissionForMemberFromMemberships({
+        memberships,
+        memberId: member?.id,
+      })
+    : false;
 
   const onClickChatbox = () => {
     setIsChatboxMenuOpen(!isChatboxMenuOpen);
@@ -61,29 +61,31 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
 
   const renderItemActions = () => {
     // if id is defined, we are looking at an item
-    if (id) {
+    if (item && item?.id) {
       // show edition only for allowed types
       const showEditButton =
-        !editingItemId && ITEM_TYPES_WITH_CAPTIONS.includes(type) && canEdit;
+        !editingItemId &&
+        ITEM_TYPES_WITH_CAPTIONS.includes(item.type) &&
+        canEdit;
 
       const activeActions = (
         <>
-          {showEditButton && <EditItemCaptionButton itemId={id} />}
-          <ShareButton itemId={id} />
+          {showEditButton && <EditItemCaptionButton itemId={item.id} />}
+          <ShareButton itemId={item.id} />
           <ChatboxButton
             tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
             id={ITEM_CHATBOX_BUTTON_ID}
             onClick={onClickChatbox}
           />
-          {canAdmin && <PublishButton itemId={id} />}
-          {canEdit && <AnalyticsDashboardButton id={id} />}
+          {canAdmin && <PublishButton itemId={item.id} />}
+          {canEdit && <AnalyticsDashboardButton id={item.id} />}
         </>
       );
 
       return (
         <>
           {openedActionTabId !== ItemActionTabs.Settings && activeActions}
-          {canEdit && <ItemSettingsButton id={id} />}
+          {canEdit && <ItemSettingsButton id={item.id} />}
         </>
       );
     }
@@ -95,9 +97,9 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
       {renderItemActions()}
       {
         // show only for content with tables : root or folders
-        (type === ItemType.FOLDER || !id) && <ModeButton />
+        (item?.type === ItemType.FOLDER || !item?.id) && <ModeButton />
       }
-      {id && <ItemMetadataButton />}
+      {item?.id && <ItemMetadataButton />}
     </Stack>
   );
 };

@@ -1,12 +1,9 @@
 import { SelectChangeEvent } from '@mui/material';
 
-import { FC } from 'react';
-
-import { MUTATION_KEYS } from '@graasp/query-client';
 import { langs } from '@graasp/translations';
 import { Select } from '@graasp/ui';
 
-import { useMutation } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import { buildLanguageOptionId } from '../../config/selectors';
 
 type Props = {
@@ -15,12 +12,8 @@ type Props = {
   lang: string;
 };
 
-const LanguageSwitch: FC<Props> = ({ id, memberId, lang }) => {
-  const { mutate: editMember } = useMutation<
-    any,
-    any,
-    { id: string; extra: { lang: string } }
-  >(MUTATION_KEYS.EDIT_MEMBER);
+const LanguageSwitch = ({ id, memberId, lang }: Props): JSX.Element => {
+  const { mutate: editMember } = mutations.useEditMember();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     if (event.target.value) {

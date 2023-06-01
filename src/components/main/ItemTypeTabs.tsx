@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import { Tab, Tabs, styled } from '@mui/material';
 
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
-import { ItemType } from '@graasp/sdk';
+import { ItemType, MimeTypes } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { ItemIcon } from '@graasp/ui';
 
@@ -36,7 +36,7 @@ type Props = {
   initialValue: NewItemTabType;
 };
 
-const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
+const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const [value, setValue] = useState<NewItemTabType>(
@@ -53,7 +53,7 @@ const ItemTypeTabs: FC<Props> = ({ onTypeChange, initialValue }) => {
       alt={translateBuilder(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
       type={ItemType.LOCAL_FILE}
       sx={{ mb: 0 }}
-      extra={{ file: { mimetype: 'application/zip' } }}
+      extra={{ file: { mimetype: MimeTypes.ZIP } }}
     />
   );
 

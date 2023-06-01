@@ -1,15 +1,16 @@
-import { ItemType } from '@graasp/sdk';
+import { EmbeddedLinkItemType, ItemType } from '@graasp/sdk';
 
 import { buildEmbeddedLinkExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER } from './members';
 
-export const GRAASP_LINK_ITEM = {
+export const GRAASP_LINK_ITEM: EmbeddedLinkItemType = {
   id: 'ecafbd2a-5688-11eb-ae91-0242ac130002',
   type: ItemType.LINK,
   name: 'graasp link',
   description: 'a description for graasp link',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-  creator: CURRENT_USER.id,
+  creator: CURRENT_USER,
+  settings: {}, createdAt: new Date(), updatedAt: new Date(),
   extra: buildEmbeddedLinkExtra({
     url: 'https://graasp.eu',
     html: '',
@@ -20,7 +21,7 @@ export const GRAASP_LINK_ITEM = {
   }),
 };
 
-export const GRAASP_LINK_ITEM_IFRAME_ONLY = {
+export const GRAASP_LINK_ITEM_IFRAME_ONLY: EmbeddedLinkItemType = {
   ...GRAASP_LINK_ITEM,
   id: 'ecafbd2a-5688-11eb-ae91-0242ac130122',
   settings: {
@@ -29,12 +30,13 @@ export const GRAASP_LINK_ITEM_IFRAME_ONLY = {
   },
 };
 
-export const YOUTUBE_LINK_ITEM = {
+export const YOUTUBE_LINK_ITEM: EmbeddedLinkItemType = {
   id: 'gcafbd2a-5688-11eb-ae93-0242ac130002',
   type: ItemType.LINK,
   name: 'graasp youtube link',
   description: 'a description for graasp youtube link',
-  creator: CURRENT_USER.id,
+  settings: {}, createdAt: new Date(), updatedAt: new Date(),
+  creator: CURRENT_USER,
   path: 'gcafbd2a_5688_11eb_ae93_0242ac130002',
   extra: buildEmbeddedLinkExtra({
     url: 'https://www.youtube.com/watch?v=FmiEgBMTPLo',
@@ -44,9 +46,12 @@ export const YOUTUBE_LINK_ITEM = {
   }),
 };
 
-export const INVALID_LINK_ITEM = {
+export const INVALID_LINK_ITEM: EmbeddedLinkItemType = {
+  id: 'gcafbd2a-5688-11eb-ae93-0242ac130001',
+  path: 'gcafbd2a_5688_11eb_ae93_0242ac130001',
   type: ItemType.LINK,
-  creator: CURRENT_USER.id,
+  creator: CURRENT_USER,
+  settings: {}, createdAt: new Date(), updatedAt: new Date(),
   name: 'graasp youtube link',
   description: 'a description for graasp youtube link',
   extra: buildEmbeddedLinkExtra({

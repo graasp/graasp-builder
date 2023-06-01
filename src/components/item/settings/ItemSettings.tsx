@@ -3,15 +3,10 @@ import { FormControlLabel, FormGroup, Switch, Tooltip } from '@mui/material';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import {
-  ItemSettings as ItemSettingsType,
-  ItemType,
-  convertJs,
-} from '@graasp/sdk';
-import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
+import { ItemType, convertJs } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import {
@@ -22,7 +17,7 @@ import {
   DEFAULT_SHOW_CHATBOX_SETTING,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_COLLAPSE_TOGGLE_ID,
@@ -38,19 +33,15 @@ type Props = {
   item: ItemRecord;
 };
 
-const ItemSettings: FC<Props> = ({ item }) => {
+const ItemSettings = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: editItem } = useMutation<
-    unknown,
-    unknown,
-    { id: string; name: string; settings: ItemSettingsType }
-  >(MUTATION_KEYS.EDIT_ITEM);
+  const { mutate: editItem } = mutations.useEditItem();
 
   const { settings } = item;
 
   const [settingLocal, setSettingLocal] =
-    useState<ImmutableCast<ItemSettingsType>>(settings);
+    useState<ItemRecord['settings']>(settings);
 
   useEffect(
     () => {

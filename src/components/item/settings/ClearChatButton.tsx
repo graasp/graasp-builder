@@ -36,7 +36,7 @@ const ClearChatButton = ({
   chatId,
   clearChat,
   variant = ButtonVariants.Button,
-}: Props): JSX.Element => {
+}: Props): JSX.Element | null => {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const { t } = useChatboxTranslation();
 
@@ -48,7 +48,7 @@ const ClearChatButton = ({
     clearChat(chatId);
   };
 
-  const getContent = (contentType) => {
+  const getContent = (contentType: ButtonVariants) => {
     const text = t(CHATBOX.CLEAR_ALL_CHAT);
 
     switch (contentType) {

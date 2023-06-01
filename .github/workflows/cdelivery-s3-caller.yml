@@ -33,6 +33,5 @@ jobs:
       graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_STAGE }}
       graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_STAGE }}
       h5p-integration-url: ${{ secrets.H5P_INTEGRATION_URL_STAGE }}
-      hidden-item-tag-id: ${{ secrets.REACT_APP_HIDDEN_ITEM_TAG_ID_STAGE }}
       sentry-dsn: ${{ secrets.REACT_APP_SENTRY_DSN }}
       show-notifications: ${{ secrets.REACT_APP_SHOW_NOTIFICATIONS }}

@@ -1,10 +1,10 @@
+import { ColDef } from 'ag-grid-community';
 import { List } from 'immutable';
 
 import { useMemo } from 'react';
 
-import { MUTATION_KEYS } from '@graasp/query-client';
-import { Invitation } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { Invitation, PermissionLevel } from '@graasp/sdk';
+import { InvitationRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -13,13 +13,15 @@ import {
   MEMBERSHIP_TABLE_ROW_HEIGHT,
 } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { useMutation } from '../../../config/queryClient';
+import { mutations } from '../../../config/queryClient';
 import {
   buildInvitationTableRowId,
   buildItemInvitationRowDeleteButtonId,
 } from '../../../config/selectors';
 import ResendInvitationRenderer from './ResendInvitationRenderer';
-import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
+import TableRowDeleteButtonRenderer, {
+  TableRowDeleteButtonRendererProps,
+} from './TableRowDeleteButtonRenderer';
 import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 
 const rowStyle = {
@@ -29,7 +31,7 @@ const rowStyle = {
 
 type Props = {
   item: ItemRecord;
-  invitations: List<Invitation>;
+  invitations: List<InvitationRecord>;
   emptyMessage?: string;
   readOnly?: boolean;
 };
@@ -41,27 +43,16 @@ const InvitationsTable = ({
   readOnly = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: editInvitation } = useMutation<
-    unknown,
-    unknown,
-    Partial<Invitation> & {
-      itemId: string;
-    }
-  >(MUTATION_KEYS.PATCH_INVITATION);
-  const { mutate: postInvitations } = useMutation<
-    unknown,
-    unknown,
-    { itemId: string; invitations: Partial<Invitation>[] }
-  >(MUTATION_KEYS.POST_INVITATIONS);
-  const { mutate: deleteInvitation } = useMutation<
-    unknown,
-    unknown,
-    { itemId: string; id: string }
-  >(MUTATION_KEYS.DELETE_INVITATION);
+  const { mutate: editInvitation } = mutations.usePatchInvitation();
+  const { mutate: postInvitations } = mutations.usePostInvitations();
+  const { mutate: deleteInvitation } = mutations.useDeleteInvitation();
 
-  const getRowId = ({ data }) => buildInvitationTableRowId(data.id);
+  const getRowId = ({ data }: { data: Invitation }) =>
+    buildInvitationTableRowId(data.id);
 
-  const onDelete = ({ instance }) => {
+  const onDelete: TableRowDeleteButtonRendererProps<Invitation>['onDelete'] = ({
+    instance,
+  }) => {
     deleteInvitation({ itemId: item.id, id: instance.id });
   };
 
@@ -76,14 +67,26 @@ const InvitationsTable = ({
 
   const PermissionRenderer = TableRowPermissionRenderer({
     item,
-    editFunction: ({ instance, value }) => {
+    editFunction: ({
+      instance,
+      value,
+    }: {
+      instance: Invitation;
+      value: PermissionLevel;
+    }) => {
       editInvitation({
         id: instance.id,
         permission: value,
         itemId: item.id,
       });
     },
-    createFunction: ({ instance, value }) => {
+    createFunction: ({
+      instance,
+      value,
+    }: {
+      instance: Invitation;
+      value: PermissionLevel;
+    }) => {
       postInvitations({
         itemId: item.id,
         invitations: [
@@ -100,7 +103,7 @@ const InvitationsTable = ({
   const InvitationRenderer = ResendInvitationRenderer(item.id);
 
   // never changes, so we can use useMemo
-  const columnDefs = useMemo(
+  const columnDefs = useMemo<ColDef[]>(
     () => [
       {
         headerCheckboxSelection: !readOnly,
@@ -120,7 +123,7 @@ const InvitationsTable = ({
         cellRenderer: readOnly ? null : InvitationRenderer,
         cellStyle: rowStyle,
         flex: 1,
-        field: readOnly ? null : 'email',
+        field: readOnly ? undefined : 'email',
       },
       {
         headerName: translateBuilder(
@@ -135,22 +138,23 @@ const InvitationsTable = ({
               display: 'flex',
               justifyContent: 'right',
             }
-          : null,
+          : undefined,
       },
       {
-        field: readOnly ? null : 'actions',
+        field: readOnly ? undefined : 'actions',
         cellRenderer: readOnly ? null : ActionRenderer,
         headerName: readOnly
-          ? null
+          ? undefined
           : translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
         colId: 'actions',
         type: 'rightAligned',
         sortable: false,
+        // bug: force css
         cellStyle: {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
-        },
+        } as any,
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -163,7 +167,7 @@ const InvitationsTable = ({
     ],
   );
 
-  const countTextFunction = (selected) =>
+  const countTextFunction = (selected: string[]) =>
     translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
       count: selected.length,
     });
@@ -172,7 +176,7 @@ const InvitationsTable = ({
     <GraaspTable
       columnDefs={columnDefs}
       tableHeight={MEMBERSHIP_TABLE_HEIGHT}
-      rowData={invitations.toJS()}
+      rowData={invitations.toJS() as Invitation[]}
       emptyMessage={emptyMessage}
       getRowId={getRowId}
       rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}

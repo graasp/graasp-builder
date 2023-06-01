@@ -1,6 +1,6 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import {
@@ -24,16 +24,21 @@ type MoveButtonProps = {
   onClick?: () => void;
 };
 
-const MoveButton: FC<MoveButtonProps> = ({
+const MoveButton = ({
   itemIds,
   color = 'default',
   id,
   type = ActionButton.ICON_BUTTON,
   onClick,
-}) => {
+}: MoveButtonProps): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { openModal: openMoveModal } = useContext(MoveItemModalContext);
+
+  // TODO: return error?
+  if (!openMoveModal) {
+    return null;
+  }
 
   const handleMove = () => {
     openMoveModal(itemIds);

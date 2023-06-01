@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { CopyItemModalProvider } from './CopyItemModalContext';
 import { CreateShortcutModalProvider } from './CreateShortcutModalContext';
 import { EditItemModalProvider } from './EditItemModalContext';
@@ -9,7 +7,7 @@ import { MoveItemModalProvider } from './MoveItemModalContext';
 
 type Props = { children: JSX.Element };
 
-const ModalProviders: FC<Props> = ({ children }) => (
+const ModalProviders = ({ children }: Props): JSX.Element => (
   <LayoutContextProvider>
     <EditItemModalProvider>
       <CopyItemModalProvider>

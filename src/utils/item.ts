@@ -6,8 +6,7 @@ import { useEffect, useState } from 'react';
 import {
   DiscriminatedItem,
   FolderItemExtra,
-  Invitation,
-  ItemMembership,
+  Item,
   ItemType,
   getAppExtra,
   getDocumentExtra,
@@ -22,7 +21,7 @@ export const transformIdForPath = (id: string): string =>
   id.replace(/\-/g, '_');
 
 export const getParentsIdsFromPath = (
-  path: string,
+  path?: string,
   { ignoreSelf = false } = {},
 ): string[] => {
   if (!path) {
@@ -53,11 +52,12 @@ export const buildPath = ({
   ids: string[];
 }): string => `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
 
-export const getItemById = (
-  items: DiscriminatedItem[],
+export function getItemById<T extends Item>(
+  items: T[],
   id: string,
-): DiscriminatedItem | undefined =>
-  items.find(({ id: thisId }) => id === thisId);
+): T | undefined {
+  return items.find(({ id: thisId }) => id === thisId);
+}
 
 export const getDirectParentId = (path: string): string | null => {
   const ids = getParentsIdsFromPath(path);
@@ -75,15 +75,16 @@ export const isChild = (
   return ({ path }) => path.match(reg);
 };
 
-export const getChildren = (
-  items: DiscriminatedItem[],
-  id: string,
-): DiscriminatedItem[] => items.filter(isChild(id));
+export const getChildren = (items: Item[], id: string): Item[] =>
+  items.filter(isChild(id));
 
 export const isRootItem = ({ path }: { path: string }): boolean =>
   path.length === UUID_LENGTH;
 
-export const isUrlValid = (str: string): boolean => {
+export const isUrlValid = (str?: string): boolean => {
+  if (!str) {
+    return false;
+  }
   const pattern = new RegExp(
     '^(https?:\\/\\/)+' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
@@ -93,7 +94,7 @@ export const isUrlValid = (str: string): boolean => {
       '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
-  return Boolean(str) && pattern.test(str);
+  return pattern.test(str);
 };
 
 export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
@@ -119,7 +120,7 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     }
     case ItemType.DOCUMENT: {
       const { content } = getDocumentExtra(item.extra) || {};
-      hasValidTypeProperties = content?.length > 0;
+      hasValidTypeProperties = Boolean(content && content.length > 0);
       break;
     }
     default:
@@ -147,22 +148,20 @@ export const sortByName = (
 };
 
 // todo: use typescript to precise data is one of Invitation or Membership
-export const useIsParentInstance = ({
+export function useIsParentInstance({
   instance,
   item,
 }: {
-  instance:
-    | Pick<Partial<Invitation>, 'itemPath'>
-    | Pick<Partial<ItemMembership>, 'itemPath'>;
+  instance: { item: Item };
   item: ItemRecord;
-}): boolean => {
+}): boolean {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {
-    setIsParentMembership(instance.itemPath !== item.path);
+    setIsParentMembership(instance.item.path !== item.path);
     return () => {
       setIsParentMembership(false);
     };
   }, [instance, item]);
 
   return isParentMembership;
-};
+}

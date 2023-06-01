@@ -1,10 +1,12 @@
+import { List } from 'immutable';
+
 import { Button, Container, styled } from '@mui/material';
 
 import { useState } from 'react';
-import { UseQueryResult } from 'react-query';
 
-import { Api, MUTATION_KEYS } from '@graasp/query-client';
+import { Api } from '@graasp/query-client';
 import {
+  Context,
   DEFAULT_LANG,
   DocumentItemExtraProperties,
   ItemType,
@@ -18,7 +20,6 @@ import {
   DocumentItemTypeRecord,
   EmbeddedLinkItemTypeRecord,
   EtherpadItemTypeRecord,
-  EtherpadRecord,
   FolderItemTypeRecord,
   H5PItemTypeRecord,
   ItemRecord,
@@ -40,7 +41,6 @@ import {
 
 import {
   API_HOST,
-  CONTEXT_BUILDER,
   DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
   GRAASP_ASSETS_URL,
@@ -48,7 +48,7 @@ import {
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
 import { useCommonTranslation } from '../../config/i18n';
-import { hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
@@ -66,7 +66,7 @@ import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
 import { DocumentExtraForm } from './form/DocumentForm';
 
-const { useChildren, useFileContent, useEtherpad } = hooks;
+const { useChildren, useFileContentUrl, useEtherpad } = hooks;
 
 const StyledContainer = styled(Container)(() => ({
   textAlign: 'center',
@@ -92,16 +92,7 @@ const FileContent = ({
   saveButtonId: string;
   cancelButtonId: string;
 }): JSX.Element => {
-  const {
-    data: fileContent,
-    isLoading,
-    isError,
-  } = useFileContent(item.id, {
-    replyUrl: true,
-  });
-
-  // todo: remove when query client is correctly typed
-  const file = fileContent as Record<string, string>;
+  const { data: fileUrl, isLoading, isError } = useFileContentUrl(item.id);
 
   if (isLoading) {
     return <Loader />;
@@ -115,7 +106,7 @@ const FileContent = ({
     <StyledContainer>
       <FileItem
         editCaption={isEditing}
-        fileUrl={file?.url}
+        fileUrl={fileUrl}
         id={buildFileItemId(item.id)}
         item={item}
         onSaveCaption={onSaveCaption}
@@ -141,7 +132,7 @@ const LinkContent = ({
   cancelButtonId,
 }: {
   item: EmbeddedLinkItemTypeRecord;
-  member: MemberRecord;
+  member?: MemberRecord;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
   onCancelCaption: (caption: string) => void;
@@ -150,7 +141,7 @@ const LinkContent = ({
 }): JSX.Element => (
   <StyledContainer>
     <LinkItem
-      memberId={member.id}
+      memberId={member?.id}
       isResizable
       item={item}
       editCaption={isEditing}
@@ -250,7 +241,7 @@ const DocumentContent = ({
 const AppContent = ({
   item,
   member,
-  permission,
+  permission = PermissionLevel.Read,
   isEditing,
   onSaveCaption,
   onCancelCaption,
@@ -258,8 +249,8 @@ const AppContent = ({
   cancelButtonId,
 }: {
   item: AppItemTypeRecord;
-  member: MemberRecord;
-  permission: PermissionLevel;
+  member?: MemberRecord;
+  permission?: PermissionLevel;
   isEditing: boolean;
   onSaveCaption: (caption: string) => void;
   onCancelCaption: (caption: string) => void;
@@ -275,21 +266,21 @@ const AppContent = ({
     saveButtonId={saveButtonId}
     cancelButtonId={cancelButtonId}
     height={ITEM_DEFAULT_HEIGHT}
-    requestApiAccessToken={(payload) =>
-      Api.requestApiAccessToken(payload, { API_HOST })
-    }
+    requestApiAccessToken={(payload: {
+      id: string;
+      key: string;
+      origin: string;
+    }) => Api.requestApiAccessToken(payload, { API_HOST })}
     contextPayload={{
       apiHost: API_HOST,
       itemId: item.id,
-      memberId: member.id,
+      memberId: member?.id,
       permission,
       settings: item.settings,
       lang:
         // todo: remove once it is added in ItemSettings type in sdk
-        (item.settings?.lang as string | undefined) ||
-        member.extra?.lang ||
-        DEFAULT_LANG,
-      context: CONTEXT_BUILDER,
+        item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
+      context: Context.Builder,
     }}
   />
 );
@@ -327,7 +318,7 @@ const FolderContent = ({
       parentId={item.id}
       id={buildItemsTableId(item.id)}
       title={item.name}
-      items={children}
+      items={children ?? List()}
       isEditing={isEditing}
       headerElements={
         enableEditing ? [<NewItemButton key="newButton" />] : undefined
@@ -342,9 +333,9 @@ const FolderContent = ({
  * Helper component to render typed H5P items
  */
 const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
-  const { contentId } = getH5PExtra(item?.extra);
+  const extra = getH5PExtra(item?.extra);
 
-  if (!contentId) {
+  if (!extra?.contentId) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
@@ -352,7 +343,7 @@ const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
     <H5PItem
       itemId={item.id}
       itemName={item.name}
-      contentId={contentId}
+      contentId={extra.contentId}
       integrationUrl={H5P_INTEGRATION_URL}
     />
   );
@@ -370,7 +361,7 @@ const EtherpadContent = ({
     data: etherpad,
     isLoading,
     isError,
-  }: UseQueryResult<EtherpadRecord> = useEtherpad(
+  } = useEtherpad(
     item,
     'write', // server will return read view if no write access allowed
   );
@@ -396,9 +387,9 @@ const EtherpadContent = ({
  * Props for {@see ItemContent}
  */
 type Props = {
-  item: ItemRecord;
+  item?: ItemRecord;
   enableEditing?: boolean;
-  permission: PermissionLevel;
+  permission?: PermissionLevel;
 };
 
 /**
@@ -409,14 +400,12 @@ const ItemContent = ({
   enableEditing,
   permission,
 }: Props): JSX.Element => {
-  const { mutate: editItem } = useMutation<any, any, any>(
-    MUTATION_KEYS.EDIT_ITEM,
-  );
+  const { mutate: editItem } = mutations.useEditItem();
   const { editingItemId, setEditingItemId } = useLayoutContext();
 
   const { data: member, isLoading, isError } = useCurrentUserContext();
 
-  const isEditing = enableEditing && editingItemId === item.id;
+  const isEditing = Boolean(enableEditing && editingItemId === item?.id);
 
   if (isLoading) {
     return <Loader />;
@@ -508,7 +497,7 @@ const ItemContent = ({
         <FolderContent
           item={item}
           isEditing={isEditing}
-          enableEditing={enableEditing}
+          enableEditing={enableEditing ?? false}
         />
       );
 

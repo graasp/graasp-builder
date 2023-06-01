@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 import Typography from '@mui/material/Typography';
 
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
@@ -14,7 +14,7 @@ import {
   ITEM_SEARCH_INPUT_ID,
 } from '../../config/selectors';
 
-export const NoItemSearchResult: FC = () => {
+export const NoItemSearchResult = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
@@ -30,9 +30,9 @@ export const NoItemSearchResult: FC = () => {
 };
 
 export const useItemSearch = (
-  items: List<ItemRecord>,
+  items?: List<ItemRecord>,
 ): {
-  results: List<ItemRecord>;
+  results?: List<ItemRecord>;
   text: string;
   input: JSX.Element;
 } => {

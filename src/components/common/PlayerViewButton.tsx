@@ -1,8 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { FC } from 'react';
-
 import { redirect } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { PlayIcon } from '@graasp/ui';
@@ -19,7 +17,7 @@ type Props = {
   itemId: string;
 };
 
-const PlayerViewButton: FC<Props> = ({ itemId }) => {
+const PlayerViewButton = ({ itemId }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const onClick = () => {

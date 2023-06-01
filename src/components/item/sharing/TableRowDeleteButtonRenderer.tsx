@@ -2,29 +2,31 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { Invitation, ItemMembership } from '@graasp/sdk';
+import { Item } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
 import { useIsParentInstance } from '../../../utils/item';
 
-type ChildCompProps = { data: Invitation | ItemMembership };
+type ChildCompProps<T> = { data: T };
 
-type Props = {
+export type TableRowDeleteButtonRendererProps<T> = {
   item: ItemRecord;
   buildIdFunction: (id: string) => string;
   tooltip?: string;
   color?: IconButtonProps['color'];
-  onDelete?: (args: { instance: ChildCompProps['data'] }) => void;
+  onDelete: (args: { instance: T }) => void;
 };
 
-const TableRowDeleteButtonRenderer = ({
+function TableRowDeleteButtonRenderer<T extends { item: Item; id: string }>({
   item,
   buildIdFunction,
   tooltip,
   color = 'default',
   onDelete,
-}: Props): ((args: ChildCompProps) => JSX.Element) => {
-  const ChildComponent = ({ data }: ChildCompProps) => {
+}: TableRowDeleteButtonRendererProps<T>): (
+  args: ChildCompProps<T>,
+) => JSX.Element {
+  const ChildComponent = ({ data }: ChildCompProps<T>) => {
     const isFromParent = useIsParentInstance({
       instance: data,
       item,
@@ -63,6 +65,6 @@ const TableRowDeleteButtonRenderer = ({
   };
 
   return ChildComponent;
-};
+}
 
 export default TableRowDeleteButtonRenderer;

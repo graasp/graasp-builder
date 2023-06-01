@@ -2,9 +2,11 @@ import Checkbox from '@mui/material/Checkbox';
 import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
+import TableSortLabel, {
+  TableSortLabelProps,
+} from '@mui/material/TableSortLabel';
 
-import { FC } from 'react';
+import { MouseEvent } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 
@@ -16,7 +18,7 @@ type Props = {
     visuallyHidden: string;
   };
   numSelected: number;
-  onRequestSort: (event: Event, property: string) => void;
+  onRequestSort: (event: MouseEvent, property: string) => void;
   onSelectAllClick: () => void;
   order: 'asc' | 'desc';
   orderBy: string;
@@ -24,7 +26,7 @@ type Props = {
   headCells: (TableCellProps & { id: string; label: string })[];
 };
 
-const CustomTableHead: FC<Props> = (props) => {
+const CustomTableHead = (props: Props): JSX.Element => {
   const {
     classes,
     onSelectAllClick,
@@ -36,9 +38,11 @@ const CustomTableHead: FC<Props> = (props) => {
     headCells,
   } = props;
   const { t: translateBuilder } = useBuilderTranslation();
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  const createSortHandler =
+    (property: string): TableSortLabelProps['onClick'] =>
+    (event) => {
+      onRequestSort(event, property);
+    };
 
   return (
     <TableHead>
@@ -58,7 +62,7 @@ const CustomTableHead: FC<Props> = (props) => {
           <TableCell
             key={headCell.id}
             align={headCell.align}
-            sortDirection={orderBy === headCell.id ? order : null}
+            sortDirection={orderBy === headCell.id ? order : undefined}
           >
             <TableSortLabel
               active={orderBy === headCell.id}

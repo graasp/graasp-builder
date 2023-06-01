@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { COOKIE_KEYS } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { CookiesBanner } from '@graasp/ui';
@@ -7,7 +5,7 @@ import { CookiesBanner } from '@graasp/ui';
 import { DOMAIN } from '../../config/constants';
 import { useCommonTranslation } from '../../config/i18n';
 
-const Component: FC = () => {
+const Component = (): JSX.Element => {
   const { t } = useCommonTranslation();
 
   return (

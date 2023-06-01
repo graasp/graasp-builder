@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import HelpIcon from '@mui/icons-material/Help';
@@ -9,32 +7,37 @@ import Looks5Icon from '@mui/icons-material/Looks5';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import UpdateIcon from '@mui/icons-material/Update';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { useParams } from 'react-router';
 
-import { DATA_KEYS, MUTATION_KEYS } from '@graasp/query-client';
-import { PermissionLevel, redirect } from '@graasp/sdk';
+import { DATA_KEYS } from '@graasp/query-client';
+import {
+  ItemTagType,
+  ItemValidationStatus,
+  PermissionLevel,
+  redirect,
+} from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
-import {
-  ADMIN_CONTACT,
-  CC_LICENSE_ABOUT_URL,
-  VALIDATION_STATUS_NAMES,
-} from '../../../config/constants';
+import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, useMutation } from '../../../config/queryClient';
+import { hooks, mutations } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
   ITEM_VALIDATION_REFRESH_BUTTON_ID,
 } from '../../../config/selectors';
-import { isItemPublic } from '../../../utils/itemTag';
-import { getValidationStatusFromItemValidations } from '../../../utils/itemValidation';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import VisibilitySelect from '../sharing/VisibilitySelect';
@@ -44,23 +47,15 @@ import CoEditorSettings from './CoEditorSettings';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
 import ItemPublishButton from './ItemPublishButton';
 
-const { POST_ITEM_VALIDATION } = MUTATION_KEYS;
-const { buildItemValidationAndReviewKey } = DATA_KEYS;
-const {
-  useItemValidationAndReview,
-  useItemValidationGroups,
-  useItemValidationStatuses,
-  useItemValidationReviewStatuses,
-} = hooks;
+const { useItemTags, useLastItemValidationGroup } = hooks;
 
-const { useTags, useItemTags } = hooks;
+const { usePostItemValidation } = mutations;
 
 type Props = {
   item: ItemRecord;
   permission?: PermissionLevel;
 };
 
-// https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
 // eslint-disable-next-line no-shadow
 const enum PublishFlow {
   SET_ITEM_VISIBILITY_PUBLIC_STEP,
@@ -68,14 +63,13 @@ const enum PublishFlow {
   PUBLISH_STEP,
 }
 
-const ItemPublishTab: FC<Props> = ({
+const ItemPublishTab = ({
   item,
   permission = PermissionLevel.Read,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const queryClient = useQueryClient();
 
-  const { data: tags, isLoading: isTagsLoading } = useTags();
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.id,
   );
@@ -90,82 +84,61 @@ const ItemPublishTab: FC<Props> = ({
     memberId: currentMember?.id,
   });
 
-  const isPublic = isItemPublic({ tags, itemTags });
+  const [validationStatus, setValidationStatus] =
+    useState<ItemValidationStatus | null>(null);
+
+  const isPublic = itemTags?.find(({ type }) => type === ItemTagType.Public);
 
   const canAdmin = permission === PermissionLevel.Admin;
 
-  // current item
-  const { itemId } = useParams();
-
   // item validation
-  const { mutate: validateItem } = useMutation<any, any, any>(
-    POST_ITEM_VALIDATION,
+  const { mutate: validateItem } = usePostItemValidation();
+
+  const { data: lastItemValidationGroup } = useLastItemValidationGroup(
+    item?.id,
   );
 
-  // get map of item validation and review statuses
-  const { data: ivStatuses } = useItemValidationStatuses();
-  const { data: ivrStatuses } = useItemValidationReviewStatuses();
-  const validationStatusesMap = new Map(
-    // todo: fix with query client
-    (ivStatuses as List<any>)
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      ?.concat(ivrStatuses)
-      ?.map((entry) => [entry?.id, entry?.name]),
-  );
+  useEffect(() => {
+    // check if validation is still valid
+    const isOutdated =
+      Boolean(!lastItemValidationGroup) ||
+      Boolean(!lastItemValidationGroup?.createdAt) ||
+      (lastItemValidationGroup?.createdAt
+        ? lastItemValidationGroup.createdAt <= item?.updatedAt
+        : true);
+    // QUESTION: should this be null instead?
+    if (isOutdated) {
+      setValidationStatus(ItemValidationStatus.Failure);
+    }
 
-  // get item validation data
-  const { data: itemValidationData, isLoading } =
-    useItemValidationAndReview(itemId);
-  // todo: fix with query client
-  const itemValidationDataTyped = itemValidationData as any;
-  // check if validation is still valid
-  const iVId =
-    new Date(itemValidationDataTyped?.createdAt) >= new Date(item?.updatedAt)
-      ? itemValidationDataTyped?.itemValidationId
-      : null;
-  // get item validation groups
-  const { data: itemValidationGroups } = useItemValidationGroups(iVId);
-  // todo: fix with query client
-  const itemValidationGroupsTyped = itemValidationGroups as List<any>;
-  // group iv records by item validation status
-  const ivByStatus = itemValidationGroupsTyped?.groupBy(
-    ({ statusId }) => validationStatusesMap[statusId],
-  );
-
-  const [itemValidationStatus, setItemValidationStatus] = useState<
-    string | boolean
-  >(VALIDATION_STATUS_NAMES.NOT_VALIDATED);
+    const mapByStatus = lastItemValidationGroup?.itemValidations?.groupBy(
+      ({ status }) => status,
+    );
+    let status = null;
+    if (mapByStatus?.get(ItemValidationStatus.Failure)) {
+      status = ItemValidationStatus.Failure;
+    } else if (mapByStatus?.get(ItemValidationStatus.Pending)) {
+      status = ItemValidationStatus.Pending;
+    } else if (mapByStatus?.get(ItemValidationStatus.Success)) {
+      status = ItemValidationStatus.Success;
+    }
+    setValidationStatus(status);
+  }, [lastItemValidationGroup, item?.updatedAt]);
 
   const step = (() => {
     if (!isPublic) {
       return PublishFlow.SET_ITEM_VISIBILITY_PUBLIC_STEP;
     }
-    if (itemValidationStatus !== VALIDATION_STATUS_NAMES.SUCCESS) {
+    if (validationStatus !== ItemValidationStatus.Success) {
       return PublishFlow.VALIDATE_ITEM_STEP;
     }
     return PublishFlow.PUBLISH_STEP;
   })();
 
-  useEffect(() => {
-    // process when we fetch the item validation and review records
-    if (ivByStatus) {
-      setItemValidationStatus(
-        getValidationStatusFromItemValidations(
-          ivByStatus,
-          validationStatusesMap,
-          itemValidationDataTyped,
-        ),
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ivByStatus]);
-
   if (
-    isLoading ||
+    // isLoading ||
     isMembershipsLoading ||
     isLoadingCurrentMember ||
-    isTagsLoading ||
     isItemTagsLoading
   ) {
     return <Loader />;
@@ -183,26 +156,28 @@ const ItemPublishTab: FC<Props> = ({
 
   const handleValidate = () => {
     // prevent re-send request if the item is already successfully validated
-    if (!(itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS)) {
-      validateItem({ itemId });
+    if (!(validationStatus === ItemValidationStatus.Success)) {
+      validateItem({ itemId: item.id });
     }
-    setItemValidationStatus(VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC);
+    setValidationStatus(ItemValidationStatus.Pending);
   };
 
   const handleRefresh = () => {
-    queryClient.invalidateQueries(buildItemValidationAndReviewKey(itemId));
+    queryClient.invalidateQueries(
+      DATA_KEYS.buildLastItemValidationGroupKey(item.id),
+    );
   };
 
   // display icon indicating current status of given item
   const displayItemValidationIcon = () => {
-    switch (itemValidationStatus) {
-      case VALIDATION_STATUS_NAMES.SUCCESS:
+    switch (validationStatus) {
+      case ItemValidationStatus.Success:
         return <CheckCircleIcon color="primary" />;
-      case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
+      case ItemValidationStatus.Pending:
         return <UpdateIcon color="primary" />;
-      case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
+      case ItemValidationStatus.PendingManual:
         return <UpdateIcon color="primary" />;
-      case VALIDATION_STATUS_NAMES.FAILURE:
+      case ItemValidationStatus.Failure:
         return <CancelIcon color="primary" />;
       default:
     }
@@ -215,8 +190,8 @@ const ItemPublishTab: FC<Props> = ({
   };
 
   const displayItemValidationMessage = () => {
-    switch (itemValidationStatus) {
-      case VALIDATION_STATUS_NAMES.PENDING_AUTOMATIC:
+    switch (validationStatus) {
+      case ItemValidationStatus.Pending:
         return (
           <Typography variant="body1">
             {translateBuilder(
@@ -224,7 +199,7 @@ const ItemPublishTab: FC<Props> = ({
             )}
           </Typography>
         );
-      case VALIDATION_STATUS_NAMES.PENDING_MANUAL:
+      case ItemValidationStatus.PendingManual:
         return (
           <Typography variant="body1">
             {translateBuilder(
@@ -232,7 +207,7 @@ const ItemPublishTab: FC<Props> = ({
             )}
           </Typography>
         );
-      case VALIDATION_STATUS_NAMES.FAILURE:
+      case ItemValidationStatus.Failure:
         return (
           <Typography variant="body1">
             {translateBuilder(
@@ -272,27 +247,36 @@ const ItemPublishTab: FC<Props> = ({
         <Typography variant="body1">
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_INFORMATIONS)}
         </Typography>
-        <Button
-          id={ITEM_VALIDATION_BUTTON_ID}
-          disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
-          variant="outlined"
-          onClick={handleValidate}
-          color="primary"
-          endIcon={displayItemValidationIcon()}
+        <Stack
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+          spacing={2}
         >
-          {translateBuilder(
-            BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON,
-          )}
-        </Button>
-        <Button
-          id={ITEM_VALIDATION_REFRESH_BUTTON_ID}
-          variant="outlined"
-          onClick={handleRefresh}
-          color="primary"
-          disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
-        >
-          {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON)}
-        </Button>
+          <Button
+            id={ITEM_VALIDATION_BUTTON_ID}
+            disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
+            variant="outlined"
+            onClick={handleValidate}
+            color="primary"
+            endIcon={displayItemValidationIcon()}
+          >
+            {translateBuilder(
+              BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON,
+            )}
+          </Button>
+          <Button
+            id={ITEM_VALIDATION_REFRESH_BUTTON_ID}
+            variant="outlined"
+            onClick={handleRefresh}
+            color="primary"
+            disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
+          >
+            {translateBuilder(
+              BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON,
+            )}
+          </Button>
+        </Stack>
         {displayItemValidationMessage()}
         <Typography variant="h6" mt={2} mr={2}>
           <Looks3Icon color="primary" />
@@ -351,7 +335,7 @@ const ItemPublishTab: FC<Props> = ({
         </Typography>
         <ItemPublishButton
           item={item}
-          isValidated={itemValidationStatus === VALIDATION_STATUS_NAMES.SUCCESS}
+          isValidated={validationStatus === ItemValidationStatus.Success}
           disabled={step < PublishFlow.PUBLISH_STEP}
         />
       </>
