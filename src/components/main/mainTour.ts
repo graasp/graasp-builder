@@ -3,6 +3,7 @@ import {
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
   CREATE_ITEM_BUTTON_ID,
   CREATE_ITEM_FOLDER_ID,
+  ITEM_FORM_CANCEL_BUTTON_ID,
 } from '../../config/selectors';
 
 const navigationSteps = [
@@ -11,21 +12,28 @@ const navigationSteps = [
     target: `#${APP_NAVIGATION_PLATFORM_SWITCH_ID}`,
     content: 'Start of tour info ',
     disableBeacon: true,
+    disableOverlayClose: true,
     timestamp: 'now',
   },
   {
     target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Builder}`,
     content: 'Builder Info',
+    disableBeacon: true,
+    disableOverlayClose: true,
     timestamp: 'now',
   },
   {
     target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Player}`,
     content: 'Player Info',
+    disableBeacon: true,
+    disableOverlayClose: true,
     timestamp: 'now',
   },
   {
     target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Library}`,
     content: 'Library Info',
+    disableBeacon: true,
+    disableOverlayClose: true,
     timestamp: 'now',
   },
 ];
@@ -38,14 +46,17 @@ const createItem = [
     // hideCloseButton: true,
     // hideFooter: true,
     requireClick: true,
-    spotlightClicks: true,
+    disableBeacon: true,
     timestamp: 'now',
   },
 
   {
     target: `#${CREATE_ITEM_FOLDER_ID}`,
     content: 'folder info',
+    disableBeacon: true,
+    disableOverlayClose: true,
     timestamp: 'now',
+    clickForBackId: { ITEM_FORM_CANCEL_BUTTON_ID },
   },
 ];
 
