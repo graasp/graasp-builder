@@ -57,19 +57,12 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
       if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
         // Update state to advance the tour
         const isNextStep = steps.length > index + 1;
-        // eslint-disable-next-line
-        console.log(
-          action === ACTIONS.NEXT,
-          isNextStep,
-          steps[index].requireClick,
-        );
+
         if (
           action === ACTIONS.NEXT &&
           isNextStep &&
           steps[index].requireClick
         ) {
-          // eslint-disable-next-line
-          console.log('get in here');
           document.getElementById(steps[index].target.slice(1)).click();
           setActiveTourStep(index + 1);
         } else {
@@ -87,8 +80,6 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
     setIsTourOpen(true); // Start the tour automatically
   }, []);
 
-  // eslint-disable-next-line
-  console.log(tourSteps);
   return (
     <TourContext.Provider value={contextValue}>
       <Joyride
@@ -99,6 +90,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
         styles={{
           options: {
             spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
+            zIndex: 1500,
           },
         }}
         showProgress
