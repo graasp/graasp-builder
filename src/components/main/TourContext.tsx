@@ -72,6 +72,9 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
       } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
         // Need to set our running state to false, so we can restart if we click start again.
         setIsTourOpen(false);
+      } else if (type === EVENTS.TOOLTIP_CLOSE) {
+        // Stop the tour when the closeTooltip button is clicked
+        setIsTourOpen(false);
       }
     },
     [steps],
