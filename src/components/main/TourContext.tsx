@@ -21,7 +21,7 @@ type TourContextData = {
 
 type TourProps = {
   children: React.ReactElement;
-  run: boolean;
+  run?: boolean;
 };
 
 export const TourContext = React.createContext<TourContextData | undefined>(
