@@ -60,7 +60,7 @@ const App = (): JSX.Element => {
   );
 
   return (
-    <Tour run={false}>
+    <Tour>
       <Routes>
         <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
         <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
