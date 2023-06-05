@@ -22,6 +22,7 @@ import FavoriteItems from './main/FavoriteItems';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
 import Redirect from './main/Redirect';
+import { Tour } from './main/TourContext';
 import MemberProfileScreen from './member/MemberProfileScreen';
 
 const App = (): JSX.Element => {
@@ -59,20 +60,25 @@ const App = (): JSX.Element => {
   );
 
   return (
-    <Routes>
-      <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
-      <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
-      <Route
-        path={FAVORITE_ITEMS_PATH}
-        element={<FavoriteWithAuthorization />}
-      />
-      <Route path={buildItemPath()} element={<ItemScreen />} />
-      <Route path={MEMBER_PROFILE_PATH} element={<MemberWithAuthorization />} />
-      <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
-      <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
-      <Route path={REDIRECT_PATH} element={<Redirect />} />
-      <Route element={<Redirect />} />
-    </Routes>
+    <Tour run={false}>
+      <Routes>
+        <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
+        <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
+        <Route
+          path={FAVORITE_ITEMS_PATH}
+          element={<FavoriteWithAuthorization />}
+        />
+        <Route path={buildItemPath()} element={<ItemScreen />} />
+        <Route
+          path={MEMBER_PROFILE_PATH}
+          element={<MemberWithAuthorization />}
+        />
+        <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
+        <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
+        <Route path={REDIRECT_PATH} element={<Redirect />} />
+        <Route element={<Redirect />} />
+      </Routes>
+    </Tour>
   );
 };
 
