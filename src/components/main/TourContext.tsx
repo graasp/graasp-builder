@@ -12,6 +12,7 @@ export type Step = JoyrideStep & {
   target: string;
   timestamp: string;
   requireClick?: boolean;
+  clickForBackId?: string;
 };
 
 type TourContextData = {
@@ -76,6 +77,40 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
     [steps],
   );
 
+  const waitForTargetElement = (targetSelector, callback) => {
+    const interval = setInterval(() => {
+      const targetElement = document.querySelector(targetSelector);
+      if (targetElement) {
+        clearInterval(interval);
+        callback();
+      }
+    }, 100);
+  };
+
+  useEffect(() => {
+    const handleTargetClick = () => {
+      waitForTargetElement(steps[activeTourStep + 1].target, () => {
+        setActiveTourStep(activeTourStep + 1);
+      });
+    };
+
+    const currentStep = steps[activeTourStep];
+
+    if (currentStep && currentStep.requireClick) {
+      // Attach click event listener to the target component
+      const targetElement = document.querySelector(currentStep.target);
+      targetElement.addEventListener('click', handleTargetClick);
+    }
+
+    return () => {
+      if (currentStep && currentStep.requireClick) {
+        // Clean up the click event listener when the step changes
+        const targetElement = document.querySelector(currentStep.target);
+        targetElement.removeEventListener('click', handleTargetClick);
+      }
+    };
+  }, [activeTourStep, steps]);
+
   useEffect(() => {
     setIsTourOpen(true); // Start the tour automatically
   }, []);
@@ -95,6 +130,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
         }}
         showProgress
         showSkipButton
+        spotlightClicks
         stepIndex={activeTourStep}
         callback={handleJoyrideCallback}
       />
