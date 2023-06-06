@@ -12,7 +12,9 @@ export type Step = JoyrideStep & {
   target: string;
   timestamp: string;
   requireClick?: boolean;
-  clickForBackId?: string;
+  clickForBackTarget?: string;
+  requireTextInput?: true;
+  exampleTextInput?: string;
 };
 
 type TourContextData = {
@@ -70,10 +72,18 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
         ) {
           document.getElementById(steps[index].target.slice(1)).click();
           setActiveTourStep(index + 1);
+        } else if (action === ACTIONS.NEXT && steps[index].requireTextInput) {
+          const textField = document.getElementById(
+            steps[index].target.slice(1),
+          ) as HTMLTextAreaElement;
+          if (textField.value === '') {
+            textField.value = steps[index].exampleTextInput;
+          }
+          setActiveTourStep(index + 1);
         } else {
-          if (action === ACTIONS.PREV && steps[index].clickForBackId) {
+          if (action === ACTIONS.PREV && steps[index].clickForBackTarget) {
             const backElement = document.querySelector(
-              steps[index].clickForBackId,
+              steps[index].clickForBackTarget,
             ) as HTMLElement;
             backElement.click();
           }
@@ -94,7 +104,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
         clearInterval(interval);
         callback();
       }
-    }, 100);
+    }, 100); // TODO: add a timeout to this
   };
 
   useEffect(() => {

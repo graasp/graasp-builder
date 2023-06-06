@@ -4,6 +4,7 @@ import {
   CREATE_ITEM_BUTTON_ID,
   CREATE_ITEM_FOLDER_ID,
   ITEM_FORM_CANCEL_BUTTON_ID,
+  ITEM_FORM_NAME_INPUT_ID,
 } from '../../config/selectors';
 
 const navigationSteps = [
@@ -56,7 +57,16 @@ const createItem = [
     disableBeacon: true,
     disableOverlayClose: true,
     timestamp: 'now',
-    clickForBackId: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
+    clickForBackTarget: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
+  },
+  {
+    target: `#${ITEM_FORM_NAME_INPUT_ID}`,
+    content: 'name info',
+    disableBeacon: true,
+    disableOverlayClose: true,
+    timestamp: 'now',
+    requireTextInput: true,
+    exampleTextInput: 'My new folder',
   },
 ];
 
