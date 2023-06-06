@@ -24,6 +24,7 @@ import { buildItemPath } from '../../config/paths';
 import { mutations } from '../../config/queryClient';
 import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
+  ITEM_FORM_CANCEL_BUTTON_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '../../config/selectors';
 import { InternalItemType, NewItemTabType } from '../../config/types';
@@ -190,7 +191,10 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       case ItemType.ETHERPAD:
         return (
           <>
-            <CancelButton onClick={handleClose} />
+            <CancelButton
+              onClick={handleClose}
+              id={ITEM_FORM_CANCEL_BUTTON_ID}
+            />
             <Button
               onClick={submitEtherpad}
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
@@ -206,7 +210,10 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       case ItemType.DOCUMENT:
         return (
           <>
-            <CancelButton onClick={handleClose} />
+            <CancelButton
+              onClick={handleClose}
+              id={ITEM_FORM_CANCEL_BUTTON_ID}
+            />
             <Button
               onClick={submit}
               id={ITEM_FORM_CONFIRM_BUTTON_ID}

@@ -56,7 +56,7 @@ const createItem = [
     disableBeacon: true,
     disableOverlayClose: true,
     timestamp: 'now',
-    clickForBackId: { ITEM_FORM_CANCEL_BUTTON_ID },
+    clickForBackId: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
   },
 ];
 

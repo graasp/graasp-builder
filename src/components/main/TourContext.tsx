@@ -71,6 +71,12 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           document.getElementById(steps[index].target.slice(1)).click();
           setActiveTourStep(index + 1);
         } else {
+          if (action === ACTIONS.PREV && steps[index].clickForBackId) {
+            const backElement = document.querySelector(
+              steps[index].clickForBackId,
+            ) as HTMLElement;
+            backElement.click();
+          }
           setActiveTourStep(index + (action === ACTIONS.PREV ? -1 : 1));
         }
       } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {

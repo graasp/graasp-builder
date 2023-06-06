@@ -10,12 +10,13 @@ import { useCommonTranslation } from '../../config/i18n';
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   color?: ButtonProps['color'];
+  id?: string;
 };
 
-const CancelButton = ({ onClick, color }: Props): JSX.Element => {
+const CancelButton = ({ onClick, color, id }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
   return (
-    <Button onClick={onClick} variant="text" color={color}>
+    <Button onClick={onClick} variant="text" color={color} id={id}>
       {translateCommon(COMMON.CANCEL_BUTTON)}
     </Button>
   );
