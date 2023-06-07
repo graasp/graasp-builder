@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["eslint"],
+      "groupName": "eslint packages"
+    },
+    {
+      "matchPackagePatterns": ["^@codemirror"],
+      "groupName": "codemirror packages"
+    },
+    {
+      "matchPackagePatterns": ["^@sentry"],
+      "groupName": "sentry packages"
+    },
+    {
+      "matchPackagePatterns": ["^@commitlint/"],
+      "groupName": "commitlint packages"
+    },
+    {
+      "matchPackagePatterns": ["lodash"],
+      "groupName": "lodash packages"
+    },
+    {
+      "matchPackagePatterns": ["^@uppy/"],
+      "groupName": "uppy packages"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "devDependencies (non-major)"
+    },
+    {
+      "matchPackagePatterns": ["mui"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "mui (non-major)"
+    }
+  ]
+}
