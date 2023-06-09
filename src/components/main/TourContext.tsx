@@ -1,21 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Joyride, {
-  ACTIONS,
-  EVENTS,
-  Step as JoyrideStep,
-  STATUS,
-} from 'react-joyride';
+import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 
-import { steps as mainTourSteps } from './mainTour';
-
-export type Step = JoyrideStep & {
-  target: string;
-  timestamp: string;
-  requireClick?: boolean;
-  clickForBackTarget?: string;
-  requireTextInput?: true;
-  exampleTextInput?: string;
-};
+import { Step, steps as mainTourSteps } from './mainTour';
 
 type TourContextData = {
   tourSteps: Step[];
@@ -33,9 +19,11 @@ export const TourContext = React.createContext<TourContextData | undefined>(
 
 export const Tour: React.FC<TourProps> = ({ children, run }) => {
   const [tourSteps, setTourSteps] = useState<Step[]>([]);
-  const [steps] = useState<Step[]>(mainTourSteps);
+  const [itemId, setItemId] = useState('');
+  const [steps, setSteps] = useState<Step[]>(mainTourSteps(itemId));
   const [activeTourStep, setActiveTourStep] = useState(0);
   const [isTourOpen, setIsTourOpen] = useState(false);
+  const [isTourReady, setIsTourReady] = useState(true);
 
   const addTourStep = useCallback((step: Step) => {
     setTourSteps((prevSteps) => [
@@ -53,50 +41,6 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
     [tourSteps, addTourStep],
   );
 
-  const handleJoyrideCallback = useCallback(
-    (data) => {
-      const { action, index, status, type } = data;
-
-      if (action === ACTIONS.CLOSE) {
-        setIsTourOpen(false);
-      }
-
-      if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
-        // Update state to advance the tour
-        const isNextStep = steps.length > index + 1;
-
-        if (
-          action === ACTIONS.NEXT &&
-          isNextStep &&
-          steps[index].requireClick
-        ) {
-          document.getElementById(steps[index].target.slice(1)).click();
-          setActiveTourStep(index + 1);
-        } else if (action === ACTIONS.NEXT && steps[index].requireTextInput) {
-          const textField = document.getElementById(
-            steps[index].target.slice(1),
-          ) as HTMLTextAreaElement;
-          if (textField.value === '') {
-            textField.value = steps[index].exampleTextInput;
-          }
-          setActiveTourStep(index + 1);
-        } else {
-          if (action === ACTIONS.PREV && steps[index].clickForBackTarget) {
-            const backElement = document.querySelector(
-              steps[index].clickForBackTarget,
-            ) as HTMLElement;
-            backElement.click();
-          }
-          setActiveTourStep(index + (action === ACTIONS.PREV ? -1 : 1));
-        }
-      } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-        // Need to set our running state to false, so we can restart if we click start again.
-        setIsTourOpen(false);
-      }
-    },
-    [steps],
-  );
-
   const waitForTargetElement = (targetSelector, callback) => {
     const interval = setInterval(() => {
       const targetElement = document.querySelector(targetSelector);
@@ -107,29 +51,253 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
     }, 100); // TODO: add a timeout to this
   };
 
+  const handleItemId = (fullId: string, prefix: string) => {
+    console.log('handle iddddd: ', fullId?.substring(prefix.length));
+    console.log('fullID: ', fullId);
+
+    setItemId(fullId?.substring(prefix.length));
+    //  setItemId('f575a2d0-6e30-4531-9fe4-e8ed4a605458');
+  };
+
+  /**  const getNumberOfItems = useCallback(
+    (nextStepIndex: number) => {
+      for (let i = 0; i < tourSteps.length; i += 1) {
+        if (tourSteps[i].target === steps[nextStepIndex].parent) {
+          console.log('PARENT:', steps[nextStepIndex].parent);
+          return steps[nextStepIndex].numberOfItems;
+        }
+      }
+      return 0; // TODO might exist a better way
+    },
+    [steps, tourSteps],
+  ); */
+
+  /**  const waitForIncreaseElement = (targetSelector, nextStepIndex, start) => {
+    const interval = setInterval(() => {
+      const targetElement = document.querySelector(targetSelector);
+      const currentValue = getNumberOfItems(nextStepIndex);
+      console.log('CURRENT:', currentValue);
+      if (targetElement && currentValue > start) {
+        console.log('HEJSAN');
+        clearInterval(interval);
+        // callback();
+      }
+    }, 100); // TODO: add a timeout to this
+  }; */
+
+  const handleToggleStep = useCallback(
+    // TODO: Add timeout for this function so the tour doesn't get completely stuck
+    (
+      nextStepIndex: number,
+      target: string,
+      parent?: string,
+      _start?: number,
+      _waitFor?: (
+        parent?: string,
+        nextStepIndex?: number,
+        start?: number,
+      ) => void,
+    ) => {
+      // Check if the target element of the next step is mounted before advancing
+      const targetElement = document.querySelector(target);
+
+      if (targetElement && !parent) {
+        // waitFor?.(parent, nextStepIndex, start);
+        setActiveTourStep(nextStepIndex);
+      } else {
+        // Wait for the target element to be mounted using MutationObserver
+        const observer = new MutationObserver((mutationsList) => {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const mutation of mutationsList) {
+            if (
+              parent &&
+              mutation.type === 'childList' &&
+              mutation.addedNodes.length > 0
+            ) {
+              console.log('PARENTPARENT');
+              observer.disconnect();
+
+              // waitFor?.(parent, nextStepIndex, start);
+              setActiveTourStep(nextStepIndex);
+              return;
+            }
+
+            // eslint-disable-next-line no-restricted-syntax
+            for (const addedNode of mutation.addedNodes) {
+              if (
+                addedNode.nodeType === Node.ELEMENT_NODE &&
+                (addedNode as Element).matches(target)
+              ) {
+                observer.disconnect();
+
+                // waitFor?.(parent, nextStepIndex, start);
+                setActiveTourStep(nextStepIndex);
+                return;
+              }
+            }
+          }
+        });
+
+        if (parent) {
+          const parentElement = document.querySelector(parent);
+          observer.observe(parentElement, { childList: true, subtree: true });
+        } else {
+          observer.observe(document.body, { childList: true, subtree: true });
+        }
+      }
+    },
+    [],
+  );
+
+  const handleJoyrideCallback = useCallback(
+    (data) => {
+      const { action, index, status, type } = data;
+      console.log('Current target:', steps[index].target);
+
+      if (action === ACTIONS.CLOSE) {
+        setIsTourOpen(false);
+      }
+
+      const start = 0;
+      if (steps[index + 1].shouldIncrease) {
+        // start = getNumberOfItems(index + 1);
+        console.log('START:', start);
+      }
+
+      if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+        // Update state to advance the tour
+        const isNextStep = steps.length > index + 1;
+        console.log(steps[index].target);
+        if (
+          action === ACTIONS.NEXT &&
+          isNextStep &&
+          steps[index + 1].itemIdTarget
+        ) {
+          const idElement = document.querySelector(
+            steps[index + 1].itemIdTarget,
+          );
+          console.log(idElement);
+          handleItemId(idElement?.id, steps[index + 1].itemIdPrefix);
+        }
+
+        if (
+          action === ACTIONS.NEXT &&
+          isNextStep &&
+          steps[index].requireClick
+        ) {
+          const clickTarget = steps[index].clickTarget ?? steps[index].target;
+          (document.querySelector(clickTarget) as HTMLElement)?.click(); // TODO would be faster to use getElementById, if all steps are id's
+
+          handleToggleStep(
+            index + 1,
+            steps[index + 1].target,
+            steps[index + 1].parent,
+            start,
+            // waitForIncreaseElement,
+          );
+        } else if (
+          action === ACTIONS.NEXT &&
+          isNextStep &&
+          steps[index + 1].requireTextInput
+        ) {
+          const textField = document.getElementById(
+            steps[index + 1].target.slice(1),
+          ) as HTMLTextAreaElement;
+          if (textField.value === '' && !steps[index + 1].textTarget) {
+            // textField.value = steps[index].exampleTextInput;
+            for (let i = 0; i < tourSteps.length; i += 1) {
+              if (tourSteps[i].target === steps[index + 1].target) {
+                tourSteps[i].onTextChange?.({
+                  target: { value: steps[index + 1].exampleTextInput },
+                });
+              }
+            }
+            handleToggleStep(
+              index + 1,
+              steps[index + 1].target,
+              steps[index + 1].itemIdPrefix,
+            );
+          } else if (steps[index + 1].textTarget) {
+            // Because this will always be the textEditor
+            // TODOD right now this interrupts the tour.
+
+            // for (let i = 0; i < tourSteps.length; i += 1) {
+            //  if (tourSteps[i].target === steps[index + 1].target) {
+            //    tourSteps[i].onTextChange?.(steps[index + 1].exampleTextInput);
+            //  }
+            // }
+            handleToggleStep(
+              index + 1,
+              steps[index + 1].target,
+              steps[index + 1].itemIdPrefix,
+            );
+          }
+        } else if (isNextStep && action === ACTIONS.NEXT) {
+          handleToggleStep(
+            index + 1,
+            steps[index + 1].target,
+            steps[index + 1].itemIdPrefix,
+          );
+        } else if (action === ACTIONS.NEXT) {
+          setIsTourOpen(false); // TODO: better way to close the tour when finished
+        } else if (action === ACTIONS.PREV && steps[index].clickForBackTarget) {
+          const backElement = document.querySelector(
+            steps[index].clickForBackTarget,
+          ) as HTMLElement;
+          backElement?.click();
+          handleToggleStep(index - 1, steps[index - 1].target);
+        } else if (action === ACTIONS.PREV) {
+          handleToggleStep(index - 1, steps[index - 1].target);
+        }
+      } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+        // Need to set our running state to false, so we can restart if we click start again.
+        setIsTourOpen(false);
+      }
+    },
+    [steps, tourSteps, handleToggleStep],
+  );
+
   useEffect(() => {
     const handleTargetClick = () => {
-      waitForTargetElement(steps[activeTourStep + 1].target, () => {
-        setActiveTourStep(activeTourStep + 1);
-      });
+      if (activeTourStep + 1 < steps.length) {
+        waitForTargetElement(steps[activeTourStep + 1].target, () => {
+          handleToggleStep(
+            activeTourStep + 1,
+            steps[activeTourStep + 1].target,
+          ); // TODO: this might be enough now without the waitFor
+        });
+      }
     };
 
     const currentStep = steps[activeTourStep];
 
+    // To be able to step forward in the tour by pressing the target button
     if (currentStep && currentStep.requireClick) {
       // Attach click event listener to the target component
       const targetElement = document.querySelector(currentStep.target);
-      targetElement.addEventListener('click', handleTargetClick);
+      targetElement?.addEventListener('click', handleTargetClick);
     }
 
     return () => {
       if (currentStep && currentStep.requireClick) {
+        // TODO: check if this will actually clean up right eventlisterns
         // Clean up the click event listener when the step changes
         const targetElement = document.querySelector(currentStep.target);
-        targetElement.removeEventListener('click', handleTargetClick);
+        targetElement?.removeEventListener('click', handleTargetClick);
       }
     };
-  }, [activeTourStep, steps]);
+  }, [activeTourStep, steps, handleToggleStep]);
+
+  useEffect(() => {
+    setIsTourReady(false);
+    const newSteps = mainTourSteps(itemId);
+    console.log('itemId:', itemId);
+    console.log('newSteps:', newSteps);
+    setSteps(newSteps); // Start the tour automatically
+    console.log('steps:', steps);
+    console.log('id: ', itemId);
+    setIsTourReady(true);
+  }, [itemId]);
 
   useEffect(() => {
     setIsTourOpen(true); // Start the tour automatically
@@ -137,23 +305,25 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
 
   return (
     <TourContext.Provider value={contextValue}>
-      <Joyride
-        steps={mainTourSteps}
-        run={run || isTourOpen}
-        continuous
-        debug
-        styles={{
-          options: {
-            spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
-            zIndex: 1500,
-          },
-        }}
-        showProgress
-        showSkipButton
-        spotlightClicks
-        stepIndex={activeTourStep}
-        callback={handleJoyrideCallback}
-      />
+      {isTourReady && (
+        <Joyride
+          steps={steps}
+          run={run || isTourOpen}
+          continuous
+          debug
+          styles={{
+            options: {
+              spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
+              zIndex: 1500,
+            },
+          }}
+          showProgress
+          showSkipButton
+          spotlightClicks
+          stepIndex={activeTourStep}
+          callback={handleJoyrideCallback}
+        />
+      )}
       {children}
     </TourContext.Provider>
   );
