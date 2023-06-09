@@ -5,6 +5,7 @@ import { FolderItemTypeRecord } from '@graasp/sdk/frontend';
 import { TextEditor } from '@graasp/ui';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
+import TourStep from '../../main/TourStep';
 import BaseItemForm from './BaseItemForm';
 
 type Props = {
@@ -35,13 +36,23 @@ const FolderForm = ({
       />
 
       <Box sx={{ mt: 2 }}>
-        <TextEditor
-          id={FOLDER_FORM_DESCRIPTION_ID}
-          value={updatedProperties?.description || item?.description}
-          edit
-          onChange={onCaptionChange}
-          showActions={false}
-        />
+        <TourStep
+          step={{
+            target: `#${FOLDER_FORM_DESCRIPTION_ID}`,
+            content: 'hejehej',
+            timestamp: 'now',
+          }}
+          onTextChange={onCaptionChange}
+          focusModal
+        >
+          <TextEditor
+            id={FOLDER_FORM_DESCRIPTION_ID}
+            value={updatedProperties?.description || item?.description}
+            edit
+            onChange={onCaptionChange}
+            showActions={false}
+          />
+        </TourStep>
       </Box>
     </>
   );
