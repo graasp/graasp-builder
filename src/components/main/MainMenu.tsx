@@ -20,7 +20,6 @@ import {
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
-import TourStep from './TourStep';
 
 const StyledLink = styled('a')(({ theme }) => ({
   position: 'absolute',
@@ -80,21 +79,13 @@ const MainMenu = (): JSX.Element => {
           icon={<FolderIcon />}
           text={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
         />
-        <TourStep
-          step={{
-            target: `#hej`,
-            content: 'this is a shared items path',
-            timestamp: 'now',
-          }}
-        >
-          <MenuItem
-            id="hej"
-            onClick={() => goTo(SHARED_ITEMS_PATH)}
-            text={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-            icon={<FolderSharedIcon />}
-            selected={pathname === SHARED_ITEMS_PATH}
-          />
-        </TourStep>
+        <MenuItem
+          onClick={() => goTo(SHARED_ITEMS_PATH)}
+          text={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
+          icon={<FolderSharedIcon />}
+          selected={pathname === SHARED_ITEMS_PATH}
+        />
+
         <MenuItem
           onClick={() => goTo(FAVORITE_ITEMS_PATH)}
           selected={pathname === FAVORITE_ITEMS_PATH}
