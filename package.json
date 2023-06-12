@@ -13,7 +13,7 @@
     "@emotion/react": "11.11.0",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "2.0.0-rc.1",
-    "@graasp/query-client": "1.0.0-rc1",
+    "@graasp/query-client": "github:graasp/graasp-query-client#277-split-many-publish",
     "@graasp/sdk": "1.0.0-rc1",
     "@graasp/translations": "1.14.0",
     "@graasp/ui": "3.0.0-rc.2",

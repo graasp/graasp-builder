@@ -2505,9 +2505,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:1.0.0-rc1":
+"@graasp/query-client@github:graasp/graasp-query-client#277-split-many-publish":
   version: 1.0.0-rc1
-  resolution: "@graasp/query-client@npm:1.0.0-rc1"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=68cdb406762d8a1de9febe3dcf8c50557eb3e2ea"
   dependencies:
     "@graasp/sdk": 1.0.0-rc1
     "@graasp/translations": 1.13.0
@@ -2520,7 +2520,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 7e06c40b7b9375a2c84c703edc301988a0cdd57fa122d549f494f465e98cb719973c6c01fc4cfe0cff05764ee6300ffb09c80b0c4c14438020356f079914221a
+  checksum: 0d80c170f1317106db33efc6f7bbbca2185fa5bc5ef0a3899a05c4d1175166e073ac1208f96a1c9261a1a8ea18feb46e8bc3c082ee50548451a48ac205e290a8
   languageName: node
   linkType: hard
 
@@ -9912,7 +9912,7 @@ __metadata:
     "@emotion/styled": 11.11.0
     "@graasp/chatbox": 2.0.0-rc.1
     "@graasp/plugin-websockets": 1.0.0
-    "@graasp/query-client": 1.0.0-rc1
+    "@graasp/query-client": "github:graasp/graasp-query-client#277-split-many-publish"
     "@graasp/sdk": 1.0.0-rc1
     "@graasp/translations": 1.14.0
     "@graasp/ui": 3.0.0-rc.2
