@@ -2507,7 +2507,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#277-split-many-publish":
   version: 1.0.0-rc1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=e8e6478505a1261a4fb884f9f2bb2c3173c05c34"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=6e93bc0125404f817e23aa6742aafc29d4c77a85"
   dependencies:
     "@graasp/sdk": 1.0.0-rc1
     "@graasp/translations": 1.13.0
@@ -2520,7 +2520,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 5e845ec02e8d36b3fb7e318e3e8b30aa0805abe04cc36dca4e96819fc985f3e1405b89b9dc911b1042e9cc4ec3fcd95f7343c06f025976fd3beb4818cab61b59
+  checksum: 414a3e07312bf440e17be862a748ba03d4c468545ce110836e150ddda2271fb937c00e04ebdde7bb80964ed3d8abc46db504cb185532505493249b0a805ff4e7
   languageName: node
   linkType: hard
 
