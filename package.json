@@ -149,5 +149,5 @@
     "@types/react": "17.0.62",
     "@svgr/webpack": "6.5.1"
   },
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.6.0"
 }
