@@ -123,7 +123,6 @@ Cypress.Commands.add(
     postItemFlagError = false,
     getItemChatError = false,
     recycleItemsError = false,
-    // getRecycledItemsError = false,
     deleteItemTagError = false,
     restoreItemsError = false,
     getItemThumbnailError = false,

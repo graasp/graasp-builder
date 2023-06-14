@@ -48,7 +48,7 @@ describe('Recycle Item in Grid', () => {
 
   describe('Error handling', () => {
     it('error while deleting item does not recycle in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, recycleItemError: true });
+      cy.setUpApi({ ...SAMPLE_ITEMS, recycleItemsError: true });
       const { id } = SAMPLE_ITEMS.items[0];
       const { id: idToDelete } = SAMPLE_ITEMS.items[2];
 
