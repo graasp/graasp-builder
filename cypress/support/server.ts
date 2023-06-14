@@ -278,6 +278,7 @@ export const mockRecycleItems = (
       query: { id: new RegExp(ID_FORMAT) },
     },
     ({ url, reply }) => {
+      console.log('weofijoiwefk');
       let ids = qs.parse(url.slice(url.indexOf('?') + 1)).id as
         | string
         | string[];
@@ -286,6 +287,7 @@ export const mockRecycleItems = (
       }
 
       if (shouldThrowError) {
+        console.log('weiofjkm');
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
