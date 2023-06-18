@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { ChangeEvent, useContext, useEffect } from 'react';
 
-import { TourContext } from './TourContext';
+import { TourContext, TourContextData } from './TourContext';
 import { Step } from './mainTour';
 
 // import steps from './TourSteps.json';
@@ -8,7 +8,9 @@ import { Step } from './mainTour';
 type TourStepProps = {
   step: Step;
   children: React.ReactElement;
-  onTextChange?: (string) => void;
+  onTextChange?:
+    | ((content: string) => void)
+    | ((event: ChangeEvent<{ value: string }>) => void);
   focusModal?: boolean;
   itemId?: string;
   numberOfItems?: number;
@@ -21,7 +23,7 @@ const TourStep: React.FC<TourStepProps> = ({
   focusModal,
   numberOfItems,
 }) => {
-  const { addTourStep } = useContext(TourContext);
+  const { addTourStep } = useContext(TourContext) as TourContextData;
 
   useEffect(() => {
     let customStep = step;

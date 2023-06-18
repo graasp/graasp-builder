@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box';
 
-import { FC } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 

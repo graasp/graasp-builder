@@ -1,9 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 
 import { Step, steps as mainTourSteps } from './mainTour';
 
-type TourContextData = {
+export type TourContextData = {
   tourSteps: Step[];
   addTourStep: (step: Step) => void;
 };
@@ -41,7 +47,10 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
     [tourSteps, addTourStep],
   );
 
-  const waitForTargetElement = (targetSelector, callback) => {
+  const waitForTargetElement = (
+    targetSelector: string,
+    callback: () => void,
+  ) => {
     const interval = setInterval(() => {
       const targetElement = document.querySelector(targetSelector);
       if (targetElement) {
@@ -140,7 +149,12 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
 
         if (parent) {
           const parentElement = document.querySelector(parent);
-          observer.observe(parentElement, { childList: true, subtree: true });
+          if (parentElement) {
+            observer.observe(parentElement, {
+              childList: true,
+              subtree: true,
+            });
+          }
         } else {
           observer.observe(document.body, { childList: true, subtree: true });
         }
@@ -174,10 +188,13 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           steps[index + 1].itemIdTarget
         ) {
           const idElement = document.querySelector(
-            steps[index + 1].itemIdTarget,
+            steps[index + 1].itemIdTarget ?? '',
           );
           console.log(idElement);
-          handleItemId(idElement?.id, steps[index + 1].itemIdPrefix);
+          handleItemId(
+            idElement?.id ?? '',
+            steps[index + 1].itemIdPrefix ?? '',
+          );
         }
 
         if (
@@ -207,9 +224,12 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
             // textField.value = steps[index].exampleTextInput;
             for (let i = 0; i < tourSteps.length; i += 1) {
               if (tourSteps[i].target === steps[index + 1].target) {
+                // TODO check why it seems like the input is of the wrong type to typescript
+                // eslint-disable-next-line
+                // @ts-ignore
                 tourSteps[i].onTextChange?.({
-                  target: { value: steps[index + 1].exampleTextInput },
-                });
+                  target: { value: steps[index + 1].exampleTextInput ?? '' },
+                } as ChangeEvent<{ value: string }>);
               }
             }
             handleToggleStep(
@@ -242,7 +262,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           setIsTourOpen(false); // TODO: better way to close the tour when finished
         } else if (action === ACTIONS.PREV && steps[index].clickForBackTarget) {
           const backElement = document.querySelector(
-            steps[index].clickForBackTarget,
+            steps[index].clickForBackTarget ?? '',
           ) as HTMLElement;
           backElement?.click();
           handleToggleStep(index - 1, steps[index - 1].target);

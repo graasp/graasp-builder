@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { Step as JoyrideStep } from 'react-joyride';
 
 import {
@@ -24,7 +25,9 @@ export type Step = JoyrideStep & {
   requireTextInput?: true;
   exampleTextInput?: string;
   textTarget?: string;
-  onTextChange?: (string) => void;
+  onTextChange?:
+    | ((content: string) => void)
+    | ((event: ChangeEvent<{ value: string }>) => void);
   focusModal?: boolean;
   needsItemId?: boolean;
   itemIdPrefix?: string;
