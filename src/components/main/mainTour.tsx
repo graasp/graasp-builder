@@ -12,8 +12,7 @@ import {
   ITEM_FORM_NAME_INPUT_ID,
   ITEM_MAIN_CLASS,
   NAVIGATION_HOME_LINK_ID,
-  OWNED_ITEMS_ID,
-  buildItemsTableRowId,
+  OWNED_ITEMS_ID, // buildItemsTableRowId,
 } from '../../config/selectors';
 
 export type Step = JoyrideStep & {
@@ -39,6 +38,7 @@ export type Step = JoyrideStep & {
 };
 
 export const constructStepsWithId = (id: string): Step[] => {
+  console.log(id);
   const startOfTour: Step = {
     target: 'body',
     content: (
@@ -64,7 +64,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     content: 'End of tour',
     disableOverlayClose: true,
     timestamp: 'now',
-    clickForBackTarget: '#cell-name-0', // this is id for first row in item table TODO: get it in a better way,
+    clickForBackTarget: `#${HEADER_MEMBER_MENU_BUTTON_ID}`, // this is id for first row in item table TODO: get it in a better way,
     disableBeacon: true,
     placement: 'center' as const,
   };
@@ -136,20 +136,20 @@ export const constructStepsWithId = (id: string): Step[] => {
       shouldIncrease: true,
       clickForBackTarget: `#${CREATE_ITEM_BUTTON_ID}`, // TODO: would make more sense if this is added to the actual step and not the one after
     },
-    {
+    /* {
       target: buildItemsTableRowId(id),
       content: 'item info',
       timestamp: 'now',
       needsItemId: true,
-    },
+    }, */
     {
-      target: '#cell-actions-4',
+      target: '[id^=cell-actions-]', // will find the first one matching, not super reliable.
       content: 'item info',
       timestamp: 'now',
       needsItemId: true,
     },
     {
-      target: '#cell-actions-4 > button',
+      target: '[id^=cell-actions-] > button',
       content: 'item info',
       timestamp: 'now',
     },
@@ -158,7 +158,7 @@ export const constructStepsWithId = (id: string): Step[] => {
       content: 'your item',
       timestamp: 'now',
       disableBeacon: true,
-      clickTarget: '#cell-name-0', // this is id for first row in item table TODO: get it in a better way
+      clickTarget: '[id^=cell-name-]', // this is id for first row in item table TODO: get it in a better way
       requireClick: true,
     },
     {

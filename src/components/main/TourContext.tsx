@@ -173,7 +173,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
       }
 
       const start = 0;
-      if (steps[index + 1].shouldIncrease) {
+      if (steps[index + 1]?.shouldIncrease) {
         // start = getNumberOfItems(index + 1);
         console.log('START:', start);
       }
