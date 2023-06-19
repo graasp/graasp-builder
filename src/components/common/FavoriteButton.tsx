@@ -34,8 +34,8 @@ const FavoriteButton = ({
   const { data: member } = useCurrentUserContext();
   const { data: favorites } = hooks.useFavoriteItems();
   const { t: translateBuilder } = useBuilderTranslation();
-  const addFavorite = mutations.useFavoriteItem();
-  const deleteFavorite = mutations.useUnfavoriteItem();
+  const addFavorite = mutations.useAddFavoriteItem();
+  const deleteFavorite = mutations.useRemoveFavoriteItem();
 
   if (!member) {
     return null;

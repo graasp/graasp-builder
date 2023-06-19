@@ -2,6 +2,7 @@ import {
   DiscriminatedItem,
   FolderItemExtra,
   FolderItemType,
+  ItemFavorite,
   ItemLoginSchemaType,
   ItemSettings,
   ItemTagType,
@@ -184,6 +185,19 @@ export const SAMPLE_ITEMS: ApiConfig = {
   ],
   // memberships: [],
 };
+
+export const SAMPLE_FAVORITE: ItemFavorite[] = [
+  {
+    id: '49883c9b-050b-43d5-bd37-6921e25b55da5',
+    createdAt: new Date(),
+    item: sampleItems[1]
+  },
+  {
+    id: '49883c9b-050b-43d5-bd37-6921e25b55da',
+    createdAt: new Date(),
+    item: sampleItems[2]
+  },
+];
 
 export const RECYCLED_ITEM_DATA: RecycledItemData[] = [
   {

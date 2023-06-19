@@ -20,11 +20,13 @@ import { ITEM_VALIDATION_AND_REVIEW } from '../fixtures/validations';
 import './commands/item';
 import './commands/navigation';
 import {
+  mockAddFavorite,
   mockAppApiAccessToken,
   mockClearItemChat,
   mockCopyItems,
   mockDefaultDownloadFile,
   mockDeleteAppData,
+  mockDeleteFavorite,
   mockDeleteInvitation,
   mockDeleteItemCategory,
   mockDeleteItemLoginSchemaRoute,
@@ -45,6 +47,7 @@ import {
   mockGetItem,
   mockGetItemCategories,
   mockGetItemChat,
+  mockGetItemFavorites,
   mockGetItemInvitations,
   mockGetItemLoginSchema,
   mockGetItemLoginSchemaType,
@@ -99,6 +102,7 @@ Cypress.Commands.add(
   ({
     items = [],
     recycledItemData = [],
+    favoriteItems = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     mentions = SAMPLE_MENTIONS,
@@ -148,6 +152,9 @@ Cypress.Commands.add(
     postAppDataError = false,
     patchAppDataError = false,
     deleteAppDataError = false,
+    getFavoriteError = false,
+    addFavoriteError = false,
+    deleteFavoriteError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -304,6 +311,12 @@ Cypress.Commands.add(
     mockUpdatePassword(members, updatePasswordError);
 
     mockDeleteItemLoginSchemaRoute(items);
+
+    mockGetItemFavorites(favoriteItems, getFavoriteError)
+
+    mockAddFavorite(cachedItems, addFavoriteError)
+
+    mockDeleteFavorite(deleteFavoriteError)
   },
 );
 
