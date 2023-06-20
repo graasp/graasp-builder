@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useMatch } from 'react-router';
 
 import {
@@ -39,6 +39,7 @@ import LinkForm from '../item/form/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
 import ItemTypeTabs from './ItemTypeTabs';
+import TourContext, { TourContextData } from './TourContext';
 
 const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   flexGrow: 1,
@@ -62,6 +63,7 @@ type Props = {
 const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
+  const { isTourOpen } = useContext(TourContext) as TourContextData;
 
   const { padName, EtherpadForm } = useEtherpadForm();
 
@@ -241,7 +243,13 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="md"
+      fullWidth
+      disableEnforceFocus={isTourOpen}
+    >
       <StyledDialogContent>
         <ItemTypeTabs
           onTypeChange={setSelectedItemType}

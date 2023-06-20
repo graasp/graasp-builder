@@ -83,6 +83,16 @@ export const constructStepsWithId = (id: string): Step[] => {
       disableBeacon: true,
       timestamp: 'now',
     },
+    {
+      target:
+        'body > div.MuiDialog-root.MuiModal-root.css-zw3mfo-MuiModal-root-MuiDialog-root > div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container > div > div.MuiDialogContent-root.css-1751eu6-MuiDialogContent-root > div.MuiBox-root.css-1vozh7r',
+      content:
+        'There is multiple different items such as: Folders, Documents, Apps, Links to other web content.',
+      disableBeacon: true,
+      disableOverlayClose: true,
+      timestamp: 'now',
+      clickForBackTarget: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
+    },
 
     {
       target: `#${CREATE_ITEM_FOLDER_ID}`,

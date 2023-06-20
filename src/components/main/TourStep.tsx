@@ -23,7 +23,9 @@ const TourStep: React.FC<TourStepProps> = ({
   focusModal,
   numberOfItems,
 }) => {
-  const { addTourStep } = useContext(TourContext) as TourContextData;
+  const { addTourStep, removeTourStep } = useContext(
+    TourContext,
+  ) as TourContextData;
 
   useEffect(() => {
     let customStep = step;
@@ -32,7 +34,10 @@ const TourStep: React.FC<TourStepProps> = ({
     if (numberOfItems) customStep = { ...customStep, numberOfItems };
 
     addTourStep(customStep); // logic for filtering out the old tour step is in the context
-  }, [step, addTourStep, onTextChange, focusModal, numberOfItems]);
+
+    // no clean up on dismount, since we only have to get the functions etc. ones unless they change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, addTourStep, removeTourStep, focusModal, numberOfItems]);
 
   return children;
 };

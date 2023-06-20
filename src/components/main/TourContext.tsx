@@ -10,8 +10,10 @@ import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 import { Step, steps as mainTourSteps } from './mainTour';
 
 export type TourContextData = {
+  isTourOpen: boolean;
   tourSteps: Step[];
   addTourStep: (step: Step) => void;
+  removeTourStep: (step: Step) => void;
 };
 
 type TourProps = {
@@ -32,19 +34,37 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
   const [isTourReady, setIsTourReady] = useState(true);
 
   const addTourStep = useCallback((step: Step) => {
+    setTourSteps((prevSteps) => {
+      const newStep = { ...step, disableBeacon: true };
+      console.log('check add step');
+      const stepExists = prevSteps.some(
+        (s) => JSON.stringify(s) === JSON.stringify(newStep), // since order of properties will always be the same
+      );
+      console.log('PRevSteps:', prevSteps);
+      console.log('StepExists??', stepExists);
+      if (stepExists) {
+        return prevSteps; // If identical step already exists, return the previous steps
+      }
+      console.log('addsStep', step);
+      return [...prevSteps.filter((s) => s.target !== step.target), newStep];
+    });
+  }, []);
+
+  const removeTourStep = useCallback((step: Step) => {
     setTourSteps((prevSteps) => [
       ...prevSteps.filter((s) => s.target !== step.target),
-      { ...step, disableBeacon: true },
     ]);
   }, []);
 
   const contextValue = useMemo(
     // maybe don't have to add it to context every time, only if timestamp is less than last login
     () => ({
+      isTourOpen,
       tourSteps,
       addTourStep,
+      removeTourStep,
     }),
-    [tourSteps, addTourStep],
+    [tourSteps, addTourStep, removeTourStep, isTourOpen],
   );
 
   const waitForTargetElement = (
@@ -227,6 +247,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           const textField = document.getElementById(
             steps[index + 1].target.slice(1),
           ) as HTMLTextAreaElement;
+          console.log('TEXTFIELD value', textField.value);
           if (textField.value === '' && !steps[index + 1].textTarget) {
             // textField.value = steps[index].exampleTextInput;
             for (let i = 0; i < tourSteps.length; i += 1) {
@@ -235,7 +256,9 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
                 // eslint-disable-next-line
                 // @ts-ignore
                 tourSteps[i].onTextChange?.({
-                  target: { value: steps[index + 1].exampleTextInput ?? '' },
+                  target: {
+                    value: steps[index + 1].exampleTextInput as string,
+                  },
                 } as ChangeEvent<{ value: string }>);
               }
             }
