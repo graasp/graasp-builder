@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/graasp/graasp-builder/compare/v0.12.0...v1.0.0) (2023-06-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* typeorm ([#629](https://github.com/graasp/graasp-builder/issues/629))
+
+### Features
+
+* typeorm ([#629](https://github.com/graasp/graasp-builder/issues/629)) ([0e6b71d](https://github.com/graasp/graasp-builder/commit/0e6b71d206cad1bcbbbb3dcc9cf8e71b1964792e))
+
+
+### Bug Fixes
+
+* adapt optimistic mutations ([#649](https://github.com/graasp/graasp-builder/issues/649)) ([6a5d15d](https://github.com/graasp/graasp-builder/commit/6a5d15dac422f9518c6128bfd87849e01100a3c5))
+
+
+### chore
+
+* release 1.0.0 ([066cff6](https://github.com/graasp/graasp-builder/commit/066cff6d6be995a738b2da9471774232ca073169))
+
 ## [0.12.0](https://github.com/graasp/graasp-builder/compare/v0.11.2...v0.12.0) (2023-05-10)
 
 
