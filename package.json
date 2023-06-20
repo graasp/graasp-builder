@@ -13,8 +13,8 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "2.0.0-rc.1",
-    "@graasp/query-client": "github:graasp/graasp-query-client#refactor-favorite",
-    "@graasp/sdk": "github:graasp/graasp-sdk#refactor-favorite",
+    "@graasp/query-client": "1.0.0",
+    "@graasp/sdk": "1.0.0",
     "@graasp/translations": "1.14.0",
     "@graasp/ui": "3.0.0-rc.2",
     "@mui/icons-material": "5.11.16",
@@ -147,8 +147,7 @@
     "nth-check": "2.1.1",
     "react-error-overlay": "6.0.11",
     "@types/react": "17.0.62",
-    "@svgr/webpack": "6.5.1",
-    "@graasp/sdk": "github:graasp/graasp-sdk#refactor-favorite"
+    "@svgr/webpack": "6.5.1"
   },
   "packageManager": "yarn@3.5.1"
 }
