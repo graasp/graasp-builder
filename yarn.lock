@@ -4849,6 +4849,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/sdk@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@graasp/sdk@npm:1.1.0"
+  dependencies:
+    "@aws-sdk/client-s3": 3.353.0
+    "@fastify/secure-session": 6.1.0
+    "@graasp/etherpad-api": 2.1.1
+    fastify: 4.18.0
+    fluent-json-schema: 4.1.0
+    immutable: 4.3.0
+    js-cookie: 3.0.5
+    qs: 6.11.2
+    typeorm: 0.3.16
+    uuid: 9.0.0
+    validator: 13.9.0
+  checksum: d78fbef71fbaec66762433d571eb969c2c5c4b26fc8eec06a9b46e503ff507a9f8398414918e87f02319f1d0c08bbbc150e30f743a1d951caa45556e068fe474
+  languageName: node
+  linkType: hard
+
 "@graasp/translations@npm:1.13.0":
   version: 1.13.0
   resolution: "@graasp/translations@npm:1.13.0"
@@ -4867,9 +4886,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@graasp/ui@npm:3.0.0"
+"@graasp/ui@github:graasp/graasp-ui#367-navigation":
+  version: 3.0.0-rc.2
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=131bcf066f6dbb042cbaf16651692e2dcf8a8d6d"
   dependencies:
     "@graasp/sdk": 1.0.0-rc1
     clsx: 1.2.1
@@ -4902,7 +4921,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 2d259666f692c23852706e413902415386ec86bcecbd9d9c5d87d004c8d7a4a44161f20de5325a85a552738a45c437582af4434e4f1bbda9f6e464e9ae2a8b6e
+  checksum: c8ab4bc84c108f6fbabd9406835820019488216256a12dd3de5c94c053619752a0b609eac696e5b52e7dbe07df60def099d683903bd7268f084d8dc87a211d9c
   languageName: node
   linkType: hard
 
@@ -12485,9 +12504,9 @@ __metadata:
     "@graasp/chatbox": 2.0.0-rc.1
     "@graasp/plugin-websockets": 1.0.0
     "@graasp/query-client": 1.0.0
-    "@graasp/sdk": 1.0.0
+    "@graasp/sdk": 1.1.0
     "@graasp/translations": 1.15.0
-    "@graasp/ui": 3.0.0
+    "@graasp/ui": "github:graasp/graasp-ui#367-navigation"
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.134
