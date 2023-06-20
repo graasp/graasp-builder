@@ -45,6 +45,8 @@ export const constructStepsWithId = (id: string): Step[] => {
       <div>
         <h2>Welcome to Graasp</h2>
         <p>
+          This is a short tour that will show you some of the main features. If
+          you at anytime want to skip the tour, just click the skip button.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar
           sapien et lacus pellentesque, et iaculis enim ultrices. Ut venenatis
           tempus luctus. In sit amet lorem sit amet tortor fringilla tristique
@@ -73,7 +75,8 @@ export const constructStepsWithId = (id: string): Step[] => {
     // TODO, the stemps in the modal loses keyboard focus, so it's not possible to continue tour with keyboard!!
     {
       target: `#${CREATE_ITEM_BUTTON_ID}`,
-      content: 'Create Item info',
+      content:
+        'Click here to create a new item, either by uploading a file or creating it yourself. If you are inside a folder it will be added inside it.',
       disableOverlayClose: true,
       requireClick: true,
       spotlightClicks: false,
@@ -83,7 +86,8 @@ export const constructStepsWithId = (id: string): Step[] => {
 
     {
       target: `#${CREATE_ITEM_FOLDER_ID}`,
-      content: 'folder info',
+      content:
+        'There is multiple different items such as: Folders, Documents, Apps, Links to other web content.',
       disableBeacon: true,
       disableOverlayClose: true,
       timestamp: 'now',
@@ -91,7 +95,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     },
     {
       target: `#${ITEM_FORM_NAME_INPUT_ID}`,
-      content: 'name info',
+      content: 'When creating a Folder you will have to give it a name.',
       disableBeacon: true,
       disableOverlayClose: true,
       timestamp: 'now',
@@ -100,7 +104,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     },
     {
       target: `#${FOLDER_FORM_DESCRIPTION_ID}`,
-      content: 'description info',
+      content: 'If you want you can add a description to it here.',
       disableBeacon: true,
       disableOverlayClose: true,
       timestamp: 'now',
@@ -111,7 +115,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       // obs this doesn't add
       target: `#${ITEM_FORM_CONFIRM_BUTTON_ID}`,
-      content: 'Add button info',
+      content: 'Click the Add button to finsih creating the item.',
       disableOverlayClose: true,
       spotlightClicks: false,
       // clickTarget: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
@@ -126,7 +130,8 @@ export const constructStepsWithId = (id: string): Step[] => {
   const itemSteps: Step[] = [
     {
       target: 'div.ag-row-even:nth-child(1)', // TODO: get better way to pick the first item
-      content: 'your item',
+      content:
+        'The Folder is now added to you items here. When you have multiple items in the same place they will all be listed as a table here.',
       timestamp: 'now',
       itemIdPrefix: 'nameCellRenderer-',
       itemIdTarget:
@@ -144,18 +149,20 @@ export const constructStepsWithId = (id: string): Step[] => {
     }, */
     {
       target: '[id^=cell-actions-]', // will find the first one matching, not super reliable.
-      content: 'item info',
+      content:
+        'For each item you can edit the name of it, download it or multiple other things.',
       timestamp: 'now',
       needsItemId: true,
     },
     {
       target: '[id^=cell-actions-] > button',
-      content: 'item info',
+      content:
+        'Here you can do things such at deleting the item, moving it or copying it.',
       timestamp: 'now',
     },
     {
       target: 'div.ag-row-even:nth-child(1)', // TODO: get better way to pick the first item
-      content: 'your item',
+      content: 'Click the item to enter it.',
       timestamp: 'now',
       disableBeacon: true,
       clickTarget: '[id^=cell-name-]', // this is id for first row in item table TODO: get it in a better way
@@ -163,25 +170,28 @@ export const constructStepsWithId = (id: string): Step[] => {
     },
     {
       target: `.${ITEM_MAIN_CLASS}`, // TODO needs to have a good way to wait for target to load before moving forward.
-      content: 'item info',
+      content:
+        'Here you can change the content of your item. Since this is a folder you could, if you had items in your folder, reorder them to change the order your content is displayed. If this was a document you would be able to change the text here. And if it was an App you would be able to change the settings and the content of it here. ',
       clickForBackTarget: `#${NAVIGATION_HOME_LINK_ID}`,
       timestamp: 'now',
     },
     {
       target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Player}`,
-      content: 'Player Info',
+      content: 'In Player you can view how your content looks.',
       disableBeacon: true,
       disableOverlayClose: true,
       timestamp: 'now',
     },
     {
       target: '.css-m69qwo-MuiStack-root > span:nth-child(1)',
-      content: 'edit item',
+      content:
+        'Here you can edit the caption of the item. For some items the text edit box will appear under the item.',
       timestamp: 'now',
     },
     {
       target: '.itemMenuShareButton',
-      content: 'share item',
+      content:
+        'Here you can share the item, or current folder with other users. You can also set the viewing permissions.',
       timestamp: 'now',
       requireClick: true,
     },
@@ -205,7 +215,8 @@ export const constructStepsWithId = (id: string): Step[] => {
     startOfTour,
     {
       target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Builder}`,
-      content: 'Builder Info',
+      content:
+        'Right now you are in Builder. Here you can create documents and share them with other users among other things. ',
       disableBeacon: true,
       disableOverlayClose: true,
       timestamp: 'now',
@@ -214,24 +225,27 @@ export const constructStepsWithId = (id: string): Step[] => {
     ...itemSteps,
     {
       target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Library}`,
-      content: 'Library Info',
+      content:
+        'In the Library you can find courses other users have published.',
       disableBeacon: true,
       disableOverlayClose: true,
       clickForBackTarget: '.itemMenuShareButton',
       timestamp: 'now',
     },
     {
-      target: '.css-q9mey5',
-      content: 'Tutorial info',
+      target: '.css-q9mey5', // Can't change place with profile, tour will then skip this step
+      content:
+        'If you need some more information you can find it here in Tutorials.',
       timestamp: 'now',
       // requireClick: true,
       // clickTarget: '.css-kxftdr',
     },
     {
       target: `#${HEADER_MEMBER_MENU_BUTTON_ID}`,
-      content: 'profile info',
+      content:
+        'In the profile you can change language, set a profile picture and set a password (?). You could also redo the tour whenever you want.',
       requireClick: true,
-      clickTarget: '.css-kxftdr',
+      clickTarget: '.css-kxftdr', // TODO get better id
       timestamp: 'now',
     },
     endOfTour,
