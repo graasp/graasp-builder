@@ -24,7 +24,7 @@ type Props = {
 const isItemFavorite = (
   item: ItemRecord,
   favorites?: List<ItemFavoriteRecord>,
-): boolean => favorites?.map((f) => f.item.id).contains(item.id) || false;
+): boolean => favorites?.some((f) => f.item.id === item.id) || false;
 const FavoriteButton = ({
   item,
   size,
