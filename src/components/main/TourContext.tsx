@@ -172,6 +172,13 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
         setIsTourOpen(false);
       }
 
+      /* const cookieBannerElement = document.querySelector(
+        '#root > div.css-ab8yd1 > main > div.cookie-container-className', // TODO get dimensions of cookie banner
+      ) as HTMLElement;
+      const { top, left, width, height } =
+        cookieBannerElement.getBoundingClientRect();
+      console.log('cookiebanner', top, left, width, height); */
+
       const start = 0;
       if (steps[index + 1]?.shouldIncrease) {
         // start = getNumberOfItems(index + 1);
@@ -334,7 +341,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           styles={{
             options: {
               spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
-              zIndex: 1500,
+              zIndex: 1500, // TODO: Get zIndex dynamically
             },
           }}
           showProgress
