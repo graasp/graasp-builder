@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 
 import { Step, steps as mainTourSteps } from './mainTour';
@@ -239,49 +233,6 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
             start,
             // waitForIncreaseElement,
           );
-        } else if (
-          action === ACTIONS.NEXT &&
-          isNextStep &&
-          steps[index + 1].requireTextInput
-        ) {
-          const textField = document.getElementById(
-            steps[index + 1].target.slice(1),
-          ) as HTMLTextAreaElement;
-          console.log('TEXTFIELD value', textField.value);
-          if (textField.value === '' && !steps[index + 1].textTarget) {
-            // textField.value = steps[index].exampleTextInput;
-            for (let i = 0; i < tourSteps.length; i += 1) {
-              if (tourSteps[i].target === steps[index + 1].target) {
-                // TODO check why it seems like the input is of the wrong type to typescript
-                // eslint-disable-next-line
-                // @ts-ignore
-                tourSteps[i].onTextChange?.({
-                  target: {
-                    value: steps[index + 1].exampleTextInput as string,
-                  },
-                } as ChangeEvent<{ value: string }>);
-              }
-            }
-            handleToggleStep(
-              index + 1,
-              steps[index + 1].target,
-              steps[index + 1].itemIdPrefix,
-            );
-          } else if (steps[index + 1].textTarget) {
-            // Because this will always be the textEditor
-            // TODOD right now this interrupts the tour.
-
-            // for (let i = 0; i < tourSteps.length; i += 1) {
-            //  if (tourSteps[i].target === steps[index + 1].target) {
-            //    tourSteps[i].onTextChange?.(steps[index + 1].exampleTextInput);
-            //  }
-            // }
-            handleToggleStep(
-              index + 1,
-              steps[index + 1].target,
-              steps[index + 1].itemIdPrefix,
-            );
-          }
         } else if (isNextStep && action === ACTIONS.NEXT) {
           handleToggleStep(
             index + 1,
@@ -314,6 +265,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           handleToggleStep(
             activeTourStep + 1,
             steps[activeTourStep + 1].target,
+            steps[activeTourStep + 1].parent,
           ); // TODO: this might be enough now without the waitFor
         });
       }
@@ -324,7 +276,9 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
     // To be able to step forward in the tour by pressing the target button
     if (currentStep && currentStep.requireClick) {
       // Attach click event listener to the target component
-      const targetElement = document.querySelector(currentStep.target);
+      const targetElement = document.querySelector(
+        currentStep.clickTarget ?? currentStep.target,
+      );
       targetElement?.addEventListener('click', handleTargetClick);
     }
 
@@ -332,7 +286,9 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
       if (currentStep && currentStep.requireClick) {
         // TODO: check if this will actually clean up right eventlisterns
         // Clean up the click event listener when the step changes
-        const targetElement = document.querySelector(currentStep.target);
+        const targetElement = document.querySelector(
+          currentStep.clickTarget ?? currentStep.target,
+        );
         targetElement?.removeEventListener('click', handleTargetClick);
       }
     };

@@ -19,7 +19,6 @@ import {
   CREATE_ITEM_ZIP_ID,
 } from '../../config/selectors';
 import { InternalItemType, NewItemTabType } from '../../config/types';
-import TourStep from './TourStep';
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.divider}`,
@@ -66,26 +65,18 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
       value={value}
       onChange={handleChange}
     >
-      <TourStep
-        step={{
-          target: `#${CREATE_ITEM_FOLDER_ID}`,
-          content: 'this is a nice folder tab',
-          timestamp: 'now',
-        }}
-      >
-        <Tab
-          id={CREATE_ITEM_FOLDER_ID}
-          value={ItemType.FOLDER}
-          label={translateBuilder(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
-          icon={
-            <ItemIcon
-              alt={translateBuilder(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
-              type={ItemType.FOLDER}
-              sx={{ mb: 0 }}
-            />
-          }
-        />
-      </TourStep>
+      <Tab
+        id={CREATE_ITEM_FOLDER_ID}
+        value={ItemType.FOLDER}
+        label={translateBuilder(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
+        icon={
+          <ItemIcon
+            alt={translateBuilder(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
+            type={ItemType.FOLDER}
+            sx={{ mb: 0 }}
+          />
+        }
+      />
       <Tab
         id={CREATE_ITEM_FILE_ID}
         value={ItemType.LOCAL_FILE}

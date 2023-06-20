@@ -83,16 +83,6 @@ export const constructStepsWithId = (id: string): Step[] => {
       disableBeacon: true,
       timestamp: 'now',
     },
-    {
-      target:
-        'body > div.MuiDialog-root.MuiModal-root.css-zw3mfo-MuiModal-root-MuiDialog-root > div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container > div > div.MuiDialogContent-root.css-1751eu6-MuiDialogContent-root > div.MuiBox-root.css-1vozh7r',
-      content:
-        'There is multiple different items such as: Folders, Documents, Apps, Links to other web content.',
-      disableBeacon: true,
-      disableOverlayClose: true,
-      timestamp: 'now',
-      clickForBackTarget: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
-    },
 
     {
       target: `#${CREATE_ITEM_FOLDER_ID}`,
@@ -107,6 +97,7 @@ export const constructStepsWithId = (id: string): Step[] => {
       target: `#${ITEM_FORM_NAME_INPUT_ID}`,
       content: 'When creating a Folder you will have to give it a name.',
       disableBeacon: true,
+      spotlightClicks: false,
       disableOverlayClose: true,
       timestamp: 'now',
       requireTextInput: true,
@@ -117,10 +108,23 @@ export const constructStepsWithId = (id: string): Step[] => {
       content: 'If you want you can add a description to it here.',
       disableBeacon: true,
       disableOverlayClose: true,
+      spotlightClicks: false,
       timestamp: 'now',
       requireTextInput: true,
       textTarget: `#${FOLDER_FORM_DESCRIPTION_ID} .ql-editor > p`, // needs to change when quil editor updates
       exampleTextInput: 'My folder description',
+    },
+    {
+      target:
+        'body > div.MuiDialog-root.MuiModal-root.css-zw3mfo-MuiModal-root-MuiDialog-root > div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container > div > div.MuiDialogContent-root.css-1751eu6-MuiDialogContent-root > div.MuiBox-root.css-1vozh7r',
+      content: 'Lets create your first item. Click Next when you are done',
+      disableBeacon: true,
+      disableOverlayClose: true,
+      placement: 'bottom',
+      timestamp: 'now',
+
+      // clickTarget: `#${ITEM_FORM_CONFIRM_BUTTON_ID}`,
+      // requireClick: true, // Handle how this should be when it's the last step
     },
     {
       // obs this doesn't add
@@ -131,9 +135,10 @@ export const constructStepsWithId = (id: string): Step[] => {
       // clickTarget: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
       // hideCloseButton: true,
       // hideFooter: true,
-      requireClick: true, // Handle how this should be when it's the last step
       disableBeacon: true,
       timestamp: 'now',
+      requireClick: true,
+      clickTarget: `#${ITEM_FORM_CONFIRM_BUTTON_ID}`,
     },
   ];
 
@@ -147,6 +152,7 @@ export const constructStepsWithId = (id: string): Step[] => {
       itemIdTarget:
         'div.ag-row-even:nth-child(1) >  div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > div:nth-child(1)',
       disableBeacon: true,
+      hideBackButton: true,
       parent: `#${OWNED_ITEMS_ID}`,
       shouldIncrease: true,
       clickForBackTarget: `#${CREATE_ITEM_BUTTON_ID}`, // TODO: would make more sense if this is added to the actual step and not the one after

@@ -8,7 +8,6 @@ import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
-import TourStep from '../../main/TourStep';
 
 export type BaseFormProps = {
   updatedProperties: Partial<DiscriminatedItem>;
@@ -30,27 +29,18 @@ const BaseForm = ({
   };
 
   return (
-    <TourStep
-      onTextChange={handleNameInput}
-      step={{
-        target: `#${ITEM_FORM_NAME_INPUT_ID}`,
-        content: 'hejehej',
-        timestamp: 'now',
-      }}
-    >
-      <TextField
-        variant="standard"
-        autoFocus
-        required={required}
-        id={ITEM_FORM_NAME_INPUT_ID}
-        label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
-        value={updatedProperties?.name ?? item?.name}
-        onChange={handleNameInput}
-        // always shrink because setting name from defined app does not shrink automatically
-        InputLabelProps={{ shrink: true }}
-        sx={{ width: '50%', my: 1 }}
-      />
-    </TourStep>
+    <TextField
+      variant="standard"
+      autoFocus
+      required={required}
+      id={ITEM_FORM_NAME_INPUT_ID}
+      label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
+      value={updatedProperties?.name ?? item?.name}
+      onChange={handleNameInput}
+      // always shrink because setting name from defined app does not shrink automatically
+      InputLabelProps={{ shrink: true }}
+      sx={{ width: '50%', my: 1 }}
+    />
   );
 };
 
