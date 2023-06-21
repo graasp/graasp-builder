@@ -30,6 +30,9 @@ export type Step = JoyrideStep & {
   focusModal?: boolean;
   needsItemId?: boolean;
   itemIdPrefix?: string;
+  nextButtonSetting?: 'skipStep' | 'hidden';
+  altClickTarget?: string;
+  skipStepButton?: boolean;
   clickTarget?: string;
   numberOfItems?: number;
   parent?: string;
@@ -66,7 +69,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     content: 'End of tour',
     disableOverlayClose: true,
     timestamp: 'now',
-    clickForBackTarget: `#${HEADER_MEMBER_MENU_BUTTON_ID}`, // this is id for first row in item table TODO: get it in a better way,
+    clickForBackTarget: '[id^=cell-name-]', // this is id for first row in item table TODO: get it in a better way,
     disableBeacon: true,
     placement: 'center' as const,
   };
@@ -87,7 +90,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target: `#${CREATE_ITEM_FOLDER_ID}`,
       content:
-        'There is multiple different items such as: Folders, Documents, Apps, Links to other web content.',
+        'There is multiple different items such as: Folders, Documents, Applications, Links to other web content.',
       disableBeacon: true,
       disableOverlayClose: true,
       timestamp: 'now',
@@ -97,8 +100,8 @@ export const constructStepsWithId = (id: string): Step[] => {
       target: `#${ITEM_FORM_NAME_INPUT_ID}`,
       content: 'When creating a Folder you will have to give it a name.',
       disableBeacon: true,
-      spotlightClicks: false,
       disableOverlayClose: true,
+      spotlightClicks: true,
       timestamp: 'now',
       requireTextInput: true,
       exampleTextInput: 'My new folder',
@@ -108,7 +111,7 @@ export const constructStepsWithId = (id: string): Step[] => {
       content: 'If you want you can add a description to it here.',
       disableBeacon: true,
       disableOverlayClose: true,
-      spotlightClicks: false,
+      spotlightClicks: true,
       timestamp: 'now',
       requireTextInput: true,
       textTarget: `#${FOLDER_FORM_DESCRIPTION_ID} .ql-editor > p`, // needs to change when quil editor updates
@@ -117,9 +120,10 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target:
         'body > div.MuiDialog-root.MuiModal-root.css-zw3mfo-MuiModal-root-MuiDialog-root > div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container > div > div.MuiDialogContent-root.css-1751eu6-MuiDialogContent-root > div.MuiBox-root.css-1vozh7r',
-      content: 'Lets create your first item. Click Next when you are done',
+      content: 'Lets create your first Folder. Click Next when you are done',
       disableBeacon: true,
       disableOverlayClose: true,
+      spotlightClicks: true,
       placement: 'bottom',
       timestamp: 'now',
 
@@ -129,7 +133,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       // obs this doesn't add
       target: `#${ITEM_FORM_CONFIRM_BUTTON_ID}`,
-      content: 'Click the Add button to finsih creating the item.',
+      content: 'Click the Add button to finish creating the item.',
       disableOverlayClose: true,
       spotlightClicks: false,
       // clickTarget: `#${ITEM_FORM_CANCEL_BUTTON_ID}`,
@@ -166,7 +170,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target: '[id^=cell-actions-]', // will find the first one matching, not super reliable.
       content:
-        'For each item you can edit the name of it, download it or multiple other things.',
+        'For each item you can edit the name of it, download it or do multiple other things.',
       timestamp: 'now',
       needsItemId: true,
     },
@@ -181,20 +185,27 @@ export const constructStepsWithId = (id: string): Step[] => {
       content: 'Click the item to enter it.',
       timestamp: 'now',
       disableBeacon: true,
+      spotlightClicks: true, // Might not want this
       clickTarget: '[id^=cell-name-]', // this is id for first row in item table TODO: get it in a better way
       requireClick: true,
     },
     {
       target: `.${ITEM_MAIN_CLASS}`, // TODO needs to have a good way to wait for target to load before moving forward.
       content:
-        'Here you can change the content of your item. Since this is a folder you could, if you had items in your folder, reorder them to change the order your content is displayed. If this was a document you would be able to change the text here. And if it was an App you would be able to change the settings and the content of it here. ',
+        'Here you can change the content of your item. Depeding on which kind of item, you can do different things. For example reorder items in folders, edit documents or change settings for applications',
       clickForBackTarget: `#${NAVIGATION_HOME_LINK_ID}`,
       timestamp: 'now',
     },
     {
       target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Player}`,
-      content: 'In Player you can view how your content looks.',
+      content: (
+        <p>
+          In <b>Player</b> you can view how your content looks. It will be in
+          the same order as here in Builder.
+        </p>
+      ),
       disableBeacon: true,
+      spotlightClicks: false,
       disableOverlayClose: true,
       timestamp: 'now',
     },
@@ -211,18 +222,69 @@ export const constructStepsWithId = (id: string): Step[] => {
       timestamp: 'now',
       requireClick: true,
     },
-    {
+    /* {
       target: '.MuiContainer-root',
       content: 'share info',
       clickForBackTarget: '.itemMenuShareButton',
       isFixed: true,
       timestamp: 'now',
+    }, */
+    {
+      // TODO get better selector
+      target: '#createMembershipFormId',
+      content: (
+        <p>
+          Here you can invite people to your item by adding their email. You can
+          decide how much control they will have over the item by setting the
+          permission.
+          <br />
+          <br />
+          <i>Read</i>, they can only view.
+          <br />
+          <i>Write</i>, they can edit the content.
+          <br />
+          <i>Admin</i>, they can do everything you can such as changing settings
+          and inviting other people
+        </p>
+      ),
+      clickForBackTarget: '.itemMenuShareButton',
+      timestamp: 'now',
     },
     {
+      // TODO get better selector
+      target:
+        '#root > div.css-ab8yd1 > main > div.itemMain > div.MuiBox-root.css-17ivyl1 > div.MuiContainer-root.MuiContainer-maxWidthLg.MuiContainer-disableGutters.css-1p4tas-MuiContainer-root > div.MuiStack-root.css-34nz0c-MuiStack-root',
+      content:
+        'You could also share this link going to your item with others. You can decide if it should go to Player or to Builder.',
+      timestamp: 'now',
+    },
+    {
+      // TODO get better selector
+      target:
+        '#root > div.css-ab8yd1 > main > div.itemMain > div.MuiBox-root.css-17ivyl1 > div.MuiContainer-root.MuiContainer-maxWidthLg.MuiContainer-disableGutters.css-1p4tas-MuiContainer-root > div.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.css-16xgmj2-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root',
+      content: (
+        <p>
+          Here you can decide who should be able to use the link.
+          <br />
+          <br />
+          <i>Public</i> - everyone with the link,
+          <br />
+          <i>Private</i> - only people you have added with their email,
+          <br />
+          <i>Pseudonymized</i> - those that Sign in to Graasp using a nickname{' '}
+        </p>
+      ),
+
+      timestamp: 'now',
+    },
+
+    {
       target: 'li.MuiListItem-root:nth-child(2)',
-      content: 'share info',
+      content:
+        'You can find items and folders other users have shared with you here.',
       clickTarget: '.itemMenuShareButton',
       requireClick: true,
+      spotlightClicks: false,
       timestamp: 'now',
     },
   ];
@@ -230,10 +292,31 @@ export const constructStepsWithId = (id: string): Step[] => {
   const mainSteps: Step[] = [
     startOfTour,
     {
-      target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Builder}`,
-      content:
-        'Right now you are in Builder. Here you can create documents and share them with other users among other things. ',
+      // TODO - it's not accessible since tooltip will lock in the keyboard focus
+      // TODO - should not wait for this step, since the cookie banner don't always have to be there!!!
+      target: '#root > div.css-ab8yd1 > main > div.cookie-container-className',
+      content: 'Lets start by accepting or declining cookies',
       disableBeacon: true,
+      disableOverlayClose: true,
+      requireClick: true,
+      clickTarget: '#decline-button-id',
+      altClickTarget: '#rcc-confirm-button',
+      nextButtonSetting: 'skipStep',
+      hideBackButton: true,
+      timestamp: 'now',
+      spotlightClicks: true,
+      showProgress: false,
+    },
+    {
+      target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Builder}`,
+      content: (
+        <p>
+          Right now you are in <b>Builder</b>. Here you can create documents and
+          share them with other users among other things.
+        </p>
+      ),
+      disableBeacon: true,
+      hideBackButton: true,
       disableOverlayClose: true,
       timestamp: 'now',
     },
@@ -241,8 +324,11 @@ export const constructStepsWithId = (id: string): Step[] => {
     ...itemSteps,
     {
       target: `#${APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS.Library}`,
-      content:
-        'In the Library you can find courses other users have published.',
+      content: (
+        <p>
+          In the <b>Library</b> you can find courses other users have published.
+        </p>
+      ),
       disableBeacon: true,
       disableOverlayClose: true,
       clickForBackTarget: '.itemMenuShareButton',

@@ -26,6 +26,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
   const [activeTourStep, setActiveTourStep] = useState(0);
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isTourReady, setIsTourReady] = useState(true);
+  const [nextButtonSetting, setNextButtonSetting] = useState('');
 
   const addTourStep = useCallback((step: Step) => {
     setTourSteps((prevSteps) => {
@@ -199,6 +200,21 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
         console.log('START:', start);
       }
 
+      if (
+        steps[index]?.requireClick &&
+        (
+          document.querySelector(
+            steps[index]?.clickTarget ?? steps[index]?.target,
+          ) as HTMLButtonElement
+        )?.disabled
+      ) {
+        setNextButtonSetting('hidden');
+      } else if (steps[index]?.nextButtonSetting) {
+        setNextButtonSetting(steps[index]?.nextButtonSetting as string);
+      } else {
+        setNextButtonSetting('');
+      }
+
       if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
         // Update state to advance the tour
         const isNextStep = steps.length > index + 1;
@@ -209,19 +225,20 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           steps[index + 1].itemIdTarget
         ) {
           const idElement = document.querySelector(
-            steps[index + 1].itemIdTarget ?? '',
+            steps[index + 1].itemIdTarget as string,
           );
           console.log(idElement);
           handleItemId(
-            idElement?.id ?? '',
-            steps[index + 1].itemIdPrefix ?? '',
+            idElement?.id as string,
+            steps[index + 1].itemIdPrefix as string,
           );
         }
 
         if (
           action === ACTIONS.NEXT &&
           isNextStep &&
-          steps[index].requireClick
+          steps[index].requireClick &&
+          !steps[index].altClickTarget // TODO for cookies banner, solve in a nicer way
         ) {
           const clickTarget = steps[index].clickTarget ?? steps[index].target;
           (document.querySelector(clickTarget) as HTMLElement)?.click(); // TODO would be faster to use getElementById, if all steps are id's
@@ -280,6 +297,14 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
         currentStep.clickTarget ?? currentStep.target,
       );
       targetElement?.addEventListener('click', handleTargetClick);
+
+      if (currentStep.altClickTarget) {
+        // TODO: code this nicer
+        const targetElement2 = document.querySelector(
+          currentStep.altClickTarget,
+        );
+        targetElement2?.addEventListener('click', handleTargetClick);
+      }
     }
 
     return () => {
@@ -290,6 +315,13 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           currentStep.clickTarget ?? currentStep.target,
         );
         targetElement?.removeEventListener('click', handleTargetClick);
+
+        if (currentStep.altClickTarget) {
+          const targetElement2 = document.querySelector(
+            currentStep.altClickTarget,
+          );
+          targetElement2?.removeEventListener('click', handleTargetClick);
+        }
       }
     };
   }, [activeTourStep, steps, handleToggleStep]);
@@ -322,10 +354,17 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
               spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
               zIndex: 1500, // TODO: Get zIndex dynamically
             },
+            buttonNext: {
+              visibility: nextButtonSetting === 'hidden' ? 'hidden' : 'visible',
+            },
+          }}
+          locale={{
+            skip: 'Close', // To only use either Close or Skip, since it's not really clear what the difference is between them
+            next: nextButtonSetting === 'skipStep' ? 'Skip step' : 'Next',
           }}
           showProgress
+          hideCloseButton // to only show skip button
           showSkipButton
-          spotlightClicks
           stepIndex={activeTourStep}
           callback={handleJoyrideCallback}
         />
