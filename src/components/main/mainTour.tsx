@@ -158,6 +158,7 @@ export const constructStepsWithId = (id: string): Step[] => {
         'div.ag-row-even:nth-child(1) >  div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > div:nth-child(1)',
       disableBeacon: true,
       hideBackButton: true,
+      disableScrolling: true,
       parent: `#${OWNED_ITEMS_ID}`,
       shouldIncrease: true,
       clickForBackTarget: `#${CREATE_ITEM_BUTTON_ID}`, // TODO: would make more sense if this is added to the actual step and not the one after
@@ -173,6 +174,8 @@ export const constructStepsWithId = (id: string): Step[] => {
       content:
         'For each item you can edit the name of it, download it or do multiple other things.',
       timestamp: 'now',
+      disableScrolling: true,
+      disableBeacon: true,
       needsItemId: true,
     },
     {
@@ -180,13 +183,15 @@ export const constructStepsWithId = (id: string): Step[] => {
       content:
         'Here you can do things such at deleting the item, moving it or copying it.',
       timestamp: 'now',
+      disableBeacon: true,
+      disableScrolling: true,
     },
     {
       target: 'div.ag-row-even:nth-child(1)', // TODO: get better way to pick the first item
       content: 'Click the item to enter it.',
       timestamp: 'now',
       disableBeacon: true,
-      spotlightClicks: true, // Might not want this
+      disableScrolling: true,
       clickTarget: '[id^=cell-name-]', // this is id for first row in item table TODO: get it in a better way
       requireClick: true,
     },
