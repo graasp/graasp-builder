@@ -48,13 +48,9 @@ export const constructStepsWithId = (id: string): Step[] => {
       <div>
         <h2>Welcome to Graasp</h2>
         <p>
-          This is a short tour that will show you some of the main features. If
-          you at anytime want to skip the tour, just click the skip button.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar
-          sapien et lacus pellentesque, et iaculis enim ultrices. Ut venenatis
-          tempus luctus. In sit amet lorem sit amet tortor fringilla tristique
-          eu id ipsum. Curabitur dignissim eleifend augue, sed dapibus justo
-          vestibulum vel.
+          This is a short tour that will show you some of the main features of
+          Graasp. It will help you getting started. If you at anytime want to
+          skip the tour, just click the close button.
         </p>
       </div>
     ),
@@ -66,7 +62,12 @@ export const constructStepsWithId = (id: string): Step[] => {
 
   const endOfTour: Step = {
     target: 'body',
-    content: 'End of tour',
+    content: (
+      <div>
+        <h2>End of tour</h2>
+        <p>Hope you now know a little about how to use Graasp. Enjoy!</p>
+      </div>
+    ),
     disableOverlayClose: true,
     timestamp: 'now',
     clickForBackTarget: '[id^=cell-name-]', // this is id for first row in item table TODO: get it in a better way,
