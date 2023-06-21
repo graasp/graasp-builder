@@ -1,4 +1,4 @@
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_FAVORITE, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { FAVORITE_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
 import {
   buildItemsTableRowIdAttribute,
@@ -9,7 +9,6 @@ import {
   FAVORITE_ITEMS_ID,
 } from '../../../../src/config/selectors';
 import {
-  buildMemberWithFavorites,
   CURRENT_USER,
 } from '../../../fixtures/members';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
@@ -22,13 +21,11 @@ const toggleFavoriteButton = (itemId) => {
   cy.get(`#${buildItemMenu(itemId)} .${FAVORITE_ITEM_BUTTON_CLASS}`).click();
 };
 
-const favoriteItems = [SAMPLE_ITEMS.items[1].id, SAMPLE_ITEMS.items[2].id];
-
 describe('Favorite Item', () => {
   describe('Member has no favorite items', () => {
     beforeEach(() => {
       cy.setUpApi({
-        ...SAMPLE_ITEMS,
+        ...SAMPLE_ITEMS
       });
       cy.visit(FAVORITE_ITEMS_PATH);
     });
@@ -42,7 +39,7 @@ describe('Favorite Item', () => {
     beforeEach(() => {
       cy.setUpApi({
         ...SAMPLE_ITEMS,
-        currentMember: buildMemberWithFavorites(favoriteItems),
+        favoriteItems: SAMPLE_FAVORITE
       });
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
       cy.visit(HOME_PATH);
@@ -58,29 +55,25 @@ describe('Favorite Item', () => {
 
       toggleFavoriteButton(item.id);
 
-      cy.wait('@editMember').then(
+      cy.wait('@favoriteItem').then(
         ({
-          request: {
-            body: { extra },
-          },
+          request
         }) => {
-          expect(extra.favoriteItems.includes(item.id));
+          expect(request.url).to.contain(item.id);
         },
       );
     });
 
     it('remove item from favorites', () => {
-      const itemId = favoriteItems[0];
+      const itemId = SAMPLE_ITEMS.items[1].id;
 
       toggleFavoriteButton(itemId);
 
-      cy.wait('@editMember').then(
+      cy.wait('@unfavoriteItem').then(
         ({
-          request: {
-            body: { extra },
-          },
+          request
         }) => {
-          expect(!extra.favoriteItems.includes(itemId));
+          expect(request.url).to.contain(itemId);
         },
       );
     });
@@ -88,31 +81,23 @@ describe('Favorite Item', () => {
     it('check favorite items view', () => {
       cy.visit(FAVORITE_ITEMS_PATH);
 
-      const itemId = favoriteItems[0];
+      const itemId = SAMPLE_ITEMS.items[1].id;
 
       cy.get(buildItemsTableRowIdAttribute(itemId)).should('exist');
     });
   });
 
   describe('Error Handling', () => {
-    it('check favorite items view with multiple deleted item', () => {
-      const itemId = 'ecafbd2a-5688-11eb-ae93-2212bc437002';
+    it('check favorite items view with server error', () => {
       cy.setUpApi({
         ...SAMPLE_ITEMS,
-        currentMember: buildMemberWithFavorites([itemId, favoriteItems[0]]),
+        getFavoriteError: true
       });
       cy.visit(FAVORITE_ITEMS_PATH);
 
-      // delete non existing id automatically
-      cy.wait('@editMember').then(
-        ({
-          request: {
-            body: { extra },
-          },
-        }) => {
-          expect(!extra.favoriteItems.includes(itemId));
-        },
-      );
+      it('Show empty table', () => {
+        cy.get(`#${FAVORITE_ITEMS_ID}`).should('exist');
+      });
     });
   });
 });

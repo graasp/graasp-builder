@@ -9,6 +9,7 @@ import {
   ChatMention,
   HttpMethod,
   Item,
+  ItemFavorite,
   ItemPublished,
   ItemTagType,
   ItemValidationGroup,
@@ -70,6 +71,7 @@ const {
   buildPostItemChatMessageRoute,
   buildClearItemChatRoute,
   GET_RECYCLED_ITEMS_DATA_ROUTE,
+  GET_FAVORITE_ITEMS_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
   buildGetMembersRoute,
@@ -1939,4 +1941,60 @@ export const mockUpdatePassword = (
       return reply('update password');
     },
   ).as('updatePassword');
+};
+
+export const mockGetItemFavorites = (
+  itemFavorites: ItemFavorite[],
+  shouldThrowError: boolean
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.GET,
+      url: `${API_HOST}/${GET_FAVORITE_ITEMS_ROUTE}`,
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(itemFavorites);
+    },
+  ).as('getFavoriteItems');
+};
+
+export const mockAddFavorite = (
+  _items: ItemForTest[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.POST,
+      url: new RegExp(`${API_HOST}/${GET_FAVORITE_ITEMS_ROUTE}/${ID_FORMAT}`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('favoriteItem');
+};
+
+export const mockDeleteFavorite = (
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.DELETE,
+      url: new RegExp(`${API_HOST}/${GET_FAVORITE_ITEMS_ROUTE}/${ID_FORMAT}`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(body);
+    },
+  ).as('unfavoriteItem');
 };

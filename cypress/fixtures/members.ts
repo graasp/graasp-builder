@@ -1,4 +1,4 @@
-import { Member, MemberType } from '@graasp/sdk';
+import { MemberType } from '@graasp/sdk';
 import { MemberForTest } from '../support/types';
 import { AVATAR_LINK } from './thumbnails/links';
 
@@ -80,11 +80,6 @@ export const MEMBERS: Record<string, MemberForTest> = {
 };
 
 export const CURRENT_USER = MEMBERS.ANNA;
-
-export const buildMemberWithFavorites = (favoriteItems: string[]): Member => ({
-  ...CURRENT_USER,
-  extra: { ...CURRENT_USER.extra, favoriteItems },
-});
 
 export const MOCK_SESSIONS = [
   { id: MEMBERS.BOB.id, token: 'bob-token', createdAt: Date.now() },
