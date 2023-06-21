@@ -77,7 +77,6 @@ export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';
 export const DASHBOARD_UPLOADER_ID = 'dashboardUploader';
 export const CREATE_ITEM_CLOSE_BUTTON_ID = 'createItemCloseButton';
 export const USER_MENU_SIGN_OUT_OPTION_ID = 'userMenuSignOutOption';
-export const NAVIGATION_HIDDEN_PARENTS_ID = 'navigationHiddenParents';
 export const ITEM_LOGIN_SCREEN_ID = 'itemLoginScreen';
 export const ITEM_LOGIN_SIGN_IN_USERNAME_ID = 'itemLoginSignInUsername';
 export const ITEM_LOGIN_SIGN_IN_PASSWORD_ID = 'itemLoginSignInPassword';

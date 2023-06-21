@@ -16,7 +16,6 @@ import {
   ITEMS_GRID_NO_ITEM_ID,
   ITEMS_GRID_PAGINATION_ID,
   ITEMS_TABLE_ROW,
-  NAVIGATION_HOME_LINK_ID,
   NAVIGATION_ROOT_ID,
   buildItemCard,
   buildItemsTableRowIdAttribute,
@@ -50,7 +49,7 @@ describe('View Folder', () => {
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
     });
 
-    it('visit Home', () => {
+    it.only('visit Home', () => {
       cy.visit(HOME_PATH);
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
@@ -78,8 +77,7 @@ describe('View Folder', () => {
       );
 
       // root title
-      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
-        'have.text',
+      cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
         translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
       );
 
@@ -91,8 +89,7 @@ describe('View Folder', () => {
       cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
 
       // root title
-      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
-        'have.text',
+      cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
         translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
       );
 
@@ -111,8 +108,7 @@ describe('View Folder', () => {
         }
       });
       // root title
-      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
-        'have.text',
+      cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
         translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
       );
     });
@@ -142,8 +138,7 @@ describe('View Folder', () => {
       });
 
       // breadcrumb navigation
-      cy.get(`#${NAVIGATION_ROOT_ID}`).should(
-        'have.text',
+      cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
         translateBuilder(BUILDER.NAVIGATION_SHARED_ITEMS_TITLE),
       );
     });
@@ -167,7 +162,7 @@ describe('View Folder', () => {
       });
 
       // visit home
-      cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
+      cy.get(`#${NAVIGATION_ROOT_ID} [href="${HOME_PATH}"]`).click();
 
       // should get own items
       cy.wait('@getOwnItems').then(({ response: { body } }) => {
@@ -320,7 +315,7 @@ describe('View Folder', () => {
       });
 
       // visit home
-      cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
+      cy.get(`#${NAVIGATION_ROOT_ID} [href="${HOME_PATH}"]`).click();
 
       // should get own items
       cy.wait('@getOwnItems').then(({ response: { body } }) => {

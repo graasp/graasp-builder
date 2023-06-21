@@ -1,8 +1,7 @@
 import { useLocation, useMatch } from 'react-router-dom';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
-import { Navigation as GraaspNavigation, HomeMenu, ItemMenu } from '@graasp/ui';
+import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -26,7 +25,7 @@ const {
   useSharedItems,
 } = hooks;
 
-const Navigation = (): JSX.Element | null => {
+const Navigator = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const match = useMatch(buildItemPath());
   const { pathname } = useLocation();
@@ -38,8 +37,11 @@ const Navigation = (): JSX.Element | null => {
   const { data: parents, isLoading: areParentsLoading } = useParents({
     id: itemId ?? '',
     path: itemPath ?? '',
-    enabled: !!itemId && !!itemPath,
+    enabled: !!itemPath,
   });
+
+  const isParentOwned =
+    (item?.creator?.id ?? parents?.first()?.creator?.id) === currentMember?.id;
 
   if (isItemLoading || areParentsLoading) {
     return null;
@@ -65,36 +67,28 @@ const Navigation = (): JSX.Element | null => {
     },
   ];
 
-  const renderRoot = (thisItem?: ItemRecord) => {
-    if (!thisItem) {
-      return null;
-    }
-
-    let selected = menu[0];
-    const isParentOwned =
-      (item?.creator?.id ?? parents?.first()?.creator?.id) ===
-      currentMember?.id;
-
-    // favorite root path
-    if (pathname === FAVORITE_ITEMS_PATH) {
-      // eslint-disable-next-line prefer-destructuring
-      selected = menu[2];
-    }
-    // shared items and non owned items
-    else if (
-      pathname === SHARED_ITEMS_PATH ||
-      (pathname !== HOME_PATH && !isParentOwned)
-    ) {
-      // eslint-disable-next-line prefer-destructuring
-      selected = menu[1];
-    }
+  const renderRoot = () => {
+    const selected =
+      isParentOwned || pathname === HOME_PATH ? menu[0] : menu[1];
 
     return (
       <>
-        <HomeMenu selected={selected} elements={menu} />
+        <HomeMenu
+          selected={selected}
+          elements={menu}
+          // menuId={HOME_MENU_ID}
+          // homeDropdownId={HOME_MENU_DROPDOWN_BUTTON_ID}
+          buildMenuItemId={buildNavigationLink}
+        />
         <ItemMenu
-          itemId={thisItem.id}
-          useChildren={isParentOwned ? useOwnItems : useSharedItems}
+          itemId="root"
+          // buildIconId={buildNavigationDropDownId}
+          // buildMenuItemId={buildMenuItemId}
+          useChildren={
+            isParentOwned || pathname === HOME_PATH
+              ? (useOwnItems as any)
+              : useSharedItems
+          }
           buildToItemPath={buildToItemPath}
         />
       </>
@@ -110,17 +104,17 @@ const Navigation = (): JSX.Element | null => {
   }
 
   return (
-    <GraaspNavigation
+    <Navigation
       id={NAVIGATION_ROOT_ID}
       sx={{ paddingLeft: 2 }}
       item={item}
       buildToItemPath={buildToItemPath}
       parents={parents}
       renderRoot={renderRoot}
-      buildBreadcrumbsItemLinkId={buildNavigationLink}
-      useChildren={useChildren}
+      buildMenuItemId={buildNavigationLink}
+      useChildren={useChildren as any}
     />
   );
 };
 
-export default Navigation;
+export default Navigator;

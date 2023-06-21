@@ -4888,7 +4888,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#367-navigation":
   version: 3.0.0-rc.2
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=131bcf066f6dbb042cbaf16651692e2dcf8a8d6d"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=b499605d7f4818ae58ed023cf2317be72b6446fa"
   dependencies:
     "@graasp/sdk": 1.0.0-rc1
     clsx: 1.2.1
@@ -4921,7 +4921,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: c8ab4bc84c108f6fbabd9406835820019488216256a12dd3de5c94c053619752a0b609eac696e5b52e7dbe07df60def099d683903bd7268f084d8dc87a211d9c
+  checksum: cd6ad01f319cbc18ed25213f92a9c2919d24195e49e69d140184738fd4e08f21ea21f1bc61e52e9f55dd1b43d4cec076cccfe30afead72eee4d48ce1616045b7
   languageName: node
   linkType: hard
 

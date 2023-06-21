@@ -1,14 +1,13 @@
+import { buildItemPath } from '../../../src/config/paths';
 import {
+  NAVIGATION_HOME_LINK_ID,
   buildItemLink,
   buildItemsTableRowIdAttribute,
-  buildNavigationLink,
-  NAVIGATION_HIDDEN_PARENTS_ID,
-  NAVIGATION_HOME_LINK_ID,
 } from '../../../src/config/selectors';
 import {
   NAVIGATE_PAUSE,
-  WAIT_FOR_ITEM_TABLE_ROW_TIME,
   TABLE_ITEM_RENDER_TIME,
+  WAIT_FOR_ITEM_TABLE_ROW_TIME,
 } from '../constants';
 
 Cypress.Commands.add('goToItemInGrid', (id) => {
@@ -28,11 +27,8 @@ Cypress.Commands.add('goToHome', () => {
   cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
 });
 
-Cypress.Commands.add('goToItemWithNavigation', (id, openHidden = false) => {
+Cypress.Commands.add('goToItemWithNavigation', (id) => {
   cy.wait(NAVIGATE_PAUSE);
-  if (openHidden) {
-    cy.get(`#${NAVIGATION_HIDDEN_PARENTS_ID}`).click();
-  }
-  cy.get(`#${buildNavigationLink(id)}`).click();
+  cy.get(`[href="${buildItemPath(id)}"]`).click();
   cy.wait(TABLE_ITEM_RENDER_TIME);
 });
