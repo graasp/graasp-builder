@@ -365,6 +365,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
           showProgress
           hideCloseButton // to only show skip button
           showSkipButton
+          disableOverlayClose
           stepIndex={activeTourStep}
           callback={handleJoyrideCallback}
         />

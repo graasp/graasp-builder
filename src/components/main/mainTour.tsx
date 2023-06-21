@@ -192,7 +192,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target: `.${ITEM_MAIN_CLASS}`, // TODO needs to have a good way to wait for target to load before moving forward.
       content:
-        'Here you can change the content of your item. Depeding on which kind of item, you can do different things. For example reorder items in folders, edit documents or change settings for applications',
+        'Here you can change the content of your item. Depeding on which kind of item, you can do different things. For example reorder items in Folders, edit Documents or change settings for Applications',
       clickForBackTarget: `#${NAVIGATION_HOME_LINK_ID}`,
       timestamp: 'now',
     },
@@ -295,16 +295,17 @@ export const constructStepsWithId = (id: string): Step[] => {
       // TODO - it's not accessible since tooltip will lock in the keyboard focus
       // TODO - should not wait for this step, since the cookie banner don't always have to be there!!!
       target: '#root > div.css-ab8yd1 > main > div.cookie-container-className',
-      content: 'Lets start by accepting or declining cookies',
+      content: 'Lets start by accepting or rejecting non-essential cookies',
       disableBeacon: true,
       disableOverlayClose: true,
       requireClick: true,
       clickTarget: '#decline-button-id',
       altClickTarget: '#rcc-confirm-button',
-      nextButtonSetting: 'skipStep',
+      nextButtonSetting: 'hidden',
       hideBackButton: true,
       timestamp: 'now',
       spotlightClicks: true,
+      placement: 'top-end',
       showProgress: false,
     },
     {
@@ -345,7 +346,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target: `#${HEADER_MEMBER_MENU_BUTTON_ID}`,
       content:
-        'In the profile you can change language, set a profile picture and set a password (?). You could also redo the tour whenever you want.',
+        'In the profile you can change the language, set a profile picture and set a password.',
       requireClick: true,
       clickTarget: '.css-kxftdr', // TODO get better id
       timestamp: 'now',
