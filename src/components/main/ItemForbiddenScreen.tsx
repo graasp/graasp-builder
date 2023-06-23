@@ -40,7 +40,7 @@ const ItemForbiddenScreen = (): JSX.Element => {
       >
         <Grid item>
           {/* // TODO: remove hook from prop */}
-          <ForbiddenContent signOut={signOut as any} user={member} />
+          <ForbiddenContent signOut={signOut as any} memberId={member?.id} />
           <UserSwitchWrapper ButtonContent={ButtonContent} />
         </Grid>
       </Grid>

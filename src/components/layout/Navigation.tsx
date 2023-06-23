@@ -35,8 +35,8 @@ const Navigator = (): JSX.Element | null => {
   const itemPath = item?.path;
 
   const { data: parents, isLoading: areParentsLoading } = useParents({
-    id: itemId ?? '',
-    path: itemPath ?? '',
+    id: itemId,
+    path: itemPath,
     enabled: !!itemPath,
   });
 
@@ -68,6 +68,11 @@ const Navigator = (): JSX.Element | null => {
   ];
 
   const renderRoot = () => {
+    // no access to root if signed out
+    if (!currentMember) {
+      return null;
+    }
+
     const selected =
       isParentOwned || pathname === HOME_PATH ? menu[0] : menu[1];
 

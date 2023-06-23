@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../../../src/config/selectors';
 import { SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
@@ -16,7 +17,7 @@ describe('Public Items', () => {
       const item = SAMPLE_PUBLIC_ITEMS.items[4];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { body } }) => {
-        expect(body.id).to.equal(item.id)
+        expect(body.id).to.equal(item.id);
       });
       expectFolderViewScreenLayout({ item, currentMember });
     });
@@ -30,7 +31,7 @@ describe('Public Items', () => {
       const item = SAMPLE_PUBLIC_ITEMS.items[4];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { body } }) => {
-        expect(body.id).to.equal(item.id)
+        expect(body.id).to.equal(item.id);
       });
       expectFolderViewScreenLayout({ item, currentMember });
     });
@@ -44,7 +45,7 @@ describe('Public Items', () => {
       const item = SAMPLE_PUBLIC_ITEMS.items[2];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { body } }) => {
-        expect(body.id).to.equal(item.id)
+        expect(body.id).to.equal(item.id);
       });
       expectFolderViewScreenLayout({ item, currentMember });
     });
@@ -60,7 +61,7 @@ describe('Public Items', () => {
       const item = SAMPLE_PUBLIC_ITEMS.items[1];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
-        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED)
+        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);
       });
       cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('exist');
     });
@@ -74,7 +75,7 @@ describe('Public Items', () => {
       const item = SAMPLE_PUBLIC_ITEMS.items[1];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
-        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED)
+        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);
       });
       cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('exist');
     });
@@ -88,7 +89,7 @@ describe('Public Items', () => {
       const item = SAMPLE_PUBLIC_ITEMS.items[6];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
-        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED)
+        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);
       });
       cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('exist');
     });

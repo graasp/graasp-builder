@@ -49,7 +49,7 @@ describe('View Folder', () => {
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
     });
 
-    it.only('visit Home', () => {
+    it('visit Home', () => {
       cy.visit(HOME_PATH);
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 

@@ -26,10 +26,9 @@ const visitItemPage = (item) => {
 };
 
 describe('Customized Tags', () => {
-
   it('Display item without tags', () => {
     // check for not displaying if no tags
-    const item = PUBLISHED_ITEM
+    const item = PUBLISHED_ITEM;
     cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
