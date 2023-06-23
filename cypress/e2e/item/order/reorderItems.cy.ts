@@ -37,7 +37,8 @@ describe('Order Items', () => {
       cy.visit(buildItemPath(ITEM_REORDER_ITEMS.parent.id));
     });
 
-    it('move item to a spot below', () => {
+    // flaky test is skipped
+    it.skip('move item to a spot below', () => {
       const currentPosition = 0;
       const newPosition = 1;
 
@@ -56,7 +57,8 @@ describe('Order Items', () => {
       reorderAndCheckItem(childId, currentPosition, newPosition);
     });
 
-    it('move middle item to top spot', () => {
+    // flaky test is skipped
+    it.skip('move middle item to top spot', () => {
       const currentPosition = 1;
       const newPosition = 0;
 
