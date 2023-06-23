@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.1](https://github.com/graasp/graasp-builder/compare/v1.1.0...v1.1.1) (2023-06-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/ui to v3.0.0 ([#665](https://github.com/graasp/graasp-builder/issues/665)) ([2f96940](https://github.com/graasp/graasp-builder/commit/2f96940617b4e6321250136ca0a66099e2d67420))
+* **deps:** update mui (non-major) ([7458c1a](https://github.com/graasp/graasp-builder/commit/7458c1a04302c247a5111b08bbee5ba5e8776148))
+* **deps:** update react-router monorepo to v6.11.2 ([f009159](https://github.com/graasp/graasp-builder/commit/f009159e146e53c5812ebe76ff6c2acb12990872))
+* **deps:** update uppy packages ([e5ab13e](https://github.com/graasp/graasp-builder/commit/e5ab13e3ee75518b2e1eca698ddd5958f85d3d2f))
+
 ## [1.1.0](https://github.com/graasp/graasp-builder/compare/v1.0.0...v1.1.0) (2023-06-21)
 
 
