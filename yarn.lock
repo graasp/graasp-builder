@@ -3731,12 +3731,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@graasp/translations@npm:1.14.0"
+"@graasp/translations@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@graasp/translations@npm:1.15.0"
   dependencies:
     i18next: 22.4.15
-  checksum: 54001bdd6c37bb03a9f6d9677c10f8a7f29c1c488ec2d04b80aa92eeeb6582221c0171b4d9d66de048acca8707c46cf00d0660ad03e63b305d48cff0a71dd173
+  checksum: e073b83374462f2d108f1d697b7aa14460d05f4ec2e10757db0e0a0a72574bff4721f997851d8e88e871f3704c8bcf887533590dd7acdcbf9d607109bae25c8a
   languageName: node
   linkType: hard
 
@@ -11317,7 +11317,7 @@ __metadata:
     "@graasp/plugin-websockets": 1.0.0
     "@graasp/query-client": 1.0.0
     "@graasp/sdk": 1.0.0
-    "@graasp/translations": 1.14.0
+    "@graasp/translations": 1.15.0
     "@graasp/ui": 3.0.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
