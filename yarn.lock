@@ -3740,9 +3740,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:3.0.0-rc.2":
-  version: 3.0.0-rc.2
-  resolution: "@graasp/ui@npm:3.0.0-rc.2"
+"@graasp/ui@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@graasp/ui@npm:3.0.0"
   dependencies:
     "@graasp/sdk": 1.0.0-rc1
     clsx: 1.2.1
@@ -3753,7 +3753,7 @@ __metadata:
     qs: 6.11.2
     quill-emoji: 0.2.0
     react-cookie-consent: 7.4.1
-    react-quill: 2.0.0
+    react-quill: 2.0.0-beta.4
     react-rnd: 10.4.1
     react-text-mask: 5.5.0
     uuid: 9.0.0
@@ -3775,7 +3775,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: e0af9d2dcf00612b05eaea8acfac2dd4a9b13803684f31e398cfc803fe4eed1d27ab1ba22c1f058246833435633cdc2788bcb0d710a70ac81d3f42661b40eb0a
+  checksum: 2d259666f692c23852706e413902415386ec86bcecbd9d9c5d87d004c8d7a4a44161f20de5325a85a552738a45c437582af4434e4f1bbda9f6e464e9ae2a8b6e
   languageName: node
   linkType: hard
 
@@ -11318,7 +11318,7 @@ __metadata:
     "@graasp/query-client": 1.0.0
     "@graasp/sdk": 1.0.0
     "@graasp/translations": 1.14.0
-    "@graasp/ui": 3.0.0-rc.2
+    "@graasp/ui": 3.0.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.134
@@ -17695,6 +17695,20 @@ __metadata:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
   checksum: 568e28656ae3a40944d5c4cc9d35accc21834cf15b61a74af4566d8772eb152ce65c0d5ea6da65918cb5c9453c1a2041c60c4a19819bf319bee2e067b613d32b
+  languageName: node
+  linkType: hard
+
+"react-quill@npm:2.0.0-beta.4":
+  version: 2.0.0-beta.4
+  resolution: "react-quill@npm:2.0.0-beta.4"
+  dependencies:
+    "@types/quill": ^1.3.10
+    lodash: ^4.17.4
+    quill: ^1.3.7
+  peerDependencies:
+    react: ^16 || ^17
+    react-dom: ^16 || ^17
+  checksum: bec76caae579d199d47b475af2236321c902dd468bd9b6a688c6bc1b4c8ddcf8407348ae3a490f9e45b6e33dc7d0fffe026ccd595297440c2623964d5f466c29
   languageName: node
   linkType: hard
 
