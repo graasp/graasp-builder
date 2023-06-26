@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/graasp/graasp-builder/compare/v1.1.1...v1.2.0) (2023-06-26)
+
+
+### Features
+
+* use graasp ui breadcrumb navigation ([#679](https://github.com/graasp/graasp-builder/issues/679)) ([78f5980](https://github.com/graasp/graasp-builder/commit/78f5980a113034f381f9cd1194f4f4af9b04a85b))
+
+
+### Bug Fixes
+
+* **ci:** skip flaky test ([#669](https://github.com/graasp/graasp-builder/issues/669)) ([a731c7e](https://github.com/graasp/graasp-builder/commit/a731c7e231b1bf88bc52114a23e9c6df6c87c8de))
+* **deps:** update dependency @graasp/translations to v1.15.0 ([#668](https://github.com/graasp/graasp-builder/issues/668)) ([b6269b0](https://github.com/graasp/graasp-builder/commit/b6269b076b6846ff151fe9e877f5ac0565e0bf9a))
+* **deps:** update react-router monorepo to v6.13.0 ([#651](https://github.com/graasp/graasp-builder/issues/651)) ([571811d](https://github.com/graasp/graasp-builder/commit/571811de7194bd497547ff0ab30d20751af04292))
+* **deps:** update sentry packages to v7.56.0 ([#670](https://github.com/graasp/graasp-builder/issues/670)) ([8b3d642](https://github.com/graasp/graasp-builder/commit/8b3d64244c1e1e83fb60d9c5c4e3443a4d59e854))
+
 ## [1.1.1](https://github.com/graasp/graasp-builder/compare/v1.1.0...v1.1.1) (2023-06-23)
 
 
