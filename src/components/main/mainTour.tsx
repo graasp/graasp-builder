@@ -91,7 +91,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target: `#${CREATE_ITEM_FOLDER_ID}`,
       content:
-        'There is multiple different items such as: Folders, Documents, Applications, Links to other web content.',
+        'There are multiple different items such as: Folders, Documents, Applications, Links to other web content.',
       disableBeacon: true,
       disableOverlayClose: true,
       timestamp: 'now',
@@ -151,7 +151,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target: 'div.ag-row-even:nth-child(1)', // TODO: get better way to pick the first item
       content:
-        'The Folder is now added to you items here. When you have multiple items in the same place they will all be listed as a table here.',
+        'The Folder is now added to your items here. When you have multiple items in the same place they will all be listed as a table here.',
       timestamp: 'now',
       itemIdPrefix: 'nameCellRenderer-',
       itemIdTarget:
@@ -198,7 +198,7 @@ export const constructStepsWithId = (id: string): Step[] => {
     {
       target: `.${ITEM_MAIN_CLASS}`, // TODO needs to have a good way to wait for target to load before moving forward.
       content:
-        'Here you can change the content of your item. Depeding on which kind of item, you can do different things. For example reorder items in Folders, edit Documents or change settings for Applications',
+        'Here you can change the content of your item. Depending on which kind of item, you can do different things. For example reorder items in Folders, edit Documents or change settings for Applications',
       clickForBackTarget: `#${NAVIGATION_HOME_LINK_ID}`,
       timestamp: 'now',
     },
