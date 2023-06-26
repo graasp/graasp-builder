@@ -182,7 +182,7 @@ export const mockGetSharedItems = ({
   member,
 }: {
   items: ItemForTest[];
-  member: Member;
+  member?: Member;
 }): void => {
   cy.intercept(
     {
@@ -190,8 +190,11 @@ export const mockGetSharedItems = ({
       url: `${API_HOST}/${SHARED_ITEM_WITH_ROUTE}`,
     },
     (req) => {
-      const own = items.filter(({ creator }) => creator?.id !== member.id);
-      req.reply(own);
+      if (!member) {
+        return req.reply({ statusCode: StatusCodes.UNAUTHORIZED });
+      }
+      const shared = items.filter(({ creator }) => creator?.id !== member.id);
+      return req.reply(shared);
     },
   ).as('getSharedItems');
 };
@@ -225,26 +228,6 @@ export const mockPostItem = (
     },
   ).as('postItem');
 };
-
-// export const mockDeleteItem = (items: ItemForTest[], shouldThrowError: boolean): void => {
-//   cy.intercept(
-//     {
-//       method: HttpMethod.DELETE,
-//       url: new RegExp(`${API_HOST}/${buildDeleteItemRoute(ID_FORMAT)}$`),
-//     },
-//     ({ url, reply }) => {
-//       if (shouldThrowError) {
-//         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
-//       }
-
-//       const id = url.slice(API_HOST.length).split('/')[2];
-//       return reply({
-//         statusCode: StatusCodes.OK,
-//         body: getItemById(items, id),
-//       });
-//     },
-//   ).as('deleteItem');
-// };
 
 export const mockDeleteItems = (
   _items: ItemForTest[],
