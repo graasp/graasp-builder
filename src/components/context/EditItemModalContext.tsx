@@ -141,7 +141,7 @@ const EditItemModalProvider = ({ children }: Props): JSX.Element => {
           <TextField
             variant="standard"
             id={ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID}
-            label="Alternative Text (for accessibility purposes)"
+            label={translateBuilder(BUILDER.EDIT_ITEM_IMAGE_ALT_TEXT_LABEL)}
             value={
               (
                 updatedProperties?.extra?.[fileItem.type] as
@@ -152,7 +152,9 @@ const EditItemModalProvider = ({ children }: Props): JSX.Element => {
             onChange={(e) =>
               setUpdatedItem({
                 ...updatedProperties,
-                extra: { [fileItem.type]: { altText: e.target.value } },
+                extra: {
+                  [fileItem.type]: { altText: e.target.value, size: 'yolo' },
+                },
               } as LocalFileItemType | S3FileItemType)
             }
             // always shrink because setting name from defined app does not shrink automatically
