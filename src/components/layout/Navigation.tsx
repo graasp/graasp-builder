@@ -81,14 +81,10 @@ const Navigator = (): JSX.Element | null => {
         <HomeMenu
           selected={selected}
           elements={menu}
-          // menuId={HOME_MENU_ID}
-          // homeDropdownId={HOME_MENU_DROPDOWN_BUTTON_ID}
           buildMenuItemId={buildNavigationLink}
         />
         <ItemMenu
           itemId="root"
-          // buildIconId={buildNavigationDropDownId}
-          // buildMenuItemId={buildMenuItemId}
           useChildren={
             isParentOwned || pathname === HOME_PATH
               ? (useOwnItems as any)

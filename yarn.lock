@@ -4771,9 +4771,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#use-parents":
-  version: 1.0.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=bc5ec918f4ad20d0ae3a2ddb53cee2e5b943b373"
+"@graasp/query-client@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@graasp/query-client@npm:1.0.1"
   dependencies:
     "@graasp/sdk": 1.0.0
     "@graasp/translations": 1.13.0
@@ -4786,7 +4786,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 902b2325cdabdf3296d63577ad6005a51c81edc0c04e6a35ef31b14508cb5981939f4c5ed07a457e12e4e4bed12fab41569059cb98d98747301b470030f5f892
+  checksum: e79aea3001f66a83fc86db78fe63e951ff0a63a349eebeab7dcb4e7d977cd669834b5e40af9ce0399aa56a48f284198279d492453263844b398508c4a15b607b
   languageName: node
   linkType: hard
 
@@ -4827,11 +4827,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#367-navigation":
-  version: 3.0.0-rc.2
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=cf2c3006c08551bba0ffd78309ff68047bf65f4e"
+"@graasp/ui@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@graasp/ui@npm:3.1.0"
   dependencies:
-    "@graasp/sdk": 1.0.0-rc1
+    "@graasp/sdk": 1.0.0
     clsx: 1.2.1
     http-status-codes: 2.2.0
     immutable: 4.3.0
@@ -4862,7 +4862,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 2dac6aac5d249dc4358129ed2cfa96aafd315dc4e64dd7f8bcfffd1d945f228ce14ac9a66a3b185e951386ee37583540701d0c49e2603874a967d8826abac904
+  checksum: d030e2882e8d988b82f8db9e1b1f912693b036c3ab795fb6b922e06ee9ea02b424ae3796d578e5e6adc1b799e84e3a1ff2655d55a5f6f4f3648684f407a0f532
   languageName: node
   linkType: hard
 
@@ -12294,10 +12294,10 @@ __metadata:
     "@emotion/styled": 11.11.0
     "@graasp/chatbox": 2.0.0-rc.1
     "@graasp/plugin-websockets": 1.0.0
-    "@graasp/query-client": "github:graasp/graasp-query-client#use-parents"
+    "@graasp/query-client": 1.0.1
     "@graasp/sdk": 1.1.0
     "@graasp/translations": 1.15.0
-    "@graasp/ui": "github:graasp/graasp-ui#367-navigation"
+    "@graasp/ui": 3.1.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.134
