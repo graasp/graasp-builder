@@ -4771,9 +4771,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:1.0.1":
+"@graasp/query-client@github:graasp/graasp-query-client#use-query-client":
   version: 1.0.1
-  resolution: "@graasp/query-client@npm:1.0.1"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=54a44b44d4331e9db5f2b81297df85e4ad2e3fb1"
   dependencies:
     "@graasp/sdk": 1.0.0
     "@graasp/translations": 1.13.0
@@ -4786,7 +4786,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: e79aea3001f66a83fc86db78fe63e951ff0a63a349eebeab7dcb4e7d977cd669834b5e40af9ce0399aa56a48f284198279d492453263844b398508c4a15b607b
+  checksum: 1972329612fae837922f58c7bef65e148794bb90bf0fac034a553f3313e8b698d2afbb0326d4c65a15d5684df02fa337d7617965981257a01c9de54a66a49624
   languageName: node
   linkType: hard
 
@@ -12294,7 +12294,7 @@ __metadata:
     "@emotion/styled": 11.11.0
     "@graasp/chatbox": 2.0.0-rc.1
     "@graasp/plugin-websockets": 1.0.0
-    "@graasp/query-client": 1.0.1
+    "@graasp/query-client": "github:graasp/graasp-query-client#use-query-client"
     "@graasp/sdk": 1.1.0
     "@graasp/translations": 1.15.0
     "@graasp/ui": 3.2.0

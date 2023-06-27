@@ -17,29 +17,32 @@ import i18nConfig from '../config/i18n';
 import {
   QueryClientProvider,
   ReactQueryDevtools,
-  queryClient,
+  useQueryClient,
 } from '../config/queryClient';
 import App from './App';
 import { CurrentUserContextProvider } from './context/CurrentUserContext';
 import ModalProviders from './context/ModalProviders';
 
-const Root = (): JSX.Element => (
-  <QueryClientProvider client={queryClient}>
-    <I18nextProvider i18n={i18nConfig}>
-      <ThemeProvider theme={GraaspTheme}>
-        <CssBaseline />
-        {true && <ToastContainer position="bottom-right" theme="colored" />}
-        <Router>
-          <ModalProviders>
-            <CurrentUserContextProvider>
-              <App />
-            </CurrentUserContextProvider>
-          </ModalProviders>
-        </Router>
-      </ThemeProvider>
-    </I18nextProvider>
-    {NODE_ENV === ENV.DEVELOPMENT && <ReactQueryDevtools />}
-  </QueryClientProvider>
-);
+const Root = (): JSX.Element => {
+  const queryClient = useQueryClient();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <I18nextProvider i18n={i18nConfig}>
+        <ThemeProvider theme={GraaspTheme}>
+          <CssBaseline />
+          {true && <ToastContainer position="bottom-right" theme="colored" />}
+          <Router>
+            <ModalProviders>
+              <CurrentUserContextProvider>
+                <App />
+              </CurrentUserContextProvider>
+            </ModalProviders>
+          </Router>
+        </ThemeProvider>
+      </I18nextProvider>
+      {NODE_ENV === ENV.DEVELOPMENT && <ReactQueryDevtools />}
+    </QueryClientProvider>
+  );
+};
 
 export default Root;

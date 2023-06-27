@@ -74,7 +74,7 @@ const ItemMembershipsTable = ({
   const { mutate: shareItem } = mutations.usePostItemMembership();
 
   const onDelete = ({ instance }: { instance: ItemMembership }) => {
-    deleteItemMembership({ id: instance.id });
+    deleteItemMembership({ id: instance.id, itemId: item.id });
   };
 
   // never changes, so we can use useMemo
