@@ -4827,11 +4827,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@graasp/ui@npm:3.1.0"
+"@graasp/ui@npm:3.2.0":
+  version: 3.2.0
+  resolution: "@graasp/ui@npm:3.2.0"
   dependencies:
-    "@graasp/sdk": 1.0.0
+    "@graasp/sdk": 1.1.0
     clsx: 1.2.1
     http-status-codes: 2.2.0
     immutable: 4.3.0
@@ -4862,7 +4862,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: d030e2882e8d988b82f8db9e1b1f912693b036c3ab795fb6b922e06ee9ea02b424ae3796d578e5e6adc1b799e84e3a1ff2655d55a5f6f4f3648684f407a0f532
+  checksum: 2bd2d1df239c8c748649aab71ad24b8e7ab806f79d24870a24139ccca5a6f8abf11949794604a9e78dceee64d32a5b934d9a51187c187b11f19a6afa67f231dc
   languageName: node
   linkType: hard
 
@@ -5856,16 +5856,16 @@ __metadata:
   linkType: hard
 
 "@smithy/protocol-http@npm:^1.0.1":
-  version: 1.1.0
-  resolution: "@smithy/protocol-http@npm:1.1.0"
+  version: 1.0.1
+  resolution: "@smithy/protocol-http@npm:1.0.1"
   dependencies:
-    "@smithy/types": ^1.1.0
+    "@smithy/types": ^1.0.0
     tslib: ^2.5.0
-  checksum: f912e085a477664abf38ff4cd0c2ac064ef068afc6cc0a09ce9c2849f07bac8be622edf60f19a91e2701184b63daa85cb2898e243d7a2c6fd1613de705b3152c
+  checksum: ba9ac4880fed48eeea0813663c94c765fe5b900f2fdac4f5de6524306bbc6645829f48bc175d202076b83acaccf008ed77f4b5546a4c180315f253e22fe6c89f
   languageName: node
   linkType: hard
 
-"@smithy/types@npm:^1.0.0, @smithy/types@npm:^1.1.0":
+"@smithy/types@npm:^1.0.0":
   version: 1.1.0
   resolution: "@smithy/types@npm:1.1.0"
   dependencies:
@@ -12297,7 +12297,7 @@ __metadata:
     "@graasp/query-client": 1.0.1
     "@graasp/sdk": 1.1.0
     "@graasp/translations": 1.15.0
-    "@graasp/ui": 3.1.0
+    "@graasp/ui": 3.2.0
     "@graasp/websockets": "github:graasp/graasp-websockets.git"
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.134

@@ -181,6 +181,9 @@ export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';
 export const buildItemsTableId = (id: string): string => `itemsTable-${id}`;
 
+export const ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID =
+  'imageEditAltTextTextField';
+
 export const SETTINGS_PINNED_TOGGLE_ID = 'settingsPinnedToggle';
 export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
 export const SETTINGS_COLLAPSE_TOGGLE_ID = 'settingsCollapseToggle';
