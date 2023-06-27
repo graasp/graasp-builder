@@ -22,6 +22,7 @@ import {
 import App from './App';
 import { CurrentUserContextProvider } from './context/CurrentUserContext';
 import ModalProviders from './context/ModalProviders';
+import { TourContextProvider } from './context/TourContext';
 
 const Root = (): JSX.Element => (
   <QueryClientProvider client={queryClient}>
@@ -29,12 +30,15 @@ const Root = (): JSX.Element => (
       <ThemeProvider theme={GraaspTheme}>
         <CssBaseline />
         {true && <ToastContainer position="bottom-right" theme="colored" />}
+
         <Router>
-          <ModalProviders>
-            <CurrentUserContextProvider>
-              <App />
-            </CurrentUserContextProvider>
-          </ModalProviders>
+          <TourContextProvider>
+            <ModalProviders>
+              <CurrentUserContextProvider>
+                <App />
+              </CurrentUserContextProvider>
+            </ModalProviders>
+          </TourContextProvider>
         </Router>
       </ThemeProvider>
     </I18nextProvider>

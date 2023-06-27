@@ -1,14 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 
+import { useTourContext } from '../context/TourContext';
 import { Step, steps as mainTourSteps } from './mainTour';
-
-export type TourContextData = {
-  isTourOpen: boolean;
-  tourSteps: Step[];
-  addTourStep: (step: Step) => void;
-  removeTourStep: (step: Step) => void;
-};
 
 type TourProps = {
   children: React.ReactElement;
@@ -16,56 +10,19 @@ type TourProps = {
   callbackOnComplete?: () => void;
 };
 
-export const TourContext = React.createContext<TourContextData | undefined>(
-  undefined,
-);
-
 export const Tour: React.FC<TourProps> = ({
   children,
   run,
   callbackOnComplete,
 }) => {
-  const [tourSteps, setTourSteps] = useState<Step[]>([]);
   const [itemId, setItemId] = useState('');
-  const [steps, setSteps] = useState<Step[]>(mainTourSteps(itemId));
+  const [steps] = useState<Step[]>(mainTourSteps(itemId));
   const [activeTourStep, setActiveTourStep] = useState(0);
-  const [isTourOpen, setIsTourOpen] = useState(false);
-  const [isTourReady, setIsTourReady] = useState(true);
+  // const [isTourReady, setIsTourReady] = useState(true);
   const [nextButtonSetting, setNextButtonSetting] = useState('');
 
-  const addTourStep = useCallback((step: Step) => {
-    setTourSteps((prevSteps) => {
-      const newStep = { ...step, disableBeacon: true };
-      console.log('check add step');
-      const stepExists = prevSteps.some(
-        (s) => JSON.stringify(s) === JSON.stringify(newStep), // since order of properties will always be the same
-      );
-      console.log('PRevSteps:', prevSteps);
-      console.log('StepExists??', stepExists);
-      if (stepExists) {
-        return prevSteps; // If identical step already exists, return the previous steps
-      }
-      console.log('addsStep', step);
-      return [...prevSteps.filter((s) => s.target !== step.target), newStep];
-    });
-  }, []);
-
-  const removeTourStep = useCallback((step: Step) => {
-    setTourSteps((prevSteps) => [
-      ...prevSteps.filter((s) => s.target !== step.target),
-    ]);
-  }, []);
-
-  const contextValue = useMemo(
-    // maybe don't have to add it to context every time, only if timestamp is less than last login
-    () => ({
-      isTourOpen,
-      tourSteps,
-      addTourStep,
-      removeTourStep,
-    }),
-    [tourSteps, addTourStep, removeTourStep, isTourOpen],
-  );
+  const { isTourOpen, tourSteps, manualRun, openTour, closeTour } =
+    useTourContext();
 
   const waitForTargetElement = (
     targetSelector: string,
@@ -89,30 +46,30 @@ export const Tour: React.FC<TourProps> = ({
   };
 
   /**  const getNumberOfItems = useCallback(
-    (nextStepIndex: number) => {
-      for (let i = 0; i < tourSteps.length; i += 1) {
-        if (tourSteps[i].target === steps[nextStepIndex].parent) {
-          console.log('PARENT:', steps[nextStepIndex].parent);
-          return steps[nextStepIndex].numberOfItems;
+      (nextStepIndex: number) => {
+        for (let i = 0; i < tourSteps.length; i += 1) {
+          if (tourSteps[i].target === steps[nextStepIndex].parent) {
+            console.log('PARENT:', steps[nextStepIndex].parent);
+            return steps[nextStepIndex].numberOfItems;
+          }
         }
-      }
-      return 0; // TODO might exist a better way
-    },
-    [steps, tourSteps],
-  ); */
+        return 0; // TODO might exist a better way
+      },
+      [steps, tourSteps],
+    ); */
 
   /**  const waitForIncreaseElement = (targetSelector, nextStepIndex, start) => {
-    const interval = setInterval(() => {
-      const targetElement = document.querySelector(targetSelector);
-      const currentValue = getNumberOfItems(nextStepIndex);
-      console.log('CURRENT:', currentValue);
-      if (targetElement && currentValue > start) {
-        console.log('HEJSAN');
-        clearInterval(interval);
-        // callback();
-      }
-    }, 100); // TODO: add a timeout to this
-  }; */
+      const interval = setInterval(() => {
+        const targetElement = document.querySelector(targetSelector);
+        const currentValue = getNumberOfItems(nextStepIndex);
+        console.log('CURRENT:', currentValue);
+        if (targetElement && currentValue > start) {
+          console.log('HEJSAN');
+          clearInterval(interval);
+          // callback();
+        }
+      }, 100); // TODO: add a timeout to this
+    }; */
 
   const handleToggleStep = useCallback(
     // TODO: Add timeout for this function so the tour doesn't get completely stuck
@@ -189,15 +146,15 @@ export const Tour: React.FC<TourProps> = ({
       console.log('Current target:', steps[index].target);
 
       if (action === ACTIONS.CLOSE) {
-        setIsTourOpen(false);
+        closeTour?.();
       }
 
       /* const cookieBannerElement = document.querySelector(
-        '#root > div.css-ab8yd1 > main > div.cookie-container-className', // TODO get dimensions of cookie banner
-      ) as HTMLElement;
-      const { top, left, width, height } =
-        cookieBannerElement.getBoundingClientRect();
-      console.log('cookiebanner', top, left, width, height); */
+          '#root > div.css-ab8yd1 > main > div.cookie-container-className', // TODO get dimensions of cookie banner
+        ) as HTMLElement;
+        const { top, left, width, height } =
+          cookieBannerElement.getBoundingClientRect();
+        console.log('cookiebanner', top, left, width, height); */
 
       const start = 0;
       if (steps[index + 1]?.shouldIncrease) {
@@ -262,7 +219,8 @@ export const Tour: React.FC<TourProps> = ({
             steps[index + 1].itemIdPrefix,
           );
         } else if (action === ACTIONS.NEXT) {
-          setIsTourOpen(false); // TODO: better way to close the tour when finished
+          closeTour?.(); // TODO: better way to close the tour when finished
+          callbackOnComplete?.();
         } else if (action === ACTIONS.PREV && steps[index].clickForBackTarget) {
           const backElement = document.querySelector(
             steps[index].clickForBackTarget ?? '',
@@ -274,8 +232,8 @@ export const Tour: React.FC<TourProps> = ({
         }
       } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
         // Need to set our running state to false, so we can restart if we click start again.
-        setIsTourOpen(false);
-        callbackOnComplete?.();
+        closeTour?.();
+        // callbackOnComplete?.();
       }
     },
     [steps, tourSteps, handleToggleStep],
@@ -332,7 +290,7 @@ export const Tour: React.FC<TourProps> = ({
     };
   }, [activeTourStep, steps, handleToggleStep]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     setIsTourReady(false);
     const newSteps = mainTourSteps(itemId);
     console.log('itemId:', itemId);
@@ -341,44 +299,50 @@ export const Tour: React.FC<TourProps> = ({
     console.log('steps:', steps);
     console.log('id: ', itemId);
     setIsTourReady(true);
-  }, [itemId]);
+  }, [itemId]); */
 
-  // useEffect(() => {
-  //  setIsTourOpen(true); // Start the tour automatically
-  // }, []);
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    run ? openTour?.() : closeTour?.(); // Start the tour automatically
+  }, [run]);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    if (manualRun) {
+      setActiveTourStep(0);
+    }
+  }, [manualRun]);
 
   return (
-    <TourContext.Provider value={contextValue}>
-      {isTourReady && (
-        <Joyride
-          steps={steps}
-          run={run || isTourOpen}
-          continuous
-          debug
-          styles={{
-            options: {
-              spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
-              zIndex: 1500, // TODO: Get zIndex dynamically
-            },
-            buttonNext: {
-              visibility: nextButtonSetting === 'hidden' ? 'hidden' : 'visible',
-            },
-          }}
-          locale={{
-            skip: 'Close', // To only use either Close or Skip, since it's not really clear what the difference is between them
-            next: nextButtonSetting === 'skipStep' ? 'Skip step' : 'Next',
-          }}
-          showProgress
-          hideCloseButton // to only show skip button
-          showSkipButton
-          disableOverlayClose
-          stepIndex={activeTourStep}
-          callback={handleJoyrideCallback}
-        />
-      )}
+    <>
+      <Joyride
+        steps={steps}
+        run={run && isTourOpen}
+        continuous
+        debug
+        styles={{
+          options: {
+            spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
+            zIndex: 1500, // TODO: Get zIndex dynamically
+          },
+          buttonNext: {
+            visibility: nextButtonSetting === 'hidden' ? 'hidden' : 'visible',
+          },
+        }}
+        locale={{
+          skip: 'Close', // To only use either Close or Skip, since it's not really clear what the difference is between them
+          next: nextButtonSetting === 'skipStep' ? 'Skip step' : 'Next',
+        }}
+        showProgress
+        hideCloseButton // to only show skip button
+        showSkipButton
+        disableOverlayClose
+        stepIndex={activeTourStep}
+        callback={handleJoyrideCallback}
+      />
       {children}
-    </TourContext.Provider>
+    </>
   );
 };
 
-export default TourContext;
+export default Tour;

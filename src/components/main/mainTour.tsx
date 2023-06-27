@@ -342,7 +342,7 @@ export const constructStepsWithId = (id: string): Step[] => {
       timestamp: 'now',
     },
     {
-      target: '.css-q9mey5', // Can't change place with profile, tour will then skip this step
+      target: '#root > div.css-ab8yd1 > div > div > ul > div > a:nth-child(2)', // Can't change place with profile, tour will then skip this step
       content:
         'If you need some more information you can find it here in Tutorials.',
       timestamp: 'now',

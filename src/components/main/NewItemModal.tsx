@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useMatch } from 'react-router';
 
 import {
@@ -30,6 +30,7 @@ import {
 import { InternalItemType, NewItemTabType } from '../../config/types';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
+import { useTourContext } from '../context/TourContext';
 import FileDashboardUploader from '../file/FileDashboardUploader';
 import AppForm from '../item/form/AppForm';
 import DocumentForm from '../item/form/DocumentForm';
@@ -39,7 +40,6 @@ import LinkForm from '../item/form/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
 import ItemTypeTabs from './ItemTypeTabs';
-import TourContext, { TourContextData } from './TourContext';
 
 const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   flexGrow: 1,
@@ -63,7 +63,7 @@ type Props = {
 const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
-  const { isTourOpen } = useContext(TourContext) as TourContextData;
+  const { isTourOpen } = useTourContext();
 
   const { padName, EtherpadForm } = useEtherpadForm();
 

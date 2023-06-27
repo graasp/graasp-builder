@@ -19,17 +19,20 @@ import { mutations } from '../config/queryClient';
 import RecycleBinScreen from './RecycleBinScreen';
 import SharedItems from './SharedItems';
 import { useCurrentUserContext } from './context/CurrentUserContext';
+import { useTourContext } from './context/TourContext';
 import FavoriteItems from './main/FavoriteItems';
 import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
 import Redirect from './main/Redirect';
-import { Tour } from './main/TourContext';
+import { Tour } from './main/Tour';
 import MemberProfileScreen from './member/MemberProfileScreen';
 
 const App = (): JSX.Element => {
   const { pathname } = useLocation();
   const { data: currentMember, isLoading } = useCurrentUserContext();
   const { mutate: editMember } = mutations.useEditMember();
+  const { manualRun } = useTourContext();
+  console.log('Manual run', manualRun);
 
   if (isLoading) {
     return <CustomInitialLoader />;
@@ -75,7 +78,7 @@ const App = (): JSX.Element => {
 
   return (
     <Tour
-      run={!currentMember?.extra.hasCompletedTour}
+      run={!currentMember?.extra.hasCompletedTour || manualRun}
       callbackOnComplete={setTourCompleted}
     >
       <Routes>

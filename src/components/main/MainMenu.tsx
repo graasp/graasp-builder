@@ -20,11 +20,9 @@ import {
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import { useTourContext } from '../context/TourContext';
 
 const StyledLink = styled('a')(({ theme }) => ({
-  position: 'absolute',
-  bottom: 0,
-  width: '100%',
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(2),
@@ -35,6 +33,13 @@ const StyledLink = styled('a')(({ theme }) => ({
     color: theme.palette.primary.main,
   },
 }));
+
+const StyledLinkDiv = styled('div')(() => ({
+  position: 'absolute',
+  bottom: 0,
+  width: '100%',
+}));
+
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   '&:hover': {
     color: theme.palette.primary.main,
@@ -46,19 +51,29 @@ const MainMenu = (): JSX.Element => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: member } = useCurrentUserContext();
+  const { reRunTour } = useTourContext();
 
   const goTo = (path: string) => {
     navigate(path);
   };
 
-  const resourcesLink = (
-    <StyledLink href={TUTORIALS_LINK} target="_blank">
-      <ListItemIcon>
-        <AutoStoriesIcon />
-      </ListItemIcon>
-      {translateBuilder('Tutorials')}
-    </StyledLink>
-  );
+  const resourcesLinks = // TODO: use button instead of link for tour, get a tour icon
+    (
+      <StyledLinkDiv>
+        <StyledLink onClick={reRunTour}>
+          <ListItemIcon>
+            <AutoStoriesIcon />
+          </ListItemIcon>
+          Tour
+        </StyledLink>
+        <StyledLink href={TUTORIALS_LINK} target="_blank">
+          <ListItemIcon>
+            <AutoStoriesIcon />
+          </ListItemIcon>
+          {translateBuilder('Tutorials')}
+        </StyledLink>
+      </StyledLinkDiv>
+    );
 
   const renderAuthenticatedMemberMenuItems = () => {
     if (!member || !member.id) {
@@ -105,7 +120,7 @@ const MainMenu = (): JSX.Element => {
   return (
     <GraaspMainMenu fullHeight>
       {renderAuthenticatedMemberMenuItems()}
-      {resourcesLink}
+      {resourcesLinks}
     </GraaspMainMenu>
   );
 };
