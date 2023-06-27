@@ -13,13 +13,18 @@ export type TourContextData = {
 type TourProps = {
   children: React.ReactElement;
   run?: boolean;
+  callbackOnComplete?: () => void;
 };
 
 export const TourContext = React.createContext<TourContextData | undefined>(
   undefined,
 );
 
-export const Tour: React.FC<TourProps> = ({ children, run }) => {
+export const Tour: React.FC<TourProps> = ({
+  children,
+  run,
+  callbackOnComplete,
+}) => {
   const [tourSteps, setTourSteps] = useState<Step[]>([]);
   const [itemId, setItemId] = useState('');
   const [steps, setSteps] = useState<Step[]>(mainTourSteps(itemId));
@@ -270,6 +275,7 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
       } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
         // Need to set our running state to false, so we can restart if we click start again.
         setIsTourOpen(false);
+        callbackOnComplete?.();
       }
     },
     [steps, tourSteps, handleToggleStep],
@@ -337,9 +343,9 @@ export const Tour: React.FC<TourProps> = ({ children, run }) => {
     setIsTourReady(true);
   }, [itemId]);
 
-  useEffect(() => {
-    setIsTourOpen(true); // Start the tour automatically
-  }, []);
+  // useEffect(() => {
+  //  setIsTourOpen(true); // Start the tour automatically
+  // }, []);
 
   return (
     <TourContext.Provider value={contextValue}>

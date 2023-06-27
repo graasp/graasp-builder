@@ -15,6 +15,7 @@ import {
   SHARED_ITEMS_PATH,
   buildItemPath,
 } from '../config/paths';
+import { mutations } from '../config/queryClient';
 import RecycleBinScreen from './RecycleBinScreen';
 import SharedItems from './SharedItems';
 import { useCurrentUserContext } from './context/CurrentUserContext';
@@ -28,6 +29,7 @@ import MemberProfileScreen from './member/MemberProfileScreen';
 const App = (): JSX.Element => {
   const { pathname } = useLocation();
   const { data: currentMember, isLoading } = useCurrentUserContext();
+  const { mutate: editMember } = mutations.useEditMember();
 
   if (isLoading) {
     return <CustomInitialLoader />;
@@ -41,6 +43,7 @@ const App = (): JSX.Element => {
       saveUrlForRedirection(pathname, DOMAIN);
     },
   };
+
   const HomeWithAuthorization = withAuthorization(Home, withAuthorizationProps);
   const SharedWithAuthorization = withAuthorization(
     SharedItems,
@@ -59,8 +62,22 @@ const App = (): JSX.Element => {
     withAuthorizationProps,
   );
 
+  const setTourCompleted = (): void => {
+    if (currentMember) {
+      editMember({
+        id: currentMember.id,
+        extra: {
+          hasCompletedTour: true,
+        },
+      });
+    }
+  };
+
   return (
-    <Tour>
+    <Tour
+      run={!currentMember?.extra.hasCompletedTour}
+      callbackOnComplete={setTourCompleted}
+    >
       <Routes>
         <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
         <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
