@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 
-import { ItemType, PermissionLevel } from '@graasp/sdk';
+import { Item, ItemType, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
@@ -20,6 +20,7 @@ import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import { useLayoutContext } from '../../context/LayoutContext';
+import ItemMenu from '../../main/ItemMenu';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
@@ -70,6 +71,8 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
       const activeActions = (
         <>
           {showEditButton && <EditItemCaptionButton itemId={item.id} />}
+          <ItemMenu item={item.toJS() as Item} canEdit={showEditButton} />
+
           <ShareButton itemId={item.id} />
           <ChatboxButton
             tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
