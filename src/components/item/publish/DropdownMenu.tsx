@@ -28,8 +28,9 @@ type Props = {
   selectedValues?: List<ItemCategoryRecord>;
   handleChange: (
     _event: SyntheticEvent,
-    value: Category[],
+    value: CategoryRecord[],
     reason: AutocompleteChangeReason,
+    details?: { option: CategoryRecord },
   ) => void;
 };
 

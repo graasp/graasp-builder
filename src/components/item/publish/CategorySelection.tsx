@@ -7,7 +7,8 @@ import { SyntheticEvent } from 'react';
 import { useParams } from 'react-router';
 
 import { routines } from '@graasp/query-client';
-import { Category, CategoryType } from '@graasp/sdk';
+import { CategoryType } from '@graasp/sdk';
+import { CategoryRecord } from '@graasp/sdk/frontend';
 import { BUILDER, FAILURE_MESSAGES } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -64,19 +65,19 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
   }
 
   const handleChange = (
-    event: SyntheticEvent,
-    _values: Category[],
+    _event: SyntheticEvent,
+    _values: CategoryRecord[],
     reason: AutocompleteChangeReason,
+    details?: { option: CategoryRecord },
   ) => {
     if (!itemId) {
       console.error('No item id is defined');
       return;
     }
 
-    const target = event.target as HTMLOptionElement;
     if (reason === SELECT_OPTION) {
       // post new category
-      const newCategoryId = target.getAttribute('data-id');
+      const newCategoryId = details?.option.id;
       if (!newCategoryId) {
         notifier({
           type: postItemCategoryRoutine.FAILURE,
@@ -90,7 +91,7 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
       }
     }
     if (reason === REMOVE_OPTION) {
-      const deletedCategoryId = target.getAttribute('data-id');
+      const deletedCategoryId = details?.option.id;
       const itemCategoryIdToDelete = itemCategories?.find(
         ({ category }) => category.id === deletedCategoryId,
       )?.id;

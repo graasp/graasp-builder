@@ -1,5 +1,6 @@
+import { InfoRounded } from '@mui/icons-material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Checkbox, FormControlLabel, Typography } from '@mui/material';
+import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 
@@ -43,7 +44,7 @@ const ItemPublishButton = ({
     if (itemPublishedEntry) {
       setIsPublished(Boolean(itemPublishedEntry));
 
-      // disable setting if any visiblity is set on any ancestor items
+      // disable setting if any publication is set on any ancestor items
       setIsDisabled(itemPublishedEntry?.item?.path !== item?.path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,6 +80,14 @@ const ItemPublishButton = ({
 
   return (
     <>
+      {isDisabled && (
+        <Stack direction="row" alignItems="start" gap={1} color="gray">
+          <InfoRounded fontSize="small" />
+          <Typography>
+            {/* {translateBuilder(BUILDER.LIBRARY_SETTINGS_CHILD_PUBLISHED_STATUS)} */}
+          </Typography>
+        </Stack>
+      )}
       <Button
         disabled={disabled || isDisabled || !isValidated || isPublished}
         onClick={handlePublish}
@@ -91,7 +100,7 @@ const ItemPublishButton = ({
         {translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
       </Button>
       <Button
-        disabled={disabled || !isPublished}
+        disabled={disabled || isDisabled || !isPublished}
         onClick={handleUnpublish}
         id={ITEM_UNPUBLISH_BUTTON_ID}
       >
