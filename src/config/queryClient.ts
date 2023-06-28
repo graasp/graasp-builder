@@ -4,6 +4,7 @@ import { API_HOST, DOMAIN } from './constants';
 import notifier from './notifier';
 
 const {
+  queryClient,
   useQueryClient,
   QueryClientProvider,
   hooks,
@@ -24,6 +25,7 @@ const {
 });
 
 export {
+  queryClient,
   useQueryClient,
   QueryClientProvider,
   hooks,

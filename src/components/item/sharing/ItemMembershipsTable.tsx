@@ -99,6 +99,7 @@ const ItemMembershipsTable = ({
         editItemMembership({
           id: instance.id,
           permission: value,
+          itemId: item.id,
         });
       },
       createFunction: ({
