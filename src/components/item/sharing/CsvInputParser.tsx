@@ -97,7 +97,7 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
     if (isError) {
       return (
         <Alert id={SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID} severity="error">
-          {translateBuilder(error as string)}
+          {translateBuilder(error.message)}
         </Alert>
       );
     }
