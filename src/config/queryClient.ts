@@ -5,6 +5,7 @@ import notifier from './notifier';
 
 const {
   queryClient,
+  useQueryClient,
   QueryClientProvider,
   hooks,
   ReactQueryDevtools,
@@ -25,6 +26,7 @@ const {
 
 export {
   queryClient,
+  useQueryClient,
   QueryClientProvider,
   hooks,
   mutations,
