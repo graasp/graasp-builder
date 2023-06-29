@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { WebSocket } from '@graasp/plugin-websockets/test/mock-client';
+import { MockWebSocket } from '@graasp/query-client';
 
 import { buildItemPath } from '../../../../src/config/paths';
 import {
@@ -27,7 +26,7 @@ describe('Chatbox Scenarios', () => {
   let client;
 
   beforeEach(() => {
-    client = new WebSocket();
+    client = new MockWebSocket();
   });
 
   it('Send messages in chatbox', () => {
