@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/graasp/graasp-builder/compare/v1.2.0...v1.3.0) (2023-06-29)
+
+
+### Features
+
+* allow to set an `altText` on images ([#631](https://github.com/graasp/graasp-builder/issues/631)) ([92f1184](https://github.com/graasp/graasp-builder/commit/92f1184a803c9f37bb2ba53c3efcf298545f2ad7))
+
+
+### Bug Fixes
+
+* use new query client and update dependency versions ([#686](https://github.com/graasp/graasp-builder/issues/686)) ([36ed3a6](https://github.com/graasp/graasp-builder/commit/36ed3a6698a69b6967066b9e3eba793158d5a205))
+
 ## [1.2.0](https://github.com/graasp/graasp-builder/compare/v1.1.1...v1.2.0) (2023-06-26)
 
 
