@@ -77,6 +77,7 @@ export const Tour: React.FC<TourProps> = ({
       nextStepIndex: number,
       target: string,
       parent?: string,
+      _idPrefix?: string,
       _start?: number,
       _waitFor?: (
         parent?: string,
@@ -89,36 +90,86 @@ export const Tour: React.FC<TourProps> = ({
 
       if (targetElement && !parent) {
         // waitFor?.(parent, nextStepIndex, start);
+        console.log('NOT PARENT');
         setActiveTourStep(nextStepIndex);
       } else {
+        // console.log('Observer enter');
         // Wait for the target element to be mounted using MutationObserver
+
         const observer = new MutationObserver((mutationsList) => {
+          // console.log('MutationListLength', mutationsList.length);
           // eslint-disable-next-line no-restricted-syntax
           for (const mutation of mutationsList) {
-            if (
+            // console.log('PArent', parent);
+            // console.log('Mutation', mutation);
+            if (parent) {
+              /* console.log(
+                'Parent if',
+                parent &&
+                  mutation.type === 'childList' &&
+                  mutation.addedNodes.length > 0,
+              );
+              console.log('Mutation type', mutation.type);
+              console.log('AddedNodes', mutation.addedNodes); */
+            }
+
+            /* if (
               parent &&
               mutation.type === 'childList' &&
               mutation.addedNodes.length > 0
             ) {
-              console.log('PARENTPARENT');
+              console.log('PARENTPARENT', mutation.addedNodes);
               observer.disconnect();
 
               // waitFor?.(parent, nextStepIndex, start);
               setActiveTourStep(nextStepIndex);
               return;
-            }
+            } */
 
-            // eslint-disable-next-line no-restricted-syntax
-            for (const addedNode of mutation.addedNodes) {
-              if (
-                addedNode.nodeType === Node.ELEMENT_NODE &&
-                (addedNode as Element).matches(target)
-              ) {
+            const fun = document.querySelector(
+              '#ownedItems > div:nth-child(1) > div',
+            );
+
+            if (mutation.type === 'childList') {
+              const firstRowElement = fun?.querySelector('.ag-row');
+              const actions = fun?.querySelector('[id^=cell-actions-]');
+              if (parent && firstRowElement && actions) {
+                // Step 4: Perform your logic for the first row
+                console.log('First', firstRowElement);
                 observer.disconnect();
 
                 // waitFor?.(parent, nextStepIndex, start);
+                console.log('NextStepIndex', nextStepIndex);
                 setActiveTourStep(nextStepIndex);
+                console.log('First row element', firstRowElement);
+                console.log('RETURN');
                 return;
+              }
+              // eslint-disable-next-line no-restricted-syntax
+              for (const addedNode of mutation.addedNodes) {
+                if (
+                  addedNode.nodeType === Node.ELEMENT_NODE &&
+                  ((addedNode as Element).matches(target) ||
+                    (parent &&
+                      (addedNode as Element).matches(
+                        'ag-row-even:nth-child(1)',
+                      )))
+                ) {
+                  console.log('TARGEEET-ID', (addedNode as Element).role);
+                  console.log(
+                    'First,',
+                    addedNode.nodeType === Node.ELEMENT_NODE &&
+                      (addedNode as Element).matches(target),
+                  );
+                  console.log('TARGEEET', addedNode);
+                  console.log('PArent', parent);
+                  observer.disconnect();
+
+                  // waitFor?.(parent, nextStepIndex, start);
+                  setActiveTourStep(nextStepIndex);
+                  console.log('RETURN');
+                  return;
+                }
               }
             }
           }
@@ -126,8 +177,9 @@ export const Tour: React.FC<TourProps> = ({
 
         if (parent) {
           const parentElement = document.querySelector(parent);
+          console.log('PArentElement', parentElement);
           if (parentElement) {
-            observer.observe(parentElement, {
+            observer.observe(document.body, {
               childList: true,
               subtree: true,
             });
@@ -202,6 +254,7 @@ export const Tour: React.FC<TourProps> = ({
           steps[index].requireClick &&
           !steps[index].altClickTarget // TODO for cookies banner, solve in a nicer way
         ) {
+          console.log('RequireClick place');
           const clickTarget = steps[index].clickTarget ?? steps[index].target;
           (document.querySelector(clickTarget) as HTMLElement)?.click(); // TODO would be faster to use getElementById, if all steps are id's
 
@@ -209,10 +262,12 @@ export const Tour: React.FC<TourProps> = ({
             index + 1,
             steps[index + 1].target,
             steps[index + 1].parent,
-            start,
+            steps[index + 1].itemIdPrefix,
+            // start,
             // waitForIncreaseElement,
           );
         } else if (isNextStep && action === ACTIONS.NEXT) {
+          console.log('Default place');
           handleToggleStep(
             index + 1,
             steps[index + 1].target,
@@ -226,8 +281,10 @@ export const Tour: React.FC<TourProps> = ({
             steps[index].clickForBackTarget ?? '',
           ) as HTMLElement;
           backElement?.click();
+          console.log('12');
           handleToggleStep(index - 1, steps[index - 1].target);
         } else if (action === ACTIONS.PREV) {
+          console.log('13');
           handleToggleStep(index - 1, steps[index - 1].target);
         }
       } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
@@ -243,6 +300,7 @@ export const Tour: React.FC<TourProps> = ({
     const handleTargetClick = () => {
       if (activeTourStep + 1 < steps.length) {
         waitForTargetElement(steps[activeTourStep + 1].target, () => {
+          console.log('15');
           handleToggleStep(
             activeTourStep + 1,
             steps[activeTourStep + 1].target,
