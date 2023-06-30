@@ -149,11 +149,7 @@ export const Tour: React.FC<TourProps> = ({
               for (const addedNode of mutation.addedNodes) {
                 if (
                   addedNode.nodeType === Node.ELEMENT_NODE &&
-                  ((addedNode as Element).matches(target) ||
-                    (parent &&
-                      (addedNode as Element).matches(
-                        'ag-row-even:nth-child(1)',
-                      )))
+                  (addedNode as Element).matches(target)
                 ) {
                   console.log('TARGEEET-ID', (addedNode as Element).role);
                   console.log(
