@@ -2,8 +2,10 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
+import PlaceIcon from '@mui/icons-material/Place';
 import Star from '@mui/icons-material/Star';
 import { styled } from '@mui/material';
+import Button from '@mui/material/Button';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useLocation, useNavigate } from 'react-router';
@@ -34,6 +36,19 @@ const StyledLink = styled('a')(({ theme }) => ({
   },
 }));
 
+const StyledButton = styled(Button)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  textDecoration: 'none',
+  color: 'grey',
+}));
+
+const StyledListIcon = styled(ListItemIcon)(({ theme }) => ({
+  listIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
+
 const StyledLinkDiv = styled('div')(() => ({
   position: 'absolute',
   bottom: 0,
@@ -60,12 +75,23 @@ const MainMenu = (): JSX.Element => {
   const resourcesLinks = // TODO: use button instead of link for tour, get a tour icon
     (
       <StyledLinkDiv>
-        <StyledLink onClick={reRunTour}>
-          <ListItemIcon>
-            <AutoStoriesIcon />
-          </ListItemIcon>
-          Tour
-        </StyledLink>
+        <StyledButton>
+          <Button sx={{ color: 'grey' }} onClick={reRunTour}>
+            <StyledListIcon>
+              <ListItemIcon>
+                <PlaceIcon />
+              </ListItemIcon>
+            </StyledListIcon>
+            <span
+              style={{
+                textTransform: 'none',
+                fontSize: '16px',
+              }}
+            >
+              Tour
+            </span>
+          </Button>
+        </StyledButton>
         <StyledLink href={TUTORIALS_LINK} target="_blank">
           <ListItemIcon>
             <AutoStoriesIcon />
