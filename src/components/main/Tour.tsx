@@ -378,6 +378,7 @@ export const Tour: React.FC<TourProps> = ({
           options: {
             spotlightShadow: '0 0 15px rgba(255, 0, 0, 1)',
             zIndex: 1500, // TODO: Get zIndex dynamically
+            primaryColor: 'rgb(80, 80, 210)',
           },
           buttonNext: {
             visibility: nextButtonSetting === 'hidden' ? 'hidden' : 'visible',
