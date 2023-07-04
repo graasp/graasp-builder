@@ -195,6 +195,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
               onClick={submitEtherpad}
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
               disabled={!padName}
+              type="submit"
             >
               {translateBuilder(BUILDER.CREATE_ITEM_ADD_BUTTON)}
             </Button>
@@ -214,6 +215,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
                 isConfirmButtonDisabled ||
                 !isItemValid(updatedPropertiesPerType[selectedItemType])
               }
+              type="submit"
             >
               {translateBuilder(BUILDER.CREATE_ITEM_ADD_BUTTON)}
             </Button>
