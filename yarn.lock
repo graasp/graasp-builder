@@ -3834,12 +3834,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.3.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.3.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.22.3
   resolution: "@babel/runtime@npm:7.22.3"
   dependencies:
     regenerator-runtime: ^0.13.11
   checksum: 8fc50785ca4cba749fed90bffca7e6fd52d4709755654e95b8d2a945fc034b56fb8c2e8a0183fea7c4abb86bf5fa77678c0ea35163b6920649833d180c34c234
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.20.6":
+  version: 7.22.6
+  resolution: "@babel/runtime@npm:7.22.6"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: e585338287c4514a713babf4fdb8fc2a67adcebab3e7723a739fc62c79cfda875b314c90fd25f827afb150d781af97bc16c85bfdbfa2889f06053879a1ddb597
   languageName: node
   linkType: hard
 
@@ -4765,6 +4774,15 @@ __metadata:
     uuid: 9.0.0
     validator: 13.9.0
   checksum: 48eda9d8528591df34f27763cd86835b3f2be52c22eb21cf0d432b5a21ef8a2654c910528178611883d1bb05f0b4908b69771cd5fbebbd19c2cebbc1994dbd3b
+  languageName: node
+  linkType: hard
+
+"@graasp/translations@github:graasp/graasp-translations#180-published-tab":
+  version: 1.15.0
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=9fd419c18ea107d9decec59029f2f07951d62981"
+  dependencies:
+    i18next: 22.4.15
+  checksum: 78008d14da30e323cf84e8efa1ce3a4cac85e49c53e5ae98023fd90cc4b39617c589f6496e447860b15d0d9534bd96c9649400d73971b5b141fcefcdd4c05616
   languageName: node
   linkType: hard
 
@@ -12121,7 +12139,7 @@ __metadata:
     "@graasp/chatbox": 2.0.0
     "@graasp/query-client": 1.1.3
     "@graasp/sdk": 1.1.1
-    "@graasp/translations": 1.15.0
+    "@graasp/translations": "github:graasp/graasp-translations#180-published-tab"
     "@graasp/ui": 3.2.1
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.134
