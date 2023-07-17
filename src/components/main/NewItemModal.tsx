@@ -24,6 +24,7 @@ import { buildItemPath } from '../../config/paths';
 import { mutations } from '../../config/queryClient';
 import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
+  ITEM_FORM_CANCEL_BUTTON_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '../../config/selectors';
 import { InternalItemType, NewItemTabType } from '../../config/types';
@@ -38,6 +39,8 @@ import LinkForm from '../item/form/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
 import ItemTypeTabs from './ItemTypeTabs';
+
+// import TourContext, { TourContextData } from './TourContext';
 
 const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   flexGrow: 1,
@@ -61,6 +64,7 @@ type Props = {
 const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
+  // const { isTourOpen } = useContext(TourContext) as TourContextData;
 
   const { padName, EtherpadForm } = useEtherpadForm();
 
@@ -190,7 +194,10 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       case ItemType.ETHERPAD:
         return (
           <>
-            <CancelButton onClick={handleClose} />
+            <CancelButton
+              onClick={handleClose}
+              id={ITEM_FORM_CANCEL_BUTTON_ID}
+            />
             <Button
               onClick={submitEtherpad}
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
@@ -207,7 +214,10 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       case ItemType.DOCUMENT:
         return (
           <>
-            <CancelButton onClick={handleClose} />
+            <CancelButton
+              onClick={handleClose}
+              id={ITEM_FORM_CANCEL_BUTTON_ID}
+            />
             <Button
               onClick={submit}
               id={ITEM_FORM_CONFIRM_BUTTON_ID}
@@ -236,7 +246,13 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="md"
+      fullWidth
+      // disableEnforceFocus={isTourOpen}
+    >
       <StyledDialogContent>
         <ItemTypeTabs
           onTypeChange={setSelectedItemType}

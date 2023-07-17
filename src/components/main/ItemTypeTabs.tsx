@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-wrap-multilines */
 import { Tab, Tabs, styled } from '@mui/material';
 
 import { useState } from 'react';

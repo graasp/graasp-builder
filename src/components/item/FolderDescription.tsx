@@ -41,7 +41,7 @@ const FolderDescription = ({
 
   return (
     <TextEditor
-      value={parentItem?.description}
+      value={parentItem?.description ?? ''}
       edit={isEditing}
       placeholderText={translateBuilder(
         BUILDER.EDIT_FOLDER_DESCRIPTION_PLACEHOLDER,

@@ -1,6 +1,7 @@
 import { Grid, Typography, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 
+import Joyride from 'react-joyride';
 import { Link, useParams } from 'react-router-dom';
 
 import { Context } from '@graasp/sdk';
@@ -23,10 +24,12 @@ import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
   HEADER_APP_BAR_ID,
+  TOUR_NAVIGATION_SIDEBAR_CLOSE_BUTTON_ID,
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { useLayoutContext } from '../context/LayoutContext';
+import { steps } from '../guidedTour/StarterTour';
 import MainMenu from './MainMenu';
 import NotificationButton from './NotificationButton';
 
@@ -109,7 +112,18 @@ const Main = ({ children }: Props): JSX.Element => {
       headerRightContent={rightContent}
       sidebar={<MainMenu />}
       open={isMainMenuOpen}
+      menuButtonId={TOUR_NAVIGATION_SIDEBAR_CLOSE_BUTTON_ID}
     >
+      <Joyride
+        continuous
+        run
+        styles={{ options: { zIndex: 10000 } }}
+        scrollToFirstStep
+        showProgress
+        hideCloseButton
+        showSkipButton
+        steps={steps}
+      />
       <CookiesBanner />
       {children}
     </GraaspMain>

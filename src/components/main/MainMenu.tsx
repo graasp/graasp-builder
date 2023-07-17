@@ -1,9 +1,10 @@
+import { AutoAwesome } from '@mui/icons-material';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import Star from '@mui/icons-material/Star';
-import { styled } from '@mui/material';
+import { ListItemButton, Stack, styled } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useLocation, useNavigate } from 'react-router';
@@ -19,11 +20,15 @@ import {
   RECYCLE_BIN_PATH,
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
+import {
+  TOUR_NAVIGATION_SIDEBAR_ID,
+  TOUR_TUTORIALS_LINK_ID,
+} from '../../config/selectors';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const StyledLink = styled('a')(({ theme }) => ({
-  position: 'absolute',
-  bottom: 0,
+  // position: 'absolute',
+  // bottom: 0,
   width: '100%',
   display: 'flex',
   alignItems: 'center',
@@ -52,12 +57,30 @@ const MainMenu = (): JSX.Element => {
   };
 
   const resourcesLink = (
-    <StyledLink href={TUTORIALS_LINK} target="_blank">
+    <StyledLink
+      id={TOUR_TUTORIALS_LINK_ID}
+      href={TUTORIALS_LINK}
+      target="_blank"
+    >
       <ListItemIcon>
         <AutoStoriesIcon />
       </ListItemIcon>
       {translateBuilder('Tutorials')}
     </StyledLink>
+  );
+
+  const tourButton = (
+    <ListItemButton
+      sx={{
+        color: 'grey',
+        '&:hover': { color: 'purple' },
+      }}
+    >
+      <ListItemIcon sx={{ color: 'inherit' }}>
+        <AutoAwesome />
+      </ListItemIcon>
+      {translateBuilder('Show me around')}
+    </ListItemButton>
   );
 
   const renderAuthenticatedMemberMenuItems = () => {
@@ -72,7 +95,7 @@ const MainMenu = (): JSX.Element => {
     }
 
     return (
-      <>
+      <div id={TOUR_NAVIGATION_SIDEBAR_ID}>
         <MenuItem
           onClick={() => goTo(HOME_PATH)}
           selected={pathname === HOME_PATH}
@@ -85,6 +108,7 @@ const MainMenu = (): JSX.Element => {
           icon={<FolderSharedIcon />}
           selected={pathname === SHARED_ITEMS_PATH}
         />
+
         <MenuItem
           onClick={() => goTo(FAVORITE_ITEMS_PATH)}
           selected={pathname === FAVORITE_ITEMS_PATH}
@@ -97,14 +121,19 @@ const MainMenu = (): JSX.Element => {
           text={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
           icon={<DeleteIcon />}
         />
-      </>
+      </div>
     );
   };
 
   return (
     <GraaspMainMenu fullHeight>
-      {renderAuthenticatedMemberMenuItems()}
-      {resourcesLink}
+      <Stack direction="column" height="100%" justifyContent="space-between">
+        {renderAuthenticatedMemberMenuItems()}
+        <div>
+          {tourButton}
+          {resourcesLink}
+        </div>
+      </Stack>
     </GraaspMainMenu>
   );
 };
