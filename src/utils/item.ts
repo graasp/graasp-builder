@@ -134,7 +134,7 @@ export const getChildrenOrderFromFolderExtra = (
   extra: ImmutableCast<FolderItemExtra>,
 ): List<string> => extra[ItemType.FOLDER]?.childrenOrder ?? List();
 
-export const stripHtml = (str?: string): string =>
+export const stripHtml = (str?: string | null): string =>
   str?.replace(/<[^>]*>?/gm, '') || '';
 
 // sort objects by alphabetical order according to name
