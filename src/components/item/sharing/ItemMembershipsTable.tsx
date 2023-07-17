@@ -98,7 +98,6 @@ const ItemMembershipsTable = ({
       }) => {
         editItemMembership({
           id: instance.id,
-          itemId: instance.item.id,
           permission: value,
           itemId: item.id,
         });
