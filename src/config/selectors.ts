@@ -176,6 +176,8 @@ export const buildCategorySelectionTitleId = (title: string): string =>
   `itemCategoryTitle-${title}`;
 export const buildCategorySelectionId = (title: string): string =>
   `itemCategoryDropdown-${title}`;
+export const buildCategoryDropdownParentSelector = (title: string): string =>
+  `itemCategoryDropdownParent-${title}`;
 export const SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID =
   'shareItemPseudonymizedSchema';
 export const ITEM_RECYCLE_BUTTON_CLASS = 'itemRecycleButton';

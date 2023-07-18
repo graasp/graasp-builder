@@ -3,6 +3,7 @@ import { CategoryType } from '@graasp/sdk';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   LIBRARY_SETTINGS_CATEGORIES_ID,
+  buildCategoryDropdownParentSelector,
   buildCategorySelectionId,
   buildCategorySelectionOptionId,
   buildPublishButtonId,
@@ -60,20 +61,62 @@ describe('Categories', () => {
       categoryContent.contains(name);
     });
 
-    it('Delete a category', () => {
-      const {
-        categories: [itemCategory],
-      } = item;
-      const { category, id } = itemCategory;
-      const categoryType = SAMPLE_CATEGORIES.find(
-        ({ id: cId }) => cId === category.id,
-      )?.type;
-      toggleOption(category.id, categoryType);
-      cy.wait('@deleteItemCategory').then((data) => {
+    describe('Delete a category', () => {
+      it('Using Dropdown', () => {
         const {
-          request: { url },
-        } = data;
-        expect(url.split('/')).contains(id);
+          categories: [itemCategory],
+        } = item;
+        const { category, id } = itemCategory;
+        const categoryType = SAMPLE_CATEGORIES.find(
+          ({ id: cId }) => cId === category.id,
+        )?.type;
+        toggleOption(category.id, categoryType);
+        cy.wait('@deleteItemCategory').then((data) => {
+          const {
+            request: { url },
+          } = data;
+          expect(url.split('/')).contains(id);
+        });
+      });
+
+      it('Using cross on category tag', () => {
+        const {
+          categories: [itemCategory],
+        } = item;
+        const { category, id } = itemCategory;
+        const categoryType = SAMPLE_CATEGORIES.find(
+          ({ id: cId }) => cId === category.id,
+        )?.type;
+        cy.get(`[data-cy=${buildCategoryDropdownParentSelector(categoryType)}]`)
+          .find(`[data-tag-index=0] > svg`)
+          .click();
+        cy.wait('@deleteItemCategory').then((data) => {
+          const {
+            request: { url },
+          } = data;
+          expect(url.split('/')).contains(id);
+        });
+      });
+
+      it('Using backspace in textfield', () => {
+        const {
+          categories: [itemCategory],
+        } = item;
+        const { category, id } = itemCategory;
+        const categoryType = SAMPLE_CATEGORIES.find(
+          ({ id: cId }) => cId === category.id,
+        )?.type;
+        cy.get(
+          `[data-cy=${buildCategoryDropdownParentSelector(
+            categoryType,
+          )}] input`,
+        ).type('{backspace}');
+        cy.wait('@deleteItemCategory').then((data) => {
+          const {
+            request: { url },
+          } = data;
+          expect(url.split('/')).contains(id);
+        });
       });
     });
 
