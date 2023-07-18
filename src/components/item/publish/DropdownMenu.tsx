@@ -15,6 +15,7 @@ import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import {
+  buildCategoryDropdownParentSelector,
   buildCategorySelectionId,
   buildCategorySelectionOptionId,
   buildCategorySelectionTitleId,
@@ -28,8 +29,9 @@ type Props = {
   selectedValues?: List<ItemCategoryRecord>;
   handleChange: (
     _event: SyntheticEvent,
-    value: Category[],
+    value: CategoryRecord[],
     reason: AutocompleteChangeReason,
+    details?: { option: CategoryRecord },
   ) => void;
 };
 
@@ -57,6 +59,7 @@ const DropdownMenu = ({
         {title}
       </Typography>
       <Autocomplete
+        data-cy={buildCategoryDropdownParentSelector(type)}
         sx={{ width: 'auto', maxWidth: '85%' }}
         disabled={disabled || !values}
         multiple

@@ -37,7 +37,7 @@ const FolderForm = ({
       <Box sx={{ mt: 2 }}>
         <TextEditor
           id={FOLDER_FORM_DESCRIPTION_ID}
-          value={updatedProperties?.description || item?.description}
+          value={(updatedProperties?.description || item?.description) ?? ''}
           edit
           onChange={onCaptionChange}
           showActions={false}
