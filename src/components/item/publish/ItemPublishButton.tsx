@@ -84,7 +84,7 @@ const ItemPublishButton = ({
         <Stack direction="row" alignItems="start" gap={1} color="gray">
           <InfoRounded fontSize="small" />
           <Typography>
-            {/* {translateBuilder(BUILDER.LIBRARY_SETTINGS_CHILD_PUBLISHED_STATUS)} */}
+            {translateBuilder(BUILDER.LIBRARY_SETTINGS_CHILD_PUBLISHED_STATUS)}
           </Typography>
         </Stack>
       )}
