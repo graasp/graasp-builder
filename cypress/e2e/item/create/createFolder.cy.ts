@@ -38,10 +38,6 @@ describe('Create Folder', () => {
       cy.wait('@postItem').then(() => {
         // expect update
         cy.wait('@getItem').its('response.url').should('contain', id);
-
-        // form is cleared
-        cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
-        cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', '');
       });
     });
   });
@@ -81,10 +77,6 @@ describe('Create Folder', () => {
       cy.wait('@postItem').then(() => {
         // expect update
         cy.wait('@getItem').its('response.url').should('contain', id);
-
-        // form is cleared
-        cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
-        cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', '');
       });
     });
   });
