@@ -58,6 +58,13 @@ type Props = {
   handleClose: () => void;
 };
 
+const DEFAULT_PROPERTIES: PropertiesPerType = {
+  [ItemType.FOLDER]: { type: ItemType.FOLDER },
+  [ItemType.LINK]: { type: ItemType.LINK },
+  [ItemType.APP]: { type: ItemType.APP },
+  [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
+};
+
 const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -71,12 +78,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
 
   // todo: find a way to create this type of literal from the enum values instead of like this...
   const [updatedPropertiesPerType, setUpdatedPropertiesPerType] =
-    useState<PropertiesPerType>({
-      [ItemType.FOLDER]: { type: ItemType.FOLDER },
-      [ItemType.LINK]: { type: ItemType.LINK },
-      [ItemType.APP]: { type: ItemType.APP },
-      [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
-    });
+    useState<PropertiesPerType>(DEFAULT_PROPERTIES);
 
   const { mutate: postItem } = mutations.usePostItem();
   const { mutate: postEtherpad } = mutations.usePostEtherpad();
@@ -93,7 +95,9 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
 
     // schedule button disable state reset AFTER end of click event handling
     setTimeout(() => setConfirmButtonDisabled(false), durationMs);
-    return handleClose();
+    handleClose();
+
+    setUpdatedPropertiesPerType(DEFAULT_PROPERTIES);
   };
 
   const submit = () => {
