@@ -55,7 +55,7 @@ const PasswordSetting = (): JSX.Element => {
     if (isValid) {
       // perform validation when all fields are filled in
       if (currentPassword === newPassword) {
-        return setNewPassword(FAILURE_MESSAGES.PASSWORD_EQUAL_ERROR);
+        return setNewPasswordError(FAILURE_MESSAGES.PASSWORD_EQUAL_ERROR);
       }
       if (newPassword !== confirmPassword) {
         return setConfirmPasswordError(FAILURE_MESSAGES.PASSWORD_CONFIRM_ERROR);
@@ -63,7 +63,7 @@ const PasswordSetting = (): JSX.Element => {
 
       // check password strength for new password
       if (!isPasswordStrong(newPassword)) {
-        return setNewPassword(FAILURE_MESSAGES.PASSWORD_WEAK_ERROR);
+        return setNewPasswordError(FAILURE_MESSAGES.PASSWORD_WEAK_ERROR);
       }
 
       // perform password update
