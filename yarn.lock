@@ -4746,12 +4746,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:1.1.5":
-  version: 1.1.5
-  resolution: "@graasp/query-client@npm:1.1.5"
+"@graasp/query-client@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@graasp/query-client@npm:1.2.0"
   dependencies:
     "@graasp/sdk": 1.1.2
-    "@graasp/translations": 1.15.0
+    "@graasp/translations": 1.15.1
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
@@ -4761,7 +4761,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 6e7303043ff731eddd2d2172586c4d8bb425a14bf359285c9f80f036e320aa86777ad8129c516d76f40e760b2963d2af8add7fdba37b970b9146be0c1b1d2cdd
+  checksum: eaf962ccb577c0e38368fd078e4f0a4e5682a3da32df8e7edb00080eafc21902bc760bd850a46242a962154d0164ce4f2710f71c0a5278cee24383607cab6e0b
   languageName: node
   linkType: hard
 
@@ -4781,15 +4781,6 @@ __metadata:
     uuid: 9.0.0
     validator: 13.9.0
   checksum: 57792d9701515f53f7d8c8203e36195c7fa0164b348bf3b95cdbc1876bd8983388d88cde904f7847b94e13de5917c26ec97be1495516e3e736650930f3239a72
-  languageName: node
-  linkType: hard
-
-"@graasp/translations@npm:1.15.0":
-  version: 1.15.0
-  resolution: "@graasp/translations@npm:1.15.0"
-  dependencies:
-    i18next: 22.4.15
-  checksum: e073b83374462f2d108f1d697b7aa14460d05f4ec2e10757db0e0a0a72574bff4721f997851d8e88e871f3704c8bcf887533590dd7acdcbf9d607109bae25c8a
   languageName: node
   linkType: hard
 
@@ -12156,7 +12147,7 @@ __metadata:
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
     "@graasp/chatbox": 2.0.0
-    "@graasp/query-client": 1.1.5
+    "@graasp/query-client": 1.2.0
     "@graasp/sdk": 1.1.2
     "@graasp/translations": 1.15.1
     "@graasp/ui": 3.2.4

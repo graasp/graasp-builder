@@ -13,7 +13,7 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "2.0.0",
-    "@graasp/query-client": "1.1.5",
+    "@graasp/query-client": "1.2.0",
     "@graasp/sdk": "1.1.2",
     "@graasp/translations": "1.15.1",
     "@graasp/ui": "3.2.4",
@@ -78,7 +78,7 @@
     "prettier:check": "prettier --check src/**/*.{js,ts,tsx,json}",
     "prettier:write": "prettier --write src/**/*.{js,ts,tsx,json}",
     "cypress:open": "env-cmd -f ./.env.local cypress open",
-    "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3111 && yarn cypress:run\"",
+    "cypress": "concurrently -k -s first \"yarn start:test\" \"wait-on http://localhost:3111 && yarn cypress:run\"",
     "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome",
     "postinstall": "husky install"
   },
