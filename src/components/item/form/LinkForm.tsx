@@ -18,11 +18,15 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleLinkInput: TextFieldProps['onChange'] = (event) => {
+    const newValue = event.target.value;
+    const hasProtocol = /^https?:\/\//;
     onChange({
       ...item,
       name: translateBuilder(BUILDER.LINK_DEFAULT_NAME), // todo: this is replaced by iframely
       extra: buildEmbeddedLinkExtra({
-        url: event.target.value,
+        // when used inside the NewItem Modal this component does not receive the item prop
+        // so the https will not show, but it will be added when we submit the url.
+        url: hasProtocol.test(newValue) ? newValue : `https://${newValue}`,
         html: '',
         thumbnails: [],
         icons: [],

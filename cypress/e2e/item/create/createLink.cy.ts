@@ -2,7 +2,11 @@ import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { GRAASP_LINK_ITEM, INVALID_LINK_ITEM } from '../../../fixtures/links';
+import {
+  GRAASP_LINK_ITEM,
+  GRAASP_LINK_ITEM_NO_PROTOCOL,
+  INVALID_LINK_ITEM,
+} from '../../../fixtures/links';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createLink } from '../../../support/createUtils';
 
@@ -15,6 +19,24 @@ describe('Create Link', () => {
 
     // create
     createLink(GRAASP_LINK_ITEM);
+
+    cy.wait('@postItem').then(() => {
+      // check item is created and displayed
+      cy.wait(CREATE_ITEM_PAUSE);
+
+      // expect update
+      cy.wait('@getOwnItems');
+    });
+  });
+
+  it('create link without protocol on Home', () => {
+    cy.setUpApi();
+    cy.visit(HOME_PATH);
+
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+
+    // create
+    createLink(GRAASP_LINK_ITEM_NO_PROTOCOL);
 
     cy.wait('@postItem').then(() => {
       // check item is created and displayed
