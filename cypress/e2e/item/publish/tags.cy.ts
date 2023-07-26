@@ -88,7 +88,6 @@ describe('Tags permissions', () => {
     cy.visit(buildItemPath(item.id));
 
     cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
-    openPublishItemTab(item.id);
-    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('not.exist');
+    cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
   });
 });

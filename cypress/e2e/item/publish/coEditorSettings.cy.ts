@@ -83,7 +83,6 @@ describe('Co-editor setting permissions', () => {
     cy.visit(buildItemPath(item.id));
 
     cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
-    openPublishItemTab(item.id);
-    cy.get(`#${CO_EDITOR_SETTINGS_RADIO_GROUP_ID}`).should('not.exist');
+    cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
   });
 });
