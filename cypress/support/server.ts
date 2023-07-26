@@ -1816,7 +1816,7 @@ export const mockPublishItem = (items: ItemForTest[]): void => {
 export const mockUnpublishItem = (items: ItemForTest[]): void => {
   cy.intercept(
     {
-      method: HttpMethod.POST,
+      method: HttpMethod.DELETE,
       url: new RegExp(`${API_HOST}/${buildItemUnpublishRoute(ID_FORMAT)}`),
     },
     ({ reply, url }) => {
@@ -1928,7 +1928,7 @@ export const mockUpdatePassword = (
 
 export const mockGetItemFavorites = (
   itemFavorites: ItemFavorite[],
-  shouldThrowError: boolean
+  shouldThrowError: boolean,
 ): void => {
   cy.intercept(
     {
@@ -1964,9 +1964,7 @@ export const mockAddFavorite = (
   ).as('favoriteItem');
 };
 
-export const mockDeleteFavorite = (
-  shouldThrowError: boolean,
-): void => {
+export const mockDeleteFavorite = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
       method: HttpMethod.DELETE,

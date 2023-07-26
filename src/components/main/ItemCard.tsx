@@ -105,7 +105,7 @@ const ItemComponent = ({
 
   return (
     <GraaspCard
-      description={truncate(stripHtml(item.description), {
+      description={truncate(stripHtml(item.description || ''), {
         length: DESCRIPTION_MAX_LENGTH,
       })}
       Actions={Actions}

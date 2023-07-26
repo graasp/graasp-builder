@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/graasp/graasp-builder/compare/v1.4.0...v1.5.0) (2023-07-26)
+
+
+### chore
+
+* release 1.5.0 ([399be79](https://github.com/graasp/graasp-builder/commit/399be791f7b03cfc2a09f334dfb90d3391e25847))
+
+## [1.4.0](https://github.com/graasp/graasp-builder/compare/v1.3.0...v1.4.0) (2023-07-21)
+
+
+### Features
+
+* adds submit role to add button ([#693](https://github.com/graasp/graasp-builder/issues/693)) ([d8a0aa3](https://github.com/graasp/graasp-builder/commit/d8a0aa355e6f8cd2fdee1ec6fc5a70f57ed0905a))
+
+
+### Bug Fixes
+
+* add information when item is already published in parent ([efce7b2](https://github.com/graasp/graasp-builder/commit/efce7b209ef065967cf66b25a02870bcd3909abd))
+* allow to omit https in new link dialog ([#713](https://github.com/graasp/graasp-builder/issues/713)) ([1213db1](https://github.com/graasp/graasp-builder/commit/1213db1dee5cdbab075d192bcba9f69c2ae7079b))
+* clear new form on submit ([#703](https://github.com/graasp/graasp-builder/issues/703)) ([d14a3a1](https://github.com/graasp/graasp-builder/commit/d14a3a185ba83c9d94b5dd55a6294e791050488f))
+* **deps:** update dependency @graasp/ui to v3.2.4 ([#699](https://github.com/graasp/graasp-builder/issues/699)) ([cee6fae](https://github.com/graasp/graasp-builder/commit/cee6faedbe4dc8d0001ff6a3fc6e24a78c935771))
+* **deps:** update dependency react-toastify to v9 ([#681](https://github.com/graasp/graasp-builder/issues/681)) ([5030b37](https://github.com/graasp/graasp-builder/commit/5030b377fb34bb0675ecd6ea08505e76de8a9c72))
+* **deps:** update mui (non-major) ([#682](https://github.com/graasp/graasp-builder/issues/682)) ([421ebbb](https://github.com/graasp/graasp-builder/commit/421ebbba4fac1e040b88340b9a0c193b91226689))
+* **deps:** update uppy packages ([#671](https://github.com/graasp/graasp-builder/issues/671)) ([cfa8ee0](https://github.com/graasp/graasp-builder/commit/cfa8ee0240cb999ae6027a5bab515323d5c47862))
+* **deps:** update uppy packages ([#700](https://github.com/graasp/graasp-builder/issues/700)) ([37d0d51](https://github.com/graasp/graasp-builder/commit/37d0d515c0316f668df984e692bc164cb7cd292b))
+* password error shown in helpertext ([#709](https://github.com/graasp/graasp-builder/issues/709)) ([3673d51](https://github.com/graasp/graasp-builder/commit/3673d51854f2d83f74f8c2ccd111fc1c8e7815a3))
+* removing categories in publishing dialog ([#704](https://github.com/graasp/graasp-builder/issues/704)) ([efce7b2](https://github.com/graasp/graasp-builder/commit/efce7b209ef065967cf66b25a02870bcd3909abd))
+* update deps and test fixtures for unpublished error ([1213db1](https://github.com/graasp/graasp-builder/commit/1213db1dee5cdbab075d192bcba9f69c2ae7079b))
+
 ## [1.3.0](https://github.com/graasp/graasp-builder/compare/v1.2.0...v1.3.0) (2023-06-29)
 
 
