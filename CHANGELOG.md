@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.1](https://github.com/graasp/graasp-builder/compare/v1.5.0...v1.5.1) (2023-07-26)
+
+
+### Bug Fixes
+
+* **deps:** update ui for link fix ([#720](https://github.com/graasp/graasp-builder/issues/720)) ([63df349](https://github.com/graasp/graasp-builder/commit/63df349a6c4fca15fb44de258a8f90f54964d1cd))
+
 ## [1.5.0](https://github.com/graasp/graasp-builder/compare/v1.4.0...v1.5.0) (2023-07-26)
 
 
