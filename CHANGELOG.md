@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/graasp/graasp-builder/compare/v1.4.0...v1.5.0) (2023-07-26)
+
+
+### chore
+
+* release 1.5.0 ([399be79](https://github.com/graasp/graasp-builder/commit/399be791f7b03cfc2a09f334dfb90d3391e25847))
+
 ## [1.4.0](https://github.com/graasp/graasp-builder/compare/v1.3.0...v1.4.0) (2023-07-21)
 
 
