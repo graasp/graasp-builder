@@ -49,7 +49,6 @@ const MainMenu = (): JSX.Element => {
   const { data: member } = useCurrentUserContext();
 
   const theme = useTheme();
-  console.log(theme.palette);
   const iconColor = theme.palette.action.active;
 
   const goTo = (path: string) => {
