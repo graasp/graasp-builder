@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 
-import { ItemType } from '@graasp/sdk';
+import { ItemType, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
@@ -51,7 +51,7 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
     ? getHighestPermissionForMemberFromMemberships({
         memberships,
         memberId: member?.id,
-      })
+      })?.permission === PermissionLevel.Admin
     : false;
 
   const onClickChatbox = () => {
