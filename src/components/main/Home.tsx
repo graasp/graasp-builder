@@ -15,7 +15,7 @@ import Items from './Items';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
 
-const Home = (): JSX.Element => {
+const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
 
@@ -28,23 +28,27 @@ const Home = (): JSX.Element => {
   }
 
   return (
-    <Main>
-      <UppyContextProvider enable={isSuccess}>
-        <FileUploader />
-        <Box mx={2}>
-          <ItemHeader showNavigation={false} />
-          <Items
-            id={OWNED_ITEMS_ID}
-            defaultSortedColumn={{ updatedAt: 'desc' }}
-            title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-            items={ownItems}
-            headerElements={[<NewItemButton key="newButton" />]}
-            ToolbarActions={ItemActionsRenderer}
-          />
-        </Box>
-      </UppyContextProvider>
-    </Main>
+    <UppyContextProvider enable={isSuccess}>
+      <FileUploader />
+      <Box mx={2}>
+        <ItemHeader showNavigation={false} />
+        <Items
+          id={OWNED_ITEMS_ID}
+          defaultSortedColumn={{ updatedAt: 'desc' }}
+          title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
+          items={ownItems}
+          headerElements={[<NewItemButton key="newButton" />]}
+          ToolbarActions={ItemActionsRenderer}
+        />
+      </Box>
+    </UppyContextProvider>
   );
 };
+
+const Home = (): JSX.Element => (
+  <Main>
+    <HomeLoadableContent />
+  </Main>
+);
 
 export default Home;

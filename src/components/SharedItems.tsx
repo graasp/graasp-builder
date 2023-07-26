@@ -16,7 +16,7 @@ import ItemHeader from './item/header/ItemHeader';
 import Items from './main/Items';
 import Main from './main/Main';
 
-const SharedItems = (): JSX.Element => {
+const SharedItemsLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
 
@@ -29,18 +29,22 @@ const SharedItems = (): JSX.Element => {
   }
 
   return (
-    <Main>
-      <Box mx={2}>
-        <ItemHeader showNavigation={false} />
-        <Items
-          id={SHARED_ITEMS_ID}
-          title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-          items={sharedItems ?? List()}
-          showCreator
-        />
-      </Box>
-    </Main>
+    <Box mx={2}>
+      <ItemHeader showNavigation={false} />
+      <Items
+        id={SHARED_ITEMS_ID}
+        title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
+        items={sharedItems ?? List()}
+        showCreator
+      />
+    </Box>
   );
 };
+
+const SharedItems = (): JSX.Element => (
+  <Main>
+    <SharedItemsLoadableContent />
+  </Main>
+);
 
 export default SharedItems;

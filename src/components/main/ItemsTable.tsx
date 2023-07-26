@@ -16,6 +16,7 @@ import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
+import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
@@ -272,7 +273,7 @@ const ItemsTable = ({
       <GraaspTable
         id={tableId}
         columnDefs={columnDefs}
-        // tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
+        tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
         rowData={rows.toJS() as DiscriminatedItem[]}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}

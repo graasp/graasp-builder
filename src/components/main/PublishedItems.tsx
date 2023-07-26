@@ -35,16 +35,14 @@ const PublishedItemsDisplay = ({ member }: { member: Member }): JSX.Element => {
   }
 
   return (
-    <Main>
-      <Box mx={2}>
-        <ItemHeader showNavigation={false} />
-        <Items
-          id={PUBLISHED_ITEMS_ID}
-          title={translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
-          items={sharedItems ?? List()}
-        />
-      </Box>
-    </Main>
+    <Box mx={2}>
+      <ItemHeader showNavigation={false} />
+      <Items
+        id={PUBLISHED_ITEMS_ID}
+        title={translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
+        items={sharedItems ?? List()}
+      />
+    </Box>
   );
 };
 
@@ -55,7 +53,11 @@ const PublishedItems = (): JSX.Element => {
     return <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
   }
 
-  return <PublishedItemsDisplay member={member} />;
+  return (
+    <Main>
+      <PublishedItemsDisplay member={member} />
+    </Main>
+  );
 };
 
 export default PublishedItems;

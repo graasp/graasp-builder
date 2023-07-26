@@ -2,15 +2,14 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
-import PublicIcon from '@mui/icons-material/Public';
 import Star from '@mui/icons-material/Star';
-import { styled } from '@mui/material';
+import { styled, useTheme } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useLocation, useNavigate } from 'react-router';
 
 import { BUILDER } from '@graasp/translations';
-import { MainMenu as GraaspMainMenu, MenuItem } from '@graasp/ui';
+import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
 
 import { TUTORIALS_LINK } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
@@ -48,6 +47,10 @@ const MainMenu = (): JSX.Element => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: member } = useCurrentUserContext();
+
+  const theme = useTheme();
+  console.log(theme.palette);
+  const iconColor = theme.palette.action.active;
 
   const goTo = (path: string) => {
     navigate(path);
@@ -97,7 +100,13 @@ const MainMenu = (): JSX.Element => {
           onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
           selected={pathname === PUBLISHED_ITEMS_PATH}
           text="Published items"
-          icon={<PublicIcon />}
+          icon={
+            <LibraryIcon
+              primaryColor={iconColor}
+              secondaryColor="#fff"
+              size={24}
+            />
+          }
         />
         <MenuItem
           onClick={() => goTo(RECYCLE_BIN_PATH)}
