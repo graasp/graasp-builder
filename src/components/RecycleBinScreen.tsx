@@ -50,7 +50,7 @@ const ToolbarActions = ({ selectedIds }: ToolbarActionsProps): JSX.Element => (
   </>
 );
 
-const RecycleBinScreen = (): JSX.Element => {
+const RecycleBinLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
     data: recycledEntries,
@@ -66,24 +66,26 @@ const RecycleBinScreen = (): JSX.Element => {
   }
 
   return (
-    <Main>
-      <Box mx={2}>
-        <ItemHeader showNavigation={false} />
-        <Items
-          id={RECYCLED_ITEMS_ID}
-          clickable={false}
-          title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-          items={
-            recycledEntries?.map(({ item }) => item as ItemRecord) ?? List()
-          }
-          actions={RowActions}
-          ToolbarActions={ToolbarActions}
-          showThumbnails={false}
-          enableMemberships={false}
-        />
-      </Box>
-    </Main>
+    <Box mx={2}>
+      <ItemHeader showNavigation={false} />
+      <Items
+        id={RECYCLED_ITEMS_ID}
+        clickable={false}
+        title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
+        items={recycledEntries?.map(({ item }) => item as ItemRecord) ?? List()}
+        actions={RowActions}
+        ToolbarActions={ToolbarActions}
+        showThumbnails={false}
+        enableMemberships={false}
+      />
+    </Box>
   );
 };
+
+const RecycleBinScreen = (): JSX.Element => (
+  <Main>
+    <RecycleBinLoadableContent />
+  </Main>
+);
 
 export default RecycleBinScreen;
