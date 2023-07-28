@@ -11,6 +11,8 @@ import {
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
+import { MEMBERS } from '../../../fixtures/members';
+import { PAGE_LOAD_WAITING_PAUSE } from '../../../support/constants';
 
 const openPublishItemTab = (id) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
@@ -20,6 +22,36 @@ const openPublishItemTab = (id) => {
 export const publishItem = (): void => {
   cy.get(`#${ITEM_PUBLISH_BUTTON_ID}`).click();
 };
+
+describe('Public', ()=> {
+  it('Should not view publish tab', () => {
+    const item = SAMPLE_PUBLIC_ITEMS.items[0];
+    cy.setUpApi({
+      items: [item],
+      currentMember:null
+    });
+    cy.visit(buildItemPath(item.id));
+    
+    // wait for page to fully load
+    cy.wait(PAGE_LOAD_WAITING_PAUSE)
+    cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
+  });
+})
+
+describe('Read', ()=> {
+  it('Should not view publish tab', () => {
+    const item = SAMPLE_ITEMS.items[1];
+    cy.setUpApi({
+      items: [item],
+      currentMember: MEMBERS.BOB
+    });
+    cy.visit(buildItemPath(item.id));
+    
+    // wait for page to fully load
+    cy.wait(PAGE_LOAD_WAITING_PAUSE)
+    cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
+  });
+})
 
 describe('Public Item', () => {
   it('Validate item', () => {

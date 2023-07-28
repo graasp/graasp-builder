@@ -137,6 +137,7 @@ export const mockGetCurrentMember = (
       url: `${API_HOST}/${GET_CURRENT_MEMBER_ROUTE}`,
     },
     ({ reply }) => {
+
       if (shouldThrowError) {
         return reply({
           statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
