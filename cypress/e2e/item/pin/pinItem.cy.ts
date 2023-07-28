@@ -1,12 +1,12 @@
-import { ITEMS_SETTINGS, PINNED_ITEM } from '../../../fixtures/items';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
+  PIN_ITEM_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
-  PIN_ITEM_BUTTON_CLASS,
 } from '../../../../src/config/selectors';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ITEMS_SETTINGS, PINNED_ITEM } from '../../../fixtures/items';
+import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const togglePinButton = (itemId) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);

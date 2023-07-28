@@ -13,17 +13,31 @@ describe('Links', () => {
     cy.setUpApi({
       items: [
         {
-          ...GRAASP_LINK_ITEM, memberships: [
-            buildItemMembership({ item: GRAASP_LINK_ITEM, member: CURRENT_USER }),
-          ]
+          ...GRAASP_LINK_ITEM,
+          memberships: [
+            buildItemMembership({
+              item: GRAASP_LINK_ITEM,
+              member: CURRENT_USER,
+            }),
+          ],
         },
         {
-          ...GRAASP_LINK_ITEM_IFRAME_ONLY, memberships: [buildItemMembership({ item: GRAASP_LINK_ITEM_IFRAME_ONLY, member: CURRENT_USER }),
-          ]
+          ...GRAASP_LINK_ITEM_IFRAME_ONLY,
+          memberships: [
+            buildItemMembership({
+              item: GRAASP_LINK_ITEM_IFRAME_ONLY,
+              member: CURRENT_USER,
+            }),
+          ],
         },
         {
-          ...YOUTUBE_LINK_ITEM, memberships: [buildItemMembership({ item: YOUTUBE_LINK_ITEM, member: CURRENT_USER }),
-          ]
+          ...YOUTUBE_LINK_ITEM,
+          memberships: [
+            buildItemMembership({
+              item: YOUTUBE_LINK_ITEM,
+              member: CURRENT_USER,
+            }),
+          ],
         },
       ],
     });

@@ -1,5 +1,5 @@
-import { langs } from '@graasp/translations';
 import { EmailFrequency } from '@graasp/sdk';
+import { langs } from '@graasp/translations';
 
 import { emailFrequency } from '../../src/config/constants';
 import { MEMBER_PROFILE_PATH } from '../../src/config/paths';

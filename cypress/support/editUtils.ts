@@ -11,7 +11,15 @@ import { CAPTION_EDIT_PAUSE, TABLE_ITEM_RENDER_TIME } from './constants';
 
 // eslint-disable-next-line import/prefer-default-export
 // bug: use string for type to fit usage
-export const editItem = (payload:{id:string, type:ItemType|string, name:string, description:string}, mode = DEFAULT_ITEM_LAYOUT_MODE):void => {
+export const editItem = (
+  payload: {
+    id: string;
+    type: ItemType | string;
+    name: string;
+    description: string;
+  },
+  mode = DEFAULT_ITEM_LAYOUT_MODE,
+): void => {
   if (DEFAULT_ITEM_LAYOUT_MODE === ITEM_LAYOUT_MODES.LIST) {
     cy.wait(TABLE_ITEM_RENDER_TIME);
   }
@@ -29,7 +37,7 @@ export const editItem = (payload:{id:string, type:ItemType|string, name:string, 
   }
 
   switch (type) {
-      case ItemType.H5P:
+    case ItemType.H5P:
     case ItemType.APP:
     case ItemType.ETHERPAD:
     case ItemType.LINK:
@@ -47,7 +55,13 @@ export const editItem = (payload:{id:string, type:ItemType|string, name:string, 
   }
 };
 
-export const editCaptionFromViewPage = ({ id, caption }:{id:string, caption:string}): void => {
+export const editCaptionFromViewPage = ({
+  id,
+  caption,
+}: {
+  id: string;
+  caption: string;
+}): void => {
   cy.wait(CAPTION_EDIT_PAUSE);
   cy.get(`#${buildEditButtonId(id)}`).click();
   cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}${caption}`);

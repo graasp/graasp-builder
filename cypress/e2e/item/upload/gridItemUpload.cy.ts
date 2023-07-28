@@ -4,7 +4,6 @@
 // import { ICON_FILEPATH, TEXT_FILEPATH } from '../../../fixtures/files';
 // import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-
 // BUG: These tests work but not in CI
 
 // const dragUploadItem = (filenames) =>

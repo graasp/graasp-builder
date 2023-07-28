@@ -312,11 +312,11 @@ Cypress.Commands.add(
 
     mockDeleteItemLoginSchemaRoute(items);
 
-    mockGetItemFavorites(favoriteItems, getFavoriteError)
+    mockGetItemFavorites(favoriteItems, getFavoriteError);
 
-    mockAddFavorite(cachedItems, addFavoriteError)
+    mockAddFavorite(cachedItems, addFavoriteError);
 
-    mockDeleteFavorite(deleteFavoriteError)
+    mockDeleteFavorite(deleteFavoriteError);
   },
 );
 

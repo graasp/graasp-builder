@@ -8,7 +8,17 @@ describe('View Document', () => {
   describe('Grid', () => {
     beforeEach(() => {
       cy.setUpApi({
-        items: [{ ...GRAASP_DOCUMENT_ITEM, memberships: [buildItemMembership({ item: GRAASP_DOCUMENT_ITEM, member: CURRENT_USER })] }],
+        items: [
+          {
+            ...GRAASP_DOCUMENT_ITEM,
+            memberships: [
+              buildItemMembership({
+                item: GRAASP_DOCUMENT_ITEM,
+                member: CURRENT_USER,
+              }),
+            ],
+          },
+        ],
       });
     });
 

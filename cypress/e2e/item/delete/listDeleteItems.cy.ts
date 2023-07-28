@@ -42,7 +42,11 @@ describe('Delete Items in List', () => {
 
   describe('Error handling', () => {
     it('error while deleting items does not delete in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, recycledItemData: RECYCLED_ITEM_DATA, deleteItemsError: true });
+      cy.setUpApi({
+        ...SAMPLE_ITEMS,
+        recycledItemData: RECYCLED_ITEM_DATA,
+        deleteItemsError: true,
+      });
 
       // go to children item
       cy.visit(RECYCLE_BIN_PATH);

@@ -1,4 +1,9 @@
-import { AppItemType, DocumentItemType, EmbeddedLinkItemType, ItemType } from '@graasp/sdk';
+import {
+  AppItemType,
+  DocumentItemType,
+  EmbeddedLinkItemType,
+  ItemType,
+} from '@graasp/sdk';
 
 import {
   CREATE_ITEM_APP_ID,
@@ -14,30 +19,45 @@ import {
 import { InternalItemType } from '../../src/config/types';
 import { FileItemForTest } from './types';
 
-export const createApp = (payload: AppItemType, options?: { confirm?: boolean }): void => {
+export const createApp = (
+  payload: AppItemType,
+  options?: { confirm?: boolean },
+): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
   cy.get(`#${CREATE_ITEM_APP_ID}`).click();
   cy.fillAppModal(payload, options);
 };
 
-export const createDocument = (payload: DocumentItemType, options?: { confirm?: boolean }): void => {
+export const createDocument = (
+  payload: DocumentItemType,
+  options?: { confirm?: boolean },
+): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
   cy.get(`#${CREATE_ITEM_DOCUMENT_ID}`).click();
   cy.fillDocumentModal(payload, options);
 };
 
-export const createFolder = (payload: { name?: string; description?: string }, options?: { confirm?: boolean }): void => {
+export const createFolder = (
+  payload: { name?: string; description?: string },
+  options?: { confirm?: boolean },
+): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
   cy.fillFolderModal(payload, options);
 };
 
-export const createLink = (payload: EmbeddedLinkItemType, options?: { confirm?: boolean }): void => {
+export const createLink = (
+  payload: EmbeddedLinkItemType,
+  options?: { confirm?: boolean },
+): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
   cy.get(`#${CREATE_ITEM_LINK_ID}`).click();
   cy.fillLinkModal(payload, options);
 };
 
-export const createFile = (payload: FileItemForTest, options?: { confirm?: boolean }): void => {
+export const createFile = (
+  payload: FileItemForTest,
+  options?: { confirm?: boolean },
+): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
   const { confirm = true } = options ?? {};
   cy.get(`#${CREATE_ITEM_FILE_ID}`).click();
@@ -56,8 +76,16 @@ export const createFile = (payload: FileItemForTest, options?: { confirm?: boole
   }
 };
 
-
-export const createItem = (payload: { name?: string; extra?: { [ItemType.LINK]: { url?: string; } }; filepath?: string; type?: ItemType | InternalItemType, createFilepath?: string }, options?: { confirm?: boolean }): void => {
+export const createItem = (
+  payload: {
+    name?: string;
+    extra?: { [ItemType.LINK]: { url?: string } };
+    filepath?: string;
+    type?: ItemType | InternalItemType;
+    createFilepath?: string;
+  },
+  options?: { confirm?: boolean },
+): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
 
   switch (payload.type) {

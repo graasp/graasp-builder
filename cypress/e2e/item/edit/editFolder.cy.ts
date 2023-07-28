@@ -20,9 +20,7 @@ describe('Edit Folder', () => {
       //   const { id } = item;
       //   cy.setUpApi({ items: [item] });
       //   cy.visit(buildItemPath(id));
-
       //   cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
       //   const caption = 'new caption';
       //   editCaptionFromViewPage({ id, caption });
       //   cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
@@ -134,9 +132,7 @@ describe('Edit Folder', () => {
       //   const { id } = item;
       //   cy.setUpApi({ items: [item] });
       //   cy.visit(buildItemPath(id));
-
       //   cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-
       //   const caption = 'new caption';
       //   editCaptionFromViewPage({ id, caption });
       //   cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
