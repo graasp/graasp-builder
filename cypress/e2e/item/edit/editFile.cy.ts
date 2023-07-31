@@ -1,10 +1,10 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import {
   TEXT_EDITOR_CLASS,
   buildCancelButtonId,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';

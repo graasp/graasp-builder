@@ -17,9 +17,9 @@ export const ID_FORMAT = '(?=.*[0-9])(?=.*[a-zA-Z])([a-z0-9-]+)';
  */
 export const parseStringToRegExp = (
   str: string,
-  options: { characters?: string[], parseQueryString?: boolean } = {},
+  options: { characters?: string[]; parseQueryString?: boolean } = {},
 ): string => {
-  const { characters = ['?', '.'], parseQueryString = false } = options
+  const { characters = ['?', '.'], parseQueryString = false } = options;
   const [originalPathname, ...querystrings] = str.split('?');
   let pathname = originalPathname;
   let querystring = querystrings.join('?');
@@ -45,7 +45,10 @@ const validateCsvHeaders = (headers) => {
   expect(headers).to.deep.equal(expectedHeader);
 };
 
-export const verifyDownloadedChat = (name: string, numMessages: number): void => {
+export const verifyDownloadedChat = (
+  name: string,
+  numMessages: number,
+): void => {
   // get file from download folder
   const downloadsFolder = Cypress.config('downloadsFolder');
   const filename = [downloadsFolder, name].join('/');

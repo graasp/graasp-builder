@@ -10,7 +10,9 @@ export const GRAASP_DOCUMENT_ITEM: DocumentItemType = {
   name: 'graasp text',
   description: 'a description for graasp text',
   path: 'ecafbd2a_5688_12eb_ae93_0242ac130002',
-  settings: {}, createdAt: new Date(), updatedAt: new Date(),
+  settings: {},
+  createdAt: new Date(),
+  updatedAt: new Date(),
   creator: CURRENT_USER,
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',
@@ -31,7 +33,9 @@ export const GRAASP_DOCUMENT_CHILDREN_ITEM: DocumentItemType = {
   description: 'a description for graasp text',
   path: 'bdf09f5a_5688_11eb_ae93_0242ac130002.1cafbd2a_5688_12eb_ae93_0242ac130002',
   creator: CURRENT_USER,
-  settings: {}, createdAt: new Date(), updatedAt: new Date(),
+  settings: {},
+  createdAt: new Date(),
+  updatedAt: new Date(),
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',
   }),

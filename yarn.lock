@@ -4395,12 +4395,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.16.0":
-  version: 1.16.0
-  resolution: "@graasp/translations@npm:1.16.0"
+"@graasp/translations@npm:1.17.0":
+  version: 1.17.0
+  resolution: "@graasp/translations@npm:1.17.0"
   dependencies:
     i18next: 22.4.15
-  checksum: 48703ae22f1a5d5d66c0dc0a9b9146a880f16527a427b32bf5ab0075f8a4607618f679cf330214b11d19c45609b268a19d2cab2c8a757ae96e8d63b7f99442c5
+  checksum: cd9b28b30f1fb02301f8369f51e9cdd7c70299da03a567e9787df3c08db13c1b7dabce036824113755307bd1af9fac85ee5e6551e47a6b511f2c158eb1a96391
   languageName: node
   linkType: hard
 
@@ -12320,7 +12320,7 @@ __metadata:
     "@graasp/chatbox": 2.0.0
     "@graasp/query-client": 1.3.1
     "@graasp/sdk": 1.1.3
-    "@graasp/translations": 1.16.0
+    "@graasp/translations": 1.17.0
     "@graasp/ui": 3.2.6
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.137

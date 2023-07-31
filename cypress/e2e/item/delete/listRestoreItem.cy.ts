@@ -60,7 +60,11 @@ describe('Restore Items in List', () => {
 
   describe('Error handling', () => {
     it('error while restoring item does not delete in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, recycledItemData: RECYCLED_ITEM_DATA, restoretItemsError: true });
+      cy.setUpApi({
+        ...SAMPLE_ITEMS,
+        recycledItemData: RECYCLED_ITEM_DATA,
+        restoretItemsError: true,
+      });
       const { id } = RECYCLED_ITEM_DATA[0].item;
 
       // go to children item

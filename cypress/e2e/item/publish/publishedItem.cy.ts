@@ -23,35 +23,35 @@ export const publishItem = (): void => {
   cy.get(`#${ITEM_PUBLISH_BUTTON_ID}`).click();
 };
 
-describe('Public', ()=> {
+describe('Public', () => {
   it('Should not view publish tab', () => {
     const item = SAMPLE_PUBLIC_ITEMS.items[0];
     cy.setUpApi({
       items: [item],
-      currentMember:null
+      currentMember: null,
     });
     cy.visit(buildItemPath(item.id));
-    
+
     // wait for page to fully load
-    cy.wait(PAGE_LOAD_WAITING_PAUSE)
+    cy.wait(PAGE_LOAD_WAITING_PAUSE);
     cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
   });
-})
+});
 
-describe('Read', ()=> {
+describe('Read', () => {
   it('Should not view publish tab', () => {
     const item = SAMPLE_ITEMS.items[1];
     cy.setUpApi({
       items: [item],
-      currentMember: MEMBERS.BOB
+      currentMember: MEMBERS.BOB,
     });
     cy.visit(buildItemPath(item.id));
-    
+
     // wait for page to fully load
-    cy.wait(PAGE_LOAD_WAITING_PAUSE)
+    cy.wait(PAGE_LOAD_WAITING_PAUSE);
     cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
   });
-})
+});
 
 describe('Public Item', () => {
   it('Validate item', () => {

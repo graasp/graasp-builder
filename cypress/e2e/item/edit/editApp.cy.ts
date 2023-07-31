@@ -1,10 +1,10 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import {
   TEXT_EDITOR_CLASS,
   buildCancelButtonId,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
+import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildAppExtra } from '../../../../src/utils/itemExtra';
 import {
   GRAASP_APP_CHILDREN_ITEM,

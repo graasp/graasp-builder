@@ -30,7 +30,7 @@ describe('Copy items in List', () => {
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       itemIds.forEach((id) => {
-        expect(url).to.contain(id)
+        expect(url).to.contain(id);
         cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
       });
     });
@@ -50,12 +50,11 @@ describe('Copy items in List', () => {
     copyItems({ itemIds, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url, body } }) => {
-      expect(body.parentId).to.equal(toItem)
+      expect(body.parentId).to.equal(toItem);
       itemIds.forEach((id) => {
-        expect(url).to.contain(id)
+        expect(url).to.contain(id);
         cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
       });
-
     });
   });
 
@@ -73,7 +72,7 @@ describe('Copy items in List', () => {
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       itemIds.forEach((id) => {
-        expect(url).to.contain(id)
+        expect(url).to.contain(id);
         cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
       });
     });

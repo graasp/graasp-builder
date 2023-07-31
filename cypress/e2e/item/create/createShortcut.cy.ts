@@ -8,31 +8,49 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
+import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { buildShortcutExtra } from '../../../../src/utils/itemExtra';
 import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 
 const createShortcut = ({ id, toItemPath }) => {
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).click();
   cy.fillTreeModal(toItemPath);
 };
 
-const createShortcutInGrid = ({ id, toItemPath }: { id: string, toItemPath?: string }) => {
+const createShortcutInGrid = ({
+  id,
+  toItemPath,
+}: {
+  id: string;
+  toItemPath?: string;
+}) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   createShortcut({ id, toItemPath });
 };
 
-const createShortcutInList = ({ id, toItemPath }: { id: string, toItemPath?: string }) => {
+const createShortcutInList = ({
+  id,
+  toItemPath,
+}: {
+  id: string;
+  toItemPath?: string;
+}) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   createShortcut({ id, toItemPath });
 };
 
-const checkCreateShortcutRequest = ({ id, toItemId }: { id: string, toItemId?: string }) => {
+const checkCreateShortcutRequest = ({
+  id,
+  toItemId,
+}: {
+  id: string;
+  toItemId?: string;
+}) => {
   cy.wait('@postItem').then(({ request: { body, url } }) => {
     // check post item request is correct
 
@@ -55,8 +73,8 @@ describe('Create Shortcut', () => {
       cy.visit(HOME_PATH);
 
       const { id } = SAMPLE_ITEMS.items[0];
-      // toItemId: TREE_MODAL_MY_ITEMS_ID 
-      createShortcutInList({ id, });
+      // toItemId: TREE_MODAL_MY_ITEMS_ID
+      createShortcutInList({ id });
 
       checkCreateShortcutRequest({ id });
     });
@@ -102,7 +120,7 @@ describe('Create Shortcut', () => {
 
       const { id } = SAMPLE_ITEMS.items[0];
       // toItemId: TREE_MODAL_MY_ITEMS_ID
-      createShortcutInGrid({ id, });
+      createShortcutInGrid({ id });
 
       checkCreateShortcutRequest({ id });
     });

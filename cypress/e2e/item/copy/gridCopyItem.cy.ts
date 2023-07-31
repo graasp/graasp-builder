@@ -29,7 +29,7 @@ describe('Copy Item in Grid', () => {
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-      expect(url).to.contain(copyItemId)
+      expect(url).to.contain(copyItemId);
     });
   });
 
@@ -48,8 +48,8 @@ describe('Copy Item in Grid', () => {
 
     cy.wait('@copyItems').then(({ request: { url, body } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-      expect(url).to.contain(copyItemId)
-      expect(body.parentId).to.equal(toItemId)
+      expect(url).to.contain(copyItemId);
+      expect(body.parentId).to.equal(toItemId);
     });
   });
 
@@ -68,8 +68,7 @@ describe('Copy Item in Grid', () => {
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-      expect(url).to.contain(copyItemId)
-
+      expect(url).to.contain(copyItemId);
     });
   });
 
@@ -90,7 +89,7 @@ describe('Copy Item in Grid', () => {
       cy.wait('@copyItems').then(({ request: { url } }) => {
         // check item is still existing in parent
         cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-        expect(url).to.contain(copyItemId)
+        expect(url).to.contain(copyItemId);
       });
     });
   });

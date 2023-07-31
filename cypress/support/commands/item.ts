@@ -1,8 +1,4 @@
-import {
-  ItemType,
-  getAppExtra,
-  getDocumentExtra,
-} from '@graasp/sdk';
+import { ItemType, getAppExtra, getDocumentExtra } from '@graasp/sdk';
 
 import {
   FOLDER_FORM_DESCRIPTION_ID,
@@ -150,10 +146,7 @@ Cypress.Commands.add(
     } else {
       cy.get(`#${buildItemFormAppOptionId(APP_NAME)}`).click();
       // check name get added automatically
-      cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should(
-        'have.value',
-        APP_NAME,
-      );
+      cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', APP_NAME);
       // edit the app name
       cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`)
         .type(`{selectall}{backspace}${NEW_APP_NAME}`)

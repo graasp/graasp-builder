@@ -191,6 +191,8 @@ const EditItemModalProvider = ({ children }: Props): JSX.Element => {
       case ItemType.LINK:
       case ItemType.SHORTCUT:
       case ItemType.APP:
+      case ItemType.ETHERPAD:
+      case ItemType.H5P:
         return (
           <BaseItemForm
             onChange={setUpdatedItem}
