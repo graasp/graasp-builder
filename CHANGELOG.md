@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/graasp/graasp-builder/compare/v1.5.1...v1.6.0) (2023-07-31)
+
+
+### Features
+
+* add published tab and fix flickering in main menu ([#695](https://github.com/graasp/graasp-builder/issues/695)) ([a187372](https://github.com/graasp/graasp-builder/commit/a1873720d37339a2a279005aa68e1db69080e723))
+* edit name etherpad ([#727](https://github.com/graasp/graasp-builder/issues/727)) ([382750e](https://github.com/graasp/graasp-builder/commit/382750edeceebbe8d1777e3d1e4148939f3dda63))
+
+
+### Bug Fixes
+
+* hide publish tab for reader and public ([#721](https://github.com/graasp/graasp-builder/issues/721)) ([2b40b72](https://github.com/graasp/graasp-builder/commit/2b40b724025ad2f8b58a965ac151127d57386667))
+
 ## [1.5.1](https://github.com/graasp/graasp-builder/compare/v1.5.0...v1.5.1) (2023-07-26)
 
 
