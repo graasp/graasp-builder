@@ -605,9 +605,8 @@ export const mockPostManyItemMemberships = (
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
       const itemId = url.split('/')[4];
-      const itemMemberships = items.find(
-        ({ id }) => id === itemId,
-      )?.memberships;
+      const itemMemberships = items.find(({ id }) => id === itemId)
+        ?.memberships;
 
       // return membership or error if membership
       // for member id already exists
@@ -1459,9 +1458,8 @@ export const mockGetItemThumbnailUrl = (
       const [link] = url.split('?');
       const id = link.slice(API_HOST.length).split('/')[2];
 
-      const thumbnails = items.find(
-        ({ id: thisId }) => id === thisId,
-      )?.thumbnails;
+      const thumbnails = items.find(({ id: thisId }) => id === thisId)
+        ?.thumbnails;
       if (!thumbnails) {
         return reply({ statusCode: StatusCodes.NOT_FOUND });
       }
