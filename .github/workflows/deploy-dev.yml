@@ -1,0 +1,77 @@
+name: Deploy to development environment
+
+# Control when the action will run
+on:
+  # Triggers the workflow on push events only for the main branch
+  push:
+    branches:
+      - main
+
+  # Allows to run the workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-app:
+    name: Deploy to dev
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Yarn install and Cache dependencies
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+
+      - name: Yarn build
+        # Set environment variables required to perform the build. These are only available to this step
+        env:
+          VITE_PORT: ${{ vars.VITE_PORT }}
+          VITE_VERSION: ${{ github.sha }}
+          VITE_GRAASP_DOMAIN: ${{ vars.VITE_GRAASP_DOMAIN }}
+          VITE_GRAASP_API_HOST: ${{ vars.VITE_GRAASP_API_HOST }}
+          VITE_GRAASP_AUTH_HOST: ${{ vars.VITE_GRAASP_AUTH_HOST }}
+          VITE_GRAASP_BUILDER_HOST: ${{ vars.VITE_GRAASP_BUILDER_HOST }}
+          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
+          VITE_SENTRY_ENV: ${{ vars.VITE_SENTRY_ENV }}
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
+          VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+        run: yarn build
+        shell: bash
+
+      - name: Deploy
+        uses: graasp/graasp-deploy/.github/actions/deploy-s3@v1
+        # Replace input build-folder or version if needed
+        with:
+          build-folder: 'build'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-region: ${{ secrets.AWS_REGION_DEV }}
+          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_DEV }}
+
+# # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
+# jobs:
+#   graasp-deploy-s3-workflow:
+#     # abort previous deployment if a newer one is in progress
+#     concurrency:
+#       group: deploy-development
+#       cancel-in-progress: true
+
+#     name: Graasp Builder
+#     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
+#     uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@v1
+#     with:
+#       build-folder: 'build'
+#     secrets:
+#       api-host: ${{ secrets.REACT_APP_API_HOST_DEV }}
+#       authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_DEV }}
+#       domain: ${{ secrets.REACT_APP_DOMAIN_DEV }}
+#       ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_DEV }}
+#       graasp-analyzer-host: ${{ secrets.ANALYZER_CLIENT_HOST_DEV }}
+#       graasp-assets-url: ${{ secrets.REACT_APP_GRAASP_ASSETS_URL_DEV }}
+#       graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_DEV }}
+#       graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_DEV }}
+#       h5p-integration-url: ${{ secrets.H5P_INTEGRATION_URL_DEV }}
+#       sentry-dsn: ${{ secrets.REACT_APP_SENTRY_DSN }}
+#       show-notifications: ${{ secrets.REACT_APP_SHOW_NOTIFICATIONS }}
