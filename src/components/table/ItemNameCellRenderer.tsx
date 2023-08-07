@@ -1,10 +1,10 @@
-import { isList } from 'immutable';
-
 import { Box, Typography } from '@mui/material';
 
 import { ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
+
+import { isList } from 'immutable';
 
 import { hooks } from '../../config/queryClient';
 import { buildNameCellRendererId } from '../../config/selectors';

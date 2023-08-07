@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import {
   Dialog,
   DialogActions,
@@ -10,6 +8,8 @@ import {
 
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
+
+import PropTypes from 'prop-types';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import CancelButton from '../../common/CancelButton';

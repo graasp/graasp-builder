@@ -1,6 +1,3 @@
-import { List } from 'immutable';
-import partition from 'lodash.partition';
-
 import { Divider } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -14,6 +11,9 @@ import {
 } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
+
+import { List } from 'immutable';
+import partition from 'lodash.partition';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';

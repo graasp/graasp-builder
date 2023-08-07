@@ -40,15 +40,15 @@ const expectPanelLayout = ({ item }: { item: ItemForTest }) => {
   const panel = cy.get(`#${ITEM_PANEL_ID}`);
   panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
 
-  const creatorName = getMemberById(Object.values(MEMBERS), creator.id).name;
+  const creatorName = getMemberById(Object.values(MEMBERS), creator?.id).name;
 
   panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
 
   if (item.type === ItemType.LOCAL_FILE || item.type === ItemType.S3_FILE) {
-    const { mimetype, size } =
+    const { mimetype = 'invalid-mimetype', size = 'invalid-size' } =
       item.type === ItemType.LOCAL_FILE
-        ? getFileExtra(item.extra)
-        : getS3FileExtra(item.extra);
+        ? getFileExtra(item.extra) || {}
+        : getS3FileExtra(item.extra) || {};
     panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
 
     panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(size);
@@ -123,7 +123,7 @@ export const expectLinkViewScreenLayout = ({
   currentMember?: MemberForTest;
 }): void => {
   const { id, description, settings } = item;
-  const { url, html } = getEmbeddedLinkExtra(item.extra);
+  const { url, html } = getEmbeddedLinkExtra(item.extra) || {};
 
   // embedded element
   if (html) {

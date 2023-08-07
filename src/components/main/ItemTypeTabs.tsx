@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import { Tab, Tabs, styled } from '@mui/material';
-
 import { useState } from 'react';
+
+import { Tab, Tabs, styled } from '@mui/material';
 
 import { ItemType, MimeTypes } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';

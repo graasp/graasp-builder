@@ -1,6 +1,6 @@
-import { IconButtonProps } from '@mui/material/IconButton';
-
 import { useContext } from 'react';
+
+import { IconButtonProps } from '@mui/material/IconButton';
 
 import { BUILDER } from '@graasp/translations';
 import {

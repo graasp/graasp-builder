@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { useState } from 'react';
 
 import { Box, Typography, styled } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -6,11 +6,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
 import Select from '@mui/material/Select';
 
-import { useState } from 'react';
-
 import { ItemMembership } from '@graasp/sdk';
 import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
+
+import { List } from 'immutable';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';

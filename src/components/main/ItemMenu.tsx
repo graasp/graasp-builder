@@ -1,3 +1,5 @@
+import { useContext, useState } from 'react';
+
 import FlagIcon from '@mui/icons-material/Flag';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -5,8 +7,6 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
-import { useContext, useState } from 'react';
 
 import { Item, convertJs } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';

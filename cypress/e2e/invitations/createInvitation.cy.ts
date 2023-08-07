@@ -35,7 +35,7 @@ describe('Create Invitation', () => {
   it('invite one new member', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
-    const { id } = SAMPLE_ITEMS.items?.[0];
+    const id = SAMPLE_ITEMS.items?.[0].id;
     cy.visit(buildItemPath(id));
 
     // invite

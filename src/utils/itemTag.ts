@@ -1,7 +1,7 @@
-import { List } from 'immutable';
-
 import { ItemTagType } from '@graasp/sdk';
 import { ItemTagRecord } from '@graasp/sdk/frontend';
+
+import { List } from 'immutable';
 
 export const isItemHidden = ({
   itemTags,

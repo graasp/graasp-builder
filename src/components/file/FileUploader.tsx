@@ -1,12 +1,12 @@
-import '@uppy/drag-drop/dist/style.css';
-import { DragDrop } from '@uppy/react';
+import { DragEventHandler, useContext, useEffect, useState } from 'react';
 
 import { Box, styled } from '@mui/material';
 
-import { DragEventHandler, useContext, useEffect, useState } from 'react';
-
 import { MAX_FILE_SIZE } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
+
+import '@uppy/drag-drop/dist/style.css';
+import { DragDrop } from '@uppy/react';
 
 import {
   DRAWER_WIDTH,

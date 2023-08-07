@@ -1,36 +1,52 @@
-import PropTypes from 'prop-types';
+import {
+  ReactElement,
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-import { createContext, useEffect, useMemo, useState } from 'react';
+import Uppy, { ErrorCallback, UploadCompleteCallback } from '@uppy/core';
 
 import { mutations } from '../../config/queryClient';
 import { configureFileUppy } from '../../utils/uppy';
 import StatusBar from './StatusBar';
 
-const UppyContext = createContext();
+type UppyContextType = {
+  uppy?: Uppy;
+};
 
-const UppyContextProvider = ({ enable, itemId, children }) => {
-  const [uppy, setUppy] = useState(null);
+const UppyContext = createContext<UppyContextType>({ uppy: undefined });
+
+const UppyContextProvider = ({
+  enable = false,
+  itemId,
+  children,
+}: {
+  enable?: boolean;
+  itemId?: string;
+  children: ReactElement | (ReactElement | undefined)[];
+}): JSX.Element => {
+  const [uppy, setUppy] = useState<Uppy>();
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
+  const handleClose = () => {
     setOpenStatusBar(false);
   };
 
-  const onComplete = (result) => {
+  const onComplete: UploadCompleteCallback<{ [key: string]: unknown }> = (
+    result,
+  ) => {
     if (!result?.failed.length) {
-      const data = result.successful[0].response.body;
+      const data = result.successful[0].response?.body;
       onFileUploadComplete({ id: itemId, data });
     }
 
     return false;
   };
 
-  const onError = (error) => {
+  const onError: ErrorCallback = (error) => {
     onFileUploadComplete({ id: itemId, error });
   };
 
@@ -41,6 +57,9 @@ const UppyContextProvider = ({ enable, itemId, children }) => {
   useEffect(() => {
     if (enable) {
       setUppy(
+        // todo: remove
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         configureFileUppy({
           itemId,
           onComplete,
@@ -60,18 +79,6 @@ const UppyContextProvider = ({ enable, itemId, children }) => {
       {children}
     </UppyContext.Provider>
   );
-};
-
-UppyContextProvider.propTypes = {
-  children: PropTypes.node,
-  enable: PropTypes.bool,
-  itemId: PropTypes.string,
-};
-
-UppyContextProvider.defaultProps = {
-  children: null,
-  enable: false,
-  itemId: undefined,
 };
 
 export { UppyContext, UppyContextProvider };

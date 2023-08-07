@@ -1,9 +1,9 @@
+import { HTMLAttributes, useState } from 'react';
+
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
-
-import { HTMLAttributes, useState } from 'react';
 
 import { AppItemType, DiscriminatedItem, Item, getAppExtra } from '@graasp/sdk';
 import { AppItemTypeRecord, AppRecord } from '@graasp/sdk/frontend';

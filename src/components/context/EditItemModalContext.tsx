@@ -1,11 +1,11 @@
+import { createContext, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { TextField } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-
-import { createContext, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { routines } from '@graasp/query-client';
 import {
@@ -95,7 +95,7 @@ const EditItemModalProvider = ({ children }: Props): JSX.Element => {
         ...updatedProperties,
       })
     ) {
-      toast.error(translateBuilder(BUILDER.EDIT_ITEM_ERROR_MESSAGE));
+      toast.error<string>(translateBuilder(BUILDER.EDIT_ITEM_ERROR_MESSAGE));
       return;
     }
 

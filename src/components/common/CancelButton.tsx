@@ -1,6 +1,6 @@
-import { ButtonProps } from '@mui/material/Button';
-
 import { MouseEventHandler } from 'react';
+
+import { ButtonProps } from '@mui/material/Button';
 
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';

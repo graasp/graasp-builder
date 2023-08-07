@@ -1,10 +1,10 @@
-import { List } from 'immutable';
-
 import { Box } from '@mui/material';
 
 import { Member } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
+
+import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';

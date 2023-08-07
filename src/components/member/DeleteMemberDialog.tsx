@@ -1,11 +1,11 @@
+import { useState } from 'react';
+
 import { Grid, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
-import { useState } from 'react';
 
 import { ACCOUNT } from '@graasp/translations';
 import { Button } from '@graasp/ui';

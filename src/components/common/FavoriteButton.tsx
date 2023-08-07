@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import { IconButtonProps } from '@mui/material/IconButton';
 
 import { ItemFavoriteRecord, ItemRecord } from '@graasp/sdk/frontend';
@@ -8,6 +6,8 @@ import {
   ActionButtonVariant,
   FavoriteButton as GraaspFavoriteButton,
 } from '@graasp/ui';
+
+import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, mutations } from '../../config/queryClient';

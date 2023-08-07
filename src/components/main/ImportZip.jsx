@@ -1,14 +1,14 @@
-import '@uppy/dashboard/dist/style.css';
-import { Dashboard } from '@uppy/react';
-
-import Typography from '@mui/material/Typography';
-
 import { useEffect, useState } from 'react';
 import { useMatch } from 'react-router';
+
+import Typography from '@mui/material/Typography';
 
 import { routines } from '@graasp/query-client';
 import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
+
+import '@uppy/dashboard/dist/style.css';
+import { Dashboard } from '@uppy/react';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';

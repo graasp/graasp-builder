@@ -1,7 +1,3 @@
-import Uppy from '@uppy/core';
-import XHRUpload from '@uppy/xhr-upload';
-import { filesize } from 'filesize';
-
 import { API_ROUTES } from '@graasp/query-client';
 import {
   MAX_FILE_SIZE,
@@ -9,8 +5,13 @@ import {
   MAX_ZIP_FILE_SIZE,
 } from '@graasp/sdk';
 
+import Uppy from '@uppy/core';
+import XHRUpload from '@uppy/xhr-upload';
+import { filesize } from 'filesize';
+
+import { API_HOST } from '@/config/env';
+
 import {
-  API_HOST,
   FILE_UPLOAD_MAX_FILES,
   H5P_FILE_DOT_EXTENSION,
 } from '../config/constants';

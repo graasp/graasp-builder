@@ -1,6 +1,4 @@
 // synchronous functions to manage items from redux
-import { List } from 'immutable';
-
 import { useEffect, useState } from 'react';
 
 import {
@@ -13,6 +11,8 @@ import {
   getEmbeddedLinkExtra,
 } from '@graasp/sdk';
 import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
+
+import { List } from 'immutable';
 
 import { UUID_LENGTH } from '../config/constants';
 

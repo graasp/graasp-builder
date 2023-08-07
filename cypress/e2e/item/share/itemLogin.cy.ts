@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { ItemLoginSchemaType } from '@graasp/sdk';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   SETTINGS,

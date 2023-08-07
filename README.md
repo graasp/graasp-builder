@@ -1,4 +1,5 @@
 # Graasp Builder
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -7,15 +8,15 @@
 
 1. Run `yarn` to install the dependencies.
 2. Run the API at `localhost:3000`
-3. Set the following environnement variables in `.env.local`
+3. Set the following environnement variables in `.env.development`
 
-```
-REACT_APP_API_HOST=http://localhost:3000
-PORT=3111
-REACT_APP_SHOW_NOTIFICATIONS=true
-REACT_APP_AUTHENTICATION_HOST=http://localhost:3001
-REACT_APP_H5P_INTEGRATION_URL=
-REACT_APP_VERSION=latest
+```sh
+VITE_PORT=3111
+VITE_GRAASP_API_HOST=http://localhost:3000
+VITE_SHOW_NOTIFICATIONS=true
+VITE_GRAASP_AUTH_HOST=http://localhost:3001
+VITE_H5P_INTEGRATION_URL=
+VITE_VERSION=latest-dev
 ```
 
 4. Run `yarn start`. The client should be accessible at `localhost:3111`
@@ -36,13 +37,12 @@ You are successfully authenticated if you can access to the client without being
 
 Set the following environnement variables in `.env.test`
 
-```
-REACT_APP_API_HOST=http://localhost:3000
-PORT=3111
-REACT_APP_SHOW_NOTIFICATIONS=false
-REACT_APP_NODE_ENV=test
-REACT_APP_H5P_INTEGRATION_URL=
-REACT_APP_VERSION=latest
+```sh
+VITE_PORT=3111
+VITE_GRAASP_API_HOST=http://localhost:3000
+VITE_SHOW_NOTIFICATIONS=false
+VITE_H5P_INTEGRATION_URL=
+VITE_VERSION=latest
 ```
 
 Run `yarn cypress`. This should run every tests headlessly.
@@ -66,13 +66,6 @@ While developing you can run `yarn check` to perform prettier formatting checks,
     </tr>
   </tbody>
 </table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->

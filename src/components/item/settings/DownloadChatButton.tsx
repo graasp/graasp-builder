@@ -1,9 +1,9 @@
-import { GetApp } from '@mui/icons-material';
-import { IconButton, Stack, Tooltip, Typography, styled } from '@mui/material';
-
 import { useState } from 'react';
 import { CSVLink as CsvLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
+
+import { GetApp } from '@mui/icons-material';
+import { IconButton, Stack, Tooltip, Typography, styled } from '@mui/material';
 
 import { normalizeMentions } from '@graasp/chatbox';
 import { Button } from '@graasp/ui';

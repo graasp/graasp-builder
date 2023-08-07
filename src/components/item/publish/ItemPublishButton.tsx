@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import { InfoRounded } from '@mui/icons-material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
-
-import { useEffect, useState } from 'react';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';

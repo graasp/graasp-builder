@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { SelectChangeEvent, Stack, styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -5,8 +7,6 @@ import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
-
-import { useEffect, useState } from 'react';
 
 import { Context } from '@graasp/sdk';
 import {

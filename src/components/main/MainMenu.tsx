@@ -1,3 +1,5 @@
+import { useLocation, useNavigate } from 'react-router';
+
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -5,8 +7,6 @@ import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import Star from '@mui/icons-material/Star';
 import { styled, useTheme } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
-
-import { useLocation, useNavigate } from 'react-router';
 
 import { BUILDER } from '@graasp/translations';
 import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';

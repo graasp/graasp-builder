@@ -1,7 +1,7 @@
+import { useState } from 'react';
+
 import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
-
-import { useState } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';

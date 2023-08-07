@@ -1,11 +1,11 @@
-import { v4 } from 'uuid';
-
 import {
   DiscriminatedItem,
   ItemMembership,
   Member,
   PermissionLevel,
 } from '@graasp/sdk';
+
+import { v4 } from 'uuid';
 
 import { ApiConfig } from '../support/types';
 import { DEFAULT_FOLDER_ITEM } from './items';

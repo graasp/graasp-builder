@@ -1,18 +1,12 @@
-import Uppy from '@uppy/core';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import {
-  FormEventHandler,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-
 import { MemberRecord } from '@graasp/sdk/frontend';
 import { ACCOUNT } from '@graasp/translations';
+
+import Uppy from '@uppy/core';
 
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
@@ -72,7 +66,7 @@ const AvatarSetting = ({ user }: Props): JSX.Element | null => {
     return null;
   }
 
-  const handleClose: MouseEventHandler<HTMLButtonElement> = (_event) => {
+  const handleClose = () => {
     setOpenStatusBar(false);
   };
 

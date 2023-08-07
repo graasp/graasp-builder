@@ -1,12 +1,12 @@
-import { ColDef } from 'ag-grid-community';
-import { List } from 'immutable';
-
 import { useMemo } from 'react';
 
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { InvitationRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
+
+import { ColDef } from 'ag-grid-community';
+import { List } from 'immutable';
 
 import {
   MEMBERSHIP_TABLE_HEIGHT,

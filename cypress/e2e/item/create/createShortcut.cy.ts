@@ -1,6 +1,6 @@
-import * as qs from 'qs';
-
 import { ItemType } from '@graasp/sdk';
+
+import * as qs from 'qs';
 
 import { HOME_PATH } from '../../../../src/config/paths';
 import {

@@ -1,6 +1,6 @@
-import { IconButtonProps } from '@mui/material';
-
 import { MouseEventHandler } from 'react';
+
+import { IconButtonProps } from '@mui/material';
 
 import { BUILDER } from '@graasp/translations';
 import {

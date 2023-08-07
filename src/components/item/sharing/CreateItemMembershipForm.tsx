@@ -1,17 +1,17 @@
-import { List } from 'immutable';
-import validator from 'validator';
+import { useState } from 'react';
 
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { useState } from 'react';
-
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
+
+import { List } from 'immutable';
+import validator from 'validator';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { mutations } from '../../../config/queryClient';

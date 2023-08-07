@@ -1,7 +1,7 @@
+import { Link, useParams } from 'react-router-dom';
+
 import { Grid, Typography, styled } from '@mui/material';
 import Box from '@mui/material/Box';
-
-import { Link, useParams } from 'react-router-dom';
 
 import { Context } from '@graasp/sdk';
 import {

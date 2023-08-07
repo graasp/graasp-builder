@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
+
 import InfoIcon from '@mui/icons-material/Info';
 import { FormControlLabel, FormGroup, Switch, Tooltip } from '@mui/material';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
-import { useEffect, useState } from 'react';
 
 import { ItemType, convertJs } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';

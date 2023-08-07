@@ -1,12 +1,14 @@
-import '@uppy/dashboard/dist/style.css';
-import { Dashboard } from '@uppy/react';
-
-import Typography from '@mui/material/Typography';
-
 import { useContext } from 'react';
+
+import { Typography } from '@mui/material';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
+
+import '@uppy/dashboard/dist/style.css';
+import DashboardLocale from '@uppy/dashboard/types/generatedLocale';
+import { Dashboard } from '@uppy/react';
+import { StatusBarLocale } from '@uppy/status-bar';
 
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
@@ -15,9 +17,11 @@ import { humanFileSize } from '../../utils/uppy';
 import ErrorAlert from '../common/ErrorAlert';
 import { UppyContext } from './UppyContext';
 
-const FileDashboardUploader = () => {
+const FileDashboardUploader = (): JSX.Element => {
   const { uppy } = useContext(UppyContext);
   const { t: translateBuilder, i18n } = useBuilderTranslation();
+  const uppyLocales = i18n.options.resources?.[i18n.language]
+    ?.uppy as (DashboardLocale & StatusBarLocale)['strings'];
 
   if (!uppy) {
     return <ErrorAlert />;
@@ -28,10 +32,10 @@ const FileDashboardUploader = () => {
       <Typography variant="h6">
         {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
       </Typography>
-      <Typography variant="body" paragraph>
+      <Typography variant="body1" paragraph>
         {translateBuilder(BUILDER.UPLOAD_FILE_INFORMATIONS)}
       </Typography>
-      <Typography variant="body" paragraph>
+      <Typography variant="body1" paragraph>
         {translateBuilder(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
           maxFiles: FILE_UPLOAD_MAX_FILES,
           maxSize: humanFileSize(MAX_FILE_SIZE),
@@ -43,9 +47,13 @@ const FileDashboardUploader = () => {
           height={200}
           width="100%"
           proudlyDisplayPoweredByUppy={false}
-          locale={{
-            strings: i18n.options.resources[i18n.language].uppy,
-          }}
+          locale={
+            uppyLocales
+              ? {
+                  strings: uppyLocales,
+                }
+              : undefined
+          }
         />
       </div>
     </>

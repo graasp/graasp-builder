@@ -1,7 +1,3 @@
-import { StatusCodes } from 'http-status-codes';
-import * as qs from 'qs';
-import { v4 as uuidv4, v4 } from 'uuid';
-
 import { API_ROUTES } from '@graasp/query-client';
 import {
   App,
@@ -19,6 +15,10 @@ import {
   RecycledItemData,
 } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
+
+import { StatusCodes } from 'http-status-codes';
+import * as qs from 'qs';
+import { v4 as uuidv4, v4 } from 'uuid';
 
 import { SETTINGS, SIGN_IN_PATH } from '../../src/config/constants';
 import {

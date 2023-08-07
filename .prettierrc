@@ -5,7 +5,14 @@
   "singleQuote": true,
   "bracketSpacing": true,
   "arrowParens": "always",
-  "importOrder": ["^@mui", "^react", "^@?graasp", "^[./]"],
+  "importOrder": [
+    "^react",
+    "^@?mui",
+    "^@?graasp",
+    "<THIRD_PARTY_MODULES>",
+    "^@/",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
   "plugins": ["@trivago/prettier-plugin-sort-imports"]

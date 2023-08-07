@@ -1,13 +1,13 @@
-import { ColDef } from 'ag-grid-community';
+import { useMemo } from 'react';
 
 import { Typography } from '@mui/material';
-
-import { useMemo } from 'react';
 
 import { ItemMembership, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
+
+import { ColDef } from 'ag-grid-community';
 
 import {
   MEMBERSHIP_TABLE_HEIGHT,

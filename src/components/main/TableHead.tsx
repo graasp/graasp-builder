@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react';
+
 import Checkbox from '@mui/material/Checkbox';
 import TableCell, { TableCellProps } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -5,8 +7,6 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel, {
   TableSortLabelProps,
 } from '@mui/material/TableSortLabel';
-
-import { MouseEvent } from 'react';
 
 import { BUILDER } from '@graasp/translations';
 

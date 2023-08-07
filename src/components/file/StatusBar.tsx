@@ -1,13 +1,13 @@
-import { StatusBar as UppyStatusBar } from '@uppy/react';
-import '@uppy/status-bar/dist/style.css';
-import PropTypes from 'prop-types';
-
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import { grey } from '@mui/material/colors';
+
+import Uppy from '@uppy/core';
+import { StatusBar as UppyStatusBar } from '@uppy/react';
+import '@uppy/status-bar/dist/style.css';
 
 const StyledSnackbarContent = styled(SnackbarContent)(() => ({
   '&.MuiSnackbarContent-root': {
@@ -21,7 +21,17 @@ const StyledSnackbarContent = styled(SnackbarContent)(() => ({
   },
 }));
 
-const StatusBar = ({ handleClose, open, uppy }) => {
+type Props = {
+  handleClose: () => void;
+  open?: boolean;
+  uppy?: Uppy;
+};
+
+const StatusBar = ({
+  handleClose,
+  open = false,
+  uppy,
+}: Props): JSX.Element | null => {
   if (!uppy) {
     return null;
   }
@@ -56,17 +66,6 @@ const StatusBar = ({ handleClose, open, uppy }) => {
       <StyledSnackbarContent message={statusBar} action={action} />
     </Snackbar>
   );
-};
-
-StatusBar.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  open: PropTypes.bool,
-  uppy: PropTypes.shape({}),
-};
-
-StatusBar.defaultProps = {
-  open: false,
-  uppy: null,
 };
 
 export default StatusBar;

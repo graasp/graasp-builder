@@ -1,12 +1,12 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
-import { useEffect, useState } from 'react';
-
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
+
+import { Record } from 'immutable';
+import PropTypes from 'prop-types';
 
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';

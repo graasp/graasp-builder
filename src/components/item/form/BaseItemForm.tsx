@@ -1,6 +1,6 @@
-import { TextField } from '@mui/material';
-
 import { ChangeEvent } from 'react';
+
+import { TextField } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';

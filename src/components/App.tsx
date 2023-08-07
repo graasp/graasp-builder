@@ -4,7 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import { saveUrlForRedirection } from '@graasp/sdk';
 import { CustomInitialLoader, withAuthorization } from '@graasp/ui';
 
-import { DOMAIN, SIGN_IN_PATH } from '../config/constants';
+import { DOMAIN } from '@/config/env';
+
+import { SIGN_IN_PATH } from '../config/constants';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,

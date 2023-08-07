@@ -101,7 +101,7 @@ const ItemScreen = (): JSX.Element => {
   return (
     <Main>
       <UppyContextProvider enable={enableEditing} itemId={itemId}>
-        {item.type === ItemType.FOLDER && <FileUploader />}
+        {item.type === ItemType.FOLDER ? <FileUploader /> : undefined}
         <ItemMain item={item}>{content}</ItemMain>
       </UppyContextProvider>
     </Main>

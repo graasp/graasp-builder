@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react';
+
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
-
-import { useEffect, useState } from 'react';
 
 import { Item } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
