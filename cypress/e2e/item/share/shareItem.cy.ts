@@ -27,8 +27,7 @@ const openShareItemTab = (id: string) => {
 // eslint-disable-next-line import/prefer-default-export
 export const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
-  cy.wait(1000);
-  cy.get(`li[data-value="${value}"]`).click();
+  cy.get(`li[data-value="${value}"]`, { timeout: 1000 }).click();
 };
 
 describe('Share Item', () => {
@@ -88,7 +87,6 @@ describe('Share Item', () => {
       },
     );
     // change public -> item login
-    cy.wait(1000);
     changeVisibility(SETTINGS.ITEM_LOGIN.name);
     cy.wait([
       `@deleteItemTag-${ItemTagType.Public}`,
