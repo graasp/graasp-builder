@@ -11,12 +11,12 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
-    base: '',
+    base: '/',
     server: {
       port: parseInt(process.env.VITE_PORT || '3001', 10),
       open: true,
       watch: {
-        ignored: ['**/coverage/**'],
+        ignored: ['**/coverage/**', '**/cypress/downloads/**'],
       },
     },
     build: {

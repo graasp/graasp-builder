@@ -28,16 +28,9 @@ jobs:
       - name: Type-check code
         run: tsc --noEmit
 
-      #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
-      - name: Cypress run
-        uses: cypress-io/github-action@v5
-        with:
-          install: false
-          start: yarn dev
-          browser: chrome
-          quiet: true
-          config-file: cypress.config.ts
-          cache-key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Build App
+        run: yarn build
+        shell: bash
         env:
           VITE_PORT: ${{ vars.VITE_PORT }}
           VITE_VERSION: ${{ vars.VITE_VERSION }}
@@ -48,6 +41,19 @@ jobs:
           VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
           VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+
+
+      #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
+          start: yarn preview --port ${{ vars.VITE_PORT }}
+          browser: chrome
+          quiet: true
+          config-file: cypress.config.ts
+          cache-key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       # after the test run completes
       # store any screenshots
