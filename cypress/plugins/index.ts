@@ -27,7 +27,6 @@ module.exports = (on, config) => {
         root: '#root',
       },
       API_HOST: process.env.VITE_GRAASP_API_HOST,
-      AUTHENTICATION_HOST: process.env.REACT_APP_AUTHENTICATION_HOST,
     },
   };
   // eslint-disable-next-line @typescript-eslint/no-var-requires
