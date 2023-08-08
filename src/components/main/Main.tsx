@@ -13,11 +13,9 @@ import {
   usePlatformNavigation,
 } from '@graasp/ui';
 
-import {
-  APP_NAME,
-  GRAASP_LOGO_HEADER_HEIGHT,
-  HOST_MAP,
-} from '../../config/constants';
+import { HOST_MAP } from '@/config/externalPaths';
+
+import { APP_NAME, GRAASP_LOGO_HEADER_HEIGHT } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,

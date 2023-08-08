@@ -19,21 +19,22 @@ import {
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
   SHARE_LINK_CONTAINER_BORDER_WIDTH,
-} from '../../../config/constants';
+} from '@/config/constants';
+import {
+  buildGraaspBuilderView,
+  buildGraaspPlayerView,
+} from '@/config/externalPaths';
 import {
   useBuilderTranslation,
   useEnumsTranslation,
   useMessagesTranslation,
-} from '../../../config/i18n';
-import notifier from '../../../config/notifier';
-import {
-  buildGraaspBuilderView,
-  buildGraaspPlayerView,
-} from '../../../config/paths';
+} from '@/config/i18n';
+import notifier from '@/config/notifier';
 import {
   SHARE_ITEM_DIALOG_LINK_ID,
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
-} from '../../../config/selectors';
+} from '@/config/selectors';
+
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../../types/clipboard';
 import { copyToClipboard } from '../../../utils/clipboard';
 

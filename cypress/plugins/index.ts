@@ -23,6 +23,7 @@ const initConfig: Cypress.PluginConfig = (on, config) => {
         root: '#root',
       },
       API_HOST: process.env.VITE_GRAASP_API_HOST,
+      AUTH_HOST: process.env.VITE_GRAASP_AUTH_HOST,
     },
   };
   // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require

@@ -1,6 +1,5 @@
 import { COOKIE_KEYS } from '@graasp/sdk';
 
-import { SIGN_IN_PATH } from '../../src/config/constants';
 import {
   HOME_PATH,
   ITEMS_PATH,
@@ -20,6 +19,7 @@ import {
   REDIRECTION_TIME,
   REQUEST_FAILURE_LOADING_TIME,
 } from '../support/constants';
+import { SIGN_IN_PATH } from '../support/paths';
 
 describe('Authentication', () => {
   describe('Signed Off > Redirect to sign in route', () => {

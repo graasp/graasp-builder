@@ -1,18 +1,11 @@
 import {
-  Context,
   EmailFrequency,
   ItemLoginSchemaType,
   ItemType,
   PermissionLevel,
-  buildSignInPath,
 } from '@graasp/sdk';
 
 import ITEM_LAYOUT_MODES from '../enums/itemLayoutModes';
-import {
-  GRAASP_AUTH_HOST,
-  GRAASP_LIBRARY_HOST,
-  GRAASP_PLAYER_HOST,
-} from './env';
 
 export const APP_NAME = 'Graasp';
 
@@ -140,18 +133,8 @@ export const CC_LICENSE_ABOUT_URL =
 
 export const ADMIN_CONTACT = 'admin@graasp.org';
 
-export const HOST_MAP = {
-  [Context.Builder]: '/',
-  [Context.Library]: GRAASP_LIBRARY_HOST,
-  [Context.Player]: GRAASP_PLAYER_HOST,
-  [Context.Analytics]: '',
-};
-
 export const MEMBERSHIP_TABLE_HEIGHT = 400;
 export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
-
-// signin page path from auth host
-export const SIGN_IN_PATH = buildSignInPath({ host: GRAASP_AUTH_HOST });
 
 export const DISPLAY_CO_EDITORS_OPTIONS = {
   YES: {

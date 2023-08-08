@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Context } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
-import { buildGraaspAnalyzerLink } from '@/config/paths';
+import { buildGraaspAnalyzerLink } from '@/config/externalPaths';
 
 import { DEFAULT_ANALYZER_HEIGHT } from '../../config/constants';
 import { useEnumsTranslation } from '../../config/i18n';

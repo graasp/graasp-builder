@@ -1,11 +1,8 @@
 import { Context, ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
 
+import { buildItemPath } from '@/config/paths';
+
 import { SETTINGS } from '../../../../src/config/constants';
-import {
-  buildGraaspBuilderView,
-  buildGraaspPlayerView,
-  buildItemPath,
-} from '../../../../src/config/paths';
 import {
   SHARE_ITEM_DIALOG_LINK_ID,
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
@@ -18,6 +15,10 @@ import {
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
+import {
+  buildGraaspBuilderView,
+  buildGraaspPlayerView,
+} from '../../../support/paths';
 
 const openShareItemTab = (id: string) => {
   cy.get(`#${buildShareButtonId(id)}`).click();

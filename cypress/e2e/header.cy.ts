@@ -1,4 +1,3 @@
-import { SIGN_IN_PATH } from '../../src/config/constants';
 import { HOME_PATH } from '../../src/config/paths';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
@@ -8,6 +7,7 @@ import {
   HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID,
   MEMBER_PROFILE_MEMBER_NAME_ID,
 } from '../../src/config/selectors';
+import { SIGN_IN_PATH } from '../support/paths';
 
 describe('Header', () => {
   it('App Navigation', () => {

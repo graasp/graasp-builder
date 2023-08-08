@@ -2,17 +2,18 @@ import { MemberRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
-import { SIGN_IN_PATH } from '../../config/constants';
-import { useBuilderTranslation } from '../../config/i18n';
-import { MEMBER_PROFILE_PATH } from '../../config/paths';
-import { mutations } from '../../config/queryClient';
+import { SIGN_IN_PATH } from '@/config/externalPaths';
+import { useBuilderTranslation } from '@/config/i18n';
+import { MEMBER_PROFILE_PATH } from '@/config/paths';
+import { mutations } from '@/config/queryClient';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
   HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID,
   HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID,
   HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID,
   buildMemberMenuItemId,
-} from '../../config/selectors';
+} from '@/config/selectors';
+
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import MemberAvatar from './MemberAvatar';
 

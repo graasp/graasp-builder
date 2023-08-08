@@ -23,7 +23,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as qs from 'qs';
 import { v4 as uuidv4, v4 } from 'uuid';
 
-import { SETTINGS, SIGN_IN_PATH } from '../../src/config/constants';
+import { SETTINGS } from '../../src/config/constants';
 import {
   getItemById,
   isChild,
@@ -39,6 +39,7 @@ import {
 import { buildInvitation } from '../fixtures/invitations';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { AVATAR_LINK, ITEM_THUMBNAIL_LINK } from '../fixtures/thumbnails/links';
+import { SIGN_IN_PATH } from './paths';
 import { ItemForTest, MemberForTest } from './types';
 import { ID_FORMAT, parseStringToRegExp } from './utils';
 
