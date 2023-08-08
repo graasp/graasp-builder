@@ -121,7 +121,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillDocumentModal',
-  ({ name = '', extra = {} }, { confirm = true } = {}) => {
+  ({ name = '', extra }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(ITEM_FORM_DOCUMENT_TEXT_SELECTOR).type(
@@ -137,7 +137,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillAppModal',
-  ({ name = '', extra = {} }, { confirm = true, type = false } = {}) => {
+  ({ name = '', extra }, { confirm = true, type = false } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
     cy.get(`#${ITEM_FORM_APP_URL_ID}`).click();

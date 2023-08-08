@@ -5,7 +5,7 @@ import {
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const openAnalyticsDashboard = (itemId) => {
+const openAnalyticsDashboard = (itemId: string) => {
   cy.get(`#${buildDashboardButtonId(itemId)}`).click();
 };
 

@@ -8,14 +8,14 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { RECYCLED_ITEM_DATA, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const restoreItem = (id) => {
+const restoreItem = (id: string) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(
     `${buildItemsTableRowIdAttribute(id)} .${RESTORE_ITEMS_BUTTON_CLASS}`,
   ).click();
 };
 
-const restoreItems = (itemIds) => {
+const restoreItems = (itemIds: string[]) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.wait(TABLE_ITEM_RENDER_TIME);

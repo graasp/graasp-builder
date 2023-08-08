@@ -8,7 +8,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { RECYCLED_ITEM_DATA, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const deleteItems = (itemIds) => {
+const deleteItems = (itemIds: string[]) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.wait(TABLE_ITEM_RENDER_TIME);

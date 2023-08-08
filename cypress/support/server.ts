@@ -3,9 +3,12 @@ import {
   App,
   Category,
   ChatMention,
+  DiscriminatedItem,
   HttpMethod,
+  Invitation,
   Item,
   ItemFavorite,
+  ItemMembership,
   ItemPublished,
   ItemTagType,
   ItemValidationGroup,
@@ -112,7 +115,6 @@ const checkMembership = ({
 export const redirectionReply = {
   headers: { 'content-type': 'application/json' },
   statusCode: StatusCodes.OK,
-  body: null,
 };
 
 export const mockGetAppListRoute = (apps: App[]): void => {
@@ -374,7 +376,10 @@ export const mockGetItems = ({
       if (!Array.isArray(itemIds)) {
         itemIds = [itemIds];
       }
-      const result = { data: {}, errors: [] };
+      const result: {
+        data: { [key: string]: ItemForTest };
+        errors: { statusCode: number }[];
+      } = { data: {}, errors: [] };
       itemIds.forEach((id) => {
         const item = getItemById(items, id);
 
@@ -389,7 +394,6 @@ export const mockGetItems = ({
         if (!haveMembership) {
           result.errors.push({
             statusCode: StatusCodes.UNAUTHORIZED,
-            body: null,
           });
         } else if (!item) {
           result.errors.push({ statusCode: StatusCodes.NOT_FOUND });
@@ -610,25 +614,40 @@ export const mockPostManyItemMemberships = (
 
       // return membership or error if membership
       // for member id already exists
-      const result = { data: {}, errors: [] };
-
-      body.memberships.forEach((m) => {
-        const thisM = itemMemberships?.find(
-          ({ member }) => m.memberId === member.id,
-        );
-        if (thisM) {
-          result.errors.push({
-            statusCode: StatusCodes.BAD_REQUEST,
-            message: 'membership already exists',
-            data: thisM,
-          });
-        }
-        result.data[m.memberId] = {
-          permission: m.permission,
-          member: members?.find(({ id }) => m.memberId === id),
-          item: items?.find(({ path }) => m.itemPath === path),
+      const result: {
+        data: {
+          [key: string]: {
+            permission: PermissionLevel;
+            member: Member;
+            item: DiscriminatedItem;
+          };
         };
-      });
+        errors: { statusCode: number; message: string; data: unknown }[];
+      } = { data: {}, errors: [] };
+
+      body.memberships.forEach(
+        (m: {
+          itemPath: string;
+          permission: PermissionLevel;
+          memberId: string;
+        }) => {
+          const thisM = itemMemberships?.find(
+            ({ member }) => m.memberId === member.id,
+          );
+          if (thisM) {
+            result.errors.push({
+              statusCode: StatusCodes.BAD_REQUEST,
+              message: 'membership already exists',
+              data: thisM,
+            });
+          }
+          result.data[m.memberId] = {
+            permission: m.permission,
+            member: members?.find(({ id }) => m.memberId === id),
+            item: items?.find(({ path }) => m.itemPath === path),
+          };
+        },
+      );
       return reply(result);
     },
   ).as('postManyItemMemberships');
@@ -671,7 +690,10 @@ export const mockGetMembers = (members: Member[]): void => {
         memberIds = [memberIds];
       }
 
-      const result = {
+      const result: {
+        data: { [key: string]: Member };
+        errors: { statusCode: number; name: string }[];
+      } = {
         data: {},
         errors: [],
       };
@@ -717,7 +739,10 @@ export const mockGetMembersBy = (
       }
 
       // TODO
-      const result = {
+      const result: {
+        data: { [key: string]: Member };
+        errors: unknown[];
+      } = {
         data: {},
         errors: [],
       };
@@ -869,7 +894,7 @@ export const mockPostItemLogin = (
       // check query match item login schema
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
-      const itemLoginSchema = item.itemLoginSchema[0];
+      const { itemLoginSchema } = item;
 
       // provide either username or member id
       if (body.username) {
@@ -880,7 +905,7 @@ export const mockPostItemLogin = (
 
       // should have password if required
       if (
-        itemLoginSchema ===
+        itemLoginSchema.type ===
         SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME_AND_PASSWORD
       ) {
         expect(body).to.have.keys('password');
@@ -951,7 +976,7 @@ export const mockGetItemLogin = (items: ItemForTest[]): void => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
       reply({
-        body: item?.itemLoginSchema?.[0] ?? {},
+        body: item?.itemLoginSchema ?? {},
         statusCode: StatusCodes.OK,
       });
     },
@@ -1024,7 +1049,12 @@ export const mockGetItemMembershipsForItem = (
       const itemId = qs.parse(url.slice(url.indexOf('?') + 1)).itemId as string;
       const selectedItems = items.filter(({ id }) => itemId.includes(id));
       // todo: use reduce
-      const result = { data: {}, errors: [] };
+      const result: {
+        data: {
+          [key: string]: ItemMembership[];
+        };
+        errors: { statusCode: number }[];
+      } = { data: {}, errors: [] };
       selectedItems.forEach((item) => {
         const { creator, id, memberships } = item;
         // build default membership depending on current member
@@ -1047,6 +1077,9 @@ export const mockGetItemMembershipsForItem = (
             permission: PermissionLevel.Admin,
             member: creator,
             item,
+            id: v4(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
         ];
       });
@@ -1671,8 +1704,14 @@ export const mockPostInvitations = (
       const itemId = url.split('/')[4];
       const invitations = items.find(({ id }) => id === itemId)?.invitations;
 
-      const result = { data: {}, errors: [] };
-      body.invitations.forEach((inv) => {
+      const result: {
+        data: { [key: string]: Invitation };
+        errors: { statusCode: number; message: string; data: unknown }[];
+      } = {
+        data: {},
+        errors: [],
+      };
+      body.invitations.forEach((inv: Parameters<typeof buildInvitation>[0]) => {
         const thisInv = invitations?.find(({ email }) => email === inv.email);
         if (thisInv) {
           result.errors.push({

@@ -9,7 +9,15 @@ import {
 } from '../../../src/config/selectors';
 import { ITEMS_WITH_INVITATIONS } from '../../fixtures/invitations';
 
-const editInvitation = ({ itemId, id, permission }) => {
+const editInvitation = ({
+  itemId,
+  id,
+  permission,
+}: {
+  itemId: string;
+  id: string;
+  permission: PermissionLevel;
+}) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
   const select = cy.get(
     `${buildInvitationTableRowSelector(

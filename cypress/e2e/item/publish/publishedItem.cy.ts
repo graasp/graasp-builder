@@ -14,7 +14,7 @@ import {
 import { MEMBERS } from '../../../fixtures/members';
 import { PAGE_LOAD_WAITING_PAUSE } from '../../../support/constants';
 
-const openPublishItemTab = (id) => {
+const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 

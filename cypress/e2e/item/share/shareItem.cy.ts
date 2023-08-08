@@ -19,7 +19,7 @@ import {
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
 
-const openShareItemTab = (id) => {
+const openShareItemTab = (id: string) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
 };
 

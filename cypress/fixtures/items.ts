@@ -225,8 +225,9 @@ export const RECYCLED_ITEM_DATA: RecycledItemData[] = [
 ];
 
 export const generateOwnItems = (number: number): ItemForTest[] => {
-  const id = (i) => `cafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;
-  const path = (i) => id(i).replace(/-/g, '_');
+  const id = (i: number) =>
+    `cafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;
+  const path = (i: number) => id(i).replace(/-/g, '_');
 
   return Array(number)
     .fill(null)

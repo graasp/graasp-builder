@@ -8,7 +8,13 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const moveItems = ({ itemIds, toItemPath }) => {
+const moveItems = ({
+  itemIds,
+  toItemPath,
+}: {
+  itemIds: string[];
+  toItemPath: string;
+}) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.wait(TABLE_ITEM_RENDER_TIME);

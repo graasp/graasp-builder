@@ -7,7 +7,13 @@ import {
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const copyItems = ({ itemIds, toItemPath }) => {
+const copyItems = ({
+  itemIds,
+  toItemPath,
+}: {
+  itemIds: string[];
+  toItemPath: string;
+}) => {
   // check selected ids
   itemIds.forEach((id) => {
     cy.get(`${buildItemsTableRowIdAttribute(id)} input`).click();

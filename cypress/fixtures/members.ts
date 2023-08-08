@@ -1,9 +1,9 @@
-import { MemberType } from '@graasp/sdk';
+import { Member, MemberType } from '@graasp/sdk';
 
 import { MemberForTest } from '../support/types';
 import { AVATAR_LINK } from './thumbnails/links';
 
-export const SIGNED_OUT_MEMBER = null;
+export const SIGNED_OUT_MEMBER: Member | null = null;
 
 export const MEMBERS: Record<string, MemberForTest> = {
   ANNA: {

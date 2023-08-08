@@ -5,7 +5,7 @@ import {
 } from '../../../src/config/selectors';
 import { ITEMS_WITH_INVITATIONS } from '../../fixtures/invitations';
 
-const deleteInvitation = ({ id, itemId }) => {
+const deleteInvitation = ({ id, itemId }: { id: string; itemId: string }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
   cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).click();
 };

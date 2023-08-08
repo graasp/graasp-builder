@@ -1,6 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable global-require */
-
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -18,8 +15,7 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-
-module.exports = (on, config) => {
+const initConfig: Cypress.PluginConfig = (on, config) => {
   const newConfig = {
     ...config,
     env: {
@@ -29,7 +25,8 @@ module.exports = (on, config) => {
       API_HOST: process.env.VITE_GRAASP_API_HOST,
     },
   };
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
   require('@cypress/code-coverage/task')(on, newConfig);
   return newConfig;
 };
+export default initConfig;

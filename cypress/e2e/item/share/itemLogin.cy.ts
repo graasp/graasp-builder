@@ -21,13 +21,15 @@ import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
 
-const changeSignInMode = (mode) => {
+const changeSignInMode = (mode: string) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
   cy.get(`li[data-value="${mode}"]`).click();
 };
 
 const checkItemLoginScreenLayout = (
-  itemLoginSchema = SETTINGS_ITEM_LOGIN_DEFAULT,
+  itemLoginSchema:
+    | ItemLoginSchemaType
+    | `${ItemLoginSchemaType}` = SETTINGS_ITEM_LOGIN_DEFAULT,
 ) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).should('exist');
   if (itemLoginSchema === ItemLoginSchemaType.UsernameAndPassword) {
@@ -59,7 +61,15 @@ const fillItemLoginScreenLayout = ({
   cy.get(`#${ITEM_LOGIN_SIGN_IN_BUTTON_ID}`).click();
 };
 
-const checkItemLoginSetting = ({ isEnabled, mode, disabled = false }) => {
+const checkItemLoginSetting = ({
+  isEnabled,
+  mode,
+  disabled = false,
+}: {
+  isEnabled: boolean;
+  mode: string;
+  disabled?: boolean;
+}) => {
   if (isEnabled && !disabled) {
     cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID} + input`).should(
       'have.value',
@@ -74,7 +84,7 @@ const checkItemLoginSetting = ({ isEnabled, mode, disabled = false }) => {
   }
 };
 
-const editItemLoginSetting = (mode) => {
+const editItemLoginSetting = (mode: string) => {
   cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID}`).click();
   cy.get(`li[data-value="${mode}"]`).click();
   cy.wait('@putItemLoginSchema').then(({ request: { body } }) => {
@@ -102,7 +112,7 @@ describe('Item Login', () => {
       it('username or member id', () => {
         cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[0].id));
         checkItemLoginScreenLayout(
-          ITEM_LOGIN_ITEMS.items[0].itemLoginSchema[0],
+          ITEM_LOGIN_ITEMS.items[0].itemLoginSchema.type,
         );
         fillItemLoginScreenLayout({
           username: 'username',
@@ -124,7 +134,7 @@ describe('Item Login', () => {
       it('username or member id and password', () => {
         cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[3].id));
         checkItemLoginScreenLayout(
-          ITEM_LOGIN_ITEMS.items[3].itemLoginSchema[0],
+          ITEM_LOGIN_ITEMS.items[3].itemLoginSchema.type,
         );
         fillItemLoginScreenLayout({
           username: 'username',

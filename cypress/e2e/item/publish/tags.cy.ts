@@ -14,12 +14,13 @@ import {
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
+import { ItemForTest } from '../../../support/types';
 
-const openPublishItemTab = (id) => {
+const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 
-const visitItemPage = (item) => {
+const visitItemPage = (item: ItemForTest) => {
   cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
   cy.visit(buildItemPath(item.id));
   openPublishItemTab(item.id);

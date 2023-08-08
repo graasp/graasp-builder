@@ -15,7 +15,7 @@ import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 import { changeVisibility } from '../share/shareItem.cy';
 
-const openPublishItemTab = (id) => {
+const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 

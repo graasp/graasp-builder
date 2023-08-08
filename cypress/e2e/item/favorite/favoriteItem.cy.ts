@@ -12,7 +12,7 @@ import { SAMPLE_FAVORITE, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const toggleFavoriteButton = (itemId) => {
+const toggleFavoriteButton = (itemId: string) => {
   cy.wait(TABLE_ITEM_RENDER_TIME);
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();

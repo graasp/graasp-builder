@@ -8,7 +8,11 @@ import {
 import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
 import { ROW_HEIGHT } from '../../../support/constants';
 
-const reorderAndCheckItem = (id, currentPosition, newPosition) => {
+const reorderAndCheckItem = (
+  id: string,
+  currentPosition: number,
+  newPosition: number,
+) => {
   const dragIcon = `${buildItemsTableRowSelector(
     id,
   )} .${ROW_DRAGGER_CLASS} svg`;

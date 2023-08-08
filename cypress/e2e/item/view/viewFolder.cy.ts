@@ -30,9 +30,11 @@ import {
   NAVIGATION_LOAD_PAUSE,
   TABLE_ITEM_RENDER_TIME,
 } from '../../../support/constants';
+import { ItemForTest } from '../../../support/types';
 import { expectFolderViewScreenLayout } from '../../../support/viewUtils';
 
-const translateBuilder = (key) => i18n.t(key, { ns: namespaces.builder });
+const translateBuilder = (key: string) =>
+  i18n.t(key, { ns: namespaces.builder });
 
 describe('View Folder', () => {
   describe('Grid', () => {
@@ -177,7 +179,10 @@ describe('View Folder', () => {
   describe('Grid pagination', () => {
     const sampleItems = generateOwnItems(30);
 
-    const checkGridPagination = (items, itemsPerPage) => {
+    const checkGridPagination = (
+      items: ItemForTest[],
+      itemsPerPage: number,
+    ) => {
       const numberPages = Math.ceil(items.length / itemsPerPage);
 
       // for each page

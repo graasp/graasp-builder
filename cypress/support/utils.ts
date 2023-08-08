@@ -36,11 +36,11 @@ export const parseStringToRegExp = (
 
 export const EMAIL_FORMAT = '[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+';
 
-const validateCsvData = (data, numMessages) => {
+const validateCsvData = (data: unknown[], numMessages: number) => {
   expect(data).to.have.length(numMessages);
 };
 
-const validateCsvHeaders = (headers) => {
+const validateCsvHeaders = (headers: string[]) => {
   const expectedHeader = EXPORT_CSV_HEADERS.map((h) => h.label);
   expect(headers).to.deep.equal(expectedHeader);
 };

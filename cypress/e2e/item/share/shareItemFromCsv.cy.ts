@@ -1,3 +1,5 @@
+import { ItemMembership, PermissionLevel } from '@graasp/sdk';
+
 import * as Papa from 'papaparse';
 
 import { buildItemPath } from '../../../../src/config/paths';
@@ -12,7 +14,7 @@ import { ITEMS_WITH_INVITATIONS } from '../../../fixtures/invitations';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
 
-const shareItem = ({ id, fixture }) => {
+const shareItem = ({ id, fixture }: { id: string; fixture: string }) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
   cy.get(`#${SHARE_ITEM_CSV_PARSER_BUTTON_ID}`).click();
   cy.attachFile(
@@ -60,14 +62,24 @@ describe('Share Item From CSV', () => {
 
     cy.fixture(fixture).then((data) => {
       // get content from csv and remove last line: no content
-      const { data: csvContent } = Papa.parse(data, { header: true });
+      const { data: csvContent } = Papa.parse<{
+        name: string;
+        permission: PermissionLevel;
+        email: string;
+      }>(data, { header: true });
       const csv = csvContent.filter(({ name }) => name);
 
       // david, cedric alredy has an invitation
       // garry is a new invitation
       cy.wait('@postInvitations').then(({ request: { url, body } }) => {
         expect(url).to.contain(id);
-        const { invitations } = body;
+        const { invitations } = body as {
+          invitations: {
+            email: string;
+            permission: PermissionLevel;
+            name: string;
+          }[];
+        };
         csv.forEach(({ permission, email }) => {
           const member = registeredMembers.find(
             ({ email: mEmail }) => mEmail === email,
@@ -87,14 +99,14 @@ describe('Share Item From CSV', () => {
       // fanny is already a membership
       cy.wait('@postManyItemMemberships').then(({ request: { url, body } }) => {
         expect(url).to.contain(id);
-        const { memberships } = body;
+        const { data: memberships } = body as {
+          data: { [key: string]: ItemMembership };
+        };
         csv.forEach(({ permission, email }) => {
           const member = registeredMembers.find(
             ({ email: mEmail }) => mEmail === email,
           );
-          const membership = memberships.find(
-            ({ email: thisEmail }) => thisEmail === email,
-          );
+          const membership = memberships[email];
           if (member) {
             expect(membership.permission).to.equal(permission);
           } else {

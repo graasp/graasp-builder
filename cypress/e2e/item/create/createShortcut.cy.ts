@@ -14,7 +14,13 @@ import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const createShortcut = ({ id, toItemPath }) => {
+const createShortcut = ({
+  id,
+  toItemPath,
+}: {
+  id: string;
+  toItemPath: string;
+}) => {
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).click();
   cy.fillTreeModal(toItemPath);
 };

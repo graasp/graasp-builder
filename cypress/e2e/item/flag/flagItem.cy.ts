@@ -12,7 +12,7 @@ import {
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 
-const openFlagItemModal = (itemId) => {
+const openFlagItemModal = (itemId: string) => {
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
 
@@ -23,7 +23,7 @@ const openFlagItemModal = (itemId) => {
   menuFlagButton.click();
 };
 
-const flagItem = (itemId, type) => {
+const flagItem = (itemId: string, type: FlagType) => {
   openFlagItemModal(itemId);
 
   const flagListItem = cy.get(`#${buildFlagListItemId(type)}`);
