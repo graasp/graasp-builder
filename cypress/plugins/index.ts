@@ -27,7 +27,6 @@ const initConfig: Cypress.PluginConfig = (on, config) => {
     },
   };
   // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-  require('@cypress/code-coverage/task')(on, newConfig);
-  return newConfig;
+  return require('@cypress/code-coverage/task')(on, newConfig);
 };
 export default initConfig;
