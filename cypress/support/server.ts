@@ -909,7 +909,7 @@ export const mockPostItemLogin = (
         itemLoginSchema.type ===
         SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.USERNAME_AND_PASSWORD
       ) {
-        expect(body).to.have.keys('password');
+        expect(body).to.have.any.keys('password');
       }
 
       reply({

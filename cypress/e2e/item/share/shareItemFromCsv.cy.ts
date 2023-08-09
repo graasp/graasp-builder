@@ -1,4 +1,4 @@
-import { ItemMembership, PermissionLevel } from '@graasp/sdk';
+import { PermissionLevel } from '@graasp/sdk';
 
 import * as Papa from 'papaparse';
 
@@ -69,7 +69,7 @@ describe('Share Item From CSV', () => {
       }>(data, { header: true });
       const csv = csvContent.filter(({ name }) => name);
 
-      // david, cedric alredy has an invitation
+      // david, cedric already has an invitation
       // garry is a new invitation
       cy.wait('@postInvitations').then(({ request: { url, body } }) => {
         expect(url).to.contain(id);
@@ -78,6 +78,7 @@ describe('Share Item From CSV', () => {
             email: string;
             permission: PermissionLevel;
             name: string;
+            itemPath: string;
           }[];
         };
         csv.forEach(({ permission, email }) => {
@@ -99,14 +100,22 @@ describe('Share Item From CSV', () => {
       // fanny is already a membership
       cy.wait('@postManyItemMemberships').then(({ request: { url, body } }) => {
         expect(url).to.contain(id);
-        const { data: memberships } = body as {
-          data: { [key: string]: ItemMembership };
+        const { memberships } = body as {
+          memberships: {
+            name: string;
+            email: string;
+            permission: PermissionLevel;
+            itemPath: string;
+            memberId: string;
+          }[];
         };
         csv.forEach(({ permission, email }) => {
           const member = registeredMembers.find(
             ({ email: mEmail }) => mEmail === email,
           );
-          const membership = memberships[email];
+          const membership = memberships.find(
+            ({ email: thisEmail }) => thisEmail === email,
+          );
           if (member) {
             expect(membership.permission).to.equal(permission);
           } else {
