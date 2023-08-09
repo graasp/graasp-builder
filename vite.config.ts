@@ -14,10 +14,15 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
     base: '/',
     server: {
       port: parseInt(process.env.VITE_PORT || '3001', 10),
-      open: true,
+      // only auto open the app when in dev mode
+      open: mode === 'dev',
       watch: {
         ignored: ['**/coverage/**', '**/cypress/downloads/**'],
       },
+    },
+    preview: {
+      port: parseInt(process.env.VITE_PORT || '3333', 10),
+      strictPort: true,
     },
     build: {
       outDir: 'build',
@@ -33,6 +38,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
         exclude: ['node_modules', 'test/'],
         extension: ['.js', '.ts', '.tsx'],
         requireEnv: false,
+        forceBuildInstrument: mode === 'test',
         checkProd: true,
       }),
       ...(mode === 'dev'

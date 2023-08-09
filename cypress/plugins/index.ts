@@ -24,6 +24,7 @@ const initConfig: Cypress.PluginConfig = (on, config) => {
       },
       API_HOST: process.env.VITE_GRAASP_API_HOST,
       AUTH_HOST: process.env.VITE_GRAASP_AUTH_HOST,
+      BUILDER_HOST: `http://localhost:${process.env.VITE_PORT}`,
       PLAYER_HOST: process.env.VITE_GRAASP_PLAYER_HOST,
       ANALYZER_HOST: process.env.VITE_GRAASP_ANALYZER_HOST,
     },

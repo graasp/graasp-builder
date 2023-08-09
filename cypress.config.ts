@@ -15,7 +15,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return initConfig(on, config);
     },
-    baseUrl: 'http://localhost:3111',
+    baseUrl: `http://localhost:${process.env.VITE_PORT || 3333}`,
   },
   component: {
     devServer: {
