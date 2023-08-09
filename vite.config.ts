@@ -35,7 +35,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
       react(),
       istanbul({
         include: 'src/*',
-        exclude: ['node_modules', 'test/'],
+        exclude: ['node_modules', 'test/', '.nyc_output', 'coverage'],
         extension: ['.js', '.ts', '.tsx'],
         requireEnv: false,
         forceBuildInstrument: mode === 'test',
@@ -48,7 +48,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
               open: true,
               gzipSize: true,
               brotliSize: true,
-              filename: 'analice.html',
+              filename: 'bundle_analysis.html',
             }) as PluginOption,
           ]
         : []),

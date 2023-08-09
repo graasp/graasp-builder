@@ -8,5 +8,6 @@
     "strict": true,
     "sourceMap": false
   },
-  "include": ["**/*.ts", "cypress.d.ts"]
+  "include": ["cypress/**/*.ts", "cypress.d.ts"],
+  "exclude": ["coverage", ".nyc_output"]
 }
