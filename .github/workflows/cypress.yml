@@ -29,7 +29,7 @@ jobs:
         run: tsc --noEmit
 
       - name: Build App
-        run: yarn build
+        run: yarn build:test
         shell: bash
         env:
           VITE_PORT: ${{ vars.VITE_PORT }}
@@ -49,7 +49,7 @@ jobs:
         with:
           install: false
           # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
-          start: yarn preview --port ${{ vars.VITE_PORT }}
+          start: yarn preview:test
           browser: chrome
           quiet: true
           config-file: cypress.config.ts
