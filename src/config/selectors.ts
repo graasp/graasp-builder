@@ -228,8 +228,6 @@ export const buildCategoryMenuOptionSelector = (
 ): string => `#${menuName} .MuiAutocomplete-option`;
 export const buildDashboardButtonId = (id: string): string =>
   `dashboard-button-${id}`;
-export const buildGraaspAnalyzerId = (id: string): string =>
-  `graasp-analyzer-${id}`;
 export const buildPlayerTabName = (id: string): string => `builder-tab-${id}`;
 
 export const ITEM_PUBLISH_SECTION_TITLE_ID = 'itemPublishSectionTitle';

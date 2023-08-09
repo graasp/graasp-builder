@@ -8,7 +8,6 @@ enum TreePreventSelection {
 
 enum ItemActionTabs {
   Settings = 'settings',
-  Dashboard = 'dashboard',
   Library = 'library',
   Sharing = 'sharing',
 }

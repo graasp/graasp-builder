@@ -1618,7 +1618,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/cache@npm:^11.11.0":
+"@emotion/cache@npm:11.11.0, @emotion/cache@npm:^11.11.0":
   version: 11.11.0
   resolution: "@emotion/cache@npm:11.11.0"
   dependencies:
@@ -2125,9 +2125,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:3.3.0":
+"@graasp/ui@github:graasp/graasp-ui#481-analytics-url":
   version: 3.3.0
-  resolution: "@graasp/ui@npm:3.3.0"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=3736559831aba5720a05efbdd4be87a820b229ca"
   dependencies:
     "@graasp/sdk": 1.1.3
     clsx: 2.0.0
@@ -2163,7 +2163,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: a1d2f7735c959ae662aaae47be4f2a89b1561041dce07c069135b8f7ab0ff81efc68849787f7d4e6bec6833fccb7c445ec0d8265ccc4da664f7f4ff721847960
+  checksum: 664a4f7de7073d761e5f018a6514daa7c56bf28150e3a7ffdc9f92cb89719cb72de7bd9a982bf2bbc7a4e741481dbed6e0c1621f04cbb45920492535efe339e9
   languageName: node
   linkType: hard
 
@@ -7456,13 +7456,14 @@ __metadata:
     "@commitlint/cli": 17.7.0
     "@commitlint/config-conventional": 17.7.0
     "@cypress/code-coverage": 3.11.0
+    "@emotion/cache": 11.11.0
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
     "@graasp/chatbox": 2.0.0
     "@graasp/query-client": 1.3.2
     "@graasp/sdk": 1.2.0
     "@graasp/translations": 1.18.1
-    "@graasp/ui": 3.3.0
+    "@graasp/ui": "github:graasp/graasp-ui#481-analytics-url"
     "@mui/icons-material": 5.14.3
     "@mui/lab": 5.0.0-alpha.138
     "@mui/material": 5.14.4
@@ -7535,6 +7536,7 @@ __metadata:
     react-router-dom: 6.14.2
     react-toastify: 9.1.3
     rollup-plugin-visualizer: 5.9.2
+    stylis: 4.3.0
     stylis-plugin-rtl: 2.1.1
     typescript: 5.1.6
     uuid: 9.0.0
@@ -12338,6 +12340,13 @@ __metadata:
   version: 4.2.0
   resolution: "stylis@npm:4.2.0"
   checksum: 0eb6cc1b866dc17a6037d0a82ac7fa877eba6a757443e79e7c4f35bacedbf6421fadcab4363b39667b43355cbaaa570a3cde850f776498e5450f32ed2f9b7584
+  languageName: node
+  linkType: hard
+
+"stylis@npm:4.3.0":
+  version: 4.3.0
+  resolution: "stylis@npm:4.3.0"
+  checksum: 6120de3f03eacf3b5adc8e7919c4cca991089156a6badc5248752a3088106afaaf74996211a6817a7760ebeadca09004048eea31875bd8d4df51386365c50025
   languageName: node
   linkType: hard
 

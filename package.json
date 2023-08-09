@@ -13,13 +13,14 @@
     "node": ">=16"
   },
   "dependencies": {
+    "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "2.0.0",
     "@graasp/query-client": "1.3.2",
     "@graasp/sdk": "1.2.0",
     "@graasp/translations": "1.18.1",
-    "@graasp/ui": "3.3.0",
+    "@graasp/ui": "github:graasp/graasp-ui#481-analytics-url",
     "@mui/icons-material": "5.14.3",
     "@mui/lab": "5.0.0-alpha.138",
     "@mui/material": "5.14.4",
@@ -58,6 +59,7 @@
     "react-router": "6.14.2",
     "react-router-dom": "6.14.2",
     "react-toastify": "9.1.3",
+    "stylis": "4.3.0",
     "stylis-plugin-rtl": "2.1.1",
     "uuid": "9.0.0",
     "validator": "13.11.0"

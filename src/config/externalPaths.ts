@@ -22,5 +22,5 @@ export const HOST_MAP = {
   [Context.Builder]: '/',
   [Context.Library]: GRAASP_LIBRARY_HOST,
   [Context.Player]: GRAASP_PLAYER_HOST,
-  [Context.Analytics]: '',
+  [Context.Analytics]: GRAASP_ANALYZER_HOST,
 };
