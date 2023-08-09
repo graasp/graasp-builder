@@ -10,6 +10,7 @@
 
 # misc
 .DS_Store
+bundle_analysis.html
 
 npm-debug.log*
 yarn-debug.log*

@@ -41,7 +41,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
         forceBuildInstrument: mode === 'test',
         checkProd: true,
       }),
-      ...(mode === 'dev'
+      ...(mode === 'development'
         ? [
             visualizer({
               template: 'treemap', // or sunburst
