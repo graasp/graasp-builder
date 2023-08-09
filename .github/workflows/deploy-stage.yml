@@ -32,9 +32,13 @@ jobs:
           VITE_GRAASP_DOMAIN: ${{ vars.VITE_GRAASP_DOMAIN }}
           VITE_GRAASP_API_HOST: ${{ vars.VITE_GRAASP_API_HOST }}
           VITE_GRAASP_AUTH_HOST: ${{ vars.VITE_GRAASP_AUTH_HOST }}
-          VITE_GRAASP_BUILDER_HOST: ${{ vars.VITE_GRAASP_BUILDER_HOST }}
+          VITE_GRAASP_PLAYER_HOST: ${{ vars.VITE_GRAASP_PLAYER_HOST }}
+          VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
+          VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
+          VITE_H5P_INTEGRATION_URL: ${{ secrets.VITE_H5P_INTEGRATION_URL }}
           VITE_SENTRY_ENV: ${{ vars.VITE_SENTRY_ENV }}
           VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+          # un-comment to enable Google Analytics
           # VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
         run: yarn build
@@ -50,28 +54,3 @@ jobs:
           aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_STAGE }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
           cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_STAGE }}
-
-# jobs:
-#   graasp-deploy-s3-workflow:
-#     # abort previous deployment if a newer one is in progress
-#     concurrency:
-#       group: deploy-staging
-#       cancel-in-progress: true
-
-#     name: Graasp Builder
-#     uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@v1
-#     with:
-#       build-folder: 'build'
-#       tag: ${{ github.event.client_payload.tag }}
-#     secrets:
-#       api-host: ${{ secrets.REACT_APP_API_HOST_STAGE }}
-#       authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_STAGE }}
-#       domain: ${{ secrets.REACT_APP_DOMAIN_STAGE }}
-#       ga-measurement-id: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID_STAGE }}
-#       graasp-analyzer-host: ${{ secrets.ANALYZER_CLIENT_HOST_STAGE }}
-#       graasp-assets-url: ${{ secrets.REACT_APP_GRAASP_ASSETS_URL_STAGE }}
-#       graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_STAGE }}
-#       graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_STAGE }}
-#       h5p-integration-url: ${{ secrets.H5P_INTEGRATION_URL_STAGE }}
-#       sentry-dsn: ${{ secrets.REACT_APP_SENTRY_DSN }}
-#       show-notifications: ${{ secrets.REACT_APP_SHOW_NOTIFICATIONS }}

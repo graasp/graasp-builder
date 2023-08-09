@@ -114,8 +114,7 @@ const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
     setAllowSharingValue(event.target.value as CCSharingLicenseChoice);
   };
 
-  const handleSubmit = (event: SubmitEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (requireAttributionValue) {
       updateCCLicense({
         id: itemId,
