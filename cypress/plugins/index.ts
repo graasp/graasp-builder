@@ -19,4 +19,5 @@
 const initConfig: Cypress.PluginConfig = (on, config) => {
   return config;
 };
+
 export default initConfig;
