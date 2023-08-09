@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -11,25 +12,11 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-
 /**
  * @type {Cypress.PluginConfig}
  */
+// eslint-disable-next-line no-unused-vars
 const initConfig: Cypress.PluginConfig = (on, config) => {
-  const newConfig = {
-    ...config,
-    env: {
-      'cypress-react-selector': {
-        root: '#root',
-      },
-      API_HOST: process.env.VITE_GRAASP_API_HOST,
-      AUTH_HOST: process.env.VITE_GRAASP_AUTH_HOST,
-      BUILDER_HOST: `http://localhost:${process.env.VITE_PORT}`,
-      PLAYER_HOST: process.env.VITE_GRAASP_PLAYER_HOST,
-      ANALYZER_HOST: process.env.VITE_GRAASP_ANALYZER_HOST,
-    },
-  };
-  // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-  return require('@cypress/code-coverage/task')(on, newConfig);
+  return config;
 };
 export default initConfig;
