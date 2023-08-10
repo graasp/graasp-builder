@@ -2163,7 +2163,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 664a4f7de7073d761e5f018a6514daa7c56bf28150e3a7ffdc9f92cb89719cb72de7bd9a982bf2bbc7a4e741481dbed6e0c1621f04cbb45920492535efe339e9
+  checksum: af7edc922484f9703e104a8d06343fdad35c7c542a7e1fad6d323afec76217b624ed14f03946ae7399604c71082cd7f2af7a5a0a213a4d182b9ef4ae01f5ebfc
   languageName: node
   linkType: hard
 
