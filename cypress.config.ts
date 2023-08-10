@@ -23,10 +23,4 @@ export default defineConfig({
     },
     baseUrl: `http://localhost:${process.env.VITE_PORT || 3333}`,
   },
-  component: {
-    devServer: {
-      framework: 'react',
-      bundler: 'vite',
-    },
-  },
 });
