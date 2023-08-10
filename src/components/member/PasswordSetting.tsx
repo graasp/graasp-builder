@@ -1,8 +1,8 @@
+import { ChangeEvent, useState } from 'react';
+
 import { Button, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-
-import { ChangeEvent, useState } from 'react';
 
 import { isPasswordStrong } from '@graasp/sdk';
 import { ACCOUNT, FAILURE_MESSAGES } from '@graasp/translations';

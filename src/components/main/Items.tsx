@@ -1,7 +1,7 @@
-import { List } from 'immutable';
-
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
+
+import { List } from 'immutable';
 
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';

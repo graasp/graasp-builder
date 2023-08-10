@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
-
-import { useEffect, useState } from 'react';
 
 import { ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
 import { ItemRecord, ItemTagRecord } from '@graasp/sdk/frontend';

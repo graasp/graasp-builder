@@ -6,18 +6,22 @@ import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { CURRENT_USER } from '../../fixtures/members';
 import { WEBSOCKETS_DELAY_TIME } from '../../support/constants';
 
-// paramaterized before, to be called in each test or in beforeEach
-function beforeWs(visitRoute, sampleData, wsClientStub) {
+// parameterized before, to be called in each test or in beforeEach
+function beforeWs(
+  visitRoute: string,
+  sampleData: unknown,
+  wsClientStub: MockWebSocket,
+) {
   cy.setUpApi(sampleData);
   cy.visit(visitRoute, {
     onBeforeLoad: (win) => {
-      cy.stub(win, 'WebSocket', () => wsClientStub);
+      cy.stub(win, 'WebSocket').callsFake(() => wsClientStub);
     },
   });
 }
 
 describe('Websocket interactions', () => {
-  let client;
+  let client: MockWebSocket;
 
   beforeEach(() => {
     client = new MockWebSocket();

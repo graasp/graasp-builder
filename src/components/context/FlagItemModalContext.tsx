@@ -1,10 +1,10 @@
-import { List } from 'immutable';
-
 import { createContext, useMemo, useState } from 'react';
 
 import { routines } from '@graasp/query-client';
 import { FlagType } from '@graasp/sdk';
 import { ItemFlagDialog } from '@graasp/ui';
+
+import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';

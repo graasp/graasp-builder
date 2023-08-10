@@ -1,7 +1,7 @@
+import { MouseEventHandler, useEffect, useState } from 'react';
+
 import { Chip, TextField, Typography } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
-
-import { MouseEventHandler, useEffect, useState } from 'react';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';

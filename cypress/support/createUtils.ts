@@ -1,5 +1,6 @@
 import {
   AppItemType,
+  DiscriminatedItem,
   DocumentItemType,
   EmbeddedLinkItemType,
   ItemType,
@@ -17,6 +18,7 @@ import {
   ZIP_DASHBOARD_UPLOADER_ID,
 } from '../../src/config/selectors';
 import { InternalItemType } from '../../src/config/types';
+import { ZIPInternalItem } from '../fixtures/files';
 import { FileItemForTest } from './types';
 
 export const createApp = (
@@ -76,14 +78,9 @@ export const createFile = (
   }
 };
 
+// todo: question: only used by import zip ??
 export const createItem = (
-  payload: {
-    name?: string;
-    extra?: { [ItemType.LINK]: { url?: string } };
-    filepath?: string;
-    type?: ItemType | InternalItemType;
-    createFilepath?: string;
-  },
+  payload: DiscriminatedItem | ZIPInternalItem,
   options?: { confirm?: boolean },
 ): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
@@ -101,6 +98,8 @@ export const createItem = (
       // drag-drop a file in the uploader
       cy.attachFile(
         cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).first(),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         payload?.createFilepath,
         {
           action: 'drag-drop',

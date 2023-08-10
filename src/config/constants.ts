@@ -1,57 +1,13 @@
 import {
-  Context,
   EmailFrequency,
   ItemLoginSchemaType,
   ItemType,
   PermissionLevel,
-  buildSignInPath,
 } from '@graasp/sdk';
 
 import ITEM_LAYOUT_MODES from '../enums/itemLayoutModes';
 
 export const APP_NAME = 'Graasp';
-
-export const ENV = {
-  DEVELOPMENT: 'development',
-  PRODUCTION: 'production',
-  TEST: 'test',
-};
-
-export const NODE_ENV =
-  process.env.REACT_APP_NODE_ENV || process.env.NODE_ENV || ENV.DEVELOPMENT;
-
-export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
-
-export const APP_VERSION = process.env.REACT_APP_VERSION || 'latest';
-
-export const HOST = process.env.REACT_APP_HOST || 'http://localhost:3111';
-
-export const API_HOST =
-  process.env.REACT_APP_API_HOST || 'http://localhost:3111';
-
-export const SHOW_NOTIFICATIONS =
-  process.env.REACT_APP_SHOW_NOTIFICATIONS === 'true' || false;
-
-export const AUTHENTICATION_HOST =
-  process.env.REACT_APP_AUTHENTICATION_HOST || 'http://localhost:3001';
-
-export const GRAASP_PERFORM_HOST =
-  process.env.REACT_APP_GRAASP_PERFORM_HOST || 'http://localhost:3112';
-export const GRAASP_LIBRARY_HOST =
-  process.env.REACT_APP_GRAASP_EXPLORE_HOST || 'http://localhost:3005';
-
-export const H5P_INTEGRATION_URL =
-  process.env.REACT_APP_H5P_INTEGRATION_URL || `${API_HOST}/p/h5p-integration`;
-
-export const GRAASP_ANALYZER_HOST =
-  process.env.REACT_APP_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
-
-export const buildGraaspAnalyzerLink = (id: string): string =>
-  `${GRAASP_ANALYZER_HOST}/embedded/${id}`;
-
-export const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
-
-export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
 
@@ -156,6 +112,7 @@ export const GRID_ITEMS_PER_PAGE_CHOICES: number[] = [12, 24, 36, 48];
 export const ITEM_DEFAULT_HEIGHT = '70vh';
 export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 
+// todo: change
 export const ITEMS_TABLE_CONTAINER_HEIGHT = '65vh';
 
 export const THUMBNAIL_ASPECT = 1;
@@ -176,18 +133,8 @@ export const CC_LICENSE_ABOUT_URL =
 
 export const ADMIN_CONTACT = 'admin@graasp.org';
 
-export const HOST_MAP = {
-  [Context.Builder]: '/',
-  [Context.Library]: GRAASP_LIBRARY_HOST,
-  [Context.Player]: GRAASP_PERFORM_HOST,
-  [Context.Analytics]: '',
-};
-
 export const MEMBERSHIP_TABLE_HEIGHT = 400;
 export const MEMBERSHIP_TABLE_ROW_HEIGHT = 75;
-
-// signin page path from auth host
-export const SIGN_IN_PATH = buildSignInPath({ host: AUTHENTICATION_HOST });
 
 export const DISPLAY_CO_EDITORS_OPTIONS = {
   YES: {

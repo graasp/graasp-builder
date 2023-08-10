@@ -1,4 +1,4 @@
-import * as Papa from 'papaparse';
+import { ChangeEvent, useState } from 'react';
 
 import PublishIcon from '@mui/icons-material/Publish';
 import Alert from '@mui/material/Alert';
@@ -11,12 +11,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 
-import { useState } from 'react';
-
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
+
+import * as Papa from 'papaparse';
 
 import {
   useBuilderTranslation,
@@ -60,7 +60,7 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
     setIsOpen(false);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const t = e.target as HTMLInputElement;
     if (t.files?.length) {
       const file = t.files?.[0];

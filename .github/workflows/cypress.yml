@@ -6,25 +6,74 @@ on:
   push:
     branches-ignore:
       - main
-      - master
 
-# This workflow is made up of one job that calls the reusable workflow in graasp-deploy
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  graasp-deploy-cypress-workflow:
-    # only cancel in-progress jobs or runs for the current workflow
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
-      cancel-in-progress: true
-      
-    # Replace with repository name
-    name: Cypress caller template
-    # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
-    # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/cypress.yml@v1
-    with:
-      # Test values
-      node-env-test: test
-      hidden-item-tag-id-test: 12345678-1234-1234-1234-123456789012
-    # Insert required secrets based on repository with the following format: ${{ secrets.SECRET_NAME }}
-    secrets:
-      api-host-test: ${{ secrets.REACT_APP_API_HOST }}
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Yarn Install and Cache
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+        with:
+          cypress: true
+
+      # type check
+      - name: Type-check code
+        run: tsc --noEmit
+
+      - name: Build App
+        run: NODE_OPTIONS=--max-old-space-size=3072 yarn build:test
+        shell: bash
+        env:
+          VITE_PORT: ${{ vars.VITE_PORT }}
+          VITE_VERSION: ${{ vars.VITE_VERSION }}
+          VITE_GRAASP_DOMAIN: ${{ vars.VITE_GRAASP_DOMAIN }}
+          VITE_GRAASP_API_HOST: ${{ vars.VITE_GRAASP_API_HOST }}
+          VITE_GRAASP_AUTH_HOST: ${{ vars.VITE_GRAASP_AUTH_HOST }}
+          VITE_GRAASP_PLAYER_HOST: ${{ vars.VITE_GRAASP_PLAYER_HOST }}
+          VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
+          VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
+          VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+
+
+      #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
+          start: yarn preview:test
+          browser: chrome
+          quiet: true
+          config-file: cypress.config.ts
+          cache-key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        env:
+          VITE_PORT: ${{ vars.VITE_PORT }}
+          VITE_VERSION: ${{ vars.VITE_VERSION }}
+          VITE_GRAASP_DOMAIN: ${{ vars.VITE_GRAASP_DOMAIN }}
+          VITE_GRAASP_API_HOST: ${{ vars.VITE_GRAASP_API_HOST }}
+          VITE_GRAASP_AUTH_HOST: ${{ vars.VITE_GRAASP_AUTH_HOST }}
+          VITE_GRAASP_PLAYER_HOST: ${{ vars.VITE_GRAASP_PLAYER_HOST }}
+          VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
+          VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
+          VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+
+      # after the test run completes
+      # store any screenshots
+      # NOTE: screenshots will be generated only if E2E test failed
+      # thus we store screenshots only on failures
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: coverage report
+        run: npx nyc report --reporter=text-summary

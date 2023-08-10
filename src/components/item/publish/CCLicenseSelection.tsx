@@ -1,3 +1,5 @@
+import { ChangeEvent, useEffect, useState } from 'react';
+
 import {
   Box,
   FormControlLabel,
@@ -5,8 +7,6 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-
-import { ChangeEvent, useEffect, useState } from 'react';
 
 import { CCLicenseAdaptions } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
@@ -114,8 +114,7 @@ const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
     setAllowSharingValue(event.target.value as CCSharingLicenseChoice);
   };
 
-  const handleSubmit = (event: SubmitEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (requireAttributionValue) {
       updateCCLicense({
         id: itemId,

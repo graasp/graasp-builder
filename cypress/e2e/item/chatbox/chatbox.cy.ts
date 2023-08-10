@@ -23,7 +23,7 @@ const openChatbox = () => {
 };
 
 describe('Chatbox Scenarios', () => {
-  let client;
+  let client: MockWebSocket;
 
   beforeEach(() => {
     client = new MockWebSocket();

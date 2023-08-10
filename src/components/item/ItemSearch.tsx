@@ -1,12 +1,12 @@
-import { List } from 'immutable';
+import { ChangeEvent, useState } from 'react';
 
 import Typography from '@mui/material/Typography';
-
-import { ChangeEvent, useState } from 'react';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { SearchInput } from '@graasp/ui';
+
+import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {

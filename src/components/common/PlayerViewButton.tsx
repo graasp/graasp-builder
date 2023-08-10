@@ -5,9 +5,10 @@ import { redirect } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';
 import { PlayIcon } from '@graasp/ui';
 
-import { ITEM_HEADER_ICON_HEIGHT } from '../../config/constants';
-import { useBuilderTranslation } from '../../config/i18n';
-import { buildGraaspPlayerView } from '../../config/paths';
+import { ITEM_HEADER_ICON_HEIGHT } from '@/config/constants';
+import { buildGraaspPlayerView } from '@/config/externalPaths';
+import { useBuilderTranslation } from '@/config/i18n';
+
 import {
   buildPlayerButtonId,
   buildPlayerTabName,

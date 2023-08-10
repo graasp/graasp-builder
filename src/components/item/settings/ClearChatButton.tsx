@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { DeleteForever } from '@mui/icons-material';
 import {
   Box,
@@ -10,8 +12,6 @@ import {
   Typography,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-
-import { useState } from 'react';
 
 import { CHATBOX } from '@graasp/translations';
 import { Button } from '@graasp/ui';

@@ -1,6 +1,6 @@
-import { SelectProps } from '@mui/material';
-
 import { useEffect, useState } from 'react';
+
+import { SelectProps } from '@mui/material';
 
 import { PermissionLevel } from '@graasp/sdk';
 import { BUILDER } from '@graasp/translations';

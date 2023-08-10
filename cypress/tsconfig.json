@@ -3,9 +3,11 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "dom", "ES2021.String"],
-    "types": ["cypress", "node"],
-    "strict": false,
+    "types": ["cypress", "node", "vite/client"],
+    "strictNullChecks": false,
+    "strict": true,
     "sourceMap": false
   },
-  "include": ["**/*.ts", "cypress.d.ts"]
+  "include": ["**/*.ts", "cypress.d.ts"],
+  "exclude": ["coverage", ".nyc_output"]
 }

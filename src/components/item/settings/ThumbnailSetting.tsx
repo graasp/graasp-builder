@@ -1,14 +1,14 @@
-import Uppy from '@uppy/core';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-
-import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
 import { ItemType } from '@graasp/sdk';
 import { EmbeddedLinkItemTypeRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Thumbnail } from '@graasp/ui';
+
+import Uppy from '@uppy/core';
 
 import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
@@ -66,11 +66,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
     return null;
   }
 
-  const handleClose = (_event: Event, reason: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
+  const handleClose = () => {
     setOpenStatusBar(false);
   };
 

@@ -1,6 +1,6 @@
-import { TextField, Typography } from '@mui/material';
-
 import { useState } from 'react';
+
+import { TextField, Typography } from '@mui/material';
 
 import { BUILDER } from '@graasp/translations';
 

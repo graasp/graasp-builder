@@ -1,10 +1,8 @@
-import { Record } from 'immutable';
-import PropTypes from 'prop-types';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
-import { useEffect, useState } from 'react';
-
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -17,7 +15,12 @@ import {
 } from '../../../config/selectors';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
-const CoEditorSettings = ({ item, disabled }) => {
+type Props = {
+  item: ItemRecord;
+  disabled: boolean;
+};
+
+const CoEditorSettings = ({ item, disabled }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: updateDisplayCoEditors } = mutations.useEditItem();
 
@@ -44,7 +47,7 @@ const CoEditorSettings = ({ item, disabled }) => {
     return <Loader />;
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     // value from radio button is string, convert to boolean
     const newValue = event.target.value === 'true';
     setOptionValue(newValue);
@@ -71,7 +74,7 @@ const CoEditorSettings = ({ item, disabled }) => {
       >
         {Object.values(DISPLAY_CO_EDITORS_OPTIONS).map((option) => (
           <FormControlLabel
-            key={option.value}
+            key={option.label}
             id={buildCoEditorSettingsRadioButtonId(option.value)}
             value={option.value}
             control={<Radio color="primary" />}
@@ -82,11 +85,6 @@ const CoEditorSettings = ({ item, disabled }) => {
       </RadioGroup>
     </>
   );
-};
-
-CoEditorSettings.propTypes = {
-  item: PropTypes.instanceOf(Record).isRequired,
-  disabled: PropTypes.bool,
 };
 
 export default CoEditorSettings;

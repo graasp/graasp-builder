@@ -9,7 +9,7 @@ import {
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const copyItem = ({ id, toItemPath }) => {
+const copyItem = ({ id, toItemPath }: { id: string; toItemPath: string }) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();

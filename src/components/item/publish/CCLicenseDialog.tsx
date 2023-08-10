@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import {
   Dialog,
   DialogActions,
@@ -14,13 +12,21 @@ import { Button } from '@graasp/ui';
 import { useBuilderTranslation } from '../../../config/i18n';
 import CancelButton from '../../common/CancelButton';
 
+type Props = {
+  open: boolean;
+  setOpen: (state: boolean) => void;
+  disabled?: boolean;
+  buttonName: string;
+  handleSubmit: () => void;
+};
+
 const CCLicenseDialog = ({
   open,
   setOpen,
-  disabled,
+  disabled = false,
   buttonName,
   handleSubmit,
-}) => {
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleClickOpen = () => {
@@ -35,7 +41,7 @@ const CCLicenseDialog = ({
     <>
       <Button
         variant="contained"
-        my={1}
+        sx={{ my: 1 }}
         onClick={handleClickOpen}
         disabled={disabled} // disable the button if no option is selected
       >
@@ -59,18 +65,6 @@ const CCLicenseDialog = ({
       </Dialog>
     </>
   );
-};
-
-CCLicenseDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-  buttonName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-};
-
-CCLicenseDialog.defaultProps = {
-  disabled: false,
 };
 
 export default CCLicenseDialog;

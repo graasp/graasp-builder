@@ -1,6 +1,3 @@
-import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
-import { List } from 'immutable';
-
 import { useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
@@ -15,6 +12,9 @@ import {
 import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { BUILDER, COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
+
+import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
+import { List } from 'immutable';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {

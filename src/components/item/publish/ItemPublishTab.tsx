@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
+
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import HelpIcon from '@mui/icons-material/Help';
@@ -15,9 +18,6 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-
-import { useEffect, useState } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { DATA_KEYS } from '@graasp/query-client';
 import {

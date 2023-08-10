@@ -14,7 +14,7 @@ import {
   ITEMS_SETTINGS,
 } from '../../../fixtures/items';
 
-const toggleHideButton = (itemId, isHidden = false) => {
+const toggleHideButton = (itemId: string, isHidden = false) => {
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
 

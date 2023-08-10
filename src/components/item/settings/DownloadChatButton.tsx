@@ -1,9 +1,8 @@
-import { GetApp } from '@mui/icons-material';
-import { IconButton, Stack, Tooltip, Typography, styled } from '@mui/material';
-
-import { useState } from 'react';
 import { CSVLink as CsvLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
+
+import { GetApp } from '@mui/icons-material';
+import { IconButton, Stack, Tooltip, Typography, styled } from '@mui/material';
 
 import { normalizeMentions } from '@graasp/chatbox';
 import { Button } from '@graasp/ui';
@@ -30,8 +29,10 @@ const DownloadChatButton = ({
   variant = ButtonVariants.IconButton,
   showInfo = true,
 }: Props): JSX.Element | null => {
-  const [filename, setFilename] = useState('');
   const { t } = useTranslation();
+  const filename = `${
+    new Date().toISOString().split('T')[0]
+  }_chat_${chatId}.csv`;
 
   const { data: exportedChat, isLoading } = hooks.useExportItemChat(chatId);
 
@@ -40,11 +41,7 @@ const DownloadChatButton = ({
   }
 
   // generate file name when user clicks on the button
-  const onClick = () => {
-    // get only YYYY-MM-DD date format
-    const currentDate = new Date().toISOString().split('T')[0];
-    setFilename(`${currentDate}_chat_${chatId}.csv`);
-  };
+
   const csvMessages = exportedChat.messages
     ?.map((message) => ({
       ...message.toJS(),
@@ -88,8 +85,6 @@ const DownloadChatButton = ({
         headers={EXPORT_CSV_HEADERS}
         data={csvMessages}
         filename={filename}
-        asyncOnClick
-        onClick={onClick}
         // this removes the BOM for better parsing
         uFEFF={false}
       >

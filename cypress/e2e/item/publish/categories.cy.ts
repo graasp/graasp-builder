@@ -1,4 +1,4 @@
-import { CategoryType } from '@graasp/sdk';
+import { Category, CategoryType } from '@graasp/sdk';
 
 import { buildItemPath } from '../../../../src/config/paths';
 import {
@@ -22,7 +22,10 @@ const openPublishItemTab = (id: string) => {
   cy.wait(PUBLISH_TAB_LOADING_TIME);
 };
 
-const toggleOption = (id, categoryType) => {
+const toggleOption = (
+  id: string,
+  categoryType: CategoryType | `${CategoryType}`,
+) => {
   cy.get(`#${buildCategorySelectionId(categoryType)}`).click();
 
   cy.get(`#${buildCategorySelectionOptionId(categoryType, id)}`).click();
@@ -31,7 +34,7 @@ const toggleOption = (id, categoryType) => {
 describe('Categories', () => {
   describe('Item without category', () => {
     it('Display item without category', () => {
-      const item = { ...ITEM_WITH_CATEGORIES, categories: [] };
+      const item = { ...ITEM_WITH_CATEGORIES, categories: [] as Category[] };
       cy.setUpApi({ items: [item] });
       cy.visit(buildItemPath(item.id));
       openPublishItemTab(item.id);

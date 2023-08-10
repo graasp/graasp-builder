@@ -1,4 +1,5 @@
 # Graasp Builder
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -7,15 +8,15 @@
 
 1. Run `yarn` to install the dependencies.
 2. Run the API at `localhost:3000`
-3. Set the following environnement variables in `.env.local`
+3. Set the following environnement variables in `.env.development`
 
-```
-REACT_APP_API_HOST=http://localhost:3000
-PORT=3111
-REACT_APP_SHOW_NOTIFICATIONS=true
-REACT_APP_AUTHENTICATION_HOST=http://localhost:3001
-REACT_APP_H5P_INTEGRATION_URL=
-REACT_APP_VERSION=latest
+```sh
+VITE_PORT=3111
+VITE_GRAASP_API_HOST=http://localhost:3000
+VITE_SHOW_NOTIFICATIONS=true
+VITE_GRAASP_AUTH_HOST=http://localhost:3001
+VITE_H5P_INTEGRATION_URL=
+VITE_VERSION=latest-dev
 ```
 
 4. Run `yarn start`. The client should be accessible at `localhost:3111`
@@ -34,19 +35,37 @@ You are successfully authenticated if you can access to the client without being
 
 ## Testing
 
+The tests are run using Cypress. Cypress only compiles the code for the tests, your app needs to run at the specified `baseUrl` in the cypress config.
+
+### Running tests in interactive mode
+
 Set the following environnement variables in `.env.test`
 
-```
-REACT_APP_API_HOST=http://localhost:3000
-PORT=3111
-REACT_APP_SHOW_NOTIFICATIONS=false
-REACT_APP_NODE_ENV=test
-REACT_APP_H5P_INTEGRATION_URL=
-REACT_APP_VERSION=latest
+```sh
+VITE_PORT=3333
+VITE_GRAASP_API_HOST=http://localhost:3000
+VITE_GRAASP_AUTH_HOST=http://localhost:3001
+VITE_GRAASP_PLAYER_HOST=http://localhost:3112
+VITE_GRAASP_LIBRARY_HOST=http://localhost:3005
+VITE_GRAASP_ANALYZER_HOST=http://localhost:3113
+VITE_H5P_INTEGRATION_URL=
+VITE_VERSION=cypress-tests
+VITE_SHOW_NOTIFICATIONS=true
 ```
 
-Run `yarn cypress`. This should run every tests headlessly.
-You can run `yarn cypress:open` to access the framework and visually display the tests' processes.
+Run `yarn start:test` and `yarn cypress:open` in 2 terminal windows.
+
+:warning: It is possible that the websocket test become flacks (or just stop passing) if you use the dev server. In that case, you can resort to first building the app in test mode `yarn build:test` and then starting a preview of the app with `yarn preview:test`.
+
+### Running all tests in headless mode
+
+You will need to have the `.env.test` file from the other section.
+
+You can simply run: `yarn test`. This will:
+
+1. Build your app in test mode (using the `.env.test` file to pull env variables)
+2. Start your app in preview mode (simply serve the generated files with a static http server, but using the same `.env.test` file)
+3. Start the cypress tests to run your full test suite (this can take a while depending on the number of tests you have)
 
 ## Developing
 
@@ -66,13 +85,6 @@ While developing you can run `yarn check` to perform prettier formatting checks,
     </tr>
   </tbody>
 </table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->

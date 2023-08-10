@@ -39,11 +39,11 @@ describe('Member Profile', () => {
     cy.get(`#${MEMBER_PROFILE_EMAIL_ID}`).should('contain', email);
     cy.get(`#${MEMBER_PROFILE_INSCRIPTION_DATE_ID}`).should(
       'contain',
-      formatDate(createdAt, { locale: CURRENT_USER.extra.lang as string }),
+      formatDate(createdAt, { locale: CURRENT_USER.extra.lang }),
     );
     cy.get(`#${MEMBER_PROFILE_LANGUAGE_SWITCH_ID}`).should(
       'contain',
-      langs[extra.lang as string],
+      langs[extra.lang as keyof typeof langs],
     );
     cy.get(`#${MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID}`).should(
       'contain',

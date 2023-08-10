@@ -10,7 +10,15 @@ import {
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
 import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 
-const editItemMembership = ({ itemId, id, permission }) => {
+const editItemMembership = ({
+  itemId,
+  id,
+  permission,
+}: {
+  id: string;
+  itemId: string;
+  permission: PermissionLevel;
+}) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
 
   cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'cypress-localstorage-commands';
-
 import { COOKIE_KEYS } from '@graasp/sdk';
+
+import 'cypress-localstorage-commands';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import {

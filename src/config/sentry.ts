@@ -1,21 +1,8 @@
-import { ENV, NODE_ENV } from './constants';
-
 const generateSentryConfig = () => {
-  let SENTRY_ENVIRONMENT = ENV.DEVELOPMENT;
-  let SENTRY_TRACE_SAMPLE_RATE = 1.0;
-  switch (NODE_ENV) {
-    case ENV.PRODUCTION:
-      SENTRY_ENVIRONMENT = ENV.PRODUCTION;
-      SENTRY_TRACE_SAMPLE_RATE = 0.1;
-      break;
-    case ENV.TEST:
-      SENTRY_TRACE_SAMPLE_RATE = 0.0;
-      break;
-    case ENV.DEVELOPMENT:
-      SENTRY_TRACE_SAMPLE_RATE = 0.0;
-      break;
-    default:
-  }
+  const SENTRY_ENVIRONMENT = import.meta.env.VITE_SENTRY_ENV;
+  // when app is built, PROD will be true
+  // when running the app with `yarn dev` it will be false
+  const SENTRY_TRACE_SAMPLE_RATE = import.meta.env.PROD ? 0.5 : 0.0;
 
   return { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE };
 };

@@ -1,0 +1,56 @@
+name: Deploy to staging environment
+
+# Control when the action will run
+on:
+  # Triggers the workflow on repository-dispatch event
+  repository_dispatch:
+    types: [staging-deployment]
+
+jobs:
+  deploy-app:
+    name: Deploy to stage
+    runs-on: ubuntu-latest
+    environment: staging
+
+    concurrency:
+      group: deploy-staging
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.tag }}
+
+      - name: Yarn install and Cache dependencies
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+
+      - name: Yarn build
+        # Set environment variables required to perform the build. These are only available to this step
+        env:
+          VITE_VERSION: ${{ github.event.client_payload.tag }}
+          VITE_GRAASP_DOMAIN: ${{ vars.VITE_GRAASP_DOMAIN }}
+          VITE_GRAASP_API_HOST: ${{ vars.VITE_GRAASP_API_HOST }}
+          VITE_GRAASP_AUTH_HOST: ${{ vars.VITE_GRAASP_AUTH_HOST }}
+          VITE_GRAASP_PLAYER_HOST: ${{ vars.VITE_GRAASP_PLAYER_HOST }}
+          VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
+          VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
+          VITE_H5P_INTEGRATION_URL: ${{ secrets.VITE_H5P_INTEGRATION_URL }}
+          VITE_SENTRY_ENV: ${{ vars.VITE_SENTRY_ENV }}
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+          # un-comment to enable Google Analytics
+          # VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
+          VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+        run: yarn build
+        shell: bash
+
+      - name: Deploy
+        uses: graasp/graasp-deploy/.github/actions/deploy-s3@v1
+        # Replace input build-folder or version if needed
+        with:
+          build-folder: 'build'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
+          aws-region: ${{ secrets.AWS_REGION_STAGE }}
+          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_STAGE }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
+          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_STAGE }}

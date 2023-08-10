@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { SyntheticEvent } from 'react';
 
 import { Box } from '@mui/material';
 import Autocomplete, {
@@ -7,11 +7,11 @@ import Autocomplete, {
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { SyntheticEvent } from 'react';
-
 import { Category, CategoryType } from '@graasp/sdk';
 import { CategoryRecord, ItemCategoryRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
+
+import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import {

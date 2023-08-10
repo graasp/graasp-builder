@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import { Item } from '@graasp/sdk';
 import {
   ItemRecord,
@@ -8,6 +6,8 @@ import {
 } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ItemBadges } from '@graasp/ui';
+
+import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';

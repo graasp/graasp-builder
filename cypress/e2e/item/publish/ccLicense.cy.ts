@@ -10,18 +10,19 @@ import {
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
 import { PUBLISHED_ITEMS_WITH_CC_LICENSE } from '../../../fixtures/items';
+import { ItemForTest } from '../../../support/types';
 
-const openPublishItemTab = (id) => {
+const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 
-const visitItemPage = (item) => {
+const visitItemPage = (item: ItemForTest) => {
   cy.setUpApi({ items: [item] });
   cy.visit(buildItemPath(item.id));
   openPublishItemTab(item.id);
 };
 
-const ensureRadioCheckedState = (parentId, shouldBeChecked) =>
+const ensureRadioCheckedState = (parentId: string, shouldBeChecked: boolean) =>
   cy
     .get(`#${parentId}`)
     // MUI doesn't update the `checked` attribute of checkboxes.

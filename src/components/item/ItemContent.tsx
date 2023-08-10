@@ -1,8 +1,6 @@
-import { List } from 'immutable';
+import { useState } from 'react';
 
 import { Button, Container, styled } from '@mui/material';
-
-import { useState } from 'react';
 
 import { Api } from '@graasp/query-client';
 import {
@@ -39,12 +37,14 @@ import {
   SaveButton,
 } from '@graasp/ui';
 
+import { List } from 'immutable';
+
+import { API_HOST, H5P_INTEGRATION_URL } from '@/config/env';
+
 import {
-  API_HOST,
   DEFAULT_LINK_SHOW_BUTTON,
   DEFAULT_LINK_SHOW_IFRAME,
   GRAASP_ASSETS_URL,
-  H5P_INTEGRATION_URL,
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
 import { useCommonTranslation } from '../../config/i18n';

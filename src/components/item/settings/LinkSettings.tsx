@@ -1,7 +1,7 @@
+import { ChangeEvent } from 'react';
+
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
-
-import { ChangeEvent } from 'react';
 
 import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';

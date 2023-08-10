@@ -1,12 +1,12 @@
+import { useRef, useState } from 'react';
+import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
-import { useRef, useState } from 'react';
-import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 
 import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';

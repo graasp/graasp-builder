@@ -9,7 +9,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
-const recycleItem = (id) => {
+const recycleItem = (id: string) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();

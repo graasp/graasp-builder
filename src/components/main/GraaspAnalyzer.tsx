@@ -3,10 +3,9 @@ import { useEffect } from 'react';
 import { Context } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 
-import {
-  DEFAULT_ANALYZER_HEIGHT,
-  buildGraaspAnalyzerLink,
-} from '../../config/constants';
+import { buildGraaspAnalyzerLink } from '@/config/externalPaths';
+
+import { DEFAULT_ANALYZER_HEIGHT } from '../../config/constants';
 import { useEnumsTranslation } from '../../config/i18n';
 import { buildGraaspAnalyzerId } from '../../config/selectors';
 import { useLayoutContext } from '../context/LayoutContext';

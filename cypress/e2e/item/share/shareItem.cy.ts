@@ -1,11 +1,8 @@
 import { Context, ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
 
+import { buildItemPath } from '@/config/paths';
+
 import { SETTINGS } from '../../../../src/config/constants';
-import {
-  buildGraaspBuilderView,
-  buildGraaspPlayerView,
-  buildItemPath,
-} from '../../../../src/config/paths';
 import {
   SHARE_ITEM_DIALOG_LINK_ID,
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
@@ -18,16 +15,19 @@ import {
   SAMPLE_ITEMS,
   SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
+import {
+  buildGraaspBuilderView,
+  buildGraaspPlayerView,
+} from '../../../support/paths';
 
-const openShareItemTab = (id) => {
+const openShareItemTab = (id: string) => {
   cy.get(`#${buildShareButtonId(id)}`).click();
 };
 
 // eslint-disable-next-line import/prefer-default-export
 export const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
-  cy.wait(1000);
-  cy.get(`li[data-value="${value}"]`).click();
+  cy.get(`li[data-value="${value}"]`, { timeout: 1000 }).click();
 };
 
 describe('Share Item', () => {
@@ -87,7 +87,6 @@ describe('Share Item', () => {
       },
     );
     // change public -> item login
-    cy.wait(1000);
     changeVisibility(SETTINGS.ITEM_LOGIN.name);
     cy.wait([
       `@deleteItemTag-${ItemTagType.Public}`,

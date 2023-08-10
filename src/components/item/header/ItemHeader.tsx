@@ -1,6 +1,6 @@
-import Stack from '@mui/material/Stack';
-
 import { useMatch } from 'react-router';
+
+import Stack from '@mui/material/Stack';
 
 import { Loader } from '@graasp/ui';
 

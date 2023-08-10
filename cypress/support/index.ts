@@ -1,4 +1,9 @@
-import { ItemType, PermissionLevel } from '@graasp/sdk';
+import {
+  AppItemExtra,
+  DocumentItemExtra,
+  ItemType,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 // cypress/support/index.ts
 declare global {
@@ -25,8 +30,12 @@ declare global {
 
       openMetadataPanel(): void;
 
-      attachFile(selector: Chainable, file: string, options?: object);
-      attachFiles(selector: Chainable, filenames: string[], options?: object);
+      attachFile(selector: Chainable, file: string, options?: object): void;
+      attachFiles(
+        selector: Chainable,
+        filenames: string[],
+        options?: object,
+      ): void;
 
       // TODO
       visitAndMockWs(
@@ -48,9 +57,12 @@ declare global {
         payload?: { extra?: { [ItemType.LINK]: { url?: string } } },
         options?: { confirm?: boolean },
       ): void;
-      fillDocumentModal(payload, options?: { confirm?: boolean }): void;
+      fillDocumentModal(
+        payload: { name: string; extra?: DocumentItemExtra },
+        options?: { confirm?: boolean },
+      ): void;
       fillAppModal(
-        payload,
+        payload: { name: string; extra?: AppItemExtra },
         options?: { type?: boolean; confirm?: boolean },
       ): void;
       fillFolderModal(
@@ -58,7 +70,7 @@ declare global {
         arg2?: { confirm?: boolean },
       ): void;
 
-      dragAndDrop(subject: string, x: number, y: number);
+      dragAndDrop(subject: string, x: number, y: number): void;
       // TODO
       setUpApi(args?: any): any;
 
