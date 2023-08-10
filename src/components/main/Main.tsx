@@ -38,7 +38,6 @@ type Props = { children: JSX.Element | (JSX.Element & string) };
 
 // small converter for HOST_MAP into a usePlatformNavigation mapper
 export const platformsHostsMap = defaultHostsMapper({
-  [Platform.Builder]: HOST_MAP.builder,
   [Platform.Player]: HOST_MAP.player,
   [Platform.Library]: HOST_MAP.library,
   [Platform.Analytics]: HOST_MAP.analytics,
@@ -52,6 +51,7 @@ const Main = ({ children }: Props): JSX.Element => {
   const platformProps = {
     [Platform.Builder]: {
       id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Builder],
+      href: '/',
     },
     [Platform.Player]: {
       id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Player],
