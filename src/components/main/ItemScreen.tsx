@@ -25,7 +25,6 @@ import ItemMain from '../item/ItemMain';
 import ItemPublishTab from '../item/publish/ItemPublishTab';
 import ItemSettings from '../item/settings/ItemSettings';
 import ItemSharingTab from '../item/sharing/ItemSharingTab';
-import GraaspAnalyzer from './GraaspAnalyzer';
 import ItemForbiddenScreen from './ItemForbiddenScreen';
 import Main from './Main';
 
@@ -80,9 +79,6 @@ const ItemScreen = (): JSX.Element => {
     switch (openedActionTabId) {
       case ItemActionTabs.Sharing: {
         return <ItemSharingTab item={item} memberships={memberships} />;
-      }
-      case ItemActionTabs.Dashboard: {
-        return <GraaspAnalyzer item={item} />;
       }
       case ItemActionTabs.Library: {
         return <ItemPublishTab item={item} permission={permission} />;

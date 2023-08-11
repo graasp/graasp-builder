@@ -58,9 +58,6 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
         '@': resolve(__dirname, 'src'),
       },
     },
-    define: {
-      'process.env.REACT_APP_GRAASP_ASSETS_URL': `"${process.env.VITE_GRAASP_ASSETS_URL}"`,
-    },
   });
 };
 export default config;

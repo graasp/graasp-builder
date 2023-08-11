@@ -14,7 +14,6 @@ import {
   getHighestPermissionForMemberFromMemberships,
   isItemUpdateAllowedForUser,
 } from '../../../utils/membership';
-import AnalyticsDashboardButton from '../../common/AnalyticsDashboardButton';
 import EditItemCaptionButton from '../../common/EditItemCaptionButton';
 import ItemMetadataButton from '../../common/ItemMetadataButton';
 import PublishButton from '../../common/PublishButton';
@@ -78,7 +77,6 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
             onClick={onClickChatbox}
           />
           {canAdmin && <PublishButton itemId={item.id} />}
-          {canEdit && <AnalyticsDashboardButton id={item.id} />}
         </>
       );
 

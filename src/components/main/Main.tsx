@@ -40,6 +40,7 @@ type Props = { children: JSX.Element | (JSX.Element & string) };
 export const platformsHostsMap = defaultHostsMapper({
   [Platform.Player]: HOST_MAP.player,
   [Platform.Library]: HOST_MAP.library,
+  [Platform.Analytics]: HOST_MAP.analytics,
 });
 
 const Main = ({ children }: Props): JSX.Element => {
@@ -50,6 +51,7 @@ const Main = ({ children }: Props): JSX.Element => {
   const platformProps = {
     [Platform.Builder]: {
       id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Builder],
+      href: '/',
     },
     [Platform.Player]: {
       id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Player],
@@ -61,7 +63,7 @@ const Main = ({ children }: Props): JSX.Element => {
     },
     [Platform.Analytics]: {
       id: APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS[Platform.Analytics],
-      disabled: true,
+      ...getNavigationEvents(Platform.Analytics),
     },
   };
 
@@ -77,7 +79,6 @@ const Main = ({ children }: Props): JSX.Element => {
         id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
         selected={Platform.Builder}
         platformsProps={platformProps}
-        disabledColor="#999"
       />
     </Box>
   );

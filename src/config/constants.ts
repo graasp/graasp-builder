@@ -152,7 +152,6 @@ export const AVATAR_ICON_HEIGHT = 30;
 export const DEFAULT_LINK_SHOW_IFRAME = false;
 export const DEFAULT_LINK_SHOW_BUTTON = true;
 
-export const GRAASP_ASSETS_URL = process.env.REACT_APP_GRAASP_ASSETS_URL;
 export const EXPORT_CSV_HEADERS = [
   { label: 'message_id', key: 'id' },
   { label: 'item_id', key: 'chatId' },
