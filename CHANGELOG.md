@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/graasp/graasp-builder/compare/v1.6.0...v1.7.0) (2023-08-11)
+
+
+### Features
+
+* enable analytics panel ([#736](https://github.com/graasp/graasp-builder/issues/736)) ([000ad2e](https://github.com/graasp/graasp-builder/commit/000ad2ea9e8be293c2ca966e8e3359f77a28bce7))
+* move to vitejs ([#733](https://github.com/graasp/graasp-builder/issues/733)) ([9f96a14](https://github.com/graasp/graasp-builder/commit/9f96a1428bc34d64fae492905d1c2860547e1927))
+
+
+### Bug Fixes
+
+* add env for cypress to get the api host ([9f96a14](https://github.com/graasp/graasp-builder/commit/9f96a1428bc34d64fae492905d1c2860547e1927))
+* **deps:** update mui (non-major) to v5.14.3 ([#719](https://github.com/graasp/graasp-builder/issues/719)) ([b116bf9](https://github.com/graasp/graasp-builder/commit/b116bf902ff456467e64be3255cc440be5c8e463))
+* increase cypress build step node memory ([9f96a14](https://github.com/graasp/graasp-builder/commit/9f96a1428bc34d64fae492905d1c2860547e1927))
+* update workflow names and content ([9f96a14](https://github.com/graasp/graasp-builder/commit/9f96a1428bc34d64fae492905d1c2860547e1927))
+* upgrade prettier ([#728](https://github.com/graasp/graasp-builder/issues/728)) ([848b776](https://github.com/graasp/graasp-builder/commit/848b776edfd9eb2828fd4711aad5c03b03da90d8))
+* use preview instead of dev server ([9f96a14](https://github.com/graasp/graasp-builder/commit/9f96a1428bc34d64fae492905d1c2860547e1927))
+
 ## [1.6.0](https://github.com/graasp/graasp-builder/compare/v1.5.1...v1.6.0) (2023-07-31)
 
 
