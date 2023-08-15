@@ -101,7 +101,7 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "17.7.0",
+    "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
     "@cypress/code-coverage": "3.11.0",
     "@testing-library/jest-dom": "^5.16.5",
