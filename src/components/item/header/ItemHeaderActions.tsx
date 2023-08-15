@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 
-import { Item, ItemType, PermissionLevel } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
@@ -71,7 +71,10 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
       const activeActions = (
         <>
           {showEditButton && <EditItemCaptionButton itemId={item.id} />}
-          <ItemMenu item={item.toJS() as Item} canEdit={showEditButton} />
+          <ItemMenu
+            item={item.toJS() as DiscriminatedItem}
+            canEdit={showEditButton}
+          />
 
           <ShareButton itemId={item.id} />
           <ChatboxButton
