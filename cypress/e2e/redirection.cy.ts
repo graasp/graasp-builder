@@ -7,7 +7,7 @@ const DOMAIN = Cypress.env('REACT_APP_GRAASP_DOMAIN');
 
 describe('Redirection', () => {
   it('Redirection to saved url', () => {
-    const link = 'http://somelink.com';
+    const link = 'https://graasp.org';
     saveUrlForRedirection(link, DOMAIN);
 
     cy.setUpApi();
