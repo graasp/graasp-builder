@@ -1,7 +1,9 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
+  EDIT_MODAL_ID,
+  ITEM_MAIN_CLASS,
   TEXT_EDITOR_CLASS,
-  buildCancelButtonId,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
@@ -36,12 +38,14 @@ describe('Edit Link', () => {
       const { id, description } = GRAASP_LINK_ITEM;
       cy.visit(buildItemPath(id));
       cy.get(`#${buildEditButtonId(id)}`).click();
-      cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}{backspace}`);
-      cy.get(`#${buildCancelButtonId(id)}`).click();
-      cy.get(`.${TEXT_EDITOR_CLASS}`)
+      cy.get(`#${EDIT_MODAL_ID} .${TEXT_EDITOR_CLASS}`).type(
+        `{selectall}{backspace}`,
+      );
+      cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).click();
+      cy.get(`.${ITEM_MAIN_CLASS} .${TEXT_EDITOR_CLASS}`)
         .should('exist')
         .and('contain.text', description);
-      cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
+      cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).should('not.exist');
     });
   });
 

@@ -1,7 +1,7 @@
 import { CSSProperties, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Item, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, Item, ItemType } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
@@ -92,7 +92,7 @@ const ItemComponent = ({
             item={
               // DO NOT REMOVE cast
               // here we cast explicitly to be equivalent to the grid which does not let us use Records
-              item.toJS() as Item
+              item.toJS() as DiscriminatedItem
             }
           />
           <DownloadButton id={item.id} name={item.name} />

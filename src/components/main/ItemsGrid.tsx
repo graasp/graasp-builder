@@ -45,7 +45,6 @@ type Props = {
   };
   headerElements?: JSX.Element[];
   parentId?: string;
-  isEditing?: boolean;
 };
 
 const ItemsGrid = ({
@@ -56,7 +55,6 @@ const ItemsGrid = ({
   headerElements = [],
   manyMemberships,
   itemsStatuses,
-  isEditing = false,
   parentId,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -106,7 +104,7 @@ const ItemsGrid = ({
   return (
     <div id={gridId}>
       <ItemsToolbar title={title} headerElements={headerElements} />
-      <FolderDescription itemId={parentId} isEditing={isEditing} />
+      <FolderDescription itemId={parentId} />
       <Grid container spacing={2}>
         {renderItems()}
       </Grid>

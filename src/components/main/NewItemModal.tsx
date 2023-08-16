@@ -31,9 +31,9 @@ import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 import FileDashboardUploader from '../file/FileDashboardUploader';
 import AppForm from '../item/form/AppForm';
+import FolderForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
-import FolderForm from '../item/form/FolderForm';
 import LinkForm from '../item/form/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
@@ -154,7 +154,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
               {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
             </Typography>
             <FolderForm
-              onChange={updateItem}
+              setChanges={updateItem}
               updatedProperties={updatedPropertiesPerType[ItemType.FOLDER]}
             />
           </>
@@ -179,10 +179,15 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
         return <LinkForm onChange={updateItem} />;
       case ItemType.DOCUMENT:
         return (
-          <DocumentForm
-            onChange={updateItem}
-            updatedProperties={updatedPropertiesPerType[ItemType.DOCUMENT]}
-          />
+          <>
+            <Typography variant="h6">
+              {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
+            </Typography>
+            <DocumentForm
+              setChanges={updateItem}
+              updatedProperties={updatedPropertiesPerType[ItemType.DOCUMENT]}
+            />
+          </>
         );
       default:
         return null;

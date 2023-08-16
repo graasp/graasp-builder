@@ -84,13 +84,7 @@ const ItemScreen = (): JSX.Element => {
         return <ItemPublishTab item={item} permission={permission} />;
       }
       default:
-        return (
-          <ItemContent
-            item={item}
-            enableEditing={enableEditing}
-            permission={permission}
-          />
-        );
+        return <ItemContent item={item} permission={permission} />;
     }
   })();
 

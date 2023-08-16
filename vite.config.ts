@@ -15,7 +15,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
     server: {
       port: parseInt(process.env.VITE_PORT || '3001', 10),
       // only auto open the app when in dev mode
-      open: mode === 'dev',
+      open: mode === 'development',
       watch: {
         ignored: ['**/coverage/**', '**/cypress/downloads/**'],
       },
@@ -28,7 +28,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
       outDir: 'build',
     },
     plugins: [
-      checker({
+      mode === 'test' ? undefined:checker({
         typescript: true,
         eslint: { lintCommand: 'eslint "./**/*.{ts,tsx}"' },
       }),

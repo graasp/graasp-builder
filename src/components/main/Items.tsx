@@ -28,7 +28,6 @@ type Props = {
     name?: 'desc' | 'asc';
   };
   parentId?: string;
-  isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
   enableMemberships?: boolean;
@@ -44,7 +43,6 @@ const Items = ({
   clickable = true,
   parentId,
   defaultSortedColumn,
-  isEditing = false,
   showThumbnails = true,
   showCreator = false,
   enableMemberships = true,
@@ -79,7 +77,6 @@ const Items = ({
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
-          isEditing={isEditing}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -97,7 +94,6 @@ const Items = ({
           isSearching={Boolean(itemSearch.text)}
           ToolbarActions={ToolbarActions}
           clickable={clickable}
-          isEditing={isEditing}
           showThumbnails={showThumbnails}
           showCreator={showCreator}
         />

@@ -53,7 +53,6 @@ type Props = {
     type?: 'desc' | 'asc' | null;
     name?: 'desc' | 'asc' | null;
   };
-  isEditing?: boolean;
   showThumbnails?: boolean;
   showCreator?: boolean;
 };
@@ -70,7 +69,6 @@ const ItemsTable = ({
   ToolbarActions,
   clickable = true,
   defaultSortedColumn,
-  isEditing = false,
   showThumbnails = true,
   showCreator = false,
 }: Props): JSX.Element => {
@@ -269,7 +267,7 @@ const ItemsTable = ({
   return (
     <>
       <ItemsToolbar title={tableTitle} headerElements={headerElements} />
-      {itemId && <FolderDescription isEditing={isEditing} itemId={itemId} />}
+      {itemId && <FolderDescription itemId={itemId} />}
       <GraaspTable
         id={tableId}
         columnDefs={columnDefs}

@@ -7,7 +7,7 @@ export const GRAASP_H5P_ITEM: H5PItemType = {
   id: 'ecaf1d2a-5688-11eb-ae91-0242ac130002',
   type: ItemType.H5P,
   name: 'graasp h5p',
-  description: 'a description for graasp link',
+  description: 'a description for graasp h5p',
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},

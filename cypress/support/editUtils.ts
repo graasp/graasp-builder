@@ -2,9 +2,10 @@ import { ItemType } from '@graasp/sdk';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import {
+  EDIT_MODAL_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
-  buildSaveButtonId,
 } from '../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../src/enums';
 import { CAPTION_EDIT_PAUSE, TABLE_ITEM_RENDER_TIME } from './constants';
@@ -64,6 +65,8 @@ export const editCaptionFromViewPage = ({
 }): void => {
   cy.wait(CAPTION_EDIT_PAUSE);
   cy.get(`#${buildEditButtonId(id)}`).click();
-  cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}${caption}`);
-  cy.get(`#${buildSaveButtonId(id)}`).click();
+  cy.get(`#${EDIT_MODAL_ID} .${TEXT_EDITOR_CLASS}`).type(
+    `{selectall}${caption}`,
+  );
+  cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
 };

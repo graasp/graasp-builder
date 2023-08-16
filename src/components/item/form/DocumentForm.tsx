@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import {
   DocumentItemExtraFlavor,
@@ -11,14 +10,14 @@ import {
   ItemType,
   convertJs,
 } from '@graasp/sdk';
-import { DocumentItemTypeRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { DocumentItem } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
-import BaseForm, { BaseFormProps } from './BaseItemForm';
+import type { EditModalContentPropType } from './EditModalWrapper';
+import BaseForm from './NameForm';
 
 export const DocumentExtraForm = ({
   documentItemId,
@@ -100,27 +99,25 @@ export const DocumentExtraForm = ({
   );
 };
 
-type Props = {
-  onChange: BaseFormProps['onChange'];
-  item?: DocumentItemTypeRecord;
-  updatedProperties: Partial<DocumentItemType>;
-};
-
 const DocumentForm = ({
-  onChange,
+  setChanges,
   item,
   updatedProperties,
-}: Props): JSX.Element => {
+}: EditModalContentPropType): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
+  // we cast the properties here to match the generic component EditModalContentType
+  const typedUpdatedProperties = updatedProperties as Partial<DocumentItemType>;
+  const typedItem = item as DocumentItemType;
+
   const initContent: string =
-    updatedProperties?.extra?.[ItemType.DOCUMENT]?.content ||
-    item?.extra?.[ItemType.DOCUMENT]?.content ||
+    typedUpdatedProperties?.extra?.[ItemType.DOCUMENT]?.content ||
+    typedItem?.extra?.[ItemType.DOCUMENT]?.content ||
     '';
 
   const initFlavor: DocumentItemExtraProperties['flavor'] =
-    updatedProperties?.extra?.[ItemType.DOCUMENT]?.flavor ||
-    item?.extra?.[ItemType.DOCUMENT]?.flavor;
+    typedUpdatedProperties?.extra?.[ItemType.DOCUMENT]?.flavor ||
+    typedItem?.extra?.[ItemType.DOCUMENT]?.flavor;
 
   const [content, setContent] =
     useState<DocumentItemExtraProperties['content']>(initContent);
@@ -131,8 +128,7 @@ const DocumentForm = ({
 
   // synchronize upper state after async local state change
   useEffect(() => {
-    onChange({
-      ...updatedProperties,
+    setChanges({
       extra: currentExtra,
     });
     // we only want to execute the state sync on local state change
@@ -141,12 +137,9 @@ const DocumentForm = ({
 
   return (
     <>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
-      </Typography>
       <Box>
         <BaseForm
-          onChange={onChange}
+          setChanges={setChanges}
           item={item}
           required
           updatedProperties={updatedProperties}
