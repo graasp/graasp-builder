@@ -2,7 +2,6 @@ import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { GRAASP_DOCUMENT_ITEM } from '../../../fixtures/documents';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createDocument } from '../../../support/createUtils';
 
 describe('Create Document', () => {
@@ -16,8 +15,6 @@ describe('Create Document', () => {
     createDocument(GRAASP_DOCUMENT_ITEM);
 
     cy.wait('@postItem').then(() => {
-      // check item is created and displayed
-      cy.wait(CREATE_ITEM_PAUSE);
       // should update view
       cy.wait('@getOwnItems');
     });

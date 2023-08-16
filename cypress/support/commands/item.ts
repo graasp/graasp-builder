@@ -18,6 +18,7 @@ import {
 } from '../../../src/config/selectors';
 import { getParentsIdsFromPath } from '../../../src/utils/item';
 import { APP_NAME, NEW_APP_NAME } from '../../fixtures/apps/apps';
+import { TREE_VIEW_PAUSE } from '../constants';
 
 Cypress.Commands.add(
   'fillShareForm',
@@ -42,7 +43,7 @@ Cypress.Commands.add(
   (toItemPath, treeRootId = TREE_MODAL_MY_ITEMS_ID) => {
     const ids = getParentsIdsFromPath(toItemPath);
 
-    // cy.wait(TREE_VIEW_PAUSE);
+    cy.wait(TREE_VIEW_PAUSE);
 
     [treeRootId, ...ids].forEach((value, idx, array) => {
       cy.get(`#${treeRootId}`).then(($tree) => {

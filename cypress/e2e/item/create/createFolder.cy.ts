@@ -6,7 +6,6 @@ import {
 } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { CREATED_ITEM, SAMPLE_ITEMS } from '../../../fixtures/items';
-import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createFolder } from '../../../support/createUtils';
 
 describe('Create Folder', () => {
@@ -52,8 +51,6 @@ describe('Create Folder', () => {
       createFolder(CREATED_ITEM);
 
       cy.wait('@postItem').then(() => {
-        // check item is created and displayed
-        cy.wait(CREATE_ITEM_PAUSE);
         // expect update
         cy.wait('@getOwnItems');
 

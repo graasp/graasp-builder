@@ -2,7 +2,6 @@ import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { GRAASP_APP_ITEM } from '../../../fixtures/apps';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createApp } from '../../../support/createUtils';
 
 describe('Create App', () => {
@@ -17,8 +16,6 @@ describe('Create App', () => {
       createApp(GRAASP_APP_ITEM);
 
       cy.wait('@postItem').then(() => {
-        // check item is created and displayed
-        cy.wait(CREATE_ITEM_PAUSE);
         // should update view
         cy.wait('@getOwnItems');
       });
@@ -34,8 +31,6 @@ describe('Create App', () => {
       createApp(GRAASP_APP_ITEM);
 
       cy.wait('@postItem').then(() => {
-        // check item is created and displayed
-        cy.wait(CREATE_ITEM_PAUSE);
         // should update view
         cy.wait('@getOwnItems');
       });

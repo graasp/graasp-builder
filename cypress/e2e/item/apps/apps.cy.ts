@@ -7,7 +7,7 @@ describe('Apps', () => {
     cy.setUpApi({ items: [APP_USING_CONTEXT_ITEM] });
     cy.visit(buildItemPath(id));
 
-    cy.wait(3000);
+    cy.wait(2000);
 
     const iframeSelector = `iframe[title="${name}"]`;
 
