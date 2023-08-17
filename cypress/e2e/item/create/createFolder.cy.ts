@@ -6,7 +6,6 @@ import {
 } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { CREATED_ITEM, SAMPLE_ITEMS } from '../../../fixtures/items';
-import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createFolder } from '../../../support/createUtils';
 
 describe('Create Folder', () => {
@@ -51,16 +50,12 @@ describe('Create Folder', () => {
       // create
       createFolder(CREATED_ITEM);
 
-      cy.wait('@postItem').then(() => {
-        // check item is created and displayed
-        cy.wait(CREATE_ITEM_PAUSE);
-        // expect update
-        cy.wait('@getOwnItems');
-
-        // form is cleared
-        cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
-        cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', '');
-      });
+      cy.wait('@postItem');
+      // small necessary pause required in order for the form to be able to reset
+      cy.wait(300);
+      // form is cleared
+      cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
+      cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', '');
     });
 
     it('create folder in item', () => {

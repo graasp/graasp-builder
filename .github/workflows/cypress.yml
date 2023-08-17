@@ -15,9 +15,15 @@ jobs:
   cypress:
     name: Cypress
     runs-on: ubuntu-latest
+    timeout-minutes: 50
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
       - name: Yarn Install and Cache
         uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1

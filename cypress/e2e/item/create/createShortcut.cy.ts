@@ -12,7 +12,6 @@ import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { buildShortcutExtra } from '../../../../src/utils/itemExtra';
 import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const createShortcut = ({
   id,
@@ -44,7 +43,7 @@ const createShortcutInList = ({
   id: string;
   toItemPath?: string;
 }) => {
-  cy.wait(TABLE_ITEM_RENDER_TIME);
+  // cy.wait(TABLE_ITEM_RENDER_TIME);
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   createShortcut({ id, toItemPath });
