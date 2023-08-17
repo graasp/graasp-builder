@@ -38,13 +38,11 @@ type Props = {
   open: boolean;
 
   item: DiscriminatedItem;
-  setItem: Dispatch<DiscriminatedItem | null>;
   setOpen: Dispatch<boolean>;
 };
 
 const EditModalWrapper = ({
   item,
-  setItem,
   setOpen,
   ComponentType,
   open,
@@ -96,7 +94,6 @@ const EditModalWrapper = ({
 
   const onClose = () => {
     setOpen(false);
-    setItem(null);
     setUpdatedItem({});
     // schedule button disable state reset AFTER end of click event handling
     // todo: factor out this logic to graasp-ui

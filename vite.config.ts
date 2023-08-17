@@ -28,7 +28,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
       outDir: 'build',
     },
     plugins: [
-      mode === 'test' ? undefined:checker({
+      mode === 'test' ? undefined : checker({
         typescript: true,
         eslint: { lintCommand: 'eslint "./**/*.{ts,tsx}"' },
       }),
