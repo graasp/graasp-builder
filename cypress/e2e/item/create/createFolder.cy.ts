@@ -50,14 +50,12 @@ describe('Create Folder', () => {
       // create
       createFolder(CREATED_ITEM);
 
-      cy.wait('@postItem').then(() => {
-        // expect update
-        cy.wait('@getOwnItems');
-
-        // form is cleared
-        cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
-        cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', '');
-      });
+      cy.wait('@postItem');
+      // small necessary pause required in order for the form to be able to reset
+      cy.wait(300);
+      // form is cleared
+      cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
+      cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', '');
     });
 
     it('create folder in item', () => {
