@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Yarn Install and Cache
         uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
