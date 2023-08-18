@@ -71,7 +71,9 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
 
       const activeActions = (
         <>
-          {showEditButton && <EditButton item={item.toJS() as DiscriminatedItem} />}
+          {showEditButton && (
+            <EditButton item={item.toJS() as DiscriminatedItem} />
+          )}
           <ItemMenu
             item={item.toJS() as DiscriminatedItem}
             canEdit={showEditButton}
