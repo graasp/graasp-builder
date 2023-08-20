@@ -111,7 +111,7 @@
     "@types/jest": "29.5.3",
     "@types/lodash.partition": "4.6.7",
     "@types/lodash.truncate": "4.4.7",
-    "@types/node": "18.17.5",
+    "@types/node": "18.17.6",
     "@types/papaparse": "5.3.7",
     "@types/qs": "6.9.7",
     "@types/react": "18.2.20",
@@ -123,7 +123,7 @@
     "@typescript-eslint/parser": "6.4.0",
     "@vitejs/plugin-react": "4.0.4",
     "concurrently": "8.2.0",
-    "cypress": "12.17.3",
+    "cypress": "12.17.4",
     "cypress-localstorage-commands": "2.2.4",
     "env-cmd": "10.1.0",
     "eslint": "^8.47.0",
@@ -140,7 +140,7 @@
     "rollup-plugin-visualizer": "5.9.2",
     "typescript": "5.1.6",
     "vite": "4.4.9",
-    "vite-plugin-checker": "0.6.1",
+    "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
   },
   "packageManager": "yarn@3.6.1"
