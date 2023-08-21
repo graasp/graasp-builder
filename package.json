@@ -144,5 +144,5 @@
     "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.2"
 }
