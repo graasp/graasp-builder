@@ -87,7 +87,7 @@ export const isUrlValid = (str?: string | null): boolean => {
       '((\\d{1,3}\\.){3}\\d{1,3})|' + // OR ip (v4) address
       'localhost)' + // OR localhost alias
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\?\\S*)?' + // query string
       '(\\#\\S*)?$', // fragment locator
     'i',
   );
