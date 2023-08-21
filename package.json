@@ -18,7 +18,7 @@
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "2.0.0",
     "@graasp/query-client": "1.4.1",
-    "@graasp/sdk": "1.2.0",
+    "@graasp/sdk": "1.2.1",
     "@graasp/translations": "1.18.1",
     "@graasp/ui": "3.3.1",
     "@mui/icons-material": "5.14.3",
