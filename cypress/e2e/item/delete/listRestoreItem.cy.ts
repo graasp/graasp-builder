@@ -6,10 +6,8 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { RECYCLED_ITEM_DATA, SAMPLE_ITEMS } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const restoreItem = (id: string) => {
-  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(
     `${buildItemsTableRowIdAttribute(id)} .${RESTORE_ITEMS_BUTTON_CLASS}`,
   ).click();
@@ -18,7 +16,6 @@ const restoreItem = (id: string) => {
 const restoreItems = (itemIds: string[]) => {
   // check selected ids
   itemIds.forEach((id) => {
-    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`${buildItemsTableRowIdAttribute(id)} .ag-checkbox-input`).click();
   });
 
@@ -63,7 +60,7 @@ describe('Restore Items in List', () => {
       cy.setUpApi({
         ...SAMPLE_ITEMS,
         recycledItemData: RECYCLED_ITEM_DATA,
-        restoretItemsError: true,
+        restoreItemsError: true,
       });
       const { id } = RECYCLED_ITEM_DATA[0].item;
 
