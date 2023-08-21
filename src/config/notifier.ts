@@ -6,6 +6,8 @@ import buildI18n, {
   REQUEST_MESSAGES,
 } from '@graasp/translations';
 
+import { AxiosError } from 'axios';
+
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
   COPY_MEMBER_ID_TO_CLIPBOARD,
@@ -23,8 +25,19 @@ type Payload = ErrorPayload & SuccessPayload;
 
 const i18n = buildI18n();
 
-const getErrorMessageFromPayload = (payload?: ErrorPayload) =>
-  i18n.t(payload?.error?.message ?? FAILURE_MESSAGES.UNEXPECTED_ERROR);
+const getErrorMessageFromPayload = (
+  payload?: Parameters<Notifier>[0]['payload'],
+) => {
+  if (payload?.error && payload.error instanceof AxiosError) {
+    if (payload.error.isAxiosError) {
+      return (
+        payload.error.response?.data.message ??
+        FAILURE_MESSAGES.UNEXPECTED_ERROR
+      );
+    }
+  }
+  return payload?.error?.message ?? FAILURE_MESSAGES.UNEXPECTED_ERROR;
+};
 
 const getSuccessMessageFromPayload = (payload?: SuccessPayload) =>
   i18n.t(payload?.message ?? 'The operation successfully proceeded');
