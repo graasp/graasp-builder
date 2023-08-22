@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-import { BUILDER } from '@graasp/translations';
 import { DownloadButton as Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   id: string;

@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { routines } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';
-import { BUILDER, COMMON, FAILURE_MESSAGES } from '@graasp/translations';
+import { COMMON, FAILURE_MESSAGES } from '@graasp/translations';
 
 import CancelButton from '@/components/common/CancelButton';
 import { DOUBLE_CLICK_DELAY_MS } from '@/config/constants';
@@ -22,6 +22,8 @@ import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '@/config/selectors';
 import { isItemValid } from '@/utils/item';
+
+import { BUILDER } from '../../../langs/constants';
 
 const { editItemRoutine } = routines;
 

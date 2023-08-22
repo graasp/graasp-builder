@@ -3,11 +3,11 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 
-import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import NewItemModal from './NewItemModal';
 
 const NewItemButton = (): JSX.Element => {

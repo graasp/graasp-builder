@@ -1,5 +1,4 @@
 import { MemberRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
 import { SIGN_IN_PATH } from '@/config/externalPaths';
@@ -14,6 +13,7 @@ import {
   buildMemberMenuItemId,
 } from '@/config/selectors';
 
+import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import MemberAvatar from './MemberAvatar';
 

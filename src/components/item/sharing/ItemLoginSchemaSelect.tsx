@@ -3,11 +3,11 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { ItemLoginSchemaType, UUID } from '@graasp/sdk';
 import { ItemLoginSchemaRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { mutations } from '../../../config/queryClient';
 import { SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 
 const { usePutItemLoginSchema } = mutations;
 

@@ -8,13 +8,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { THUMBNAIL_ASPECT } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';
 import { CROP_MODAL_CONFIRM_BUTTON_CLASSNAME } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { getCroppedImg } from '../../utils/image';
 import CancelButton from './CancelButton';
 

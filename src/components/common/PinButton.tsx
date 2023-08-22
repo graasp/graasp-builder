@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
 import { Item } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { ActionButtonVariant, PinButton as GraaspPinButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { PIN_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   type?: ActionButtonVariant;

@@ -1,8 +1,7 @@
 import Alert from '@mui/material/Alert';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../config/i18n';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   id?: string;

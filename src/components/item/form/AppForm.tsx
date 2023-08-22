@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 
 import { AppItemType, DiscriminatedItem, Item, getAppExtra } from '@graasp/sdk';
 import { AppRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
@@ -15,6 +14,7 @@ import {
   ITEM_FORM_APP_URL_ID,
   buildItemFormAppOptionId,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './NameForm';
 

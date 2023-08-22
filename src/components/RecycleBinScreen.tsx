@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -13,6 +12,7 @@ import {
   ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID,
   RECYCLED_ITEMS_ID,
 } from '../config/selectors';
+import { BUILDER } from '../langs/constants';
 import DeleteButton from './common/DeleteButton';
 import ErrorAlert from './common/ErrorAlert';
 import RestoreButton from './common/RestoreButton';

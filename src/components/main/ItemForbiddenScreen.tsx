@@ -1,12 +1,12 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Grid } from '@mui/material';
 
-import { BUILDER } from '@graasp/translations';
 import { Button, ForbiddenContent } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import Main from './Main';

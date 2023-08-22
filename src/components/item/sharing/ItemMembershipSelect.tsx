@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { SelectProps } from '@mui/material';
 
 import { PermissionLevel } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { Select } from '@graasp/ui';
 
 import {
@@ -14,6 +13,7 @@ import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   buildPermissionOptionId,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 
 export type ItemMembershipSelectProps = {
   value: string;

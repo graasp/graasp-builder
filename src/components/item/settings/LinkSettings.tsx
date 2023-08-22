@@ -4,7 +4,6 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 
 import {
   DEFAULT_LINK_SHOW_BUTTON,
@@ -16,6 +15,7 @@ import {
   SETTINGS_LINK_SHOW_BUTTON_ID,
   SETTINGS_LINK_SHOW_IFRAME_ID,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 
 type Props = {
   item: EmbeddedLinkItemTypeRecord;

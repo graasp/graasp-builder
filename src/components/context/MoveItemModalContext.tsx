@@ -1,12 +1,11 @@
 import { createContext, useMemo, useState } from 'react';
 
-import { BUILDER } from '@graasp/translations';
-
 import { validate } from 'uuid';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { TreePreventSelection } from '../../enums';
+import { BUILDER } from '../../langs/constants';
 import type { TreeModalProps } from '../main/TreeModal';
 import TreeModal from '../main/TreeModal';
 

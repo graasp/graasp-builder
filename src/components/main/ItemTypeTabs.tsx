@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Tab, Tabs, styled } from '@mui/material';
 
 import { ItemType, MimeTypes } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { ItemIcon } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -19,6 +18,7 @@ import {
   CREATE_ITEM_ZIP_ID,
 } from '../../config/selectors';
 import { InternalItemType, NewItemTabType } from '../../config/types';
+import { BUILDER } from '../../langs/constants';
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.divider}`,

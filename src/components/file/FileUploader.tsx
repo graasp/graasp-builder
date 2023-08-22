@@ -3,7 +3,6 @@ import { DragEventHandler, useContext, useEffect, useState } from 'react';
 import { Box, styled } from '@mui/material';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 
 import '@uppy/drag-drop/dist/style.css';
 import { DragDrop } from '@uppy/react';
@@ -15,6 +14,7 @@ import {
 } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { UPLOADER_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { humanFileSize } from '../../utils/uppy';
 import { useLayoutContext } from '../context/LayoutContext';
 import { UppyContext } from './UppyContext';

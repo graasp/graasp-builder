@@ -9,11 +9,7 @@ import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 
 import { Context } from '@graasp/sdk';
-import {
-  BUILDER,
-  FAILURE_MESSAGES,
-  SUCCESS_MESSAGES,
-} from '@graasp/translations';
+import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from '@graasp/translations';
 
 import {
   SHARE_LINK_COLOR,
@@ -35,6 +31,7 @@ import {
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
 } from '@/config/selectors';
 
+import { BUILDER } from '../../../langs/constants';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '../../../types/clipboard';
 import { copyToClipboard } from '../../../utils/clipboard';
 

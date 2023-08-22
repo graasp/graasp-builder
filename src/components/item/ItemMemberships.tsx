@@ -6,11 +6,11 @@ import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 
 import { PermissionLevel } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { membershipsWithoutUser } from '../../utils/membership';
 import MemberAvatar from '../common/MemberAvatar';
 import { useCurrentUserContext } from '../context/CurrentUserContext';

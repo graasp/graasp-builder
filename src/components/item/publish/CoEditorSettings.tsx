@@ -3,7 +3,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
@@ -13,6 +12,7 @@ import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
   buildCoEditorSettingsRadioButtonId,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
 type Props = {

@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -11,6 +10,7 @@ import {
   FAVORITE_ITEMS_ERROR_ALERT_ID,
   FAVORITE_ITEMS_ID,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import ItemHeader from '../item/header/ItemHeader';

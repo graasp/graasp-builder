@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { BUILDER } from '@graasp/translations';
 import {
   ActionButtonVariant,
   DeleteButton as GraaspDeleteButton,
@@ -10,6 +9,7 @@ import {
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_DELETE_BUTTON_CLASS } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import DeleteItemDialog from '../main/DeleteItemDialog';
 
 type Props = {

@@ -10,7 +10,6 @@ import {
 
 import { CCLicenseAdaptions } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { CCSharingVariant, CreativeCommons, Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -24,6 +23,7 @@ import {
   CC_REQUIRE_ATTRIBUTION_CONTROL_ID,
   CC_SHARE_ALIKE_CONTROL_ID,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CCLicenseDialog from './CCLicenseDialog';
 

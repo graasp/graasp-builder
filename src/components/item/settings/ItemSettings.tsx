@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 
 import { ItemType, convertJs } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 
 import {
   DEFAULT_COLLAPSIBLE_SETTING,
@@ -25,6 +24,7 @@ import {
   SETTINGS_RESIZE_TOGGLE_ID,
   SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import AdminChatSettings from './AdminChatSettings';
 import LinkSettings from './LinkSettings';
 import ThumbnailSetting from './ThumbnailSetting';

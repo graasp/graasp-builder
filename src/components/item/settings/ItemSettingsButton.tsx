@@ -3,14 +3,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../../config/i18n';
 import {
   ITEM_SETTINGS_BUTTON_CLASS,
   buildSettingsButtonId,
 } from '../../../config/selectors';
 import { ItemActionTabs } from '../../../enums';
+import { BUILDER } from '../../../langs/constants';
 import { useLayoutContext } from '../../context/LayoutContext';
 
 type Props = {

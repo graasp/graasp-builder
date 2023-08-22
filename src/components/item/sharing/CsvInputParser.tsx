@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER, COMMON } from '@graasp/translations';
+import { COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
 import * as Papa from 'papaparse';
@@ -30,6 +30,7 @@ import {
   SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 
 const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');

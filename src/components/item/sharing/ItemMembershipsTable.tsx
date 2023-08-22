@@ -4,7 +4,6 @@ import { Typography } from '@mui/material';
 
 import { ItemMembership, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { ColDef } from 'ag-grid-community';
@@ -19,6 +18,7 @@ import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
 import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 

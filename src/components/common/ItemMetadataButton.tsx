@@ -1,13 +1,12 @@
 import InfoIcon from '@mui/icons-material/Info';
 import { IconButton, Tooltip } from '@mui/material';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_INFORMATION_BUTTON_ID,
   ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { useLayoutContext } from '../context/LayoutContext';
 
 const ItemMetadataButton = (): JSX.Element => {

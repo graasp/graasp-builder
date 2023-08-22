@@ -9,7 +9,6 @@ import {
   ItemMembershipRecord,
   ItemRecord,
 } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -17,6 +16,7 @@ import partition from 'lodash.partition';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
+import { BUILDER } from '../../../langs/constants';
 import {
   isItemUpdateAllowedForUser,
   isSettingsEditionAllowedForUser,

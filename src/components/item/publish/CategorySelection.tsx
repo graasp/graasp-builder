@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { routines } from '@graasp/query-client';
 import { CategoryType } from '@graasp/sdk';
 import { CategoryRecord } from '@graasp/sdk/frontend';
-import { BUILDER, FAILURE_MESSAGES } from '@graasp/translations';
+import { FAILURE_MESSAGES } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -19,6 +19,7 @@ import {
 import notifier from '../../../config/notifier';
 import { hooks, mutations } from '../../../config/queryClient';
 import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { sortByName } from '../../../utils/item';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import DropdownMenu from './DropdownMenu';

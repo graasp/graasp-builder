@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { ItemType, getFileExtra, getS3FileExtra } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER, COMMON } from '@graasp/translations';
+import { COMMON } from '@graasp/translations';
 
 import i18n, {
   useBuilderTranslation,
@@ -18,6 +18,7 @@ import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { formatDate } from '../../utils/date';
 import { useLayoutContext } from '../context/LayoutContext';
 import ItemMemberships from './ItemMemberships';

@@ -2,10 +2,9 @@ import { useState } from 'react';
 
 import { TextField, Typography } from '@mui/material';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_ETHERPAD_NAME_INPUT_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 
 const useEtherpadForm = (): {
   padName: string;

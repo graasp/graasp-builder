@@ -6,13 +6,13 @@ import Typography from '@mui/material/Typography';
 
 import { ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
 import { ItemRecord, ItemTagRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { SETTINGS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
 import { SHARE_ITEM_VISIBILITY_SELECT_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import ItemLoginSchemaSelect from './ItemLoginSchemaSelect';
 
 const { useItemTags, useItemLoginSchema, useItemPublishedInformation } = hooks;

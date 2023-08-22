@@ -2,10 +2,9 @@ import { ChangeEvent } from 'react';
 
 import { TextField } from '@mui/material';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import type { EditModalContentPropType } from './EditModalWrapper';
 
 export type NameFormProps = EditModalContentPropType & {

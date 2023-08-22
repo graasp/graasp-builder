@@ -5,7 +5,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -15,6 +14,7 @@ import {
   ITEM_PUBLISH_BUTTON_ID,
   ITEM_UNPUBLISH_BUTTON_ID,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 
 const { useItemPublishedInformation } = hooks;
 const { useUnpublishItem, usePublishItem } = mutations;

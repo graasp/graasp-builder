@@ -7,7 +7,6 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { Invitation, PermissionLevel } from '@graasp/sdk';
 import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -20,6 +19,7 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import ItemMembershipSelect, {
   ItemMembershipSelectProps,
 } from './ItemMembershipSelect';

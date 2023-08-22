@@ -3,14 +3,13 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../../config/i18n';
 import {
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../../config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../enums';
+import { BUILDER } from '../../../langs/constants';
 import { useLayoutContext } from '../../context/LayoutContext';
 
 const ModeButton = (): JSX.Element | null => {

@@ -27,7 +27,6 @@ import {
   redirect,
 } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
@@ -38,6 +37,7 @@ import {
   ITEM_VALIDATION_BUTTON_ID,
   ITEM_VALIDATION_REFRESH_BUTTON_ID,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { isItemUpdateAllowedForUser } from '../../../utils/membership';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import VisibilitySelect from '../sharing/VisibilitySelect';

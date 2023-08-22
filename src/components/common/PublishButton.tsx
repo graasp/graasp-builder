@@ -2,7 +2,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { BUILDER } from '@graasp/translations';
 import { LibraryIcon } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -11,6 +10,7 @@ import {
   buildPublishButtonId,
 } from '../../config/selectors';
 import { ItemActionTabs } from '../../enums';
+import { BUILDER } from '../../langs/constants';
 import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
