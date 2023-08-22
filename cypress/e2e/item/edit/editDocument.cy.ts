@@ -2,9 +2,10 @@ import { getDocumentExtra } from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  EDIT_MODAL_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
-  buildSaveButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { buildDocumentExtra } from '../../../../src/utils/itemExtra';
@@ -176,8 +177,10 @@ describe('Edit Document', () => {
       const caption = 'new text';
       cy.wait(CAPTION_EDIT_PAUSE);
       cy.get(`#${buildEditButtonId(id)}`).click();
-      cy.get(`.${TEXT_EDITOR_CLASS}`).type(`{selectall}${caption}`);
-      cy.get(`#${buildSaveButtonId(id)}`).click();
+      cy.get(`#${EDIT_MODAL_ID} .${TEXT_EDITOR_CLASS}`).type(
+        `{selectall}${caption}`,
+      );
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
 
       cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
         expect(endpointUrl).to.contain(id);

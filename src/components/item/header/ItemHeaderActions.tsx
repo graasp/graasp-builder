@@ -5,6 +5,8 @@ import { ItemRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
 
+import EditButton from '@/components/common/EditButton';
+
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
@@ -14,7 +16,6 @@ import {
   getHighestPermissionForMemberFromMemberships,
   isItemUpdateAllowedForUser,
 } from '../../../utils/membership';
-import EditItemCaptionButton from '../../common/EditItemCaptionButton';
 import ItemMetadataButton from '../../common/ItemMetadataButton';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
@@ -70,7 +71,9 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
 
       const activeActions = (
         <>
-          {showEditButton && <EditItemCaptionButton itemId={item.id} />}
+          {showEditButton && (
+            <EditButton item={item.toJS() as DiscriminatedItem} />
+          )}
           <ItemMenu
             item={item.toJS() as DiscriminatedItem}
             canEdit={showEditButton}

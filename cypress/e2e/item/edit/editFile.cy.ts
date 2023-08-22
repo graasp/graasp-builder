@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
   TEXT_EDITOR_CLASS,
-  buildCancelButtonId,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
@@ -44,20 +44,20 @@ describe('Edit File', () => {
       const { id } = IMAGE_ITEM_DEFAULT;
       cy.visit(buildItemPath(id));
       cy.get(`#${buildEditButtonId(id)}`).click();
-      cy.get(`#${buildCancelButtonId(id)}`).click();
+      cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).click();
       // button should not exist anymore
       cy.get(`.${TEXT_EDITOR_CLASS}`).should('exist');
-      cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
+      cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).should('not.exist');
     });
 
     it("cancel s3File's caption", () => {
       const { id } = VIDEO_ITEM_S3;
       cy.visit(buildItemPath(id));
       cy.get(`#${buildEditButtonId(id)}`).click();
-      cy.get(`#${buildCancelButtonId(id)}`).click();
+      cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).click();
       // button should not exist anymore
       cy.get(`.${TEXT_EDITOR_CLASS}`).should('exist');
-      cy.get(`#${buildCancelButtonId(id)}`).should('not.exist');
+      cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).should('not.exist');
     });
   });
 

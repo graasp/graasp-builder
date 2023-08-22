@@ -6,7 +6,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 
 import { AppItemType, DiscriminatedItem, Item, getAppExtra } from '@graasp/sdk';
-import { AppItemTypeRecord, AppRecord } from '@graasp/sdk/frontend';
+import { AppRecord } from '@graasp/sdk/frontend';
 import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -16,11 +16,11 @@ import {
   buildItemFormAppOptionId,
 } from '../../../config/selectors';
 import { buildAppExtra } from '../../../utils/itemExtra';
-import BaseItemForm from './BaseItemForm';
+import BaseItemForm from './NameForm';
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
-  item?: AppItemTypeRecord;
+  item?: AppItemType;
   updatedProperties: Partial<DiscriminatedItem>;
 };
 
@@ -74,9 +74,14 @@ const AppForm = ({
         {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
       </Typography>
       <BaseItemForm
-        onChange={onChange}
-        item={item?.update('name', () => newName)}
-        updatedProperties={updatedProperties}
+        setChanges={onChange}
+        updatedProperties={
+          {
+            ...item,
+            name: newName,
+            ...updatedProperties,
+          } as Partial<DiscriminatedItem>
+        }
       />
 
       {isAppsLoading ? (
