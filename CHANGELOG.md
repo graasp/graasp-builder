@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/graasp/graasp-builder/compare/v1.7.0...v1.8.0) (2023-08-22)
+
+
+### Features
+
+* add item menu in item header ([#688](https://github.com/graasp/graasp-builder/issues/688)) ([91e1e0f](https://github.com/graasp/graasp-builder/commit/91e1e0f7eae75d71580e218e3dfd92095d394654))
+
+
+### Bug Fixes
+
+* cryptic errors ([#754](https://github.com/graasp/graasp-builder/issues/754)) ([b4b76f6](https://github.com/graasp/graasp-builder/commit/b4b76f639d5acd30169e7de4fd0d03785091ae64))
+* **deps:** update dependency @graasp/chatbox to v2.0.1 ([#758](https://github.com/graasp/graasp-builder/issues/758)) ([e429374](https://github.com/graasp/graasp-builder/commit/e429374a815290e111ce341962adce1b27bf2733))
+
 ## [1.7.0](https://github.com/graasp/graasp-builder/compare/v1.6.0...v1.7.0) (2023-08-11)
 
 
