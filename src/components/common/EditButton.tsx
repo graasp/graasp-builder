@@ -50,14 +50,12 @@ const EditButton = ({ item }: Props): JSX.Element => {
 
   return (
     <>
-      {open && (
-        <EditModalWrapper
-          item={item}
-          ComponentType={typeToFormComponent()}
-          setOpen={setOpen}
-          open={open}
-        />
-      )}
+      <EditModalWrapper
+        item={item}
+        ComponentType={typeToFormComponent()}
+        setOpen={setOpen}
+        open={open}
+      />
       <GraaspEditButton
         tooltip={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
         id={buildEditButtonId(item.id)}
