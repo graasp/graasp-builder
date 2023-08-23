@@ -1,4 +1,4 @@
-import { ItemType, MimeTypes } from '@graasp/sdk';
+import { ItemType, MaxWidth, MimeTypes } from '@graasp/sdk';
 
 import { InternalItemType } from '../../src/config/types';
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
@@ -20,6 +20,30 @@ export const IMAGE_ITEM_DEFAULT: LocalFileItemForTest = {
   createdAt: new Date('2021-03-16T16:00:50.968Z'),
   updatedAt: new Date('2021-03-16T16:00:52.655Z'),
   settings: {},
+  extra: buildFileExtra({
+    name: 'icon.png',
+    path: '9a95/e2e1/2a7b-1615910428274',
+    size: 32439,
+    mimetype: 'image/png',
+    altText: 'myAltText',
+  }),
+  // for testing: creating needs a fixture, reading needs an url
+  createFilepath: ICON_FILEPATH,
+  readFilepath: MOCK_IMAGE_URL,
+};
+
+export const IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH: LocalFileItemForTest = {
+  id: 'bd5519a2-5ba9-4305-b221-185facbe6a29',
+  name: 'icon.png',
+  description: 'a default image description',
+  type: ItemType.LOCAL_FILE,
+  path: 'bd5519a2_5ba9_4305_b221_185facbe6a29',
+  creator: CURRENT_USER,
+  createdAt: new Date('2021-03-16T16:00:50.968Z'),
+  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  settings: {
+    maxWidth: MaxWidth.Medium,
+  },
   extra: buildFileExtra({
     name: 'icon.png',
     path: '9a95/e2e1/2a7b-1615910428274',
