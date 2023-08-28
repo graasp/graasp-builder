@@ -4,12 +4,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import CancelButton from '../common/CancelButton';
 
 const labelId = 'alert-dialog-title';

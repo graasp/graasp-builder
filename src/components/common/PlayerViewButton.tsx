@@ -2,7 +2,6 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { redirect } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { PlayIcon } from '@graasp/ui';
 
 import { ITEM_HEADER_ICON_HEIGHT } from '@/config/constants';
@@ -13,6 +12,7 @@ import {
   buildPlayerButtonId,
   buildPlayerTabName,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   itemId: string;

@@ -1,6 +1,5 @@
 import { useLocation, useMatch } from 'react-router-dom';
 
-import { BUILDER } from '@graasp/translations';
 import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -15,6 +14,7 @@ import {
   NAVIGATION_ROOT_ID,
   buildNavigationLink,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 
 const {
   useItem,

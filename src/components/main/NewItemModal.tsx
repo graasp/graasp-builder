@@ -15,7 +15,7 @@ import {
   Item,
   ItemType,
 } from '@graasp/sdk';
-import { BUILDER, COMMON } from '@graasp/translations';
+import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
@@ -27,6 +27,7 @@ import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '../../config/selectors';
 import { InternalItemType, NewItemTabType } from '../../config/types';
+import { BUILDER } from '../../langs/constants';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 import FileDashboardUploader from '../file/FileDashboardUploader';

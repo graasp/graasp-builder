@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 
 import { Member } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -12,6 +11,7 @@ import {
   PUBLISHED_ITEMS_ERROR_ALERT_ID,
   PUBLISHED_ITEMS_ID,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import ItemHeader from '../item/header/ItemHeader';

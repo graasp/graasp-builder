@@ -1,4 +1,3 @@
-import { BUILDER } from '@graasp/translations';
 import { ShareButton as GraaspShareButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -7,6 +6,7 @@ import {
   buildShareButtonId,
 } from '../../config/selectors';
 import { ItemActionTabs } from '../../enums';
+import { BUILDER } from '../../langs/constants';
 import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {

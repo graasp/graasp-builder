@@ -8,7 +8,6 @@ import Select from '@mui/material/Select';
 
 import { ItemMembership } from '@graasp/sdk';
 import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 
 import { List } from 'immutable';
 
@@ -19,6 +18,7 @@ import {
   ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID,
   ITEMS_GRID_PAGINATION_ID,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { getMembershipsForItem } from '../../utils/membership';
 import FolderDescription from '../item/FolderDescription';
 import { NoItemSearchResult } from '../item/ItemSearch';

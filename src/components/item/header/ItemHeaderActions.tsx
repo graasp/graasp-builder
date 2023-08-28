@@ -2,7 +2,6 @@ import { Stack } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
@@ -12,6 +11,7 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { ITEM_CHATBOX_BUTTON_ID } from '../../../config/selectors';
 import { ItemActionTabs } from '../../../enums';
+import { BUILDER } from '../../../langs/constants';
 import {
   getHighestPermissionForMemberFromMemberships,
   isItemUpdateAllowedForUser,

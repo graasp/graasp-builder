@@ -9,7 +9,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import { Item, convertJs } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { ActionButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -20,6 +19,7 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import CollapseButton from '../common/CollapseButton';
 import FavoriteButton from '../common/FavoriteButton';
 import HideButton from '../common/HideButton';

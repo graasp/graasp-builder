@@ -4,13 +4,13 @@ import {
   ItemTagRecord,
   ResultOfRecord,
 } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { ItemBadges } from '@graasp/ui';
 
 import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
+import { BUILDER } from '../../langs/constants';
 import { isItemHidden, isItemPublic } from '../../utils/itemTag';
 
 const { useManyItemPublishedInformations } = hooks;

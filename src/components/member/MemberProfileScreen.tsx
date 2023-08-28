@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { ACCOUNT, BUILDER, COMMON } from '@graasp/translations';
+import { ACCOUNT, COMMON } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import {
@@ -34,6 +34,7 @@ import {
   MEMBER_PROFILE_MEMBER_NAME_ID,
   MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import { copyToClipboard } from '../../utils/clipboard';
 import { formatDate } from '../../utils/date';

@@ -10,7 +10,7 @@ import {
   getShortcutExtra,
 } from '@graasp/sdk';
 import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
-import { BUILDER, COMMON } from '@graasp/translations';
+import { COMMON } from '@graasp/translations';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
@@ -25,6 +25,7 @@ import i18n, {
 import { buildItemPath } from '../../config/paths';
 import { hooks, mutations } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';

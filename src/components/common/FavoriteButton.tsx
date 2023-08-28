@@ -1,7 +1,6 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
 import { ItemFavoriteRecord, ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import {
   ActionButtonVariant,
   FavoriteButton as GraaspFavoriteButton,
@@ -12,6 +11,7 @@ import { List } from 'immutable';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, mutations } from '../../config/queryClient';
 import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {

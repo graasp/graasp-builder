@@ -6,7 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { Button, DynamicTreeView, Loader } from '@graasp/ui';
 
 import { TREE_VIEW_MAX_WIDTH } from '../../config/constants';
@@ -19,6 +18,7 @@ import {
   buildTreeItemId,
 } from '../../config/selectors';
 import { TreePreventSelection } from '../../enums';
+import { BUILDER } from '../../langs/constants';
 import { getParentsIdsFromPath } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 

@@ -10,11 +10,11 @@ import {
   ItemType,
   convertJs,
 } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { DocumentItem } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
 import type { EditModalContentPropType } from './EditModalWrapper';
 import BaseForm from './NameForm';

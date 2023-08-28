@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 
 import { ItemType } from '@graasp/sdk';
 import { EmbeddedLinkItemTypeRecord, ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { Thumbnail } from '@graasp/ui';
 
 import Uppy from '@uppy/core';
@@ -17,6 +16,7 @@ import {
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import defaultImage from '../../../resources/avatar.png';
 import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal from '../../common/CropModal';

@@ -1,10 +1,8 @@
-import { BUILDER, namespaces } from '@graasp/translations';
-
 import {
   DEFAULT_ITEM_LAYOUT_MODE,
   GRID_ITEMS_PER_PAGE_CHOICES,
 } from '../../../../src/config/constants';
-import i18n from '../../../../src/config/i18n';
+import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
 import {
   HOME_PATH,
   SHARED_ITEMS_PATH,
@@ -21,6 +19,7 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { BUILDER } from '../../../../src/langs/constants';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
@@ -34,7 +33,7 @@ import { ItemForTest } from '../../../support/types';
 import { expectFolderViewScreenLayout } from '../../../support/viewUtils';
 
 const translateBuilder = (key: string) =>
-  i18n.t(key, { ns: namespaces.builder });
+  i18n.t(key, { ns: BUILDER_NAMESPACE });
 
 describe('View Folder', () => {
   describe('Grid', () => {

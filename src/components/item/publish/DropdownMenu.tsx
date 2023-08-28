@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 
 import { Category, CategoryType } from '@graasp/sdk';
 import { CategoryRecord, ItemCategoryRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 
 import { List } from 'immutable';
 
@@ -20,6 +19,7 @@ import {
   buildCategorySelectionOptionId,
   buildCategorySelectionTitleId,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 
 type Props = {
   disabled: boolean;

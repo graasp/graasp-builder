@@ -2,10 +2,10 @@ import { TextField, TextFieldProps } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { EmbeddedLinkItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { isUrlValid } from '../../../utils/item';
 import { buildEmbeddedLinkExtra } from '../../../utils/itemExtra';
 

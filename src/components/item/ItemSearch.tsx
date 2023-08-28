@@ -3,7 +3,6 @@ import { ChangeEvent, useState } from 'react';
 import Typography from '@mui/material/Typography';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER } from '@graasp/translations';
 import { SearchInput } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -13,6 +12,7 @@ import {
   ITEMS_GRID_NO_SEARCH_RESULT_ID,
   ITEM_SEARCH_INPUT_ID,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 
 export const NoItemSearchResult = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();

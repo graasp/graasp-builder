@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { Typography } from '@mui/material';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 
 import '@uppy/dashboard/dist/style.css';
 import DashboardLocale from '@uppy/dashboard/types/generatedLocale';
@@ -13,6 +12,7 @@ import { StatusBarLocale } from '@uppy/status-bar';
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { humanFileSize } from '../../utils/uppy';
 import ErrorAlert from '../common/ErrorAlert';
 import { UppyContext } from './UppyContext';

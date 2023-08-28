@@ -1,7 +1,6 @@
 import { FlagType } from '@graasp/sdk';
-import { namespaces } from '@graasp/translations';
 
-import i18n from '../../../../src/config/i18n';
+import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   ITEM_MENU_FLAG_BUTTON_CLASS,
@@ -31,7 +30,7 @@ const flagItem = (itemId: string, type: FlagType) => {
   flagListItem.click();
 
   i18n.changeLanguage(CURRENT_USER.extra.lang as string);
-  const text = i18n.t('Flag', { ns: namespaces.builder });
+  const text = i18n.t('Flag', { ns: BUILDER_NAMESPACE });
   const flagItemButton = cy.get(`button:contains("${text}")`);
 
   flagItemButton.click();

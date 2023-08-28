@@ -2,11 +2,10 @@ import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { RESTORE_ITEMS_BUTTON_CLASS } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   itemIds: string[];

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { EditButton as GraaspEditButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -9,6 +8,7 @@ import {
   EDIT_ITEM_BUTTON_CLASS,
   buildEditButtonId,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import BaseItemForm from '../item/form/BaseItemForm';
 import DocumentForm from '../item/form/DocumentForm';
 import EditModalWrapper, {

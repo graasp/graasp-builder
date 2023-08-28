@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { HOME_ERROR_ALERT_ID, OWNED_ITEMS_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import FileUploader from '../file/FileUploader';
 import { UppyContextProvider } from '../file/UppyContext';

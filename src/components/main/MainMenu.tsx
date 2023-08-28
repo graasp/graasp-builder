@@ -8,7 +8,6 @@ import Star from '@mui/icons-material/Star';
 import { styled, useTheme } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-import { BUILDER } from '@graasp/translations';
 import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
 
 import { TUTORIALS_LINK } from '../../config/constants';
@@ -20,6 +19,7 @@ import {
   RECYCLE_BIN_PATH,
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
+import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const StyledLink = styled('a')(({ theme }) => ({

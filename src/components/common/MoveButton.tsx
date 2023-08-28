@@ -2,7 +2,6 @@ import { useContext } from 'react';
 
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { BUILDER } from '@graasp/translations';
 import {
   ActionButton,
   ActionButtonVariant,
@@ -14,6 +13,7 @@ import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
   ITEM_MOVE_BUTTON_CLASS,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { MoveItemModalContext } from '../context/MoveItemModalContext';
 
 type MoveButtonProps = {

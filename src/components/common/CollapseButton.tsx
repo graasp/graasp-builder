@@ -8,12 +8,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
 import { Item } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   item: Item;

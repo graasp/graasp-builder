@@ -9,11 +9,11 @@ import {
   getFileExtra,
   getS3FileExtra,
 } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID } from '@/config/selectors';
 
+import { BUILDER } from '../../../langs/constants';
 import DescriptionForm from './DescriptionForm';
 import { EditModalContentPropType } from './EditModalWrapper';
 import BaseItemForm from './NameForm';

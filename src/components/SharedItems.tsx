@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
 
-import { BUILDER } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import { List } from 'immutable';
+
+import { BUILDER } from '@/langs/constants';
 
 import { useBuilderTranslation } from '../config/i18n';
 import { hooks } from '../config/queryClient';

@@ -4,7 +4,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
-import { BUILDER } from '@graasp/translations';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -13,6 +12,7 @@ import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
   ITEM_RECYCLE_BUTTON_CLASS,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   itemIds: string[];

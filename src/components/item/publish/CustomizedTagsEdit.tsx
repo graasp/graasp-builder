@@ -4,7 +4,7 @@ import { Chip, TextField, Typography } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
-import { BUILDER, COMMON } from '@graasp/translations';
+import { COMMON } from '@graasp/translations';
 import { Loader, SaveButton } from '@graasp/ui';
 
 import {
@@ -17,6 +17,7 @@ import {
   ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
   buildCustomizedTagsSelector,
 } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
 type Props = { item: ItemRecord; disabled?: boolean };

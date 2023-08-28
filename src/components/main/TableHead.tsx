@@ -8,10 +8,9 @@ import TableSortLabel, {
   TableSortLabelProps,
 } from '@mui/material/TableSortLabel';
 
-import { BUILDER } from '@graasp/translations';
-
 import { useBuilderTranslation } from '../../config/i18n';
 import { Ordering } from '../../enums';
+import { BUILDER } from '../../langs/constants';
 
 type Props = {
   classes: {

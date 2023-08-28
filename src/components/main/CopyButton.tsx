@@ -2,7 +2,6 @@ import { MouseEventHandler } from 'react';
 
 import { IconButtonProps } from '@mui/material';
 
-import { BUILDER } from '@graasp/translations';
 import {
   ActionButtonVariant,
   CopyButton as GraaspCopyButton,
@@ -13,6 +12,7 @@ import {
   ITEM_COPY_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
 } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { useCopyItemModalContext } from '../context/CopyItemModalContext';
 
 export type Props = {

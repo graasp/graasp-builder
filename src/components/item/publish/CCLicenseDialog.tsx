@@ -6,10 +6,10 @@ import {
   DialogTitle,
 } from '@mui/material';
 
-import { BUILDER } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
+import { BUILDER } from '../../../langs/constants';
 import CancelButton from '../../common/CancelButton';
 
 type Props = {

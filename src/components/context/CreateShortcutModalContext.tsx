@@ -6,11 +6,11 @@ import {
   ItemType,
   ShortcutItemType,
 } from '@graasp/sdk';
-import { BUILDER } from '@graasp/translations';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { TREE_MODAL_MY_ITEMS_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
 import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal, { TreeModalProps } from '../main/TreeModal';
 
