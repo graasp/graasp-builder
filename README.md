@@ -1,7 +1,7 @@
 # Graasp Builder
 
 [![GitHub Release](https://img.shields.io/github/release/graasp/graasp-builder)]()
-![Cypress CI](https://github.com/graasp/graasp-builder/actions/workflows/cypress.yml/badge.svg?branch=main)
+![Cypress CI](https://github.com/graasp/graasp-builder/actions/workflows/ci.yml/badge.svg?branch=main)
 ![typescript version](https://img.shields.io/github/package-json/dependency-version/graasp/graasp-builder/dev/typescript)
 [![gitlocalized ](https://gitlocalize.com/repo/8885/whole_project/badge.svg)](https://gitlocalize.com/repo/8885/whole_project?utm_source=badge)
 
