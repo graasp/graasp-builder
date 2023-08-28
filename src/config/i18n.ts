@@ -11,7 +11,7 @@ import it from '../langs/it.json';
 
 const i18n = buildI18n().use(initReactI18next);
 
-const BUILDER_NAMESPACE = 'builder';
+export const BUILDER_NAMESPACE = 'builder';
 i18n.addResourceBundle('ar', BUILDER_NAMESPACE, ar);
 i18n.addResourceBundle('de', BUILDER_NAMESPACE, de);
 i18n.addResourceBundle('en', BUILDER_NAMESPACE, en);
