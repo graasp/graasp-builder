@@ -1,7 +1,14 @@
 # Graasp Builder
 
+[![GitHub Release](https://img.shields.io/github/release/graasp/graasp-builder)]()
+![Cypress CI](https://github.com/graasp/graasp-builder/actions/workflows/ci.yml/badge.svg?branch=main)
+![typescript version](https://img.shields.io/github/package-json/dependency-version/graasp/graasp-builder/dev/typescript)
+[![gitlocalized ](https://gitlocalize.com/repo/8885/whole_project/badge.svg)](https://gitlocalize.com/repo/8885/whole_project?utm_source=badge)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Installation
@@ -70,6 +77,10 @@ You can simply run: `yarn test`. This will:
 ## Developing
 
 While developing you can run `yarn check` to perform prettier formatting checks, type checks and eslint rule checking.
+
+## Translations
+
+You can translate Graasp Builder through [GitLocalize](https://gitlocalize.com/repo/8885). Let us know if your language is not available.
 
 ## Contributors
 
