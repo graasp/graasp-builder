@@ -139,7 +139,7 @@
     "nyc": "15.1.0",
     "prettier": "3.0.2",
     "rollup-plugin-visualizer": "5.9.2",
-    "typescript": "5.1.6",
+    "typescript": "5.2.2",
     "vite": "4.4.9",
     "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
