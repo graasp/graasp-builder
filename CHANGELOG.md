@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/graasp/graasp-builder/compare/v1.8.1...v1.9.0) (2023-09-01)
+
+
+### Features
+
+* add file setting maximum width ([#764](https://github.com/graasp/graasp-builder/issues/764)) ([4ebd9bd](https://github.com/graasp/graasp-builder/commit/4ebd9bdd780453d6b08f4cd026e50950a9f1e15e))
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v1.5.0 ([#772](https://github.com/graasp/graasp-builder/issues/772)) ([85d8b1c](https://github.com/graasp/graasp-builder/commit/85d8b1c334f14957c242a14cc1ea61da0bf0d62a))
+* **deps:** update dependency react-i18next to v13.2.0 ([#677](https://github.com/graasp/graasp-builder/issues/677)) ([55b0587](https://github.com/graasp/graasp-builder/commit/55b058710e5eeccc9a24d03a7353777b9d0fb069))
+* **deps:** update sentry packages to v7.66.0 ([#774](https://github.com/graasp/graasp-builder/issues/774)) ([74ead51](https://github.com/graasp/graasp-builder/commit/74ead5148506fb02d0b6ac8c3a8019a06652d9ac))
+
+
+### Documentation
+
+* update readme with translations gitlocalize link ([#773](https://github.com/graasp/graasp-builder/issues/773)) ([dc46e62](https://github.com/graasp/graasp-builder/commit/dc46e62fdb3f0fedd7371cd7c40297e853ab8130))
+
 ## [1.8.1](https://github.com/graasp/graasp-builder/compare/v1.8.0...v1.8.1) (2023-08-28)
 
 
