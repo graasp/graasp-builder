@@ -26,6 +26,7 @@ import {
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import AdminChatSettings from './AdminChatSettings';
+import FileSettings from './FileSettings';
 import LinkSettings from './LinkSettings';
 import ThumbnailSetting from './ThumbnailSetting';
 
@@ -190,6 +191,18 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
     );
   };
 
+  const renderSettingsPerType = () => {
+    switch (item.type) {
+      case ItemType.LINK:
+        return <LinkSettings item={item} />;
+      case ItemType.S3_FILE:
+      case ItemType.LOCAL_FILE:
+        return <FileSettings item={item} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Container disableGutters sx={{ mt: 2 }}>
       <Typography variant="h4">
@@ -203,7 +216,7 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
         {renderChatSetting()}
         {renderSaveActionsSetting()}
       </FormGroup>
-      {item.type === ItemType.LINK && <LinkSettings item={item} />}
+      {renderSettingsPerType()}
       <ThumbnailSetting item={item} />
       <AdminChatSettings item={item} />
     </Container>
