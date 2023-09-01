@@ -2109,12 +2109,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:1.4.3":
-  version: 1.4.3
-  resolution: "@graasp/query-client@npm:1.4.3"
+"@graasp/query-client@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@graasp/query-client@npm:1.5.0"
   dependencies:
-    "@graasp/sdk": 1.2.1
-    "@graasp/translations": 1.18.3
+    "@graasp/sdk": 1.4.0
+    "@graasp/translations": 1.19.0
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
@@ -2124,13 +2124,13 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: d6789d5a0ef00b5febbabdf92cbb5904ffbc1359ee9fcd80c6e9be30e7008b4ae114cbb5ae543e49d2a58a838201d6f834d27c8582859bcc21a47ff42c49abb3
+  checksum: 7832abe197504ddf0e15983ed1e1f46cf32cdfdf0ca0cf7e5c702a236de891fd6f0e7f7e159ab9166eb78a9628c530a3b26e9af04ea80d836124eb6c9a95b25d
   languageName: node
   linkType: hard
 
-"@graasp/sdk@github:graasp/graasp-sdk#248-max-width-file":
-  version: 1.2.1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=3aae4e1207cb8a7f29fe30803568076991181661"
+"@graasp/sdk@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@graasp/sdk@npm:1.4.0"
   dependencies:
     "@aws-sdk/client-s3": 3.370.0
     "@fastify/secure-session": 6.1.0
@@ -2143,16 +2143,7 @@ __metadata:
     typeorm: 0.3.17
     uuid: 9.0.0
     validator: 13.11.0
-  checksum: 00fb0b12f639558298835ce95b13441b21fa4643c11430e1e268650a468518934b5fd7deb392b3f5c33b4192966636b1c7f6f25d3e2214c638d98fad814aa80d
-  languageName: node
-  linkType: hard
-
-"@graasp/translations@npm:1.18.3":
-  version: 1.18.3
-  resolution: "@graasp/translations@npm:1.18.3"
-  dependencies:
-    i18next: 23.4.4
-  checksum: d980d3042d956c22a4f58fb0c9e15e6559688c8eb9c0636dc3d4e3038b84204a886e9370a2a2a45e6f07da821a223b2a0f31d472747e47624d0e3465f02f457f
+  checksum: 224ed990ed7b68fe4b463d2d1e24fc503c5f5434703cb818a54d22ee9aa8e9997c3a02768ceec082bea604853aa4804ac4d454c746e38089e3e327e0ffcd4c27
   languageName: node
   linkType: hard
 
@@ -2165,11 +2156,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#503-resize-file":
-  version: 3.3.2
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=96feae14fb15fef8513a73301858957ce0365414"
+"@graasp/ui@npm:3.4.0":
+  version: 3.4.0
+  resolution: "@graasp/ui@npm:3.4.0"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk#248-max-width-file"
+    "@graasp/sdk": 1.4.0
     http-status-codes: 2.2.0
     immutable: 4.3.2
     katex: 0.16.8
@@ -2202,7 +2193,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 0fcb2116362d6a8f5b0d3c9823212d07361ea77b5b873161a495658aa8c202ced56551c2281c4115a82050e8962e6cd65c2f33412efc74b59ad0346796d84c03
+  checksum: fc12ceaf940a5e0869346067427819eaa10cda9e531fd833b5324042ec7e5f32987ff40713079f03b69ae62fb68248b545d8ab97ada5c70fcedf5b8a0a55f3cd
   languageName: node
   linkType: hard
 
@@ -7410,10 +7401,10 @@ __metadata:
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
     "@graasp/chatbox": 2.0.1
-    "@graasp/query-client": 1.4.3
-    "@graasp/sdk": "github:graasp/graasp-sdk#248-max-width-file"
+    "@graasp/query-client": 1.5.0
+    "@graasp/sdk": 1.4.0
     "@graasp/translations": 1.19.0
-    "@graasp/ui": "github:graasp/graasp-ui#503-resize-file"
+    "@graasp/ui": 3.4.0
     "@mui/icons-material": 5.14.6
     "@mui/lab": 5.0.0-alpha.141
     "@mui/material": 5.14.6
@@ -7760,15 +7751,6 @@ __metadata:
   bin:
     husky: lib/bin.js
   checksum: 837bc7e4413e58c1f2946d38fb050f5d7324c6f16b0fd66411ffce5703b294bd21429e8ba58711cd331951ee86ed529c5be4f76805959ff668a337dbfa82a1b0
-  languageName: node
-  linkType: hard
-
-"i18next@npm:23.4.4":
-  version: 23.4.4
-  resolution: "i18next@npm:23.4.4"
-  dependencies:
-    "@babel/runtime": ^7.22.5
-  checksum: faa968dcba328528231e3cd140d5a0f4b9b472b75874b7cbf8415e2dbff48397f1cdcc36a739ea6915f6970c367fdd7f985f120e63e1c30a839c53e366d851fd
   languageName: node
   linkType: hard
 

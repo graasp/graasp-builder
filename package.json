@@ -17,10 +17,10 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "2.0.1",
-    "@graasp/query-client": "1.4.3",
-    "@graasp/sdk": "github:graasp/graasp-sdk#248-max-width-file",
+    "@graasp/query-client": "1.5.0",
+    "@graasp/sdk": "1.4.0",
     "@graasp/translations": "1.19.0",
-    "@graasp/ui": "github:graasp/graasp-ui#503-resize-file",
+    "@graasp/ui": "3.4.0",
     "@mui/icons-material": "5.14.6",
     "@mui/lab": "5.0.0-alpha.141",
     "@mui/material": "5.14.6",
@@ -67,7 +67,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "yarn dev",
+    "start": "yarn dev --host 127.0.0.1",
     "start:test": "vite --mode test",
     "build": "vite build",
     "build:dev": "vite build --mode development",
@@ -143,9 +143,6 @@
     "vite": "4.4.9",
     "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
-  },
-  "resolutions": {
-    "@graasp/sdk": "github:graasp/graasp-sdk#248-max-width-file"
   },
   "packageManager": "yarn@3.6.3"
 }

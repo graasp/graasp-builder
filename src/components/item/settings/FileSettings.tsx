@@ -10,6 +10,7 @@ import { Select } from '@graasp/ui';
 import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
 import { FILE_SETTING_MAX_WIDTH_ID } from '@/config/selectors';
+import { BUILDER } from '@/langs/constants';
 
 const FileSettings = ({
   item,
@@ -30,7 +31,7 @@ const FileSettings = ({
   return (
     <Box mt={4} my={4}>
       <Typography variant="h5" m={0} p={0}>
-        {translateBuilder('SETTINGS_FILE_SETTINGS_TITLE')}
+        {translateBuilder(BUILDER.SETTINGS_FILE_SETTINGS_TITLE)}
       </Typography>
       <Stack direction="row" spacing={2} alignItems="center">
         <Stack>
