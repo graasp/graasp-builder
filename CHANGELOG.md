@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.1](https://github.com/graasp/graasp-builder/compare/v1.9.0...v1.9.1) (2023-09-07)
+
+
+### Bug Fixes
+
+* remove parenthesis around text ([#782](https://github.com/graasp/graasp-builder/issues/782)) ([93d573f](https://github.com/graasp/graasp-builder/commit/93d573fa75549d3122c147914f72cb9c7c68f901))
+
 ## [1.9.0](https://github.com/graasp/graasp-builder/compare/v1.8.1...v1.9.0) (2023-09-01)
 
 
