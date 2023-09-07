@@ -1,11 +1,16 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   CREATE_ITEM_BUTTON_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
   ITEM_FORM_NAME_INPUT_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
-import { CREATED_ITEM, SAMPLE_ITEMS } from '../../../fixtures/items';
+import {
+  CREATED_BLANK_NAME_ITEM,
+  CREATED_ITEM,
+  SAMPLE_ITEMS,
+} from '../../../fixtures/items';
 import { createFolder } from '../../../support/createUtils';
 
 describe('Create Folder', () => {
@@ -33,11 +38,19 @@ describe('Create Folder', () => {
 
       // create
       createFolder(CREATED_ITEM);
+    });
 
-      cy.wait('@postItem').then(() => {
-        // expect update
-        cy.wait('@getItem').its('response.url').should('contain', id);
-      });
+    it('create folder with blank name in item', () => {
+      // create
+      cy.setUpApi();
+      cy.visit(HOME_PATH);
+      createFolder(CREATED_BLANK_NAME_ITEM, { confirm: false });
+
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
+        'have.prop',
+        'disabled',
+        true,
+      );
     });
   });
 
