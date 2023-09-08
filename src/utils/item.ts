@@ -122,6 +122,11 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     case ItemType.DOCUMENT: {
       const { content } = getDocumentExtra(item.extra) || {};
       hasValidTypeProperties = Boolean(content && content.length > 0);
+      console.log(
+        Boolean(content && content.length > 0),
+        'content valid',
+        content,
+      );
       break;
     }
     default:
