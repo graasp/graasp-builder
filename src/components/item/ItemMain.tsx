@@ -3,6 +3,8 @@ import { Box, Divider, Typography, styled } from '@mui/material';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { DrawerHeader } from '@graasp/ui';
 
+import emotionStyled from '@emotion/styled';
+
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
@@ -12,6 +14,11 @@ import { useLayoutContext } from '../context/LayoutContext';
 import ItemMetadataContent from './ItemMetadataContent';
 import ItemPanel from './ItemPanel';
 import ItemHeader from './header/ItemHeader';
+
+const ItemContainer = emotionStyled.div<{ isMainMenuOpen: boolean }>`
+  width: ${({ isMainMenuOpen }) =>
+    isMainMenuOpen ? 'calc(100vw - 240px)' : '100vw'};
+`;
 
 const StyledContainer = styled(Box)<{ open: boolean }>(({ theme, open }) => {
   const openStyles = open
@@ -58,10 +65,15 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
     setIsItemMetadataMenuOpen,
     isChatboxMenuOpen,
     setIsChatboxMenuOpen,
+    isMainMenuOpen,
   } = useLayoutContext();
 
   return (
-    <div id={id} className={ITEM_MAIN_CLASS}>
+    <ItemContainer
+      id={id}
+      className={ITEM_MAIN_CLASS}
+      isMainMenuOpen={isMainMenuOpen}
+    >
       {isChatboxMenuOpen && (
         <ItemPanel open={isChatboxMenuOpen}>
           <DrawerHeader
@@ -100,7 +112,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
 
         {children}
       </StyledContainer>
-    </div>
+    </ItemContainer>
   );
 };
 

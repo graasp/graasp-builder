@@ -7,8 +7,8 @@ type Props = {
 
 const ItemsToolbar = ({ title, headerElements }: Props): JSX.Element => (
   <Stack direction="row" justifyContent="space-between" spacing={1}>
-    <Box>
-      <Typography variant="h4" noWrap>
+    <Box sx={{ maxWidth: '50%' }}>
+      <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
         {title}
       </Typography>
     </Box>
