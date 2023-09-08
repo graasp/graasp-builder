@@ -215,12 +215,6 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       case ItemType.APP:
       case ItemType.LINK:
       case ItemType.DOCUMENT:
-        console.log(
-          isConfirmButtonDisabled ||
-            !isItemValid(updatedPropertiesPerType[selectedItemType]),
-          'disabled',
-          updatedPropertiesPerType[selectedItemType],
-        );
         return (
           <>
             <CancelButton onClick={handleClose} />
