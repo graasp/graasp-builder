@@ -40,7 +40,7 @@ describe('Create Folder', () => {
       createFolder(CREATED_ITEM);
     });
 
-    it('create folder with blank name in item', () => {
+    it('cannot create folder with blank name in item', () => {
       // create
       cy.setUpApi();
       cy.visit(HOME_PATH);
