@@ -85,18 +85,20 @@ const ItemComponent = ({
   // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {member && member.id && <FavoriteButton size="medium" item={item} />}
-      {enableEdition && (
+      {member && member.id && (
         <>
-          <EditButton
-            item={
-              // DO NOT REMOVE cast
-              // here we cast explicitly to be equivalent to the grid which does not let us use Records
-              item.toJS() as DiscriminatedItem
-            }
-          />
+          <FavoriteButton size="medium" item={item} />
           <DownloadButton id={item.id} name={item.name} />
         </>
+      )}
+      {enableEdition && (
+        <EditButton
+          item={
+            // DO NOT REMOVE cast
+            // here we cast explicitly to be equivalent to the grid which does not let us use Records
+            item.toJS() as DiscriminatedItem
+          }
+        />
       )}
     </>
   );

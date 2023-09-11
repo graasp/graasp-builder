@@ -44,7 +44,10 @@ const ActionsCellRenderer = ({
     }, [manyMemberships, item, member]);
 
     const renderAnyoneActions = () => (
-      <ItemMenu item={item} canEdit={canEdit} />
+      <>
+        <DownloadButton id={item.id} name={item.name} />
+        <ItemMenu item={item} canEdit={canEdit} />
+      </>
     );
 
     const renderEditorActions = () => {
@@ -52,12 +55,7 @@ const ActionsCellRenderer = ({
         return null;
       }
 
-      return (
-        <>
-          <EditButton item={item} />
-          <DownloadButton id={item.id} name={item.name} />
-        </>
-      );
+      return <EditButton item={item} />;
     };
 
     return (
