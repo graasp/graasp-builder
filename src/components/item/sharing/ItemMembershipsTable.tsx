@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
@@ -19,6 +19,7 @@ import {
   buildItemMembershipRowId,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
+import DeleteItemDialog from './ConfirmMembership';
 import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
 import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 
@@ -69,12 +70,26 @@ const ItemMembershipsTable = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
   const { mutate: editItemMembership } = mutations.useEditItemMembership();
   const { mutate: shareItem } = mutations.usePostItemMembership();
 
+  const [open, setOpen] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState<any>(null);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const onDelete = ({ instance }: { instance: ItemMembership }) => {
-    deleteItemMembership({ id: instance.id, itemId: item.id });
+    setMemberToDelete({
+      instanceId: instance?.id,
+      memberInstance: instance?.member?.id,
+      permission: instance?.permission,
+    });
+    handleClickOpen();
   };
 
   // never changes, so we can use useMemo
@@ -196,16 +211,29 @@ const ItemMembershipsTable = ({
     });
 
   return (
-    <GraaspTable
-      columnDefs={columnDefs}
-      tableHeight={MEMBERSHIP_TABLE_HEIGHT}
-      rowData={memberships}
-      getRowId={getRowId}
-      rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
-      isClickable={false}
-      emptyMessage={emptyMessage}
-      countTextFunction={countTextFunction}
-    />
+    <>
+      <GraaspTable
+        columnDefs={columnDefs}
+        tableHeight={MEMBERSHIP_TABLE_HEIGHT}
+        rowData={memberships}
+        getRowId={getRowId}
+        rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
+        isClickable={false}
+        emptyMessage={emptyMessage}
+        countTextFunction={countTextFunction}
+      />
+      {open && (
+        <DeleteItemDialog
+          open={open}
+          handleClose={handleClose}
+          item={item}
+          memberToDelete={memberToDelete}
+          isOneAdmin={
+            memberships.filter((per) => per.permission === 'admin').length === 1
+          }
+        />
+      )}
+    </>
   );
 };
 

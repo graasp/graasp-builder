@@ -309,3 +309,6 @@ export const CC_DERIVATIVE_CONTROL_ID = 'derivativeSelector';
 export const EDIT_MODAL_ID = 'editModal';
 export const EDIT_ITEM_MODAL_CANCEL_BUTTON_ID = 'editModalCancelButton';
 export const FILE_SETTING_MAX_WIDTH_ID = 'fileSettingMaxWidth';
+
+export const CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID =
+  'confirmDeleteMembershipButton';

@@ -247,5 +247,10 @@
   "STATUS_TOOLTIP_IS_PUBLISHED": "Published",
   "STATUS_TOOLTIP_IS_COLLAPSIBLE": "Collapsible",
   "STATUS_TOOLTIP_SHOW_CHATBOX": "Chatbox visible",
-  "SETTINGS_FILE_SETTINGS_TITLE": "File Settings"
+  "SETTINGS_FILE_SETTINGS_TITLE": "File Settings",
+  "DELETE_MEMBERSHIP": "Delete Membership",
+  "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirm",
+  "DELETE_OWN_MEMBERSHIP_MESSAGE": "Are you sure you want to delete your own permission on this item?",
+  "DELETE_MEMBERSHIP_MESSAGE": "Are you sure you want to delete membership on this item?",
+  "DELETE_ONLY_ADMIN_ALERT_MESSAGE": "You are not allowed to delete this admin as this is the only admin"
 }

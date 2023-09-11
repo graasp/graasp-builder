@@ -227,5 +227,10 @@
   "USER_SWITCH_PROFILE_BUTTON": "Siehe Profil",
   "USER_SWITCH_SIGN_OUT_BUTTON": "Abmelden",
   "USER_SWITCH_SIGNED_OUT_TOOLTIP": "Sie sind nicht angemeldet.",
-  "USER_SWITCH_SWITCH_USER_TEXT": "Melden Sie sich mit einem anderen Konto an"
+  "USER_SWITCH_SWITCH_USER_TEXT": "Melden Sie sich mit einem anderen Konto an",
+  "DELETE_MEMBERSHIP": "Mitgliedschaft löschen",
+  "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Bestätigen",
+  "DELETE_OWN_MEMBERSHIP_MESSAGE": "Sind Sie sicher, dass Sie Ihre eigene Berechtigung für dieses Element löschen möchten?",
+  "DELETE_MEMBERSHIP_MESSAGE": "Sind Sie sicher, dass Sie die Mitgliedschaft für diesen Artikel löschen möchten?",
+  "DELETE_ONLY_ADMIN_ALERT_MESSAGE": "Sie dürfen diesen Administrator nicht löschen, da dies der einzige Administrator ist"
 }
