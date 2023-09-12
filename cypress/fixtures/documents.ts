@@ -19,6 +19,21 @@ export const GRAASP_DOCUMENT_ITEM: DocumentItemType = {
   }),
 };
 
+export const GRAASP_DOCUMENT_BLANK_NAME_ITEM: DocumentItemType = {
+  id: 'ecafbd2a-5688-12eb-ae91-0242ac130004',
+  type: ItemType.DOCUMENT,
+  name: '  ',
+  description: 'a description for graasp text',
+  path: 'ecafbd2a_5688_12eb_ae93_0242ac130002',
+  settings: {},
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  creator: CURRENT_USER,
+  extra: buildDocumentExtra({
+    content: '<h1>Some Title</h1>',
+  }),
+};
+
 export const GRAASP_DOCUMENT_PARENT_FOLDER: Item = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'bdf09f5a-5688-11eb-ae93-0242ac130002',

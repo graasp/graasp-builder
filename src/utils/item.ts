@@ -103,7 +103,7 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     return false;
   }
 
-  const shouldHaveName = Boolean(item.name);
+  const shouldHaveName = Boolean(item.name?.trim());
 
   // item should have a type
   let hasValidTypeProperties =
