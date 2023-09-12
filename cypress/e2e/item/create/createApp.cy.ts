@@ -1,6 +1,9 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
-import { GRAASP_APP_ITEM } from '../../../fixtures/apps';
+import {
+  GRAASP_APP_ITEM,
+  GRAASP_CUSTOM_APP_ITEM,
+} from '../../../fixtures/apps';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { createApp } from '../../../support/createUtils';
 
@@ -56,7 +59,7 @@ describe('Create App', () => {
       });
     });
 
-    it('Create app by typing', () => {
+    it('Create a custom app', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       const { id } = SAMPLE_ITEMS.items[0];
 
@@ -66,7 +69,7 @@ describe('Create App', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // create
-      createApp(GRAASP_APP_ITEM);
+      createApp(GRAASP_CUSTOM_APP_ITEM);
 
       cy.wait('@postItem').then(() => {
         // expect update

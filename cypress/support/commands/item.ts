@@ -140,7 +140,6 @@ Cypress.Commands.add(
   ({ name = '', extra }, { confirm = true, type = false } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
-    cy.get(`#${ITEM_FORM_APP_URL_ID}`).click();
     if (type) {
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
     } else {
