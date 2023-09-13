@@ -85,12 +85,6 @@ const ItemComponent = ({
   // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {member && member.id && (
-        <>
-          <FavoriteButton size="medium" item={item} />
-          <DownloadButton id={item.id} name={item.name} />
-        </>
-      )}
       {enableEdition && (
         <EditButton
           item={
@@ -99,6 +93,12 @@ const ItemComponent = ({
             item.toJS() as DiscriminatedItem
           }
         />
+      )}
+      {member && member.id && (
+        <>
+          <DownloadButton id={item.id} name={item.name} />
+          <FavoriteButton size="medium" item={item} />
+        </>
       )}
     </>
   );
