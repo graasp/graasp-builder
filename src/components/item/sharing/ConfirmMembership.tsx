@@ -4,7 +4,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { PermissionLevel } from '@graasp/sdk';
+import { ItemMembership, PermissionLevel } from '@graasp/sdk';
+import { ItemRecord } from '@graasp/sdk/frontend';
 import { Button } from '@graasp/ui';
 
 import { useCurrentUserContext } from '@/components/context/CurrentUserContext';
@@ -21,9 +22,9 @@ const descriptionId = 'alert-dialog-description';
 type Props = {
   open?: boolean;
   handleClose: () => void;
-  item: any;
-  memberToDelete: any;
-  isOneAdmin: boolean;
+  item: ItemRecord;
+  memberToDelete: ItemMembership | null;
+  hasOnlyOneAdmin: boolean;
 };
 
 const DeleteItemDialog = ({
@@ -31,7 +32,7 @@ const DeleteItemDialog = ({
   open = false,
   handleClose,
   memberToDelete,
-  isOneAdmin = false,
+  hasOnlyOneAdmin = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: member } = useCurrentUserContext();
@@ -39,15 +40,20 @@ const DeleteItemDialog = ({
   const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
 
   const onDelete = () => {
-    deleteItemMembership({ id: memberToDelete.instanceId, itemId: item.id });
-    handleClose();
+    if (memberToDelete?.id) {
+      deleteItemMembership({ id: memberToDelete?.id, itemId: item.id });
+      handleClose();
+    }
   };
 
   let dialogText = '';
   // incase of deleting the only admin
-  if (isOneAdmin && memberToDelete?.permission === PermissionLevel?.Admin) {
-    dialogText = translateBuilder(BUILDER?.DELETE_ONLY_ADMIN_ALERT_MESSAGE);
-  } else if (member?.id === memberToDelete?.memberInstance) {
+  if (
+    hasOnlyOneAdmin &&
+    memberToDelete?.permission === PermissionLevel?.Admin
+  ) {
+    dialogText = translateBuilder(BUILDER.DELETE_ONLY_ADMIN_ALERT_MESSAGE);
+  } else if (member?.id === memberToDelete?.member?.id) {
     // deleting yourself
     dialogText = translateBuilder(BUILDER.DELETE_OWN_MEMBERSHIP_MESSAGE);
   } else {
@@ -67,9 +73,10 @@ const DeleteItemDialog = ({
       <DialogContent>
         <DialogContentText id={descriptionId}>{dialogText}</DialogContentText>
       </DialogContent>
-      {isOneAdmin && memberToDelete?.permission === PermissionLevel?.Admin ? (
+      {hasOnlyOneAdmin &&
+      memberToDelete?.permission === PermissionLevel?.Admin ? (
         <Button onClick={handleClose} autoFocus variant="text">
-          ok
+          {translateBuilder(BUILDER.APPROVE_BUTTON_TEXT)}
         </Button>
       ) : (
         <DialogActions>

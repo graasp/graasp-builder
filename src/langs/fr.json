@@ -248,9 +248,9 @@
   "STATUS_TOOLTIP_IS_COLLAPSIBLE": "Minifié",
   "STATUS_TOOLTIP_SHOW_CHATBOX": "Chatbox visible",
   "SETTINGS_FILE_SETTINGS_TITLE": "Paramètres du fichier",
-  "DELETE_MEMBERSHIP": "Supprimer l'adhésion",
+  "DELETE_MEMBERSHIP": "Supprimer l'authorisation",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirmer",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer votre propre autorisation sur cet élément ?",
-  "DELETE_MEMBERSHIP_MESSAGE": "Etes-vous sûr de vouloir supprimer l'adhésion pour cet article ?",
-  "DELETE_ONLY_ADMIN_ALERT_MESSAGE": "Vous n'êtes pas autorisé à supprimer cet administrateur car c'est le seul administrateur"
+  "DELETE_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'autorisation à cet élément ?",
+  "DELETE_ONLY_ADMIN_ALERT_MESSAGE": "Vous n'êtes pas autorisé à supprimer le dernier administrateur de cet élément."
 }
