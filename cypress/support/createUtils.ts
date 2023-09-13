@@ -23,7 +23,7 @@ import { FileItemForTest } from './types';
 
 export const createApp = (
   payload: AppItemType,
-  options?: { confirm?: boolean },
+  options?: { confirm?: boolean; custom?: boolean },
 ): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
   cy.get(`#${CREATE_ITEM_APP_ID}`).click();

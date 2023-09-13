@@ -9,6 +9,7 @@ import { AppItemType, DiscriminatedItem } from '@graasp/sdk';
 import { AppRecord } from '@graasp/sdk/frontend';
 
 import AppCard from '@/components/main/AppCard';
+import { CUSTOM_APP_URL_ID } from '@/config/selectors';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
@@ -84,7 +85,7 @@ const AppForm = ({
         (isNewApp ? (
           <Box sx={{ marginTop: '24px' }}>
             <TextField
-              id="standard-adornment-password"
+              id={CUSTOM_APP_URL_ID}
               fullWidth
               variant="standard"
               autoFocus

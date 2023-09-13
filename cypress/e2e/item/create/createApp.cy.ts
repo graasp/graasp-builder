@@ -69,7 +69,7 @@ describe('Create App', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // create
-      createApp(GRAASP_CUSTOM_APP_ITEM);
+      createApp(GRAASP_CUSTOM_APP_ITEM, { custom: true });
 
       cy.wait('@postItem').then(() => {
         // expect update
