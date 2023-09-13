@@ -2,6 +2,8 @@ import { useLocation, useMatch } from 'react-router-dom';
 
 import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
 
+import { getUUID } from '@/utils/shortUrl';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
@@ -29,7 +31,8 @@ const Navigator = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const match = useMatch(buildItemPath());
   const { pathname } = useLocation();
-  const itemId = match?.params?.itemId;
+  const itemUuid = match?.params?.itemId;
+  const itemId = getUUID(itemUuid);
   const { data: currentMember } = useCurrentMember();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;

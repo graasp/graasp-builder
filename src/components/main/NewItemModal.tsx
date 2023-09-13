@@ -18,6 +18,8 @@ import {
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
+import { getUUID } from '@/utils/shortUrl';
+
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
@@ -85,7 +87,8 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
   const { mutate: postEtherpad } = mutations.usePostEtherpad();
 
   const match = useMatch(buildItemPath());
-  const parentId = match?.params?.itemId;
+  const itemUuid = match?.params?.itemId;
+  const parentId = getUUID(itemUuid);
 
   const submitAndDisableConfirmButtonFor = (
     submitFn: () => void | boolean,

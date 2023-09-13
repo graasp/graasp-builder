@@ -14,6 +14,7 @@ import {
 } from '@graasp/ui';
 
 import { HOST_MAP } from '@/config/externalPaths';
+import { getUUID } from '@/utils/shortUrl';
 
 import { APP_NAME, GRAASP_LOGO_HEADER_HEIGHT } from '../../config/constants';
 import { HOME_PATH } from '../../config/paths';
@@ -46,7 +47,9 @@ export const platformsHostsMap = defaultHostsMapper({
 const Main = ({ children }: Props): JSX.Element => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
 
-  const { itemId } = useParams();
+  const { itemId: itemUuid } = useParams();
+
+  const itemId = getUUID(itemUuid);
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
     [Platform.Builder]: {

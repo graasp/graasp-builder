@@ -16,6 +16,8 @@ import { Table as GraaspTable } from '@graasp/ui/dist/table';
 import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
 import { List } from 'immutable';
 
+import { getUUID } from '@/utils/shortUrl';
+
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
   useBuilderTranslation,
@@ -77,7 +79,10 @@ const ItemsTable = ({
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
-  const { itemId } = useParams();
+
+  const { itemId: itemUuid } = useParams();
+
+  const itemId = getUUID(itemUuid);
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
 

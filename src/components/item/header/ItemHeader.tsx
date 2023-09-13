@@ -4,6 +4,8 @@ import Stack from '@mui/material/Stack';
 
 import { Loader } from '@graasp/ui';
 
+import { getUUID } from '@/utils/shortUrl';
+
 import { buildItemPath } from '../../../config/paths';
 import { hooks } from '../../../config/queryClient';
 import { ITEM_HEADER_ID } from '../../../config/selectors';
@@ -19,7 +21,9 @@ type Props = {
 
 const ItemHeader = ({ showNavigation = true }: Props): JSX.Element => {
   const match = useMatch(buildItemPath());
-  const itemId = match?.params?.itemId;
+  const itemUuid = match?.params?.itemId;
+  const itemId = getUUID(itemUuid);
+
   const { data: item, isLoading: isItemLoading, isError } = useItem(itemId);
 
   if (isItemLoading) {

@@ -9,6 +9,8 @@ import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
 
+import { getUUID } from '@/utils/shortUrl';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';
 import { buildItemPath } from '../../config/paths';
@@ -19,7 +21,8 @@ import { configureH5PImportUppy, humanFileSize } from '../../utils/uppy';
 const ImportH5P = () => {
   const [uppy, setUppy] = useState(null);
   const match = useMatch(buildItemPath());
-  const itemId = match?.params?.itemId;
+  const itemUuid = match?.params?.itemId;
+  const itemId = getUUID(itemUuid);
   const { t: translateBuilder } = useBuilderTranslation();
 
   const onComplete = (result) => {
