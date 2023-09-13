@@ -89,7 +89,7 @@ const AppForm = ({
               fullWidth
               variant="standard"
               autoFocus
-              label="App Url"
+              label={translateBuilder(BUILDER.APP_URL)}
               onChange={(e) =>
                 handleAppSelection({ url: e.target.value, name: '' })
               }
