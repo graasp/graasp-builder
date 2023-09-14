@@ -1,28 +1,26 @@
 import { useEffect, useState } from 'react';
-import { useMatch } from 'react-router';
 
 import Typography from '@mui/material/Typography';
 
 import { routines } from '@graasp/query-client';
 import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
+import { useShortenURLParams } from '@graasp/ui';
 
 import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
 
-import { getUUID } from '@/utils/shortUrl';
-
 import { useBuilderTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';
-import { buildItemPath } from '../../config/paths';
+import { ITEM_ID_PARAMS } from '../../config/paths';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { configureZipImportUppy, humanFileSize } from '../../utils/uppy';
 
 const ImportZip = () => {
   const [uppy, setUppy] = useState(null);
-  const match = useMatch(buildItemPath());
-  const itemUuid = match?.params?.itemId;
-  const itemId = getUUID(itemUuid);
+
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+
   const { t: translateBuilder } = useBuilderTranslation();
 
   const onComplete = (result) => {

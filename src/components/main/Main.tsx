@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Grid, Typography, styled } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -11,13 +11,13 @@ import {
   PlatformSwitch,
   defaultHostsMapper,
   usePlatformNavigation,
+  useShortenURLParams,
 } from '@graasp/ui';
 
 import { HOST_MAP } from '@/config/externalPaths';
-import { getUUID } from '@/utils/shortUrl';
 
 import { APP_NAME, GRAASP_LOGO_HEADER_HEIGHT } from '../../config/constants';
-import { HOME_PATH } from '../../config/paths';
+import { HOME_PATH, ITEM_ID_PARAMS } from '../../config/paths';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
@@ -47,9 +47,8 @@ export const platformsHostsMap = defaultHostsMapper({
 const Main = ({ children }: Props): JSX.Element => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
 
-  const { itemId: itemUuid } = useParams();
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
 
-  const itemId = getUUID(itemUuid);
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
     [Platform.Builder]: {
