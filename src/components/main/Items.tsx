@@ -1,4 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { useEffect } from 'react';
+
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
@@ -35,6 +37,8 @@ type Props = {
   totalCount?: number;
   page?: number;
   onPageChange?: (p: number) => void;
+  enableClientSearch?: boolean;
+  setSearchQuery?: (s: string) => void;
 };
 
 const Items = ({
@@ -53,13 +57,17 @@ const Items = ({
   totalCount,
   page,
   onPageChange,
+  enableClientSearch = true,
+  setSearchQuery,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
-  const itemsToDisplay = itemSearch.results;
+  const itemsToDisplay = enableClientSearch ? itemSearch.results : items;
+
   const itemIds = itemsToDisplay?.map(({ id: itemId }) => itemId).toArray();
   const { data: manyMemberships, isLoading: isMembershipsLoading } =
     useManyItemMemberships(enableMemberships ? itemIds : []);
+
   const { data: itemsTags } = useItemsTags(
     itemsToDisplay?.map((r) => r.id).toJS(),
   );
@@ -67,6 +75,12 @@ const Items = ({
     items: itemsToDisplay,
     itemsTags,
   });
+
+  useEffect(() => {
+    if (!enableClientSearch) {
+      setSearchQuery?.(itemSearch.text);
+    }
+  }, [itemSearch.text]);
 
   if (isMembershipsLoading) {
     return <Loader />;

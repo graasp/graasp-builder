@@ -43,7 +43,7 @@ const TreeModal = ({
   prevent = TreePreventSelection.NONE,
 }: TreeModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data, isLoading: isOwnItemsLoading } = useOwnItems(1);
+  const { data, isLoading: isOwnItemsLoading } = useOwnItems(1, '');
 
   const ownItems = data?.data;
   // todo: get only shared items with write/admin rights

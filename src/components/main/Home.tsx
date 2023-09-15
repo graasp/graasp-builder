@@ -20,7 +20,11 @@ import NewItemButton from './NewItemButton';
 const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
-  const { data, isLoading, isError, isSuccess } = hooks.useOwnItems(page);
+  const [searchQuery, setSearchQuery] = useState('');
+  const { data, isLoading, isError, isSuccess } = hooks.useOwnItems(
+    page,
+    searchQuery,
+  );
 
   if (isLoading) {
     return <Loader />;
@@ -47,6 +51,8 @@ const HomeLoadableContent = (): JSX.Element => {
           totalCount={totalCount}
           page={page}
           onPageChange={onPageChange}
+          enableClientSearch={false}
+          setSearchQuery={setSearchQuery}
         />
       </Box>
     </UppyContextProvider>
