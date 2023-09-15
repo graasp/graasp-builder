@@ -56,6 +56,9 @@ type Props = {
   };
   showThumbnails?: boolean;
   showCreator?: boolean;
+  totalCount?: number;
+  page?: number;
+  onPageChange?: (_: unknown, p: number) => void;
 };
 
 const ItemsTable = ({
@@ -72,6 +75,9 @@ const ItemsTable = ({
   defaultSortedColumn,
   showThumbnails = true,
   showCreator = false,
+  totalCount,
+  page,
+  onPageChange,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -283,6 +289,10 @@ const ItemsTable = ({
         rowDragText={itemRowDragText}
         ToolbarActions={ToolbarActions}
         countTextFunction={countTextFunction}
+        totalCount={totalCount}
+        page={page}
+        onPageChange={onPageChange}
+        isClientPagination={false}
       />
     </>
   );

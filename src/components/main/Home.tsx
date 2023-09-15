@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Box from '@mui/material/Box';
 
 import { Loader } from '@graasp/ui';
@@ -17,16 +19,19 @@ import NewItemButton from './NewItemButton';
 
 const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: ownItems, isLoading, isError, isSuccess } = hooks.useOwnItems();
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isError, isSuccess } = hooks.useOwnItems(page);
 
   if (isLoading) {
     return <Loader />;
   }
-
-  if (isError || !ownItems) {
+  if (isError || !data) {
     return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
   }
-
+  const { data: ownItems, totalCount } = data;
+  const onPageChange = (currentPage: number) => {
+    setPage(currentPage);
+  };
   return (
     <UppyContextProvider enable={isSuccess}>
       <FileUploader />
@@ -39,6 +44,9 @@ const HomeLoadableContent = (): JSX.Element => {
           items={ownItems}
           headerElements={[<NewItemButton key="newButton" />]}
           ToolbarActions={ItemActionsRenderer}
+          totalCount={totalCount}
+          page={page}
+          onPageChange={onPageChange}
         />
       </Box>
     </UppyContextProvider>

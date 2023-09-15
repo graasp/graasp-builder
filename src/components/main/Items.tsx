@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
@@ -31,6 +32,9 @@ type Props = {
   showThumbnails?: boolean;
   showCreator?: boolean;
   enableMemberships?: boolean;
+  totalCount?: number;
+  page?: number;
+  onPageChange?: (p: number) => void;
 };
 
 const Items = ({
@@ -46,6 +50,9 @@ const Items = ({
   showThumbnails = true,
   showCreator = false,
   enableMemberships = true,
+  totalCount,
+  page,
+  onPageChange,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
@@ -77,6 +84,11 @@ const Items = ({
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={[itemSearch.input, ...headerElements]}
+          totalCount={totalCount}
+          {...(onPageChange && {
+            onPageChange: (_: any, p: number) => onPageChange(p),
+          })}
+          page={page}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -96,6 +108,11 @@ const Items = ({
           clickable={clickable}
           showThumbnails={showThumbnails}
           showCreator={showCreator}
+          totalCount={totalCount}
+          {...(onPageChange && {
+            onPageChange: (_: any, p: number) => onPageChange(p + 1),
+          })}
+          {...(page && { page: page - 1 })}
         />
       );
   }

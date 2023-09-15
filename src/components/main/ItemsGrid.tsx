@@ -45,6 +45,9 @@ type Props = {
   };
   headerElements?: JSX.Element[];
   parentId?: string;
+  totalCount?: number;
+  page?: number;
+  onPageChange?: (_: unknown, p: number) => void;
 };
 
 const ItemsGrid = ({
@@ -56,6 +59,9 @@ const ItemsGrid = ({
   manyMemberships,
   itemsStatuses,
   parentId,
+  totalCount,
+  page: BEPage,
+  onPageChange,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
@@ -63,7 +69,9 @@ const ItemsGrid = ({
     GRID_ITEMS_PER_PAGE_CHOICES[0],
   );
 
-  const pagesCount = Math.ceil(items.size / itemsPerPage);
+  const pagesCount = totalCount
+    ? Math.ceil(totalCount / itemsPerPage)
+    : Math.ceil(items.size / itemsPerPage);
 
   // bugfix: since page state is independent from search, must ensure always within range
   if (page !== 1 && page > pagesCount) {
@@ -130,8 +138,8 @@ const ItemsGrid = ({
         <Pagination
           id={ITEMS_GRID_PAGINATION_ID}
           count={pagesCount}
-          page={page}
-          onChange={(_e, v) => setPage(v)}
+          page={typeof BEPage === 'undefined' ? page : BEPage}
+          onChange={onPageChange || ((_e, v) => setPage(v))}
         />
       </Box>
     </div>
