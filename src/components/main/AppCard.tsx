@@ -15,10 +15,10 @@ import { buildItemFormAppOptionId } from '@/config/selectors';
 import AddNewIcon from '../../resources/addNew.png';
 
 export type Props = {
-  url: string;
-  description: string;
+  url?: string;
+  description?: string;
   name: string;
-  extra: { image?: string };
+  extra?: { image?: string };
   handleSelect: any;
   selected?: boolean;
 };

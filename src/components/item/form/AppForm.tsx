@@ -30,7 +30,7 @@ const AppForm = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [newName, setNewName] = useState<string>(item?.name ?? '');
-  const [isNewApp, setIsNewApp] = useState<boolean>(false);
+  const [isCustomApp, setIsCustomApp] = useState<boolean>(false);
 
   const handleAppSelection = (
     newValue: AppRecord | null | { url: string; name: string },
@@ -58,10 +58,14 @@ const AppForm = ({
 
   const url = (updatedProperties?.extra?.app as { url: string })?.url;
 
-  const addNewApp = () => {
-    setIsNewApp(true);
+  const addCustomApp = () => {
+    setIsCustomApp(true);
     handleAppSelection({ url: '', name: '' });
   };
+
+  if (isAppsLoading) {
+    return <Skeleton height={60} />;
+  }
   return (
     <div>
       <Typography variant="h6">
@@ -79,66 +83,59 @@ const AppForm = ({
       />
       <br />
 
-      {isAppsLoading && <Skeleton height={60} />}
-
-      {!isAppsLoading &&
-        (isNewApp ? (
-          <Box sx={{ marginTop: '24px' }}>
-            <TextField
-              id={CUSTOM_APP_URL_ID}
-              fullWidth
-              variant="standard"
-              autoFocus
-              label={translateBuilder(BUILDER.APP_URL)}
-              onChange={(e) =>
-                handleAppSelection({ url: e.target.value, name: '' })
-              }
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => {
-                        setIsNewApp(false);
-                        handleAppSelection({ url: '', name: '' });
-                      }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 2,
-              marginTop: '24px',
+      {isCustomApp ? (
+        <Box sx={{ mt: 3 }}>
+          <TextField
+            id={CUSTOM_APP_URL_ID}
+            fullWidth
+            variant="standard"
+            autoFocus
+            label={translateBuilder(BUILDER.APP_URL)}
+            onChange={(e) =>
+              handleAppSelection({ url: e.target.value, name: '' })
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => {
+                      setIsCustomApp(false);
+                      handleAppSelection({ url: '', name: '' });
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
-          >
-            {data?.map((ele) => (
-              <AppCard
-                key={ele.name}
-                url={ele?.url}
-                name={ele.name}
-                description={ele.description}
-                extra={ele.extra}
-                selected={ele?.url === url}
-                handleSelect={handleAppSelection}
-              />
-            ))}
+          />
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 2,
+            mt: 3,
+          }}
+        >
+          {data?.map((ele) => (
             <AppCard
-              url=""
-              name="Add Your Custom App"
-              description=""
-              handleSelect={addNewApp}
-              extra={{}}
+              key={ele.name}
+              url={ele?.url}
+              name={ele.name}
+              description={ele.description}
+              extra={ele?.extra}
+              selected={ele?.url === url}
+              handleSelect={handleAppSelection}
             />
-          </Box>
-        ))}
+          ))}
+          <AppCard
+            name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
+            handleSelect={addCustomApp}
+          />
+        </Box>
+      )}
     </div>
   );
 };
