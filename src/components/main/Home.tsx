@@ -21,10 +21,10 @@ const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
-  const { data, isLoading, isError, isSuccess } = hooks.useOwnItems(
+  const { data, isLoading, isError, isSuccess } = hooks.useOwnItems({
     page,
-    searchQuery,
-  );
+    name: searchQuery,
+  });
 
   if (isLoading) {
     return <Loader />;
