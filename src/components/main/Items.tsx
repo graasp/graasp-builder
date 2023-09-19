@@ -80,7 +80,7 @@ const Items = ({
     if (!enableClientSearch) {
       setSearchQuery?.(itemSearch.text);
     }
-  }, [itemSearch.text]);
+  }, [itemSearch.text, enableClientSearch, setSearchQuery]);
 
   if (isMembershipsLoading) {
     return <Loader />;
