@@ -21,9 +21,11 @@ const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   const { data, isLoading, isError, isSuccess } = hooks.useOwnItems({
     page,
     name: searchQuery,
+    limit: itemsPerPage,
   });
 
   if (isLoading) {
@@ -53,6 +55,8 @@ const HomeLoadableContent = (): JSX.Element => {
           onPageChange={onPageChange}
           enableClientSearch={false}
           setSearchQuery={setSearchQuery}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
         />
       </Box>
     </UppyContextProvider>

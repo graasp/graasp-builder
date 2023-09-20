@@ -39,6 +39,8 @@ type Props = {
   onPageChange?: (p: number) => void;
   enableClientSearch?: boolean;
   setSearchQuery?: (s: string) => void;
+  itemsPerPage?: number;
+  setItemsPerPage?: (num: number) => void;
 };
 
 const Items = ({
@@ -59,6 +61,8 @@ const Items = ({
   onPageChange,
   enableClientSearch = true,
   setSearchQuery,
+  itemsPerPage,
+  setItemsPerPage,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
@@ -100,9 +104,11 @@ const Items = ({
           headerElements={[itemSearch.input, ...headerElements]}
           totalCount={totalCount}
           {...(onPageChange && {
-            onPageChange: (_: any, p: number) => onPageChange(p),
+            onPageChange,
           })}
           page={page}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:

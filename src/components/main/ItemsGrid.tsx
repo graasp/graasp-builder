@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Typography, styled } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -47,7 +47,9 @@ type Props = {
   parentId?: string;
   totalCount?: number;
   page?: number;
-  onPageChange?: (_: unknown, p: number) => void;
+  onPageChange?: (p: number) => void;
+  itemsPerPage?: number;
+  setItemsPerPage?: (num: number) => void;
 };
 
 const ItemsGrid = ({
@@ -62,11 +64,13 @@ const ItemsGrid = ({
   totalCount,
   page: BEPage,
   onPageChange,
+  itemsPerPage: limit,
+  setItemsPerPage: setLimit,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(
-    GRID_ITEMS_PER_PAGE_CHOICES[0],
+    limit || GRID_ITEMS_PER_PAGE_CHOICES[0],
   );
 
   const pagesCount = totalCount
@@ -109,6 +113,11 @@ const ItemsGrid = ({
     ));
   };
 
+  useEffect(() => {
+    setLimit?.(itemsPerPage);
+    onPageChange?.(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemsPerPage, setLimit]);
   return (
     <div id={gridId}>
       <ItemsToolbar title={title} headerElements={headerElements} />
@@ -139,7 +148,7 @@ const ItemsGrid = ({
           id={ITEMS_GRID_PAGINATION_ID}
           count={pagesCount}
           page={typeof BEPage === 'undefined' ? page : BEPage}
-          onChange={onPageChange || ((_e, v) => setPage(v))}
+          onChange={(_e, v) => (onPageChange ? onPageChange(v) : setPage(v))}
         />
       </Box>
     </div>
