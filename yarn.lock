@@ -2147,6 +2147,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/sdk@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@graasp/sdk@npm:1.5.0"
+  dependencies:
+    "@aws-sdk/client-s3": 3.370.0
+    "@fastify/secure-session": 6.1.0
+    "@graasp/etherpad-api": 2.1.1
+    date-fns: 2.30.0
+    fastify: 4.18.0
+    fluent-json-schema: 4.1.0
+    immutable: 4.3.2
+    js-cookie: 3.0.5
+    qs: 6.11.2
+    typeorm: 0.3.17
+    uuid: 9.0.0
+    validator: 13.11.0
+  checksum: ee6f6446137289e8f61fa2b2f43260077205274570c869536f46de92f858662264a065285c82861e70492d67ab1eecb8fb412600e74de41ed839b6eed6a073ed
+  languageName: node
+  linkType: hard
+
 "@graasp/translations@npm:1.19.0":
   version: 1.19.0
   resolution: "@graasp/translations@npm:1.19.0"
@@ -2156,11 +2176,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:3.4.0":
-  version: 3.4.0
-  resolution: "@graasp/ui@npm:3.4.0"
+"@graasp/ui@npm:3.5.0":
+  version: 3.5.0
+  resolution: "@graasp/ui@npm:3.5.0"
   dependencies:
-    "@graasp/sdk": 1.4.0
+    "@graasp/sdk": 1.5.0
     http-status-codes: 2.2.0
     immutable: 4.3.2
     katex: 0.16.8
@@ -2171,6 +2191,7 @@ __metadata:
     react-quill: 2.0.0-beta.4
     react-rnd: 10.4.1
     react-text-mask: 5.5.0
+    short-uuid: 4.2.2
     uuid: 9.0.0
   peerDependencies:
     "@emotion/cache": ~11.10.7 || ~11.11.0
@@ -2193,7 +2214,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: fc12ceaf940a5e0869346067427819eaa10cda9e531fd833b5324042ec7e5f32987ff40713079f03b69ae62fb68248b545d8ab97ada5c70fcedf5b8a0a55f3cd
+  checksum: 86657565d44c562779de9c7a750b9b3538e366c01cbce502b348e73b8fbd4ff369e135e642a539f61ab4e880f97031b9e367dab71dc2d18387f5a7244e9bbbd7
   languageName: node
   linkType: hard
 
@@ -7422,7 +7443,7 @@ __metadata:
     "@graasp/query-client": 1.5.0
     "@graasp/sdk": 1.4.0
     "@graasp/translations": 1.19.0
-    "@graasp/ui": 3.4.0
+    "@graasp/ui": 3.5.0
     "@mui/icons-material": 5.14.6
     "@mui/lab": 5.0.0-alpha.141
     "@mui/material": 5.14.6
