@@ -228,5 +228,9 @@
   "USER_SWITCH_PROFILE_BUTTON": "انظر إلى الملف الشخصي",
   "USER_SWITCH_SIGN_OUT_BUTTON": "خروج",
   "USER_SWITCH_SIGNED_OUT_TOOLTIP": "أنت غير مسجل الدخول.",
-  "USER_SWITCH_SWITCH_USER_TEXT": "تسجيل الدخول بحساب آخر"
+  "USER_SWITCH_SWITCH_USER_TEXT": "تسجيل الدخول بحساب آخر",
+  "FALLBACK_TITLE": "عفواً",
+  "FALLBACK_TEXT": "حدث خطأ غير متوقع، يرحى المحاولة لاحقاً",
+  "FALLBACK_BACK_TO_HOME": "الرجوع إلى الصفحة الرئيسية",
+  "REPORT_A_BUG": "الإبلاغ عن مشكلة"
 }
