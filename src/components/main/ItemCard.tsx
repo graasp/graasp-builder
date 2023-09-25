@@ -94,12 +94,10 @@ const ItemComponent = ({
           }
         />
       )}
-      {member && member.id && (
-        <>
-          <DownloadButton id={item.id} name={item.name} />
-          <FavoriteButton size="medium" item={item} />
-        </>
+      {((member && member.id) || itemsStatuses?.[item.id]?.isPublic) && (
+        <DownloadButton id={item.id} name={item.name} />
       )}
+      {member && member.id && <FavoriteButton size="medium" item={item} />}
     </>
   );
   // here we use the same component as the table this is why it is instantiated a bit weirdly
