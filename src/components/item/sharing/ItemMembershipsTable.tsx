@@ -74,9 +74,8 @@ const ItemMembershipsTable = ({
   const { mutate: shareItem } = mutations.usePostItemMembership();
 
   const [open, setOpen] = useState(false);
-  const [memberToDelete, setMemberToDelete] = useState<ItemMembership | null>(
-    null,
-  );
+  const [membershipToDelete, setMembershipToDelete] =
+    useState<ItemMembership | null>(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -86,7 +85,7 @@ const ItemMembershipsTable = ({
     setOpen(false);
   };
   const onDelete = ({ instance }: { instance: ItemMembership }) => {
-    setMemberToDelete(instance);
+    setMembershipToDelete(instance);
     handleClickOpen();
   };
 
@@ -225,7 +224,7 @@ const ItemMembershipsTable = ({
           open={open}
           handleClose={handleClose}
           item={item}
-          memberToDelete={memberToDelete}
+          membershipToDelete={membershipToDelete}
           hasOnlyOneAdmin={
             memberships.filter(
               (per) => per.permission === PermissionLevel.Admin,

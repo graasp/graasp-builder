@@ -312,3 +312,4 @@ export const FILE_SETTING_MAX_WIDTH_ID = 'fileSettingMaxWidth';
 
 export const CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID =
   'confirmDeleteMembershipButton';
+export const CUSTOM_APP_URL_ID = 'customAppURLId';

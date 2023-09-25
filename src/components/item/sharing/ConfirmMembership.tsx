@@ -23,7 +23,7 @@ type Props = {
   open?: boolean;
   handleClose: () => void;
   item: ItemRecord;
-  memberToDelete: ItemMembership | null;
+  membershipToDelete: ItemMembership | null;
   hasOnlyOneAdmin: boolean;
 };
 
@@ -31,7 +31,7 @@ const DeleteItemDialog = ({
   item,
   open = false,
   handleClose,
-  memberToDelete,
+  membershipToDelete,
   hasOnlyOneAdmin = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -40,8 +40,8 @@ const DeleteItemDialog = ({
   const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
 
   const onDelete = () => {
-    if (memberToDelete?.id) {
-      deleteItemMembership({ id: memberToDelete?.id, itemId: item.id });
+    if (membershipToDelete?.id) {
+      deleteItemMembership({ id: membershipToDelete?.id, itemId: item.id });
       handleClose();
     }
   };
@@ -50,10 +50,10 @@ const DeleteItemDialog = ({
   // incase of deleting the only admin
   if (
     hasOnlyOneAdmin &&
-    memberToDelete?.permission === PermissionLevel?.Admin
+    membershipToDelete?.permission === PermissionLevel.Admin
   ) {
     dialogText = translateBuilder(BUILDER.DELETE_ONLY_ADMIN_ALERT_MESSAGE);
-  } else if (member?.id === memberToDelete?.member?.id) {
+  } else if (member?.id === membershipToDelete?.member?.id) {
     // deleting yourself
     dialogText = translateBuilder(BUILDER.DELETE_OWN_MEMBERSHIP_MESSAGE);
   } else {
@@ -74,7 +74,7 @@ const DeleteItemDialog = ({
         <DialogContentText id={descriptionId}>{dialogText}</DialogContentText>
       </DialogContent>
       {hasOnlyOneAdmin &&
-      memberToDelete?.permission === PermissionLevel?.Admin ? (
+      membershipToDelete?.permission === PermissionLevel.Admin ? (
         <Button onClick={handleClose} autoFocus variant="text">
           {translateBuilder(BUILDER.APPROVE_BUTTON_TEXT)}
         </Button>

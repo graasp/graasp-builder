@@ -43,6 +43,12 @@ export const CREATED_ITEM: Partial<FolderItemType> = {
   extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
 };
 
+export const CREATED_BLANK_NAME_ITEM: Partial<FolderItemType> = {
+  name: ' ',
+  type: ItemType.FOLDER,
+  extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
+};
+
 export const EDITED_FIELDS = {
   name: 'new name',
 };

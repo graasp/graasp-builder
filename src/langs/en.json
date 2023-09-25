@@ -253,5 +253,7 @@
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Are you sure you want to delete your own permission on this item?",
   "DELETE_MEMBERSHIP_MESSAGE": "Are you sure you want to delete membership on this item?",
   "DELETE_ONLY_ADMIN_ALERT_MESSAGE": "You are not allowed to delete this admin as this is the only admin",
-  "APPROVE_BUTTON_TEXT": "OK"
+  "APPROVE_BUTTON_TEXT": "OK",
+  "APP_URL": "App Url",
+  "CREATE_CUSTOM_APP": "Add Your Custom App"
 }

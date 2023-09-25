@@ -1,19 +1,18 @@
-import { HTMLAttributes, useState } from 'react';
+import React, { useState } from 'react';
 
-import { TextField } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 
-import { AppItemType, DiscriminatedItem, Item, getAppExtra } from '@graasp/sdk';
+import { AppItemType, DiscriminatedItem } from '@graasp/sdk';
 import { AppRecord } from '@graasp/sdk/frontend';
+
+import AppCard from '@/components/main/AppCard';
+import { CUSTOM_APP_URL_ID } from '@/config/selectors';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
-import {
-  ITEM_FORM_APP_URL_ID,
-  buildItemFormAppOptionId,
-} from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './NameForm';
@@ -31,8 +30,11 @@ const AppForm = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [newName, setNewName] = useState<string>(item?.name ?? '');
+  const [isCustomApp, setIsCustomApp] = useState<boolean>(false);
 
-  const handleAppSelection = (_event: any, newValue: AppRecord | null) => {
+  const handleAppSelection = (
+    newValue: AppRecord | null | { url: string; name: string },
+  ) => {
     if (!newValue) {
       return console.error('new value is undefined');
     }
@@ -51,23 +53,19 @@ const AppForm = ({
     return onChange(props);
   };
 
-  const handleAppInput = (_event: any, url: string) => {
-    // TODO: improve types
-    const props = {
-      ...item,
-      extra: buildAppExtra({ url }),
-    } as unknown as Item;
-    onChange(props);
-  };
-
   const { useApps } = hooks;
   const { data, isLoading: isAppsLoading } = useApps();
 
-  const url = getAppExtra(item?.extra)?.url;
+  const url = (updatedProperties?.extra?.app as { url: string })?.url;
 
-  // todo: fix type -> we will change the interface
-  const value = data?.find((app) => app.url === url) || (url as any);
+  const addCustomApp = () => {
+    setIsCustomApp(true);
+    handleAppSelection({ url: '', name: '' });
+  };
 
+  if (isAppsLoading) {
+    return <Skeleton height={60} />;
+  }
   return (
     <div>
       <Typography variant="h6">
@@ -83,67 +81,60 @@ const AppForm = ({
           } as Partial<DiscriminatedItem>
         }
       />
+      <br />
 
-      {isAppsLoading ? (
-        <Skeleton height={60} />
-      ) : (
-        <Autocomplete
-          id={ITEM_FORM_APP_URL_ID}
-          options={data?.toArray() ?? []}
-          getOptionLabel={(option) => {
-            if (typeof option === 'string') {
-              return option;
+      {isCustomApp ? (
+        <Box sx={{ mt: 3 }}>
+          <TextField
+            id={CUSTOM_APP_URL_ID}
+            fullWidth
+            variant="standard"
+            autoFocus
+            label={translateBuilder(BUILDER.APP_URL)}
+            onChange={(e) =>
+              handleAppSelection({ url: e.target.value, name: '' })
             }
-            return option.url;
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => {
+                      setIsCustomApp(false);
+                      handleAppSelection({ url: '', name: '' });
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 2,
+            mt: 3,
           }}
-          filterOptions={(options, state) => {
-            const filteredOptionsByName = options.filter((opt: AppRecord) =>
-              opt.name.toLowerCase().includes(state.inputValue.toLowerCase()),
-            );
-            return filteredOptionsByName;
-          }}
-          value={value}
-          clearOnBlur={false}
-          onChange={handleAppSelection}
-          onInputChange={handleAppInput}
-          renderOption={(
-            props: HTMLAttributes<HTMLLIElement>,
-            option: AppRecord,
-          ) => (
-            <li
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...props}
-              style={{
-                display: 'flex',
-                padding: 8,
-                alignItems: 'center',
-              }}
-              id={buildItemFormAppOptionId(option.name)}
-            >
-              <img
-                style={{
-                  verticalAlign: 'middle',
-                  margin: 8,
-                  height: '30px',
-                }}
-                src={option.extra?.image as string}
-                alt={option.name}
-              />
-              <Typography variant="body1" pr={1}>
-                {option.name}
-              </Typography>
-              <Typography variant="caption">{option.description}</Typography>
-            </li>
-          )}
-          renderInput={(params) => (
-            <TextField
-              variant="standard"
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...params}
-              label={translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_URL_LABEL)}
+        >
+          {data?.map((ele) => (
+            <AppCard
+              key={ele.name}
+              url={ele?.url}
+              name={ele.name}
+              description={ele.description}
+              extra={ele?.extra}
+              selected={ele?.url === url}
+              handleSelect={handleAppSelection}
             />
-          )}
-        />
+          ))}
+          <AppCard
+            name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
+            handleSelect={addCustomApp}
+          />
+        </Box>
       )}
     </div>
   );

@@ -234,5 +234,7 @@
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "هل أنت متأكد من إلغاء عضويتك على هذا العنصر؟",
   "DELETE_MEMBERSHIP_MESSAGE": "هل أنت متأكد من إلغاء العضوية على هذا العنصر؟",
   "DELETE_ONLY_ADMIN_ALERT_MESSAGE": "لا يمكنك إلغاء عضوية هذا الأدمن حيث أنه الأدمن الوحيد",
-  "APPROVE_BUTTON_TEXT": "موافق"
+  "APPROVE_BUTTON_TEXT": "موافق",
+  "APP_URL": "رابط التطبيق",
+  "CREATE_CUSTOM_APP": "أنشيء تطبيقاً خاصاً"
 }
