@@ -104,7 +104,6 @@ const ItemScreen = (): JSX.Element => {
 };
 
 const WrappedItemScreen = (): JSX.Element => {
-  const { mutate: signOut } = mutations.useSignOut();
   const { mutate: itemLoginSignIn } = mutations.usePostItemLogin();
   const itemId = useShortenURLParams(ITEM_ID_PARAMS);
 
@@ -116,10 +115,6 @@ const WrappedItemScreen = (): JSX.Element => {
 
   const Component = ItemLoginAuthorization({
     signIn: itemLoginSignIn,
-    // todo: remove when ui is updated
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    signOut,
     itemId,
     useCurrentMember,
     useItem,
