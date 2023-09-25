@@ -7,7 +7,6 @@ import {
   Item,
   ItemType,
   getAppExtra,
-  getDocumentExtra,
   getEmbeddedLinkExtra,
 } from '@graasp/sdk';
 import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
@@ -103,7 +102,7 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     return false;
   }
 
-  const shouldHaveName = Boolean(item.name);
+  const shouldHaveName = Boolean(item.name?.trim());
 
   // item should have a type
   let hasValidTypeProperties =
@@ -117,11 +116,6 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     case ItemType.APP: {
       const { url } = getAppExtra(item.extra) || {};
       hasValidTypeProperties = isUrlValid(url);
-      break;
-    }
-    case ItemType.DOCUMENT: {
-      const { content } = getDocumentExtra(item.extra) || {};
-      hasValidTypeProperties = Boolean(content && content.length > 0);
       break;
     }
     default:
