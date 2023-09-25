@@ -23,7 +23,19 @@ export const GRAASP_APP_ITEM: AppItemType = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'ecafbd2a-5688-12eb-ae91-0272ac130002',
   path: 'ecafbd2a_5688_12eb_ae91_0272ac130002',
-  name: 'my app',
+  name: 'test app',
+  description: 'my app description',
+  type: ItemType.APP,
+  extra: {
+    [ItemType.APP]: { url: APPS_LIST[0].url },
+  },
+  creator: CURRENT_USER,
+};
+export const GRAASP_CUSTOM_APP_ITEM: AppItemType = {
+  ...DEFAULT_FOLDER_ITEM,
+  id: 'ecafbd2a-5688-12eb-ae91-0272ac130002',
+  path: 'ecafbd2a_5688_12eb_ae91_0272ac130002',
+  name: 'Add Your Custom App',
   description: 'my app description',
   type: ItemType.APP,
   extra: {
