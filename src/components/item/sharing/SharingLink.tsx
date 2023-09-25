@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { QrCode2 } from '@mui/icons-material';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { SelectChangeEvent, Stack, styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -66,7 +65,6 @@ const SharingLink = ({ itemId }: Props): JSX.Element => {
 
   const [linkType, setLinkType] = useState<Context>(Context.Player);
   const [link, setLink] = useState<string>();
-  const [openQrModal, setOpenQrModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (itemId) {
@@ -118,63 +116,47 @@ const SharingLink = ({ itemId }: Props): JSX.Element => {
   const handleLinkTypeChange = (event: SelectChangeEvent<Context>) => {
     setLinkType(event.target.value as Context);
   };
-  const closeQrModal = () => {
-    setOpenQrModal(false);
-  };
-  const generateQrCode = () => {
-    setOpenQrModal(true);
-  };
+
   return (
-    <>
-      <StyledBox
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <StyledLink href={link} target="_blank" id={SHARE_ITEM_DIALOG_LINK_ID}>
-          {link}
-        </StyledLink>
-        <Stack direction="row" alignItems="center">
-          <Select
-            sx={{ ml: 1, textTransform: 'capitalize' }}
-            value={linkType}
-            onChange={handleLinkTypeChange}
-            renderValue={(value) => enumT(value)}
-            id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
+    <StyledBox
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <StyledLink href={link} target="_blank" id={SHARE_ITEM_DIALOG_LINK_ID}>
+        {link}
+      </StyledLink>
+      <Stack direction="row" alignItems="center">
+        <Select
+          sx={{ ml: 1, textTransform: 'capitalize' }}
+          value={linkType}
+          onChange={handleLinkTypeChange}
+          renderValue={(value) => enumT(value)}
+          id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
+        >
+          <MenuItem
+            // sx={{ textTransform: 'capitalize' }}
+            value={Context.Builder}
           >
-            <MenuItem
-              // sx={{ textTransform: 'capitalize' }}
-              value={Context.Builder}
-            >
-              {enumT(Context.Builder)}
-            </MenuItem>
-            <MenuItem
-              // sx={{ textTransform: 'capitalize' }}
-              value={Context.Player}
-            >
-              {enumT(Context.Player)}
-            </MenuItem>
-          </Select>
-          <Tooltip
-            title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}
+            {enumT(Context.Builder)}
+          </MenuItem>
+          <MenuItem
+            // sx={{ textTransform: 'capitalize' }}
+            value={Context.Player}
           >
-            <span>
-              <IconButton onClick={handleCopy}>
-                <FileCopyIcon />
-              </IconButton>
-            </span>
-          </Tooltip>
-          <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_QR_CODE)}>
-            <IconButton onClick={generateQrCode}>
-              <QrCode2 />
+            {enumT(Context.Player)}
+          </MenuItem>
+        </Select>
+        <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>
+          <span>
+            <IconButton onClick={handleCopy}>
+              <FileCopyIcon />
             </IconButton>
-          </Tooltip>
-        </Stack>
-      </StyledBox>
-      {link && openQrModal && (
-        <QRCode open={openQrModal} handleClose={closeQrModal} value={link} />
-      )}
-    </>
+          </span>
+        </Tooltip>
+        {link && <QRCode value={link} />}
+      </Stack>
+    </StyledBox>
   );
 };
 

@@ -1,35 +1,46 @@
+import { useState } from 'react';
 import QR from 'react-qr-code';
 
-import { Box, Modal } from '@mui/material';
+import { QrCode2 } from '@mui/icons-material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Dialog, DialogContent, IconButton, Tooltip } from '@mui/material';
+
+import { useBuilderTranslation } from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
 
 type Props = {
   value: string;
-  open: boolean;
-  handleClose: () => void;
 };
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '30%',
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
+const QRCode = ({ value }: Props): JSX.Element => {
+  const { t: translateBuilder } = useBuilderTranslation();
+  const [openQrModal, setOpenQrModal] = useState<boolean>(false);
 
-const QRCode = ({ value, open, handleClose }: Props): JSX.Element => (
-  <Modal open={open} onClose={handleClose}>
-    <Box sx={style}>
-      <QR
-        size={256}
-        style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
-        value={value}
-        viewBox="0 0 256 256"
-      />
-    </Box>
-  </Modal>
-);
+  return (
+    <>
+      <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_QR_CODE)}>
+        <IconButton onClick={() => setOpenQrModal(true)}>
+          <QrCode2 />
+        </IconButton>
+      </Tooltip>
+      <Dialog open={openQrModal} onClose={() => setOpenQrModal(false)}>
+        <IconButton
+          aria-label="close"
+          onClick={() => setOpenQrModal(false)}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent sx={{ p: 5 }}>
+          <QR size={500} value={value} />
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};
 
 export default QRCode;
