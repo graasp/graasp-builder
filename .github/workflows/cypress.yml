@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 50
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -56,7 +56,6 @@ jobs:
           install: false
           # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
           start: yarn preview:test
-          browser: chrome
           quiet: true
           config-file: cypress.config.ts
           cache-key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
