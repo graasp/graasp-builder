@@ -46,7 +46,6 @@ jobs:
           VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
 
-
       #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
       - name: Cypress run
         uses: cypress-io/github-action@v5
