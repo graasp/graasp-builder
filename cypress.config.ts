@@ -19,12 +19,12 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
       require('@cypress/code-coverage/task')(on, config);
-      on('before:browser:launch', (browser, launchOptions) => {
-        if (browser.name === 'chrome' && browser.isHeadless) {
-          launchOptions.args.push('--headless=old');
-        }
-        return launchOptions;
-      });
+      // on('before:browser:launch', (browser, launchOptions) => {
+      //   if (browser.name === 'chrome' && browser.isHeadless) {
+      //     launchOptions.args.push('--headless=old');
+      //   }
+      //   return launchOptions;
+      // });
       return config;
     },
     baseUrl: `http://localhost:${process.env.VITE_PORT || 3333}`,
