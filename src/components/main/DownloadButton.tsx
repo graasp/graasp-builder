@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { DownloadButton as Button } from '@graasp/ui';
 
-import { DOWNLOAD_BUTTON_ID } from '@/config/selectors';
+import { buildDownloadButtonId } from '@/config/selectors';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
@@ -39,7 +39,7 @@ export const DownloadButton = ({ id, name }: Props): JSX.Element => {
     downloadItem({ id });
   };
   return (
-    <span id={`${DOWNLOAD_BUTTON_ID}${id}`}>
+    <span id={buildDownloadButtonId(id)}>
       <Button
         handleDownload={handleDownload}
         isLoading={isDownloading}
