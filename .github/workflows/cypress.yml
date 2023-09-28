@@ -4,8 +4,6 @@ name: Cypress CI
 on:
   # Triggers the workflow on push events except for the main branch
   push:
-    branches-ignore:
-      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
@@ -18,12 +16,12 @@ jobs:
     timeout-minutes: 50
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Yarn Install and Cache
         uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
