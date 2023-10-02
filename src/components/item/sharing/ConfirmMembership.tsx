@@ -1,3 +1,5 @@
+import CloseIcon from '@mui/icons-material/Close';
+import { Alert, AlertTitle, IconButton, Snackbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -41,26 +43,52 @@ const DeleteItemDialog = ({
 
   const onDelete = () => {
     if (membershipToDelete?.id) {
-      deleteItemMembership({ id: membershipToDelete?.id, itemId: item.id });
+      deleteItemMembership({ id: membershipToDelete.id, itemId: item.id });
       handleClose();
     }
   };
 
   let dialogText = '';
+  const isDeletingLastAdmin =
+    hasOnlyOneAdmin && membershipToDelete?.permission === PermissionLevel.Admin;
   // incase of deleting the only admin
-  if (
-    hasOnlyOneAdmin &&
-    membershipToDelete?.permission === PermissionLevel.Admin
-  ) {
-    dialogText = translateBuilder(BUILDER.DELETE_ONLY_ADMIN_ALERT_MESSAGE);
+  if (isDeletingLastAdmin) {
+    dialogText = translateBuilder(BUILDER.DELETE_LAST_ADMIN_ALERT_MESSAGE);
   } else if (member?.id === membershipToDelete?.member?.id) {
     // deleting yourself
     dialogText = translateBuilder(BUILDER.DELETE_OWN_MEMBERSHIP_MESSAGE);
   } else {
     // delete other members
-    dialogText = translateBuilder(BUILDER.DELETE_MEMBERSHIP_MESSAGE);
+    dialogText = translateBuilder(BUILDER.DELETE_MEMBERSHIP_MESSAGE, {
+      name: membershipToDelete?.member.name,
+      permissionLevel: membershipToDelete?.permission,
+    });
   }
-  return (
+  return isDeletingLastAdmin ? (
+    <Snackbar
+      open={open}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    >
+      <Alert
+        severity="error"
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }
+      >
+        <AlertTitle>Error</AlertTitle>
+        {dialogText}
+      </Alert>
+    </Snackbar>
+  ) : (
     <Dialog
       open={open}
       onClose={handleClose}
@@ -73,25 +101,19 @@ const DeleteItemDialog = ({
       <DialogContent>
         <DialogContentText id={descriptionId}>{dialogText}</DialogContentText>
       </DialogContent>
-      {hasOnlyOneAdmin &&
-      membershipToDelete?.permission === PermissionLevel.Admin ? (
-        <Button onClick={handleClose} autoFocus variant="text">
-          {translateBuilder(BUILDER.APPROVE_BUTTON_TEXT)}
+
+      <DialogActions>
+        <CancelButton onClick={handleClose} />
+        <Button
+          id={CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID}
+          onClick={onDelete}
+          color="error"
+          autoFocus
+          variant="text"
+        >
+          {translateBuilder(BUILDER.DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON)}
         </Button>
-      ) : (
-        <DialogActions>
-          <CancelButton onClick={handleClose} />
-          <Button
-            id={CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID}
-            onClick={onDelete}
-            color="error"
-            autoFocus
-            variant="text"
-          >
-            {translateBuilder(BUILDER.DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON)}
-          </Button>
-        </DialogActions>
-      )}
+      </DialogActions>
     </Dialog>
   );
 };

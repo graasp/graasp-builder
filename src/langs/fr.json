@@ -251,6 +251,6 @@
   "DELETE_MEMBERSHIP": "Supprimer l'authorisation",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirmer",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer votre propre autorisation sur cet élément ?",
-  "DELETE_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'autorisation à cet élément ?",
-  "DELETE_ONLY_ADMIN_ALERT_MESSAGE": "Vous n'êtes pas autorisé à supprimer le dernier administrateur de cet élément."
+  "DELETE_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'accès en {{permissionLevel}} sur cet élément à {{name}} ? Il leur sera impossible d'accéder à cet élément.",
+  "DELETE_LAST_ADMIN_ALERT_MESSAGE": "Vous n'êtes pas autorisé à supprimer le dernier administrateur de cet élément."
 }
