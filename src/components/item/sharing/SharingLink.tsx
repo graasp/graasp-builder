@@ -11,6 +11,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { Context } from '@graasp/sdk';
 import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from '@graasp/translations';
 
+import shortUUID from 'short-uuid';
+
 import QRCode from '@/components/common/QRCode';
 import {
   SHARE_LINK_COLOR,
@@ -58,6 +60,7 @@ type Props = {
   itemId?: string;
 };
 
+const { fromUUID } = shortUUID();
 const SharingLink = ({ itemId }: Props): JSX.Element => {
   const { t: translateMessages } = useMessagesTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
@@ -70,11 +73,11 @@ const SharingLink = ({ itemId }: Props): JSX.Element => {
     if (itemId) {
       switch (linkType) {
         case Context.Builder: {
-          setLink(buildGraaspBuilderView(itemId));
+          setLink(buildGraaspBuilderView(fromUUID(itemId || '')));
           break;
         }
         case Context.Player: {
-          setLink(buildGraaspPlayerView(itemId));
+          setLink(buildGraaspPlayerView(fromUUID(itemId || '')));
           break;
         }
         default:
