@@ -1,10 +1,11 @@
-import CloseIcon from '@mui/icons-material/Close';
-import { Alert, AlertTitle, IconButton, Snackbar } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  Alert,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 
 import { ItemMembership, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
@@ -64,31 +65,7 @@ const DeleteItemDialog = ({
       permissionLevel: membershipToDelete?.permission,
     });
   }
-  return isDeletingLastAdmin ? (
-    <Snackbar
-      open={open}
-      autoHideDuration={6000}
-      onClose={handleClose}
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-    >
-      <Alert
-        severity="error"
-        action={
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            size="small"
-            onClick={handleClose}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        }
-      >
-        <AlertTitle>Error</AlertTitle>
-        {dialogText}
-      </Alert>
-    </Snackbar>
-  ) : (
+  return (
     <Dialog
       open={open}
       onClose={handleClose}
@@ -99,20 +76,32 @@ const DeleteItemDialog = ({
         {translateBuilder(BUILDER.DELETE_MEMBERSHIP)}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id={descriptionId}>{dialogText}</DialogContentText>
+        {isDeletingLastAdmin ? (
+          <Alert severity="error">{dialogText}</Alert>
+        ) : (
+          <DialogContentText id={descriptionId}>{dialogText}</DialogContentText>
+        )}
       </DialogContent>
 
       <DialogActions>
-        <CancelButton onClick={handleClose} />
-        <Button
-          id={CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID}
-          onClick={onDelete}
-          color="error"
-          autoFocus
-          variant="text"
-        >
-          {translateBuilder(BUILDER.DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON)}
-        </Button>
+        {isDeletingLastAdmin ? (
+          <Button onClick={handleClose} autoFocus variant="text">
+            {translateBuilder(BUILDER.APPROVE_BUTTON_TEXT)}
+          </Button>
+        ) : (
+          <>
+            <CancelButton onClick={handleClose} />
+            <Button
+              id={CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID}
+              onClick={onDelete}
+              color="error"
+              autoFocus
+              variant="text"
+            >
+              {translateBuilder(BUILDER.DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON)}
+            </Button>
+          </>
+        )}
       </DialogActions>
     </Dialog>
   );
