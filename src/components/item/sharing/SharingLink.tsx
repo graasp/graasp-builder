@@ -30,7 +30,6 @@ import notifier from '@/config/notifier';
 import {
   SHARE_ITEM_DIALOG_LINK_ID,
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
-  SHARE_ITEM_QR_BTN_ID,
 } from '@/config/selectors';
 
 import { BUILDER } from '../../../langs/constants';
@@ -155,11 +154,7 @@ const SharingLink = ({ itemId }: Props): JSX.Element => {
             </IconButton>
           </span>
         </Tooltip>
-        {link && (
-          <span id={SHARE_ITEM_QR_BTN_ID}>
-            <QRCode value={link} />
-          </span>
-        )}
+        {link && <QRCode value={link} />}
       </Stack>
     </StyledBox>
   );

@@ -131,7 +131,7 @@ describe('Share Item', () => {
 
   it('Share Item with QR Code', () => {
     cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
-    const item = SAMPLE_PUBLIC_ITEMS.items[0] as any;
+    const item = SAMPLE_PUBLIC_ITEMS.items[0];
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
 

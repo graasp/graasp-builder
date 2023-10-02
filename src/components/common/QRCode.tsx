@@ -6,7 +6,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Box, Dialog, DialogContent, IconButton, Tooltip } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
-import { SHARE_ITEM_QR_DIALOG_ID } from '@/config/selectors';
+import {
+  SHARE_ITEM_QR_BTN_ID,
+  SHARE_ITEM_QR_DIALOG_ID,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 type Props = {
@@ -20,7 +23,10 @@ const QRCode = ({ value }: Props): JSX.Element => {
   return (
     <>
       <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_QR_CODE)}>
-        <IconButton onClick={() => setOpenQrModal(true)}>
+        <IconButton
+          onClick={() => setOpenQrModal(true)}
+          id={SHARE_ITEM_QR_BTN_ID}
+        >
           <QrCode2 />
         </IconButton>
       </Tooltip>
@@ -41,11 +47,7 @@ const QRCode = ({ value }: Props): JSX.Element => {
           <CloseIcon />
         </IconButton>
         <DialogContent sx={{ p: 5 }}>
-          <Box
-            sx={{
-              width: { xs: '60vw', sm: '50vw', md: '30vw', lg: '24vw' },
-            }}
-          >
+          <Box width={{ xs: '60vw', sm: '50vw', md: '30vw', lg: '24vw' }}>
             <QR
               style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
               value={value}
