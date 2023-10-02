@@ -3,9 +3,10 @@ import QR from 'react-qr-code';
 
 import { QrCode2 } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Dialog, DialogContent, IconButton, Tooltip } from '@mui/material';
+import { Box, Dialog, DialogContent, IconButton, Tooltip } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
+import { SHARE_ITEM_QR_DIALOG_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 type Props = {
@@ -23,7 +24,11 @@ const QRCode = ({ value }: Props): JSX.Element => {
           <QrCode2 />
         </IconButton>
       </Tooltip>
-      <Dialog open={openQrModal} onClose={() => setOpenQrModal(false)}>
+      <Dialog
+        open={openQrModal}
+        onClose={() => setOpenQrModal(false)}
+        id={SHARE_ITEM_QR_DIALOG_ID}
+      >
         <IconButton
           aria-label="close"
           onClick={() => setOpenQrModal(false)}
@@ -36,7 +41,16 @@ const QRCode = ({ value }: Props): JSX.Element => {
           <CloseIcon />
         </IconButton>
         <DialogContent sx={{ p: 5 }}>
-          <QR size={500} value={value} />
+          <Box
+            sx={{
+              width: { xs: '60vw', sm: '50vw', md: '30vw', lg: '24vw' },
+            }}
+          >
+            <QR
+              style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
+              value={value}
+            />
+          </Box>
         </DialogContent>
       </Dialog>
     </>

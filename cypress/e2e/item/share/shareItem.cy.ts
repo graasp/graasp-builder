@@ -7,6 +7,8 @@ import {
   SHARE_ITEM_DIALOG_LINK_ID,
   SHARE_ITEM_DIALOG_LINK_SELECT_ID,
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
+  SHARE_ITEM_QR_BTN_ID,
+  SHARE_ITEM_QR_DIALOG_ID,
   SHARE_ITEM_VISIBILITY_SELECT_ID,
   buildShareButtonId,
 } from '../../../../src/config/selectors';
@@ -125,5 +127,16 @@ describe('Share Item', () => {
     cy.wait(`@deleteItemLoginSchema`).then(({ request: { url } }) => {
       expect(url).to.include(item.id);
     });
+  });
+
+  it('Share Item with QR Code', () => {
+    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
+    const item = SAMPLE_PUBLIC_ITEMS.items[0] as any;
+    cy.visit(buildItemPath(item.id));
+    openShareItemTab(item.id);
+
+    cy.get(`#${SHARE_ITEM_QR_BTN_ID}`).click();
+
+    cy.get(`#${SHARE_ITEM_QR_DIALOG_ID}`).should('exist');
   });
 });
