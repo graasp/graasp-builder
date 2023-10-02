@@ -13,6 +13,7 @@ import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from '@graasp/translations';
 
 import shortUUID from 'short-uuid';
 
+import QRCode from '@/components/common/QRCode';
 import {
   SHARE_LINK_COLOR,
   SHARE_LINK_CONTAINER_BORDER_STYLE,
@@ -156,6 +157,7 @@ const SharingLink = ({ itemId }: Props): JSX.Element => {
             </IconButton>
           </span>
         </Tooltip>
+        {link && <QRCode value={link} />}
       </Stack>
     </StyledBox>
   );

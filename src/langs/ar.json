@@ -211,6 +211,7 @@
   "SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE": "هذا البريد غير صالح",
   "SHARE_ITEM_FORM_INVITATION_TOOLTIP": "سيتلقى المستخدمون الغير مسجّلين رابطًا شخصيًا للتسجيل في المنصة.",
   "SHARE_ITEM_LINK_COPY_TOOLTIP": "النّسخ إلى الحافظة",
+  "SHARE_ITEM_LINK_QR_CODE": "أنشئ رمز الاستجابة",
   "SHARED_ITEMS_TITLE": "العناصر المنشورة",
   "SHARED_MEMBERS_LABEL": "الأعضاء المنشورين",
   "SHARED_MEMBERS_TOOLTIP_one": "تمّت مشاركة هذا العنصر مع مستخدم واحد",
