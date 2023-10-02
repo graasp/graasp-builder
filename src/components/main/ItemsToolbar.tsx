@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 type Props = {
   title: string;
@@ -6,18 +6,14 @@ type Props = {
 };
 
 const ItemsToolbar = ({ title, headerElements }: Props): JSX.Element => (
-  <Grid container spacing={2}>
-    <Grid item xs={6}>
-      <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
-        {title}
-      </Typography>
-    </Grid>
-    <Grid item xs={6}>
-      <Stack direction="row" alignItems="center" justifyContent="flex-end">
-        {headerElements}
-      </Stack>
-    </Grid>
-  </Grid>
+  <Stack direction="row" justifyContent="space-between" spacing={1}>
+    <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+      {title}
+    </Typography>
+    <Stack direction="row" alignItems="center" justifyContent="flex-end">
+      {headerElements}
+    </Stack>
+  </Stack>
 );
 
 export default ItemsToolbar;

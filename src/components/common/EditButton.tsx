@@ -1,11 +1,14 @@
 import { useState } from 'react';
 
+import { Dialog } from '@mui/material';
+
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { EditButton as GraaspEditButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   EDIT_ITEM_BUTTON_CLASS,
+  EDIT_MODAL_ID,
   buildEditButtonId,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
@@ -50,12 +53,19 @@ const EditButton = ({ item }: Props): JSX.Element => {
 
   return (
     <>
-      <EditModalWrapper
-        item={item}
-        ComponentType={typeToFormComponent()}
-        setOpen={setOpen}
+      <Dialog
+        id={EDIT_MODAL_ID}
         open={open}
-      />
+        // onClose={onClose}
+        maxWidth="sm"
+        fullWidth
+      >
+        <EditModalWrapper
+          item={item}
+          ComponentType={typeToFormComponent()}
+          setOpen={setOpen}
+        />
+      </Dialog>
       <GraaspEditButton
         tooltip={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
         id={buildEditButtonId(item.id)}
