@@ -85,19 +85,19 @@ const ItemComponent = ({
   // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {member && member.id && <FavoriteButton size="medium" item={item} />}
       {enableEdition && (
-        <>
-          <EditButton
-            item={
-              // DO NOT REMOVE cast
-              // here we cast explicitly to be equivalent to the grid which does not let us use Records
-              item.toJS() as DiscriminatedItem
-            }
-          />
-          <DownloadButton id={item.id} name={item.name} />
-        </>
+        <EditButton
+          item={
+            // DO NOT REMOVE cast
+            // here we cast explicitly to be equivalent to the grid which does not let us use Records
+            item.toJS() as DiscriminatedItem
+          }
+        />
       )}
+      {((member && member.id) || itemsStatuses?.[item.id]?.isPublic) && (
+        <DownloadButton id={item.id} name={item.name} />
+      )}
+      {member && member.id && <FavoriteButton size="medium" item={item} />}
     </>
   );
   // here we use the same component as the table this is why it is instantiated a bit weirdly

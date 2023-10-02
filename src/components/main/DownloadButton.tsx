@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 
 import { DownloadButton as Button } from '@graasp/ui';
 
+import { buildDownloadButtonId } from '@/config/selectors';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { BUILDER } from '../../langs/constants';
@@ -37,14 +39,16 @@ export const DownloadButton = ({ id, name }: Props): JSX.Element => {
     downloadItem({ id });
   };
   return (
-    <Button
-      handleDownload={handleDownload}
-      isLoading={isDownloading}
-      title={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
-      ariaLabel={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
-      loaderColor="primary"
-      loaderSize={10}
-    />
+    <span id={buildDownloadButtonId(id)}>
+      <Button
+        handleDownload={handleDownload}
+        isLoading={isDownloading}
+        title={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
+        ariaLabel={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
+        loaderColor="primary"
+        loaderSize={10}
+      />
+    </span>
   );
 };
 
