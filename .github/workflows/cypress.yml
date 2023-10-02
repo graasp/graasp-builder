@@ -4,8 +4,6 @@ name: Cypress CI
 on:
   # Triggers the workflow on push events except for the main branch
   push:
-    branches-ignore:
-      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}

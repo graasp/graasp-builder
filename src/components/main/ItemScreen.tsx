@@ -116,6 +116,9 @@ const WrappedItemScreen = (): JSX.Element => {
 
   const Component = ItemLoginAuthorization({
     signIn: itemLoginSignIn,
+    // todo: remove when ui is updated
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     signOut,
     itemId,
     useCurrentMember,
