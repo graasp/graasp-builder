@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
@@ -9,6 +8,7 @@ import Star from '@mui/icons-material/Star';
 import { Box, Button, styled, useTheme } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
+import { DEFAULT_LANG } from '@graasp/sdk';
 import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
 
 import { captureMessage, showReportDialog } from '@sentry/react';
@@ -22,7 +22,6 @@ import {
   RECYCLE_BIN_PATH,
   SHARED_ITEMS_PATH,
 } from '../../config/paths';
-import { mutations } from '../../config/queryClient';
 import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
@@ -56,9 +55,7 @@ const MainMenu = (): JSX.Element => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: member } = useCurrentUserContext();
-  const { mutate: postBug } = mutations.usePostBug();
 
-  const [isSentryFormOpen, setIsSentryFormOpen] = useState(false);
   const theme = useTheme();
   const iconColor = theme.palette.action.active;
 
@@ -66,50 +63,18 @@ const MainMenu = (): JSX.Element => {
     navigate(path);
   };
 
-  useEffect(() => {
-    if (isSentryFormOpen) {
-      setTimeout(() => {
-        const ele: HTMLButtonElement | null = document.querySelector(
-          '.form-submit > .btn',
-        );
-        const nameInput: HTMLInputElement | null =
-          document.querySelector('#id_name');
-        const emailInput: HTMLInputElement | null =
-          document.querySelector('#id_email');
-        const commentsInput: HTMLInputElement | null =
-          document.querySelector('#id_comments');
-
-        if (ele) {
-          const originalClick: any = ele.onclick;
-          ele.onclick = null;
-          ele?.addEventListener('click', (e) => {
-            e?.preventDefault();
-            originalClick?.(e);
-            postBug({
-              name: nameInput?.value || '',
-              email: emailInput?.value || '',
-              details: commentsInput?.value || '',
-            });
-          });
-        }
-      }, 1000);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSentryFormOpen]);
-
   const openBugReport = () => {
-    setIsSentryFormOpen(true);
     const eventId = captureMessage(
       `Graasp Builder | User Feedback ${Date.now()}`,
     );
     // this will be reported in sentry user feedback issues
     showReportDialog({
       eventId,
-      lang: i18n.language || 'en',
+      lang: i18n.language || DEFAULT_LANG,
     });
   };
 
-  const resourcesLink = (
+  const resourceLinks = (
     <BottomContainer>
       <Button onClick={openBugReport}>
         {translateBuilder(BUILDER.REPORT_A_BUG)}
@@ -180,7 +145,7 @@ const MainMenu = (): JSX.Element => {
   return (
     <GraaspMainMenu fullHeight>
       {renderAuthenticatedMemberMenuItems()}
-      {resourcesLink}
+      {resourceLinks}
     </GraaspMainMenu>
   );
 };

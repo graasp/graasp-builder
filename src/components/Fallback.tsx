@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router';
 
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Box, Button, Stack, Typography } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { HOME_PATH } from '@/config/paths';
 
 import { BUILDER } from '../langs/constants';
-import ErrorImg from '../resources/warning-error.png';
 
 const FallbackComponent = (): JSX.Element => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const FallbackComponent = (): JSX.Element => {
         </Button>
       </Box>
       <Box>
-        <img src={ErrorImg} alt="error_img" />
+        <ErrorOutlineIcon style={{ fontSize: '25em', color: '#5050d2' }} />
       </Box>
     </Stack>
   );

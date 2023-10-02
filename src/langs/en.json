@@ -249,7 +249,7 @@
   "STATUS_TOOLTIP_SHOW_CHATBOX": "Chatbox visible",
   "SETTINGS_FILE_SETTINGS_TITLE": "File Settings",
   "FALLBACK_TITLE": "Oops!",
-  "FALLBACK_TEXT": "Sorry, Something went wrong Try again later",
+  "FALLBACK_TEXT": "Sorry, something went wrong. Try again later.",
   "FALLBACK_BACK_TO_HOME": "Back to homepage",
   "REPORT_A_BUG": "Report a Bug"
 }
