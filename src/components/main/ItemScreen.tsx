@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
 
 import { ItemType } from '@graasp/sdk';
-import { ItemLoginAuthorization, Loader } from '@graasp/ui';
+import {
+  ItemLoginAuthorization,
+  Loader,
+  useShortenURLParams,
+} from '@graasp/ui';
+
+import { ITEM_ID_PARAMS } from '@/config/paths';
 
 import { PERMISSIONS_EDITION_ALLOWED } from '../../config/constants';
 import { hooks, mutations } from '../../config/queryClient';
@@ -36,9 +41,9 @@ const {
 } = hooks;
 
 const ItemScreen = (): JSX.Element => {
-  const { itemId } = useParams();
-  const { data: item, isError, isLoading } = useItem(itemId);
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
 
+  const { data: item, isError, isLoading } = useItem(itemId);
   const { setEditingItemId, openedActionTabId, setOpenedActionTabId } =
     useLayoutContext();
   const { data: currentMember } = useCurrentUserContext();
@@ -101,7 +106,7 @@ const ItemScreen = (): JSX.Element => {
 const WrappedItemScreen = (): JSX.Element => {
   const { mutate: signOut } = mutations.useSignOut();
   const { mutate: itemLoginSignIn } = mutations.usePostItemLogin();
-  const { itemId } = useParams();
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
 
   const ForbiddenContent = <ItemForbiddenScreen />;
 

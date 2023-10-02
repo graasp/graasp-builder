@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import {
   DiscriminatedItem,
@@ -11,6 +11,7 @@ import {
 } from '@graasp/sdk';
 import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { COMMON } from '@graasp/translations';
+import { useShortenURLParams } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
@@ -77,7 +78,9 @@ const ItemsTable = ({
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
-  const { itemId } = useParams();
+
+  const itemId = useShortenURLParams('itemId');
+
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
 

@@ -8,6 +8,6 @@ export const buildItemPath = (id = ':itemId'): string => `${ITEMS_PATH}/${id}`;
 export const REDIRECT_PATH = '/redirect';
 export const MEMBER_PROFILE_PATH = '/profile';
 export const RECYCLE_BIN_PATH = '/recycle-bin';
-
 export const buildItemSettingsPath = (id = ':itemId'): string =>
   `${ITEMS_PATH}/${id}/settings`;
+export const ITEM_ID_PARAMS = 'itemId';

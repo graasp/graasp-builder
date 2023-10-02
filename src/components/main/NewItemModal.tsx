@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useMatch } from 'react-router';
 
 import { Box, styled } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -16,11 +15,11 @@ import {
   ItemType,
 } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { Button } from '@graasp/ui';
+import { Button, useShortenURLParams } from '@graasp/ui';
 
 import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
-import { buildItemPath } from '../../config/paths';
+import { ITEM_ID_PARAMS } from '../../config/paths';
 import { mutations } from '../../config/queryClient';
 import {
   CREATE_ITEM_CLOSE_BUTTON_ID,
@@ -83,9 +82,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
 
   const { mutate: postItem } = mutations.usePostItem();
   const { mutate: postEtherpad } = mutations.usePostEtherpad();
-
-  const match = useMatch(buildItemPath());
-  const parentId = match?.params?.itemId;
+  const parentId = useShortenURLParams(ITEM_ID_PARAMS);
 
   const submitAndDisableConfirmButtonFor = (
     submitFn: () => void | boolean,

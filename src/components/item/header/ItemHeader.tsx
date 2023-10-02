@@ -1,10 +1,9 @@
-import { useMatch } from 'react-router';
-
 import Stack from '@mui/material/Stack';
 
-import { Loader } from '@graasp/ui';
+import { Loader, useShortenURLParams } from '@graasp/ui';
 
-import { buildItemPath } from '../../../config/paths';
+import { ITEM_ID_PARAMS } from '@/config/paths';
+
 import { hooks } from '../../../config/queryClient';
 import { ITEM_HEADER_ID } from '../../../config/selectors';
 import ErrorAlert from '../../common/ErrorAlert';
@@ -18,8 +17,7 @@ type Props = {
 };
 
 const ItemHeader = ({ showNavigation = true }: Props): JSX.Element => {
-  const match = useMatch(buildItemPath());
-  const itemId = match?.params?.itemId;
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
   const { data: item, isLoading: isItemLoading, isError } = useItem(itemId);
 
   if (isItemLoading) {
