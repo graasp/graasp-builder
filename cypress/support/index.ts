@@ -63,7 +63,7 @@ declare global {
       ): void;
       fillAppModal(
         payload: { name: string; extra?: AppItemExtra },
-        options?: { type?: boolean; confirm?: boolean },
+        options?: { type?: boolean; confirm?: boolean; custom?: boolean },
       ): void;
       fillFolderModal(
         arg1: { name?: string; description?: string },

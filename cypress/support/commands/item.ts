@@ -1,6 +1,7 @@
 import { ItemType, getAppExtra, getDocumentExtra } from '@graasp/sdk';
 
 import {
+  CUSTOM_APP_URL_ID,
   FOLDER_FORM_DESCRIPTION_ID,
   ITEM_FORM_APP_URL_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
@@ -17,7 +18,11 @@ import {
   buildTreeItemId,
 } from '../../../src/config/selectors';
 import { getParentsIdsFromPath } from '../../../src/utils/item';
-import { APP_NAME, NEW_APP_NAME } from '../../fixtures/apps/apps';
+import {
+  APP_NAME,
+  CUSTOM_APP_URL,
+  NEW_APP_NAME,
+} from '../../fixtures/apps/apps';
 import { TREE_VIEW_PAUSE } from '../constants';
 
 Cypress.Commands.add(
@@ -137,14 +142,20 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillAppModal',
-  ({ name = '', extra }, { confirm = true, type = false } = {}) => {
+  (
+    { name = '', extra },
+    { confirm = true, type = false, custom = false } = {},
+  ) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
-    cy.get(`#${ITEM_FORM_APP_URL_ID}`).click();
     if (type) {
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
+    } else if (custom) {
+      cy.get(`#${buildItemFormAppOptionId(name)}`).click();
+      // check name get added automatically
+      cy.get(`#${CUSTOM_APP_URL_ID}`).type(CUSTOM_APP_URL);
     } else {
-      cy.get(`#${buildItemFormAppOptionId(APP_NAME)}`).click();
+      cy.get(`#${buildItemFormAppOptionId(name)}`).click();
       // check name get added automatically
       cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', APP_NAME);
       // edit the app name

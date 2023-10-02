@@ -5,6 +5,7 @@ import { ItemRecord } from '@graasp/sdk/frontend';
 import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
+import DownloadButton from '@/components/main/DownloadButton';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -93,6 +94,7 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
         <>
           {openedActionTabId !== ItemActionTabs.Settings && activeActions}
           {canEdit && <ItemSettingsButton id={item.id} />}
+          <DownloadButton id={item.id} name={item.name} />
         </>
       );
     }
