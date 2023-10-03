@@ -168,6 +168,8 @@ export const INVITE_ITEM_BUTTON_ID = 'inviteItemButton';
 export const SHARE_ITEM_DIALOG_ID = 'shareItemDialog';
 export const SHARE_ITEM_DIALOG_LINK_ID = 'shareItemDialogLink';
 export const SHARE_ITEM_DIALOG_LINK_SELECT_ID = 'shareItemDialogLinkSelect';
+export const SHARE_ITEM_QR_BTN_ID = 'shareItemQRBtn';
+export const SHARE_ITEM_QR_DIALOG_ID = 'shareItemQRDialog';
 export const ACCESS_INDICATION_ID = 'accessIndication';
 export const ITEM_CHATBOX_BUTTON_ID = 'itemChatboxButton';
 export const CHATBOX_ID = 'chatbox';
@@ -309,3 +311,7 @@ export const CC_DERIVATIVE_CONTROL_ID = 'derivativeSelector';
 export const EDIT_MODAL_ID = 'editModal';
 export const EDIT_ITEM_MODAL_CANCEL_BUTTON_ID = 'editModalCancelButton';
 export const FILE_SETTING_MAX_WIDTH_ID = 'fileSettingMaxWidth';
+
+export const buildDownloadButtonId = (itemId: string): string =>
+  `download-button-id-${itemId}`;
+export const CUSTOM_APP_URL_ID = 'customAppURLId';

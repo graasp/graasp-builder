@@ -26,6 +26,7 @@ export const IMAGE_ITEM_DEFAULT: LocalFileItemForTest = {
     size: 32439,
     mimetype: 'image/png',
     altText: 'myAltText',
+    content: '',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -50,6 +51,7 @@ export const IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH: LocalFileItemForTest = {
     size: 32439,
     mimetype: 'image/png',
     altText: 'myAltText',
+    content: '',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -72,6 +74,7 @@ export const VIDEO_ITEM_DEFAULT: LocalFileItemForTest = {
     size: 52345,
     mimetype: MimeTypes.Video.MP4,
     altText: 'myAltText',
+    content: '',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: VIDEO_FILEPATH,
@@ -94,6 +97,7 @@ export const PDF_ITEM_DEFAULT: LocalFileItemForTest = {
     size: 54321,
     mimetype: MimeTypes.PDF,
     altText: 'myAltText',
+    content: '',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -121,6 +125,7 @@ export const IMAGE_ITEM_S3: S3FileItemForTest = {
     mimetype: MimeTypes.Image.PNG,
     name: 'myfile',
     altText: 'myAltText',
+    content: '',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,
@@ -143,6 +148,7 @@ export const VIDEO_ITEM_S3: S3FileItemForTest = {
     mimetype: MimeTypes.Video.MP4,
     name: 'myfile',
     altText: 'myAltText',
+    content: '',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: VIDEO_FILEPATH,
@@ -165,6 +171,7 @@ export const PDF_ITEM_S3: S3FileItemForTest = {
     mimetype: MimeTypes.PDF,
     name: 'myfile',
     altText: 'myAltText',
+    content: '',
   }),
   // for testing: creating needs a fixture, reading needs an url
   createFilepath: ICON_FILEPATH,

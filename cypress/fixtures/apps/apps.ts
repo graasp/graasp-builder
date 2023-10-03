@@ -2,6 +2,7 @@ import { App, Publisher } from '@graasp/sdk';
 
 export const APP_NAME = 'test app';
 export const NEW_APP_NAME = 'my new test app';
+export const CUSTOM_APP_URL = 'http://testapp.com';
 
 export const publisher: Publisher = {
   id: 'publisher-id',

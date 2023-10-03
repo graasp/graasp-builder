@@ -1,11 +1,17 @@
-import { useLocation, useMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
+import {
+  HomeMenu,
+  ItemMenu,
+  Navigation,
+  useShortenURLParams,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
+  ITEM_ID_PARAMS,
   SHARED_ITEMS_PATH,
   buildItemPath,
 } from '../../config/paths';
@@ -27,9 +33,8 @@ const {
 
 const Navigator = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const match = useMatch(buildItemPath());
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
   const { pathname } = useLocation();
-  const itemId = match?.params?.itemId;
   const { data: currentMember } = useCurrentMember();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
