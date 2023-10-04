@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { AppItemType, DiscriminatedItem } from '@graasp/sdk';
 import { AppRecord } from '@graasp/sdk/frontend';
+import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
 import { CUSTOM_APP_URL_ID } from '@/config/selectors';
@@ -60,7 +61,7 @@ const AppForm = ({
 
   const addCustomApp = () => {
     setIsCustomApp(true);
-    handleAppSelection({ url: '', name: '' });
+    handleAppSelection({ url: '', name: ' ' });
   };
 
   if (isAppsLoading) {
@@ -68,9 +69,22 @@ const AppForm = ({
   }
   return (
     <div>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography variant="h6">
+          {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
+        </Typography>
+        {isCustomApp && (
+          <Button
+            variant="text"
+            onClick={() => {
+              setIsCustomApp(false);
+              handleAppSelection({ url: '', name: '' });
+            }}
+          >
+            Back
+          </Button>
+        )}
+      </Box>
       <BaseItemForm
         setChanges={onChange}
         updatedProperties={

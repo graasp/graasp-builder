@@ -39,11 +39,15 @@ const AppCard = ({
     <Card
       sx={{
         maxWidth: 300,
-        border: selected ? '2px solid #5050d2' : 'none',
+        border: selected ? '2px solid #5050d2' : '2px solid transparent',
         position: 'relative',
       }}
       onClick={() => {
-        handleSelect({ url, description, name, extra });
+        if (selected) {
+          handleSelect({ url: '', name: '' });
+        } else {
+          handleSelect({ url, description, name, extra });
+        }
       }}
       id={buildItemFormAppOptionId(name)}
     >
@@ -61,14 +65,14 @@ const AppCard = ({
           <CloseIcon />
         </IconButton>
       )}
-      <CardActionArea>
+      <CardActionArea sx={{ height: '100%' }}>
         <CardMedia
           component="img"
           height="100"
           image={extra?.image || AddNewIcon}
           alt={name}
         />
-        <CardContent>
+        <CardContent sx={{ height: '100%' }}>
           <Typography gutterBottom variant="subtitle2" component="div">
             {name}
           </Typography>
