@@ -250,5 +250,6 @@
   "STATUS_TOOLTIP_SHOW_CHATBOX": "Chatbox visible",
   "SETTINGS_FILE_SETTINGS_TITLE": "File Settings",
   "APP_URL": "App Url",
-  "CREATE_CUSTOM_APP": "Add Your Custom App"
+  "CREATE_CUSTOM_APP": "Add Your Custom App",
+  "BACK_TO_APP_LIST": "Back To App's List"
 }

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  TextField,
+  styled,
+} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 
@@ -17,6 +23,15 @@ import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
 import { buildAppExtra } from '../../../utils/itemExtra';
 import BaseItemForm from './NameForm';
+
+const StyledButton = styled(Button)(() => ({
+  padding: 0,
+  marginTop: '32px',
+  justifyContent: 'start',
+  '&:hover': {
+    background: 'none',
+  },
+}));
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
@@ -69,22 +84,10 @@ const AppForm = ({
   }
   return (
     <div>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant="h6">
-          {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
-        </Typography>
-        {isCustomApp && (
-          <Button
-            variant="text"
-            onClick={() => {
-              setIsCustomApp(false);
-              handleAppSelection({ url: '', name: '' });
-            }}
-          >
-            Back
-          </Button>
-        )}
-      </Box>
+      <Typography variant="h6">
+        {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
+      </Typography>
+
       <BaseItemForm
         setChanges={onChange}
         updatedProperties={
@@ -98,32 +101,48 @@ const AppForm = ({
       <br />
 
       {isCustomApp ? (
-        <Box sx={{ mt: 3 }}>
-          <TextField
-            id={CUSTOM_APP_URL_ID}
-            fullWidth
-            variant="standard"
-            autoFocus
-            label={translateBuilder(BUILDER.APP_URL)}
-            onChange={(e) =>
-              handleAppSelection({ url: e.target.value, name: '' })
-            }
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => {
-                      setIsCustomApp(false);
-                      handleAppSelection({ url: '', name: '' });
-                    }}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Box>
+        <>
+          <Box sx={{ mt: 3 }}>
+            <TextField
+              id={CUSTOM_APP_URL_ID}
+              fullWidth
+              variant="standard"
+              autoFocus
+              label={translateBuilder(BUILDER.APP_URL)}
+              onChange={(e) =>
+                handleAppSelection({ url: e.target.value, name: '' })
+              }
+              value={url}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => {
+                        handleAppSelection({
+                          url: ' ',
+                          name: item?.name || '',
+                        });
+                      }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          {isCustomApp && (
+            <StyledButton
+              variant="text"
+              onClick={() => {
+                setIsCustomApp(false);
+                handleAppSelection({ url: '', name: '' });
+              }}
+            >
+              {translateBuilder(BUILDER.BACK_TO_APP_LIST)}
+            </StyledButton>
+          )}
+        </>
       ) : (
         <Box
           sx={{
