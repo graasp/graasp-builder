@@ -153,6 +153,7 @@ Cypress.Commands.add(
     } else if (custom) {
       cy.get(`#${buildItemFormAppOptionId(name)}`).click();
       // check name get added automatically
+      cy.fillBaseItemModal({ name }, { confirm: false });
       cy.get(`#${CUSTOM_APP_URL_ID}`).type(CUSTOM_APP_URL);
     } else {
       cy.get(`#${buildItemFormAppOptionId(name)}`).click();
