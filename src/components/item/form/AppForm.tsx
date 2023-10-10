@@ -80,7 +80,10 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
             autoFocus
             label={translateBuilder(BUILDER.APP_URL)}
             onChange={(e) =>
-              handleAppSelection({ url: e.target.value, name: '' })
+              // todo: use better type here (partial of discriminated item is not a good type)
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              onChange({ extra: buildAppExtra({ url: e.target.value }) })
             }
             value={currentUrl}
           />
