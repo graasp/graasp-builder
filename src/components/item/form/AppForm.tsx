@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import CloseIcon from '@mui/icons-material/Close';
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  TextField,
-  styled,
-} from '@mui/material';
+import { Box, Stack, TextField } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
-import { AppItemType, DiscriminatedItem } from '@graasp/sdk';
-import { AppRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
@@ -22,154 +15,114 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
 import { buildAppExtra } from '../../../utils/itemExtra';
-import BaseItemForm from './NameForm';
-
-const StyledButton = styled(Button)(() => ({
-  padding: 0,
-  marginTop: '32px',
-  justifyContent: 'start',
-  '&:hover': {
-    background: 'none',
-  },
-}));
+import NameForm from './NameForm';
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
-  item?: AppItemType;
   updatedProperties: Partial<DiscriminatedItem>;
 };
 
-const AppForm = ({
-  onChange,
-  item,
-  updatedProperties = {},
-}: Props): JSX.Element => {
+const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const [newName, setNewName] = useState<string>(item?.name ?? '');
   const [isCustomApp, setIsCustomApp] = useState<boolean>(false);
 
   const handleAppSelection = (
-    newValue: AppRecord | null | { url: string; name: string },
+    newValue: null | { url: string; name: string },
   ) => {
+    // there is a new value to use
+    if (newValue) {
+      onChange({
+        name: newValue.name,
+        // todo: use better type here (partial of discriminated item is not a good type)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        extra: buildAppExtra({
+          url: newValue.url,
+        }),
+      });
+      return;
+    }
+    // there is no new value to use
     if (!newValue) {
-      return console.error('new value is undefined');
+      // unset the name and the url in the extra
+      onChange({ name: undefined, extra: undefined });
     }
-
-    const url = newValue?.url;
-    const name = newValue?.name ?? item?.name;
-    // TODO: improve types
-    const props = {
-      ...item,
-      extra: buildAppExtra({ url }),
-    } as unknown as AppItemType;
-    if (name) {
-      setNewName(name);
-      props.name = name;
-    }
-    return onChange(props);
   };
 
   const { useApps } = hooks;
   const { data, isLoading: isAppsLoading } = useApps();
 
-  const url = (updatedProperties?.extra?.app as { url: string })?.url;
+  const currentUrl = (updatedProperties?.extra?.app as { url: string })?.url;
 
   const addCustomApp = () => {
     setIsCustomApp(true);
-    handleAppSelection({ url: '', name: ' ' });
+    // maybe here we would like to not reset the name ?
+    handleAppSelection(null);
   };
 
   if (isAppsLoading) {
     return <Skeleton height={60} />;
   }
   return (
-    <div>
+    <Box>
       <Typography variant="h6">
         {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
       </Typography>
 
-      <BaseItemForm
-        setChanges={onChange}
-        updatedProperties={
-          {
-            ...item,
-            name: newName,
-            ...updatedProperties,
-          } as Partial<DiscriminatedItem>
-        }
-      />
-      <br />
+      <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
 
       {isCustomApp ? (
-        <>
-          <Box sx={{ mt: 3 }}>
-            <TextField
-              id={CUSTOM_APP_URL_ID}
-              fullWidth
-              variant="standard"
-              autoFocus
-              label={translateBuilder(BUILDER.APP_URL)}
-              onChange={(e) =>
-                handleAppSelection({ url: e.target.value, name: '' })
-              }
-              value={url}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => {
-                        handleAppSelection({
-                          url: ' ',
-                          name: item?.name || '',
-                        });
-                      }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-          {isCustomApp && (
-            <StyledButton
-              variant="text"
-              onClick={() => {
-                setIsCustomApp(false);
-                handleAppSelection({ url: '', name: '' });
-              }}
-            >
-              {translateBuilder(BUILDER.BACK_TO_APP_LIST)}
-            </StyledButton>
-          )}
-        </>
+        <Stack direction="column" alignItems="start" mt={1} spacing={2}>
+          <TextField
+            id={CUSTOM_APP_URL_ID}
+            fullWidth
+            variant="standard"
+            autoFocus
+            label={translateBuilder(BUILDER.APP_URL)}
+            onChange={(e) =>
+              handleAppSelection({ url: e.target.value, name: '' })
+            }
+            value={currentUrl}
+          />
+          <Button
+            variant="text"
+            onClick={() => {
+              setIsCustomApp(false);
+              handleAppSelection(null);
+            }}
+          >
+            {translateBuilder(BUILDER.BACK_TO_APP_LIST)}
+          </Button>
+        </Stack>
       ) : (
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 2,
-            mt: 3,
-          }}
-        >
+        <Grid2 container spacing={2} alignItems="stretch">
           {data?.map((ele) => (
             <AppCard
               key={ele.name}
-              url={ele?.url}
               name={ele.name}
               description={ele.description}
-              extra={ele?.extra}
-              selected={ele?.url === url}
-              handleSelect={handleAppSelection}
+              image={ele.extra.image}
+              selected={ele.url === currentUrl}
+              onClick={() => {
+                if (ele.url === currentUrl) {
+                  // reset fields
+                  handleAppSelection(null);
+                } else {
+                  handleAppSelection({ url: ele.url, name: ele.name });
+                }
+              }}
             />
           ))}
           <AppCard
             name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
-            handleSelect={addCustomApp}
+            description={translateBuilder(
+              BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
+            )}
+            onClick={addCustomApp}
           />
-        </Box>
+        </Grid2>
       )}
-    </div>
+    </Box>
   );
 };
 

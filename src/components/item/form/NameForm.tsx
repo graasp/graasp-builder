@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-import { TextField } from '@mui/material';
+import { TextField, useMediaQuery, useTheme } from '@mui/material';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
@@ -18,7 +18,9 @@ const NameForm = ({
   setChanges,
 }: NameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-
+  const theme = useTheme();
+  // when the screen is large, us only half of the width for the input.
+  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
     setChanges({ name: event.target.value });
   };
@@ -34,7 +36,9 @@ const NameForm = ({
       onChange={handleNameInput}
       // always shrink because setting name from defined app does not shrink automatically
       InputLabelProps={{ shrink: true }}
-      sx={{ width: '50%', my: 1 }}
+      // only take full width when on small screen size
+      fullWidth={!largeScreen}
+      sx={{ my: 1, width: largeScreen ? '50%' : undefined }}
     />
   );
 };
