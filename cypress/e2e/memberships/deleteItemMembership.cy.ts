@@ -1,5 +1,6 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
+  CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID,
   buildItemMembershipRowDeleteButtonId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
@@ -16,6 +17,7 @@ const deleteItemMembership = ({
   cy.get(`#${buildShareButtonId(itemId)}`).click();
   cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
   cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).click();
+  cy.get(`#${CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID}`).click();
 };
 
 describe('Delete Membership', () => {

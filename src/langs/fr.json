@@ -247,5 +247,10 @@
   "STATUS_TOOLTIP_IS_PUBLISHED": "Publié",
   "STATUS_TOOLTIP_IS_COLLAPSIBLE": "Minifié",
   "STATUS_TOOLTIP_SHOW_CHATBOX": "Chatbox visible",
-  "SETTINGS_FILE_SETTINGS_TITLE": "Paramètres du fichier"
+  "SETTINGS_FILE_SETTINGS_TITLE": "Paramètres du fichier",
+  "DELETE_MEMBERSHIP": "Supprimer l'autorisation",
+  "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirmer",
+  "DELETE_OWN_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer votre propre autorisation sur cet élément ? Vous perdrez l'accès à cet élément, cette action est irréversible.",
+  "DELETE_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'accès en {{permissionLevel}} sur cet élément à {{name}} ? Il leur sera impossible d'accéder à cet élément.",
+  "DELETE_LAST_ADMIN_ALERT_MESSAGE": "Vous n'êtes pas autorisé à supprimer le dernier administrateur de cet élément."
 }

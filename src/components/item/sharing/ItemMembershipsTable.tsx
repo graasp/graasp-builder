@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
@@ -19,6 +19,7 @@ import {
   buildItemMembershipRowId,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
+import DeleteItemDialog from './ConfirmMembership';
 import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
 import TableRowPermissionRenderer from './TableRowPermissionRenderer';
 
@@ -69,12 +70,23 @@ const ItemMembershipsTable = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
   const { mutate: editItemMembership } = mutations.useEditItemMembership();
   const { mutate: shareItem } = mutations.usePostItemMembership();
 
+  const [open, setOpen] = useState(false);
+  const [membershipToDelete, setMembershipToDelete] =
+    useState<ItemMembership | null>(null);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const onDelete = ({ instance }: { instance: ItemMembership }) => {
-    deleteItemMembership({ id: instance.id, itemId: item.id });
+    setMembershipToDelete(instance);
+    handleClickOpen();
   };
 
   // never changes, so we can use useMemo
@@ -196,16 +208,31 @@ const ItemMembershipsTable = ({
     });
 
   return (
-    <GraaspTable
-      columnDefs={columnDefs}
-      tableHeight={MEMBERSHIP_TABLE_HEIGHT}
-      rowData={memberships}
-      getRowId={getRowId}
-      rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
-      isClickable={false}
-      emptyMessage={emptyMessage}
-      countTextFunction={countTextFunction}
-    />
+    <>
+      <GraaspTable
+        columnDefs={columnDefs}
+        tableHeight={MEMBERSHIP_TABLE_HEIGHT}
+        rowData={memberships}
+        getRowId={getRowId}
+        rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
+        isClickable={false}
+        emptyMessage={emptyMessage}
+        countTextFunction={countTextFunction}
+      />
+      {open && (
+        <DeleteItemDialog
+          open={open}
+          handleClose={handleClose}
+          item={item}
+          membershipToDelete={membershipToDelete}
+          hasOnlyOneAdmin={
+            memberships.filter(
+              (per) => per.permission === PermissionLevel.Admin,
+            ).length === 1
+          }
+        />
+      )}
+    </>
   );
 };
 
