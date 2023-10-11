@@ -1,7 +1,6 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
 import { Stack } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { ItemType } from '@graasp/sdk';
@@ -124,39 +123,35 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
       <Stack spacing={3} mb={3}>
-        <Grid item sm={6}>
-          <Typography variant="h5">
-            {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
-          </Typography>
-          <Typography variant="body1">
-            {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
-          </Typography>
-          <input
-            type="file"
-            accept="image/*"
-            onInput={onSelectFile}
-            // onChange is successfully triggered in test
-            onChange={onSelectFile}
-            ref={inputRef}
-            className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
-          />
-        </Grid>
-        <Grid item sm={6} xs={12}>
-          <Thumbnail
-            id={itemId}
-            isLoading={isLoading}
-            // TODO: fix type
-            url={
-              imgUrl ??
-              (item as EmbeddedLinkItemTypeRecord)?.extra?.[
-                ItemType.LINK
-              ]?.thumbnails?.first()
-            }
-            alt={alt}
-            maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
-            maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-          />
-        </Grid>
+        <Typography variant="h5">
+          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
+        </Typography>
+        <Typography variant="body1">
+          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
+        </Typography>
+        <input
+          type="file"
+          accept="image/*"
+          onInput={onSelectFile}
+          // onChange is successfully triggered in test
+          onChange={onSelectFile}
+          ref={inputRef}
+          className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
+        />
+        <Thumbnail
+          id={itemId}
+          isLoading={isLoading}
+          // TODO: fix type
+          url={
+            imgUrl ??
+            (item as EmbeddedLinkItemTypeRecord)?.extra?.[
+              ItemType.LINK
+            ]?.thumbnails?.first()
+          }
+          alt={alt}
+          maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
+          maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
+        />
       </Stack>
       {fileSource && (
         <CropModal
