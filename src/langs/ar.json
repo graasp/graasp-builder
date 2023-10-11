@@ -257,5 +257,7 @@
   "SETTINGS_FILE_SETTINGS_TITLE": "إعدادات الملف",
   "APP_URL": "رابط التطبيق",
   "CREATE_CUSTOM_APP": "أنشيء تطبيقاً خاصاً",
-  "BACK_TO_APP_LIST": "الرجوع إلى قائمة التطبيقات"
+  "BACK_TO_APP_LIST": "الرجوع إلى قائمة التطبيقات",
+  "DOWNGRADE_PERMISSION_TITLE": "خفض مستوى الإذن الخاص بك",
+  "DOWNGRADE_PERMISSION_DESCRIPTION": "أنت غير مخول لك لخفض مستوى الإذن الخاص بك"
 }

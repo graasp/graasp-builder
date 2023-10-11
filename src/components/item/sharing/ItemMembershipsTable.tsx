@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
-import { ItemMembership, PermissionLevel } from '@graasp/sdk';
+import { ItemMembership, Member, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
@@ -59,6 +59,7 @@ type Props = {
   emptyMessage?: string;
   showEmail?: boolean;
   readOnly?: boolean;
+  currentMember: Member | undefined;
 };
 
 const ItemMembershipsTable = ({
@@ -67,6 +68,7 @@ const ItemMembershipsTable = ({
   emptyMessage,
   showEmail = true,
   readOnly = false,
+  currentMember,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -101,6 +103,7 @@ const ItemMembershipsTable = ({
     });
     const PermissionRenderer = TableRowPermissionRenderer({
       item,
+      currentMember,
       editFunction: ({
         value,
         instance,

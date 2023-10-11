@@ -86,6 +86,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
           )}
           memberships={authorizedMemberships}
           readOnly={!canEditSettings}
+          currentMember={currentMember}
         />
 
         {/* show authenticated members if login schema is defined
@@ -105,6 +106,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
               )}
               showEmail={false}
               readOnly={!canEditSettings}
+              currentMember={currentMember}
             />
           </>
         )}

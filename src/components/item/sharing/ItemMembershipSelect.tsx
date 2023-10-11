@@ -52,6 +52,7 @@ const ItemMembershipSelect = ({
         text: enumT(v),
       }))}
       buildOptionId={buildPermissionOptionId}
+      value={permission}
       defaultValue={permission}
       onChange={onChange}
       displayEmpty={displayEmpty}
