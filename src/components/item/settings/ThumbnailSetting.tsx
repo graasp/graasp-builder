@@ -1,6 +1,6 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import Grid from '@mui/material/Grid';
+import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { ItemType } from '@graasp/sdk';
@@ -115,49 +115,44 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   };
 
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
-  const defaultImageComponent = <img src={defaultImage} alt={alt} />;
+  const imgUrl = thumbnailUrl ?? defaultImage;
 
   return (
     <>
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
-      <Grid container justifyContent="space-between">
-        <Grid item sm={6}>
-          <Typography variant="h5">
-            {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
-          </Typography>
-          <Typography variant="body1">
-            {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
-          </Typography>
-          <input
-            type="file"
-            accept="image/*"
-            onInput={onSelectFile}
-            // onChange is successfully triggered in test
-            onChange={onSelectFile}
-            ref={inputRef}
-            className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
-          />
-        </Grid>
-        <Grid item sm={6} textAlign="right">
-          <Thumbnail
-            id={itemId}
-            isLoading={isLoading}
-            // TODO: fix type
-            url={
-              thumbnailUrl ??
-              (item as EmbeddedLinkItemTypeRecord)?.extra?.[
-                ItemType.LINK
-              ]?.thumbnails?.first()
-            }
-            alt={alt}
-            maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
-            maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-            defaultComponent={defaultImageComponent}
-          />
-        </Grid>
-      </Grid>
+      <Stack spacing={3} mb={3}>
+        <Typography variant="h5">
+          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
+        </Typography>
+        <Typography variant="body1">
+          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
+        </Typography>
+        <input
+          type="file"
+          accept="image/*"
+          onInput={onSelectFile}
+          // onChange is successfully triggered in test
+          onChange={onSelectFile}
+          ref={inputRef}
+          className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
+        />
+        <Thumbnail
+          id={itemId}
+          isLoading={isLoading}
+          // TODO: fix type
+          url={
+            imgUrl ??
+            (item as EmbeddedLinkItemTypeRecord)?.extra?.[
+              ItemType.LINK
+            ]?.thumbnails?.first()
+          }
+          alt={alt}
+          maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
+          maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
+        />
+      </Stack>
       {fileSource && (
         <CropModal
           open={showCropModal}
