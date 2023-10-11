@@ -1,5 +1,6 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
+import { Stack } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -115,14 +116,14 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   };
 
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
-  const defaultImageComponent = <img src={defaultImage} alt={alt} />;
+  const imgUrl = thumbnailUrl ?? defaultImage;
 
   return (
     <>
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
-      <Grid container justifyContent="space-between">
+      <Stack spacing={3} mb={3}>
         <Grid item sm={6}>
           <Typography variant="h5">
             {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
@@ -140,13 +141,13 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
             className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
           />
         </Grid>
-        <Grid item sm={6} textAlign="right">
+        <Grid item sm={6} xs={12}>
           <Thumbnail
             id={itemId}
             isLoading={isLoading}
             // TODO: fix type
             url={
-              thumbnailUrl ??
+              imgUrl ??
               (item as EmbeddedLinkItemTypeRecord)?.extra?.[
                 ItemType.LINK
               ]?.thumbnails?.first()
@@ -154,10 +155,9 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
             alt={alt}
             maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
             maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-            defaultComponent={defaultImageComponent}
           />
         </Grid>
-      </Grid>
+      </Stack>
       {fileSource && (
         <CropModal
           open={showCropModal}
