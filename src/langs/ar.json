@@ -256,5 +256,6 @@
   "STATUS_TOOLTIP_SHOW_CHATBOX": "صندوق الدردشة مرئي",
   "SETTINGS_FILE_SETTINGS_TITLE": "إعدادات الملف",
   "APP_URL": "رابط التطبيق",
-  "CREATE_CUSTOM_APP": "أنشيء تطبيقاً خاصاً"
+  "CREATE_CUSTOM_APP": "أنشيء تطبيقاً خاصاً",
+  "BACK_TO_APP_LIST": "الرجوع إلى قائمة التطبيقات"
 }

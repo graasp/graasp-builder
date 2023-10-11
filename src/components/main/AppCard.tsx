@@ -1,71 +1,54 @@
-import React from 'react';
-
-import CloseIcon from '@mui/icons-material/Close';
 import {
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
-  IconButton,
   Typography,
 } from '@mui/material';
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 import { buildItemFormAppOptionId } from '@/config/selectors';
 
 import AddNewIcon from '../../resources/addNew.png';
 
 export type Props = {
-  url?: string;
-  description?: string;
+  description: string;
   name: string;
-  extra?: { image?: string };
-  handleSelect: any;
+  image?: string;
+  onClick: () => void;
   selected?: boolean;
 };
 
 const AppCard = ({
-  url,
   description,
   name,
-  extra,
-  handleSelect,
+  image,
+  onClick,
   selected = false,
-}: Props): JSX.Element => {
-  const clearApp = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    handleSelect({ url: '', name: '' });
-  };
-  return (
+}: Props): JSX.Element => (
+  <Grid2 xs={12} sm={6} md={4} display="flex">
     <Card
       sx={{
-        maxWidth: 300,
-        border: selected ? '2px solid #5050d2' : 'none',
-        position: 'relative',
+        width: '100%',
+        outline: selected ? '2px solid #5050d2' : '',
       }}
-      onClick={() => {
-        handleSelect({ url, description, name, extra });
-      }}
+      onClick={onClick}
       id={buildItemFormAppOptionId(name)}
     >
-      {selected && (
-        <IconButton
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            zIndex: 1,
-            color: 'white',
-          }}
-          onClick={clearApp}
-        >
-          <CloseIcon />
-        </IconButton>
-      )}
-      <CardActionArea>
+      <CardActionArea
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          height: '100%',
+        }}
+      >
         <CardMedia
           component="img"
-          height="100"
-          image={extra?.image || AddNewIcon}
+          // replace with aspectRatio: 1 to display a square image
+          sx={{ height: 100 }}
+          image={image || AddNewIcon}
           alt={name}
         />
         <CardContent>
@@ -87,7 +70,7 @@ const AppCard = ({
         </CardContent>
       </CardActionArea>
     </Card>
-  );
-};
+  </Grid2>
+);
 
 export default AppCard;
