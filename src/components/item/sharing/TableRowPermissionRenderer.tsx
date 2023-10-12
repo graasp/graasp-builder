@@ -54,12 +54,6 @@ function TableRowPermissionRenderer<
     const onChangePermission: ItemMembershipSelectProps['onChange'] = (e) => {
       const value = e.target.value as PermissionLevel;
       // editing a parent's instance from a child should create a new instance
-      console.log({
-        value,
-        instancePer: instance.permission,
-        instanceMem: instance?.member?.id,
-        currentMember: currentMember?.id,
-      });
       if (
         (value === PermissionLevel.Read || value === PermissionLevel.Write) &&
         instance.permission === PermissionLevel.Admin &&
