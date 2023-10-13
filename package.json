@@ -41,7 +41,7 @@
     "date-fns": "2.30.0",
     "filesize": "10.0.12",
     "http-status-codes": "2.2.0",
-    "immutable": "4.3.2",
+    "immutable": "4.3.4",
     "katex": "0.16.8",
     "lodash.groupby": "4.6.0",
     "lodash.partition": "4.6.0",
