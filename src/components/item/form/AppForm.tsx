@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { Box, Stack, TextField } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
@@ -44,6 +44,8 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
     }
     // there is no new value to use
     if (!newValue) {
+      // eslint-disable-next-line no-console
+      console.log('got null value');
       // unset the name and the url in the extra
       onChange({ name: undefined, extra: undefined });
     }
@@ -52,24 +54,26 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
   const { useApps } = hooks;
   const { data, isLoading: isAppsLoading } = useApps();
 
-  const currentUrl = (updatedProperties?.extra?.app as { url: string })?.url;
+  const currentUrl =
+    updatedProperties.type === ItemType.APP
+      ? updatedProperties.extra?.app?.url
+      : '';
 
   const addCustomApp = () => {
     setIsCustomApp(true);
     // maybe here we would like to not reset the name ?
     handleAppSelection(null);
   };
-
+  // eslint-disable-next-line no-console
+  console.log(currentUrl);
   if (isAppsLoading) {
     return <Skeleton height={60} />;
   }
   return (
-    <Box>
+    <Stack direction="column" height="100%" spacing={2}>
       <Typography variant="h6">
         {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
       </Typography>
-
-      <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
 
       {isCustomApp ? (
         <Stack direction="column" alignItems="start" mt={1} spacing={2}>
@@ -98,7 +102,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
           </Button>
         </Stack>
       ) : (
-        <Grid2 container spacing={2} alignItems="stretch">
+        <Grid2 container spacing={2} alignItems="stretch" overflow="scroll">
           {data?.map((ele) => (
             <AppCard
               key={ele.name}
@@ -109,6 +113,8 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
               onClick={() => {
                 if (ele.url === currentUrl) {
                   // reset fields
+                  // eslint-disable-next-line no-console
+                  console.log('reset');
                   handleAppSelection(null);
                 } else {
                   handleAppSelection({ url: ele.url, name: ele.name });
@@ -125,7 +131,8 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
           />
         </Grid2>
       )}
-    </Box>
+      <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
+    </Stack>
   );
 };
 

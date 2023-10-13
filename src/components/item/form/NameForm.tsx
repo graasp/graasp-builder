@@ -24,6 +24,8 @@ const NameForm = ({
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
     setChanges({ name: event.target.value });
   };
+  // eslint-disable-next-line no-console
+  console.log('name input', updatedProperties?.name ?? item?.name);
 
   return (
     <TextField
@@ -32,7 +34,7 @@ const NameForm = ({
       required={required}
       id={ITEM_FORM_NAME_INPUT_ID}
       label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
-      value={updatedProperties?.name ?? item?.name}
+      value={updatedProperties?.name ?? item?.name ?? ''}
       onChange={handleNameInput}
       // always shrink because setting name from defined app does not shrink automatically
       InputLabelProps={{ shrink: true }}
