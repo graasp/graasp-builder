@@ -3,6 +3,7 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  Skeleton,
   Typography,
   styled,
 } from '@mui/material';
@@ -16,6 +17,7 @@ const StyledCardActionArea = styled(CardActionArea)({
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   height: '100%',
+  width: '100%',
 });
 
 const StyledAppBackground = styled(CardMedia)({
@@ -26,10 +28,10 @@ const StyledAppBackground = styled(CardMedia)({
 }) as typeof CardMedia;
 
 export type Props = {
-  description: string;
-  name: string;
+  description?: string;
+  name?: string;
   image?: string;
-  onClick: () => void;
+  onClick?: () => void;
   selected?: boolean;
 };
 
@@ -40,42 +42,47 @@ const AppCard = ({
   onClick,
   selected = false,
 }: Props): JSX.Element => (
+  <Card
+    sx={{
+      width: '100%',
+      outline: selected ? '2px solid #5050d2' : '',
+    }}
+    onClick={onClick}
+    id={buildItemFormAppOptionId(name)}
+  >
+    <StyledCardActionArea>
+      <StyledAppBackground
+        component={image ? 'img' : 'div'}
+        src={image}
+        alt={name}
+      />
+      <CardContent sx={{ width: '100%' }}>
+        <Typography gutterBottom variant="subtitle2" component="div">
+          {name || <Skeleton />}
+        </Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            display: '-webkit-box',
+            overflow: 'hidden',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 3,
+          }}
+        >
+          {description || <Skeleton height={45} />}
+        </Typography>
+      </CardContent>
+    </StyledCardActionArea>
+  </Card>
+);
+const AppCardWrapper = (props: Props): JSX.Element => (
   <Grid2 xs={12} sm={6} md={4} display="flex">
-    <Card
-      sx={{
-        width: '100%',
-        outline: selected ? '2px solid #5050d2' : '',
-      }}
-      onClick={onClick}
-      id={buildItemFormAppOptionId(name)}
-    >
-      <StyledCardActionArea>
-        <StyledAppBackground
-          component={image ? 'img' : 'div'}
-          src={image}
-          alt={name}
-        />
-
-        <CardContent>
-          <Typography gutterBottom variant="subtitle2" component="div">
-            {name}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{
-              display: '-webkit-box',
-              overflow: 'hidden',
-              WebkitBoxOrient: 'vertical',
-              WebkitLineClamp: 3,
-            }}
-          >
-            {description}
-          </Typography>
-        </CardContent>
-      </StyledCardActionArea>
-    </Card>
+    <AppCard
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    />
   </Grid2>
 );
 
-export default AppCard;
+export default AppCardWrapper;
