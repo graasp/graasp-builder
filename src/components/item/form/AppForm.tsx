@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { Stack, TextField } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
+import { Alert, Stack, TextField } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
@@ -61,79 +62,86 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
 
   const addCustomApp = () => {
     setIsCustomApp(true);
-    // maybe here we would like to not reset the name ?
     handleAppSelection(null);
   };
-  // eslint-disable-next-line no-console
-  console.log(currentUrl);
+
+  if (data) {
+    return (
+      <Stack direction="column" height="100%" spacing={2}>
+        <Typography variant="h6">
+          {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
+        </Typography>
+
+        {isCustomApp ? (
+          <Stack direction="column" alignItems="start" mt={1} spacing={2}>
+            <Button
+              startIcon={<ArrowBack fontSize="small" />}
+              variant="text"
+              onClick={() => {
+                setIsCustomApp(false);
+                handleAppSelection(null);
+              }}
+            >
+              {translateBuilder(BUILDER.CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON)}
+            </Button>
+            <Typography>
+              {translateBuilder(BUILDER.CREATE_CUSTOM_APP_HELPER_TEXT)}
+            </Typography>
+            <TextField
+              id={CUSTOM_APP_URL_ID}
+              fullWidth
+              variant="standard"
+              autoFocus
+              label={translateBuilder(BUILDER.APP_URL)}
+              onChange={(e) =>
+                // todo: use better type here (partial of discriminated item is not a good type)
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                onChange({ extra: buildAppExtra({ url: e.target.value }) })
+              }
+              value={currentUrl}
+            />
+          </Stack>
+        ) : (
+          <Grid2 container spacing={2} alignItems="stretch" overflow="scroll">
+            {data?.map((ele) => (
+              <AppCard
+                key={ele.name}
+                name={ele.name}
+                description={ele.description}
+                image={ele.extra.image}
+                selected={ele.url === currentUrl}
+                onClick={() => {
+                  if (ele.url === currentUrl) {
+                    // reset fields
+                    // eslint-disable-next-line no-console
+                    console.log('reset');
+                    handleAppSelection(null);
+                  } else {
+                    handleAppSelection({ url: ele.url, name: ele.name });
+                  }
+                }}
+              />
+            ))}
+            <AppCard
+              name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
+              description={translateBuilder(
+                BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
+              )}
+              onClick={addCustomApp}
+            />
+          </Grid2>
+        )}
+        <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
+      </Stack>
+    );
+  }
+
   if (isAppsLoading) {
     return <Skeleton height={60} />;
   }
-  return (
-    <Stack direction="column" height="100%" spacing={2}>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
-      </Typography>
 
-      {isCustomApp ? (
-        <Stack direction="column" alignItems="start" mt={1} spacing={2}>
-          <TextField
-            id={CUSTOM_APP_URL_ID}
-            fullWidth
-            variant="standard"
-            autoFocus
-            label={translateBuilder(BUILDER.APP_URL)}
-            onChange={(e) =>
-              // todo: use better type here (partial of discriminated item is not a good type)
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              onChange({ extra: buildAppExtra({ url: e.target.value }) })
-            }
-            value={currentUrl}
-          />
-          <Button
-            variant="text"
-            onClick={() => {
-              setIsCustomApp(false);
-              handleAppSelection(null);
-            }}
-          >
-            {translateBuilder(BUILDER.BACK_TO_APP_LIST)}
-          </Button>
-        </Stack>
-      ) : (
-        <Grid2 container spacing={2} alignItems="stretch" overflow="scroll">
-          {data?.map((ele) => (
-            <AppCard
-              key={ele.name}
-              name={ele.name}
-              description={ele.description}
-              image={ele.extra.image}
-              selected={ele.url === currentUrl}
-              onClick={() => {
-                if (ele.url === currentUrl) {
-                  // reset fields
-                  // eslint-disable-next-line no-console
-                  console.log('reset');
-                  handleAppSelection(null);
-                } else {
-                  handleAppSelection({ url: ele.url, name: ele.name });
-                }
-              }}
-            />
-          ))}
-          <AppCard
-            name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
-            description={translateBuilder(
-              BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
-            )}
-            onClick={addCustomApp}
-          />
-        </Grid2>
-      )}
-      <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
-    </Stack>
-  );
+  return <Alert>{translateBuilder(BUILDER.APP_LIST_LOADING_FAILED)}</Alert>;
 };
 
 export default AppForm;
