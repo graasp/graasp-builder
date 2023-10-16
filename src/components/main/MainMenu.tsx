@@ -1,11 +1,19 @@
 import { useLocation, useNavigate } from 'react-router';
 
+import { BugReport } from '@mui/icons-material';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import Star from '@mui/icons-material/Star';
-import { Box, Button, styled, useTheme } from '@mui/material';
+import {
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Stack,
+  styled,
+  useTheme,
+} from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { DEFAULT_LANG } from '@graasp/sdk';
@@ -25,25 +33,18 @@ import {
 import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
-const BottomContainer = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  bottom: 0,
-  width: '100%',
-  padding: theme.spacing(2),
-}));
+// const StyledLink = styled('a')(({ theme }) => ({
+//   display: 'flex',
+//   alignItems: 'center',
+//   boxSizing: 'border-box',
+//   color: 'grey',
+//   textDecoration: 'none',
+//   marginTop: theme.spacing(1),
 
-const StyledLink = styled('a')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  boxSizing: 'border-box',
-  color: 'grey',
-  textDecoration: 'none',
-  marginTop: theme.spacing(1),
-
-  '&:hover': {
-    color: theme.palette.primary.main,
-  },
-}));
+//   '&:hover': {
+//     color: theme.palette.primary.main,
+//   },
+// }));
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   '&:hover': {
     color: theme.palette.primary.main,
@@ -70,23 +71,31 @@ const MainMenu = (): JSX.Element => {
     // this will be reported in sentry user feedback issues
     showReportDialog({
       eventId,
+      title: translateBuilder(BUILDER.REPORT_A_BUG),
       lang: i18n.language || DEFAULT_LANG,
     });
   };
 
-  const resourceLinks = (
-    <BottomContainer>
-      <Button onClick={openBugReport}>
-        {translateBuilder(BUILDER.REPORT_A_BUG)}
-      </Button>
+  const reportBugLink = (
+    <ListItem disablePadding>
+      <ListItemButton onClick={openBugReport}>
+        <ListItemIcon>
+          <BugReport />
+        </ListItemIcon>
+        <ListItemText>{translateBuilder(BUILDER.REPORT_A_BUG)}</ListItemText>
+      </ListItemButton>
+    </ListItem>
+  );
 
-      <StyledLink href={TUTORIALS_LINK} target="_blank">
+  const resourceLinks = (
+    <ListItem disablePadding>
+      <ListItemButton href={TUTORIALS_LINK} target="_blank">
         <ListItemIcon>
           <AutoStoriesIcon />
         </ListItemIcon>
-        {translateBuilder('Tutorials')}
-      </StyledLink>
-    </BottomContainer>
+        <ListItemText>{translateBuilder('Tutorials')}</ListItemText>
+      </ListItemButton>
+    </ListItem>
   );
 
   const renderAuthenticatedMemberMenuItems = () => {
@@ -101,7 +110,7 @@ const MainMenu = (): JSX.Element => {
     }
 
     return (
-      <>
+      <div>
         <MenuItem
           onClick={() => goTo(HOME_PATH)}
           selected={pathname === HOME_PATH}
@@ -138,14 +147,19 @@ const MainMenu = (): JSX.Element => {
           text={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
           icon={<DeleteIcon />}
         />
-      </>
+      </div>
     );
   };
 
   return (
     <GraaspMainMenu fullHeight>
-      {renderAuthenticatedMemberMenuItems()}
-      {resourceLinks}
+      <Stack direction="column" height="100%" justifyContent="space-between">
+        {renderAuthenticatedMemberMenuItems()}
+        <div>
+          {reportBugLink}
+          {resourceLinks}
+        </div>
+      </Stack>
     </GraaspMainMenu>
   );
 };

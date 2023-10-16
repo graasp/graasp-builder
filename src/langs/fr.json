@@ -247,5 +247,6 @@
   "STATUS_TOOLTIP_IS_PUBLISHED": "Publié",
   "STATUS_TOOLTIP_IS_COLLAPSIBLE": "Minifié",
   "STATUS_TOOLTIP_SHOW_CHATBOX": "Chatbox visible",
-  "SETTINGS_FILE_SETTINGS_TITLE": "Paramètres du fichier"
+  "SETTINGS_FILE_SETTINGS_TITLE": "Paramètres du fichier",
+  "REPORT_A_BUG": "Signaler un problème"
 }
