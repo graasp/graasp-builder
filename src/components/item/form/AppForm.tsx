@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { Box, Stack, TextField } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
+import { ArrowBack } from '@mui/icons-material';
+import { Alert, Stack, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
@@ -16,6 +16,57 @@ import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
 import { buildAppExtra } from '../../../utils/itemExtra';
 import NameForm from './NameForm';
+
+type AppGridProps = {
+  currentUrl: string;
+  handleSelection: (value: null | { name: string; url: string }) => void;
+};
+
+const AppGrid = ({
+  currentUrl,
+  handleSelection,
+}: AppGridProps): JSX.Element | JSX.Element[] => {
+  const { useApps } = hooks;
+  const { data, isLoading } = useApps();
+
+  const { t: translateBuilder } = useBuilderTranslation();
+
+  if (data) {
+    return (
+      <>
+        {data.map((ele) => (
+          <AppCard
+            key={ele.name}
+            name={ele.name}
+            description={ele.description}
+            image={ele.extra.image}
+            selected={ele.url === currentUrl}
+            onClick={() => {
+              if (ele.url === currentUrl) {
+                // reset fields
+                handleSelection(null);
+              } else {
+                handleSelection({ url: ele.url, name: ele.name });
+              }
+            }}
+          />
+        ))}
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return Array(7)
+      .fill(0)
+      .map(() => <AppCard />);
+  }
+
+  return (
+    <Alert severity="error">
+      {translateBuilder(BUILDER.APP_LIST_LOADING_FAILED)}
+    </Alert>
+  );
+};
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
@@ -49,30 +100,37 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
     }
   };
 
-  const { useApps } = hooks;
-  const { data, isLoading: isAppsLoading } = useApps();
-
-  const currentUrl = (updatedProperties?.extra?.app as { url: string })?.url;
+  const currentUrl =
+    (updatedProperties.type === ItemType.APP &&
+      updatedProperties.extra?.app?.url) ||
+    '';
 
   const addCustomApp = () => {
     setIsCustomApp(true);
-    // maybe here we would like to not reset the name ?
     handleAppSelection(null);
   };
 
-  if (isAppsLoading) {
-    return <Skeleton height={60} />;
-  }
   return (
-    <Box>
+    <Stack direction="column" height="100%" spacing={2}>
       <Typography variant="h6">
         {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
       </Typography>
 
-      <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
-
       {isCustomApp ? (
         <Stack direction="column" alignItems="start" mt={1} spacing={2}>
+          <Button
+            startIcon={<ArrowBack fontSize="small" />}
+            variant="text"
+            onClick={() => {
+              setIsCustomApp(false);
+              handleAppSelection(null);
+            }}
+          >
+            {translateBuilder(BUILDER.CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON)}
+          </Button>
+          <Typography>
+            {translateBuilder(BUILDER.CREATE_CUSTOM_APP_HELPER_TEXT)}
+          </Typography>
           <TextField
             id={CUSTOM_APP_URL_ID}
             fullWidth
@@ -87,35 +145,13 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
             }
             value={currentUrl}
           />
-          <Button
-            variant="text"
-            onClick={() => {
-              setIsCustomApp(false);
-              handleAppSelection(null);
-            }}
-          >
-            {translateBuilder(BUILDER.BACK_TO_APP_LIST)}
-          </Button>
         </Stack>
       ) : (
-        <Grid2 container spacing={2} alignItems="stretch">
-          {data?.map((ele) => (
-            <AppCard
-              key={ele.name}
-              name={ele.name}
-              description={ele.description}
-              image={ele.extra.image}
-              selected={ele.url === currentUrl}
-              onClick={() => {
-                if (ele.url === currentUrl) {
-                  // reset fields
-                  handleAppSelection(null);
-                } else {
-                  handleAppSelection({ url: ele.url, name: ele.name });
-                }
-              }}
-            />
-          ))}
+        <Grid2 container spacing={2} alignItems="stretch" overflow="scroll">
+          <AppGrid
+            currentUrl={currentUrl}
+            handleSelection={handleAppSelection}
+          />
           <AppCard
             name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
             description={translateBuilder(
@@ -125,7 +161,8 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
           />
         </Grid2>
       )}
-    </Box>
+      <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
+    </Stack>
   );
 };
 
