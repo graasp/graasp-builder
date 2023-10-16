@@ -162,9 +162,9 @@
   "LINK_DEFAULT_NAME": "My Link",
   "MOVE_BUTTON": "Move",
   "MOVE_ITEM_MODAL_TITLE": "Where do you want to move this item?",
-  "MY_ITEMS_TITLE": "My Items",
+  "MY_ITEMS_TITLE": "My Graasp",
   "NAVIGATION_FAVORITE_ITEMS_TITLE": "Favorite Items",
-  "NAVIGATION_MY_ITEMS_TITLE": "My Items",
+  "NAVIGATION_MY_ITEMS_TITLE": "My Graasp",
   "NAVIGATION_SHARED_ITEMS_TITLE": "Shared Items",
   "NEW_ITEM_APP_TAB_TEXT": "Application",
   "NEW_ITEM_BUTTON_TOOLTIP": "Create new item",
@@ -253,6 +253,14 @@
   "FALLBACK_TEXT": "Sorry, something went wrong. Try again later.",
   "FALLBACK_BACK_TO_HOME": "Back to homepage",
   "REPORT_A_BUG": "Report a Bug",
+  "DELETE_MEMBERSHIP": "Delete Membership",
+  "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirm",
+  "DELETE_OWN_MEMBERSHIP_MESSAGE": "Are you sure you want to delete your own permission on this item? You will loose access to this item, this action can not be undone.",
+  "DELETE_MEMBERSHIP_MESSAGE": "Are you sure you want to remove {{permissionLevel}} access on this item for {{name}}? They will loose access to this item.",
+  "DELETE_LAST_ADMIN_ALERT_MESSAGE": "You are not allowed to delete this admin as this is the only admin",
+  "APPROVE_BUTTON_TEXT": "OK",
   "APP_URL": "App Url",
-  "CREATE_CUSTOM_APP": "Add Your Custom App"
+  "CREATE_CUSTOM_APP": "Add Your Custom App",
+  "CREATE_CUSTOM_APP_DESCRIPTION": "Advanced option to create a custom app",
+  "BACK_TO_APP_LIST": "Back To App's List"
 }

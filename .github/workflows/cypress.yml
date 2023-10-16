@@ -46,7 +46,6 @@ jobs:
           VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
 
-
       #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
       - name: Cypress run
         uses: cypress-io/github-action@v5
@@ -54,6 +53,7 @@ jobs:
           install: false
           # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
           start: yarn preview:test
+          browser: chrome
           quiet: true
           config-file: cypress.config.ts
           cache-key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}

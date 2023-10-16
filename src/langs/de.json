@@ -152,9 +152,9 @@
   "LINK_DEFAULT_NAME": "Meine Verbindung",
   "MOVE_BUTTON": "Verschieben",
   "MOVE_ITEM_MODAL_TITLE": "Wohin möchten Sie dieses Element verschieben?",
-  "MY_ITEMS_TITLE": "Meine Elemente",
+  "MY_ITEMS_TITLE": "Mein Graasp",
   "NAVIGATION_FAVORITE_ITEMS_TITLE": "Lieblingselemente",
-  "NAVIGATION_MY_ITEMS_TITLE": "Meine Elemente",
+  "NAVIGATION_MY_ITEMS_TITLE": "Mein Graasp",
   "NAVIGATION_SHARED_ITEMS_TITLE": "Geteilte Elemente",
   "NEW_ITEM_APP_TAB_TEXT": "Anwendung",
   "NEW_ITEM_BUTTON_TOOLTIP": "Neues Element erstellen",
@@ -227,5 +227,10 @@
   "USER_SWITCH_PROFILE_BUTTON": "Siehe Profil",
   "USER_SWITCH_SIGN_OUT_BUTTON": "Abmelden",
   "USER_SWITCH_SIGNED_OUT_TOOLTIP": "Sie sind nicht angemeldet.",
-  "USER_SWITCH_SWITCH_USER_TEXT": "Melden Sie sich mit einem anderen Konto an"
+  "USER_SWITCH_SWITCH_USER_TEXT": "Melden Sie sich mit einem anderen Konto an",
+  "DELETE_MEMBERSHIP": "Mitgliedschaft löschen",
+  "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Bestätigen",
+  "DELETE_OWN_MEMBERSHIP_MESSAGE": "Sind Sie sicher, dass Sie Ihre eigene Berechtigung für dieses Element entfernen möchten? Sie verlieren den Zugriff auf dieses Element, diese Aktion ist irreversibel.",
+  "DELETE_MEMBERSHIP_MESSAGE": "Sind Sie sicher, dass Sie {{permissionLevel}} Zugang für diesen Artikel für {{name}} entfernen möchten?",
+  "DELETE_LAST_ADMIN_ALERT_MESSAGE": "Sie dürfen diesen Administrator nicht löschen, da dies der einzige Administrator ist"
 }

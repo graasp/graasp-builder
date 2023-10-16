@@ -33,18 +33,6 @@ import {
 import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
-// const StyledLink = styled('a')(({ theme }) => ({
-//   display: 'flex',
-//   alignItems: 'center',
-//   boxSizing: 'border-box',
-//   color: 'grey',
-//   textDecoration: 'none',
-//   marginTop: theme.spacing(1),
-
-//   '&:hover': {
-//     color: theme.palette.primary.main,
-//   },
-// }));
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   '&:hover': {
     color: theme.palette.primary.main,

@@ -246,6 +246,12 @@
   "FALLBACK_TEXT": "حدث خطأ غير متوقع، يرحى المحاولة لاحقاً",
   "FALLBACK_BACK_TO_HOME": "الرجوع إلى الصفحة الرئيسية",
   "REPORT_A_BUG": "الإبلاغ عن مشكلة",
+  "DELETE_MEMBERSHIP": "حذف العضوية",
+  "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "تأكيد",
+  "DELETE_OWN_MEMBERSHIP_MESSAGE": "هل أنت متأكد من إلغاء عضويتك على هذا العنصر؟",
+  "DELETE_MEMBERSHIP_MESSAGE": "هل أنت متأكد من إزالة عضوية {{name}}ك {{permissionLevel}} على هذا العنصر؟",
+  "DELETE_LAST_ADMIN_ALERT_MESSAGE": "لا يمكنك إلغاء عضوية هذا الأدمن حيث أنه الأدمن الوحيد",
+  "APPROVE_BUTTON_TEXT": "موافق",
   "STATUS_TOOLTIP_IS_PINNED": "مُثبت",
   "STATUS_TOOLTIP_IS_HIDDEN": "مخفي",
   "STATUS_TOOLTIP_IS_PUBLIC": "عام",
@@ -254,5 +260,6 @@
   "STATUS_TOOLTIP_SHOW_CHATBOX": "صندوق الدردشة مرئي",
   "SETTINGS_FILE_SETTINGS_TITLE": "إعدادات الملف",
   "APP_URL": "رابط التطبيق",
-  "CREATE_CUSTOM_APP": "أنشيء تطبيقاً خاصاً"
+  "CREATE_CUSTOM_APP": "أنشيء تطبيقاً خاصاً",
+  "BACK_TO_APP_LIST": "الرجوع إلى قائمة التطبيقات"
 }

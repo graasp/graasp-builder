@@ -20,6 +20,7 @@ import {
   SHARED_ITEMS_PATH,
   buildItemPath,
 } from '../config/paths';
+import { hooks } from '../config/queryClient';
 import FallbackComponent from './Fallback';
 import RecycleBinScreen from './RecycleBinScreen';
 import SharedItems from './SharedItems';
@@ -31,9 +32,14 @@ import PublishedItems from './main/PublishedItems';
 import Redirect from './main/Redirect';
 import MemberProfileScreen from './member/MemberProfileScreen';
 
+const { useItemFeedbackUpdates } = hooks;
+
 const App = (): JSX.Element => {
   const { pathname } = useLocation();
   const { data: currentMember, isLoading } = useCurrentUserContext();
+
+  // registers the item updates through websockets
+  useItemFeedbackUpdates?.(currentMember?.id);
 
   if (isLoading) {
     return <CustomInitialLoader />;
