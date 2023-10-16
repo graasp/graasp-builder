@@ -58,7 +58,7 @@ const AppCard = ({
       />
       <CardContent sx={{ width: '100%' }}>
         <Typography gutterBottom variant="subtitle2" component="div">
-          {name || <Skeleton />}
+          {name ?? <Skeleton />}
         </Typography>
         <Typography
           variant="body2"
@@ -70,7 +70,7 @@ const AppCard = ({
             WebkitLineClamp: 3,
           }}
         >
-          {description || <Skeleton height={45} />}
+          {description ?? <Skeleton height={45} />}
         </Typography>
       </CardContent>
     </StyledCardActionArea>
