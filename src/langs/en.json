@@ -260,5 +260,5 @@
   "CREATE_CUSTOM_APP_DESCRIPTION": "Advanced option to create a custom app",
   "BACK_TO_APP_LIST": "Back To App's List",
   "DOWNGRADE_PERMISSION_TITLE": "Downgrade Your Own Permission",
-  "DOWNGRADE_PERMISSION_DESCRIPTION": "You are not allowed to Downgrade Your Own Permission"
+  "DOWNGRADE_PERMISSION_DESCRIPTION": "Are you sure you want to downgrade your own permission? Once it's done you can't undo."
 }

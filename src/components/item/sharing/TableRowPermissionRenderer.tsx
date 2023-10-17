@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import { useState } from 'react';
 
 import {
@@ -13,8 +12,10 @@ import Typography from '@mui/material/Typography';
 
 import { Item, Member, PermissionLevel } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
+import { COMMON } from '@graasp/translations';
 
-import { useBuilderTranslation } from '@/config/i18n';
+import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
 import {
   DOWNGRADE_OWN_PERMISSION_DIALOG_DESC_ID,
   DOWNGRADE_OWN_PERMISSION_DIALOG_TITLE_ID,
@@ -30,7 +31,7 @@ type TableRowPermissionRendererProps<T> = {
   editFunction: (args: { value: PermissionLevel; instance: T }) => void;
   createFunction: (args: { value: PermissionLevel; instance: T }) => void;
   readOnly?: boolean;
-  currentMember?: Member;
+  hasOnlyOneAdmin?: boolean;
 };
 
 function TableRowPermissionRenderer<
@@ -40,20 +41,37 @@ function TableRowPermissionRenderer<
   editFunction,
   createFunction,
   readOnly = false,
-  currentMember,
+  hasOnlyOneAdmin,
 }: TableRowPermissionRendererProps<T>): ({ data }: { data: T }) => JSX.Element {
   const ChildComponent = ({ data: instance }: { data: T }) => {
     const [open, setOpen] = useState(false);
+    const [selectedPermission, setSelectedPermission] = useState(
+      instance.permission,
+    );
+
+    const { t: translateBuilder } = useBuilderTranslation();
+    const { t: translateCommon } = useCommonTranslation();
+    const { data: currentMember } = hooks.useCurrentMember();
+
     const handleClose = () => {
       setOpen(false);
     };
+
     const isParentMembership = useIsParentInstance({
       instance,
       item,
     });
+    const changePermission = (value: PermissionLevel) => {
+      // editing a parent's instance from a child should create a new instance
+      if (isParentMembership) {
+        createFunction({ value, instance });
+      } else {
+        editFunction({ value, instance });
+      }
+    };
     const onChangePermission: ItemMembershipSelectProps['onChange'] = (e) => {
       const value = e.target.value as PermissionLevel;
-      // editing a parent's instance from a child should create a new instance
+      setSelectedPermission(value);
       if (
         (value === PermissionLevel.Read || value === PermissionLevel.Write) &&
         instance.permission === PermissionLevel.Admin &&
@@ -61,24 +79,10 @@ function TableRowPermissionRenderer<
         instance?.member?.id === currentMember?.id
       ) {
         setOpen(true);
-        return;
-      }
-      if (
-        value === PermissionLevel.Read &&
-        instance.permission === PermissionLevel.Write &&
-        instance?.member &&
-        instance?.member?.id === currentMember?.id
-      ) {
-        setOpen(true);
-        return;
-      }
-      if (isParentMembership) {
-        createFunction({ value, instance });
       } else {
-        editFunction({ value, instance });
+        changePermission(value);
       }
     };
-    const { t: translateBuilder } = useBuilderTranslation();
 
     return readOnly ? (
       <Typography noWrap>{instance.permission}</Typography>
@@ -99,14 +103,27 @@ function TableRowPermissionRenderer<
             {translateBuilder(BUILDER.DOWNGRADE_PERMISSION_TITLE)}
           </DialogTitle>
           <DialogContent>
-            <Alert severity="error">
-              {translateBuilder(BUILDER.DOWNGRADE_PERMISSION_DESCRIPTION)}
-            </Alert>
+            {hasOnlyOneAdmin ? (
+              <Alert severity="error">
+                {translateBuilder(BUILDER.DELETE_LAST_ADMIN_ALERT_MESSAGE)}
+              </Alert>
+            ) : (
+              translateBuilder(BUILDER.DOWNGRADE_PERMISSION_DESCRIPTION)
+            )}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} autoFocus variant="text">
-              {translateBuilder(BUILDER.APPROVE_BUTTON_TEXT)}
+              {translateCommon(COMMON.CLOSE_BUTTON)}
             </Button>
+            {!hasOnlyOneAdmin && (
+              <Button
+                onClick={() => changePermission(selectedPermission)}
+                autoFocus
+                variant="text"
+              >
+                {translateBuilder(BUILDER.APPROVE_BUTTON_TEXT)}
+              </Button>
+            )}
           </DialogActions>
         </Dialog>
       </>
