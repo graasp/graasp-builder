@@ -20,7 +20,7 @@
     "@graasp/query-client": "1.11.0",
     "@graasp/sdk": "1.8.0",
     "@graasp/translations": "1.19.2",
-    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#fix-select",
+    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#main",
     "@mui/icons-material": "5.14.13",
     "@mui/lab": "5.0.0-alpha.148",
     "@mui/material": "5.14.13",
