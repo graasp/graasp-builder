@@ -249,6 +249,10 @@
   "STATUS_TOOLTIP_IS_COLLAPSIBLE": "Collapsible",
   "STATUS_TOOLTIP_SHOW_CHATBOX": "Chatbox visible",
   "SETTINGS_FILE_SETTINGS_TITLE": "File Settings",
+  "FALLBACK_TITLE": "Oops!",
+  "FALLBACK_TEXT": "Sorry, something went wrong. Try again later.",
+  "FALLBACK_BACK_TO_HOME": "Back to homepage",
+  "REPORT_A_BUG": "Report a Bug",
   "DELETE_MEMBERSHIP": "Delete Membership",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirm",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Are you sure you want to delete your own permission on this item? You will loose access to this item, this action can not be undone.",
@@ -260,5 +264,8 @@
   "CREATE_CUSTOM_APP_DESCRIPTION": "Advanced option to create a custom app",
   "BACK_TO_APP_LIST": "Back To App's List",
   "DOWNGRADE_PERMISSION_TITLE": "Downgrade Your Own Permission",
-  "DOWNGRADE_PERMISSION_DESCRIPTION": "Are you sure you want to downgrade your own permission? Once it's done you can't undo."
+  "DOWNGRADE_PERMISSION_DESCRIPTION": "Are you sure you want to downgrade your own permission? Once it's done you can't undo.",
+  "CREATE_CUSTOM_APP_HELPER_TEXT": "If you know the URL of an interactive app that can leverage Graasp's API you can input it here.",
+  "CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON": "Back To App's List",
+  "APP_LIST_LOADING_FAILED": "There was an error getting the app list. Please try again later."
 }

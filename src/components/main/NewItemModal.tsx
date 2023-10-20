@@ -249,13 +249,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
           onTypeChange={setSelectedItemType}
           initialValue={selectedItemType}
         />
-        <Box
-          sx={{
-            pl: 2,
-            pr: 2,
-            width: '100%',
-          }}
-        >
+        <Box px={2} width="100%" overflow="hidden">
           {renderContent()}
         </Box>
       </StyledDialogContent>

@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
 import { List } from 'immutable';
@@ -52,11 +51,7 @@ const ToolbarActions = ({ selectedIds }: ToolbarActionsProps): JSX.Element => (
 
 const RecycleBinLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const {
-    data: recycledEntries,
-    isLoading,
-    isError,
-  } = hooks.useRecycledItemsData();
+  const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
   if (isError) {
     return <ErrorAlert />;
   }
@@ -72,7 +67,7 @@ const RecycleBinLoadableContent = (): JSX.Element => {
         id={RECYCLED_ITEMS_ID}
         clickable={false}
         title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-        items={recycledEntries?.map(({ item }) => item as ItemRecord) ?? List()}
+        items={recycledItems ?? List()}
         actions={RowActions}
         ToolbarActions={ToolbarActions}
         showThumbnails={false}

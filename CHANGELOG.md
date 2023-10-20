@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/graasp/graasp-builder/compare/v1.9.1...v1.10.0) (2023-10-16)
+
+
+### Features
+
+* add qr share link to share an item ([#797](https://github.com/graasp/graasp-builder/issues/797)) ([046bc5e](https://github.com/graasp/graasp-builder/commit/046bc5e4f92a6c862ba0e317a57a43679844323d))
+* add report a bug button using sentry and add a fallback page using error boundaries ([#800](https://github.com/graasp/graasp-builder/issues/800)) ([785beba](https://github.com/graasp/graasp-builder/commit/785beba9f326d354b14d13586ab8db2647d3bdab))
+* build create app cards ([#792](https://github.com/graasp/graasp-builder/issues/792)) ([cd8e5f7](https://github.com/graasp/graasp-builder/commit/cd8e5f7fe1b7f9ebdde3ad8958f0b8fd4626b567))
+* enhance app card style ([#812](https://github.com/graasp/graasp-builder/issues/812)) ([33dd377](https://github.com/graasp/graasp-builder/commit/33dd377b7dc8691aa53ebdcace8aed2175715d7f))
+* integrate websockets updates ([#802](https://github.com/graasp/graasp-builder/issues/802)) ([3cff148](https://github.com/graasp/graasp-builder/commit/3cff148c0c57c7774a8926fe2382b2c70e59b0e0))
+* shorten item link ([#793](https://github.com/graasp/graasp-builder/issues/793)) ([87ecd32](https://github.com/graasp/graasp-builder/commit/87ecd32426cf1c14d8a8fc92dc4d66f589b3b603))
+* translate ar.json via GitLocalize ([#801](https://github.com/graasp/graasp-builder/issues/801)) ([244ca85](https://github.com/graasp/graasp-builder/commit/244ca857435d7fa0601f26b57ba5169c0f1b36de))
+* use item feedback updates ([3cff148](https://github.com/graasp/graasp-builder/commit/3cff148c0c57c7774a8926fe2382b2c70e59b0e0))
+
+
+### Bug Fixes
+
+* add a confirmation message when deleting membership ([#790](https://github.com/graasp/graasp-builder/issues/790)) ([1f3ab01](https://github.com/graasp/graasp-builder/commit/1f3ab016daeccb04f81a2e1bd72a6e8f1f09e4bd))
+* bump ui and re-enable chrome tests ([#805](https://github.com/graasp/graasp-builder/issues/805)) ([a4a023e](https://github.com/graasp/graasp-builder/commit/a4a023ef87ec748f0e18bd71219fcd59d1c935ab))
+* **deps:** update dependency @graasp/translations to v1.19.2 ([#778](https://github.com/graasp/graasp-builder/issues/778)) ([58abaae](https://github.com/graasp/graasp-builder/commit/58abaae3c69aee5992a2e6191e52449f5d8be0d1))
+* **deps:** update mui (non-major) ([389230b](https://github.com/graasp/graasp-builder/commit/389230bfa678d72895725d0f2b3f07b7de34b0d9))
+* prevent adding new item blank spaces ([#784](https://github.com/graasp/graasp-builder/issues/784)) ([0f02a64](https://github.com/graasp/graasp-builder/commit/0f02a64f897f5fb8b48f0466c645e3232c29cd9c))
+* **style:** improve ThumbnailSettings view [#706](https://github.com/graasp/graasp-builder/issues/706) ([#819](https://github.com/graasp/graasp-builder/issues/819)) ([fe828a5](https://github.com/graasp/graasp-builder/commit/fe828a537e371ca232d557aff7e68df8ae47b30b))
+* **trans:** use 'My Graasp' instead of 'My Items' ([#815](https://github.com/graasp/graasp-builder/issues/815)) ([5aa0a2f](https://github.com/graasp/graasp-builder/commit/5aa0a2f597f17cb07dfa7ca24de7a6ace12a84c7))
+* **ui:** add a loading state to app list cards ([b496d59](https://github.com/graasp/graasp-builder/commit/b496d59d7913a725deb79e463e9f6e4f588b42f3))
+* **ui:** scroll in app-list and put app name field bellow list ([b496d59](https://github.com/graasp/graasp-builder/commit/b496d59d7913a725deb79e463e9f6e4f588b42f3))
+* update document validation ([#788](https://github.com/graasp/graasp-builder/issues/788)) ([09a317e](https://github.com/graasp/graasp-builder/commit/09a317ed4627088e105fc857e37c4a3c902f116c))
+* various app list fixes and refinements ([#830](https://github.com/graasp/graasp-builder/issues/830)) ([b496d59](https://github.com/graasp/graasp-builder/commit/b496d59d7913a725deb79e463e9f6e4f588b42f3))
+* wrapping long item name ([#786](https://github.com/graasp/graasp-builder/issues/786)) ([d0add75](https://github.com/graasp/graasp-builder/commit/d0add7584889bcf550f4ce1f1eb6daa97f9ebe52))
+
 ## [1.9.1](https://github.com/graasp/graasp-builder/compare/v1.9.0...v1.9.1) (2023-09-07)
 
 
