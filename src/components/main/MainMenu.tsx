@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router';
 
-import { BugReport } from '@mui/icons-material';
+// import { BugReport } from '@mui/icons-material';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -16,13 +16,10 @@ import {
 } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-import { DEFAULT_LANG } from '@graasp/sdk';
 import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
 
-import { captureMessage, showReportDialog } from '@sentry/react';
-
 import { TUTORIALS_LINK } from '../../config/constants';
-import i18n, { useBuilderTranslation } from '../../config/i18n';
+import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
@@ -52,28 +49,29 @@ const MainMenu = (): JSX.Element => {
     navigate(path);
   };
 
-  const openBugReport = () => {
-    const eventId = captureMessage(
-      `Graasp Builder | User Feedback ${Date.now()}`,
-    );
-    // this will be reported in sentry user feedback issues
-    showReportDialog({
-      eventId,
-      title: translateBuilder(BUILDER.REPORT_A_BUG),
-      lang: i18n.language || DEFAULT_LANG,
-    });
-  };
+  // sentry feedback feature
+  // const openBugReport = () => {
+  //   const eventId = captureMessage(
+  //     `Graasp Builder | User Feedback ${Date.now()}`,
+  //   );
+  //   // this will be reported in sentry user feedback issues
+  //   showReportDialog({
+  //     eventId,
+  //     title: translateBuilder(BUILDER.REPORT_A_BUG),
+  //     lang: i18n.language || DEFAULT_LANG,
+  //   });
+  // };
 
-  const reportBugLink = (
-    <ListItem disablePadding>
-      <ListItemButton onClick={openBugReport}>
-        <ListItemIcon>
-          <BugReport />
-        </ListItemIcon>
-        <ListItemText>{translateBuilder(BUILDER.REPORT_A_BUG)}</ListItemText>
-      </ListItemButton>
-    </ListItem>
-  );
+  // const reportBugLink = (
+  //   <ListItem disablePadding>
+  //     <ListItemButton onClick={openBugReport}>
+  //       <ListItemIcon>
+  //         <BugReport />
+  //       </ListItemIcon>
+  //       <ListItemText>{translateBuilder(BUILDER.REPORT_A_BUG)}</ListItemText>
+  //     </ListItemButton>
+  //   </ListItem>
+  // );
 
   const resourceLinks = (
     <ListItem disablePadding>
@@ -144,7 +142,7 @@ const MainMenu = (): JSX.Element => {
       <Stack direction="column" height="100%" justifyContent="space-between">
         {renderAuthenticatedMemberMenuItems()}
         <div>
-          {reportBugLink}
+          {/* {reportBugLink} */}
           {resourceLinks}
         </div>
       </Stack>
