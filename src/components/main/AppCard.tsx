@@ -11,6 +11,8 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 
 import { buildItemFormAppOptionId } from '@/config/selectors';
 
+import defaultImage from '../../resources/defaultApp.png';
+
 const StyledCardActionArea = styled(CardActionArea)({
   display: 'flex',
   flexDirection: 'column',
@@ -52,7 +54,7 @@ const AppCard = ({
             background: 'white',
           }}
         >
-          <img src={image} alt={name} width="100%" />
+          <img src={image ?? defaultImage} alt={name} width="100%" />
         </Stack>
         <Stack>
           <CardContent

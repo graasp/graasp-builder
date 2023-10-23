@@ -14,6 +14,7 @@ import { CUSTOM_APP_URL_ID } from '@/config/selectors';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
+import addNewImage from '../../../resources/addNew.png';
 import { buildAppExtra } from '../../../utils/itemExtra';
 import NameForm from './NameForm';
 
@@ -188,6 +189,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
               description={translateBuilder(
                 BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
               )}
+              image={addNewImage}
               onClick={addCustomApp}
             />
           </Grid2>
