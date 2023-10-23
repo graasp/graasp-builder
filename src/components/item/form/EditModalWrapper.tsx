@@ -10,6 +10,8 @@ import { routines } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { COMMON, FAILURE_MESSAGES } from '@graasp/translations';
 
+import isEqual from 'lodash.isequal';
+
 import CancelButton from '@/components/common/CancelButton';
 import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
 import notifier from '@/config/notifier';
@@ -82,11 +84,11 @@ const EditModalWrapper = ({
       editItem({
         id: updatedItem.id,
         name: updatedItem.name,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         description: updatedItem.description,
         // todo: find a fix since the folder has an invalid extra
-        // extra: updatedItem.extra,
+        extra: !isEqual(item.extra, updatedItem.extra)
+          ? updatedItem.extra
+          : undefined,
       });
     }
 
@@ -96,11 +98,6 @@ const EditModalWrapper = ({
   const setChanges = (payload: Partial<DiscriminatedItem>) => {
     setUpdatedItem({ ...updatedItem, ...payload } as DiscriminatedItem);
   };
-
-  // eslint-disable-next-line no-console
-  console.log('current', updatedItem);
-  // eslint-disable-next-line no-console
-  console.log('item valid', isItemValid(updatedItem));
 
   return (
     <>

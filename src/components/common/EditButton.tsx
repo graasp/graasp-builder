@@ -33,7 +33,7 @@ const EditButton = ({ item }: Props): JSX.Element => {
   };
 
   const typeToFormComponent = (): EditModalContentType => {
-    switch (item?.type) {
+    switch (item.type) {
       case ItemType.DOCUMENT:
         return DocumentForm;
       case ItemType.LOCAL_FILE:

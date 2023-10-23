@@ -101,7 +101,6 @@ const AvatarSetting = ({ user }: Props): JSX.Element | null => {
       uppy.cancelAll();
 
       uppy.addFile({
-        name: croppedImage.name,
         type: croppedImage.type,
         data: croppedImage,
       });

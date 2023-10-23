@@ -2,8 +2,6 @@ import { Box } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
 
-import { List } from 'immutable';
-
 import { useBuilderTranslation } from '../config/i18n';
 import { hooks } from '../config/queryClient';
 import {
@@ -67,7 +65,7 @@ const RecycleBinLoadableContent = (): JSX.Element => {
         id={RECYCLED_ITEMS_ID}
         clickable={false}
         title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-        items={recycledItems ?? List()}
+        items={recycledItems}
         actions={RowActions}
         ToolbarActions={ToolbarActions}
         showThumbnails={false}

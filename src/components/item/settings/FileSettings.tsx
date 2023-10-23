@@ -40,7 +40,7 @@ const FileSettings = ({
           </Typography>
         </Stack>
         <Stack>
-          <Select<MaxWidth>
+          <Select
             id={FILE_SETTING_MAX_WIDTH_ID}
             size="small"
             values={Object.values(MaxWidth).map((s) => ({

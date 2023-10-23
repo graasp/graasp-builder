@@ -17,7 +17,7 @@ import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
 import type { EditModalContentPropType } from './EditModalWrapper';
-import BaseForm from './NameForm';
+import NameForm from './NameForm';
 
 export const DocumentExtraForm = ({
   documentItemId,
@@ -138,7 +138,7 @@ const DocumentForm = ({
   return (
     <>
       <Box>
-        <BaseForm
+        <NameForm
           setChanges={setChanges}
           item={item}
           required

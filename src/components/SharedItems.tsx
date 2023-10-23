@@ -2,8 +2,6 @@ import Box from '@mui/material/Box';
 
 import { Loader } from '@graasp/ui';
 
-import { List } from 'immutable';
-
 import { BUILDER } from '@/langs/constants';
 
 import { useBuilderTranslation } from '../config/i18n';
@@ -35,7 +33,7 @@ const SharedItemsLoadableContent = (): JSX.Element => {
       <Items
         id={SHARED_ITEMS_ID}
         title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-        items={sharedItems ?? List()}
+        items={sharedItems}
         showCreator
       />
     </Box>
