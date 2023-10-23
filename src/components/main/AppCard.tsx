@@ -1,9 +1,9 @@
 import {
+  Box,
   Card,
   CardActionArea,
   CardContent,
   Skeleton,
-  Stack,
   Typography,
   styled,
 } from '@mui/material';
@@ -46,25 +46,32 @@ const AppCard = ({
     id={buildItemFormAppOptionId(name)}
   >
     <StyledCardActionArea>
-      <Stack direction="row">
-        <Stack
-          sx={{
-            height: { xs: 40, sm: 70 },
-            width: { xs: 40, sm: 70 },
-            background: 'white',
-          }}
-        >
-          <img src={image ?? defaultImage} alt={name} width="100%" />
-        </Stack>
-        <Stack>
+      <Grid2 container direction="row" alignItems="center" width="100%">
+        <Grid2 xs={2}>
+          <Box
+            sx={{
+              width: '100%',
+              heght: '100%',
+              background: 'white',
+            }}
+          >
+            <img src={image ?? defaultImage} alt={name} width="100%" />
+          </Box>
+        </Grid2>
+        <Grid2 xs={10}>
           <CardContent
-            sx={{ width: '100%', pt: 1, paddingBottom: '0 !important' }}
+            sx={{
+              pt: 1,
+              paddingBottom: '0 !important',
+              minWidth: 0,
+            }}
           >
             <Typography
               fontWeight="bold"
               gutterBottom
               variant="body1"
               component="div"
+              width="100%"
               noWrap
             >
               {name ?? <Skeleton />}
@@ -72,15 +79,17 @@ const AppCard = ({
             <Typography
               variant="body2"
               color="text.secondary"
+              width="100%"
               sx={{
                 display: { xs: 'none', sm: 'block', md: 'block' },
               }}
+              noWrap
             >
               {description ?? <Skeleton height={20} />}
             </Typography>
           </CardContent>
-        </Stack>
-      </Stack>
+        </Grid2>
+      </Grid2>
     </StyledCardActionArea>
   </Card>
 );
