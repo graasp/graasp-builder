@@ -37,7 +37,9 @@ const AppGrid = ({
   if (data) {
     // filter out with search query
     let dataToShow = searchQuery
-      ? data.filter((d) => d.name.includes(searchQuery))
+      ? data.filter((d) =>
+          d.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
       : data;
     dataToShow = dataToShow.sortBy((d) => d.name);
 
