@@ -11,8 +11,6 @@ import Tooltip from '@mui/material/Tooltip';
 import { Context } from '@graasp/sdk';
 import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from '@graasp/translations';
 
-import shortUUID from 'short-uuid';
-
 import QRCode from '@/components/common/QRCode';
 import {
   SHARE_LINK_COLOR,
@@ -60,7 +58,6 @@ type Props = {
   itemId?: string;
 };
 
-const { fromUUID } = shortUUID();
 const SharingLink = ({ itemId }: Props): JSX.Element => {
   const { t: translateMessages } = useMessagesTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
@@ -73,11 +70,11 @@ const SharingLink = ({ itemId }: Props): JSX.Element => {
     if (itemId) {
       switch (linkType) {
         case Context.Builder: {
-          setLink(buildGraaspBuilderView(fromUUID(itemId || '')));
+          setLink(buildGraaspBuilderView(itemId || ''));
           break;
         }
         case Context.Player: {
-          setLink(buildGraaspPlayerView(fromUUID(itemId || '')));
+          setLink(buildGraaspPlayerView(itemId || ''));
           break;
         }
         default:
@@ -137,18 +134,8 @@ const SharingLink = ({ itemId }: Props): JSX.Element => {
           renderValue={(value) => enumT(value)}
           id={SHARE_ITEM_DIALOG_LINK_SELECT_ID}
         >
-          <MenuItem
-            // sx={{ textTransform: 'capitalize' }}
-            value={Context.Builder}
-          >
-            {enumT(Context.Builder)}
-          </MenuItem>
-          <MenuItem
-            // sx={{ textTransform: 'capitalize' }}
-            value={Context.Player}
-          >
-            {enumT(Context.Player)}
-          </MenuItem>
+          <MenuItem value={Context.Builder}>{enumT(Context.Builder)}</MenuItem>
+          <MenuItem value={Context.Player}>{enumT(Context.Player)}</MenuItem>
         </Select>
         <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>
           <span>

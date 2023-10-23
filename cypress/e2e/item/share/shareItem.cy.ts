@@ -1,7 +1,5 @@
 import { Context, ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
 
-import shortUUID from 'short-uuid';
-
 import { buildItemPath } from '@/config/paths';
 
 import { SETTINGS } from '../../../../src/config/constants';
@@ -41,17 +39,16 @@ describe('Share Item', () => {
     cy.visit(buildItemPath(item.id));
     openShareItemTab(item.id);
 
-    const { fromUUID } = shortUUID();
     // sharing link
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'contain',
-      `${buildGraaspPlayerView(fromUUID(item.id))}`,
+      `${buildGraaspPlayerView(item.id)}`,
     );
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_SELECT_ID}`).click();
     cy.get(`li[data-value="${Context.Builder}"]`).click();
     cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
       'have.text',
-      `${buildGraaspBuilderView(fromUUID(item.id))}`,
+      `${buildGraaspBuilderView(item.id)}`,
     );
 
     const visiblitySelect = cy.get(
