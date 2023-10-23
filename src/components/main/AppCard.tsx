@@ -49,7 +49,7 @@ const AppCard = ({
           sx={{
             height: { xs: 40, sm: 70 },
             width: { xs: 40, sm: 70 },
-            background: 'black',
+            background: 'white',
           }}
         >
           <img src={image} alt={name} width="100%" />
