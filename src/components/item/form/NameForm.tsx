@@ -24,8 +24,6 @@ const NameForm = ({
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
     setChanges({ name: event.target.value });
   };
-  // eslint-disable-next-line no-console
-  console.log('name input', updatedProperties?.name ?? item?.name);
 
   return (
     <TextField

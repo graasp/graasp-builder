@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 
 import { ArrowBack } from '@mui/icons-material';
 import { Alert, Stack, TextField } from '@mui/material';
@@ -14,17 +14,20 @@ import { CUSTOM_APP_URL_ID } from '@/config/selectors';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
+import addNewImage from '../../../resources/addNew.png';
 import { buildAppExtra } from '../../../utils/itemExtra';
 import NameForm from './NameForm';
 
 type AppGridProps = {
   currentUrl: string;
   handleSelection: (value: null | { name: string; url: string }) => void;
+  searchQuery?: string;
 };
 
 const AppGrid = ({
   currentUrl,
   handleSelection,
+  searchQuery,
 }: AppGridProps): JSX.Element | JSX.Element[] => {
   const { useApps } = hooks;
   const { data, isLoading } = useApps();
@@ -32,9 +35,17 @@ const AppGrid = ({
   const { t: translateBuilder } = useBuilderTranslation();
 
   if (data) {
+    // filter out with search query
+    let dataToShow = searchQuery
+      ? data.filter((d) =>
+          d.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
+      : data;
+    dataToShow = dataToShow.sortBy((d) => d.name);
+
     return (
       <>
-        {data.map((ele) => (
+        {dataToShow.map((ele) => (
           <AppCard
             key={ele.name}
             name={ele.name}
@@ -76,6 +87,14 @@ type Props = {
 const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [isCustomApp, setIsCustomApp] = useState<boolean>(false);
+
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const searchAnApp: ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleAppSelection = (
     newValue: null | { url: string; name: string },
@@ -147,19 +166,36 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
           />
         </Stack>
       ) : (
-        <Grid2 container spacing={2} alignItems="stretch" overflow="scroll">
-          <AppGrid
-            currentUrl={currentUrl}
-            handleSelection={handleAppSelection}
+        <>
+          <TextField
+            fullWidth
+            placeholder={translateBuilder('Search for an app')}
+            variant="outlined"
+            size="small"
+            onChange={searchAnApp}
           />
-          <AppCard
-            name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
-            description={translateBuilder(
-              BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
-            )}
-            onClick={addCustomApp}
-          />
-        </Grid2>
+          <Grid2
+            container
+            spacing={2}
+            maxHeight={400}
+            alignItems="stretch"
+            overflow="auto"
+          >
+            <AppGrid
+              currentUrl={currentUrl}
+              handleSelection={handleAppSelection}
+              searchQuery={searchQuery}
+            />
+            <AppCard
+              name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
+              description={translateBuilder(
+                BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
+              )}
+              image={addNewImage}
+              onClick={addCustomApp}
+            />
+          </Grid2>
+        </>
       )}
       <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
     </Stack>
