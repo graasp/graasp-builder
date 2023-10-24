@@ -262,6 +262,9 @@
   "APP_URL": "App Url",
   "CREATE_CUSTOM_APP": "Add Your Custom App",
   "CREATE_CUSTOM_APP_DESCRIPTION": "Advanced option to create a custom app",
+  "BACK_TO_APP_LIST": "Back To App's List",
+  "DOWNGRADE_PERMISSION_TITLE": "Downgrade Your Own Permission",
+  "DOWNGRADE_PERMISSION_DESCRIPTION": "Are you sure you want to downgrade your own permission? Once it's done you can't undo.",
   "CREATE_CUSTOM_APP_HELPER_TEXT": "If you know the URL of an interactive app that can leverage Graasp's API you can input it here.",
   "CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON": "Back To App's List",
   "APP_LIST_LOADING_FAILED": "There was an error getting the app list. Please try again later."

@@ -317,3 +317,6 @@ export const CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID =
 export const buildDownloadButtonId = (itemId: string): string =>
   `download-button-id-${itemId}`;
 export const CUSTOM_APP_URL_ID = 'customAppURLId';
+
+export const DOWNGRADE_OWN_PERMISSION_DIALOG_TITLE_ID = 'downgradeTitleID';
+export const DOWNGRADE_OWN_PERMISSION_DIALOG_DESC_ID = 'downgradeDescID';

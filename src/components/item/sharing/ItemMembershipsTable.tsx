@@ -101,6 +101,10 @@ const ItemMembershipsTable = ({
     });
     const PermissionRenderer = TableRowPermissionRenderer({
       item,
+      hasOnlyOneAdmin:
+        memberships.filter((per) => per.permission === PermissionLevel.Admin)
+          .length === 1,
+
       editFunction: ({
         value,
         instance,
