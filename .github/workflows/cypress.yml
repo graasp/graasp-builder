@@ -33,7 +33,7 @@ jobs:
         run: tsc --noEmit
 
       - name: Build App
-        run: NODE_OPTIONS=--max-old-space-size=3072 yarn build:test
+        run: NODE_OPTIONS=--max-old-space-size=4096 yarn build:test
         shell: bash
         env:
           VITE_PORT: ${{ vars.VITE_PORT }}
