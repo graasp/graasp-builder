@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/graasp/graasp-builder/compare/v1.10.0...v1.11.0) (2023-10-25)
+
+
+### Features
+
+* create a dialog to downgrade own membership ([#822](https://github.com/graasp/graasp-builder/issues/822)) ([7baf7b8](https://github.com/graasp/graasp-builder/commit/7baf7b8d6a519c14a89a8b0ec223e0af5b924324))
+* freeze sentry user feedback ([#843](https://github.com/graasp/graasp-builder/issues/843)) ([1a53ffa](https://github.com/graasp/graasp-builder/commit/1a53ffa79570858552a72a6c78c9cf4a4c788e68))
+* update app cards to list in new item modal ([#844](https://github.com/graasp/graasp-builder/issues/844)) ([740d567](https://github.com/graasp/graasp-builder/commit/740d567abc91d395bcd53d18cce764361f8a6221))
+
+
+### Bug Fixes
+
+* alt-text reset bug ([9098142](https://github.com/graasp/graasp-builder/commit/9098142b8731467c46198776a5233de740160870))
+* cant edit an item twice without reloading ([#842](https://github.com/graasp/graasp-builder/issues/842)) ([9098142](https://github.com/graasp/graasp-builder/commit/9098142b8731467c46198776a5233de740160870))
+* **deps:** update dependency katex to v0.16.9 ([75811dd](https://github.com/graasp/graasp-builder/commit/75811ddd0582967e25932dbda0bbe2d8f6dfa308))
+* **deps:** update dependency uuid to v9.0.1 ([2b6879e](https://github.com/graasp/graasp-builder/commit/2b6879e53876ac734af2799866f2fe771bd698f7))
+* revert usage of short links in QRcode and displayed link ([#834](https://github.com/graasp/graasp-builder/issues/834)) ([cda2071](https://github.com/graasp/graasp-builder/commit/cda20713a1a3cb23f63e00a19525779ff76612c1))
+* s3Files should now show icons based on item type ([9098142](https://github.com/graasp/graasp-builder/commit/9098142b8731467c46198776a5233de740160870))
+* use `??` instead of `||` for skeleton in `AppCard.tsx` ([#833](https://github.com/graasp/graasp-builder/issues/833)) ([356ef76](https://github.com/graasp/graasp-builder/commit/356ef762d5513d7653b40031810d3404318b5006))
+* use upload icon on import file tab item ([9098142](https://github.com/graasp/graasp-builder/commit/9098142b8731467c46198776a5233de740160870))
+
 ## [1.10.0](https://github.com/graasp/graasp-builder/compare/v1.9.1...v1.10.0) (2023-10-16)
 
 
