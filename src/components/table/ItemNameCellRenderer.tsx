@@ -28,7 +28,16 @@ const ItemNameCellRenderer = (
       ? linkExtra?.thumbnails?.first()
       : linkExtra?.thumbnails?.[0];
     const defaultValueComponent = (
-      <ItemIcon type={item.type} iconSrc={iconSrc} alt={alt} />
+      <ItemIcon
+        type={item.type}
+        iconSrc={iconSrc}
+        alt={alt}
+        extra={
+          item.type === ItemType.S3_FILE || item.type === ItemType.LOCAL_FILE
+            ? item.extra
+            : undefined
+        }
+      />
     );
 
     const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({

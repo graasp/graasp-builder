@@ -686,6 +686,7 @@ export const PUBLISHED_ITEM: ItemForTest = {
     item,
     createdAt: new Date(),
     creator: MEMBERS.ANNA,
+    totalViews: 0,
   },
   memberships: [
     {
@@ -896,6 +897,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
+      totalViews: 0,
     },
     memberships: [
       {
@@ -934,6 +936,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
+      totalViews: 0,
     },
     memberships: [
       {
@@ -972,6 +975,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
+      totalViews: 0,
     },
     memberships: [
       {
@@ -1010,6 +1014,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       item,
       createdAt: new Date(),
       creator: MEMBERS.ANNA,
+      totalViews: 0,
     },
     memberships: [
       {

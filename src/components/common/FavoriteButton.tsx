@@ -41,7 +41,10 @@ const FavoriteButton = ({
     return null;
   }
 
-  const isFavorite = isItemFavorite(item, favorites);
+  const isFavorite = isItemFavorite(
+    item,
+    favorites as List<ItemFavoriteRecord>,
+  );
 
   const handleFavorite = () => {
     addFavorite.mutate(item.id);

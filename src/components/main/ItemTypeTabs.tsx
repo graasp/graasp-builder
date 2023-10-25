@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { Tab, Tabs, styled } from '@mui/material';
 
-import { ItemType, MimeTypes } from '@graasp/sdk';
+import { ItemType, LocalFileItemExtra, MimeTypes } from '@graasp/sdk';
 import { ItemIcon } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -53,7 +53,7 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
       alt={translateBuilder(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
       type={ItemType.LOCAL_FILE}
       sx={{ mb: 0 }}
-      extra={{ file: { mimetype: MimeTypes.ZIP } }}
+      extra={{ file: { mimetype: MimeTypes.ZIP } } as LocalFileItemExtra}
     />
   );
 
@@ -84,7 +84,7 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
         icon={
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_FILE_TAB_TEXT)}
-            type={ItemType.LOCAL_FILE}
+            type="upload"
             sx={{ mb: 0 }}
           />
         }
