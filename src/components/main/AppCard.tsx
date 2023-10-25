@@ -48,13 +48,7 @@ const AppCard = ({
     <StyledCardActionArea>
       <Grid2 container direction="row" alignItems="center" width="100%">
         <Grid2 xs={2}>
-          <Box
-            sx={{
-              width: '100%',
-              heght: '100%',
-              background: 'white',
-            }}
-          >
+          <Box height="100%" width="100%" bgcolor="white">
             <img src={image ?? defaultImage} alt={name} width="100%" />
           </Box>
         </Grid2>
