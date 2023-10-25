@@ -84,7 +84,7 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
         icon={
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_FILE_TAB_TEXT)}
-            type={ItemType.LOCAL_FILE}
+            type="upload"
             sx={{ mb: 0 }}
           />
         }

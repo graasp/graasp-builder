@@ -46,11 +46,25 @@ const AppCard = ({
     id={buildItemFormAppOptionId(name)}
   >
     <StyledCardActionArea>
-      <Grid2 container direction="row" alignItems="center" width="100%">
-        <Grid2 xs={2}>
-          <Box height="100%" width="100%" bgcolor="white">
-            <img src={image ?? defaultImage} alt={name} width="100%" />
-          </Box>
+      <Grid2
+        container
+        direction="row"
+        alignItems="center"
+        width="100%"
+        spacing={[0, 1]}
+      >
+        <Grid2 xs={2} p={[0, 1.5]}>
+          <Box
+            component="img"
+            src={image ?? defaultImage}
+            alt={name}
+            width="100%"
+            display="flex"
+            flexShrink={0}
+            minWidth={0}
+            borderRadius={1}
+            overflow="hidden"
+          />
         </Grid2>
         <Grid2 xs={10}>
           <CardContent

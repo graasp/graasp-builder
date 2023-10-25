@@ -44,6 +44,7 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   display: 'flex',
   paddingLeft: 0,
+  paddingRight: 0,
 }));
 
 type PropertiesPerType = {
