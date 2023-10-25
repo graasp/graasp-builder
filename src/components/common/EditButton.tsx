@@ -53,13 +53,7 @@ const EditButton = ({ item }: Props): JSX.Element => {
 
   return (
     <>
-      <Dialog
-        id={EDIT_MODAL_ID}
-        open={open}
-        // onClose={onClose}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog id={EDIT_MODAL_ID} open={open} maxWidth="sm" fullWidth>
         <EditModalWrapper
           item={item}
           ComponentType={typeToFormComponent()}

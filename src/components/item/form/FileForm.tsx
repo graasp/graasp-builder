@@ -1,16 +1,10 @@
 import { TextField } from '@mui/material';
 
-import {
-  DiscriminatedItem,
-  FileItemProperties,
-  ItemType,
-  MimeTypes,
-  getFileExtra,
-  getS3FileExtra,
-} from '@graasp/sdk';
+import { FileItemProperties, ItemType, MimeTypes } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID } from '@/config/selectors';
+import { getExtraFromPartial } from '@/utils/itemExtra';
 
 import { BUILDER } from '../../../langs/constants';
 import DescriptionForm from './DescriptionForm';
@@ -32,27 +26,9 @@ const FileForm = (props: EditModalContentPropType): JSX.Element | null => {
     (updatedProperties.type === ItemType.LOCAL_FILE ||
       updatedProperties.type === ItemType.S3_FILE)
   ) {
-    const getExtra = (
-      testItem: Partial<DiscriminatedItem>,
-    ): Partial<FileItemProperties> => {
-      const localFileExtra =
-        testItem.type === ItemType.LOCAL_FILE
-          ? getFileExtra(testItem.extra)
-          : undefined;
-      const s3FileExtra =
-        testItem.type === ItemType.S3_FILE
-          ? getS3FileExtra(testItem.extra)
-          : undefined;
-      const extra = {
-        ...s3FileExtra,
-        ...localFileExtra,
-      };
-      return extra;
-    };
-
-    const itemExtra = getExtra(item);
+    const itemExtra = getExtraFromPartial(item);
     const { mimetype, altText } = itemExtra;
-    const updatedExtra = getExtra(updatedProperties);
+    const updatedExtra = getExtraFromPartial(updatedProperties);
     return (
       <>
         <NameForm

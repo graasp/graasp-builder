@@ -1,4 +1,5 @@
 import {
+  DiscriminatedItem,
   DocumentItemExtra,
   DocumentItemExtraProperties,
   EmbeddedLinkItemExtra,
@@ -9,6 +10,8 @@ import {
   ItemType,
   LocalFileItemExtra,
   S3FileItemExtra,
+  getFileExtra,
+  getS3FileExtra,
 } from '@graasp/sdk';
 
 export const buildFileExtra = (
@@ -55,3 +58,21 @@ export const buildAppExtra = ({
 }): { app: { url: string; settings: ItemSettings } } => ({
   [ItemType.APP]: { url, settings },
 });
+
+export const getExtraFromPartial = (
+  testItem: Partial<DiscriminatedItem>,
+): Partial<FileItemProperties> => {
+  const localFileExtra =
+    testItem.type === ItemType.LOCAL_FILE
+      ? getFileExtra(testItem.extra)
+      : undefined;
+  const s3FileExtra =
+    testItem.type === ItemType.S3_FILE
+      ? getS3FileExtra(testItem.extra)
+      : undefined;
+  const extra = {
+    ...s3FileExtra,
+    ...localFileExtra,
+  };
+  return extra;
+};

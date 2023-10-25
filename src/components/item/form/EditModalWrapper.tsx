@@ -59,9 +59,6 @@ const EditModalWrapper = ({
   };
 
   const submit = () => {
-    // if (isConfirmButtonDisabled) {
-    //   return;
-    // }
     if (
       !isItemValid({
         ...item,
@@ -72,9 +69,7 @@ const EditModalWrapper = ({
       return;
     }
 
-    // setConfirmButtonDisabled(true);
     // add id to changed properties
-
     if (!item?.id) {
       notifier({
         type: editItemRoutine.FAILURE,
@@ -85,7 +80,7 @@ const EditModalWrapper = ({
         id: updatedItem.id,
         name: updatedItem.name,
         description: updatedItem.description,
-        // todo: find a fix since the folder has an invalid extra
+        // only post extra if it has been changed
         extra: !isEqual(item.extra, updatedItem.extra)
           ? updatedItem.extra
           : undefined,
