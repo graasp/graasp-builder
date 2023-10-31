@@ -3,7 +3,6 @@ import {
   EmbeddedLinkItemType,
   ItemType,
   Member,
-  convertJs,
   getDocumentExtra,
   getEmbeddedLinkExtra,
   getFileExtra,
@@ -68,7 +67,7 @@ export const expectItemHeaderLayout = ({
 
   if (
     isSettingsEditionAllowedForUser({
-      memberships: convertJs(memberships),
+      memberships,
       memberId: currentMember?.id,
     })
   ) {

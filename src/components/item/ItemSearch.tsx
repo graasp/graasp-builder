@@ -2,10 +2,8 @@ import { ChangeEvent, useState } from 'react';
 
 import Typography from '@mui/material/Typography';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { SearchInput } from '@graasp/ui';
-
-import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -30,9 +28,9 @@ export const NoItemSearchResult = (): JSX.Element => {
 };
 
 export const useItemSearch = (
-  items?: List<ItemRecord>,
+  items?: DiscriminatedItem[],
 ): {
-  results?: List<ItemRecord>;
+  results?: DiscriminatedItem[];
   text: string;
   input: JSX.Element;
 } => {

@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { DiscriminatedItem, ItemMembership } from '@graasp/sdk';
-import { MemberRecord, ResultOfRecord } from '@graasp/sdk/frontend';
+import {
+  DiscriminatedItem,
+  ItemMembership,
+  Member,
+  ResultOf,
+} from '@graasp/sdk';
 
 import {
   getMembershipsForItem,
@@ -12,8 +16,8 @@ import DownloadButton from '../main/DownloadButton';
 import ItemMenu from '../main/ItemMenu';
 
 type Props = {
-  manyMemberships?: ResultOfRecord<ItemMembership[]>;
-  member?: MemberRecord;
+  manyMemberships?: ResultOf<ItemMembership[]>;
+  member?: Member;
 };
 
 type ChildCompProps = {

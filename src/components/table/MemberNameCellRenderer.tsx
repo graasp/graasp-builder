@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 
 type Props = {
   defaultValue: string;
 };
 
 type ChildProps = {
-  data: ItemRecord;
+  data: DiscriminatedItem;
 };
 
 const MemberNameCellRenderer = ({

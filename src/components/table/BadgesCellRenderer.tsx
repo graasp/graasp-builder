@@ -1,12 +1,5 @@
-import { Item } from '@graasp/sdk';
-import {
-  ItemRecord,
-  ItemTagRecord,
-  ResultOfRecord,
-} from '@graasp/sdk/frontend';
+import { DiscriminatedItem, ItemTag, ResultOf } from '@graasp/sdk';
 import { ItemBadges } from '@graasp/ui';
-
-import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -33,37 +26,36 @@ const DEFAULT_ITEM_STATUSES: ItemStatuses = {
   isPublished: false,
 };
 
-export type ItemsStatuses = { [key: ItemRecord['id']]: ItemStatuses };
+export type ItemsStatuses = { [key: DiscriminatedItem['id']]: ItemStatuses };
 
 type Props = {
   itemsStatuses?: ItemsStatuses;
 };
 
 type ChildCompProps = {
-  data: Item | ItemRecord;
+  data: DiscriminatedItem;
 };
 
 export const useItemsStatuses = ({
-  items = List(),
+  items = [],
   itemsTags,
 }: {
-  items?: List<ItemRecord>;
-  itemsTags?: ResultOfRecord<List<ItemTagRecord>>;
+  items?: DiscriminatedItem[];
+  itemsTags?: ResultOf<ItemTag[]>;
 }): ItemsStatuses => {
   const { data: publishedInformations } = useManyItemPublishedInformations({
-    itemIds: items.map((i) => i.id).toJS(),
+    itemIds: items.map((i) => i.id),
   });
 
   return items.reduce((acc, r) => {
-    const itemTags = itemsTags?.data?.get(r.id);
+    const itemTags = itemsTags?.data?.[r.id];
     const { showChatbox, isPinned, isCollapsible } = {
       ...DEFAULT_ITEM_STATUSES,
-      // the settings are an immutable
-      ...r.settings?.toJS(),
+      ...r.settings,
     };
     const isHidden = isItemHidden({ itemTags });
     const isPublic = isItemPublic({ itemTags });
-    const isPublished = Boolean(publishedInformations?.data?.get(r.id));
+    const isPublished = Boolean(publishedInformations?.data?.[r.id]);
 
     return {
       ...acc,

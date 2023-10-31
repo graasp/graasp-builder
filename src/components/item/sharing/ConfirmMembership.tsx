@@ -7,8 +7,11 @@ import {
   DialogTitle,
 } from '@mui/material';
 
-import { ItemMembership, PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import {
+  DiscriminatedItem,
+  ItemMembership,
+  PermissionLevel,
+} from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import { useCurrentUserContext } from '@/components/context/CurrentUserContext';
@@ -25,7 +28,7 @@ const descriptionId = 'alert-dialog-description';
 type Props = {
   open?: boolean;
   handleClose: () => void;
-  item: ItemRecord;
+  item: DiscriminatedItem;
   membershipToDelete: ItemMembership | null;
   hasOnlyOneAdmin: boolean;
 };

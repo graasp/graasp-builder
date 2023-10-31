@@ -1,16 +1,10 @@
-import { ItemMembership, PermissionLevel } from '@graasp/sdk';
-import { ItemMembershipRecord, ResultOfRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import { ItemMembership, PermissionLevel, ResultOf } from '@graasp/sdk';
 
 import { PERMISSIONS_EDITION_ALLOWED } from '../config/constants';
 
 // todo: better check with typescript
 export const isError = (
-  membership?:
-    | ItemMembershipRecord
-    | List<ItemMembershipRecord>
-    | { statusCode: unknown },
+  membership?: ItemMembership | ItemMembership[] | { statusCode: unknown },
 ): boolean | undefined =>
   membership && typeof membership === 'object' && 'statusCode' in membership;
 
@@ -18,7 +12,7 @@ export const isItemUpdateAllowedForUser = ({
   memberships,
   memberId,
 }: {
-  memberships?: List<ItemMembershipRecord>;
+  memberships?: ItemMembership[];
   memberId?: string;
 }): boolean => {
   // the user is not authenticated so he cannot update
@@ -40,9 +34,9 @@ export const getHighestPermissionForMemberFromMemberships = ({
   memberships,
   memberId,
 }: {
-  memberships?: List<ItemMembershipRecord>;
+  memberships?: ItemMembership[];
   memberId?: string;
-}): null | ItemMembershipRecord => {
+}): null | ItemMembership => {
   if (!memberId) {
     return null;
   }
@@ -54,18 +48,17 @@ export const getHighestPermissionForMemberFromMemberships = ({
     return null;
   }
 
-  const sorted = itemMemberships?.sort((a, b) =>
-    a.item.path.length > b.item.path.length ? 1 : -1,
-  );
+  const sorted = [...itemMemberships];
+  sorted?.sort((a, b) => (a.item.path.length > b.item.path.length ? 1 : -1));
 
-  return sorted.first();
+  return sorted[0];
 };
 
 export const isSettingsEditionAllowedForUser = ({
   memberships,
   memberId,
 }: {
-  memberships?: List<ItemMembershipRecord>;
+  memberships?: ItemMembership[];
   memberId?: string;
 }): boolean =>
   !memberships
@@ -76,9 +69,9 @@ export const isSettingsEditionAllowedForUser = ({
       );
 
 export const membershipsWithoutUser = (
-  memberships: List<ItemMembershipRecord>,
+  memberships: ItemMembership[],
   userId?: string,
-): List<ItemMembershipRecord> =>
+): ItemMembership[] =>
   memberships?.filter(({ member: { id: memberId } }) => memberId !== userId);
 
 export const getMembershipsForItem = ({
@@ -86,5 +79,5 @@ export const getMembershipsForItem = ({
   manyMemberships,
 }: {
   itemId: string;
-  manyMemberships?: ResultOfRecord<ItemMembership[]>;
-}): List<ItemMembershipRecord> | undefined => manyMemberships?.data?.[itemId];
+  manyMemberships?: ResultOf<ItemMembership[]>;
+}): ItemMembership[] | undefined => manyMemberships?.data?.[itemId];

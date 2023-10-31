@@ -5,8 +5,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-import { ItemType, getFileExtra, getS3FileExtra } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import {
+  DiscriminatedItem,
+  ItemType,
+  getFileExtra,
+  getS3FileExtra,
+} from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 
 import i18n, {
@@ -26,7 +30,7 @@ import ItemMemberships from './ItemMemberships';
 const { useMember } = hooks;
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
 };
 
 const ItemMetadataContent = ({ item }: Props): JSX.Element => {

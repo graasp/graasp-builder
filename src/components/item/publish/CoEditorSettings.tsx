@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 import { FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../config/constants';
@@ -16,7 +16,7 @@ import { BUILDER } from '../../../langs/constants';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
   disabled: boolean;
 };
 

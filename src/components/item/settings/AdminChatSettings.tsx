@@ -1,16 +1,14 @@
 import { Stack } from '@mui/material';
 
-import { PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
 
 import { hooks, mutations } from '../../../config/queryClient';
 import { ButtonVariants } from '../../../enums';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import ClearChatButton from './ClearChatButton';
-import DownloadChatButton from './DownloadChatButton';
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
 };
 
 const AdminChatSettings = ({ item }: Props): JSX.Element | null => {
@@ -31,11 +29,6 @@ const AdminChatSettings = ({ item }: Props): JSX.Element | null => {
 
   return (
     <Stack direction="column" spacing={1}>
-      <DownloadChatButton
-        variant={ButtonVariants.Button}
-        chatId={itemId}
-        showInfo
-      />
       <ClearChatButton
         variant={ButtonVariants.Button}
         chatId={itemId}

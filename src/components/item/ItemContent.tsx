@@ -2,26 +2,25 @@ import { Container, styled } from '@mui/material';
 
 import { Api } from '@graasp/query-client';
 import {
+  AppItemType,
+  CompleteMember,
   Context,
   DEFAULT_LANG,
+  DiscriminatedItem,
+  DocumentItemType,
+  EmbeddedLinkItemType,
+  EtherpadItemType,
+  FolderItemType,
+  H5PItemType,
   ItemType,
+  LocalFileItemType,
+  Member,
   PermissionLevel,
   PermissionLevelCompare,
+  S3FileItemType,
   buildPdfViewerLink,
   getH5PExtra,
 } from '@graasp/sdk';
-import {
-  AppItemTypeRecord,
-  DocumentItemTypeRecord,
-  EmbeddedLinkItemTypeRecord,
-  EtherpadItemTypeRecord,
-  FolderItemTypeRecord,
-  H5PItemTypeRecord,
-  ItemRecord,
-  LocalFileItemTypeRecord,
-  MemberRecord,
-  S3FileItemTypeRecord,
-} from '@graasp/sdk/frontend';
 import {
   AppItem,
   DocumentItem,
@@ -32,8 +31,6 @@ import {
   Loader,
 } from '@graasp/ui';
 
-import { List } from 'immutable';
-
 import { API_HOST, GRAASP_ASSETS_URL, H5P_INTEGRATION_URL } from '@/config/env';
 
 import {
@@ -41,7 +38,7 @@ import {
   DEFAULT_LINK_SHOW_IFRAME,
   ITEM_DEFAULT_HEIGHT,
 } from '../../config/constants';
-import { hooks } from '../../config/queryClient';
+import { axios, hooks } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
@@ -68,7 +65,7 @@ const StyledContainer = styled(Container)(() => ({
 const FileContent = ({
   item,
 }: {
-  item: LocalFileItemTypeRecord | S3FileItemTypeRecord;
+  item: LocalFileItemType | S3FileItemType;
 }): JSX.Element => {
   const { data: fileUrl, isLoading, isError } = useFileContentUrl(item.id);
 
@@ -99,8 +96,8 @@ const LinkContent = ({
   item,
   member,
 }: {
-  item: EmbeddedLinkItemTypeRecord;
-  member?: MemberRecord;
+  item: EmbeddedLinkItemType;
+  member?: Member;
 }): JSX.Element => (
   <StyledContainer>
     <LinkItem
@@ -121,11 +118,7 @@ const LinkContent = ({
 /**
  * Helper component to render typed document items
  */
-const DocumentContent = ({
-  item,
-}: {
-  item: DocumentItemTypeRecord;
-}): JSX.Element => (
+const DocumentContent = ({ item }: { item: DocumentItemType }): JSX.Element => (
   <StyledContainer>
     <DocumentItem
       id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
@@ -143,8 +136,8 @@ const AppContent = ({
   member,
   permission = PermissionLevel.Read,
 }: {
-  item: AppItemTypeRecord;
-  member?: MemberRecord;
+  item: AppItemType;
+  member?: Member;
   permission?: PermissionLevel;
 }): JSX.Element => (
   <AppItem
@@ -155,7 +148,7 @@ const AppContent = ({
       id: string;
       key: string;
       origin: string;
-    }) => Api.requestApiAccessToken(payload, { API_HOST })}
+    }) => Api.requestApiAccessToken(payload, { API_HOST, axios })}
     contextPayload={{
       apiHost: API_HOST,
       itemId: item.id,
@@ -164,7 +157,10 @@ const AppContent = ({
       settings: item.settings,
       lang:
         // todo: remove once it is added in ItemSettings type in sdk
-        item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
+        // todo: wrong casting
+        item.settings?.lang ||
+        (member as CompleteMember)?.extra?.lang ||
+        DEFAULT_LANG,
       context: Context.Builder,
     }}
   />
@@ -177,7 +173,7 @@ const FolderContent = ({
   item,
   enableEditing,
 }: {
-  item: FolderItemTypeRecord;
+  item: FolderItemType;
   enableEditing: boolean;
 }): JSX.Element => {
   const {
@@ -201,7 +197,7 @@ const FolderContent = ({
       parentId={item.id}
       id={buildItemsTableId(item.id)}
       title={item.name}
-      items={children ?? List()}
+      items={children ?? []}
       headerElements={
         enableEditing ? [<NewItemButton key="newButton" />] : undefined
       }
@@ -214,7 +210,7 @@ const FolderContent = ({
 /**
  * Helper component to render typed H5P items
  */
-const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
+const H5PContent = ({ item }: { item: H5PItemType }): JSX.Element => {
   const extra = getH5PExtra(item?.extra);
 
   if (!extra?.contentId) {
@@ -234,11 +230,7 @@ const H5PContent = ({ item }: { item: H5PItemTypeRecord }): JSX.Element => {
 /**
  * Helper component to render typed Etherpad items
  */
-const EtherpadContent = ({
-  item,
-}: {
-  item: EtherpadItemTypeRecord;
-}): JSX.Element => {
+const EtherpadContent = ({ item }: { item: EtherpadItemType }): JSX.Element => {
   const {
     data: etherpad,
     isLoading,
@@ -251,7 +243,7 @@ const EtherpadContent = ({
   if (isLoading) {
     return <Loader />;
   }
-
+  console.log(etherpad);
   if (!etherpad?.padUrl || isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
@@ -269,7 +261,7 @@ const EtherpadContent = ({
  * Props for {@see ItemContent}
  */
 type Props = {
-  item?: ItemRecord;
+  item?: DiscriminatedItem;
   permission?: PermissionLevel;
 };
 

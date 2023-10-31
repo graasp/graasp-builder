@@ -5,11 +5,14 @@ import { Grid, TextField, TextFieldProps } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import { Invitation, PermissionLevel } from '@graasp/sdk';
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
+import {
+  DiscriminatedItem,
+  Invitation,
+  ItemMembership,
+  PermissionLevel,
+} from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
-import { List } from 'immutable';
 import validator from 'validator';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -26,8 +29,8 @@ import ItemMembershipSelect, {
 
 type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
 type Props = {
-  item: ItemRecord;
-  memberships: List<ItemMembershipRecord>;
+  item: DiscriminatedItem;
+  memberships: ItemMembership[];
 };
 
 // todo: handle multiple invitations
@@ -106,7 +109,7 @@ const CreateItemMembershipForm = ({
       });
 
       // manually notify error
-      if (result?.errors?.size) {
+      if (result?.errors?.length) {
         console.error(result?.errors);
       } else {
         // reset email input

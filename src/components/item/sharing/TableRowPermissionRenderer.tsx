@@ -10,8 +10,7 @@ import {
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { Item, Member, PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, Item, Member, PermissionLevel } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 
 import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
@@ -27,7 +26,7 @@ import ItemMembershipSelect from './ItemMembershipSelect';
 import type { ItemMembershipSelectProps } from './ItemMembershipSelect';
 
 type TableRowPermissionRendererProps<T> = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
   editFunction: (args: { value: PermissionLevel; instance: T }) => void;
   createFunction: (args: { value: PermissionLevel; instance: T }) => void;
   readOnly?: boolean;

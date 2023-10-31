@@ -10,6 +10,7 @@ import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
 import { CUSTOM_APP_URL_ID } from '@/config/selectors';
+import { sortByName } from '@/utils/item';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
@@ -36,12 +37,12 @@ const AppGrid = ({
 
   if (data) {
     // filter out with search query
-    let dataToShow = searchQuery
+    const dataToShow = searchQuery
       ? data.filter((d) =>
           d.name.toLowerCase().includes(searchQuery.toLowerCase()),
         )
       : data;
-    dataToShow = dataToShow.sortBy((d) => d.name);
+    dataToShow.sort(sortByName);
 
     return (
       <>

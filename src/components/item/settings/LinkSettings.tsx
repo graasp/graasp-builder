@@ -3,7 +3,7 @@ import { ChangeEvent } from 'react';
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { EmbeddedLinkItemTypeRecord } from '@graasp/sdk/frontend';
+import { EmbeddedLinkItemType } from '@graasp/sdk';
 
 import {
   DEFAULT_LINK_SHOW_BUTTON,
@@ -18,7 +18,7 @@ import {
 import { BUILDER } from '../../../langs/constants';
 
 type Props = {
-  item: EmbeddedLinkItemTypeRecord;
+  item: EmbeddedLinkItemType;
 };
 
 const LinkSettings = ({ item }: Props): JSX.Element => {

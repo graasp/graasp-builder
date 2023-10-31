@@ -4,7 +4,7 @@ import { InfoRounded } from '@mui/icons-material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { Button, Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -19,7 +19,11 @@ import { BUILDER } from '../../../langs/constants';
 const { useItemPublishedInformation } = hooks;
 const { useUnpublishItem, usePublishItem } = mutations;
 
-type Props = { item: ItemRecord; isValidated: boolean; disabled: boolean };
+type Props = {
+  item: DiscriminatedItem;
+  isValidated: boolean;
+  disabled: boolean;
+};
 
 const ItemPublishButton = ({
   item,

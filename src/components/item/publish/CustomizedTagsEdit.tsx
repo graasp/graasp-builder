@@ -3,7 +3,7 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 import { Chip, TextField, Typography } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Loader, SaveButton } from '@graasp/ui';
 
@@ -20,7 +20,7 @@ import {
 import { BUILDER } from '../../../langs/constants';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
-type Props = { item: ItemRecord; disabled?: boolean };
+type Props = { item: DiscriminatedItem; disabled?: boolean };
 
 const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -85,7 +85,7 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
         text={translateCommon(COMMON.SAVE_BUTTON)}
         hasChanges={!disabled}
       />
-      {settings?.tags?.size && (
+      {settings?.tags?.length && (
         <>
           <Typography variant="subtitle1">
             {translateBuilder(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}

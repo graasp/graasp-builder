@@ -1,6 +1,5 @@
 import GraaspChatbox from '@graasp/chatbox';
-import { PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { hooks, mutations } from '../../config/queryClient';
@@ -15,7 +14,7 @@ const {
 } = mutations;
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
 };
 
 const Chatbox = ({ item }: Props): JSX.Element | null => {

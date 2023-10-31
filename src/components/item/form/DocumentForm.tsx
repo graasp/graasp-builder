@@ -8,7 +8,6 @@ import {
   DocumentItemExtraProperties,
   DocumentItemType,
   ItemType,
-  convertJs,
 } from '@graasp/sdk';
 import { DocumentItem } from '@graasp/ui';
 
@@ -82,9 +81,9 @@ export const DocumentExtraForm = ({
         <DocumentItem
           edit
           id={documentItemId}
-          item={convertJs({
+          item={{
             extra: buildDocumentExtra(extra),
-          })}
+          }}
           maxHeight={maxHeight}
           onCancel={onCancel}
           onChange={onContentChange}

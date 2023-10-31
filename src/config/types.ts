@@ -1,8 +1,8 @@
-import { ItemType } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 
 // eslint-disable-next-line no-shadow
 export enum InternalItemType {
   ZIP = 'zip',
 }
 
-export type NewItemTabType = ItemType | InternalItemType.ZIP;
+export type NewItemTabType = DiscriminatedItem['type'] | InternalItemType.ZIP;

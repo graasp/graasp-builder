@@ -24,7 +24,6 @@ import {
   CLEAR_CHAT_SETTING_ID,
 } from '../../../config/selectors';
 import { ButtonVariants } from '../../../enums';
-import DownloadChatButton from './DownloadChatButton';
 
 type Props = {
   chatId: string;
@@ -85,7 +84,7 @@ const ClearChatButton = ({
         <Box width="max-content">{getContent(variant)}</Box>
         <Typography variant="body1" textAlign="center">
           {t(
-            'Careful, this will delete all the messages in this item. Make sure you have a backup',
+            'Careful, this will delete all the messages in this item. Make sure you have a backup. You can download a backup from export from Graasp Analytics.',
           )}
         </Typography>
       </Stack>
@@ -96,11 +95,11 @@ const ClearChatButton = ({
             <Typography textAlign="justify">
               {t(CHATBOX.CLEAR_ALL_CHAT_CONTENT)}
             </Typography>
-            <DownloadChatButton
-              variant={ButtonVariants.Button}
-              chatId={chatId}
-              showInfo={false}
-            />
+            <Typography>
+              {t(
+                'You can download a backup from export from Graasp Analytics.',
+              )}
+            </Typography>
           </Stack>
         </DialogContent>
         <DialogActions>

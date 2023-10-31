@@ -116,7 +116,8 @@ const WrappedItemScreen = (): JSX.Element => {
   const Component = ItemLoginAuthorization({
     signIn: itemLoginSignIn,
     itemId,
-    useCurrentMember,
+    // TODO: do not use empty user for current member
+    useCurrentMember: useCurrentMember as any,
     useItem,
     useItemLoginSchemaType,
     ForbiddenContent,

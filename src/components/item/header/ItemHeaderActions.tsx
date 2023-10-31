@@ -1,7 +1,6 @@
 import { Stack } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
 import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
@@ -29,7 +28,7 @@ import ModeButton from './ModeButton';
 const { useItemMemberships } = hooks;
 
 type Props = {
-  item?: ItemRecord;
+  item?: DiscriminatedItem;
 };
 
 const ItemHeaderActions = ({ item }: Props): JSX.Element => {
@@ -72,13 +71,8 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
 
       const activeActions = (
         <>
-          {showEditButton && (
-            <EditButton item={item.toJS() as DiscriminatedItem} />
-          )}
-          <ItemMenu
-            item={item.toJS() as DiscriminatedItem}
-            canEdit={showEditButton}
-          />
+          {showEditButton && <EditButton item={item} />}
+          <ItemMenu item={item} canEdit={showEditButton} />
 
           <ShareButton itemId={item.id} />
           <ChatboxButton

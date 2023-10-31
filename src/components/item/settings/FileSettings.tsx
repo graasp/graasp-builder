@@ -1,10 +1,6 @@
 import { Box, SelectChangeEvent, Stack, Typography } from '@mui/material';
 
-import { MaxWidth } from '@graasp/sdk';
-import {
-  LocalFileItemTypeRecord,
-  S3FileItemTypeRecord,
-} from '@graasp/sdk/frontend';
+import { LocalFileItemType, MaxWidth, S3FileItemType } from '@graasp/sdk';
 import { Select } from '@graasp/ui';
 
 import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
@@ -15,7 +11,7 @@ import { BUILDER } from '@/langs/constants';
 const FileSettings = ({
   item,
 }: {
-  item: S3FileItemTypeRecord | LocalFileItemTypeRecord;
+  item: S3FileItemType | LocalFileItemType;
 }): JSX.Element => {
   const { t: translateEnum } = useEnumsTranslation();
   const { t: translateBuilder } = useBuilderTranslation();

@@ -1,12 +1,10 @@
 import { IconButtonProps } from '@mui/material/IconButton';
 
-import { ItemFavoriteRecord, ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, ItemFavorite } from '@graasp/sdk';
 import {
   ActionButtonVariant,
   FavoriteButton as GraaspFavoriteButton,
 } from '@graasp/ui';
-
-import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, mutations } from '../../config/queryClient';
@@ -15,16 +13,17 @@ import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
   type?: ActionButtonVariant;
   onClick?: () => void;
   size?: IconButtonProps['size'];
 };
 
 const isItemFavorite = (
-  item: ItemRecord,
-  favorites?: List<ItemFavoriteRecord>,
+  item: DiscriminatedItem,
+  favorites?: ItemFavorite[],
 ): boolean => favorites?.some((f) => f.item.id === item.id) || false;
+
 const FavoriteButton = ({
   item,
   size,
@@ -41,10 +40,7 @@ const FavoriteButton = ({
     return null;
   }
 
-  const isFavorite = isItemFavorite(
-    item,
-    favorites as List<ItemFavoriteRecord>,
-  );
+  const isFavorite = isItemFavorite(item, favorites);
 
   const handleFavorite = () => {
     addFavorite.mutate(item.id);

@@ -3,8 +3,6 @@ import { Box } from '@mui/material';
 import { Member } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
-import { List } from 'immutable';
-
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
@@ -40,7 +38,7 @@ const PublishedItemsDisplay = ({ member }: { member: Member }): JSX.Element => {
       <Items
         id={PUBLISHED_ITEMS_ID}
         title={translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
-        items={sharedItems ?? List()}
+        items={sharedItems ?? []}
       />
     </Box>
   );

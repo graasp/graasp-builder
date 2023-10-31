@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useMemo } from 'react';
-import { QueryObserverResult } from 'react-query';
+import { QueryObserverResult, UseQueryResult } from 'react-query';
 
-import { MemberRecord } from '@graasp/sdk/frontend';
+import { CompleteMember } from '@graasp/sdk';
 
 import i18n from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 
 type CurrentUserContextType =
-  | QueryObserverResult<MemberRecord>
+  | QueryObserverResult<CompleteMember>
   | Record<string, never>;
 
 const CurrentUserContext = createContext<CurrentUserContextType>({});
@@ -24,7 +24,8 @@ export const CurrentUserContextProvider = ({
   const query = useCurrentMember();
 
   // update language depending on user setting
-  const lang = query?.data?.extra?.lang as string;
+  // todo: this cast can be resolved if we don't allow empty user
+  const lang = (query?.data as CompleteMember)?.extra?.lang as string;
   useEffect(() => {
     if (lang !== i18n.language) {
       i18n.changeLanguage(lang);
@@ -34,8 +35,11 @@ export const CurrentUserContextProvider = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const value = useMemo(() => query, [query.data]);
 
+  // todo: this cast can be resolved if we don't allow empty user
   return (
-    <CurrentUserContext.Provider value={value}>
+    <CurrentUserContext.Provider
+      value={value as UseQueryResult<CompleteMember, Error>}
+    >
       {children}
     </CurrentUserContext.Provider>
   );

@@ -4,8 +4,6 @@ import { routines } from '@graasp/query-client';
 import { FlagType } from '@graasp/sdk';
 import { ItemFlagDialog } from '@graasp/ui';
 
-import { List } from 'immutable';
-
 import { useBuilderTranslation } from '../../config/i18n';
 import notifier from '../../config/notifier';
 import { mutations } from '../../config/queryClient';
@@ -56,7 +54,7 @@ const FlagItemModalProvider = ({
   return (
     <FlagItemModalContext.Provider value={value}>
       <ItemFlagDialog
-        flags={List(Object.values(FlagType))}
+        flags={Object.values(FlagType)}
         onFlag={onFlag}
         open={open}
         onClose={onClose}

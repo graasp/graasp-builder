@@ -3,15 +3,13 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { ItemMembership, isPseudonymizedMember } from '@graasp/sdk';
 import {
-  InvitationRecord,
-  ItemMembershipRecord,
-  ItemRecord,
-} from '@graasp/sdk/frontend';
+  DiscriminatedItem,
+  ItemMembership,
+  isPseudonymizedMember,
+} from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
-import { List } from 'immutable';
 import partition from 'lodash.partition';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -30,8 +28,8 @@ import SharingLink from './SharingLink';
 import VisibilitySelect from './VisibilitySelect';
 
 type Props = {
-  item: ItemRecord;
-  memberships?: List<ItemMembershipRecord>;
+  item: DiscriminatedItem;
+  memberships?: ItemMembership[];
 };
 
 const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
@@ -62,7 +60,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
       return null;
     }
     const [authenticatedMemberships, authorizedMemberships] = partition(
-      memberships.toJS() as ItemMembership[],
+      memberships,
       ({ member }) => member?.email && isPseudonymizedMember(member.email),
     );
 
@@ -109,7 +107,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
           </>
         )}
 
-        {Boolean(invitations?.size) && (
+        {invitations && Boolean(invitations?.length) && (
           <>
             <Divider sx={{ my: 3 }} />
             <Typography variant="h5">
@@ -117,7 +115,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
             </Typography>
             <InvitationsTable
               item={item}
-              invitations={invitations as List<InvitationRecord>}
+              invitations={invitations}
               emptyMessage={translateBuilder(
                 BUILDER.SHARING_INVITATIONS_EMPTY_MESSAGE,
               )}

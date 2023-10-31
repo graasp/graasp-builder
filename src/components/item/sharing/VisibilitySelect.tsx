@@ -4,8 +4,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
-import { ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
-import { ItemRecord, ItemTagRecord } from '@graasp/sdk/frontend';
+import {
+  DiscriminatedItem,
+  ItemLoginSchemaType,
+  ItemTag,
+  ItemTagType,
+} from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { SETTINGS } from '../../../config/constants';
@@ -25,11 +29,11 @@ const {
 } = mutations;
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
   edit?: boolean;
 };
 
-const useVisibility = (item: ItemRecord) => {
+const useVisibility = (item: DiscriminatedItem) => {
   const [itemId] = useState(item.id);
 
   // get item public
@@ -40,7 +44,7 @@ const useVisibility = (item: ItemRecord) => {
   } = useItemTags(itemId);
   const { mutate: postItemTag } = usePostItemTag();
   const { mutate: deleteItemTag } = useDeleteItemTag();
-  const [publicTag, setPublicTag] = useState<ItemTagRecord | undefined>();
+  const [publicTag, setPublicTag] = useState<ItemTag | undefined>();
   useEffect(() => {
     setPublicTag(itemTags?.find(({ type }) => type === ItemTagType.Public));
   }, [itemTags]);

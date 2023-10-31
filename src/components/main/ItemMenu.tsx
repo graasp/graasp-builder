@@ -8,7 +8,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-import { Item, convertJs } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -32,7 +32,7 @@ import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
 
 type Props = {
-  item: Item;
+  item: DiscriminatedItem;
   canEdit?: boolean;
 };
 
@@ -99,7 +99,7 @@ const ItemMenu = ({ item, canEdit = false }: Props): JSX.Element => {
         size="medium"
         key="favorite"
         type={ActionButton.MENU_ITEM}
-        item={convertJs(item)}
+        item={item}
       />,
       <CopyButton
         key="copy"

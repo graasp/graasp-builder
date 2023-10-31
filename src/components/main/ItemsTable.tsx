@@ -6,16 +6,15 @@ import {
   Item,
   ItemMembership,
   ItemType,
+  ResultOf,
   getFolderExtra,
   getShortcutExtra,
 } from '@graasp/sdk';
-import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
 import { COMMON } from '@graasp/translations';
 import { useShortenURLParams } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
-import { List } from 'immutable';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
@@ -40,8 +39,8 @@ const { useItem } = hooks;
 
 type Props = {
   id?: string;
-  items?: List<ItemRecord>;
-  manyMemberships?: ResultOfRecord<ItemMembership[]>;
+  items?: DiscriminatedItem[];
+  manyMemberships?: ResultOf<ItemMembership[]>;
   itemsStatuses?: ItemsStatuses;
   tableTitle: string;
   headerElements?: JSX.Element[];
@@ -62,7 +61,7 @@ type Props = {
 const ItemsTable = ({
   tableTitle,
   id: tableId = '',
-  items: rows = List(),
+  items: rows = [],
   manyMemberships,
   itemsStatuses,
   headerElements = [],
@@ -118,10 +117,9 @@ const ItemsTable = ({
 
   const hasOrderChanged = (rowIds: string[]) => {
     if (parentItem && parentItem.type === ItemType.FOLDER) {
-      const { childrenOrder = List<string>() } =
-        getFolderExtra(parentItem.extra) || {};
+      const { childrenOrder = [] } = getFolderExtra(parentItem.extra) || {};
       return (
-        rowIds.length !== childrenOrder.size ||
+        rowIds.length !== childrenOrder.length ||
         !childrenOrder.every((id, i) => id === rowIds[i])
       );
     }
@@ -276,7 +274,7 @@ const ItemsTable = ({
         id={tableId}
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
-        rowData={rows.toJS() as DiscriminatedItem[]}
+        rowData={rows}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
         onCellClicked={onCellClicked}

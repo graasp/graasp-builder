@@ -9,9 +9,6 @@ import {
   getAppExtra,
   getEmbeddedLinkExtra,
 } from '@graasp/sdk';
-import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
 
 import { UUID_LENGTH } from '../config/constants';
 
@@ -126,8 +123,8 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
 };
 
 export const getChildrenOrderFromFolderExtra = (
-  extra: ImmutableCast<FolderItemExtra>,
-): List<string> => extra[ItemType.FOLDER]?.childrenOrder ?? List();
+  extra: FolderItemExtra,
+): string[] => extra[ItemType.FOLDER]?.childrenOrder ?? [];
 
 export const stripHtml = (str?: string | null): string =>
   str?.replace(/<[^>]*>?/gm, '') || '';
@@ -148,7 +145,7 @@ export function useIsParentInstance({
   item,
 }: {
   instance: { item: Item };
-  item: ItemRecord;
+  item: DiscriminatedItem;
 }): boolean {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {

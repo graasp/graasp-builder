@@ -1,11 +1,9 @@
 import { useMemo } from 'react';
 
-import { Invitation, PermissionLevel } from '@graasp/sdk';
-import { InvitationRecord, ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, Invitation, PermissionLevel } from '@graasp/sdk';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { ColDef } from 'ag-grid-community';
-import { List } from 'immutable';
 
 import {
   MEMBERSHIP_TABLE_HEIGHT,
@@ -30,8 +28,8 @@ const rowStyle = {
 };
 
 type Props = {
-  item: ItemRecord;
-  invitations: List<InvitationRecord>;
+  item: DiscriminatedItem;
+  invitations: Invitation[];
   emptyMessage?: string;
   readOnly?: boolean;
 };
@@ -176,7 +174,7 @@ const InvitationsTable = ({
     <GraaspTable
       columnDefs={columnDefs}
       tableHeight={MEMBERSHIP_TABLE_HEIGHT}
-      rowData={invitations.toJS() as Invitation[]}
+      rowData={invitations}
       emptyMessage={emptyMessage}
       getRowId={getRowId}
       rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}

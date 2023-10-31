@@ -8,8 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { CCLicenseAdaptions } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { CCLicenseAdaptions, DiscriminatedItem } from '@graasp/sdk';
 import { CCSharingVariant, CreativeCommons, Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -31,7 +30,7 @@ type CCLicenseChoice = 'yes' | 'no' | '';
 type CCSharingLicenseChoice = CCLicenseChoice | 'alike';
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
   disabled: boolean;
 };
 
