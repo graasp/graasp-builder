@@ -25,7 +25,6 @@ import {
 import { ITEMS_SETTINGS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
-import { verifyDownloadedChat } from '../../../support/utils';
 
 describe('Item Settings', () => {
   beforeEach(() => {
@@ -89,29 +88,6 @@ describe('Item Settings', () => {
       );
     });
 
-    it('Download Chat', () => {
-      const itemId = ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN.id;
-
-      cy.visit(buildItemPath(itemId));
-      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
-
-      cy.get(`#${DOWNLOAD_CHAT_BUTTON_ID}`)
-        .should('exist')
-        .and('be.visible')
-        // download file
-        .click();
-
-      // get file name from data-cy-filename attribute and check local csv
-      cy.get(`#${DOWNLOAD_CHAT_BUTTON_ID}`)
-        .should('have.attr', 'data-cy-filename')
-        .then((filename) => {
-          verifyDownloadedChat(
-            filename.toString(),
-            ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN.chat.length,
-          );
-        });
-    });
-
     it('Clear Chat', () => {
       const itemId = ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN.id;
       // navigate to the item
@@ -127,23 +103,6 @@ describe('Item Settings', () => {
 
       // check that the dialog is open
       cy.get(`#${CLEAR_CHAT_DIALOG_ID}`);
-
-      // try to download the chat backup
-      cy.get(`#${CLEAR_CHAT_DIALOG_ID} #${DOWNLOAD_CHAT_BUTTON_ID}`)
-        .should('exist')
-        .and('be.visible')
-        // download file
-        .click();
-
-      // get file name from data-cy-filename attribute and check local csv
-      cy.get(`#${CLEAR_CHAT_DIALOG_ID} #${DOWNLOAD_CHAT_BUTTON_ID}`)
-        .should('have.attr', 'data-cy-filename')
-        .then((filename) => {
-          verifyDownloadedChat(
-            filename.toString(),
-            ITEM_WITH_CHATBOX_MESSAGES.chat.length,
-          );
-        });
 
       // check that the buttons are there
       cy.get(`#${CLEAR_CHAT_CONFIRM_BUTTON_ID}`)

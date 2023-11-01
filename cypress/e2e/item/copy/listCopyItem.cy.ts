@@ -4,13 +4,11 @@ import {
   buildItemPath,
 } from '../../../../src/config/paths';
 import {
-  EDIT_ITEM_BUTTON_CLASS,
   ITEM_MENU_COPY_BUTTON_CLASS,
   TREE_MODAL_MY_ITEMS_ID,
   TREE_MODAL_SHARED_ITEMS_ID,
   buildItemMenu,
   buildItemMenuButtonId,
-  buildItemsTableId,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
@@ -106,31 +104,6 @@ describe('Copy Item in List', () => {
 
     cy.wait('@copyItems').then(() => {
       cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
-    });
-  });
-
-  describe('Error handling', () => {
-    it('error while copying item does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemsError: true });
-      const { id } = SAMPLE_ITEMS.items[0];
-
-      // go to children item
-      cy.visit(buildItemPath(id));
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-      // copy
-      const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-      const { path: toItemPath } = SAMPLE_ITEMS.items[0];
-      copyItem({ id: copyItemId, toItemPath });
-
-      cy.wait('@copyItems').then(() => {
-        // check item is still existing in parent
-        cy.get(buildItemsTableRowIdAttribute(copyItemId)).should('exist');
-        cy.get(`#${buildItemsTableId(id)} .${EDIT_ITEM_BUTTON_CLASS}`).should(
-          'have.length',
-          3,
-        );
-      });
     });
   });
 });

@@ -60,7 +60,7 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
     return <Loader />;
   }
 
-  if (!categoriesMap?.length) {
+  if (!Object.values(categoriesMap).length) {
     return null;
   }
 

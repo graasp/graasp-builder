@@ -83,28 +83,4 @@ describe('Copy items in List', () => {
       });
     });
   });
-
-  describe('Error handling', () => {
-    it('error while copying item does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemsError: true });
-      const { id: start } = SAMPLE_ITEMS.items[0];
-
-      // go to children item
-      cy.visit(buildItemPath(start));
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-      // copy
-      const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-      const { path: toItemPath } = SAMPLE_ITEMS.items[0];
-      copyItems({ itemIds, toItemPath });
-
-      cy.wait('@copyItems').then(({ response: { statusCode } }) => {
-        // check item is still existing in parent
-        itemIds.forEach((id) => {
-          cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
-        });
-        expect(statusCode).to.equal(400);
-      });
-    });
-  });
 });

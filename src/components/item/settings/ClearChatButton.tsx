@@ -84,7 +84,7 @@ const ClearChatButton = ({
         <Box width="max-content">{getContent(variant)}</Box>
         <Typography variant="body1" textAlign="center">
           {t(
-            'Careful, this will delete all the messages in this item. Make sure you have a backup. You can download a backup from export from Graasp Analytics.',
+            'Careful, this will delete all the messages in this item. Make sure you have a backup. You can download a backup from Graasp Analytics.',
           )}
         </Typography>
       </Stack>
@@ -96,9 +96,7 @@ const ClearChatButton = ({
               {t(CHATBOX.CLEAR_ALL_CHAT_CONTENT)}
             </Typography>
             <Typography>
-              {t(
-                'You can download a backup from export from Graasp Analytics.',
-              )}
+              {t('You can download a backup from Graasp Analytics.')}
             </Typography>
           </Stack>
         </DialogContent>

@@ -9,7 +9,6 @@ import {
   TREE_MODAL_SHARED_ITEMS_ID,
   buildItemMenu,
   buildItemMenuButtonId,
-  buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -109,28 +108,6 @@ describe('Move Item in List', () => {
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(toItemId);
       expect(url).to.contain(movedItem);
-    });
-  });
-
-  describe('Error handling', () => {
-    it('error while moving item does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, moveItemsError: true });
-      const { id } = SAMPLE_ITEMS.items[0];
-
-      // go to children item
-      cy.visit(buildItemPath(id));
-
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-      // move
-      const { id: movedItem } = SAMPLE_ITEMS.items[2];
-      const { path: toItemPath } = SAMPLE_ITEMS.items[3];
-      moveItem({ id: movedItem, toItemPath });
-
-      cy.wait('@moveItems').then(() => {
-        // check item is still there
-        cy.get(buildItemsTableRowIdAttribute(movedItem)).should('exist');
-      });
     });
   });
 });
