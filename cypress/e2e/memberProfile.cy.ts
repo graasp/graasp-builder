@@ -1,4 +1,4 @@
-import { EmailFrequency } from '@graasp/sdk';
+import { EmailFrequency, formatDate } from '@graasp/sdk';
 import { langs } from '@graasp/translations';
 
 import { emailFrequency } from '../../src/config/constants';
@@ -19,7 +19,6 @@ import {
   buildEmailFrequencyOptionId,
   buildLanguageOptionId,
 } from '../../src/config/selectors';
-import { formatDate } from '../../src/utils/date';
 import { CURRENT_USER } from '../fixtures/members';
 
 describe('Member Profile', () => {

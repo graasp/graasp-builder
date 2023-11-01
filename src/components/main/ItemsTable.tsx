@@ -7,6 +7,7 @@ import {
   ItemMembership,
   ItemType,
   ResultOf,
+  formatDate,
   getFolderExtra,
   getShortcutExtra,
 } from '@graasp/sdk';
@@ -26,7 +27,6 @@ import { buildItemPath } from '../../config/paths';
 import { hooks, mutations } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
@@ -144,7 +144,7 @@ const ItemsTable = ({
     }
   };
 
-  const dateColumnFormatter = ({ value }: { value: Date }) =>
+  const dateColumnFormatter = ({ value }: { value: string }) =>
     formatDate(value, {
       locale: i18n.language,
       defaultValue: translateCommon(COMMON.UNKNOWN_DATE),

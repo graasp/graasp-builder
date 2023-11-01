@@ -1,4 +1,4 @@
-import { ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import {
@@ -15,7 +15,7 @@ import { CAPTION_EDIT_PAUSE, TABLE_ITEM_RENDER_TIME } from './constants';
 export const editItem = (
   payload: {
     id: string;
-    type: ItemType | string;
+    type: DiscriminatedItem['type'] | string;
     name: string;
     description: string;
   },

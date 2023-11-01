@@ -69,15 +69,15 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
         Papa.parse(file, {
           header: true,
           dynamicTyping: true,
-          complete: ({ data: parsedData }) => {
+          complete: ({ data: parsedData }: { data: Partial<Invitation>[] }) => {
             // add current item path and default permission read
             const dataWithItemPath = parsedData.map<Partial<Invitation>>(
               (d) => ({
                 permission: PermissionLevel.Read,
-                ...(d as Partial<Invitation>),
+                ...d,
                 itemPath,
               }),
-            ) as any;
+            );
 
             share({ data: dataWithItemPath, itemId });
           },

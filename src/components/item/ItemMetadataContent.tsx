@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import {
   DiscriminatedItem,
   ItemType,
+  formatDate,
   getFileExtra,
   getS3FileExtra,
 } from '@graasp/sdk';
@@ -23,7 +24,6 @@ import {
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { formatDate } from '../../utils/date';
 import { useLayoutContext } from '../context/LayoutContext';
 import ItemMemberships from './ItemMemberships';
 

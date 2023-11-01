@@ -17,7 +17,7 @@ import ItemMenu from '../main/ItemMenu';
 
 type Props = {
   manyMemberships?: ResultOf<ItemMembership[]>;
-  member?: Member;
+  member?: Member | null;
 };
 
 type ChildCompProps = {

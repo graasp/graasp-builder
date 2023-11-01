@@ -34,7 +34,10 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
     });
   };
 
-  const { url } = getEmbeddedLinkExtra(item?.extra) || {};
+  let url = null;
+  if (item?.extra) {
+    ({ url } = getEmbeddedLinkExtra(item?.extra) || {});
+  }
   const isLinkInvalid = Boolean(url?.length) && !isUrlValid(url);
 
   return (

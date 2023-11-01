@@ -10,7 +10,7 @@ export const NotificationButton = (): JSX.Element | null => {
   const { mutate: deleteMentionMutate } = mutations.useDeleteMention();
   const { mutate: clearAllMentionsMutate } = mutations.useClearMentions();
 
-  if (!currentMember || !('id' in currentMember)) {
+  if (!currentMember) {
     return null;
   }
 

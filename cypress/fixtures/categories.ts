@@ -34,7 +34,7 @@ export const SAMPLE_ITEM_CATEGORIES: ItemCategory[] = [
     id: 'e75e1950-c5b4-4e21-95a2-c7c3bfa4072b',
     item: PUBLISHED_ITEM,
     category: SAMPLE_CATEGORIES[0],
-    createdAt: new Date(),
+    createdAt: '2021-08-11T12:56:36.834Z',
     creator: MEMBERS.ANNA,
   },
 ];
@@ -59,7 +59,7 @@ export const ITEM_WITH_CATEGORIES_CONTEXT = {
     {
       id: '65c57d69-0e59-4569-a422-f330c31c995c',
       item: ITEM_WITH_CATEGORIES,
-      createdAt: new Date(),
+      createdAt: '2021-08-11T12:56:36.834Z',
       itemValidations: [
         {
           id: 'id1',

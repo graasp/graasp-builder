@@ -97,7 +97,7 @@ const LinkContent = ({
   member,
 }: {
   item: EmbeddedLinkItemType;
-  member?: Member;
+  member?: Member | null;
 }): JSX.Element => (
   <StyledContainer>
     <LinkItem
@@ -137,7 +137,7 @@ const AppContent = ({
   permission = PermissionLevel.Read,
 }: {
   item: AppItemType;
-  member?: Member;
+  member?: CompleteMember | null;
   permission?: PermissionLevel;
 }): JSX.Element => (
   <AppItem
@@ -158,9 +158,7 @@ const AppContent = ({
       lang:
         // todo: remove once it is added in ItemSettings type in sdk
         // todo: wrong casting
-        item.settings?.lang ||
-        (member as CompleteMember)?.extra?.lang ||
-        DEFAULT_LANG,
+        item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
       context: Context.Builder,
     }}
   />
@@ -243,7 +241,7 @@ const EtherpadContent = ({ item }: { item: EtherpadItemType }): JSX.Element => {
   if (isLoading) {
     return <Loader />;
   }
-  console.log(etherpad);
+
   if (!etherpad?.padUrl || isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }

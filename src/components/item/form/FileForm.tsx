@@ -28,7 +28,9 @@ const FileForm = (props: EditModalContentPropType): JSX.Element | null => {
   ) {
     const itemExtra = getExtraFromPartial(item);
     const { mimetype, altText } = itemExtra;
-    const updatedExtra = getExtraFromPartial(updatedProperties);
+    const updatedExtra = updatedProperties.extra
+      ? getExtraFromPartial(updatedProperties)
+      : {};
     return (
       <>
         <NameForm
