@@ -1719,7 +1719,7 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox#remove-immutable":
   version: 2.0.1
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=3cddddc13ae73ae47408b961b9ec3bc5c5189a96"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=80a9f843b8777309a5856bd77fde8cdb07e9b963"
   dependencies:
     lodash.groupby: 4.6.0
     lodash.truncate: 4.4.2
@@ -1745,7 +1745,7 @@ __metadata:
     react: ^17.0.0
     react-dom: "*"
     react-i18next: ^12.0.0
-  checksum: e599dabf74d02ced4d4b8d5a0e02d6bba49ef433e83942ff4ecf3e0679fafa1c3c5a8005efc70c877003daf7be526d79f2f511e0bd8d923f4325b62a996a408a
+  checksum: 7b7e429a80a5050dd7a37f1c7eb8849c39a8e0038604e55cfb5e1811144cb24db4b8f388aa41e8d2746f00de2993fa349c947765207e1c14d1feb3e31427c75a
   languageName: node
   linkType: hard
 
@@ -1764,7 +1764,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#433-remove-immutable":
   version: 1.11.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=d779bf985d7b67153eaa23da3112be6463892e82"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=f3108a7e7a657afc1f041019f949f916c5805d97"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#remove-frontend"
     "@graasp/translations": 1.19.4
@@ -1776,13 +1776,13 @@ __metadata:
     uuid: 9.0.1
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: b43dee46e1028c458da9bd70d5eb19138b7da3a88d4fd91907635af7a3fd598737f086dd9164f93fc278a48ee9907a7d05e2a5c0b7779ec3fedd6759e50c1bc4
+  checksum: d2cbb4bc96a7313c234a54b9926d8d991abd017e80e63fc990fa0a4e9a322742dcc3c6b6b288c55d2886e04daf5d918fa937d0c6e5cc7265b9ad243e88a8afe4
   languageName: node
   linkType: hard
 
 "@graasp/sdk@github:graasp/graasp-sdk#remove-frontend":
   version: 1.10.1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=5cdd516a88ec43370c377a45ebb67dc7558c2409"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=8523912047ef1ea3eec302e67be559059402d356"
   dependencies:
     "@aws-sdk/client-s3": 3.427.0
     "@fastify/secure-session": 6.1.0
@@ -1793,7 +1793,7 @@ __metadata:
     js-cookie: 3.0.5
     uuid: 9.0.1
     validator: 13.11.0
-  checksum: de64aa4c07799efccf8e199913c428bf9c1a5932d4b0899bb1f8c788add04aa821f7b815d2461ee49ecd864d75cbbc245631f36db270fe2c8d5d9badb39d9c8c
+  checksum: 4aec27a489eb1c6dfbb5c72c9b377e3af0a6750b5b4dde5373f00de9e95b6a75375d8bc4e159dfbe61c4b00670f8c88a90ba678ffd87afd1acd8f2f7a13caa40
   languageName: node
   linkType: hard
 
@@ -1817,7 +1817,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#remove-immutable":
   version: 3.7.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=e0942d5ede244e6e1f1ae76df1463bd7ac35f6df"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=f5e3c3b1fef96e3caf252c6af1908da2a9fcc499"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#remove-frontend"
     http-status-codes: 2.3.0
@@ -1852,7 +1852,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 5b8ac4ba3215133fd9662cef621b13786164c9f829a46896e98b09bb065eb627c130cc74fc8bc02c584e62185b50c6236e1777cb6aad2b020c1f34ae7ab06425
+  checksum: f2e787b2f43f1081e4a718150ff9fa5b0b0daae406b55834bf8076f22cbf175f9d7a66c07b401ac698036a3f0096800db14a3404f25b68dbe439b97a4719d500
   languageName: node
   linkType: hard
 
