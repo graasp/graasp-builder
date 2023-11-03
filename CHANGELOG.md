@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/graasp/graasp-builder/compare/v1.11.0...v2.0.0) (2023-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove immutable ([#849](https://github.com/graasp/graasp-builder/issues/849))
+
+### Features
+
+* remove immutable ([#849](https://github.com/graasp/graasp-builder/issues/849)) ([94cbf7c](https://github.com/graasp/graasp-builder/commit/94cbf7c3a521f0bc7e9e933159801060d562e1c3))
+
 ## [1.11.0](https://github.com/graasp/graasp-builder/compare/v1.10.0...v1.11.0) (2023-10-25)
 
 
