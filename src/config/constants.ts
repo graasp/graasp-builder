@@ -101,9 +101,9 @@ export const SHARE_MODAL_AVATAR_GROUP_MAX_AVATAR = 8;
  */
 export const FLAG_LIST_MAX_HEIGHT = 250;
 
-export const SHARE_LINK_COLOR = 'black';
-export const SHARE_LINK_CONTAINER_BORDER_WIDTH = 1;
-export const SHARE_LINK_CONTAINER_BORDER_STYLE = 'dotted';
+export const SHORT_LINK_COLOR = 'black';
+export const SHORT_LINK_CONTAINER_BORDER_WIDTH = 1;
+export const SHORT_LINK_CONTAINER_BORDER_STYLE = 'dotted';
 
 /* possible choices for number of items per page in grid,
    (must be common multiple for possible row counts of 1,2,3,4,6) */
@@ -165,3 +165,6 @@ export const EXPORT_CSV_HEADERS = [
 // TODO: refer from specific endpoint /tutorials?
 export const TUTORIALS_LINK =
   'https://player.graasp.org/9d80d81f-ec9d-4bfb-836a-1c6b125aef2f';
+
+export const SHORT_LINK_ID_MAX_LENGTH = 10;
+export const SHORT_LINK_API_CALL_DEBOUNCE_MS = 500;

@@ -43,6 +43,7 @@ jobs:
           # un-comment to enable Google Analytics
           # VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+          VITE_GRAASP_REDIRECTION_HOST: ${{ vars.VITE_GRAASP_REDIRECTION_HOST }}
         run: yarn build
         shell: bash
 

@@ -17,9 +17,9 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.0.0",
-    "@graasp/query-client": "2.0.3",
-    "@graasp/sdk": "3.0.1",
-    "@graasp/translations": "1.20.1",
+    "@graasp/query-client": "2.1.0",
+    "@graasp/sdk": "3.3.0",
+    "@graasp/translations": "1.21.0",
     "@graasp/ui": "4.1.0",
     "@mui/icons-material": "5.14.18",
     "@mui/lab": "5.0.0-alpha.151",
@@ -41,6 +41,7 @@
     "filesize": "10.1.0",
     "http-status-codes": "2.3.0",
     "katex": "0.16.9",
+    "lodash.debounce": "4.0.8",
     "lodash.groupby": "4.6.0",
     "lodash.isequal": "4.5.0",
     "lodash.partition": "4.6.0",
@@ -110,6 +111,7 @@
     "@testing-library/user-event": "^14.5.1",
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
     "@types/jest": "29.5.8",
+    "@types/lodash.debounce": "4.0.9",
     "@types/lodash.groupby": "4.6.9",
     "@types/lodash.isequal": "4.5.8",
     "@types/lodash.partition": "4.6.9",
@@ -145,9 +147,6 @@
     "vite": "4.5.0",
     "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
-  },
-  "resolutions": {
-    "@graasp/sdk": "2.1.0"
   },
   "packageManager": "yarn@3.6.4"
 }

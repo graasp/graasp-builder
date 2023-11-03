@@ -1,5 +1,6 @@
 // use simple id format for tests
 export const ID_FORMAT = '(?=.*[0-9])(?=.*[a-zA-Z])([a-z0-9-]+)';
+export const SHORTLINK_FORMAT = '[a-zA-Z0-9-]+';
 
 /**
  * Parse characters of a given string to return a correct regex string

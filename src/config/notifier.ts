@@ -6,7 +6,7 @@ import buildI18n, {
   REQUEST_MESSAGES,
 } from '@graasp/translations';
 
-import { AxiosError } from 'axios';
+import axios from 'axios';
 
 import {
   COPY_ITEM_LINK_TO_CLIPBOARD,
@@ -28,14 +28,12 @@ const i18n = buildI18n();
 const getErrorMessageFromPayload = (
   payload?: Parameters<Notifier>[0]['payload'],
 ) => {
-  if (payload?.error && payload.error instanceof AxiosError) {
-    if (payload.error.isAxiosError) {
-      return (
-        payload.error.response?.data.message ??
-        FAILURE_MESSAGES.UNEXPECTED_ERROR
-      );
-    }
+  if (payload?.error && axios.isAxiosError(payload.error)) {
+    return (
+      payload.error.response?.data.message ?? FAILURE_MESSAGES.UNEXPECTED_ERROR
+    );
   }
+
   return payload?.error?.message ?? FAILURE_MESSAGES.UNEXPECTED_ERROR;
 };
 
@@ -70,6 +68,9 @@ const {
   resendInvitationRoutine,
   updatePasswordRoutine,
   shareItemRoutine,
+  createShortLinkRoutine,
+  deleteShortLinkRoutine,
+  patchShortLinkRoutine,
 } = routines;
 
 const notifier: Notifier = ({
@@ -110,7 +111,10 @@ const notifier: Notifier = ({
     case resendInvitationRoutine.FAILURE:
     case updatePasswordRoutine.FAILURE:
     case shareItemRoutine.FAILURE:
-    case exportItemRoutine.FAILURE: {
+    case exportItemRoutine.FAILURE:
+    case createShortLinkRoutine.FAILURE:
+    case deleteShortLinkRoutine.FAILURE:
+    case patchShortLinkRoutine.FAILURE: {
       message = getErrorMessageFromPayload(payload);
       break;
     }
@@ -137,7 +141,10 @@ const notifier: Notifier = ({
     case postInvitationsRoutine.SUCCESS:
     case resendInvitationRoutine.SUCCESS:
     case updatePasswordRoutine.SUCCESS:
-    case editMemberRoutine.SUCCESS: {
+    case editMemberRoutine.SUCCESS:
+    case createShortLinkRoutine.SUCCESS:
+    case deleteShortLinkRoutine.SUCCESS:
+    case patchShortLinkRoutine.SUCCESS: {
       message = getSuccessMessageFromPayload(payload);
       break;
     }

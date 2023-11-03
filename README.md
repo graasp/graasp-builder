@@ -22,6 +22,8 @@ VITE_PORT=3111
 VITE_GRAASP_API_HOST=http://localhost:3000
 VITE_SHOW_NOTIFICATIONS=true
 VITE_GRAASP_AUTH_HOST=http://localhost:3001
+# in prod, it is https://go.graasp.org
+VITE_GRAASP_REDIRECTION_HOST=http://localhost:3000/items/short-links
 VITE_H5P_INTEGRATION_URL=
 VITE_VERSION=latest-dev
 ```
@@ -55,6 +57,8 @@ VITE_GRAASP_AUTH_HOST=http://localhost:3001
 VITE_GRAASP_PLAYER_HOST=http://localhost:3112
 VITE_GRAASP_LIBRARY_HOST=http://localhost:3005
 VITE_GRAASP_ANALYZER_HOST=http://localhost:3113
+# in prod, it is https://go.graasp.org who will redirect to the backend
+VITE_GRAASP_REDIRECTION_HOST=http://localhost:3000/items/short-links
 VITE_H5P_INTEGRATION_URL=
 VITE_VERSION=cypress-tests
 VITE_SHOW_NOTIFICATIONS=true

@@ -199,6 +199,25 @@ export const SAMPLE_ITEMS: ApiConfig = {
   // memberships: [],
 };
 
+export const SAMPLE_READ_ITEMS: ApiConfig = {
+  items: [
+    {
+      ...sampleItems[0],
+      memberships: [
+        {
+          item: sampleItems[0],
+          permission: PermissionLevel.Read,
+          member: MEMBERS.ANNA,
+          id: 'fdf09f5a-5688-11eb-ae93-0242ac130034',
+          creator: MEMBERS.BOB,
+          createdAt: '2021-08-11T12:56:36.834Z',
+          updatedAt: '2021-08-11T12:56:36.834Z',
+        },
+      ],
+    },
+  ],
+};
+
 export const SAMPLE_FAVORITE: ItemFavorite[] = [
   {
     id: '49883c9b-050b-43d5-bd37-6921e25b55da5',

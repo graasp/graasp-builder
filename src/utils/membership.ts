@@ -28,6 +28,30 @@ export const isItemUpdateAllowedForUser = ({
   );
 };
 
+export const isItemAdminAllowedForMember = ({
+  memberships,
+  memberId,
+  itemPath,
+}: {
+  memberships?: ItemMembership[];
+  memberId?: string;
+  itemPath: string;
+}): boolean => {
+  // the user is not authenticated so he cannot administrate
+  if (!memberId) {
+    return false;
+  }
+
+  return Boolean(
+    memberships?.find(
+      ({ member: { id: mId }, permission, item }) =>
+        mId === memberId &&
+        permission === PermissionLevel.Admin &&
+        itemPath.startsWith(item.path),
+    ),
+  );
+};
+
 // get highest permission a member have over an item,
 // longer the itemPath, deeper is the permission, thus highested
 export const getHighestPermissionForMemberFromMemberships = ({

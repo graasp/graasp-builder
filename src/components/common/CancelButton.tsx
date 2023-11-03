@@ -11,12 +11,19 @@ type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   color?: ButtonProps['color'];
   id?: string;
+  disabled?: boolean;
 };
 
-const CancelButton = ({ id, onClick, color }: Props): JSX.Element => {
+const CancelButton = ({ id, onClick, color, disabled }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
   return (
-    <Button id={id} onClick={onClick} variant="text" color={color}>
+    <Button
+      id={id}
+      onClick={onClick}
+      variant="text"
+      color={color}
+      disabled={disabled}
+    >
       {translateCommon(COMMON.CANCEL_BUTTON)}
     </Button>
   );
