@@ -1,7 +1,5 @@
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
-
-import { List } from 'immutable';
 
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
@@ -15,7 +13,7 @@ const { useManyItemMemberships, useItemsTags } = hooks;
 
 type Props = {
   id: string;
-  items?: List<ItemRecord>;
+  items?: DiscriminatedItem[];
   title: string;
   headerElements?: JSX.Element[];
   actions?: ({ data }: { data: { id: string } }) => JSX.Element;
@@ -50,12 +48,10 @@ const Items = ({
   const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
   const itemsToDisplay = itemSearch.results;
-  const itemIds = itemsToDisplay?.map(({ id: itemId }) => itemId).toArray();
+  const itemIds = itemsToDisplay?.map(({ id: itemId }) => itemId);
   const { data: manyMemberships, isLoading: isMembershipsLoading } =
     useManyItemMemberships(enableMemberships ? itemIds : []);
-  const { data: itemsTags } = useItemsTags(
-    itemsToDisplay?.map((r) => r.id).toJS(),
-  );
+  const { data: itemsTags } = useItemsTags(itemsToDisplay?.map((r) => r.id));
   const itemsStatuses = useItemsStatuses({
     items: itemsToDisplay,
     itemsTags,

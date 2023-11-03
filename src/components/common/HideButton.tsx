@@ -33,9 +33,9 @@ const HideButton = ({
   const postTag = mutations.usePostItemTag();
   const deleteTag = mutations.useDeleteItemTag();
 
-  const hiddenTag = tags
-    ?.filter(({ type: tagType }) => tagType === ItemTagType.Hidden)
-    ?.first();
+  const hiddenTag = tags?.filter(
+    ({ type: tagType }) => tagType === ItemTagType.Hidden,
+  )?.[0];
   // since children items are hidden because parent is hidden, the hidden tag should be removed from the root item
   // if hiddenTag is undefined -> the item is not hidden
   const isOriginalHiddenItem =

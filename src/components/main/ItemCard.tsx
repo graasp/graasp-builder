@@ -1,11 +1,9 @@
 import { CSSProperties, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { DiscriminatedItem, Item, ItemType } from '@graasp/sdk';
-import { ItemMembershipRecord, ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, ItemMembership, ItemType } from '@graasp/sdk';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
-import { List } from 'immutable';
 import truncate from 'lodash.truncate';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
@@ -34,8 +32,8 @@ const NameWrapper = ({ id, style }: { id: string; style: CSSProperties }) => {
 };
 
 type Props = {
-  item: ItemRecord;
-  memberships?: List<ItemMembershipRecord>;
+  item: DiscriminatedItem;
+  memberships?: ItemMembership[];
   itemsStatuses?: ItemsStatuses;
 };
 
@@ -62,7 +60,7 @@ const ItemComponent = ({
 
   const linkUrl =
     item.type === ItemType.LINK
-      ? item?.extra?.[ItemType.LINK]?.thumbnails?.first()
+      ? item?.extra?.[ItemType.LINK]?.thumbnails?.[0]
       : undefined;
 
   const ThumbnailComponent = (
@@ -81,19 +79,9 @@ const ItemComponent = ({
     memberId: member?.id,
   });
 
-  // We need to convert the Record<item> (immutable) to item (object)
-  // because the following components are shared between the Grid and Table views
   const Actions = (
     <>
-      {enableEdition && (
-        <EditButton
-          item={
-            // DO NOT REMOVE cast
-            // here we cast explicitly to be equivalent to the grid which does not let us use Records
-            item.toJS() as DiscriminatedItem
-          }
-        />
-      )}
+      {enableEdition && <EditButton item={item} />}
       {((member && member.id) || itemsStatuses?.[item.id]?.isPublic) && (
         <DownloadButton id={item.id} name={item.name} />
       )}
@@ -112,7 +100,7 @@ const ItemComponent = ({
       Badges={<Badges data={item} />}
       name={item.name}
       creator={member?.name}
-      ItemMenu={<ItemMenu item={item.toJS() as Item} canEdit={enableEdition} />}
+      ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(item.id)}
       NameWrapper={NameWrapper({

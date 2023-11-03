@@ -6,10 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
 import Select from '@mui/material/Select';
 
-import { ItemMembership } from '@graasp/sdk';
-import { ItemRecord, ResultOfRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import { DiscriminatedItem, ItemMembership, ResultOf } from '@graasp/sdk';
 
 import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
@@ -35,8 +32,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 type Props = {
   id?: string;
-  items?: List<ItemRecord>;
-  manyMemberships?: ResultOfRecord<ItemMembership[]>;
+  items?: DiscriminatedItem[];
+  manyMemberships?: ResultOf<ItemMembership[]>;
   itemsStatuses?: ItemsStatuses;
   title: string;
   itemSearch?: {
@@ -49,7 +46,7 @@ type Props = {
 
 const ItemsGrid = ({
   id: gridId = '',
-  items = List(),
+  items = [],
   title,
   itemSearch,
   headerElements = [],
@@ -63,7 +60,7 @@ const ItemsGrid = ({
     GRID_ITEMS_PER_PAGE_CHOICES[0],
   );
 
-  const pagesCount = Math.ceil(items.size / itemsPerPage);
+  const pagesCount = Math.ceil(items.length / itemsPerPage);
 
   // bugfix: since page state is independent from search, must ensure always within range
   if (page !== 1 && page > pagesCount) {
@@ -75,7 +72,7 @@ const ItemsGrid = ({
   const itemsInPage = items.slice(start, end);
 
   const renderItems = () => {
-    if (!itemsInPage || !itemsInPage.size) {
+    if (!itemsInPage || !itemsInPage.length) {
       return (
         <Box py={1} px={2}>
           {itemSearch && itemSearch.text ? (

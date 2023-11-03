@@ -11,8 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 
-import { Invitation, PermissionLevel } from '@graasp/sdk';
-import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, Invitation, PermissionLevel } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
 
@@ -36,7 +35,7 @@ const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
 };
 
 const CsvInputParser = ({ item }: Props): JSX.Element => {
@@ -70,15 +69,15 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
         Papa.parse(file, {
           header: true,
           dynamicTyping: true,
-          complete: ({ data: parsedData }) => {
+          complete: ({ data: parsedData }: { data: Partial<Invitation>[] }) => {
             // add current item path and default permission read
             const dataWithItemPath = parsedData.map<Partial<Invitation>>(
               (d) => ({
                 permission: PermissionLevel.Read,
-                ...(d as Partial<Invitation>),
+                ...d,
                 itemPath,
               }),
-            ) as any;
+            );
 
             share({ data: dataWithItemPath, itemId });
           },
@@ -108,11 +107,11 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
     }
 
     // show generic network/axios errors
-    const genericErrors: ImmutableCast<Error[]> = results?.errors?.filter(
+    const genericErrors: Error[] = results?.errors?.filter(
       (e: { code?: string; message?: string; data?: unknown }) =>
         e?.code && e?.message && !e?.data,
     );
-    if (genericErrors?.size) {
+    if (genericErrors?.length) {
       return genericErrors.map((err) => (
         <Alert key={err.message} severity="error">
           {translateBuilder(err.message)}
@@ -127,7 +126,7 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
     const failureToShow = results.errors.filter(
       (e: any) => e?.data && (e?.data?.email || e?.data?.name),
     );
-    if (!failureToShow.size && isSuccess) {
+    if (!failureToShow.length && isSuccess) {
       return (
         <Alert severity="success">
           {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_SUCCESS_MESSAGE)}

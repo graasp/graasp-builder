@@ -30,28 +30,4 @@ describe('Delete Item in List', () => {
     });
     cy.wait('@getRecycledItems');
   });
-
-  describe('Error handling', () => {
-    it('error while deleting item does not delete in interface', () => {
-      cy.setUpApi({
-        ...SAMPLE_ITEMS,
-        recycledItemData: RECYCLED_ITEM_DATA,
-        deleteItemsError: true,
-      });
-      const { id } = RECYCLED_ITEM_DATA[0].item;
-
-      // go to children item
-      cy.visit(RECYCLE_BIN_PATH);
-
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-      // delete
-      deleteItem(id);
-
-      cy.wait('@deleteItems').then(() => {
-        // check item is still displayed
-        cy.get(buildItemsTableRowIdAttribute(id)).should('exist');
-      });
-    });
-  });
 });

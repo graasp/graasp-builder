@@ -10,6 +10,7 @@ const {
   hooks,
   ReactQueryDevtools,
   mutations,
+  axios,
 } = configureQueryClient({
   API_HOST,
   notifier,
@@ -25,6 +26,7 @@ const {
 });
 
 export {
+  axios,
   queryClient,
   useQueryClient,
   QueryClientProvider,

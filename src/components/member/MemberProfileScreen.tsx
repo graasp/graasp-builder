@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import { formatDate } from '@graasp/sdk';
 import { ACCOUNT, COMMON } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
@@ -37,7 +38,6 @@ import {
 import { BUILDER } from '../../langs/constants';
 import { COPY_MEMBER_ID_TO_CLIPBOARD } from '../../types/clipboard';
 import { copyToClipboard } from '../../utils/clipboard';
-import { formatDate } from '../../utils/date';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import Main from '../main/Main';
 import AvatarSetting from './AvatarSetting';

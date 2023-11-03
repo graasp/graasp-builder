@@ -4,16 +4,17 @@ import { hooks, mutations } from '../../config/queryClient';
 
 export const NotificationButton = (): JSX.Element | null => {
   const { data: currentMember } = hooks.useCurrentMember();
-  const memberId = currentMember?.get('id');
 
   // mutations to handle the mentions
   const { mutate: patchMentionMutate } = mutations.usePatchMention();
   const { mutate: deleteMentionMutate } = mutations.useDeleteMention();
   const { mutate: clearAllMentionsMutate } = mutations.useClearMentions();
 
-  if (!memberId) {
+  if (!currentMember) {
     return null;
   }
+
+  const memberId = currentMember?.id;
 
   const patchMentionFunction = ({
     id,

@@ -1,9 +1,7 @@
 import Box from '@mui/material/Box';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
-
-import { List } from 'immutable';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -28,7 +26,7 @@ const FavoriteItems = (): JSX.Element => {
         <Items
           id={FAVORITE_ITEMS_ID}
           title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-          items={data.map((d) => d.item) as List<ItemRecord>}
+          items={data.map((d) => d.item as DiscriminatedItem)}
         />
       );
     }

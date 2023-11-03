@@ -11,8 +11,8 @@ export const GRAASP_ETHERPAD_ITEM: EtherpadItemType = {
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: '2021-08-11T12:56:36.834Z',
+  updatedAt: '2021-08-11T12:56:36.834Z',
   extra: {
     [ItemType.ETHERPAD]: {
       padID: 'padId',

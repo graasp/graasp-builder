@@ -1,8 +1,7 @@
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { ItemLoginSchemaType, UUID } from '@graasp/sdk';
-import { ItemLoginSchemaRecord } from '@graasp/sdk/frontend';
+import { ItemLoginSchema, ItemLoginSchemaType, UUID } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { mutations } from '../../../config/queryClient';
@@ -12,7 +11,7 @@ import { BUILDER } from '../../../langs/constants';
 const { usePutItemLoginSchema } = mutations;
 
 type Props = {
-  itemLoginSchema?: ItemLoginSchemaRecord;
+  itemLoginSchema?: ItemLoginSchema;
   isDisabled: boolean;
   itemId: UUID;
   edit?: boolean;

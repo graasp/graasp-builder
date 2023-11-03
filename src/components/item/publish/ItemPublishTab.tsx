@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useQueryClient } from 'react-query';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -21,17 +20,19 @@ import {
 
 import { DATA_KEYS } from '@graasp/query-client';
 import {
+  DiscriminatedItem,
   ItemTagType,
   ItemValidationStatus,
   PermissionLevel,
   redirect,
 } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
+
+import groupBy from 'lodash.groupby';
 
 import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, mutations } from '../../../config/queryClient';
+import { hooks, mutations, useQueryClient } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
@@ -52,7 +53,7 @@ const { useItemTags, useLastItemValidationGroup } = hooks;
 const { usePostItemValidation } = mutations;
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
   permission?: PermissionLevel;
 };
 
@@ -111,15 +112,16 @@ const ItemPublishTab = ({
       setValidationStatus(ItemValidationStatus.Failure);
     }
 
-    const mapByStatus = lastItemValidationGroup?.itemValidations?.groupBy(
+    const mapByStatus = groupBy(
+      lastItemValidationGroup?.itemValidations,
       ({ status }) => status,
     );
     let status = null;
-    if (mapByStatus?.get(ItemValidationStatus.Failure)) {
+    if (mapByStatus[ItemValidationStatus.Failure]) {
       status = ItemValidationStatus.Failure;
-    } else if (mapByStatus?.get(ItemValidationStatus.Pending)) {
+    } else if (mapByStatus[ItemValidationStatus.Pending]) {
       status = ItemValidationStatus.Pending;
-    } else if (mapByStatus?.get(ItemValidationStatus.Success)) {
+    } else if (mapByStatus[ItemValidationStatus.Success]) {
       status = ItemValidationStatus.Success;
     }
     setValidationStatus(status);

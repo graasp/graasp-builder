@@ -5,12 +5,11 @@ import { AutocompleteChangeReason, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { routines } from '@graasp/query-client';
-import { CategoryType } from '@graasp/sdk';
-import { CategoryRecord } from '@graasp/sdk/frontend';
+import { Category, CategoryType } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
-import { List } from 'immutable';
+import groupBy from 'lodash.groupby';
 
 import {
   useBuilderTranslation,
@@ -55,21 +54,21 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
     useCategories();
 
   // process data
-  const categoriesMap = allCategories?.groupBy((entry) => entry.type);
+  const categoriesMap = groupBy(allCategories, (entry) => entry.type);
 
   if (isMemberLoading || isItemCategoriesLoading || isCategoriesLoading) {
     return <Loader />;
   }
 
-  if (!categoriesMap?.size) {
+  if (!Object.values(categoriesMap).length) {
     return null;
   }
 
   const handleChange = (
     _event: SyntheticEvent,
-    _values: CategoryRecord[],
+    _values: Category[],
     reason: AutocompleteChangeReason,
-    details?: { option: CategoryRecord },
+    details?: { option: Category },
   ) => {
     if (!itemId) {
       console.error('No item id is defined');
@@ -112,10 +111,12 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
       </Typography>
       {Object.values(CategoryType)?.map((type) => {
         const values =
-          categoriesMap
-            .get(type)
-            ?.map((c) => c.set('name', translateCategories(c.name)))
-            ?.sort(sortByName) ?? List();
+          categoriesMap[type]
+            ?.map((c: Category) => ({
+              ...c,
+              name: translateCategories(c.name),
+            }))
+            ?.sort(sortByName) ?? [];
 
         return (
           <DropdownMenu

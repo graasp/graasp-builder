@@ -2,8 +2,11 @@ import { useMemo, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
-import { ItemMembership, PermissionLevel } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import {
+  DiscriminatedItem,
+  ItemMembership,
+  PermissionLevel,
+} from '@graasp/sdk';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { ColDef } from 'ag-grid-community';
@@ -54,7 +57,7 @@ const getRowId = ({ data }: { data: ItemMembership }) =>
   buildItemMembershipRowId(data.id);
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
   memberships: ItemMembership[];
   emptyMessage?: string;
   showEmail?: boolean;

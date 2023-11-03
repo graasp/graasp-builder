@@ -1,6 +1,6 @@
 import { Box, Divider, Typography, styled } from '@mui/material';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { DrawerHeader } from '@graasp/ui';
 
 import { DRAWER_WIDTH, RIGHT_MENU_WIDTH } from '../../config/constants';
@@ -51,7 +51,7 @@ const StyledContainer = styled(Box)<{ open: boolean }>(({ theme, open }) => {
 
 type Props = {
   children: JSX.Element | JSX.Element[];
-  item: ItemRecord;
+  item: DiscriminatedItem;
   id?: string;
 };
 

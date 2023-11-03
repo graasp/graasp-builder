@@ -1,15 +1,12 @@
 import { Box, Typography } from '@mui/material';
 
-import { ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
-
-import { isList } from 'immutable';
 
 import { hooks } from '../../config/queryClient';
 import { buildNameCellRendererId } from '../../config/selectors';
 
-type ChildProps = { data: ItemRecord };
+type ChildProps = { data: DiscriminatedItem };
 
 const ItemNameCellRenderer = (
   showThumbnails: boolean,
@@ -21,12 +18,8 @@ const ItemNameCellRenderer = (
         : undefined;
 
     const alt = item.name;
-    const iconSrc = isList(linkExtra?.icons)
-      ? linkExtra?.icons?.first()
-      : linkExtra?.icons?.[0];
-    const thumbnailSrc = isList(linkExtra?.thumbnails)
-      ? linkExtra?.thumbnails?.first()
-      : linkExtra?.thumbnails?.[0];
+    const iconSrc = linkExtra?.icons?.[0];
+    const thumbnailSrc = linkExtra?.thumbnails?.[0];
     const defaultValueComponent = (
       <ItemIcon
         type={item.type}

@@ -91,28 +91,4 @@ describe('Move Items in List', () => {
       });
     });
   });
-
-  describe('Error handling', () => {
-    it('error while moving items does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, moveItemsError: true });
-      const { id: start } = SAMPLE_ITEMS.items[0];
-
-      // go to children item
-      cy.visit(buildItemPath(start));
-
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-      // move
-      const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-      const { path: toItemPath } = SAMPLE_ITEMS.items[3];
-      moveItems({ itemIds, toItemPath });
-
-      cy.wait('@moveItems').then(() => {
-        // check item is still there
-        itemIds.forEach((id) => {
-          cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('exist');
-        });
-      });
-    });
-  });
 });

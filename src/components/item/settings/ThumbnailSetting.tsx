@@ -3,8 +3,7 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { ItemType } from '@graasp/sdk';
-import { EmbeddedLinkItemTypeRecord, ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';
 
 import Uppy from '@uppy/core';
@@ -22,7 +21,7 @@ import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
 
-type Props = { item: ItemRecord };
+type Props = { item: DiscriminatedItem };
 
 const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -143,9 +142,8 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
           // TODO: fix type
           url={
             imgUrl ??
-            (item as EmbeddedLinkItemTypeRecord)?.extra?.[
-              ItemType.LINK
-            ]?.thumbnails?.first()
+            (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
+              ?.thumbnails?.[0]
           }
           alt={alt}
           maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}

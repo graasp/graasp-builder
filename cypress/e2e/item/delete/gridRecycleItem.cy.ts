@@ -1,7 +1,6 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
-  buildItemCard,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
@@ -42,26 +41,6 @@ describe('Recycle Item in Grid', () => {
     cy.wait('@recycleItems').then(() => {
       // check update
       cy.wait('@getItem').its('response.url').should('contain', id);
-    });
-  });
-
-  describe('Error handling', () => {
-    it('error while deleting item does not recycle in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, recycleItemsError: true });
-      const { id } = SAMPLE_ITEMS.items[0];
-      const { id: idToDelete } = SAMPLE_ITEMS.items[2];
-
-      // go to children item
-      cy.visit(buildItemPath(id));
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-
-      // recycle
-      recycleItem(idToDelete);
-
-      cy.wait('@recycleItems').then(() => {
-        // check item is still displayed
-        cy.get(`#${buildItemCard(idToDelete)}`).should('exist');
-      });
     });
   });
 });

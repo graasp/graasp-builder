@@ -46,7 +46,8 @@ const Navigator = (): JSX.Element | null => {
   });
 
   const isParentOwned =
-    (item?.creator?.id ?? parents?.first()?.creator?.id) === currentMember?.id;
+    currentMember &&
+    (item?.creator?.id ?? parents?.[0]?.creator?.id) === currentMember?.id;
 
   if (isItemLoading || areParentsLoading) {
     return null;

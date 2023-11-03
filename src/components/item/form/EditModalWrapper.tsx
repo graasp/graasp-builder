@@ -81,8 +81,9 @@ const EditModalWrapper = ({
         name: updatedItem.name,
         description: updatedItem.description,
         // only post extra if it has been changed
+        // todo: fix type
         extra: !isEqual(item.extra, updatedItem.extra)
-          ? updatedItem.extra
+          ? (updatedItem.extra as any)
           : undefined,
       });
     }

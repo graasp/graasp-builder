@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useMemo } from 'react';
 import { QueryObserverResult } from 'react-query';
 
-import { MemberRecord } from '@graasp/sdk/frontend';
+import { CompleteMember } from '@graasp/sdk';
 
 import i18n from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 
 type CurrentUserContextType =
-  | QueryObserverResult<MemberRecord>
+  | QueryObserverResult<null | CompleteMember>
   | Record<string, never>;
 
 const CurrentUserContext = createContext<CurrentUserContextType>({});
@@ -24,7 +24,7 @@ export const CurrentUserContextProvider = ({
   const query = useCurrentMember();
 
   // update language depending on user setting
-  const lang = query?.data?.extra?.lang as string;
+  const lang = query?.data?.extra?.lang;
   useEffect(() => {
     if (lang !== i18n.language) {
       i18n.changeLanguage(lang);

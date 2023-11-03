@@ -2,6 +2,7 @@ import {
   Category,
   ChatMention,
   ChatMessage,
+  CompleteMember,
   DiscriminatedItem,
   Invitation,
   Item,
@@ -30,7 +31,7 @@ export type ItemForTest = DiscriminatedItem & {
 };
 
 // TODO: not ideal, to change?
-export type MemberForTest = Member & { thumbnails?: string };
+export type MemberForTest = CompleteMember & { thumbnails?: string };
 
 export type LocalFileItemForTest = LocalFileItemType & {
   createFilepath: string;

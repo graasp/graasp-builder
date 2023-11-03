@@ -1,9 +1,9 @@
-import { Member, MemberType } from '@graasp/sdk';
+import { CompleteMember, MemberType } from '@graasp/sdk';
 
 import { MemberForTest } from '../support/types';
 import { AVATAR_LINK } from './thumbnails/links';
 
-export const SIGNED_OUT_MEMBER: Member | null = null;
+export const SIGNED_OUT_MEMBER: CompleteMember | null = null;
 
 export const MEMBERS: Record<string, MemberForTest> = {
   ANNA: {
@@ -11,8 +11,8 @@ export const MEMBERS: Record<string, MemberForTest> = {
     name: 'anna',
     type: MemberType.Individual,
     email: 'anna@email.com',
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: '2021-04-13 14:56:34.749946',
+    updatedAt: '2021-04-13 14:56:34.749946',
     extra: {
       lang: 'fr',
       emailFreq: 'never',
@@ -24,8 +24,8 @@ export const MEMBERS: Record<string, MemberForTest> = {
     name: 'bob',
     type: MemberType.Individual,
     email: 'bob@email.com',
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: '2021-04-13 14:56:34.749946',
+    updatedAt: '2021-04-13 14:56:34.749946',
     extra: { lang: 'en' },
     // this only exists for test
     thumbnails: AVATAR_LINK,
@@ -36,8 +36,8 @@ export const MEMBERS: Record<string, MemberForTest> = {
     type: MemberType.Individual,
     extra: {},
     email: 'cedric@email.com',
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: '2021-04-13 14:56:34.749946',
+    updatedAt: '2021-04-13 14:56:34.749946',
     // this only exists for test
     thumbnails: AVATAR_LINK,
   },
@@ -46,8 +46,8 @@ export const MEMBERS: Record<string, MemberForTest> = {
     name: 'david',
     type: MemberType.Individual,
     email: 'david@email.com',
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: '2021-04-13 14:56:34.749946',
+    updatedAt: '2021-04-13 14:56:34.749946',
     extra: { lang: 'en' },
   },
   EVAN: {
@@ -55,8 +55,8 @@ export const MEMBERS: Record<string, MemberForTest> = {
     name: 'evan',
     type: MemberType.Individual,
     email: 'evan@email.com',
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: '2021-04-13 14:56:34.749946',
+    updatedAt: '2021-04-13 14:56:34.749946',
     extra: { lang: 'en' },
   },
   FANNY: {
@@ -65,8 +65,8 @@ export const MEMBERS: Record<string, MemberForTest> = {
     extra: {},
     type: MemberType.Individual,
     email: 'fanny@email.com',
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: '2021-04-13 14:56:34.749946',
+    updatedAt: '2021-04-13 14:56:34.749946',
   },
   GARRY: {
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130412',
@@ -74,8 +74,8 @@ export const MEMBERS: Record<string, MemberForTest> = {
     extra: {},
     type: MemberType.Individual,
     email: 'garry@email.com',
-    createdAt: new Date('2021-04-13 14:56:34.749946'),
-    updatedAt: new Date('2021-04-13 14:56:34.749946'),
+    createdAt: '2021-04-13 14:56:34.749946',
+    updatedAt: '2021-04-13 14:56:34.749946',
   },
 };
 

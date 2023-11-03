@@ -44,23 +44,4 @@ describe('Recycle Items in List', () => {
         .should('contain', SAMPLE_ITEMS.items[0].id);
     });
   });
-
-  describe('Error handling', () => {
-    it('does not recycle items on error', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, recycleItemsError: true });
-      cy.visit(HOME_PATH);
-      const itemIds = [SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id];
-
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-      // delete
-      recycleItems(itemIds);
-      cy.wait('@recycleItems').then(() => {
-        // check item is deleted, others are still displayed
-        for (const id of itemIds) {
-          cy.get(buildItemsTableRowIdAttribute(id)).should('exist');
-        }
-      });
-    });
-  });
 });

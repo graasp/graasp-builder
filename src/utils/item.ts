@@ -9,9 +9,6 @@ import {
   getAppExtra,
   getEmbeddedLinkExtra,
 } from '@graasp/sdk';
-import { ImmutableCast, ItemRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
 
 import { UUID_LENGTH } from '../config/constants';
 
@@ -80,7 +77,7 @@ export const getChildren = (items: Item[], id: string): Item[] =>
 export const isRootItem = ({ path }: { path: string }): boolean =>
   path.length === UUID_LENGTH;
 
-export const isUrlValid = (str?: string): boolean => {
+export const isUrlValid = (str?: string | null): boolean => {
   if (!str) {
     return false;
   }
@@ -109,12 +106,18 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     item.type && Object.values<string>(ItemType).includes(item.type);
   switch (item.type) {
     case ItemType.LINK: {
-      const { url } = getEmbeddedLinkExtra(item.extra) || {};
+      let url;
+      if (item.extra) {
+        ({ url } = getEmbeddedLinkExtra(item.extra) || {});
+      }
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
     case ItemType.APP: {
-      const { url } = getAppExtra(item.extra) || {};
+      let url;
+      if (item.extra) {
+        ({ url } = getAppExtra(item.extra) || {});
+      }
       hasValidTypeProperties = isUrlValid(url);
       break;
     }
@@ -126,8 +129,8 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
 };
 
 export const getChildrenOrderFromFolderExtra = (
-  extra: ImmutableCast<FolderItemExtra>,
-): List<string> => extra[ItemType.FOLDER]?.childrenOrder ?? List();
+  extra: FolderItemExtra,
+): string[] => extra[ItemType.FOLDER]?.childrenOrder ?? [];
 
 export const stripHtml = (str?: string | null): string =>
   str?.replace(/<[^>]*>?/gm, '') || '';
@@ -148,7 +151,7 @@ export function useIsParentInstance({
   item,
 }: {
   instance: { item: Item };
-  item: ItemRecord;
+  item: DiscriminatedItem;
 }): boolean {
   const [isParentMembership, setIsParentMembership] = useState(false);
   useEffect(() => {

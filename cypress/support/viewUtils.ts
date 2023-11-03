@@ -1,9 +1,8 @@
 import {
+  CompleteMember,
   DocumentItemType,
   EmbeddedLinkItemType,
   ItemType,
-  Member,
-  convertJs,
   getDocumentExtra,
   getEmbeddedLinkExtra,
   getFileExtra,
@@ -60,7 +59,7 @@ export const expectItemHeaderLayout = ({
   currentMember,
 }: {
   item: ItemForTest;
-  currentMember?: Member;
+  currentMember?: CompleteMember;
 }): void => {
   const header = cy.get(`#${ITEM_HEADER_ID}`);
 
@@ -68,7 +67,7 @@ export const expectItemHeaderLayout = ({
 
   if (
     isSettingsEditionAllowedForUser({
-      memberships: convertJs(memberships),
+      memberships,
       memberId: currentMember?.id,
     })
   ) {
@@ -155,7 +154,7 @@ export const expectFolderViewScreenLayout = ({
   currentMember = CURRENT_USER,
 }: {
   item: ItemForTest;
-  currentMember?: MemberForTest;
+  currentMember?: MemberForTest | null;
 }): void => {
   // table
   expectPanelLayout({ item });

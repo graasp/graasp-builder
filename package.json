@@ -10,17 +10,17 @@
     "Alexandre Chau"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "dependencies": {
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
-    "@graasp/chatbox": "2.0.1",
-    "@graasp/query-client": "1.11.1",
-    "@graasp/sdk": "1.9.2",
+    "@graasp/chatbox": "3.0.0",
+    "@graasp/query-client": "2.0.0",
+    "@graasp/sdk": "2.0.0",
     "@graasp/translations": "1.19.2",
-    "@graasp/ui": "3.6.1",
+    "@graasp/ui": "4.0.0",
     "@mui/icons-material": "5.14.14",
     "@mui/lab": "5.0.0-alpha.148",
     "@mui/material": "5.14.14",
@@ -40,7 +40,6 @@
     "date-fns": "2.30.0",
     "filesize": "10.1.0",
     "http-status-codes": "2.3.0",
-    "immutable": "4.3.4",
     "katex": "0.16.9",
     "lodash.groupby": "4.6.0",
     "lodash.isequal": "4.5.0",
@@ -111,6 +110,7 @@
     "@testing-library/user-event": "^14.5.1",
     "@trivago/prettier-plugin-sort-imports": "4.2.0",
     "@types/jest": "29.5.6",
+    "@types/lodash.groupby": "4.6.8",
     "@types/lodash.isequal": "4.5.7",
     "@types/lodash.partition": "4.6.8",
     "@types/lodash.truncate": "4.4.8",

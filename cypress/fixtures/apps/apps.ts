@@ -8,8 +8,8 @@ export const publisher: Publisher = {
   id: 'publisher-id',
   name: 'name',
   origins: ['origin'],
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: '2021-08-11T12:56:36.834Z',
+  updatedAt: '2021-08-11T12:56:36.834Z',
 };
 
 export const APPS_LIST: App[] = [
@@ -24,7 +24,7 @@ export const APPS_LIST: App[] = [
     key: 'app-key',
     description: 'description',
     publisher,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: '2021-08-11T12:56:36.834Z',
+    updatedAt: '2021-08-11T12:56:36.834Z',
   },
 ];

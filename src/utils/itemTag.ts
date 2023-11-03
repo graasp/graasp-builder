@@ -1,18 +1,7 @@
-import { ItemTagType } from '@graasp/sdk';
-import { ItemTagRecord } from '@graasp/sdk/frontend';
+import { ItemTag, ItemTagType } from '@graasp/sdk';
 
-import { List } from 'immutable';
-
-export const isItemHidden = ({
-  itemTags,
-}: {
-  itemTags?: List<ItemTagRecord>;
-}): boolean =>
+export const isItemHidden = ({ itemTags }: { itemTags?: ItemTag[] }): boolean =>
   Boolean(itemTags?.find(({ type }) => type === ItemTagType.Hidden));
 
-export const isItemPublic = ({
-  itemTags,
-}: {
-  itemTags?: List<ItemTagRecord>;
-}): boolean =>
+export const isItemPublic = ({ itemTags }: { itemTags?: ItemTag[] }): boolean =>
   Boolean(itemTags?.find(({ type }) => type === ItemTagType.Public));

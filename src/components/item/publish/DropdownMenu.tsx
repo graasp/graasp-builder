@@ -7,10 +7,7 @@ import Autocomplete, {
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { Category, CategoryType } from '@graasp/sdk';
-import { CategoryRecord, ItemCategoryRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import { Category, CategoryType, ItemCategory } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import {
@@ -25,13 +22,13 @@ type Props = {
   disabled: boolean;
   type: CategoryType;
   title: string;
-  values: List<CategoryRecord>;
-  selectedValues?: List<ItemCategoryRecord>;
+  values: Category[];
+  selectedValues?: ItemCategory[];
   handleChange: (
     _event: SyntheticEvent,
-    value: CategoryRecord[],
+    value: Category[],
     reason: AutocompleteChangeReason,
-    details?: { option: CategoryRecord },
+    details?: { option: Category },
   ) => void;
 };
 
@@ -45,7 +42,7 @@ const DropdownMenu = ({
 }: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  if (!values.size) {
+  if (!values.length) {
     return null;
   }
 
@@ -65,8 +62,8 @@ const DropdownMenu = ({
         multiple
         disableClearable
         id={buildCategorySelectionId(type)}
-        value={selected.toArray()}
-        options={values.toArray()}
+        value={selected}
+        options={values}
         getOptionLabel={(option: Category) => option.name}
         onChange={handleChange}
         renderInput={(params) => (

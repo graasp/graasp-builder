@@ -1,4 +1,4 @@
-import { MemberRecord } from '@graasp/sdk/frontend';
+import { CompleteMember } from '@graasp/sdk';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
 import { SIGN_IN_PATH } from '@/config/externalPaths';
@@ -28,13 +28,16 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
   // todo: does not exist on mutations since we use httpOnly Cookie
   // const { mutate: switchMember } = mutations.useSwitchMember();
 
-  const renderAvatar = (m?: MemberRecord) => <MemberAvatar id={m?.id} />;
+  const renderAvatar = (m?: CompleteMember | null) => (
+    <MemberAvatar id={m?.id} />
+  );
 
   return (
     <GraaspUserSwitch
       ButtonContent={ButtonContent}
       signOut={signOut}
       currentMember={member}
+      userMenuItems={[]}
       isCurrentMemberLoading={isLoading}
       // fix in query client
       // switchMember={switchMember as any}

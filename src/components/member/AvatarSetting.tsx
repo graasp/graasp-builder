@@ -3,7 +3,7 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { MemberRecord } from '@graasp/sdk/frontend';
+import { Member } from '@graasp/sdk';
 import { ACCOUNT } from '@graasp/translations';
 
 import Uppy from '@uppy/core';
@@ -21,7 +21,7 @@ import MemberAvatar from '../common/MemberAvatar';
 import StatusBar from '../file/StatusBar';
 
 type Props = {
-  user: MemberRecord;
+  user: Member;
 };
 
 const AvatarSetting = ({ user }: Props): JSX.Element | null => {

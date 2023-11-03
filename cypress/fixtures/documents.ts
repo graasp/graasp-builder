@@ -11,8 +11,8 @@ export const GRAASP_DOCUMENT_ITEM: DocumentItemType = {
   description: 'a description for graasp text',
   path: 'ecafbd2a_5688_12eb_ae93_0242ac130002',
   settings: {},
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: '2021-08-11T12:56:36.834Z',
+  updatedAt: '2021-08-11T12:56:36.834Z',
   creator: CURRENT_USER,
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',
@@ -26,8 +26,8 @@ export const GRAASP_DOCUMENT_BLANK_NAME_ITEM: DocumentItemType = {
   description: 'a description for graasp text',
   path: 'ecafbd2a_5688_12eb_ae93_0242ac130002',
   settings: {},
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: '2021-08-11T12:56:36.834Z',
+  updatedAt: '2021-08-11T12:56:36.834Z',
   creator: CURRENT_USER,
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',
@@ -49,8 +49,8 @@ export const GRAASP_DOCUMENT_CHILDREN_ITEM: DocumentItemType = {
   path: 'bdf09f5a_5688_11eb_ae93_0242ac130002.1cafbd2a_5688_12eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: '2021-08-11T12:56:36.834Z',
+  updatedAt: '2021-08-11T12:56:36.834Z',
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',
   }),

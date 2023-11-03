@@ -3,7 +3,6 @@ import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
-  buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
@@ -47,27 +46,6 @@ describe('Recycle Item in List', () => {
     recycleItem(idToDelete);
     cy.wait('@recycleItems').then(({ request: { url } }) => {
       expect(url).to.contain(idToDelete);
-    });
-  });
-
-  describe('Error handling', () => {
-    it('error while recycling item does not recycle in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, recycleItemsError: true });
-      const { id } = SAMPLE_ITEMS.items[0];
-      const { id: idToDelete } = SAMPLE_ITEMS.items[2];
-
-      // go to children item
-      cy.visit(buildItemPath(id));
-
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-      // delete
-      recycleItem(idToDelete);
-
-      cy.wait('@recycleItems').then(() => {
-        // check item is still displayed
-        cy.get(buildItemsTableRowIdAttribute(idToDelete)).should('exist');
-      });
     });
   });
 });

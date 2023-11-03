@@ -34,7 +34,7 @@ const ItemMemberships = ({
     return null;
   }
 
-  if (!memberships || memberships.isEmpty() || isError) {
+  if (!memberships || !memberships.length || isError) {
     return null;
   }
 
@@ -44,7 +44,7 @@ const ItemMemberships = ({
   );
 
   // display only if has more than 2 memberships
-  if (!filteredMemberships?.size) {
+  if (!filteredMemberships?.length) {
     return null;
   }
 
@@ -53,7 +53,7 @@ const ItemMemberships = ({
       <Grid item>
         <Tooltip
           title={translateBuilder(BUILDER.SHARED_MEMBERS_TOOLTIP, {
-            count: filteredMemberships.size,
+            count: filteredMemberships.length,
           })}
           aria-label={translateBuilder(BUILDER.SHARED_MEMBERS_LABEL)}
         >

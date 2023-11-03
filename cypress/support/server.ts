@@ -6,7 +6,6 @@ import {
   DiscriminatedItem,
   HttpMethod,
   Invitation,
-  Item,
   ItemFavorite,
   ItemMembership,
   ItemPublished,
@@ -1079,8 +1078,8 @@ export const mockGetItemMembershipsForItem = (
             member: creator,
             item,
             id: v4(),
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: '2021-08-11T12:56:36.834Z',
+            updatedAt: '2021-08-11T12:56:36.834Z',
           },
         ];
       });
@@ -1185,8 +1184,8 @@ export const mockPostItemTag = (
           id: v4(),
           type: tagType,
           // avoid circular dependency
-          item: { id: item.id, path: item.path } as Item,
-          createdAt: new Date(),
+          item: { id: item.id, path: item.path } as DiscriminatedItem,
+          createdAt: '2021-08-11T12:56:36.834Z',
           creator: currentMember,
         });
         reply(body);
@@ -1937,7 +1936,7 @@ export const mockGetLatestValidationGroup = (
         return reply({ statusCode: StatusCodes.NOT_FOUND });
       }
       // TODO: should be dynamic and include failure
-      // const validationGroup: ItemValidationGroup = { id: v4(), item, createdAt: new Date(), itemValidations: [{ item, status: ItemValidationStatus.Success, id: v4(), process: ItemValidationProcess.BadWordsDetection, result: '', createdAt: new Date(), updatedAt: new Date() }] as ItemValidation[] }
+      // const validationGroup: ItemValidationGroup = { id: v4(), item, createdAt: '2021-08-11T12:56:36.834Z', itemValidations: [{ item, status: ItemValidationStatus.Success, id: v4(), process: ItemValidationProcess.BadWordsDetection, result: '', createdAt: '2021-08-11T12:56:36.834Z', updatedAt: new Date() }] as ItemValidation[] }
       // TODO: get latest
 
       return reply(validationGroup);

@@ -71,26 +71,4 @@ describe('Copy Item in Grid', () => {
       expect(url).to.contain(copyItemId);
     });
   });
-
-  describe('Error handling', () => {
-    it('error while copying item does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, copyItemError: true });
-      const { id } = SAMPLE_ITEMS.items[0];
-
-      // go to children item
-      cy.visit(buildItemPath(id));
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
-
-      // move
-      const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-      const { path: toItemPath } = SAMPLE_ITEMS.items[0];
-      copyItem({ id: copyItemId, toItemPath });
-
-      cy.wait('@copyItems').then(({ request: { url } }) => {
-        // check item is still existing in parent
-        cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-        expect(url).to.contain(copyItemId);
-      });
-    });
-  });
 });

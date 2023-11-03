@@ -17,8 +17,8 @@ export const IMAGE_ITEM_DEFAULT: LocalFileItemForTest = {
   type: ItemType.LOCAL_FILE,
   path: 'bd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER,
-  createdAt: new Date('2021-03-16T16:00:50.968Z'),
-  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  createdAt: '2021-03-16T16:00:50.968Z',
+  updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
   extra: buildFileExtra({
     name: 'icon.png',
@@ -40,8 +40,8 @@ export const IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH: LocalFileItemForTest = {
   type: ItemType.LOCAL_FILE,
   path: 'bd5519a2_5ba9_4305_b221_185facbe6a29',
   creator: CURRENT_USER,
-  createdAt: new Date('2021-03-16T16:00:50.968Z'),
-  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  createdAt: '2021-03-16T16:00:50.968Z',
+  updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {
     maxWidth: MaxWidth.Medium,
   },
@@ -65,8 +65,8 @@ export const VIDEO_ITEM_DEFAULT: LocalFileItemForTest = {
   type: ItemType.LOCAL_FILE,
   path: 'qd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER,
-  createdAt: new Date('2021-03-16T16:00:50.968Z'),
-  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  createdAt: '2021-03-16T16:00:50.968Z',
+  updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
   extra: buildFileExtra({
     name: 'video.mp4',
@@ -88,8 +88,8 @@ export const PDF_ITEM_DEFAULT: LocalFileItemForTest = {
   type: ItemType.LOCAL_FILE,
   path: 'cd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER,
-  createdAt: new Date('2021-03-16T16:00:50.968Z'),
-  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  createdAt: '2021-03-16T16:00:50.968Z',
+  updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
   extra: buildFileExtra({
     name: 'doc.pdf',
@@ -116,8 +116,8 @@ export const IMAGE_ITEM_S3: S3FileItemForTest = {
   type: ItemType.S3_FILE,
   path: 'ad5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER,
-  createdAt: new Date('2021-03-16T16:00:50.968Z'),
-  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  createdAt: '2021-03-16T16:00:50.968Z',
+  updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
   extra: buildS3FileExtra({
     path: MOCK_IMAGE_URL, // for testing
@@ -139,8 +139,8 @@ export const VIDEO_ITEM_S3: S3FileItemForTest = {
   type: ItemType.S3_FILE,
   path: 'qd5519a2_5ba9_4305_b221_185facbe6a93',
   creator: CURRENT_USER,
-  createdAt: new Date('2021-03-16T16:00:50.968Z'),
-  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  createdAt: '2021-03-16T16:00:50.968Z',
+  updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
   extra: buildS3FileExtra({
     path: MOCK_VIDEO_URL, // for testing
@@ -162,8 +162,8 @@ export const PDF_ITEM_S3: S3FileItemForTest = {
   type: ItemType.S3_FILE,
   path: 'bd5519a2_5ba9_4305_b221_185facbe6a99',
   creator: CURRENT_USER,
-  createdAt: new Date('2021-03-16T16:00:50.968Z'),
-  updatedAt: new Date('2021-03-16T16:00:52.655Z'),
+  createdAt: '2021-03-16T16:00:50.968Z',
+  updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
   extra: buildS3FileExtra({
     path: MOCK_PDF_URL, // for testing

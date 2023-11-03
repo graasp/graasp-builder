@@ -5,8 +5,7 @@ import { FormControlLabel, FormGroup, Switch, Tooltip } from '@mui/material';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import { ItemType, convertJs } from '@graasp/sdk';
-import { ItemRecord } from '@graasp/sdk/frontend';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import {
   DEFAULT_COLLAPSIBLE_SETTING,
@@ -31,7 +30,7 @@ import LinkSettings from './LinkSettings';
 import ThumbnailSetting from './ThumbnailSetting';
 
 type Props = {
-  item: ItemRecord;
+  item: DiscriminatedItem;
 };
 
 const ItemSettings = ({ item }: Props): JSX.Element => {
@@ -42,7 +41,7 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
   const { settings } = item;
 
   const [settingLocal, setSettingLocal] =
-    useState<ItemRecord['settings']>(settings);
+    useState<DiscriminatedItem['settings']>(settings);
 
   useEffect(
     () => {
@@ -51,9 +50,10 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
         // so it make the toggles flicker.
         // by only overriding keys that changes we are able to remove the flicker effect
 
-        setSettingLocal((previousSettings) =>
-          convertJs({ ...previousSettings?.toJS(), ...settings.toJS() }),
-        );
+        setSettingLocal((previousSettings) => ({
+          ...previousSettings,
+          ...settings,
+        }));
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,12 +65,10 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
     settingKey: string,
   ): void => {
     const newValue = event.target.checked;
-    setSettingLocal(
-      convertJs({
-        ...settingLocal?.toJS(),
-        [settingKey]: newValue,
-      }),
-    );
+    setSettingLocal({
+      ...settingLocal,
+      [settingKey]: newValue,
+    });
     editItem({
       id: item.id,
       name: item.name,

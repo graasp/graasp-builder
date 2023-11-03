@@ -13,7 +13,6 @@ import {
   ITEM_MAIN_CLASS,
 } from '../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../fixtures/items';
-import { SIGNED_OUT_MEMBER } from '../fixtures/members';
 import {
   REDIRECTION_TIME,
   REQUEST_FAILURE_LOADING_TIME,
@@ -23,7 +22,7 @@ import { SIGN_IN_PATH } from '../support/paths';
 describe('Authentication', () => {
   describe('Signed Off > Redirect to sign in route', () => {
     beforeEach(() => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, currentMember: SIGNED_OUT_MEMBER });
+      cy.setUpApi({ ...SAMPLE_ITEMS, currentMember: null });
     });
     it('Home', () => {
       cy.visit(HOME_PATH);
