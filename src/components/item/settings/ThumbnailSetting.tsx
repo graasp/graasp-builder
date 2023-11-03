@@ -3,7 +3,7 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { DiscriminatedItem, EmbeddedLinkItemType, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';
 
 import Uppy from '@uppy/core';
@@ -142,7 +142,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
           // TODO: fix type
           url={
             imgUrl ??
-            (item as EmbeddedLinkItemType)?.extra?.[ItemType.LINK]
+            (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
               ?.thumbnails?.[0]
           }
           alt={alt}

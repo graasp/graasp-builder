@@ -24,7 +24,6 @@ export const CurrentUserContextProvider = ({
   const query = useCurrentMember();
 
   // update language depending on user setting
-  // todo: this cast can be resolved if we don't allow empty user
   const lang = query?.data?.extra?.lang;
   useEffect(() => {
     if (lang !== i18n.language) {
@@ -35,7 +34,6 @@ export const CurrentUserContextProvider = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const value = useMemo(() => query, [query.data]);
 
-  // todo: this cast can be resolved if we don't allow empty user
   return (
     <CurrentUserContext.Provider value={value}>
       {children}

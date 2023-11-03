@@ -155,10 +155,7 @@ const AppContent = ({
       memberId: member?.id,
       permission,
       settings: item.settings,
-      lang:
-        // todo: remove once it is added in ItemSettings type in sdk
-        // todo: wrong casting
-        item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
+      lang: item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
       context: Context.Builder,
     }}
   />
