@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.1](https://github.com/graasp/graasp-builder/compare/v2.0.0...v2.0.1) (2023-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update mui (non-major) ([#845](https://github.com/graasp/graasp-builder/issues/845)) ([8647e69](https://github.com/graasp/graasp-builder/commit/8647e6909d3e67d56dc01833fb68e4f2164386fc))
+* upgrade sdk to fix ws ([#853](https://github.com/graasp/graasp-builder/issues/853)) ([756da01](https://github.com/graasp/graasp-builder/commit/756da01fb03a39e3916ce994be07d3bba9777422))
+
 ## [2.0.0](https://github.com/graasp/graasp-builder/compare/v1.11.0...v2.0.0) (2023-11-03)
 
 
