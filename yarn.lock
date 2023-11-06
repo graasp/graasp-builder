@@ -1779,15 +1779,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.19.2":
-  version: 1.19.2
-  resolution: "@graasp/translations@npm:1.19.2"
-  dependencies:
-    i18next: 23.4.6
-  checksum: e4ae1daf83e4e9e2b9bc23f3aa6480d53cbe03b53a2ad847f9933351f7b1aea31c3866fb5296aadc2872d5fdf0db22ba0b576bfff712bd6916a971094c823266
-  languageName: node
-  linkType: hard
-
 "@graasp/translations@npm:1.19.4":
   version: 1.19.4
   resolution: "@graasp/translations@npm:1.19.4"
@@ -7092,7 +7083,7 @@ __metadata:
     "@graasp/chatbox": 3.0.0
     "@graasp/query-client": 2.0.0
     "@graasp/sdk": 2.0.1
-    "@graasp/translations": 1.19.2
+    "@graasp/translations": 1.19.4
     "@graasp/ui": 4.0.0
     "@mui/icons-material": 5.14.16
     "@mui/lab": 5.0.0-alpha.151
@@ -7443,15 +7434,6 @@ __metadata:
   bin:
     husky: lib/bin.js
   checksum: 837bc7e4413e58c1f2946d38fb050f5d7324c6f16b0fd66411ffce5703b294bd21429e8ba58711cd331951ee86ed529c5be4f76805959ff668a337dbfa82a1b0
-  languageName: node
-  linkType: hard
-
-"i18next@npm:23.4.6":
-  version: 23.4.6
-  resolution: "i18next@npm:23.4.6"
-  dependencies:
-    "@babel/runtime": ^7.22.5
-  checksum: ffc63889e28b2bfce2c6e635bd686087290fe2e2f58e0a235525011bb74d541ff681895abe994b12546be6c92b66a7cc3002a13c26e587b4da8c89b15ef648db
   languageName: node
   linkType: hard
 

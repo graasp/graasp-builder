@@ -19,7 +19,7 @@
     "@graasp/chatbox": "3.0.0",
     "@graasp/query-client": "2.0.0",
     "@graasp/sdk": "2.0.1",
-    "@graasp/translations": "1.19.2",
+    "@graasp/translations": "1.19.4",
     "@graasp/ui": "4.0.0",
     "@mui/icons-material": "5.14.16",
     "@mui/lab": "5.0.0-alpha.151",
