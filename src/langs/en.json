@@ -270,5 +270,6 @@
   "APP_LIST_LOADING_FAILED": "There was an error getting the app list. Please try again later.",
   "FLAG_REASON_DESCRIPTION": "Select reason for flagging this item",
   "FLAG_MODAL_TITLE": "Flag Item",
-  "FLAG_MODAL_CONFIRM": "Flag"
+  "FLAG_MODAL_CONFIRM": "Flag",
+  "TUTORIALS": "Tutorials"
 }

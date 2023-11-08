@@ -18,6 +18,7 @@ import ItemMenu from '../main/ItemMenu';
 type Props = {
   manyMemberships?: ResultOf<ItemMembership[]>;
   member?: Member | null;
+  canMove?: boolean;
 };
 
 type ChildCompProps = {
@@ -28,6 +29,7 @@ type ChildCompProps = {
 const ActionsCellRenderer = ({
   manyMemberships,
   member,
+  canMove,
 }: Props): ((arg: ChildCompProps) => JSX.Element) => {
   const ChildComponent = ({ data: item }: ChildCompProps) => {
     const [canEdit, setCanEdit] = useState(false);
@@ -50,7 +52,7 @@ const ActionsCellRenderer = ({
     const renderAnyoneActions = () => (
       <>
         <DownloadButton id={item.id} name={item.name} />
-        <ItemMenu item={item} canEdit={canEdit} />
+        <ItemMenu item={item} canMove={canMove} canEdit={canEdit} />
       </>
     );
 

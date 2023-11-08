@@ -10,7 +10,7 @@ import ErrorAlert from '../common/ErrorAlert';
 import FileUploader from '../file/FileUploader';
 import { UppyContextProvider } from '../file/UppyContext';
 import ItemHeader from '../item/header/ItemHeader';
-import ItemActionsRenderer from './ItemActions';
+import ItemActions from './ItemActions';
 import Items from './Items';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
@@ -38,7 +38,7 @@ const HomeLoadableContent = (): JSX.Element => {
           title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
           items={ownItems}
           headerElements={[<NewItemButton key="newButton" />]}
-          ToolbarActions={ItemActionsRenderer}
+          ToolbarActions={ItemActions}
         />
       </Box>
     </UppyContextProvider>

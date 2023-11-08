@@ -196,7 +196,9 @@ const FolderContent = ({
       headerElements={
         enableEditing ? [<NewItemButton key="newButton" />] : undefined
       }
-      ToolbarActions={ItemActions}
+      // todo: not exactly correct, since you could have write rights on some child,
+      // but it's more tedious to check permissions over all selected items
+      ToolbarActions={enableEditing ? ItemActions : undefined}
       showCreator
     />
   );

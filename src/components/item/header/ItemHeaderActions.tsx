@@ -72,7 +72,8 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
       const activeActions = (
         <>
           {showEditButton && <EditButton item={item} />}
-          <ItemMenu item={item} canEdit={showEditButton} />
+          {/* prevent moving from top header to avoid confusion */}
+          <ItemMenu item={item} canMove={false} canEdit={showEditButton} />
 
           <ShareButton itemId={item.id} />
           <ChatboxButton

@@ -42,6 +42,7 @@ type Props = {
   };
   headerElements?: JSX.Element[];
   parentId?: string;
+  canMove?: boolean;
 };
 
 const ItemsGrid = ({
@@ -53,6 +54,7 @@ const ItemsGrid = ({
   manyMemberships,
   itemsStatuses,
   parentId,
+  canMove = true,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [page, setPage] = useState(1);
@@ -87,6 +89,7 @@ const ItemsGrid = ({
     return itemsInPage.map((item) => (
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
         <ItemCard
+          canMove={canMove}
           item={item}
           memberships={getMembershipsForItem({
             manyMemberships,

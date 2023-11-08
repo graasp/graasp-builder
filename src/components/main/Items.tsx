@@ -16,7 +16,7 @@ type Props = {
   items?: DiscriminatedItem[];
   title: string;
   headerElements?: JSX.Element[];
-  actions?: ({ data }: { data: { id: string } }) => JSX.Element;
+  actions?: ({ data }: { data: DiscriminatedItem }) => JSX.Element;
   ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;
   clickable?: boolean;
   defaultSortedColumn?: {
@@ -29,6 +29,7 @@ type Props = {
   showThumbnails?: boolean;
   showCreator?: boolean;
   enableMemberships?: boolean;
+  canMove?: boolean;
 };
 
 const Items = ({
@@ -44,6 +45,7 @@ const Items = ({
   showThumbnails = true,
   showCreator = false,
   enableMemberships = true,
+  canMove = true,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
   const itemSearch = useItemSearch(items);
@@ -65,6 +67,7 @@ const Items = ({
     case ITEM_LAYOUT_MODES.GRID:
       return (
         <ItemsGrid
+          canMove={canMove}
           parentId={parentId}
           title={title}
           items={itemsToDisplay}
@@ -92,6 +95,7 @@ const Items = ({
           clickable={clickable}
           showThumbnails={showThumbnails}
           showCreator={showCreator}
+          canMove={canMove}
         />
       );
   }

@@ -59,30 +59,45 @@ const sampleItems: DiscriminatedItem[] = [
     id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
     name: 'own_item_name2',
     path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
+    settings: {
+      hasThumbnail: false,
+    },
   },
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'fdf09f5a-5688-11eb-ae93-0242ac130003',
     name: 'own_item_name3',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003',
+    settings: {
+      hasThumbnail: false,
+    },
   },
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'fdf09f5a-5688-11eb-ae93-0242ac130004',
     name: 'own_item_name4',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130004',
+    settings: {
+      hasThumbnail: false,
+    },
   },
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'fdf09f5a-5688-11eb-ae93-0242ac130005',
     name: 'own_item_name5',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130005',
+    settings: {
+      hasThumbnail: false,
+    },
   },
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130006',
     name: 'own_item_name6',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130006',
+    settings: {
+      hasThumbnail: false,
+    },
   },
 ];
 export const SAMPLE_ITEMS: ApiConfig = {

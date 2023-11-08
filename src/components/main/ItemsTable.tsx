@@ -45,7 +45,7 @@ type Props = {
   tableTitle: string;
   headerElements?: JSX.Element[];
   isSearching?: boolean;
-  actions?: ({ data }: { data: { id: string } }) => JSX.Element;
+  actions?: ({ data }: { data: DiscriminatedItem }) => JSX.Element;
   ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;
   clickable?: boolean;
   defaultSortedColumn?: {
@@ -56,6 +56,7 @@ type Props = {
   };
   showThumbnails?: boolean;
   showCreator?: boolean;
+  canMove?: boolean;
 };
 
 const ItemsTable = ({
@@ -72,6 +73,7 @@ const ItemsTable = ({
   defaultSortedColumn,
   showThumbnails = true,
   showCreator = false,
+  canMove = true,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -157,6 +159,7 @@ const ItemsTable = ({
   const ActionComponent = ActionsCellRenderer({
     manyMemberships,
     member,
+    canMove,
   });
 
   const BadgesComponent = BadgesCellRenderer({
