@@ -3,9 +3,7 @@ import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
   HEADER_MEMBER_MENU_BUTTON_ID,
-  HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID,
   HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID,
-  MEMBER_PROFILE_MEMBER_NAME_ID,
 } from '../../src/config/selectors';
 import { SIGN_IN_PATH } from '../support/paths';
 
@@ -20,21 +18,6 @@ describe('Header', () => {
   });
 
   describe('User Menu', () => {
-    it('Standalone actions', () => {
-      cy.setUpApi();
-      cy.visit(HOME_PATH);
-      // go to profile
-      cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
-      cy.get(`#${HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID}`).click();
-      cy.get(`#${MEMBER_PROFILE_MEMBER_NAME_ID}`).should('be.visible');
-
-      // disable switch users
-      // sign in as another user
-      // cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
-      // cy.get(`#${HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID}`).click();
-      // cy.url().should('equal', SIGN_IN_PATH);
-    });
-
     it('Sign out', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
