@@ -20,7 +20,6 @@ i18n.addResourceBundle('it', BUILDER_NAMESPACE, it);
 
 export const useBuilderTranslation = () => useTranslation(BUILDER_NAMESPACE);
 export const useCommonTranslation = () => useTranslation(namespaces.common);
-export const useAccountTranslation = () => useTranslation(namespaces.account);
 export const useMessagesTranslation = () => useTranslation(namespaces.messages);
 export const useEnumsTranslation = () => useTranslation(namespaces.enums);
 export const useCategoriesTranslation = () =>

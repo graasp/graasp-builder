@@ -13,7 +13,6 @@ import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
   ITEMS_PATH,
-  MEMBER_PROFILE_PATH,
   PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
   REDIRECT_PATH,
@@ -30,7 +29,6 @@ import Home from './main/Home';
 import ItemScreen from './main/ItemScreen';
 import PublishedItems from './main/PublishedItems';
 import Redirect from './main/Redirect';
-import MemberProfileScreen from './member/MemberProfileScreen';
 
 const { useItemFeedbackUpdates } = hooks;
 
@@ -62,10 +60,6 @@ const App = (): JSX.Element => {
     FavoriteItems,
     withAuthorizationProps,
   );
-  const MemberWithAuthorization = withAuthorization(
-    MemberProfileScreen,
-    withAuthorizationProps,
-  );
   const RecycleWithAuthorization = withAuthorization(
     RecycleBinScreen,
     withAuthorizationProps,
@@ -89,10 +83,6 @@ const App = (): JSX.Element => {
           element={<PublishedWithAuthorization />}
         />
         <Route path={buildItemPath()} element={<ItemScreen />} />
-        <Route
-          path={MEMBER_PROFILE_PATH}
-          element={<MemberWithAuthorization />}
-        />
         <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
         <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
         <Route path={REDIRECT_PATH} element={<Redirect />} />

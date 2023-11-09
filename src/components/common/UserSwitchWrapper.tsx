@@ -1,9 +1,9 @@
 import { CompleteMember } from '@graasp/sdk';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
+import { GRAASP_ACCOUNT_HOST } from '@/config/env';
 import { SIGN_IN_PATH } from '@/config/externalPaths';
 import { useBuilderTranslation } from '@/config/i18n';
-import { MEMBER_PROFILE_PATH } from '@/config/paths';
 import { mutations } from '@/config/queryClient';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
@@ -47,7 +47,7 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
       )}
       signOutText={translateBuilder(BUILDER.USER_SWITCH_SIGN_OUT_BUTTON)}
       // switchMemberText={translateBuilder(BUILDER.USER_SWITCH_SWITCH_USER_TEXT)}
-      profilePath={MEMBER_PROFILE_PATH}
+      profilePath={GRAASP_ACCOUNT_HOST}
       redirectPath={SIGN_IN_PATH}
       buttonId={HEADER_MEMBER_MENU_BUTTON_ID}
       signInMenuItemId={HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID}
