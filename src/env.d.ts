@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_GRAASP_PLAYER_HOST?: string;
   readonly VITE_GRAASP_LIBRARY_HOST?: string;
   readonly VITE_GRAASP_ANALYZER_HOST?: string;
+  readonly VITE_GRAASP_ACCOUNT_HOST?: string;
   readonly VITE_H5P_INTEGRATION_URL?: string;
   readonly VITE_GRAASP_ASSETS_URL?: string;
   readonly VITE_SENTRY_ENV: string;

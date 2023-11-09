@@ -1,11 +1,7 @@
-import {
-  MEMBER_PROFILE_PATH,
-  buildItemPath,
-} from '../../../../src/config/paths';
+import { buildItemPath } from '../../../../src/config/paths';
 import {
   CROP_MODAL_CONFIRM_BUTTON_CLASSNAME,
   ITEM_SETTINGS_BUTTON_CLASS,
-  MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME,
   THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME,
 } from '../../../../src/config/selectors';
 import {
@@ -33,19 +29,5 @@ describe('Upload Thumbnails', () => {
     cy.wait(FILE_LOADING_PAUSE);
     cy.get(`.${CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}`).click();
     cy.wait(`@uploadItemThumbnail`);
-  });
-
-  it(`upload member avatar`, () => {
-    cy.visit(MEMBER_PROFILE_PATH);
-
-    // change item thumbnail
-    // selectFile ???
-    cy.attachFile(
-      cy.get(`.${MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME}`),
-      THUMBNAIL_MEDIUM_PATH,
-    );
-    cy.wait(FILE_LOADING_PAUSE);
-    cy.get(`.${CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}`).click();
-    cy.wait(`@uploadAvatar`);
   });
 });

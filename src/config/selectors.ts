@@ -41,7 +41,6 @@ export const buildPermissionOptionId = (id: string): string =>
   `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 export const MODE_LIST_BUTTON_ID = 'modeListButton';
-export const DELETE_MEMBER_BUTTON_ID = 'deleteMemberButton';
 
 export const MODE_GRID_BUTTON_ID = 'modeCardButton';
 export const SHARED_ITEMS_ID = 'sharedItems';
@@ -112,18 +111,7 @@ export const buildItemFormAppOptionId = (name?: string): string =>
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
 export const buildCancelButtonId = (id: string): string => `cancelButton-${id}`;
-export const MEMBER_PROFILE_MEMBER_ID_ID = 'memberProfileMemberId';
-export const MEMBER_PROFILE_MEMBER_NAME_ID = 'memberProfileMemberName';
-export const MEMBER_PROFILE_EMAIL_ID = 'memberProfileEmail';
-export const MEMBER_PROFILE_INSCRIPTION_DATE_ID =
-  'memberProfileInscriptionDate';
-export const MEMBER_PROFILE_LANGUAGE_SWITCH_ID = 'memberProfileLanguageSwitch';
-export const MEMBER_PROFILE_EMAIL_FREQ_SWITCH_ID =
-  'memberProfileEmailFreqSwitch';
-export const MEMBER_PROFILE_MEMBER_ID_COPY_BUTTON_ID =
-  'memberProfileMemberIdCopyButton';
-export const MEMBER_PROFILE_SAVE_ACTIONS_TOGGLE_ID =
-  'memberProfileSaveActionsToggle';
+
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
 export const buildMemberAvatarClass = (id?: string): string =>
@@ -211,8 +199,6 @@ export const CLEAR_CHAT_CANCEL_BUTTON_ID = 'clearChatCancelButton';
 export const CLEAR_CHAT_CONFIRM_BUTTON_ID = 'clearChatConfirmButton';
 export const DOWNLOAD_CHAT_BUTTON_ID = 'downloadChatButton';
 export const CROP_MODAL_CONFIRM_BUTTON_CLASSNAME = 'cropModalConfirmButton';
-export const MEMBER_PROFILE_AVATAR_UPLOAD_BUTTON_CLASSNAME =
-  'memberProfileAvatarUploadButton';
 export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
 export const H5P_DASHBOARD_UPLOADER_ID = 'h5pDashboardUploader';
 
