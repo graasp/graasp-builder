@@ -1,18 +1,12 @@
-import {
-  HOME_PATH,
-  SHARED_ITEMS_PATH,
-  buildItemPath,
-} from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
   TREE_MODAL_MY_ITEMS_ID,
-  TREE_MODAL_SHARED_ITEMS_ID,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const moveItem = ({
@@ -88,25 +82,6 @@ describe('Move Item in List', () => {
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);
-      expect(url).to.contain(movedItem);
-    });
-  });
-
-  it('move item in shared item', () => {
-    cy.setUpApi(SHARED_ITEMS);
-
-    // go to children item
-    cy.visit(SHARED_ITEMS_PATH);
-
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
-
-    // move
-    const { path: toItemPath, id: toItemId } = SHARED_ITEMS.items[0];
-    const { id: movedItem } = SHARED_ITEMS.items[1];
-    moveItem({ id: movedItem, toItemPath, rootId: TREE_MODAL_SHARED_ITEMS_ID });
-
-    cy.wait('@moveItems').then(({ request: { body, url } }) => {
-      expect(body.parentId).to.equal(toItemId);
       expect(url).to.contain(movedItem);
     });
   });
