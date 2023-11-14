@@ -1788,17 +1788,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@graasp/ui@npm:4.0.0"
+"@graasp/ui@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@graasp/ui@npm:4.0.1"
   dependencies:
-    "@graasp/sdk": 2.0.0
+    "@graasp/sdk": 2.1.0
     http-status-codes: 2.3.0
     katex: 0.16.9
     lodash.truncate: 4.4.2
     qs: 6.11.2
     quill-emoji: 0.2.0
-    react-cookie-consent: 8.0.1
+    react-cookie-consent: 9.0.0
     react-quill: 2.0.0-beta.4
     react-rnd: 10.4.1
     react-text-mask: 5.5.0
@@ -1825,7 +1825,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 17b08f3b45e5292416b3ef9cafdf73931e302907da1f5d3ebc88fb6e460f711b21e2d436e37832591779a35484d1bf6ed48e192e280b72a2c2f381dff3854349
+  checksum: 12b43b21c051bca13487f41af9f4836920eff0f9c304c4f4f02e8f75d02b3d49781a8517aa550d8048f3b536605e988feb9157b472fc4e989a9296cf85d3f5c0
   languageName: node
   linkType: hard
 
@@ -7084,7 +7084,7 @@ __metadata:
     "@graasp/query-client": 2.0.2
     "@graasp/sdk": 2.0.1
     "@graasp/translations": 1.19.4
-    "@graasp/ui": 4.0.0
+    "@graasp/ui": 4.0.1
     "@mui/icons-material": 5.14.16
     "@mui/lab": 5.0.0-alpha.151
     "@mui/material": 5.14.16
@@ -10520,14 +10520,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-cookie-consent@npm:8.0.1":
-  version: 8.0.1
-  resolution: "react-cookie-consent@npm:8.0.1"
+"react-cookie-consent@npm:9.0.0":
+  version: 9.0.0
+  resolution: "react-cookie-consent@npm:9.0.0"
   dependencies:
     js-cookie: ^2.2.1
   peerDependencies:
     react: ">=16"
-  checksum: c99f3e40e3091c439956498158b5b8906cce170763836d6fade98a06ce667eca25aaf3bc407e10a6fb72fc44e5178a2ebf14cbbe4e1b5684a74b7d7f484bd359
+  checksum: 56a50f03e21c7345dc97159222fd93e920290653da52fc7bf405b757e84dac183753950c42ea1db6cf633fabd0eded8216986798935bbdeda44ddb2db4dc83e0
   languageName: node
   linkType: hard
 
