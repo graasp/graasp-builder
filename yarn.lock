@@ -1746,21 +1746,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@graasp/query-client@npm:2.0.0"
+"@graasp/query-client@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@graasp/query-client@npm:2.0.2"
   dependencies:
-    "@graasp/sdk": 2.0.0
+    "@graasp/sdk": 2.1.0
     "@graasp/translations": 1.19.4
     axios: 0.27.2
-    crypto-js: 4.1.1
+    crypto-js: 4.2.0
     http-status-codes: 2.3.0
     qs: 6.11.2
     react-query: 3.39.3
     uuid: 9.0.1
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 6eea7a2bfb46dd22c3905297479cce07c9757ca8d129ee43033446eebf33833c369be5a58e5512d7c1e3558b903fef84cf3ad2d6f70514ce498165f9ddd72af4
+  checksum: 15ff7740733534ac43b2c97a4035fbfbd651dff7dfd77466e507aea5fabf488df4b21fb04afa43d0531e812cae72ede156fcb8a63dc1eee06c8a9e2879d5b659
   languageName: node
   linkType: hard
 
@@ -5141,10 +5141,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-js@npm:4.1.1":
-  version: 4.1.1
-  resolution: "crypto-js@npm:4.1.1"
-  checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
+"crypto-js@npm:4.2.0":
+  version: 4.2.0
+  resolution: "crypto-js@npm:4.2.0"
+  checksum: f051666dbc077c8324777f44fbd3aaea2986f198fe85092535130d17026c7c2ccf2d23ee5b29b36f7a4a07312db2fae23c9094b644cc35f7858b1b4fcaf27774
   languageName: node
   linkType: hard
 
@@ -7081,7 +7081,7 @@ __metadata:
     "@emotion/react": 11.11.1
     "@emotion/styled": 11.11.0
     "@graasp/chatbox": 3.0.0
-    "@graasp/query-client": 2.0.0
+    "@graasp/query-client": 2.0.2
     "@graasp/sdk": 2.0.1
     "@graasp/translations": 1.19.4
     "@graasp/ui": 4.0.0
