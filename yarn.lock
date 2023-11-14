@@ -7151,7 +7151,7 @@ __metadata:
     react-csv: 2.2.2
     react-dom: 18.2.0
     react-ga4: 2.1.0
-    react-i18next: 13.3.1
+    react-i18next: 13.3.2
     react-image-crop: 9.1.1
     react-qr-code: 2.0.12
     react-query: 3.39.3
@@ -10570,9 +10570,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:13.3.1":
-  version: 13.3.1
-  resolution: "react-i18next@npm:13.3.1"
+"react-i18next@npm:13.3.2":
+  version: 13.3.2
+  resolution: "react-i18next@npm:13.3.2"
   dependencies:
     "@babel/runtime": ^7.22.5
     html-parse-stringify: ^3.0.1
@@ -10584,7 +10584,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 71a9ae4968d701aa8c11009389f49548058abb16e96d0e0f4107206fe2dfd2df6c43e44b3209824ea42b8d2aefa8fe5ebc56e019a40947b39c3cb703e5293a87
+  checksum: ecf0483a680d71bf284deefc47d7e45c032e4c67db85a34ef67a9e343fc121ef1b129edf037ec6338d0417d243e6e615b60346f33d1ea7433e371723a138a430
   languageName: node
   linkType: hard
 
