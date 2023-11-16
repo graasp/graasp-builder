@@ -22,7 +22,7 @@
     "@graasp/translations": "1.20.1",
     "@graasp/ui": "4.1.0",
     "@mui/icons-material": "5.14.18",
-    "@mui/lab": "5.0.0-alpha.151",
+    "@mui/lab": "5.0.0-alpha.153",
     "@mui/material": "5.14.18",
     "@sentry/react": "7.80.1",
     "@uppy/core": "3.3.1",
