@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/graasp/graasp-builder/compare/v2.0.1...v2.1.0) (2023-11-16)
+
+
+### Features
+
+* replace profile path, add translations ([#858](https://github.com/graasp/graasp-builder/issues/858)) ([e1e3280](https://github.com/graasp/graasp-builder/commit/e1e3280bc51b725fce8c04ae21186e3e9149c8f7))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/query-client to v2.0.2 ([#863](https://github.com/graasp/graasp-builder/issues/863)) ([d3275ee](https://github.com/graasp/graasp-builder/commit/d3275eec1df9a3ab089eab514de1d50da062ca5d))
+* upgrade deps ([#869](https://github.com/graasp/graasp-builder/issues/869)) ([1ce60f8](https://github.com/graasp/graasp-builder/commit/1ce60f8626a27d9c9aaf5639883fe111c1c4b501))
+
 ## [2.0.1](https://github.com/graasp/graasp-builder/compare/v2.0.0...v2.0.1) (2023-11-06)
 
 
