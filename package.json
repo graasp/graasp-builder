@@ -147,7 +147,7 @@
     "vite-plugin-istanbul": "5.0.0"
   },
   "resolutions": {
-    "@graasp/sdk": "2.0.1"
+    "@graasp/sdk": "2.1.0"
   },
   "packageManager": "yarn@3.6.4"
 }
