@@ -79,7 +79,7 @@ const MainMenu = (): JSX.Element => {
         <ListItemIcon>
           <AutoStoriesIcon />
         </ListItemIcon>
-        <ListItemText>{translateBuilder('Tutorials')}</ListItemText>
+        <ListItemText>{translateBuilder(BUILDER.TUTORIALS)}</ListItemText>
       </ListItemButton>
     </ListItem>
   );

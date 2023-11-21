@@ -18,7 +18,6 @@ import Main from './main/Main';
 const SharedItemsLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
-
   if (isError) {
     return <ErrorAlert id={SHARED_ITEMS_ERROR_ALERT_ID} />;
   }
@@ -34,6 +33,7 @@ const SharedItemsLoadableContent = (): JSX.Element => {
         id={SHARED_ITEMS_ID}
         title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
         items={sharedItems}
+        canMove={false}
         showCreator
       />
     </Box>

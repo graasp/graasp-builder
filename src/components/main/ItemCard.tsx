@@ -35,12 +35,14 @@ type Props = {
   item: DiscriminatedItem;
   memberships?: ItemMembership[];
   itemsStatuses?: ItemsStatuses;
+  canMove?: boolean;
 };
 
 const ItemComponent = ({
   item,
   memberships,
   itemsStatuses,
+  canMove = true,
 }: Props): JSX.Element => {
   const { id, name } = item;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({ id });
@@ -100,7 +102,9 @@ const ItemComponent = ({
       Badges={<Badges data={item} />}
       name={item.name}
       creator={member?.name}
-      ItemMenu={<ItemMenu item={item} canEdit={enableEdition} />}
+      ItemMenu={
+        <ItemMenu item={item} canEdit={enableEdition} canMove={canMove} />
+      }
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(item.id)}
       NameWrapper={NameWrapper({

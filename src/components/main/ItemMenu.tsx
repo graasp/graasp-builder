@@ -34,9 +34,14 @@ import CopyButton from './CopyButton';
 type Props = {
   item: DiscriminatedItem;
   canEdit?: boolean;
+  canMove?: boolean;
 };
 
-const ItemMenu = ({ item, canEdit = false }: Props): JSX.Element => {
+const ItemMenu = ({
+  item,
+  canEdit = false,
+  canMove = true,
+}: Props): JSX.Element => {
   const { data: member } = useCurrentUserContext();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { t: translateBuilder } = useBuilderTranslation();
@@ -67,13 +72,17 @@ const ItemMenu = ({ item, canEdit = false }: Props): JSX.Element => {
     if (!canEdit) {
       return null;
     }
-    return [
-      <MoveButton
-        key="move"
-        type={ActionButton.MENU_ITEM}
-        itemIds={[item.id]}
-        onClick={handleClose}
-      />,
+    const result = canMove
+      ? [
+          <MoveButton
+            key="move"
+            type={ActionButton.MENU_ITEM}
+            itemIds={[item.id]}
+            onClick={handleClose}
+          />,
+        ]
+      : [];
+    return result.concat([
       <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />,
       <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
       <CollapseButton
@@ -87,7 +96,7 @@ const ItemMenu = ({ item, canEdit = false }: Props): JSX.Element => {
         itemIds={[item.id]}
         onClick={handleClose}
       />,
-    ];
+    ]);
   };
 
   const renderAuthenticatedActions = () => {
