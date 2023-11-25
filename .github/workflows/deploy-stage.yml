@@ -37,7 +37,7 @@ jobs:
           VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
           VITE_GRAASP_PLAYER_HOST: ${{ vars.VITE_GRAASP_PLAYER_HOST }}
           VITE_H5P_INTEGRATION_URL: ${{ secrets.VITE_H5P_INTEGRATION_URL }}
-          VITE_GRAASP_ASSETS_URL: ${{ secrets.VITE_GRAASP_ASSETS_URL }}
+          VITE_GRAASP_ASSETS_URL: ${{ vars.VITE_GRAASP_ASSETS_URL }}
           VITE_SENTRY_ENV: ${{ vars.VITE_SENTRY_ENV }}
           VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
           # un-comment to enable Google Analytics
