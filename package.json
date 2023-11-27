@@ -102,8 +102,8 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "18.4.2",
-    "@commitlint/config-conventional": "18.4.2",
+    "@commitlint/cli": "18.4.3",
+    "@commitlint/config-conventional": "18.4.3",
     "@cypress/code-coverage": "3.12.10",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
