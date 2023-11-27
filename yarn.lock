@@ -1835,9 +1835,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:2.0.1":
-  version: 2.0.1
-  resolution: "@graasp/sdk@npm:2.0.1"
+"@graasp/sdk@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@graasp/sdk@npm:2.1.0"
   dependencies:
     "@aws-sdk/client-s3": 3.441.0
     "@graasp/etherpad-api": 2.1.1
@@ -1846,7 +1846,7 @@ __metadata:
     js-cookie: 3.0.5
     uuid: 9.0.1
     validator: 13.11.0
-  checksum: 84a0e292c2efbdbdda7aa64e02c81e10dac750a8e99dc5e194b887b359acb724d7f6211fe4cbc4b79e6269fff88e3ed8662dc9a9aa984a24c5cffc0b8f3901b5
+  checksum: 453521f6d45b73f7aca66d2973b6032b5dde66afe32a596ae49a9b1d1b676e74b2e3f1f71301655d9f68649f3b691f3c6f78fe6d3846be1ad8cda690471aed01
   languageName: node
   linkType: hard
 
