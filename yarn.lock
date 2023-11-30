@@ -7296,7 +7296,7 @@ __metadata:
     react-dom: 18.2.0
     react-ga4: 2.1.0
     react-i18next: 13.5.0
-    react-image-crop: 9.1.1
+    react-image-crop: 10.1.8
     react-qr-code: 2.0.12
     react-query: 3.39.3
     react-quill: 2.0.0
@@ -10741,14 +10741,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-image-crop@npm:9.1.1":
-  version: 9.1.1
-  resolution: "react-image-crop@npm:9.1.1"
-  dependencies:
-    clsx: ^1.1.1
+"react-image-crop@npm:10.1.8":
+  version: 10.1.8
+  resolution: "react-image-crop@npm:10.1.8"
   peerDependencies:
     react: ">=16.13.1"
-  checksum: af10ea107124c72d6673693a11b41141bda958e3804bd38bddf45f2d54fc1392d7b11005000ed725996c0a0415e24e9ba4a8f32640fc94857f7edc766b98db7b
+  checksum: c53c412f6cfdd1d80c0691a42c6c353afb4dd2dca3209e8c3ec64a9d01d1dc6a6940221be9a0adaee5f0c66276094aa6f3d4a24dcabeab2ca3ca78fc62531e24
   languageName: node
   linkType: hard
 
