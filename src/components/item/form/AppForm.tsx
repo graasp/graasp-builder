@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useState } from 'react';
 
 import { ArrowBack } from '@mui/icons-material';
-import { Alert, Stack, TextField } from '@mui/material';
+import { Alert, Box, Stack, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
@@ -172,34 +172,42 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
             fullWidth
             placeholder={translateBuilder('Search for an app')}
             variant="outlined"
+            autoFocus
             size="small"
             onChange={searchAnApp}
           />
-          <Grid2
-            container
-            spacing={2}
-            maxHeight={400}
-            alignItems="stretch"
-            overflow="auto"
-          >
-            <AppGrid
-              currentUrl={currentUrl}
-              handleSelection={handleAppSelection}
-              searchQuery={searchQuery}
-            />
-            <AppCard
-              id={CUSTOM_APP_CYPRESS_ID}
-              name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
-              description={translateBuilder(
-                BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
-              )}
-              image={addNewImage}
-              onClick={addCustomApp}
-            />
-          </Grid2>
+          <Box display="flex" flexGrow={1}>
+            <Grid2
+              container
+              spacing={2}
+              height="max-content"
+              maxHeight={400}
+              alignItems="stretch"
+              overflow="auto"
+            >
+              <AppGrid
+                currentUrl={currentUrl}
+                handleSelection={handleAppSelection}
+                searchQuery={searchQuery}
+              />
+              <AppCard
+                id={CUSTOM_APP_CYPRESS_ID}
+                name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
+                description={translateBuilder(
+                  BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
+                )}
+                image={addNewImage}
+                onClick={addCustomApp}
+              />
+            </Grid2>
+          </Box>
         </>
       )}
-      <NameForm setChanges={onChange} updatedProperties={updatedProperties} />
+      <NameForm
+        setChanges={onChange}
+        updatedProperties={updatedProperties}
+        autoFocus={false}
+      />
     </Stack>
   );
 };

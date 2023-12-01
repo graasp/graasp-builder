@@ -9,6 +9,7 @@ import type { EditModalContentPropType } from './EditModalWrapper';
 
 export type NameFormProps = EditModalContentPropType & {
   required?: boolean;
+  autoFocus?: boolean;
 };
 
 const NameForm = ({
@@ -16,6 +17,7 @@ const NameForm = ({
   required,
   updatedProperties,
   setChanges,
+  autoFocus = true,
 }: NameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const theme = useTheme();
@@ -28,7 +30,7 @@ const NameForm = ({
   return (
     <TextField
       variant="standard"
-      autoFocus
+      autoFocus={autoFocus}
       required={required}
       id={ITEM_FORM_NAME_INPUT_ID}
       label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
