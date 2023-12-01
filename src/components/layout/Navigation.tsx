@@ -56,6 +56,7 @@ const Navigator = (): JSX.Element | null => {
   const buildToItemPath = (id: string) => buildItemPath(id);
 
   const menu = [
+    // todo: remove distinction -> not a good idea to show the whole root in arrow
     {
       name: translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
       id: 'home',

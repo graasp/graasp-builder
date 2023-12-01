@@ -17,7 +17,10 @@ import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
 
-import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
+import {
+  ITEMS_TABLE_CONTAINER_HEIGHT,
+  ITEM_PAGE_SIZE,
+} from '../../config/constants';
 import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
@@ -55,8 +58,12 @@ type Props = {
     name?: 'desc' | 'asc' | null;
   };
   showThumbnails?: boolean;
-  showCreator?: boolean;
   canMove?: boolean;
+  onShowOnlyMeChange?: (e: any) => any;
+  showOnlyMe?: boolean;
+  page?: number;
+  setPage?: (p: number) => void;
+  totalCount?: number;
 };
 
 const ItemsTable = ({
@@ -72,8 +79,12 @@ const ItemsTable = ({
   clickable = true,
   defaultSortedColumn,
   showThumbnails = true,
-  showCreator = false,
   canMove = true,
+  showOnlyMe,
+  onShowOnlyMeChange,
+  page = 1,
+  setPage,
+  totalCount,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -181,6 +192,20 @@ const ItemsTable = ({
         tooltipField: 'name',
       },
       {
+        field: 'creator',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
+        colId: 'creator',
+        type: 'rightAligned',
+        cellRenderer: MemberNameCellRenderer({
+          defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
+        }),
+        cellStyle: {
+          display: 'flex',
+          justifyContent: 'end',
+        },
+        sortable: false,
+      },
+      {
         field: 'status',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
         cellRenderer: BadgesComponent,
@@ -236,26 +261,9 @@ const ItemsTable = ({
       },
     ];
 
-    if (showCreator) {
-      columns.splice(2, 0, {
-        field: 'creator',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
-        colId: 'creator',
-        type: 'rightAligned',
-        cellRenderer: MemberNameCellRenderer({
-          defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
-        }),
-        cellStyle: {
-          display: 'flex',
-          justifyContent: 'end',
-        },
-        sortable: false,
-      });
-    }
     return columns;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    showCreator,
     translateBuilder,
     defaultSortedColumn,
     ActionComponent,
@@ -271,7 +279,12 @@ const ItemsTable = ({
 
   return (
     <>
-      <ItemsToolbar title={tableTitle} headerElements={headerElements} />
+      <ItemsToolbar
+        title={tableTitle}
+        headerElements={headerElements}
+        onShowOnlyMeChange={onShowOnlyMeChange}
+        showOnlyMe={showOnlyMe}
+      />
       {itemId && <FolderDescription itemId={itemId} />}
       <GraaspTable
         id={tableId}
@@ -286,7 +299,14 @@ const ItemsTable = ({
         enableDrag={canDrag()}
         rowDragText={itemRowDragText}
         ToolbarActions={ToolbarActions}
+        pagination
+        page={Math.max(0, page - 1)}
+        onPageChange={(e, newPage) => {
+          setPage?.(newPage + 1);
+        }}
         countTextFunction={countTextFunction}
+        totalCount={totalCount}
+        pageSize={ITEM_PAGE_SIZE}
       />
     </>
   );

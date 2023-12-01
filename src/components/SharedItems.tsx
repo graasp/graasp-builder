@@ -34,7 +34,7 @@ const SharedItemsLoadableContent = (): JSX.Element => {
         title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
         items={sharedItems}
         canMove={false}
-        showCreator
+        totalCount={sharedItems?.length}
       />
     </Box>
   );

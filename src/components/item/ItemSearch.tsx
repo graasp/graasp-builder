@@ -27,9 +27,11 @@ export const NoItemSearchResult = (): JSX.Element => {
   );
 };
 
-export const useItemSearch = (
-  items?: DiscriminatedItem[],
-): {
+export const useItemSearch = ({
+  onSearch,
+}: {
+  onSearch?: () => void;
+}): {
   results?: DiscriminatedItem[];
   text: string;
   input: JSX.Element;
@@ -40,11 +42,8 @@ export const useItemSearch = (
   const handleSearchInput = (event: ChangeEvent<{ value: string }>) => {
     const text = event.target.value;
     setSearchText(text.toLowerCase());
+    onSearch?.();
   };
-
-  const results = items?.filter(
-    (it) => it?.name?.toLowerCase().includes(searchText),
-  );
 
   const itemSearchInput = (
     <SearchInput
@@ -55,5 +54,5 @@ export const useItemSearch = (
       placeholder={translateBuilder(BUILDER.ITEM_SEARCH_PLACEHOLDER)}
     />
   );
-  return { results, text: searchText, input: itemSearchInput };
+  return { text: searchText, input: itemSearchInput };
 };

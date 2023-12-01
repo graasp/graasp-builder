@@ -101,7 +101,7 @@ const ItemComponent = ({
       Actions={Actions}
       Badges={<Badges data={item} />}
       name={item.name}
-      creator={member?.name}
+      creator={item.creator?.name}
       ItemMenu={
         <ItemMenu item={item} canEdit={enableEdition} canMove={canMove} />
       }
