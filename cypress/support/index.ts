@@ -74,7 +74,10 @@ declare global {
       // TODO
       setUpApi(args?: any): any;
 
-      fillBaseItemModal({ name = '' }, args?: { confirm?: boolean }): void;
+      fillBaseItemModal(
+        item: { name?: string },
+        options?: { confirm?: boolean },
+      ): void;
     }
   }
 }
