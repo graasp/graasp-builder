@@ -1,142 +1,194 @@
-import { Context, ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
+import { Context, ShortLink, appendPathToUrl } from '@graasp/sdk';
 
 import { buildItemPath } from '@/config/paths';
+import { ShortLinkPlatform } from '@/utils/shortLink';
 
-import { SETTINGS } from '../../../../src/config/constants';
 import {
-  SHARE_ITEM_DIALOG_LINK_ID,
-  SHARE_ITEM_DIALOG_LINK_SELECT_ID,
-  SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   SHARE_ITEM_QR_BTN_ID,
   SHARE_ITEM_QR_DIALOG_ID,
-  SHARE_ITEM_VISIBILITY_SELECT_ID,
+  SHORT_LINK_COMPONENT,
   buildShareButtonId,
+  buildShortLinkPlatformTextId,
+  buildShortLinkUrlTextId,
 } from '../../../../src/config/selectors';
+import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import {
-  ITEM_LOGIN_ITEMS,
-  SAMPLE_ITEMS,
-  SAMPLE_PUBLIC_ITEMS,
-} from '../../../fixtures/items';
-import {
+  GRAASP_REDIRECTION_HOST,
   buildGraaspBuilderView,
+  buildGraaspLibraryLink,
   buildGraaspPlayerView,
 } from '../../../support/paths';
 
-const openShareItemTab = (id: string) => {
-  cy.get(`#${buildShareButtonId(id)}`).click();
+const checkContainPlatformText = (platform: ShortLinkPlatform) =>
+  cy
+    .get(`#${buildShortLinkPlatformTextId(platform)}`)
+    .should('contain', platform);
+
+const checkContainUrlText = (platform: ShortLinkPlatform, itemId: string) => {
+  let expectedUrl;
+
+  // The client host manager can't be used here because
+  // cypress run this before the main.tsx, where the manager is init.
+  switch (platform) {
+    case 'builder':
+      expectedUrl = buildGraaspBuilderView(itemId);
+      break;
+    case 'player':
+      expectedUrl = buildGraaspPlayerView(itemId);
+      break;
+    case 'library':
+      expectedUrl = buildGraaspLibraryLink(itemId);
+      break;
+    default:
+      throw new Error(`The given platform ${platform} is unknown.`);
+  }
+
+  cy.get(`#${buildShortLinkUrlTextId(platform)}`).should(
+    'contain',
+    expectedUrl,
+  );
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export const changeVisibility = (value: string): void => {
-  cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
-  cy.get(`li[data-value="${value}"]`, { timeout: 1000 }).click();
+const checkContainShortLinkText = (
+  platform: ShortLinkPlatform,
+  alias: string,
+) => {
+  const expectedUrl = appendPathToUrl({
+    baseURL: GRAASP_REDIRECTION_HOST,
+    pathname: alias,
+  }).toString();
+
+  cy.get(`#${buildShortLinkUrlTextId(platform)}`).should(
+    'contain',
+    expectedUrl,
+  );
 };
 
-describe('Share Item', () => {
-  it('Default Private Item', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS });
-    const item = SAMPLE_ITEMS.items[0];
-    cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+describe('Share Item Link', () => {
+  describe('Without short links', () => {
+    const item = PUBLISHED_ITEM;
 
-    // sharing link
-    cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
-      'contain',
-      `${buildGraaspPlayerView(item.id)}`,
-    );
-    cy.get(`#${SHARE_ITEM_DIALOG_LINK_SELECT_ID}`).click();
-    cy.get(`li[data-value="${Context.Builder}"]`).click();
-    cy.get(`#${SHARE_ITEM_DIALOG_LINK_ID}`).should(
-      'have.text',
-      `${buildGraaspBuilderView(item.id)}`,
-    );
+    beforeEach(() => {
+      cy.setUpApi({ items: [PUBLISHED_ITEM] });
+    });
 
-    const visiblitySelect = cy.get(
-      `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
-    );
+    it('Builder link is correctly displayed', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    // visibility select default value
-    visiblitySelect.should('have.value', SETTINGS.ITEM_PRIVATE.name);
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
 
-    // change private -> public
-    changeVisibility(SETTINGS.ITEM_PUBLIC.name);
-    cy.wait(`@postItemTag-${ItemTagType.Public}`).then(
-      ({ request: { url } }) => {
-        expect(url).to.contain(item.id);
-      },
-    );
-  });
+      const context = Context.Builder;
+      checkContainPlatformText(context);
+      checkContainUrlText(context, item.id);
+    });
 
-  it('Public Item', () => {
-    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
-    // todo: improve type
-    const item = SAMPLE_PUBLIC_ITEMS.items[0] as any;
-    cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+    it('Player link is correctly displayed', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    const visiblitySelect = cy.get(
-      `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
-    );
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
 
-    // visibility select default value
-    visiblitySelect.should('have.value', SETTINGS.ITEM_PUBLIC.name);
+      const context = Context.Player;
+      checkContainPlatformText(context);
+      checkContainUrlText(context, item.id);
+    });
 
-    // change public -> private
-    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait(`@deleteItemTag-${ItemTagType.Public}`).then(
-      ({ request: { url } }) => {
-        expect(url).to.contain(item.id);
-      },
-    );
-    // change public -> item login
-    changeVisibility(SETTINGS.ITEM_LOGIN.name);
-    cy.wait([
-      `@deleteItemTag-${ItemTagType.Public}`,
-      '@putItemLoginSchema',
-    ]).then((data) => {
-      const {
-        request: { url },
-      } = data[0];
-      expect(url).to.contain(item.id);
-      expect(url).to.contain(ItemTagType.Public); // originally item login
+    it('Library link is correctly displayed', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
+
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
+
+      const context = Context.Library;
+      checkContainPlatformText(context);
+      checkContainUrlText(context, item.id);
+    });
+
+    it('Share Item with QR Code', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
+
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
+
+      cy.get(`#${SHARE_ITEM_QR_BTN_ID}`).click();
+      cy.get(`#${SHARE_ITEM_QR_DIALOG_ID}`).should('exist');
     });
   });
 
-  it('Pseudonymized Item', () => {
-    // todo: improve types
-    const item = ITEM_LOGIN_ITEMS.items[0] as any;
-    cy.setUpApi({ items: [item] });
-    cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+  describe('With short links', () => {
+    const item = PUBLISHED_ITEM;
 
-    // visibility select default value
-    cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`).should(
-      'have.value',
-      SETTINGS.ITEM_LOGIN.name,
-    );
+    const shortLinks: ShortLink[] = [
+      {
+        alias: 'test-1',
+        platform: Context.Builder,
+        item: { id: item.id },
+        createdAt: new Date().toISOString(),
+      },
+      {
+        alias: 'test-2',
+        platform: Context.Player,
+        item: { id: item.id },
+        createdAt: new Date().toISOString(),
+      },
+      {
+        alias: 'test-3',
+        platform: Context.Library,
+        item: { id: item.id },
+        createdAt: new Date().toISOString(),
+      },
+    ];
 
-    // change item login schema
-    cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID} + input`).should(
-      'have.value',
-      ItemLoginSchemaType.Username,
-    );
-    // item login edition is done in itemLogin.cy.js
-
-    // change pseudonymized -> private
-    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait(`@deleteItemLoginSchema`).then(({ request: { url } }) => {
-      expect(url).to.include(item.id);
+    beforeEach(() => {
+      cy.setUpApi({ items: [PUBLISHED_ITEM], shortLinks, itemId: item.id });
     });
-  });
 
-  it('Share Item with QR Code', () => {
-    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
-    const item = SAMPLE_PUBLIC_ITEMS.items[0];
-    cy.visit(buildItemPath(item.id));
-    openShareItemTab(item.id);
+    it('Builder link is correctly displayed', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    cy.get(`#${SHARE_ITEM_QR_BTN_ID}`).click();
+      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
 
-    cy.get(`#${SHARE_ITEM_QR_DIALOG_ID}`).should('exist');
+      const context = Context.Builder;
+      checkContainPlatformText(context);
+      checkContainShortLinkText(context, shortLinks[0].alias);
+    });
+
+    it('Player link is correctly displayed', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
+
+      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
+
+      const context = Context.Player;
+      checkContainPlatformText(context);
+      checkContainShortLinkText(context, shortLinks[1].alias);
+    });
+
+    it('Library link is correctly displayed', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
+
+      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
+
+      const context = Context.Library;
+      checkContainPlatformText(context);
+      checkContainShortLinkText(context, shortLinks[2].alias);
+    });
+
+    it('Share Item with QR Code', () => {
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
+
+      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
+
+      cy.get(`#${SHARE_ITEM_QR_BTN_ID}`).click();
+      cy.get(`#${SHARE_ITEM_QR_DIALOG_ID}`).should('exist');
+    });
   });
 });

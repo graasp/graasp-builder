@@ -23,6 +23,7 @@ const StyledCardActionArea = styled(CardActionArea)({
 });
 
 export type Props = {
+  id?: string;
   description?: string;
   name?: string;
   image?: string;
@@ -31,6 +32,7 @@ export type Props = {
 };
 
 const AppCard = ({
+  id,
   description,
   name,
   image,
@@ -43,7 +45,7 @@ const AppCard = ({
       outline: selected ? '2px solid #5050d2' : '',
     }}
     onClick={onClick}
-    id={buildItemFormAppOptionId(name)}
+    id={buildItemFormAppOptionId(id ?? name)}
   >
     <StyledCardActionArea>
       <Grid2

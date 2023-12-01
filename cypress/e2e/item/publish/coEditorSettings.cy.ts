@@ -6,6 +6,7 @@ import { buildItemPath } from '../../../../src/config/paths';
 import {
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
   ITEM_HEADER_ID,
+  SHARE_ITEM_VISIBILITY_SELECT_ID,
   buildCoEditorSettingsRadioButtonId,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
@@ -13,10 +14,14 @@ import { ITEM_WITH_CATEGORIES_CONTEXT } from '../../../fixtures/categories';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
-import { changeVisibility } from '../share/shareItem.cy';
 
 const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
+};
+
+const changeVisibility = (value: string): void => {
+  cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
+  cy.get(`li[data-value="${value}"]`, { timeout: 1000 }).click();
 };
 
 const visitItemPage = () => {

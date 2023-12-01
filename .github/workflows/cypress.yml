@@ -43,6 +43,7 @@ jobs:
           VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
           VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+          VITE_GRAASP_REDIRECTION_HOST:  ${{ vars.VITE_GRAASP_REDIRECTION_HOST }}
 
       #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
       - name: Cypress run
@@ -65,6 +66,7 @@ jobs:
           VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
           VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+          VITE_GRAASP_REDIRECTION_HOST: ${{ vars.VITE_GRAASP_REDIRECTION_HOST }}
 
       # after the test run completes
       # store any screenshots

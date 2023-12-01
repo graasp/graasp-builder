@@ -1,5 +1,6 @@
 // todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
+import { ShortLinkPlatform } from '@/utils/shortLink';
 
 export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
@@ -111,6 +112,7 @@ export const buildItemFormAppOptionId = (name?: string): string =>
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
 export const buildCancelButtonId = (id: string): string => `cancelButton-${id}`;
+export const CUSTOM_APP_CYPRESS_ID = 'custom-app';
 
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
@@ -154,7 +156,6 @@ export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';
 export const INVITE_ITEM_EMAIL_INPUT_ID = 'inviteItemEmailInput';
 export const INVITE_ITEM_BUTTON_ID = 'inviteItemButton';
 export const SHARE_ITEM_DIALOG_ID = 'shareItemDialog';
-export const SHARE_ITEM_DIALOG_LINK_ID = 'shareItemDialogLink';
 export const SHARE_ITEM_DIALOG_LINK_SELECT_ID = 'shareItemDialogLinkSelect';
 export const SHARE_ITEM_QR_BTN_ID = 'shareItemQRBtn';
 export const SHARE_ITEM_QR_DIALOG_ID = 'shareItemQRDialog';
@@ -306,3 +307,33 @@ export const CUSTOM_APP_URL_ID = 'customAppURLId';
 
 export const DOWNGRADE_OWN_PERMISSION_DIALOG_TITLE_ID = 'downgradeTitleID';
 export const DOWNGRADE_OWN_PERMISSION_DIALOG_DESC_ID = 'downgradeDescID';
+
+export const SHORT_LINK_COMPONENT = 'shortLinkComponent';
+export const SHORT_LINK_SAVE_BUTTON_ID = 'shortLinkSaveButtonID';
+export const SHORT_LINK_RANDOMIZE_BUTTON_ID = 'shortLinkRandomizeButtonID';
+export const SHORT_LINK_ALIAS_INPUT_ID = 'shortLinkAliasInputID';
+export const SHORT_LINK_PLATFORM_SELECT_ID = 'shortLinkPlatformSelectID';
+export const SHORT_LINK_MENU_START_ID = 'shortLinkMenuBtn';
+export const SHORT_LINK_SHORTEN_START_ID = 'shortLinkShortenBtn';
+
+export const buildShortLinkMenuBtnId = (alias: string): string =>
+  `${SHORT_LINK_MENU_START_ID}-${alias}`;
+export const buildShortLinkCancelBtnId = (alias: string): string =>
+  `shortLinkCancelBtn-${alias}`;
+export const buildShortLinkSaveBtnId = (alias: string): string =>
+  `shortLinkSaveBtn-${alias}`;
+export const buildShortLinkDeleteBtnId = (alias: string): string =>
+  `shortLinkDeleteBtn-${alias}`;
+export const buildShortLinkConfirmDeleteBtnId = (alias: string): string =>
+  `shortLinkConfirmDeleteBtn-${alias}`;
+export const buildShortLinkEditBtnId = (alias: string): string =>
+  `shortLinkEditBtn-${alias}`;
+export const buildShortLinkShortenBtnId = (
+  itemId: string,
+  platform: ShortLinkPlatform,
+): string => `${SHORT_LINK_SHORTEN_START_ID}-${platform}-${itemId}`;
+export const buildShortLinkPlatformTextId = (
+  platform: ShortLinkPlatform,
+): string => `shortLinkPlatformText-${platform}`;
+export const buildShortLinkUrlTextId = (platform: ShortLinkPlatform): string =>
+  `shortLinkUrlText-${platform}`;

@@ -14,9 +14,10 @@ import { BUILDER } from '@/langs/constants';
 
 type Props = {
   value: string;
+  disabled?: boolean;
 };
 
-const QRCode = ({ value }: Props): JSX.Element => {
+const QRCode = ({ value, disabled = false }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [openQrModal, setOpenQrModal] = useState<boolean>(false);
 
@@ -26,6 +27,7 @@ const QRCode = ({ value }: Props): JSX.Element => {
         <IconButton
           onClick={() => setOpenQrModal(true)}
           id={SHARE_ITEM_QR_BTN_ID}
+          disabled={disabled}
         >
           <QrCode2 />
         </IconButton>

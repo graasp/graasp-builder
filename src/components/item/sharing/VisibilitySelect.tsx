@@ -192,7 +192,7 @@ const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {
         return (
           <>
             {translateBuilder(
-              BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSSAGE,
+              BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSAGE,
             )}
             <ItemLoginSchemaSelect
               itemLoginSchema={itemLoginSchema}

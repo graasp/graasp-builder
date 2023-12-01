@@ -16,6 +16,7 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
 import {
+  isItemAdminAllowedForMember,
   isItemUpdateAllowedForUser,
   isSettingsEditionAllowedForUser,
 } from '../../../utils/membership';
@@ -24,8 +25,8 @@ import CreateItemMembershipForm from './CreateItemMembershipForm';
 import CsvInputParser from './CsvInputParser';
 import InvitationsTable from './InvitationsTable';
 import ItemMembershipsTable from './ItemMembershipsTable';
-import SharingLink from './SharingLink';
 import VisibilitySelect from './VisibilitySelect';
+import ShortLinksRenderer from './shortLink/ShortLinksRenderer';
 
 type Props = {
   item: DiscriminatedItem;
@@ -48,6 +49,12 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
   const canEditSettings = isSettingsEditionAllowedForUser({
     memberships,
     memberId: currentMember?.id,
+  });
+
+  const canAdminShortLinks = isItemAdminAllowedForMember({
+    memberships,
+    memberId: currentMember?.id,
+    itemPath: item.path,
   });
 
   if (isLoadingCurrentMember && isItemLoginLoading) {
@@ -133,7 +140,10 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
       <Typography variant="h4">
         {translateBuilder(BUILDER.SHARING_TITLE)}
       </Typography>
-      <SharingLink itemId={item.id} />
+      <ShortLinksRenderer
+        itemId={item.id}
+        canAdminShortLink={Boolean(memberships && canAdminShortLinks)}
+      />
       <Typography variant="h6">
         {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
       </Typography>

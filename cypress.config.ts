@@ -13,6 +13,8 @@ export default defineConfig({
       BUILDER_HOST: `http://localhost:${process.env.VITE_PORT}`,
       PLAYER_HOST: process.env.VITE_GRAASP_PLAYER_HOST,
       ANALYZER_HOST: process.env.VITE_GRAASP_ANALYZER_HOST,
+      LIBRARY_HOST: process.env.VITE_GRAASP_LIBRARY_HOST,
+      REDIRECTION_HOST: process.env.VITE_GRAASP_REDIRECTION_HOST,
     },
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

@@ -9,7 +9,7 @@ import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
-import { CUSTOM_APP_URL_ID } from '@/config/selectors';
+import { CUSTOM_APP_CYPRESS_ID, CUSTOM_APP_URL_ID } from '@/config/selectors';
 import { sortByName } from '@/utils/item';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -188,6 +188,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
               searchQuery={searchQuery}
             />
             <AppCard
+              id={CUSTOM_APP_CYPRESS_ID}
               name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
               description={translateBuilder(
                 BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,

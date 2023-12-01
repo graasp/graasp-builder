@@ -8,6 +8,7 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
+import { BUILDER } from '../../../../src/langs/constants';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 
@@ -30,7 +31,7 @@ const flagItem = (itemId: string, type: FlagType) => {
   flagListItem.click();
 
   i18n.changeLanguage(CURRENT_USER.extra.lang as string);
-  const text = i18n.t('Flag', { ns: BUILDER_NAMESPACE });
+  const text = i18n.t(BUILDER.FLAG_ITEM_BUTTON, { ns: BUILDER_NAMESPACE });
   const flagItemButton = cy.get(`button:contains("${text}")`);
 
   flagItemButton.click();

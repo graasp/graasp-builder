@@ -15,6 +15,8 @@ import {
   Member,
   PermissionLevel,
   RecycledItemData,
+  ShortLink,
+  ShortLinkPayload,
 } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
@@ -40,7 +42,7 @@ import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { AVATAR_LINK, ITEM_THUMBNAIL_LINK } from '../fixtures/thumbnails/links';
 import { SIGN_IN_PATH } from './paths';
 import { ItemForTest, MemberForTest } from './types';
-import { ID_FORMAT, parseStringToRegExp } from './utils';
+import { ID_FORMAT, SHORTLINK_FORMAT, parseStringToRegExp } from './utils';
 
 const {
   buildGetItemPublishedInformationRoute,
@@ -92,6 +94,11 @@ const {
   buildItemPublishRoute,
   buildUpdateMemberPasswordRoute,
   buildPostItemValidationRoute,
+  buildGetShortLinkAvailableRoute,
+  buildGetShortLinksItemRoute,
+  buildPostShortLinkRoute,
+  buildPatchShortLinkRoute,
+  buildDeleteShortLinkRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -2015,4 +2022,145 @@ export const mockDeleteFavorite = (shouldThrowError: boolean): void => {
       return reply(body);
     },
   ).as('unfavoriteItem');
+};
+
+// Intercept ShortLinks calls
+export const mockGetShortLinksItem = (
+  itemId: string,
+  shortLinks: ShortLink[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.GET,
+      url: new RegExp(`${API_HOST}/${buildGetShortLinksItemRoute(ID_FORMAT)}`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply(shortLinks.filter(({ item }) => item?.id === itemId));
+    },
+  ).as('getShortLinksItem');
+};
+
+export const mockCheckShortLink = (shouldAliasBeAvailable: boolean): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.GET,
+      url: new RegExp(
+        `${API_HOST}/${buildGetShortLinkAvailableRoute(SHORTLINK_FORMAT)}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldAliasBeAvailable) {
+        return reply({ available: true });
+      }
+
+      return reply({ available: false });
+    },
+  ).as('checkShortLink');
+};
+
+/**
+ * Convert short link payload to short link object to mock server response.
+ * @param payload The payload of the short link when posting new short link for example.
+ * @returns The short link object converted from the payload.
+ */
+function payloadToShortLink(payload: ShortLinkPayload): ShortLink {
+  const { itemId, ...restOfPayload } = payload;
+
+  return {
+    ...restOfPayload,
+    item: { id: itemId },
+    createdAt: new Date().toISOString(),
+  };
+}
+
+export const mockPostShortLink = (
+  shortLinks: ShortLink[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.POST,
+      url: new RegExp(`${API_HOST}/${buildPostShortLinkRoute()}`),
+    },
+    ({ reply, body }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      // Because the payload contains itemId and short link object contains item: { id }
+      // it is necessary to transform the post request to short link to mock server response.
+      const shortLink = payloadToShortLink(body);
+      shortLinks.push(shortLink);
+
+      return reply(shortLink);
+    },
+  ).as('postShortLink');
+};
+
+export const mockPatchShortLink = (
+  shortLinks: ShortLink[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.PATCH,
+      url: new RegExp(
+        `${API_HOST}/${buildPatchShortLinkRoute(SHORTLINK_FORMAT)}`,
+      ),
+    },
+    ({ reply, body, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const urlParams = url.split('/');
+      const patchedAlias = urlParams[urlParams.length - 1];
+
+      const shortLink = shortLinks.find(
+        (shortlink) => shortlink.alias === patchedAlias,
+      );
+
+      // This works only because of JS referenced object. It is for a mocked db only.
+      shortLink.alias = body.alias;
+      shortLink.platform = body.platform;
+
+      return reply(shortLink);
+    },
+  ).as('patchShortLink');
+};
+
+export const mockDeleteShortLink = (
+  shortLinks: ShortLink[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.DELETE,
+      url: new RegExp(
+        `${API_HOST}/${buildDeleteShortLinkRoute(SHORTLINK_FORMAT)}`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      const urlParams = url.split('/');
+      const deletedAlias = urlParams[urlParams.length - 1];
+
+      const idxToRemove = shortLinks.findIndex(
+        (shortLink) => shortLink.alias === deletedAlias,
+      );
+      const removed = shortLinks[idxToRemove];
+      // This works only because of JS referenced object. It is for a mocked db only.
+      shortLinks.splice(idxToRemove, 1);
+
+      return reply(removed);
+    },
+  ).as('deleteShortLink');
 };

@@ -22,6 +22,7 @@ import './commands/navigation';
 import {
   mockAddFavorite,
   mockAppApiAccessToken,
+  mockCheckShortLink,
   mockClearItemChat,
   mockCopyItems,
   mockDefaultDownloadFile,
@@ -33,6 +34,7 @@ import {
   mockDeleteItemMembershipForItem,
   mockDeleteItemTag,
   mockDeleteItems,
+  mockDeleteShortLink,
   mockDownloadItemChat,
   mockEditItem,
   mockEditItemMembershipForItem,
@@ -69,10 +71,12 @@ import {
   mockGetPublishItemInformations,
   mockGetRecycledItems,
   mockGetSharedItems,
+  mockGetShortLinksItem,
   mockImportZip,
   mockMoveItems,
   mockPatchAppData,
   mockPatchInvitation,
+  mockPatchShortLink,
   mockPostAppData,
   mockPostAvatar,
   mockPostInvitations,
@@ -86,6 +90,7 @@ import {
   mockPostItemThumbnail,
   mockPostItemValidation,
   mockPostManyItemMemberships,
+  mockPostShortLink,
   mockPublishItem,
   mockPutItemLoginSchema,
   mockRecycleItems,
@@ -155,10 +160,19 @@ Cypress.Commands.add(
     getFavoriteError = false,
     addFavoriteError = false,
     deleteFavoriteError = false,
+    itemId,
+    shortLinks = [],
+    getShortLinksItemError = false,
+    getShortLinkAvailable = true,
+    postShortLinkError = false,
+    patchShortLinkError = false,
+    deleteShortLinkError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
     const allItems = [...cachedItems];
+
+    const cachedShortLinks = JSON.parse(JSON.stringify(shortLinks));
 
     // hide cookie banner by default
     cy.setCookie(COOKIE_KEYS.ACCEPT_COOKIES_KEY, 'true');
@@ -317,6 +331,16 @@ Cypress.Commands.add(
     mockAddFavorite(cachedItems, addFavoriteError);
 
     mockDeleteFavorite(deleteFavoriteError);
+
+    mockGetShortLinksItem(itemId, cachedShortLinks, getShortLinksItemError);
+
+    mockCheckShortLink(getShortLinkAvailable);
+
+    mockPostShortLink(cachedShortLinks, postShortLinkError);
+
+    mockPatchShortLink(cachedShortLinks, patchShortLinkError);
+
+    mockDeleteShortLink(cachedShortLinks, deleteShortLinkError);
   },
 );
 
