@@ -1,6 +1,7 @@
 import { ItemType, getAppExtra, getDocumentExtra } from '@graasp/sdk';
 
 import {
+  CUSTOM_APP_CYPRESS_ID,
   CUSTOM_APP_URL_ID,
   FOLDER_FORM_DESCRIPTION_ID,
   ITEM_FORM_APP_URL_ID,
@@ -151,7 +152,7 @@ Cypress.Commands.add(
     if (type) {
       cy.get(`#${ITEM_FORM_APP_URL_ID}`).type(getAppExtra(extra)?.url);
     } else if (custom) {
-      cy.get(`#${buildItemFormAppOptionId(name)}`).click();
+      cy.get(`#${buildItemFormAppOptionId(CUSTOM_APP_CYPRESS_ID)}`).click();
       // check name get added automatically
       cy.fillBaseItemModal({ name }, { confirm: false });
       cy.get(`#${CUSTOM_APP_URL_ID}`).type(CUSTOM_APP_URL);

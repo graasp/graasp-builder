@@ -112,6 +112,7 @@ export const buildItemFormAppOptionId = (name?: string): string =>
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
 export const buildCancelButtonId = (id: string): string => `cancelButton-${id}`;
+export const CUSTOM_APP_CYPRESS_ID = 'custom-app';
 
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
