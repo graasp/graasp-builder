@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/graasp/graasp-builder/compare/v2.1.0...v2.2.0) (2023-12-04)
+
+
+### Features
+
+* add short links feature (graasp/graasp[#664](https://github.com/graasp/graasp-builder/issues/664)) ([#861](https://github.com/graasp/graasp-builder/issues/861)) ([946d8d8](https://github.com/graasp/graasp-builder/commit/946d8d8fffcb591ca8f7831031e931eb16631c83))
+* prevent move on shared page ([#855](https://github.com/graasp/graasp-builder/issues/855)) ([39b7314](https://github.com/graasp/graasp-builder/commit/39b731441f3fb73f3150cf5709dde182ba464fbc))
+
+
+### Bug Fixes
+
+* autofocus search field in appform and fix box shrinking ([#882](https://github.com/graasp/graasp-builder/issues/882)) ([bfbf2d6](https://github.com/graasp/graasp-builder/commit/bfbf2d67cbd144676a2b286ceb3cf9ad332c7049))
+* **fr:** update translations ([#883](https://github.com/graasp/graasp-builder/issues/883)) ([14ecbee](https://github.com/graasp/graasp-builder/commit/14ecbeea306106f04b98b0e52e6e97f2df9b1c6f))
+* upgrade deps ([#885](https://github.com/graasp/graasp-builder/issues/885)) ([bd19680](https://github.com/graasp/graasp-builder/commit/bd1968068ab1af46f67bd25bc693210688c0cfc5))
+
 ## [2.1.0](https://github.com/graasp/graasp-builder/compare/v2.0.1...v2.1.0) (2023-11-16)
 
 
