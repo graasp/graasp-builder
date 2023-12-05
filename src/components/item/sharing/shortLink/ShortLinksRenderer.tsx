@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Box, Dialog, Stack } from '@mui/material';
 
@@ -52,10 +52,12 @@ const ShortLinksRenderer = ({
     Context.Player,
   );
   // Lists the available short links platforms for the current item.
-  const [itemPlatforms, setItemPlatforms] = useState<ShortLinkPlatformType[]>([
-    ShortLinkPlatformConst.builder,
-    ShortLinkPlatformConst.player,
-  ]);
+  const defaultPlatforms = useMemo(
+    () => [ShortLinkPlatformConst.builder, ShortLinkPlatformConst.player],
+    [],
+  );
+  const [itemPlatforms, setItemPlatforms] =
+    useState<ShortLinkPlatformType[]>(defaultPlatforms);
 
   const addNewAlias = useCallback(
     (
@@ -80,7 +82,7 @@ const ShortLinksRenderer = ({
     [setShortLinks],
   );
 
-  // Append the library to the short link's platform if item is published
+  // Add the library to the short link's platform if item is published
   useEffect(() => {
     if (publishedEntry) {
       setItemPlatforms((currState) => [
@@ -88,7 +90,12 @@ const ShortLinksRenderer = ({
         ShortLinkPlatformConst.library,
       ]);
     }
-  }, [publishedEntry]);
+
+    // Reset the item platforms if rerendered to avoid multiple short links library
+    return () => {
+      setItemPlatforms(defaultPlatforms);
+    };
+  }, [defaultPlatforms, publishedEntry]);
 
   useEffect(() => {
     setShortLinks([]);
