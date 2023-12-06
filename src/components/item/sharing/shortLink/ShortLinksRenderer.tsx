@@ -9,14 +9,9 @@ import {
   appendPathToUrl,
 } from '@graasp/sdk';
 
-import { SHORT_LINK_ID_MAX_LENGTH } from '@/config/constants';
 import { GRAASP_REDIRECTION_HOST } from '@/config/env';
 import { hooks } from '@/config/queryClient';
-import {
-  ShortLinkPlatform,
-  randomAlias,
-  randomString,
-} from '@/utils/shortLink';
+import { ShortLinkPlatform, randomAlias } from '@/utils/shortLink';
 
 import ShortLink from './ShortLink';
 import ShortLinkDialogContent from './ShortLinkDialogContent';
@@ -31,7 +26,6 @@ type Props = {
 
 type ShortLinkType = {
   alias: string;
-  linkId: string;
   platform: ShortLinkPlatform;
   url: URL;
   isShorten: boolean;
@@ -50,7 +44,7 @@ const ShortLinksRenderer = ({
     Context.Player,
   );
 
-  // List of available platforms, the order is matter
+  // List of available platforms, the order matters
   const platforms = [
     ShortLinkPlatformConst.builder,
     ShortLinkPlatformConst.player,
@@ -66,7 +60,6 @@ const ShortLinksRenderer = ({
       const url = clientHostManager.getItemAsURL(platform, itemId);
 
       const shortLink = {
-        linkId: randomString(SHORT_LINK_ID_MAX_LENGTH),
         alias: randomAlias(),
         platform,
         url,
@@ -132,7 +125,7 @@ const ShortLinksRenderer = ({
           <Box width={{ xs: '100%', sm: '80%' }}>
             {shortLinks.map((shortLink) => (
               <ShortLink
-                key={shortLink.linkId}
+                key={shortLink.platform}
                 url={`${shortLink.url}`}
                 shortLink={{
                   alias: shortLink.alias,
