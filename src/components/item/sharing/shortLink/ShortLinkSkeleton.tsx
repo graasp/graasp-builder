@@ -32,15 +32,16 @@ const ShortLinkSkeleton = (): JSX.Element => {
         alignItems="center"
         justifyContent="space-between"
         spacing={2}
+        flex={1}
       >
-        <StyledBox minWidth="120px" direction="row" spacing={1} color="white">
-          <Skeleton variant="circular" width={25} height={25} />
-          <Skeleton variant="text" width={50} />
+        <StyledBox direction="row" spacing={1} color="white">
+          <Skeleton variant="circular" width={50} height={25} />
+          <Skeleton variant="text" width="100%" />
         </StyledBox>
-        <Skeleton variant="text" width={250} />
+        <Skeleton variant="text" width="100%" />
       </Stack>
 
-      <Stack direction="row" spacing={2.5} mr={1}>
+      <Stack direction="row" spacing={2} mr={1} ml={1}>
         <Skeleton variant="rounded" width={23} />
         <Skeleton variant="rounded" width={23} />
         <Skeleton variant="rounded" width={23} />
