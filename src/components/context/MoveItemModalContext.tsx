@@ -4,10 +4,9 @@ import { validate } from 'uuid';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
-import { TreePreventSelection } from '../../enums';
 import { BUILDER } from '../../langs/constants';
+import TreeModal from '../main/MoveTreeModal';
 import type { TreeModalProps } from '../main/TreeModal';
-import TreeModal from '../main/TreeModal';
 
 type Value = {
   openModal?: (ids: string[]) => void;
@@ -53,7 +52,6 @@ const MoveItemModalProvider = ({
 
     return (
       <TreeModal
-        prevent={TreePreventSelection.SELF_AND_CHILDREN}
         onClose={onClose}
         open={open}
         itemIds={itemIds}
