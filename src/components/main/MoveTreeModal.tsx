@@ -10,7 +10,10 @@ import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
-import { TREE_MODAL_CONFIRM_BUTTON_ID } from '../../config/selectors';
+import {
+  TREE_MODAL_CONFIRM_BUTTON_ID,
+  TREE_MODAL_MY_ITEMS_ID,
+} from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import CancelButton from '../common/CancelButton';
 import MoveMenuRow from './RowMenu';
@@ -31,6 +34,7 @@ interface OwnedItemsProps {
   selectedId: string;
   defaultSelectedSubItem: DiscriminatedItem | null;
 }
+
 const OwnedItemsTree = ({
   setPaths,
   setSelectedId,
@@ -38,10 +42,13 @@ const OwnedItemsTree = ({
   defaultSelectedSubItem,
 }: OwnedItemsProps) => {
   const { data: ownItems } = hooks.useOwnItems();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const [selectedSubItem, setSubSelectedItem] = useState(
     defaultSelectedSubItem,
   );
+
+  const [isHome, setIsHome] = useState(true);
   const { data } = hooks.useChildren(selectedSubItem?.id || '');
 
   const selectSubItems = (ele: DiscriminatedItem) => {
@@ -51,7 +58,11 @@ const OwnedItemsTree = ({
 
   useEffect(() => {
     if (defaultSelectedSubItem) {
-      setSubSelectedItem(defaultSelectedSubItem);
+      if (defaultSelectedSubItem.name === 'Home') {
+        setSubSelectedItem(null);
+      } else {
+        setSubSelectedItem(defaultSelectedSubItem);
+      }
       setPaths((prevPaths) => {
         const trimmedIndex = prevPaths.indexOf(defaultSelectedSubItem);
 
@@ -60,17 +71,38 @@ const OwnedItemsTree = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultSelectedSubItem?.id]);
+
+  const rootMenuItem = {
+    name: translateBuilder(BUILDER.HOME_TITLE),
+    id: TREE_MODAL_MY_ITEMS_ID,
+    extra: { folder: { childrenOrder: [''] } },
+  } as DiscriminatedItem;
   return (
-    <div>
-      {(selectedSubItem ? data : ownItems)?.map((ele) => (
+    <div id={`${TREE_MODAL_MY_ITEMS_ID}`}>
+      {/* Home or Root */}
+      {isHome && (
         <MoveMenuRow
-          key={ele.id}
-          ele={ele}
-          fetchSubItems={() => selectSubItems(ele)}
+          key={rootMenuItem.name}
+          ele={rootMenuItem}
+          fetchSubItems={() => {
+            setIsHome(false);
+            setPaths((paths: DiscriminatedItem[]) => [...paths, rootMenuItem]);
+          }}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
         />
-      ))}
+      )}
+      {/* end of home */}
+      {!isHome &&
+        (selectedSubItem ? data : ownItems)?.map((ele) => (
+          <MoveMenuRow
+            key={ele.id}
+            ele={ele}
+            fetchSubItems={() => selectSubItems(ele)}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+          />
+        ))}
     </div>
   );
 };

@@ -2,6 +2,8 @@ import { createContext, useMemo, useState } from 'react';
 
 import { validate } from 'uuid';
 
+import { TREE_MODAL_MY_ITEMS_ID } from '@/config/selectors';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
 import { BUILDER } from '../../langs/constants';
@@ -39,7 +41,12 @@ const MoveItemModalProvider = ({
     // change item's root id to null
     const newPayload = {
       ...payload,
-      to: payload.to && validate(payload.to) ? payload.to : undefined,
+      to:
+        payload.to &&
+        payload.to !== TREE_MODAL_MY_ITEMS_ID &&
+        validate(payload.to)
+          ? payload.to
+          : undefined,
     };
     moveItems(newPayload);
     onClose();
