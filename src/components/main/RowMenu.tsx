@@ -18,12 +18,37 @@ interface MenuRowProps {
   fetchSubItems: () => void;
   selectedId: string;
   setSelectedId: Dispatch<SetStateAction<string>>;
+  itemIds: string[];
 }
+
+const isTreeItemDisabled = ({
+  itemPath,
+  itemIds,
+}: {
+  itemPath: string;
+  itemIds: string[];
+}) => {
+  if (itemPath && itemIds.length) {
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < itemIds.length; i++) {
+      const pathsSerious = itemPath
+        ?.split('.')
+        .map((ele) => ele.replaceAll('_', '-'));
+
+      const isItemChild = pathsSerious.indexOf(itemIds[i]);
+      if (isItemChild > -1) {
+        return isItemChild > -1;
+      }
+    }
+  }
+  return false;
+};
 const MoveMenuRow = ({
   ele,
   fetchSubItems,
   setSelectedId,
   selectedId,
+  itemIds,
 }: MenuRowProps): JSX.Element => {
   const [isHoverActive, setIsHoverActive] = useState(false);
 
@@ -52,6 +77,10 @@ const MoveMenuRow = ({
         marginBottom: '12px',
         background: selectedId === ele.id ? 'rgba(80, 80, 210, 0.08)' : 'none',
       }}
+      disabled={isTreeItemDisabled({
+        itemPath: ele.path,
+        itemIds,
+      })}
     >
       <Box display="flex" gap="4px">
         <FolderIcon />

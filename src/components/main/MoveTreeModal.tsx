@@ -33,6 +33,7 @@ interface OwnedItemsProps {
   setSelectedId: Dispatch<SetStateAction<string>>;
   selectedId: string;
   defaultSelectedSubItem: DiscriminatedItem | null;
+  itemIds: string[];
 }
 
 const OwnedItemsTree = ({
@@ -40,6 +41,7 @@ const OwnedItemsTree = ({
   setSelectedId,
   selectedId,
   defaultSelectedSubItem,
+  itemIds,
 }: OwnedItemsProps) => {
   const { data: ownItems } = hooks.useOwnItems();
   const { t: translateBuilder } = useBuilderTranslation();
@@ -90,6 +92,7 @@ const OwnedItemsTree = ({
           }}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
+          itemIds={[]}
         />
       )}
       {/* end of home */}
@@ -101,6 +104,7 @@ const OwnedItemsTree = ({
             fetchSubItems={() => selectSubItems(ele)}
             selectedId={selectedId}
             setSelectedId={setSelectedId}
+            itemIds={itemIds}
           />
         ))}
     </div>
@@ -166,6 +170,7 @@ const TreeModal = ({
           setSelectedId={setSelectedId}
           selectedId={selectedId}
           defaultSelectedSubItem={defaultSelectedSubItem}
+          itemIds={itemIds}
         />
       </DialogContent>
       <DialogActions>
