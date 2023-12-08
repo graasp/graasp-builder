@@ -46,7 +46,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add(
-  'fillTreeModal',
+  'handleTreeMenu',
   (toItemPath, treeRootId = TREE_MODAL_MY_ITEMS_ID) => {
     const ids = getParentsIdsFromPath(toItemPath);
 
@@ -77,6 +77,44 @@ Cypress.Commands.add(
     });
 
     cy.get(`#${TREE_MODAL_CONFIRM_BUTTON_ID}`).click();
+  },
+);
+
+Cypress.Commands.add(
+  'fillTreeModal',
+  (toItemPath, treeRootId = TREE_MODAL_MY_ITEMS_ID) => {
+    const ids = getParentsIdsFromPath(toItemPath);
+
+    cy.wait(TREE_VIEW_PAUSE);
+
+    [treeRootId, ...ids].forEach((value, idx, array) => {
+      cy.get(`#${treeRootId}`).then(($tree) => {
+        // click on the element
+        if (idx === array.length - 1) {
+          cy.wrap($tree)
+            .get(
+              `#${buildTreeItemId(value, treeRootId)} .MuiTreeItem-label input`,
+            )
+            .first()
+            .click();
+        }
+        // if can't find children click on parent (current value)
+        if (
+          idx !== array.length - 1 &&
+          !$tree.find(
+            `#${buildTreeItemId(
+              array[idx + 1],
+              treeRootId,
+            )} .MuiTreeItem-label`,
+          ).length
+        ) {
+          cy.wrap($tree)
+            .get(`#${buildTreeItemId(value, treeRootId)} .MuiTreeItem-label`)
+            .first()
+            .click();
+        }
+      });
+    });
   },
 );
 

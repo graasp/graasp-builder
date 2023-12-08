@@ -23,7 +23,7 @@ const moveItems = ({
 
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath);
 };
 
 describe('Move Items in List', () => {
