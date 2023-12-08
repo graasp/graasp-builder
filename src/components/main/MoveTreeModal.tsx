@@ -34,6 +34,7 @@ interface OwnedItemsProps {
   selectedId: string;
   defaultSelectedSubItem: DiscriminatedItem | null;
   itemIds: string[];
+  defaultParent?: DiscriminatedItem;
 }
 
 const OwnedItemsTree = ({
@@ -42,6 +43,7 @@ const OwnedItemsTree = ({
   selectedId,
   defaultSelectedSubItem,
   itemIds,
+  defaultParent,
 }: OwnedItemsProps) => {
   const { data: ownItems } = hooks.useOwnItems();
   const { t: translateBuilder } = useBuilderTranslation();
@@ -81,7 +83,7 @@ const OwnedItemsTree = ({
   } as DiscriminatedItem;
   return (
     <div id={`${TREE_MODAL_MY_ITEMS_ID}`}>
-      {/* Home or Root */}
+      {/* Home or Root  Which will be the start of the menu */}
       {isHome && (
         <MoveMenuRow
           key={rootMenuItem.name}
@@ -96,6 +98,8 @@ const OwnedItemsTree = ({
         />
       )}
       {/* end of home */}
+
+      {/* Items for selected Item, So if I choose folder1 this should be it children */}
       {!isHome &&
         (selectedSubItem ? data : ownItems)?.map((ele) => (
           <MoveMenuRow
@@ -107,6 +111,22 @@ const OwnedItemsTree = ({
             itemIds={itemIds}
           />
         ))}
+
+      {/* Default Parent So If I want to move an item who's in nested folder we will have it's parent as default */}
+
+      {defaultParent && !selectedSubItem && (
+        <MoveMenuRow
+          key={defaultParent.id}
+          ele={defaultParent}
+          fetchSubItems={() => {
+            selectSubItems(defaultParent);
+            setIsHome(false);
+          }}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+          itemIds={itemIds}
+        />
+      )}
     </div>
   );
 };
@@ -119,12 +139,18 @@ const TreeModal = ({
   itemIds = [],
 }: TreeModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const [defaultSelectedSubItem, setDefaultSelectedSubItem] =
-    useState<DiscriminatedItem | null>(null);
 
   const [selectedId, setSelectedId] = useState<string>('');
-
+  // serious of breadcrumbs
   const [paths, setPaths] = useState<DiscriminatedItem[]>([]);
+
+  const { data: parents } = hooks.useParents({
+    id: itemIds[0],
+  });
+  const [defaultSelectedSubItem, setDefaultSelectedSubItem] =
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    useState<DiscriminatedItem | null>(null);
+
   const handleClose = () => {
     onClose({ id: null, open: false });
   };
@@ -171,6 +197,7 @@ const TreeModal = ({
           selectedId={selectedId}
           defaultSelectedSubItem={defaultSelectedSubItem}
           itemIds={itemIds}
+          defaultParent={parents?.[parents.length - 1]}
         />
       </DialogContent>
       <DialogActions>
