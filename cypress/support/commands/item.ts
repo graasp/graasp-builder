@@ -115,9 +115,10 @@ Cypress.Commands.add(
         }
       });
     });
+
+    cy.get(`#${TREE_MODAL_CONFIRM_BUTTON_ID}`).click();
   },
 );
-
 Cypress.Commands.add(
   'fillBaseItemModal',
   ({ name = '' }, { confirm = true } = {}) => {
