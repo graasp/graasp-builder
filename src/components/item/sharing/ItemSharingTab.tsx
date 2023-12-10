@@ -19,10 +19,11 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
-import CsvInputParser from './CsvInputParser';
 import InvitationsTable from './InvitationsTable';
 import ItemMembershipsTable from './ItemMembershipsTable';
 import VisibilitySelect from './VisibilitySelect';
+// import CsvInputParser from './csvImport/CSVParser';
+import ImportUsersWithCSVButton from './csvImport/ImportUsersWithCSVButton';
 import ShortLinksRenderer from './shortLink/ShortLinksRenderer';
 
 interface PermissionMap {
@@ -89,7 +90,8 @@ const ItemSharingTab = (): JSX.Element => {
           <Typography variant="h6" m={0} p={0}>
             {translateBuilder(BUILDER.SHARING_AUTHORIZED_MEMBERS_TITLE)}
           </Typography>
-          {canAdmin && <CsvInputParser item={item} />}
+          {/* {canAdmin && <CsvInputParser item={item} />} */}
+          {canAdmin && <ImportUsersWithCSVButton item={item} />}
         </Grid>
         {canAdmin && (
           <CreateItemMembershipForm item={item} memberships={memberships} />

@@ -147,5 +147,7 @@ export const TUTORIALS_LINK =
 export const SHORT_LINK_ID_MAX_LENGTH = 10;
 export const SHORT_LINK_API_CALL_DEBOUNCE_MS = 500;
 
+export const GROUP_COLUMN_NAME = 'group_name';
+
 // todo: to remove once we dynamically compute how many items we display
 export const ITEM_PAGE_SIZE = 12;

@@ -1549,12 +1549,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.27.0":
-  version: 1.27.0
-  resolution: "@graasp/translations@npm:1.27.0"
+"@graasp/translations@npm:1.28.0":
+  version: 1.28.0
+  resolution: "@graasp/translations@npm:1.28.0"
   peerDependencies:
     i18next: ^23.8.1
-  checksum: 10/e4a6212e713ac0e06d5cd88497d2342984daf33bb2a8a89c88f4a7f21b7fa09bb89384faa2518883614fae38c202ee1c22e49c60c0ea41e56e17c57c1782c72e
+  checksum: 10/b085ca521f4b65d69ee4154b6d3f96682259acab212605cd221dbe7d3d7867eeeeffac60f1294115849221570cad8a418c576edb8cc405ee6cb031d18e20414b
   languageName: node
   linkType: hard
 
@@ -7372,7 +7372,7 @@ __metadata:
     "@graasp/map": "npm:1.11.1"
     "@graasp/query-client": "npm:3.6.0"
     "@graasp/sdk": "npm:4.9.0"
-    "@graasp/translations": "npm:1.27.0"
+    "@graasp/translations": "npm:1.28.0"
     "@graasp/ui": "npm:4.17.0"
     "@mui/icons-material": "npm:5.15.15"
     "@mui/lab": "npm:5.0.0-alpha.170"

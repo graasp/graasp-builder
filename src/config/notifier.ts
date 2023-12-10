@@ -25,9 +25,9 @@ type Payload = ErrorPayload & SuccessPayload;
 
 const i18n = buildI18n();
 
-const getErrorMessageFromPayload = (
+export const getErrorMessageFromPayload = (
   payload?: Parameters<Notifier>[0]['payload'],
-) => {
+): string => {
   if (payload?.error && axios.isAxiosError(payload.error)) {
     return (
       payload.error.response?.data.message ?? FAILURE_MESSAGES.UNEXPECTED_ERROR
