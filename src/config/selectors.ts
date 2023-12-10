@@ -283,6 +283,8 @@ export const USER_CONFIRM_PASSWORD_INPUT_ID = 'confirmPasswordInput';
 export const SHARE_ITEM_CSV_PARSER_BUTTON_ID = 'shareItemCsvParserButton';
 export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID =
   'shareItemCsvParserInputButton';
+export const SELECT_TEMPLATE_FOLDER =
+  'selectTemplateFolder';
 export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR = `${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID} input`;
 export const SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID = 'shareITemFromCsvAlertError';
 export const SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID =
