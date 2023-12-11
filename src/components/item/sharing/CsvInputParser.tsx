@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useContext, useEffect } from 'react';
+import { ChangeEvent, useState, useContext } from 'react';
 
 import PublishIcon from '@mui/icons-material/Publish';
 import Alert from '@mui/material/Alert';
@@ -80,7 +80,7 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
         const formData = new FormData();
         formData.append("file", file);
         // TO-DO: this request needs to be moved to query-client
-        axios.post(`${API_HOST}/items/invitations/${itemId}/upload_csv?id=${itemId}&template_id=${idTemplate}`, formData, {
+        axios.post(`${API_HOST}/items/${itemId}/invitations/upload_csv?id=${itemId}&template_id=${idTemplate}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
