@@ -18,7 +18,7 @@ jobs:
 
       # put created tag in an env variable to be sent to the dispatch
       - name: Set tag
-        if: ${{ steps.release.outputs.releases_created == "true" }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
         id: set-tag
         run: |
           REPOSITORY=$(echo '${{ github.repository }}')
@@ -28,7 +28,7 @@ jobs:
 
       # Trigger an 'on: repository_dispatch' workflow to run in graasp-deploy repository
       - name: Push tag to Graasp Deploy (Staging)
-        if: ${{ steps.release.outputs.releases_created == "true" }}
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
