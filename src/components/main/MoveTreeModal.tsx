@@ -46,6 +46,7 @@ const OwnedItemsTree = ({
   defaultParent,
 }: OwnedItemsProps) => {
   const { data: ownItems } = hooks.useOwnItems();
+  const { data: sharedItems } = hooks.useSharedItems();
   const { t: translateBuilder } = useBuilderTranslation();
 
   const [selectedSubItem, setSubSelectedItem] = useState(
@@ -101,7 +102,10 @@ const OwnedItemsTree = ({
 
       {/* Items for selected Item, So if I choose folder1 this should be it children */}
       {!isHome &&
-        (selectedSubItem ? data : ownItems)?.map((ele) => (
+        (selectedSubItem
+          ? data
+          : [...(ownItems || []), ...(sharedItems || [])]
+        )?.map((ele) => (
           <MoveMenuRow
             key={ele.id}
             ele={ele}
