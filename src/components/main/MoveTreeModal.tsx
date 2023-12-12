@@ -145,7 +145,7 @@ const TreeModal = ({
   const [paths, setPaths] = useState<DiscriminatedItem[]>([]);
 
   const { data: parents } = hooks.useParents({
-    id: itemIds[0],
+    id: itemIds?.[0],
   });
   const [defaultSelectedSubItem, setDefaultSelectedSubItem] =
     // eslint-disable-next-line no-unsafe-optional-chaining
@@ -206,6 +206,7 @@ const TreeModal = ({
           onClick={onClickConfirm}
           disabled={!selectedId}
           id={TREE_MODAL_CONFIRM_BUTTON_ID}
+          variant="contained"
         >
           {translateBuilder(BUILDER.TREE_MODAL_CONFIRM_BUTTON)}
         </Button>

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 
 import { IconButtonProps } from '@mui/material/IconButton';
 
@@ -8,13 +8,18 @@ import {
   MoveButton as GraaspMoveButton,
 } from '@graasp/ui';
 
+import { validate } from 'uuid';
+
+import { mutations } from '@/config/queryClient';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
   ITEM_MOVE_BUTTON_CLASS,
+  TREE_MODAL_MY_ITEMS_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { MoveItemModalContext } from '../context/MoveItemModalContext';
+import TreeModal, { TreeModalProps } from '../main/MoveTreeModal';
 
 type MoveButtonProps = {
   itemIds: string[];
@@ -25,36 +30,79 @@ type MoveButtonProps = {
 };
 
 const MoveButton = ({
-  itemIds,
+  itemIds: defaultItemsIds,
   color = 'default',
   id,
   type = ActionButton.ICON_BUTTON,
   onClick,
-}: MoveButtonProps): JSX.Element | null => {
+}: MoveButtonProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { mutate: moveItems } = mutations.useMoveItems();
 
-  const { openModal: openMoveModal } = useContext(MoveItemModalContext);
+  const [open, setOpen] = useState(false);
+  const [itemIds, setItemIds] = useState<string[] | null>(
+    defaultItemsIds || null,
+  );
 
-  // TODO: return error?
-  if (!openMoveModal) {
-    return null;
-  }
+  const openMoveModal = (newItemIds: string[]) => {
+    setOpen(true);
+    setItemIds(newItemIds);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+    setItemIds(null);
+  };
+
+  const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
+    // change item's root id to null
+    const newPayload = {
+      ...payload,
+      to:
+        payload.to &&
+        payload.to !== TREE_MODAL_MY_ITEMS_ID &&
+        validate(payload.to)
+          ? payload.to
+          : undefined,
+    };
+    moveItems(newPayload);
+    onClose();
+  };
+  useEffect(() => {
+    setItemIds(defaultItemsIds);
+  }, [defaultItemsIds]);
 
   const handleMove = () => {
-    openMoveModal(itemIds);
-    onClick?.();
+    if (itemIds) {
+      openMoveModal(itemIds);
+      onClick?.();
+    }
   };
 
   return (
-    <GraaspMoveButton
-      color={color}
-      type={type}
-      id={id}
-      onClick={handleMove}
-      text={translateBuilder(BUILDER.MOVE_BUTTON)}
-      menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
-      iconClassName={ITEM_MOVE_BUTTON_CLASS}
-    />
+    <>
+      {!false && (
+        <GraaspMoveButton
+          color={color}
+          type={type}
+          id={id}
+          onClick={handleMove}
+          text={translateBuilder(BUILDER.MOVE_BUTTON)}
+          menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
+          iconClassName={ITEM_MOVE_BUTTON_CLASS}
+        />
+      )}
+
+      {itemIds && (
+        <TreeModal
+          onClose={onClose}
+          open={open}
+          itemIds={itemIds}
+          onConfirm={onConfirm}
+          title={translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE)}
+        />
+      )}
+    </>
   );
 };
 
