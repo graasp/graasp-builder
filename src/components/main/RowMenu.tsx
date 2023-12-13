@@ -4,7 +4,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Box, Button, IconButton } from '@mui/material';
 
-import { DiscriminatedItem, FolderItemExtra } from '@graasp/sdk';
+import { DiscriminatedItem, FolderItemExtra, ItemType } from '@graasp/sdk';
 
 import {
   TREE_MODAL_MY_ITEMS_ID,
@@ -51,7 +51,7 @@ const MoveMenuRow = ({
   itemIds,
   title,
   selfAndChildrenDisable = false,
-}: MenuRowProps): JSX.Element => {
+}: MenuRowProps): JSX.Element | null => {
   const [isHoverActive, setIsHoverActive] = useState(false);
 
   const handleHover = () => {
@@ -61,6 +61,9 @@ const MoveMenuRow = ({
     setIsHoverActive(false);
   };
 
+  if (ele.type !== ItemType.FOLDER) {
+    return null;
+  }
   return (
     <Button
       onMouseEnter={handleHover}
@@ -93,7 +96,7 @@ const MoveMenuRow = ({
         <Box display="flex">
           <Button sx={{ padding: '0' }}>{title}</Button>
           {Boolean(
-            (ele.extra as FolderItemExtra).folder.childrenOrder.length,
+            (ele.extra as FolderItemExtra).folder?.childrenOrder?.length,
           ) && (
             <IconButton
               sx={{ padding: '0' }}

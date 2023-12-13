@@ -26,10 +26,10 @@ import HideButton from '../common/HideButton';
 import MoveButton from '../common/MoveButton';
 import PinButton from '../common/PinButton';
 import RecycleButton from '../common/RecycleButton';
-import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
+import CreateShortcutModal from './CreateShortcutModal';
 
 type Props = {
   item: DiscriminatedItem;
@@ -45,9 +45,9 @@ const ItemMenu = ({
   const { data: member } = useCurrentUserContext();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { t: translateBuilder } = useBuilderTranslation();
-  const { openModal: openCreateShortcutModal } = useContext(
-    CreateShortcutModalContext,
-  );
+
+  const [openShortcutModal, setOpenShortcutModal] = useState(false);
+
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
 
   const handleClick: IconButtonProps['onClick'] = (event) => {
@@ -59,7 +59,7 @@ const ItemMenu = ({
   };
 
   const handleCreateShortcut = () => {
-    openCreateShortcutModal(item);
+    setOpenShortcutModal(true);
     handleClose();
   };
 
@@ -68,6 +68,9 @@ const ItemMenu = ({
     handleClose();
   };
 
+  const onClose = () => {
+    setOpenShortcutModal(false);
+  };
   const renderEditorActions = () => {
     if (!canEdit) {
       return null;
@@ -154,6 +157,13 @@ const ItemMenu = ({
           {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
         </MenuItem>
       </Menu>
+
+      {/* shortcut tree view */}
+      <CreateShortcutModal
+        open={openShortcutModal}
+        item={item}
+        onClose={onClose}
+      />
     </>
   );
 };
