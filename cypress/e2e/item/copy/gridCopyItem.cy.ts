@@ -13,7 +13,7 @@ const copyItem = ({ id, toItemPath }: { id: string; toItemPath: string }) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath);
 };
 
 describe('Copy Item in Grid', () => {

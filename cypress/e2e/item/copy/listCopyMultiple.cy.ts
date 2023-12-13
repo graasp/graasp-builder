@@ -20,7 +20,7 @@ const copyItems = ({
   });
 
   cy.get(`#${ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath);
 };
 
 describe('Copy items in List', () => {

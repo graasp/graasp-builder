@@ -27,7 +27,7 @@ const copyItem = ({
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
-  cy.fillTreeModal(toItemPath, rootId);
+  cy.handleTreeMenu(toItemPath, rootId);
 };
 
 describe('Copy Item in List', () => {
