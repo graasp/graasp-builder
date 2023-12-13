@@ -43,7 +43,7 @@ const isTreeItemDisabled = ({
   }
   return false;
 };
-const MoveMenuRow = ({
+const TreeMenuRow = ({
   ele,
   fetchSubItems,
   setSelectedId,
@@ -116,4 +116,4 @@ const MoveMenuRow = ({
   );
 };
 
-export default MoveMenuRow;
+export default TreeMenuRow;

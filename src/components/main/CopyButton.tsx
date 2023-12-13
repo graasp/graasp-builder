@@ -17,7 +17,7 @@ import {
   ITEM_MENU_COPY_BUTTON_CLASS,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import TreeModal, { TreeModalProps } from './MoveTreeModal';
+import TreeModal, { TreeModalProps } from './TreeModal';
 
 export type Props = {
   color?: IconButtonProps['color'];

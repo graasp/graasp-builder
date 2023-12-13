@@ -19,7 +19,7 @@ import {
   TREE_MODAL_MY_ITEMS_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import TreeModal, { TreeModalProps } from '../main/MoveTreeModal';
+import TreeModal, { TreeModalProps } from '../main/TreeModal';
 
 type MoveButtonProps = {
   itemIds: string[];
