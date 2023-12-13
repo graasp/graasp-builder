@@ -25,7 +25,7 @@ const moveItem = ({
     `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
   ).click();
 
-  cy.handleTreeMenu(toItemPath, rootId);
+  cy.fillTreeModal(toItemPath, rootId);
 };
 
 describe('Move Item in List', () => {
