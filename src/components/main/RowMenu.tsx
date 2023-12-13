@@ -6,12 +6,10 @@ import { Box, Button, IconButton } from '@mui/material';
 
 import { DiscriminatedItem, FolderItemExtra } from '@graasp/sdk';
 
-import { useBuilderTranslation } from '@/config/i18n';
 import {
   TREE_MODAL_MY_ITEMS_ID,
   buildItemRowArrowId,
 } from '@/config/selectors';
-import { BUILDER } from '@/langs/constants';
 
 interface MenuRowProps {
   ele: DiscriminatedItem;
@@ -19,6 +17,8 @@ interface MenuRowProps {
   selectedId: string;
   setSelectedId: Dispatch<SetStateAction<string>>;
   itemIds: string[];
+  title: string;
+  selfAndChildrenDisable?: boolean;
 }
 
 const isTreeItemDisabled = ({
@@ -49,10 +49,10 @@ const MoveMenuRow = ({
   setSelectedId,
   selectedId,
   itemIds,
+  title,
+  selfAndChildrenDisable = false,
 }: MenuRowProps): JSX.Element => {
   const [isHoverActive, setIsHoverActive] = useState(false);
-
-  const { t: translateBuilder } = useBuilderTranslation();
 
   const handleHover = () => {
     setIsHoverActive(true);
@@ -77,10 +77,13 @@ const MoveMenuRow = ({
         marginBottom: '12px',
         background: selectedId === ele.id ? 'rgba(80, 80, 210, 0.08)' : 'none',
       }}
-      disabled={isTreeItemDisabled({
-        itemPath: ele.path,
-        itemIds,
-      })}
+      disabled={
+        selfAndChildrenDisable &&
+        isTreeItemDisabled({
+          itemPath: ele.path,
+          itemIds,
+        })
+      }
     >
       <Box display="flex" gap="4px">
         <FolderIcon />
@@ -88,9 +91,7 @@ const MoveMenuRow = ({
       </Box>
       {(isHoverActive || selectedId === ele.id) && (
         <Box display="flex">
-          <Button sx={{ padding: '0' }}>
-            {translateBuilder(BUILDER.MOVE_BUTTON)}
-          </Button>
+          <Button sx={{ padding: '0' }}>{title}</Button>
           {Boolean(
             (ele.extra as FolderItemExtra).folder.childrenOrder.length,
           ) && (

@@ -26,6 +26,8 @@ export type TreeModalProps = {
   title: string;
   itemIds?: string[];
   open?: boolean;
+  actionTitle: string;
+  selfAndChildrenDisable?: boolean;
 };
 
 interface OwnedItemsProps {
@@ -35,6 +37,8 @@ interface OwnedItemsProps {
   defaultSelectedSubItem: DiscriminatedItem | null;
   itemIds: string[];
   defaultParent?: DiscriminatedItem;
+  title: string;
+  selfAndChildrenDisable?: boolean;
 }
 
 const OwnedItemsTree = ({
@@ -44,6 +48,8 @@ const OwnedItemsTree = ({
   defaultSelectedSubItem,
   itemIds,
   defaultParent,
+  title,
+  selfAndChildrenDisable,
 }: OwnedItemsProps) => {
   const { data: ownItems } = hooks.useOwnItems();
   const { data: sharedItems } = hooks.useSharedItems();
@@ -96,6 +102,8 @@ const OwnedItemsTree = ({
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           itemIds={[]}
+          title={title}
+          selfAndChildrenDisable={selfAndChildrenDisable}
         />
       )}
       {/* end of home */}
@@ -113,6 +121,8 @@ const OwnedItemsTree = ({
             selectedId={selectedId}
             setSelectedId={setSelectedId}
             itemIds={itemIds}
+            title={title}
+            selfAndChildrenDisable={selfAndChildrenDisable}
           />
         ))}
 
@@ -129,6 +139,8 @@ const OwnedItemsTree = ({
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           itemIds={itemIds}
+          title={title}
+          selfAndChildrenDisable={selfAndChildrenDisable}
         />
       )}
     </div>
@@ -141,6 +153,8 @@ const TreeModal = ({
   onConfirm,
   open = false,
   itemIds = [],
+  actionTitle,
+  selfAndChildrenDisable,
 }: TreeModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -202,6 +216,8 @@ const TreeModal = ({
           defaultSelectedSubItem={defaultSelectedSubItem}
           itemIds={itemIds}
           defaultParent={parents?.[parents.length - 1]}
+          title={actionTitle}
+          selfAndChildrenDisable={selfAndChildrenDisable}
         />
       </DialogContent>
       <DialogActions>
