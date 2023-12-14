@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -81,7 +81,9 @@ const OwnedItemsTree = ({
     name: translateBuilder(BUILDER.HOME_TITLE),
     id: TREE_MODAL_MY_ITEMS_ID,
     extra: { folder: { childrenOrder: [''] } },
+    type: ItemType.FOLDER,
   } as DiscriminatedItem;
+
   return (
     <div id={`${TREE_MODAL_MY_ITEMS_ID}`}>
       {/* Home or Root  Which will be the start of the menu */}

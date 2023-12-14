@@ -69,6 +69,7 @@ const MoveButton = ({
     onClose();
   };
   useEffect(() => {
+    // sync itemIds with default one as there's no way to access setItemIds
     setItemIds(defaultItemsIds);
   }, [defaultItemsIds]);
 
@@ -81,17 +82,15 @@ const MoveButton = ({
 
   return (
     <>
-      {!false && (
-        <GraaspMoveButton
-          color={color}
-          type={type}
-          id={id}
-          onClick={handleMove}
-          text={translateBuilder(BUILDER.MOVE_BUTTON)}
-          menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
-          iconClassName={ITEM_MOVE_BUTTON_CLASS}
-        />
-      )}
+      <GraaspMoveButton
+        color={color}
+        type={type}
+        id={id}
+        onClick={handleMove}
+        text={translateBuilder(BUILDER.MOVE_BUTTON)}
+        menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
+        iconClassName={ITEM_MOVE_BUTTON_CLASS}
+      />
 
       {itemIds && (
         <TreeModal

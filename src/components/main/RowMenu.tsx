@@ -4,7 +4,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Box, Button, IconButton } from '@mui/material';
 
-import { DiscriminatedItem, FolderItemExtra } from '@graasp/sdk';
+import { DiscriminatedItem, FolderItemExtra, ItemType } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import {
@@ -49,7 +49,7 @@ const MoveMenuRow = ({
   setSelectedId,
   selectedId,
   itemIds,
-}: MenuRowProps): JSX.Element => {
+}: MenuRowProps): JSX.Element | null => {
   const [isHoverActive, setIsHoverActive] = useState(false);
 
   const { t: translateBuilder } = useBuilderTranslation();
@@ -61,6 +61,9 @@ const MoveMenuRow = ({
     setIsHoverActive(false);
   };
 
+  if (ele.type !== ItemType.FOLDER) {
+    return null;
+  }
   return (
     <Button
       onMouseEnter={handleHover}
