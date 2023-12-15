@@ -48,6 +48,7 @@ const AppGrid = ({
       <>
         {dataToShow.map((ele) => (
           <AppCard
+            id={ele.id}
             key={ele.name}
             name={ele.name}
             description={ele.description}
@@ -70,7 +71,7 @@ const AppGrid = ({
   if (isLoading) {
     return Array(7)
       .fill(0)
-      .map(() => <AppCard />);
+      .map((i) => <AppCard id={i} />);
   }
 
   return (

@@ -15,7 +15,12 @@ import { COMMON } from '@graasp/translations';
 import { useShortenURLParams } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
-import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
+import {
+  CellClickedEvent,
+  ColDef,
+  IRowDragItem,
+  SortChangedEvent,
+} from 'ag-grid-community';
 
 import {
   ITEMS_TABLE_CONTAINER_HEIGHT,
@@ -40,7 +45,7 @@ import ItemsToolbar from './ItemsToolbar';
 
 const { useItem } = hooks;
 
-type Props = {
+export type ItemsTableProps = {
   id?: string;
   items?: DiscriminatedItem[];
   manyMemberships?: ResultOf<ItemMembership[]>;
@@ -64,6 +69,7 @@ type Props = {
   page?: number;
   setPage?: (p: number) => void;
   totalCount?: number;
+  onSortChanged?: (e: SortChangedEvent) => void;
 };
 
 const ItemsTable = ({
@@ -85,7 +91,8 @@ const ItemsTable = ({
   page = 1,
   setPage,
   totalCount,
-}: Props): JSX.Element => {
+  onSortChanged,
+}: ItemsTableProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();
@@ -287,6 +294,7 @@ const ItemsTable = ({
       />
       {itemId && <FolderDescription itemId={itemId} />}
       <GraaspTable
+        onSortChanged={onSortChanged}
         id={tableId}
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}

@@ -99,6 +99,7 @@ const {
   buildPostShortLinkRoute,
   buildPatchShortLinkRoute,
   buildDeleteShortLinkRoute,
+  buildGetAccessibleItems,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -170,6 +171,33 @@ export const mockGetOwnItems = (items: ItemForTest[]): void => {
       req.reply(own);
     },
   ).as('getOwnItems');
+};
+
+export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.GET,
+      url: new RegExp(`${API_HOST}/${buildGetAccessibleItems({}, {})}`),
+    },
+    ({ url, reply }) => {
+      const urlObj = new URL(url);
+      const params = new URLSearchParams(urlObj.search);
+
+      const page = parseInt(params.get('page') ?? '1', 10);
+      const pageSize = parseInt(params.get('pageSize') ?? '10', 10);
+
+      // as { page: number; pageSize: number };
+
+      // warning: we don't check memberships
+      const root = items.filter(isRootItem);
+
+      // todo: filter
+
+      const result = root.slice((page - 1) * pageSize, page * pageSize);
+
+      reply({ data: result, totalCount: root.length });
+    },
+  ).as('getAccessibleItems');
 };
 
 export const mockGetRecycledItems = (

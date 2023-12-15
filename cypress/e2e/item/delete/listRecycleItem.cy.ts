@@ -29,7 +29,7 @@ describe('Recycle Item in List', () => {
     cy.wait('@recycleItems').then(({ request: { url } }) => {
       expect(url).to.contain(id);
     });
-    cy.wait('@getOwnItems');
+    cy.wait('@getAccessibleItems');
   });
 
   it('recycle item inside parent', () => {

@@ -11,7 +11,7 @@ import ItemsTable from './ItemsTable';
 const { useManyItemMemberships, useItemsTags } = hooks;
 
 type Props = {
-  id: string;
+  id?: string;
   items?: DiscriminatedItem[];
   title: string;
   headerElements?: JSX.Element[];
@@ -35,6 +35,7 @@ type Props = {
   setPage?: (p: number) => void;
   // how many items exist, which can be more than the displayed items
   totalCount?: number;
+  onSortChanged?: (e: any) => void;
 };
 
 const Items = ({
@@ -56,6 +57,7 @@ const Items = ({
   setPage,
   onShowOnlyMeChange,
   totalCount = 0,
+  onSortChanged,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
   const itemIds = items?.map(({ id: itemId }) => itemId);
@@ -99,6 +101,7 @@ const Items = ({
           actions={actions}
           tableTitle={title}
           defaultSortedColumn={defaultSortedColumn}
+          onSortChanged={onSortChanged}
           items={items}
           manyMemberships={manyMemberships}
           itemsStatuses={itemsStatuses}

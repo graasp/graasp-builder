@@ -26,7 +26,7 @@ describe('Recycle Items in List', () => {
 
     // delete
     recycleItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
-    cy.wait(['@recycleItems', '@getOwnItems']);
+    cy.wait(['@recycleItems', '@getAccessibleItems']);
   });
 
   it('recycle 2 items in item', () => {

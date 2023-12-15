@@ -24,7 +24,7 @@ describe('Recycle Item in Grid', () => {
 
     // recycle
     recycleItem(id);
-    cy.wait(['@recycleItems', '@getOwnItems']);
+    cy.wait(['@recycleItems', '@getAccessibleItems']);
   });
 
   it('recycle item inside parent', () => {

@@ -66,7 +66,7 @@ const checkCreateShortcutRequest = ({
       expect(url).to.include(qs.stringify({ parentId: toItemId }));
     } else {
       expect(url).to.not.include('parentId');
-      cy.wait('@getOwnItems');
+      cy.wait('@getAccessibleItems');
     }
   });
 };
