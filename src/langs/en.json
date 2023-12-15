@@ -290,5 +290,6 @@
   "SHORT_LINK_MIN_CHARS_ERROR": "The short link must at least have {{data}} chars.",
   "SHORT_LINK_MAX_CHARS_ERROR": "The short link must not exceed {{data}} chars.",
   "SHORT_LINK_INVALID_CHARS_ERROR": "The short link contains invalid chars ({{data}}).",
-  "SHORT_LINK_UNKNOWN_ERROR": "An unknown error occurred."
+  "SHORT_LINK_UNKNOWN_ERROR": "An unknown error occurred.",
+  "EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM": "No Sub-Folders For this Item"
 }

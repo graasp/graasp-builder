@@ -4,7 +4,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Box, Button, IconButton } from '@mui/material';
 
-import { DiscriminatedItem, FolderItemExtra, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import {
@@ -94,15 +94,12 @@ const MoveMenuRow = ({
           <Button sx={{ padding: '0' }}>
             {translateBuilder(BUILDER.MOVE_BUTTON)}
           </Button>
-          {Boolean(
-            (ele.extra as FolderItemExtra).folder.childrenOrder.length,
-          ) && (
+          {true && (
             <IconButton
               sx={{ padding: '0' }}
               onClick={(e) => {
                 e.stopPropagation();
                 fetchSubItems();
-                setSelectedId('');
               }}
               id={buildItemRowArrowId(ele.id)}
             >
