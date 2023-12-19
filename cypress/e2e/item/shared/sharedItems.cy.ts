@@ -12,7 +12,6 @@ import { SHARED_ITEMS_PATH } from '../../../../src/config/paths';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
-import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 
 const translateBuilder = (key: string) =>
   i18n.t(key, { ns: BUILDER_NAMESPACE });
@@ -25,7 +24,6 @@ describe('Shared Items', () => {
   });
   describe('Grid', () => {
     it('visit Shared Items', () => {
-      cy.visit(SHARED_ITEMS_PATH);
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       cy.wait('@getSharedItems').then(({ response: { body } }) => {
@@ -36,7 +34,7 @@ describe('Shared Items', () => {
       });
 
       // visit child
-      const { id: childId } = SHARED_ITEMS.items[0];
+      const { id: childId } = SAMPLE_ITEMS.items[1];
       cy.goToItemInGrid(childId);
 
       // should get children

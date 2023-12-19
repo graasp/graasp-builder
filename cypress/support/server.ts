@@ -180,8 +180,7 @@ export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
       url: new RegExp(`${API_HOST}/${buildGetAccessibleItems({}, {})}`),
     },
     ({ url, reply }) => {
-      const urlObj = new URL(url);
-      const params = new URLSearchParams(urlObj.search);
+      const params = new URL(url).searchParams;
 
       const page = parseInt(params.get('page') ?? '1', 10);
       const pageSize = parseInt(params.get('pageSize') ?? '10', 10);
