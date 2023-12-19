@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.1](https://github.com/graasp/graasp-builder/compare/v2.3.0...v2.3.1) (2023-12-19)
+
+
+### Bug Fixes
+
+* allow apps to resize ([#922](https://github.com/graasp/graasp-builder/issues/922)) ([c24b633](https://github.com/graasp/graasp-builder/commit/c24b63318bc592dfd4cfec6ec15e2af387030f48))
+* **deps:** update dependency @graasp/translations to v1.21.1 ([ce872cf](https://github.com/graasp/graasp-builder/commit/ce872cfa79fb03b212784a7cc76091a76033ef86))
+* **deps:** update dependency @sentry/react to v7.89.0 ([#918](https://github.com/graasp/graasp-builder/issues/918)) ([311fb5a](https://github.com/graasp/graasp-builder/commit/311fb5ae8e7c927a1ad4b6dba6f3a42694341087))
+* udpate release-please condition ([8c13717](https://github.com/graasp/graasp-builder/commit/8c13717a559efe998a9e1fac209d91752a2baa8a))
+
 ## [2.3.0](https://github.com/graasp/graasp-builder/compare/v2.2.0...v2.3.0) (2023-12-08)
 
 
