@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { LinearProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { Loader } from '@graasp/ui';
@@ -25,7 +26,11 @@ import { ItemsTableProps } from './ItemsTable';
 import Main from './Main';
 import NewItemButton from './NewItemButton';
 
-type HomeItemSortableColumn = 'name' | 'type' | 'created_at' | 'updated_at';
+type HomeItemSortableColumn =
+  | 'item.name'
+  | 'item.type'
+  | 'item.created_at'
+  | 'item.updated_at';
 
 const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -34,20 +39,21 @@ const HomeLoadableContent = (): JSX.Element => {
 
   const [page, setPage] = useState(1);
   const [sortColumn, setSortColumn] =
-    useState<HomeItemSortableColumn>('updated_at');
+    useState<HomeItemSortableColumn>('item.updated_at');
   const [ordering, setOrdering] = useState<'asc' | 'desc'>('desc');
   const itemSearch = useItemSearch({ onSearch: () => setPage(1) });
-  const { data, isLoading, isError, isSuccess } = hooks.useAccessibleItems(
-    {
-      // todo: in the future this can be any member from creators
-      creatorId: showOnlyMe ? currentMember?.id : undefined,
-      name: itemSearch.text,
-      sortBy: sortColumn,
-      ordering,
-    },
-    // todo: adapt page size given the user window height
-    { page, pageSize: ITEM_PAGE_SIZE },
-  );
+  const { data, isLoading, isFetching, isError, isSuccess } =
+    hooks.useAccessibleItems(
+      {
+        // todo: in the future this can be any member from creators
+        creatorId: showOnlyMe ? currentMember?.id : undefined,
+        name: itemSearch.text,
+        sortBy: sortColumn,
+        ordering,
+      },
+      // todo: adapt page size given the user window height
+      { page, pageSize: ITEM_PAGE_SIZE },
+    );
 
   if (isLoading) {
     return <Loader />;
@@ -59,8 +65,12 @@ const HomeLoadableContent = (): JSX.Element => {
 
   const onShowOnlyMeChange = (e: any) => {
     setShowOnlyMe(e.target.checked);
+    setPage(1);
   };
 
+  // todo: this should be a global function but this is not applicable to other tables
+  // since they don't use a pagination
+  // with a custom table we won't need this anymore
   const onSortChanged: ItemsTableProps['onSortChanged'] = (e) => {
     const sortedColumn = e.columnApi
       .getColumnState()
@@ -73,6 +83,9 @@ const HomeLoadableContent = (): JSX.Element => {
         setOrdering(sort);
       }
 
+      // we don't sort by creator because table definition is global
+      // we should wait till the table is refactored
+
       let prop = colId;
       if (colId === 'createdAt') {
         prop = 'created_at';
@@ -83,8 +96,11 @@ const HomeLoadableContent = (): JSX.Element => {
       if (['name', 'type', 'created_at', 'updated_at'].includes(prop)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        setSortColumn(prop);
+        setSortColumn(`item.${prop}`);
       }
+    } else {
+      setSortColumn('item.updated_at');
+      setOrdering('desc');
     }
   };
 
@@ -105,7 +121,14 @@ const HomeLoadableContent = (): JSX.Element => {
           setPage={setPage}
           totalCount={data.totalCount}
           onSortChanged={onSortChanged}
+          tableHeight={null}
+          pageSize={ITEM_PAGE_SIZE}
         />
+        {isFetching && (
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        )}
       </Box>
     </UppyContextProvider>
   );

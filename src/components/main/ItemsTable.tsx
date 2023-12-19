@@ -22,10 +22,7 @@ import {
   SortChangedEvent,
 } from 'ag-grid-community';
 
-import {
-  ITEMS_TABLE_CONTAINER_HEIGHT,
-  ITEM_PAGE_SIZE,
-} from '../../config/constants';
+import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
@@ -70,6 +67,8 @@ export type ItemsTableProps = {
   setPage?: (p: number) => void;
   totalCount?: number;
   onSortChanged?: (e: SortChangedEvent) => void;
+  tableHeight?: number | null;
+  pageSize?: number;
 };
 
 const ItemsTable = ({
@@ -92,6 +91,8 @@ const ItemsTable = ({
   setPage,
   totalCount,
   onSortChanged,
+  tableHeight,
+  pageSize,
 }: ItemsTableProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -297,7 +298,11 @@ const ItemsTable = ({
         onSortChanged={onSortChanged}
         id={tableId}
         columnDefs={columnDefs}
-        tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
+        tableHeight={
+          // handle legacy case to always a height by default
+          // to remove to only have "autoheight" or pagination
+          tableHeight === null ? undefined : ITEMS_TABLE_CONTAINER_HEIGHT
+        }
         rowData={rows}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}
@@ -314,7 +319,9 @@ const ItemsTable = ({
         }}
         countTextFunction={countTextFunction}
         totalCount={totalCount}
-        pageSize={ITEM_PAGE_SIZE}
+        // has to be fixed, otherwise the pagination is false on the last page
+        // rows can contain less for the last page
+        pageSize={pageSize ?? rows.length}
       />
     </>
   );

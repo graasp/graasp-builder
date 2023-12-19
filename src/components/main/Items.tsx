@@ -36,6 +36,8 @@ type Props = {
   // how many items exist, which can be more than the displayed items
   totalCount?: number;
   onSortChanged?: (e: any) => void;
+  tableHeight?: number | null;
+  pageSize?: number;
 };
 
 const Items = ({
@@ -58,6 +60,8 @@ const Items = ({
   onShowOnlyMeChange,
   totalCount = 0,
   onSortChanged,
+  tableHeight,
+  pageSize,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
   const itemIds = items?.map(({ id: itemId }) => itemId);
@@ -116,6 +120,8 @@ const Items = ({
           page={page}
           setPage={setPage}
           totalCount={totalCount}
+          tableHeight={tableHeight}
+          pageSize={pageSize}
         />
       );
   }

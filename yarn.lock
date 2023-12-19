@@ -1172,9 +1172,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.2.0":
+"@graasp/query-client@github:graasp/graasp-query-client#554-sort-params-accessible":
   version: 2.2.0
-  resolution: "@graasp/query-client@npm:2.2.0"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7a429246f2a1dba23be354a8a1fe9803efe83efe"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
@@ -1186,7 +1186,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: a7811c3e14f431e62aba3275f0bb1ed67bf3f999b6c05db8df6f7854d93b0f5badf33e9b960c763c96784f791f400c203de86172f414d8304238d8b894716b4d
+  checksum: 67fd5965d0a069dc55d6bdd2f3ec1c1cbff0491e7692e907502d41b50d316bcf8cdf02e9299ca5a43d7431b43485ff25332c3f2bd30a29cfa31b0e0183cb17ec
   languageName: node
   linkType: hard
 
@@ -1214,7 +1214,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#519-table-pagination":
   version: 4.1.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=d329c0284a78f7bf07aeaed4ed948211428f31e2"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=bd3f59f61ed412ba9ea95417d401fd763130a814"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     http-status-codes: "npm:2.3.0"
@@ -1249,7 +1249,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: ed18a5298a900f5015c514d3cf2e4ea8204cc6d0602ba9f09b62a2f18bd2b6c05b17760549c83577efa12292a63e2f12a32d295d8c3b90b4e70fccca2d4db446
+  checksum: d2c4375bfa4a5fa05e746e9c980d55465475bd9057a1df0259a139c33e950fe09fe49e1e0f51b7da64508c4a1d372159d9109e47985593c92055027405a31c27
   languageName: node
   linkType: hard
 
@@ -5933,7 +5933,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.0"
-    "@graasp/query-client": "npm:2.2.0"
+    "@graasp/query-client": "github:graasp/graasp-query-client#554-sort-params-accessible"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
     "@graasp/ui": "github:graasp/graasp-ui#519-table-pagination"
