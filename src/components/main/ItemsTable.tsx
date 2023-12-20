@@ -69,7 +69,6 @@ export type ItemsTableProps = {
   setPage?: (p: number) => void;
   totalCount?: number;
   onSortChanged?: (e: SortChangedEvent) => void;
-  tableHeight?: number | null;
   pageSize?: number;
 };
 
@@ -93,7 +92,6 @@ const ItemsTable = ({
   setPage,
   totalCount,
   onSortChanged,
-  tableHeight,
   pageSize,
 }: ItemsTableProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -300,11 +298,7 @@ const ItemsTable = ({
         onSortChanged={onSortChanged}
         id={tableId}
         columnDefs={columnDefs}
-        tableHeight={
-          // handle legacy case to always a height by default
-          // to remove to only have "autoheight" or pagination
-          tableHeight === null ? undefined : ITEMS_TABLE_CONTAINER_HEIGHT
-        }
+        tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
         rowData={rows}
         emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
         onDragEnd={onDragEnd}

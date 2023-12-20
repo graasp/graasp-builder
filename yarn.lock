@@ -1214,7 +1214,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#519-table-pagination":
   version: 4.1.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=bd3f59f61ed412ba9ea95417d401fd763130a814"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=a1756803c222d0a9f05a76a134e8831c235979b8"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     http-status-codes: "npm:2.3.0"
@@ -1249,7 +1249,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: d2c4375bfa4a5fa05e746e9c980d55465475bd9057a1df0259a139c33e950fe09fe49e1e0f51b7da64508c4a1d372159d9109e47985593c92055027405a31c27
+  checksum: c1ff635aa81e6b61a7aefd5b2fc481bf1b3970a97921e7e7253f4a9a38ab1e99b4b1a43059189fa61f15ed44829d6a2b30e5a3fd4000ef47ea12167b31c7ac17
   languageName: node
   linkType: hard
 

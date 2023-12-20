@@ -121,7 +121,6 @@ const HomeLoadableContent = (): JSX.Element => {
             setPage={setPage}
             totalCount={accessibleItems.totalCount}
             onSortChanged={onSortChanged}
-            tableHeight={null}
             pageSize={ITEM_PAGE_SIZE}
           />
           {isFetching && (
