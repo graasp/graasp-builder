@@ -290,5 +290,6 @@
   "SHORT_LINK_MIN_CHARS_ERROR": "Le lien rapide doit au moins contenir {{data}} caractères.",
   "SHORT_LINK_MAX_CHARS_ERROR": "Le lien rapide ne doit pas dépasser les {{data}} caractères.",
   "SHORT_LINK_INVALID_CHARS_ERROR": "Le lien rapide contient des caractères non valides ({{data}}).",
-  "SHORT_LINK_UNKNOWN_ERROR": "Il y a une erreur inconnue."
+  "SHORT_LINK_UNKNOWN_ERROR": "Il y a une erreur inconnue.",
+  "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "Les éléments de cette page sont aussi disponibles dans ''Mon Graasp''. Cette page sera bientôt indisponible."
 }
