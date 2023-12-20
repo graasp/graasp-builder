@@ -141,7 +141,7 @@ const AppContent = ({
   permission?: PermissionLevel;
 }): JSX.Element => (
   <AppItem
-    isResizable={item.settings.isResizable}
+    isResizable
     item={item}
     height={ITEM_DEFAULT_HEIGHT}
     requestApiAccessToken={(payload: {
