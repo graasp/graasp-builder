@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -8,7 +8,7 @@ import { ACCESSIBLE_ITEMS_ONLY_ME_ID } from '@/config/selectors';
 type Props = {
   title: string;
   headerElements?: JSX.Element[];
-  onShowOnlyMeChange?: (e: any) => any;
+  onShowOnlyMeChange?: CheckboxProps['onChange'];
   showOnlyMe?: boolean;
 };
 

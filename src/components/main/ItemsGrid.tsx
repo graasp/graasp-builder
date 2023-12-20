@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CheckboxProps } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
@@ -27,7 +27,7 @@ type Props = {
   parentId?: string;
   canMove?: boolean;
   showOnlyMe?: boolean;
-  onShowOnlyMeChange?: (e: any) => any;
+  onShowOnlyMeChange?: CheckboxProps['onChange'];
   totalCount?: number;
   onPageChange: any;
   page?: number;

@@ -1,6 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
+import { CheckboxProps } from '@mui/material';
+
 import {
   DiscriminatedItem,
   Item,
@@ -61,7 +63,7 @@ export type ItemsTableProps = {
   };
   showThumbnails?: boolean;
   canMove?: boolean;
-  onShowOnlyMeChange?: (e: any) => any;
+  onShowOnlyMeChange?: CheckboxProps['onChange'];
   showOnlyMe?: boolean;
   page?: number;
   setPage?: (p: number) => void;

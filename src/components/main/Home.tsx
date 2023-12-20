@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { LinearProgress } from '@mui/material';
+import { CheckboxProps, LinearProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { Loader } from '@graasp/ui';
@@ -42,28 +42,24 @@ const HomeLoadableContent = (): JSX.Element => {
     useState<HomeItemSortableColumn>('item.updated_at');
   const [ordering, setOrdering] = useState<'asc' | 'desc'>('desc');
   const itemSearch = useItemSearch({ onSearch: () => setPage(1) });
-  const { data, isLoading, isFetching, isError, isSuccess } =
-    hooks.useAccessibleItems(
-      {
-        // todo: in the future this can be any member from creators
-        creatorId: showOnlyMe ? currentMember?.id : undefined,
-        name: itemSearch.text,
-        sortBy: sortColumn,
-        ordering,
-      },
-      // todo: adapt page size given the user window height
-      { page, pageSize: ITEM_PAGE_SIZE },
-    );
+  const {
+    data: accessibleItems,
+    isLoading,
+    isFetching,
+    isSuccess,
+  } = hooks.useAccessibleItems(
+    {
+      // todo: in the future this can be any member from creators
+      creatorId: showOnlyMe ? currentMember?.id : undefined,
+      name: itemSearch.text,
+      sortBy: sortColumn,
+      ordering,
+    },
+    // todo: adapt page size given the user window height
+    { page, pageSize: ITEM_PAGE_SIZE },
+  );
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError || !data) {
-    return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
-  }
-
-  const onShowOnlyMeChange = (e: any) => {
+  const onShowOnlyMeChange: CheckboxProps['onChange'] = (e) => {
     setShowOnlyMe(e.target.checked);
     setPage(1);
   };
@@ -104,34 +100,45 @@ const HomeLoadableContent = (): JSX.Element => {
     }
   };
 
-  return (
-    <UppyContextProvider enable={isSuccess}>
-      <FileUploader />
-      <Box mx={2}>
-        <ItemHeader showNavigation={false} />
-        <Items
-          id={ACCESSIBLE_ITEMS_TABLE_ID}
-          title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-          items={data.data}
-          headerElements={[itemSearch.input, <NewItemButton key="newButton" />]}
-          ToolbarActions={ItemActions}
-          onShowOnlyMeChange={onShowOnlyMeChange}
-          showOnlyMe={showOnlyMe}
-          page={page}
-          setPage={setPage}
-          totalCount={data.totalCount}
-          onSortChanged={onSortChanged}
-          tableHeight={null}
-          pageSize={ITEM_PAGE_SIZE}
-        />
-        {isFetching && (
-          <Box sx={{ width: '100%' }}>
-            <LinearProgress />
-          </Box>
-        )}
-      </Box>
-    </UppyContextProvider>
-  );
+  if (accessibleItems) {
+    return (
+      <UppyContextProvider enable={isSuccess}>
+        <FileUploader />
+        <Box mx={2}>
+          <ItemHeader showNavigation={false} />
+          <Items
+            id={ACCESSIBLE_ITEMS_TABLE_ID}
+            title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
+            items={accessibleItems.data}
+            headerElements={[
+              itemSearch.input,
+              <NewItemButton key="newButton" />,
+            ]}
+            ToolbarActions={ItemActions}
+            onShowOnlyMeChange={onShowOnlyMeChange}
+            showOnlyMe={showOnlyMe}
+            page={page}
+            setPage={setPage}
+            totalCount={accessibleItems.totalCount}
+            onSortChanged={onSortChanged}
+            tableHeight={null}
+            pageSize={ITEM_PAGE_SIZE}
+          />
+          {isFetching && (
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress />
+            </Box>
+          )}
+        </Box>
+      </UppyContextProvider>
+    );
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
 };
 
 const Home = (): JSX.Element => (

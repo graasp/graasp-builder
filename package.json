@@ -18,7 +18,7 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.0.0",
-    "@graasp/query-client": "github:graasp/graasp-query-client#554-sort-params-accessible",
+    "@graasp/query-client": "github:graasp/graasp-query-client#main",
     "@graasp/sdk": "3.3.0",
     "@graasp/translations": "1.21.1",
     "@graasp/ui": "github:graasp/graasp-ui#519-table-pagination",

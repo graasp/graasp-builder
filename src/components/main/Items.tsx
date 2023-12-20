@@ -1,3 +1,5 @@
+import { CheckboxProps } from '@mui/material';
+
 import { DiscriminatedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
@@ -28,7 +30,7 @@ type Props = {
   showThumbnails?: boolean;
   enableMemberships?: boolean;
   canMove?: boolean;
-  onShowOnlyMeChange?: (e: any) => any;
+  onShowOnlyMeChange?: CheckboxProps['onChange'];
   showOnlyMe?: boolean;
   itemSearch?: { text: string };
   page?: number;

@@ -27,7 +27,7 @@ const moveItems = ({
 };
 
 describe('Move Items in List', () => {
-  it.only('Move items on Home', () => {
+  it('Move items on Home', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 

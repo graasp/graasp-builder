@@ -1172,9 +1172,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#554-sort-params-accessible":
+"@graasp/query-client@github:graasp/graasp-query-client#main":
   version: 2.2.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7a429246f2a1dba23be354a8a1fe9803efe83efe"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=2bf65241784faec3752662dd5c067933c54e84b3"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
@@ -5933,7 +5933,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#554-sort-params-accessible"
+    "@graasp/query-client": "github:graasp/graasp-query-client#main"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
     "@graasp/ui": "github:graasp/graasp-ui#519-table-pagination"
