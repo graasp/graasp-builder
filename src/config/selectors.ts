@@ -21,7 +21,7 @@ export const ITEM_MENU_BUTTON_CLASS = 'itemMenuButton';
 export const ITEM_MENU_COPY_BUTTON_CLASS = 'itemMenuCopyButton';
 export const ITEM_MENU_RECYCLE_BUTTON_CLASS = 'itemMenuRecycleButton';
 export const buildItemMenu = (id: string): string => `itemMenu-${id}`;
-export const TREE_MODAL_MY_ITEMS_ID = 'treeModalMyItems';
+export const HOME_MODAL_ITEM_ID = 'treeModalHomeItem';
 export const ROOT_MODAL_ID = 'rootModal';
 
 export const TREE_MODAL_SHARED_ITEMS_ID = 'treeModalSharedItems';

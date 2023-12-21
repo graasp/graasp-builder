@@ -14,9 +14,9 @@ import { mutations } from '@/config/queryClient';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
+  HOME_MODAL_ITEM_ID,
   ITEM_MENU_MOVE_BUTTON_CLASS,
   ITEM_MOVE_BUTTON_CLASS,
-  TREE_MODAL_MY_ITEMS_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import TreeModal, { TreeModalProps } from '../main/MoveTreeModal';
@@ -40,9 +40,7 @@ const MoveButton = ({
   const { mutate: moveItems } = mutations.useMoveItems();
 
   const [open, setOpen] = useState(false);
-  const [itemIds, setItemIds] = useState<string[] | null>(
-    defaultItemsIds || null,
-  );
+  const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
 
   const openMoveModal = (newItemIds: string[]) => {
     setOpen(true);
@@ -51,7 +49,7 @@ const MoveButton = ({
 
   const onClose = () => {
     setOpen(false);
-    setItemIds(null);
+    setItemIds([]);
   };
 
   const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
@@ -59,9 +57,7 @@ const MoveButton = ({
     const newPayload = {
       ...payload,
       to:
-        payload.to &&
-        payload.to !== TREE_MODAL_MY_ITEMS_ID &&
-        validate(payload.to)
+        payload.to && payload.to !== HOME_MODAL_ITEM_ID && validate(payload.to)
           ? payload.to
           : undefined,
     };
@@ -69,7 +65,7 @@ const MoveButton = ({
     onClose();
   };
   useEffect(() => {
-    // sync itemIds with default one as there's no way to access setItemIds
+    // necessary to sync prop with a state because move-many-items' targets are updated dynamically with the table
     setItemIds(defaultItemsIds);
   }, [defaultItemsIds]);
 
@@ -92,7 +88,7 @@ const MoveButton = ({
         iconClassName={ITEM_MOVE_BUTTON_CLASS}
       />
 
-      {itemIds && (
+      {itemIds.length && (
         <TreeModal
           onClose={onClose}
           open={open}

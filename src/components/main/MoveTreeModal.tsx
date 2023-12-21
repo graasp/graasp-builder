@@ -17,9 +17,9 @@ import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
+  HOME_MODAL_ITEM_ID,
   ROOT_MODAL_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
-  TREE_MODAL_MY_ITEMS_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import CancelButton from '../common/CancelButton';
@@ -73,13 +73,13 @@ const OwnedItemsTree = ({
   }, [selectedParent]);
   const rootMenuItem = {
     name: translateBuilder(BUILDER.HOME_TITLE),
-    id: TREE_MODAL_MY_ITEMS_ID,
+    id: HOME_MODAL_ITEM_ID,
     type: ItemType.FOLDER,
   } as DiscriminatedItem;
 
   const items = useMemo(() => {
     const results =
-      selectedParent?.id === TREE_MODAL_MY_ITEMS_ID
+      selectedParent?.id === HOME_MODAL_ITEM_ID
         ? [...(ownItems || []), ...(sharedItems || [])]
         : data;
 
@@ -89,7 +89,7 @@ const OwnedItemsTree = ({
   }, [selectedParent, ownItems, sharedItems, data]);
 
   return (
-    <div id={`${TREE_MODAL_MY_ITEMS_ID}`}>
+    <div id={`${HOME_MODAL_ITEM_ID}`}>
       {/* Home or Root  Which will be the start of the menu */}
       {isHome && (
         <MoveMenuRow
@@ -162,7 +162,7 @@ const TreeModal = ({
   >([{ name: translateBuilder(BUILDER.ROOT), id: ROOT_MODAL_ID }]);
 
   const { data: parentItem } = hooks.useItem(
-    selectedId === TREE_MODAL_MY_ITEMS_ID ? '' : selectedId,
+    selectedId === HOME_MODAL_ITEM_ID ? '' : selectedId,
   );
   const { data: parents } = hooks.useParents({
     id: itemIds?.[0],
@@ -180,12 +180,12 @@ const TreeModal = ({
   const isDisabled =
     !selectedId ||
     selectedId === ROOT_MODAL_ID ||
-    (!parents?.length && selectedId === TREE_MODAL_MY_ITEMS_ID) ||
+    (!parents?.length && selectedId === HOME_MODAL_ITEM_ID) ||
     selectedId === (parents && parents?.[(parents?.length || 0) - 1]?.id);
 
   const text =
     !isDisabled &&
-    ((selectedId === TREE_MODAL_MY_ITEMS_ID &&
+    ((selectedId === HOME_MODAL_ITEM_ID &&
       ` ${translateBuilder(BUILDER.TO)} ${translateBuilder(
         BUILDER.HOME_TITLE,
       )}`) ||

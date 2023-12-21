@@ -4,6 +4,7 @@ import {
   CUSTOM_APP_CYPRESS_ID,
   CUSTOM_APP_URL_ID,
   FOLDER_FORM_DESCRIPTION_ID,
+  HOME_MODAL_ITEM_ID,
   ITEM_FORM_APP_URL_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
@@ -13,7 +14,6 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemFormAppOptionId,
   buildItemRowArrowId,
   buildPermissionOptionId,
@@ -47,12 +47,12 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'handleTreeMenu',
-  (toItemPath, treeRootId = TREE_MODAL_MY_ITEMS_ID) => {
+  (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
     const ids = getParentsIdsFromPath(toItemPath);
 
     cy.wait(TREE_VIEW_PAUSE);
 
-    [TREE_MODAL_MY_ITEMS_ID, ...ids].forEach((value, idx, array) => {
+    [HOME_MODAL_ITEM_ID, ...ids].forEach((value, idx, array) => {
       cy.get(`#${treeRootId}`).then(($tree) => {
         // click on the element
         if (idx === array.length - 1) {
@@ -82,7 +82,7 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillTreeModal',
-  (toItemPath, treeRootId = TREE_MODAL_MY_ITEMS_ID) => {
+  (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
     const ids = getParentsIdsFromPath(toItemPath);
 
     cy.wait(TREE_VIEW_PAUSE);

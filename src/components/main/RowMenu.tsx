@@ -7,10 +7,7 @@ import { Box, Button, IconButton } from '@mui/material';
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
-import {
-  TREE_MODAL_MY_ITEMS_ID,
-  buildItemRowArrowId,
-} from '@/config/selectors';
+import { HOME_MODAL_ITEM_ID, buildItemRowArrowId } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 interface MenuRowProps {
@@ -71,7 +68,7 @@ const MoveMenuRow = ({
       onClick={() => {
         setSelectedId(ele?.id);
       }}
-      id={`${TREE_MODAL_MY_ITEMS_ID}-${ele.id}`}
+      id={`${HOME_MODAL_ITEM_ID}-${ele.id}`}
       sx={{
         display: 'flex',
         color: 'black',
