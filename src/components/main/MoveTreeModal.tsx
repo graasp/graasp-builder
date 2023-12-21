@@ -17,6 +17,7 @@ import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
+  ROOT_MODAL_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
   TREE_MODAL_MY_ITEMS_ID,
 } from '../../config/selectors';
@@ -40,10 +41,7 @@ interface OwnedItemsProps {
   >;
   setSelectedId: Dispatch<SetStateAction<string>>;
   selectedId: string;
-  defaultSelectedSubItem:
-    | DiscriminatedItem
-    | null
-    | { name: string; id: string };
+  selectedParent: DiscriminatedItem | null | { name: string; id: string };
   itemIds: string[];
   defaultParent?: DiscriminatedItem;
 }
@@ -52,7 +50,7 @@ const OwnedItemsTree = ({
   setPaths,
   setSelectedId,
   selectedId,
-  defaultSelectedSubItem,
+  selectedParent,
   itemIds,
   defaultParent,
 }: OwnedItemsProps) => {
@@ -60,47 +58,19 @@ const OwnedItemsTree = ({
   const { data: sharedItems } = hooks.useSharedItems();
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const [selectedSubItem, setSubSelectedItem] = useState(
-    defaultSelectedSubItem,
-  );
-
   const [isHome, setIsHome] = useState(true);
-  const { data } = hooks.useChildren(selectedSubItem?.id || '');
+  const { data } = hooks.useChildren(selectedParent?.id || '');
 
   const selectSubItems = (ele: DiscriminatedItem) => {
-    setSubSelectedItem(ele);
     setPaths((paths) => [...paths, ele]);
     setSelectedId(ele.id);
   };
 
   useEffect(() => {
-    if (defaultSelectedSubItem) {
-      if (
-        defaultSelectedSubItem.name === translateBuilder(BUILDER.HOME_TITLE)
-      ) {
-        setSubSelectedItem(null);
-      } else if (
-        defaultSelectedSubItem.name === translateBuilder(BUILDER.ROOT)
-      ) {
-        setSubSelectedItem(null);
-        setIsHome(true);
-      } else {
-        setSubSelectedItem(defaultSelectedSubItem);
-      }
-
-      setSelectedId(defaultSelectedSubItem?.id);
-
-      setPaths((prevPaths) => {
-        const trimmedIndex = prevPaths.indexOf(defaultSelectedSubItem);
-        if (trimmedIndex === 0) {
-          return prevPaths.slice(0, -prevPaths.length + 1);
-        }
-        return prevPaths.slice(0, trimmedIndex + 1);
-      });
+    if (selectedParent?.id === ROOT_MODAL_ID) {
+      setIsHome(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultSelectedSubItem]);
-
+  }, [selectedParent]);
   const rootMenuItem = {
     name: translateBuilder(BUILDER.HOME_TITLE),
     id: TREE_MODAL_MY_ITEMS_ID,
@@ -108,15 +78,15 @@ const OwnedItemsTree = ({
   } as DiscriminatedItem;
 
   const items = useMemo(() => {
-    const results = selectedSubItem
-      ? data
-      : [...(ownItems || []), ...(sharedItems || [])];
+    const results =
+      selectedParent?.id === TREE_MODAL_MY_ITEMS_ID
+        ? [...(ownItems || []), ...(sharedItems || [])]
+        : data;
 
     return results?.filter(
       (ele: DiscriminatedItem) => ele.type === ItemType.FOLDER,
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSubItem]);
+  }, [selectedParent, ownItems, sharedItems, data]);
 
   return (
     <div id={`${TREE_MODAL_MY_ITEMS_ID}`}>
@@ -152,7 +122,7 @@ const OwnedItemsTree = ({
 
       {/* Default Parent So If I want to move an item who's in nested folder we will have it's parent as default */}
 
-      {defaultParent && !selectedSubItem && (
+      {defaultParent && selectedParent?.id === ROOT_MODAL_ID && (
         <MoveMenuRow
           key={defaultParent.id}
           ele={defaultParent}
@@ -189,7 +159,7 @@ const TreeModal = ({
   // serious of breadcrumbs
   const [paths, setPaths] = useState<
     (DiscriminatedItem | { name: string; id: string })[]
-  >([{ name: translateBuilder(BUILDER.ROOT), id: 'root' }]);
+  >([{ name: translateBuilder(BUILDER.ROOT), id: ROOT_MODAL_ID }]);
 
   const { data: parentItem } = hooks.useItem(
     selectedId === TREE_MODAL_MY_ITEMS_ID ? '' : selectedId,
@@ -197,9 +167,6 @@ const TreeModal = ({
   const { data: parents } = hooks.useParents({
     id: itemIds?.[0],
   });
-  const [defaultSelectedSubItem, setDefaultSelectedSubItem] = useState<
-    DiscriminatedItem | null | { name: string; id: string }
-  >(null);
 
   const handleClose = () => {
     onClose({ id: null, open: false });
@@ -212,9 +179,18 @@ const TreeModal = ({
   // no selected Item, or selectedId is same original location
   const isDisabled =
     !selectedId ||
-    selectedId === 'root' ||
+    selectedId === ROOT_MODAL_ID ||
     (!parents?.length && selectedId === TREE_MODAL_MY_ITEMS_ID) ||
     selectedId === (parents && parents?.[(parents?.length || 0) - 1]?.id);
+
+  const text =
+    !isDisabled &&
+    ((selectedId === TREE_MODAL_MY_ITEMS_ID &&
+      ` ${translateBuilder(BUILDER.TO)} ${translateBuilder(
+        BUILDER.HOME_TITLE,
+      )}`) ||
+      (parentItem?.name &&
+        ` ${translateBuilder(BUILDER.TO)} ${parentItem?.name}`));
 
   return (
     <Dialog
@@ -240,7 +216,19 @@ const TreeModal = ({
                 }}
                 key={ele.id}
                 onClick={() => {
-                  setDefaultSelectedSubItem(ele);
+                  setPaths((prevPaths) => {
+                    const trimmedIndex = prevPaths.indexOf(ele);
+                    if (trimmedIndex === 0) {
+                      return prevPaths.slice(0, -prevPaths.length + 1);
+                    }
+                    return prevPaths.slice(0, trimmedIndex + 1);
+                  });
+
+                  if (ele.id === ROOT_MODAL_ID) {
+                    setSelectedId('');
+                  } else {
+                    setSelectedId(ele.id);
+                  }
                 }}
                 disabled={index === paths.length - 1}
               >
@@ -254,7 +242,7 @@ const TreeModal = ({
           setPaths={setPaths}
           setSelectedId={setSelectedId}
           selectedId={selectedId}
-          defaultSelectedSubItem={defaultSelectedSubItem}
+          selectedParent={paths[paths.length - 1]}
           itemIds={itemIds}
           defaultParent={parents?.[parents.length - 1]}
         />
@@ -268,13 +256,7 @@ const TreeModal = ({
           variant="contained"
         >
           {translateBuilder(BUILDER.MOVE_BUTTON)}
-          {(!isDisabled &&
-            selectedId === TREE_MODAL_MY_ITEMS_ID &&
-            ` ${translateBuilder(BUILDER.TO)} ${translateBuilder(
-              BUILDER.HOME_TITLE,
-            )}`) ||
-            (parentItem?.name &&
-              ` ${translateBuilder(BUILDER.TO)} ${parentItem?.name}`)}
+          {text}
         </Button>
       </DialogActions>
     </Dialog>
