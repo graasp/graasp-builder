@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 
 import { Breadcrumbs, Button, Stack } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -12,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -23,9 +17,9 @@ import {
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import CancelButton from '../common/CancelButton';
-import MoveMenuRow from './RowMenu';
+import RootTreeModal from './RootTreeModal';
 
-const dialogId = 'simple-dialog-title';
+const dialogId = 'items-tree-modal';
 
 export type TreeModalProps = {
   onConfirm: (args: { ids: string[]; to?: string }) => void;
@@ -33,117 +27,6 @@ export type TreeModalProps = {
   title: string;
   itemIds?: string[];
   open?: boolean;
-};
-
-interface OwnedItemsProps {
-  setPaths: Dispatch<
-    SetStateAction<(DiscriminatedItem | { name: string; id: string })[]>
-  >;
-  setSelectedId: Dispatch<SetStateAction<string>>;
-  selectedId: string;
-  selectedParent: DiscriminatedItem | null | { name: string; id: string };
-  itemIds: string[];
-  defaultParent?: DiscriminatedItem;
-}
-
-const OwnedItemsTree = ({
-  setPaths,
-  setSelectedId,
-  selectedId,
-  selectedParent,
-  itemIds,
-  defaultParent,
-}: OwnedItemsProps) => {
-  const { data: ownItems } = hooks.useOwnItems();
-  const { data: sharedItems } = hooks.useSharedItems();
-  const { t: translateBuilder } = useBuilderTranslation();
-
-  const [isHome, setIsHome] = useState(true);
-  const { data } = hooks.useChildren(selectedParent?.id || '');
-
-  const selectSubItems = (ele: DiscriminatedItem) => {
-    setPaths((paths) => [...paths, ele]);
-    setSelectedId(ele.id);
-  };
-
-  useEffect(() => {
-    if (selectedParent?.id === ROOT_MODAL_ID) {
-      setIsHome(true);
-    }
-  }, [selectedParent]);
-  const rootMenuItem = {
-    name: translateBuilder(BUILDER.HOME_TITLE),
-    id: HOME_MODAL_ITEM_ID,
-    type: ItemType.FOLDER,
-  } as DiscriminatedItem;
-
-  const items = useMemo(() => {
-    const results =
-      selectedParent?.id === HOME_MODAL_ITEM_ID
-        ? [...(ownItems || []), ...(sharedItems || [])]
-        : data;
-
-    return results?.filter(
-      (ele: DiscriminatedItem) => ele.type === ItemType.FOLDER,
-    );
-  }, [selectedParent, ownItems, sharedItems, data]);
-
-  return (
-    <div id={`${HOME_MODAL_ITEM_ID}`}>
-      {/* Home or Root  Which will be the start of the menu */}
-      {isHome && (
-        <MoveMenuRow
-          key={rootMenuItem.name}
-          ele={rootMenuItem}
-          fetchSubItems={() => {
-            setIsHome(false);
-            setPaths((paths) => [...paths, rootMenuItem]);
-            setSelectedId(rootMenuItem.id);
-          }}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          itemIds={[]}
-        />
-      )}
-      {/* end of home */}
-
-      {/* Items for selected Item, So if I choose folder1 this should be it children */}
-      {!isHome &&
-        items?.map((ele) => (
-          <MoveMenuRow
-            key={ele.id}
-            ele={ele}
-            fetchSubItems={() => selectSubItems(ele)}
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
-            itemIds={itemIds}
-          />
-        ))}
-
-      {/* Default Parent So If I want to move an item who's in nested folder we will have it's parent as default */}
-
-      {defaultParent && selectedParent?.id === ROOT_MODAL_ID && (
-        <MoveMenuRow
-          key={defaultParent.id}
-          ele={defaultParent}
-          fetchSubItems={() => {
-            selectSubItems(defaultParent);
-            setIsHome(false);
-            setSelectedId(defaultParent.id);
-          }}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          itemIds={itemIds}
-        />
-      )}
-
-      {!isHome && !items?.length && (
-        <div>
-          {translateBuilder(BUILDER.EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM)}
-        </div>
-      )}
-    </div>
-  );
 };
 
 const TreeModal = ({
@@ -238,13 +121,13 @@ const TreeModal = ({
           </Breadcrumbs>
         </Stack>
 
-        <OwnedItemsTree
+        <RootTreeModal
           setPaths={setPaths}
           setSelectedId={setSelectedId}
           selectedId={selectedId}
           selectedParent={paths[paths.length - 1]}
           itemIds={itemIds}
-          defaultParent={parents?.[parents.length - 1]}
+          parentItem={parents?.[parents.length - 1]}
         />
       </DialogContent>
       <DialogActions>

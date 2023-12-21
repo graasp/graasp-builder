@@ -265,6 +265,6 @@
   "DOWNGRADE_PERMISSION_TITLE": "خفض مستوى الإذن الخاص بك",
   "DOWNGRADE_PERMISSION_DESCRIPTION": "هل أنت متأكد من خفض الإذن الخاص بك؟ لا يمكنك التراجع عن هذه العملية",
   "CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON": "الرجوع إلى قائمة التطبيقات",
-  "EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM": "لا يوجد مجلدات فرعية لهذا المجلد",
+  "EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM": "هذا المجلد لا يحتوى على أية مجلدات",
   "TO": "إلى"
 }

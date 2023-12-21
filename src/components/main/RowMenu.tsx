@@ -2,21 +2,32 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, Button, IconButton, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
-import { HOME_MODAL_ITEM_ID, buildItemRowArrowId } from '@/config/selectors';
+import { buildHomeModalItemID, buildItemRowArrowId } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 interface MenuRowProps {
   ele: DiscriminatedItem;
-  fetchSubItems: () => void;
+  onNavigate: () => void;
   selectedId: string;
   setSelectedId: Dispatch<SetStateAction<string>>;
   itemIds: string[];
 }
+
+const StyledButton = styled(Button)<{ isSelected: boolean }>(
+  ({ theme, isSelected }) => ({
+    display: 'flex',
+    color: theme.palette.text.primary,
+    width: '100%',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing(1),
+    background: isSelected ? theme.palette.grey[200] : 'none',
+  }),
+);
 
 const isTreeItemDisabled = ({
   itemPath,
@@ -25,24 +36,13 @@ const isTreeItemDisabled = ({
   itemPath: string;
   itemIds: string[];
 }) => {
-  if (itemPath && itemIds.length) {
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < itemIds.length; i++) {
-      const pathsSerious = itemPath
-        ?.split('.')
-        .map((ele) => ele.replaceAll('_', '-'));
+  const itemPaths = itemIds.map((ele) => ele.replaceAll('-', '_'));
 
-      const isItemChild = pathsSerious.indexOf(itemIds[i]);
-      if (isItemChild > -1) {
-        return isItemChild > -1;
-      }
-    }
-  }
-  return false;
+  return itemPaths.some((path) => path.includes(itemPath));
 };
 const MoveMenuRow = ({
   ele,
-  fetchSubItems,
+  onNavigate,
   setSelectedId,
   selectedId,
   itemIds,
@@ -62,21 +62,14 @@ const MoveMenuRow = ({
     return null;
   }
   return (
-    <Button
+    <StyledButton
       onMouseEnter={handleHover}
       onMouseLeave={handleUnhover}
       onClick={() => {
         setSelectedId(ele?.id);
       }}
-      id={`${HOME_MODAL_ITEM_ID}-${ele.id}`}
-      sx={{
-        display: 'flex',
-        color: 'black',
-        width: '100%',
-        justifyContent: 'space-between',
-        marginBottom: '12px',
-        background: selectedId === ele.id ? 'rgba(80, 80, 210, 0.08)' : 'none',
-      }}
+      id={buildHomeModalItemID(ele.id)}
+      isSelected={selectedId === ele.id}
       disabled={isTreeItemDisabled({
         itemPath: ele.path,
         itemIds,
@@ -91,21 +84,17 @@ const MoveMenuRow = ({
           <Button sx={{ padding: '0' }}>
             {translateBuilder(BUILDER.MOVE_BUTTON)}
           </Button>
-          {true && (
-            <IconButton
-              sx={{ padding: '0' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                fetchSubItems();
-              }}
-              id={buildItemRowArrowId(ele.id)}
-            >
-              <KeyboardArrowRightIcon />
-            </IconButton>
-          )}
+
+          <IconButton
+            sx={{ padding: '0' }}
+            onClick={onNavigate}
+            id={buildItemRowArrowId(ele.id)}
+          >
+            <KeyboardArrowRightIcon />
+          </IconButton>
         </Box>
       )}
-    </Button>
+    </StyledButton>
   );
 };
 

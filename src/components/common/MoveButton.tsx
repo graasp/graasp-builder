@@ -70,10 +70,8 @@ const MoveButton = ({
   }, [defaultItemsIds]);
 
   const handleMove = () => {
-    if (itemIds) {
-      openMoveModal(itemIds);
-      onClick?.();
-    }
+    openMoveModal(itemIds);
+    onClick?.();
   };
 
   return (
