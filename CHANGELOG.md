@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/graasp/graasp-builder/compare/v2.3.1...v2.4.0) (2023-12-22)
+
+
+### Features
+
+* translate it.json via GitLocalize ([#928](https://github.com/graasp/graasp-builder/issues/928)) ([9ab9db2](https://github.com/graasp/graasp-builder/commit/9ab9db2ad29e7764d85ccf9094247ff60202831f))
+* use accessible items on home ([#887](https://github.com/graasp/graasp-builder/issues/887)) ([819c4a1](https://github.com/graasp/graasp-builder/commit/819c4a173c2215189aefcf5046bfb07c76719b53))
+
 ## [2.3.1](https://github.com/graasp/graasp-builder/compare/v2.3.0...v2.3.1) (2023-12-19)
 
 
