@@ -1,7 +1,7 @@
 import { saveUrlForRedirection } from '@graasp/sdk';
 
 import { REDIRECT_PATH } from '../../src/config/paths';
-import { OWNED_ITEMS_ID } from '../../src/config/selectors';
+import { ACCESSIBLE_ITEMS_TABLE_ID } from '../../src/config/selectors';
 
 const DOMAIN = Cypress.env('REACT_APP_GRAASP_DOMAIN');
 
@@ -21,6 +21,6 @@ describe('Redirection', () => {
 
     cy.visit(REDIRECT_PATH);
 
-    cy.get(`#${OWNED_ITEMS_ID}`).should('be.visible');
+    cy.get(`#${ACCESSIBLE_ITEMS_TABLE_ID}`).should('be.visible');
   });
 });

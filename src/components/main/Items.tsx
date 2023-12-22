@@ -1,10 +1,11 @@
+import { CheckboxProps } from '@mui/material';
+
 import { DiscriminatedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
-import { useItemSearch } from '../item/ItemSearch';
 import { useItemsStatuses } from '../table/BadgesCellRenderer';
 import ItemsGrid from './ItemsGrid';
 import ItemsTable from './ItemsTable';
@@ -12,7 +13,7 @@ import ItemsTable from './ItemsTable';
 const { useManyItemMemberships, useItemsTags } = hooks;
 
 type Props = {
-  id: string;
+  id?: string;
   items?: DiscriminatedItem[];
   title: string;
   headerElements?: JSX.Element[];
@@ -27,9 +28,17 @@ type Props = {
   };
   parentId?: string;
   showThumbnails?: boolean;
-  showCreator?: boolean;
   enableMemberships?: boolean;
   canMove?: boolean;
+  onShowOnlyMeChange?: CheckboxProps['onChange'];
+  showOnlyMe?: boolean;
+  itemSearch?: { text: string };
+  page?: number;
+  setPage?: (p: number) => void;
+  // how many items exist, which can be more than the displayed items
+  totalCount?: number;
+  onSortChanged?: (e: any) => void;
+  pageSize?: number;
 };
 
 const Items = ({
@@ -43,19 +52,24 @@ const Items = ({
   parentId,
   defaultSortedColumn,
   showThumbnails = true,
-  showCreator = false,
   enableMemberships = true,
   canMove = true,
+  showOnlyMe = false,
+  itemSearch,
+  page,
+  setPage,
+  onShowOnlyMeChange,
+  totalCount = 0,
+  onSortChanged,
+  pageSize,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
-  const itemSearch = useItemSearch(items);
-  const itemsToDisplay = itemSearch.results;
-  const itemIds = itemsToDisplay?.map(({ id: itemId }) => itemId);
+  const itemIds = items?.map(({ id: itemId }) => itemId);
   const { data: manyMemberships, isLoading: isMembershipsLoading } =
     useManyItemMemberships(enableMemberships ? itemIds : []);
-  const { data: itemsTags } = useItemsTags(itemsToDisplay?.map((r) => r.id));
+  const { data: itemsTags } = useItemsTags(items?.map((r) => r.id));
   const itemsStatuses = useItemsStatuses({
-    items: itemsToDisplay,
+    items,
     itemsTags,
   });
 
@@ -70,12 +84,17 @@ const Items = ({
           canMove={canMove}
           parentId={parentId}
           title={title}
-          items={itemsToDisplay}
+          items={items}
           manyMemberships={manyMemberships}
           itemsStatuses={itemsStatuses}
           // This enables the possiblity to display messages (item is empty, no search result)
           itemSearch={itemSearch}
-          headerElements={[itemSearch.input, ...headerElements]}
+          headerElements={headerElements}
+          onShowOnlyMeChange={onShowOnlyMeChange}
+          showOnlyMe={showOnlyMe}
+          page={page}
+          onPageChange={setPage}
+          totalCount={totalCount}
         />
       );
     case ITEM_LAYOUT_MODES.LIST:
@@ -86,16 +105,22 @@ const Items = ({
           actions={actions}
           tableTitle={title}
           defaultSortedColumn={defaultSortedColumn}
-          items={itemsToDisplay}
+          onSortChanged={onSortChanged}
+          items={items}
           manyMemberships={manyMemberships}
           itemsStatuses={itemsStatuses}
-          headerElements={[itemSearch.input, ...headerElements]}
-          isSearching={Boolean(itemSearch.text)}
+          headerElements={headerElements}
+          isSearching={Boolean(itemSearch?.text)}
           ToolbarActions={ToolbarActions}
           clickable={clickable}
           showThumbnails={showThumbnails}
-          showCreator={showCreator}
           canMove={canMove}
+          onShowOnlyMeChange={onShowOnlyMeChange}
+          showOnlyMe={showOnlyMe}
+          page={page}
+          setPage={setPage}
+          totalCount={totalCount}
+          pageSize={pageSize}
         />
       );
   }

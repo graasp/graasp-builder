@@ -1172,9 +1172,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@graasp/query-client@npm:2.1.1"
+"@graasp/query-client@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@graasp/query-client@npm:2.2.1"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
@@ -1186,7 +1186,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 1ecb75fd21ce3de3799088b1da0ce8ada68601527b4393d883632a4f7b1d8cbd73db673dec302ea53e7ebbf16bb83aa3257e238a5698add4abc9fb4ebd904691
+  checksum: bad1c3a4163f38e45f0f64d8beb28eb6ca6fd4cf123d971be9421a6012d0d2860c71cc0c71b14bf7d46ea3afe73355a32823e037d0216caa8154905d0d408f8f
   languageName: node
   linkType: hard
 
@@ -1212,9 +1212,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.1.1":
-  version: 4.1.1
-  resolution: "@graasp/ui@npm:4.1.1"
+"@graasp/ui@npm:4.2.0":
+  version: 4.2.0
+  resolution: "@graasp/ui@npm:4.2.0"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     http-status-codes: "npm:2.3.0"
@@ -1235,8 +1235,8 @@ __metadata:
     "@mui/icons-material": ~5.11.9 || ~5.13.0 || ~5.14.0
     "@mui/lab": ~5.0.0-alpha.120
     "@mui/material": ~5.11.9 || ~5.13.0 || ~5.14.0
-    ag-grid-community: ^28.1.1
-    ag-grid-react: ^28.1.1
+    ag-grid-community: 29.3.5
+    ag-grid-react: 29.3.5
     i18next: ^22.4.15 || ^23.0.0
     react: ^17.0.2
     react-dom: ^17.0.2
@@ -1249,7 +1249,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: d1ff422d65945113393553df5b875a004086c38c8faf2c73b51e01d8372c6ce533541502e7bca68625ef6ce32f6b93da11e19c7bdcb57adbae7b5a754f76fa55
+  checksum: 364a5da87b2c13296e2fc16bd464e5ea31552b614da99eabdbd137daa98c152bf3184e72ee9ec3962804dc0e096f111aa72c6f199041f245aefde40b74c79c12
   languageName: node
   linkType: hard
 
@@ -4200,9 +4200,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.6.0":
-  version: 13.6.0
-  resolution: "cypress@npm:13.6.0"
+"cypress@npm:13.6.1":
+  version: 13.6.1
+  resolution: "cypress@npm:13.6.1"
   dependencies:
     "@cypress/request": "npm:^3.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -4249,7 +4249,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 345e295c305a9574f5de433c216c9734eab5c8594bd32b7c1a74e2d71a6c7aa5a8228f7031c3fc6bd488319c0f50c906d323d00dab5c9445c43594a41af0d23d
+  checksum: 22e3431faf87b31f57a1afbcb92eb8f2bf366468f0a47399545af772a89acc198df2ce80c3d3169e3a82649811ee60685fbd7a512e0ec9ffb9ddbe13f21ecfd0
   languageName: node
   linkType: hard
 
@@ -5933,10 +5933,10 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.0"
-    "@graasp/query-client": "npm:2.1.1"
+    "@graasp/query-client": "npm:2.2.1"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
-    "@graasp/ui": "npm:4.1.1"
+    "@graasp/ui": "npm:4.2.0"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"
@@ -5975,7 +5975,7 @@ __metadata:
     ag-grid-react: "npm:29.3.5"
     axios: "npm:1.6.2"
     concurrently: "npm:8.2.2"
-    cypress: "npm:13.6.0"
+    cypress: "npm:13.6.1"
     cypress-localstorage-commands: "npm:2.2.5"
     date-fns: "npm:2.30.0"
     env-cmd: "npm:10.1.0"

@@ -88,7 +88,7 @@ describe('Edit File', () => {
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getOwnItems');
+          cy.wait('@getAccessibleItems');
         },
       );
     });
@@ -120,7 +120,7 @@ describe('Edit File', () => {
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getOwnItems');
+          cy.wait('@getAccessibleItems');
         },
       );
     });

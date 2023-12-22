@@ -25,7 +25,7 @@ describe('Create Link', () => {
       cy.wait(CREATE_ITEM_PAUSE);
 
       // expect update
-      cy.wait('@getOwnItems');
+      cy.wait('@getAccessibleItems');
     });
   });
 
@@ -43,7 +43,7 @@ describe('Create Link', () => {
       cy.wait(CREATE_ITEM_PAUSE);
 
       // expect update
-      cy.wait('@getOwnItems');
+      cy.wait('@getAccessibleItems');
     });
   });
 

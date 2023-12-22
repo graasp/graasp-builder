@@ -1,6 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
+import { CheckboxProps } from '@mui/material';
+
 import {
   DiscriminatedItem,
   Item,
@@ -15,7 +17,12 @@ import { COMMON } from '@graasp/translations';
 import { useShortenURLParams } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
-import { CellClickedEvent, ColDef, IRowDragItem } from 'ag-grid-community';
+import {
+  CellClickedEvent,
+  ColDef,
+  IRowDragItem,
+  SortChangedEvent,
+} from 'ag-grid-community';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
@@ -37,7 +44,7 @@ import ItemsToolbar from './ItemsToolbar';
 
 const { useItem } = hooks;
 
-type Props = {
+export type ItemsTableProps = {
   id?: string;
   items?: DiscriminatedItem[];
   manyMemberships?: ResultOf<ItemMembership[]>;
@@ -55,8 +62,14 @@ type Props = {
     name?: 'desc' | 'asc' | null;
   };
   showThumbnails?: boolean;
-  showCreator?: boolean;
   canMove?: boolean;
+  onShowOnlyMeChange?: CheckboxProps['onChange'];
+  showOnlyMe?: boolean;
+  page?: number;
+  setPage?: (p: number) => void;
+  totalCount?: number;
+  onSortChanged?: (e: SortChangedEvent) => void;
+  pageSize?: number;
 };
 
 const ItemsTable = ({
@@ -72,9 +85,15 @@ const ItemsTable = ({
   clickable = true,
   defaultSortedColumn,
   showThumbnails = true,
-  showCreator = false,
   canMove = true,
-}: Props): JSX.Element => {
+  showOnlyMe,
+  onShowOnlyMeChange,
+  page = 1,
+  setPage,
+  totalCount,
+  onSortChanged,
+  pageSize,
+}: ItemsTableProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();
@@ -181,6 +200,20 @@ const ItemsTable = ({
         tooltipField: 'name',
       },
       {
+        field: 'creator',
+        headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
+        colId: 'creator',
+        type: 'rightAligned',
+        cellRenderer: MemberNameCellRenderer({
+          defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
+        }),
+        cellStyle: {
+          display: 'flex',
+          justifyContent: 'end',
+        },
+        sortable: false,
+      },
+      {
         field: 'status',
         headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
         cellRenderer: BadgesComponent,
@@ -236,26 +269,9 @@ const ItemsTable = ({
       },
     ];
 
-    if (showCreator) {
-      columns.splice(2, 0, {
-        field: 'creator',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
-        colId: 'creator',
-        type: 'rightAligned',
-        cellRenderer: MemberNameCellRenderer({
-          defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
-        }),
-        cellStyle: {
-          display: 'flex',
-          justifyContent: 'end',
-        },
-        sortable: false,
-      });
-    }
     return columns;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    showCreator,
     translateBuilder,
     defaultSortedColumn,
     ActionComponent,
@@ -271,9 +287,15 @@ const ItemsTable = ({
 
   return (
     <>
-      <ItemsToolbar title={tableTitle} headerElements={headerElements} />
+      <ItemsToolbar
+        title={tableTitle}
+        headerElements={headerElements}
+        onShowOnlyMeChange={onShowOnlyMeChange}
+        showOnlyMe={showOnlyMe}
+      />
       {itemId && <FolderDescription itemId={itemId} />}
       <GraaspTable
+        onSortChanged={onSortChanged}
         id={tableId}
         columnDefs={columnDefs}
         tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
@@ -286,7 +308,16 @@ const ItemsTable = ({
         enableDrag={canDrag()}
         rowDragText={itemRowDragText}
         ToolbarActions={ToolbarActions}
+        pagination
+        page={Math.max(0, page - 1)}
+        onPageChange={(e, newPage) => {
+          setPage?.(newPage + 1);
+        }}
         countTextFunction={countTextFunction}
+        totalCount={totalCount}
+        // has to be fixed, otherwise the pagination is false on the last page
+        // rows can contain less for the last page
+        pageSize={pageSize ?? rows.length}
       />
     </>
   );

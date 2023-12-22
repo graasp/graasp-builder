@@ -59,7 +59,7 @@ describe('Edit Document', () => {
           expect(name).to.equal(newFields.name);
           expect(getDocumentExtra(extra)?.content).to.contain(content);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getOwnItems');
+          cy.wait('@getAccessibleItems');
         },
       );
     });
@@ -125,7 +125,7 @@ describe('Edit Document', () => {
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getOwnItems');
+          cy.get('@getAccessibleItems');
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
           expect(getDocumentExtra(extra)?.content).to.contain(content);
