@@ -29,7 +29,7 @@ const SharedItemsLoadableContent = (): JSX.Element => {
 
   return (
     <Box mx={2}>
-      <Alert severity="warning">
+      <Alert severity="warning" sx={{ mt: 3 }}>
         {translateBuilder(
           "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
         )}
