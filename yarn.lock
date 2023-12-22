@@ -1172,9 +1172,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#main":
-  version: 2.2.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=2bf65241784faec3752662dd5c067933c54e84b3"
+"@graasp/query-client@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@graasp/query-client@npm:2.2.1"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
@@ -1186,7 +1186,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 67fd5965d0a069dc55d6bdd2f3ec1c1cbff0491e7692e907502d41b50d316bcf8cdf02e9299ca5a43d7431b43485ff25332c3f2bd30a29cfa31b0e0183cb17ec
+  checksum: bad1c3a4163f38e45f0f64d8beb28eb6ca6fd4cf123d971be9421a6012d0d2860c71cc0c71b14bf7d46ea3afe73355a32823e037d0216caa8154905d0d408f8f
   languageName: node
   linkType: hard
 
@@ -1212,9 +1212,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#519-table-pagination":
-  version: 4.1.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=a1756803c222d0a9f05a76a134e8831c235979b8"
+"@graasp/ui@npm:4.2.0":
+  version: 4.2.0
+  resolution: "@graasp/ui@npm:4.2.0"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     http-status-codes: "npm:2.3.0"
@@ -1249,7 +1249,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: c1ff635aa81e6b61a7aefd5b2fc481bf1b3970a97921e7e7253f4a9a38ab1e99b4b1a43059189fa61f15ed44829d6a2b30e5a3fd4000ef47ea12167b31c7ac17
+  checksum: 364a5da87b2c13296e2fc16bd464e5ea31552b614da99eabdbd137daa98c152bf3184e72ee9ec3962804dc0e096f111aa72c6f199041f245aefde40b74c79c12
   languageName: node
   linkType: hard
 
@@ -5933,10 +5933,10 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#main"
+    "@graasp/query-client": "npm:2.2.1"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
-    "@graasp/ui": "github:graasp/graasp-ui#519-table-pagination"
+    "@graasp/ui": "npm:4.2.0"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"
