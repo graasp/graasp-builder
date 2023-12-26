@@ -10,7 +10,7 @@ import {
 
 import { validate } from 'uuid';
 
-import { hooks, mutations } from '@/config/queryClient';
+import { mutations } from '@/config/queryClient';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -41,9 +41,6 @@ const MoveButton = ({
 
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
-
-  // to get first item name
-  const { data: item } = hooks.useItem(itemIds[0]);
 
   const openMoveModal = (newItemIds: string[]) => {
     setOpen(true);
@@ -89,16 +86,13 @@ const MoveButton = ({
         iconClassName={ITEM_MOVE_BUTTON_CLASS}
       />
 
-      {itemIds.length && (
+      {itemIds.length && open && (
         <TreeModal
           onClose={onClose}
           open={open}
           itemIds={itemIds}
           onConfirm={onConfirm}
-          title={translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE, {
-            name: item?.name.slice(0, 20),
-            count: itemIds.length - 1,
-          })}
+          title={BUILDER.MOVE_ITEM_MODAL_TITLE}
         />
       )}
     </>

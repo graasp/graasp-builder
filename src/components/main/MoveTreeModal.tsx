@@ -48,6 +48,7 @@ const TreeModal = ({
   const { data: parentItem } = hooks.useItem(
     selectedId === HOME_MODAL_ITEM_ID ? '' : selectedId,
   );
+  const { data: itemToMove } = hooks.useItem(itemIds[0]);
 
   const { data: parents } = hooks.useParents({
     id: itemIds?.[0],
@@ -84,7 +85,12 @@ const TreeModal = ({
       open={open}
       scroll="paper"
     >
-      <DialogTitle id={dialogId}>{title}</DialogTitle>
+      <DialogTitle id={dialogId}>
+        {translateBuilder(title, {
+          name: itemToMove?.name.slice(0, 20),
+          count: itemIds.length - 1,
+        })}
+      </DialogTitle>
       <DialogContent sx={{ height: '270px' }}>
         <Stack spacing={2} mb={2}>
           <Breadcrumbs
