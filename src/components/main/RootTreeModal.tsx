@@ -10,7 +10,7 @@ import { BUILDER } from '@/langs/constants';
 import MoveMenuRow from './RowMenu';
 
 interface RootTreeModalProps {
-  setPaths: Dispatch<
+  setBreadcrumbs: Dispatch<
     SetStateAction<(DiscriminatedItem | { name: string; id: string })[]>
   >;
   setSelectedId: Dispatch<SetStateAction<string>>;
@@ -21,7 +21,7 @@ interface RootTreeModalProps {
 }
 
 const RootTreeModal = ({
-  setPaths,
+  setBreadcrumbs,
   setSelectedId,
   selectedId,
   selectedParent,
@@ -36,7 +36,7 @@ const RootTreeModal = ({
   const { data } = hooks.useChildren(selectedParent?.id || '');
 
   const selectSubItems = (ele: DiscriminatedItem) => {
-    setPaths((paths) => [...paths, ele]);
+    setBreadcrumbs((breadcrumb) => [...breadcrumb, ele]);
     setSelectedId(ele.id);
   };
 
@@ -63,7 +63,7 @@ const RootTreeModal = ({
   }, [selectedParent, ownItems, sharedItems, data]);
 
   return (
-    <div id={`${HOME_MODAL_ITEM_ID}`}>
+    <div id={HOME_MODAL_ITEM_ID}>
       {/* Home or Root  Which will be the start of the menu */}
       {isHome && (
         <MoveMenuRow
@@ -71,7 +71,7 @@ const RootTreeModal = ({
           ele={rootMenuItem}
           onNavigate={() => {
             setIsHome(false);
-            setPaths((paths) => [...paths, rootMenuItem]);
+            setBreadcrumbs((breadcrumb) => [...breadcrumb, rootMenuItem]);
             setSelectedId(rootMenuItem.id);
           }}
           selectedId={selectedId}

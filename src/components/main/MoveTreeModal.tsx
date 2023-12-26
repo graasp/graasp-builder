@@ -41,7 +41,7 @@ const TreeModal = ({
 
   const [selectedId, setSelectedId] = useState<string>('');
   // serious of breadcrumbs
-  const [paths, setPaths] = useState<
+  const [breadcrumbs, setBreadcrumbs] = useState<
     (DiscriminatedItem | { name: string; id: string })[]
   >([{ name: translateBuilder(BUILDER.ROOT), id: ROOT_MODAL_ID }]);
 
@@ -61,21 +61,21 @@ const TreeModal = ({
     handleClose();
   };
 
-  // no selected Item, or selectedId is same original location
+  // no selected item, or selectedId is same original location
   const isDisabled =
     !selectedId ||
     selectedId === ROOT_MODAL_ID ||
     (!parents?.length && selectedId === HOME_MODAL_ITEM_ID) ||
-    selectedId === (parents && parents?.[(parents?.length || 0) - 1]?.id);
+    selectedId === (parents && parents[parents.length - 1].id);
 
   const text =
     !isDisabled &&
-    ((selectedId === HOME_MODAL_ITEM_ID &&
-      ` ${translateBuilder(BUILDER.TO)} ${translateBuilder(
-        BUILDER.HOME_TITLE,
-      )}`) ||
-      (parentItem?.name &&
-        ` ${translateBuilder(BUILDER.TO)} ${parentItem?.name}`));
+    translateBuilder(BUILDER.TO_FOLDER, {
+      name:
+        selectedId === HOME_MODAL_ITEM_ID
+          ? translateBuilder(BUILDER.HOME_TITLE)
+          : parentItem?.name || '',
+    });
 
   return (
     <Dialog
@@ -92,7 +92,7 @@ const TreeModal = ({
             aria-label="breadcrumb"
             sx={{ '& li:first-of-type': { width: '42px' } }}
           >
-            {paths.map((ele) => (
+            {breadcrumbs.map((ele) => (
               <Button
                 variant="text"
                 color="inherit"
@@ -105,15 +105,19 @@ const TreeModal = ({
                 }}
                 key={ele.id}
                 onClick={() => {
-                  setPaths((prevPaths) => {
-                    const trimmedIndex = prevPaths.indexOf(ele);
-                    if (trimmedIndex === 0 && prevPaths.length === 1) {
-                      return prevPaths;
+                  setBreadcrumbs((prevBreadcrumb) => {
+                    // remove until the clicked item included
+                    const trimmedIndex = prevBreadcrumb.indexOf(ele);
+                    if (trimmedIndex === 0 && prevBreadcrumb.length === 1) {
+                      return prevBreadcrumb;
                     }
                     if (trimmedIndex === 0) {
-                      return prevPaths.slice(0, -prevPaths.length + 1);
+                      return prevBreadcrumb.slice(
+                        0,
+                        -prevBreadcrumb.length + 1,
+                      );
                     }
-                    return prevPaths.slice(0, trimmedIndex + 1);
+                    return prevBreadcrumb.slice(0, trimmedIndex + 1);
                   });
 
                   if (ele.id === ROOT_MODAL_ID) {
@@ -134,10 +138,10 @@ const TreeModal = ({
         </Stack>
 
         <RootTreeModal
-          setPaths={setPaths}
+          setBreadcrumbs={setBreadcrumbs}
           setSelectedId={setSelectedId}
           selectedId={selectedId}
-          selectedParent={paths[paths.length - 1]}
+          selectedParent={breadcrumbs[breadcrumbs.length - 1]}
           itemIds={itemIds}
           parentItem={parents?.[parents.length - 1]}
         />
@@ -158,7 +162,7 @@ const TreeModal = ({
           }}
         >
           {translateBuilder(BUILDER.MOVE_BUTTON)}
-          {text}
+          {text && ` ${text}`}
         </Button>
       </DialogActions>
     </Dialog>
