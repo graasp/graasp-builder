@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import HomeIcon from '@mui/icons-material/Home';
 import { Breadcrumbs, Button, Stack } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -47,6 +48,7 @@ const TreeModal = ({
   const { data: parentItem } = hooks.useItem(
     selectedId === HOME_MODAL_ITEM_ID ? '' : selectedId,
   );
+
   const { data: parents } = hooks.useParents({
     id: itemIds?.[0],
   });
@@ -83,10 +85,14 @@ const TreeModal = ({
       scroll="paper"
     >
       <DialogTitle id={dialogId}>{title}</DialogTitle>
-      <DialogContent sx={{ height: '250px' }}>
+      <DialogContent sx={{ height: '270px' }}>
         <Stack spacing={2} mb={2}>
-          <Breadcrumbs separator="›" aria-label="breadcrumb">
-            {paths.map((ele, index) => (
+          <Breadcrumbs
+            separator="›"
+            aria-label="breadcrumb"
+            sx={{ '& li:first-of-type': { width: '42px' } }}
+          >
+            {paths.map((ele) => (
               <Button
                 variant="text"
                 color="inherit"
@@ -101,6 +107,9 @@ const TreeModal = ({
                 onClick={() => {
                   setPaths((prevPaths) => {
                     const trimmedIndex = prevPaths.indexOf(ele);
+                    if (trimmedIndex === 0 && prevPaths.length === 1) {
+                      return prevPaths;
+                    }
                     if (trimmedIndex === 0) {
                       return prevPaths.slice(0, -prevPaths.length + 1);
                     }
@@ -113,9 +122,12 @@ const TreeModal = ({
                     setSelectedId(ele.id);
                   }
                 }}
-                disabled={index === paths.length - 1}
               >
-                {ele.name}
+                {ele.id === ROOT_MODAL_ID ? (
+                  <HomeIcon />
+                ) : (
+                  ele.name.slice(0, 10)
+                )}
               </Button>
             ))}
           </Breadcrumbs>
@@ -137,6 +149,13 @@ const TreeModal = ({
           disabled={isDisabled}
           id={TREE_MODAL_CONFIRM_BUTTON_ID}
           variant="contained"
+          sx={{
+            textOverflow: 'ellipsis',
+            maxWidth: '180px',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            display: 'block',
+          }}
         >
           {translateBuilder(BUILDER.MOVE_BUTTON)}
           {text}

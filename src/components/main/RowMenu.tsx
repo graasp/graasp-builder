@@ -75,7 +75,16 @@ const MoveMenuRow = ({
         itemIds,
       })}
     >
-      <Box display="flex" gap="4px">
+      <Box
+        display="flex"
+        gap="4px"
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          maxWidth: '180px',
+          whiteSpace: 'nowrap',
+        }}
+      >
         <FolderIcon />
         {ele.name}
       </Box>
