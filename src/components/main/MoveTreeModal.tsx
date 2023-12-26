@@ -66,7 +66,7 @@ const TreeModal = ({
     !selectedId ||
     selectedId === ROOT_MODAL_ID ||
     (!parents?.length && selectedId === HOME_MODAL_ITEM_ID) ||
-    selectedId === (parents && parents[parents.length - 1].id);
+    selectedId === (parents && parents[parents.length - 1]?.id);
 
   const text =
     !isDisabled &&
