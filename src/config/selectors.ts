@@ -113,8 +113,8 @@ export const CREATE_ITEM_H5P_ID = 'createItemH5P';
 export const CREATE_ITEM_ETHERPAD_ID = 'createItemEtherpad';
 export const ITEM_FORM_ETHERPAD_NAME_INPUT_ID = 'itemFormEtherpadNameInputId';
 export const ITEM_FORM_APP_URL_ID = 'itemFormAppUrl';
-export const buildItemFormAppOptionId = (name?: string): string =>
-  `${name?.replaceAll(/\s/g, '-')}`;
+export const buildItemFormAppOptionId = (id?: string): string =>
+  `app-option-${id}`;
 export const TEXT_EDITOR_CLASS = 'ql-editor';
 export const buildSaveButtonId = (id: string): string => `saveButton-${id}`;
 export const buildCancelButtonId = (id: string): string => `cancelButton-${id}`;
@@ -343,3 +343,6 @@ export const buildShortLinkPlatformTextId = (
 ): string => `shortLinkPlatformText-${platform}`;
 export const buildShortLinkUrlTextId = (platform: ShortLinkPlatform): string =>
   `shortLinkUrlText-${platform}`;
+export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
+export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
+export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;

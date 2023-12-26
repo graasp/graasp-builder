@@ -4,6 +4,7 @@ import {
   GRAASP_APP_ITEM,
   GRAASP_CUSTOM_APP_ITEM,
 } from '../../../fixtures/apps';
+import { APPS_LIST } from '../../../fixtures/apps/apps';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { createApp } from '../../../support/createUtils';
 
@@ -16,11 +17,11 @@ describe('Create App', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // create
-      createApp(GRAASP_APP_ITEM);
+      createApp(GRAASP_APP_ITEM, { id: APPS_LIST[0].id });
 
       cy.wait('@postItem').then(() => {
         // should update view
-        cy.wait('@getOwnItems');
+        cy.wait('@getAccessibleItems');
       });
     });
 
@@ -31,11 +32,11 @@ describe('Create App', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // create
-      createApp(GRAASP_APP_ITEM);
+      createApp(GRAASP_APP_ITEM, { custom: true });
 
       cy.wait('@postItem').then(() => {
         // should update view
-        cy.wait('@getOwnItems');
+        cy.wait('@getAccessibleItems');
       });
     });
   });
@@ -51,7 +52,7 @@ describe('Create App', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.LIST);
 
       // create
-      createApp(GRAASP_APP_ITEM);
+      createApp(GRAASP_APP_ITEM, { id: APPS_LIST[0].id });
 
       cy.wait('@postItem').then(() => {
         // expect update

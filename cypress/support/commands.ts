@@ -39,6 +39,7 @@ import {
   mockEditItem,
   mockEditItemMembershipForItem,
   mockEditMember,
+  mockGetAccessibleItems,
   mockGetAppData,
   mockGetAppLink,
   mockGetAppListRoute,
@@ -178,6 +179,8 @@ Cypress.Commands.add(
     cy.setCookie(COOKIE_KEYS.ACCEPT_COOKIES_KEY, 'true');
 
     mockGetAppListRoute(APPS_LIST);
+
+    mockGetAccessibleItems(cachedItems);
 
     mockGetOwnItems(cachedItems);
 

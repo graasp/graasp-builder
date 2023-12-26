@@ -1,21 +1,11 @@
-import { useState } from 'react';
-
-import { Box, Typography, styled } from '@mui/material';
+import { Box, CheckboxProps } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
-import Select from '@mui/material/Select';
 
 import { DiscriminatedItem, ItemMembership, ResultOf } from '@graasp/sdk';
 
-import { GRID_ITEMS_PER_PAGE_CHOICES } from '../../config/constants';
-import { useBuilderTranslation } from '../../config/i18n';
-import {
-  ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID,
-  ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID,
-  ITEMS_GRID_PAGINATION_ID,
-} from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
+import { ITEM_PAGE_SIZE } from '../../config/constants';
+import { ITEMS_GRID_PAGINATION_ID } from '../../config/selectors';
 import { getMembershipsForItem } from '../../utils/membership';
 import FolderDescription from '../item/FolderDescription';
 import { NoItemSearchResult } from '../item/ItemSearch';
@@ -23,12 +13,6 @@ import { ItemsStatuses } from '../table/BadgesCellRenderer';
 import EmptyItem from './EmptyItem';
 import ItemCard from './ItemCard';
 import ItemsToolbar from './ItemsToolbar';
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  right: theme.spacing(2),
-  alignItems: 'center',
-}));
 
 type Props = {
   id?: string;
@@ -38,11 +22,15 @@ type Props = {
   title: string;
   itemSearch?: {
     text: string;
-    // input: PropTypes.instanceOf(ItemSearchInput),
   };
   headerElements?: JSX.Element[];
   parentId?: string;
   canMove?: boolean;
+  showOnlyMe?: boolean;
+  onShowOnlyMeChange?: CheckboxProps['onChange'];
+  totalCount?: number;
+  onPageChange: any;
+  page?: number;
 };
 
 const ItemsGrid = ({
@@ -54,39 +42,24 @@ const ItemsGrid = ({
   manyMemberships,
   itemsStatuses,
   parentId,
+  onShowOnlyMeChange,
   canMove = true,
+  showOnlyMe,
+  totalCount = 0,
+  onPageChange,
+  page = 1,
 }: Props): JSX.Element => {
-  const { t: translateBuilder } = useBuilderTranslation();
-  const [page, setPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(
-    GRID_ITEMS_PER_PAGE_CHOICES[0],
-  );
-
-  const pagesCount = Math.ceil(items.length / itemsPerPage);
-
-  // bugfix: since page state is independent from search, must ensure always within range
-  if (page !== 1 && page > pagesCount) {
-    setPage(1);
-  }
-
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const itemsInPage = items.slice(start, end);
-
+  const pagesCount = Math.ceil(Math.max(1, totalCount / ITEM_PAGE_SIZE));
   const renderItems = () => {
-    if (!itemsInPage || !itemsInPage.length) {
+    if (!items?.length) {
       return (
         <Box py={1} px={2}>
-          {itemSearch && itemSearch.text ? (
-            <NoItemSearchResult />
-          ) : (
-            <EmptyItem />
-          )}
+          {itemSearch?.text ? <NoItemSearchResult /> : <EmptyItem />}
         </Box>
       );
     }
 
-    return itemsInPage.map((item) => (
+    return items.map((item) => (
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
         <ItemCard
           canMove={canMove}
@@ -103,35 +76,22 @@ const ItemsGrid = ({
 
   return (
     <div id={gridId}>
-      <ItemsToolbar title={title} headerElements={headerElements} />
+      <ItemsToolbar
+        title={title}
+        headerElements={headerElements}
+        onShowOnlyMeChange={onShowOnlyMeChange}
+        showOnlyMe={showOnlyMe}
+      />
       <FolderDescription itemId={parentId} />
       <Grid container spacing={2}>
         {renderItems()}
       </Grid>
       <Box p={2} alignItems="center" display="flex" justifyContent="center">
-        <StyledBox display="flex">
-          <Typography pr={1} variant="body2">
-            {translateBuilder(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
-          </Typography>
-          <Select
-            labelId={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_LABEL_ID}
-            id={ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID}
-            value={itemsPerPage}
-            onChange={(e) => setItemsPerPage(e.target.value as number)}
-            label={translateBuilder(BUILDER.ITEMS_GRID_ITEMS_PER_PAGE_TITLE)}
-          >
-            {GRID_ITEMS_PER_PAGE_CHOICES.map((v) => (
-              <MenuItem value={v} key={v}>
-                {v}
-              </MenuItem>
-            ))}
-          </Select>
-        </StyledBox>
         <Pagination
           id={ITEMS_GRID_PAGINATION_ID}
           count={pagesCount}
           page={page}
-          onChange={(_e, v) => setPage(v)}
+          onChange={(_e, v) => onPageChange(v)}
         />
       </Box>
     </div>

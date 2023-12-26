@@ -35,7 +35,7 @@ describe('Edit Shortcut', () => {
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getOwnItems');
+          cy.get('@getAccessibleItems');
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
         },
@@ -67,7 +67,7 @@ describe('Edit Shortcut', () => {
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getOwnItems');
+          cy.get('@getAccessibleItems');
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
         },

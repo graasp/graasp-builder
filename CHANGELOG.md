@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/graasp/graasp-builder/compare/v2.3.1...v2.4.0) (2023-12-22)
+
+
+### Features
+
+* translate it.json via GitLocalize ([#928](https://github.com/graasp/graasp-builder/issues/928)) ([9ab9db2](https://github.com/graasp/graasp-builder/commit/9ab9db2ad29e7764d85ccf9094247ff60202831f))
+* use accessible items on home ([#887](https://github.com/graasp/graasp-builder/issues/887)) ([819c4a1](https://github.com/graasp/graasp-builder/commit/819c4a173c2215189aefcf5046bfb07c76719b53))
+
+## [2.3.1](https://github.com/graasp/graasp-builder/compare/v2.3.0...v2.3.1) (2023-12-19)
+
+
+### Bug Fixes
+
+* allow apps to resize ([#922](https://github.com/graasp/graasp-builder/issues/922)) ([c24b633](https://github.com/graasp/graasp-builder/commit/c24b63318bc592dfd4cfec6ec15e2af387030f48))
+* **deps:** update dependency @graasp/translations to v1.21.1 ([ce872cf](https://github.com/graasp/graasp-builder/commit/ce872cfa79fb03b212784a7cc76091a76033ef86))
+* **deps:** update dependency @sentry/react to v7.89.0 ([#918](https://github.com/graasp/graasp-builder/issues/918)) ([311fb5a](https://github.com/graasp/graasp-builder/commit/311fb5ae8e7c927a1ad4b6dba6f3a42694341087))
+* udpate release-please condition ([8c13717](https://github.com/graasp/graasp-builder/commit/8c13717a559efe998a9e1fac209d91752a2baa8a))
+
+## [2.3.0](https://github.com/graasp/graasp-builder/compare/v2.2.0...v2.3.0) (2023-12-08)
+
+
+### Features
+
+* improve the responsivity of the skeletons ([#906](https://github.com/graasp/graasp-builder/issues/906)) ([3f0d653](https://github.com/graasp/graasp-builder/commit/3f0d653f0a2e96729dc94c3307017c284117f5f5))
+* navigate to the item on short link click ([#908](https://github.com/graasp/graasp-builder/issues/908)) ([a30b801](https://github.com/graasp/graasp-builder/commit/a30b8012f8d59a22a6a65e8c0786aa0407aa9743))
+* replace shorten link icon by a pen ([#907](https://github.com/graasp/graasp-builder/issues/907)) ([1c81284](https://github.com/graasp/graasp-builder/commit/1c81284bb6f9fe55526aec3cf98adc3ebdd3fdd4))
+
+
+### Bug Fixes
+
+* avoid multiple library links in short links ([#896](https://github.com/graasp/graasp-builder/issues/896)) ([226673c](https://github.com/graasp/graasp-builder/commit/226673c4b3dcca9a240cd5edf775f5e81ca93efe))
+* **deps:** update dependency @graasp/query-client to v2.1.1 ([5d5d3b9](https://github.com/graasp/graasp-builder/commit/5d5d3b9929618e843562fbe83ef36332001a65f1))
+* **deps:** update dependency @graasp/ui to v4.1.1 ([#894](https://github.com/graasp/graasp-builder/issues/894)) ([d1a81bd](https://github.com/graasp/graasp-builder/commit/d1a81bdad83f23d670687356f34094c6cbe2c85d))
+* **deps:** update dependency @sentry/react to v7.86.0 ([#909](https://github.com/graasp/graasp-builder/issues/909)) ([7777fa6](https://github.com/graasp/graasp-builder/commit/7777fa64df7a849082a93f10c5dc9bd963cb5881))
+* **deps:** update react-router monorepo to v6.20.1 ([427b0d5](https://github.com/graasp/graasp-builder/commit/427b0d5a1e5f9f8b8d21b1b13c525ffd836166cf))
+* **link:** allow all non-whitespace chars in urls ([#757](https://github.com/graasp/graasp-builder/issues/757)) ([4833e9d](https://github.com/graasp/graasp-builder/commit/4833e9d139c562c8b706ffa8ab3da53662b4ad58))
+
 ## [2.2.0](https://github.com/graasp/graasp-builder/compare/v2.1.0...v2.2.0) (2023-12-04)
 
 

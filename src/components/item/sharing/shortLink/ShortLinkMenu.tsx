@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import AddLinkIcon from '@mui/icons-material/AddLink';
+import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
@@ -165,7 +165,7 @@ const ShortLinkMenu = ({
                   id={buildShortLinkShortenBtnId(itemId, platform)}
                   onClick={() => onCreate(platform)}
                 >
-                  <AddLinkIcon />
+                  <CreateIcon />
                 </IconButton>
               </span>
             </Tooltip>

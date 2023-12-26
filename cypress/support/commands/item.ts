@@ -181,7 +181,7 @@ Cypress.Commands.add(
   'fillAppModal',
   (
     { name = '', extra },
-    { confirm = true, type = false, custom = false } = {},
+    { confirm = true, id, type = false, custom = false } = {},
   ) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
@@ -193,7 +193,7 @@ Cypress.Commands.add(
       cy.fillBaseItemModal({ name }, { confirm: false });
       cy.get(`#${CUSTOM_APP_URL_ID}`).type(CUSTOM_APP_URL);
     } else {
-      cy.get(`#${buildItemFormAppOptionId(name)}`).click();
+      cy.get(`#${buildItemFormAppOptionId(id)}`).click();
       // check name get added automatically
       cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', APP_NAME);
       // edit the app name

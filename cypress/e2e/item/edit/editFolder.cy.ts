@@ -83,7 +83,7 @@ describe('Edit Folder', () => {
           expect(name).to.equal(EDITED_FIELDS.name);
           expect(description).to.contain(newDescription);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getOwnItems');
+          cy.wait('@getAccessibleItems');
         },
       );
     });
@@ -167,7 +167,7 @@ describe('Edit Folder', () => {
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getOwnItems');
+          cy.get('@getAccessibleItems');
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(EDITED_FIELDS.name);
         },

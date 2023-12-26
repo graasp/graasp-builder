@@ -21,7 +21,7 @@ describe('Create Document', () => {
 
     cy.wait('@postItem').then(() => {
       // should update view
-      cy.wait('@getOwnItems');
+      cy.wait('@getAccessibleItems');
     });
   });
 

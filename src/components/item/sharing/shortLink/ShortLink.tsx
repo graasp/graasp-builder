@@ -118,6 +118,8 @@ const ShortLink = ({
           <StyledLink
             id={buildShortLinkUrlTextId(platform)}
             textAlign={textAlign}
+            href={url}
+            target="_blank"
           >
             {url}
           </StyledLink>
