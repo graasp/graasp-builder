@@ -7,7 +7,7 @@ import {
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
-import { TREE_MODAL_MY_ITEMS_ID } from '../../config/selectors';
+import { HOME_MODAL_ITEM_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal, { TreeModalProps } from './TreeModal';
@@ -17,7 +17,11 @@ interface Props {
   item: Item;
   onClose: () => void;
 }
-const CreateShortcutModal = ({ open, item, onClose }: Props): JSX.Element => {
+const CreateShortcutModal = ({
+  open,
+  item,
+  onClose,
+}: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: createShortcut } = mutations.usePostItem();
 
@@ -32,23 +36,23 @@ const CreateShortcutModal = ({ open, item, onClose }: Props): JSX.Element => {
       extra: buildShortcutExtra(target),
       type: ItemType.SHORTCUT,
       // set parent id if not root
-      parentId: to !== TREE_MODAL_MY_ITEMS_ID ? to : undefined,
+      parentId: to !== HOME_MODAL_ITEM_ID ? to : undefined,
     };
     createShortcut(shortcut);
   };
 
-  return (
+  return open ? (
     <TreeModal
       onClose={onClose}
       open={open}
       itemIds={[item?.id || '']}
       onConfirm={onConfirm}
-      title={translateBuilder(BUILDER.CREATE_SHORTCUT_MODAL_TITLE)}
+      title={BUILDER.CREATE_SHORTCUT_MODAL_TITLE}
       actionTitle={translateBuilder(
         BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM,
       )}
     />
-  );
+  ) : null;
 };
 
 export default CreateShortcutModal;

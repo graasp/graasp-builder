@@ -82,15 +82,16 @@ const CopyButton = ({
         menuItemClassName={ITEM_MENU_COPY_BUTTON_CLASS}
         onClick={handleCopy}
       />
-
-      <TreeModal
-        onClose={onClose}
-        open={open}
-        itemIds={itemIds}
-        onConfirm={onConfirm}
-        title={translateBuilder(BUILDER.COPY_ITEM_MODAL_TITLE)}
-        actionTitle={translateBuilder(BUILDER.ITEM_COPY_BUTTON)}
-      />
+      {open && (
+        <TreeModal
+          onClose={onClose}
+          open={open}
+          itemIds={itemIds}
+          onConfirm={onConfirm}
+          title={BUILDER.COPY_ITEM_MODAL_TITLE}
+          actionTitle={translateBuilder(BUILDER.ITEM_COPY_BUTTON)}
+        />
+      )}
     </>
   );
 };

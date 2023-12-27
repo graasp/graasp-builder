@@ -7,7 +7,7 @@ import { hooks } from '@/config/queryClient';
 import { HOME_MODAL_ITEM_ID, ROOT_MODAL_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
-import MoveMenuRow from './RowMenu';
+import MoveMenuRow from './MenuRow';
 
 interface RootTreeModalProps {
   setBreadcrumbs: Dispatch<
@@ -18,6 +18,8 @@ interface RootTreeModalProps {
   selectedParent: DiscriminatedItem | null | { name: string; id: string };
   itemIds: string[];
   parentItem?: DiscriminatedItem;
+  selfAndChildrenDisable?: boolean;
+  title: string;
 }
 
 const RootTreeModal = ({
@@ -27,6 +29,8 @@ const RootTreeModal = ({
   selectedParent,
   itemIds,
   parentItem,
+  selfAndChildrenDisable = false,
+  title,
 }: RootTreeModalProps): JSX.Element => {
   const { data: ownItems } = hooks.useOwnItems();
   const { data: sharedItems } = hooks.useSharedItems();
@@ -77,6 +81,8 @@ const RootTreeModal = ({
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           itemIds={[]}
+          selfAndChildrenDisable={selfAndChildrenDisable}
+          title={title}
         />
       )}
       {/* end of home */}
@@ -91,6 +97,8 @@ const RootTreeModal = ({
             selectedId={selectedId}
             setSelectedId={setSelectedId}
             itemIds={itemIds}
+            selfAndChildrenDisable={selfAndChildrenDisable}
+            title={title}
           />
         ))}
 
@@ -108,6 +116,8 @@ const RootTreeModal = ({
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           itemIds={itemIds}
+          title={title}
+          selfAndChildrenDisable={selfAndChildrenDisable}
         />
       )}
 
