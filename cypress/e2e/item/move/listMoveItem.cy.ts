@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  HOME_MODAL_ITEM_ID,
   ITEM_MENU_MOVE_BUTTON_CLASS,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
@@ -77,7 +77,7 @@ describe('Move Item in List', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const toItem = TREE_MODAL_MY_ITEMS_ID;
+    const toItem = HOME_MODAL_ITEM_ID;
     moveItem({ id: movedItem, toItemPath: toItem });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {

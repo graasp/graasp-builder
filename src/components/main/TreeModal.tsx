@@ -11,8 +11,8 @@ import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
+  HOME_MODAL_ITEM_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
-  TREE_MODAL_MY_ITEMS_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import CancelButton from '../common/CancelButton';
@@ -85,19 +85,19 @@ const OwnedItemsTree = ({
 
   const rootMenuItem = {
     name: translateBuilder(BUILDER.HOME_TITLE),
-    id: TREE_MODAL_MY_ITEMS_ID,
+    id: HOME_MODAL_ITEM_ID,
     extra: { folder: { childrenOrder: [''] } },
     type: ItemType.FOLDER,
   } as DiscriminatedItem;
 
   return (
-    <div id={`${TREE_MODAL_MY_ITEMS_ID}`}>
+    <div id={HOME_MODAL_ITEM_ID}>
       {/* Home or Root  Which will be the start of the menu */}
       {isHome && (
         <MenuRow
           key={rootMenuItem.name}
           ele={rootMenuItem}
-          fetchSubItems={() => {
+          onNavigate={() => {
             setIsHome(false);
             setPaths((paths: DiscriminatedItem[]) => [...paths, rootMenuItem]);
           }}
@@ -119,7 +119,7 @@ const OwnedItemsTree = ({
           <MenuRow
             key={ele.id}
             ele={ele}
-            fetchSubItems={() => selectSubItems(ele)}
+            onNavigate={() => selectSubItems(ele)}
             selectedId={selectedId}
             setSelectedId={setSelectedId}
             itemIds={itemIds}
@@ -134,7 +134,7 @@ const OwnedItemsTree = ({
         <MenuRow
           key={defaultParent.id}
           ele={defaultParent}
-          fetchSubItems={() => {
+          onNavigate={() => {
             selectSubItems(defaultParent);
             setIsHome(false);
           }}

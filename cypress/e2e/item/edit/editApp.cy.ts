@@ -85,7 +85,7 @@ describe('Edit App', () => {
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getOwnItems');
+          cy.wait('@getAccessibleItems');
         },
       );
     });
@@ -149,7 +149,7 @@ describe('Edit App', () => {
         }) => {
           // check item is edited and updated
           cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getOwnItems');
+          cy.get('@getAccessibleItems');
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
         },

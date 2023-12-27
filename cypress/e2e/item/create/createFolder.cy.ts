@@ -24,7 +24,7 @@ describe('Create Folder', () => {
       // create
       createFolder(CREATED_ITEM);
 
-      cy.wait(['@postItem', '@getOwnItems']);
+      cy.wait(['@postItem', '@getAccessibleItems']);
     });
 
     it('create folder in item', () => {

@@ -4,6 +4,7 @@ import {
   CUSTOM_APP_CYPRESS_ID,
   CUSTOM_APP_URL_ID,
   FOLDER_FORM_DESCRIPTION_ID,
+  HOME_MODAL_ITEM_ID,
   ITEM_FORM_APP_URL_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
@@ -13,7 +14,7 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
-  TREE_MODAL_MY_ITEMS_ID,
+  buildHomeModalItemID,
   buildItemFormAppOptionId,
   buildItemRowArrowId,
   buildPermissionOptionId,
@@ -47,17 +48,17 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'fillTreeModal',
-  (toItemPath, treeRootId = TREE_MODAL_MY_ITEMS_ID) => {
+  (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
     const ids = getParentsIdsFromPath(toItemPath);
 
     cy.wait(TREE_VIEW_PAUSE);
 
-    [TREE_MODAL_MY_ITEMS_ID, ...ids].forEach((value, idx, array) => {
+    [HOME_MODAL_ITEM_ID, ...ids].forEach((value, idx, array) => {
       cy.get(`#${treeRootId}`).then(($tree) => {
         // click on the element
         if (idx === array.length - 1) {
           cy.wrap($tree)
-            .get(`#${buildTreeItemId(value, treeRootId)}`)
+            .get(`#${buildHomeModalItemID(value)}`)
             .first()
             .click();
         }
@@ -67,7 +68,7 @@ Cypress.Commands.add(
           !$tree.find(`#${buildTreeItemId(array[idx + 1], treeRootId)}`).length
         ) {
           cy.wrap($tree)
-            .get(`#${buildTreeItemId(value, treeRootId)}`)
+            .get(`#${buildHomeModalItemID(value)}`)
             .trigger('mouseover')
             .get(`#${buildItemRowArrowId(value)}`)
             .first()
@@ -141,7 +142,7 @@ Cypress.Commands.add(
   'fillAppModal',
   (
     { name = '', extra },
-    { confirm = true, type = false, custom = false } = {},
+    { confirm = true, id, type = false, custom = false } = {},
   ) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
@@ -153,7 +154,7 @@ Cypress.Commands.add(
       cy.fillBaseItemModal({ name }, { confirm: false });
       cy.get(`#${CUSTOM_APP_URL_ID}`).type(CUSTOM_APP_URL);
     } else {
-      cy.get(`#${buildItemFormAppOptionId(name)}`).click();
+      cy.get(`#${buildItemFormAppOptionId(id)}`).click();
       // check name get added automatically
       cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', APP_NAME);
       // edit the app name

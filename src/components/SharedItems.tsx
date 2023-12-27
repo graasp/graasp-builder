@@ -1,3 +1,4 @@
+import { Alert } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { Loader } from '@graasp/ui';
@@ -28,13 +29,18 @@ const SharedItemsLoadableContent = (): JSX.Element => {
 
   return (
     <Box mx={2}>
+      <Alert severity="warning" sx={{ mt: 3 }}>
+        {translateBuilder(
+          "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
+        )}
+      </Alert>
       <ItemHeader showNavigation={false} />
       <Items
         id={SHARED_ITEMS_ID}
         title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
         items={sharedItems}
         canMove={false}
-        showCreator
+        totalCount={sharedItems?.length}
       />
     </Box>
   );

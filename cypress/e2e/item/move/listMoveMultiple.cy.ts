@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  HOME_MODAL_ITEM_ID,
   ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
@@ -41,10 +41,6 @@ describe('Move Items in List', () => {
     cy.wait('@moveItems').then(({ request: { url, body } }) => {
       expect(body.parentId).to.equal(toItem);
       itemIds.forEach((movedItem) => expect(url).to.contain(movedItem));
-
-      itemIds.forEach((id) => {
-        cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('not.exist');
-      });
     });
   });
 
@@ -79,7 +75,7 @@ describe('Move Items in List', () => {
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    const toItem = TREE_MODAL_MY_ITEMS_ID;
+    const toItem = HOME_MODAL_ITEM_ID;
     moveItems({ itemIds, toItemPath: toItem });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {

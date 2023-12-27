@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Box, Dialog, Stack } from '@mui/material';
 
@@ -9,15 +9,9 @@ import {
   appendPathToUrl,
 } from '@graasp/sdk';
 
-import { SHORT_LINK_ID_MAX_LENGTH } from '@/config/constants';
 import { GRAASP_REDIRECTION_HOST } from '@/config/env';
 import { hooks } from '@/config/queryClient';
-import {
-  ShortLinkPlatform,
-  ShortLinkPlatformType,
-  randomAlias,
-  randomString,
-} from '@/utils/shortLink';
+import { ShortLinkPlatform, randomAlias } from '@/utils/shortLink';
 
 import ShortLink from './ShortLink';
 import ShortLinkDialogContent from './ShortLinkDialogContent';
@@ -32,7 +26,6 @@ type Props = {
 
 type ShortLinkType = {
   alias: string;
-  linkId: string;
   platform: ShortLinkPlatform;
   url: URL;
   isShorten: boolean;
@@ -44,73 +37,50 @@ const ShortLinksRenderer = ({
 }: Props): JSX.Element => {
   const { data: apiLinks, isLoading } = useShortLinksItem(itemId);
   const { data: publishedEntry } = useItemPublishedInformation({ itemId });
-  const [shortLinks, setShortLinks] = useState<ShortLinkType[]>([]);
   const [modalOpen, setOpen] = useState(false);
   const [isNew, setIsNew] = useState(false);
   const [initialAlias, setInitAlias] = useState<string>('');
   const [initialPlatform, setInitPlatform] = useState<ShortLinkPlatform>(
     Context.Player,
   );
-  // Lists the available short links platforms for the current item.
-  const [itemPlatforms, setItemPlatforms] = useState<ShortLinkPlatformType[]>([
+
+  // List of available platforms, the order matters
+  const platforms = [
     ShortLinkPlatformConst.builder,
     ShortLinkPlatformConst.player,
-  ]);
+    ShortLinkPlatformConst.library,
+  ];
 
-  const addNewAlias = useCallback(
-    (
-      platform: ShortLinkPlatform,
-      alias: string,
-      url: URL,
-      isShorten: boolean,
-    ) => {
-      setShortLinks((prevShortLinks) =>
-        [
-          ...prevShortLinks,
-          {
-            linkId: randomString(SHORT_LINK_ID_MAX_LENGTH),
-            alias,
-            platform,
-            url,
-            isShorten,
-          },
-        ].sort((a, b) => a.platform.localeCompare(b.platform)),
-      );
-    },
-    [setShortLinks],
-  );
-
-  // Append the library to the short link's platform if item is published
-  useEffect(() => {
-    if (publishedEntry) {
-      setItemPlatforms((currState) => [
-        ...currState,
-        ShortLinkPlatformConst.library,
-      ]);
-    }
-  }, [publishedEntry]);
-
-  useEffect(() => {
-    setShortLinks([]);
-    apiLinks?.forEach((link) => {
-      const url = appendPathToUrl({
-        baseURL: GRAASP_REDIRECTION_HOST,
-        pathname: link.alias,
-      });
-      addNewAlias(link.platform, link.alias, url, true);
-    });
-
-    itemPlatforms.forEach((platform) => {
-      const shortLinksPlatform = apiLinks?.filter(
-        (shortLink) => shortLink.platform === platform,
-      );
-      if (!shortLinksPlatform?.length) {
-        const clientHostManager = ClientHostManager.getInstance();
-        const url = clientHostManager.getItemAsURL(platform, itemId);
-        addNewAlias(platform, itemId, url, false);
+  const shortLinks: ShortLinkType[] = platforms
+    .map<ShortLinkType | undefined>((platform) => {
+      if (!publishedEntry && platform === ShortLinkPlatformConst.library) {
+        return undefined;
       }
-    });
-  }, [apiLinks, addNewAlias, itemId, itemPlatforms]);
+      const clientHostManager = ClientHostManager.getInstance();
+      const url = clientHostManager.getItemAsURL(platform, itemId);
+
+      const shortLink = {
+        alias: randomAlias(),
+        platform,
+        url,
+        isShorten: false,
+      };
+
+      const apiShortLink = apiLinks?.find(
+        (short) => short.platform === platform,
+      );
+      if (apiShortLink) {
+        shortLink.alias = apiShortLink.alias;
+        shortLink.isShorten = true;
+        shortLink.url = appendPathToUrl({
+          baseURL: GRAASP_REDIRECTION_HOST,
+          pathname: apiShortLink.alias,
+        });
+      }
+
+      return shortLink;
+    })
+    .filter((short): short is ShortLinkType => Boolean(short));
 
   const handleNewAlias = (platform: ShortLinkPlatform) => {
     setInitAlias(randomAlias());
@@ -155,7 +125,7 @@ const ShortLinksRenderer = ({
           <Box width={{ xs: '100%', sm: '80%' }}>
             {shortLinks.map((shortLink) => (
               <ShortLink
-                key={shortLink.linkId}
+                key={shortLink.platform}
                 url={`${shortLink.url}`}
                 shortLink={{
                   alias: shortLink.alias,
@@ -172,7 +142,7 @@ const ShortLinksRenderer = ({
         </Stack>
       )}
 
-      {isLoading && itemPlatforms.map((_) => <ShortLinkSkeleton />)}
+      {isLoading && shortLinks.map((_) => <ShortLinkSkeleton />)}
     </>
   );
 };
