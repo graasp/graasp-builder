@@ -4,6 +4,7 @@ import {
   HomeMenu,
   ItemMenu,
   Navigation,
+  useMobileView,
   useShortenURLParams,
 } from '@graasp/ui';
 
@@ -38,7 +39,7 @@ const Navigator = (): JSX.Element | null => {
   const { data: currentMember } = useCurrentMember();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
-
+  const { isMobile } = useMobileView();
   const { data: parents, isLoading: areParentsLoading } = useParents({
     id: itemId,
     path: itemPath,
@@ -114,13 +115,14 @@ const Navigator = (): JSX.Element | null => {
   return (
     <Navigation
       id={NAVIGATION_ROOT_ID}
-      sx={{ paddingLeft: 2 }}
       item={item}
       buildToItemPath={buildToItemPath}
       parents={parents}
       renderRoot={renderRoot}
       buildMenuItemId={buildNavigationLink}
       useChildren={useChildren as any}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...(isMobile && { maxItems: 2 })}
     />
   );
 };

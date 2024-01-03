@@ -31,9 +31,10 @@ const ItemHeader = ({ showNavigation = true }: Props): JSX.Element => {
   return (
     <Stack
       direction="row"
-      justifyContent="space-between"
       alignItems="center"
-      mb={1}
+      justifyContent="space-between"
+      mb={3}
+      mt={2}
       id={ITEM_HEADER_ID}
     >
       {/* display empty div to render actions on the right */}

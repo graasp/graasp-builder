@@ -1,7 +1,10 @@
-import { Stack } from '@mui/material';
+import { useState } from 'react';
+
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Box, SpeedDial, Stack, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
-import { ChatboxButton } from '@graasp/ui';
+import { ChatboxButton, useMobileView } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
@@ -31,8 +34,33 @@ type Props = {
   item?: DiscriminatedItem;
 };
 
+const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.spacing(-2.5),
+  left: theme.spacing(-2.5),
+  zIndex: 99,
+  '& button': {
+    width: theme.spacing(4.5),
+    height: theme.spacing(4.5),
+    color: 'gray',
+    background: 'white',
+    marginBottom: theme.spacing(1),
+    boxShadow: 'none',
+  },
+  '#itemactions-actions button': {
+    boxShadow: theme.shadows[2],
+  },
+  '& button:hover': {
+    color: 'white',
+  },
+}));
 const ItemHeaderActions = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const {
     editingItemId,
     openedActionTabId,
@@ -42,7 +70,7 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
   } = useLayoutContext();
 
   const { data: member } = useCurrentUserContext();
-
+  const { isMobile } = useMobileView();
   const { data: memberships } = useItemMemberships(item?.id);
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
@@ -84,18 +112,43 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
           {canAdmin && <PublishButton itemId={item.id} />}
         </>
       );
-
+      const isMobileInfoBtns = isMobile && (
+        <>
+          {item?.type === ItemType.FOLDER && <ModeButton />}
+          {item?.id && <ItemMetadataButton />}
+        </>
+      );
       return (
         <>
           {openedActionTabId !== ItemActionTabs.Settings && activeActions}
           {canEdit && <ItemSettingsButton id={item.id} />}
           <DownloadButton id={item.id} name={item.name} />
+          {isMobileInfoBtns}
         </>
       );
     }
     return null;
   };
 
+  if (isMobile) {
+    // eslint-disable-next-line no-nested-ternary
+    return item ? (
+      <Box sx={{ position: 'relative' }}>
+        <StyledSpeedDial
+          ariaLabel="item actions"
+          icon={<SettingsIcon />}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
+          direction="down"
+        >
+          {open && renderItemActions()}
+        </StyledSpeedDial>
+      </Box>
+    ) : (
+      <ModeButton />
+    );
+  }
   return (
     <Stack direction="row">
       {renderItemActions()}

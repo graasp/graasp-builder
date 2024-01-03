@@ -10,6 +10,7 @@ import {
   Platform,
   PlatformSwitch,
   defaultHostsMapper,
+  useMobileView,
   usePlatformNavigation,
   useShortenURLParams,
 } from '@graasp/ui';
@@ -46,7 +47,7 @@ export const platformsHostsMap = defaultHostsMapper({
 
 const Main = ({ children }: Props): JSX.Element => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
-
+  const { isMobile } = useMobileView();
   const itemId = useShortenURLParams(ITEM_ID_PARAMS);
 
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
@@ -73,9 +74,11 @@ const Main = ({ children }: Props): JSX.Element => {
     <Box display="flex" ml={2}>
       <StyledLink to={HOME_PATH}>
         <GraaspLogo height={GRAASP_LOGO_HEADER_HEIGHT} sx={{ fill: 'white' }} />
-        <Typography variant="h6" color="inherit" mr={2} ml={1}>
-          {APP_NAME}
-        </Typography>
+        {!isMobile && (
+          <Typography variant="h6" color="inherit" mr={2} ml={1}>
+            {APP_NAME}
+          </Typography>
+        )}
       </StyledLink>
       <PlatformSwitch
         id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
