@@ -20,11 +20,10 @@ import FileUploader from '../file/FileUploader';
 import { UppyContextProvider } from '../file/UppyContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ItemHeader from '../item/header/ItemHeader';
-import ItemActions from './ItemActions';
-import Items from './Items';
-import { ItemsTableProps } from './ItemsTable';
-import Main from './Main';
-import NewItemButton from './NewItemButton';
+import ItemActions from '../main/ItemActions';
+import Items from '../main/Items';
+import { ItemsTableProps } from '../main/ItemsTable';
+import NewItemButton from '../main/NewItemButton';
 
 type HomeItemSortableColumn =
   | 'item.name'
@@ -104,7 +103,7 @@ const HomeLoadableContent = (): JSX.Element => {
     return (
       <UppyContextProvider enable={isSuccess}>
         <FileUploader />
-        <Box mx={2}>
+        <Box m={2}>
           <ItemHeader showNavigation={false} />
           <Items
             id={ACCESSIBLE_ITEMS_TABLE_ID}
@@ -140,10 +139,6 @@ const HomeLoadableContent = (): JSX.Element => {
   return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
 };
 
-const Home = (): JSX.Element => (
-  <Main>
-    <HomeLoadableContent />
-  </Main>
-);
+const HomeScreen = (): JSX.Element => <HomeLoadableContent />;
 
-export default Home;
+export default HomeScreen;

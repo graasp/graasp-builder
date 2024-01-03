@@ -2,6 +2,8 @@
 // import { Platform } from '@graasp/ui';
 import { ShortLinkPlatform } from '@/utils/shortLink';
 
+export const SHARED_ITEMS_ROOT_CONTAINER = 'sharedItemsPageRootContainer';
+export const RECYCLED_ITEMS_ROOT_CONTAINER = 'recycledItemsPageRootContainer';
 export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
 export const ITEM_COPY_BUTTON_CLASS = 'itemCopyButton';
@@ -96,9 +98,11 @@ export const ITEM_LOGIN_SIGN_IN_MODE_ID = 'itemLoginSignInMode';
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
 export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
-export const PUBLISHED_ITEMS_ERROR_ALERT_ID = 'publishedItemsErrorAlert';
 export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'favoriteItemsErrorAlert';
+export const PUBLISHED_ITEMS_ERROR_ALERT_ID = 'publishedItemsErrorAlert';
+export const RECYCLED_ITEMS_ERROR_ALERT_ID = 'recycledItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
+export const ITEM_MENU_DUPLICATE_BUTTON_CLASS = 'itemMenuDuplicateButton';
 export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const ITEM_MENU_FLAG_BUTTON_CLASS = 'itemMenuFlagButton';
 export const buildFlagListItemId = (type: string): string =>
@@ -347,3 +351,4 @@ export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
 
 export const MOBILE_MORE_ACTIONS_BUTTON_ID = 'moreActionsMobileView';
+export const NAVIGATION_MENU_ARROW = `#${NAVIGATION_ROOT_ID} [data-testid="NavigateNextIcon"]`;

@@ -1,9 +1,9 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import { Stack } from '@mui/material';
+import { Dialog, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';
 
 import Uppy from '@uppy/core';
@@ -18,7 +18,7 @@ import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selec
 import { BUILDER } from '../../../langs/constants';
 import defaultImage from '../../../resources/avatar.png';
 import { configureThumbnailUppy } from '../../../utils/uppy';
-import CropModal from '../../common/CropModal';
+import CropModal, { MODAL_TITLE_ARIA_LABEL_ID } from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
 
 type Props = { item: DiscriminatedItem };
@@ -34,6 +34,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const itemId = item.id;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
+    size: ThumbnailSize.Medium,
   });
 
   useEffect(() => {
@@ -120,22 +121,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
-      <Stack spacing={3} mb={3}>
-        <Typography variant="h5">
-          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
-        </Typography>
-        <Typography variant="body1">
-          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
-        </Typography>
-        <input
-          type="file"
-          accept="image/*"
-          onInput={onSelectFile}
-          // onChange is successfully triggered in test
-          onChange={onSelectFile}
-          ref={inputRef}
-          className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
-        />
+      <Stack spacing={2} mb={3} alignItems="center">
         <Thumbnail
           id={itemId}
           isLoading={isLoading}
@@ -149,14 +135,30 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
           maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
           maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
         />
+        <input
+          type="file"
+          accept="image/*"
+          onInput={onSelectFile}
+          onChange={onSelectFile}
+          ref={inputRef}
+          className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
+        />
+        <Typography variant="caption">
+          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
+        </Typography>
       </Stack>
       {fileSource && (
-        <CropModal
+        <Dialog
           open={showCropModal}
           onClose={onClose}
-          src={fileSource}
-          onConfirm={onConfirmCrop}
-        />
+          aria-labelledby={MODAL_TITLE_ARIA_LABEL_ID}
+        >
+          <CropModal
+            onClose={onClose}
+            src={fileSource}
+            onConfirm={onConfirmCrop}
+          />
+        </Dialog>
       )}
     </>
   );

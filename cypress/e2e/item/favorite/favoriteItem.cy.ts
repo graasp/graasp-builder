@@ -10,12 +10,9 @@ import {
 } from '../../../../src/config/selectors';
 import { SAMPLE_FAVORITE, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const toggleFavoriteButton = (itemId: string) => {
-  cy.wait(TABLE_ITEM_RENDER_TIME);
-  const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
-  cy.get(menuSelector).click();
+  cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
   cy.get(`#${buildItemMenu(itemId)} .${FAVORITE_ITEM_BUTTON_CLASS}`).click();
 };
 

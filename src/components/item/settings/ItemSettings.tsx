@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react';
+import { Trans } from 'react-i18next';
+import { Link, useOutletContext } from 'react-router-dom';
 
 import InfoIcon from '@mui/icons-material/Info';
-import { FormControlLabel, FormGroup, Switch, Tooltip } from '@mui/material';
+import {
+  Alert,
+  FormControlLabel,
+  FormGroup,
+  Switch,
+  Tooltip,
+} from '@mui/material';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+
+import { OutletType } from '@/components/pages/item/type';
+import { buildItemInformationPath } from '@/config/paths';
 
 import {
   DEFAULT_COLLAPSIBLE_SETTING,
@@ -17,7 +28,6 @@ import {
 import { useBuilderTranslation } from '../../../config/i18n';
 import { mutations } from '../../../config/queryClient';
 import {
-  ITEM_SETTINGS_CONTAINER_ID,
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_COLLAPSE_TOGGLE_ID,
   SETTINGS_PINNED_TOGGLE_ID,
@@ -28,14 +38,10 @@ import { BUILDER } from '../../../langs/constants';
 import AdminChatSettings from './AdminChatSettings';
 import FileSettings from './FileSettings';
 import LinkSettings from './LinkSettings';
-import ThumbnailSetting from './ThumbnailSetting';
 
-type Props = {
-  item: DiscriminatedItem;
-};
-
-const ItemSettings = ({ item }: Props): JSX.Element => {
+const ItemSettings = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { item } = useOutletContext<OutletType>();
 
   const { mutate: editItem } = mutations.useEditItem();
 
@@ -203,8 +209,17 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
   };
 
   return (
-    <Container disableGutters sx={{ mt: 2 }} id={ITEM_SETTINGS_CONTAINER_ID}>
-      <Typography variant="h4">
+    <Container disableGutters sx={{ mt: 2 }}>
+      <Alert severity="warning" sx={{ marginBottom: 2 }}>
+        <Trans
+          t={translateBuilder}
+          i18nKey={BUILDER.UPDATE_THUMBNAIL_AT_INFO_ALERT}
+          components={{
+            navigate: <Link to={buildItemInformationPath(item.id)} />,
+          }}
+        />
+      </Alert>
+      <Typography variant="h5">
         {translateBuilder(BUILDER.SETTINGS_TITLE)}
       </Typography>
 
@@ -216,7 +231,6 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
         {renderSaveActionsSetting()}
       </FormGroup>
       {renderSettingsPerType()}
-      <ThumbnailSetting item={item} />
       <AdminChatSettings item={item} />
     </Container>
   );

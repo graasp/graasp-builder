@@ -10,11 +10,12 @@ import {
   useTheme,
 } from '@mui/material';
 
-import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
-import { ActionButton, ChatboxButton } from '@graasp/ui';
+import { PermissionLevel } from '@graasp/sdk';
+import { ActionButton, ChatboxButton, useShortenURLParams } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
+import { ITEM_ID_PARAMS } from '@/config/paths';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -37,22 +38,19 @@ import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
 const { useItemMemberships } = hooks;
+const { useItem } = hooks;
 
-type Props = {
-  item?: DiscriminatedItem;
-};
-
-// edit
-// share
-export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
+export const MobileItemHeaderActions = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+
+  const { data: item } = useItem(itemId);
 
   const {
     editingItemId,
     openedActionTabId,
     isChatboxMenuOpen,
     setIsChatboxMenuOpen,
-    setIsItemMetadataMenuOpen,
   } = useLayoutContext();
 
   const { data: member } = useCurrentUserContext();
@@ -73,7 +71,6 @@ export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
 
   const onClickChatbox = () => {
     setIsChatboxMenuOpen(!isChatboxMenuOpen);
-    setIsItemMetadataMenuOpen(false);
   };
 
   const toggleActionsDrawer = () => {
@@ -126,7 +123,6 @@ export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
               id={item.id}
               title={translateBuilder(BUILDER.SETTINGS_TITLE)}
               type={ActionButton.MENU_ITEM}
-              onClick={closeDrawer}
             />
           )}
         </>
@@ -138,7 +134,7 @@ export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
   return item ? (
     <>
       <Box display="flex" sx={{ '& button': { padding: 0.5 } }}>
-        <ItemMetadataButton />
+        <ItemMetadataButton itemId={item.id} />
         <ModeButton />
         <ChatboxButton
           tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}

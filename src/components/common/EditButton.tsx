@@ -67,7 +67,7 @@ const EditButton = ({ item, type = 'icon', onClick }: Props): JSX.Element => {
         />
       </Dialog>
       <GraaspEditButton
-        tooltip={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
+        title={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
         id={buildEditButtonId(item.id)}
         ariaLabel={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
         className={EDIT_ITEM_BUTTON_CLASS}

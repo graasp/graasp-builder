@@ -8,7 +8,7 @@ import {
   buildEditButtonId,
 } from '../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../src/enums';
-import { CAPTION_EDIT_PAUSE, TABLE_ITEM_RENDER_TIME } from './constants';
+import { CAPTION_EDIT_PAUSE } from './constants';
 
 // eslint-disable-next-line import/prefer-default-export
 // bug: use string for type to fit usage
@@ -21,9 +21,6 @@ export const editItem = (
   },
   mode = DEFAULT_ITEM_LAYOUT_MODE,
 ): void => {
-  if (DEFAULT_ITEM_LAYOUT_MODE === ITEM_LAYOUT_MODES.LIST) {
-    cy.wait(TABLE_ITEM_RENDER_TIME);
-  }
   const { id, type } = payload;
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID: {
@@ -67,6 +64,7 @@ export const editCaptionFromViewPage = ({
   cy.get(`#${buildEditButtonId(id)}`).click();
   cy.get(`#${EDIT_MODAL_ID} .${TEXT_EDITOR_CLASS}`).type(
     `{selectall}${caption}`,
+    { timeout: 100 },
   );
   cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
 };

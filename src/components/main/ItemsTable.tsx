@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router';
+import { useCallback } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 import { CheckboxProps } from '@mui/material';
 
@@ -14,7 +14,6 @@ import {
   getShortcutExtra,
 } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { useShortenURLParams } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import {
@@ -24,7 +23,8 @@ import {
   SortChangedEvent,
 } from 'ag-grid-community';
 
-import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
+import { ITEMS_TABLE_CONTAINER_HEIGHT } from '@/config/constants';
+
 import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
@@ -99,7 +99,7 @@ const ItemsTable = ({
   const { t: translateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
 
-  const itemId = useShortenURLParams('itemId');
+  const { itemId } = useParams();
 
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();
@@ -185,100 +185,87 @@ const ItemsTable = ({
     itemsStatuses,
   });
 
-  // never changes, so we can use useMemo
-  const columnDefs = useMemo(() => {
-    const columns: ColDef[] = [
-      {
-        field: 'name',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
-        headerCheckboxSelection: true,
-        checkboxSelection: true,
-        cellRenderer: NameCellRenderer(showThumbnails),
-        flex: 4,
-        comparator: GraaspTable.textComparator,
-        sort: defaultSortedColumn?.name,
-        tooltipField: 'name',
+  const columnDefs: ColDef[] = [
+    {
+      field: 'name',
+      headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
+      headerCheckboxSelection: true,
+      checkboxSelection: true,
+      cellRenderer: NameCellRenderer(showThumbnails),
+      flex: 4,
+      comparator: GraaspTable.textComparator,
+      sort: defaultSortedColumn?.name,
+      tooltipField: 'name',
+    },
+    {
+      field: 'creator',
+      headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
+      colId: 'creator',
+      type: 'rightAligned',
+      cellRenderer: MemberNameCellRenderer({
+        defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
+      }),
+      cellStyle: {
+        display: 'flex',
+        justifyContent: 'end',
       },
-      {
-        field: 'creator',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
-        colId: 'creator',
-        type: 'rightAligned',
-        cellRenderer: MemberNameCellRenderer({
-          defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
-        }),
-        cellStyle: {
-          display: 'flex',
-          justifyContent: 'end',
-        },
-        sortable: false,
+      sortable: false,
+    },
+    {
+      field: 'status',
+      headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
+      cellRenderer: BadgesComponent,
+      hide: noStatusesToShow,
+      type: 'rightAligned',
+      flex: 1,
+      suppressAutoSize: true,
+      maxWidth: 100,
+      cellStyle: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
       },
-      {
-        field: 'status',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
-        cellRenderer: BadgesComponent,
-        hide: noStatusesToShow,
-        type: 'rightAligned',
-        flex: 1,
-        suppressAutoSize: true,
-        maxWidth: 100,
-        cellStyle: {
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
+    },
+    {
+      field: 'type',
+      headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
+      type: 'rightAligned',
+      cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
+        translateEnums(data.type),
+      minWidth: 90,
+      maxWidth: 120,
+      comparator: GraaspTable.textComparator,
+      sort: defaultSortedColumn?.type,
+    },
+    {
+      field: 'updatedAt',
+      headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
+      maxWidth: 160,
+      minWidth: 80,
+      type: 'rightAligned',
+      valueFormatter: dateColumnFormatter,
+      comparator: GraaspTable.dateComparator,
+      sort: defaultSortedColumn?.updatedAt,
+    },
+    {
+      field: 'actions',
+      cellRenderer: actions ?? ActionComponent,
+      suppressKeyboardEvent: GraaspTable.suppressKeyboardEventForParentCell,
+      headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
+      colId: 'actions',
+      type: 'rightAligned',
+      cellStyle: {
+        paddingLeft: '0!important',
+        paddingRight: '0!important',
+        textAlign: 'right',
       },
-      {
-        field: 'type',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
-        type: 'rightAligned',
-        cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
-          translateEnums(data.type),
-        minWidth: 90,
-        maxWidth: 120,
-        comparator: GraaspTable.textComparator,
-        sort: defaultSortedColumn?.type,
-      },
-      {
-        field: 'updatedAt',
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
-        maxWidth: 160,
-        minWidth: 80,
-        type: 'rightAligned',
-        valueFormatter: dateColumnFormatter,
-        comparator: GraaspTable.dateComparator,
-        sort: defaultSortedColumn?.updatedAt,
-      },
-      {
-        field: 'actions',
-        cellRenderer: actions ?? ActionComponent,
-        suppressKeyboardEvent: GraaspTable.suppressKeyboardEventForParentCell,
-        headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
-        colId: 'actions',
-        type: 'rightAligned',
-        cellStyle: {
-          paddingLeft: '0!important',
-          paddingRight: '0!important',
-          textAlign: 'right',
-        },
-        sortable: false,
-        suppressAutoSize: true,
-        // prevent ellipsis for small screens
-        minWidth: 140,
-      },
-    ];
-
-    return columns;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    translateBuilder,
-    defaultSortedColumn,
-    ActionComponent,
-    BadgesComponent,
-    actions,
-    showThumbnails,
-  ]);
+      sortable: false,
+      suppressAutoSize: true,
+      // prevent ellipsis for small screens
+      minWidth: 140,
+    },
+  ];
 
   const countTextFunction = (selected: string[]) =>
     translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {

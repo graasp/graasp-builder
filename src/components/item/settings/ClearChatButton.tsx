@@ -71,6 +71,7 @@ const ClearChatButton = ({
             variant="outlined"
             color="error"
             onClick={() => setOpenConfirmation(true)}
+            sx={{ minWidth: 150 }}
           >
             {text}
           </Button>
@@ -82,7 +83,7 @@ const ClearChatButton = ({
     <>
       <Stack direction="row" alignItems="center" spacing={2}>
         <Box width="max-content">{getContent(variant)}</Box>
-        <Typography variant="body1" textAlign="center">
+        <Typography variant="body1">
           {t(
             'Careful, this will delete all the messages in this item. Make sure you have a backup. You can download a backup from Graasp Analytics.',
           )}

@@ -1,7 +1,6 @@
 import { CheckboxProps } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
-import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
@@ -62,21 +61,17 @@ const Items = ({
   totalCount = 0,
   onSortChanged,
   pageSize,
-}: Props): JSX.Element => {
+}: Props): JSX.Element | null => {
   const { mode } = useLayoutContext();
   const itemIds = items?.map(({ id: itemId }) => itemId);
-  const { data: manyMemberships, isLoading: isMembershipsLoading } =
-    useManyItemMemberships(enableMemberships ? itemIds : []);
-  const { data: itemsTags } = useItemsTags(items?.map((r) => r.id));
+  const { data: manyMemberships } = useManyItemMemberships(
+    enableMemberships ? itemIds : [],
+  );
+  const { data: itemsTags } = useItemsTags(itemIds);
   const itemsStatuses = useItemsStatuses({
     items,
     itemsTags,
   });
-
-  if (isMembershipsLoading) {
-    return <Loader />;
-  }
-
   switch (mode) {
     case ITEM_LAYOUT_MODES.GRID:
       return (
@@ -87,7 +82,7 @@ const Items = ({
           items={items}
           manyMemberships={manyMemberships}
           itemsStatuses={itemsStatuses}
-          // This enables the possiblity to display messages (item is empty, no search result)
+          // This enables the possibility to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={headerElements}
           onShowOnlyMeChange={onShowOnlyMeChange}

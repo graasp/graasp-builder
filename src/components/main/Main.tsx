@@ -1,23 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { Grid, Typography, styled } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Stack, styled } from '@mui/material';
 
 import { Context } from '@graasp/sdk';
 import {
-  GraaspLogo,
   Main as GraaspMain,
   Platform,
   PlatformSwitch,
   defaultHostsMapper,
-  useMobileView,
   usePlatformNavigation,
-  useShortenURLParams,
 } from '@graasp/ui';
 
 import { HOST_MAP } from '@/config/externalPaths';
+import { useBuilderTranslation } from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
 
-import { APP_NAME, GRAASP_LOGO_HEADER_HEIGHT } from '../../config/constants';
 import { HOME_PATH, ITEM_ID_PARAMS } from '../../config/paths';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
@@ -26,7 +23,6 @@ import {
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
-import { useLayoutContext } from '../context/LayoutContext';
 import MainMenu from './MainMenu';
 import NotificationButton from './NotificationButton';
 
@@ -36,7 +32,9 @@ const StyledLink = styled(Link)(() => ({
   display: 'flex',
   alignItems: 'center',
 }));
-type Props = { children: JSX.Element | (JSX.Element & string) };
+const LinkComponent = ({ children }: { children: JSX.Element }) => (
+  <StyledLink to={HOME_PATH}>{children}</StyledLink>
+);
 
 // small converter for HOST_MAP into a usePlatformNavigation mapper
 export const platformsHostsMap = defaultHostsMapper({
@@ -45,11 +43,12 @@ export const platformsHostsMap = defaultHostsMapper({
   [Platform.Analytics]: HOST_MAP.analytics,
 });
 
-const Main = ({ children }: Props): JSX.Element => {
-  const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
-  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+type Props = { children: JSX.Element | (JSX.Element & string) };
 
-  const { isMobile } = useMobileView();
+const Main = ({ children }: Props): JSX.Element => {
+  const { t } = useBuilderTranslation();
+
+  const itemId = useParams()[ITEM_ID_PARAMS];
 
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
@@ -71,49 +70,27 @@ const Main = ({ children }: Props): JSX.Element => {
     },
   };
 
-  const leftContent = (
-    <Box display="flex" ml={2}>
-      <StyledLink to={HOME_PATH}>
-        <GraaspLogo height={GRAASP_LOGO_HEADER_HEIGHT} sx={{ fill: 'white' }} />
-        {!isMobile && (
-          <Typography variant="h6" color="inherit" mr={2} ml={1}>
-            {APP_NAME}
-          </Typography>
-        )}
-      </StyledLink>
-      <PlatformSwitch
-        id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
-        selected={Platform.Builder}
-        platformsProps={platformProps}
-      />
-    </Box>
-  );
-
   const rightContent = (
-    <Grid container>
-      <Grid item>
-        <NotificationButton />
-      </Grid>
-      <Grid item>
-        <UserSwitchWrapper />
-      </Grid>
-    </Grid>
+    <Stack direction="row" alignItems="center">
+      <NotificationButton />
+      <UserSwitchWrapper />
+    </Stack>
   );
-
   return (
     <GraaspMain
       context={Context.Builder}
-      handleDrawerOpen={() => {
-        setIsMainMenuOpen(true);
-      }}
-      handleDrawerClose={() => {
-        setIsMainMenuOpen(false);
-      }}
       headerId={HEADER_APP_BAR_ID}
-      headerLeftContent={leftContent}
+      drawerOpenAriaLabel={t(BUILDER.ARIA_OPEN_DRAWER)}
       headerRightContent={rightContent}
-      sidebar={<MainMenu />}
-      open={isMainMenuOpen}
+      drawerContent={<MainMenu />}
+      LinkComponent={LinkComponent}
+      PlatformComponent={
+        <PlatformSwitch
+          id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
+          selected={Platform.Builder}
+          platformsProps={platformProps}
+        />
+      }
     >
       <CookiesBanner />
       {children}

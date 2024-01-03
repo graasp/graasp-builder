@@ -117,17 +117,9 @@ const MobileItemMenu = ({
   };
   const shareActions = (
     <>
-      <ShareButton
-        itemId={item.id}
-        type={ActionButton.MENU_ITEM}
-        onClick={closeDrawer}
-      />
+      <ShareButton itemId={item.id} type={ActionButton.MENU_ITEM} />
       {canAdmin && (
-        <PublishButton
-          itemId={item.id}
-          onClick={closeDrawer}
-          type={ActionButton.MENU_ITEM}
-        />
+        <PublishButton itemId={item.id} type={ActionButton.MENU_ITEM} />
       )}
     </>
   );

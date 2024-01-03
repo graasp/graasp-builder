@@ -1,5 +1,5 @@
 import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
-import { HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, ITEMS_PATH } from '../../../../src/config/paths';
 import {
   ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR,
   ACCESSIBLE_ITEMS_ONLY_ME_ID,
@@ -16,16 +16,23 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { BUILDER } from '../../../../src/langs/constants';
 import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
-import {
-  NAVIGATION_LOAD_PAUSE,
-  TABLE_ITEM_RENDER_TIME,
-} from '../../../support/constants';
+import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
 import { ItemForTest } from '../../../support/types';
 
 const translateBuilder = (key: string) =>
   i18n.t(key, { ns: BUILDER_NAMESPACE });
 
 const sampleItems = generateOwnItems(30);
+
+// register a custom one time interceptor to listen specifically
+// to the request made with the search parameter we want
+const interceptAccessibleItemsSearch = (searchTerm: string) =>
+  cy
+    .intercept({
+      pathname: `/${ITEMS_PATH}/accessible`,
+      query: { name: searchTerm },
+    })
+    .as('getAccessibleSearch');
 
 describe('Home', () => {
   describe('Grid', () => {
@@ -70,6 +77,8 @@ describe('Home', () => {
 
         it('Search on second page should reset page number', () => {
           const searchText = 'mysearch';
+          interceptAccessibleItemsSearch(searchText);
+
           cy.wait('@getAccessibleItems');
           // navigate to seconde page
           cy.get(`#${ITEMS_GRID_PAGINATION_ID} > ul > li`).eq(2).click();
@@ -79,17 +88,13 @@ describe('Home', () => {
           });
           cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
-          cy.wait(['@getAccessibleItems', '@getAccessibleItems']).then(
-            ([
-              _unused,
-              {
-                request: { url },
-              },
-            ]) => {
-              expect(url).to.contain(searchText);
-              expect(url).to.contain('page=1');
-            },
-          );
+          // using our custom interceptor with the search parameter we can distinguish the complete
+          // search request from possibly other incomplete search requests
+          cy.wait('@getAccessibleSearch').then(({ request: { query } }) => {
+            expect(query.name).to.eq(searchText);
+            expect(query.page).to.eq('1');
+          });
+          cy.get(`#${buildItemCard(sampleItems[0].id)}`).should('be.visible');
         });
       });
 
@@ -155,14 +160,12 @@ describe('Home', () => {
         cy.goToItemInGrid(childId);
 
         // should get children
-        cy.wait('@getChildren', { timeout: TABLE_ITEM_RENDER_TIME }).then(
-          ({ response: { body } }) => {
-            // check item is created and displayed
-            for (const item of body) {
-              cy.get(`#${buildItemCard(item.id)}`).should('exist');
-            }
-          },
-        );
+        cy.wait('@getChildren').then(({ response: { body } }) => {
+          // check item is created and displayed
+          for (const item of body) {
+            cy.get(`#${buildItemCard(item.id)}`).should('exist');
+          }
+        });
 
         // root title
         cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
@@ -283,6 +286,8 @@ describe('Home', () => {
 
         it('Search on second page should reset page number', () => {
           const searchText = 'mysearch';
+          interceptAccessibleItemsSearch(searchText);
+
           cy.wait('@getAccessibleItems');
           // navigate to second page
           cy.get(ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR).click();
@@ -292,17 +297,10 @@ describe('Home', () => {
           });
           cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
-          cy.wait(['@getAccessibleItems', '@getAccessibleItems']).then(
-            ([
-              _unused,
-              {
-                request: { url },
-              },
-            ]) => {
-              expect(url).to.contain(searchText);
-              expect(url).to.contain('page=1');
-            },
-          );
+          cy.wait('@getAccessibleSearch').then(({ request: { query } }) => {
+            expect(query.name).to.eq(searchText);
+            expect(query.page).to.eq('1');
+          });
         });
       });
 

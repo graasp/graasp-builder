@@ -96,10 +96,9 @@ describe('Item Settings', () => {
       cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
 
       // click on the clear chat button
-      cy.get(`#${CLEAR_CHAT_SETTING_ID}`)
-        .should('exist')
-        .and('be.visible')
-        .click();
+      cy.get(`#${CLEAR_CHAT_SETTING_ID}`).scrollIntoView();
+      cy.get(`#${CLEAR_CHAT_SETTING_ID}`).should('exist').and('be.visible');
+      cy.get(`#${CLEAR_CHAT_SETTING_ID}`).click();
 
       // check that the dialog is open
       cy.get(`#${CLEAR_CHAT_DIALOG_ID}`);

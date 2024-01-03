@@ -4,31 +4,19 @@ import {
   buildItemLink,
   buildItemsTableRowIdAttribute,
 } from '../../../src/config/selectors';
-import {
-  NAVIGATE_PAUSE,
-  TABLE_ITEM_RENDER_TIME,
-  WAIT_FOR_ITEM_TABLE_ROW_TIME,
-} from '../constants';
 
 Cypress.Commands.add('goToItemInGrid', (id) => {
-  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${buildItemLink(id)}`).click();
 });
 
 Cypress.Commands.add('goToItemInList', (id) => {
-  cy.wait(NAVIGATE_PAUSE);
-  cy.get(buildItemsTableRowIdAttribute(id), {
-    timeout: WAIT_FOR_ITEM_TABLE_ROW_TIME,
-  }).click();
+  cy.get(buildItemsTableRowIdAttribute(id)).click();
 });
 
 Cypress.Commands.add('goToHome', () => {
-  cy.wait(NAVIGATE_PAUSE);
   cy.get(`#${NAVIGATION_HOME_LINK_ID}`).click();
 });
 
 Cypress.Commands.add('goToItemWithNavigation', (id) => {
-  cy.wait(NAVIGATE_PAUSE);
   cy.get(`[href="${buildItemPath(id)}"]`).click();
-  cy.wait(TABLE_ITEM_RENDER_TIME);
 });

@@ -1,7 +1,13 @@
 import { CSSProperties, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { DiscriminatedItem, ItemMembership, ItemType } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemMembership,
+  ItemType,
+  PermissionLevel,
+  ThumbnailSize,
+} from '@graasp/sdk';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import truncate from 'lodash.truncate';
@@ -12,7 +18,10 @@ import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
 import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
-import { isItemUpdateAllowedForUser } from '../../utils/membership';
+import {
+  getHighestPermissionForMemberFromMemberships,
+  isItemUpdateAllowedForUser,
+} from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
@@ -45,7 +54,10 @@ const ItemComponent = ({
   canMove = true,
 }: Props): JSX.Element => {
   const { id, name } = item;
-  const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({ id });
+  const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
+    id,
+    size: ThumbnailSize.Medium,
+  });
 
   const alt = name;
   const defaultValueComponent = (
@@ -72,6 +84,7 @@ const ItemComponent = ({
       url={thumbnailUrl ?? linkUrl}
       alt={alt}
       defaultComponent={defaultValueComponent}
+      sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
     />
   );
 
@@ -80,6 +93,12 @@ const ItemComponent = ({
     memberships,
     memberId: member?.id,
   });
+  const canAdmin = member?.id
+    ? getHighestPermissionForMemberFromMemberships({
+        memberships,
+        memberId: member?.id,
+      })?.permission === PermissionLevel.Admin
+    : false;
 
   const Actions = (
     <>
@@ -103,7 +122,12 @@ const ItemComponent = ({
       name={item.name}
       creator={item.creator?.name}
       ItemMenu={
-        <ItemMenu item={item} canEdit={enableEdition} canMove={canMove} />
+        <ItemMenu
+          item={item}
+          canEdit={enableEdition}
+          canAdmin={canAdmin}
+          canMove={canMove}
+        />
       }
       Thumbnail={ThumbnailComponent}
       cardId={buildItemCard(item.id)}

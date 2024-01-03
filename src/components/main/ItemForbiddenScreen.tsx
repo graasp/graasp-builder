@@ -4,7 +4,6 @@ import { Grid } from '@mui/material';
 import { Button, ForbiddenContent } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { mutations } from '../../config/queryClient';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
@@ -13,7 +12,6 @@ import Main from './Main';
 
 const ItemForbiddenScreen = (): JSX.Element => {
   const { data: member } = useCurrentUserContext();
-  const { mutate: signOut } = mutations.useSignOut();
   const { t: translateBuilder } = useBuilderTranslation();
 
   const ButtonContent = (
@@ -40,7 +38,7 @@ const ItemForbiddenScreen = (): JSX.Element => {
       >
         <Grid item>
           {/* // TODO: remove hook from prop */}
-          <ForbiddenContent signOut={signOut as any} memberId={member?.id} />
+          <ForbiddenContent memberId={member?.id} />
           <UserSwitchWrapper ButtonContent={ButtonContent} />
         </Grid>
       </Grid>

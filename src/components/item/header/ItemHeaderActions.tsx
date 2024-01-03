@@ -1,16 +1,16 @@
 import { Box, Stack } from '@mui/material';
 
-import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
-import { ChatboxButton } from '@graasp/ui';
+import { ItemType, PermissionLevel } from '@graasp/sdk';
+import { ChatboxButton, useShortenURLParams } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
+import { ITEM_ID_PARAMS } from '@/config/paths';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { ITEM_CHATBOX_BUTTON_ID } from '../../../config/selectors';
-import { ItemActionTabs } from '../../../enums';
 import { BUILDER } from '../../../langs/constants';
 import {
   getHighestPermissionForMemberFromMemberships,
@@ -25,24 +25,17 @@ import ItemMenu from '../../main/ItemMenu';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
-const { useItemMemberships } = hooks;
+const { useItemMemberships, useItem } = hooks;
 
-type Props = {
-  item?: DiscriminatedItem;
-};
-
-const ItemHeaderActions = ({ item }: Props): JSX.Element => {
+const ItemHeaderActions = (): JSX.Element => {
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const {
-    editingItemId,
-    openedActionTabId,
-    isChatboxMenuOpen,
-    setIsChatboxMenuOpen,
-    setIsItemMetadataMenuOpen,
-  } = useLayoutContext();
+  const { editingItemId, isChatboxMenuOpen, setIsChatboxMenuOpen } =
+    useLayoutContext();
 
   const { data: member } = useCurrentUserContext();
+  const { data: item } = useItem(itemId);
 
   const { data: memberships } = useItemMemberships(item?.id);
   const canEdit = isItemUpdateAllowedForUser({
@@ -58,7 +51,6 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
 
   const onClickChatbox = () => {
     setIsChatboxMenuOpen(!isChatboxMenuOpen);
-    setIsItemMetadataMenuOpen(false);
   };
 
   const renderItemActions = () => {
@@ -80,7 +72,12 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
         <>
           {showEditButton && <EditButton item={item} />}
           <Box width="100%">
-            <ItemMenu item={item} canMove={false} canEdit={showEditButton} />
+            <ItemMenu
+              item={item}
+              canMove={false}
+              canEdit={showEditButton}
+              canAdmin={canAdmin}
+            />
           </Box>
 
           {shareActions}
@@ -95,8 +92,7 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
 
       return (
         <>
-          {openedActionTabId !== ItemActionTabs.Settings && activeActions}
-
+          {activeActions}
           <DownloadButton id={item.id} name={item.name} />
           {canEdit && <ItemSettingsButton id={item.id} />}
         </>
@@ -112,7 +108,7 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
         // show only for content with tables : root or folders
         (item?.type === ItemType.FOLDER || !item?.id) && <ModeButton />
       }
-      {item?.id && <ItemMetadataButton />}
+      {item?.id && <ItemMetadataButton itemId={item.id} />}
     </Stack>
   );
 };

@@ -22,7 +22,7 @@ const PlayerViewButton = ({ itemId }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const onClick = () => {
-    redirect(buildGraaspPlayerView(itemId), {
+    redirect(window, buildGraaspPlayerView(itemId), {
       name: buildPlayerTabName(itemId),
       openInNewTab: true,
     });
