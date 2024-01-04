@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import FlagIcon from '@mui/icons-material/Flag';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -11,9 +12,15 @@ import MenuItem from '@mui/material/MenuItem';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
 
+import { validate } from 'uuid';
+
+import { mutations } from '@/config/queryClient';
+import { getParentsIdsFromPath } from '@/utils/item';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   ITEM_MENU_BUTTON_CLASS,
+  ITEM_MENU_DUPLICATE_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
   buildItemMenu,
@@ -49,6 +56,7 @@ const ItemMenu = ({
     CreateShortcutModalContext,
   );
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
+  const { mutate: copyItems } = mutations.useCopyItems();
 
   const handleClick: IconButtonProps['onClick'] = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,6 +76,19 @@ const ItemMenu = ({
     handleClose();
   };
 
+  const handleDuplicate = () => {
+    const parent = getParentsIdsFromPath(item.path);
+
+    const parentId = parent[parent.length - 2];
+    const newPayload = {
+      ids: [item.id],
+      to: parentId && validate(parentId) ? parentId : undefined,
+      itemsName: {
+        [item.id]: `${item.name} ${translateBuilder(BUILDER.COPY)}`,
+      },
+    };
+    copyItems(newPayload);
+  };
   const renderEditorActions = () => {
     if (!canEdit) {
       return null;
@@ -116,6 +137,15 @@ const ItemMenu = ({
         itemIds={[item.id]}
         onClick={handleClose}
       />,
+      <MenuItem
+        onClick={handleDuplicate}
+        className={ITEM_MENU_DUPLICATE_BUTTON_CLASS}
+      >
+        <ListItemIcon>
+          <FileCopyIcon />
+        </ListItemIcon>
+        {translateBuilder(BUILDER.ITEM_MENU_DUPLICATE_MENU_ITEM)}
+      </MenuItem>,
     ];
   };
 

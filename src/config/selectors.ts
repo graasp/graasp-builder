@@ -92,6 +92,7 @@ export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
 export const PUBLISHED_ITEMS_ERROR_ALERT_ID = 'publishedItemsErrorAlert';
 export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'favoriteItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
+export const ITEM_MENU_DUPLICATE_BUTTON_CLASS = 'itemMenuDuplicateButton';
 export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const ITEM_MENU_FLAG_BUTTON_CLASS = 'itemMenuFlagButton';
 export const buildFlagListItemId = (type: string): string =>

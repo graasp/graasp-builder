@@ -136,6 +136,7 @@ export const BUILDER = {
   ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER:
     'ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER',
   ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM: 'ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM',
+  ITEM_MENU_DUPLICATE_MENU_ITEM: 'ITEM_MENU_DUPLICATE_MENU_ITEM',
   ITEM_MENU_FLAG_MENU_ITEM: 'ITEM_MENU_FLAG_MENU_ITEM',
   ITEM_METADATA_CREATED_AT_TITLE: 'ITEM_METADATA_CREATED_AT_TITLE',
   ITEM_METADATA_LINK_TITLE: 'ITEM_METADATA_LINK_TITLE',
@@ -356,4 +357,5 @@ export const BUILDER = {
   // temporary message
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.":
     "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
+  COPY: 'COPY',
 };

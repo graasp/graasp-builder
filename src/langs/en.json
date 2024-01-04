@@ -291,5 +291,7 @@
   "SHORT_LINK_MAX_CHARS_ERROR": "The short link must not exceed {{data}} chars.",
   "SHORT_LINK_INVALID_CHARS_ERROR": "The short link contains invalid chars ({{data}}).",
   "SHORT_LINK_UNKNOWN_ERROR": "An unknown error occurred.",
-  "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "You can also find the items of this page in ''My Graasp''. This page ''Shared Items'' will be unavailable soon."
+  "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "You can also find the items of this page in ''My Graasp''. This page ''Shared Items'' will be unavailable soon.",
+  "ITEM_MENU_DUPLICATE_MENU_ITEM": "Duplicate",
+  "COPY": "copy"
 }
