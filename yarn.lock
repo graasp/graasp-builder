@@ -1214,7 +1214,7 @@ __metadata:
 
 "@graasp/ui@https://github.com/graasp/graasp-ui.git#responsive-enhancements":
   version: 4.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=3bb36a6198bdf9cd244d15d8ab3ba07a74fc8d38"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=bb9bb456a212dbdad3555a092885445d67daace4"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     http-status-codes: "npm:2.3.0"
@@ -1249,7 +1249,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: ba32602f3cd72b8fb5aea6b713e3645f8b7aab0e8ebc6144d512ffb181383846b9309f2cd93688001c2aa629e513d1ed3bfa75c8de91607aa2775c8fb05c7ca2
+  checksum: 43cbf1960ca3851295b8d3ccac71bb3dac05ed1aca56d15283689f154de873bd9c1735ebc7d3a0ea766781657f471a1c539e965404e43561f91dec8002343daf
   languageName: node
   linkType: hard
 
