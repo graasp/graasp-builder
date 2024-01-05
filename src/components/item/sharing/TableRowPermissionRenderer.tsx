@@ -32,7 +32,19 @@ type TableRowPermissionRendererProps<T> = {
   readOnly?: boolean;
   hasOnlyOneAdmin?: boolean;
 };
-
+const checkPermissionLessOrEqual = ({
+  base,
+  value,
+}: {
+  base: PermissionLevel;
+  value: PermissionLevel;
+}) => {
+  const orderedPermissionToHighest = ['read', 'write', 'admin'];
+  return (
+    orderedPermissionToHighest.indexOf(value) >=
+    orderedPermissionToHighest.indexOf(base)
+  );
+};
 function TableRowPermissionRenderer<
   T extends { permission: PermissionLevel; item: Item; member?: Member },
 >({
@@ -55,7 +67,12 @@ function TableRowPermissionRenderer<
     const handleClose = () => {
       setOpen(false);
     };
+    const isEditingOwnPermission =
+      instance?.member && instance?.member?.id === currentMember?.id;
 
+    const isEditingTheOnlyAdmin = Boolean(
+      hasOnlyOneAdmin && instance.permission === PermissionLevel.Admin,
+    );
     const isParentMembership = useIsParentInstance({
       instance,
       item,
@@ -74,13 +91,33 @@ function TableRowPermissionRenderer<
       if (
         (value === PermissionLevel.Read || value === PermissionLevel.Write) &&
         instance.permission === PermissionLevel.Admin &&
-        instance?.member &&
-        instance?.member?.id === currentMember?.id
+        isEditingOwnPermission
       ) {
         setOpen(true);
       } else {
         changePermission(value);
       }
+    };
+
+    const permissionDisabledMap = {
+      admin:
+        isEditingTheOnlyAdmin &&
+        checkPermissionLessOrEqual({
+          value: instance.permission,
+          base: PermissionLevel.Admin,
+        }),
+      read:
+        isEditingTheOnlyAdmin &&
+        checkPermissionLessOrEqual({
+          value: instance.permission,
+          base: PermissionLevel.Read,
+        }),
+      write:
+        isEditingTheOnlyAdmin &&
+        checkPermissionLessOrEqual({
+          value: instance.permission,
+          base: PermissionLevel.Write,
+        }),
     };
 
     return readOnly ? (
@@ -91,6 +128,7 @@ function TableRowPermissionRenderer<
           value={instance.permission}
           showLabel={false}
           onChange={onChangePermission}
+          disabledMap={permissionDisabledMap}
         />
         <Dialog
           open={open}
