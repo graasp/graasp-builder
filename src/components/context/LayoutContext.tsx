@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
+import { useMediaQuery, useTheme } from '@mui/material';
+
 import { ChatStatus } from '@graasp/sdk';
-import { useMobileView } from '@graasp/ui';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
 import { ITEM_LAYOUT_MODES } from '../../enums';
@@ -72,7 +73,9 @@ export const LayoutContextProvider = ({
     null,
   );
 
-  const { isMobile } = useMobileView();
+  const theme = useTheme();
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
   const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);
 

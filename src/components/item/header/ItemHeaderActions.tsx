@@ -1,10 +1,18 @@
 import { useState } from 'react';
 
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Box, SpeedDial, Stack, styled } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Stack,
+  SwipeableDrawer,
+  styled,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
-import { ChatboxButton, useMobileView } from '@graasp/ui';
+import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
@@ -34,32 +42,44 @@ type Props = {
   item?: DiscriminatedItem;
 };
 
-const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
-  position: 'absolute',
-  top: theme.spacing(-2.5),
-  left: theme.spacing(-2.5),
-  zIndex: 99,
+// a way to expand button to include the text
+const StyledBox = styled(Box)(() => ({
+  '& span': {
+    maxWidth: '20px',
+  },
   '& button': {
-    width: theme.spacing(4.5),
-    height: theme.spacing(4.5),
-    color: 'gray',
-    background: 'white',
-    marginBottom: theme.spacing(1),
-    boxShadow: 'none',
-  },
-  '#itemactions-actions button': {
-    boxShadow: theme.shadows[2],
-  },
-  '& button:hover': {
-    color: 'white',
+    paddingRight: '100px',
   },
 }));
+
+type ButtonWithTextProps = {
+  children: JSX.Element;
+  isMobile: boolean;
+  text: string;
+  onClick: () => void;
+};
+
+const ButtonWithText = ({
+  children,
+  isMobile,
+  text,
+  onClick,
+}: ButtonWithTextProps): JSX.Element =>
+  isMobile ? (
+    <StyledBox
+      onClick={onClick}
+      p={text ? '6px 11px ' : 0}
+      display="flex"
+      alignItems="center"
+      gap={3}
+    >
+      {children} {text}
+    </StyledBox>
+  ) : (
+    children
+  );
 const ItemHeaderActions = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const {
     editingItemId,
@@ -70,7 +90,10 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
   } = useLayoutContext();
 
   const { data: member } = useCurrentUserContext();
-  const { isMobile } = useMobileView();
+  const [isItemActionsDrawerOpen, setIsItemActionsDrawerOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const { data: memberships } = useItemMemberships(item?.id);
   const canEdit = isItemUpdateAllowedForUser({
     memberships,
@@ -88,6 +111,10 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
     setIsItemMetadataMenuOpen(false);
   };
 
+  const toggleActionsDrawer = () => {
+    setIsItemActionsDrawerOpen(!isItemActionsDrawerOpen);
+  };
+  const closeDrawer = () => setIsItemActionsDrawerOpen(false);
   const renderItemActions = () => {
     // if id is defined, we are looking at an item
     if (item && item?.id) {
@@ -99,31 +126,76 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
 
       const activeActions = (
         <>
-          {showEditButton && <EditButton item={item} />}
+          {showEditButton && (
+            <ButtonWithText
+              isMobile={isMobile}
+              text={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
+              onClick={closeDrawer}
+            >
+              <EditButton item={item} />
+            </ButtonWithText>
+          )}
           {/* prevent moving from top header to avoid confusion */}
-          <ItemMenu item={item} canMove={false} canEdit={showEditButton} />
 
-          <ShareButton itemId={item.id} />
-          <ChatboxButton
-            tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
-            id={ITEM_CHATBOX_BUTTON_ID}
-            onClick={onClickChatbox}
-          />
-          {canAdmin && <PublishButton itemId={item.id} />}
+          <ButtonWithText isMobile={isMobile} text="" onClick={closeDrawer}>
+            <Box>
+              <ItemMenu
+                item={item}
+                canMove={false}
+                canEdit={showEditButton}
+                displayMenu={!isMobile}
+              />
+            </Box>
+          </ButtonWithText>
+          <ButtonWithText
+            isMobile={isMobile}
+            text={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
+            onClick={closeDrawer}
+          >
+            <ShareButton itemId={item.id} />
+          </ButtonWithText>
+          <ButtonWithText
+            isMobile={isMobile}
+            text={translateBuilder(BUILDER.SETTINGS_SHOW_CHAT_LABEL)}
+            onClick={closeDrawer}
+          >
+            <ChatboxButton
+              tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+              id={ITEM_CHATBOX_BUTTON_ID}
+              onClick={onClickChatbox}
+            />
+          </ButtonWithText>
+          {canAdmin && (
+            <ButtonWithText
+              isMobile={isMobile}
+              text={translateBuilder(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE)}
+              onClick={closeDrawer}
+            >
+              <PublishButton itemId={item.id} />
+            </ButtonWithText>
+          )}
         </>
       );
-      const isMobileInfoBtns = isMobile && (
-        <>
-          {item?.type === ItemType.FOLDER && <ModeButton />}
-          {item?.id && <ItemMetadataButton />}
-        </>
-      );
+
       return (
         <>
           {openedActionTabId !== ItemActionTabs.Settings && activeActions}
-          {canEdit && <ItemSettingsButton id={item.id} />}
-          <DownloadButton id={item.id} name={item.name} />
-          {isMobileInfoBtns}
+          <ButtonWithText
+            isMobile={isMobile}
+            text={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
+            onClick={closeDrawer}
+          >
+            <DownloadButton id={item.id} name={item.name} />
+          </ButtonWithText>
+          {canEdit && (
+            <ButtonWithText
+              isMobile={isMobile}
+              text={translateBuilder(BUILDER.SETTINGS_TITLE)}
+              onClick={closeDrawer}
+            >
+              <ItemSettingsButton id={item.id} />
+            </ButtonWithText>
+          )}
         </>
       );
     }
@@ -131,20 +203,28 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
   };
 
   if (isMobile) {
-    // eslint-disable-next-line no-nested-ternary
     return item ? (
-      <Box sx={{ position: 'relative' }}>
-        <StyledSpeedDial
-          ariaLabel="item actions"
-          icon={<SettingsIcon />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-          direction="down"
+      <>
+        <Box display="flex" sx={{ '& button': { padding: 0.5 } }}>
+          <ItemMetadataButton />
+          <ModeButton />
+          <IconButton onClick={toggleActionsDrawer}>
+            <SettingsIcon />
+          </IconButton>
+        </Box>
+
+        <SwipeableDrawer
+          anchor="bottom"
+          open={isItemActionsDrawerOpen}
+          onClose={closeDrawer}
+          onOpen={() => setIsItemActionsDrawerOpen(true)}
+          PaperProps={{ sx: { maxHeight: '50vh', paddingY: 2 } }}
         >
-          {open && renderItemActions()}
-        </StyledSpeedDial>
-      </Box>
+          <Box display="flex" flexDirection="column">
+            {renderItemActions()}
+          </Box>
+        </SwipeableDrawer>
+      </>
     ) : (
       <ModeButton />
     );

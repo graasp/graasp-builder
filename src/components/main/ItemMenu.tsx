@@ -35,12 +35,14 @@ type Props = {
   item: DiscriminatedItem;
   canEdit?: boolean;
   canMove?: boolean;
+  displayMenu?: boolean;
 };
 
 const ItemMenu = ({
   item,
   canEdit = false,
   canMove = true,
+  displayMenu = true,
 }: Props): JSX.Element => {
   const { data: member } = useCurrentUserContext();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -119,6 +121,34 @@ const ItemMenu = ({
     ];
   };
 
+  if (!displayMenu) {
+    return (
+      <>
+        {renderAuthenticatedActions()}
+        {renderEditorActions()}
+        <MenuItem
+          onClick={handleCreateShortcut}
+          className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+          sx={{ paddingY: '2px' }}
+        >
+          <ListItemIcon>
+            <LabelImportantIcon />
+          </ListItemIcon>
+          {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
+        </MenuItem>
+        <MenuItem
+          onClick={handleFlag}
+          className={ITEM_MENU_FLAG_BUTTON_CLASS}
+          sx={{ paddingY: '2px' }}
+        >
+          <ListItemIcon>
+            <FlagIcon />
+          </ListItemIcon>
+          {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
+        </MenuItem>
+      </>
+    );
+  }
   return (
     <>
       <IconButton

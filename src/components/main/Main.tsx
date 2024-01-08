@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { Grid, Typography, styled } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  styled,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { Context } from '@graasp/sdk';
@@ -10,7 +16,6 @@ import {
   Platform,
   PlatformSwitch,
   defaultHostsMapper,
-  useMobileView,
   usePlatformNavigation,
   useShortenURLParams,
 } from '@graasp/ui';
@@ -47,8 +52,10 @@ export const platformsHostsMap = defaultHostsMapper({
 
 const Main = ({ children }: Props): JSX.Element => {
   const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
-  const { isMobile } = useMobileView();
   const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
