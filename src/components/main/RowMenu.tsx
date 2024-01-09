@@ -6,9 +6,7 @@ import { Box, Button, IconButton, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
-import { useBuilderTranslation } from '@/config/i18n';
 import { buildHomeModalItemID, buildItemRowArrowId } from '@/config/selectors';
-import { BUILDER } from '@/langs/constants';
 
 interface MenuRowProps {
   ele: DiscriminatedItem;
@@ -49,8 +47,6 @@ const MoveMenuRow = ({
 }: MenuRowProps): JSX.Element | null => {
   const [isHoverActive, setIsHoverActive] = useState(false);
 
-  const { t: translateBuilder } = useBuilderTranslation();
-
   const handleHover = () => {
     setIsHoverActive(true);
   };
@@ -90,10 +86,6 @@ const MoveMenuRow = ({
       </Box>
       {(isHoverActive || selectedId === ele.id) && (
         <Box display="flex">
-          <Button sx={{ padding: '0' }}>
-            {translateBuilder(BUILDER.MOVE_BUTTON)}
-          </Button>
-
           <IconButton
             sx={{ padding: '0' }}
             onClick={onNavigate}

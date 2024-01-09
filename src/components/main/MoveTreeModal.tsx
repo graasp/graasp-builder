@@ -96,7 +96,7 @@ const TreeModal = ({
           <Breadcrumbs
             separator="›"
             aria-label="breadcrumb"
-            sx={{ '& li:first-of-type': { width: '42px' } }}
+            sx={{ '& li:first-of-type': { width: '42px', paddingLeft: 1 } }}
           >
             {breadcrumbs.map((ele) => (
               <Button
@@ -104,6 +104,7 @@ const TreeModal = ({
                 color="inherit"
                 sx={{
                   padding: 0,
+                  minWidth: 0,
                   '&:hover': {
                     textDecoration: 'underline',
                     background: 'none',
