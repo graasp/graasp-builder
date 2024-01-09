@@ -83,9 +83,6 @@ const ItemMenu = ({
     const newPayload = {
       ids: [item.id],
       to: parentId && validate(parentId) ? parentId : undefined,
-      itemsName: {
-        [item.id]: `${item.name} ${translateBuilder(BUILDER.COPY)}`,
-      },
     };
     copyItems(newPayload);
   };
