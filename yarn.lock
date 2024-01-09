@@ -1212,9 +1212,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@https://github.com/graasp/graasp-ui.git#630-select-disable":
+"@graasp/ui@https://github.com/graasp/graasp-ui.git#main":
   version: 4.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ba3f2dbb3a0afdb9f726c83ed8b6c54aeb6eec38"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=c2dfe20970b85d62fd474fdf7855b2cc82f8633a"
   dependencies:
     "@graasp/sdk": "npm:3.3.0"
     http-status-codes: "npm:2.3.0"
@@ -1249,7 +1249,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 59892f52a917e1d1c7879c1aa9c84d0a0d52d664ba0c728eee7ed017eec3602c5a1e5544606f479636447c26a23c627b1b51e35d5c66318670bd7d94abcc5ae4
+  checksum: 15b72bd65c5a0b6b6f4fbfd0e2cecc61c01c85be7a3a51e2e3b4ca3044f0543e47d0752ce117ea48c61b8c1ad8dfa5c431ef91c3bccadee3f1697e4676634fac
   languageName: node
   linkType: hard
 
@@ -5936,7 +5936,7 @@ __metadata:
     "@graasp/query-client": "npm:2.2.1"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
-    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#630-select-disable"
+    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#main"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"

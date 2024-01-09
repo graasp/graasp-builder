@@ -32,19 +32,7 @@ type TableRowPermissionRendererProps<T> = {
   readOnly?: boolean;
   hasOnlyOneAdmin?: boolean;
 };
-const checkPermissionLessOrEqual = ({
-  base,
-  value,
-}: {
-  base: PermissionLevel;
-  value: PermissionLevel;
-}) => {
-  const orderedPermissionToHighest = ['read', 'write', 'admin'];
-  return (
-    orderedPermissionToHighest.indexOf(value) >=
-    orderedPermissionToHighest.indexOf(base)
-  );
-};
+
 function TableRowPermissionRenderer<
   T extends { permission: PermissionLevel; item: Item; member?: Member },
 >({
@@ -99,25 +87,11 @@ function TableRowPermissionRenderer<
       }
     };
 
+    // permissions will be disabled when trying to change permission for the only admin
     const permissionDisabledMap = {
-      admin:
-        isEditingTheOnlyAdmin &&
-        checkPermissionLessOrEqual({
-          value: instance.permission,
-          base: PermissionLevel.Admin,
-        }),
-      read:
-        isEditingTheOnlyAdmin &&
-        checkPermissionLessOrEqual({
-          value: instance.permission,
-          base: PermissionLevel.Read,
-        }),
-      write:
-        isEditingTheOnlyAdmin &&
-        checkPermissionLessOrEqual({
-          value: instance.permission,
-          base: PermissionLevel.Write,
-        }),
+      admin: isEditingTheOnlyAdmin,
+      read: isEditingTheOnlyAdmin,
+      write: isEditingTheOnlyAdmin,
     };
 
     return readOnly ? (

@@ -15,9 +15,15 @@ import {
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 
-interface DisabledMap {
-  [key: string]: boolean;
-}
+type DisabledMap = {
+  [key in PermissionLevel]: boolean;
+};
+
+const defaultDisabledMap = {
+  admin: false,
+  read: false,
+  write: false,
+};
 export type ItemMembershipSelectProps = {
   value: string;
   onChange?: SelectProps['onChange'];
@@ -33,7 +39,7 @@ const ItemMembershipSelect = ({
   color,
   showLabel = true,
   displayEmpty = false,
-  disabledMap,
+  disabledMap = defaultDisabledMap,
 }: ItemMembershipSelectProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
@@ -55,7 +61,7 @@ const ItemMembershipSelect = ({
       values={Object.values(PermissionLevel).map((v) => ({
         value: v,
         text: enumT(v),
-        ...(disabledMap && { disabled: disabledMap?.[v] }),
+        disabled: disabledMap[v],
       }))}
       buildOptionId={buildPermissionOptionId}
       value={permission}
