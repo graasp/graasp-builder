@@ -7,7 +7,7 @@ import { hooks } from '@/config/queryClient';
 import { HOME_MODAL_ITEM_ID, ROOT_MODAL_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
-import MoveMenuRow from './MenuRow';
+import TreeMenuRow from './MenuRow';
 
 interface RootTreeModalProps {
   setBreadcrumbs: Dispatch<
@@ -19,7 +19,6 @@ interface RootTreeModalProps {
   itemIds: string[];
   parentItem?: DiscriminatedItem;
   selfAndChildrenDisable?: boolean;
-  title: string;
 }
 
 const RootTreeModal = ({
@@ -30,7 +29,6 @@ const RootTreeModal = ({
   itemIds,
   parentItem,
   selfAndChildrenDisable = false,
-  title,
 }: RootTreeModalProps): JSX.Element => {
   const { data: ownItems } = hooks.useOwnItems();
   const { data: sharedItems } = hooks.useSharedItems();
@@ -70,7 +68,7 @@ const RootTreeModal = ({
     <div id={HOME_MODAL_ITEM_ID}>
       {/* Home or Root  Which will be the start of the menu */}
       {isHome && (
-        <MoveMenuRow
+        <TreeMenuRow
           key={rootMenuItem.name}
           ele={rootMenuItem}
           onNavigate={() => {
@@ -82,7 +80,6 @@ const RootTreeModal = ({
           setSelectedId={setSelectedId}
           itemIds={[]}
           selfAndChildrenDisable={selfAndChildrenDisable}
-          title={title}
         />
       )}
       {/* end of home */}
@@ -90,7 +87,7 @@ const RootTreeModal = ({
       {/* Items for selected Item, So if I choose folder1 this should be it children */}
       {!isHome &&
         items?.map((ele) => (
-          <MoveMenuRow
+          <TreeMenuRow
             key={ele.id}
             ele={ele}
             onNavigate={() => selectSubItems(ele)}
@@ -98,14 +95,13 @@ const RootTreeModal = ({
             setSelectedId={setSelectedId}
             itemIds={itemIds}
             selfAndChildrenDisable={selfAndChildrenDisable}
-            title={title}
           />
         ))}
 
       {/* Default Parent So If I want to move an item who's in nested folder we will have it's parent as default */}
 
       {parentItem && selectedParent?.id === ROOT_MODAL_ID && (
-        <MoveMenuRow
+        <TreeMenuRow
           key={parentItem.id}
           ele={parentItem}
           onNavigate={() => {
@@ -116,7 +112,6 @@ const RootTreeModal = ({
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           itemIds={itemIds}
-          title={title}
           selfAndChildrenDisable={selfAndChildrenDisable}
         />
       )}

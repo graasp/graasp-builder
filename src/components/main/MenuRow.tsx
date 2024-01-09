@@ -6,10 +6,7 @@ import { Box, Button, IconButton, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
-import {
-  buildHomeModalItemID, // TREE_MODAL_MY_ITEMS_ID,
-  buildItemRowArrowId,
-} from '@/config/selectors';
+import { buildHomeModalItemID, buildItemRowArrowId } from '@/config/selectors';
 
 interface MenuRowProps {
   ele: DiscriminatedItem;
@@ -17,7 +14,6 @@ interface MenuRowProps {
   selectedId: string;
   setSelectedId: Dispatch<SetStateAction<string>>;
   itemIds: string[];
-  title: string;
   selfAndChildrenDisable?: boolean;
 }
 
@@ -49,7 +45,6 @@ const TreeMenuRow = ({
   setSelectedId,
   selectedId,
   itemIds,
-  title,
   selfAndChildrenDisable = false,
 }: MenuRowProps): JSX.Element | null => {
   const [isHoverActive, setIsHoverActive] = useState(false);
@@ -104,8 +99,6 @@ const TreeMenuRow = ({
       </Box>
       {(isHoverActive || selectedId === ele.id) && (
         <Box display="flex">
-          <Button sx={{ padding: '0' }}>{title}</Button>
-
           <IconButton
             sx={{ padding: '0' }}
             onClick={onNavigate}
