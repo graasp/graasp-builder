@@ -357,5 +357,4 @@ export const BUILDER = {
   // temporary message
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.":
     "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
-  COPY: 'COPY',
 };
