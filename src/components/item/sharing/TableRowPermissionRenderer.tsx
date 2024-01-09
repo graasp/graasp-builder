@@ -87,13 +87,6 @@ function TableRowPermissionRenderer<
       }
     };
 
-    // permissions will be disabled when trying to change permission for the only admin
-    const permissionDisabledMap = {
-      admin: isEditingTheOnlyAdmin,
-      read: isEditingTheOnlyAdmin,
-      write: isEditingTheOnlyAdmin,
-    };
-
     return readOnly ? (
       <Typography noWrap>{instance.permission}</Typography>
     ) : (
@@ -101,8 +94,8 @@ function TableRowPermissionRenderer<
         <ItemMembershipSelect
           value={instance.permission}
           showLabel={false}
+          disabled={isEditingTheOnlyAdmin}
           onChange={onChangePermission}
-          disabledMap={permissionDisabledMap}
         />
         <Dialog
           open={open}
