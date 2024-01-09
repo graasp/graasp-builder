@@ -12,8 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
 
-import { validate } from 'uuid';
-
 import { mutations } from '@/config/queryClient';
 import { getParentsIdsFromPath } from '@/utils/item';
 
@@ -77,12 +75,14 @@ const ItemMenu = ({
   };
 
   const handleDuplicate = () => {
-    const parent = getParentsIdsFromPath(item.path);
+    const parentsIds = getParentsIdsFromPath(item.path);
+    // get the close parent if not then undefined
+    const to =
+      parentsIds.length > 1 ? parentsIds[parentsIds.length - 2] : undefined;
 
-    const parentId = parent[parent.length - 2];
     const newPayload = {
       ids: [item.id],
-      to: parentId && validate(parentId) ? parentId : undefined,
+      to,
     };
     copyItems(newPayload);
   };
