@@ -92,57 +92,60 @@ const TreeModal = ({
         })}
       </DialogTitle>
       <DialogContent sx={{ height: '270px' }}>
-        <Stack spacing={2} mb={2}>
-          <Breadcrumbs
-            separator="›"
-            aria-label="breadcrumb"
-            sx={{ '& li:first-of-type': { width: '42px', paddingLeft: 1 } }}
-          >
-            {breadcrumbs.map((ele) => (
-              <Button
-                variant="text"
-                color="inherit"
-                sx={{
-                  padding: 0,
-                  minWidth: 0,
-                  '&:hover': {
-                    textDecoration: 'underline',
-                    background: 'none',
-                  },
-                }}
-                key={ele.id}
-                onClick={() => {
-                  setBreadcrumbs((prevBreadcrumb) => {
-                    // remove until the clicked item included
-                    const trimmedIndex = prevBreadcrumb.indexOf(ele);
-                    if (trimmedIndex === 0 && prevBreadcrumb.length === 1) {
-                      return prevBreadcrumb;
-                    }
-                    if (trimmedIndex === 0) {
-                      return prevBreadcrumb.slice(
-                        0,
-                        -prevBreadcrumb.length + 1,
-                      );
-                    }
-                    return prevBreadcrumb.slice(0, trimmedIndex + 1);
-                  });
+        {breadcrumbs.length > 1 && (
+          <Stack spacing={2} mb={2}>
+            <Breadcrumbs
+              separator="›"
+              aria-label="breadcrumb"
+              sx={{ '& li:first-of-type': { width: '42px', paddingLeft: 1 } }}
+            >
+              {breadcrumbs.map((ele) => (
+                <Button
+                  variant="text"
+                  color="inherit"
+                  sx={{
+                    textTransform: 'none',
+                    padding: 0,
+                    minWidth: 0,
+                    '&:hover': {
+                      textDecoration: 'underline',
+                      background: 'none',
+                    },
+                  }}
+                  key={ele.id}
+                  onClick={() => {
+                    setBreadcrumbs((prevBreadcrumb) => {
+                      // remove until the clicked item included
+                      const trimmedIndex = prevBreadcrumb.indexOf(ele);
+                      if (trimmedIndex === 0 && prevBreadcrumb.length === 1) {
+                        return prevBreadcrumb;
+                      }
+                      if (trimmedIndex === 0) {
+                        return prevBreadcrumb.slice(
+                          0,
+                          -prevBreadcrumb.length + 1,
+                        );
+                      }
+                      return prevBreadcrumb.slice(0, trimmedIndex + 1);
+                    });
 
-                  if (ele.id === ROOT_MODAL_ID) {
-                    setSelectedId('');
-                  } else {
-                    setSelectedId(ele.id);
-                  }
-                }}
-              >
-                {ele.id === ROOT_MODAL_ID ? (
-                  <HomeIcon />
-                ) : (
-                  ele.name.slice(0, 10)
-                )}
-              </Button>
-            ))}
-          </Breadcrumbs>
-        </Stack>
+                    if (ele.id === ROOT_MODAL_ID) {
+                      setSelectedId('');
+                    } else {
+                      setSelectedId(ele.id);
+                    }
+                  }}
+                >
+                  {ele.id === ROOT_MODAL_ID ? (
+                    <HomeIcon />
+                  ) : (
+                    ele.name.slice(0, 10)
+                  )}
+                </Button>
+              ))}
+            </Breadcrumbs>
+          </Stack>
+        )}
 
         <RootTreeModal
           setBreadcrumbs={setBreadcrumbs}

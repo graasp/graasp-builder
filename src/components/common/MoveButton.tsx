@@ -86,7 +86,7 @@ const MoveButton = ({
         iconClassName={ITEM_MOVE_BUTTON_CLASS}
       />
 
-      {itemIds.length && open && (
+      {itemIds.length > 0 && open && (
         <TreeModal
           onClose={onClose}
           open={open}

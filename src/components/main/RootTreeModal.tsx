@@ -1,6 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 
+import { Box } from '@mui/material';
+
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { theme } from '@graasp/ui';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
@@ -112,9 +115,9 @@ const RootTreeModal = ({
       )}
 
       {!isHome && !items?.length && (
-        <div>
+        <Box sx={{ color: theme.palette.grey[800] }}>
           {translateBuilder(BUILDER.EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM)}
-        </div>
+        </Box>
       )}
     </div>
   );
