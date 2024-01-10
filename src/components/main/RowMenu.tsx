@@ -1,12 +1,17 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import FolderIcon from '@mui/icons-material/Folder';
+import HomeIcon from '@mui/icons-material/Home';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Box, Button, IconButton, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
-import { buildHomeModalItemID, buildItemRowArrowId } from '@/config/selectors';
+import {
+  HOME_MODAL_ITEM_ID,
+  buildHomeModalItemID,
+  buildItemRowArrowId,
+} from '@/config/selectors';
 
 interface MenuRowProps {
   ele: DiscriminatedItem;
@@ -24,6 +29,7 @@ const StyledButton = styled(Button)<{ isSelected: boolean }>(
     justifyContent: 'space-between',
     marginBottom: theme.spacing(1),
     background: isSelected ? theme.palette.grey[200] : 'none',
+    textTransform: 'none',
   }),
 );
 
@@ -36,7 +42,7 @@ const isTreeItemDisabled = ({
 }) => {
   const itemPaths = itemIds.map((ele) => ele.replaceAll('-', '_'));
 
-  return itemPaths.some((path) => path.includes(itemPath));
+  return itemPaths.some((path) => itemPath.includes(path));
 };
 const MoveMenuRow = ({
   ele,
@@ -81,7 +87,8 @@ const MoveMenuRow = ({
           whiteSpace: 'nowrap',
         }}
       >
-        <FolderIcon />
+        {ele.id === HOME_MODAL_ITEM_ID ? <HomeIcon /> : <FolderIcon />}
+
         {ele.name}
       </Box>
       {(isHoverActive || selectedId === ele.id) && (
