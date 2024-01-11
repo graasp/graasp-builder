@@ -84,6 +84,11 @@ const TreeModal = ({
       aria-labelledby={dialogId}
       open={open}
       scroll="paper"
+      PaperProps={{
+        sx: {
+          width: { sm: '350px', md: '400px', lg: '500px' },
+        },
+      }}
     >
       <DialogTitle id={dialogId}>
         {translateBuilder(title, {
@@ -91,7 +96,11 @@ const TreeModal = ({
           count: itemIds.length - 1,
         })}
       </DialogTitle>
-      <DialogContent sx={{ height: '270px' }}>
+      <DialogContent
+        sx={{
+          height: '270px',
+        }}
+      >
         {breadcrumbs.length > 1 && (
           <Stack spacing={2} mb={2}>
             <Breadcrumbs
@@ -139,7 +148,9 @@ const TreeModal = ({
                   {ele.id === ROOT_MODAL_ID ? (
                     <HomeIcon />
                   ) : (
-                    ele.name.slice(0, 10)
+                    `${ele.name.slice(0, 12)}${
+                      ele.name.length > 12 ? '...' : ''
+                    }`
                   )}
                 </Button>
               ))}

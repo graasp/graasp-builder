@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import FolderIcon from '@mui/icons-material/Folder';
 import HomeIcon from '@mui/icons-material/Home';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, Button, IconButton, styled } from '@mui/material';
+import { Box, Button, IconButton, Typography, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
@@ -77,19 +77,19 @@ const MoveMenuRow = ({
         itemIds,
       })}
     >
-      <Box
-        display="flex"
-        gap="4px"
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          maxWidth: '180px',
-          whiteSpace: 'nowrap',
-        }}
-      >
+      <Box display="flex" gap="4px">
         {ele.id === HOME_MODAL_ITEM_ID ? <HomeIcon /> : <FolderIcon />}
-
-        {ele.name}
+        <Typography
+          sx={{
+            maxWidth: { sm: '250px', md: '300px', lg: '400px' },
+            overflowWrap: 'break-word',
+            textAlign: 'start',
+            fontWeight: 450,
+          }}
+          variant="body2"
+        >
+          {ele.name}
+        </Typography>
       </Box>
       {(isHoverActive || selectedId === ele.id) && (
         <Box display="flex">
