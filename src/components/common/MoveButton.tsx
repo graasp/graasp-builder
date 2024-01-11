@@ -49,7 +49,6 @@ const MoveButton = ({
 
   const onClose = () => {
     setOpen(false);
-    setItemIds([]);
   };
 
   const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
