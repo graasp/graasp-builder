@@ -1,3 +1,5 @@
+import { getParentsIdsFromPath } from '@/utils/item';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_DUPLICATE_BUTTON_CLASS,
@@ -32,7 +34,8 @@ describe('Duplicate Item in Grid', () => {
 
   it('Duplicate item in item', () => {
     cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id, path } = SAMPLE_ITEMS.items[0];
+    const parentsIds = getParentsIdsFromPath(path);
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -42,8 +45,9 @@ describe('Duplicate Item in Grid', () => {
     const { id: duplicateItemId } = SAMPLE_ITEMS.items[2];
     duplicateItem({ id: duplicateItemId });
 
-    cy.wait('@copyItems').then(({ request: { url } }) => {
+    cy.wait('@copyItems').then(({ request: { url, body } }) => {
       cy.get(`#${buildItemCard(duplicateItemId)}`).should('exist');
+      expect(body.parentId).to.equal(parentsIds[0]);
       expect(url).to.contain(duplicateItemId);
     });
   });
