@@ -92,7 +92,7 @@ const TreeModal = ({
     >
       <DialogTitle id={dialogId}>
         {translateBuilder(title, {
-          name: itemToMove?.name.slice(0, 20),
+          name: itemToMove?.name,
           count: itemIds.length - 1,
         })}
       </DialogTitle>

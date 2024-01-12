@@ -77,7 +77,7 @@ const MoveMenuRow = ({
         itemIds,
       })}
     >
-      <Box display="flex" gap="4px">
+      <Box display="flex" gap="4px" alignItems="center">
         {ele.id === HOME_MODAL_ITEM_ID ? <HomeIcon /> : <FolderIcon />}
         <Typography
           sx={{
