@@ -8,18 +8,21 @@ import {
   MoveButton as GraaspMoveButton,
 } from '@graasp/ui';
 
-import { validate } from 'uuid';
-
-import { mutations } from '@/config/queryClient';
+import { hooks, mutations } from '@/config/queryClient';
+import { applyEllipsisOnLength, getDirectParentId } from '@/utils/item';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
-  HOME_MODAL_ITEM_ID,
   ITEM_MENU_MOVE_BUTTON_CLASS,
   ITEM_MOVE_BUTTON_CLASS,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import TreeModal, { TreeModalProps } from '../main/MoveTreeModal';
+import { NavigationElement } from '../main/itemSelectionModal/Breadcrumbs';
+import ItemSelectionModal, {
+  ItemSelectionModalProps,
+} from '../main/itemSelectionModal/ItemSelectionModal';
+
+const TITLE_MAX_NAME_LENGTH = 15;
 
 type MoveButtonProps = {
   itemIds: string[];
@@ -42,6 +45,8 @@ const MoveButton = ({
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
 
+  const { data: items } = hooks.useItems(itemIds);
+
   const openMoveModal = (newItemIds: string[]) => {
     setOpen(true);
     setItemIds(newItemIds);
@@ -51,14 +56,11 @@ const MoveButton = ({
     setOpen(false);
   };
 
-  const onConfirm: TreeModalProps['onConfirm'] = (payload) => {
+  const onConfirm: ItemSelectionModalProps['onConfirm'] = (payload) => {
     // change item's root id to null
     const newPayload = {
-      ...payload,
-      to:
-        payload.to && payload.to !== HOME_MODAL_ITEM_ID && validate(payload.to)
-          ? payload.to
-          : undefined,
+      ids: itemIds,
+      to: payload,
     };
     moveItems(newPayload);
     onClose();
@@ -73,6 +75,41 @@ const MoveButton = ({
     onClick?.();
   };
 
+  const isDisabled = (item: NavigationElement, homeId: string) => {
+    // cannot move inside self
+    const moveInSelf = itemIds.includes(item.id);
+
+    // cannot move in same direct parent
+    // todo: not opti because we only have the ids from the table
+    const directParentIds = Object.values(items?.data ?? {})?.map((i) =>
+      getDirectParentId(i.path),
+    );
+    const moveInDirectParent = directParentIds?.includes(item.id);
+
+    // cannot move to home if was already on home
+    let moveToHome = false;
+
+    if (items?.data) {
+      moveToHome =
+        item.id === homeId &&
+        !getDirectParentId(Object.values(items.data)[0].path);
+    }
+    return moveInSelf || moveInDirectParent || moveToHome;
+  };
+
+  const title = items
+    ? translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE, {
+        name: applyEllipsisOnLength(
+          Object.values(items.data)[0].name,
+          TITLE_MAX_NAME_LENGTH,
+        ),
+        count: itemIds.length,
+      })
+    : translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE);
+
+  const buttonText = (name?: string) =>
+    translateBuilder(BUILDER.MOVE_BUTTON, { name, count: name ? 1 : 0 });
+
   return (
     <>
       <GraaspMoveButton
@@ -85,13 +122,15 @@ const MoveButton = ({
         iconClassName={ITEM_MOVE_BUTTON_CLASS}
       />
 
-      {itemIds.length > 0 && open && (
-        <TreeModal
+      {items?.data && open && (
+        <ItemSelectionModal
+          title={title}
+          isDisabled={isDisabled}
+          buttonText={buttonText}
           onClose={onClose}
           open={open}
-          itemIds={itemIds}
           onConfirm={onConfirm}
-          title={BUILDER.MOVE_ITEM_MODAL_TITLE}
+          items={Object.values(items.data)}
         />
       )}
     </>
