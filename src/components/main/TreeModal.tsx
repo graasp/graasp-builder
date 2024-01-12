@@ -12,8 +12,8 @@ import { TREE_VIEW_MAX_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
+  HOME_MODAL_ITEM_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
-  TREE_MODAL_MY_ITEMS_ID,
   TREE_MODAL_SHARED_ITEMS_ID,
   buildTreeItemId,
 } from '../../config/selectors';
@@ -73,7 +73,7 @@ const TreeModal = ({
       ownItems?.find(({ id }) => id === rootItemId),
     );
     const itemRootId = isRootItemOwned
-      ? TREE_MODAL_MY_ITEMS_ID
+      ? HOME_MODAL_ITEM_ID
       : TREE_MODAL_SHARED_ITEMS_ID;
 
     // trees root not being treeRootId should be closed
@@ -135,20 +135,20 @@ const TreeModal = ({
     <>
       {ownItems && (
         <DynamicTreeView
-          id={TREE_MODAL_MY_ITEMS_ID}
+          id={HOME_MODAL_ITEM_ID}
           rootSx={{
             flexGrow: 1,
             maxWidth: TREE_VIEW_MAX_WIDTH,
           }}
           selectedId={selectedId}
-          initialExpendedItems={buildExpandedItems(TREE_MODAL_MY_ITEMS_ID)}
+          initialExpendedItems={buildExpandedItems(HOME_MODAL_ITEM_ID)}
           items={ownItems}
           onTreeItemSelect={onTreeItemSelect}
           useChildren={useChildren}
           useItem={useItem}
           showCheckbox
           rootLabel={translateBuilder(BUILDER.ITEMS_TREE_OWN_ITEMS_LABEL)}
-          rootId={TREE_MODAL_MY_ITEMS_ID}
+          rootId={HOME_MODAL_ITEM_ID}
           showItemFilter={isFolder}
           shouldFetchChildrenForItem={isFolder}
           isTreeItemDisabled={isTreeItemDisabled}

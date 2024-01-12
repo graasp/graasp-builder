@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  HOME_MODAL_ITEM_ID,
   ITEMS_TABLE_COPY_SELECTED_ITEMS_ID,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
@@ -74,7 +74,7 @@ describe('Copy items in List', () => {
 
     // copy
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    copyItems({ itemIds, toItemPath: TREE_MODAL_MY_ITEMS_ID });
+    copyItems({ itemIds, toItemPath: HOME_MODAL_ITEM_ID });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       itemIds.forEach((id) => {

@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  HOME_MODAL_ITEM_ID,
   ITEM_MENU_COPY_BUTTON_CLASS,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemCard,
   buildItemMenu,
   buildItemMenuButtonId,
@@ -63,7 +63,7 @@ describe('Copy Item in Grid', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const toItemPath = TREE_MODAL_MY_ITEMS_ID;
+    const toItemPath = HOME_MODAL_ITEM_ID;
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
