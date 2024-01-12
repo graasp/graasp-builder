@@ -42,7 +42,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
       istanbul({
         include: 'src/*',
         exclude: ['node_modules', 'test/', '.nyc_output', 'coverage'],
-        extension: ['.js', '.ts', '.tsx'],
+        extension: ['.ts', '.tsx'],
         requireEnv: false,
         forceBuildInstrument: mode === 'test',
         checkProd: true,

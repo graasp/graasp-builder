@@ -16,6 +16,7 @@ import {
   Box,
   Button,
   IconButton,
+  Link,
   Stack,
   Tooltip,
   Typography,
@@ -26,7 +27,6 @@ import {
   ItemTagType,
   ItemValidationStatus,
   PermissionLevel,
-  redirect,
 } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
@@ -184,11 +184,6 @@ const ItemPublishTab = (): JSX.Element => {
     return null;
   };
 
-  const handleClick = () => {
-    const url = CC_LICENSE_ABOUT_URL;
-    redirect(window, url, { openInNewTab: true });
-  };
-
   const displayItemValidationMessage = () => {
     switch (validationStatus) {
       case ItemValidationStatus.Pending:
@@ -311,7 +306,12 @@ const ItemPublishTab = (): JSX.Element => {
             arrow
           >
             <span>
-              <IconButton aria-label="info" onClick={handleClick}>
+              <IconButton
+                component={Link}
+                aria-label="info"
+                href={CC_LICENSE_ABOUT_URL}
+                target="_blank"
+              >
                 <Help />
               </IconButton>
             </span>
