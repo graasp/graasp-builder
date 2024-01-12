@@ -1,6 +1,6 @@
 {
   "name": "graasp-builder",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "private": true,
   "license": "AGPL-3.0-only",
   "author": "Graasp",
@@ -104,8 +104,8 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "18.4.3",
-    "@commitlint/config-conventional": "18.4.3",
+    "@commitlint/cli": "18.4.4",
+    "@commitlint/config-conventional": "18.4.4",
     "@cypress/code-coverage": "3.12.12",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
