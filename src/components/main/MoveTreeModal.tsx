@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
-import { useBuilderTranslation } from '../../config/i18n';
+import i18n, { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
   HOME_MODAL_ITEM_ID,
@@ -38,7 +38,7 @@ const TreeModal = ({
   itemIds = [],
 }: TreeModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-
+  console.log(i18n.language);
   const [selectedId, setSelectedId] = useState<string>('');
   // serious of breadcrumbs
   const [breadcrumbs, setBreadcrumbs] = useState<
@@ -92,7 +92,12 @@ const TreeModal = ({
     >
       <DialogTitle id={dialogId}>
         {translateBuilder(title, {
-          name: itemToMove?.name,
+          name:
+            i18n.language === 'en'
+              ? `${itemToMove?.name.slice(0, 10)}${
+                  (itemToMove?.name.length || 0) > 10 ? '...' : ''
+                }`
+              : itemToMove?.name,
           count: itemIds.length - 1,
         })}
       </DialogTitle>
