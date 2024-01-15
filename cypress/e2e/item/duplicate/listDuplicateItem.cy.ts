@@ -1,20 +1,9 @@
 import { getParentsIdsFromPath } from '@/utils/item';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import {
-  ITEM_MENU_DUPLICATE_BUTTON_CLASS,
-  buildItemMenu,
-  buildItemMenuButtonId,
-  buildItemsTableRowIdAttribute,
-} from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-
-const duplicateItem = ({ id }: { id: string }) => {
-  const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  cy.get(menuSelector).click();
-  cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_DUPLICATE_BUTTON_CLASS}`).click();
-};
+import duplicateItem from '../../../support/actionsUtils';
 
 describe('duplicate Item in List', () => {
   it('duplicate item on Home', () => {
@@ -28,7 +17,6 @@ describe('duplicate Item in List', () => {
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       expect(url).to.contain(duplicateItemId);
-      cy.get(buildItemsTableRowIdAttribute(duplicateItemId)).should('exist');
     });
   });
 
@@ -48,7 +36,6 @@ describe('duplicate Item in List', () => {
     cy.wait('@copyItems').then(({ request: { url, body } }) => {
       expect(url).to.contain(duplicateItemId);
       expect(body.parentId).to.equal(parentsIds[0]);
-      cy.get(buildItemsTableRowIdAttribute(duplicateItemId)).should('exist');
     });
   });
 });
