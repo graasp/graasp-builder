@@ -1,6 +1,5 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  HOME_MODAL_ITEM_ID,
   ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
@@ -55,7 +54,7 @@ describe('Move Items in List', () => {
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     moveItems({ itemIds, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
@@ -75,8 +74,7 @@ describe('Move Items in List', () => {
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    const toItem = HOME_MODAL_ITEM_ID;
-    moveItems({ itemIds, toItemPath: toItem });
+    moveItems({ itemIds, toItemPath: 'selectionModalMyGraasp' });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);

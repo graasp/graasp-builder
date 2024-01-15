@@ -11,7 +11,10 @@ import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
-import { TREE_MODAL_CONFIRM_BUTTON_ID } from '../../../config/selectors';
+import {
+  HOME_MODAL_ITEM_ID,
+  TREE_MODAL_CONFIRM_BUTTON_ID,
+} from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import CancelButton from '../../common/CancelButton';
 import AccessibleNavigationTree from './AccessibleNavigationTree';
@@ -20,6 +23,7 @@ import ChildrenNavigationTree from './ChildrenNavigationTree';
 import RootNavigationTree from './RootNavigationTree';
 
 const dialogId = 'items-tree-modal';
+const MY_GRAASP_BREADCRUMB_ID = 'selectionModalMyGraasp';
 
 export type ItemSelectionModalProps = {
   buttonText: (itemName?: string) => string;
@@ -55,7 +59,7 @@ const ItemSelectionModal = ({
   // my graasp displays accessible items
   const MY_GRAASP_BREADCRUMB = {
     name: translateBuilder(BUILDER.MY_ITEMS_TITLE),
-    id: 'selectionModalMyGraasp',
+    id: MY_GRAASP_BREADCRUMB_ID,
   };
 
   const SPECIAL_BREADCRUMB_IDS = [ROOT_BREADCRUMB.id, MY_GRAASP_BREADCRUMB.id];
@@ -87,6 +91,12 @@ const ItemSelectionModal = ({
     handleClose();
   };
 
+  // row menu navigation
+  const onNavigate = (item: NavigationElement) => {
+    setSelectedNavigationItem(item);
+    setSelectedItem(item);
+  };
+
   // does not show breadcrumbs on root
   const renderBreadcrumbs = () => {
     if (selectedNavigationItem.id === ROOT_BREADCRUMB.id) {
@@ -112,21 +122,7 @@ const ItemSelectionModal = ({
     // element itself
     elements.push(selectedNavigationItem);
 
-    return (
-      <Breadcrumbs
-        elements={elements}
-        onSelect={(item: NavigationElement) => {
-          setSelectedNavigationItem(item);
-          setSelectedItem(item);
-        }}
-      />
-    );
-  };
-
-  // row menu navigation
-  const onNavigate = (item: NavigationElement) => {
-    setSelectedNavigationItem(item);
-    setSelectedItem(item);
+    return <Breadcrumbs elements={elements} onSelect={onNavigate} />;
   };
 
   return (
@@ -141,9 +137,11 @@ const ItemSelectionModal = ({
         <Stack
           direction="column"
           sx={{
+            // needs a min height to avoid too small modal (reduce flickering)
             minHeight: 270,
             position: 'relative',
           }}
+          id={HOME_MODAL_ITEM_ID}
         >
           {renderBreadcrumbs()}
 

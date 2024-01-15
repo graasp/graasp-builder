@@ -82,16 +82,16 @@ const RowMenu = ({
             {item.name}
           </Typography>
         </StyledButton>
+        {(isHoverActive || selectedId === item.id) && (
+          <IconButton
+            onClick={() => onNavigate(item)}
+            id={buildItemRowArrowId(item.id)}
+            size="small"
+          >
+            <KeyboardArrowRightIcon />
+          </IconButton>
+        )}
       </Stack>
-      {(isHoverActive || selectedId === item.id) && (
-        <IconButton
-          sx={{ p: 0 }}
-          onClick={() => onNavigate(item)}
-          id={buildItemRowArrowId(item.id)}
-        >
-          <KeyboardArrowRightIcon />
-        </IconButton>
-      )}
     </Stack>
   );
 };

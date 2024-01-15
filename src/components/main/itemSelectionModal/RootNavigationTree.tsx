@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
@@ -26,9 +26,13 @@ const RootNavigationTree = ({
   rootMenuItems,
   selectedId,
 }: RootNavigationTreeProps): JSX.Element => {
+  const { t: translateBuilder } = useBuilderTranslation();
+
   // todo: to change with real recent items (most used)
   const { data: recentItems } = hooks.useAccessibleItems({}, { pageSize: 5 });
-  const { t: translateBuilder } = useBuilderTranslation();
+  const recentFolders = recentItems?.data?.filter(
+    ({ type }) => type === ItemType.FOLDER,
+  );
 
   const { data: parents } = hooks.useParents({
     id: items[0].id,
@@ -50,19 +54,23 @@ const RootNavigationTree = ({
           //   root items cannot be disabled - but they are disabled by the button
         />
       ))}
-      <Typography color="darkgrey" variant="subtitle2">
-        {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_RECENT_ITEMS)}
-      </Typography>
-      {recentItems?.data?.map((item) => (
-        <RowMenu
-          key={item.name}
-          item={item}
-          onNavigate={onNavigate}
-          selectedId={selectedId}
-          onClick={onClick}
-          isDisabled={isDisabled}
-        />
-      ))}
+      {recentFolders && (
+        <>
+          <Typography color="darkgrey" variant="subtitle2">
+            {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_RECENT_ITEMS)}
+          </Typography>
+          {recentFolders.map((item) => (
+            <RowMenu
+              key={item.name}
+              item={item}
+              onNavigate={onNavigate}
+              selectedId={selectedId}
+              onClick={onClick}
+              isDisabled={isDisabled}
+            />
+          ))}
+        </>
+      )}
       {/* show second parent to allow moving a level above */}
       {parents && parents.length > 1 && (
         <>
