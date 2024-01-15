@@ -1,9 +1,4 @@
-import {
-  EmailFrequency,
-  ItemLoginSchemaType,
-  ItemType,
-  PermissionLevel,
-} from '@graasp/sdk';
+import { ItemLoginSchemaType, ItemType, PermissionLevel } from '@graasp/sdk';
 
 import ITEM_LAYOUT_MODES from '../enums/itemLayoutModes';
 
@@ -21,13 +16,6 @@ export const DRAWER_WIDTH = 240;
 export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_EMAIL_FREQUENCY = 'always';
-
-export const emailFrequency = {
-  [EmailFrequency.Always]: 'Always receive email notifications',
-  // todo: schedule a digest of the notifications
-  // daily: 'Receive email notifications once per day',
-  [EmailFrequency.Never]: 'Disable email notifications',
-};
 
 export const DEFAULT_SHOW_CHATBOX_SETTING = false;
 export const DEFAULT_PINNED_SETTING = false;

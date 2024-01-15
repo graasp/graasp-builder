@@ -291,8 +291,6 @@ export const buildCategorySelectionOptionId = (
 export const LIBRARY_SETTINGS_CATEGORIES_ID = 'librarySettingsCategories';
 export const buildLanguageOptionId = (value: string): string =>
   `languageOption-${value}`;
-export const buildEmailFrequencyOptionId = (value: string): string =>
-  `emailFrequencyOption-${value}`;
 
 export const CC_ALLOW_COMMERCIAL_CONTROL_ID = 'allowCommercialCCSelector';
 export const CC_DISALLOW_COMMERCIAL_CONTROL_ID = 'disallowCommercialCCSelector';
