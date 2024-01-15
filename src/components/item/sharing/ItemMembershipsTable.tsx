@@ -207,7 +207,7 @@ const ItemMembershipsTable = ({
       },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, showEmail, readOnly]);
+  }, [item, showEmail, readOnly, memberships]);
 
   const countTextFunction = (selected: string[]) =>
     translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
