@@ -38,7 +38,6 @@ const TreeModal = ({
   itemIds = [],
 }: TreeModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  console.log(i18n.language);
   const [selectedId, setSelectedId] = useState<string>('');
   // serious of breadcrumbs
   const [breadcrumbs, setBreadcrumbs] = useState<

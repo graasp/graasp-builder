@@ -15,20 +15,6 @@ import {
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 
-/**
- * Type of the `disabled` prop which allows to disable a subset of the options.
- * Undefined keys are considered as not disabled.
- */
-type DisabledMap = {
-  [key in PermissionLevel]?: boolean;
-};
-
-const defaultDisabledMap: DisabledMap = {
-  admin: false,
-  read: false,
-  write: false,
-};
-
 export type ItemMembershipSelectProps = {
   value: string;
   onChange?: SelectProps['onChange'];
@@ -39,7 +25,7 @@ export type ItemMembershipSelectProps = {
    * This prop allows to disable the select when passed the value `true`
    * or to disable only certain options when passed an object where the keys are the values of the options
    */
-  disabled?: boolean | DisabledMap;
+  disabled?: boolean;
 };
 
 const ItemMembershipSelect = ({
@@ -56,8 +42,7 @@ const ItemMembershipSelect = ({
   const label = showLabel
     ? translateBuilder(BUILDER.ITEM_MEMBERSHIP_PERMISSION_LABEL)
     : undefined;
-  const disabledMap =
-    typeof disabled === 'boolean' ? defaultDisabledMap : disabled;
+
   useEffect(() => {
     if (permission !== value) {
       setPermission(value);
@@ -71,9 +56,9 @@ const ItemMembershipSelect = ({
       values={Object.values(PermissionLevel).map((v) => ({
         value: v,
         text: enumT(v),
-        disabled: disabledMap[v],
+        disabled,
       }))}
-      disabled={typeof disabled === 'boolean' ? disabled : undefined}
+      disabled={disabled}
       buildOptionId={buildPermissionOptionId}
       value={permission}
       defaultValue={permission}
