@@ -306,6 +306,8 @@ const ItemsTable = ({
         getRowId={getRowNodeId}
         isClickable={clickable}
         enableDrag={canDrag()}
+        // kinda duplicate props but it needs to be enabled for ui
+        rowDragManaged={canDrag()}
         rowDragText={itemRowDragText}
         ToolbarActions={ToolbarActions}
         pagination

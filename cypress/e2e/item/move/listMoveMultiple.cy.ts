@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  HOME_MODAL_ITEM_ID,
   ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
@@ -23,7 +23,7 @@ const moveItems = ({
 
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath);
 };
 
 describe('Move Items in List', () => {
@@ -75,7 +75,7 @@ describe('Move Items in List', () => {
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    const toItem = TREE_MODAL_MY_ITEMS_ID;
+    const toItem = HOME_MODAL_ITEM_ID;
     moveItems({ itemIds, toItemPath: toItem });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {

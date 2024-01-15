@@ -4,8 +4,8 @@ import {
   buildItemPath,
 } from '../../../../src/config/paths';
 import {
+  HOME_MODAL_ITEM_ID,
   ITEM_MENU_COPY_BUTTON_CLASS,
-  TREE_MODAL_MY_ITEMS_ID,
   TREE_MODAL_SHARED_ITEMS_ID,
   buildItemMenu,
   buildItemMenuButtonId,
@@ -77,7 +77,7 @@ describe('Copy Item in List', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    copyItem({ id: copyItemId, toItemPath: TREE_MODAL_MY_ITEMS_ID });
+    copyItem({ id: copyItemId, toItemPath: HOME_MODAL_ITEM_ID });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       expect(url).to.contain(copyItemId);
