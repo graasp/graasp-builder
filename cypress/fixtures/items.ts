@@ -53,6 +53,11 @@ const sampleItems: DiscriminatedItem[] = [
     settings: {
       hasThumbnail: false,
     },
+    extra: {
+      [ItemType.FOLDER]: {
+        childrenOrder: ['fdf09f5a-5688-11eb-ae93-0242ac130004'],
+      },
+    },
   },
   {
     ...DEFAULT_FOLDER_ITEM,

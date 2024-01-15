@@ -21,10 +21,16 @@ export const ITEM_MENU_BUTTON_CLASS = 'itemMenuButton';
 export const ITEM_MENU_COPY_BUTTON_CLASS = 'itemMenuCopyButton';
 export const ITEM_MENU_RECYCLE_BUTTON_CLASS = 'itemMenuRecycleButton';
 export const buildItemMenu = (id: string): string => `itemMenu-${id}`;
-export const TREE_MODAL_MY_ITEMS_ID = 'treeModalMyItems';
+export const HOME_MODAL_ITEM_ID = 'treeModalHomeItem';
+export const buildHomeModalItemID = (id: string): string =>
+  `${HOME_MODAL_ITEM_ID}-${id}`;
+export const ROOT_MODAL_ID = 'rootModal';
+
 export const TREE_MODAL_SHARED_ITEMS_ID = 'treeModalSharedItems';
 export const buildTreeItemId = (id: string, treeRootId: string): string =>
   `${treeRootId}-${id}`;
+export const buildItemRowArrowId = (id: string): string =>
+  `treeModalMyItems-${id}-arrow`;
 export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';

@@ -354,6 +354,9 @@ export const BUILDER = {
   SHORT_LINK_MAX_CHARS_ERROR: 'SHORT_LINK_MAX_CHARS_ERROR',
   SHORT_LINK_INVALID_CHARS_ERROR: 'SHORT_LINK_INVALID_CHARS_ERROR',
   SHORT_LINK_UNKNOWN_ERROR: 'SHORT_LINK_UNKNOWN_ERROR',
+  EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM: 'EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM',
+  TO_FOLDER: 'TO_FOLDER',
+  ROOT: 'ROOT',
   // temporary message
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.":
     "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
