@@ -1,4 +1,4 @@
-import GraaspChatbox from '@graasp/chatbox';
+import { Chatbox as GraaspChatbox } from '@graasp/chatbox';
 import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
