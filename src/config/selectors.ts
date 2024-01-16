@@ -22,7 +22,7 @@ export const ITEM_MENU_COPY_BUTTON_CLASS = 'itemMenuCopyButton';
 export const ITEM_MENU_RECYCLE_BUTTON_CLASS = 'itemMenuRecycleButton';
 export const buildItemMenu = (id: string): string => `itemMenu-${id}`;
 export const HOME_MODAL_ITEM_ID = 'treeModalHomeItem';
-export const buildHomeModalItemID = (id: string): string =>
+export const buildNavigationModalItemId = (id: string): string =>
   `${HOME_MODAL_ITEM_ID}-${id}`;
 export const ROOT_MODAL_ID = 'rootModal';
 

@@ -14,9 +14,9 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
-  buildHomeModalItemID,
   buildItemFormAppOptionId,
   buildItemRowArrowId,
+  buildNavigationModalItemId,
   buildPermissionOptionId,
   buildTreeItemId,
 } from '../../../src/config/selectors';
@@ -58,7 +58,7 @@ Cypress.Commands.add(
         // click on the element
         if (idx === array.length - 1) {
           cy.wrap($tree)
-            .get(`#${buildHomeModalItemID(value)}`)
+            .get(`#${buildNavigationModalItemId(value)}`)
             .first()
             .click();
         }
@@ -68,7 +68,7 @@ Cypress.Commands.add(
           !$tree.find(`#${buildTreeItemId(array[idx + 1], treeRootId)}`).length
         ) {
           cy.wrap($tree)
-            .get(`#${buildHomeModalItemID(value)}`)
+            .get(`#${buildNavigationModalItemId(value)}`)
             .trigger('mouseover')
             .get(`#${buildItemRowArrowId(value)}`)
             .first()

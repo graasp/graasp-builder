@@ -1,6 +1,5 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  HOME_MODAL_ITEM_ID,
   ITEM_MENU_MOVE_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
@@ -51,7 +50,7 @@ describe('Move Item in Grid', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     moveItem({ id: movedItem, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
@@ -70,8 +69,7 @@ describe('Move Item in Grid', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const toItem = HOME_MODAL_ITEM_ID;
-    moveItem({ id: movedItem, toItemPath: toItem });
+    moveItem({ id: movedItem, toItemPath: 'selectionModalMyGraasp' });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);
