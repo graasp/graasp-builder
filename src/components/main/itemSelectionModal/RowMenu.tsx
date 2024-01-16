@@ -54,13 +54,13 @@ const RowMenu = ({
       justifyContent="space-between"
       onMouseEnter={handleHover}
       onMouseLeave={handleUnhover}
+      id={buildNavigationModalItemId(item.id)}
     >
       <Stack direction="row" alignItems="center" width="100%">
         <StyledButton
           onClick={() => {
             onClick(item);
           }}
-          id={buildNavigationModalItemId(item.id)}
           isSelected={selectedId === item.id}
           disabled={isDisabled?.(item)}
           startIcon={

@@ -7,6 +7,8 @@ const ROW_MAX_NAME_LENGTH = 15;
 export type NavigationElement = {
   id: string;
   name: string;
+  // important to have to compute if an element should be disabled
+  path: string;
   icon?: JSX.Element;
 };
 

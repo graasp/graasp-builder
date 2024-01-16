@@ -76,25 +76,30 @@ const MoveButton = ({
   };
 
   const isDisabled = (item: NavigationElement, homeId: string) => {
-    // cannot move inside self
-    const moveInSelf = itemIds.includes(item.id);
-
-    // cannot move in same direct parent
-    // todo: not opti because we only have the ids from the table
-    const directParentIds = Object.values(items?.data ?? {})?.map((i) =>
-      getDirectParentId(i.path),
-    );
-    const moveInDirectParent = directParentIds?.includes(item.id);
-
-    // cannot move to home if was already on home
-    let moveToHome = false;
-
     if (items?.data) {
-      moveToHome =
-        item.id === homeId &&
-        !getDirectParentId(Object.values(items.data)[0].path);
+      // cannot move inside self and below
+      const moveInSelf = Object.values(items.data).some((i) =>
+        item.path.includes(i.path),
+      );
+
+      // cannot move in same direct parent
+      // todo: not opti because we only have the ids from the table
+      const directParentIds = Object.values(items.data).map((i) =>
+        getDirectParentId(i.path),
+      );
+      const moveInDirectParent = directParentIds.includes(item.id);
+
+      // cannot move to home if was already on home
+      let moveToHome = false;
+
+      if (items?.data) {
+        moveToHome =
+          item.id === homeId &&
+          !getDirectParentId(Object.values(items.data)[0].path);
+      }
+      return moveInSelf || moveInDirectParent || moveToHome;
     }
-    return moveInSelf || moveInDirectParent || moveToHome;
+    return false;
   };
 
   const title = items
@@ -103,7 +108,8 @@ const MoveButton = ({
           Object.values(items.data)[0].name,
           TITLE_MAX_NAME_LENGTH,
         ),
-        count: itemIds.length,
+        // -1 because we show one name
+        count: itemIds.length - 1,
       })
     : translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE);
 

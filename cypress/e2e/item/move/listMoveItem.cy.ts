@@ -3,10 +3,21 @@ import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
+  buildItemRowArrowId,
+  buildNavigationModalItemId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
+
+const openMoveModal = ({ id: movedItemId }: { id: string }) => {
+  const menuSelector = `#${buildItemMenuButtonId(movedItemId)}`;
+  cy.wait(TABLE_ITEM_RENDER_TIME);
+  cy.get(menuSelector).click();
+  cy.get(
+    `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
+  ).click();
+};
 
 const moveItem = ({
   id: movedItemId,
@@ -17,12 +28,7 @@ const moveItem = ({
   toItemPath: string;
   rootId?: string;
 }) => {
-  const menuSelector = `#${buildItemMenuButtonId(movedItemId)}`;
-  cy.wait(TABLE_ITEM_RENDER_TIME);
-  cy.get(menuSelector).click();
-  cy.get(
-    `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
-  ).click();
+  openMoveModal({ id: movedItemId });
 
   cy.handleTreeMenu(toItemPath, rootId);
 };
@@ -63,6 +69,39 @@ describe('Move Item in List', () => {
       expect(body.parentId).to.equal(toItem);
       expect(url).to.contain(movedItem);
     });
+  });
+
+  it('cannot move inside self children', () => {
+    cy.setUpApi(SAMPLE_ITEMS);
+    const { id } = SAMPLE_ITEMS.items[0];
+
+    // go to children item
+    cy.visit(buildItemPath(id));
+
+    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+
+    const { id: movedItemId } = SAMPLE_ITEMS.items[2];
+    const parentId = SAMPLE_ITEMS.items[0].id;
+    const childId = SAMPLE_ITEMS.items[6].id;
+    openMoveModal({ id: movedItemId });
+    // parent is disabled
+    cy.get(`#${buildNavigationModalItemId(parentId)} button`).should(
+      'be.disabled',
+    );
+    cy.get(`#${buildNavigationModalItemId(parentId)}`).trigger('mouseover');
+    cy.get(`#${buildItemRowArrowId(parentId)}`).click();
+
+    // self is disabled
+    cy.get(`#${buildNavigationModalItemId(movedItemId)} button`).should(
+      'be.disabled',
+    );
+    cy.get(`#${buildNavigationModalItemId(movedItemId)}`).trigger('mouseover');
+    cy.get(`#${buildItemRowArrowId(movedItemId)}`).click();
+
+    // inner child is disabled
+    cy.get(`#${buildNavigationModalItemId(childId)} button`).should(
+      'be.disabled',
+    );
   });
 
   it('move item to Home', () => {

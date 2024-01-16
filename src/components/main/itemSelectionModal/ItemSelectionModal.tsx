@@ -51,23 +51,22 @@ const ItemSelectionModal = ({
 
   // special elements for breadcrumbs
   // root displays specific paths
-  const ROOT_BREADCRUMB = {
+  const ROOT_BREADCRUMB: NavigationElement = {
     icon: <HomeIcon />,
     name: '',
+    path: 'selectionModalRoot',
     id: 'selectionModalRoot',
   };
   // my graasp displays accessible items
-  const MY_GRAASP_BREADCRUMB = {
+  const MY_GRAASP_BREADCRUMB: NavigationElement = {
     name: translateBuilder(BUILDER.MY_ITEMS_TITLE),
     id: MY_GRAASP_BREADCRUMB_ID,
+    path: MY_GRAASP_BREADCRUMB_ID,
   };
 
   const SPECIAL_BREADCRUMB_IDS = [ROOT_BREADCRUMB.id, MY_GRAASP_BREADCRUMB.id];
 
-  const [selectedItem, setSelectedItem] = useState<{
-    id: string;
-    name: string;
-  }>();
+  const [selectedItem, setSelectedItem] = useState<NavigationElement>();
 
   // keep track of the navigation item that can be different from the selected item
   const [selectedNavigationItem, setSelectedNavigationItem] =
