@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-import SettingsIcon from '@mui/icons-material/Settings';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   Box,
+  Divider,
   IconButton,
   Stack,
   SwipeableDrawer,
+  Typography,
   styled,
   useMediaQuery,
   useTheme,
@@ -33,6 +35,7 @@ import ShareButton from '../../common/ShareButton';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import { useLayoutContext } from '../../context/LayoutContext';
 import ItemMenu from '../../main/ItemMenu';
+import MobileItemMenu from '../../main/MobileItemMenu';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
@@ -59,7 +62,7 @@ type ButtonWithTextProps = {
   onClick: () => void;
 };
 
-const ButtonWithText = ({
+const IconButtonWithText = ({
   children,
   isMobile,
   text,
@@ -68,7 +71,7 @@ const ButtonWithText = ({
   isMobile ? (
     <StyledBox
       onClick={onClick}
-      p={text ? '6px 11px ' : 0}
+      p="6px 11px"
       display="flex"
       alignItems="center"
       gap={3}
@@ -124,55 +127,59 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
         ITEM_TYPES_WITH_CAPTIONS.includes(item.type) &&
         canEdit;
 
-      const activeActions = (
+      const shareActions = (
         <>
-          {showEditButton && (
-            <ButtonWithText
-              isMobile={isMobile}
-              text={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
-              onClick={closeDrawer}
-            >
-              <EditButton item={item} />
-            </ButtonWithText>
-          )}
-          {/* prevent moving from top header to avoid confusion */}
-
-          <ButtonWithText isMobile={isMobile} text="" onClick={closeDrawer}>
-            <Box>
-              <ItemMenu
-                item={item}
-                canMove={false}
-                canEdit={showEditButton}
-                displayMenu={!isMobile}
-              />
-            </Box>
-          </ButtonWithText>
-          <ButtonWithText
+          <IconButtonWithText
             isMobile={isMobile}
             text={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
             onClick={closeDrawer}
           >
             <ShareButton itemId={item.id} />
-          </ButtonWithText>
-          <ButtonWithText
-            isMobile={isMobile}
-            text={translateBuilder(BUILDER.SETTINGS_SHOW_CHAT_LABEL)}
-            onClick={closeDrawer}
-          >
-            <ChatboxButton
-              tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
-              id={ITEM_CHATBOX_BUTTON_ID}
-              onClick={onClickChatbox}
-            />
-          </ButtonWithText>
+          </IconButtonWithText>
           {canAdmin && (
-            <ButtonWithText
+            <IconButtonWithText
               isMobile={isMobile}
               text={translateBuilder(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE)}
               onClick={closeDrawer}
             >
               <PublishButton itemId={item.id} />
-            </ButtonWithText>
+            </IconButtonWithText>
+          )}
+        </>
+      );
+      const activeActions = (
+        <>
+          {showEditButton && (
+            <IconButtonWithText
+              isMobile={isMobile}
+              text={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
+              onClick={closeDrawer}
+            >
+              <EditButton item={item} />
+            </IconButtonWithText>
+          )}
+          <Box width="100%">
+            {isMobile ? (
+              <MobileItemMenu
+                item={item}
+                canMove={false}
+                canEdit={showEditButton}
+              >
+                {shareActions}
+              </MobileItemMenu>
+            ) : (
+              <ItemMenu item={item} canMove={false} canEdit={showEditButton} />
+            )}
+          </Box>
+
+          {!isMobile && shareActions}
+          {isMobile && <Divider />}
+          {!isMobile && (
+            <ChatboxButton
+              tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+              id={ITEM_CHATBOX_BUTTON_ID}
+              onClick={onClickChatbox}
+            />
           )}
         </>
       );
@@ -180,21 +187,21 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
       return (
         <>
           {openedActionTabId !== ItemActionTabs.Settings && activeActions}
-          <ButtonWithText
+          <IconButtonWithText
             isMobile={isMobile}
             text={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
             onClick={closeDrawer}
           >
             <DownloadButton id={item.id} name={item.name} />
-          </ButtonWithText>
+          </IconButtonWithText>
           {canEdit && (
-            <ButtonWithText
+            <IconButtonWithText
               isMobile={isMobile}
               text={translateBuilder(BUILDER.SETTINGS_TITLE)}
               onClick={closeDrawer}
             >
               <ItemSettingsButton id={item.id} />
-            </ButtonWithText>
+            </IconButtonWithText>
           )}
         </>
       );
@@ -208,8 +215,13 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
         <Box display="flex" sx={{ '& button': { padding: 0.5 } }}>
           <ItemMetadataButton />
           <ModeButton />
+          <ChatboxButton
+            tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+            id={ITEM_CHATBOX_BUTTON_ID}
+            onClick={onClickChatbox}
+          />
           <IconButton onClick={toggleActionsDrawer}>
-            <SettingsIcon />
+            <MoreVertIcon />
           </IconButton>
         </Box>
 
@@ -218,9 +230,17 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
           open={isItemActionsDrawerOpen}
           onClose={closeDrawer}
           onOpen={() => setIsItemActionsDrawerOpen(true)}
-          PaperProps={{ sx: { maxHeight: '50vh', paddingY: 2 } }}
+          PaperProps={{ sx: { maxHeight: '80vh', paddingY: 2 } }}
         >
-          <Box display="flex" flexDirection="column">
+          <Typography px={3} pb={1} variant="h5">
+            {item.name}
+          </Typography>
+          <Divider sx={{ borderColor: theme.palette.grey[400] }} />
+          <Box
+            display="flex"
+            flexDirection="column"
+            sx={{ maxHeight: '100%', overflow: 'auto', marginTop: 1 }}
+          >
             {renderItemActions()}
           </Box>
         </SwipeableDrawer>

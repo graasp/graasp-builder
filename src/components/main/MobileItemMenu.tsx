@@ -1,11 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 import FlagIcon from '@mui/icons-material/Flag';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { Divider } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import { DiscriminatedItem } from '@graasp/sdk';
@@ -13,11 +11,8 @@ import { ActionButton } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
-  ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
-  buildItemMenu,
-  buildItemMenuButtonId,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import CollapseButton from '../common/CollapseButton';
@@ -35,37 +30,28 @@ type Props = {
   item: DiscriminatedItem;
   canEdit?: boolean;
   canMove?: boolean;
+  children: JSX.Element;
 };
 
-const ItemMenu = ({
+const MobileItemMenu = ({
   item,
   canEdit = false,
   canMove = true,
+  children,
 }: Props): JSX.Element => {
   const { data: member } = useCurrentUserContext();
-  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { t: translateBuilder } = useBuilderTranslation();
   const { openModal: openCreateShortcutModal } = useContext(
     CreateShortcutModalContext,
   );
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
 
-  const handleClick: IconButtonProps['onClick'] = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleCreateShortcut = () => {
     openCreateShortcutModal(item);
-    handleClose();
   };
 
   const handleFlag = () => {
     openFlagModal?.(item.id);
-    handleClose();
   };
 
   const renderEditorActions = () => {
@@ -78,7 +64,6 @@ const ItemMenu = ({
             key="move"
             type={ActionButton.MENU_ITEM}
             itemIds={[item.id]}
-            onClick={handleClose}
           />,
         ]
       : [];
@@ -90,12 +75,6 @@ const ItemMenu = ({
         item={item}
       />,
       <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
-      <RecycleButton
-        key="recycle"
-        type={ActionButton.MENU_ITEM}
-        itemIds={[item.id]}
-        onClick={handleClose}
-      />,
     ]);
   };
 
@@ -108,7 +87,6 @@ const ItemMenu = ({
         key="copy"
         type={ActionButton.MENU_ITEM}
         itemIds={[item.id]}
-        onClick={handleClose}
       />,
       <FavoriteButton
         size="medium"
@@ -121,41 +99,41 @@ const ItemMenu = ({
 
   return (
     <>
-      <IconButton
-        id={buildItemMenuButtonId(item.id)}
-        className={ITEM_MENU_BUTTON_CLASS}
-        onClick={handleClick}
+      {renderAuthenticatedActions()}
+      <Divider />
+      {children}
+      <Divider />
+      <MenuItem
+        onClick={handleCreateShortcut}
+        className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+        sx={{ paddingY: '2px' }}
       >
-        <MoreVertIcon />
-      </IconButton>
-
-      <Menu
-        id={buildItemMenu(item.id)}
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
+        <ListItemIcon>
+          <LabelImportantIcon />
+        </ListItemIcon>
+        {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
+      </MenuItem>
+      {renderEditorActions()}
+      <Divider />
+      {canEdit && (
+        <RecycleButton
+          key="recycle"
+          type={ActionButton.MENU_ITEM}
+          itemIds={[item.id]}
+        />
+      )}
+      <MenuItem
+        onClick={handleFlag}
+        className={ITEM_MENU_FLAG_BUTTON_CLASS}
+        sx={{ paddingY: '2px' }}
       >
-        {renderAuthenticatedActions()}
-        {renderEditorActions()}
-        <MenuItem
-          onClick={handleCreateShortcut}
-          className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
-        >
-          <ListItemIcon>
-            <LabelImportantIcon />
-          </ListItemIcon>
-          {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
-        </MenuItem>
-        <MenuItem onClick={handleFlag} className={ITEM_MENU_FLAG_BUTTON_CLASS}>
-          <ListItemIcon>
-            <FlagIcon />
-          </ListItemIcon>
-          {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
-        </MenuItem>
-      </Menu>
+        <ListItemIcon>
+          <FlagIcon />
+        </ListItemIcon>
+        {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
+      </MenuItem>
     </>
   );
 };
 
-export default ItemMenu;
+export default MobileItemMenu;
