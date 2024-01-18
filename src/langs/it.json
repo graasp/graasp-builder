@@ -116,7 +116,7 @@
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL": "Pseudonimizzato",
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL": "Pseudonimo e password",
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL": "Pseudonimo",
-  "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSSAGE": "Questo elemento è accessibile se il visitatore fornisce a",
+  "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSAGE": "Questo elemento è accessibile se il visitatore fornisce a",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_INFORMATIONS": "Questo elemento è pubblico. Chiunque può accedervi.\n Nota: la pubblicazione degli elementi verrà annullata automaticamente se si modifica lo stato di visibilità da pubblico ad altri.",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL": "Pubblico",
   "ITEM_SETTINGS_VISIBILITY_TITLE": "Visibilità",

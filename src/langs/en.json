@@ -116,7 +116,7 @@
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL": "Pseudonymized",
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL": "Pseudonym and Password",
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL": "Pseudonym",
-  "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSSAGE": "This item is accessible if the visitor provides a ",
+  "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSAGE": "This item is accessible if the visitor provides a ",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_INFORMATIONS": "This item is public. Anyone can access it.\n Note: Items will be unpublished automatically if you change the visibility state from public to others.",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL": "Public",
   "ITEM_SETTINGS_VISIBILITY_TITLE": "Visibility",
