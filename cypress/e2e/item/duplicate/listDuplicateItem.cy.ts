@@ -15,8 +15,10 @@ describe('duplicate Item in List', () => {
     const { id: duplicateItemId } = SAMPLE_ITEMS.items[0];
     duplicateItem({ id: duplicateItemId });
 
-    cy.wait('@copyItems').then(({ request: { url } }) => {
+    cy.wait('@copyItems').then(({ request: { url, body } }) => {
       expect(url).to.contain(duplicateItemId);
+      // as we duplicate on home parentId will be undefined
+      expect(body.parentId).to.equal(undefined);
     });
   });
 
