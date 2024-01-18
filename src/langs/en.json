@@ -161,7 +161,12 @@
   "LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS": "This element must be public to be published",
   "LINK_DEFAULT_NAME": "My Link",
   "MOVE_BUTTON": "Move",
+  "MOVE_BUTTON_zero": "Move",
+  "MOVE_BUTTON_one": "Move to {{name}}",
   "MOVE_ITEM_MODAL_TITLE": "Where do you want to move this item?",
+  "MOVE_ITEM_MODAL_TITLE_zero": "Where do you want to move {{name}}?",
+  "MOVE_ITEM_MODAL_TITLE_one": "Where do you want to move {{name}} and one other?",
+  "MOVE_ITEM_MODAL_TITLE_other": "Where do you want to move {{name}} and {{count}} others?",
   "MY_ITEMS_TITLE": "My Graasp",
   "NAVIGATION_FAVORITE_ITEMS_TITLE": "Favorite Items",
   "NAVIGATION_MY_ITEMS_TITLE": "My Graasp",
@@ -291,5 +296,10 @@
   "SHORT_LINK_MAX_CHARS_ERROR": "The short link must not exceed {{data}} chars.",
   "SHORT_LINK_INVALID_CHARS_ERROR": "The short link contains invalid chars ({{data}}).",
   "SHORT_LINK_UNKNOWN_ERROR": "An unknown error occurred.",
+  "EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM": "This item does not contain any folder.",
+  "TO_FOLDER": "to {{name}}",
+  "ROOT": "Root",
+  "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Recent Items",
+  "ITEM_SELECTION_NAVIGATION_PARENT": "Move above",
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "You can also find the items of this page in ''My Graasp''. This page ''Shared Items'' will be unavailable soon."
 }

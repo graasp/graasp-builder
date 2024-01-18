@@ -9,7 +9,7 @@ import {
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
-import { TREE_MODAL_MY_ITEMS_ID } from '../../config/selectors';
+import { HOME_MODAL_ITEM_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { buildShortcutExtra } from '../../utils/itemExtra';
 import TreeModal, { TreeModalProps } from '../main/TreeModal';
@@ -51,7 +51,7 @@ const CreateShortcutModalProvider = ({ children }: Props): JSX.Element => {
       extra: buildShortcutExtra(target),
       type: ItemType.SHORTCUT,
       // set parent id if not root
-      parentId: to !== TREE_MODAL_MY_ITEMS_ID ? to : undefined,
+      parentId: to !== HOME_MODAL_ITEM_ID ? to : undefined,
     };
     createShortcut(shortcut);
 

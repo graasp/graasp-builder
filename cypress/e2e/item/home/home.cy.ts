@@ -170,7 +170,7 @@ describe('Home', () => {
         );
 
         // visit child
-        const { id: childChildId } = SAMPLE_ITEMS.items[2];
+        const { id: childChildId } = SAMPLE_ITEMS.items[3];
         cy.goToItemInGrid(childChildId);
 
         // expect no children
@@ -225,7 +225,7 @@ describe('Home', () => {
         });
 
         // visit child
-        const { id: childChildId } = SAMPLE_ITEMS.items[2];
+        const { id: childChildId } = SAMPLE_ITEMS.items[3];
         cy.goToItemInList(childChildId);
 
         // expect no children

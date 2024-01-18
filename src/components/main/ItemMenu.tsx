@@ -158,36 +158,32 @@ const ItemMenu = ({
       >
         <MoreVertIcon />
       </IconButton>
-      {Boolean(anchorEl) && (
-        <Menu
-          id={buildItemMenu(item.id)}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
+
+      <Menu
+        id={buildItemMenu(item.id)}
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        {renderAuthenticatedActions()}
+        {renderEditorActions()}
+        <MenuItem
+          onClick={handleCreateShortcut}
+          className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
         >
-          {renderAuthenticatedActions()}
-          {renderEditorActions()}
-          <MenuItem
-            onClick={handleCreateShortcut}
-            className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
-          >
-            <ListItemIcon>
-              <LabelImportantIcon />
-            </ListItemIcon>
-            {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
-          </MenuItem>
-          <MenuItem
-            onClick={handleFlag}
-            className={ITEM_MENU_FLAG_BUTTON_CLASS}
-          >
-            <ListItemIcon>
-              <FlagIcon />
-            </ListItemIcon>
-            {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
-          </MenuItem>
-        </Menu>
-      )}
+          <ListItemIcon>
+            <LabelImportantIcon />
+          </ListItemIcon>
+          {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
+        </MenuItem>
+        <MenuItem onClick={handleFlag} className={ITEM_MENU_FLAG_BUTTON_CLASS}>
+          <ListItemIcon>
+            <FlagIcon />
+          </ListItemIcon>
+          {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
+        </MenuItem>
+      </Menu>
     </>
   );
 };

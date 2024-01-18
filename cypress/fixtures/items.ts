@@ -53,6 +53,11 @@ const sampleItems: DiscriminatedItem[] = [
     settings: {
       hasThumbnail: false,
     },
+    extra: {
+      [ItemType.FOLDER]: {
+        childrenOrder: ['fdf09f5a-5688-11eb-ae93-0242ac130004'],
+      },
+    },
   },
   {
     ...DEFAULT_FOLDER_ITEM,
@@ -95,6 +100,15 @@ const sampleItems: DiscriminatedItem[] = [
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130006',
     name: 'own_item_name6',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130006',
+    settings: {
+      hasThumbnail: false,
+    },
+  },
+  {
+    ...DEFAULT_FOLDER_ITEM,
+    id: 'eef09f5a-5688-11eb-ae93-0242ac130003',
+    name: 'own_item_name7',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fdf09f5a_5688_11eb_ae93_0242ac130003.eef09f5a_5688_11eb_ae93_0242ac130003',
     settings: {
       hasThumbnail: false,
     },
@@ -192,6 +206,20 @@ export const SAMPLE_ITEMS: ApiConfig = {
           createdAt: '2021-08-11T12:56:36.834Z',
           updatedAt: '2021-08-11T12:56:36.834Z',
           id: '2dd4caf9-538a-317a-86d3-99432b223c18',
+        },
+      ],
+    },
+    {
+      ...sampleItems[6],
+      memberships: [
+        {
+          item: sampleItems[6],
+          permission: PermissionLevel.Admin,
+          member: MEMBERS.ANNA,
+          creator: MEMBERS.ANNA,
+          createdAt: '2021-08-11T12:56:36.834Z',
+          updatedAt: '2021-08-11T12:56:36.834Z',
+          id: '2dd4caf9-538a-317a-86d3-99432b223c12',
         },
       ],
     },

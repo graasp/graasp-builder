@@ -116,7 +116,7 @@
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL": "Pseudomisé",
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_AND_PASSWORD_LABEL": "Pseudonyme et Mot de passe",
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL": "Pseudonyme",
-  "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSAGE": "Cet élément est accessible si le visiteur se connecte avec un ",
+  "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSSAGE": "Cet élément est accessible si le visiteur fournit un",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_INFORMATIONS": "Cet élément est public. N'importe quel visiteur peut accéder à cet élément.",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL": "Public",
   "ITEM_SETTINGS_VISIBILITY_TITLE": "Visibilité",
@@ -161,7 +161,12 @@
   "LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS": "Cet élément doit être public pour pouvoir être publié",
   "LINK_DEFAULT_NAME": "Mon Lien",
   "MOVE_BUTTON": "Déplacer",
-  "MOVE_ITEM_MODAL_TITLE": "Où déplacer cet élément?",
+  "MOVE_BUTTON_zero": "Déplacer",
+  "MOVE_BUTTON_one": "Déplacer dans {{name}}",
+  "MOVE_ITEM_MODAL_TITLE_zero": "Où déplacer cet élément ?",
+  "MOVE_ITEM_MODAL_TITLE_one": "Où déplacer {{name}} ?",
+  "MOVE_ITEM_MODAL_TITLE_two": "Où déplacer {{name}} et un autre ?",
+  "MOVE_ITEM_MODAL_TITLE_other": "Où déplacer {{name}} et {{count}} autres éléments ?",
   "MY_ITEMS_TITLE": "Mon Graasp",
   "NAVIGATION_FAVORITE_ITEMS_TITLE": "Éléments Favoris",
   "NAVIGATION_MY_ITEMS_TITLE": "Mon Graasp",
@@ -291,5 +296,7 @@
   "SHORT_LINK_MAX_CHARS_ERROR": "Le lien rapide ne doit pas dépasser les {{data}} caractères.",
   "SHORT_LINK_INVALID_CHARS_ERROR": "Le lien rapide contient des caractères non valides ({{data}}).",
   "SHORT_LINK_UNKNOWN_ERROR": "Il y a une erreur inconnue.",
-  "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "Les éléments de cette page sont aussi disponibles dans ''Mon Graasp''. Cette page ''Eléments Partagés'' sera bientôt indisponible."
+  "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "Les éléments de cette page sont aussi disponibles dans ''Mon Graasp''. Cette page ''Eléments Partagés'' sera bientôt indisponible.",
+  "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Éléments Récents",
+  "ITEM_SELECTION_NAVIGATION_PARENT": "Déplacer au-dessus"
 }

@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/graasp/graasp-builder/compare/v2.4.1...v2.5.0) (2024-01-16)
+
+
+### Features
+
+* disable options for downgrading the only admin ([#931](https://github.com/graasp/graasp-builder/issues/931)) ([a7da8b9](https://github.com/graasp/graasp-builder/commit/a7da8b99943c49a1539fc63f979983734b69cd00))
+* move menu items tree ([#910](https://github.com/graasp/graasp-builder/issues/910)) ([f014f13](https://github.com/graasp/graasp-builder/commit/f014f131dfcf519e3859364e4d4bbc3f34124a59))
+* refactor move modal, use accessible with pagination ([#951](https://github.com/graasp/graasp-builder/issues/951)) ([1f18249](https://github.com/graasp/graasp-builder/commit/1f182498e1a8192c376177a91c625c7cbe6063da))
+
+
+### Bug Fixes
+
+* remove email freq ([#948](https://github.com/graasp/graasp-builder/issues/948)) ([a2804af](https://github.com/graasp/graasp-builder/commit/a2804af807deea4fa448e12eeff21c4d8ae37847))
+* update chatbox ([#949](https://github.com/graasp/graasp-builder/issues/949)) ([e89800e](https://github.com/graasp/graasp-builder/commit/e89800ea82848e9e392eb73c0fa6be3a5cac0019))
+
+## [2.4.1](https://github.com/graasp/graasp-builder/compare/v2.4.0...v2.4.1) (2024-01-11)
+
+
+### Bug Fixes
+
+* **ar:** update ([#942](https://github.com/graasp/graasp-builder/issues/942)) ([54efe96](https://github.com/graasp/graasp-builder/commit/54efe961ea41acdb7d34876199877558834d8b4e))
+* **deps:** update dependency @sentry/react to v7.93.0 ([#927](https://github.com/graasp/graasp-builder/issues/927)) ([f16a0d4](https://github.com/graasp/graasp-builder/commit/f16a0d462b234a74ce721bd34fdb8ea44948fc85))
+* **de:** update ([#938](https://github.com/graasp/graasp-builder/issues/938)) ([dedc367](https://github.com/graasp/graasp-builder/commit/dedc3679d3a8d15cb28dcf98a8bc548ef2b4203f))
+* **es:** add spanish ([#937](https://github.com/graasp/graasp-builder/issues/937)) ([e84c78b](https://github.com/graasp/graasp-builder/commit/e84c78b2918218c9aeac584d80025dcd7df1c385))
+* fix reorder in table ([#944](https://github.com/graasp/graasp-builder/issues/944)) ([7b1adb7](https://github.com/graasp/graasp-builder/commit/7b1adb79e42f0683379a1be90b6a0b09032d9a69))
+* **fr:** update ([#940](https://github.com/graasp/graasp-builder/issues/940)) ([55f6f76](https://github.com/graasp/graasp-builder/commit/55f6f76ab7f8b713ee9715ae9f439d9e2c8bbaa8))
+* **it:** update ([#939](https://github.com/graasp/graasp-builder/issues/939)) ([6050742](https://github.com/graasp/graasp-builder/commit/6050742a229f72a0340f2ca8bcb39bb7f74f7b45))
+
 ## [2.4.0](https://github.com/graasp/graasp-builder/compare/v2.3.1...v2.4.0) (2023-12-22)
 
 

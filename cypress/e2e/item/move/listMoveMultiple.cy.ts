@@ -1,7 +1,6 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
@@ -23,7 +22,7 @@ const moveItems = ({
 
   cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath);
 };
 
 describe('Move Items in List', () => {
@@ -55,7 +54,7 @@ describe('Move Items in List', () => {
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     moveItems({ itemIds, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
@@ -75,8 +74,7 @@ describe('Move Items in List', () => {
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    const toItem = TREE_MODAL_MY_ITEMS_ID;
-    moveItems({ itemIds, toItemPath: toItem });
+    moveItems({ itemIds, toItemPath: 'selectionModalMyGraasp' });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);

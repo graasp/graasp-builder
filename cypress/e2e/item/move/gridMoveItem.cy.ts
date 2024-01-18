@@ -1,7 +1,6 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
-  TREE_MODAL_MY_ITEMS_ID,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
@@ -21,7 +20,7 @@ const moveItem = ({
     `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
   ).click();
 
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath);
 };
 
 describe('Move Item in Grid', () => {
@@ -51,7 +50,7 @@ describe('Move Item in Grid', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
     moveItem({ id: movedItem, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
@@ -70,8 +69,7 @@ describe('Move Item in Grid', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const toItem = TREE_MODAL_MY_ITEMS_ID;
-    moveItem({ id: movedItem, toItemPath: toItem });
+    moveItem({ id: movedItem, toItemPath: 'selectionModalMyGraasp' });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);

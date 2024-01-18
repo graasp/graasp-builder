@@ -55,7 +55,12 @@ function TableRowPermissionRenderer<
     const handleClose = () => {
       setOpen(false);
     };
+    const isEditingOwnPermission =
+      instance?.member && instance?.member?.id === currentMember?.id;
 
+    const isEditingTheOnlyAdmin = Boolean(
+      hasOnlyOneAdmin && instance.permission === PermissionLevel.Admin,
+    );
     const isParentMembership = useIsParentInstance({
       instance,
       item,
@@ -74,8 +79,7 @@ function TableRowPermissionRenderer<
       if (
         (value === PermissionLevel.Read || value === PermissionLevel.Write) &&
         instance.permission === PermissionLevel.Admin &&
-        instance?.member &&
-        instance?.member?.id === currentMember?.id
+        isEditingOwnPermission
       ) {
         setOpen(true);
       } else {
@@ -90,6 +94,7 @@ function TableRowPermissionRenderer<
         <ItemMembershipSelect
           value={instance.permission}
           showLabel={false}
+          disabled={isEditingTheOnlyAdmin}
           onChange={onChangePermission}
         />
         <Dialog
