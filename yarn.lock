@@ -1264,16 +1264,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:3.4.0":
-  version: 3.4.0
-  resolution: "@graasp/sdk@npm:3.4.0"
+"@graasp/sdk@npm:3.4.1":
+  version: 3.4.1
+  resolution: "@graasp/sdk@npm:3.4.1"
   dependencies:
-    "@graasp/etherpad-api": "npm:2.1.1"
     date-fns: "npm:3.2.0"
     js-cookie: "npm:3.0.5"
     uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-  checksum: 00bd8d449e8c1bcb4750ddce9dc0eefc23d917d042d5d7db6c1007c7380904de3bc7e9bde43325736df69f3dc584d15717dac01769e06a9f71e1e1133075f7f7
+  checksum: 6bf2d3fbb28d61a457a534628620982a656258ab2e5c101294da8e7e4327eacff526378983c4e06a85f0115e0547325f9dbece793f7f4bc6129aa8909a42a24b
   languageName: node
   linkType: hard
 
@@ -1295,11 +1294,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@graasp/ui@npm:4.3.0"
+"@graasp/ui@npm:4.3.1":
+  version: 4.3.1
+  resolution: "@graasp/ui@npm:4.3.1"
   dependencies:
-    "@graasp/sdk": "npm:3.4.0"
+    "@graasp/sdk": "npm:3.4.1"
     http-status-codes: "npm:2.3.0"
     katex: "npm:0.16.9"
     lodash.truncate: "npm:4.4.2"
@@ -1332,7 +1331,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 5538861e5d4d58e6105bb0e84d03238eecbc28bf5c2112557ed7ca5725a3025a4c09e06f4f050b9805595256c5227081696c12a90fc0e266fb8801d4c895d28d
+  checksum: b5cf0290dda520c2bd65c2834c415ac3d376569a2a2765f1b1bd855cb1a8e5d582c94213433383b8b632f598007d96a774cbacf10702f3c14f1def563e677409
   languageName: node
   linkType: hard
 
@@ -6314,7 +6313,7 @@ __metadata:
     "@graasp/query-client": "npm:2.2.1"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
-    "@graasp/ui": "npm:4.3.0"
+    "@graasp/ui": "npm:4.3.1"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"
