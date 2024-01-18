@@ -164,3 +164,11 @@ export function useIsParentInstance({
 
   return isParentMembership;
 }
+
+export const applyEllipsisOnLength = (
+  longString: string,
+  maxLength: number,
+): string =>
+  `${longString.slice(0, maxLength)}${
+    (longString.length || 0) > maxLength ? '…' : ''
+  }`;
