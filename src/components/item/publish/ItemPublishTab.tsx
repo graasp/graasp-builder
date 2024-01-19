@@ -188,7 +188,7 @@ const ItemPublishTab = ({
 
   const handleClick = () => {
     const url = CC_LICENSE_ABOUT_URL;
-    redirect(url, { openInNewTab: true });
+    redirect(window, url, { openInNewTab: true });
   };
 
   const displayItemValidationMessage = () => {
