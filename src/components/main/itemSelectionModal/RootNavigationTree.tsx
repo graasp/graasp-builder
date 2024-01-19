@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
@@ -29,7 +29,11 @@ const RootNavigationTree = ({
   const { t: translateBuilder } = useBuilderTranslation();
 
   // todo: to change with real recent items (most used)
-  const { data: recentItems } = hooks.useAccessibleItems({}, { pageSize: 5 });
+  const { data: recentItems } = hooks.useAccessibleItems(
+    // you can move into an item you have at least write permission
+    { permissions: [PermissionLevel.Admin, PermissionLevel.Write] },
+    { pageSize: 5 },
+  );
   const recentFolders = recentItems?.data?.filter(
     ({ type }) => type === ItemType.FOLDER,
   );

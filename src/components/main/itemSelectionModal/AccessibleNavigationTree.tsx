@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import { Pagination, Stack } from '@mui/material';
 
+import { PermissionLevel } from '@graasp/sdk';
+
 import { hooks } from '@/config/queryClient';
 
 import RowMenu, { RowMenuProps } from './RowMenu';
@@ -24,7 +26,10 @@ const AccessibleNavigationTree = ({
   // todo: to change with real recent items (most used)
   const [page, setPage] = useState(1);
   // todo: show only items with admin rights
-  const { data: accessibleItems } = hooks.useAccessibleItems({}, { page });
+  const { data: accessibleItems } = hooks.useAccessibleItems(
+    { permissions: [PermissionLevel.Write, PermissionLevel.Admin] },
+    { page },
+  );
 
   const nbPages = accessibleItems
     ? Math.ceil(accessibleItems.totalCount / PAGE_SIZE)
