@@ -166,5 +166,4 @@ export const EXPORT_CSV_HEADERS = [
 export const TUTORIALS_LINK =
   'https://player.graasp.org/9d80d81f-ec9d-4bfb-836a-1c6b125aef2f';
 
-
-export const GROUP_COLUMN_NAME = 'group_name'
+export const GROUP_COLUMN_NAME = 'group_name';

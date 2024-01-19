@@ -48,9 +48,9 @@ const SelectItemModalProvider = ({
     };
 
     if (newPayload.to) {
-      setItemId(newPayload.to)
+      setItemId(newPayload.to);
     } else {
-      setItemId('')
+      setItemId('');
     }
     onClose();
   };
@@ -72,7 +72,10 @@ const SelectItemModalProvider = ({
     );
   };
 
-  const value = useMemo<Value>(() => ({ openModal, selId, cleanItemSel }), [selId]);
+  const value = useMemo<Value>(
+    () => ({ openModal, selId, cleanItemSel }),
+    [selId],
+  );
 
   return (
     <SelectItemModalContext.Provider value={value}>
