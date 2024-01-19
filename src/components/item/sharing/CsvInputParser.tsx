@@ -1,4 +1,7 @@
-import { ChangeEvent, useState, useContext } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import PublishIcon from '@mui/icons-material/Publish';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
@@ -9,33 +12,33 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
-import FolderCopyIcon from '@mui/icons-material/FolderCopy';
-import { API_HOST } from '../../../config/env';
+
+import { Invitation, ItemMembership, ItemType } from '@graasp/sdk';
 import { ItemRecord } from '@graasp/sdk/frontend';
 import { COMMON } from '@graasp/translations';
 import { Button, Loader } from '@graasp/ui';
-import { GROUP_COLUMN_NAME } from '../../../config/constants'
+
 import axios from 'axios';
+import * as Papa from 'papaparse';
+
+import { GROUP_COLUMN_NAME } from '../../../config/constants';
+import { API_HOST } from '../../../config/env';
 import {
   useBuilderTranslation,
   useCommonTranslation,
   useMessagesTranslation,
 } from '../../../config/i18n';
+import notifier from '../../../config/notifier';
 import { hooks } from '../../../config/queryClient';
 import {
+  SELECT_TEMPLATE_FOLDER,
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
   SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID,
   SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
   SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
-  SELECT_TEMPLATE_FOLDER,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import { SelectItemModalContext } from '../../context/SelectItemModalContext';
-import { ItemMembership, Invitation } from '@graasp/sdk';
-
-import * as Papa from 'papaparse';
-import { useMutation, useQueryClient } from 'react-query';
-import notifier from '../../../config/notifier';
 
 const label = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');
@@ -48,7 +51,7 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateMessages } = useMessagesTranslation();
   const { t: translateCommon } = useCommonTranslation();
-  const { id: itemId } = item;
+  const { id: itemId, type: typeOfItem } = item;
   const [isOpen, setIsOpen] = useState(false);
   const [isVisibleFolderBtn, setFolderBtn] = useState(false);
   const [isEnabledConfirmBtn, setConfirmBtn] = useState(false);
@@ -59,30 +62,33 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
 
   // TO-DO: Move following section to query-client
   // START QUERY SECTION
-  const postManyItemMemberships = async (
-    {
-      _attachedFile,
-      _itemId,
-      idTemplate,
-    }: {
-      _attachedFile: File;
-      _itemId: string;
-      idTemplate?: string;
-    }
-  ) => {
-
+  const postManyItemMemberships = async ({
+    _attachedFile,
+    _itemId,
+    idTemplate,
+  }: {
+    _attachedFile: File;
+    _itemId: string;
+    idTemplate?: string;
+  }) => {
     const formData = new FormData();
-    formData.append("file", _attachedFile);
-    return axios.post<{
-      data: (Invitation | ItemMembership)[];
-      errors: Error[];
-    }>(`${API_HOST}/items/${_itemId}/invitations/upload_csv?id=${_itemId}&template_id=${idTemplate}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      withCredentials: true,
-    }).then(({ data }) => data);
-  }
+    formData.append('file', _attachedFile);
+    return axios
+      .post<{
+        data: (Invitation | ItemMembership)[];
+        errors: Error[];
+      }>(
+        `${API_HOST}/items/${_itemId}/invitations/upload_csv?id=${_itemId}&template_id=${idTemplate}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          withCredentials: true,
+        },
+      )
+      .then(({ data }) => data);
+  };
   const ITEMS_KEY = 'items';
   const useShareCustom = () => {
     const queryClient = useQueryClient();
@@ -99,9 +105,12 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
         data: (Invitation | ItemMembership)[];
         errors: Error[];
       }> => {
-
-        const res = await postManyItemMemberships({ _attachedFile, _itemId, idTemplate }) // Pass the parameters as an object
-        return res
+        const res = await postManyItemMemberships({
+          _attachedFile,
+          _itemId,
+          idTemplate,
+        }); // Pass the parameters as an object
+        return res;
       },
       {
         onSuccess: (_results) => {
@@ -117,20 +126,12 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
           });
         },
         onSettled: (_data, _error, { _itemId }) => {
-          queryClient.invalidateQueries([
-            ITEMS_KEY,
-            'memberships',
-            _itemId,
-          ]);
-          queryClient.invalidateQueries([
-            ITEMS_KEY,
-            _itemId,
-            'invitations',
-          ]);
+          queryClient.invalidateQueries([ITEMS_KEY, 'memberships', _itemId]);
+          queryClient.invalidateQueries([ITEMS_KEY, _itemId, 'invitations']);
         },
       },
     );
-  }
+  };
   // END OF QUERY SECTION
 
   const {
@@ -142,40 +143,47 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
     error,
   } = useShareCustom();
 
-  const { openModal: openMoveModal, selId: idTemplate, cleanItemSel: cleanId } = useContext(SelectItemModalContext);
+  const {
+    openModal: openMoveModal,
+    selId: idTemplate,
+    cleanItemSel: cleanId,
+  } = useContext(SelectItemModalContext);
 
   const handleClose = () => {
-    if (cleanId)
-      cleanId();
+    if (cleanId) cleanId();
     setIsOpen(false);
     setFolderBtn(false);
     setConfirmBtn(false);
-
+    setFile(null);
   };
   const sendQuery = () => {
     if (attachedFile) {
-      share({ _attachedFile: attachedFile, _itemId: itemId, idTemplate })
+      share({ _attachedFile: attachedFile, _itemId: itemId, idTemplate });
     }
   };
 
-
-  const { data: itemObj } = useItem(idTemplate)
+  const { data: itemObj } = useItem(idTemplate);
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const t = e.target as HTMLInputElement;
     if (t.files?.length) {
       const file = t.files?.[0];
       if (file) {
-        // it is necessary to check if CSV contains the group column, 
-        // parser only reads the first row to avoid processing whole file 
+        // it is necessary to check if CSV contains the group column,
+        // parser only reads the first row to avoid processing whole file
         // at the front-end
         Papa.parse(file, {
           header: true,
           dynamicTyping: false,
           preview: 1,
           complete(_results) {
-            const headers = _results.meta.fields
-            if (headers?.includes(GROUP_COLUMN_NAME)) {
-              setFolderBtn(true)
+            const headers = _results.meta.fields;
+            if (
+              headers?.includes(GROUP_COLUMN_NAME) &&
+              typeOfItem === ItemType.FOLDER
+            ) {
+              setFolderBtn(true);
+            } else {
+              setFolderBtn(false);
             }
             setConfirmBtn(true);
             setFile(file);
@@ -211,7 +219,6 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
         e?.code && e?.message && !e?.data,
     );
 
-
     if (genericErrors?.length) {
       return genericErrors.map((err) => (
         <Alert key={err.message} severity="error">
@@ -226,7 +233,6 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
     const failureToShow = results.errors.filter(
       (e: any) => e?.data && (e?.data?.email || e?.data?.name),
     );
-
     if (!failureToShow.length && isSuccess) {
       return (
         <Alert severity="success">
@@ -297,10 +303,12 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
                 />
               </Button>
             </Box>
-            {isVisibleFolderBtn &&
+            {isVisibleFolderBtn && (
               <>
                 <DialogContentText>
-                  {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT_GROUP_COLUMN_DETECTED)}
+                  {translateBuilder(
+                    BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT_GROUP_COLUMN_DETECTED,
+                  )}
                 </DialogContentText>
                 <Box textAlign="center" mb={2}>
                   <Button
@@ -308,13 +316,17 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
                     id={SELECT_TEMPLATE_FOLDER}
                     startIcon={<FolderCopyIcon />}
                     component="label"
-                    onClick={() => { if (openMoveModal) openMoveModal([itemId]) }}
+                    onClick={() => {
+                      if (openMoveModal) openMoveModal([itemId]);
+                    }}
                   >
-                    {itemObj ? itemObj.name : translateBuilder(BUILDER.SELECT_TEMPLATE_INPUT_BUTTON)}
+                    {itemObj
+                      ? itemObj.name
+                      : translateBuilder(BUILDER.SELECT_TEMPLATE_INPUT_BUTTON)}
                   </Button>
                 </Box>
               </>
-            }
+            )}
 
             {renderResults()}
           </DialogContent>
@@ -322,11 +334,19 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
             <Button variant="text" onClick={handleClose} color="primary">
               {translateCommon(COMMON.CLOSE_BUTTON)}
             </Button>
-            <Button variant="text" onClick={sendQuery} color="primary" disabled={!isEnabledConfirmBtn}>
-              {translateCommon('Confirm')}
-            </Button>
+
+            {!isSuccess && (
+              <Button
+                variant="text"
+                onClick={sendQuery}
+                color="primary"
+                disabled={!isEnabledConfirmBtn}
+              >
+                {translateCommon('Confirm')}
+              </Button>
+            )}
           </DialogActions>
-        </Dialog >
+        </Dialog>
       )}
     </>
   );
