@@ -1233,9 +1233,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#accessible-permission":
-  version: 2.2.3
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=ee7093106d94ad5404b7264065ca7db3f9514700"
+"@graasp/query-client@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@graasp/query-client@npm:2.3.0"
   dependencies:
     "@graasp/sdk": "npm:3.4.1"
     "@graasp/translations": "npm:1.22.1"
@@ -1247,7 +1247,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 15283670654d6ab34c0422f81553e2cf4fac52273029bc4bafc34aeed907c8cf3d4afe21f459ec68914b0e2bdbcb9c967f3e78bbb0256b2e1506ede3960a2067
+  checksum: 7cbf30cc71c27e19b50d896899b2bed3de924c4d7b0d09346198ee07c0d640261908fdb718cce11b00888f2333b581e175ca2d31bac766163b27ef069a29abfa
   languageName: node
   linkType: hard
 
@@ -6331,7 +6331,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.1"
-    "@graasp/query-client": "github:graasp/graasp-query-client#accessible-permission"
+    "@graasp/query-client": "npm:2.3.0"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
     "@graasp/ui": "npm:4.3.1"
