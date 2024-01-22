@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import {
   DiscriminatedItem,
   ItemMembership,
+  PermissionLevelCompare,
   isPseudonymizedMember,
 } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
@@ -31,6 +32,27 @@ import ShortLinksRenderer from './shortLink/ShortLinksRenderer';
 type Props = {
   item: DiscriminatedItem;
   memberships?: ItemMembership[];
+};
+interface PermissionMap {
+  [key: string]: ItemMembership;
+}
+
+const selectHighestMemberships = (
+  memberships: ItemMembership[],
+): ItemMembership[] => {
+  const permissionMap = memberships.reduce<PermissionMap>((acc, curr) => {
+    const { member, permission } = curr;
+
+    if (
+      !acc[member.id] ||
+      PermissionLevelCompare.gt(permission, acc[member.id].permission)
+    ) {
+      acc[member.id] = curr;
+    }
+    return acc;
+  }, {});
+
+  return Object.values(permissionMap);
 };
 
 const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
@@ -89,7 +111,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
           emptyMessage={translateBuilder(
             BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE,
           )}
-          memberships={authorizedMemberships}
+          memberships={selectHighestMemberships(authorizedMemberships)}
           readOnly={!canEditSettings}
         />
 
@@ -104,7 +126,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
             </Typography>
             <ItemMembershipsTable
               item={item}
-              memberships={authenticatedMemberships}
+              memberships={selectHighestMemberships(authenticatedMemberships)}
               emptyMessage={translateBuilder(
                 BUILDER.SHARING_AUTHENTICATED_MEMBERS_EMPTY_MESSAGE,
               )}
