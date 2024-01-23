@@ -7,7 +7,7 @@ import { HOME_PATH } from '../../config/paths';
 
 const Redirect = (): JSX.Element => {
   useEffect(() => {
-    redirectToSavedUrl(HOME_PATH);
+    redirectToSavedUrl(window, HOME_PATH);
   }, []);
 
   return <RedirectionContent link={HOME_PATH} />;

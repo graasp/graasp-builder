@@ -1233,12 +1233,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.2.1":
-  version: 2.2.1
-  resolution: "@graasp/query-client@npm:2.2.1"
+"@graasp/query-client@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@graasp/query-client@npm:2.3.0"
   dependencies:
-    "@graasp/sdk": "npm:3.3.0"
-    "@graasp/translations": "npm:1.21.1"
+    "@graasp/sdk": "npm:3.4.1"
+    "@graasp/translations": "npm:1.22.1"
     axios: "npm:0.27.2"
     crypto-js: "npm:4.2.0"
     http-status-codes: "npm:2.3.0"
@@ -1247,7 +1247,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: bad1c3a4163f38e45f0f64d8beb28eb6ca6fd4cf123d971be9421a6012d0d2860c71cc0c71b14bf7d46ea3afe73355a32823e037d0216caa8154905d0d408f8f
+  checksum: 7cbf30cc71c27e19b50d896899b2bed3de924c4d7b0d09346198ee07c0d640261908fdb718cce11b00888f2333b581e175ca2d31bac766163b27ef069a29abfa
   languageName: node
   linkType: hard
 
@@ -1264,25 +1264,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:3.4.0":
-  version: 3.4.0
-  resolution: "@graasp/sdk@npm:3.4.0"
+"@graasp/sdk@npm:3.4.1":
+  version: 3.4.1
+  resolution: "@graasp/sdk@npm:3.4.1"
   dependencies:
-    "@graasp/etherpad-api": "npm:2.1.1"
     date-fns: "npm:3.2.0"
     js-cookie: "npm:3.0.5"
     uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-  checksum: 00bd8d449e8c1bcb4750ddce9dc0eefc23d917d042d5d7db6c1007c7380904de3bc7e9bde43325736df69f3dc584d15717dac01769e06a9f71e1e1133075f7f7
+  checksum: 6bf2d3fbb28d61a457a534628620982a656258ab2e5c101294da8e7e4327eacff526378983c4e06a85f0115e0547325f9dbece793f7f4bc6129aa8909a42a24b
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.21.1":
-  version: 1.21.1
-  resolution: "@graasp/translations@npm:1.21.1"
+"@graasp/translations@npm:1.22.1":
+  version: 1.22.1
+  resolution: "@graasp/translations@npm:1.22.1"
   dependencies:
-    i18next: "npm:23.7.7"
-  checksum: d95ac9cf2f2a587d6779d5b28f9c95f2f5410d3d28235b78cdf4e8ad36acd6b6ca4ac90831a6b28fecd91c6fad080f1230ab72c88295cf7742725bfa8a10c416
+    i18next: "npm:23.7.16"
+  checksum: 29043007a9926ff54236101c41ceb92eead09d8ce99edf46943790171f3275fb2cc1acd552bfa605247c42b4866bbf1f83dd889da3f571d388eca5f2dd598e17
   languageName: node
   linkType: hard
 
@@ -1295,11 +1294,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@graasp/ui@npm:4.3.0"
+"@graasp/ui@npm:4.3.1":
+  version: 4.3.1
+  resolution: "@graasp/ui@npm:4.3.1"
   dependencies:
-    "@graasp/sdk": "npm:3.4.0"
+    "@graasp/sdk": "npm:3.4.1"
     http-status-codes: "npm:2.3.0"
     katex: "npm:0.16.9"
     lodash.truncate: "npm:4.4.2"
@@ -1332,7 +1331,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 5538861e5d4d58e6105bb0e84d03238eecbc28bf5c2112557ed7ca5725a3025a4c09e06f4f050b9805595256c5227081696c12a90fc0e266fb8801d4c895d28d
+  checksum: b5cf0290dda520c2bd65c2834c415ac3d376569a2a2765f1b1bd855cb1a8e5d582c94213433383b8b632f598007d96a774cbacf10702f3c14f1def563e677409
   languageName: node
   linkType: hard
 
@@ -6311,10 +6310,10 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.1"
-    "@graasp/query-client": "npm:2.2.1"
-    "@graasp/sdk": "npm:3.3.0"
-    "@graasp/translations": "npm:1.21.1"
-    "@graasp/ui": "npm:4.3.0"
+    "@graasp/query-client": "npm:2.3.0"
+    "@graasp/sdk": "npm:3.4.1"
+    "@graasp/translations": "npm:1.22.1"
+    "@graasp/ui": "npm:4.3.1"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"
@@ -6398,7 +6397,7 @@ __metadata:
     typescript: "npm:5.3.2"
     uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-    vite: "npm:5.0.5"
+    vite: "npm:5.0.12"
     vite-plugin-checker: "npm:0.6.2"
     vite-plugin-istanbul: "npm:5.0.0"
   languageName: unknown
@@ -6686,12 +6685,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:23.7.7":
-  version: 23.7.7
-  resolution: "i18next@npm:23.7.7"
+"i18next@npm:23.7.16":
+  version: 23.7.16
+  resolution: "i18next@npm:23.7.16"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: c8d112f5bbe62b3402b0fc47094f85e6ae6f939ff0b3299c5f2b3d30e05125184ae3faa10abfc14e21ea7f8dc78526455c251dc7e5eb40cf1a204257f22e6071
+  checksum: 77e74c07a73316f6fb6678a5a3e8ce58a6e66be457dd1ccd23941e9fc57ad8e1da55193fa6328c70b86073337b776cd267f3c13c6309f548b3116f27a1e41787
   languageName: node
   linkType: hard
 
@@ -11843,9 +11842,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.0.5":
-  version: 5.0.5
-  resolution: "vite@npm:5.0.5"
+"vite@npm:5.0.12":
+  version: 5.0.12
+  resolution: "vite@npm:5.0.12"
   dependencies:
     esbuild: "npm:^0.19.3"
     fsevents: "npm:~2.3.3"
@@ -11879,7 +11878,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: f4cd6e6e38448bdb6dd4dc36c0b34a5c42944d88961b9df246e75a4c3237196b1c64b1afc563524405d1fe3f34e728b9dbfd8cbc5af4e0a03371033d8057fdfe
+  checksum: ed0bb26a0d0c8e1dae0b70af9e36adffd7e15d80297443fe4da762596dc81570bad7f0291f590a57c1553f5e435338d8c7ffc483bd9431a95c09d9ac90665fad
   languageName: node
   linkType: hard
 
