@@ -138,12 +138,6 @@ const ItemMenu = ({
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <FavoriteButton
-            size="medium"
-            key="favorite"
-            type={ActionButton.MENU_ITEM}
-            item={item}
-          />
           <CopyButton
             key="copy"
             type={ActionButton.MENU_ITEM}
@@ -169,6 +163,13 @@ const ItemMenu = ({
             </ListItemIcon>
             {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
           </MenuItem>
+          <FavoriteButton
+            size="medium"
+            key="favorite"
+            type={ActionButton.MENU_ITEM}
+            item={item}
+          />
+          {renderEditorActions()}
           <MenuItem
             onClick={handleFlag}
             className={ITEM_MENU_FLAG_BUTTON_CLASS}
@@ -178,7 +179,6 @@ const ItemMenu = ({
             </ListItemIcon>
             {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
           </MenuItem>
-          ,{renderEditorActions()}
         </Menu>
       </>
     );

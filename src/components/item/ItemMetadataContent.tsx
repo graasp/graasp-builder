@@ -1,3 +1,6 @@
+import { useOutletContext } from 'react-router';
+
+import { Container } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +9,6 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
 import {
-  DiscriminatedItem,
   ItemType,
   formatDate,
   getFileExtra,
@@ -24,25 +26,18 @@ import {
   ITEM_PANEL_TABLE_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { useLayoutContext } from '../context/LayoutContext';
+import { OutletType } from '../pages/item/type';
 import ItemMemberships from './ItemMemberships';
+import ThumbnailSetting from './settings/ThumbnailSetting';
 
 const { useMember } = hooks;
 
-type Props = {
-  item: DiscriminatedItem;
-};
-
-const ItemMetadataContent = ({ item }: Props): JSX.Element => {
+const ItemMetadataContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
+  const { item } = useOutletContext<OutletType>();
 
-  const { setIsItemMetadataMenuOpen } = useLayoutContext();
   const { data: creator } = useMember(item?.creator?.id);
-
-  const onClick = () => {
-    setIsItemMetadataMenuOpen(true);
-  };
 
   let size = null;
   let mimetype = null;
@@ -75,7 +70,9 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
   };
 
   return (
-    <>
+    <Container>
+      <ThumbnailSetting item={item} />
+
       <TableContainer sx={{ p: 2, boxSizing: 'border-box' }}>
         <Typography variant="h5" id={ITEM_PANEL_NAME_ID} noWrap>
           {item.name}
@@ -132,8 +129,8 @@ const ItemMetadataContent = ({ item }: Props): JSX.Element => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ItemMemberships id={item.id} maxAvatar={5} onClick={onClick} />
-    </>
+      <ItemMemberships id={item.id} maxAvatar={5} />
+    </Container>
   );
 };
 

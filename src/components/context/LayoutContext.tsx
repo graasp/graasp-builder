@@ -12,12 +12,8 @@ interface LayoutContextInterface {
   setEditingItemId: (itemId: string | null) => void;
   openedActionTabId: string | null;
   setOpenedActionTabId: (action: string | null) => void;
-  isItemMetadataMenuOpen: boolean;
-  setIsItemMetadataMenuOpen: (isOpen: boolean) => void;
   isChatboxMenuOpen: boolean;
   setIsChatboxMenuOpen: (isOpen: boolean) => void;
-  isItemSharingOpen: boolean;
-  setIsItemSharingOpen: (isOpen: boolean) => void;
 }
 
 export const LayoutContext = createContext<LayoutContextInterface>({
@@ -33,16 +29,8 @@ export const LayoutContext = createContext<LayoutContextInterface>({
   setOpenedActionTabId: () => {
     // do nothing
   },
-  isItemMetadataMenuOpen: false,
-  setIsItemMetadataMenuOpen: () => {
-    // do nothing
-  },
   isChatboxMenuOpen: false,
   setIsChatboxMenuOpen: () => {
-    // do nothing
-  },
-  isItemSharingOpen: false,
-  setIsItemSharingOpen: () => {
     // do nothing
   },
 });
@@ -65,9 +53,6 @@ export const LayoutContextProvider = ({
     null,
   );
 
-  const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);
-
-  const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
   // check query params to see if chat should be open
   const chatIsOpen =
     new URLSearchParams(window.location.search).get('chat') === ChatStatus.Open;
@@ -81,21 +66,10 @@ export const LayoutContextProvider = ({
       setEditingItemId,
       openedActionTabId,
       setOpenedActionTabId,
-      isItemMetadataMenuOpen,
-      setIsItemMetadataMenuOpen,
       isChatboxMenuOpen,
       setIsChatboxMenuOpen,
-      isItemSharingOpen,
-      setIsItemSharingOpen,
     }),
-    [
-      editingItemId,
-      isChatboxMenuOpen,
-      isItemMetadataMenuOpen,
-      mode,
-      openedActionTabId,
-      isItemSharingOpen,
-    ],
+    [editingItemId, isChatboxMenuOpen, mode, openedActionTabId],
   );
 
   return (

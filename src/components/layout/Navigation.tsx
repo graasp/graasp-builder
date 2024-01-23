@@ -1,17 +1,11 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
-import {
-  HomeMenu,
-  ItemMenu,
-  Navigation,
-  useShortenURLParams,
-} from '@graasp/ui';
+import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
   FAVORITE_ITEMS_PATH,
   HOME_PATH,
-  ITEM_ID_PARAMS,
   SHARED_ITEMS_PATH,
   buildItemPath,
 } from '../../config/paths';
@@ -21,6 +15,7 @@ import {
   buildNavigationLink,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
+import { buildExtraItems } from './utils';
 
 const {
   useItem,
@@ -33,11 +28,17 @@ const {
 
 const Navigator = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+  const { itemId } = useParams();
   const { pathname } = useLocation();
   const { data: currentMember } = useCurrentMember();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
+
+  const location = useLocation();
+
+  const itemSettingsLocation = location.pathname.split(
+    `${buildItemPath(itemId)}/`,
+  )?.[1];
 
   const { data: parents, isLoading: areParentsLoading } = useParents({
     id: itemId,
@@ -111,6 +112,12 @@ const Navigator = (): JSX.Element | null => {
     return null;
   }
 
+  const extraItems = buildExtraItems({
+    translate: translateBuilder,
+    location: itemSettingsLocation,
+    itemId,
+  });
+
   return (
     <Navigation
       id={NAVIGATION_ROOT_ID}
@@ -121,6 +128,7 @@ const Navigator = (): JSX.Element | null => {
       renderRoot={renderRoot}
       buildMenuItemId={buildNavigationLink}
       useChildren={useChildren as any}
+      extraItems={extraItems}
     />
   );
 };

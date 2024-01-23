@@ -305,5 +305,8 @@
   "ROOT": "Root",
   "ARIA_OPEN_DRAWER": "open drawer",
   "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Recent Items",
-  "ITEM_SELECTION_NAVIGATION_PARENT": "Move above"
+  "ITEM_SELECTION_NAVIGATION_PARENT": "Move above",
+  "BACK": "Back",
+  "UPDATE_THUMBNAIL_AT_INFO_ALERT": "You can change the item's thumbnail in its information page: <navigate>Information</navigate>",
+  "ITEM_ACTION_INFORMATION": "Information"
 }

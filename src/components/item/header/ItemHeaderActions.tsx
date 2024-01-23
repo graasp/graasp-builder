@@ -11,7 +11,6 @@ import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { ITEM_CHATBOX_BUTTON_ID } from '../../../config/selectors';
-import { ItemActionTabs } from '../../../enums';
 import { BUILDER } from '../../../langs/constants';
 import {
   getHighestPermissionForMemberFromMemberships,
@@ -31,13 +30,8 @@ const { useItemMemberships, useItem } = hooks;
 const ItemHeaderActions = (): JSX.Element => {
   const itemId = useShortenURLParams(ITEM_ID_PARAMS);
   const { t: translateBuilder } = useBuilderTranslation();
-  const {
-    editingItemId,
-    openedActionTabId,
-    isChatboxMenuOpen,
-    setIsChatboxMenuOpen,
-    setIsItemMetadataMenuOpen,
-  } = useLayoutContext();
+  const { editingItemId, isChatboxMenuOpen, setIsChatboxMenuOpen } =
+    useLayoutContext();
 
   const { data: member } = useCurrentUserContext();
   const { data: item } = useItem(itemId);
@@ -56,7 +50,6 @@ const ItemHeaderActions = (): JSX.Element => {
 
   const onClickChatbox = () => {
     setIsChatboxMenuOpen(!isChatboxMenuOpen);
-    setIsItemMetadataMenuOpen(false);
   };
 
   const renderItemActions = () => {
@@ -91,7 +84,7 @@ const ItemHeaderActions = (): JSX.Element => {
 
       return (
         <>
-          {openedActionTabId !== ItemActionTabs.Settings && activeActions}
+          {activeActions}
           {canEdit && <ItemSettingsButton id={item.id} />}
           <DownloadButton id={item.id} name={item.name} />
         </>
@@ -107,7 +100,7 @@ const ItemHeaderActions = (): JSX.Element => {
         // show only for content with tables : root or folders
         (item?.type === ItemType.FOLDER || !item?.id) && <ModeButton />
       }
-      {item?.id && <ItemMetadataButton />}
+      {item?.id && <ItemMetadataButton itemId={item.id} />}
     </Stack>
   );
 };

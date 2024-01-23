@@ -1,3 +1,5 @@
+import { useOutletContext } from 'react-router';
+
 import { Container, Skeleton, styled } from '@mui/material';
 
 import { Api } from '@graasp/query-client';
@@ -6,7 +8,6 @@ import {
   CompleteMember,
   Context,
   DEFAULT_LANG,
-  DiscriminatedItem,
   DocumentItemType,
   EmbeddedLinkItemType,
   EtherpadItemType,
@@ -50,6 +51,7 @@ import { useCurrentUserContext } from '../context/CurrentUserContext';
 import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
+import { OutletType } from '../pages/item/type';
 
 const { useChildren, useFileContentUrl, useEtherpad } = hooks;
 
@@ -259,18 +261,11 @@ const EtherpadContent = ({ item }: { item: EtherpadItemType }): JSX.Element => {
 };
 
 /**
- * Props for {@see ItemContent}
- */
-type Props = {
-  item?: DiscriminatedItem;
-  permission?: PermissionLevel;
-};
-
-/**
  * Main item renderer component
  */
-const ItemContent = ({ item, permission }: Props): JSX.Element => {
+const ItemContent = (): JSX.Element => {
   const { data: member, isLoading, isError } = useCurrentUserContext();
+  const { item, permission } = useOutletContext<OutletType>();
 
   if (isLoading) {
     return <Loader />;

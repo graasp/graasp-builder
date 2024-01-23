@@ -1,37 +1,27 @@
+import { useNavigate } from 'react-router';
+
 import InfoIcon from '@mui/icons-material/Info';
 import { IconButton, Tooltip } from '@mui/material';
 
-import { useBuilderTranslation } from '../../config/i18n';
-import {
-  ITEM_INFORMATION_BUTTON_ID,
-  ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
-} from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
-import { useLayoutContext } from '../context/LayoutContext';
+import { buildItemInformationPath } from '@/config/paths';
 
-const ItemMetadataButton = (): JSX.Element => {
+import { useBuilderTranslation } from '../../config/i18n';
+import { ITEM_INFORMATION_BUTTON_ID } from '../../config/selectors';
+import { BUILDER } from '../../langs/constants';
+
+const ItemMetadataButton = ({ itemId }: { itemId: string }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const {
-    isItemMetadataMenuOpen,
-    setIsItemMetadataMenuOpen,
-    setIsChatboxMenuOpen,
-  } = useLayoutContext();
+
+  const navigate = useNavigate();
 
   const onClick = () => {
-    setIsItemMetadataMenuOpen(!isItemMetadataMenuOpen);
-    setIsChatboxMenuOpen(false);
+    navigate(buildItemInformationPath(itemId));
   };
 
   return (
     <Tooltip title={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}>
       <span>
-        <IconButton
-          id={ITEM_INFORMATION_BUTTON_ID}
-          onClick={onClick}
-          className={
-            isItemMetadataMenuOpen ? ITEM_INFORMATION_ICON_IS_OPEN_CLASS : ''
-          }
-        >
+        <IconButton id={ITEM_INFORMATION_BUTTON_ID} onClick={onClick}>
           <InfoIcon />
         </IconButton>
       </span>

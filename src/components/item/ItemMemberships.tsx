@@ -17,15 +17,10 @@ import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
   id?: string;
-  onClick: () => void;
   maxAvatar?: number;
 };
 
-const ItemMemberships = ({
-  id,
-  maxAvatar = 2,
-  onClick,
-}: Props): JSX.Element | null => {
+const ItemMemberships = ({ id, maxAvatar = 2 }: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: memberships, isError } = hooks.useItemMemberships(id);
   const { data: currentUser } = useCurrentUserContext();
@@ -57,7 +52,7 @@ const ItemMemberships = ({
           })}
           aria-label={translateBuilder(BUILDER.SHARED_MEMBERS_LABEL)}
         >
-          <AvatarGroup max={maxAvatar} spacing={3} onClick={onClick}>
+          <AvatarGroup max={maxAvatar} spacing={3}>
             {filteredMemberships.map(({ member, permission }) => {
               const badgeContent =
                 permission === PermissionLevel.Read ? (

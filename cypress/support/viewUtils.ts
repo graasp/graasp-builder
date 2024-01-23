@@ -17,7 +17,6 @@ import {
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_HEADER_ID,
-  ITEM_PANEL_ID,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
   TEXT_EDITOR_CLASS,
@@ -36,21 +35,20 @@ const expectPanelLayout = ({ item }: { item: ItemForTest }) => {
 
   const { name, creator } = item;
 
-  const panel = cy.get(`#${ITEM_PANEL_ID}`);
-  panel.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
+  cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
 
   const creatorName = getMemberById(Object.values(MEMBERS), creator?.id).name;
 
-  panel.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
+  cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
 
   if (item.type === ItemType.LOCAL_FILE || item.type === ItemType.S3_FILE) {
     const { mimetype = 'invalid-mimetype', size = 'invalid-size' } =
       item.type === ItemType.LOCAL_FILE
         ? getFileExtra(item.extra) || {}
         : getS3FileExtra(item.extra) || {};
-    panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
+    cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
 
-    panel.get(`#${ITEM_PANEL_TABLE_ID}`).contains(size);
+    cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(size);
   }
 };
 
@@ -89,11 +87,10 @@ export const expectDocumentViewScreenLayout = ({
     expect(editor.html()).to.contain(getDocumentExtra(item.extra)?.content);
   });
 
+  expectItemHeaderLayout({ item, currentMember });
   expectPanelLayout({
     item,
   });
-
-  expectItemHeaderLayout({ item, currentMember });
 };
 
 export const expectFileViewScreenLayout = ({
@@ -108,10 +105,9 @@ export const expectFileViewScreenLayout = ({
 
   cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', item.description);
 
+  expectItemHeaderLayout({ item, currentMember });
   // table
   expectPanelLayout({ item });
-
-  expectItemHeaderLayout({ item, currentMember });
 };
 
 export const expectLinkViewScreenLayout = ({
@@ -143,10 +139,9 @@ export const expectLinkViewScreenLayout = ({
     cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', description);
   }
 
+  expectItemHeaderLayout({ item, currentMember });
   // table
   expectPanelLayout({ item });
-
-  expectItemHeaderLayout({ item, currentMember });
 };
 
 export const expectFolderViewScreenLayout = ({
@@ -157,7 +152,6 @@ export const expectFolderViewScreenLayout = ({
   currentMember?: MemberForTest | null;
 }): void => {
   // table
-  expectPanelLayout({ item });
-
   expectItemHeaderLayout({ item, currentMember });
+  expectPanelLayout({ item });
 };

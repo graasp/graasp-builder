@@ -19,12 +19,17 @@ import {
   buildGraaspPlayerView,
 } from '../../../support/paths';
 
-const checkContainPlatformText = (platform: ShortLinkPlatform) =>
-  cy
-    .get(`#${buildShortLinkPlatformTextId(platform)}`)
-    .should('contain', platform);
+export const checkContainPlatformText = (platform: ShortLinkPlatform): void => {
+  cy.get(`#${buildShortLinkPlatformTextId(platform)}`).should(
+    'contain',
+    platform,
+  );
+};
 
-const checkContainUrlText = (platform: ShortLinkPlatform, itemId: string) => {
+export const checkContainUrlText = (
+  platform: ShortLinkPlatform,
+  itemId: string,
+): void => {
   let expectedUrl;
 
   // The client host manager can't be used here because
