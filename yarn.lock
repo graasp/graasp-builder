@@ -1220,16 +1220,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:3.4.0":
-  version: 3.4.0
-  resolution: "@graasp/sdk@npm:3.4.0"
+"@graasp/sdk@npm:3.4.1":
+  version: 3.4.1
+  resolution: "@graasp/sdk@npm:3.4.1"
   dependencies:
-    "@graasp/etherpad-api": "npm:2.1.1"
     date-fns: "npm:3.2.0"
     js-cookie: "npm:3.0.5"
     uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-  checksum: 00bd8d449e8c1bcb4750ddce9dc0eefc23d917d042d5d7db6c1007c7380904de3bc7e9bde43325736df69f3dc584d15717dac01769e06a9f71e1e1133075f7f7
+  checksum: 6bf2d3fbb28d61a457a534628620982a656258ab2e5c101294da8e7e4327eacff526378983c4e06a85f0115e0547325f9dbece793f7f4bc6129aa8909a42a24b
   languageName: node
   linkType: hard
 
@@ -1251,15 +1250,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@graasp/ui@npm:4.3.0"
+"@graasp/ui@https://github.com/graasp/graasp-ui.git#create-ismobile-hook":
+  version: 4.3.1
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=30a1baa3ebe3a504a2ac319abe907b9649f7e383"
   dependencies:
-    "@graasp/sdk": "npm:3.4.0"
+    "@graasp/sdk": "npm:3.4.1"
     http-status-codes: "npm:2.3.0"
     katex: "npm:0.16.9"
     lodash.truncate: "npm:4.4.2"
-    qs: "npm:6.11.2"
     quill-emoji: "npm:0.2.0"
     react-cookie-consent: "npm:9.0.0"
     react-quill: "npm:2.0.0-beta.4"
@@ -1288,7 +1286,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 5538861e5d4d58e6105bb0e84d03238eecbc28bf5c2112557ed7ca5725a3025a4c09e06f4f050b9805595256c5227081696c12a90fc0e266fb8801d4c895d28d
+  checksum: 9797d0fe95216750d42889b1f3fd1afcab262cb6ff62457a9fba9b6dc7e5373b147a6cc3b42fefac3c479f883ea132dd4821acf2cfbd6038bb6ab1695d40ef2d
   languageName: node
   linkType: hard
 
@@ -6311,7 +6309,7 @@ __metadata:
     "@graasp/query-client": "npm:2.2.1"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
-    "@graasp/ui": "npm:4.3.0"
+    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#create-ismobile-hook"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"

@@ -1,11 +1,10 @@
 import { useLocation } from 'react-router-dom';
 
-import { useMediaQuery, useTheme } from '@mui/material';
-
 import {
   HomeMenu,
   ItemMenu,
   Navigation,
+  useMobileView,
   useShortenURLParams,
 } from '@graasp/ui';
 
@@ -41,8 +40,7 @@ const Navigator = (): JSX.Element | null => {
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile } = useMobileView();
 
   const { data: parents, isLoading: areParentsLoading } = useParents({
     id: itemId,
