@@ -21,7 +21,7 @@
     "@graasp/query-client": "2.2.1",
     "@graasp/sdk": "3.3.0",
     "@graasp/translations": "1.21.1",
-    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#create-ismobile-hook",
+    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#666-mobile-view-custom-hook",
     "@mui/icons-material": "5.14.19",
     "@mui/lab": "5.0.0-alpha.151",
     "@mui/material": "5.14.19",

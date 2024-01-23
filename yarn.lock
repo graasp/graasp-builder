@@ -1250,9 +1250,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@https://github.com/graasp/graasp-ui.git#create-ismobile-hook":
+"@graasp/ui@https://github.com/graasp/graasp-ui.git#666-mobile-view-custom-hook":
   version: 4.3.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=30a1baa3ebe3a504a2ac319abe907b9649f7e383"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=09a3f878f1245f2029466191f5a83ed283a54a4a"
   dependencies:
     "@graasp/sdk": "npm:3.4.1"
     http-status-codes: "npm:2.3.0"
@@ -6309,7 +6309,7 @@ __metadata:
     "@graasp/query-client": "npm:2.2.1"
     "@graasp/sdk": "npm:3.3.0"
     "@graasp/translations": "npm:1.21.1"
-    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#create-ismobile-hook"
+    "@graasp/ui": "https://github.com/graasp/graasp-ui.git#666-mobile-view-custom-hook"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"
