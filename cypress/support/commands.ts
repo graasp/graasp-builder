@@ -353,6 +353,11 @@ Cypress.Commands.add('switchMode', (mode) => {
         break;
       case ITEM_LAYOUT_MODES.LIST:
         cy.get(`#${MODE_LIST_BUTTON_ID}`).click({ force: true });
+        // todo: this wait is here to ensure the table has time to stabilize.
+        // this wait should be removed as soon as the table is not using ag-grid anymore.
+        // this is due to multiple re-rendering caused by how we handle the table. This should be fixed.
+        // using waits in not a solution.
+        cy.wait(2000);
         break;
       default:
         console.error(`invalid mode ${mode} provided`);

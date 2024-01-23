@@ -26,4 +26,5 @@ Cypress.Commands.add('goToHome', () => {
 Cypress.Commands.add('goToItemWithNavigation', (id) => {
   cy.wait(NAVIGATE_PAUSE);
   cy.get(`[href="${buildItemPath(id)}"]`).click();
+  cy.wait(WAIT_FOR_ITEM_TABLE_ROW_TIME);
 });

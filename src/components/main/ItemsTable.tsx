@@ -24,7 +24,8 @@ import {
   SortChangedEvent,
 } from 'ag-grid-community';
 
-import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
+import { ITEMS_TABLE_CONTAINER_HEIGHT } from '@/config/constants';
+
 import i18n, {
   useBuilderTranslation,
   useCommonTranslation,

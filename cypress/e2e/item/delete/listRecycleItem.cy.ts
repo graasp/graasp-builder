@@ -6,10 +6,11 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
+import { WAIT_FOR_ITEM_TABLE_ROW_TIME } from '../../../support/constants';
 
 const recycleItem = (id: string) => {
-  const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  cy.get(menuSelector).click();
+  cy.wait(WAIT_FOR_ITEM_TABLE_ROW_TIME);
+  cy.get(`#${buildItemMenuButtonId(id)}`).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_RECYCLE_BUTTON_CLASS}`).click();
 };
 

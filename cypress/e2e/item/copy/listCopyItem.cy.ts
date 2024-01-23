@@ -24,8 +24,7 @@ const copyItem = ({
   toItemPath: string;
   rootId?: string;
 }) => {
-  const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  cy.get(menuSelector).click();
+  cy.get(`#${buildItemMenuButtonId(id)}`).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
   cy.fillTreeModal(toItemPath, rootId);
 };

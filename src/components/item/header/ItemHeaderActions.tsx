@@ -1,10 +1,11 @@
 import { Stack } from '@mui/material';
 
-import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
-import { ChatboxButton } from '@graasp/ui';
+import { ItemType, PermissionLevel } from '@graasp/sdk';
+import { ChatboxButton, useShortenURLParams } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
+import { ITEM_ID_PARAMS } from '@/config/paths';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -25,13 +26,10 @@ import ItemMenu from '../../main/ItemMenu';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
-const { useItemMemberships } = hooks;
+const { useItemMemberships, useItem } = hooks;
 
-type Props = {
-  item?: DiscriminatedItem;
-};
-
-const ItemHeaderActions = ({ item }: Props): JSX.Element => {
+const ItemHeaderActions = (): JSX.Element => {
+  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
   const { t: translateBuilder } = useBuilderTranslation();
   const {
     editingItemId,
@@ -42,6 +40,7 @@ const ItemHeaderActions = ({ item }: Props): JSX.Element => {
   } = useLayoutContext();
 
   const { data: member } = useCurrentUserContext();
+  const { data: item } = useItem(itemId);
 
   const { data: memberships } = useItemMemberships(item?.id);
   const canEdit = isItemUpdateAllowedForUser({

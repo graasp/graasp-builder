@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import {
   DiscriminatedItem,
   ItemMembership,
@@ -32,22 +30,13 @@ const ActionsCellRenderer = ({
   canMove,
 }: Props): ((arg: ChildCompProps) => JSX.Element) => {
   const ChildComponent = ({ data: item }: ChildCompProps) => {
-    const [canEdit, setCanEdit] = useState(false);
-
-    useEffect(() => {
-      if (manyMemberships && manyMemberships.data) {
-        setCanEdit(
-          isItemUpdateAllowedForUser({
-            memberships: getMembershipsForItem({
-              itemId: item.id,
-              manyMemberships,
-            }),
-            memberId: member?.id,
-          }),
-        );
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [manyMemberships, item, member]);
+    const canEdit = isItemUpdateAllowedForUser({
+      memberships: getMembershipsForItem({
+        itemId: item.id,
+        manyMemberships,
+      }),
+      memberId: member?.id,
+    });
 
     const renderAnyoneActions = () => (
       <>

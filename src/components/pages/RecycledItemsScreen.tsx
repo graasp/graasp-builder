@@ -54,7 +54,7 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
 
   if (recycledItems) {
     return (
-      <Box id={RECYCLED_ITEMS_ROOT_CONTAINER} m={2}>
+      <Box id={RECYCLED_ITEMS_ROOT_CONTAINER} mx={2}>
         <ItemHeader showNavigation={false} />
         <Items
           id={RECYCLED_ITEMS_ID}
@@ -65,16 +65,20 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
           ToolbarActions={ToolbarActions}
           showThumbnails={false}
           enableMemberships={false}
+          totalCount={recycledItems?.length}
         />
       </Box>
     );
   }
+
   if (isLoading) {
     return <Loader />;
   }
+
   if (isError) {
     return <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
   }
+
   return null;
 };
 
