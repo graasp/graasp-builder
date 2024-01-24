@@ -136,6 +136,7 @@ const ItemMenu = ({
       />,
       <MenuItem
         onClick={handleDuplicate}
+        key="duplicate"
         className={ITEM_MENU_DUPLICATE_BUTTON_CLASS}
       >
         <ListItemIcon>
