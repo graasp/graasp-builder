@@ -787,28 +787,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11.11.1":
-  version: 11.11.1
-  resolution: "@emotion/react@npm:11.11.1"
-  dependencies:
-    "@babel/runtime": "npm:^7.18.3"
-    "@emotion/babel-plugin": "npm:^11.11.0"
-    "@emotion/cache": "npm:^11.11.0"
-    "@emotion/serialize": "npm:^1.1.2"
-    "@emotion/use-insertion-effect-with-fallbacks": "npm:^1.0.1"
-    "@emotion/utils": "npm:^1.2.1"
-    "@emotion/weak-memoize": "npm:^0.3.1"
-    hoist-non-react-statics: "npm:^3.3.1"
-  peerDependencies:
-    react: ">=16.8.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: dfc140718d0a8051a74e51c379226d9de6b19f6a5dd595fb282ef72f4413695a2d012ba919f1e9eeff761c6659e6f7398da8e0e36eb7997a4fdf54cef88644ae
-  languageName: node
-  linkType: hard
-
-"@emotion/react@npm:^11.11.1":
+"@emotion/react@npm:11.11.3, @emotion/react@npm:^11.11.1":
   version: 11.11.3
   resolution: "@emotion/react@npm:11.11.3"
   dependencies:
@@ -6307,7 +6286,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:18.4.4"
     "@cypress/code-coverage": "npm:3.12.12"
     "@emotion/cache": "npm:11.11.0"
-    "@emotion/react": "npm:11.11.1"
+    "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.1"
     "@graasp/query-client": "npm:2.3.0"
