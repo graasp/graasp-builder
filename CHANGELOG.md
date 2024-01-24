@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/graasp/graasp-builder/compare/v2.5.0...v2.6.0) (2024-01-24)
+
+
+### Features
+
+* add duplicate item action ([#932](https://github.com/graasp/graasp-builder/issues/932)) ([175f173](https://github.com/graasp/graasp-builder/commit/175f173e231c37e45b647be5e072bd452b2ee545))
+* filter memberships for same member to render highest permission only ([#936](https://github.com/graasp/graasp-builder/issues/936)) ([8cf22c2](https://github.com/graasp/graasp-builder/commit/8cf22c2295af1cbc1f17e407a917867a383534e6))
+
+
+### Bug Fixes
+
+* add key prop to duplicate item main menu ([#965](https://github.com/graasp/graasp-builder/issues/965)) ([43a3c87](https://github.com/graasp/graasp-builder/commit/43a3c87395ea61d0e22ab72d2f5d71aa375761fc))
+* **deps:** update dependency @emotion/react to v11.11.3 ([#945](https://github.com/graasp/graasp-builder/issues/945)) ([1f1a285](https://github.com/graasp/graasp-builder/commit/1f1a285a26580ef91c6b0409b2fc78fabdd67d1a))
+* **deps:** update dependency @graasp/query-client to v2.3.2 ([#970](https://github.com/graasp/graasp-builder/issues/970)) ([456902e](https://github.com/graasp/graasp-builder/commit/456902e7048dd81bb6e77bd8c148d89db2c0b21d))
+* **deps:** update dependency @graasp/ui to v4.3.1 ([8da10f0](https://github.com/graasp/graasp-builder/commit/8da10f0bbb753a95e45f30528c7a57ba0bf97247))
+* fix visibility select lang translations ([#959](https://github.com/graasp/graasp-builder/issues/959)) ([5492143](https://github.com/graasp/graasp-builder/commit/5492143c3a22b3ea84d6aeb9da2fc1c4c07a4d00))
+* only show admin and write accessible in move modal ([#960](https://github.com/graasp/graasp-builder/issues/960)) ([94063f7](https://github.com/graasp/graasp-builder/commit/94063f7443c55d1d974fee2e314271374b687f2b))
+
 ## [2.5.0](https://github.com/graasp/graasp-builder/compare/v2.4.1...v2.5.0) (2024-01-16)
 
 
