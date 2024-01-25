@@ -3,7 +3,7 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';
 
 import Uppy from '@uppy/core';
@@ -34,6 +34,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const itemId = item.id;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
+    size: ThumbnailSize.Medium,
   });
 
   useEffect(() => {
