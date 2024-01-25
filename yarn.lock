@@ -1252,7 +1252,7 @@ __metadata:
 
 "@graasp/ui@https://github.com/graasp/graasp-ui.git#675-add-type-props-for-action-buttons":
   version: 4.4.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=9272e8caf72365e141f8e9056173affa0d3546de"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=c95e34bbdb96117ecd50c95f0967cb8fbdad5c25"
   dependencies:
     "@graasp/sdk": "npm:3.5.0"
     http-status-codes: "npm:2.3.0"
@@ -1286,7 +1286,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: a81713636b14e56a46d4854a1d23d7158e8ff18067bcd03ebf56dc81821917a44a5879ea912fce491aa74b9db9ba7555ad24eb0f5a8568944301da813d819b7b
+  checksum: 12515560ff46ca83ffcf33566c67cd8a3bbfafb0cc4fc149b273d12532ce4a3d8feefa352ccfe9c0c071e5bf13c52a1e45eb5b9ad952cb54efc01aa3c094de50
   languageName: node
   linkType: hard
 

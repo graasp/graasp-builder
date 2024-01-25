@@ -19,7 +19,10 @@ import DownloadButton from '@/components/main/DownloadButton';
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
-import { ITEM_CHATBOX_BUTTON_ID } from '../../../config/selectors';
+import {
+  ITEM_CHATBOX_BUTTON_ID,
+  MOBILE_MORE_ACTIONS_BUTTON_ID,
+} from '../../../config/selectors';
 import { ItemActionTabs } from '../../../enums';
 import { BUILDER } from '../../../langs/constants';
 import {
@@ -142,7 +145,10 @@ export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
           id={ITEM_CHATBOX_BUTTON_ID}
           onClick={onClickChatbox}
         />
-        <IconButton onClick={toggleActionsDrawer}>
+        <IconButton
+          onClick={toggleActionsDrawer}
+          id={MOBILE_MORE_ACTIONS_BUTTON_ID}
+        >
           <MoreVertIcon />
         </IconButton>
       </Box>

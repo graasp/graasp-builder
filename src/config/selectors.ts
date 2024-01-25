@@ -344,3 +344,5 @@ export const buildShortLinkUrlTextId = (platform: ShortLinkPlatform): string =>
 export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
+
+export const MOBILE_MORE_ACTIONS_BUTTON_ID = 'moreActionsMobileView';

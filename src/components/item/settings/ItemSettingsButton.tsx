@@ -43,7 +43,11 @@ const ItemSettingsButton = ({
   switch (type) {
     case ActionButton.MENU_ITEM:
       return (
-        <MenuItem key={title} onClick={onClickSettings}>
+        <MenuItem
+          key={title}
+          onClick={onClickSettings}
+          className={ITEM_SETTINGS_BUTTON_CLASS}
+        >
           <ListItemIcon>
             {openedActionTabId === ItemActionTabs.Settings ? (
               <CloseIcon />
