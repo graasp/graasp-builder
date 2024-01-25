@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Pagination, Stack } from '@mui/material';
 
-import { PermissionLevel } from '@graasp/sdk';
+import { ItemType, PermissionLevel } from '@graasp/sdk';
 
 import { hooks } from '@/config/queryClient';
 
@@ -31,9 +31,14 @@ const AccessibleNavigationTree = ({
     { page },
   );
 
-  const nbPages = accessibleItems
-    ? Math.ceil(accessibleItems.totalCount / PAGE_SIZE)
-    : 0;
+  const accessibleFolders = accessibleItems?.data?.filter(
+    ({ type }) => type === ItemType.FOLDER,
+  );
+
+  const nbPages =
+    accessibleItems && accessibleFolders
+      ? Math.ceil(accessibleItems.totalCount / PAGE_SIZE)
+      : 0;
 
   return (
     <Stack
@@ -43,7 +48,7 @@ const AccessibleNavigationTree = ({
       justifyContent="space-between"
     >
       <Stack>
-        {accessibleItems?.data?.map((ele) => (
+        {accessibleFolders?.map((ele) => (
           <RowMenu
             key={ele.id}
             item={ele}
