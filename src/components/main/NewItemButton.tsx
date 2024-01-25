@@ -29,18 +29,20 @@ const NewItemButton = (): JSX.Element => {
         title={translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
         arrow
       >
-        <Button
-          id={CREATE_ITEM_BUTTON_ID}
-          onClick={handleClickOpen}
-          sx={{
-            cursor: 'pointer',
-            flex: 'none',
-            ml: 1,
-          }}
-        >
-          <AddIcon />
-          {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
-        </Button>
+        <span>
+          <Button
+            id={CREATE_ITEM_BUTTON_ID}
+            onClick={handleClickOpen}
+            sx={{
+              cursor: 'pointer',
+              flex: 'none',
+              ml: 1,
+            }}
+          >
+            <AddIcon />
+            {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+          </Button>
+        </span>
       </Tooltip>
       <NewItemModal open={open} handleClose={handleClose} />
     </>

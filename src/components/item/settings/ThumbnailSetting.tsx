@@ -101,7 +101,6 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
     try {
       // remove waiting files
       uppy.cancelAll();
-
       uppy.addFile({
         type: croppedImage.type,
         data: croppedImage,

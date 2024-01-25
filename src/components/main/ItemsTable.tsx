@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   DiscriminatedItem,
@@ -12,14 +12,14 @@ import {
   getShortcutExtra,
 } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { Table as GraaspTable } from '@graasp/ui/dist/table';
+import { Table as GraaspTable } from '@graasp/ui/table';
 
 import {
   CellClickedEvent,
   ColDef,
   IRowDragItem,
   SortChangedEvent,
-} from 'ag-grid-community';
+} from '@ag-grid-community/core';
 
 import { ShowOnlyMeChangeType } from '@/config/types';
 

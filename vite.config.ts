@@ -28,10 +28,12 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
       outDir: 'build',
     },
     plugins: [
-      mode === 'test' ? undefined : checker({
-        typescript: true,
-        eslint: { lintCommand: 'eslint "./**/*.{ts,tsx}"' },
-      }),
+      mode === 'test'
+        ? undefined
+        : checker({
+            typescript: true,
+            eslint: { lintCommand: 'eslint "./**/*.{ts,tsx}"' },
+          }),
       react(),
       istanbul({
         include: 'src/*',
@@ -49,7 +51,7 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
               gzipSize: true,
               brotliSize: true,
               filename: 'bundle_analysis.html',
-            }) as PluginOption,
+            }) as unknown as PluginOption,
           ]
         : []),
     ],

@@ -8,10 +8,10 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { theme as GraaspTheme } from '@graasp/ui';
 
+import '@ag-grid-community/styles/ag-grid.min.css';
+import '@ag-grid-community/styles/ag-theme-material.min.css';
 import * as Sentry from '@sentry/react';
 import '@uppy/core/dist/style.css';
-import 'ag-grid-community/styles/ag-grid.min.css';
-import 'ag-grid-community/styles/ag-theme-material.min.css';
 
 import i18nConfig from '../config/i18n';
 import {
@@ -26,13 +26,13 @@ import { FilterItemsContextProvider } from './context/FilterItemsContext';
 import ModalProviders from './context/ModalProviders';
 
 const Root = (): JSX.Element => (
-  <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
-    <QueryClientProvider client={queryClient}>
-      <I18nextProvider i18n={i18nConfig}>
-        <ThemeProvider theme={GraaspTheme}>
-          <CssBaseline />
-          <ToastContainer position="bottom-right" theme="colored" />
-          <Router>
+  <QueryClientProvider client={queryClient}>
+    <I18nextProvider i18n={i18nConfig}>
+      <ThemeProvider theme={GraaspTheme}>
+        <CssBaseline />
+        <ToastContainer position="bottom-right" theme="colored" />
+        <Router>
+          <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
             <ModalProviders>
               <CurrentUserContextProvider>
                 <FilterItemsContextProvider>
@@ -40,14 +40,14 @@ const Root = (): JSX.Element => (
                 </FilterItemsContextProvider>
               </CurrentUserContextProvider>
             </ModalProviders>
-          </Router>
-        </ThemeProvider>
-      </I18nextProvider>
-      {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
-        <ReactQueryDevtools position="bottom-right" />
-      )}
-    </QueryClientProvider>
-  </Sentry.ErrorBoundary>
+          </Sentry.ErrorBoundary>
+        </Router>
+      </ThemeProvider>
+    </I18nextProvider>
+    {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
+      <ReactQueryDevtools position="bottom-right" />
+    )}
+  </QueryClientProvider>
 );
 
 export default Root;

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ReactGA from 'react-ga4';
+// todo: hack to have the text editor styles available without having to bundle them with graasp/ui
+import 'react-quill/dist/quill.snow.css';
 
 import {
   BUILDER_ITEMS_PREFIX,
@@ -10,9 +12,10 @@ import {
   PLAYER_ITEMS_PREFIX,
   hasAcceptedCookies,
 } from '@graasp/sdk';
-import '@graasp/ui/dist/bundle.css';
 
 import { BrowserTracing, init as SentryInit } from '@sentry/react';
+// todo: hack to have the text editor styles available without having to bundle them with graasp/ui
+import 'katex/dist/katex.min.css';
 
 import pkg from '../package.json';
 import Root from './components/Root';

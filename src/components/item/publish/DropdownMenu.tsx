@@ -46,8 +46,8 @@ const DropdownMenu = ({
     return null;
   }
 
-  const selected = values.filter(
-    ({ id }) => selectedValues?.find(({ category }) => category.id === id),
+  const selected = values.filter(({ id }) =>
+    selectedValues?.find(({ category }) => category.id === id),
   );
 
   return (
