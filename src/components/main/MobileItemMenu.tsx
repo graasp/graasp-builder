@@ -18,7 +18,6 @@ import { BUILDER } from '../../langs/constants';
 import CollapseButton from '../common/CollapseButton';
 import FavoriteButton from '../common/FavoriteButton';
 import HideButton from '../common/HideButton';
-import IconButtonWithText from '../common/IconButtonWithText';
 import MoveButton from '../common/MoveButton';
 import PinButton from '../common/PinButton';
 import PublishButton from '../common/PublishButton';
@@ -118,19 +117,17 @@ const MobileItemMenu = ({
   };
   const shareActions = (
     <>
-      <IconButtonWithText
-        text={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
+      <ShareButton
+        itemId={item.id}
+        type={ActionButton.MENU_ITEM}
         onClick={closeDrawer}
-      >
-        <ShareButton itemId={item.id} />
-      </IconButtonWithText>
+      />
       {canAdmin && (
-        <IconButtonWithText
-          text={translateBuilder(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE)}
+        <PublishButton
+          itemId={item.id}
           onClick={closeDrawer}
-        >
-          <PublishButton itemId={item.id} />
-        </IconButtonWithText>
+          type={ActionButton.MENU_ITEM}
+        />
       )}
     </>
   );

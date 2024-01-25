@@ -1,4 +1,7 @@
-import { ShareButton as GraaspShareButton } from '@graasp/ui';
+import {
+  ActionButtonVariant,
+  ShareButton as GraaspShareButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -11,9 +14,15 @@ import { useLayoutContext } from '../context/LayoutContext';
 
 type Props = {
   itemId: string;
+  type?: ActionButtonVariant;
+  onClick?: () => void;
 };
 
-const ShareButton = ({ itemId }: Props): JSX.Element => {
+const ShareButton = ({
+  itemId,
+  type,
+  onClick: closeDrawer,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { openedActionTabId, setOpenedActionTabId } = useLayoutContext();
 
@@ -23,6 +32,7 @@ const ShareButton = ({ itemId }: Props): JSX.Element => {
         ? null
         : ItemActionTabs.Sharing,
     );
+    closeDrawer?.();
   };
 
   return (
@@ -33,6 +43,7 @@ const ShareButton = ({ itemId }: Props): JSX.Element => {
       onClick={onClick}
       open={openedActionTabId === ItemActionTabs.Sharing}
       id={buildShareButtonId(itemId)}
+      type={type}
     />
   );
 };

@@ -11,10 +11,9 @@ import {
 } from '@mui/material';
 
 import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
-import { ChatboxButton } from '@graasp/ui';
+import { ActionButton, ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
-import IconButtonWithText from '@/components/common/IconButtonWithText';
 import DownloadButton from '@/components/main/DownloadButton';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
@@ -40,6 +39,8 @@ type Props = {
   item?: DiscriminatedItem;
 };
 
+// edit
+// share
 export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -88,12 +89,11 @@ export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
       const activeActions = (
         <>
           {showEditButton && (
-            <IconButtonWithText
-              text={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
+            <EditButton
+              item={item}
               onClick={closeDrawer}
-            >
-              <EditButton item={item} />
-            </IconButtonWithText>
+              type={ActionButton.MENU_ITEM}
+            />
           )}
           <Box width="100%">
             <MobileItemMenu
@@ -111,19 +111,20 @@ export const MobileItemHeaderActions = ({ item }: Props): JSX.Element => {
       return (
         <>
           {openedActionTabId !== ItemActionTabs.Settings && activeActions}
-          <IconButtonWithText
-            text={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
+
+          <DownloadButton
+            id={item.id}
+            name={item.name}
+            type={ActionButton.MENU_ITEM}
             onClick={closeDrawer}
-          >
-            <DownloadButton id={item.id} name={item.name} />
-          </IconButtonWithText>
+          />
           {canEdit && (
-            <IconButtonWithText
-              text={translateBuilder(BUILDER.SETTINGS_TITLE)}
+            <ItemSettingsButton
+              id={item.id}
+              title={translateBuilder(BUILDER.SETTINGS_TITLE)}
+              type={ActionButton.MENU_ITEM}
               onClick={closeDrawer}
-            >
-              <ItemSettingsButton id={item.id} />
-            </IconButtonWithText>
+            />
           )}
         </>
       );
