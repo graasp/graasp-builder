@@ -4,11 +4,7 @@ import {
   buildItemLink,
   buildItemsTableRowIdAttribute,
 } from '../../../src/config/selectors';
-import {
-  NAVIGATE_PAUSE,
-  TABLE_ITEM_RENDER_TIME,
-  WAIT_FOR_ITEM_TABLE_ROW_TIME,
-} from '../constants';
+import { NAVIGATE_PAUSE, WAIT_FOR_ITEM_TABLE_ROW_TIME } from '../constants';
 
 Cypress.Commands.add('goToItemInGrid', (id) => {
   cy.wait(NAVIGATE_PAUSE);
@@ -30,5 +26,4 @@ Cypress.Commands.add('goToHome', () => {
 Cypress.Commands.add('goToItemWithNavigation', (id) => {
   cy.wait(NAVIGATE_PAUSE);
   cy.get(`[href="${buildItemPath(id)}"]`).click();
-  cy.wait(TABLE_ITEM_RENDER_TIME);
 });

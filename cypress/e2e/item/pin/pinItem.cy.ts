@@ -6,12 +6,9 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { ITEMS_SETTINGS, PINNED_ITEM } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const togglePinButton = (itemId: string) => {
-  cy.wait(TABLE_ITEM_RENDER_TIME);
-  const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
-  cy.get(menuSelector).click();
+  cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
   cy.get(`#${buildItemMenu(itemId)} .${PIN_ITEM_BUTTON_CLASS}`).click();
 };
 

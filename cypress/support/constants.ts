@@ -20,7 +20,6 @@ export const REDIRECTION_TIME = 500;
 export const CAPTION_EDIT_PAUSE = 2000;
 
 export const ROW_HEIGHT = 48;
-export const TABLE_ITEM_RENDER_TIME = 7000;
 export const TABLE_MEMBERSHIP_RENDER_TIME = 3000;
 export const FIXTURES_THUMBNAILS_FOLDER = './thumbnails';
 export const CHATBOX_LOADING_TIME = 5000;

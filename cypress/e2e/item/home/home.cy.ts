@@ -16,10 +16,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { BUILDER } from '../../../../src/langs/constants';
 import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
-import {
-  NAVIGATION_LOAD_PAUSE,
-  TABLE_ITEM_RENDER_TIME,
-} from '../../../support/constants';
+import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
 import { ItemForTest } from '../../../support/types';
 
 const translateBuilder = (key: string) =>
@@ -82,6 +79,7 @@ describe('Home', () => {
           cy.wait('@getAccessibleItems')
             .its('request.url')
             .should('contain', 'page=1');
+          cy.get(`#${buildItemCard(sampleItems[0].id)}`).should('be.visible');
           cy.wait('@getAccessibleItems')
             .its('request.url')
             .should('contain', searchText);
@@ -150,14 +148,12 @@ describe('Home', () => {
         cy.goToItemInGrid(childId);
 
         // should get children
-        cy.wait('@getChildren', { timeout: TABLE_ITEM_RENDER_TIME }).then(
-          ({ response: { body } }) => {
-            // check item is created and displayed
-            for (const item of body) {
-              cy.get(`#${buildItemCard(item.id)}`).should('exist');
-            }
-          },
-        );
+        cy.wait('@getChildren').then(({ response: { body } }) => {
+          // check item is created and displayed
+          for (const item of body) {
+            cy.get(`#${buildItemCard(item.id)}`).should('exist');
+          }
+        });
 
         // root title
         cy.get(`#${NAVIGATION_ROOT_ID}`).contains(

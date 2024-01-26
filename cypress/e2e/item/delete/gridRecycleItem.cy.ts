@@ -9,7 +9,6 @@ import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const recycleItem = (id: string) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  // cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_RECYCLE_BUTTON_CLASS}`).click();
 };

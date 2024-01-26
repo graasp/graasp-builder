@@ -5,10 +5,7 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { EDITED_FIELDS, SAMPLE_ITEMS } from '../../../fixtures/items';
-import {
-  EDIT_ITEM_PAUSE,
-  TABLE_ITEM_RENDER_TIME,
-} from '../../../support/constants';
+import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editItem } from '../../../support/editUtils';
 
 describe('Edit Folder', () => {
@@ -34,9 +31,6 @@ describe('Edit Folder', () => {
     it('confirm with empty name', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
-
-      // wait for the render
-      cy.wait(TABLE_ITEM_RENDER_TIME);
 
       // click edit button
       const itemId = SAMPLE_ITEMS.items[0].id;
