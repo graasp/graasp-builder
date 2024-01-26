@@ -17,6 +17,7 @@ import {
 import { useBuilderTranslation } from '../../../config/i18n';
 import { mutations } from '../../../config/queryClient';
 import {
+  ITEM_SETTINGS_CONTAINER_ID,
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_COLLAPSE_TOGGLE_ID,
   SETTINGS_PINNED_TOGGLE_ID,
@@ -202,7 +203,7 @@ const ItemSettings = ({ item }: Props): JSX.Element => {
   };
 
   return (
-    <Container disableGutters sx={{ mt: 2 }}>
+    <Container disableGutters sx={{ mt: 2 }} id={ITEM_SETTINGS_CONTAINER_ID}>
       <Typography variant="h4">
         {translateBuilder(BUILDER.SETTINGS_TITLE)}
       </Typography>
