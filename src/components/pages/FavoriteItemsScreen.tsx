@@ -11,40 +11,40 @@ import {
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 import ItemHeader from '../item/header/ItemHeader';
-import Items from './Items';
-import Main from './Main';
+import Items from '../main/Items';
+import Main from '../main/Main';
 
-const FavoriteItems = (): JSX.Element => {
+const FavoriteItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { isLoading: isMemberLoading } = useCurrentUserContext();
-  const { data, isLoading: isItemsLoading } = hooks.useFavoriteItems();
-  const renderContent = () => {
-    if (data) {
-      return (
+  const { data, isLoading: isItemsLoading, isError } = hooks.useFavoriteItems();
+
+  if (data) {
+    return (
+      <Box m={2}>
+        <ItemHeader showNavigation={false} />
         <Items
           id={FAVORITE_ITEMS_ID}
           title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
           items={data.map((d) => d.item as DiscriminatedItem)}
         />
-      );
-    }
-
-    if (isMemberLoading || isItemsLoading) {
-      return <Loader />;
-    }
-    return <ErrorAlert id={FAVORITE_ITEMS_ERROR_ALERT_ID} />;
-  };
-
-  return (
-    <Main>
-      <Box mx={2}>
-        <ItemHeader showNavigation={false} />
-        {renderContent()}
       </Box>
-    </Main>
-  );
+    );
+  }
+
+  if (isItemsLoading) {
+    return <Loader />;
+  }
+  if (isError) {
+    return <ErrorAlert id={FAVORITE_ITEMS_ERROR_ALERT_ID} />;
+  }
+  return null;
 };
 
-export default FavoriteItems;
+const FavoriteItemsScreen = (): JSX.Element => (
+  <Main>
+    <FavoriteItemsLoadableContent />
+  </Main>
+);
+
+export default FavoriteItemsScreen;

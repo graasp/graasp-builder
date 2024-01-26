@@ -30,8 +30,8 @@ import ItemMain from '../item/ItemMain';
 import ItemPublishTab from '../item/publish/ItemPublishTab';
 import ItemSettings from '../item/settings/ItemSettings';
 import ItemSharingTab from '../item/sharing/ItemSharingTab';
-import ItemForbiddenScreen from './ItemForbiddenScreen';
-import Main from './Main';
+import ItemForbiddenScreen from '../main/ItemForbiddenScreen';
+import Main from '../main/Main';
 
 const {
   useItem,

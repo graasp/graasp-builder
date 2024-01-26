@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
 import { ChatStatus } from '@graasp/sdk';
+import { useMobileView } from '@graasp/ui';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
 import { ITEM_LAYOUT_MODES } from '../../enums';
@@ -58,6 +59,7 @@ export const LayoutContextProvider = ({
 }: {
   children: JSX.Element;
 }): JSX.Element => {
+  const { isMobile } = useMobileView();
   // layout mode: grid or list
   const [mode, setMode] = useState<string>(DEFAULT_ITEM_LAYOUT_MODE);
 
@@ -71,7 +73,7 @@ export const LayoutContextProvider = ({
     null,
   );
 
-  const [isMainMenuOpen, setIsMainMenuOpen] = useState(true);
+  const [isMainMenuOpen, setIsMainMenuOpen] = useState(!isMobile);
   const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);
 
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);

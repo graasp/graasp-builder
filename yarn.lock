@@ -19,6 +19,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ag-grid-community/styles@npm:31.0.3":
+  version: 31.0.3
+  resolution: "@ag-grid-community/styles@npm:31.0.3"
+  checksum: 9caa12c9231a9df0d5cfd787a668da01e628b2c55e5c7c2c558473880bdc6e07c15790f5404e1fc566288e62b3ca16f2da1591ee78d2575c0ca01474af70f764
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
@@ -6323,6 +6330,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "graasp-builder@workspace:."
   dependencies:
+    "@ag-grid-community/styles": "npm:31.0.3"
     "@commitlint/cli": "npm:18.4.4"
     "@commitlint/config-conventional": "npm:18.4.4"
     "@cypress/code-coverage": "npm:3.12.12"

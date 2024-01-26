@@ -55,7 +55,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
   } = useLayoutContext();
 
   return (
-    <Box id={id} className={ITEM_MAIN_CLASS}>
+    <Box id={id} m={2} className={ITEM_MAIN_CLASS}>
       {isChatboxMenuOpen && (
         <ItemPanel open={isChatboxMenuOpen}>
           <DrawerHeader
@@ -73,21 +73,23 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
           <Chatbox item={item} />
         </ItemPanel>
       )}
-      <ItemPanel open={isItemMetadataMenuOpen}>
-        <DrawerHeader
-          handleDrawerClose={() => {
-            setIsItemMetadataMenuOpen(false);
-          }}
-          // todo
-          direction="rtl"
-        >
-          <Typography variant="h6">
-            {translateBuilder(BUILDER.ITEM_METADATA_TITLE)}
-          </Typography>
-        </DrawerHeader>
-        <Divider />
-        <ItemMetadataContent item={item} />
-      </ItemPanel>
+      {isItemMetadataMenuOpen && (
+        <ItemPanel open={isItemMetadataMenuOpen}>
+          <DrawerHeader
+            handleDrawerClose={() => {
+              setIsItemMetadataMenuOpen(false);
+            }}
+            // todo
+            direction="rtl"
+          >
+            <Typography variant="h6">
+              {translateBuilder(BUILDER.ITEM_METADATA_TITLE)}
+            </Typography>
+          </DrawerHeader>
+          <Divider />
+          <ItemMetadataContent item={item} />
+        </ItemPanel>
+      )}
 
       <StyledContainer open={isChatboxMenuOpen || isItemMetadataMenuOpen}>
         <ItemHeader showNavigation />
