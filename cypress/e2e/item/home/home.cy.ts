@@ -79,17 +79,12 @@ describe('Home', () => {
           });
           cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
-          cy.wait(['@getAccessibleItems', '@getAccessibleItems']).then(
-            ([
-              _unused,
-              {
-                request: { url },
-              },
-            ]) => {
-              expect(url).to.contain(searchText);
-              expect(url).to.contain('page=1');
-            },
-          );
+          cy.wait('@getAccessibleItems')
+            .its('request.url')
+            .should('contain', 'page=1');
+          cy.wait('@getAccessibleItems')
+            .its('request.url')
+            .should('contain', searchText);
         });
       });
 
