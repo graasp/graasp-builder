@@ -1212,9 +1212,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.3.2":
+"@graasp/query-client@github:graasp/graasp-query-client#no-cachetime-for-item-thumbnail":
   version: 2.3.2
-  resolution: "@graasp/query-client@npm:2.3.2"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=aa5dd8a249edb895e42a41dce44e3ec9e6b3e205"
   dependencies:
     "@graasp/sdk": "npm:3.5.0"
     "@graasp/translations": "npm:1.22.1"
@@ -1226,7 +1226,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: a998abfc7a826ce789c32e8d7112811a2e6f0e22a41ff476d5939bb35a6eac22b6167e32c8c47b5100fe889b26612f71cf83bb439be18f9f13a4e8e3e5b8644c
+  checksum: e71e88e182cd90f89caa23c19825426b62fc8e5add5685cbd44cac2e8e1f9b8dac125595b40d3c84542d771dcfe66d2aa0fb8245dd0e057678a8a85cdf4745b4
   languageName: node
   linkType: hard
 
@@ -1285,15 +1285,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.3.1":
-  version: 4.3.1
-  resolution: "@graasp/ui@npm:4.3.1"
+"@graasp/ui@github:graasp/graasp-ui#remove-memo-on-thumbnail":
+  version: 4.4.0
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=4d856f79d2815daa1f8a182eded4a3c1140ebd81"
   dependencies:
-    "@graasp/sdk": "npm:3.4.1"
+    "@graasp/sdk": "npm:3.5.0"
     http-status-codes: "npm:2.3.0"
     katex: "npm:0.16.9"
     lodash.truncate: "npm:4.4.2"
-    qs: "npm:6.11.2"
     quill-emoji: "npm:0.2.0"
     react-cookie-consent: "npm:9.0.0"
     react-quill: "npm:2.0.0-beta.4"
@@ -1322,7 +1321,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: b5cf0290dda520c2bd65c2834c415ac3d376569a2a2765f1b1bd855cb1a8e5d582c94213433383b8b632f598007d96a774cbacf10702f3c14f1def563e677409
+  checksum: 2709625e58e87961d2f9c041cba9381af81d97d5895db33f3077e7566807a500c920d47e87817cde3e182990a31f031bcb3731bd1527318723fdb3d74894edfa
   languageName: node
   linkType: hard
 
@@ -6301,10 +6300,10 @@ __metadata:
     "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.1"
-    "@graasp/query-client": "npm:2.3.2"
+    "@graasp/query-client": "github:graasp/graasp-query-client#no-cachetime-for-item-thumbnail"
     "@graasp/sdk": "npm:3.4.1"
     "@graasp/translations": "npm:1.22.1"
-    "@graasp/ui": "npm:4.3.1"
+    "@graasp/ui": "github:graasp/graasp-ui#remove-memo-on-thumbnail"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"

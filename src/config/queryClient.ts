@@ -19,7 +19,7 @@ const {
     keepPreviousData: true,
     refetchOnMount: false,
     // avoid refetching when same data are closely fetched
-    staleTime: 1000, // ms
+    staleTime: 3 * 1000, // ms
     cacheTime: 1000, // ms
   },
   DOMAIN,
