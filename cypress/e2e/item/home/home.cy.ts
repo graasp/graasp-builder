@@ -1,5 +1,5 @@
 import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
-import { HOME_PATH } from '../../../../src/config/paths';
+import { HOME_PATH, ITEMS_PATH } from '../../../../src/config/paths';
 import {
   ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR,
   ACCESSIBLE_ITEMS_ONLY_ME_ID,
@@ -67,6 +67,12 @@ describe('Home', () => {
 
         it('Search on second page should reset page number', () => {
           const searchText = 'mysearch';
+          // register a custom one time interceptor to listen specifically
+          // to the request made with the search parameter we want
+          cy.intercept({
+            pathname: `/${ITEMS_PATH}/accessible`,
+            query: { name: searchText },
+          }).as('getAccessibleSearch');
           cy.wait('@getAccessibleItems');
           // navigate to seconde page
           cy.get(`#${ITEMS_GRID_PAGINATION_ID} > ul > li`).eq(2).click();
@@ -76,13 +82,13 @@ describe('Home', () => {
           });
           cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
-          cy.wait('@getAccessibleItems')
-            .its('request.url')
-            .should('contain', 'page=1');
+          // using our custom interceptor with the search parameter we can distinguish the complete
+          // search request from possibly other incomplete search requests
+          cy.wait('@getAccessibleSearch').then(({ request: { query } }) => {
+            expect(query.name).to.eq(searchText);
+            expect(query.page).to.eq('1');
+          });
           cy.get(`#${buildItemCard(sampleItems[0].id)}`).should('be.visible');
-          cy.wait('@getAccessibleItems')
-            .its('request.url')
-            .should('contain', searchText);
         });
       });
 
@@ -274,6 +280,10 @@ describe('Home', () => {
 
         it('Search on second page should reset page number', () => {
           const searchText = 'mysearch';
+          cy.intercept({
+            pathname: `/${ITEMS_PATH}/accessible`,
+            query: { name: searchText },
+          }).as('getAccessibleSearch');
           cy.wait('@getAccessibleItems');
           // navigate to second page
           cy.get(ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR).click();
@@ -283,17 +293,10 @@ describe('Home', () => {
           });
           cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
-          cy.wait(['@getAccessibleItems', '@getAccessibleItems']).then(
-            ([
-              _unused,
-              {
-                request: { url },
-              },
-            ]) => {
-              expect(url).to.contain(searchText);
-              expect(url).to.contain('page=1');
-            },
-          );
+          cy.wait('@getAccessibleSearch').then(({ request: { query } }) => {
+            expect(query.name).to.eq(searchText);
+            expect(query.page).to.eq('1');
+          });
         });
       });
 

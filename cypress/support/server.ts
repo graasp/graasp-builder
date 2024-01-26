@@ -99,7 +99,6 @@ const {
   buildPostShortLinkRoute,
   buildPatchShortLinkRoute,
   buildDeleteShortLinkRoute,
-  buildGetAccessibleItems,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('API_HOST');
@@ -177,7 +176,7 @@ export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
   cy.intercept(
     {
       method: HttpMethod.GET,
-      url: new RegExp(`${API_HOST}/${buildGetAccessibleItems({}, {})}`),
+      pathname: `/${ITEMS_ROUTE}/accessible`,
     },
     ({ url, reply }) => {
       const params = new URL(url).searchParams;
