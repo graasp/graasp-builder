@@ -2322,6 +2322,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:^4.0.0-beta.1":
+  version: 4.36.1
+  resolution: "@tanstack/query-core@npm:4.36.1"
+  checksum: 7c648872cd491bcab2aa4c18e0b7ca130c072f05c277a5876977fa3bfa87634bbfde46e9d249236587d78c39866889a02e4e202b478dc6074ff96093732ae56d
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:4.0.5":
+  version: 4.0.5
+  resolution: "@tanstack/react-query@npm:4.0.5"
+  dependencies:
+    "@tanstack/query-core": "npm:^4.0.0-beta.1"
+    "@types/use-sync-external-store": "npm:^0.0.3"
+    use-sync-external-store: "npm:^1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-native: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: b4988ada9a2eb7a74f742fae328648bbe0da7fafa849b57ed4b0dc1263c46a4cc9b77a9de845b0077aa1364392978e8ff9386e5e634c53b9982d8a87f75304ff
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:^9.0.0":
   version: 9.3.4
   resolution: "@testing-library/dom@npm:9.3.4"
@@ -2869,6 +2896,13 @@ __metadata:
   version: 2.0.9
   resolution: "@types/unist@npm:2.0.9"
   checksum: 53e63a9ecebc8dca8b9dbc69cd0369ea0c993188ebb6e3b41c222281b4e95d8e0b524bcb1556fd210ea7f39771551be0c1c8fe0000bdcc0cd184cd2cd2794256
+  languageName: node
+  linkType: hard
+
+"@types/use-sync-external-store@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@types/use-sync-external-store@npm:0.0.3"
+  checksum: 161ddb8eec5dbe7279ac971531217e9af6b99f7783213566d2b502e2e2378ea19cf5e5ea4595039d730aa79d3d35c6567d48599f69773a02ffcff1776ec2a44e
   languageName: node
   linkType: hard
 
@@ -6338,6 +6372,7 @@ __metadata:
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"
     "@sentry/react": "npm:7.93.0"
+    "@tanstack/react-query": "npm:4.0.5"
     "@testing-library/jest-dom": "npm:^6.1.5"
     "@testing-library/react": "npm:^14.1.2"
     "@testing-library/user-event": "npm:^14.5.1"
@@ -6405,7 +6440,6 @@ __metadata:
     react-i18next: "npm:13.5.0"
     react-image-crop: "npm:11.0.5"
     react-qr-code: "npm:2.0.12"
-    react-query: "npm:3.39.3"
     react-quill: "npm:2.0.0"
     react-router: "npm:6.20.1"
     react-router-dom: "npm:6.20.1"
@@ -11716,6 +11750,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 8f08eba26d69406b61bb4b8dacdd5a92bd6aef5b53d346dfe87954f7330ee10ecabc937cc7854635155d46053828e85c10b5a5aff7a04720e6a97b9f42999bac
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: a676216affc203876bd47981103f201f28c2731361bb186367e12d287a7566763213a8816910c6eb88265eccd4c230426eb783d64c373c4a180905be8820ed8e
   languageName: node
   linkType: hard
 
