@@ -1,9 +1,9 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import { Stack } from '@mui/material';
+import { Dialog, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';
 
 import Uppy from '@uppy/core';
@@ -18,7 +18,7 @@ import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selec
 import { BUILDER } from '../../../langs/constants';
 import defaultImage from '../../../resources/avatar.png';
 import { configureThumbnailUppy } from '../../../utils/uppy';
-import CropModal from '../../common/CropModal';
+import CropModal, { MODAL_TITLE_ARIA_LABEL_ID } from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
 
 type Props = { item: DiscriminatedItem };
@@ -34,6 +34,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const itemId = item.id;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
+    size: ThumbnailSize.Medium,
   });
 
   useEffect(() => {
@@ -151,12 +152,17 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
         />
       </Stack>
       {fileSource && (
-        <CropModal
+        <Dialog
           open={showCropModal}
           onClose={onClose}
-          src={fileSource}
-          onConfirm={onConfirmCrop}
-        />
+          aria-labelledby={MODAL_TITLE_ARIA_LABEL_ID}
+        >
+          <CropModal
+            onClose={onClose}
+            src={fileSource}
+            onConfirm={onConfirmCrop}
+          />
+        </Dialog>
       )}
     </>
   );

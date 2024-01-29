@@ -5,7 +5,6 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { TABLE_ITEM_RENDER_TIME } from '../../../support/constants';
 
 const moveItems = ({
   itemIds,
@@ -16,11 +15,9 @@ const moveItems = ({
 }) => {
   // check selected ids
   itemIds.forEach((id) => {
-    cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`${buildItemsTableRowIdAttribute(id)} input`).click();
   });
 
-  cy.wait(TABLE_ITEM_RENDER_TIME);
   cy.get(`#${ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID}`).click();
   cy.handleTreeMenu(toItemPath);
 };

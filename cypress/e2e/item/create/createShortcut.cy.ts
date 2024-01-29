@@ -43,7 +43,6 @@ const createShortcutInList = ({
   id: string;
   toItemPath?: string;
 }) => {
-  // cy.wait(TABLE_ITEM_RENDER_TIME);
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   createShortcut({ id, toItemPath });

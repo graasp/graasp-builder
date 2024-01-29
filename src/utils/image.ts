@@ -1,11 +1,11 @@
-import { PixelCrop } from 'react-image-crop';
+import { Crop } from 'react-image-crop';
 
 import { THUMBNAIL_EXTENSION } from '../config/constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getCroppedImg = (
   image: HTMLImageElement,
-  crop: PixelCrop,
+  crop: Crop,
   extension = THUMBNAIL_EXTENSION,
 ): Promise<Blob> => {
   const canvas = document.createElement('canvas');

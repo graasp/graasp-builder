@@ -10,7 +10,6 @@ import { RECYCLED_ITEM_DATA, SAMPLE_ITEMS } from '../../../fixtures/items';
 const deleteItems = (itemIds: string[]) => {
   // check selected ids
   itemIds.forEach((id) => {
-    // cy.wait(TABLE_ITEM_RENDER_TIME);
     cy.get(`${buildItemsTableRowIdAttribute(id)} .ag-checkbox-input`).click();
   });
 

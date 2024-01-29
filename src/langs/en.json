@@ -25,6 +25,8 @@
   "CREATE_SHORTCUT_MODAL_TITLE": "Where do you want to create the shortcut?",
   "CROP_IMAGE_MODAL_CONTENT_TEXT": "Crop your chosen image to fit the image size requirements.",
   "CROP_IMAGE_MODAL_TITLE": "Crop Image",
+  "CROP_IMAGE_MODAL_IMAGE_ALT_TEXT": "Crop me",
+  "CROP_IMAGE_MODAL_UNEXPECTED_ERROR": "An unexpected error happened, please try again later. You can dismiss this modal, refresh the page and try again. If this issue persists please contact us.",
   "DELETE_BUTTON": "Delete",
   "DELETE_ITEM_MODAL_CONFIRM_BUTTON": "Delete Permanently",
   "DELETE_ITEM_MODAL_CONTENT_one": "This item will be deleted permanently.",
