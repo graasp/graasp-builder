@@ -3316,23 +3316,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:29.3.5":
-  version: 29.3.5
-  resolution: "ag-grid-community@npm:29.3.5"
-  checksum: 89707d12ec8bdc725cdef18e037f4a9cb19c66da130e0f0a97a7762274d980e684a25de055cc0de0150b4251fb61478ceeb40489e9e5f7af142585c92e0fedc3
+"ag-grid-community@npm:31.0.3, ag-grid-community@npm:~31.0.3":
+  version: 31.0.3
+  resolution: "ag-grid-community@npm:31.0.3"
+  checksum: f1658691b7689873e5deca1d9172b78106dc57e83db4d50d235fa167d54b98881bb29880eb864f05c03a4fa5cfa727efa2c8b4e85df427d3cc17829acec579c6
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:29.3.5":
-  version: 29.3.5
-  resolution: "ag-grid-react@npm:29.3.5"
+"ag-grid-react@npm:31.0.3":
+  version: 31.0.3
+  resolution: "ag-grid-react@npm:31.0.3"
   dependencies:
+    ag-grid-community: "npm:~31.0.3"
     prop-types: "npm:^15.8.1"
   peerDependencies:
-    ag-grid-community: ~29.3.5
     react: ^16.3.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: d86136f11b41fe5f563dc33a4645838b20af3c646391cf6e883bc196683f7c771c9ce349ca118607aa2257450de1a8fa7b3cf39f24f5a6d93e632d0b069e0448
+  checksum: b9befca02c397a03da8f24599108b69ba64f6a6ec5194c6318aedeea0a12cb25cf8132d3be2fda4ad0ae9edf199942bd7814a19675d93f7a633027726d84bf8b
   languageName: node
   linkType: hard
 
@@ -6368,8 +6368,8 @@ __metadata:
     "@uppy/tus": "npm:3.1.2"
     "@uppy/xhr-upload": "npm:3.3.1"
     "@vitejs/plugin-react": "npm:4.2.0"
-    ag-grid-community: "npm:29.3.5"
-    ag-grid-react: "npm:29.3.5"
+    ag-grid-community: "npm:31.0.3"
+    ag-grid-react: "npm:31.0.3"
     axios: "npm:1.6.2"
     concurrently: "npm:8.2.2"
     cypress: "npm:13.6.1"
