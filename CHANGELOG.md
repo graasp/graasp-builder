@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.1](https://github.com/graasp/graasp-builder/compare/v2.6.0...v2.6.1) (2024-01-29)
+
+
+### Bug Fixes
+
+* **test:** accessible url test ([5b15fb7](https://github.com/graasp/graasp-builder/commit/5b15fb765fbf55cdc21de7b6c76f45c17d601ce5))
+* **test:** remove waits ([5b15fb7](https://github.com/graasp/graasp-builder/commit/5b15fb765fbf55cdc21de7b6c76f45c17d601ce5))
+* update crop modal ([#966](https://github.com/graasp/graasp-builder/issues/966)) ([5b15fb7](https://github.com/graasp/graasp-builder/commit/5b15fb765fbf55cdc21de7b6c76f45c17d601ce5))
+* use medium thumbnail size ([5b15fb7](https://github.com/graasp/graasp-builder/commit/5b15fb765fbf55cdc21de7b6c76f45c17d601ce5))
+
 ## [2.6.0](https://github.com/graasp/graasp-builder/compare/v2.5.0...v2.6.0) (2024-01-24)
 
 
