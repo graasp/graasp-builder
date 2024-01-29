@@ -152,7 +152,7 @@ const CropModal = ({
         >
           <img
             ref={imageRef}
-            alt="Crop me"
+            alt={t(BUILDER.CROP_IMAGE_MODAL_IMAGE_ALT_TEXT)}
             width="100%"
             height="100%"
             src={src}

@@ -24,6 +24,16 @@ const translateBuilder = (key: string) =>
 
 const sampleItems = generateOwnItems(30);
 
+// register a custom one time interceptor to listen specifically
+// to the request made with the search parameter we want
+const interceptAccessibleItemsSearch = (searchTerm: string) =>
+  cy
+    .intercept({
+      pathname: `/${ITEMS_PATH}/accessible`,
+      query: { name: searchTerm },
+    })
+    .as('getAccessibleSearch');
+
 describe('Home', () => {
   describe('Grid', () => {
     describe('Features', () => {
@@ -67,12 +77,8 @@ describe('Home', () => {
 
         it('Search on second page should reset page number', () => {
           const searchText = 'mysearch';
-          // register a custom one time interceptor to listen specifically
-          // to the request made with the search parameter we want
-          cy.intercept({
-            pathname: `/${ITEMS_PATH}/accessible`,
-            query: { name: searchText },
-          }).as('getAccessibleSearch');
+          interceptAccessibleItemsSearch(searchText);
+
           cy.wait('@getAccessibleItems');
           // navigate to seconde page
           cy.get(`#${ITEMS_GRID_PAGINATION_ID} > ul > li`).eq(2).click();
@@ -280,10 +286,8 @@ describe('Home', () => {
 
         it('Search on second page should reset page number', () => {
           const searchText = 'mysearch';
-          cy.intercept({
-            pathname: `/${ITEMS_PATH}/accessible`,
-            query: { name: searchText },
-          }).as('getAccessibleSearch');
+          interceptAccessibleItemsSearch(searchText);
+
           cy.wait('@getAccessibleItems');
           // navigate to second page
           cy.get(ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR).click();
