@@ -7,7 +7,7 @@ import ReactCrop, {
 } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import Dialog from '@mui/material/Dialog';
+import { Alert } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -20,6 +20,8 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { CROP_MODAL_CONFIRM_BUTTON_CLASSNAME } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import CancelButton from './CancelButton';
+
+export const MODAL_TITLE_ARIA_LABEL_ID = 'crop-modal-title';
 
 function centerAspectCrop(
   mediaWidth: number,
@@ -42,26 +44,23 @@ function centerAspectCrop(
 }
 
 export type CropProps = {
-  open: boolean;
   onClose: () => void;
   src: string;
   onConfirm: (blob: Blob | null) => void;
 };
 
-const CropModal = ({
-  onConfirm,
-  open,
-  onClose,
-  src,
-}: CropProps): JSX.Element => {
+const CropModal = ({ onConfirm, onClose, src }: CropProps): JSX.Element => {
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
+  const [isError, setIsError] = useState(false);
   const imageRef = useRef<HTMLImageElement | null>(null);
   const { t } = useBuilderTranslation();
 
   const handleOnConfirm = async () => {
     const image = imageRef.current;
+
     if (!image || !completedCrop) {
+      setIsError(true);
       throw new Error('Crop canvas does not exist');
     }
 
@@ -133,11 +132,11 @@ const CropModal = ({
     setCrop(centerAspectCrop(imgWidth, imgHeight, THUMBNAIL_ASPECT));
   };
 
-  const label = 'crop-modal-title';
-
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby={label}>
-      <DialogTitle id={label}>{t(BUILDER.CROP_IMAGE_MODAL_TITLE)}</DialogTitle>
+    <>
+      <DialogTitle id={MODAL_TITLE_ARIA_LABEL_ID}>
+        {t(BUILDER.CROP_IMAGE_MODAL_TITLE)}
+      </DialogTitle>
       <DialogContent sx={{ textAlign: 'center' }}>
         <DialogContentText>
           {t(BUILDER.CROP_IMAGE_MODAL_CONTENT_TEXT)}
@@ -159,17 +158,23 @@ const CropModal = ({
             onLoad={onImageLoaded}
           />
         </ReactCrop>
+        {isError && (
+          <Alert severity="error">
+            {t(BUILDER.CROP_IMAGE_MODAL_UNEXPECTED_ERROR)}
+          </Alert>
+        )}
       </DialogContent>
       <DialogActions>
         <CancelButton onClick={onClose} />
         <Button
           onClick={handleOnConfirm}
           className={CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}
+          disabled={isError}
         >
           {t(BUILDER.CONFIRM_BUTTON)}
         </Button>
       </DialogActions>
-    </Dialog>
+    </>
   );
 };
 

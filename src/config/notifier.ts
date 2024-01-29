@@ -178,8 +178,12 @@ const notifier: Notifier = ({
     default:
   }
   // error notification
-  if (payload?.error && message) {
-    toast.error(i18n.t(message));
+  if (payload?.error) {
+    if (message) {
+      toast.error(i18n.t(message));
+    } else {
+      toast.error(payload.error.toString());
+    }
   }
   // success notification
   else if (message) {
