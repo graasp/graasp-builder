@@ -1308,9 +1308,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#main":
-  version: 4.4.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=7411a5cfdd7104b6974e2b3fc6f0c66ef51f3036"
+"@graasp/ui@npm:4.5.0":
+  version: 4.5.0
+  resolution: "@graasp/ui@npm:4.5.0"
   dependencies:
     "@graasp/sdk": "npm:3.5.0"
     http-status-codes: "npm:2.3.0"
@@ -1344,7 +1344,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 09732b75bf3863b3625fd610296a41a07cbc0425cf488844b95218aff7047078eb52ec950c3f3ace2ca70a65b2587005c6df6b76d49a6267bbaa91061bb0e346
+  checksum: eecd53f0d9d7824c526179b84db29ff303c70f0405d19ad74fc48c5b4966ed47620da06fdda981bfc7ed70eba08d02d1bc9f3e3a958ec430c556fa6b191f5878
   languageName: node
   linkType: hard
 
@@ -6333,7 +6333,7 @@ __metadata:
     "@graasp/query-client": "npm:2.4.1"
     "@graasp/sdk": "npm:3.4.1"
     "@graasp/translations": "npm:1.22.1"
-    "@graasp/ui": "github:graasp/graasp-ui#main"
+    "@graasp/ui": "npm:4.5.0"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"
