@@ -64,6 +64,7 @@ export const editCaptionFromViewPage = ({
   cy.get(`#${buildEditButtonId(id)}`).click();
   cy.get(`#${EDIT_MODAL_ID} .${TEXT_EDITOR_CLASS}`).type(
     `{selectall}${caption}`,
+    { timeout: 100 },
   );
   cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
 };

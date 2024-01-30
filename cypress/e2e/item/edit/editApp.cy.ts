@@ -53,6 +53,7 @@ describe('Edit App', () => {
       cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).click();
       cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).should('not.exist');
       cy.get(`.${ITEM_MAIN_CLASS} .${TEXT_EDITOR_CLASS}`)
+        .scrollIntoView()
         .should('be.visible')
         .and('contain.text', description);
     });
