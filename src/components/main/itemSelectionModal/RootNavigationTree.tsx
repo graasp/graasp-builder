@@ -31,7 +31,10 @@ const RootNavigationTree = ({
   // todo: to change with real recent items (most used)
   const { data: recentItems } = hooks.useAccessibleItems(
     // you can move into an item you have at least write permission
-    { permissions: [PermissionLevel.Admin, PermissionLevel.Write] },
+    {
+      permissions: [PermissionLevel.Admin, PermissionLevel.Write],
+      types: [ItemType.FOLDER],
+    },
     { pageSize: 5 },
   );
   const recentFolders = recentItems?.data?.filter(
