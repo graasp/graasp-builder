@@ -13,7 +13,6 @@ import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
-import Main from '../main/Main';
 
 const FavoriteItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -41,10 +40,6 @@ const FavoriteItemsLoadableContent = (): JSX.Element | null => {
   return null;
 };
 
-const FavoriteItemsScreen = (): JSX.Element => (
-  <Main>
-    <FavoriteItemsLoadableContent />
-  </Main>
-);
+const FavoriteItemsScreen = (): JSX.Element => <FavoriteItemsLoadableContent />;
 
 export default FavoriteItemsScreen;

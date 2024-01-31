@@ -24,7 +24,6 @@ import {
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
-import { useLayoutContext } from '../context/LayoutContext';
 import MainMenu from './MainMenu';
 import NotificationButton from './NotificationButton';
 
@@ -48,7 +47,7 @@ export const platformsHostsMap = defaultHostsMapper({
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main = ({ children }: Props): JSX.Element => {
-  const { isMainMenuOpen } = useLayoutContext();
+  // const { isMainMenuOpen } = useLayoutContext();
   const { t } = useBuilderTranslation();
 
   const itemId = useShortenURLParams(ITEM_ID_PARAMS);
@@ -79,7 +78,6 @@ const Main = ({ children }: Props): JSX.Element => {
       <UserSwitchWrapper />
     </Stack>
   );
-
   return (
     <GraaspMain
       context={Context.Builder}
@@ -87,7 +85,6 @@ const Main = ({ children }: Props): JSX.Element => {
       drawerOpenAriaLabel={t(BUILDER.ARIA_OPEN_DRAWER)}
       headerRightContent={rightContent}
       drawerContent={<MainMenu />}
-      open={isMainMenuOpen}
       LinkComponent={LinkComponent}
       PlatformComponent={
         <PlatformSwitch

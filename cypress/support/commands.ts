@@ -6,8 +6,6 @@ import 'cypress-localstorage-commands';
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import {
   ITEM_INFORMATION_BUTTON_ID,
-  ITEM_INFORMATION_ICON_IS_OPEN_CLASS,
-  ITEM_PANEL_ID,
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../src/config/selectors';
@@ -398,11 +396,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('openMetadataPanel', () => {
-  cy.get(`#${ITEM_PANEL_ID}`).then(($itemPanel) => {
-    if (!$itemPanel.hasClass(ITEM_INFORMATION_ICON_IS_OPEN_CLASS)) {
-      cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
-    }
-  });
+  cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
 });
 
 Cypress.Commands.add('attachFile', (selector, file, options = {}) => {

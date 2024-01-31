@@ -23,7 +23,6 @@ import ItemHeader from '../item/header/ItemHeader';
 import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import { ItemsTableProps } from '../main/ItemsTable';
-import Main from '../main/Main';
 import NewItemButton from '../main/NewItemButton';
 
 type HomeItemSortableColumn =
@@ -140,10 +139,6 @@ const HomeLoadableContent = (): JSX.Element => {
   return <ErrorAlert id={HOME_ERROR_ALERT_ID} />;
 };
 
-const HomeScreen = (): JSX.Element => (
-  <Main>
-    <HomeLoadableContent />
-  </Main>
-);
+const HomeScreen = (): JSX.Element => <HomeLoadableContent />;
 
 export default HomeScreen;

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 
 import { saveUrlForRedirection } from '@graasp/sdk';
@@ -19,6 +19,7 @@ import {
 } from '../config/paths';
 import { hooks } from '../config/queryClient';
 import { useCurrentUserContext } from './context/CurrentUserContext';
+import Main from './main/Main';
 import Redirect from './main/Redirect';
 import FavoriteItemsScreen from './pages/FavoriteItemsScreen';
 import HomeScreen from './pages/HomeScreen';
@@ -71,21 +72,29 @@ const App = (): JSX.Element => {
 
   return (
     <Routes>
-      <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
-      <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
       <Route
-        path={FAVORITE_ITEMS_PATH}
-        element={<FavoriteWithAuthorization />}
-      />
-      <Route
-        path={PUBLISHED_ITEMS_PATH}
-        element={<PublishedWithAuthorization />}
-      />
-      <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
-      <Route path={buildItemPath()} element={<ItemScreen />} />
-      <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
-      <Route path={REDIRECT_PATH} element={<Redirect />} />
-      <Route path="*" element={<Redirect />} />
+        element={
+          <Main>
+            <Outlet />
+          </Main>
+        }
+      >
+        <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
+        <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
+        <Route
+          path={FAVORITE_ITEMS_PATH}
+          element={<FavoriteWithAuthorization />}
+        />
+        <Route
+          path={PUBLISHED_ITEMS_PATH}
+          element={<PublishedWithAuthorization />}
+        />
+        <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
+        <Route path={buildItemPath()} element={<ItemScreen />} />
+        <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
+        <Route path={REDIRECT_PATH} element={<Redirect />} />
+        <Route path="*" element={<Redirect />} />
+      </Route>
     </Routes>
   );
 };

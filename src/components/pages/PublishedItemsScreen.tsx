@@ -13,7 +13,6 @@ import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
-import Main from '../main/Main';
 
 const PublishedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -47,9 +46,7 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
 };
 
 const PublishedItemsScreen = (): JSX.Element => (
-  <Main>
-    <PublishedItemsLoadableContent />
-  </Main>
+  <PublishedItemsLoadableContent />
 );
 
 export default PublishedItemsScreen;

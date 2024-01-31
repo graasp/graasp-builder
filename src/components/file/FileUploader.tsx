@@ -7,57 +7,45 @@ import { MAX_FILE_SIZE } from '@graasp/sdk';
 import '@uppy/drag-drop/dist/style.css';
 import { DragDrop } from '@uppy/react';
 
-import {
-  DRAWER_WIDTH,
-  FILE_UPLOAD_MAX_FILES,
-  HEADER_HEIGHT,
-} from '../../config/constants';
+import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { UPLOADER_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { humanFileSize } from '../../utils/uppy';
-import { useLayoutContext } from '../context/LayoutContext';
 import { UppyContext } from './UppyContext';
 
-const StyledContainer = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'color' && prop !== 'myProp',
-})<{ isMainMenuOpen: boolean }>(({ theme, isMainMenuOpen }) => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
   display: 'none',
-  height: '100vh',
-  width: '100%',
-  boxSizing: 'border-box',
-  position: 'fixed',
+
+  // used to position the uppy container above the rest of the content
+  position: 'absolute',
+  // sets the borders of the container to stick to the border of the parent
   top: 0,
+  bottom: 0,
   left: 0,
+  right: 0,
+
+  // width: '100%',
+  boxSizing: 'border-box',
+
   // show above drawer
   zIndex: theme.zIndex.drawer + 1,
   opacity: 0.8,
+}));
 
+const StyledDragDrop = styled(DragDrop)(({ theme }) => ({
+  // sets uppy to stretch to full width
+  width: '100%',
+  boxSizing: 'border-box',
+  padding: theme.spacing(2),
+  // these styles are necessary and can not be lifted up
   '& > div': {
-    width: '100%',
-    height: '100vh',
     boxSizing: 'border-box',
-    paddingLeft: `${
-      Number(theme.spacing(2).slice(0, -2)) +
-      (isMainMenuOpen ? DRAWER_WIDTH : 0)
-    }px`,
-    paddingTop: `${Number(theme.spacing(2).slice(0, -2)) + HEADER_HEIGHT}px`,
-    paddingBottom: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-
-    '& > div': {
-      boxSizing: 'border-box',
-      height: '100vh',
-      // container's top and bottom padding
-      paddingBottom: `${
-        Number(theme.spacing(4).slice(0, -2)) + HEADER_HEIGHT
-      }px`,
-    },
+    height: '100%',
   },
 }));
 
 const FileUploader = (): JSX.Element | null => {
-  const { isMainMenuOpen } = useLayoutContext();
   const { uppy } = useContext(UppyContext);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
@@ -141,9 +129,8 @@ const FileUploader = (): JSX.Element | null => {
       onDragEnd={() => handleDragEnd()}
       onDragLeave={() => handleDragEnd()}
       onDrop={handleDrop}
-      isMainMenuOpen={isMainMenuOpen}
     >
-      <DragDrop
+      <StyledDragDrop
         uppy={uppy}
         note={translateBuilder(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
           maxFiles: FILE_UPLOAD_MAX_FILES,

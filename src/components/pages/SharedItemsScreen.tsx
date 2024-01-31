@@ -15,7 +15,6 @@ import {
 import ErrorAlert from '../common/ErrorAlert';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
-import Main from '../main/Main';
 
 const SharedItemsLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -47,10 +46,6 @@ const SharedItemsLoadableContent = (): JSX.Element => {
   );
 };
 
-const SharedItemsScreen = (): JSX.Element => (
-  <Main>
-    <SharedItemsLoadableContent />
-  </Main>
-);
+const SharedItemsScreen = (): JSX.Element => <SharedItemsLoadableContent />;
 
 export default SharedItemsScreen;

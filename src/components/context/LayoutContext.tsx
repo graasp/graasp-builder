@@ -1,7 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
 import { ChatStatus } from '@graasp/sdk';
-import { useMobileView } from '@graasp/ui';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
 import { ITEM_LAYOUT_MODES } from '../../enums';
@@ -11,8 +10,8 @@ interface LayoutContextInterface {
   setMode: (mode: string) => void;
   editingItemId: string | null;
   setEditingItemId: (itemId: string | null) => void;
-  isMainMenuOpen: boolean;
-  setIsMainMenuOpen: (isOpen: boolean) => void;
+  // isMainMenuOpen?: boolean;
+  // setIsMainMenuOpen: (isOpen: boolean) => void;
   openedActionTabId: string | null;
   setOpenedActionTabId: (action: string | null) => void;
   isItemMetadataMenuOpen: boolean;
@@ -32,10 +31,10 @@ export const LayoutContext = createContext<LayoutContextInterface>({
   setEditingItemId: () => {
     // do nothing
   },
-  isMainMenuOpen: true,
-  setIsMainMenuOpen: () => {
-    // do nothing
-  },
+  // isMainMenuOpen: true,
+  // setIsMainMenuOpen: () => {
+  //   // do nothing
+  // },
   openedActionTabId: null,
   setOpenedActionTabId: () => {
     // do nothing
@@ -59,7 +58,6 @@ export const LayoutContextProvider = ({
 }: {
   children: JSX.Element;
 }): JSX.Element => {
-  const { isMobile } = useMobileView();
   // layout mode: grid or list
   const [mode, setMode] = useState<string>(DEFAULT_ITEM_LAYOUT_MODE);
 
@@ -73,7 +71,7 @@ export const LayoutContextProvider = ({
     null,
   );
 
-  const [isMainMenuOpen, setIsMainMenuOpen] = useState(!isMobile);
+  // const [isMainMenuOpen, setIsMainMenuOpen] = useState<boolean>();
   const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);
 
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
@@ -88,8 +86,12 @@ export const LayoutContextProvider = ({
       setMode,
       editingItemId,
       setEditingItemId,
-      isMainMenuOpen,
-      setIsMainMenuOpen,
+      // isMainMenuOpen,
+      // setIsMainMenuOpen: (state: boolean) => {
+      //   // eslint-disable-next-line no-console
+      //   console.log('toggling main menu to ', state);
+      //   setIsMainMenuOpen(state);
+      // },
       openedActionTabId,
       setOpenedActionTabId,
       isItemMetadataMenuOpen,
@@ -103,7 +105,7 @@ export const LayoutContextProvider = ({
       editingItemId,
       isChatboxMenuOpen,
       isItemMetadataMenuOpen,
-      isMainMenuOpen,
+      // isMainMenuOpen,
       mode,
       openedActionTabId,
       isItemSharingOpen,

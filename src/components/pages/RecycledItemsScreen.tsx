@@ -17,7 +17,6 @@ import ErrorAlert from '../common/ErrorAlert';
 import RestoreButton from '../common/RestoreButton';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
-import Main from '../main/Main';
 
 type RowActionsProps = {
   data: { id: string };
@@ -79,10 +78,6 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
   return null;
 };
 
-const RecycledItemsScreen = (): JSX.Element => (
-  <Main>
-    <RecycleBinLoadableContent />
-  </Main>
-);
+const RecycledItemsScreen = (): JSX.Element => <RecycleBinLoadableContent />;
 
 export default RecycledItemsScreen;
