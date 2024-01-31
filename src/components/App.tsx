@@ -4,8 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import { saveUrlForRedirection } from '@graasp/sdk';
 import { CustomInitialLoader, withAuthorization } from '@graasp/ui';
 
-import * as Sentry from '@sentry/react';
-
 import { DOMAIN } from '@/config/env';
 import { SIGN_IN_PATH } from '@/config/externalPaths';
 
@@ -20,7 +18,6 @@ import {
   buildItemPath,
 } from '../config/paths';
 import { hooks } from '../config/queryClient';
-import FallbackComponent from './Fallback';
 import RecycleBinScreen from './RecycleBinScreen';
 import SharedItems from './SharedItems';
 import { useCurrentUserContext } from './context/CurrentUserContext';
@@ -70,25 +67,23 @@ const App = (): JSX.Element => {
   );
 
   return (
-    <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
-      <Routes>
-        <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
-        <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
-        <Route
-          path={FAVORITE_ITEMS_PATH}
-          element={<FavoriteWithAuthorization />}
-        />
-        <Route
-          path={PUBLISHED_ITEMS_PATH}
-          element={<PublishedWithAuthorization />}
-        />
-        <Route path={buildItemPath()} element={<ItemScreen />} />
-        <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
-        <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
-        <Route path={REDIRECT_PATH} element={<Redirect />} />
-        <Route element={<Redirect />} />
-      </Routes>
-    </Sentry.ErrorBoundary>
+    <Routes>
+      <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
+      <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
+      <Route
+        path={FAVORITE_ITEMS_PATH}
+        element={<FavoriteWithAuthorization />}
+      />
+      <Route
+        path={PUBLISHED_ITEMS_PATH}
+        element={<PublishedWithAuthorization />}
+      />
+      <Route path={buildItemPath()} element={<ItemScreen />} />
+      <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
+      <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
+      <Route path={REDIRECT_PATH} element={<Redirect />} />
+      <Route element={<Redirect />} />
+    </Routes>
   );
 };
 

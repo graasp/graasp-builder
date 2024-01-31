@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Box, Button, Stack, Typography } from '@mui/material';
@@ -9,7 +9,6 @@ import { HOME_PATH } from '@/config/paths';
 import { BUILDER } from '../langs/constants';
 
 const FallbackComponent = (): JSX.Element => {
-  const navigate = useNavigate();
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
@@ -26,9 +25,12 @@ const FallbackComponent = (): JSX.Element => {
         </Typography>
         <Typography>{translateBuilder(BUILDER.FALLBACK_TEXT)}</Typography>
         <Button
+          component={Link}
+          to={HOME_PATH}
+          // forces a full-page reload to attempt to fix a JS-related issue
+          reloadDocument
           sx={{ mt: 3 }}
           variant="contained"
-          onClick={() => navigate(HOME_PATH)}
         >
           {translateBuilder(BUILDER.FALLBACK_BACK_TO_HOME)}
         </Button>

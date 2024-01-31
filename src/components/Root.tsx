@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { theme as GraaspTheme } from '@graasp/ui';
 
+import * as Sentry from '@sentry/react';
 import '@uppy/core/dist/style.css';
 import 'ag-grid-community/styles/ag-grid.min.css';
 import 'ag-grid-community/styles/ag-theme-material.min.css';
@@ -19,6 +20,7 @@ import {
   queryClient,
 } from '../config/queryClient';
 import App from './App';
+import FallbackComponent from './Fallback';
 import { CurrentUserContextProvider } from './context/CurrentUserContext';
 import ModalProviders from './context/ModalProviders';
 
@@ -29,11 +31,13 @@ const Root = (): JSX.Element => (
         <CssBaseline />
         {true && <ToastContainer position="bottom-right" theme="colored" />}
         <Router>
-          <ModalProviders>
-            <CurrentUserContextProvider>
-              <App />
-            </CurrentUserContextProvider>
-          </ModalProviders>
+          <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
+            <ModalProviders>
+              <CurrentUserContextProvider>
+                <App />
+              </CurrentUserContextProvider>
+            </ModalProviders>
+          </Sentry.ErrorBoundary>
         </Router>
       </ThemeProvider>
     </I18nextProvider>
