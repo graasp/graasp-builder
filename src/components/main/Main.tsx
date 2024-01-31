@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 
-import { Grid, Typography, styled } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Stack, styled } from '@mui/material';
 
 import { Context } from '@graasp/sdk';
 import {
-  GraaspLogo,
   Main as GraaspMain,
   Platform,
   PlatformSwitch,
@@ -15,8 +13,9 @@ import {
 } from '@graasp/ui';
 
 import { HOST_MAP } from '@/config/externalPaths';
+import { useBuilderTranslation } from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
 
-import { APP_NAME, GRAASP_LOGO_HEADER_HEIGHT } from '../../config/constants';
 import { HOME_PATH, ITEM_ID_PARAMS } from '../../config/paths';
 import {
   APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS,
@@ -35,7 +34,9 @@ const StyledLink = styled(Link)(() => ({
   display: 'flex',
   alignItems: 'center',
 }));
-type Props = { children: JSX.Element | (JSX.Element & string) };
+const LinkComponent = ({ children }: { children: JSX.Element }) => (
+  <StyledLink to={HOME_PATH}>{children}</StyledLink>
+);
 
 // small converter for HOST_MAP into a usePlatformNavigation mapper
 export const platformsHostsMap = defaultHostsMapper({
@@ -44,8 +45,11 @@ export const platformsHostsMap = defaultHostsMapper({
   [Platform.Analytics]: HOST_MAP.analytics,
 });
 
+type Props = { children: JSX.Element | (JSX.Element & string) };
+
 const Main = ({ children }: Props): JSX.Element => {
-  const { isMainMenuOpen, setIsMainMenuOpen } = useLayoutContext();
+  const { isMainMenuOpen } = useLayoutContext();
+  const { t } = useBuilderTranslation();
 
   const itemId = useShortenURLParams(ITEM_ID_PARAMS);
 
@@ -69,47 +73,29 @@ const Main = ({ children }: Props): JSX.Element => {
     },
   };
 
-  const leftContent = (
-    <Box display="flex" ml={2}>
-      <StyledLink to={HOME_PATH}>
-        <GraaspLogo height={GRAASP_LOGO_HEADER_HEIGHT} sx={{ fill: 'white' }} />
-        <Typography variant="h6" color="inherit" mr={2} ml={1}>
-          {APP_NAME}
-        </Typography>
-      </StyledLink>
-      <PlatformSwitch
-        id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
-        selected={Platform.Builder}
-        platformsProps={platformProps}
-      />
-    </Box>
-  );
-
   const rightContent = (
-    <Grid container>
-      <Grid item>
-        <NotificationButton />
-      </Grid>
-      <Grid item>
-        <UserSwitchWrapper />
-      </Grid>
-    </Grid>
+    <Stack direction="row" alignItems="center">
+      <NotificationButton />
+      <UserSwitchWrapper />
+    </Stack>
   );
 
   return (
     <GraaspMain
       context={Context.Builder}
-      handleDrawerOpen={() => {
-        setIsMainMenuOpen(true);
-      }}
-      handleDrawerClose={() => {
-        setIsMainMenuOpen(false);
-      }}
       headerId={HEADER_APP_BAR_ID}
-      headerLeftContent={leftContent}
+      drawerOpenAriaLabel={t(BUILDER.ARIA_OPEN_DRAWER)}
       headerRightContent={rightContent}
-      sidebar={<MainMenu />}
+      drawerContent={<MainMenu />}
       open={isMainMenuOpen}
+      LinkComponent={LinkComponent}
+      PlatformComponent={
+        <PlatformSwitch
+          id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
+          selected={Platform.Builder}
+          platformsProps={platformProps}
+        />
+      }
     >
       <CookiesBanner />
       {children}

@@ -36,10 +36,9 @@ describe('Co-editor Setting', () => {
     visitItemPage();
 
     Object.values(DISPLAY_CO_EDITORS_OPTIONS).forEach((option) => {
-      const displayTags = cy.get(
-        `#${buildCoEditorSettingsRadioButtonId(option.value)}`,
-      );
-      displayTags.should('be.visible');
+      cy.get(`#${buildCoEditorSettingsRadioButtonId(option.value)}`)
+        .scrollIntoView()
+        .should('be.visible');
     });
   });
 

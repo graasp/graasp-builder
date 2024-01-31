@@ -37,7 +37,9 @@ const Root = (): JSX.Element => (
         </Router>
       </ThemeProvider>
     </I18nextProvider>
-    {import.meta.env.DEV && <ReactQueryDevtools position="bottom-right" />}
+    {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
+      <ReactQueryDevtools position="bottom-right" />
+    )}
   </QueryClientProvider>
 );
 

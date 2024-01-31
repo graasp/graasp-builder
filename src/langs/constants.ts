@@ -362,6 +362,7 @@ export const BUILDER = {
   EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM: 'EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM',
   TO_FOLDER: 'TO_FOLDER',
   ROOT: 'ROOT',
+  ARIA_OPEN_DRAWER: 'ARIA_OPEN_DRAWER',
   // temporary message
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.":
     "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",

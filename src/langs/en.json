@@ -303,6 +303,7 @@
   "EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM": "This item does not contain any folder.",
   "TO_FOLDER": "to {{name}}",
   "ROOT": "Root",
+  "ARIA_OPEN_DRAWER": "open drawer",
   "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Recent Items",
   "ITEM_SELECTION_NAVIGATION_PARENT": "Move above"
 }
