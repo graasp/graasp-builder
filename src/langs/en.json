@@ -8,7 +8,15 @@
   "COLLAPSE_ITEM_COLLAPSE_TEXT": "Collapse",
   "COLLAPSE_ITEM_UNCOLLAPSE_TEXT": "Uncollapse",
   "CONFIRM_BUTTON": "Confirm",
+  
+  "COPY_BUTTON": "Copy",
+  "COPY_BUTTON_zero": "Copy",
+  "COPY_BUTTON_one": "Copy to {{name}}",
   "COPY_ITEM_MODAL_TITLE": "Where do you want to copy this item?",
+  "COPY_ITEM_MODAL_TITLE_zero": "Where do you want to copy {{name}}?",
+  "COPY_ITEM_MODAL_TITLE_one": "Where do you want to copy {{name}} and one other?",
+  "COPY_ITEM_MODAL_TITLE_other": "Where do you want to copy {{name}} and {{count}} others?",
+
   "CREATE_ITEM_ADD_BUTTON": "Add",
   "CREATE_ITEM_LINK_INVALID_LINK_ERROR": "This link is not valid",
   "CREATE_ITEM_LINK_LABEL": "Link",
@@ -72,7 +80,6 @@
   "INVITATIONS_TABLE_PERMISSION_HEADER": "Permission",
   "ITEM_CATEGORIES_SELECTION_TITLE": "Category",
   "ITEM_CHATBOX_TITLE": "Chatbox",
-  "ITEM_COPY_BUTTON": "Copy",
   "ITEM_MEMBERSHIP_PERMISSION_LABEL": "Permission",
   "ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER": "Actions",
   "ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP": "This membership is defined in the parent item and cannot be deleted here.",
