@@ -8,7 +8,6 @@
   "COLLAPSE_ITEM_COLLAPSE_TEXT": "Collapse",
   "COLLAPSE_ITEM_UNCOLLAPSE_TEXT": "Uncollapse",
   "CONFIRM_BUTTON": "Confirm",
-  
   "COPY_BUTTON": "Copy",
   "COPY_BUTTON_zero": "Copy",
   "COPY_BUTTON_one": "Copy to {{name}}",
@@ -16,7 +15,6 @@
   "COPY_ITEM_MODAL_TITLE_zero": "Where do you want to copy {{name}}?",
   "COPY_ITEM_MODAL_TITLE_one": "Where do you want to copy {{name}} and one other?",
   "COPY_ITEM_MODAL_TITLE_other": "Where do you want to copy {{name}} and {{count}} others?",
-
   "CREATE_ITEM_ADD_BUTTON": "Add",
   "CREATE_ITEM_LINK_INVALID_LINK_ERROR": "This link is not valid",
   "CREATE_ITEM_LINK_LABEL": "Link",

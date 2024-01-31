@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import FlagIcon from '@mui/icons-material/Flag';
-import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -20,7 +19,6 @@ import {
   ITEM_MENU_BUTTON_CLASS,
   ITEM_MENU_DUPLICATE_BUTTON_CLASS,
   ITEM_MENU_FLAG_BUTTON_CLASS,
-  ITEM_MENU_SHORTCUT_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../config/selectors';
@@ -31,10 +29,10 @@ import HideButton from '../common/HideButton';
 import MoveButton from '../common/MoveButton';
 import PinButton from '../common/PinButton';
 import RecycleButton from '../common/RecycleButton';
-import { CreateShortcutModalContext } from '../context/CreateShortcutModalContext';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
 import CopyButton from './CopyButton';
+import CreateShortcutButton from './CreateShortcutButton';
 
 type Props = {
   item: DiscriminatedItem;
@@ -52,9 +50,6 @@ const ItemMenu = ({
   const { data: member } = useCurrentUserContext();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { t: translateBuilder } = useBuilderTranslation();
-  const { openModal: openCreateShortcutModal } = useContext(
-    CreateShortcutModalContext,
-  );
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
   const { mutate: copyItems } = mutations.useCopyItems();
   const { data: memberships } = hooks.useItemMemberships(item.id);
@@ -65,11 +60,6 @@ const ItemMenu = ({
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleCreateShortcut = () => {
-    openCreateShortcutModal(item);
-    handleClose();
   };
 
   const handleFlag = () => {
@@ -154,15 +144,11 @@ const ItemMenu = ({
             </ListItemIcon>
             {translateBuilder(BUILDER.ITEM_MENU_DUPLICATE_MENU_ITEM)}
           </MenuItem>
-          <MenuItem
-            onClick={handleCreateShortcut}
-            className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
-          >
-            <ListItemIcon>
-              <LabelImportantIcon />
-            </ListItemIcon>
-            {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
-          </MenuItem>
+          <CreateShortcutButton
+            key="shortcut"
+            item={item}
+            onClick={handleClose}
+          />
           <FavoriteButton
             size="medium"
             key="favorite"
