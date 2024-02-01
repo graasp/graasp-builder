@@ -28,7 +28,6 @@ export const buildNavigationModalItemId = (id: string): string =>
   `${HOME_MODAL_ITEM_ID}-${id}`;
 export const ROOT_MODAL_ID = 'rootModal';
 
-export const TREE_MODAL_SHARED_ITEMS_ID = 'treeModalSharedItems';
 export const buildTreeItemId = (id: string, treeRootId: string): string =>
   `${treeRootId}-${id}`;
 export const buildItemRowArrowId = (id: string): string =>
@@ -348,4 +347,4 @@ export const buildShortLinkUrlTextId = (platform: ShortLinkPlatform): string =>
 export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
-export const NAVIGATION_MENU_ARROW = `#${NAVIGATION_ROOT_ID} [data-testid="NavigateNextIcon"]`;
+export const MY_GRAASP_ITEM_PATH = 'selectionModalMyGraasp';
