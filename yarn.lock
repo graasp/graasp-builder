@@ -1308,9 +1308,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.5.0":
+"@graasp/ui@github:graasp/graasp-ui#forbidden-content-update":
   version: 4.5.0
-  resolution: "@graasp/ui@npm:4.5.0"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=3c3a67a3154bfbc115527266e8708cde5ab6de6b"
   dependencies:
     "@graasp/sdk": "npm:3.5.0"
     http-status-codes: "npm:2.3.0"
@@ -1344,7 +1344,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: eecd53f0d9d7824c526179b84db29ff303c70f0405d19ad74fc48c5b4966ed47620da06fdda981bfc7ed70eba08d02d1bc9f3e3a958ec430c556fa6b191f5878
+  checksum: 98afcc9c4e29290696115b033a88104295aa4b3d3f30562cedeaa4e4a617992fbfd73ffa4fa1b5bdf22f074ca8379c6138674c103d469882d2d1f30c72763cec
   languageName: node
   linkType: hard
 
@@ -6333,7 +6333,7 @@ __metadata:
     "@graasp/query-client": "npm:2.4.1"
     "@graasp/sdk": "npm:3.4.1"
     "@graasp/translations": "npm:1.22.1"
-    "@graasp/ui": "npm:4.5.0"
+    "@graasp/ui": "github:graasp/graasp-ui#forbidden-content-update"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"

@@ -363,6 +363,9 @@ export const BUILDER = {
   TO_FOLDER: 'TO_FOLDER',
   ROOT: 'ROOT',
   ARIA_OPEN_DRAWER: 'ARIA_OPEN_DRAWER',
+  FORBIDDEN_ACCESS_TITLE: 'FORBIDDEN_ACCESS_TITLE',
+  FORBIDDEN_ACCESS_AUTHENTICATED_HELPER_TEXT:
+    'FORBIDDEN_ACCESS_AUTHENTICATED_HELPER_TEXT',
   // temporary message
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.":
     "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",

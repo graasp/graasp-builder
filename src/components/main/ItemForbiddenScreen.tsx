@@ -1,10 +1,9 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Grid } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { Button, ForbiddenContent } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { mutations } from '../../config/queryClient';
 import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
@@ -13,37 +12,34 @@ import Main from './Main';
 
 const ItemForbiddenScreen = (): JSX.Element => {
   const { data: member } = useCurrentUserContext();
-  const { mutate: signOut } = mutations.useSignOut();
-  const { t: translateBuilder } = useBuilderTranslation();
+  const { t } = useBuilderTranslation();
 
   const ButtonContent = (
-    <Button
-      variant="outlined"
-      startIcon={<AccountCircleIcon />}
-      sx={{ my: 1, mx: 'auto' }}
-    >
+    <Button variant="outlined" startIcon={<AccountCircleIcon />}>
       {member
-        ? translateBuilder(BUILDER.SWITCH_ACCOUNT_BUTTON_SIGNED_IN)
-        : translateBuilder(BUILDER.SWITCH_ACCOUNT_BUTTON_SIGNED_OUT)}
+        ? t(BUILDER.SWITCH_ACCOUNT_BUTTON_SIGNED_IN)
+        : t(BUILDER.SWITCH_ACCOUNT_BUTTON_SIGNED_OUT)}
     </Button>
   );
 
   return (
     <Main>
-      <Grid
+      <Stack
         id={ITEM_LOGIN_SCREEN_FORBIDDEN_ID}
-        container
         justifyContent="center"
         alignItems="center"
-        textAlign="center"
-        height="90%"
+        height="100%"
+        spacing={2}
       >
-        <Grid item>
-          {/* // TODO: remove hook from prop */}
-          <ForbiddenContent signOut={signOut as any} memberId={member?.id} />
-          <UserSwitchWrapper ButtonContent={ButtonContent} />
-        </Grid>
-      </Grid>
+        <ForbiddenContent
+          memberId={member?.id}
+          title={t(BUILDER.FORBIDDEN_ACCESS_TITLE)}
+          authenticatedText={t(
+            BUILDER.FORBIDDEN_ACCESS_AUTHENTICATED_HELPER_TEXT,
+          )}
+        />
+        <UserSwitchWrapper ButtonContent={ButtonContent} />
+      </Stack>
     </Main>
   );
 };

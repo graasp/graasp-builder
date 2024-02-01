@@ -305,5 +305,7 @@
   "ROOT": "Root",
   "ARIA_OPEN_DRAWER": "open drawer",
   "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Recent Items",
-  "ITEM_SELECTION_NAVIGATION_PARENT": "Move above"
+  "ITEM_SELECTION_NAVIGATION_PARENT": "Move above",
+  "FORBIDDEN_ACCESS_TITLE": "You cannot access this item",
+  "FORBIDDEN_ACCESS_AUTHENTICATED_HELPER_TEXT": "Ask the creator to share this item with you"
 }
