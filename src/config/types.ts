@@ -6,3 +6,4 @@ export enum InternalItemType {
 }
 
 export type NewItemTabType = DiscriminatedItem['type'] | InternalItemType.ZIP;
+export type ShowOnlyMeChangeType = (checked: boolean) => void;

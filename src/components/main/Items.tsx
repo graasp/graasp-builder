@@ -1,6 +1,6 @@
-import { CheckboxProps } from '@mui/material';
-
 import { DiscriminatedItem } from '@graasp/sdk';
+
+import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
@@ -29,7 +29,7 @@ type Props = {
   showThumbnails?: boolean;
   enableMemberships?: boolean;
   canMove?: boolean;
-  onShowOnlyMeChange?: CheckboxProps['onChange'];
+  onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
   itemSearch?: { text: string };
   page?: number;

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { CheckboxProps, LinearProgress } from '@mui/material';
+import { LinearProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { Loader } from '@graasp/ui';
 
 import { ITEM_PAGE_SIZE } from '@/config/constants';
+import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -61,8 +62,8 @@ const HomeLoadableContent = (): JSX.Element => {
     { page, pageSize: ITEM_PAGE_SIZE },
   );
 
-  const onShowOnlyMeChange: CheckboxProps['onChange'] = (e) => {
-    setShowOnlyMe(e.target.checked);
+  const onShowOnlyMeChange: ShowOnlyMeChangeType = (checked) => {
+    setShowOnlyMe(checked);
     setPage(1);
   };
 

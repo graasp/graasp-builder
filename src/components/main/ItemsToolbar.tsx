@@ -1,16 +1,16 @@
-import { Stack, Typography } from '@mui/material';
-import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
+import { Stack, Switch, Typography } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { ACCESSIBLE_ITEMS_ONLY_ME_ID } from '@/config/selectors';
+import { ShowOnlyMeChangeType } from '@/config/types';
 
 import SelectTypes from '../common/SelectTypes';
 
 type Props = {
   title: string;
   headerElements?: JSX.Element[];
-  onShowOnlyMeChange?: CheckboxProps['onChange'];
+  onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
 };
 
@@ -31,14 +31,14 @@ const ItemsToolbar = ({
           {headerElements}
         </Stack>
       </Stack>
-      <Stack direction="column">
+      <Stack direction="column" mt={1}>
         {onShowOnlyMeChange && (
           <FormControlLabel
             control={
-              <Checkbox
+              <Switch
                 id={ACCESSIBLE_ITEMS_ONLY_ME_ID}
                 checked={showOnlyMe}
-                onChange={onShowOnlyMeChange}
+                onChange={(_, checked) => onShowOnlyMeChange(checked)}
               />
             }
             label={t('Show only created by me')}
