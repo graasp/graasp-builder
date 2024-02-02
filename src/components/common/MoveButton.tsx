@@ -9,7 +9,8 @@ import {
 } from '@graasp/ui';
 
 import { hooks, mutations } from '@/config/queryClient';
-import { applyEllipsisOnLength, getDirectParentId } from '@/utils/item';
+import { getDirectParentId } from '@/utils/item';
+import { computButtonText, computeTitle } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -21,8 +22,6 @@ import { NavigationElement } from '../main/itemSelectionModal/Breadcrumbs';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
 } from '../main/itemSelectionModal/ItemSelectionModal';
-
-const TITLE_MAX_NAME_LENGTH = 15;
 
 type MoveButtonProps = {
   itemIds: string[];
@@ -102,19 +101,19 @@ const MoveButton = ({
     return false;
   };
 
-  const title = items
-    ? translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE, {
-        name: applyEllipsisOnLength(
-          Object.values(items.data)[0].name,
-          TITLE_MAX_NAME_LENGTH,
-        ),
-        // -1 because we show one name
-        count: itemIds.length - 1,
-      })
-    : translateBuilder(BUILDER.MOVE_ITEM_MODAL_TITLE);
+  const title = computeTitle({
+    items,
+    count: itemIds.length - 1,
+    translateBuilder,
+    translateKey: BUILDER.MOVE_ITEM_MODAL_TITLE,
+  });
 
   const buttonText = (name?: string) =>
-    translateBuilder(BUILDER.MOVE_BUTTON, { name, count: name ? 1 : 0 });
+    computButtonText({
+      translateBuilder,
+      translateKey: BUILDER.MOVE_BUTTON,
+      name,
+    });
 
   return (
     <>

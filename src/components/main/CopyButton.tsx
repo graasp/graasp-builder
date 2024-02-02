@@ -8,7 +8,7 @@ import {
 } from '@graasp/ui';
 
 import { hooks, mutations } from '@/config/queryClient';
-import { applyEllipsisOnLength } from '@/utils/item';
+import { computButtonText, computeTitle } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -20,9 +20,6 @@ import { NavigationElement } from './itemSelectionModal/Breadcrumbs';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
 } from './itemSelectionModal/ItemSelectionModal';
-
-// TODO: move to const ?
-const TITLE_MAX_NAME_LENGTH = 15;
 
 export type Props = {
   color?: IconButtonProps['color'];
@@ -75,23 +72,22 @@ const CopyButton = ({
     onClick?.();
   };
 
-  // TODO: check if it can be disabled
+  // The copy button is never disabled
   const isDisabled = (_item: NavigationElement, _homeId: string) => false;
 
-  // TODO: move in utils ?
-  const title = items
-    ? translateBuilder(BUILDER.COPY_ITEM_MODAL_TITLE, {
-        name: applyEllipsisOnLength(
-          Object.values(items.data)[0].name,
-          TITLE_MAX_NAME_LENGTH,
-        ),
-        // -1 because we show one name
-        count: itemIds.length - 1,
-      })
-    : translateBuilder(BUILDER.COPY_ITEM_MODAL_TITLE);
+  const title = computeTitle({
+    items,
+    count: itemIds.length - 1,
+    translateBuilder,
+    translateKey: BUILDER.COPY_ITEM_MODAL_TITLE,
+  });
 
   const buttonText = (name?: string) =>
-    translateBuilder(BUILDER.COPY_BUTTON, { name, count: name ? 1 : 0 });
+    computButtonText({
+      translateBuilder,
+      translateKey: BUILDER.COPY_BUTTON,
+      name,
+    });
 
   return (
     <>

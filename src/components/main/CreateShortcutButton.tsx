@@ -6,12 +6,13 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import {
   DiscriminatedItem,
   ItemType,
+  ResultOf,
   ShortcutItemType,
   buildShortcutExtra,
 } from '@graasp/sdk';
 
 import { mutations } from '@/config/queryClient';
-import { applyEllipsisOnLength } from '@/utils/item';
+import { computButtonText, computeTitle } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MENU_SHORTCUT_BUTTON_CLASS } from '../../config/selectors';
@@ -20,9 +21,6 @@ import { NavigationElement } from './itemSelectionModal/Breadcrumbs';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
 } from './itemSelectionModal/ItemSelectionModal';
-
-// TODO: move to const ?
-const TITLE_MAX_NAME_LENGTH = 15;
 
 export type Props = {
   item: DiscriminatedItem;
@@ -77,20 +75,31 @@ const CreateShortcutButton = ({
     onClick?.();
   };
 
-  // TODO: check if it can be disabled
+  // The shortcut button is never disabled
   const isDisabled = (_item: NavigationElement, _homeId: string) => false;
 
-  // TODO: create the languages consts
-  const title = item
-    ? translateBuilder(BUILDER.CREATE_SHORTCUT_MODAL_TITLE, {
-        name: applyEllipsisOnLength(item.name, TITLE_MAX_NAME_LENGTH),
-        count: 1,
-      })
-    : translateBuilder(BUILDER.CREATE_SHORTCUT_MODAL_TITLE);
+  const items: ResultOf<DiscriminatedItem> | undefined = item
+    ? {
+        data: {
+          [item.id]: item,
+        },
+        errors: [],
+      }
+    : undefined;
 
-  // TODO: change to shortcut
+  const title = computeTitle({
+    items,
+    count: 1,
+    translateBuilder,
+    translateKey: BUILDER.CREATE_SHORTCUT_MODAL_TITLE,
+  });
+
   const buttonText = (name?: string) =>
-    translateBuilder(BUILDER.CONFIRM_BUTTON, { name, count: name ? 1 : 0 });
+    computButtonText({
+      translateBuilder,
+      translateKey: BUILDER.CREATE_SHORTCUT_BUTTON,
+      name,
+    });
 
   return (
     <>
