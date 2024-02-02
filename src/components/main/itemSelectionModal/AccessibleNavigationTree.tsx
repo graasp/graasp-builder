@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Pagination, Stack } from '@mui/material';
 
-import { PermissionLevel } from '@graasp/sdk';
+import { ItemType, PermissionLevel } from '@graasp/sdk';
 
 import { hooks } from '@/config/queryClient';
 
@@ -27,7 +27,10 @@ const AccessibleNavigationTree = ({
   const [page, setPage] = useState(1);
   // todo: show only items with admin rights
   const { data: accessibleItems } = hooks.useAccessibleItems(
-    { permissions: [PermissionLevel.Write, PermissionLevel.Admin] },
+    {
+      permissions: [PermissionLevel.Write, PermissionLevel.Admin],
+      types: [ItemType.FOLDER],
+    },
     { page },
   );
 

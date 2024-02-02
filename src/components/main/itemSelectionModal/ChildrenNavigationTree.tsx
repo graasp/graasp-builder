@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
 
+import { ItemType } from '@graasp/sdk';
+
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
@@ -23,10 +25,14 @@ const ChildrenNavigationTree = ({
   isDisabled,
 }: ChildrenNavigationTreeProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  // TODO: use filter in useChildren directly in another PR
   const { data: children } = hooks.useChildren(selectedNavigationItem.id);
+
+  const folders = children?.filter((item) => item.type === ItemType.FOLDER);
+
   return (
     <>
-      {children?.map((ele) => (
+      {folders?.map((ele) => (
         <RowMenu
           key={ele.id}
           item={ele}
@@ -36,7 +42,7 @@ const ChildrenNavigationTree = ({
           isDisabled={isDisabled}
         />
       ))}
-      {!children?.length && (
+      {!folders?.length && (
         <Box sx={{ color: 'darkgrey', pt: 1 }}>
           {translateBuilder(BUILDER.EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM)}
         </Box>
