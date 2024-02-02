@@ -25,7 +25,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
   left: 0,
   right: 0,
 
-  // width: '100%',
   boxSizing: 'border-box',
 
   // show above drawer

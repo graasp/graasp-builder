@@ -30,7 +30,7 @@ const Root = (): JSX.Element => (
       <I18nextProvider i18n={i18nConfig}>
         <ThemeProvider theme={GraaspTheme}>
           <CssBaseline />
-          {true && <ToastContainer position="bottom-right" theme="colored" />}
+          <ToastContainer position="bottom-right" theme="colored" />
           <Router>
             <ModalProviders>
               <CurrentUserContextProvider>

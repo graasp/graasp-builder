@@ -10,8 +10,6 @@ interface LayoutContextInterface {
   setMode: (mode: string) => void;
   editingItemId: string | null;
   setEditingItemId: (itemId: string | null) => void;
-  // isMainMenuOpen?: boolean;
-  // setIsMainMenuOpen: (isOpen: boolean) => void;
   openedActionTabId: string | null;
   setOpenedActionTabId: (action: string | null) => void;
   isItemMetadataMenuOpen: boolean;
@@ -31,10 +29,6 @@ export const LayoutContext = createContext<LayoutContextInterface>({
   setEditingItemId: () => {
     // do nothing
   },
-  // isMainMenuOpen: true,
-  // setIsMainMenuOpen: () => {
-  //   // do nothing
-  // },
   openedActionTabId: null,
   setOpenedActionTabId: () => {
     // do nothing
@@ -71,7 +65,6 @@ export const LayoutContextProvider = ({
     null,
   );
 
-  // const [isMainMenuOpen, setIsMainMenuOpen] = useState<boolean>();
   const [isItemSharingOpen, setIsItemSharingOpen] = useState(true);
 
   const [isItemMetadataMenuOpen, setIsItemMetadataMenuOpen] = useState(false);
@@ -86,12 +79,6 @@ export const LayoutContextProvider = ({
       setMode,
       editingItemId,
       setEditingItemId,
-      // isMainMenuOpen,
-      // setIsMainMenuOpen: (state: boolean) => {
-      //   // eslint-disable-next-line no-console
-      //   console.log('toggling main menu to ', state);
-      //   setIsMainMenuOpen(state);
-      // },
       openedActionTabId,
       setOpenedActionTabId,
       isItemMetadataMenuOpen,
@@ -105,7 +92,6 @@ export const LayoutContextProvider = ({
       editingItemId,
       isChatboxMenuOpen,
       isItemMetadataMenuOpen,
-      // isMainMenuOpen,
       mode,
       openedActionTabId,
       isItemSharingOpen,

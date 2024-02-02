@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { Stack, styled } from '@mui/material';
 
@@ -9,7 +9,6 @@ import {
   PlatformSwitch,
   defaultHostsMapper,
   usePlatformNavigation,
-  useShortenURLParams,
 } from '@graasp/ui';
 
 import { HOST_MAP } from '@/config/externalPaths';
@@ -47,10 +46,9 @@ export const platformsHostsMap = defaultHostsMapper({
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main = ({ children }: Props): JSX.Element => {
-  // const { isMainMenuOpen } = useLayoutContext();
   const { t } = useBuilderTranslation();
 
-  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+  const itemId = useParams()[ITEM_ID_PARAMS];
 
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
