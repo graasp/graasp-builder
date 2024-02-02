@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import { Loader } from '@graasp/ui';
 
 import { ITEM_PAGE_SIZE } from '@/config/constants';
-import { ItemTypesFilterChanged } from '@/config/types';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -17,6 +16,7 @@ import {
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import { useFilterItemsContext } from '../context/FilterItemsContext';
 import FileUploader from '../file/FileUploader';
 import { UppyContextProvider } from '../file/UppyContext';
 import { useItemSearch } from '../item/ItemSearch';
@@ -35,6 +35,7 @@ type HomeItemSortableColumn =
 const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: currentMember } = useCurrentUserContext();
+  const { itemTypes } = useFilterItemsContext();
   const [showOnlyMe, setShowOnlyMe] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -54,14 +55,11 @@ const HomeLoadableContent = (): JSX.Element => {
       name: itemSearch.text,
       sortBy: sortColumn,
       ordering,
-      // types: [ItemType.FOLDER],
+      types: itemTypes,
     },
     // todo: adapt page size given the user window height
     { page, pageSize: ITEM_PAGE_SIZE },
   );
-
-  const onItemTypesChange: ItemTypesFilterChanged = (newTypes) =>
-    console.log('new types', newTypes);
 
   const onShowOnlyMeChange: CheckboxProps['onChange'] = (e) => {
     setShowOnlyMe(e.target.checked);
@@ -119,7 +117,6 @@ const HomeLoadableContent = (): JSX.Element => {
               <NewItemButton key="newButton" />,
             ]}
             ToolbarActions={ItemActions}
-            onTypesChange={onItemTypesChange}
             onShowOnlyMeChange={onShowOnlyMeChange}
             showOnlyMe={showOnlyMe}
             page={page}

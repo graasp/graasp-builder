@@ -6,13 +6,11 @@ import { useBuilderTranslation } from '@/config/i18n';
 import { ACCESSIBLE_ITEMS_ONLY_ME_ID } from '@/config/selectors';
 
 import SelectTypes from '../common/SelectTypes';
-import { ItemTypesFilterChanged } from '@/config/types';
 
 type Props = {
   title: string;
   headerElements?: JSX.Element[];
   onShowOnlyMeChange?: CheckboxProps['onChange'];
-  onTypesChanged?: ItemTypesFilterChanged;
   showOnlyMe?: boolean;
 };
 
@@ -20,7 +18,6 @@ const ItemsToolbar = ({
   title,
   headerElements,
   onShowOnlyMeChange,
-  onTypesChanged,
   showOnlyMe,
 }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
@@ -48,7 +45,7 @@ const ItemsToolbar = ({
             label={t('Show only created by me')}
           />
         )}
-        <SelectTypes onChange={onTypesChanged} />
+        <SelectTypes />
       </Stack>
     </>
   );

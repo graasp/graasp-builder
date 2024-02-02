@@ -48,6 +48,7 @@ import {
 } from '../../config/selectors';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import { useFilterItemsContext } from '../context/FilterItemsContext';
 import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
@@ -177,12 +178,15 @@ const FolderContent = ({
   item: FolderItemType;
   enableEditing: boolean;
 }): JSX.Element => {
+  const { itemTypes } = useFilterItemsContext();
+
   const {
     data: children,
     isLoading,
     isError,
   } = useChildren(item.id, {
     ordered: true,
+    types: itemTypes,
   });
 
   if (isLoading) {

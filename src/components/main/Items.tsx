@@ -2,8 +2,6 @@ import { CheckboxProps } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
-import { ItemTypesFilterChanged } from '@/config/types';
-
 import { hooks } from '../../config/queryClient';
 import { ITEM_LAYOUT_MODES } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
@@ -31,7 +29,6 @@ type Props = {
   showThumbnails?: boolean;
   enableMemberships?: boolean;
   canMove?: boolean;
-  onTypesChange?: ItemTypesFilterChanged;
   onShowOnlyMeChange?: CheckboxProps['onChange'];
   showOnlyMe?: boolean;
   itemSearch?: { text: string };
@@ -61,7 +58,6 @@ const Items = ({
   page,
   setPage,
   onShowOnlyMeChange,
-  onTypesChange,
   totalCount = 0,
   onSortChanged,
   pageSize,
@@ -89,7 +85,6 @@ const Items = ({
           // This enables the possibility to display messages (item is empty, no search result)
           itemSearch={itemSearch}
           headerElements={headerElements}
-          onTypesChanged={onTypesChange}
           onShowOnlyMeChange={onShowOnlyMeChange}
           showOnlyMe={showOnlyMe}
           page={page}
@@ -115,7 +110,6 @@ const Items = ({
           clickable={clickable}
           showThumbnails={showThumbnails}
           canMove={canMove}
-          onTypesChanged={onTypesChange}
           onShowOnlyMeChange={onShowOnlyMeChange}
           showOnlyMe={showOnlyMe}
           page={page}

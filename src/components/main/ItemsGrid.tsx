@@ -4,8 +4,6 @@ import Pagination from '@mui/material/Pagination';
 
 import { DiscriminatedItem, ItemMembership, ResultOf } from '@graasp/sdk';
 
-import { ItemTypesFilterChanged } from '@/config/types';
-
 import { ITEM_PAGE_SIZE } from '../../config/constants';
 import { ITEMS_GRID_PAGINATION_ID } from '../../config/selectors';
 import { getMembershipsForItem } from '../../utils/membership';
@@ -30,7 +28,6 @@ type Props = {
   canMove?: boolean;
   showOnlyMe?: boolean;
   onShowOnlyMeChange?: CheckboxProps['onChange'];
-  onTypesChanged?: ItemTypesFilterChanged;
   totalCount?: number;
   onPageChange: any;
   page?: number;
@@ -46,7 +43,6 @@ const ItemsGrid = ({
   itemsStatuses,
   parentId,
   onShowOnlyMeChange,
-  onTypesChanged,
   canMove = true,
   showOnlyMe,
   totalCount = 0,
@@ -83,7 +79,6 @@ const ItemsGrid = ({
       <ItemsToolbar
         title={title}
         headerElements={headerElements}
-        onTypesChanged={onTypesChanged}
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}
       />

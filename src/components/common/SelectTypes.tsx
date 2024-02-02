@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Stack } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -8,9 +9,12 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { ItemType, UnionOfConst } from '@graasp/sdk';
+import { ItemType } from '@graasp/sdk';
+import { ItemIcon } from '@graasp/ui';
 
-import { ItemTypesFilterChanged } from '@/config/types';
+import { useEnumsTranslation } from '@/config/i18n';
+
+import { useFilterItemsContext } from '../context/FilterItemsContext';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -23,16 +27,16 @@ const MenuProps = {
   },
 };
 
-const names = Object.values(ItemType);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { S3_FILE, ...usableTypes } = ItemType;
 
-type Props = {
-  onChange?: ItemTypesFilterChanged;
-};
+export const MultipleSelectCheckmarks = (): JSX.Element => {
+  const { itemTypes, setItemTypes } = useFilterItemsContext();
+  const { t: translateEnums } = useEnumsTranslation();
 
-export const MultipleSelectCheckmarks = ({ onChange }: Props): JSX.Element => {
-  const [itemTypes, setItemTypes] = React.useState<
-    UnionOfConst<typeof ItemType>[]
-  >([]);
+  const types = Object.values(usableTypes).sort((t1, t2) =>
+    translateEnums(t1).localeCompare(translateEnums(t2)),
+  );
 
   const handleChange = (event: SelectChangeEvent<typeof itemTypes>) => {
     const {
@@ -40,36 +44,48 @@ export const MultipleSelectCheckmarks = ({ onChange }: Props): JSX.Element => {
     } = event;
 
     if (typeof value === typeof itemTypes) {
-      onChange?.(value as typeof itemTypes);
       setItemTypes(value as typeof itemTypes);
     } else {
       console.error('Something goes wrong with SelectTypes filter');
     }
   };
 
+  //  TODO: translate me
+  const label = 'Filter by types';
+
+  const renderValues = (value: typeof itemTypes) => (
+    <Stack direction="row" spacing={1} flexWrap="wrap">
+      {value.map((type) => (
+        <ItemIcon alt={type} type={type} />
+      ))}
+    </Stack>
+  );
+
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
-        <Select
-          labelId="demo-multiple-checkbox-label"
-          id="demo-multiple-checkbox"
-          multiple
-          value={itemTypes}
-          onChange={handleChange}
-          input={<OutlinedInput label="Types" />}
-          renderValue={(selected) => selected.join(', ')}
-          MenuProps={MenuProps}
-        >
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={itemTypes.indexOf(name) > -1} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl sx={{ minWidth: 150, maxWidth: 350, mt: 2 }} size="small">
+      <InputLabel id="select-types-filter-label">{label}</InputLabel>
+      <Select
+        labelId="select-types-filter-label"
+        id="select-types-filter"
+        size="small"
+        multiple
+        value={itemTypes}
+        onChange={handleChange}
+        input={<OutlinedInput label={label} />}
+        renderValue={renderValues}
+        MenuProps={MenuProps}
+      >
+        {types.map((type) => (
+          <MenuItem key={type} value={type}>
+            <Checkbox checked={itemTypes.indexOf(type) > -1} />
+            <Stack direction="row" spacing={1} alignItems="center">
+              <ItemIcon alt={type} type={type} />
+              <ListItemText primary={translateEnums(type)} />
+            </Stack>
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

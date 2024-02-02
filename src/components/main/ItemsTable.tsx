@@ -41,7 +41,6 @@ import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
-import { ItemTypesFilterChanged } from '@/config/types';
 
 const { useItem } = hooks;
 
@@ -70,7 +69,6 @@ export type ItemsTableProps = {
   setPage?: (p: number) => void;
   totalCount?: number;
   onSortChanged?: (e: SortChangedEvent) => void;
-  onTypesChanged?: ItemTypesFilterChanged;
   pageSize?: number;
 };
 
@@ -90,7 +88,6 @@ const ItemsTable = ({
   canMove = true,
   showOnlyMe,
   onShowOnlyMeChange,
-  onTypesChanged,
   page = 1,
   setPage,
   totalCount,
@@ -280,7 +277,6 @@ const ItemsTable = ({
       <ItemsToolbar
         title={tableTitle}
         headerElements={headerElements}
-        onTypesChanged={onTypesChanged}
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}
       />
