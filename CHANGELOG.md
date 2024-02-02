@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.3](https://github.com/graasp/graasp-builder/compare/v2.6.2...v2.6.3) (2024-02-02)
+
+
+### Bug Fixes
+
+* default route and conventions for route screens ([#976](https://github.com/graasp/graasp-builder/issues/976)) ([eede60a](https://github.com/graasp/graasp-builder/commit/eede60a536b3527d09951ee07eb61ced0e19edcd))
+
 ## [2.6.2](https://github.com/graasp/graasp-builder/compare/v2.6.1...v2.6.2) (2024-01-31)
 
 
