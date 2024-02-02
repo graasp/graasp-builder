@@ -319,5 +319,6 @@
   "ITEM_SELECTION_NAVIGATION_PARENT": "Move above",
   "BACK": "Go Back",
   "UPDATE_THUMBNAIL_AT_INFO_ALERT": "You can change the item's thumbnail in its information page: <navigate>Information</navigate>",
-  "ITEM_ACTION_INFORMATION": "Information"
+  "ITEM_ACTION_INFORMATION": "Information",
+  "FILTER_BY_TYPES_LABEL": "Filter by type"
 }

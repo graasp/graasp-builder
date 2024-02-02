@@ -13,14 +13,18 @@ import {
   SHARED_ITEMS_ROOT_CONTAINER,
 } from '../../config/selectors';
 import ErrorAlert from '../common/ErrorAlert';
+import { useFilterItemsContext } from '../context/FilterItemsContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
 
 const SharedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
+  const { displayItem } = useFilterItemsContext();
+  // TODO: implement filter in the hooks directly ?
+  const filteredItems = sharedItems?.filter((i) => displayItem(i.type));
 
-  if (sharedItems) {
+  if (filteredItems) {
     return (
       <Box id={SHARED_ITEMS_ROOT_CONTAINER} mx={2}>
         <Alert severity="warning" sx={{ mt: 3 }}>
@@ -32,9 +36,9 @@ const SharedItemsLoadableContent = (): JSX.Element | null => {
         <Items
           id={SHARED_ITEMS_ID}
           title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-          items={sharedItems}
+          items={filteredItems}
           canMove={false}
-          totalCount={sharedItems?.length}
+          totalCount={filteredItems?.length}
         />
       </Box>
     );

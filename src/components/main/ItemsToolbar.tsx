@@ -31,8 +31,7 @@ const ItemsToolbar = ({
           {headerElements}
         </Stack>
       </Stack>
-      {/* TODO: adapt for screen size */}
-      <Stack direction="row">
+      <Stack direction="column">
         {onShowOnlyMeChange && (
           <FormControlLabel
             control={

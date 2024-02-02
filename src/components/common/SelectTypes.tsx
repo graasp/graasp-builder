@@ -12,7 +12,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { ItemType } from '@graasp/sdk';
 import { ItemIcon } from '@graasp/ui';
 
-import { useEnumsTranslation } from '@/config/i18n';
+import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
 
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 
@@ -22,19 +23,19 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
     },
   },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { S3_FILE, ...usableTypes } = ItemType;
+const { S3_FILE, ...BUILDER_ITEM_TYPES } = ItemType; // exclude S3 file
 
 export const MultipleSelectCheckmarks = (): JSX.Element => {
   const { itemTypes, setItemTypes } = useFilterItemsContext();
   const { t: translateEnums } = useEnumsTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
-  const types = Object.values(usableTypes).sort((t1, t2) =>
+  const types = Object.values(BUILDER_ITEM_TYPES).sort((t1, t2) =>
     translateEnums(t1).localeCompare(translateEnums(t2)),
   );
 
@@ -50,8 +51,7 @@ export const MultipleSelectCheckmarks = (): JSX.Element => {
     }
   };
 
-  //  TODO: translate me
-  const label = 'Filter by types';
+  const label = translateBuilder(BUILDER.FILTER_BY_TYPES_LABEL);
 
   const renderValues = (value: typeof itemTypes) => (
     <Stack direction="row" spacing={1} flexWrap="wrap">
@@ -62,7 +62,7 @@ export const MultipleSelectCheckmarks = (): JSX.Element => {
   );
 
   return (
-    <FormControl sx={{ minWidth: 150, maxWidth: 350, mt: 2 }} size="small">
+    <FormControl sx={{ maxWidth: 180 }} size="small">
       <InputLabel id="select-types-filter-label">{label}</InputLabel>
       <Select
         labelId="select-types-filter-label"

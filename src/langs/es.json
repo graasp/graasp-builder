@@ -302,5 +302,6 @@
   "SHORT_LINK_MAX_CHARS_ERROR": "El enlace corto no debe exceder los {{data}} caracteres.",
   "SHORT_LINK_INVALID_CHARS_ERROR": "El enlace corto contiene caracteres no válidos ({{data}}).",
   "SHORT_LINK_UNKNOWN_ERROR": "Un error desconocido ocurrió.",
-  "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "También puede encontrar los elementos de esta página en ''My Graasp''. Esta página ''Elementos compartidos'' dejará de estar disponible pronto."
+  "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "También puede encontrar los elementos de esta página en ''My Graasp''. Esta página ''Elementos compartidos'' dejará de estar disponible pronto.",
+  "FILTER_BY_TYPES_LABEL": "Filtro por tipo"
 }

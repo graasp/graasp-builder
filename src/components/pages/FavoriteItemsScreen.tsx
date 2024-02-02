@@ -11,21 +11,25 @@ import {
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
+import { useFilterItemsContext } from '../context/FilterItemsContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
 
 const FavoriteItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data, isLoading: isItemsLoading, isError } = hooks.useFavoriteItems();
+  const { displayItem } = useFilterItemsContext();
+  // TODO: implement filter in the hooks directly ?
+  const filteredData = data?.filter((d) => displayItem(d.item.type));
 
-  if (data) {
+  if (filteredData) {
     return (
       <Box m={2}>
         <ItemHeader showNavigation={false} />
         <Items
           id={FAVORITE_ITEMS_ID}
           title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-          items={data.map((d) => d.item as DiscriminatedItem)}
+          items={filteredData.map((d) => d.item as DiscriminatedItem)}
         />
       </Box>
     );

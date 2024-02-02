@@ -310,5 +310,6 @@
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "Les éléments de cette page sont aussi disponibles dans ''Mon Graasp''. Cette page ''Eléments Partagés'' sera bientôt indisponible.",
   "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Éléments Récents",
   "ITEM_SELECTION_NAVIGATION_PARENT": "Déplacer au-dessus",
-  "ARIA_OPEN_DRAWER": "ouvrir la barre latérale"
+  "ARIA_OPEN_DRAWER": "ouvrir la barre latérale",
+  "FILTER_BY_TYPES_LABEL": "Filtrer par type"
 }
