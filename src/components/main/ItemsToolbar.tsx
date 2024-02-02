@@ -5,10 +5,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useBuilderTranslation } from '@/config/i18n';
 import { ACCESSIBLE_ITEMS_ONLY_ME_ID } from '@/config/selectors';
 
+import SelectTypes from '../common/SelectTypes';
+import { ItemTypesFilterChanged } from '@/config/types';
+
 type Props = {
   title: string;
   headerElements?: JSX.Element[];
   onShowOnlyMeChange?: CheckboxProps['onChange'];
+  onTypesChanged?: ItemTypesFilterChanged;
   showOnlyMe?: boolean;
 };
 
@@ -16,6 +20,7 @@ const ItemsToolbar = ({
   title,
   headerElements,
   onShowOnlyMeChange,
+  onTypesChanged,
   showOnlyMe,
 }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
@@ -29,18 +34,22 @@ const ItemsToolbar = ({
           {headerElements}
         </Stack>
       </Stack>
-      {onShowOnlyMeChange && (
-        <FormControlLabel
-          control={
-            <Checkbox
-              id={ACCESSIBLE_ITEMS_ONLY_ME_ID}
-              checked={showOnlyMe}
-              onChange={onShowOnlyMeChange}
-            />
-          }
-          label={t('Show only created by me')}
-        />
-      )}
+      {/* TODO: adapt for screen size */}
+      <Stack direction="row">
+        {onShowOnlyMeChange && (
+          <FormControlLabel
+            control={
+              <Checkbox
+                id={ACCESSIBLE_ITEMS_ONLY_ME_ID}
+                checked={showOnlyMe}
+                onChange={onShowOnlyMeChange}
+              />
+            }
+            label={t('Show only created by me')}
+          />
+        )}
+        <SelectTypes onChange={onTypesChanged} />
+      </Stack>
     </>
   );
 };

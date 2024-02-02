@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { Loader } from '@graasp/ui';
 
 import { ITEM_PAGE_SIZE } from '@/config/constants';
+import { ItemTypesFilterChanged } from '@/config/types';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -53,10 +54,14 @@ const HomeLoadableContent = (): JSX.Element => {
       name: itemSearch.text,
       sortBy: sortColumn,
       ordering,
+      // types: [ItemType.FOLDER],
     },
     // todo: adapt page size given the user window height
     { page, pageSize: ITEM_PAGE_SIZE },
   );
+
+  const onItemTypesChange: ItemTypesFilterChanged = (newTypes) =>
+    console.log('new types', newTypes);
 
   const onShowOnlyMeChange: CheckboxProps['onChange'] = (e) => {
     setShowOnlyMe(e.target.checked);
@@ -114,6 +119,7 @@ const HomeLoadableContent = (): JSX.Element => {
               <NewItemButton key="newButton" />,
             ]}
             ToolbarActions={ItemActions}
+            onTypesChange={onItemTypesChange}
             onShowOnlyMeChange={onShowOnlyMeChange}
             showOnlyMe={showOnlyMe}
             page={page}

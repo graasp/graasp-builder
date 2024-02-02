@@ -1,4 +1,4 @@
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, UnionOfConst } from '@graasp/sdk';
 
 // eslint-disable-next-line no-shadow
 export enum InternalItemType {
@@ -6,3 +6,6 @@ export enum InternalItemType {
 }
 
 export type NewItemTabType = DiscriminatedItem['type'] | InternalItemType.ZIP;
+export type ItemTypesFilterChanged = (
+  newTypes: UnionOfConst<typeof ItemType>[],
+) => void;
