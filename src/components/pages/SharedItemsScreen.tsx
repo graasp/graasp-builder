@@ -5,16 +5,16 @@ import { Loader } from '@graasp/ui';
 
 import { BUILDER } from '@/langs/constants';
 
-import { useBuilderTranslation } from '../config/i18n';
-import { hooks } from '../config/queryClient';
+import { useBuilderTranslation } from '../../config/i18n';
+import { hooks } from '../../config/queryClient';
 import {
   SHARED_ITEMS_ERROR_ALERT_ID,
   SHARED_ITEMS_ID,
-} from '../config/selectors';
-import ErrorAlert from './common/ErrorAlert';
-import ItemHeader from './item/header/ItemHeader';
-import Items from './main/Items';
-import Main from './main/Main';
+  SHARED_ITEMS_ROOT_CONTAINER,
+} from '../../config/selectors';
+import ErrorAlert from '../common/ErrorAlert';
+import ItemHeader from '../item/header/ItemHeader';
+import Items from '../main/Items';
 
 const SharedItemsLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -28,8 +28,8 @@ const SharedItemsLoadableContent = (): JSX.Element => {
   }
 
   return (
-    <Box mx={2}>
-      <Alert severity="warning" sx={{ mt: 3 }}>
+    <Box id={SHARED_ITEMS_ROOT_CONTAINER} m={2}>
+      <Alert severity="warning">
         {translateBuilder(
           "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
         )}
@@ -46,10 +46,6 @@ const SharedItemsLoadableContent = (): JSX.Element => {
   );
 };
 
-const SharedItems = (): JSX.Element => (
-  <Main>
-    <SharedItemsLoadableContent />
-  </Main>
-);
+const SharedItemsScreen = (): JSX.Element => <SharedItemsLoadableContent />;
 
-export default SharedItems;
+export default SharedItemsScreen;

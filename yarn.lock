@@ -19,6 +19,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ag-grid-community/styles@npm:31.0.3":
+  version: 31.0.3
+  resolution: "@ag-grid-community/styles@npm:31.0.3"
+  checksum: 9caa12c9231a9df0d5cfd787a668da01e628b2c55e5c7c2c558473880bdc6e07c15790f5404e1fc566288e62b3ca16f2da1591ee78d2575c0ca01474af70f764
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
@@ -1308,9 +1315,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.5.0":
-  version: 4.5.0
-  resolution: "@graasp/ui@npm:4.5.0"
+"@graasp/ui@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@graasp/ui@npm:4.5.1"
   dependencies:
     "@graasp/sdk": "npm:3.5.0"
     http-status-codes: "npm:2.3.0"
@@ -1344,7 +1351,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: eecd53f0d9d7824c526179b84db29ff303c70f0405d19ad74fc48c5b4966ed47620da06fdda981bfc7ed70eba08d02d1bc9f3e3a958ec430c556fa6b191f5878
+  checksum: 659135ea821492202155706c4ae6c0effda5aa862ae302c9b056c3220476bc1d4042d2a25ed6d3f808f061370c8f2b970b81de1db88fb9dd9f3ab71712640db4
   languageName: node
   linkType: hard
 
@@ -6323,6 +6330,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "graasp-builder@workspace:."
   dependencies:
+    "@ag-grid-community/styles": "npm:31.0.3"
     "@commitlint/cli": "npm:18.4.4"
     "@commitlint/config-conventional": "npm:18.4.4"
     "@cypress/code-coverage": "npm:3.12.12"
@@ -6333,7 +6341,7 @@ __metadata:
     "@graasp/query-client": "npm:2.4.1"
     "@graasp/sdk": "npm:3.4.1"
     "@graasp/translations": "npm:1.22.1"
-    "@graasp/ui": "npm:4.5.0"
+    "@graasp/ui": "npm:4.5.1"
     "@mui/icons-material": "npm:5.14.19"
     "@mui/lab": "npm:5.0.0-alpha.151"
     "@mui/material": "npm:5.14.19"

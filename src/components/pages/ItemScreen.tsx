@@ -30,8 +30,7 @@ import ItemMain from '../item/ItemMain';
 import ItemPublishTab from '../item/publish/ItemPublishTab';
 import ItemSettings from '../item/settings/ItemSettings';
 import ItemSharingTab from '../item/sharing/ItemSharingTab';
-import ItemForbiddenScreen from './ItemForbiddenScreen';
-import Main from './Main';
+import ItemForbiddenScreen from '../main/ItemForbiddenScreen';
 
 const {
   useItem,
@@ -94,12 +93,10 @@ const ItemScreen = (): JSX.Element => {
   })();
 
   return (
-    <Main>
-      <UppyContextProvider enable={enableEditing} itemId={itemId}>
-        {item.type === ItemType.FOLDER ? <FileUploader /> : undefined}
-        <ItemMain item={item}>{content}</ItemMain>
-      </UppyContextProvider>
-    </Main>
+    <UppyContextProvider enable={enableEditing} itemId={itemId}>
+      {item.type === ItemType.FOLDER ? <FileUploader /> : undefined}
+      <ItemMain item={item}>{content}</ItemMain>
+    </UppyContextProvider>
   );
 };
 

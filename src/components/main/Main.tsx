@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { Stack, styled } from '@mui/material';
 
@@ -9,7 +9,6 @@ import {
   PlatformSwitch,
   defaultHostsMapper,
   usePlatformNavigation,
-  useShortenURLParams,
 } from '@graasp/ui';
 
 import { HOST_MAP } from '@/config/externalPaths';
@@ -24,7 +23,6 @@ import {
 } from '../../config/selectors';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
-import { useLayoutContext } from '../context/LayoutContext';
 import MainMenu from './MainMenu';
 import NotificationButton from './NotificationButton';
 
@@ -48,10 +46,9 @@ export const platformsHostsMap = defaultHostsMapper({
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main = ({ children }: Props): JSX.Element => {
-  const { isMainMenuOpen } = useLayoutContext();
   const { t } = useBuilderTranslation();
 
-  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+  const itemId = useParams()[ITEM_ID_PARAMS];
 
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
@@ -79,7 +76,6 @@ const Main = ({ children }: Props): JSX.Element => {
       <UserSwitchWrapper />
     </Stack>
   );
-
   return (
     <GraaspMain
       context={Context.Builder}
@@ -87,7 +83,6 @@ const Main = ({ children }: Props): JSX.Element => {
       drawerOpenAriaLabel={t(BUILDER.ARIA_OPEN_DRAWER)}
       headerRightContent={rightContent}
       drawerContent={<MainMenu />}
-      open={isMainMenuOpen}
       LinkComponent={LinkComponent}
       PlatformComponent={
         <PlatformSwitch

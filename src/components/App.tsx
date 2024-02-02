@@ -1,10 +1,8 @@
-import { useLocation } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 
 import { saveUrlForRedirection } from '@graasp/sdk';
 import { CustomInitialLoader, withAuthorization } from '@graasp/ui';
-
-import * as Sentry from '@sentry/react';
 
 import { DOMAIN } from '@/config/env';
 import { SIGN_IN_PATH } from '@/config/externalPaths';
@@ -20,15 +18,15 @@ import {
   buildItemPath,
 } from '../config/paths';
 import { hooks } from '../config/queryClient';
-import FallbackComponent from './Fallback';
-import RecycleBinScreen from './RecycleBinScreen';
-import SharedItems from './SharedItems';
 import { useCurrentUserContext } from './context/CurrentUserContext';
-import FavoriteItems from './main/FavoriteItems';
-import Home from './main/Home';
-import ItemScreen from './main/ItemScreen';
-import PublishedItems from './main/PublishedItems';
+import Main from './main/Main';
 import Redirect from './main/Redirect';
+import FavoriteItemsScreen from './pages/FavoriteItemsScreen';
+import HomeScreen from './pages/HomeScreen';
+import ItemScreen from './pages/ItemScreen';
+import PublishedItemsScreen from './pages/PublishedItemsScreen';
+import RecycledItemsScreen from './pages/RecycledItemsScreen';
+import SharedItemsScreen from './pages/SharedItemsScreen';
 
 const { useItemFeedbackUpdates } = hooks;
 
@@ -51,27 +49,36 @@ const App = (): JSX.Element => {
       saveUrlForRedirection(pathname, DOMAIN);
     },
   };
-  const HomeWithAuthorization = withAuthorization(Home, withAuthorizationProps);
+  const HomeWithAuthorization = withAuthorization(
+    HomeScreen,
+    withAuthorizationProps,
+  );
   const SharedWithAuthorization = withAuthorization(
-    SharedItems,
+    SharedItemsScreen,
     withAuthorizationProps,
   );
   const FavoriteWithAuthorization = withAuthorization(
-    FavoriteItems,
-    withAuthorizationProps,
-  );
-  const RecycleWithAuthorization = withAuthorization(
-    RecycleBinScreen,
+    FavoriteItemsScreen,
     withAuthorizationProps,
   );
   const PublishedWithAuthorization = withAuthorization(
-    PublishedItems,
+    PublishedItemsScreen,
+    withAuthorizationProps,
+  );
+  const RecycleWithAuthorization = withAuthorization(
+    RecycledItemsScreen,
     withAuthorizationProps,
   );
 
   return (
-    <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
-      <Routes>
+    <Routes>
+      <Route
+        element={
+          <Main>
+            <Outlet />
+          </Main>
+        }
+      >
         <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
         <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
         <Route
@@ -82,13 +89,13 @@ const App = (): JSX.Element => {
           path={PUBLISHED_ITEMS_PATH}
           element={<PublishedWithAuthorization />}
         />
-        <Route path={buildItemPath()} element={<ItemScreen />} />
         <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
+        <Route path={buildItemPath()} element={<ItemScreen />} />
         <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
         <Route path={REDIRECT_PATH} element={<Redirect />} />
-        <Route element={<Redirect />} />
-      </Routes>
-    </Sentry.ErrorBoundary>
+        <Route path="*" element={<Redirect />} />
+      </Route>
+    </Routes>
   );
 };
 
