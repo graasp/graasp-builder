@@ -16,9 +16,29 @@ import ErrorAlert from '../common/ErrorAlert';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
 
-const SharedItemsLoadableContent = (): JSX.Element => {
+const SharedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
+
+  if (sharedItems) {
+    return (
+      <Box id={SHARED_ITEMS_ROOT_CONTAINER} mx={2}>
+        <Alert severity="warning" sx={{ mt: 3 }}>
+          {translateBuilder(
+            "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
+          )}
+        </Alert>
+        <ItemHeader showNavigation={false} />
+        <Items
+          id={SHARED_ITEMS_ID}
+          title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
+          items={sharedItems}
+          canMove={false}
+          totalCount={sharedItems?.length}
+        />
+      </Box>
+    );
+  }
   if (isError) {
     return <ErrorAlert id={SHARED_ITEMS_ERROR_ALERT_ID} />;
   }
@@ -27,23 +47,7 @@ const SharedItemsLoadableContent = (): JSX.Element => {
     return <Loader />;
   }
 
-  return (
-    <Box id={SHARED_ITEMS_ROOT_CONTAINER} m={2}>
-      <Alert severity="warning">
-        {translateBuilder(
-          "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
-        )}
-      </Alert>
-      <ItemHeader showNavigation={false} />
-      <Items
-        id={SHARED_ITEMS_ID}
-        title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-        items={sharedItems}
-        canMove={false}
-        totalCount={sharedItems?.length}
-      />
-    </Box>
-  );
+  return null;
 };
 
 const SharedItemsScreen = (): JSX.Element => <SharedItemsLoadableContent />;

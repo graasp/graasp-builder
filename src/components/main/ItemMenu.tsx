@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
 
-import { mutations } from '@/config/queryClient';
+import { hooks, mutations } from '@/config/queryClient';
 import { getParentsIdsFromPath } from '@/utils/item';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -39,14 +39,16 @@ import CopyButton from './CopyButton';
 type Props = {
   item: DiscriminatedItem;
   canEdit?: boolean;
+  canAdmin?: boolean;
   canMove?: boolean;
 };
 
 const ItemMenu = ({
   item,
   canEdit = false,
+  canAdmin = false,
   canMove = true,
-}: Props): JSX.Element => {
+}: Props): JSX.Element | null => {
   const { data: member } = useCurrentUserContext();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { t: translateBuilder } = useBuilderTranslation();
@@ -55,6 +57,7 @@ const ItemMenu = ({
   );
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
   const { mutate: copyItems } = mutations.useCopyItems();
+  const { data: memberships } = hooks.useItemMemberships(item.id);
 
   const handleClick: IconButtonProps['onClick'] = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,103 +90,100 @@ const ItemMenu = ({
     copyItems(newPayload);
   };
   const renderEditorActions = () => {
-    if (!canEdit) {
-      return null;
-    }
-    const result = canMove
-      ? [
+    if (canEdit) {
+      return [
+        canMove ? (
           <MoveButton
             key="move"
             type={ActionButton.MENU_ITEM}
             itemIds={[item.id]}
             onClick={handleClose}
-          />,
-        ]
-      : [];
-    return result.concat([
-      <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />,
-      <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
-      <CollapseButton
-        key="collapse"
-        type={ActionButton.MENU_ITEM}
-        item={item}
-      />,
-      <RecycleButton
-        key="recycle"
-        type={ActionButton.MENU_ITEM}
-        itemIds={[item.id]}
-        onClick={handleClose}
-      />,
-    ]);
-  };
-
-  const renderAuthenticatedActions = () => {
-    if (!member || !member.id) {
-      return null;
+          />
+        ) : undefined,
+        <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />,
+        <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
+        <CollapseButton
+          key="collapse"
+          type={ActionButton.MENU_ITEM}
+          item={item}
+        />,
+        canAdmin ? (
+          <RecycleButton
+            key="recycle"
+            type={ActionButton.MENU_ITEM}
+            itemIds={[item.id]}
+            onClick={handleClose}
+          />
+        ) : undefined,
+      ].filter(Boolean);
     }
-    return [
-      <FavoriteButton
-        size="medium"
-        key="favorite"
-        type={ActionButton.MENU_ITEM}
-        item={item}
-      />,
-      <CopyButton
-        key="copy"
-        type={ActionButton.MENU_ITEM}
-        itemIds={[item.id]}
-        onClick={handleClose}
-      />,
-      <MenuItem
-        onClick={handleDuplicate}
-        key="duplicate"
-        className={ITEM_MENU_DUPLICATE_BUTTON_CLASS}
-      >
-        <ListItemIcon>
-          <FileCopyIcon />
-        </ListItemIcon>
-        {translateBuilder(BUILDER.ITEM_MENU_DUPLICATE_MENU_ITEM)}
-      </MenuItem>,
-    ];
+    return null;
   };
 
-  return (
-    <>
-      <IconButton
-        id={buildItemMenuButtonId(item.id)}
-        className={ITEM_MENU_BUTTON_CLASS}
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
-
-      <Menu
-        id={buildItemMenu(item.id)}
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {renderAuthenticatedActions()}
-        {renderEditorActions()}
-        <MenuItem
-          onClick={handleCreateShortcut}
-          className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+  if (memberships && member?.id) {
+    return (
+      <>
+        <IconButton
+          id={buildItemMenuButtonId(item.id)}
+          className={ITEM_MENU_BUTTON_CLASS}
+          onClick={handleClick}
         >
-          <ListItemIcon>
-            <LabelImportantIcon />
-          </ListItemIcon>
-          {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
-        </MenuItem>
-        <MenuItem onClick={handleFlag} className={ITEM_MENU_FLAG_BUTTON_CLASS}>
-          <ListItemIcon>
-            <FlagIcon />
-          </ListItemIcon>
-          {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
-        </MenuItem>
-      </Menu>
-    </>
-  );
+          <MoreVertIcon />
+        </IconButton>
+
+        <Menu
+          id={buildItemMenu(item.id)}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <FavoriteButton
+            size="medium"
+            key="favorite"
+            type={ActionButton.MENU_ITEM}
+            item={item}
+          />
+          <CopyButton
+            key="copy"
+            type={ActionButton.MENU_ITEM}
+            itemIds={[item.id]}
+            onClick={handleClose}
+          />
+          <MenuItem
+            onClick={handleDuplicate}
+            key="duplicate"
+            className={ITEM_MENU_DUPLICATE_BUTTON_CLASS}
+          >
+            <ListItemIcon>
+              <FileCopyIcon />
+            </ListItemIcon>
+            {translateBuilder(BUILDER.ITEM_MENU_DUPLICATE_MENU_ITEM)}
+          </MenuItem>
+          <MenuItem
+            onClick={handleCreateShortcut}
+            className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}
+          >
+            <ListItemIcon>
+              <LabelImportantIcon />
+            </ListItemIcon>
+            {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
+          </MenuItem>
+          <MenuItem
+            onClick={handleFlag}
+            className={ITEM_MENU_FLAG_BUTTON_CLASS}
+          >
+            <ListItemIcon>
+              <FlagIcon />
+            </ListItemIcon>
+            {translateBuilder(BUILDER.ITEM_MENU_FLAG_MENU_ITEM)}
+          </MenuItem>
+          ,{renderEditorActions()}
+        </Menu>
+      </>
+    );
+  }
+  return null;
 };
 
 export default ItemMenu;

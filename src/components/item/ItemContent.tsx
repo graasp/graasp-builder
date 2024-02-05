@@ -1,4 +1,4 @@
-import { Container, styled } from '@mui/material';
+import { Container, Skeleton, styled } from '@mui/material';
 
 import { Api } from '@graasp/query-client';
 import {
@@ -66,27 +66,31 @@ const FileContent = ({
   item,
 }: {
   item: LocalFileItemType | S3FileItemType;
-}): JSX.Element => {
+}): JSX.Element | null => {
   const { data: fileUrl, isLoading, isError } = useFileContentUrl(item.id);
 
+  if (fileUrl) {
+    return (
+      <StyledContainer>
+        <FileItem
+          fileUrl={fileUrl}
+          id={buildFileItemId(item.id)}
+          item={item}
+          pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
+        />
+      </StyledContainer>
+    );
+  }
+
   if (isLoading) {
-    return <Loader />;
+    return <Skeleton height="50vh" />;
   }
 
   if (isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
   }
 
-  return (
-    <StyledContainer>
-      <FileItem
-        fileUrl={fileUrl}
-        id={buildFileItemId(item.id)}
-        item={item}
-        pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
-      />
-    </StyledContainer>
-  );
+  return null;
 };
 
 /**

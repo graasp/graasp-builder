@@ -8,8 +8,7 @@ import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const recycleItem = (id: string) => {
-  const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  cy.get(menuSelector).click();
+  cy.get(`#${buildItemMenuButtonId(id)}`).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_RECYCLE_BUTTON_CLASS}`).click();
 };
 

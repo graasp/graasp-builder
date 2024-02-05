@@ -18,19 +18,20 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: member } = useCurrentUserContext();
   const {
-    data: sharedItems,
+    data: publishedItems,
     isLoading,
     isError,
   } = hooks.usePublishedItemsForMember(member?.id);
 
-  if (sharedItems) {
+  if (publishedItems) {
     return (
-      <Box m={2}>
+      <Box mx={2}>
         <ItemHeader showNavigation={false} />
         <Items
           id={PUBLISHED_ITEMS_ID}
           title={translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
-          items={sharedItems ?? []}
+          items={publishedItems ?? []}
+          totalCount={publishedItems?.length}
         />
       </Box>
     );
@@ -39,6 +40,7 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
   if (isLoading) {
     return <Loader />;
   }
+
   if (isError) {
     return <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
   }
