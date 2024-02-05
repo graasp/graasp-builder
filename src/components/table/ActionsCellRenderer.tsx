@@ -2,11 +2,14 @@ import {
   DiscriminatedItem,
   ItemMembership,
   Member,
+  PermissionLevel,
   ResultOf,
 } from '@graasp/sdk';
 
+import { hooks } from '@/config/queryClient';
+
 import {
-  getMembershipsForItem,
+  getHighestPermissionForMemberFromMemberships,
   isItemUpdateAllowedForUser,
 } from '../../utils/membership';
 import EditButton from '../common/EditButton';
@@ -25,32 +28,39 @@ type ChildCompProps = {
 
 // items and memberships match by index
 const ActionsCellRenderer = ({
-  manyMemberships,
   member,
   canMove,
 }: Props): ((arg: ChildCompProps) => JSX.Element) => {
   const ChildComponent = ({ data: item }: ChildCompProps) => {
+    const { data: memberships } = hooks.useItemMemberships(item.id);
     const canEdit = isItemUpdateAllowedForUser({
-      memberships: getMembershipsForItem({
-        itemId: item.id,
-        manyMemberships,
-      }),
+      memberships,
       memberId: member?.id,
     });
+    const canAdmin = member?.id
+      ? getHighestPermissionForMemberFromMemberships({
+          memberships,
+          memberId: member?.id,
+        })?.permission === PermissionLevel.Admin
+      : false;
 
     const renderAnyoneActions = () => (
       <>
         <DownloadButton id={item.id} name={item.name} />
-        <ItemMenu item={item} canMove={canMove} canEdit={canEdit} />
+        <ItemMenu
+          item={item}
+          canMove={canMove}
+          canAdmin={canAdmin}
+          canEdit={canEdit}
+        />
       </>
     );
 
     const renderEditorActions = () => {
-      if (!canEdit) {
-        return null;
+      if (canEdit) {
+        return <EditButton item={item} />;
       }
-
-      return <EditButton item={item} />;
+      return null;
     };
 
     return (

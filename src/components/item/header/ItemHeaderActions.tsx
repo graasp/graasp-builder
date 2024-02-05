@@ -72,7 +72,12 @@ const ItemHeaderActions = (): JSX.Element => {
         <>
           {showEditButton && <EditButton item={item} />}
           {/* prevent moving from top header to avoid confusion */}
-          <ItemMenu item={item} canMove={false} canEdit={showEditButton} />
+          <ItemMenu
+            item={item}
+            canMove={false}
+            canAdmin={canAdmin}
+            canEdit={showEditButton}
+          />
 
           <ShareButton itemId={item.id} />
           <ChatboxButton

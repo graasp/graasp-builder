@@ -10,7 +10,7 @@ import CopyButton from './CopyButton';
 type Props = {
   selectedIds: string[];
 };
-
+// todo: not used anymore ?
 const ItemActionsRenderer = ({ selectedIds }: Props): JSX.Element => (
   <>
     <MoveButton
