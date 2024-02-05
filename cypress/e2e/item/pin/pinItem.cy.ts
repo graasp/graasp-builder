@@ -6,10 +6,8 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { ITEMS_SETTINGS, PINNED_ITEM } from '../../../fixtures/items';
-import { WAIT_FOR_ITEM_TABLE_ROW_TIME } from '../../../support/constants';
 
 const togglePinButton = (itemId: string) => {
-  cy.wait(WAIT_FOR_ITEM_TABLE_ROW_TIME);
   cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
   cy.get(`#${buildItemMenu(itemId)} .${PIN_ITEM_BUTTON_CLASS}`).click();
 };

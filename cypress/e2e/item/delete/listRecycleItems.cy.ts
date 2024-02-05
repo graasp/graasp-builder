@@ -5,12 +5,10 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { WAIT_FOR_ITEM_TABLE_ROW_TIME } from '../../../support/constants';
 
 const recycleItems = (itemIds: string[]) => {
   // check selected ids
   itemIds.forEach((id) => {
-    cy.wait(WAIT_FOR_ITEM_TABLE_ROW_TIME);
     cy.get(`${buildItemsTableRowIdAttribute(id)} .ag-checkbox-input`).click();
   });
 

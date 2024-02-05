@@ -8,10 +8,8 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { WAIT_FOR_ITEM_TABLE_ROW_TIME } from '../../../support/constants';
 
 const openMoveModal = ({ id: movedItemId }: { id: string }) => {
-  cy.wait(WAIT_FOR_ITEM_TABLE_ROW_TIME);
   cy.get(`#${buildItemMenuButtonId(movedItemId)}`).click();
   cy.get(
     `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
