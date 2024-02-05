@@ -6,13 +6,12 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import {
   DiscriminatedItem,
   ItemType,
-  ResultOf,
   ShortcutItemType,
   buildShortcutExtra,
 } from '@graasp/sdk';
 
 import { mutations } from '@/config/queryClient';
-import { computButtonText, computeTitle } from '@/utils/itemSelection';
+import { computButtonText } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MENU_SHORTCUT_BUTTON_CLASS } from '../../config/selectors';
@@ -76,23 +75,11 @@ const CreateShortcutButton = ({
   };
 
   // The shortcut button is never disabled
-  const isDisabled = (_item: NavigationElement, _homeId: string) => false;
-
-  const items: ResultOf<DiscriminatedItem> | undefined = item
-    ? {
-        data: {
-          [item.id]: item,
-        },
-        errors: [],
-      }
-    : undefined;
-
-  const title = computeTitle({
-    items,
-    count: 1,
-    translateBuilder,
-    translateKey: BUILDER.CREATE_SHORTCUT_MODAL_TITLE,
-  });
+  const isDisabled = (
+    _items: DiscriminatedItem[],
+    _item: NavigationElement,
+    _homeId: string,
+  ) => false;
 
   const buttonText = (name?: string) =>
     computButtonText({
@@ -115,13 +102,13 @@ const CreateShortcutButton = ({
 
       {item && open && (
         <ItemSelectionModal
-          title={title}
+          titleKey={BUILDER.CREATE_SHORTCUT_MODAL_TITLE}
           isDisabled={isDisabled}
           buttonText={buttonText}
           onClose={onClose}
           open={open}
           onConfirm={onConfirm}
-          items={[item]}
+          itemIds={[item.id]}
         />
       )}
     </>

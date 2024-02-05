@@ -30,7 +30,7 @@ const MenuProps = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { S3_FILE, ...BUILDER_ITEM_TYPES } = ItemType; // exclude S3 file
 
-export const MultipleSelectCheckmarks = (): JSX.Element => {
+export const SelectTypes = (): JSX.Element => {
   const { itemTypes, setItemTypes } = useFilterItemsContext();
   const { t: translateEnums } = useEnumsTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
@@ -89,4 +89,4 @@ export const MultipleSelectCheckmarks = (): JSX.Element => {
   );
 };
 
-export default MultipleSelectCheckmarks;
+export default SelectTypes;

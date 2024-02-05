@@ -31,7 +31,7 @@ const ItemsToolbar = ({
           {headerElements}
         </Stack>
       </Stack>
-      <Stack direction="column" mt={1}>
+      <Stack direction="column" mt={1} mb={1}>
         {onShowOnlyMeChange && (
           <FormControlLabel
             control={

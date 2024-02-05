@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 
 import { IconButtonProps } from '@mui/material/IconButton';
 
+import { DiscriminatedItem } from '@graasp/sdk';
 import {
   ActionButton,
   ActionButtonVariant,
   MoveButton as GraaspMoveButton,
 } from '@graasp/ui';
 
-import { hooks, mutations } from '@/config/queryClient';
+import { mutations } from '@/config/queryClient';
 import { getDirectParentId } from '@/utils/item';
-import { computButtonText, computeTitle } from '@/utils/itemSelection';
+import { computButtonText } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -44,7 +45,7 @@ const MoveButton = ({
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
 
-  const { data: items } = hooks.useItems(itemIds);
+  // const { data: items } = hooks.useItems(itemIds);
 
   const openMoveModal = (newItemIds: string[]) => {
     setOpen(true);
@@ -74,39 +75,37 @@ const MoveButton = ({
     onClick?.();
   };
 
-  const isDisabled = (item: NavigationElement, homeId: string) => {
-    if (items?.data) {
+  const isDisabled = (
+    items: DiscriminatedItem[],
+    item: NavigationElement,
+    homeId: string,
+  ) => {
+    if (items) {
       // cannot move inside self and below
-      const moveInSelf = Object.values(items.data).some((i) =>
-        item.path.includes(i.path),
-      );
+      const moveInSelf = items.some((i) => item.path.includes(i.path));
 
       // cannot move in same direct parent
       // todo: not opti because we only have the ids from the table
-      const directParentIds = Object.values(items.data).map((i) =>
-        getDirectParentId(i.path),
-      );
+      const directParentIds = items.map((i) => getDirectParentId(i.path));
       const moveInDirectParent = directParentIds.includes(item.id);
 
       // cannot move to home if was already on home
       let moveToHome = false;
 
-      if (items?.data) {
-        moveToHome =
-          item.id === homeId &&
-          !getDirectParentId(Object.values(items.data)[0].path);
+      if (items) {
+        moveToHome = item.id === homeId && !getDirectParentId(items[0].path);
       }
       return moveInSelf || moveInDirectParent || moveToHome;
     }
     return false;
   };
 
-  const title = computeTitle({
-    items,
-    count: itemIds.length - 1,
-    translateBuilder,
-    translateKey: BUILDER.MOVE_ITEM_MODAL_TITLE,
-  });
+  // const title = computeTitle({
+  //   items,
+  //   count: itemIds.length - 1,
+  //   translateBuilder,
+  //   translateKey: BUILDER.MOVE_ITEM_MODAL_TITLE,
+  // });
 
   const buttonText = (name?: string) =>
     computButtonText({
@@ -126,16 +125,15 @@ const MoveButton = ({
         menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
         iconClassName={ITEM_MOVE_BUTTON_CLASS}
       />
-
-      {items?.data && open && (
+      {itemIds && open && (
         <ItemSelectionModal
-          title={title}
+          titleKey={BUILDER.MOVE_ITEM_MODAL_TITLE}
           isDisabled={isDisabled}
           buttonText={buttonText}
           onClose={onClose}
           open={open}
           onConfirm={onConfirm}
-          items={Object.values(items.data)}
+          itemIds={itemIds}
         />
       )}
     </>

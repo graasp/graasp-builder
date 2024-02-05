@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { IconButtonProps } from '@mui/material';
 
+import { DiscriminatedItem } from '@graasp/sdk';
 import {
   ActionButtonVariant,
   CopyButton as GraaspCopyButton,
 } from '@graasp/ui';
 
-import { hooks, mutations } from '@/config/queryClient';
-import { computButtonText, computeTitle } from '@/utils/itemSelection';
+import { mutations } from '@/config/queryClient';
+import { computButtonText } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -41,8 +42,6 @@ const CopyButton = ({
   const [open, setOpen] = useState<boolean>(false);
   const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
 
-  const { data: items } = hooks.useItems(itemIds);
-
   const openCopyModal = (newItemIds: string[]) => {
     setOpen(true);
     setItemIds(newItemIds);
@@ -73,14 +72,11 @@ const CopyButton = ({
   };
 
   // The copy button is never disabled
-  const isDisabled = (_item: NavigationElement, _homeId: string) => false;
-
-  const title = computeTitle({
-    items,
-    count: itemIds.length - 1,
-    translateBuilder,
-    translateKey: BUILDER.COPY_ITEM_MODAL_TITLE,
-  });
+  const isDisabled = (
+    _items: DiscriminatedItem[],
+    _item: NavigationElement,
+    _homeId: string,
+  ) => false;
 
   const buttonText = (name?: string) =>
     computButtonText({
@@ -101,15 +97,15 @@ const CopyButton = ({
         onClick={handleCopy}
       />
 
-      {items?.data && open && (
+      {itemIds && open && (
         <ItemSelectionModal
-          title={title}
+          titleKey={BUILDER.COPY_ITEM_MODAL_TITLE}
           isDisabled={isDisabled}
           buttonText={buttonText}
           onClose={onClose}
           open={open}
           onConfirm={onConfirm}
-          items={Object.values(items.data)}
+          itemIds={itemIds}
         />
       )}
     </>
