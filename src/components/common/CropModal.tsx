@@ -32,7 +32,7 @@ function centerAspectCrop(
     makeAspectCrop(
       {
         unit: '%',
-        width: 90,
+        width: 100,
       },
       aspect,
       mediaWidth,
