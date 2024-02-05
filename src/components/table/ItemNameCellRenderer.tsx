@@ -31,7 +31,6 @@ const ItemNameCellRenderer = (
         iconSrc={iconSrc}
         alt={alt}
         mimetype={getMimetype(item.extra)}
-        sx={{ border: '2px solid red' }}
       />
     );
 
