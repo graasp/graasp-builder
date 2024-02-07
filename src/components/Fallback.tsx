@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { ErrorOutline } from '@mui/icons-material';
 import { Box, Button, Stack, Typography } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -33,7 +33,7 @@ const FallbackComponent = (): JSX.Element => {
           {translateBuilder(BUILDER.FALLBACK_BACK_TO_HOME)}
         </Button>
       </Box>
-      <ErrorOutlineIcon
+      <ErrorOutline
         fontSize="large"
         htmlColor="#5050d2"
         sx={{

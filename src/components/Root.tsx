@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
-import { theme as GraaspTheme } from '@graasp/ui';
+import { theme } from '@graasp/ui';
 
 import '@ag-grid-community/styles/ag-grid.min.css';
 import '@ag-grid-community/styles/ag-theme-material.min.css';
@@ -28,7 +28,7 @@ import ModalProviders from './context/ModalProviders';
 const Root = (): JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <I18nextProvider i18n={i18nConfig}>
-      <ThemeProvider theme={GraaspTheme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <ToastContainer position="bottom-right" theme="colored" />
         <Router>
