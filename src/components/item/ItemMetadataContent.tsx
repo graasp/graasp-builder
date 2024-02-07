@@ -27,7 +27,6 @@ import {
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { OutletType } from '../pages/item/type';
-import ItemMemberships from './ItemMemberships';
 import ThumbnailSetting from './settings/ThumbnailSetting';
 
 const { useMember } = hooks;
@@ -129,7 +128,6 @@ const ItemMetadataContent = (): JSX.Element => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ItemMemberships id={item.id} maxAvatar={5} />
     </Container>
   );
 };
