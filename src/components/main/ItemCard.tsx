@@ -6,6 +6,7 @@ import {
   ItemMembership,
   ItemType,
   PermissionLevel,
+  ThumbnailSize,
 } from '@graasp/sdk';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
@@ -53,7 +54,10 @@ const ItemComponent = ({
   canMove = true,
 }: Props): JSX.Element => {
   const { id, name } = item;
-  const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({ id });
+  const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
+    id,
+    size: ThumbnailSize.Medium,
+  });
 
   const alt = name;
   const defaultValueComponent = (
@@ -80,6 +84,7 @@ const ItemComponent = ({
       url={thumbnailUrl ?? linkUrl}
       alt={alt}
       defaultComponent={defaultValueComponent}
+      sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
     />
   );
 
