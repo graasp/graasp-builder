@@ -69,7 +69,7 @@ export const SelectTypes = (): JSX.Element => {
         MenuProps={MenuProps}
       >
         {types.map((type) => (
-          <MenuItem key={type} value={type}>
+          <MenuItem key={type} value={type} disableGutters sx={{ padding: 0 }}>
             <Checkbox checked={itemTypes.includes(type)} size="small" />
             <Stack direction="row" spacing={1} alignItems="center">
               <ItemIcon alt={type} type={type} />
