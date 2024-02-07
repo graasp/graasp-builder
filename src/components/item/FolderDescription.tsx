@@ -1,4 +1,4 @@
-import { TextEditor } from '@graasp/ui';
+import TextEditor from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';

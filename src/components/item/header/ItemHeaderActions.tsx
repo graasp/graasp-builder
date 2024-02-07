@@ -1,11 +1,12 @@
+import { useParams } from 'react-router-dom';
+
 import { Stack } from '@mui/material';
 
 import { ItemType, PermissionLevel } from '@graasp/sdk';
-import { ChatboxButton, useShortenURLParams } from '@graasp/ui';
+import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
-import { ITEM_ID_PARAMS } from '@/config/paths';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -28,7 +29,7 @@ import ModeButton from './ModeButton';
 const { useItemMemberships, useItem } = hooks;
 
 const ItemHeaderActions = (): JSX.Element => {
-  const itemId = useShortenURLParams(ITEM_ID_PARAMS);
+  const { itemId } = useParams();
   const { t: translateBuilder } = useBuilderTranslation();
   const { editingItemId, isChatboxMenuOpen, setIsChatboxMenuOpen } =
     useLayoutContext();

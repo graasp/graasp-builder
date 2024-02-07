@@ -9,7 +9,7 @@ import {
   DocumentItemType,
   ItemType,
 } from '@graasp/sdk';
-import { DocumentItem } from '@graasp/ui';
+import { DocumentItem } from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';

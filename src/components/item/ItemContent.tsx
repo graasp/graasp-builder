@@ -24,13 +24,13 @@ import {
 } from '@graasp/sdk';
 import {
   AppItem,
-  DocumentItem,
   EtherpadItem,
   FileItem,
   H5PItem,
   LinkItem,
   Loader,
 } from '@graasp/ui';
+import { DocumentItem } from '@graasp/ui/text-editor';
 
 import { API_HOST, GRAASP_ASSETS_URL, H5P_INTEGRATION_URL } from '@/config/env';
 

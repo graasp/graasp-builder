@@ -1,4 +1,5 @@
 import { ItemType, MaxWidth, MimeTypes } from '@graasp/sdk';
+import { DEFAULT_LANG } from '@graasp/translations';
 
 import { InternalItemType } from '../../src/config/types';
 import { buildFileExtra, buildS3FileExtra } from '../../src/utils/itemExtra';
@@ -20,6 +21,7 @@ export const IMAGE_ITEM_DEFAULT: LocalFileItemForTest = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
+  lang: DEFAULT_LANG,
   extra: buildFileExtra({
     name: 'icon.png',
     path: '9a95/e2e1/2a7b-1615910428274',
@@ -45,6 +47,7 @@ export const IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH: LocalFileItemForTest = {
   settings: {
     maxWidth: MaxWidth.Medium,
   },
+  lang: DEFAULT_LANG,
   extra: buildFileExtra({
     name: 'icon.png',
     path: '9a95/e2e1/2a7b-1615910428274',
@@ -68,6 +71,7 @@ export const VIDEO_ITEM_DEFAULT: LocalFileItemForTest = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
+  lang: DEFAULT_LANG,
   extra: buildFileExtra({
     name: 'video.mp4',
     path: '9a95/e2e1/2a7b-1615910428274',
@@ -91,6 +95,7 @@ export const PDF_ITEM_DEFAULT: LocalFileItemForTest = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
+  lang: DEFAULT_LANG,
   extra: buildFileExtra({
     name: 'doc.pdf',
     path: '9a95/e2e1/2a7b-1615910428274',
@@ -119,6 +124,7 @@ export const IMAGE_ITEM_S3: S3FileItemForTest = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
+  lang: DEFAULT_LANG,
   extra: buildS3FileExtra({
     path: MOCK_IMAGE_URL, // for testing
     size: 32439,
@@ -142,6 +148,7 @@ export const VIDEO_ITEM_S3: S3FileItemForTest = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
+  lang: DEFAULT_LANG,
   extra: buildS3FileExtra({
     path: MOCK_VIDEO_URL, // for testing
     size: 52345,
@@ -165,6 +172,7 @@ export const PDF_ITEM_S3: S3FileItemForTest = {
   createdAt: '2021-03-16T16:00:50.968Z',
   updatedAt: '2021-03-16T16:00:52.655Z',
   settings: {},
+  lang: DEFAULT_LANG,
   extra: buildS3FileExtra({
     path: MOCK_PDF_URL, // for testing
     size: 54321,

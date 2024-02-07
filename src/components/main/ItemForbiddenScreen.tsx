@@ -37,7 +37,6 @@ const ItemForbiddenScreen = (): JSX.Element => {
         height="90%"
       >
         <Grid item>
-          {/* // TODO: remove hook from prop */}
           <ForbiddenContent memberId={member?.id} />
           <UserSwitchWrapper ButtonContent={ButtonContent} />
         </Grid>

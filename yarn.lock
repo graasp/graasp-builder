@@ -1485,11 +1485,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.5.0":
-  version: 2.5.0
-  resolution: "@graasp/query-client@npm:2.5.0"
+"@graasp/query-client@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@graasp/query-client@npm:2.6.0"
   dependencies:
-    "@graasp/sdk": "npm:3.6.0"
+    "@graasp/sdk": "npm:3.7.0"
     "@graasp/translations": "npm:1.23.0"
     axios: "npm:0.27.2"
     crypto-js: "npm:4.2.0"
@@ -1500,32 +1500,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 10/3f609bc338770a04ae1764a5a9663ee9bd788261d09983e89e7dc8d2299ce75eeee267106903158b06da46e0698ef9f04f20f937eab52785a3b10ef273fda934
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:3.5.0":
-  version: 3.5.0
-  resolution: "@graasp/sdk@npm:3.5.0"
-  dependencies:
-    date-fns: "npm:3.2.0"
-    js-cookie: "npm:3.0.5"
-    uuid: "npm:9.0.1"
-    validator: "npm:13.11.0"
-  checksum: 10/dfbb9977904336214e411c93a33084fca8e07cb73145f655a070dfdb81a772d6a0412849ee07c8ee2e74497d59f960a8ef1989062a4e41d78ad5d22b24e8a8db
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:3.6.0, @graasp/sdk@npm:^3.3.0":
-  version: 3.6.0
-  resolution: "@graasp/sdk@npm:3.6.0"
-  dependencies:
-    js-cookie: "npm:3.0.5"
-    validator: "npm:13.11.0"
-  peerDependencies:
-    date-fns: ^3
-    uuid: ^9
-  checksum: 10/df52e11764c727e17ce69d247805fd8a2d49ba291b84e00ca390f853f0b0eb7fc4a2153e7003044cb8f84edf9c2c9cae91b79a55d1e71e71c69317e40145ad12
+  checksum: 10/050cf66f683150f393eb5f27f66535871b981b39a1de1df8a1d2d95c73ddb40950b73f58c93028121a41f5e1580cfb6b2ed7680c2ddc82f9354e3967f730e9d2
   languageName: node
   linkType: hard
 
@@ -1540,6 +1515,18 @@ __metadata:
     date-fns: ^3
     uuid: ^9
   checksum: 10/686ecf2f252ccaf17a63730e3a9f486bbf5d4744a62c66fc338ec7bc4e1c9161387ce1c72bd560946a57aaa6798ef5e50fe97ccd8178c52ff5c497c8d11ee131
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@npm:^3.3.0":
+  version: 3.5.0
+  resolution: "@graasp/sdk@npm:3.5.0"
+  dependencies:
+    date-fns: "npm:3.2.0"
+    js-cookie: "npm:3.0.5"
+    uuid: "npm:9.0.1"
+    validator: "npm:13.11.0"
+  checksum: 10/dfbb9977904336214e411c93a33084fca8e07cb73145f655a070dfdb81a772d6a0412849ee07c8ee2e74497d59f960a8ef1989062a4e41d78ad5d22b24e8a8db
   languageName: node
   linkType: hard
 
@@ -3219,14 +3206,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
-  version: 15.7.9
-  resolution: "@types/prop-types@npm:15.7.9"
-  checksum: 10/c7591d3ff7593e243908a07e1d3e2bb6e8879008af5800d8378115a90d0fdf669a1cae72a6d7f69e59c4fa7bb4c8ed61f6ebc1c520fe110c6f2b03ac02414072
-  languageName: node
-  linkType: hard
-
-"@types/prop-types@npm:^15.7.11":
+"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.11":
   version: 15.7.11
   resolution: "@types/prop-types@npm:15.7.11"
   checksum: 10/7519ff11d06fbf6b275029fe03fff9ec377b4cb6e864cac34d87d7146c7f5a7560fd164bdc1d2dbe00b60c43713631251af1fd3d34d46c69cd354602bc0c7c54
@@ -7323,8 +7303,8 @@ __metadata:
     "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.3"
-    "@graasp/query-client": "npm:2.5.0"
-    "@graasp/sdk": "npm:3.5.0"
+    "@graasp/query-client": "npm:2.6.0"
+    "@graasp/sdk": "npm:3.7.0"
     "@graasp/translations": "npm:1.22.1"
     "@graasp/ui": "github:graasp/graasp-ui#484-convert-to-pure-ts-package"
     "@mui/icons-material": "npm:5.15.6"
