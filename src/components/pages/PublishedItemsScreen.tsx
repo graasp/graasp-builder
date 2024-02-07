@@ -23,9 +23,9 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
     isLoading,
     isError,
   } = hooks.usePublishedItemsForMember(member?.id);
-  const { displayItem } = useFilterItemsContext();
+  const { shouldDisplayItem } = useFilterItemsContext();
   // TODO: implement filter in the hooks directly ?
-  const filteredData = publishedItems?.filter((d) => displayItem(d.type));
+  const filteredData = publishedItems?.filter((d) => shouldDisplayItem(d.type));
 
   if (filteredData) {
     return (

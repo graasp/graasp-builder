@@ -33,8 +33,6 @@
   "CREATE_SHORTCUT_DEFAULT_NAME": "Verknüpfung zu {{name}}",
   "CREATE_SHORTCUT_MODAL_TITLE": "Wo möchten Sie die Verknüpfung erstellen?",
   "CREATE_SHORTCUT_MODAL_TITLE_zero": "Wo möchten Sie die Verknüpfung für {{name}} erstellt werden?",
-  "CREATE_SHORTCUT_MODAL_TITLE_one": "Wo möchten Sie die Verknüpfung für {{name}} und eine andere erstellt werden?",
-  "CREATE_SHORTCUT_MODAL_TITLE_other": "Wo möchten Sie die Verknüpfung für {{name}} und {{count}} andere erstellt werden?",
   "CROP_IMAGE_MODAL_CONTENT_TEXT": "Schneiden Sie das ausgewählte Bild zu, damit es den Anforderungen an die Bildgröße entspricht.",
   "CROP_IMAGE_MODAL_TITLE": "Bild zuschneiden",
   "DELETE_BUTTON": "Löschen",

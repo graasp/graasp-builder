@@ -1,6 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  MY_GRAASP_ITEM_PATH,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
@@ -69,7 +70,7 @@ describe('Move Item in Grid', () => {
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    moveItem({ id: movedItem, toItemPath: 'selectionModalMyGraasp' });
+    moveItem({ id: movedItem, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);

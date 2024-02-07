@@ -29,12 +29,10 @@
   "CREATE_NEW_ITEM_NAME_LABEL": "Nom",
   "CREATE_SHORTCUT_BUTTON": "Créer le raccourci",
   "CREATE_SHORTCUT_BUTTON_zero": "Créer le raccourci",
-  "CREATE_SHORTCUT_BUTTON_one": "Créer le raccourci vers {{name}}",
+  "CREATE_SHORTCUT_BUTTON_one": "Créer le raccourci dans {{name}}",
   "CREATE_SHORTCUT_DEFAULT_NAME": "Raccourci vers {{name}}",
   "CREATE_SHORTCUT_MODAL_TITLE": "Où voulez-vous créer le raccourci?",
   "CREATE_SHORTCUT_MODAL_TITLE_zero": "Où voulez-vous créer le raccourci pour {{name}}?",
-  "CREATE_SHORTCUT_MODAL_TITLE_one": "Où voulez-vous créer le raccourci pour {{name}} et un autre?",
-  "CREATE_SHORTCUT_MODAL_TITLE_other": "Où voulez-vous créer le raccourci pour {{name}} et {{count}} autres?",
   "CROP_IMAGE_MODAL_CONTENT_TEXT": "Couper l'image choisie pour correspondre aux critères de taille d'image.",
   "CROP_IMAGE_MODAL_TITLE": "Couper l'Image",
   "DELETE_BUTTON": "Supprimer",
@@ -311,5 +309,5 @@
   "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Éléments Récents",
   "ITEM_SELECTION_NAVIGATION_PARENT": "Déplacer au-dessus",
   "ARIA_OPEN_DRAWER": "ouvrir la barre latérale",
-  "FILTER_BY_TYPES_LABEL": "Filtrer par type"
+  "FILTER_BY_TYPES_LABEL": "Type"
 }

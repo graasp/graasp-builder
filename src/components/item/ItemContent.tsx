@@ -178,7 +178,7 @@ const FolderContent = ({
   item: FolderItemType;
   enableEditing: boolean;
 }): JSX.Element => {
-  const { displayItem } = useFilterItemsContext();
+  const { shouldDisplayItem } = useFilterItemsContext();
 
   const {
     data: children,
@@ -189,7 +189,7 @@ const FolderContent = ({
   });
 
   // TODO: use hook's filter when available
-  const folderChildren = children?.filter((f) => displayItem(f.type));
+  const folderChildren = children?.filter((f) => shouldDisplayItem(f.type));
 
   if (isLoading) {
     return <Loader />;

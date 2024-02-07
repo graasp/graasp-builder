@@ -7,7 +7,7 @@ import { applyEllipsisOnLength } from './item';
 type TFunction = (key: string, params?: { [key: string]: unknown }) => string;
 
 type TitleProps = {
-  items: ResultOf<DiscriminatedItem<ItemSettings>> | undefined;
+  items?: ResultOf<DiscriminatedItem<ItemSettings>>;
   count: number;
   translateBuilder: TFunction;
   translateKey: string;
@@ -35,7 +35,7 @@ type ButtonProps = {
   name?: string;
 };
 
-export const computButtonText = ({
+export const computeButtonText = ({
   name,
   translateBuilder,
   translateKey,

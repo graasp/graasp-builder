@@ -9,7 +9,7 @@ import {
 } from '@graasp/ui';
 
 import { mutations } from '@/config/queryClient';
-import { computButtonText } from '@/utils/itemSelection';
+import { computeButtonText } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -79,7 +79,7 @@ const CopyButton = ({
   ) => false;
 
   const buttonText = (name?: string) =>
-    computButtonText({
+    computeButtonText({
       translateBuilder,
       translateKey: BUILDER.COPY_BUTTON,
       name,

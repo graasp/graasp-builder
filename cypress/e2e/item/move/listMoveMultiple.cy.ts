@@ -1,6 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
+  MY_GRAASP_ITEM_PATH,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
@@ -71,7 +72,7 @@ describe('Move Items in List', () => {
 
     // move
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    moveItems({ itemIds, toItemPath: 'selectionModalMyGraasp' });
+    moveItems({ itemIds, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);

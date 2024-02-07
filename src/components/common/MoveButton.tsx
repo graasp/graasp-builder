@@ -11,7 +11,7 @@ import {
 
 import { mutations } from '@/config/queryClient';
 import { getDirectParentId } from '@/utils/item';
-import { computButtonText } from '@/utils/itemSelection';
+import { computeButtonText } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -44,8 +44,6 @@ const MoveButton = ({
 
   const [open, setOpen] = useState(false);
   const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
-
-  // const { data: items } = hooks.useItems(itemIds);
 
   const openMoveModal = (newItemIds: string[]) => {
     setOpen(true);
@@ -100,15 +98,8 @@ const MoveButton = ({
     return false;
   };
 
-  // const title = computeTitle({
-  //   items,
-  //   count: itemIds.length - 1,
-  //   translateBuilder,
-  //   translateKey: BUILDER.MOVE_ITEM_MODAL_TITLE,
-  // });
-
   const buttonText = (name?: string) =>
-    computButtonText({
+    computeButtonText({
       translateBuilder,
       translateKey: BUILDER.MOVE_BUTTON,
       name,

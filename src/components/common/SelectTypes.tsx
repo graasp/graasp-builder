@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { Stack } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -29,6 +27,7 @@ const MenuProps = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { S3_FILE, ...BUILDER_ITEM_TYPES } = ItemType; // exclude S3 file
+const LABEL_ID = 'select-types-filter-label';
 
 export const SelectTypes = (): JSX.Element => {
   const { itemTypes, setItemTypes } = useFilterItemsContext();
@@ -43,12 +42,7 @@ export const SelectTypes = (): JSX.Element => {
     const {
       target: { value },
     } = event;
-
-    if (typeof value === typeof itemTypes) {
-      setItemTypes(value as typeof itemTypes);
-    } else {
-      console.error('Something goes wrong with SelectTypes filter');
-    }
+    setItemTypes(value as typeof itemTypes);
   };
 
   const label = translateBuilder(BUILDER.FILTER_BY_TYPES_LABEL);
@@ -62,11 +56,10 @@ export const SelectTypes = (): JSX.Element => {
   );
 
   return (
-    <FormControl sx={{ maxWidth: 180 }} size="small">
-      <InputLabel id="select-types-filter-label">{label}</InputLabel>
+    <FormControl sx={{ width: 'max-content', minWidth: '200px' }} size="small">
+      <InputLabel id={LABEL_ID}>{label}</InputLabel>
       <Select
-        labelId="select-types-filter-label"
-        id="select-types-filter"
+        labelId={LABEL_ID}
         size="small"
         multiple
         value={itemTypes}
@@ -77,7 +70,7 @@ export const SelectTypes = (): JSX.Element => {
       >
         {types.map((type) => (
           <MenuItem key={type} value={type}>
-            <Checkbox checked={itemTypes.indexOf(type) > -1} />
+            <Checkbox checked={itemTypes.includes(type)} size="small" />
             <Stack direction="row" spacing={1} alignItems="center">
               <ItemIcon alt={type} type={type} />
               <ListItemText primary={translateEnums(type)} />

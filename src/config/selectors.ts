@@ -347,4 +347,4 @@ export const buildShortLinkUrlTextId = (platform: ShortLinkPlatform): string =>
 export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
-export const MY_GRAASP_ITEM_PATH = 'selectionModalMyGraasp';
+export const MY_GRAASP_ITEM_PATH = 'myGraaspItemPath';

@@ -52,9 +52,9 @@ const ToolbarActions = ({ selectedIds }: ToolbarActionsProps): JSX.Element => (
 const RecycleBinLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
-  const { displayItem } = useFilterItemsContext();
+  const { shouldDisplayItem } = useFilterItemsContext();
   // TODO: implement filter in the hooks directly ?
-  const filteredData = recycledItems?.filter((d) => displayItem(d.type));
+  const filteredData = recycledItems?.filter((d) => shouldDisplayItem(d.type));
 
   if (filteredData) {
     return (

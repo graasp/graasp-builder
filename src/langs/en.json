@@ -33,8 +33,6 @@
   "CREATE_SHORTCUT_DEFAULT_NAME": "Shortcut to {{name}}",
   "CREATE_SHORTCUT_MODAL_TITLE": "Where do you want to create the shortcut?",
   "CREATE_SHORTCUT_MODAL_TITLE_zero": "Where do you want to create the shortcut for {{name}}?",
-  "CREATE_SHORTCUT_MODAL_TITLE_one": "Where do you want to create the shortcut for {{name}} and another one?",
-  "CREATE_SHORTCUT_MODAL_TITLE_other": "Where do you want to create the shortcut for {{name}} and {{count}} others?",
   "CROP_IMAGE_MODAL_CONTENT_TEXT": "Crop your chosen image to fit the image size requirements.",
   "CROP_IMAGE_MODAL_TITLE": "Crop Image",
   "CROP_IMAGE_MODAL_IMAGE_ALT_TEXT": "Crop me",
@@ -320,5 +318,5 @@
   "BACK": "Go Back",
   "UPDATE_THUMBNAIL_AT_INFO_ALERT": "You can change the item's thumbnail in its information page: <navigate>Information</navigate>",
   "ITEM_ACTION_INFORMATION": "Information",
-  "FILTER_BY_TYPES_LABEL": "Filter by type"
+  "FILTER_BY_TYPES_LABEL": "Type"
 }

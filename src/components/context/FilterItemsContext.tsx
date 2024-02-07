@@ -1,8 +1,8 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 
-import { ItemType, UnionOfConst } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 
-type ItemTypeConst = UnionOfConst<typeof ItemType>;
+type ItemTypeConst = DiscriminatedItem['type'];
 type ItemTypes = ItemTypeConst[];
 
 type FilterItemsContextType = {
@@ -10,7 +10,7 @@ type FilterItemsContextType = {
   setItemTypes: (
     newTypes: ItemTypes | ((types: ItemTypes) => ItemTypes),
   ) => void;
-  displayItem: (itemType: ItemTypeConst) => boolean;
+  shouldDisplayItem: (itemType: ItemTypeConst) => boolean;
 };
 
 const FilterItemsContext = createContext<FilterItemsContextType>({
@@ -20,7 +20,7 @@ const FilterItemsContext = createContext<FilterItemsContextType>({
       'No Provider found for "FilterItemsContext". Check that this Provider is accessible.',
     );
   },
-  displayItem: (_itemType): boolean => {
+  shouldDisplayItem: (_itemType): boolean => {
     console.error(
       'No Provider found for "FilterItemsContext". Check that this Provider is accessible.',
     );
@@ -41,7 +41,7 @@ export const FilterItemsContextProvider = ({
     () => ({
       itemTypes,
       setItemTypes,
-      displayItem: (itemType: ItemTypeConst) =>
+      shouldDisplayItem: (itemType: ItemTypeConst) =>
         itemTypes.length === 0 || itemTypes.includes(itemType),
     }),
     [itemTypes],

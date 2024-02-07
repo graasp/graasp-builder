@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 
-import { DiscriminatedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -18,9 +17,9 @@ import Items from '../main/Items';
 const FavoriteItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data, isLoading: isItemsLoading, isError } = hooks.useFavoriteItems();
-  const { displayItem } = useFilterItemsContext();
+  const { shouldDisplayItem } = useFilterItemsContext();
   // TODO: implement filter in the hooks directly ?
-  const filteredData = data?.filter((d) => displayItem(d.item.type));
+  const filteredData = data?.filter((d) => shouldDisplayItem(d.item.type));
 
   if (filteredData) {
     return (
@@ -29,7 +28,7 @@ const FavoriteItemsLoadableContent = (): JSX.Element | null => {
         <Items
           id={FAVORITE_ITEMS_ID}
           title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-          items={filteredData.map((d) => d.item as DiscriminatedItem)}
+          items={filteredData.map((d) => d.item)}
         />
       </Box>
     );

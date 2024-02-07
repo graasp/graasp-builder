@@ -20,9 +20,9 @@ import Items from '../main/Items';
 const SharedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: sharedItems, isLoading, isError } = hooks.useSharedItems();
-  const { displayItem } = useFilterItemsContext();
+  const { shouldDisplayItem } = useFilterItemsContext();
   // TODO: implement filter in the hooks directly ?
-  const filteredItems = sharedItems?.filter((i) => displayItem(i.type));
+  const filteredItems = sharedItems?.filter((i) => shouldDisplayItem(i.type));
 
   if (filteredItems) {
     return (

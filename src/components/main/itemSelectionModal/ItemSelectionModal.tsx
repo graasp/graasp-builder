@@ -15,6 +15,7 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import {
   HOME_MODAL_ITEM_ID,
+  MY_GRAASP_ITEM_PATH,
   TREE_MODAL_CONFIRM_BUTTON_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
@@ -25,7 +26,6 @@ import ChildrenNavigationTree from './ChildrenNavigationTree';
 import RootNavigationTree from './RootNavigationTree';
 
 const dialogId = 'items-tree-modal';
-const MY_GRAASP_BREADCRUMB_ID = 'selectionModalMyGraasp';
 
 export type ItemSelectionModalProps = {
   buttonText: (itemName?: string) => string;
@@ -74,8 +74,8 @@ const ItemSelectionModal = ({
   // my graasp displays accessible items
   const MY_GRAASP_BREADCRUMB: NavigationElement = {
     name: translateBuilder(BUILDER.MY_ITEMS_TITLE),
-    id: MY_GRAASP_BREADCRUMB_ID,
-    path: MY_GRAASP_BREADCRUMB_ID,
+    id: MY_GRAASP_ITEM_PATH,
+    path: MY_GRAASP_ITEM_PATH,
   };
 
   const SPECIAL_BREADCRUMB_IDS = [ROOT_BREADCRUMB.id, MY_GRAASP_BREADCRUMB.id];
@@ -138,12 +138,9 @@ const ItemSelectionModal = ({
     return <Breadcrumbs elements={elements} onSelect={onNavigate} />;
   };
 
-  const isDisabledLocal = (item: NavigationElement) => {
-    if (!items?.data) {
-      return true;
-    }
-    return isDisabled(Object.values(items.data), item, MY_GRAASP_BREADCRUMB.id);
-  };
+  const isDisabledLocal = (item: NavigationElement) =>
+    !items?.data ||
+    isDisabled(Object.values(items.data), item, MY_GRAASP_BREADCRUMB.id);
 
   return (
     <Dialog

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import { ListItemIcon, MenuItem } from '@mui/material';
@@ -11,7 +11,7 @@ import {
 } from '@graasp/sdk';
 
 import { mutations } from '@/config/queryClient';
-import { computButtonText } from '@/utils/itemSelection';
+import { computeButtonText } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MENU_SHORTCUT_BUTTON_CLASS } from '../../config/selectors';
@@ -64,11 +64,6 @@ const CreateShortcutButton = ({
     onClose();
   };
 
-  useEffect(() => {
-    // necessary to sync prop with a state because move-many-items' targets are updated dynamically with the table
-    setItem(defaultItem);
-  }, [defaultItem]);
-
   const handleShortcut = () => {
     openShortcutModal(item);
     onClick?.();
@@ -82,7 +77,7 @@ const CreateShortcutButton = ({
   ) => false;
 
   const buttonText = (name?: string) =>
-    computButtonText({
+    computeButtonText({
       translateBuilder,
       translateKey: BUILDER.CREATE_SHORTCUT_BUTTON,
       name,
