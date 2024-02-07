@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { ShareButton as GraaspShareButton } from '@graasp/ui';
 
@@ -17,20 +17,16 @@ type Props = {
 
 const ShareButton = ({ itemId }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const navigate = useNavigate();
-
-  const onClick = () => {
-    navigate(buildItemSharePath(itemId));
-  };
 
   return (
-    <GraaspShareButton
-      tooltip={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
-      ariaLabel={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
-      className={SHARE_ITEM_BUTTON_CLASS}
-      onClick={onClick}
-      id={buildShareButtonId(itemId)}
-    />
+    <Link to={buildItemSharePath(itemId)}>
+      <GraaspShareButton
+        tooltip={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
+        ariaLabel={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
+        className={SHARE_ITEM_BUTTON_CLASS}
+        id={buildShareButtonId(itemId)}
+      />
+    </Link>
   );
 };
 

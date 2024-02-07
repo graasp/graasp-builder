@@ -33,14 +33,14 @@ const ItemScreenLayout = (): JSX.Element => {
     memberId: currentMember?.id,
   });
   const permission = itemMembership?.permission;
-  const enableEditing = permission
+  const canEdit = permission
     ? PERMISSIONS_EDITION_ALLOWED.includes(permission)
     : false;
 
   if (item && itemId && memberships) {
     return (
-      <UppyContextProvider enable={enableEditing} itemId={itemId}>
-        <Outlet context={{ item, permission }} />
+      <UppyContextProvider enable={canEdit} itemId={itemId}>
+        <Outlet context={{ item, permission, canEdit }} />
       </UppyContextProvider>
     );
   }

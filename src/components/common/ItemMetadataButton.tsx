@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import InfoIcon from '@mui/icons-material/Info';
 import { IconButton, Tooltip } from '@mui/material';
@@ -12,19 +12,13 @@ import { BUILDER } from '../../langs/constants';
 const ItemMetadataButton = ({ itemId }: { itemId: string }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const navigate = useNavigate();
-
-  const onClick = () => {
-    navigate(buildItemInformationPath(itemId));
-  };
-
   return (
     <Tooltip title={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}>
-      <span>
-        <IconButton id={ITEM_INFORMATION_BUTTON_ID} onClick={onClick}>
+      <Link to={buildItemInformationPath(itemId)}>
+        <IconButton id={ITEM_INFORMATION_BUTTON_ID}>
           <InfoIcon />
         </IconButton>
-      </span>
+      </Link>
     </Tooltip>
   );
 };

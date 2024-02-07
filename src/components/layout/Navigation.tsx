@@ -34,11 +34,7 @@ const Navigator = (): JSX.Element | null => {
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
 
-  const location = useLocation();
-
-  const itemSettingsLocation = location.pathname.split(
-    `${buildItemPath(itemId)}/`,
-  )?.[1];
+  const { pathname: location } = useLocation();
 
   const { data: parents, isLoading: areParentsLoading } = useParents({
     id: itemId,
@@ -114,7 +110,7 @@ const Navigator = (): JSX.Element | null => {
 
   const extraItems = buildExtraItems({
     translate: translateBuilder,
-    location: itemSettingsLocation,
+    location,
     itemId,
   });
 

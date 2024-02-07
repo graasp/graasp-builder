@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -20,26 +20,20 @@ type Props = {
 
 const PublishButton = ({ itemId }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const navigate = useNavigate();
-
-  const onClick = () => {
-    navigate(buildItemPublishPath(itemId));
-  };
 
   const title = translateBuilder(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE);
 
   return (
     <Tooltip title={title}>
-      <span>
+      <Link to={buildItemPublishPath(itemId)}>
         <IconButton
           aria-label={title}
           className={PUBLISH_ITEM_BUTTON_CLASS}
-          onClick={onClick}
           id={buildPublishButtonId(itemId)}
         >
           <LibraryIcon size={24} showSetting primaryColor="#777" />
         </IconButton>
-      </span>
+      </Link>
     </Tooltip>
   );
 };

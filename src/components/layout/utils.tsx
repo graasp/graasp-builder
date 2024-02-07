@@ -5,19 +5,18 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { LibraryIcon } from '@graasp/ui';
 
 import {
+  ITEM_INFORMATION_PATH,
+  ITEM_PUBLISH_PATH,
+  ITEM_SETTINGS_PATH,
+  ITEM_SHARE_PATH,
   buildItemInformationPath,
+  buildItemPath,
   buildItemPublishPath,
   buildItemSettingsPath,
   buildItemSharePath,
 } from '@/config/paths';
 import { BUILDER } from '@/langs/constants';
 
-const ItemAction = {
-  SETTINGS: 'settings',
-  INFORMATION: 'information',
-  SHARE: 'share',
-  PUBLISH: 'publish',
-};
 export interface MenuItemType {
   name: string;
   path: string;
@@ -41,6 +40,9 @@ export const buildExtraItems = ({
   if (!itemId) {
     return [];
   }
+
+  const page = buildItemPath(location);
+
   // we don't switch to sub pages
   // const menuItems = [
   //   {
@@ -61,8 +63,8 @@ export const buildExtraItems = ({
   //   },
   // ];
 
-  switch (location) {
-    case ItemAction.SETTINGS:
+  switch (true) {
+    case page.includes(ITEM_SETTINGS_PATH):
       return [
         {
           name: translate(BUILDER.SETTINGS_TITLE),
@@ -71,7 +73,7 @@ export const buildExtraItems = ({
           menuItems: [],
         },
       ];
-    case ItemAction.SHARE:
+    case page.includes(ITEM_SHARE_PATH):
       return [
         {
           name: translate(BUILDER.SHARE_ITEM_BUTTON),
@@ -80,7 +82,7 @@ export const buildExtraItems = ({
           menuItems: [],
         },
       ];
-    case ItemAction.PUBLISH:
+    case page.includes(ITEM_PUBLISH_PATH):
       return [
         {
           name: translate(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON),
@@ -89,7 +91,7 @@ export const buildExtraItems = ({
           menuItems: [],
         },
       ];
-    case ItemAction.INFORMATION:
+    case page.includes(ITEM_INFORMATION_PATH):
       return [
         {
           name: translate(BUILDER.ITEM_ACTION_INFORMATION),

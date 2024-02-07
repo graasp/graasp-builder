@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
@@ -19,23 +19,16 @@ type Props = {
 
 const ItemSettingsButton = ({ id }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const navigate = useNavigate();
-
-  const onClickSettings = () => {
-    navigate(buildItemSettingsPath(id));
-  };
-
   return (
     <Tooltip title={translateBuilder(BUILDER.SETTINGS_TITLE)}>
-      <span>
+      <Link to={buildItemSettingsPath(id)}>
         <IconButton
-          onClick={onClickSettings}
           className={ITEM_SETTINGS_BUTTON_CLASS}
           id={buildSettingsButtonId(id)}
         >
           <SettingsIcon />
         </IconButton>
-      </span>
+      </Link>
     </Tooltip>
   );
 };

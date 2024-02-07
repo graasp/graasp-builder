@@ -20,6 +20,6 @@ describe('Published Item Page', () => {
     cy.get(`#${ITEM_PUBLISH_BUTTON_ID} > span`)
       .children()
       .children()
-      .should('exist');
+      .should('be.visible');
   });
 });
