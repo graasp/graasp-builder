@@ -1,10 +1,11 @@
+import { useOutletContext, useParams } from 'react-router';
+
 import { Divider } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import {
-  DiscriminatedItem,
   ItemMembership,
   PermissionLevelCompare,
   isPseudonymizedMember,
@@ -12,6 +13,8 @@ import {
 import { Loader } from '@graasp/ui';
 
 import partition from 'lodash.partition';
+
+import { OutletType } from '@/components/pages/item/type';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
@@ -29,10 +32,6 @@ import ItemMembershipsTable from './ItemMembershipsTable';
 import VisibilitySelect from './VisibilitySelect';
 import ShortLinksRenderer from './shortLink/ShortLinksRenderer';
 
-type Props = {
-  item: DiscriminatedItem;
-  memberships?: ItemMembership[];
-};
 interface PermissionMap {
   [key: string]: ItemMembership;
 }
@@ -55,8 +54,13 @@ const selectHighestMemberships = (
   return Object.values(permissionMap);
 };
 
-const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
+const ItemSharingTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { item } = useOutletContext<OutletType>();
+  const { itemId } = useParams();
+
+  const { data: memberships } = hooks.useItemMemberships(itemId);
+
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentUserContext();
   const { data: invitations } = hooks.useItemInvitations(item?.id);
@@ -98,7 +102,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
         <Divider sx={{ my: 3 }} />
 
         <Grid container justifyContent="space-between" alignItems="center">
-          <Typography variant="h5" m={0} p={0}>
+          <Typography variant="h6" m={0} p={0}>
             {translateBuilder(BUILDER.SHARING_AUTHORIZED_MEMBERS_TITLE)}
           </Typography>
           {canEditSettings && <CsvInputParser item={item} />}
@@ -121,7 +125,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
         {itemLoginSchema && (
           <>
             <Divider sx={{ my: 3 }} />
-            <Typography variant="h5" m={0} p={0}>
+            <Typography variant="h6" m={0} p={0}>
               {translateBuilder(BUILDER.SHARING_AUTHENTICATED_MEMBERS_TITLE)}
             </Typography>
             <ItemMembershipsTable
@@ -139,7 +143,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
         {invitations && Boolean(invitations?.length) && (
           <>
             <Divider sx={{ my: 3 }} />
-            <Typography variant="h5">
+            <Typography variant="h6">
               {translateBuilder(BUILDER.SHARING_INVITATIONS_TITLE)}
             </Typography>
             <InvitationsTable
@@ -159,7 +163,7 @@ const ItemSharingTab = ({ item, memberships }: Props): JSX.Element => {
 
   return (
     <Container disableGutters component="div">
-      <Typography variant="h4">
+      <Typography variant="h5">
         {translateBuilder(BUILDER.SHARING_TITLE)}
       </Typography>
       <ShortLinksRenderer

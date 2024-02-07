@@ -9,7 +9,6 @@ import { ITEM_MAIN_CLASS } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import Chatbox from '../common/Chatbox';
 import { useLayoutContext } from '../context/LayoutContext';
-import ItemMetadataContent from './ItemMetadataContent';
 import ItemPanel from './ItemPanel';
 import ItemHeader from './header/ItemHeader';
 
@@ -47,12 +46,8 @@ type Props = {
 
 const ItemMain = ({ id, children, item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const {
-    isItemMetadataMenuOpen,
-    setIsItemMetadataMenuOpen,
-    isChatboxMenuOpen,
-    setIsChatboxMenuOpen,
-  } = useLayoutContext();
+
+  const { isChatboxMenuOpen, setIsChatboxMenuOpen } = useLayoutContext();
 
   return (
     <Box id={id} m={2} className={ITEM_MAIN_CLASS}>
@@ -73,25 +68,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
           <Chatbox item={item} />
         </ItemPanel>
       )}
-      {isItemMetadataMenuOpen && (
-        <ItemPanel open={isItemMetadataMenuOpen}>
-          <DrawerHeader
-            handleDrawerClose={() => {
-              setIsItemMetadataMenuOpen(false);
-            }}
-            // todo
-            direction="rtl"
-          >
-            <Typography variant="h6">
-              {translateBuilder(BUILDER.ITEM_METADATA_TITLE)}
-            </Typography>
-          </DrawerHeader>
-          <Divider />
-          <ItemMetadataContent item={item} />
-        </ItemPanel>
-      )}
-
-      <StyledContainer open={isChatboxMenuOpen || isItemMetadataMenuOpen}>
+      <StyledContainer open={isChatboxMenuOpen}>
         <ItemHeader showNavigation />
 
         {children}

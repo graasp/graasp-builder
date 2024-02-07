@@ -1,7 +1,7 @@
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   CROP_MODAL_CONFIRM_BUTTON_CLASSNAME,
-  ITEM_SETTINGS_BUTTON_CLASS,
+  ITEM_INFORMATION_BUTTON_ID,
   THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME,
 } from '../../../../src/config/selectors';
 import {
@@ -18,7 +18,7 @@ describe('Upload Thumbnails', () => {
   it(`upload item thumbnail`, () => {
     const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
     cy.visit(buildItemPath(items[0].id));
-    cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+    cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
 
     // change item thumbnail
     // selectFile ???

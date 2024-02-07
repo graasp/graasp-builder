@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 import { CheckboxProps } from '@mui/material';
 
@@ -14,7 +14,6 @@ import {
   getShortcutExtra,
 } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { useShortenURLParams } from '@graasp/ui';
 import { Table as GraaspTable } from '@graasp/ui/dist/table';
 
 import {
@@ -100,7 +99,7 @@ const ItemsTable = ({
   const { t: translateEnums } = useEnumsTranslation();
   const navigate = useNavigate();
 
-  const itemId = useShortenURLParams('itemId');
+  const { itemId } = useParams();
 
   const { data: parentItem } = useItem(itemId);
   const { data: member } = useCurrentUserContext();

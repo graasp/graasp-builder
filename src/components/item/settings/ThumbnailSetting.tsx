@@ -121,22 +121,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
-      <Stack spacing={3} mb={3}>
-        <Typography variant="h5">
-          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
-        </Typography>
-        <Typography variant="body1">
-          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
-        </Typography>
-        <input
-          type="file"
-          accept="image/*"
-          onInput={onSelectFile}
-          // onChange is successfully triggered in test
-          onChange={onSelectFile}
-          ref={inputRef}
-          className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
-        />
+      <Stack spacing={2} mb={3} alignItems="center">
         <Thumbnail
           id={itemId}
           isLoading={isLoading}
@@ -150,6 +135,17 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
           maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
           maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
         />
+        <input
+          type="file"
+          accept="image/*"
+          onInput={onSelectFile}
+          onChange={onSelectFile}
+          ref={inputRef}
+          className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
+        />
+        <Typography variant="caption">
+          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
+        </Typography>
       </Stack>
       {fileSource && (
         <Dialog

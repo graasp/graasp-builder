@@ -36,8 +36,6 @@ describe('View Folder', () => {
       // should get current item
       cy.wait('@getItem');
 
-      expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
-
       // should get children
       cy.wait('@getChildren').then(({ response: { body } }) => {
         // check all children are created and displayed
@@ -45,6 +43,7 @@ describe('View Folder', () => {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
         }
       });
+      expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
 
       // visit home
       cy.get(`#${NAVIGATION_ROOT_ID} [href="${HOME_PATH}"]`).click();
@@ -81,9 +80,6 @@ describe('View Folder', () => {
 
         // should get current item
         cy.wait('@getItem');
-
-        expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
-
         // should get children
         cy.wait('@getChildren').then(({ response: { body } }) => {
           // check all children are created and displayed
@@ -92,6 +88,7 @@ describe('View Folder', () => {
           }
         });
 
+        expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
         // visit home
         cy.get(`#${NAVIGATION_ROOT_ID} [href="${HOME_PATH}"]`).click();
 

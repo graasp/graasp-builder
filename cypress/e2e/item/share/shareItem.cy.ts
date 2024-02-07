@@ -1,6 +1,6 @@
 import { Context, ShortLink, appendPathToUrl } from '@graasp/sdk';
 
-import { buildItemPath } from '@/config/paths';
+import { buildItemPath, buildItemSharePath } from '@/config/paths';
 import { ShortLinkPlatform } from '@/utils/shortLink';
 
 import {
@@ -19,12 +19,17 @@ import {
   buildGraaspPlayerView,
 } from '../../../support/paths';
 
-const checkContainPlatformText = (platform: ShortLinkPlatform) =>
-  cy
-    .get(`#${buildShortLinkPlatformTextId(platform)}`)
-    .should('contain', platform);
+export const checkContainPlatformText = (platform: ShortLinkPlatform): void => {
+  cy.get(`#${buildShortLinkPlatformTextId(platform)}`).should(
+    'contain',
+    platform,
+  );
+};
 
-const checkContainUrlText = (platform: ShortLinkPlatform, itemId: string) => {
+export const checkContainUrlText = (
+  platform: ShortLinkPlatform,
+  itemId: string,
+): void => {
   let expectedUrl;
 
   // The client host manager can't be used here because
@@ -189,6 +194,24 @@ describe('Share Item Link', () => {
 
       cy.get(`#${SHARE_ITEM_QR_BTN_ID}`).click();
       cy.get(`#${SHARE_ITEM_QR_DIALOG_ID}`).should('exist');
+    });
+  });
+
+  describe('Without short links', () => {
+    const item = PUBLISHED_ITEM;
+
+    beforeEach(() => {
+      cy.setUpApi({ items: [item] });
+    });
+
+    it('Builder link is correctly displayed', () => {
+      cy.visit(buildItemSharePath(item.id));
+
+      cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
+
+      const context = Context.Builder;
+      checkContainPlatformText(context);
+      checkContainUrlText(context, item.id);
     });
   });
 });

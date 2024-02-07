@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -20,7 +21,6 @@ import {
 
 import { DATA_KEYS } from '@graasp/query-client';
 import {
-  DiscriminatedItem,
   ItemTagType,
   ItemValidationStatus,
   PermissionLevel,
@@ -29,6 +29,8 @@ import {
 import { Loader } from '@graasp/ui';
 
 import groupBy from 'lodash.groupby';
+
+import { OutletType } from '@/components/pages/item/type';
 
 import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -52,11 +54,6 @@ const { useItemTags, useLastItemValidationGroup } = hooks;
 
 const { usePostItemValidation } = mutations;
 
-type Props = {
-  item: DiscriminatedItem;
-  permission?: PermissionLevel;
-};
-
 // eslint-disable-next-line no-shadow
 const enum PublishFlow {
   SET_ITEM_VISIBILITY_PUBLIC_STEP,
@@ -64,12 +61,11 @@ const enum PublishFlow {
   PUBLISH_STEP,
 }
 
-const ItemPublishTab = ({
-  item,
-  permission = PermissionLevel.Read,
-}: Props): JSX.Element => {
+const ItemPublishTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const queryClient = useQueryClient();
+  const { item, permission = PermissionLevel.Read } =
+    useOutletContext<OutletType>();
 
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.id,
@@ -228,7 +224,7 @@ const ItemPublishTab = ({
   return (
     <Box m={2}>
       <>
-        <Typography variant="h6" mt={2} id={ITEM_PUBLISH_SECTION_TITLE_ID}>
+        <Typography variant="h5" mt={2} id={ITEM_PUBLISH_SECTION_TITLE_ID}>
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_TITLE)}
         </Typography>
         <Typography variant="body1">
