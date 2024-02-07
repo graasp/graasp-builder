@@ -1,6 +1,11 @@
 import { Box, Typography } from '@mui/material';
 
-import { DiscriminatedItem, ItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemType,
+  getEmbeddedLinkExtra,
+  getMimetype,
+} from '@graasp/sdk';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
@@ -25,11 +30,7 @@ const ItemNameCellRenderer = (
         type={item.type}
         iconSrc={iconSrc}
         alt={alt}
-        extra={
-          item.type === ItemType.S3_FILE || item.type === ItemType.LOCAL_FILE
-            ? item.extra
-            : undefined
-        }
+        mimetype={getMimetype(item.extra)}
       />
     );
 
