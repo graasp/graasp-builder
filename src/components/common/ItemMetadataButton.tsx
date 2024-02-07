@@ -14,11 +14,13 @@ const ItemMetadataButton = ({ itemId }: { itemId: string }): JSX.Element => {
 
   return (
     <Tooltip title={translateBuilder(BUILDER.ITEM_METADATA_TITLE)}>
-      <Link to={buildItemInformationPath(itemId)}>
-        <IconButton id={ITEM_INFORMATION_BUTTON_ID}>
-          <InfoIcon />
-        </IconButton>
-      </Link>
+      <IconButton
+        component={Link}
+        to={buildItemInformationPath(itemId)}
+        id={ITEM_INFORMATION_BUTTON_ID}
+      >
+        <InfoIcon />
+      </IconButton>
     </Tooltip>
   );
 };

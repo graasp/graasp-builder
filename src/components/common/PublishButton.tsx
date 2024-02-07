@@ -25,15 +25,15 @@ const PublishButton = ({ itemId }: Props): JSX.Element => {
 
   return (
     <Tooltip title={title}>
-      <Link to={buildItemPublishPath(itemId)}>
-        <IconButton
-          aria-label={title}
-          className={PUBLISH_ITEM_BUTTON_CLASS}
-          id={buildPublishButtonId(itemId)}
-        >
-          <LibraryIcon size={24} showSetting primaryColor="#777" />
-        </IconButton>
-      </Link>
+      <IconButton
+        aria-label={title}
+        className={PUBLISH_ITEM_BUTTON_CLASS}
+        id={buildPublishButtonId(itemId)}
+        to={buildItemPublishPath(itemId)}
+        component={Link}
+      >
+        <LibraryIcon size={24} showSetting primaryColor="#777" />
+      </IconButton>
     </Tooltip>
   );
 };

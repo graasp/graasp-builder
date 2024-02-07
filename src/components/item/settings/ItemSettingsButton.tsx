@@ -21,14 +21,14 @@ const ItemSettingsButton = ({ id }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   return (
     <Tooltip title={translateBuilder(BUILDER.SETTINGS_TITLE)}>
-      <Link to={buildItemSettingsPath(id)}>
-        <IconButton
-          className={ITEM_SETTINGS_BUTTON_CLASS}
-          id={buildSettingsButtonId(id)}
-        >
-          <SettingsIcon />
-        </IconButton>
-      </Link>
+      <IconButton
+        component={Link}
+        to={buildItemSettingsPath(id)}
+        className={ITEM_SETTINGS_BUTTON_CLASS}
+        id={buildSettingsButtonId(id)}
+      >
+        <SettingsIcon />
+      </IconButton>
     </Tooltip>
   );
 };

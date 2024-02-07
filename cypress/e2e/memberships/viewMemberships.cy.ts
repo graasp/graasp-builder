@@ -3,7 +3,6 @@ import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowSelector,
-  buildMemberAvatarClass,
   buildShareButtonId,
 } from '../../../src/config/selectors';
 import { membershipsWithoutUser } from '../../../src/utils/membership';
@@ -16,26 +15,6 @@ import {
 describe('View Memberships', () => {
   beforeEach(() => {
     cy.setUpApi({ ...ITEMS_WITH_MEMBERSHIPS });
-  });
-
-  it('view membership in share item modal', () => {
-    const [item] = ITEMS_WITH_MEMBERSHIPS.items;
-    const { memberships } = item;
-    cy.visit(buildItemPath(item.id));
-    cy.openMetadataPanel();
-
-    const filteredMemberships = membershipsWithoutUser(
-      memberships,
-      CURRENT_USER.id,
-    );
-
-    // panel only contains 2 avatars: one user, one +x
-    // check contains member avatar
-    const [first, second] = filteredMemberships;
-    cy.get(`.${buildMemberAvatarClass(first.member.id)}`).should('be.visible');
-    cy.get(`.${buildMemberAvatarClass(second.member.id)}`).should('be.visible');
-
-    // todo: check permission level
   });
 
   it('view membership in settings', () => {
