@@ -13,6 +13,7 @@ export const buildItemCard = (id: string): string => `itemCard-${id}`;
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';
 export const ITEM_FORM_NAME_INPUT_ID = 'newItemNameInput';
 export const ITEM_FORM_CONFIRM_BUTTON_ID = 'newItemConfirmButton';
+export const ITEM_SETTINGS_CONTAINER_ID = 'itemSettingsContainerId';
 export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
 export const buildItemLink = (id: string): string => `itemLink-${id}`;
 export const NAVIGATION_HOME_LINK_ID = 'navigationHomeLink';
@@ -348,4 +349,6 @@ export const buildShortLinkUrlTextId = (platform: ShortLinkPlatform): string =>
 export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
+
+export const MOBILE_MORE_ACTIONS_BUTTON_ID = 'moreActionsMobileView';
 export const NAVIGATION_MENU_ARROW = `#${NAVIGATION_ROOT_ID} [data-testid="NavigateNextIcon"]`;

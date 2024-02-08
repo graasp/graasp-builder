@@ -1,6 +1,6 @@
 import { useLocation, useParams } from 'react-router-dom';
 
-import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
+import { HomeMenu, ItemMenu, Navigation, useMobileView } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -34,6 +34,7 @@ const Navigator = (): JSX.Element | null => {
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
 
+  const { isMobile } = useMobileView();
   const { pathname: location } = useLocation();
 
   const { data: parents, isLoading: areParentsLoading } = useParents({
@@ -117,13 +118,14 @@ const Navigator = (): JSX.Element | null => {
   return (
     <Navigation
       id={NAVIGATION_ROOT_ID}
-      sx={{ paddingLeft: 2 }}
       item={item}
       buildToItemPath={buildToItemPath}
       parents={parents}
       renderRoot={renderRoot}
       buildMenuItemId={buildNavigationLink}
       useChildren={useChildren as any}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...(isMobile && { maxItems: 2 })}
       extraItems={extraItems}
     />
   );

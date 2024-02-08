@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { DownloadButton as Button } from '@graasp/ui';
+import { ActionButtonVariant, DownloadButton as Button } from '@graasp/ui';
 
 import { buildDownloadButtonId } from '@/config/selectors';
 
@@ -11,9 +11,16 @@ import { BUILDER } from '../../langs/constants';
 type Props = {
   id: string;
   name: string;
+  type?: ActionButtonVariant;
+  onClick?: () => void;
 };
 
-export const DownloadButton = ({ id, name }: Props): JSX.Element => {
+export const DownloadButton = ({
+  id,
+  name,
+  type,
+  onClick,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const {
@@ -37,6 +44,7 @@ export const DownloadButton = ({ id, name }: Props): JSX.Element => {
 
   const handleDownload = () => {
     downloadItem({ id });
+    onClick?.();
   };
   return (
     <span id={buildDownloadButtonId(id)}>
@@ -47,6 +55,7 @@ export const DownloadButton = ({ id, name }: Props): JSX.Element => {
         ariaLabel={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
         loaderColor="primary"
         loaderSize={10}
+        type={type}
       />
     </span>
   );

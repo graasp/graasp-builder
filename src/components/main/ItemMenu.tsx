@@ -100,13 +100,14 @@ const ItemMenu = ({
             onClick={handleClose}
           />
         ) : undefined,
+
         <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />,
-        <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
         <CollapseButton
           key="collapse"
           type={ActionButton.MENU_ITEM}
           item={item}
         />,
+        <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
         canAdmin ? (
           <RecycleButton
             key="recycle"
@@ -183,6 +184,7 @@ const ItemMenu = ({
       </>
     );
   }
+
   return null;
 };
 

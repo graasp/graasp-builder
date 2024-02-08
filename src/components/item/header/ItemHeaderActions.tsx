@@ -30,6 +30,7 @@ const { useItemMemberships, useItem } = hooks;
 const ItemHeaderActions = (): JSX.Element => {
   const itemId = useShortenURLParams(ITEM_ID_PARAMS);
   const { t: translateBuilder } = useBuilderTranslation();
+
   const { editingItemId, isChatboxMenuOpen, setIsChatboxMenuOpen } =
     useLayoutContext();
 
@@ -61,32 +62,37 @@ const ItemHeaderActions = (): JSX.Element => {
         ITEM_TYPES_WITH_CAPTIONS.includes(item.type) &&
         canEdit;
 
+      const shareActions = (
+        <>
+          <ShareButton itemId={item.id} />
+          {canAdmin && <PublishButton itemId={item.id} />}
+        </>
+      );
       const activeActions = (
         <>
           {showEditButton && <EditButton item={item} />}
-          {/* prevent moving from top header to avoid confusion */}
           <ItemMenu
             item={item}
             canMove={false}
-            canAdmin={canAdmin}
             canEdit={showEditButton}
+            canAdmin={canAdmin}
           />
 
-          <ShareButton itemId={item.id} />
+          {shareActions}
+
           <ChatboxButton
             tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
             id={ITEM_CHATBOX_BUTTON_ID}
             onClick={onClickChatbox}
           />
-          {canAdmin && <PublishButton itemId={item.id} />}
         </>
       );
 
       return (
         <>
           {activeActions}
-          {canEdit && <ItemSettingsButton id={item.id} />}
           <DownloadButton id={item.id} name={item.name} />
+          {canEdit && <ItemSettingsButton id={item.id} />}
         </>
       );
     }

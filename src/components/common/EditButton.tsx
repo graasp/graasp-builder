@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { Dialog } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
-import { EditButton as GraaspEditButton } from '@graasp/ui';
+import {
+  ActionButton,
+  ActionButtonVariant,
+  EditButton as GraaspEditButton,
+} from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -22,14 +26,21 @@ import NameForm from '../item/form/NameForm';
 
 type Props = {
   item: DiscriminatedItem;
+  type?: ActionButtonVariant;
+  onClick?: () => void;
 };
 
-const EditButton = ({ item }: Props): JSX.Element => {
+const EditButton = ({
+  item,
+  type = ActionButton.ICON_BUTTON,
+  onClick,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [open, setOpen] = useState(false);
 
   const handleEdit = () => {
     setOpen(true);
+    onClick?.();
   };
 
   const typeToFormComponent = (): EditModalContentType => {
@@ -66,6 +77,7 @@ const EditButton = ({ item }: Props): JSX.Element => {
         ariaLabel={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
         className={EDIT_ITEM_BUTTON_CLASS}
         onClick={handleEdit}
+        type={type}
       />
     </>
   );
