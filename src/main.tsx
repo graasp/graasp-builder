@@ -1,6 +1,3 @@
-// todo: hack to have the text editor styles available without having to bundle them with graasp/ui
-import 'katex/dist/katex.min.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ReactGA from 'react-ga4';
