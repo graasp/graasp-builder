@@ -4,6 +4,7 @@ import { Dialog } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import {
+  ActionButton,
   ActionButtonVariant,
   EditButton as GraaspEditButton,
 } from '@graasp/ui';
@@ -29,7 +30,11 @@ type Props = {
   onClick?: () => void;
 };
 
-const EditButton = ({ item, type = 'icon', onClick }: Props): JSX.Element => {
+const EditButton = ({
+  item,
+  type = ActionButton.ICON_BUTTON,
+  onClick,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [open, setOpen] = useState(false);
 

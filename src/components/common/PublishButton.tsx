@@ -20,7 +20,10 @@ type Props = {
   type?: ActionButtonVariant;
 };
 
-const PublishButton = ({ itemId, type = 'icon' }: Props): JSX.Element => {
+const PublishButton = ({
+  itemId,
+  type = ActionButton.ICON_BUTTON,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const title = translateBuilder(BUILDER.LIBRARY_SETTINGS_BUTTON_TITLE);

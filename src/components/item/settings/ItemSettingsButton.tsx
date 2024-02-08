@@ -24,7 +24,7 @@ type Props = {
 
 const ItemSettingsButton = ({
   id,
-  type = 'icon',
+  type = ActionButton.ICON_BUTTON,
   title = 'Settings',
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();

@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { ItemType, PermissionLevel } from '@graasp/sdk';
 import { ChatboxButton, useShortenURLParams } from '@graasp/ui';
@@ -71,14 +71,12 @@ const ItemHeaderActions = (): JSX.Element => {
       const activeActions = (
         <>
           {showEditButton && <EditButton item={item} />}
-          <Box width="100%">
-            <ItemMenu
-              item={item}
-              canMove={false}
-              canEdit={showEditButton}
-              canAdmin={canAdmin}
-            />
-          </Box>
+          <ItemMenu
+            item={item}
+            canMove={false}
+            canEdit={showEditButton}
+            canAdmin={canAdmin}
+          />
 
           {shareActions}
 
