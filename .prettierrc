@@ -6,6 +6,7 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "importOrder": [
+    ".*\\.css$",
     "^react",
     "^@?mui",
     "^@?graasp",
@@ -15,5 +16,7 @@
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "plugins": ["@trivago/prettier-plugin-sort-imports"]
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports"
+  ]
 }

@@ -1,10 +1,11 @@
+import '@uppy/dashboard/dist/style.css';
+
 import { useContext } from 'react';
 
 import { Typography } from '@mui/material';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
 
-import '@uppy/dashboard/dist/style.css';
 import DashboardLocale from '@uppy/dashboard/types/generatedLocale';
 import { Dashboard } from '@uppy/react';
 import { StatusBarLocale } from '@uppy/status-bar';

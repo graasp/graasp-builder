@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 import {
   DocumentItemExtraFlavor,
@@ -12,7 +11,10 @@ import {
 import { DocumentItem } from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
+import {
+  FLAVOR_SELECT_ID,
+  ITEM_FORM_DOCUMENT_TEXT_ID,
+} from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
 import type { EditModalContentPropType } from './EditModalWrapper';
@@ -54,19 +56,23 @@ export const DocumentExtraForm = ({
     <>
       <Box sx={{ width: '100%' }}>
         <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
-          <InputLabel shrink>Flavor</InputLabel>
+          <InputLabel shrink id={FLAVOR_SELECT_ID}>
+            {t(BUILDER.DOCUMENT_FLAVOR_SELECT_LABEL)}
+          </InputLabel>
           <Select
+            id={FLAVOR_SELECT_ID}
             variant="standard"
             label="flavor"
             value={extra.flavor}
-            onChange={(event) =>
-              onFlavorChange?.(
-                event.target.value === ''
-                  ? undefined
-                  : (event.target
-                      .value as DocumentItemExtraProperties['flavor']),
-              )
-            }
+            onChange={({ target: { value } }) => {
+              if (
+                value &&
+                // check that the value is valid to make a safe cast
+                Object.values<string>(DocumentItemExtraFlavor).includes(value)
+              ) {
+                onFlavorChange?.(value as `${DocumentItemExtraFlavor}`);
+              }
+            }}
           >
             <MenuItem value="">None</MenuItem>
             {flavorsTranslations.map(([f, name]) => (

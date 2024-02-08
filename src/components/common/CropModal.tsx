@@ -1,3 +1,5 @@
+import 'react-image-crop/dist/ReactCrop.css';
+
 import { ReactEventHandler, useRef, useState } from 'react';
 import ReactCrop, {
   Crop,
@@ -5,7 +7,6 @@ import ReactCrop, {
   centerCrop,
   makeAspectCrop,
 } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 
 import { Alert } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';

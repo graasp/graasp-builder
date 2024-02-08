@@ -42,6 +42,7 @@
   "DELETE_ITEM_MODAL_CONTENT_one": "This item will be deleted permanently.",
   "DELETE_ITEM_MODAL_CONTENT_other": "These items will be deleted permanently.",
   "DELETE_ITEM_MODAL_TITLE": "Confirm deletion",
+  "DOCUMENT_FLAVOR_SELECT_LABEL": "Flavor",
   "DOCUMENT_FLAVOR_ERROR": "Error",
   "DOCUMENT_FLAVOR_INFO": "Information",
   "DOCUMENT_FLAVOR_NAME": "Style",

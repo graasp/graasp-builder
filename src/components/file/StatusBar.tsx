@@ -1,3 +1,5 @@
+import '@uppy/status-bar/dist/style.css';
+
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +9,6 @@ import { grey } from '@mui/material/colors';
 
 import Uppy from '@uppy/core';
 import { StatusBar as UppyStatusBar } from '@uppy/react';
-import '@uppy/status-bar/dist/style.css';
 
 const StyledSnackbarContent = styled(SnackbarContent)(() => ({
   '&.MuiSnackbarContent-root': {

@@ -1,17 +1,21 @@
+import '@ag-grid-community/styles/ag-grid.min.css';
+import '@ag-grid-community/styles/ag-theme-material.min.css';
+import '@uppy/core/dist/style.css';
+// hack to have the text editor styles available without having to bundle them with graasp/ui
+import 'katex/dist/katex.min.css';
+import 'react-quill/dist/quill.snow.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
 import { theme } from '@graasp/ui';
 
-import '@ag-grid-community/styles/ag-grid.min.css';
-import '@ag-grid-community/styles/ag-theme-material.min.css';
 import * as Sentry from '@sentry/react';
-import '@uppy/core/dist/style.css';
 
 import i18nConfig from '../config/i18n';
 import {
