@@ -13,7 +13,7 @@ const BackButton = ({ onClick }: Props): JSX.Element => {
   return (
     <Tooltip title={t(BUILDER.BACK)}>
       <IconButton onClick={onClick}>
-        <ArrowCircleLeftRoundedIcon fontSize="large" />
+        <ArrowCircleLeftRoundedIcon />
       </IconButton>
     </Tooltip>
   );

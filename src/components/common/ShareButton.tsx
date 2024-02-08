@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { styled } from '@mui/material';
+
 import {
   ActionButtonVariant,
   ShareButton as GraaspShareButton,
@@ -19,11 +21,16 @@ type Props = {
   type?: ActionButtonVariant;
 };
 
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none',
+  color: 'black',
+}));
+
 const ShareButton = ({ itemId, type }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
-    <Link to={buildItemSharePath(itemId)}>
+    <StyledLink to={buildItemSharePath(itemId)}>
       <GraaspShareButton
         tooltip={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
         ariaLabel={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
@@ -31,7 +38,7 @@ const ShareButton = ({ itemId, type }: Props): JSX.Element => {
         id={buildShareButtonId(itemId)}
         type={type}
       />
-    </Link>
+    </StyledLink>
   );
 };
 

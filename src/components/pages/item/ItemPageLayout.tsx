@@ -30,7 +30,7 @@ const ItemPageLayout = (): JSX.Element => {
           <BackButton onClick={() => navigate(buildItemPath(itemId))} />
           <Navigation />
         </Box>
-        <Box px={2}>
+        <Box>
           <Outlet context={outletContext} />
         </Box>
       </Box>

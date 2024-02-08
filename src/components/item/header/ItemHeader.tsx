@@ -20,7 +20,6 @@ const ItemHeader = ({ showNavigation = true }: Props): JSX.Element => {
       alignItems="center"
       justifyContent="space-between"
       mb={1}
-      // mt={2}
       id={ITEM_HEADER_ID}
     >
       {/* display empty div to render actions on the right */}

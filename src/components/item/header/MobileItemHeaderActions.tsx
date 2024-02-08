@@ -133,7 +133,11 @@ export const MobileItemHeaderActions = (): JSX.Element => {
 
   return item ? (
     <>
-      <Box display="flex" sx={{ '& button': { padding: 0.5 } }}>
+      <Box
+        display="flex"
+        sx={{ '& button': { padding: 0.5 } }}
+        alignItems="center"
+      >
         <ItemMetadataButton itemId={item.id} />
         <ModeButton />
         <ChatboxButton
