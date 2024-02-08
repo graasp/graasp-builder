@@ -7,11 +7,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   Stack,
   Tooltip,
   Typography,
 } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
 
 import { CHATBOX } from '@graasp/translations';
 import { Button } from '@graasp/ui';

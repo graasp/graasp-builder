@@ -1,5 +1,4 @@
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 import { ItemLoginSchema, ItemLoginSchemaType, UUID } from '@graasp/sdk';
 

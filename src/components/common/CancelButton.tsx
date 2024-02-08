@@ -1,6 +1,4 @@
-import { MouseEventHandler } from 'react';
-
-import { ButtonProps } from '@mui/material/Button';
+import { ButtonProps } from '@mui/material';
 
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -8,7 +6,7 @@ import { Button } from '@graasp/ui';
 import { useCommonTranslation } from '../../config/i18n';
 
 type Props = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: () => void;
   color?: ButtonProps['color'];
   id?: string;
   disabled?: boolean;

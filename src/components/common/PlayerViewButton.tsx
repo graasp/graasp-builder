@@ -1,5 +1,4 @@
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import { IconButton, Tooltip } from '@mui/material';
 
 import { redirect } from '@graasp/sdk';
 import { PlayIcon } from '@graasp/ui';

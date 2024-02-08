@@ -1,7 +1,8 @@
-import ListIcon from '@mui/icons-material/List';
-import ViewModuleIcon from '@mui/icons-material/ViewModule';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import {
+  List as ListIcon,
+  ViewModule as ViewModuleIcon,
+} from '@mui/icons-material';
+import { IconButton, Tooltip } from '@mui/material';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import {

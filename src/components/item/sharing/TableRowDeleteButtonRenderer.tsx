@@ -1,6 +1,5 @@
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import { Close } from '@mui/icons-material';
+import { IconButton, IconButtonProps, Tooltip } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
@@ -47,7 +46,7 @@ function TableRowDeleteButtonRenderer<
           id={buildIdFunction(data.id)}
           color={color}
         >
-          <CloseIcon />
+          <Close />
         </IconButton>
       );
 

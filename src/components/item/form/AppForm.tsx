@@ -1,8 +1,7 @@
 import { ChangeEventHandler, useState } from 'react';
 
 import { ArrowBack } from '@mui/icons-material';
-import { Alert, Box, Stack, TextField } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Alert, Box, Stack, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';

@@ -1,7 +1,6 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import { Dialog, Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Dialog, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';

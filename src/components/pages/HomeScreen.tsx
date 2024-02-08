@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { LinearProgress } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, LinearProgress } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
 

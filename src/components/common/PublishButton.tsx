@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import { IconButton, Tooltip } from '@mui/material';
 
 import { LibraryIcon } from '@graasp/ui';
 

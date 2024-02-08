@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 import { SearchInput } from '@graasp/ui';

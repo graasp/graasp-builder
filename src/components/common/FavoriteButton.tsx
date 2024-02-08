@@ -1,6 +1,6 @@
-import { IconButtonProps } from '@mui/material/IconButton';
+import { IconButtonProps } from '@mui/material';
 
-import { DiscriminatedItem, ItemFavorite } from '@graasp/sdk';
+import { DiscriminatedItem, ItemBookmark } from '@graasp/sdk';
 import {
   ActionButtonVariant,
   FavoriteButton as GraaspFavoriteButton,
@@ -21,7 +21,7 @@ type Props = {
 
 const isItemFavorite = (
   item: DiscriminatedItem,
-  favorites?: ItemFavorite[],
+  favorites?: ItemBookmark[],
 ): boolean => favorites?.some((f) => f.item.id === item.id) || false;
 
 const FavoriteButton = ({

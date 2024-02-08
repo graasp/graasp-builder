@@ -1,5 +1,4 @@
-import { Alert } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Alert, Box } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
 

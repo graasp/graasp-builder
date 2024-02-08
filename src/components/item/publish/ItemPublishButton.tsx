@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { InfoRounded } from '@mui/icons-material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { CheckCircle, InfoRounded } from '@mui/icons-material';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
@@ -95,10 +94,7 @@ const ItemPublishButton = ({
       <Button
         disabled={disabled || isDisabled || !isValidated || isPublished}
         onClick={handlePublish}
-        sx={{
-          mr: 2,
-        }}
-        endIcon={isPublished && <CheckCircleIcon color="primary" />}
+        endIcon={isPublished && <CheckCircle color="primary" />}
         id={ITEM_PUBLISH_BUTTON_ID}
       >
         {translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}

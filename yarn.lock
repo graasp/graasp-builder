@@ -1577,7 +1577,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#484-convert-to-pure-ts-package":
   version: 4.6.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=ffcf17adc5e630ecd90cc9a64d04492b1d38e43b"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=7dbe9beb0883df81fd4bb982375c68828c73ddb8"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.0.3"
     "@ag-grid-community/react": "npm:^31.0.3"
@@ -1586,6 +1586,7 @@ __metadata:
     "@storybook/react-vite": "npm:7.6.13"
     http-status-codes: "npm:2.3.0"
     interweave: "npm:13.1.0"
+    katex: "npm:0.16.9"
     lodash.truncate: "npm:4.4.2"
     react-cookie-consent: "npm:9.0.0"
     react-quill: "npm:2.0.0-beta.4"
@@ -1607,7 +1608,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/ddd31a89708f43d59e350bbcfdef7d05cc1a30148f49e909f2b66b2889d52569c5e11358f189409ccbe56530e4d7ae48f4c56a14b9c441ce34974d904d6c89f9
+  checksum: 10/b73f4a5b14ce6918967552befda27a4edd2556bbaf0d94cfae301681ad1641e900221a85481a9f5b301a9e0dbbf83041c36df673a5fbf645f4c8c83575392a5e
   languageName: node
   linkType: hard
 
@@ -3183,16 +3184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 20.11.6
-  resolution: "@types/node@npm:20.11.6"
-  dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10/375dfc75f0aa8b7fb99382d84c317e5dab2969dcc3f54d8490b119151060923eae6483839552347bc78262bbcefb2951ee131e15372f4e80b755be2dda9afe80
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:20.11.16":
+"@types/node@npm:*, @types/node@npm:20.11.16":
   version: 20.11.16
   resolution: "@types/node@npm:20.11.16"
   dependencies:

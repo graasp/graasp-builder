@@ -8,11 +8,13 @@ import ReactCrop, {
   makeAspectCrop,
 } from 'react-image-crop';
 
-import { Alert } from '@mui/material';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  Alert,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 
 import { Button } from '@graasp/ui';
 

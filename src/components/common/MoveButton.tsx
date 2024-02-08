@@ -1,11 +1,10 @@
 import { useState } from 'react';
 
-import { IconButtonProps } from '@mui/material/IconButton';
-
 import { DiscriminatedItem } from '@graasp/sdk';
 import {
   ActionButton,
   ActionButtonVariant,
+  ColorVariants,
   MoveButton as GraaspMoveButton,
 } from '@graasp/ui';
 
@@ -26,7 +25,7 @@ import ItemSelectionModal, {
 
 type MoveButtonProps = {
   itemIds: string[];
-  color?: IconButtonProps['color'];
+  color?: ColorVariants;
   id?: string;
   type?: ActionButtonVariant;
   onClick?: () => void;
@@ -34,7 +33,7 @@ type MoveButtonProps = {
 
 const MoveButton = ({
   itemIds,
-  color = 'default',
+  color = 'primary',
   id,
   type = ActionButton.ICON_BUTTON,
   onClick,

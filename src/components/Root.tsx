@@ -10,8 +10,7 @@ import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { theme } from '@graasp/ui';
 

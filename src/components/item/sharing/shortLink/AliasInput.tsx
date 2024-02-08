@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-import CachedIcon from '@mui/icons-material/Cached';
+import { Cached } from '@mui/icons-material';
 import { IconButton, Stack, TextField, Tooltip } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -42,7 +42,7 @@ const AliasInput = ({ alias, onChange, hasError }: Props): JSX.Element => {
             onClick={() => onChange(randomAlias())}
             id={SHORT_LINK_RANDOMIZE_BUTTON_ID}
           >
-            <CachedIcon />
+            <Cached />
           </IconButton>
         </span>
       </Tooltip>

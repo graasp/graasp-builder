@@ -1,6 +1,4 @@
-import { Box } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
+import { Box, Grid, Pagination } from '@mui/material';
 
 import { DiscriminatedItem, ItemMembership, ResultOf } from '@graasp/sdk';
 

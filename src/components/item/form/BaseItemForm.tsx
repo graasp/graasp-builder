@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
 import DescriptionForm from './DescriptionForm';

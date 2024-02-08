@@ -7,8 +7,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Typography,
 } from '@mui/material';
-import Typography from '@mui/material/Typography';
 
 import { DiscriminatedItem, Item, Member, PermissionLevel } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';

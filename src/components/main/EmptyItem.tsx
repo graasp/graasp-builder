@@ -1,4 +1,4 @@
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEMS_GRID_NO_ITEM_ID } from '../../config/selectors';

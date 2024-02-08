@@ -1,5 +1,4 @@
-import { Stack, Switch, Typography } from '@mui/material';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { FormControlLabel, Stack, Switch, Typography } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { ACCESSIBLE_ITEMS_ONLY_ME_ID } from '@/config/selectors';
@@ -27,7 +26,12 @@ const ItemsToolbar = ({
         <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
           {title}
         </Typography>
-        <Stack direction="row" alignItems="center" justifyContent="flex-end">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+          spacing={1}
+        >
           {headerElements}
         </Stack>
       </Stack>

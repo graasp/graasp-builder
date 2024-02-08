@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
 import { Item } from '@graasp/sdk';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
@@ -48,7 +44,7 @@ const CollapseButton = ({
     onClick?.();
   };
 
-  const icon = isCollapsible ? <ExpandLessIcon /> : <ExpandMoreIcon />;
+  const icon = isCollapsible ? <ExpandLess /> : <ExpandMore />;
   const text = isCollapsible
     ? translateBuilder(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)
     : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);

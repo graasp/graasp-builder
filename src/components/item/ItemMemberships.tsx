@@ -1,9 +1,5 @@
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Badge from '@mui/material/Badge';
-import Grid from '@mui/material/Grid';
-import Tooltip from '@mui/material/Tooltip';
+import { Edit, Visibility } from '@mui/icons-material';
+import { AvatarGroup, Badge, Grid, Tooltip } from '@mui/material';
 
 import { PermissionLevel } from '@graasp/sdk';
 
@@ -56,9 +52,9 @@ const ItemMemberships = ({ id, maxAvatar = 2 }: Props): JSX.Element | null => {
             {filteredMemberships.map(({ member, permission }) => {
               const badgeContent =
                 permission === PermissionLevel.Read ? (
-                  <VisibilityIcon fontSize="small" />
+                  <Visibility fontSize="small" />
                 ) : (
-                  <EditIcon fontSize="small" />
+                  <Edit fontSize="small" />
                 );
 
               return (

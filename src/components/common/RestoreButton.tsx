@@ -1,6 +1,5 @@
-import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import { RestoreFromTrash } from '@mui/icons-material';
+import { IconButton, IconButtonProps, Tooltip } from '@mui/material';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
@@ -38,7 +37,7 @@ const RestoreButton = ({
           className={RESTORE_ITEMS_BUTTON_CLASS}
           onClick={onClick}
         >
-          <RestoreFromTrashIcon />
+          <RestoreFromTrash />
         </IconButton>
       </span>
     </Tooltip>
