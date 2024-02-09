@@ -1,4 +1,5 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
@@ -35,7 +36,10 @@ type Props = {
 export const FilterItemsContextProvider = ({
   children,
 }: Props): JSX.Element => {
+  const location = useLocation();
   const [itemTypes, setItemTypes] = useState<ItemTypes>([]);
+
+  useEffect(() => setItemTypes([]), [location]);
 
   const value = useMemo(
     () => ({
