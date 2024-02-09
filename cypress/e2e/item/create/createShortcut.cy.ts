@@ -5,6 +5,7 @@ import * as qs from 'qs';
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
+  MY_GRAASP_ITEM_PATH,
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
@@ -16,12 +17,14 @@ import { SAMPLE_ITEMS } from '../../../fixtures/items';
 const createShortcut = ({
   id,
   toItemPath,
+  rootId,
 }: {
   id: string;
   toItemPath: string;
+  rootId?: string;
 }) => {
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath, rootId);
 };
 
 const createShortcutInGrid = ({
@@ -39,13 +42,15 @@ const createShortcutInGrid = ({
 const createShortcutInList = ({
   id,
   toItemPath,
+  rootId,
 }: {
   id: string;
   toItemPath?: string;
+  rootId?: string;
 }) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
-  createShortcut({ id, toItemPath });
+  createShortcut({ id, toItemPath, rootId });
 };
 
 const checkCreateShortcutRequest = ({
@@ -77,8 +82,7 @@ describe('Create Shortcut', () => {
       cy.visit(HOME_PATH);
 
       const { id } = SAMPLE_ITEMS.items[0];
-      // toItemId: TREE_MODAL_MY_ITEMS_ID
-      createShortcutInList({ id });
+      createShortcutInList({ id, toItemPath: MY_GRAASP_ITEM_PATH });
 
       checkCreateShortcutRequest({ id });
     });
@@ -123,8 +127,7 @@ describe('Create Shortcut', () => {
       cy.switchMode(ITEM_LAYOUT_MODES.GRID);
 
       const { id } = SAMPLE_ITEMS.items[0];
-      // toItemId: TREE_MODAL_MY_ITEMS_ID
-      createShortcutInGrid({ id });
+      createShortcutInGrid({ id, toItemPath: MY_GRAASP_ITEM_PATH });
 
       checkCreateShortcutRequest({ id });
     });

@@ -82,45 +82,6 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add(
-  'fillTreeModal',
-  (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
-    const ids = getParentsIdsFromPath(toItemPath);
-
-    cy.wait(TREE_VIEW_PAUSE);
-
-    [treeRootId, ...ids].forEach((value, idx, array) => {
-      cy.get(`#${treeRootId}`).then(($tree) => {
-        // click on the element
-        if (idx === array.length - 1) {
-          cy.wrap($tree)
-            .get(
-              `#${buildTreeItemId(value, treeRootId)} .MuiTreeItem-label input`,
-            )
-            .first()
-            .click();
-        }
-        // if can't find children click on parent (current value)
-        if (
-          idx !== array.length - 1 &&
-          !$tree.find(
-            `#${buildTreeItemId(
-              array[idx + 1],
-              treeRootId,
-            )} .MuiTreeItem-label`,
-          ).length
-        ) {
-          cy.wrap($tree)
-            .get(`#${buildTreeItemId(value, treeRootId)} .MuiTreeItem-label`)
-            .first()
-            .click();
-        }
-      });
-    });
-
-    cy.get(`#${TREE_MODAL_CONFIRM_BUTTON_ID}`).click();
-  },
-);
-Cypress.Commands.add(
   'fillBaseItemModal',
   ({ name = '' }, { confirm = true } = {}) => {
     // first select all the text and then remove it to have a clear field, then type new text

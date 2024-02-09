@@ -10,6 +10,7 @@ export const DESCRIPTION_MAX_LENGTH = 30;
 export const DOUBLE_CLICK_DELAY_MS = 500;
 
 export const TREE_VIEW_MAX_WIDTH = 400;
+export const ITEM_SELECT_MODAL_TITLE_MAX_NAME_LENGTH = 15;
 export const UUID_LENGTH = 36;
 
 export const DRAWER_WIDTH = 240;

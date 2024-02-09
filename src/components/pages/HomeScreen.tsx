@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { CheckboxProps, LinearProgress } from '@mui/material';
+import { LinearProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { Loader } from '@graasp/ui';
 
 import { ITEM_PAGE_SIZE } from '@/config/constants';
+import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -16,6 +17,7 @@ import {
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import { useFilterItemsContext } from '../context/FilterItemsContext';
 import FileUploader from '../file/FileUploader';
 import { UppyContextProvider } from '../file/UppyContext';
 import { useItemSearch } from '../item/ItemSearch';
@@ -34,6 +36,7 @@ type HomeItemSortableColumn =
 const HomeLoadableContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: currentMember } = useCurrentUserContext();
+  const { itemTypes } = useFilterItemsContext();
   const [showOnlyMe, setShowOnlyMe] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -53,13 +56,14 @@ const HomeLoadableContent = (): JSX.Element => {
       name: itemSearch.text,
       sortBy: sortColumn,
       ordering,
+      types: itemTypes,
     },
     // todo: adapt page size given the user window height
     { page, pageSize: ITEM_PAGE_SIZE },
   );
 
-  const onShowOnlyMeChange: CheckboxProps['onChange'] = (e) => {
-    setShowOnlyMe(e.target.checked);
+  const onShowOnlyMeChange: ShowOnlyMeChangeType = (checked) => {
+    setShowOnlyMe(checked);
     setPage(1);
   };
 

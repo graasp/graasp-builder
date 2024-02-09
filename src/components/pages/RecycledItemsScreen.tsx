@@ -15,6 +15,7 @@ import { BUILDER } from '../../langs/constants';
 import DeleteButton from '../common/DeleteButton';
 import ErrorAlert from '../common/ErrorAlert';
 import RestoreButton from '../common/RestoreButton';
+import { useFilterItemsContext } from '../context/FilterItemsContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
 
@@ -51,8 +52,11 @@ const ToolbarActions = ({ selectedIds }: ToolbarActionsProps): JSX.Element => (
 const RecycleBinLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
+  const { shouldDisplayItem } = useFilterItemsContext();
+  // TODO: implement filter in the hooks directly ?
+  const filteredData = recycledItems?.filter((d) => shouldDisplayItem(d.type));
 
-  if (recycledItems) {
+  if (filteredData) {
     return (
       <Box id={RECYCLED_ITEMS_ROOT_CONTAINER} mx={2}>
         <ItemHeader showNavigation={false} />
@@ -60,7 +64,7 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
           id={RECYCLED_ITEMS_ID}
           clickable={false}
           title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-          items={recycledItems}
+          items={filteredData}
           actions={RowActions}
           ToolbarActions={ToolbarActions}
           showThumbnails={false}

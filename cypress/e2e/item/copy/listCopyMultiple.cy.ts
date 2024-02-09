@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  HOME_MODAL_ITEM_ID,
   ITEMS_TABLE_COPY_SELECTED_ITEMS_ID,
+  MY_GRAASP_ITEM_PATH,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
@@ -10,9 +10,11 @@ import { SAMPLE_ITEMS } from '../../../fixtures/items';
 const copyItems = ({
   itemIds,
   toItemPath,
+  rootId,
 }: {
   itemIds: string[];
   toItemPath: string;
+  rootId?: string;
 }) => {
   // check selected ids
   itemIds.forEach((id) => {
@@ -20,7 +22,7 @@ const copyItems = ({
   });
 
   cy.get(`#${ITEMS_TABLE_COPY_SELECTED_ITEMS_ID}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath, rootId);
 };
 
 describe('Copy items in List', () => {
@@ -74,7 +76,7 @@ describe('Copy items in List', () => {
 
     // copy
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    copyItems({ itemIds, toItemPath: HOME_MODAL_ITEM_ID });
+    copyItems({ itemIds, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       itemIds.forEach((id) => {

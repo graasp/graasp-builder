@@ -1,8 +1,10 @@
-import { Box, CheckboxProps } from '@mui/material';
+import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
 import { DiscriminatedItem, ItemMembership, ResultOf } from '@graasp/sdk';
+
+import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { ITEM_PAGE_SIZE } from '../../config/constants';
 import { ITEMS_GRID_PAGINATION_ID } from '../../config/selectors';
@@ -27,7 +29,7 @@ type Props = {
   parentId?: string;
   canMove?: boolean;
   showOnlyMe?: boolean;
-  onShowOnlyMeChange?: CheckboxProps['onChange'];
+  onShowOnlyMeChange?: ShowOnlyMeChangeType;
   totalCount?: number;
   onPageChange: any;
   page?: number;

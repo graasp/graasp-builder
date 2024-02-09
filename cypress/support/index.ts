@@ -44,7 +44,6 @@ declare global {
         wsClientStub: any,
       ): void;
 
-      fillTreeModal(path: string, rootId?: string): void;
       handleTreeMenu(path: string, rootId?: string): void;
       switchMode(mode: string): void;
       goToItemInGrid(path: string): void;

@@ -17,7 +17,7 @@ const {
   enableWebsocket: true,
   defaultQueryOptions: {
     keepPreviousData: true,
-    refetchOnMount: false,
+    refetchOnMount: true,
   },
   DOMAIN,
 });

@@ -1,8 +1,6 @@
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { CheckboxProps } from '@mui/material';
-
 import {
   DiscriminatedItem,
   Item,
@@ -23,8 +21,9 @@ import {
   SortChangedEvent,
 } from 'ag-grid-community';
 
-import { ITEMS_TABLE_CONTAINER_HEIGHT } from '@/config/constants';
+import { ShowOnlyMeChangeType } from '@/config/types';
 
+import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
@@ -63,7 +62,7 @@ export type ItemsTableProps = {
   };
   showThumbnails?: boolean;
   canMove?: boolean;
-  onShowOnlyMeChange?: CheckboxProps['onChange'];
+  onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
   page?: number;
   setPage?: (p: number) => void;

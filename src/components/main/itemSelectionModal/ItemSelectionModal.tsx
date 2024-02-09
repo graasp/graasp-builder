@@ -9,10 +9,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
+import { computeTitle } from '@/utils/itemSelection';
+
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import {
   HOME_MODAL_ITEM_ID,
+  MY_GRAASP_ITEM_PATH,
   TREE_MODAL_CONFIRM_BUTTON_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
@@ -23,31 +26,42 @@ import ChildrenNavigationTree from './ChildrenNavigationTree';
 import RootNavigationTree from './RootNavigationTree';
 
 const dialogId = 'items-tree-modal';
-const MY_GRAASP_BREADCRUMB_ID = 'selectionModalMyGraasp';
 
 export type ItemSelectionModalProps = {
   buttonText: (itemName?: string) => string;
   /** disabled rows
    *  */
-  isDisabled: (item: NavigationElement, homeId: string) => boolean;
+  isDisabled?: (
+    items: DiscriminatedItem[],
+    item: NavigationElement,
+    homeId: string,
+  ) => boolean;
   // items can be undefined because "many" operations start empty
-  items?: DiscriminatedItem[];
+  itemIds?: string[];
   onClose: (args: { id: string | null; open: boolean }) => void;
-  onConfirm: (args: string | undefined) => void;
+  onConfirm: (destination: string | undefined) => void;
   open?: boolean;
-  title: string;
+  titleKey: string;
 };
 
 const ItemSelectionModal = ({
   buttonText = () => 'Submit',
-  isDisabled,
-  items = [],
+  isDisabled = () => false,
+  itemIds = [],
   onClose,
   onConfirm,
   open = false,
-  title,
+  titleKey,
 }: ItemSelectionModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { data: items } = hooks.useItems(itemIds);
+
+  const title = computeTitle({
+    items,
+    count: itemIds.length - 1,
+    translateBuilder,
+    translateKey: titleKey,
+  });
 
   // special elements for breadcrumbs
   // root displays specific paths
@@ -60,8 +74,8 @@ const ItemSelectionModal = ({
   // my graasp displays accessible items
   const MY_GRAASP_BREADCRUMB: NavigationElement = {
     name: translateBuilder(BUILDER.MY_ITEMS_TITLE),
-    id: MY_GRAASP_BREADCRUMB_ID,
-    path: MY_GRAASP_BREADCRUMB_ID,
+    id: MY_GRAASP_ITEM_PATH,
+    path: MY_GRAASP_ITEM_PATH,
   };
 
   const SPECIAL_BREADCRUMB_IDS = [ROOT_BREADCRUMB.id, MY_GRAASP_BREADCRUMB.id];
@@ -124,6 +138,10 @@ const ItemSelectionModal = ({
     return <Breadcrumbs elements={elements} onSelect={onNavigate} />;
   };
 
+  const isDisabledLocal = (item: NavigationElement) =>
+    !items?.data ||
+    isDisabled(Object.values(items.data), item, MY_GRAASP_BREADCRUMB.id);
+
   return (
     <Dialog
       onClose={handleClose}
@@ -144,19 +162,25 @@ const ItemSelectionModal = ({
         >
           {renderBreadcrumbs()}
 
-          {selectedNavigationItem.id === ROOT_BREADCRUMB.id && (
+          {items?.data && selectedNavigationItem.id === ROOT_BREADCRUMB.id && (
             <RootNavigationTree
-              isDisabled={(item) => isDisabled(item, MY_GRAASP_BREADCRUMB.id)}
+              isDisabled={(item) =>
+                isDisabled(
+                  Object.values(items.data),
+                  item,
+                  MY_GRAASP_BREADCRUMB.id,
+                )
+              }
               onClick={setSelectedItem}
               selectedId={selectedItem?.id}
               onNavigate={onNavigate}
-              items={items}
+              items={Object.values(items.data)}
               rootMenuItems={[MY_GRAASP_BREADCRUMB]}
             />
           )}
           {selectedNavigationItem.id === MY_GRAASP_BREADCRUMB.id && (
             <AccessibleNavigationTree
-              isDisabled={(item) => isDisabled(item, MY_GRAASP_BREADCRUMB.id)}
+              isDisabled={isDisabledLocal}
               onClick={setSelectedItem}
               onNavigate={onNavigate}
               selectedId={selectedItem?.id}
@@ -164,7 +188,7 @@ const ItemSelectionModal = ({
           )}
           {!SPECIAL_BREADCRUMB_IDS.includes(selectedNavigationItem.id) && (
             <ChildrenNavigationTree
-              isDisabled={(item) => isDisabled(item, MY_GRAASP_BREADCRUMB.id)}
+              isDisabled={isDisabledLocal}
               onClick={setSelectedItem}
               onNavigate={onNavigate}
               selectedId={selectedItem?.id}
@@ -181,7 +205,7 @@ const ItemSelectionModal = ({
             !selectedItem ||
             // root is not a valid value
             selectedItem.id === ROOT_BREADCRUMB.id ||
-            isDisabled(selectedItem, MY_GRAASP_BREADCRUMB.id)
+            isDisabledLocal(selectedItem)
           }
           id={TREE_MODAL_CONFIRM_BUTTON_ID}
           variant="contained"

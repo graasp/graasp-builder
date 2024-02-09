@@ -22,6 +22,7 @@ import {
 import App from './App';
 import FallbackComponent from './Fallback';
 import { CurrentUserContextProvider } from './context/CurrentUserContext';
+import { FilterItemsContextProvider } from './context/FilterItemsContext';
 import ModalProviders from './context/ModalProviders';
 
 const Root = (): JSX.Element => (
@@ -34,7 +35,9 @@ const Root = (): JSX.Element => (
           <Router>
             <ModalProviders>
               <CurrentUserContextProvider>
-                <App />
+                <FilterItemsContextProvider>
+                  <App />
+                </FilterItemsContextProvider>
               </CurrentUserContextProvider>
             </ModalProviders>
           </Router>

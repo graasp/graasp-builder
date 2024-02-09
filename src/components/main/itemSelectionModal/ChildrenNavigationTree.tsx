@@ -25,11 +25,9 @@ const ChildrenNavigationTree = ({
   isDisabled,
 }: ChildrenNavigationTreeProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  // TODO: use filter in useChildren directly in another PR
   const { data: children } = hooks.useChildren(selectedNavigationItem.id);
-
-  const folders = children?.filter((item) => item.type === ItemType.FOLDER);
-
+  // TODO: use hook's filter when available
+  const folders = children?.filter((f) => f.type === ItemType.FOLDER);
   return (
     <>
       {folders?.map((ele) => (

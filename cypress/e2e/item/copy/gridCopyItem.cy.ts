@@ -1,7 +1,7 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
-  HOME_MODAL_ITEM_ID,
   ITEM_MENU_COPY_BUTTON_CLASS,
+  MY_GRAASP_ITEM_PATH,
   buildItemCard,
   buildItemMenu,
   buildItemMenuButtonId,
@@ -9,11 +9,19 @@ import {
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
-const copyItem = ({ id, toItemPath }: { id: string; toItemPath: string }) => {
+const copyItem = ({
+  id,
+  toItemPath,
+  rootId,
+}: {
+  id: string;
+  toItemPath: string;
+  rootId?: string;
+}) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
   cy.get(menuSelector).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
-  cy.fillTreeModal(toItemPath);
+  cy.handleTreeMenu(toItemPath, rootId);
 };
 
 describe('Copy Item in Grid', () => {
@@ -63,7 +71,7 @@ describe('Copy Item in Grid', () => {
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const toItemPath = HOME_MODAL_ITEM_ID;
+    const toItemPath = MY_GRAASP_ITEM_PATH;
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
