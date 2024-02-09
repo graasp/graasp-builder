@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { IconButtonProps } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
 import {
   ActionButtonVariant,
   CopyButton as GraaspCopyButton,
@@ -17,7 +16,6 @@ import {
   ITEM_MENU_COPY_BUTTON_CLASS,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { NavigationElement } from './itemSelectionModal/Breadcrumbs';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
 } from './itemSelectionModal/ItemSelectionModal';
@@ -49,6 +47,7 @@ const CopyButton = ({
 
   const onClose = () => {
     setOpen(false);
+    setItemIds([]);
   };
 
   const onConfirm: ItemSelectionModalProps['onConfirm'] = (payload) => {
@@ -70,13 +69,6 @@ const CopyButton = ({
     openCopyModal(itemIds);
     onClick?.();
   };
-
-  // The copy button is never disabled
-  const isDisabled = (
-    _items: DiscriminatedItem[],
-    _item: NavigationElement,
-    _homeId: string,
-  ) => false;
 
   const buttonText = (name?: string) =>
     computeButtonText({
@@ -100,7 +92,6 @@ const CopyButton = ({
       {itemIds && open && (
         <ItemSelectionModal
           titleKey={BUILDER.COPY_ITEM_MODAL_TITLE}
-          isDisabled={isDisabled}
           buttonText={buttonText}
           onClose={onClose}
           open={open}

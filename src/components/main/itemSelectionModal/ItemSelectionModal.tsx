@@ -31,7 +31,7 @@ export type ItemSelectionModalProps = {
   buttonText: (itemName?: string) => string;
   /** disabled rows
    *  */
-  isDisabled: (
+  isDisabled?: (
     items: DiscriminatedItem[],
     item: NavigationElement,
     homeId: string,
@@ -46,7 +46,7 @@ export type ItemSelectionModalProps = {
 
 const ItemSelectionModal = ({
   buttonText = () => 'Submit',
-  isDisabled,
+  isDisabled = () => false,
   itemIds = [],
   onClose,
   onConfirm,

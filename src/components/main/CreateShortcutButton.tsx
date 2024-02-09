@@ -16,7 +16,6 @@ import { computeButtonText } from '@/utils/itemSelection';
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MENU_SHORTCUT_BUTTON_CLASS } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { NavigationElement } from './itemSelectionModal/Breadcrumbs';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
 } from './itemSelectionModal/ItemSelectionModal';
@@ -69,13 +68,6 @@ const CreateShortcutButton = ({
     onClick?.();
   };
 
-  // The shortcut button is never disabled
-  const isDisabled = (
-    _items: DiscriminatedItem[],
-    _item: NavigationElement,
-    _homeId: string,
-  ) => false;
-
   const buttonText = (name?: string) =>
     computeButtonText({
       translateBuilder,
@@ -98,7 +90,6 @@ const CreateShortcutButton = ({
       {item && open && (
         <ItemSelectionModal
           titleKey={BUILDER.CREATE_SHORTCUT_MODAL_TITLE}
-          isDisabled={isDisabled}
           buttonText={buttonText}
           onClose={onClose}
           open={open}

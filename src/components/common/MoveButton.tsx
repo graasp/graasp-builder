@@ -52,6 +52,7 @@ const MoveButton = ({
 
   const onClose = () => {
     setOpen(false);
+    setItemIds([]);
   };
 
   const onConfirm: ItemSelectionModalProps['onConfirm'] = (payload) => {

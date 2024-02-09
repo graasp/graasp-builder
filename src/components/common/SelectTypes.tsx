@@ -1,11 +1,14 @@
-import { Stack } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {
+  Checkbox,
+  FormControl,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+  Stack,
+} from '@mui/material';
 
 import { ItemType } from '@graasp/sdk';
 import { ItemIcon } from '@graasp/ui';
@@ -25,8 +28,9 @@ const MenuProps = {
   },
 };
 
+// Exclude LOCAL_FILE because it is also file like for S3_FILE but stored in another location.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { S3_FILE, ...BUILDER_ITEM_TYPES } = ItemType; // exclude S3 file
+const { LOCAL_FILE, ...BUILDER_ITEM_TYPES } = ItemType;
 const LABEL_ID = 'select-types-filter-label';
 
 export const SelectTypes = (): JSX.Element => {
