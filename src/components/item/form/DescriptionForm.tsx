@@ -24,7 +24,6 @@ const DescriptionForm = ({
     <TextEditor
       id={id}
       value={(updatedProperties?.description || item?.description) ?? ''}
-      edit
       onChange={onChange}
       showActions={false}
     />
