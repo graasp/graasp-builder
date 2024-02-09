@@ -127,11 +127,7 @@ const LinkContent = ({
  */
 const DocumentContent = ({ item }: { item: DocumentItemType }): JSX.Element => (
   <StyledContainer>
-    <DocumentItem
-      id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
-      item={item}
-      maxHeight="70vh"
-    />
+    <DocumentItem id={DOCUMENT_ITEM_TEXT_EDITOR_ID} item={item} />
   </StyledContainer>
 );
 

@@ -20,7 +20,7 @@ const FallbackComponent = (): JSX.Element => {
       spacing={4}
     >
       <Box>
-        <Typography variant="h1">
+        <Typography variant="h1" fontSize="6em">
           {translateBuilder(BUILDER.FALLBACK_TITLE)}
         </Typography>
         <Typography>{translateBuilder(BUILDER.FALLBACK_TEXT)}</Typography>
@@ -28,6 +28,7 @@ const FallbackComponent = (): JSX.Element => {
           component={Link}
           to={HOME_PATH}
           sx={{ mt: 3 }}
+          reloadDocument
           variant="contained"
         >
           {translateBuilder(BUILDER.FALLBACK_BACK_TO_HOME)}

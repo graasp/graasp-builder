@@ -48,6 +48,8 @@
   "DOCUMENT_FLAVOR_NAME": "Style",
   "DOCUMENT_FLAVOR_SUCCESS": "Success",
   "DOCUMENT_FLAVOR_WARNING": "Warning",
+  "DOCUMENT_EDITOR_MODE_RICH_TEXT": "Rich Text (default)",
+  "DOCUMENT_EDITOR_MODE_RAW": "Raw (advanced)",
   "DOWNLOAD_ITEM_BUTTON": "Download",
   "DROP_DOWN_PLACEHOLDER": "Please Choose From List",
   "EDIT_BUTTON_TOOLTIP": "Edit",

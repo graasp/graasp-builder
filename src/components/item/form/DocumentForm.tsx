@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import {
+  Alert,
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Tab,
+  TextField,
+} from '@mui/material';
 
 import {
   DocumentItemExtraFlavor,
@@ -8,7 +19,7 @@ import {
   DocumentItemType,
   ItemType,
 } from '@graasp/sdk';
-import { DocumentItem } from '@graasp/ui/text-editor';
+import TextEditor from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import {
@@ -19,6 +30,11 @@ import { BUILDER } from '../../../langs/constants';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
 import type { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
+
+enum EditorMode {
+  Rich,
+  Raw,
+}
 
 export const DocumentExtraForm = ({
   documentItemId,
@@ -46,14 +62,27 @@ export const DocumentExtraForm = ({
   showActions?: boolean;
 }): JSX.Element => {
   const { t } = useBuilderTranslation();
+  const [editorMode, setEditorMode] = useState(EditorMode.Rich);
   const flavorsTranslations = Object.values(DocumentItemExtraFlavor).map(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     (f) => [f, t(BUILDER[`DOCUMENT_FLAVOR_${f.toUpperCase()}`])],
   );
 
+  const withFlavor = (textView: JSX.Element): JSX.Element =>
+    extra?.flavor ? (
+      <Alert severity={extra.flavor}>{textView}</Alert>
+    ) : (
+      textView
+    );
+
+  const handleChangeEditorMode = (mode: string) => {
+    // todo: fix
+    setEditorMode(mode as unknown as EditorMode);
+  };
+
   return (
-    <>
+    <Stack direction="column" spacing={1}>
       <Box sx={{ width: '100%' }}>
         <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
           <InputLabel shrink id={FLAVOR_SELECT_ID}>
@@ -63,15 +92,9 @@ export const DocumentExtraForm = ({
             id={FLAVOR_SELECT_ID}
             variant="standard"
             label="flavor"
-            value={extra.flavor}
+            value={extra.flavor ?? ''}
             onChange={({ target: { value } }) => {
-              if (
-                value &&
-                // check that the value is valid to make a safe cast
-                Object.values<string>(DocumentItemExtraFlavor).includes(value)
-              ) {
-                onFlavorChange?.(value as `${DocumentItemExtraFlavor}`);
-              }
+              onFlavorChange?.(value as `${DocumentItemExtraFlavor}`);
             }}
           >
             <MenuItem value="">None</MenuItem>
@@ -83,24 +106,51 @@ export const DocumentExtraForm = ({
           </Select>
         </FormControl>
       </Box>
-      <Box sx={{ mt: 2 }}>
-        <DocumentItem
-          edit
-          id={documentItemId}
-          item={{
-            extra: buildDocumentExtra(extra),
-          }}
-          maxHeight={maxHeight}
-          onCancel={onCancel}
-          onChange={onContentChange}
-          onSave={onContentSave}
-          placeholderText={placeholder}
-          saveButtonId={saveButtonId}
-          cancelButtonId={cancelButtonId}
-          showActions={showActions}
-        />
+      <Box>
+        <TabContext value={editorMode.toString()}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList
+              onChange={(_, value) => handleChangeEditorMode(value)}
+              aria-label="lab API tabs example"
+            >
+              <Tab
+                label={t(BUILDER.DOCUMENT_EDITOR_MODE_RICH_TEXT)}
+                value={EditorMode.Rich.toString()}
+              />
+              <Tab
+                label={t(BUILDER.DOCUMENT_EDITOR_MODE_RAW)}
+                value={EditorMode.Raw.toString()}
+              />
+            </TabList>
+          </Box>
+          <TabPanel value={EditorMode.Rich.toString()}>
+            {withFlavor(
+              <TextEditor
+                id={documentItemId}
+                value={extra.content}
+                maxHeight={maxHeight}
+                onCancel={onCancel}
+                onChange={onContentChange}
+                onSave={onContentSave}
+                placeholderText={placeholder}
+                saveButtonId={saveButtonId}
+                cancelButtonId={cancelButtonId}
+                showActions={showActions}
+              />,
+            )}
+          </TabPanel>
+          <TabPanel value={EditorMode.Raw.toString()}>
+            <TextField
+              multiline
+              fullWidth
+              minRows={5}
+              value={extra.content}
+              onChange={({ target: { value } }) => onContentChange?.(value)}
+            />
+          </TabPanel>
+        </TabContext>
       </Box>
-    </>
+    </Stack>
   );
 };
 

@@ -71,7 +71,6 @@ const ClearChatButton = ({
             variant="outlined"
             color="error"
             onClick={() => setOpenConfirmation(true)}
-            sx={{ minWidth: 150 }}
           >
             {text}
           </Button>
