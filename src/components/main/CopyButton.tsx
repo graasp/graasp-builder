@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { IconButtonProps } from '@mui/material';
 
@@ -29,7 +29,7 @@ export type Props = {
 };
 
 const CopyButton = ({
-  itemIds: defaultItemsIds,
+  itemIds,
   color,
   id,
   type,
@@ -38,35 +38,25 @@ const CopyButton = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: copyItems } = mutations.useCopyItems();
   const [open, setOpen] = useState<boolean>(false);
-  const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
 
-  const openCopyModal = (newItemIds: string[]) => {
+  const openCopyModal = () => {
     setOpen(true);
-    setItemIds(newItemIds);
   };
 
   const onClose = () => {
     setOpen(false);
-    setItemIds([]);
   };
 
-  const onConfirm: ItemSelectionModalProps['onConfirm'] = (payload) => {
-    // change item's root id to null
-    const newPayload = {
+  const onConfirm: ItemSelectionModalProps['onConfirm'] = (destination) => {
+    copyItems({
       ids: itemIds,
-      to: payload,
-    };
-    copyItems(newPayload);
+      to: destination,
+    });
     onClose();
   };
 
-  useEffect(() => {
-    // necessary to sync prop with a state because move-many-items' targets are updated dynamically with the table
-    setItemIds(defaultItemsIds);
-  }, [defaultItemsIds]);
-
   const handleCopy = () => {
-    openCopyModal(itemIds);
+    openCopyModal();
     onClick?.();
   };
 

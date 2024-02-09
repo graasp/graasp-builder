@@ -73,11 +73,10 @@ const ItemMenu = ({
     const to =
       parentsIds.length > 1 ? parentsIds[parentsIds.length - 2] : undefined;
 
-    const newPayload = {
+    copyItems({
       ids: [item.id],
       to,
-    };
-    copyItems(newPayload);
+    });
   };
   const renderEditorActions = () => {
     if (canEdit) {

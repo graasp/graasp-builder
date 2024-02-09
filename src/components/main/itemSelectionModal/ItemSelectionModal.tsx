@@ -39,7 +39,7 @@ export type ItemSelectionModalProps = {
   // items can be undefined because "many" operations start empty
   itemIds?: string[];
   onClose: (args: { id: string | null; open: boolean }) => void;
-  onConfirm: (args: string | undefined) => void;
+  onConfirm: (destination: string | undefined) => void;
   open?: boolean;
   titleKey: string;
 };

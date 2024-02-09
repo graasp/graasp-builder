@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { IconButtonProps } from '@mui/material/IconButton';
 
@@ -33,7 +33,7 @@ type MoveButtonProps = {
 };
 
 const MoveButton = ({
-  itemIds: defaultItemsIds,
+  itemIds,
   color = 'default',
   id,
   type = ActionButton.ICON_BUTTON,
@@ -43,34 +43,25 @@ const MoveButton = ({
   const { mutate: moveItems } = mutations.useMoveItems();
 
   const [open, setOpen] = useState(false);
-  const [itemIds, setItemIds] = useState<string[]>(defaultItemsIds || []);
 
-  const openMoveModal = (newItemIds: string[]) => {
+  const openMoveModal = () => {
     setOpen(true);
-    setItemIds(newItemIds);
   };
 
   const onClose = () => {
     setOpen(false);
-    setItemIds([]);
   };
 
-  const onConfirm: ItemSelectionModalProps['onConfirm'] = (payload) => {
-    // change item's root id to null
-    const newPayload = {
+  const onConfirm: ItemSelectionModalProps['onConfirm'] = (destination) => {
+    moveItems({
       ids: itemIds,
-      to: payload,
-    };
-    moveItems(newPayload);
+      to: destination,
+    });
     onClose();
   };
-  useEffect(() => {
-    // necessary to sync prop with a state because move-many-items' targets are updated dynamically with the table
-    setItemIds(defaultItemsIds);
-  }, [defaultItemsIds]);
 
   const handleMove = () => {
-    openMoveModal(itemIds);
+    openMoveModal();
     onClick?.();
   };
 

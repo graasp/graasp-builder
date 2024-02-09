@@ -43,8 +43,7 @@ const CreateShortcutButton = ({
     setOpen(false);
   };
 
-  const onConfirm: ItemSelectionModalProps['onConfirm'] = (payload) => {
-    const to = payload; // place where to save the shortcut
+  const onConfirm: ItemSelectionModalProps['onConfirm'] = (destination) => {
     const target = item.id; // id of the item where the shortcut is pointing
 
     const shortcut: Partial<ShortcutItemType> &
@@ -56,7 +55,7 @@ const CreateShortcutButton = ({
       }),
       extra: buildShortcutExtra(target),
       type: ItemType.SHORTCUT,
-      parentId: to,
+      parentId: destination,
     };
 
     createShortcut(shortcut);
