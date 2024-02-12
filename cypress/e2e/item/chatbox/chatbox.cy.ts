@@ -1,5 +1,7 @@
 import { MockWebSocket } from '@graasp/query-client';
 
+import { v4 } from 'uuid';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   CHATBOX_ID,
@@ -11,14 +13,10 @@ import {
   ITEM_WITH_CHATBOX_MESSAGES,
 } from '../../../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
-import {
-  CHATBOX_LOADING_TIME,
-  WEBSOCKETS_DELAY_TIME,
-} from '../../../support/constants';
+import { CHATBOX_LOADING_TIME } from '../../../support/constants';
 
 const openChatbox = () => {
   cy.get(`#${ITEM_CHATBOX_BUTTON_ID}`).click();
-  cy.wait(CHATBOX_LOADING_TIME);
   cy.wait('@getItemChat', { timeout: CHATBOX_LOADING_TIME });
 };
 
@@ -42,6 +40,7 @@ describe('Chatbox Scenarios', () => {
 
     // send message
     const message = 'a new message';
+    const messageId = v4();
     // get the input field (which is a textarea because it is multiline
     cy.get(`#${CHATBOX_ID} #${CHATBOX_INPUT_BOX_ID} textarea:visible`).type(
       message,
@@ -61,16 +60,21 @@ describe('Chatbox Scenarios', () => {
           kind: 'item',
           op: 'publish',
           message: {
+            id: messageId,
             creator: CURRENT_USER.id,
             chatId: item.id,
             body: message,
+            createdAt: new Date().toISOString(),
+            updated: new Date().toISOString(),
           },
         },
       });
-      cy.wait(WEBSOCKETS_DELAY_TIME);
 
       // check the new message is visible
-      cy.get(`#${CHATBOX_ID}`).should('contain', message);
+      cy.get(`#${CHATBOX_ID} [data-cy=message-${messageId}]`).should(
+        'contain',
+        message,
+      );
     });
   });
 
@@ -80,6 +84,7 @@ describe('Chatbox Scenarios', () => {
 
     openChatbox();
 
+    const messageId = v4();
     // check websocket: the chatbox displays someone else's message
     const bobMessage = 'a message from bob';
     cy.get(`#${CHATBOX_ID}`).then(() => {
@@ -92,16 +97,21 @@ describe('Chatbox Scenarios', () => {
           kind: 'item',
           op: 'publish',
           message: {
+            id: messageId,
             creator: MEMBERS.BOB.id,
             chatId: item.id,
             body: bobMessage,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           },
         },
       });
-      cy.wait(WEBSOCKETS_DELAY_TIME);
 
       // check the new message is visible
-      cy.get(`#${CHATBOX_ID}`).should('contain', bobMessage);
+      cy.get(`#${CHATBOX_ID} [data-cy=message-${messageId}]`).should(
+        'contain',
+        bobMessage,
+      );
     });
   });
 });
