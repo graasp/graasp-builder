@@ -1,8 +1,7 @@
 /// <reference types="./src/env.d.ts"/>
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
-import { visualizer } from 'rollup-plugin-visualizer';
-import { PluginOption, UserConfigExport, defineConfig, loadEnv } from 'vite';
+import { UserConfigExport, defineConfig, loadEnv } from 'vite';
 import checker from 'vite-plugin-checker';
 import istanbul from 'vite-plugin-istanbul';
 
@@ -48,17 +47,6 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
         forceBuildInstrument: mode === 'test',
         checkProd: true,
       }),
-      ...(mode === 'development'
-        ? [
-            visualizer({
-              template: 'treemap', // or sunburst
-              open: true,
-              gzipSize: true,
-              brotliSize: true,
-              filename: 'bundle_analysis.html',
-            }) as unknown as PluginOption,
-          ]
-        : []),
     ],
     resolve: {
       alias: {
