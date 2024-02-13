@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/graasp/graasp-builder/compare/v2.6.3...v2.7.0) (2024-02-09)
+
+
+### Features
+
+* hide none-folder in the move modal ([#984](https://github.com/graasp/graasp-builder/issues/984)) ([dbe6886](https://github.com/graasp/graasp-builder/commit/dbe688636f59bc9d82c82db5ae83e3e0d5fb5c03))
+* migrate Copy and CreateShortcut modals to ItemSelectionModal ([#988](https://github.com/graasp/graasp-builder/issues/988)) ([d11d13f](https://github.com/graasp/graasp-builder/commit/d11d13ff5c0d8819c7d6ff5ab9697a089cb08b3b))
+* **ui:** create separate pages for item share, publish and settings ([#971](https://github.com/graasp/graasp-builder/issues/971)) ([8489787](https://github.com/graasp/graasp-builder/commit/84897871fabe811c3826a9b877bef404105a3095))
+* update showonlyme checkbox to switch ([d11d13f](https://github.com/graasp/graasp-builder/commit/d11d13ff5c0d8819c7d6ff5ab9697a089cb08b3b))
+
+
+### Bug Fixes
+
+* improve item thumbnails in grid view ([#992](https://github.com/graasp/graasp-builder/issues/992)) ([08548d5](https://github.com/graasp/graasp-builder/commit/08548d57f6923aa8bd1a5e6707ee4e66194a6941))
+* refetch queries on mount and update selection modal ([d11d13f](https://github.com/graasp/graasp-builder/commit/d11d13ff5c0d8819c7d6ff5ab9697a089cb08b3b))
+* some loaders to display data first and pagination bugs ([#967](https://github.com/graasp/graasp-builder/issues/967)) ([392a736](https://github.com/graasp/graasp-builder/commit/392a736ab5b6fbead1d1584afb058de76dd24413))
+* use 100% for crop ([#991](https://github.com/graasp/graasp-builder/issues/991)) ([0abb860](https://github.com/graasp/graasp-builder/commit/0abb8606536c000a2a6b41cfbd601e846f0eed17))
+
 ## [2.6.3](https://github.com/graasp/graasp-builder/compare/v2.6.2...v2.6.3) (2024-02-02)
 
 
