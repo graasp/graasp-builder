@@ -34,7 +34,7 @@ describe('Edit Link', () => {
       });
     });
 
-    it.only('cancel caption', () => {
+    it('cancel caption', () => {
       const { id, description } = GRAASP_LINK_ITEM;
       cy.visit(buildItemPath(id));
       cy.get(`#${buildEditButtonId(id)}`).click();
