@@ -153,6 +153,7 @@
   "LIBRARY_SETTINGS_INFORMATION": "Vous pouvez publier votre collection sur Graasp Library, notre bibliothèque de ressources pour l'éducation.",
   "LIBRARY_SETTINGS_NOT_PUBLISHED_ITEM_MESSAGE": "Seuls les utilisateurs disposant de droits d'administration peuvent publier cet élément et le valider.",
   "LIBRARY_SETTINGS_PUBLISH_BUTTON": "Publier",
+  "LIBRARY_SETTINGS_PUBLISH_BUTTON_DISABLED": "Publié",
   "LIBRARY_SETTINGS_PUBLISH_NOTIFICATIONS_LABEL": "Envoyer une notification par email à tous les co-éditeurs",
   "LIBRARY_SETTINGS_PUBLISHED_STATUS": "Cet élément est publié. N'importe qui peut y accéder et l'élément est répertorié sur Graasp Library, notre librarie de ressources d'apprentissage.",
   "LIBRARY_SETTINGS_CHILD_PUBLISHED_STATUS": "Cet élément fait partie d'une collection déjà publiée. La publication et la dépublication peuvent être effectuées à la racine de la collection.",

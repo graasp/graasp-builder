@@ -160,6 +160,7 @@
   "LIBRARY_SETTINGS_INFORMATION": "You can publish your collection to Graasp Library, our open educational resource library.\nPublished collections are accessible by the public.\nTo publish your collection, please follow the three steps below.",
   "LIBRARY_SETTINGS_NOT_PUBLISHED_ITEM_MESSAGE": "Only users with admin rights can publish this item and validate it.",
   "LIBRARY_SETTINGS_PUBLISH_BUTTON": "Publish",
+  "LIBRARY_SETTINGS_PUBLISH_BUTTON_DISABLED": "Published",
   "LIBRARY_SETTINGS_PUBLISH_NOTIFICATIONS_LABEL": "Send email notifications to all co-editors",
   "LIBRARY_SETTINGS_PUBLISHED_STATUS": "This element is published. Anyone can access it and is available on Graasp Library, our public repository of learning ressources.",
   "LIBRARY_SETTINGS_CHILD_PUBLISHED_STATUS": "This element is part of a collection that is already published. Publishing and un-publishing can be done at the collection root.",

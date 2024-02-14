@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { CheckCircle, InfoRounded } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
-import { Button, Loader } from '@graasp/ui';
+import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
@@ -32,30 +33,18 @@ const ItemPublishButton = ({
   const { t: translateBuilder } = useBuilderTranslation();
 
   // item tags
-  const { mutate: unpublish } = useUnpublishItem();
-  const { mutate: publishItem } = usePublishItem();
+  const { mutate: unpublish, isLoading: isUnPublishing } = useUnpublishItem();
+  const { mutate: publishItem, isLoading: isPublishing } = usePublishItem();
 
-  const { data: itemPublishedEntry, isLoading: isItemTagsLoading } =
-    useItemPublishedInformation({ itemId: item.id });
+  const { data: itemPublishedEntry, isLoading } = useItemPublishedInformation({
+    itemId: item.id,
+  });
 
-  const [isPublished, setIsPublished] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [emailNotification, setEmailNotification] = useState<boolean>(false);
 
-  // update state variables depending on fetch values
-  useEffect(() => {
-    if (itemPublishedEntry) {
-      setIsPublished(Boolean(itemPublishedEntry));
-
-      // disable setting if any publication is set on any ancestor items
-      setIsDisabled(itemPublishedEntry?.item?.path !== item?.path);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemPublishedEntry, item]);
-
-  if (isItemTagsLoading) {
-    return <Loader />;
-  }
+  const isPublished = Boolean(itemPublishedEntry);
+  const isDisabled =
+    itemPublishedEntry && itemPublishedEntry?.item?.path !== item?.path;
 
   if (!isValidated) {
     return null;
@@ -91,25 +80,30 @@ const ItemPublishButton = ({
           </Typography>
         </Stack>
       )}
-      <Button
-        disabled={disabled || isDisabled || !isValidated || isPublished}
-        onClick={handlePublish}
-        endIcon={isPublished && <CheckCircle color="primary" />}
-        id={ITEM_PUBLISH_BUTTON_ID}
-      >
-        {translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
-      </Button>
-      <Button
-        disabled={disabled || isDisabled || !isPublished}
-        onClick={handleUnpublish}
-        id={ITEM_UNPUBLISH_BUTTON_ID}
-      >
-        {translateBuilder(BUILDER.LIBRARY_SETTINGS_UNPUBLISH_BUTTON)}
-      </Button>
+      <Stack direction="row" spacing={1}>
+        <LoadingButton
+          variant="contained"
+          disabled={disabled || isDisabled || !isValidated || isPublished}
+          onClick={handlePublish}
+          endIcon={isPublished && <CheckCircle color="primary" />}
+          id={ITEM_PUBLISH_BUTTON_ID}
+          loading={isLoading || isPublishing || isUnPublishing}
+        >
+          {isPublished
+            ? translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON_DISABLED)
+            : translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
+        </LoadingButton>
+        <Button
+          disabled={disabled || isDisabled || !isPublished}
+          onClick={handleUnpublish}
+          id={ITEM_UNPUBLISH_BUTTON_ID}
+        >
+          {translateBuilder(BUILDER.LIBRARY_SETTINGS_UNPUBLISH_BUTTON)}
+        </Button>
+      </Stack>
       <div>
         <FormControlLabel
           control={
-            // eslint-disable-next-line react/jsx-wrap-multilines
             <Checkbox
               id={EMAIL_NOTIFICATION_CHECKBOX}
               checked={emailNotification}
