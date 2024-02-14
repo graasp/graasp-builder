@@ -1,4 +1,4 @@
-import Stack from '@mui/material/Stack';
+import { Stack } from '@mui/material';
 
 import { ITEM_HEADER_ID } from '../../../config/selectors';
 import Navigation from '../../layout/Navigation';

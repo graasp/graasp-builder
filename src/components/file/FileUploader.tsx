@@ -1,10 +1,11 @@
+import '@uppy/drag-drop/dist/style.css';
+
 import { DragEventHandler, useContext, useEffect, useState } from 'react';
 
 import { Box, styled } from '@mui/material';
 
 import { MAX_FILE_SIZE } from '@graasp/sdk';
 
-import '@uppy/drag-drop/dist/style.css';
 import { DragDrop } from '@uppy/react';
 
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';

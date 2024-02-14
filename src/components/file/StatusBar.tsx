@@ -1,13 +1,11 @@
-import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import Snackbar from '@mui/material/Snackbar';
-import SnackbarContent from '@mui/material/SnackbarContent';
+import '@uppy/status-bar/dist/style.css';
+
+import { Close } from '@mui/icons-material';
+import { IconButton, Snackbar, SnackbarContent, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 import Uppy from '@uppy/core';
 import { StatusBar as UppyStatusBar } from '@uppy/react';
-import '@uppy/status-bar/dist/style.css';
 
 const StyledSnackbarContent = styled(SnackbarContent)(() => ({
   '&.MuiSnackbarContent-root': {
@@ -51,7 +49,7 @@ const StatusBar = ({
       color="inherit"
       onClick={handleClose}
     >
-      <CloseIcon fontSize="small" />
+      <Close fontSize="small" />
     </IconButton>
   );
 

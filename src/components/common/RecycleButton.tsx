@@ -1,8 +1,11 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
+import { Delete } from '@mui/icons-material';
+import {
+  IconButton,
+  IconButtonProps,
+  ListItemIcon,
+  MenuItem,
+  Tooltip,
+} from '@mui/material';
 
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
@@ -48,7 +51,7 @@ const RecycleButton = ({
           className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
         >
           <ListItemIcon>
-            <DeleteIcon />
+            <Delete />
           </ListItemIcon>
           {text}
         </MenuItem>
@@ -65,7 +68,7 @@ const RecycleButton = ({
               aria-label={text}
               onClick={handleClick}
             >
-              <DeleteIcon />
+              <Delete />
             </IconButton>
           </span>
         </Tooltip>

@@ -10,7 +10,6 @@ import {
   PLAYER_ITEMS_PREFIX,
   hasAcceptedCookies,
 } from '@graasp/sdk';
-import '@graasp/ui/dist/bundle.css';
 
 import { BrowserTracing, init as SentryInit } from '@sentry/react';
 

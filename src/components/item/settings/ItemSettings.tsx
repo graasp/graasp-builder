@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { Link, useOutletContext } from 'react-router-dom';
 
-import InfoIcon from '@mui/icons-material/Info';
+import { Info } from '@mui/icons-material';
 import {
   Alert,
+  Container,
   FormControlLabel,
   FormGroup,
   Switch,
   Tooltip,
+  Typography,
 } from '@mui/material';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
@@ -160,7 +160,7 @@ const ItemSettings = (): JSX.Element => {
         sx={{ m: 0, p: 0 }}
       >
         <span>
-          <InfoIcon htmlColor="gray" sx={{ mb: -0.5 }} fontSize="small" />
+          <Info htmlColor="gray" sx={{ mb: -0.5 }} fontSize="small" />
         </span>
       </Tooltip>
     ) : null;

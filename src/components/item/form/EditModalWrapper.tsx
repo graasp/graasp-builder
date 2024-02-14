@@ -1,10 +1,12 @@
 import { ComponentType as CT, Dispatch, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { Button } from '@mui/material';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material';
 
 import { routines } from '@graasp/query-client';
 import { DiscriminatedItem } from '@graasp/sdk';

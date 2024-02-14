@@ -7,9 +7,9 @@ import {
   ItemMembership,
   PermissionLevel,
 } from '@graasp/sdk';
-import { Table as GraaspTable } from '@graasp/ui/dist/table';
+import { Table as GraaspTable } from '@graasp/ui/table';
 
-import { ColDef } from 'ag-grid-community';
+import { ColDef } from '@ag-grid-community/core';
 
 import {
   MEMBERSHIP_TABLE_HEIGHT,

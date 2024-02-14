@@ -1,5 +1,4 @@
-import { Toolbar, styled } from '@mui/material';
-import Drawer from '@mui/material/Drawer';
+import { Drawer, Toolbar, styled } from '@mui/material';
 
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { ITEM_PANEL_ID } from '../../config/selectors';

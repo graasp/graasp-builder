@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 
-import CancelIcon from '@mui/icons-material/Cancel';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import HelpIcon from '@mui/icons-material/Help';
-import Looks3Icon from '@mui/icons-material/Looks3';
-import Looks4Icon from '@mui/icons-material/Looks4';
-import Looks5Icon from '@mui/icons-material/Looks5';
-import LooksOneIcon from '@mui/icons-material/LooksOne';
-import LooksTwoIcon from '@mui/icons-material/LooksTwo';
-import UpdateIcon from '@mui/icons-material/Update';
+import {
+  Cancel,
+  CheckCircle,
+  Help,
+  Looks3,
+  Looks4,
+  Looks5,
+  LooksOne,
+  LooksTwo,
+  Update,
+} from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -170,13 +172,13 @@ const ItemPublishTab = (): JSX.Element => {
   const displayItemValidationIcon = () => {
     switch (validationStatus) {
       case ItemValidationStatus.Success:
-        return <CheckCircleIcon color="primary" />;
+        return <CheckCircle color="primary" />;
       case ItemValidationStatus.Pending:
-        return <UpdateIcon color="primary" />;
+        return <Update color="primary" />;
       case ItemValidationStatus.PendingManual:
-        return <UpdateIcon color="primary" />;
+        return <Update color="primary" />;
       case ItemValidationStatus.Failure:
-        return <CancelIcon color="primary" />;
+        return <Cancel color="primary" />;
       default:
     }
     return null;
@@ -231,7 +233,7 @@ const ItemPublishTab = (): JSX.Element => {
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_INFORMATION)}
         </Typography>
         <Typography variant="h6" mt={2} mr={2}>
-          <LooksOneIcon color="primary" />
+          <LooksOne color="primary" />
           {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
         </Typography>
         <Typography variant="body1">
@@ -239,7 +241,7 @@ const ItemPublishTab = (): JSX.Element => {
         </Typography>
         <VisibilitySelect item={item} edit={canEdit} />
         <Typography variant="h6" mt={2} mr={2}>
-          <LooksTwoIcon color="primary" />
+          <LooksTwo color="primary" />
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_TITLE)}
         </Typography>
         <Typography variant="body1">
@@ -277,7 +279,7 @@ const ItemPublishTab = (): JSX.Element => {
         </Stack>
         {displayItemValidationMessage()}
         <Typography variant="h6" mt={2} mr={2}>
-          <Looks3Icon color="primary" />
+          <Looks3 color="primary" />
           {translateBuilder(
             BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_TITLE,
           )}
@@ -300,7 +302,7 @@ const ItemPublishTab = (): JSX.Element => {
         </Box>
 
         <Typography variant="h6" mt={2}>
-          <Looks4Icon color="primary" />
+          <Looks4 color="primary" />
           {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_TITLE)}
           <Tooltip
             title={translateBuilder(
@@ -310,7 +312,7 @@ const ItemPublishTab = (): JSX.Element => {
           >
             <span>
               <IconButton aria-label="info" onClick={handleClick}>
-                <HelpIcon />
+                <Help />
               </IconButton>
             </span>
           </Tooltip>
@@ -321,7 +323,7 @@ const ItemPublishTab = (): JSX.Element => {
         />
 
         <Typography variant="h6" mt={2} mr={2}>
-          <Looks5Icon color="primary" />
+          <Looks5 color="primary" />
           {translateBuilder(
             BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_TITLE,
           )}

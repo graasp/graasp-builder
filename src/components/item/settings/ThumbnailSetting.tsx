@@ -1,7 +1,6 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import { Dialog, Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Dialog, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';
@@ -101,7 +100,6 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
     try {
       // remove waiting files
       uppy.cancelAll();
-
       uppy.addFile({
         type: croppedImage.type,
         data: croppedImage,

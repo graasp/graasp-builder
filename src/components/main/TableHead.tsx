@@ -1,12 +1,14 @@
 import { MouseEvent } from 'react';
 
-import Checkbox from '@mui/material/Checkbox';
-import TableCell, { TableCellProps } from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel, {
+import {
+  Checkbox,
+  TableCell,
+  TableCellProps,
+  TableHead,
+  TableRow,
+  TableSortLabel,
   TableSortLabelProps,
-} from '@mui/material/TableSortLabel';
+} from '@mui/material';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { Ordering } from '../../enums';

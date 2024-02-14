@@ -1,11 +1,12 @@
 import { SyntheticEvent } from 'react';
 
-import { Box } from '@mui/material';
-import Autocomplete, {
+import {
+  Autocomplete,
   AutocompleteChangeReason,
-} from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+  Box,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 import { Category, CategoryType, ItemCategory } from '@graasp/sdk';
 
@@ -46,8 +47,8 @@ const DropdownMenu = ({
     return null;
   }
 
-  const selected = values.filter(
-    ({ id }) => selectedValues?.find(({ category }) => category.id === id),
+  const selected = values.filter(({ id }) =>
+    selectedValues?.find(({ category }) => category.id === id),
   );
 
   return (

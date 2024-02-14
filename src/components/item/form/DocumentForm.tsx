@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react';
 
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import Box from '@mui/material/Box';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import {
+  Alert,
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Tab,
+  TextField,
+} from '@mui/material';
 
 import {
   DocumentItemExtraFlavor,
@@ -9,64 +19,83 @@ import {
   DocumentItemType,
   ItemType,
 } from '@graasp/sdk';
-import { DocumentItem } from '@graasp/ui';
+import TextEditor from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import { ITEM_FORM_DOCUMENT_TEXT_ID } from '../../../config/selectors';
+import {
+  FLAVOR_SELECT_ID,
+  ITEM_FORM_DOCUMENT_TEXT_ID,
+} from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import { buildDocumentExtra } from '../../../utils/itemExtra';
 import type { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
 
+enum EditorMode {
+  Rich,
+  Raw,
+}
+
 export const DocumentExtraForm = ({
   documentItemId,
   extra,
-  maxHeight,
   onCancel,
   onContentChange,
-  onContentSave,
   onFlavorChange,
+  onEditorChange,
   placeholder,
-  saveButtonId,
-  cancelButtonId,
-  showActions = false,
 }: {
   documentItemId?: string;
   extra: DocumentItemExtraProperties;
-  maxHeight?: string;
   onCancel?: () => void;
   onContentChange?: (text: string) => void;
-  onContentSave?: (text: string) => void;
   onFlavorChange?: (text: DocumentItemExtraProperties['flavor']) => void;
+  onEditorChange?: (isRaw: DocumentItemExtraProperties['isRaw']) => void;
   placeholder?: string;
-  saveButtonId?: string;
-  cancelButtonId?: string;
-  showActions?: boolean;
 }): JSX.Element => {
   const { t } = useBuilderTranslation();
+  const [editorMode, setEditorMode] = useState(
+    extra.isRaw ? EditorMode.Raw.toString() : EditorMode.Rich.toString(),
+  );
   const flavorsTranslations = Object.values(DocumentItemExtraFlavor).map(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    (f) => [f, t(BUILDER[`DOCUMENT_FLAVOR_${f.toUpperCase()}`])],
+    (f) => [
+      f,
+      t(
+        BUILDER[
+          `DOCUMENT_FLAVOR_${f.toUpperCase() as Uppercase<`${DocumentItemExtraFlavor}`>}`
+        ],
+      ),
+    ],
   );
 
+  const withFlavor = (textView: JSX.Element): JSX.Element =>
+    extra?.flavor ? (
+      <Alert severity={extra.flavor}>{textView}</Alert>
+    ) : (
+      textView
+    );
+
+  const handleChangeEditorMode = (mode: string) => {
+    // send editor mode change
+    onEditorChange?.(mode === EditorMode.Raw.toString());
+    setEditorMode(mode);
+  };
+
   return (
-    <>
+    <Stack direction="column" spacing={1} minHeight={0}>
       <Box sx={{ width: '100%' }}>
         <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
-          <InputLabel shrink>Flavor</InputLabel>
+          <InputLabel shrink id={FLAVOR_SELECT_ID}>
+            {t(BUILDER.DOCUMENT_FLAVOR_SELECT_LABEL)}
+          </InputLabel>
           <Select
+            id={FLAVOR_SELECT_ID}
             variant="standard"
             label="flavor"
-            value={extra.flavor}
-            onChange={(event) =>
-              onFlavorChange?.(
-                event.target.value === ''
-                  ? undefined
-                  : (event.target
-                      .value as DocumentItemExtraProperties['flavor']),
-              )
-            }
+            value={extra.flavor ?? ''}
+            onChange={({ target: { value } }) => {
+              onFlavorChange?.(value as `${DocumentItemExtraFlavor}`);
+            }}
           >
             <MenuItem value="">None</MenuItem>
             {flavorsTranslations.map(([f, name]) => (
@@ -77,24 +106,47 @@ export const DocumentExtraForm = ({
           </Select>
         </FormControl>
       </Box>
-      <Box sx={{ mt: 2 }}>
-        <DocumentItem
-          edit
-          id={documentItemId}
-          item={{
-            extra: buildDocumentExtra(extra),
-          }}
-          maxHeight={maxHeight}
-          onCancel={onCancel}
-          onChange={onContentChange}
-          onSave={onContentSave}
-          placeholderText={placeholder}
-          saveButtonId={saveButtonId}
-          cancelButtonId={cancelButtonId}
-          showActions={showActions}
-        />
-      </Box>
-    </>
+      <TabContext value={editorMode.toString()}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList
+            onChange={(_, value) => handleChangeEditorMode(value)}
+            aria-label={t(BUILDER.DOCUMENT_EDITOR_MODE_ARIA_LABEL)}
+          >
+            <Tab
+              label={t(BUILDER.DOCUMENT_EDITOR_MODE_RICH_TEXT)}
+              value={EditorMode.Rich.toString()}
+            />
+            <Tab
+              label={t(BUILDER.DOCUMENT_EDITOR_MODE_RAW)}
+              value={EditorMode.Raw.toString()}
+            />
+          </TabList>
+        </Box>
+
+        <TabPanel value={EditorMode.Rich.toString()}>
+          {withFlavor(
+            <TextEditor
+              id={documentItemId}
+              value={extra.content}
+              onCancel={onCancel}
+              onChange={onContentChange}
+              placeholderText={placeholder}
+              showActions={false}
+            />,
+          )}
+        </TabPanel>
+        <TabPanel value={EditorMode.Raw.toString()} sx={{ minHeight: '0px' }}>
+          <TextField
+            multiline
+            fullWidth
+            minRows={5}
+            maxRows={25}
+            value={extra.content}
+            onChange={({ target: { value } }) => onContentChange?.(value)}
+          />
+        </TabPanel>
+      </TabContext>
+    </Stack>
   );
 };
 
@@ -118,12 +170,17 @@ const DocumentForm = ({
     typedUpdatedProperties?.extra?.[ItemType.DOCUMENT]?.flavor ||
     typedItem?.extra?.[ItemType.DOCUMENT]?.flavor;
 
+  const initIsRaw: DocumentItemExtraProperties['isRaw'] =
+    typedUpdatedProperties?.extra?.[ItemType.DOCUMENT]?.isRaw ||
+    typedItem?.extra?.[ItemType.DOCUMENT]?.isRaw;
+
   const [content, setContent] =
     useState<DocumentItemExtraProperties['content']>(initContent);
   const [flavor, setFlavor] =
     useState<DocumentItemExtraProperties['flavor']>(initFlavor);
-
-  const currentExtra = buildDocumentExtra({ content, flavor });
+  const [isRaw, setIsRaw] =
+    useState<DocumentItemExtraProperties['isRaw']>(initIsRaw);
+  const currentExtra = buildDocumentExtra({ content, flavor, isRaw });
 
   // synchronize upper state after async local state change
   useEffect(() => {
@@ -132,26 +189,25 @@ const DocumentForm = ({
     });
     // we only want to execute the state sync on local state change
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content, flavor]);
+  }, [content, flavor, isRaw]);
 
   return (
-    <>
-      <Box>
-        <NameForm
-          setChanges={setChanges}
-          item={item}
-          required
-          updatedProperties={updatedProperties}
-        />
-      </Box>
+    <Box id="document" display="flex" flexDirection="column" minHeight="0px">
+      <NameForm
+        setChanges={setChanges}
+        item={item}
+        required
+        updatedProperties={updatedProperties}
+      />
       <DocumentExtraForm
         documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
         extra={currentExtra.document}
         onContentChange={setContent}
         onFlavorChange={setFlavor}
+        onEditorChange={setIsRaw}
         placeholder={translateBuilder(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
       />
-    </>
+    </Box>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { KeyboardArrowRight } from '@mui/icons-material';
 import { Button, IconButton, Stack, Typography, styled } from '@mui/material';
 
 import { ItemType } from '@graasp/sdk';
@@ -88,7 +88,7 @@ const RowMenu = ({
             id={buildItemRowArrowId(item.id)}
             size="small"
           >
-            <KeyboardArrowRightIcon />
+            <KeyboardArrowRight />
           </IconButton>
         )}
       </Stack>

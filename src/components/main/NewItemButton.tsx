@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import AddIcon from '@mui/icons-material/Add';
-import Tooltip from '@mui/material/Tooltip';
+import { Add } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
@@ -29,18 +29,12 @@ const NewItemButton = (): JSX.Element => {
         title={translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
         arrow
       >
-        <Button
-          id={CREATE_ITEM_BUTTON_ID}
-          onClick={handleClickOpen}
-          sx={{
-            cursor: 'pointer',
-            flex: 'none',
-            ml: 1,
-          }}
-        >
-          <AddIcon />
-          {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
-        </Button>
+        <span>
+          <Button id={CREATE_ITEM_BUTTON_ID} onClick={handleClickOpen}>
+            <Add />
+            {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+          </Button>
+        </span>
       </Tooltip>
       <NewItemModal open={open} handleClose={handleClose} />
     </>

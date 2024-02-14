@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import { IconButtonProps } from '@mui/material/IconButton';
-
 import {
   ActionButtonVariant,
+  ColorVariants,
   DeleteButton as GraaspDeleteButton,
 } from '@graasp/ui';
 
@@ -14,7 +13,7 @@ import DeleteItemDialog from '../main/DeleteItemDialog';
 
 type Props = {
   itemIds: string[];
-  color?: IconButtonProps['color'];
+  color?: ColorVariants;
   id?: string;
   type?: ActionButtonVariant;
   onClick?: () => void;

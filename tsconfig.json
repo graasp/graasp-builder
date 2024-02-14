@@ -4,19 +4,23 @@
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext", "ES2021.String"],
     "allowJs": true, // todo: change to false once Uppy is moved to ts
+    "module": "ESNext",
     "skipLibCheck": true,
+
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noErrorTruncation": true,
     "jsx": "react-jsx",
+
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+
     "types": ["vite/client"],
     "baseUrl": "./src",
     "paths": {

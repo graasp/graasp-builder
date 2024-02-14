@@ -1,9 +1,5 @@
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
 import { Item, ItemTagType } from '@graasp/sdk';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';

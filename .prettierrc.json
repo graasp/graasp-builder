@@ -6,6 +6,7 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "importOrder": [
+    ".*\\.css$",
     "^react",
     "^@?mui",
     "^@?graasp",

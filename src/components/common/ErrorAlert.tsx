@@ -1,4 +1,4 @@
-import Alert from '@mui/material/Alert';
+import { Alert } from '@mui/material';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { BUILDER } from '../../langs/constants';

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import { IconButtonProps } from '@mui/material';
-
 import {
   ActionButtonVariant,
+  ColorVariants,
   CopyButton as GraaspCopyButton,
 } from '@graasp/ui';
 
@@ -21,7 +20,7 @@ import ItemSelectionModal, {
 } from './itemSelectionModal/ItemSelectionModal';
 
 export type Props = {
-  color?: IconButtonProps['color'];
+  color?: ColorVariants;
   id?: string;
   onClick?: () => void;
   type?: ActionButtonVariant;

@@ -41,7 +41,6 @@ const CCLicenseDialog = ({
     <>
       <Button
         variant="contained"
-        sx={{ my: 1 }}
         onClick={handleClickOpen}
         disabled={disabled} // disable the button if no option is selected
       >

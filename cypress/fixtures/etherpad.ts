@@ -1,4 +1,5 @@
 import { EtherpadItemType, ItemType } from '@graasp/sdk';
+import { DEFAULT_LANG } from '@graasp/translations';
 
 import { CURRENT_USER } from './members';
 
@@ -11,6 +12,7 @@ export const GRAASP_ETHERPAD_ITEM: EtherpadItemType = {
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},
+  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   extra: {

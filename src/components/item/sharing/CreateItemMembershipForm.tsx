@@ -1,9 +1,13 @@
 import { useState } from 'react';
 
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { Grid, TextField, TextFieldProps } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import { ErrorOutline } from '@mui/icons-material';
+import {
+  Grid,
+  IconButton,
+  TextField,
+  TextFieldProps,
+  Tooltip,
+} from '@mui/material';
 
 import {
   DiscriminatedItem,
@@ -142,7 +146,7 @@ const CreateItemMembershipForm = ({
     >
       <span>
         <IconButton aria-label="status">
-          <ErrorOutlineIcon />
+          <ErrorOutline />
         </IconButton>
       </span>
     </Tooltip>

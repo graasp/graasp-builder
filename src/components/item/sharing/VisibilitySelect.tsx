@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Typography from '@mui/material/Typography';
+import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 
 import {
   DiscriminatedItem,

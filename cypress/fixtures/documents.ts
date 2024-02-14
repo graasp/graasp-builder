@@ -1,4 +1,5 @@
 import { DocumentItemType, Item, ItemType } from '@graasp/sdk';
+import { DEFAULT_LANG } from '@graasp/translations';
 
 import { buildDocumentExtra } from '../../src/utils/itemExtra';
 import { DEFAULT_FOLDER_ITEM } from './items';
@@ -13,6 +14,7 @@ export const GRAASP_DOCUMENT_ITEM: DocumentItemType = {
   settings: {},
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
+  lang: DEFAULT_LANG,
   creator: CURRENT_USER,
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',
@@ -28,6 +30,7 @@ export const GRAASP_DOCUMENT_BLANK_NAME_ITEM: DocumentItemType = {
   settings: {},
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
+  lang: DEFAULT_LANG,
   creator: CURRENT_USER,
   extra: buildDocumentExtra({
     content: '<h1>Some Title</h1>',
@@ -49,6 +52,7 @@ export const GRAASP_DOCUMENT_CHILDREN_ITEM: DocumentItemType = {
   path: 'bdf09f5a_5688_11eb_ae93_0242ac130002.1cafbd2a_5688_12eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},
+  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   extra: buildDocumentExtra({

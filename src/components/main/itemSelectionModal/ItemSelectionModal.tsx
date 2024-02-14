@@ -1,11 +1,14 @@
 import { useState } from 'react';
 
-import HomeIcon from '@mui/icons-material/Home';
-import { Button, Stack } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Home as HomeIcon } from '@mui/icons-material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+} from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 

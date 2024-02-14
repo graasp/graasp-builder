@@ -1,15 +1,17 @@
 import { ChangeEvent, useState } from 'react';
 
-import PublishIcon from '@mui/icons-material/Publish';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Grid from '@mui/material/Grid';
+import { Publish } from '@mui/icons-material';
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+} from '@mui/material';
 
 import { DiscriminatedItem, Invitation, PermissionLevel } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
@@ -183,7 +185,7 @@ const CsvInputParser = ({ item }: Props): JSX.Element => {
             <Box textAlign="center">
               <Button
                 id={SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID}
-                startIcon={<PublishIcon />}
+                startIcon={<Publish />}
                 component="label"
               >
                 {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_INPUT_BUTTON)}

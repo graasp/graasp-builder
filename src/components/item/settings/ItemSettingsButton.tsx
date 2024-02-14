@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import SettingsIcon from '@mui/icons-material/Settings';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import { Settings } from '@mui/icons-material';
+import { IconButton, Tooltip } from '@mui/material';
 
 import { buildItemSettingsPath } from '@/config/paths';
 
@@ -27,7 +26,7 @@ const ItemSettingsButton = ({ id }: Props): JSX.Element => {
         className={ITEM_SETTINGS_BUTTON_CLASS}
         id={buildSettingsButtonId(id)}
       >
-        <SettingsIcon />
+        <Settings />
       </IconButton>
     </Tooltip>
   );

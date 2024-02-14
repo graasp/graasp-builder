@@ -1,8 +1,7 @@
 import { SyntheticEvent } from 'react';
 import { useParams } from 'react-router';
 
-import { AutocompleteChangeReason, Box } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { AutocompleteChangeReason, Box, Typography } from '@mui/material';
 
 import { routines } from '@graasp/query-client';
 import { Category, CategoryType } from '@graasp/sdk';

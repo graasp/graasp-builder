@@ -1,9 +1,6 @@
-import { useOutletContext, useParams } from 'react-router';
+import { useOutletContext, useParams } from 'react-router-dom';
 
-import { Divider } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { Container, Divider, Grid, Typography } from '@mui/material';
 
 import {
   ItemMembership,

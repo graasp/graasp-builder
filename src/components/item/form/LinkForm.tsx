@@ -1,5 +1,4 @@
-import { TextField, TextFieldProps } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { TextField, TextFieldProps, Typography } from '@mui/material';
 
 import { EmbeddedLinkItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
 

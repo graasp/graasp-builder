@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import '@uppy/dashboard/dist/style.css';
 
-import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { Typography } from '@mui/material';
 
 import { routines } from '@graasp/query-client';
 import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
 
-import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
 
 import { useBuilderTranslation } from '../../config/i18n';

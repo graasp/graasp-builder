@@ -15,11 +15,7 @@ const ItemForbiddenScreen = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const ButtonContent = (
-    <Button
-      variant="outlined"
-      startIcon={<AccountCircleIcon />}
-      sx={{ my: 1, mx: 'auto' }}
-    >
+    <Button variant="outlined" startIcon={<AccountCircleIcon />}>
       {member
         ? translateBuilder(BUILDER.SWITCH_ACCOUNT_BUTTON_SIGNED_IN)
         : translateBuilder(BUILDER.SWITCH_ACCOUNT_BUTTON_SIGNED_OUT)}
@@ -37,7 +33,6 @@ const ItemForbiddenScreen = (): JSX.Element => {
         height="90%"
       >
         <Grid item>
-          {/* // TODO: remove hook from prop */}
           <ForbiddenContent memberId={member?.id} />
           <UserSwitchWrapper ButtonContent={ButtonContent} />
         </Grid>

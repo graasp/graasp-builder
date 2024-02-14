@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import QR from 'react-qr-code';
 
-import { QrCode2 } from '@mui/icons-material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Close, QrCode2 } from '@mui/icons-material';
 import { Box, Dialog, DialogContent, IconButton, Tooltip } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -46,7 +45,7 @@ const QRCode = ({ value, disabled = false }: Props): JSX.Element => {
             top: 8,
           }}
         >
-          <CloseIcon />
+          <Close />
         </IconButton>
         <DialogContent sx={{ p: 5 }}>
           <Box width={{ xs: '60vw', sm: '50vw', md: '30vw', lg: '24vw' }}>

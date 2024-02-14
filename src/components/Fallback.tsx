@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { ErrorOutline } from '@mui/icons-material';
 import { Box, Button, Stack, Typography } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -9,7 +9,6 @@ import { HOME_PATH } from '@/config/paths';
 import { BUILDER } from '../langs/constants';
 
 const FallbackComponent = (): JSX.Element => {
-  const navigate = useNavigate();
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
@@ -21,19 +20,21 @@ const FallbackComponent = (): JSX.Element => {
       spacing={4}
     >
       <Box>
-        <Typography variant="h1">
+        <Typography variant="h1" fontSize="6em">
           {translateBuilder(BUILDER.FALLBACK_TITLE)}
         </Typography>
         <Typography>{translateBuilder(BUILDER.FALLBACK_TEXT)}</Typography>
         <Button
+          component={Link}
+          to={HOME_PATH}
           sx={{ mt: 3 }}
+          reloadDocument
           variant="contained"
-          onClick={() => navigate(HOME_PATH)}
         >
           {translateBuilder(BUILDER.FALLBACK_BACK_TO_HOME)}
         </Button>
       </Box>
-      <ErrorOutlineIcon
+      <ErrorOutline
         fontSize="large"
         htmlColor="#5050d2"
         sx={{

@@ -1,5 +1,5 @@
 import { DiscriminatedItem } from '@graasp/sdk';
-import { TextEditor } from '@graasp/ui';
+import TextEditor from '@graasp/ui/text-editor';
 
 type DescriptionFormProps = {
   id?: string;
@@ -24,7 +24,6 @@ const DescriptionForm = ({
     <TextEditor
       id={id}
       value={(updatedProperties?.description || item?.description) ?? ''}
-      edit
       onChange={onChange}
       showActions={false}
     />

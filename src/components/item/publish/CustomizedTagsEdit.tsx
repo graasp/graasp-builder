@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Chip, TextField, Typography } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
@@ -47,8 +47,7 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
     setDisplayValues(event.target.value);
   };
 
-  const handleSubmit: MouseEventHandler = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     const tagsList =
       displayValues
         ?.split(', ')
@@ -80,7 +79,6 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
       />
       <SaveButton
         onClick={handleSubmit}
-        sx={{ marginTop: 1, marginLeft: 2 }}
         id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
         text={translateCommon(COMMON.SAVE_BUTTON)}
         hasChanges={!disabled}

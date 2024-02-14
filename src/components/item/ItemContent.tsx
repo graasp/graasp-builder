@@ -7,7 +7,6 @@ import {
   AppItemType,
   CompleteMember,
   Context,
-  DEFAULT_LANG,
   DocumentItemType,
   EmbeddedLinkItemType,
   EtherpadItemType,
@@ -22,15 +21,16 @@ import {
   buildPdfViewerLink,
   getH5PExtra,
 } from '@graasp/sdk';
+import { DEFAULT_LANG } from '@graasp/translations';
 import {
   AppItem,
-  DocumentItem,
   EtherpadItem,
   FileItem,
   H5PItem,
   LinkItem,
   Loader,
 } from '@graasp/ui';
+import { DocumentItem } from '@graasp/ui/text-editor';
 
 import { API_HOST, GRAASP_ASSETS_URL, H5P_INTEGRATION_URL } from '@/config/env';
 
@@ -127,11 +127,7 @@ const LinkContent = ({
  */
 const DocumentContent = ({ item }: { item: DocumentItemType }): JSX.Element => (
   <StyledContainer>
-    <DocumentItem
-      id={DOCUMENT_ITEM_TEXT_EDITOR_ID}
-      item={item}
-      maxHeight="70vh"
-    />
+    <DocumentItem id={DOCUMENT_ITEM_TEXT_EDITOR_ID} item={item} />
   </StyledContainer>
 );
 

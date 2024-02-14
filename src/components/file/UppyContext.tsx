@@ -39,6 +39,8 @@ const UppyContextProvider = ({
     result,
   ) => {
     if (!result?.failed.length) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       const data = result.successful[0].response?.body;
       onFileUploadComplete({ id: itemId, data });
     }

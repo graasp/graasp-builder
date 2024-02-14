@@ -7,11 +7,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   Stack,
   Tooltip,
   Typography,
 } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
 
 import { CHATBOX } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -71,7 +71,6 @@ const ClearChatButton = ({
             variant="outlined"
             color="error"
             onClick={() => setOpenConfirmation(true)}
-            sx={{ minWidth: 150 }}
           >
             {text}
           </Button>

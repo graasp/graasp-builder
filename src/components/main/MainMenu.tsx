@@ -1,20 +1,22 @@
 import { useLocation, useNavigate } from 'react-router';
 
 // import { BugReport } from '@mui/icons-material';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FolderIcon from '@mui/icons-material/Folder';
-import FolderSharedIcon from '@mui/icons-material/FolderShared';
-import Star from '@mui/icons-material/Star';
+import {
+  AutoStories,
+  Delete,
+  Folder,
+  FolderShared,
+  Star,
+} from '@mui/icons-material';
 import {
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Stack,
   styled,
   useTheme,
 } from '@mui/material';
-import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
 
@@ -77,7 +79,7 @@ const MainMenu = (): JSX.Element => {
     <ListItem disablePadding>
       <ListItemButton href={TUTORIALS_LINK} target="_blank">
         <ListItemIcon>
-          <AutoStoriesIcon />
+          <AutoStories />
         </ListItemIcon>
         <ListItemText>{translateBuilder(BUILDER.TUTORIALS)}</ListItemText>
       </ListItemButton>
@@ -90,7 +92,7 @@ const MainMenu = (): JSX.Element => {
         <StyledMenuItem
           disabled
           text={translateBuilder(BUILDER.HOME_TITLE)}
-          icon={<FolderIcon />}
+          icon={<Folder />}
         />
       );
     }
@@ -100,13 +102,13 @@ const MainMenu = (): JSX.Element => {
         <MenuItem
           onClick={() => goTo(HOME_PATH)}
           selected={pathname === HOME_PATH}
-          icon={<FolderIcon />}
+          icon={<Folder />}
           text={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
         />
         <MenuItem
           onClick={() => goTo(SHARED_ITEMS_PATH)}
           text={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-          icon={<FolderSharedIcon />}
+          icon={<FolderShared />}
           selected={pathname === SHARED_ITEMS_PATH}
         />
         <MenuItem
@@ -131,7 +133,7 @@ const MainMenu = (): JSX.Element => {
           onClick={() => goTo(RECYCLE_BIN_PATH)}
           selected={pathname === RECYCLE_BIN_PATH}
           text={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-          icon={<DeleteIcon />}
+          icon={<Delete />}
         />
       </div>
     );

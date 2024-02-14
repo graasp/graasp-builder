@@ -1,4 +1,5 @@
 import { EmbeddedLinkItemType, ItemType } from '@graasp/sdk';
+import { DEFAULT_LANG } from '@graasp/translations';
 
 import { buildEmbeddedLinkExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER } from './members';
@@ -11,6 +12,7 @@ export const GRAASP_LINK_ITEM: EmbeddedLinkItemType = {
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},
+  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   extra: buildEmbeddedLinkExtra({
@@ -31,6 +33,7 @@ export const GRAASP_LINK_ITEM_NO_PROTOCOL: EmbeddedLinkItemType = {
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},
+  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   extra: buildEmbeddedLinkExtra({
@@ -58,6 +61,7 @@ export const YOUTUBE_LINK_ITEM: EmbeddedLinkItemType = {
   name: 'graasp youtube link',
   description: 'a description for graasp youtube link',
   settings: {},
+  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   creator: CURRENT_USER,
@@ -76,6 +80,7 @@ export const INVALID_LINK_ITEM: EmbeddedLinkItemType = {
   type: ItemType.LINK,
   creator: CURRENT_USER,
   settings: {},
+  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   name: 'graasp youtube link',

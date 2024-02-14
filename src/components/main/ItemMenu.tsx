@@ -3,10 +3,13 @@ import { useContext, useState } from 'react';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import FlagIcon from '@mui/icons-material/Flag';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import {
+  IconButton,
+  IconButtonProps,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+} from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
