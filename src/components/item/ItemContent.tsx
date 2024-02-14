@@ -7,7 +7,6 @@ import {
   AppItemType,
   CompleteMember,
   Context,
-  DEFAULT_LANG,
   DocumentItemType,
   EmbeddedLinkItemType,
   EtherpadItemType,
@@ -22,6 +21,7 @@ import {
   buildPdfViewerLink,
   getH5PExtra,
 } from '@graasp/sdk';
+import { DEFAULT_LANG } from '@graasp/translations';
 import {
   AppItem,
   EtherpadItem,

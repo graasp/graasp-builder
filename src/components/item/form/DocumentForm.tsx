@@ -39,34 +39,33 @@ enum EditorMode {
 export const DocumentExtraForm = ({
   documentItemId,
   extra,
-  maxHeight,
   onCancel,
   onContentChange,
-  onContentSave,
   onFlavorChange,
+  onEditorChange,
   placeholder,
-  saveButtonId,
-  cancelButtonId,
-  showActions = false,
 }: {
   documentItemId?: string;
   extra: DocumentItemExtraProperties;
-  maxHeight?: string;
   onCancel?: () => void;
   onContentChange?: (text: string) => void;
-  onContentSave?: (text: string) => void;
   onFlavorChange?: (text: DocumentItemExtraProperties['flavor']) => void;
+  onEditorChange?: (isRaw: DocumentItemExtraProperties['isRaw']) => void;
   placeholder?: string;
-  saveButtonId?: string;
-  cancelButtonId?: string;
-  showActions?: boolean;
 }): JSX.Element => {
   const { t } = useBuilderTranslation();
-  const [editorMode, setEditorMode] = useState(EditorMode.Rich);
+  const [editorMode, setEditorMode] = useState(
+    extra.isRaw ? EditorMode.Raw.toString() : EditorMode.Rich.toString(),
+  );
   const flavorsTranslations = Object.values(DocumentItemExtraFlavor).map(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    (f) => [f, t(BUILDER[`DOCUMENT_FLAVOR_${f.toUpperCase()}`])],
+    (f) => [
+      f,
+      t(
+        BUILDER[
+          `DOCUMENT_FLAVOR_${f.toUpperCase() as Uppercase<`${DocumentItemExtraFlavor}`>}`
+        ],
+      ),
+    ],
   );
 
   const withFlavor = (textView: JSX.Element): JSX.Element =>
@@ -77,12 +76,14 @@ export const DocumentExtraForm = ({
     );
 
   const handleChangeEditorMode = (mode: string) => {
-    // todo: fix
-    setEditorMode(mode as unknown as EditorMode);
+    // send editor mode change
+    onEditorChange?.(mode === EditorMode.Raw.toString());
+    setEditorMode(mode);
   };
 
+  // todo: send the raw mode when switching the tabs and save in extra.
   return (
-    <Stack direction="column" spacing={1}>
+    <Stack direction="column" spacing={1} minHeight={0}>
       <Box sx={{ width: '100%' }}>
         <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
           <InputLabel shrink id={FLAVOR_SELECT_ID}>
@@ -106,50 +107,47 @@ export const DocumentExtraForm = ({
           </Select>
         </FormControl>
       </Box>
-      <Box>
-        <TabContext value={editorMode.toString()}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList
-              onChange={(_, value) => handleChangeEditorMode(value)}
-              aria-label="lab API tabs example"
-            >
-              <Tab
-                label={t(BUILDER.DOCUMENT_EDITOR_MODE_RICH_TEXT)}
-                value={EditorMode.Rich.toString()}
-              />
-              <Tab
-                label={t(BUILDER.DOCUMENT_EDITOR_MODE_RAW)}
-                value={EditorMode.Raw.toString()}
-              />
-            </TabList>
-          </Box>
-          <TabPanel value={EditorMode.Rich.toString()}>
-            {withFlavor(
-              <TextEditor
-                id={documentItemId}
-                value={extra.content}
-                maxHeight={maxHeight}
-                onCancel={onCancel}
-                onChange={onContentChange}
-                onSave={onContentSave}
-                placeholderText={placeholder}
-                saveButtonId={saveButtonId}
-                cancelButtonId={cancelButtonId}
-                showActions={showActions}
-              />,
-            )}
-          </TabPanel>
-          <TabPanel value={EditorMode.Raw.toString()}>
-            <TextField
-              multiline
-              fullWidth
-              minRows={5}
-              value={extra.content}
-              onChange={({ target: { value } }) => onContentChange?.(value)}
+      <TabContext value={editorMode.toString()}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList
+            onChange={(_, value) => handleChangeEditorMode(value)}
+            aria-label="lab API tabs example"
+          >
+            <Tab
+              label={t(BUILDER.DOCUMENT_EDITOR_MODE_RICH_TEXT)}
+              value={EditorMode.Rich.toString()}
             />
-          </TabPanel>
-        </TabContext>
-      </Box>
+            <Tab
+              label={t(BUILDER.DOCUMENT_EDITOR_MODE_RAW)}
+              value={EditorMode.Raw.toString()}
+            />
+          </TabList>
+        </Box>
+
+        <TabPanel value={EditorMode.Rich.toString()}>
+          {withFlavor(
+            <TextEditor
+              id={documentItemId}
+              value={extra.content}
+              onCancel={onCancel}
+              onChange={onContentChange}
+              placeholderText={placeholder}
+              showActions={false}
+            />,
+          )}
+        </TabPanel>
+        <TabPanel value={EditorMode.Raw.toString()} sx={{ minHeight: '0px' }}>
+          <TextField
+            sx={{ height: '100%', overflow: 'scroll' }}
+            multiline
+            fullWidth
+            minRows={5}
+            maxRows={25}
+            value={extra.content}
+            onChange={({ target: { value } }) => onContentChange?.(value)}
+          />
+        </TabPanel>
+      </TabContext>
     </Stack>
   );
 };
@@ -174,12 +172,17 @@ const DocumentForm = ({
     typedUpdatedProperties?.extra?.[ItemType.DOCUMENT]?.flavor ||
     typedItem?.extra?.[ItemType.DOCUMENT]?.flavor;
 
+  const initIsRaw: DocumentItemExtraProperties['isRaw'] =
+    typedUpdatedProperties?.extra?.[ItemType.DOCUMENT]?.isRaw ||
+    typedItem?.extra?.[ItemType.DOCUMENT]?.isRaw;
+
   const [content, setContent] =
     useState<DocumentItemExtraProperties['content']>(initContent);
   const [flavor, setFlavor] =
     useState<DocumentItemExtraProperties['flavor']>(initFlavor);
-
-  const currentExtra = buildDocumentExtra({ content, flavor });
+  const [isRaw, setIsRaw] =
+    useState<DocumentItemExtraProperties['isRaw']>(initIsRaw);
+  const currentExtra = buildDocumentExtra({ content, flavor, isRaw });
 
   // synchronize upper state after async local state change
   useEffect(() => {
@@ -188,26 +191,32 @@ const DocumentForm = ({
     });
     // we only want to execute the state sync on local state change
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content, flavor]);
+  }, [content, flavor, isRaw]);
 
   return (
-    <>
-      <Box>
-        <NameForm
-          setChanges={setChanges}
-          item={item}
-          required
-          updatedProperties={updatedProperties}
-        />
-      </Box>
+    <Box
+      id="document"
+      // todo: remove
+      border="1px solid red"
+      display="flex"
+      flexDirection="column"
+      minHeight="0px"
+    >
+      <NameForm
+        setChanges={setChanges}
+        item={item}
+        required
+        updatedProperties={updatedProperties}
+      />
       <DocumentExtraForm
         documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
         extra={currentExtra.document}
         onContentChange={setContent}
         onFlavorChange={setFlavor}
+        onEditorChange={setIsRaw}
         placeholder={translateBuilder(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
       />
-    </>
+    </Box>
   );
 };
 

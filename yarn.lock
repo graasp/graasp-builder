@@ -1531,6 +1531,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/sdk@github:graasp/graasp-sdk#407-add-is-raw-on-document-extra":
+  version: 3.8.0
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=0771c71d5c091b1b16499ae8aba373d4ae7b2dac"
+  dependencies:
+    "@faker-js/faker": "npm:8.4.0"
+    js-cookie: "npm:3.0.5"
+    validator: "npm:13.11.0"
+  peerDependencies:
+    date-fns: ^3
+    uuid: ^9
+  checksum: 10/cf091c6886110696133fc18ac71f53fbdbf5074e58f4e29aff6195fddd52c99efabd13662a227b394963775acd043641723df2b54a532890d832cf39b49d1009
+  languageName: node
+  linkType: hard
+
 "@graasp/sdk@npm:3.7.0":
   version: 3.7.0
   resolution: "@graasp/sdk@npm:3.7.0"
@@ -1575,9 +1589,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#484-convert-to-pure-ts-package":
-  version: 4.6.1
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=80bdef01552dad3aa7ee3a2656a9f2059fc9ec18"
+"@graasp/ui@npm:4.7.0, @graasp/ui@npm:^4.1.1":
+  version: 4.7.0
+  resolution: "@graasp/ui@npm:4.7.0"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.0.3"
     "@ag-grid-community/react": "npm:^31.0.3"
@@ -1608,7 +1622,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/99e30379ffcf8fcfe99156e578653d81c9d03a872e221de13fab2db4174ff5fbacc4c890d25b67086d5b6a19ad1beea004556f164876afdf0e8e76b6d88cffea
+  checksum: 10/b0a6984dc4a8d1dbd882afb3eb5fc4bf6442c9958d0dffe0b14fded62ac3c1e500766d94c8ae9835c899fe46358e173e9b826b8bf37984d4c2470c6e770b7b6c
   languageName: node
   linkType: hard
 
@@ -7364,9 +7378,9 @@ __metadata:
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.3"
     "@graasp/query-client": "npm:2.6.0"
-    "@graasp/sdk": "npm:3.7.0"
+    "@graasp/sdk": "github:graasp/graasp-sdk#407-add-is-raw-on-document-extra"
     "@graasp/translations": "npm:1.23.0"
-    "@graasp/ui": "github:graasp/graasp-ui#484-convert-to-pure-ts-package"
+    "@graasp/ui": "npm:4.7.0"
     "@mui/icons-material": "npm:5.15.8"
     "@mui/lab": "npm:5.0.0-alpha.162"
     "@mui/material": "npm:5.15.8"

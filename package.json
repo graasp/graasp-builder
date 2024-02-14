@@ -21,9 +21,9 @@
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.0.3",
     "@graasp/query-client": "2.6.0",
-    "@graasp/sdk": "3.7.0",
+    "@graasp/sdk": "github:graasp/graasp-sdk#407-add-is-raw-on-document-extra",
     "@graasp/translations": "1.23.0",
-    "@graasp/ui": "github:graasp/graasp-ui#484-convert-to-pure-ts-package",
+    "@graasp/ui": "4.7.0",
     "@mui/icons-material": "5.15.8",
     "@mui/lab": "5.0.0-alpha.162",
     "@mui/material": "5.15.8",
@@ -148,9 +148,6 @@
     "vite": "5.0.12",
     "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
-  },
-  "resolutions": {
-    "@graasp/ui": "github:graasp/graasp-ui#484-convert-to-pure-ts-package"
   },
   "packageManager": "yarn@4.1.0"
 }
