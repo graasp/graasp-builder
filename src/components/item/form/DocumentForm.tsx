@@ -81,7 +81,6 @@ export const DocumentExtraForm = ({
     setEditorMode(mode);
   };
 
-  // todo: send the raw mode when switching the tabs and save in extra.
   return (
     <Stack direction="column" spacing={1} minHeight={0}>
       <Box sx={{ width: '100%' }}>
@@ -194,14 +193,7 @@ const DocumentForm = ({
   }, [content, flavor, isRaw]);
 
   return (
-    <Box
-      id="document"
-      // todo: remove
-      border="1px solid red"
-      display="flex"
-      flexDirection="column"
-      minHeight="0px"
-    >
+    <Box id="document" display="flex" flexDirection="column" minHeight="0px">
       <NameForm
         setChanges={setChanges}
         item={item}
