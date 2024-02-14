@@ -50,6 +50,7 @@
   "DOCUMENT_FLAVOR_WARNING": "Warning",
   "DOCUMENT_EDITOR_MODE_RICH_TEXT": "Rich Text",
   "DOCUMENT_EDITOR_MODE_RAW": "HTML",
+  "DOCUMENT_EDITOR_MODE_ARIA_LABEL": "Switch document editor mode",
   "DOWNLOAD_ITEM_BUTTON": "Download",
   "DROP_DOWN_PLACEHOLDER": "Please Choose From List",
   "EDIT_BUTTON_TOOLTIP": "Edit",

@@ -110,7 +110,7 @@ export const DocumentExtraForm = ({
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList
             onChange={(_, value) => handleChangeEditorMode(value)}
-            aria-label="lab API tabs example"
+            aria-label={t(BUILDER.DOCUMENT_EDITOR_MODE_ARIA_LABEL)}
           >
             <Tab
               label={t(BUILDER.DOCUMENT_EDITOR_MODE_RICH_TEXT)}
@@ -137,7 +137,6 @@ export const DocumentExtraForm = ({
         </TabPanel>
         <TabPanel value={EditorMode.Raw.toString()} sx={{ minHeight: '0px' }}>
           <TextField
-            sx={{ height: '100%', overflow: 'scroll' }}
             multiline
             fullWidth
             minRows={5}
