@@ -1531,20 +1531,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@github:graasp/graasp-sdk#407-add-is-raw-on-document-extra":
-  version: 3.8.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=0771c71d5c091b1b16499ae8aba373d4ae7b2dac"
-  dependencies:
-    "@faker-js/faker": "npm:8.4.0"
-    js-cookie: "npm:3.0.5"
-    validator: "npm:13.11.0"
-  peerDependencies:
-    date-fns: ^3
-    uuid: ^9
-  checksum: 10/cf091c6886110696133fc18ac71f53fbdbf5074e58f4e29aff6195fddd52c99efabd13662a227b394963775acd043641723df2b54a532890d832cf39b49d1009
-  languageName: node
-  linkType: hard
-
 "@graasp/sdk@npm:3.7.0":
   version: 3.7.0
   resolution: "@graasp/sdk@npm:3.7.0"
@@ -1556,6 +1542,20 @@ __metadata:
     date-fns: ^3
     uuid: ^9
   checksum: 10/686ecf2f252ccaf17a63730e3a9f486bbf5d4744a62c66fc338ec7bc4e1c9161387ce1c72bd560946a57aaa6798ef5e50fe97ccd8178c52ff5c497c8d11ee131
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@npm:3.8.1":
+  version: 3.8.1
+  resolution: "@graasp/sdk@npm:3.8.1"
+  dependencies:
+    "@faker-js/faker": "npm:8.4.0"
+    js-cookie: "npm:3.0.5"
+    validator: "npm:13.11.0"
+  peerDependencies:
+    date-fns: ^3
+    uuid: ^9
+  checksum: 10/f97d1472e71a334e34154b3090c37a4dab9cf8072877689536805f9a8a39c81cafe4a7236281a733da0550ed115e002aff2c40b4cc9c1195112b6efd5c90723c
   languageName: node
   linkType: hard
 
@@ -7378,7 +7378,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.3"
     "@graasp/query-client": "npm:2.6.0"
-    "@graasp/sdk": "github:graasp/graasp-sdk#407-add-is-raw-on-document-extra"
+    "@graasp/sdk": "npm:3.8.1"
     "@graasp/translations": "npm:1.23.0"
     "@graasp/ui": "npm:4.7.0"
     "@mui/icons-material": "npm:5.15.8"

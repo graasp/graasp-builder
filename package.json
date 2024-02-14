@@ -21,7 +21,7 @@
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.0.3",
     "@graasp/query-client": "2.6.0",
-    "@graasp/sdk": "github:graasp/graasp-sdk#407-add-is-raw-on-document-extra",
+    "@graasp/sdk": "3.8.1",
     "@graasp/translations": "1.23.0",
     "@graasp/ui": "4.7.0",
     "@mui/icons-material": "5.15.8",
