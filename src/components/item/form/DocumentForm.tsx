@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import {
-  Alert,
   Box,
   FormControl,
   InputLabel,
@@ -19,6 +18,7 @@ import {
   DocumentItemType,
   ItemType,
 } from '@graasp/sdk';
+import { withFlavor } from '@graasp/ui';
 import TextEditor from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -67,14 +67,6 @@ export const DocumentExtraForm = ({
       ),
     ],
   );
-
-  const withFlavor = (textView: JSX.Element): JSX.Element => {
-    if (!extra.flavor || extra.flavor === DocumentItemExtraFlavor.None) {
-      return textView;
-    }
-
-    return <Alert severity={extra.flavor}>{textView}</Alert>;
-  };
 
   const handleChangeEditorMode = (mode: string) => {
     // send editor mode change
@@ -125,16 +117,19 @@ export const DocumentExtraForm = ({
         </Box>
 
         <TabPanel value={EditorMode.Rich.toString()}>
-          {withFlavor(
-            <TextEditor
-              id={documentItemId}
-              value={extra.content}
-              onCancel={onCancel}
-              onChange={onContentChange}
-              placeholderText={placeholder}
-              showActions={false}
-            />,
-          )}
+          {withFlavor({
+            content: (
+              <TextEditor
+                id={documentItemId}
+                value={extra.content}
+                onCancel={onCancel}
+                onChange={onContentChange}
+                placeholderText={placeholder}
+                showActions={false}
+              />
+            ),
+            flavor: extra.flavor,
+          })}
         </TabPanel>
         <TabPanel value={EditorMode.Raw.toString()} sx={{ minHeight: '0px' }}>
           <TextField
