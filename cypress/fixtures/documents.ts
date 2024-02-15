@@ -51,11 +51,9 @@ export const GRAASP_DOCUMENT_PARENT_FOLDER: Item = {
 
 export const GRAASP_DOCUMENT_CHILDREN_ITEM: DocumentItemType =
   DocumentItemFactory({
-    id: '1cafbd2a-5688-12eb-ae91-0242ac130002',
     type: ItemType.DOCUMENT,
     name: 'children graasp text',
     description: 'a description for graasp text',
-    path: 'bdf09f5a_5688_11eb_ae93_0242ac130002.1cafbd2a_5688_12eb_ae93_0242ac130002',
     creator: CURRENT_USER,
     settings: {},
     createdAt: '2021-08-11T12:56:36.834Z',
@@ -63,6 +61,7 @@ export const GRAASP_DOCUMENT_CHILDREN_ITEM: DocumentItemType =
     extra: buildDocumentExtra({
       content: '<h1>Some Title</h1>',
     }),
+    parentItem: GRAASP_DOCUMENT_PARENT_FOLDER,
   });
 
 export const GRAASP_DOCUMENT_ITEMS_FIXTURE = [

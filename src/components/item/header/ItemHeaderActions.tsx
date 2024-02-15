@@ -61,7 +61,7 @@ const ItemHeaderActions = (): JSX.Element => {
         ITEM_TYPES_WITH_CAPTIONS.includes(item.type) &&
         canEdit;
 
-      const activeActions = (
+      return (
         <>
           {showEditButton && <EditButton item={item} />}
           <DownloadButton id={item.id} name={item.name} />
@@ -84,8 +84,6 @@ const ItemHeaderActions = (): JSX.Element => {
           {canEdit && <ItemSettingsButton id={item.id} />}
         </>
       );
-
-      return activeActions;
     }
     return null;
   };

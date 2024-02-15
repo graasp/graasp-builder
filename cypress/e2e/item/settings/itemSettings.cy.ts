@@ -1,5 +1,7 @@
-import { MaxWidth } from '@graasp/sdk';
+import { ItemType, MaxWidth, getFileExtra } from '@graasp/sdk';
 import { langs } from '@graasp/translations';
+
+import { getMemberById } from '@/utils/member';
 
 import {
   buildItemPath,
@@ -70,6 +72,7 @@ describe('Item Settings', () => {
           ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN,
           IMAGE_ITEM_DEFAULT,
           IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH,
+          IMAGE_ITEM_DEFAULT,
         ],
       });
     });
@@ -83,12 +86,43 @@ describe('Item Settings', () => {
       cy.get(`#${SETTINGS_CHATBOX_TOGGLE_ID}`).should('be.checked');
     });
 
-    it('metadata table', () => {
-      const { id, name, type } = ITEMS_SETTINGS.items[1];
-      cy.visit(buildItemSettingsPath(id));
+    describe('Metadata table', () => {
+      it('folder', () => {
+        const { id, name, type, creator } = ITEMS_SETTINGS.items[1];
+        cy.visit(buildItemSettingsPath(id));
 
-      cy.get(`#${ITEM_PANEL_NAME_ID}`).should('contain', name);
-      cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('contain', type);
+        cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
+        cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(type);
+
+        const creatorName = getMemberById(
+          Object.values(MEMBERS),
+          creator?.id,
+        ).name;
+
+        cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
+      });
+
+      it('file', () => {
+        const { id, name, type, extra, creator } = IMAGE_ITEM_DEFAULT;
+        cy.visit(buildItemSettingsPath(id));
+
+        cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
+        cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(type);
+
+        const creatorName = getMemberById(
+          Object.values(MEMBERS),
+          creator?.id,
+        ).name;
+
+        cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
+
+        if (type === ItemType.LOCAL_FILE || type === ItemType.S3_FILE) {
+          const { mimetype, size } = getFileExtra(extra);
+          cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
+
+          cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(size);
+        }
+      });
     });
 
     describe('Language', () => {
