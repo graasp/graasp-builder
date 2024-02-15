@@ -32,7 +32,7 @@ const AdminChatSettings = ({ item }: Props): JSX.Element | null => {
   }
 
   return (
-    <Stack direction="column" spacing={1}>
+    <Stack direction="column" spacing={1} mt={1}>
       <Typography variant="h6">
         {t(BUILDER.ITEM_SETTINGS_CHAT_SETTINGS_TITLE)}
       </Typography>

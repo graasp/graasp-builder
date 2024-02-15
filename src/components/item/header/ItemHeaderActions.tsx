@@ -81,15 +81,11 @@ const ItemHeaderActions = (): JSX.Element => {
             onClick={onClickChatbox}
           />
           {canAdmin && <PublishButton itemId={item.id} />}
+          {canEdit && <ItemSettingsButton id={item.id} />}
         </>
       );
 
-      return (
-        <>
-          {activeActions}
-          <ItemSettingsButton id={item.id} />
-        </>
-      );
+      return activeActions;
     }
     return null;
   };

@@ -11,6 +11,8 @@ import {
 import { useBuilderTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
 import {
+  SETTINGS_CHATBOX_TOGGLE_ID,
+  SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_RESIZE_TOGGLE_ID,
   SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
 } from '@/config/selectors';
@@ -84,6 +86,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
       />
 
       <ItemSettingProperty
+        id={SETTINGS_PINNED_TOGGLE_ID}
         icon={
           <PinButton
             isPinned={Boolean(settings.isPinned)}
@@ -109,6 +112,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
             type={ActionButton.ICON}
           />
         }
+        id={SETTINGS_CHATBOX_TOGGLE_ID}
         title={translateBuilder(BUILDER.ITEM_SETTINGS_SHOW_CHAT_TITLE)}
         checked={Boolean(settings.showChatbox)}
         onClick={(checked: boolean): void => {

@@ -78,7 +78,7 @@ const ClearChatButton = ({
             color="error"
             onClick={() => setOpenConfirmation(true)}
           >
-            {text}
+            <Typography noWrap>{text}</Typography>
           </Button>
         );
     }
@@ -86,11 +86,11 @@ const ClearChatButton = ({
 
   return (
     <>
-      <Stack direction="row" alignItems="center" spacing={2}>
-        <Box width="max-content">{getContent(variant)}</Box>
-        <Typography variant="body1">
+      <Stack direction="column" spacing={2}>
+        <Typography variant="body1" maxWidth="50ch">
           {translateBuilder(BUILDER.ITEM_SETTINGS_CLEAR_CHAT_EXPLANATION)}
         </Typography>
+        <Box width="max-content">{getContent(variant)}</Box>
       </Stack>
       <Dialog open={openConfirmation} id={CLEAR_CHAT_DIALOG_ID}>
         <DialogTitle>{t(CHATBOX.CLEAR_ALL_CHAT_TITLE)}</DialogTitle>

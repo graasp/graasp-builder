@@ -3,6 +3,7 @@ import {
   LocalFileItemFactory,
   MaxWidth,
   MimeTypes,
+  S3FileItemFactory,
 } from '@graasp/sdk';
 
 import { InternalItemType } from '../../src/config/types';

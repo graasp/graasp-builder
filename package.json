@@ -20,7 +20,7 @@
     "@emotion/react": "11.11.3",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.0.3",
-    "@graasp/query-client": "github:graasp/graasp-query-client#geolocation-address",
+    "@graasp/query-client": "2.6.1",
     "@graasp/sdk": "3.8.1",
     "@graasp/translations": "1.23.0",
     "@graasp/ui": "github:graasp/graasp-ui#navigation-icon",

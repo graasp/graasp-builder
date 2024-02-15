@@ -1534,11 +1534,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#geolocation-address":
-  version: 2.6.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=660f2448ee0348387fab9f5b32bfb30dd8a56eb1"
+"@graasp/query-client@npm:2.6.1":
+  version: 2.6.1
+  resolution: "@graasp/query-client@npm:2.6.1"
   dependencies:
-    "@graasp/sdk": "npm:3.8.0"
+    "@graasp/sdk": "npm:3.8.1"
     "@graasp/translations": "npm:1.23.0"
     axios: "npm:0.27.2"
     crypto-js: "npm:4.2.0"
@@ -1549,7 +1549,7 @@ __metadata:
     uuid: "npm:9.0.1"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 10/ebc6e86d6004100b66161f89760c051b8bbce56004b069678ff03af4c36d22be97ccde53066902fdf16bc42d4842221897eb0650f0e3c676f8f2c08191f858b0
+  checksum: 10/2de2c09ea80c62e795ffa7fbfee7625ac661b70e68a4c228fd3014edc687ffdc8e647d51ea5b190600b706405e7a7275b0c89a2ec403618d5db089b24bf6e8d1
   languageName: node
   linkType: hard
 
@@ -7633,7 +7633,7 @@ __metadata:
     "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.3"
-    "@graasp/query-client": "github:graasp/graasp-query-client#geolocation-address"
+    "@graasp/query-client": "npm:2.6.1"
     "@graasp/sdk": "npm:3.8.1"
     "@graasp/translations": "npm:1.23.0"
     "@graasp/ui": "github:graasp/graasp-ui#navigation-icon"

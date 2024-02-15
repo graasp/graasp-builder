@@ -15,6 +15,8 @@ import {
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
 
 import { useBuilderTranslation } from '@/config/i18n';

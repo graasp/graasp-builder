@@ -3,11 +3,12 @@ import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ItemGeolocation } from '@graasp/sdk';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider';
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
 
 import useDebouncedCallback from '@/utils/useDebounce';
