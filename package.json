@@ -22,7 +22,7 @@
     "@graasp/chatbox": "3.0.3",
     "@graasp/query-client": "2.6.1",
     "@graasp/sdk": "3.8.3",
-    "@graasp/translations": "1.23.0",
+    "@graasp/translations": "1.24.0",
     "@graasp/ui": "4.8.1",
     "@mui/icons-material": "5.15.8",
     "@mui/lab": "5.0.0-alpha.162",
