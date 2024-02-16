@@ -17,7 +17,6 @@ import {
   getHighestPermissionForMemberFromMemberships,
   isItemUpdateAllowedForUser,
 } from '../../../utils/membership';
-import ItemMetadataButton from '../../common/ItemMetadataButton';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
@@ -62,9 +61,10 @@ const ItemHeaderActions = (): JSX.Element => {
         ITEM_TYPES_WITH_CAPTIONS.includes(item.type) &&
         canEdit;
 
-      const activeActions = (
+      return (
         <>
           {showEditButton && <EditButton item={item} />}
+          <DownloadButton id={item.id} name={item.name} />
           {/* prevent moving from top header to avoid confusion */}
           <ItemMenu
             item={item}
@@ -75,19 +75,13 @@ const ItemHeaderActions = (): JSX.Element => {
 
           <ShareButton itemId={item.id} />
           <ChatboxButton
+            showChat
             tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
             id={ITEM_CHATBOX_BUTTON_ID}
             onClick={onClickChatbox}
           />
           {canAdmin && <PublishButton itemId={item.id} />}
-        </>
-      );
-
-      return (
-        <>
-          {activeActions}
           {canEdit && <ItemSettingsButton id={item.id} />}
-          <DownloadButton id={item.id} name={item.name} />
         </>
       );
     }
@@ -101,7 +95,6 @@ const ItemHeaderActions = (): JSX.Element => {
         // show only for content with tables : root or folders
         (item?.type === ItemType.FOLDER || !item?.id) && <ModeButton />
       }
-      {item?.id && <ItemMetadataButton itemId={item.id} />}
     </Stack>
   );
 };

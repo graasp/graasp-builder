@@ -16,7 +16,12 @@ import {
 import { CHATBOX } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
-import { useChatboxTranslation } from '../../../config/i18n';
+import { BUILDER } from '@/langs/constants';
+
+import {
+  useBuilderTranslation,
+  useChatboxTranslation,
+} from '../../../config/i18n';
 import {
   CLEAR_CHAT_CANCEL_BUTTON_ID,
   CLEAR_CHAT_CONFIRM_BUTTON_ID,
@@ -38,6 +43,7 @@ const ClearChatButton = ({
 }: Props): JSX.Element | null => {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const { t } = useChatboxTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   if (!clearChat) {
     return null;
@@ -72,7 +78,7 @@ const ClearChatButton = ({
             color="error"
             onClick={() => setOpenConfirmation(true)}
           >
-            {text}
+            <Typography noWrap>{text}</Typography>
           </Button>
         );
     }
@@ -80,13 +86,11 @@ const ClearChatButton = ({
 
   return (
     <>
-      <Stack direction="row" alignItems="center" spacing={2}>
-        <Box width="max-content">{getContent(variant)}</Box>
-        <Typography variant="body1">
-          {t(
-            'Careful, this will delete all the messages in this item. Make sure you have a backup. You can download a backup from Graasp Analytics.',
-          )}
+      <Stack direction="column" spacing={2}>
+        <Typography variant="body1" maxWidth="50ch">
+          {translateBuilder(BUILDER.ITEM_SETTINGS_CLEAR_CHAT_EXPLANATION)}
         </Typography>
+        <Box width="max-content">{getContent(variant)}</Box>
       </Stack>
       <Dialog open={openConfirmation} id={CLEAR_CHAT_DIALOG_ID}>
         <DialogTitle>{t(CHATBOX.CLEAR_ALL_CHAT_TITLE)}</DialogTitle>
@@ -96,7 +100,7 @@ const ClearChatButton = ({
               {t(CHATBOX.CLEAR_ALL_CHAT_CONTENT)}
             </Typography>
             <Typography>
-              {t('You can download a backup from Graasp Analytics.')}
+              {translateBuilder(BUILDER.ITEM_SETTINGS_CLEAR_CHAT_BACKUP_TEXT)}
             </Typography>
           </Stack>
         </DialogContent>

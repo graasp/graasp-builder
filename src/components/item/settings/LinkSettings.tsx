@@ -91,7 +91,7 @@ const LinkSettings = ({ item }: Props): JSX.Element => {
 
   return (
     <>
-      <Typography variant="h5" m={0} p={0}>
+      <Typography variant="h6" m={0} p={0}>
         {translateBuilder(BUILDER.SETTINGS_LINK_SETTINGS_TITLE)}
       </Typography>
       <Typography variant="body1">

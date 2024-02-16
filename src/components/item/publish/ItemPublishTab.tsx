@@ -56,7 +56,6 @@ const { useItemTags, useLastItemValidationGroup } = hooks;
 
 const { usePostItemValidation } = mutations;
 
-// eslint-disable-next-line no-shadow
 const enum PublishFlow {
   SET_ITEM_VISIBILITY_PUBLIC_STEP,
   VALIDATE_ITEM_STEP,

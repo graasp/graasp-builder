@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
-import { Item } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -12,15 +12,19 @@ import { COLLAPSE_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 
 type Props = {
-  item: Item;
+  item: DiscriminatedItem;
   type?: ActionButtonVariant;
   onClick?: () => void;
+  isCollapsedTextKey?: string;
+  notCollapsedTextKey?: string;
 };
 
 const CollapseButton = ({
   item,
   type = ActionButton.ICON_BUTTON,
   onClick,
+  isCollapsedTextKey = BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT,
+  notCollapsedTextKey = BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -33,6 +37,8 @@ const CollapseButton = ({
     setIsCollapsible(item?.settings?.isCollapsible ?? false);
   }, [item]);
 
+  const disabled = item.type === ItemType.FOLDER;
+
   const handleCollapse = () => {
     editItem({
       id: item.id,
@@ -44,10 +50,15 @@ const CollapseButton = ({
     onClick?.();
   };
 
-  const icon = isCollapsible ? <ExpandLess /> : <ExpandMore />;
-  const text = isCollapsible
-    ? translateBuilder(BUILDER.COLLAPSE_ITEM_UNCOLLAPSE_TEXT)
-    : translateBuilder(BUILDER.COLLAPSE_ITEM_COLLAPSE_TEXT);
+  const icon = isCollapsible ? <ExpandLess color="primary" /> : <ExpandMore />;
+  let text;
+  if (disabled) {
+    text = translateBuilder(BUILDER.SETTINGS_COLLAPSE_FOLDER_INFORMATION);
+  } else {
+    text = translateBuilder(
+      isCollapsible ? isCollapsedTextKey : notCollapsedTextKey,
+    );
+  }
 
   switch (type) {
     case ActionButton.MENU_ITEM:
@@ -56,17 +67,21 @@ const CollapseButton = ({
           key={text}
           onClick={handleCollapse}
           className={COLLAPSE_ITEM_BUTTON_CLASS}
+          disabled={disabled}
         >
           <ListItemIcon>{icon}</ListItemIcon>
           {text}
         </MenuItem>
       );
+    case ActionButton.ICON:
+      return icon;
     case ActionButton.ICON_BUTTON:
     default:
       return (
         <Tooltip title={text}>
           <span>
             <IconButton
+              disabled={disabled}
               aria-label={text}
               className={COLLAPSE_ITEM_BUTTON_CLASS}
               onClick={handleCollapse}

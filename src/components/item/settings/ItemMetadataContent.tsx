@@ -1,14 +1,11 @@
 import { useOutletContext } from 'react-router-dom';
 
-import {
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 
 import {
   ItemType,
@@ -21,15 +18,16 @@ import { COMMON } from '@graasp/translations';
 import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
-} from '../../config/i18n';
-import { hooks } from '../../config/queryClient';
+} from '../../../config/i18n';
+import { hooks } from '../../../config/queryClient';
 import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
-} from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
-import { OutletType } from '../pages/item/type';
-import ThumbnailSetting from './settings/ThumbnailSetting';
+} from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
+import { OutletType } from '../../pages/item/type';
+import LanguageSelect from './LanguageSelect';
+import ThumbnailSetting from './ThumbnailSetting';
 
 const { useMember } = hooks;
 
@@ -71,7 +69,7 @@ const ItemMetadataContent = (): JSX.Element => {
   };
 
   return (
-    <Container>
+    <>
       <ThumbnailSetting item={item} />
 
       <TableContainer sx={{ p: 2, boxSizing: 'border-box' }}>
@@ -127,10 +125,18 @@ const ItemMetadataContent = (): JSX.Element => {
               </TableCell>
             </TableRow>
             {renderLink()}
+            <TableRow>
+              <TableCell align="left">
+                {translateBuilder(BUILDER.ITEM_METADATA_LANGUAGE_TITLE)}
+              </TableCell>
+              <TableCell align="right">
+                <LanguageSelect item={item} />
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-    </Container>
+    </>
   );
 };
 

@@ -6,21 +6,9 @@ enum TreePreventSelection {
   SELF_AND_CHILDREN = 'selfAndChildren',
 }
 
-enum ItemActionTabs {
-  Settings = 'settings',
-  Library = 'library',
-  Sharing = 'sharing',
-}
-
 enum ButtonVariants {
   IconButton = 'icon',
   Button = 'button',
 }
 
-export {
-  Ordering,
-  ItemActionTabs,
-  TreePreventSelection,
-  ButtonVariants,
-  ITEM_LAYOUT_MODES,
-};
+export { Ordering, TreePreventSelection, ButtonVariants, ITEM_LAYOUT_MODES };

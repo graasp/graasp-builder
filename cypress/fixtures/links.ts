@@ -1,10 +1,13 @@
-import { EmbeddedLinkItemType, ItemType } from '@graasp/sdk';
-import { DEFAULT_LANG } from '@graasp/translations';
+import {
+  EmbeddedLinkItemFactory,
+  EmbeddedLinkItemType,
+  ItemType,
+} from '@graasp/sdk';
 
 import { buildEmbeddedLinkExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER } from './members';
 
-export const GRAASP_LINK_ITEM: EmbeddedLinkItemType = {
+export const GRAASP_LINK_ITEM: EmbeddedLinkItemType = EmbeddedLinkItemFactory({
   id: 'ecafbd2a-5688-11eb-ae91-0242ac130002',
   type: ItemType.LINK,
   name: 'graasp link',
@@ -12,7 +15,6 @@ export const GRAASP_LINK_ITEM: EmbeddedLinkItemType = {
   path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
   creator: CURRENT_USER,
   settings: {},
-  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   extra: buildEmbeddedLinkExtra({
@@ -23,45 +25,45 @@ export const GRAASP_LINK_ITEM: EmbeddedLinkItemType = {
       'https://graasp.eu/cdn/img/epfl/favicons/favicon-32x32.png?v=yyxJ380oWY',
     ],
   }),
-};
+});
 
-export const GRAASP_LINK_ITEM_NO_PROTOCOL: EmbeddedLinkItemType = {
-  id: 'ecafbd2a-5688-11eb-ae91-0242ac130002',
-  type: ItemType.LINK,
-  name: 'graasp link',
-  description: 'a description for graasp link',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-  creator: CURRENT_USER,
-  settings: {},
-  lang: DEFAULT_LANG,
-  createdAt: '2021-08-11T12:56:36.834Z',
-  updatedAt: '2021-08-11T12:56:36.834Z',
-  extra: buildEmbeddedLinkExtra({
-    url: 'graasp.eu',
-    html: '',
-    thumbnails: ['https://graasp.eu/img/epfl/logo-tile.png'],
-    icons: [
-      'https://graasp.eu/cdn/img/epfl/favicons/favicon-32x32.png?v=yyxJ380oWY',
-    ],
-  }),
-};
+export const GRAASP_LINK_ITEM_NO_PROTOCOL: EmbeddedLinkItemType =
+  EmbeddedLinkItemFactory({
+    id: 'ecafbd2a-5688-11eb-ae91-0242ac130002',
+    type: ItemType.LINK,
+    name: 'graasp link',
+    description: 'a description for graasp link',
+    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+    creator: CURRENT_USER,
+    settings: {},
+    createdAt: '2021-08-11T12:56:36.834Z',
+    updatedAt: '2021-08-11T12:56:36.834Z',
+    extra: buildEmbeddedLinkExtra({
+      url: 'graasp.eu',
+      html: '',
+      thumbnails: ['https://graasp.eu/img/epfl/logo-tile.png'],
+      icons: [
+        'https://graasp.eu/cdn/img/epfl/favicons/favicon-32x32.png?v=yyxJ380oWY',
+      ],
+    }),
+  });
 
-export const GRAASP_LINK_ITEM_IFRAME_ONLY: EmbeddedLinkItemType = {
-  ...GRAASP_LINK_ITEM,
-  id: 'ecafbd2a-5688-11eb-ae91-0242ac130122',
-  settings: {
-    showLinkIframe: true,
-    showLinkButton: false,
-  },
-};
+export const GRAASP_LINK_ITEM_IFRAME_ONLY: EmbeddedLinkItemType =
+  EmbeddedLinkItemFactory({
+    ...GRAASP_LINK_ITEM,
+    id: 'ecafbd2a-5688-11eb-ae91-0242ac130122',
+    settings: {
+      showLinkIframe: true,
+      showLinkButton: false,
+    },
+  });
 
-export const YOUTUBE_LINK_ITEM: EmbeddedLinkItemType = {
+export const YOUTUBE_LINK_ITEM: EmbeddedLinkItemType = EmbeddedLinkItemFactory({
   id: 'gcafbd2a-5688-11eb-ae93-0242ac130002',
   type: ItemType.LINK,
   name: 'graasp youtube link',
   description: 'a description for graasp youtube link',
   settings: {},
-  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   creator: CURRENT_USER,
@@ -72,15 +74,14 @@ export const YOUTUBE_LINK_ITEM: EmbeddedLinkItemType = {
     thumbnails: ['https://i.ytimg.com/vi/FmiEgBMTPLo/maxresdefault.jpg'],
     icons: ['https://www.youtube.com/s/desktop/f0ff6c1d/img/favicon_96.png'],
   }),
-};
+});
 
-export const INVALID_LINK_ITEM: EmbeddedLinkItemType = {
+export const INVALID_LINK_ITEM: EmbeddedLinkItemType = EmbeddedLinkItemFactory({
   id: 'gcafbd2a-5688-11eb-ae93-0242ac130001',
   path: 'gcafbd2a_5688_11eb_ae93_0242ac130001',
   type: ItemType.LINK,
   creator: CURRENT_USER,
   settings: {},
-  lang: DEFAULT_LANG,
   createdAt: '2021-08-11T12:56:36.834Z',
   updatedAt: '2021-08-11T12:56:36.834Z',
   name: 'graasp youtube link',
@@ -91,4 +92,4 @@ export const INVALID_LINK_ITEM: EmbeddedLinkItemType = {
     thumbnails: [],
     icons: [],
   }),
-};
+});

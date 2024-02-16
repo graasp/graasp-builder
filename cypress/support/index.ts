@@ -28,8 +28,6 @@ declare global {
         text: string,
       ): void;
 
-      openMetadataPanel(): void;
-
       attachFile(selector: Chainable, file: string, options?: object): void;
       attachFiles(
         selector: Chainable,

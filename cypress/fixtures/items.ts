@@ -1,5 +1,6 @@
 import {
   DiscriminatedItem,
+  FolderItemFactory,
   FolderItemType,
   ItemFavorite,
   ItemLoginSchemaType,
@@ -12,12 +13,11 @@ import {
   RecycledItemData,
   ShortcutItemType,
 } from '@graasp/sdk';
-import { DEFAULT_LANG } from '@graasp/translations';
 
 import { ApiConfig, ItemForTest } from '../support/types';
 import { CURRENT_USER, MEMBERS } from './members';
 
-export const DEFAULT_FOLDER_ITEM: FolderItemType = {
+export const DEFAULT_FOLDER_ITEM: FolderItemType = FolderItemFactory({
   id: 'folder-id',
   name: 'folder',
   path: 'folder-path',
@@ -28,8 +28,7 @@ export const DEFAULT_FOLDER_ITEM: FolderItemType = {
   updatedAt: '2020-01-01T01:01:01Z',
   description: 'mydescription',
   settings: {},
-  lang: DEFAULT_LANG,
-};
+});
 
 export const CREATED_ITEM: Partial<FolderItemType> = {
   name: 'created item',

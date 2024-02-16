@@ -138,7 +138,6 @@ export const ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS =
 export const buildItemMembershipRowDeleteButtonId = (id: string): string =>
   `itemMembershipRowDeleteButtonId-${id}`;
 export const ITEM_INFORMATION_ICON_IS_OPEN_CLASS = 'itemInformationIconIsOpen';
-export const ITEM_INFORMATION_BUTTON_ID = 'itemInformationButton';
 export const ITEM_SEARCH_INPUT_ID = 'itemSearchInput';
 export const ITEMS_GRID_NO_SEARCH_RESULT_ID = 'itemsGridNoSearchResult';
 export const ITEMS_GRID_ITEMS_PER_PAGE_SELECT_ID =
@@ -349,3 +348,4 @@ export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
 export const MY_GRAASP_ITEM_PATH = 'myGraaspItemPath';
+export const LANGUAGE_SELECTOR_ID = 'languageSelector';

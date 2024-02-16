@@ -15,7 +15,6 @@ export const UUID_LENGTH = 36;
 
 export const DRAWER_WIDTH = 240;
 export const DEFAULT_LOCALE = 'en-US';
-export const DEFAULT_LANG = 'en';
 export const DEFAULT_EMAIL_FREQUENCY = 'always';
 
 export const DEFAULT_SHOW_CHATBOX_SETTING = false;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Chip, TextField, Typography } from '@mui/material';
+import { Chip, Stack, TextField, Typography } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
@@ -67,27 +67,36 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
       <Typography variant="body1">
         {translateBuilder(BUILDER.ITEM_TAGS_INFORMATION)}
       </Typography>
-      <TextField
-        variant="outlined"
-        multiline
-        maxRows={5}
-        defaultValue={displayValues}
-        onChange={handleChange}
-        id={ITEM_TAGS_EDIT_INPUT_ID}
-        sx={{ mt: 1, mb: 1 }}
-        disabled={disabled}
-      />
-      <SaveButton
-        onClick={handleSubmit}
-        id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
-        text={translateCommon(COMMON.SAVE_BUTTON)}
-        hasChanges={!disabled}
-      />
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Stack flexGrow={1}>
+          <TextField
+            variant="outlined"
+            multiline
+            maxRows={5}
+            defaultValue={displayValues}
+            onChange={handleChange}
+            id={ITEM_TAGS_EDIT_INPUT_ID}
+            sx={{ mt: 1, mb: 1 }}
+            disabled={disabled}
+            fullWidth
+            placeholder={translateBuilder(BUILDER.ITEM_TAGS_PLACEHOLDER)}
+          />
+        </Stack>
+        <Stack>
+          <SaveButton
+            onClick={handleSubmit}
+            id={ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}
+            text={translateCommon(COMMON.SAVE_BUTTON)}
+            hasChanges={!disabled}
+          />
+        </Stack>
+      </Stack>
       {settings?.tags?.length && (
         <>
-          <Typography variant="subtitle1">
+          <Typography variant="caption">
             {translateBuilder(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
           </Typography>
+          <br />
           {settings?.tags?.map((tag, index) => (
             <Chip
               key={tag}

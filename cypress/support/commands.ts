@@ -5,7 +5,6 @@ import 'cypress-localstorage-commands';
 
 import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
 import {
-  ITEM_INFORMATION_BUTTON_ID,
   MODE_GRID_BUTTON_ID,
   MODE_LIST_BUTTON_ID,
 } from '../../src/config/selectors';
@@ -394,10 +393,6 @@ Cypress.Commands.add(
           .should('contain', text),
       ),
 );
-
-Cypress.Commands.add('openMetadataPanel', () => {
-  cy.get(`#${ITEM_INFORMATION_BUTTON_ID}`).click();
-});
 
 Cypress.Commands.add('attachFile', (selector, file, options = {}) => {
   selector.selectFile(`cypress/fixtures/${file}`, options);

@@ -26,7 +26,7 @@ const FileSettings = ({
 
   return (
     <Box mt={4} my={4}>
-      <Typography variant="h5" m={0} p={0}>
+      <Typography variant="h6" m={0} p={0}>
         {translateBuilder(BUILDER.SETTINGS_FILE_SETTINGS_TITLE)}
       </Typography>
       <Stack direction="row" spacing={2} alignItems="center">

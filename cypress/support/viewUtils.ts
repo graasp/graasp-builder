@@ -2,11 +2,8 @@ import {
   CompleteMember,
   DocumentItemType,
   EmbeddedLinkItemType,
-  ItemType,
   getDocumentExtra,
   getEmbeddedLinkExtra,
-  getFileExtra,
-  getS3FileExtra,
 } from '@graasp/sdk';
 
 import {
@@ -17,40 +14,15 @@ import {
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_HEADER_ID,
-  ITEM_PANEL_NAME_ID,
-  ITEM_PANEL_TABLE_ID,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
   buildFileItemId,
   buildSettingsButtonId,
   buildShareButtonId,
 } from '../../src/config/selectors';
-import { getMemberById } from '../../src/utils/member';
 import { isSettingsEditionAllowedForUser } from '../../src/utils/membership';
-import { CURRENT_USER, MEMBERS } from '../fixtures/members';
+import { CURRENT_USER } from '../fixtures/members';
 import { ItemForTest, MemberForTest } from './types';
-
-const expectPanelLayout = ({ item }: { item: ItemForTest }) => {
-  cy.openMetadataPanel();
-
-  const { name, creator } = item;
-
-  cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
-
-  const creatorName = getMemberById(Object.values(MEMBERS), creator?.id).name;
-
-  cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
-
-  if (item.type === ItemType.LOCAL_FILE || item.type === ItemType.S3_FILE) {
-    const { mimetype = 'invalid-mimetype', size = 'invalid-size' } =
-      item.type === ItemType.LOCAL_FILE
-        ? getFileExtra(item.extra) || {}
-        : getS3FileExtra(item.extra) || {};
-    cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
-
-    cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(size);
-  }
-};
 
 export const expectItemHeaderLayout = ({
   item: { id, type, memberships },
@@ -88,9 +60,6 @@ export const expectDocumentViewScreenLayout = ({
   });
 
   expectItemHeaderLayout({ item, currentMember });
-  expectPanelLayout({
-    item,
-  });
 };
 
 export const expectFileViewScreenLayout = ({
@@ -106,8 +75,6 @@ export const expectFileViewScreenLayout = ({
   cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', item.description);
 
   expectItemHeaderLayout({ item, currentMember });
-  // table
-  expectPanelLayout({ item });
 };
 
 export const expectLinkViewScreenLayout = ({
@@ -140,8 +107,6 @@ export const expectLinkViewScreenLayout = ({
   }
 
   expectItemHeaderLayout({ item, currentMember });
-  // table
-  expectPanelLayout({ item });
 };
 
 export const expectFolderViewScreenLayout = ({
@@ -153,5 +118,4 @@ export const expectFolderViewScreenLayout = ({
 }): void => {
   // table
   expectItemHeaderLayout({ item, currentMember });
-  expectPanelLayout({ item });
 };
