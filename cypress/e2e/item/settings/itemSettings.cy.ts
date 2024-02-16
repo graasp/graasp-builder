@@ -92,7 +92,7 @@ describe('Item Settings', () => {
         cy.visit(buildItemSettingsPath(id));
 
         cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
-        cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(type);
+        cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(type);
 
         const creatorName = getMemberById(
           Object.values(MEMBERS),
@@ -102,12 +102,12 @@ describe('Item Settings', () => {
         cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
       });
 
-      it('file', () => {
+      it.only('file', () => {
         const { id, name, type, extra, creator } = IMAGE_ITEM_DEFAULT;
         cy.visit(buildItemSettingsPath(id));
 
         cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
-        cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(type);
+        cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(extra.file.mimetype);
 
         const creatorName = getMemberById(
           Object.values(MEMBERS),

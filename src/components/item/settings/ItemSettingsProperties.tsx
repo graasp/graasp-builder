@@ -53,6 +53,26 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
       case ItemType.S3_FILE:
       case ItemType.LOCAL_FILE:
         return <FileSettings item={item} />;
+      case ItemType.APP:
+        return (
+          <ItemSettingProperty
+            id={SETTINGS_RESIZE_TOGGLE_ID}
+            title={translateBuilder(
+              BUILDER.ITEM_SETTINGS_RESIZABLE_ENABLED_TEXT,
+            )}
+            checked={Boolean(settings?.isResizable || DEFAULT_RESIZE_SETTING)}
+            onClick={(checked: boolean): void => {
+              handleOnToggle({ target: { checked } }, 'isResizable');
+            }}
+            valueText={
+              settings?.isResizable
+                ? translateBuilder(BUILDER.ITEM_SETTINGS_RESIZABLE_ENABLED_TEXT)
+                : translateBuilder(
+                    BUILDER.ITEM_SETTINGS_RESIZABLE_DISABLED_TEXT,
+                  )
+            }
+          />
+        );
       default:
         return null;
     }
@@ -137,21 +157,6 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
         disabled
       />
 
-      {item.type === ItemType.APP && (
-        <ItemSettingProperty
-          id={SETTINGS_RESIZE_TOGGLE_ID}
-          title={translateBuilder(BUILDER.ITEM_SETTINGS_RESIZABLE_ENABLED_TEXT)}
-          checked={Boolean(settings?.isResizable || DEFAULT_RESIZE_SETTING)}
-          onClick={(checked: boolean): void => {
-            handleOnToggle({ target: { checked } }, 'isResizable');
-          }}
-          valueText={
-            settings?.isResizable
-              ? translateBuilder(BUILDER.ITEM_SETTINGS_RESIZABLE_ENABLED_TEXT)
-              : translateBuilder(BUILDER.ITEM_SETTINGS_RESIZABLE_DISABLED_TEXT)
-          }
-        />
-      )}
       {renderSettingsPerType()}
     </>
   );

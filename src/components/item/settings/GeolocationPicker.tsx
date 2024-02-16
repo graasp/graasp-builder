@@ -15,15 +15,11 @@ import {
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
-
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks, mutations } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
-import { useSearchAddress } from './hooks';
+import { OpenStreetMapResult, useSearchAddress } from './hooks';
 
 const GeolocationPicker = ({
   item,
@@ -52,14 +48,18 @@ const GeolocationPicker = ({
     setQuery(e.target.value);
   };
 
-  const onChangeOption = (option: SearchResult): void => {
+  const onChangeOption = (option: OpenStreetMapResult): void => {
     const {
       raw: { lat, lon: lng },
       label,
     } = option;
     putGeoloc({
       itemId: item.id,
-      geolocation: { lng, lat, addressLabel: label },
+      geolocation: {
+        lng: parseFloat(lng),
+        lat: parseFloat(lat),
+        addressLabel: label,
+      },
     });
     setResults([]);
   };

@@ -128,7 +128,7 @@
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_PSEUDONYM_LABEL": "Pseudonyme",
   "ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_SCHEMA_SELECT_MESSAGE": "Cet élément est accessible si le visiteur fournit un",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_INFORMATIONS": "Cet élément est public. N'importe quel visiteur peut accéder à cet élément.",
-  "ITEM_TAGS_PLACEHOLDER": "Anglais, Biologie, Plantes",
+  "ITEM_TAGS_PLACEHOLDER": "biologie, plantes, effet de serre",
   "ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL": "Public",
   "ITEM_SETTINGS_VISIBILITY_TITLE": "Visibilité",
   "ITEM_TAGS_INFORMATION": "Veuillez séparer les groupes de mots par une virgule. ",

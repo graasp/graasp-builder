@@ -68,12 +68,13 @@ export const DocumentExtraForm = ({
     ],
   );
 
-  const withFlavor = (textView: JSX.Element): JSX.Element =>
-    extra?.flavor ? (
-      <Alert severity={extra.flavor}>{textView}</Alert>
-    ) : (
-      textView
-    );
+  const withFlavor = (textView: JSX.Element): JSX.Element => {
+    if (!extra.flavor || extra.flavor === DocumentItemExtraFlavor.None) {
+      return textView;
+    }
+
+    return <Alert severity={extra.flavor}>{textView}</Alert>;
+  };
 
   const handleChangeEditorMode = (mode: string) => {
     // send editor mode change

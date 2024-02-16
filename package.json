@@ -21,9 +21,9 @@
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.0.3",
     "@graasp/query-client": "2.6.1",
-    "@graasp/sdk": "3.8.1",
+    "@graasp/sdk": "3.8.3",
     "@graasp/translations": "1.23.0",
-    "@graasp/ui": "github:graasp/graasp-ui#navigation-icon",
+    "@graasp/ui": "4.8.0",
     "@mui/icons-material": "5.15.8",
     "@mui/lab": "5.0.0-alpha.162",
     "@mui/material": "5.15.8",
@@ -114,7 +114,6 @@
     "@testing-library/user-event": "^14.5.2",
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
     "@types/jest": "29.5.12",
-    "@types/leaflet": "^1",
     "@types/lodash.debounce": "4.0.9",
     "@types/lodash.groupby": "4.6.9",
     "@types/lodash.isequal": "4.5.8",
@@ -150,6 +149,9 @@
     "vite": "5.0.12",
     "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
+  },
+  "resolutions": {
+    "@graasp/sdk": "3.8.3"
   },
   "packageManager": "yarn@4.1.0"
 }

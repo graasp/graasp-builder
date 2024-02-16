@@ -1,15 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ItemGeolocation } from '@graasp/sdk';
 
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
 
 import useDebouncedCallback from '@/utils/useDebounce';
 
@@ -20,19 +13,23 @@ type Props = {
 
 const DELAY_MS = 1000;
 
+export type OpenStreetMapResult = Awaited<
+  ReturnType<OpenStreetMapProvider['search']>
+>[0];
+
 type ReturnedValue = {
   clearQuery: () => void;
   isDebounced: boolean;
   loading: boolean;
   query?: string | null;
-  results: SearchResult<RawResult>[];
+  results: OpenStreetMapResult[];
   setQuery: Dispatch<string | null>;
-  setResults: Dispatch<SearchResult<RawResult>[]>;
+  setResults: Dispatch<OpenStreetMapResult[]>;
 };
 
 // eslint-disable-next-line import/prefer-default-export
 export const useSearchAddress = ({ lang, geoloc }: Props): ReturnedValue => {
-  const [results, setResults] = useState<SearchResult<RawResult>[]>([]);
+  const [results, setResults] = useState<OpenStreetMapResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState<string | null | undefined>();
 
