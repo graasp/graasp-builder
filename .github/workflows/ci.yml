@@ -1,6 +1,11 @@
 name: CI checks
 
-on: [push]
+on:
+  push:
+    branches:
+      - "main"
+  merge_group:
+  pull_request:
 
 jobs:
   build-and-test:
