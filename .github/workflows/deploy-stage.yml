@@ -56,4 +56,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION_STAGE }}
           aws-s3-bucket-name: ${{ vars.AWS_S3_BUCKET_NAME }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
-          cloudfront-distribution-id: ${{ vars.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_STAGE }}
+          cloudfront-distribution-id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
