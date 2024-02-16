@@ -9,11 +9,11 @@ export const GRAASP_AUTH_HOST =
 export const GRAASP_PLAYER_HOST =
   import.meta.env.VITE_GRAASP_PLAYER_HOST || 'http://localhost:3112';
 export const GRAASP_LIBRARY_HOST =
-  import.meta.env.VITE_GRAASP_LIBRARY_HOST || 'http://localhost:3005';
+  import.meta.env.VITE_GRAASP_LIBRARY_HOST || 'http://localhost:3115';
 export const GRAASP_ANALYZER_HOST =
   import.meta.env.VITE_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
 export const GRAASP_ACCOUNT_HOST =
-  import.meta.env.VITE_GRAASP_ACCOUNT_HOST || 'http://localhost:3115';
+  import.meta.env.VITE_GRAASP_ACCOUNT_HOST || 'http://localhost:3114';
 
 export const GRAASP_REDIRECTION_HOST = import.meta.env
   .VITE_GRAASP_REDIRECTION_HOST;
