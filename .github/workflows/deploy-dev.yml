@@ -50,6 +50,6 @@ jobs:
           build-folder: 'build'
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
           aws-region: ${{ secrets.AWS_REGION_DEV }}
-          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_DEV }}
+          aws-s3-bucket-name: ${{ vars.AWS_S3_BUCKET_NAME }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_DEV }}
+          cloudfront-distribution-id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
