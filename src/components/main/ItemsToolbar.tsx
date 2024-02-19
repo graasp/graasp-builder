@@ -38,6 +38,7 @@ const ItemsToolbar = ({
       <Stack direction="column" mt={2} mb={2} spacing={1}>
         {onShowOnlyMeChange && (
           <FormControlLabel
+            sx={{ maxWidth: 'max-content' }}
             control={
               <Switch
                 id={ACCESSIBLE_ITEMS_ONLY_ME_ID}
