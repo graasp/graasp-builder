@@ -34,7 +34,7 @@ jobs:
           VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
           VITE_GRAASP_PLAYER_HOST: ${{ vars.VITE_GRAASP_PLAYER_HOST }}
           VITE_H5P_INTEGRATION_URL: ${{ secrets.VITE_H5P_INTEGRATION_URL }}
-          VITE_GRAASP_ASSETS_URL: ${{ secrets.VITE_GRAASP_ASSETS_URL }}
+          VITE_GRAASP_ASSETS_URL: ${{ vars.VITE_GRAASP_ASSETS_URL }}
           VITE_SENTRY_ENV: ${{ vars.VITE_SENTRY_ENV }}
           VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
           # VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
@@ -50,6 +50,6 @@ jobs:
           build-folder: 'build'
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
           aws-region: ${{ secrets.AWS_REGION_DEV }}
-          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_COMPOSE_DEV }}
+          aws-s3-bucket-name: ${{ vars.AWS_S3_BUCKET_NAME }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_COMPOSE_DEV }}
+          cloudfront-distribution-id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
