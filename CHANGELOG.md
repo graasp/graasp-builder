@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/graasp/graasp-builder/compare/v2.7.0...v2.8.0) (2024-02-20)
+
+
+### Features
+
+* merge metadata and settings, add tags and geoloc ([#996](https://github.com/graasp/graasp-builder/issues/996)) ([1e31079](https://github.com/graasp/graasp-builder/commit/1e310799ef5b3e4ebd7e8e67304f1a7350bf3581))
+* use new graasp UI ([#997](https://github.com/graasp/graasp-builder/issues/997)) ([dfaba0a](https://github.com/graasp/graasp-builder/commit/dfaba0a67a06202d2255261e212e761876dc8de3))
+
+
+### Bug Fixes
+
+* cant remove flavor ([#1011](https://github.com/graasp/graasp-builder/issues/1011)) ([621dd88](https://github.com/graasp/graasp-builder/commit/621dd880fa3d78227b318476010b901a7636bbe8))
+* **chore:** set FormControlLabel max width to limit show only me switch ([#1024](https://github.com/graasp/graasp-builder/issues/1024)) ([c6ce11e](https://github.com/graasp/graasp-builder/commit/c6ce11ee36af4c56c2cd257209649d2f98580f86))
+* configure merge queue ([#1017](https://github.com/graasp/graasp-builder/issues/1017)) ([3cd54d5](https://github.com/graasp/graasp-builder/commit/3cd54d5d594d7d101903f32c2415f2d5e896ebb5))
+* **deps:** update dependency @graasp/query-client to v2.6.2 ([#1019](https://github.com/graasp/graasp-builder/issues/1019)) ([35af95a](https://github.com/graasp/graasp-builder/commit/35af95ae381685402871a89d59032948398c6626))
+* **deps:** update dependency @graasp/translations to v1.24.0 ([#1020](https://github.com/graasp/graasp-builder/issues/1020)) ([5001afd](https://github.com/graasp/graasp-builder/commit/5001afd45677a41e69f96b22c033abdc0a9e9afe))
+* **deps:** update dependency @sentry/react to v7.101.1 ([#1007](https://github.com/graasp/graasp-builder/issues/1007)) ([f9b9a01](https://github.com/graasp/graasp-builder/commit/f9b9a013ee17aa6c94fd170024734b7f43a6083f))
+* **deps:** update react-router monorepo to v6.22.0 ([#1008](https://github.com/graasp/graasp-builder/issues/1008)) ([485500c](https://github.com/graasp/graasp-builder/commit/485500ce3dde18d31787842da3f0bf0608fb0a14))
+* update readme values ([#1015](https://github.com/graasp/graasp-builder/issues/1015)) ([6cdab81](https://github.com/graasp/graasp-builder/commit/6cdab813e67d8f6aecfc4f664fdbd7a19daddcb5))
+
 ## [2.7.0](https://github.com/graasp/graasp-builder/compare/v2.6.3...v2.7.0) (2024-02-09)
 
 
