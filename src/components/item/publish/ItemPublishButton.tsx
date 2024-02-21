@@ -5,7 +5,6 @@ import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
-import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
@@ -36,7 +35,7 @@ const ItemPublishButton = ({
   const { mutate: unpublish, isLoading: isUnPublishing } = useUnpublishItem();
   const { mutate: publishItem, isLoading: isPublishing } = usePublishItem();
 
-  const { data: itemPublishedEntry, isLoading } = useItemPublishedInformation({
+  const { data: itemPublishedEntry, isFetching } = useItemPublishedInformation({
     itemId: item.id,
   });
 
@@ -85,21 +84,30 @@ const ItemPublishButton = ({
           variant="contained"
           disabled={disabled || isDisabled || !isValidated || isPublished}
           onClick={handlePublish}
-          endIcon={isPublished && <CheckCircle color="primary" />}
+          endIcon={
+            // only show the icon when the item is published and we are not un-publishing it
+            isPublished &&
+            !isUnPublishing &&
+            !isFetching && <CheckCircle color="primary" />
+          }
           id={ITEM_PUBLISH_BUTTON_ID}
-          loading={isLoading || isPublishing || isUnPublishing}
+          // show a loading state when we are fetching the entry and when we are publishing
+          loading={isFetching || isPublishing}
         >
           {isPublished
             ? translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON_DISABLED)
             : translateBuilder(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
         </LoadingButton>
-        <Button
+        <LoadingButton
+          variant="contained"
           disabled={disabled || isDisabled || !isPublished}
           onClick={handleUnpublish}
           id={ITEM_UNPUBLISH_BUTTON_ID}
+          // show a loading state when we are un-publishing the entry
+          loading={isUnPublishing}
         >
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_UNPUBLISH_BUTTON)}
-        </Button>
+        </LoadingButton>
       </Stack>
       <div>
         <FormControlLabel
