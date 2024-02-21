@@ -2,9 +2,9 @@ import {
   EmbeddedLinkItemFactory,
   EmbeddedLinkItemType,
   ItemType,
+  buildEmbeddedLinkExtra,
 } from '@graasp/sdk';
 
-import { buildEmbeddedLinkExtra } from '../../src/utils/itemExtra';
 import { CURRENT_USER } from './members';
 
 export const GRAASP_LINK_ITEM: EmbeddedLinkItemType = EmbeddedLinkItemFactory({

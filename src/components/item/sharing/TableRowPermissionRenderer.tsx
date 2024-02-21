@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { DiscriminatedItem, Item, Member, PermissionLevel } from '@graasp/sdk';
+import { DiscriminatedItem, Member, PermissionLevel } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 
 import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
@@ -34,7 +34,11 @@ type TableRowPermissionRendererProps<T> = {
 };
 
 function TableRowPermissionRenderer<
-  T extends { permission: PermissionLevel; item: Item; member?: Member },
+  T extends {
+    permission: PermissionLevel;
+    item: DiscriminatedItem;
+    member?: Member;
+  },
 >({
   item,
   editFunction,

@@ -1,7 +1,7 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
-import { Item, ItemTagType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemTagType } from '@graasp/sdk';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -13,7 +13,7 @@ import {
 import { BUILDER } from '../../langs/constants';
 
 type Props = {
-  item: Item;
+  item: DiscriminatedItem;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };

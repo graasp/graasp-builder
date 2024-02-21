@@ -1,4 +1,4 @@
-import { COOKIE_KEYS } from '@graasp/sdk';
+import { CookieKeys } from '@graasp/sdk';
 
 import {
   HOME_PATH,
@@ -27,14 +27,14 @@ describe('Authentication', () => {
     it('Home', () => {
       cy.visit(HOME_PATH);
       cy.url().should('equal', SIGN_IN_PATH);
-      cy.getCookie(COOKIE_KEYS.REDIRECT_URL_KEY, {
+      cy.getCookie(CookieKeys.RedirectUrl, {
         timeout: REQUEST_FAILURE_LOADING_TIME,
       }).should('have.property', 'value', HOME_PATH);
     });
     it('Shared Items', () => {
       cy.visit(SHARED_ITEMS_PATH);
       cy.url().should('equal', SIGN_IN_PATH);
-      cy.getCookie(COOKIE_KEYS.REDIRECT_URL_KEY, {
+      cy.getCookie(CookieKeys.RedirectUrl, {
         timeout: REQUEST_FAILURE_LOADING_TIME,
       }).should('have.property', 'value', SHARED_ITEMS_PATH);
     });
@@ -64,7 +64,7 @@ describe('Authentication', () => {
 
     describe('Redirect to URL in local storage', () => {
       it('Home', () => {
-        cy.setCookie(COOKIE_KEYS.REDIRECT_URL_KEY, HOME_PATH);
+        cy.setCookie(CookieKeys.RedirectUrl, HOME_PATH);
         cy.visit(REDIRECT_PATH);
         cy.url({
           timeout: REDIRECTION_TIME,
@@ -72,7 +72,7 @@ describe('Authentication', () => {
       });
 
       it('Items', () => {
-        cy.setCookie(COOKIE_KEYS.REDIRECT_URL_KEY, ITEMS_PATH);
+        cy.setCookie(CookieKeys.RedirectUrl, ITEMS_PATH);
         cy.visit(REDIRECT_PATH);
         cy.url({
           timeout: REDIRECTION_TIME,
@@ -80,7 +80,7 @@ describe('Authentication', () => {
       });
 
       it('SharedItems', () => {
-        cy.setCookie(COOKIE_KEYS.REDIRECT_URL_KEY, SHARED_ITEMS_PATH);
+        cy.setCookie(CookieKeys.RedirectUrl, SHARED_ITEMS_PATH);
         cy.visit(REDIRECT_PATH);
         cy.url({
           timeout: REDIRECTION_TIME,
@@ -89,7 +89,7 @@ describe('Authentication', () => {
 
       it('Item', () => {
         cy.setCookie(
-          COOKIE_KEYS.REDIRECT_URL_KEY,
+          CookieKeys.RedirectUrl,
           buildItemPath(SAMPLE_ITEMS.items?.[0].id),
         );
         cy.visit(REDIRECT_PATH);

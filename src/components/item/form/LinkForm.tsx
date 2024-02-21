@@ -1,12 +1,15 @@
 import { TextField, TextFieldProps, Typography } from '@mui/material';
 
-import { EmbeddedLinkItemType, getEmbeddedLinkExtra } from '@graasp/sdk';
+import {
+  EmbeddedLinkItemType,
+  buildEmbeddedLinkExtra,
+  getLinkExtra,
+} from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import { isUrlValid } from '../../../utils/item';
-import { buildEmbeddedLinkExtra } from '../../../utils/itemExtra';
 
 type Props = {
   onChange: (item: Partial<EmbeddedLinkItemType>) => void;
@@ -35,7 +38,7 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
 
   let url = null;
   if (item?.extra) {
-    ({ url } = getEmbeddedLinkExtra(item?.extra) || {});
+    ({ url } = getLinkExtra(item?.extra) || {});
   }
   const isLinkInvalid = Boolean(url?.length) && !isUrlValid(url);
 

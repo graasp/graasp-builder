@@ -12,10 +12,10 @@ import {
 
 import {
   AppItemType,
+  DiscriminatedItem,
   DocumentItemType,
   EmbeddedLinkItemType,
   FolderItemType,
-  Item,
   ItemType,
 } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
@@ -135,7 +135,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
     );
   };
 
-  const updateItem = (item: Partial<Item>) => {
+  const updateItem = (item: Partial<DiscriminatedItem>) => {
     // update content given current type
     const type = selectedItemType as keyof PropertiesPerType;
     setUpdatedPropertiesPerType({

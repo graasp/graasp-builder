@@ -5,7 +5,6 @@ import {
   CompleteMember,
   DiscriminatedItem,
   Invitation,
-  Item,
   ItemCategory,
   ItemLoginSchema,
   ItemMembership,
@@ -45,7 +44,7 @@ export type FileItemForTest = LocalFileItemForTest | S3FileItemForTest;
 
 export type ApiConfig = {
   items?: ItemForTest[];
-  recycledItems?: Item[];
+  recycledItems?: DiscriminatedItem[];
   members?: MemberForTest[];
   currentMember?: Member;
   mentions?: ChatMention[];

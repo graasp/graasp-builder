@@ -1,6 +1,5 @@
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, buildDocumentExtra } from '@graasp/sdk';
 
-import { buildDocumentExtra } from '../../src/utils/itemExtra';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
 

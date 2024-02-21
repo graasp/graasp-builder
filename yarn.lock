@@ -1541,9 +1541,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:3.8.3":
-  version: 3.8.3
-  resolution: "@graasp/sdk@npm:3.8.3"
+"@graasp/sdk@github:graasp/graasp-sdk#esm-package":
+  version: 3.10.0
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=b06ca8a78122249a26d56ebc6271763f286fb760"
   dependencies:
     "@faker-js/faker": "npm:8.4.0"
     js-cookie: "npm:3.0.5"
@@ -1551,7 +1551,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3
     uuid: ^9
-  checksum: 10/3968defd8bc2eb9c4165ae8a89ae43c0cbe22bef9934f0eb4a2645188b793639c193a79016cb961052068601754f0cc1ef8b2abf23b691231aa9ad0594ad56f2
+  checksum: 10/20d9ebdea1ebbb022ebc96b51b41c662de419560ad5a05156ae15e804d5f13e2851c22e9517fe5043a096f92515d2e7d19babf53630998d2d79dac8e8df223d1
   languageName: node
   linkType: hard
 
@@ -7477,7 +7477,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.3"
     "@graasp/query-client": "npm:2.6.2"
-    "@graasp/sdk": "npm:3.8.3"
+    "@graasp/sdk": "github:graasp/graasp-sdk#esm-package"
     "@graasp/translations": "npm:1.24.0"
     "@graasp/ui": "npm:4.8.1"
     "@mui/icons-material": "npm:5.15.8"

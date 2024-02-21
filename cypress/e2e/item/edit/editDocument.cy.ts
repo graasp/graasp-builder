@@ -1,4 +1,4 @@
-import { getDocumentExtra } from '@graasp/sdk';
+import { buildDocumentExtra, getDocumentExtra } from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
@@ -8,7 +8,6 @@ import {
   buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildDocumentExtra } from '../../../../src/utils/itemExtra';
 import {
   GRAASP_DOCUMENT_CHILDREN_ITEM,
   GRAASP_DOCUMENT_ITEM,

@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import {
   DiscriminatedItem,
   ItemType,
-  getEmbeddedLinkExtra,
+  getLinkExtra,
   getMimetype,
 } from '@graasp/sdk';
 import { ItemIcon, Thumbnail } from '@graasp/ui';
@@ -18,9 +18,7 @@ const ItemNameCellRenderer = (
 ): ((props: ChildProps) => JSX.Element) => {
   const Component = ({ data: item }: ChildProps): JSX.Element => {
     const linkExtra =
-      item.type === ItemType.LINK
-        ? getEmbeddedLinkExtra(item.extra)
-        : undefined;
+      item.type === ItemType.LINK ? getLinkExtra(item.extra) : undefined;
 
     const alt = item.name;
     const iconSrc = linkExtra?.icons?.[0];
