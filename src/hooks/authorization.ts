@@ -1,24 +1,42 @@
-import { DiscriminatedItem, ItemMembership } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemMembership,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { hooks } from '@/config/queryClient';
-import { isItemUpdateAllowedForUser } from '@/utils/membership';
+import { getHighestPermissionForMemberFromMemberships } from '@/utils/item';
 
+// todo: to be replaced by a query client hook get item that would contain the permission
 // eslint-disable-next-line import/prefer-default-export
-export const useCanUpdateItem = (
+export const useGetPermissionForItem = (
   item?: DiscriminatedItem,
+  allMemberships?: ItemMembership[],
 ): {
-  allowed: boolean;
+  data?: PermissionLevel;
   memberships?: ItemMembership[];
   isMembershipsLoading: boolean;
+  isCurrentMemberLoading: boolean;
+  isLoading: boolean;
 } => {
+  // does not fetch memberships if they are given
   const { data: memberships, isLoading: isMembershipsLoading } =
-    hooks.useItemMemberships(item?.id);
-  const { data: currentMember } = hooks.useCurrentMember();
+    hooks.useItemMemberships(allMemberships ? undefined : item?.id);
+  const { data: currentMember, isLoading: isCurrentMemberLoading } =
+    hooks.useCurrentMember();
+  const isLoading = isMembershipsLoading || isCurrentMemberLoading;
 
-  const allowed = isItemUpdateAllowedForUser({
+  return {
+    data: item
+      ? getHighestPermissionForMemberFromMemberships({
+          memberships: allMemberships ?? memberships,
+          memberId: currentMember?.id,
+          itemPath: item?.path,
+        })?.permission
+      : undefined,
+    isLoading,
     memberships,
-    memberId: currentMember?.id,
-  });
-
-  return { allowed, memberships, isMembershipsLoading };
+    isMembershipsLoading,
+    isCurrentMemberLoading,
+  };
 };

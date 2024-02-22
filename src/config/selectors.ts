@@ -48,9 +48,7 @@ export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
 export const buildPermissionOptionId = (id: string): string =>
   `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
-export const MODE_LIST_BUTTON_ID = 'modeListButton';
 
-export const MODE_GRID_BUTTON_ID = 'modeCardButton';
 export const SHARED_ITEMS_ID = 'sharedItems';
 export const PUBLISHED_ITEMS_ID = 'publishedItems';
 export const FAVORITE_ITEMS_ID = 'favoriteItems';
@@ -349,3 +347,4 @@ export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
 export const MY_GRAASP_ITEM_PATH = 'myGraaspItemPath';
 export const LANGUAGE_SELECTOR_ID = 'languageSelector';
+export const LAYOUT_MODE_BUTTON_ID = 'layoutModeButton';

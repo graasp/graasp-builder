@@ -1,13 +1,14 @@
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '@/enums/itemLayoutMode';
+
 import {
   EDIT_MODAL_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
 } from '../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../src/enums';
+import { ItemLayoutMode } from '../../src/enums';
 import { CAPTION_EDIT_PAUSE } from './constants';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -23,12 +24,12 @@ export const editItem = (
 ): void => {
   const { id, type } = payload;
   switch (mode) {
-    case ITEM_LAYOUT_MODES.GRID: {
+    case ItemLayoutMode.Grid: {
       const button = `#${buildEditButtonId(id)}`;
       cy.get(button).click();
       break;
     }
-    case ITEM_LAYOUT_MODES.LIST:
+    case ItemLayoutMode.List:
     default: {
       cy.get(`#${buildEditButtonId(id)}`).click();
     }

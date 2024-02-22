@@ -1,12 +1,12 @@
 import { getParentsIdsFromPath } from '@/utils/item';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import duplicateItem from '../../../support/actionsUtils';
 
 describe('duplicate Item in Home', () => {
-  Object.values(ITEM_LAYOUT_MODES).forEach((view) => {
+  Object.values(ItemLayoutMode).forEach((view) => {
     it(`duplicate item on Home in ${view} view`, () => {
       cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
@@ -25,7 +25,7 @@ describe('duplicate Item in Home', () => {
   });
 });
 describe('duplicate Item in item', () => {
-  Object.values(ITEM_LAYOUT_MODES).forEach((view) => {
+  Object.values(ItemLayoutMode).forEach((view) => {
     it(`duplicate item in item in ${view} view`, () => {
       cy.setUpApi(SAMPLE_ITEMS);
       const { id, path } = SAMPLE_ITEMS.items[0];

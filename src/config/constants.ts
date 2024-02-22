@@ -1,7 +1,5 @@
 import { ItemLoginSchemaType, ItemType, PermissionLevel } from '@graasp/sdk';
 
-import ITEM_LAYOUT_MODES from '../enums/itemLayoutModes';
-
 export const APP_NAME = 'Graasp';
 
 export const DESCRIPTION_MAX_LENGTH = 30;
@@ -28,13 +26,6 @@ export const DEFAULT_MEMBER_PROFILE_SAVE_ACTIONS_SETTING = true;
 export const DEFAULT_PERMISSION_LEVEL = PermissionLevel.Read;
 
 export const DEFAULT_ANALYZER_HEIGHT = 2300;
-
-export const PERMISSIONS_EDITION_ALLOWED = [
-  PermissionLevel.Write,
-  PermissionLevel.Admin,
-];
-
-export const DEFAULT_ITEM_LAYOUT_MODE = ITEM_LAYOUT_MODES.LIST;
 
 export const ROWS_PER_PAGE_OPTIONS = [10, 25];
 

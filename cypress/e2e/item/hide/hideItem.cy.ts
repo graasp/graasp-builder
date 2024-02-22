@@ -7,7 +7,7 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import {
   CHILD_HIDDEN_ITEM,
   HIDDEN_ITEM,
@@ -78,7 +78,7 @@ describe('Hiding Item', () => {
 
     it('Hide an item', () => {
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
       const item = ITEMS_SETTINGS.items[1];
 
       toggleHideButton(item.id, false);
@@ -93,7 +93,7 @@ describe('Hiding Item', () => {
 
     it('Show an Item', () => {
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
       const item = ITEMS_SETTINGS.items[0];
 
       toggleHideButton(item.id, true);
@@ -108,7 +108,7 @@ describe('Hiding Item', () => {
 
     it('Cannot hide child of hidden item', () => {
       cy.visit(buildItemPath(HIDDEN_ITEM.id));
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       cy.get(`#${buildItemMenuButtonId(CHILD_HIDDEN_ITEM.id)}`).click();
       cy.get(

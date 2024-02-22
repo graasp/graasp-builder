@@ -4,6 +4,7 @@ import { Container, Divider, Grid, Typography } from '@mui/material';
 
 import {
   ItemMembership,
+  PermissionLevel,
   PermissionLevelCompare,
   isPseudoMember,
 } from '@graasp/sdk';
@@ -12,16 +13,11 @@ import { Loader } from '@graasp/ui';
 import partition from 'lodash.partition';
 
 import { OutletType } from '@/components/pages/item/type';
+import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
-import {
-  isItemAdminAllowedForMember,
-  isItemUpdateAllowedForUser,
-  isSettingsEditionAllowedForUser,
-} from '../../../utils/membership';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CreateItemMembershipForm from './CreateItemMembershipForm';
 import CsvInputParser from './CsvInputParser';
 import InvitationsTable from './InvitationsTable';
@@ -58,35 +54,26 @@ const ItemSharingTab = (): JSX.Element => {
 
   const { data: memberships } = hooks.useItemMemberships(itemId);
 
-  const { data: currentMember, isLoading: isLoadingCurrentMember } =
-    useCurrentUserContext();
   const { data: invitations } = hooks.useItemInvitations(item?.id);
   const { data: itemLoginSchema, isLoading: isItemLoginLoading } =
     hooks.useItemLoginSchema({ itemId: item.id });
 
-  const canEdit = isItemUpdateAllowedForUser({
-    memberships,
-    memberId: currentMember?.id,
-  });
+  const { data: permission, isLoading } = useGetPermissionForItem(item);
 
-  const canEditSettings = isSettingsEditionAllowedForUser({
-    memberships,
-    memberId: currentMember?.id,
-  });
+  const canWrite = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+    : false;
+  const canAdmin = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
+    : false;
 
-  const canAdminShortLinks = isItemAdminAllowedForMember({
-    memberships,
-    memberId: currentMember?.id,
-    itemPath: item.path,
-  });
-
-  if (isLoadingCurrentMember && isItemLoginLoading) {
+  if (isLoading && isItemLoginLoading) {
     return <Loader />;
   }
 
   const renderMembershipSettings = () => {
     // do not display settings if cannot access memberships
-    if (!memberships || !canEdit) {
+    if (!memberships || !canWrite) {
       return null;
     }
     const [authenticatedMemberships, authorizedMemberships] = partition(
@@ -102,9 +89,9 @@ const ItemSharingTab = (): JSX.Element => {
           <Typography variant="h6" m={0} p={0}>
             {translateBuilder(BUILDER.SHARING_AUTHORIZED_MEMBERS_TITLE)}
           </Typography>
-          {canEditSettings && <CsvInputParser item={item} />}
+          {canAdmin && <CsvInputParser item={item} />}
         </Grid>
-        {canEditSettings && (
+        {canAdmin && (
           <CreateItemMembershipForm item={item} memberships={memberships} />
         )}
         <ItemMembershipsTable
@@ -113,7 +100,7 @@ const ItemSharingTab = (): JSX.Element => {
             BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE,
           )}
           memberships={selectHighestMemberships(authorizedMemberships)}
-          readOnly={!canEditSettings}
+          readOnly={!canAdmin}
         />
 
         {/* show authenticated members if login schema is defined
@@ -132,7 +119,7 @@ const ItemSharingTab = (): JSX.Element => {
                 BUILDER.SHARING_AUTHENTICATED_MEMBERS_EMPTY_MESSAGE,
               )}
               showEmail={false}
-              readOnly={!canEditSettings}
+              readOnly={!canAdmin}
             />
           </>
         )}
@@ -149,7 +136,7 @@ const ItemSharingTab = (): JSX.Element => {
               emptyMessage={translateBuilder(
                 BUILDER.SHARING_INVITATIONS_EMPTY_MESSAGE,
               )}
-              readOnly={!canEditSettings}
+              readOnly={!canAdmin}
             />
             <Divider sx={{ my: 3 }} />
           </>
@@ -165,12 +152,12 @@ const ItemSharingTab = (): JSX.Element => {
       </Typography>
       <ShortLinksRenderer
         itemId={item.id}
-        canAdminShortLink={Boolean(memberships && canAdminShortLinks)}
+        canAdminShortLink={Boolean(memberships && canAdmin)}
       />
       <Typography variant="h6">
         {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
       </Typography>
-      <VisibilitySelect item={item} edit={canEditSettings} />
+      <VisibilitySelect item={item} edit={canAdmin} />
       {renderMembershipSettings()}
     </Container>
   );

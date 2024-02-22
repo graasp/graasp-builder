@@ -2,9 +2,13 @@ import {
   CompleteMember,
   DocumentItemType,
   LinkItemType,
+  PermissionLevel,
+  PermissionLevelCompare,
   getDocumentExtra,
   getLinkExtra,
 } from '@graasp/sdk';
+
+import { getHighestPermissionForMemberFromMemberships } from '@/utils/item';
 
 import {
   DEFAULT_LINK_SHOW_BUTTON,
@@ -20,12 +24,11 @@ import {
   buildSettingsButtonId,
   buildShareButtonId,
 } from '../../src/config/selectors';
-import { isSettingsEditionAllowedForUser } from '../../src/utils/membership';
 import { CURRENT_USER } from '../fixtures/members';
 import { ItemForTest, MemberForTest } from './types';
 
 export const expectItemHeaderLayout = ({
-  item: { id, type, memberships },
+  item: { id, type, memberships, path },
   currentMember,
 }: {
   item: ItemForTest;
@@ -35,12 +38,16 @@ export const expectItemHeaderLayout = ({
 
   header.get(`#${buildShareButtonId(id)}`).should('exist');
 
-  if (
-    isSettingsEditionAllowedForUser({
-      memberships,
-      memberId: currentMember?.id,
-    })
-  ) {
+  const permission = getHighestPermissionForMemberFromMemberships({
+    memberships,
+    memberId: currentMember?.id,
+    itemPath: path,
+  })?.permission;
+  const canEditSettings = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+    : false;
+
+  if (canEditSettings) {
     if (ITEM_TYPES_WITH_CAPTIONS.includes(type)) {
       header.get(`#${buildEditButtonId(id)}`).should('exist');
     }

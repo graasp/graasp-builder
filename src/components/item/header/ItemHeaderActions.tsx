@@ -2,30 +2,26 @@ import { useParams } from 'react-router-dom';
 
 import { Stack } from '@mui/material';
 
-import { ItemType, PermissionLevel } from '@graasp/sdk';
+import { ItemType, PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
+import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { ITEM_CHATBOX_BUTTON_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import {
-  getHighestPermissionForMemberFromMemberships,
-  isItemUpdateAllowedForUser,
-} from '../../../utils/membership';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import { useLayoutContext } from '../../context/LayoutContext';
 import ItemMenu from '../../main/ItemMenu';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
 import ModeButton from './ModeButton';
 
-const { useItemMemberships, useItem } = hooks;
+const { useItem } = hooks;
 
 const ItemHeaderActions = (): JSX.Element => {
   const { itemId } = useParams();
@@ -33,19 +29,14 @@ const ItemHeaderActions = (): JSX.Element => {
   const { editingItemId, isChatboxMenuOpen, setIsChatboxMenuOpen } =
     useLayoutContext();
 
-  const { data: member } = useCurrentUserContext();
   const { data: item } = useItem(itemId);
 
-  const { data: memberships } = useItemMemberships(item?.id);
-  const canEdit = isItemUpdateAllowedForUser({
-    memberships,
-    memberId: member?.id,
-  });
-  const canAdmin = member?.id
-    ? getHighestPermissionForMemberFromMemberships({
-        memberships,
-        memberId: member?.id,
-      })?.permission === PermissionLevel.Admin
+  const { data: permission } = useGetPermissionForItem(item);
+  const canWrite = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+    : false;
+  const canAdmin = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
     : false;
 
   const onClickChatbox = () => {
@@ -59,7 +50,7 @@ const ItemHeaderActions = (): JSX.Element => {
       const showEditButton =
         !editingItemId &&
         ITEM_TYPES_WITH_CAPTIONS.includes(item.type) &&
-        canEdit;
+        canWrite;
 
       return (
         <>
@@ -70,7 +61,7 @@ const ItemHeaderActions = (): JSX.Element => {
             item={item}
             canMove={false}
             canAdmin={canAdmin}
-            canEdit={showEditButton}
+            canWrite={showEditButton}
           />
 
           <ShareButton itemId={item.id} />
@@ -81,7 +72,7 @@ const ItemHeaderActions = (): JSX.Element => {
             onClick={onClickChatbox}
           />
           {canAdmin && <PublishButton itemId={item.id} />}
-          {canEdit && <ItemSettingsButton id={item.id} />}
+          {canWrite && <ItemSettingsButton id={item.id} />}
         </>
       );
     }

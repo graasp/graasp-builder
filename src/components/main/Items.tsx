@@ -3,7 +3,7 @@ import { DiscriminatedItem } from '@graasp/sdk';
 import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { hooks } from '../../config/queryClient';
-import { ITEM_LAYOUT_MODES } from '../../enums';
+import { ItemLayoutMode } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
 import { useItemsStatuses } from '../table/BadgesCellRenderer';
 import ItemsGrid from './ItemsGrid';
@@ -73,7 +73,7 @@ const Items = ({
     itemsTags,
   });
   switch (mode) {
-    case ITEM_LAYOUT_MODES.GRID:
+    case ItemLayoutMode.Grid:
       return (
         <ItemsGrid
           canMove={canMove}
@@ -92,7 +92,7 @@ const Items = ({
           totalCount={totalCount}
         />
       );
-    case ITEM_LAYOUT_MODES.LIST:
+    case ItemLayoutMode.List:
     default:
       return (
         <ItemsTable

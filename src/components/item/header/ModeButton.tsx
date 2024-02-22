@@ -1,66 +1,65 @@
+import { MouseEvent, useState } from 'react';
+
 import {
   List as ListIcon,
   ViewModule as ViewModuleIcon,
 } from '@mui/icons-material';
-import { IconButton, Tooltip } from '@mui/material';
+// import MapIcon from '@mui/icons-material/Map';
+import { IconButton } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
-import { useBuilderTranslation } from '../../../config/i18n';
-import {
-  MODE_GRID_BUTTON_ID,
-  MODE_LIST_BUTTON_ID,
-} from '../../../config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../enums';
-import { BUILDER } from '../../../langs/constants';
+import { LAYOUT_MODE_BUTTON_ID } from '@/config/selectors';
+
+import { ItemLayoutMode } from '../../../enums';
 import { useLayoutContext } from '../../context/LayoutContext';
 
-const ModeButton = (): JSX.Element | null => {
-  const { t: translateBuilder } = useBuilderTranslation();
-  const { mode, setMode } = useLayoutContext();
+const modeToIcon = (mode: ItemLayoutMode) => {
+  switch (mode) {
+    // case ItemLayoutMode.Map:
+    //   return <MapIcon color="primary" />;
+    case ItemLayoutMode.Grid:
+      return <ViewModuleIcon color="primary" />;
+    case ItemLayoutMode.List:
+    default:
+      return <ListIcon color="primary" />;
+  }
+};
 
-  const handleOnClick = (value: string) => {
-    setMode(value);
+const ModeButton = (): JSX.Element | null => {
+  const { mode, setMode } = useLayoutContext();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  switch (mode) {
-    case ITEM_LAYOUT_MODES.GRID:
-      return (
-        <div>
-          <Tooltip title={translateBuilder(BUILDER.LAYOUT_MODE_LIST_LABEL)}>
-            <span>
-              <IconButton
-                id={MODE_LIST_BUTTON_ID}
-                onClick={() => {
-                  handleOnClick(ITEM_LAYOUT_MODES.LIST);
-                }}
-                color="primary"
-              >
-                <ListIcon />
-              </IconButton>
-            </span>
-          </Tooltip>
-        </div>
-      );
-    case ITEM_LAYOUT_MODES.LIST:
-      return (
-        <div>
-          <Tooltip title={translateBuilder(BUILDER.LAYOUT_MODE_GRID_LABEL)}>
-            <span>
-              <IconButton
-                id={MODE_GRID_BUTTON_ID}
-                color="primary"
-                onClick={() => {
-                  handleOnClick(ITEM_LAYOUT_MODES.GRID);
-                }}
-              >
-                <ViewModuleIcon />
-              </IconButton>
-            </span>
-          </Tooltip>
-        </div>
-      );
-    default:
-      return null;
-  }
+  const handleChange = (newMode: ItemLayoutMode) => {
+    setMode(newMode);
+    handleClose();
+  };
+
+  return (
+    <>
+      <IconButton id={LAYOUT_MODE_BUTTON_ID} onClick={handleClick}>
+        {modeToIcon(mode)}
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        {Object.values(ItemLayoutMode).map((value) => (
+          <MenuItem
+            onClick={() => handleChange(value)}
+            style={{ fontSize: 14, fontFamily: 'monospace' }}
+            value={value}
+          >
+            {modeToIcon(value)}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
 };
 
 export default ModeButton;

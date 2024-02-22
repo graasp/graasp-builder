@@ -1,5 +1,5 @@
 // import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-// import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+// import ItemLayoutMode from '../../../../src/enums/itemLayoutModes';
 // import { IMAGE_ITEM_DEFAULT, IMAGE_ITEM_S3 } from '../../../fixtures/files';
 // import { SAMPLE_ITEMS } from '../../../fixtures/items';
 // import { CREATE_ITEM_PAUSE } from '../../../support/constants';
@@ -12,7 +12,7 @@
 //     cy.setUpApi();
 //     cy.visit(HOME_PATH);
 
-//     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+//     cy.switchMode(ItemLayoutMode.List);
 
 //     // create
 //     createFile(IMAGE_ITEM_DEFAULT);
@@ -32,7 +32,7 @@
 //     // go to children item
 //     cy.visit(buildItemPath(id));
 
-//     cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+//     cy.switchMode(ItemLayoutMode.List);
 
 //     // create
 //     createFile(IMAGE_ITEM_S3);

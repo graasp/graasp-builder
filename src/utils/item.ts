@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import {
   DiscriminatedItem,
   FolderItemExtra,
+  ItemMembership,
   ItemType,
   getAppExtra,
   getLinkExtra,
@@ -173,3 +174,33 @@ export const applyEllipsisOnLength = (
   `${longString.slice(0, maxLength)}${
     (longString.length || 0) > maxLength ? '…' : ''
   }`;
+
+// todo: to remove
+// get highest permission a member have over an item,
+// longer the itemPath, deeper is the permission, thus highested
+export const getHighestPermissionForMemberFromMemberships = ({
+  memberships,
+  memberId,
+  itemPath,
+}: {
+  memberships?: ItemMembership[];
+  memberId?: string;
+  itemPath: DiscriminatedItem['path'];
+}): null | ItemMembership => {
+  if (!memberId) {
+    return null;
+  }
+
+  const itemMemberships = memberships?.filter(
+    ({ item: { path: mPath }, member: { id: mId } }) =>
+      mId === memberId && itemPath.includes(mPath),
+  );
+  if (!itemMemberships) {
+    return null;
+  }
+
+  const sorted = [...itemMemberships];
+  sorted?.sort((a, b) => (a.item.path.length > b.item.path.length ? 1 : -1));
+
+  return sorted[0];
+};

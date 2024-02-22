@@ -3,7 +3,7 @@ import {
   ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const recycleItems = (itemIds: string[]) => {
@@ -20,7 +20,7 @@ describe('Recycle Items in List', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // delete
     recycleItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
@@ -31,7 +31,7 @@ describe('Recycle Items in List', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // delete
     recycleItems([SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[3].id]);

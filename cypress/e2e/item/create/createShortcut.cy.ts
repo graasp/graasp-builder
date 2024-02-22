@@ -9,7 +9,7 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
@@ -123,7 +123,7 @@ describe('Create Shortcut', () => {
     it('create shortcut from Home to Home', () => {
       cy.setUpApi({ items: [...SAMPLE_ITEMS.items, IMAGE_ITEM_DEFAULT] });
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const { id } = SAMPLE_ITEMS.items[0];
       createShortcutInGrid({ id, toItemPath: MY_GRAASP_ITEM_PATH });
@@ -134,7 +134,7 @@ describe('Create Shortcut', () => {
     it('create shortcut from Home to Item', () => {
       cy.setUpApi({ items: [...SAMPLE_ITEMS.items, IMAGE_ITEM_DEFAULT] });
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const { id } = SAMPLE_ITEMS.items[0];
       const { id: toItemId, path: toItemPath } = SAMPLE_ITEMS.items[3];
@@ -146,7 +146,7 @@ describe('Create Shortcut', () => {
     it('create shortcut from Item to Item', () => {
       cy.setUpApi({ items: [...SAMPLE_ITEMS.items, IMAGE_ITEM_DEFAULT] });
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const { id } = SAMPLE_ITEMS.items[1];
       const { id: toItemId, path: toItemPath } = SAMPLE_ITEMS.items[3];
@@ -158,7 +158,7 @@ describe('Create Shortcut', () => {
     it('create shortcut from file to Item', () => {
       cy.setUpApi({ items: [...SAMPLE_ITEMS.items, IMAGE_ITEM_DEFAULT] });
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const { id } = IMAGE_ITEM_DEFAULT;
       const { id: toItemId, path: toItemPath } = SAMPLE_ITEMS.items[3];

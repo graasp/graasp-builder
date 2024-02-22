@@ -4,7 +4,7 @@ import {
   buildItemCard,
   buildNameCellRendererId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
 import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
 
@@ -25,7 +25,7 @@ describe('View Thumbnails', () => {
     cy.get(`#${buildNameCellRendererId(items[1].id)} img`).should('exist');
 
     // GRID
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+    cy.switchMode(ItemLayoutMode.Grid);
     cy.get(`#${buildItemCard(items[0].id)} img`)
       .should('have.attr', 'src')
       .and('contain', 'data:');
@@ -53,7 +53,7 @@ describe('View Thumbnails', () => {
     cy.visit(SHARED_ITEMS_PATH);
 
     // check bob avatar in shared items, grid mode
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+    cy.switchMode(ItemLayoutMode.Grid);
     cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
       .and('contain', MEMBERS.BOB.thumbnails);

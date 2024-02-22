@@ -1,5 +1,5 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import {
   GRAASP_APP_ITEM,
   GRAASP_CUSTOM_APP_ITEM,
@@ -14,7 +14,7 @@ describe('Create App', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createApp(GRAASP_APP_ITEM, { id: APPS_LIST[0].id });
@@ -29,7 +29,7 @@ describe('Create App', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createApp(GRAASP_APP_ITEM, { custom: true });
@@ -49,7 +49,7 @@ describe('Create App', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createApp(GRAASP_APP_ITEM, { id: APPS_LIST[0].id });
@@ -67,7 +67,7 @@ describe('Create App', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createApp(GRAASP_CUSTOM_APP_ITEM, { custom: true });

@@ -4,7 +4,7 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const recycleItem = (id: string) => {
@@ -17,7 +17,7 @@ describe('Recycle Item in List', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     const { id } = SAMPLE_ITEMS.items[0];
 
@@ -37,7 +37,7 @@ describe('Recycle Item in List', () => {
     // go to children item
     cy.visit(buildItemPath(id));
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // delete
     recycleItem(idToDelete);

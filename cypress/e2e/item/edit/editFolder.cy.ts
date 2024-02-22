@@ -3,7 +3,7 @@ import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { EDITED_FIELDS, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editItem } from '../../../support/editUtils';
@@ -17,7 +17,7 @@ describe('Edit Folder', () => {
       //   const { id } = item;
       //   cy.setUpApi({ items: [item] });
       //   cy.visit(buildItemPath(id));
-      //   cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      //   cy.switchMode(ItemLayoutMode.List);
       //   const caption = 'new caption';
       //   editCaptionFromViewPage({ id, caption });
       //   cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
@@ -52,7 +52,7 @@ describe('Edit Folder', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       const itemToEdit = SAMPLE_ITEMS.items[0];
       const newDescription = 'new description';
@@ -63,7 +63,7 @@ describe('Edit Folder', () => {
           ...EDITED_FIELDS,
           description: newDescription,
         },
-        ITEM_LAYOUT_MODES.LIST,
+        ItemLayoutMode.List,
       );
 
       cy.wait('@editItem').then(
@@ -87,7 +87,7 @@ describe('Edit Folder', () => {
       // go to children item
       cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       const itemToEdit = SAMPLE_ITEMS.items[2];
 
@@ -97,7 +97,7 @@ describe('Edit Folder', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.LIST,
+        ItemLayoutMode.List,
       );
 
       cy.wait('@editItem').then(
@@ -126,7 +126,7 @@ describe('Edit Folder', () => {
       //   const { id } = item;
       //   cy.setUpApi({ items: [item] });
       //   cy.visit(buildItemPath(id));
-      //   cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      //   cy.switchMode(ItemLayoutMode.Grid);
       //   const caption = 'new caption';
       //   editCaptionFromViewPage({ id, caption });
       //   cy.wait(`@editItem`).then(({ request: { url: endpointUrl, body } }) => {
@@ -140,7 +140,7 @@ describe('Edit Folder', () => {
     it('edit folder on Home', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const itemToEdit = SAMPLE_ITEMS.items[0];
 
@@ -150,7 +150,7 @@ describe('Edit Folder', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.GRID,
+        ItemLayoutMode.Grid,
       );
 
       cy.wait('@editItem').then(
@@ -172,7 +172,7 @@ describe('Edit Folder', () => {
       cy.setUpApi(SAMPLE_ITEMS);
       // go to children item
       cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const itemToEdit = SAMPLE_ITEMS.items[2];
 
@@ -182,7 +182,7 @@ describe('Edit Folder', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.GRID,
+        ItemLayoutMode.Grid,
       );
 
       cy.wait('@editItem').then(

@@ -6,7 +6,7 @@ import {
   buildItemMenuButtonId,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const copyItem = ({
@@ -27,7 +27,7 @@ describe('Copy Item in List', () => {
   it('copy item on Home', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[0];
@@ -46,7 +46,7 @@ describe('Copy Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];
@@ -66,7 +66,7 @@ describe('Copy Item in List', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // copy
     const { id: copyItemId } = SAMPLE_ITEMS.items[2];

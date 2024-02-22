@@ -6,11 +6,14 @@ import {
   ItemMembership,
   ItemType,
   PermissionLevel,
+  PermissionLevelCompare,
   ThumbnailSize,
 } from '@graasp/sdk';
 import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
 
 import truncate from 'lodash.truncate';
+
+import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemPath } from '../../config/paths';
@@ -18,10 +21,6 @@ import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
 import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
-import {
-  getHighestPermissionForMemberFromMemberships,
-  isItemUpdateAllowedForUser,
-} from '../../utils/membership';
 import EditButton from '../common/EditButton';
 import FavoriteButton from '../common/FavoriteButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
@@ -89,20 +88,18 @@ const ItemComponent = ({
   );
 
   const { data: member } = useCurrentUserContext();
-  const enableEdition = isItemUpdateAllowedForUser({
-    memberships,
-    memberId: member?.id,
-  });
-  const canAdmin = member?.id
-    ? getHighestPermissionForMemberFromMemberships({
-        memberships,
-        memberId: member?.id,
-      })?.permission === PermissionLevel.Admin
+  const { data: permission } = useGetPermissionForItem(item, memberships);
+
+  const canWrite = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+    : false;
+  const canAdmin = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
     : false;
 
   const Actions = (
     <>
-      {enableEdition && <EditButton item={item} />}
+      {canWrite && <EditButton item={item} />}
       {((member && member.id) || itemsStatuses?.[item.id]?.isPublic) && (
         <DownloadButton id={item.id} name={item.name} />
       )}
@@ -124,7 +121,7 @@ const ItemComponent = ({
       ItemMenu={
         <ItemMenu
           item={item}
-          canEdit={enableEdition}
+          canWrite={canWrite}
           canAdmin={canAdmin}
           canMove={canMove}
         />

@@ -797,9 +797,9 @@ export const PUBLISHED_ITEM_VALIDATIONS = [
 
 const hiddenItem: DiscriminatedItem = {
   ...DEFAULT_FOLDER_ITEM,
-  id: 'ecafbd2a-5688-11eb-ae93-0242ac130001',
-  name: 'parent public item',
-  path: 'ecafbd2a_5688_11eb_ae93_0242ac130001',
+  id: 'ecafbd2a-5688-11eb-ae93-0242ac130011',
+  name: 'parent hidden public item',
+  path: 'ecafbd2a_5688_11eb_ae93_0242ac130011',
 };
 export const HIDDEN_ITEM: ItemForTest = {
   ...hiddenItem,
@@ -942,21 +942,21 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       {
         id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
         type: ItemTagType.Public,
-        item,
+        item: itemCCLicenseCCBY,
         createdAt: '2021-08-11T12:56:36.834Z',
         creator: MEMBERS.ANNA,
       },
     ],
     published: {
       id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-      item,
+      item: itemCCLicenseCCBY,
       createdAt: '2021-08-11T12:56:36.834Z',
       creator: MEMBERS.ANNA,
       totalViews: 0,
     },
     memberships: [
       {
-        item,
+        item: itemCCLicenseCCBY,
         permission: PermissionLevel.Admin,
         member: MEMBERS.ANNA,
         creator: MEMBERS.ANNA,
@@ -965,7 +965,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
         updatedAt: '2021-08-11T12:56:36.834Z',
       },
       {
-        item,
+        item: itemCCLicenseCCBY,
         permission: PermissionLevel.Read,
         member: MEMBERS.BOB,
         creator: MEMBERS.ANNA,
@@ -981,21 +981,21 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       {
         id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
         type: ItemTagType.Public,
-        item,
+        item: itemCCLicenseCCBYNC,
         createdAt: '2021-08-11T12:56:36.834Z',
         creator: MEMBERS.ANNA,
       },
     ],
     published: {
       id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-      item,
+      item: itemCCLicenseCCBYNC,
       createdAt: '2021-08-11T12:56:36.834Z',
       creator: MEMBERS.ANNA,
       totalViews: 0,
     },
     memberships: [
       {
-        item,
+        item: itemCCLicenseCCBYNC,
         permission: PermissionLevel.Admin,
         member: MEMBERS.ANNA,
         creator: MEMBERS.ANNA,
@@ -1004,7 +1004,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
         updatedAt: '2021-08-11T12:56:36.834Z',
       },
       {
-        item,
+        item: itemCCLicenseCCBYNC,
         permission: PermissionLevel.Read,
         member: MEMBERS.BOB,
         creator: MEMBERS.ANNA,
@@ -1020,21 +1020,21 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       {
         id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
         type: ItemTagType.Public,
-        item,
+        item: itemCCLicenseCCBYSA,
         createdAt: '2021-08-11T12:56:36.834Z',
         creator: MEMBERS.ANNA,
       },
     ],
     published: {
       id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-      item,
+      item: itemCCLicenseCCBYSA,
       createdAt: '2021-08-11T12:56:36.834Z',
       creator: MEMBERS.ANNA,
       totalViews: 0,
     },
     memberships: [
       {
-        item,
+        item: itemCCLicenseCCBYSA,
         permission: PermissionLevel.Admin,
         member: MEMBERS.ANNA,
         creator: MEMBERS.ANNA,
@@ -1043,7 +1043,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
         updatedAt: '2021-08-11T12:56:36.834Z',
       },
       {
-        item,
+        item: itemCCLicenseCCBYSA,
         permission: PermissionLevel.Read,
         member: MEMBERS.BOB,
         creator: MEMBERS.ANNA,
@@ -1059,21 +1059,21 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
       {
         id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
         type: ItemTagType.Public,
-        item,
+        item: itemCCLicenseCCBYNCND,
         createdAt: '2021-08-11T12:56:36.834Z',
         creator: MEMBERS.ANNA,
       },
     ],
     published: {
       id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-      item,
+      item: itemCCLicenseCCBYNCND,
       createdAt: '2021-08-11T12:56:36.834Z',
       creator: MEMBERS.ANNA,
       totalViews: 0,
     },
     memberships: [
       {
-        item,
+        item: itemCCLicenseCCBYNCND,
         permission: PermissionLevel.Admin,
         member: MEMBERS.ANNA,
         creator: MEMBERS.ANNA,
@@ -1082,7 +1082,7 @@ export const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
         updatedAt: '2021-08-11T12:56:36.834Z',
       },
       {
-        item,
+        item: itemCCLicenseCCBYNCND,
         permission: PermissionLevel.Read,
         member: MEMBERS.BOB,
         creator: MEMBERS.ANNA,

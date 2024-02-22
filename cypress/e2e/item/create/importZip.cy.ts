@@ -1,6 +1,6 @@
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../../../src/config/selectors';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { ZIP_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { createItem } from '../../../support/createUtils';
@@ -10,7 +10,7 @@ describe('Import Zip', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createItem(ZIP_DEFAULT);
@@ -25,7 +25,7 @@ describe('Import Zip', () => {
     const { id } = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(id));
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createItem(ZIP_DEFAULT);
@@ -40,7 +40,7 @@ describe('Import Zip', () => {
     const { id } = SAMPLE_ITEMS.items[0];
     cy.visit(buildItemPath(id));
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createItem(ZIP_DEFAULT);

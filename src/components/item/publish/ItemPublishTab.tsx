@@ -25,6 +25,7 @@ import {
   ItemTagType,
   ItemValidationStatus,
   PermissionLevel,
+  PermissionLevelCompare,
   redirect,
 } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
@@ -32,6 +33,7 @@ import { Loader } from '@graasp/ui';
 import groupBy from 'lodash.groupby';
 
 import { OutletType } from '@/components/pages/item/type';
+import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -42,8 +44,6 @@ import {
   ITEM_VALIDATION_REFRESH_BUTTON_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import { isItemUpdateAllowedForUser } from '../../../utils/membership';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import VisibilitySelect from '../sharing/VisibilitySelect';
 import CCLicenseSelection from './CCLicenseSelection';
 import CategorySelection from './CategorySelection';
@@ -63,29 +63,28 @@ const enum PublishFlow {
 
 const ItemPublishTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { item, permission = PermissionLevel.Read } =
-    useOutletContext<OutletType>();
+  const { item } = useOutletContext<OutletType>();
 
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.id,
   );
 
-  const { data: memberships, isLoading: isMembershipsLoading } =
-    hooks.useItemMemberships(item?.id);
-  const { data: currentMember, isLoading: isLoadingCurrentMember } =
-    useCurrentUserContext();
-
-  const canEdit = isItemUpdateAllowedForUser({
-    memberships,
-    memberId: currentMember?.id,
-  });
+  const {
+    data: permission,
+    isCurrentMemberLoading,
+    isMembershipsLoading,
+  } = useGetPermissionForItem(item);
+  const canWrite = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+    : false;
+  const canAdmin = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
+    : false;
 
   const [validationStatus, setValidationStatus] =
     useState<ItemValidationStatus | null>(null);
 
   const isPublic = itemTags?.find(({ type }) => type === ItemTagType.Public);
-
-  const canAdmin = permission === PermissionLevel.Admin;
 
   // item validation
   const { mutate: validateItem } = usePostItemValidation();
@@ -132,16 +131,11 @@ const ItemPublishTab = (): JSX.Element => {
     return PublishFlow.PUBLISH_STEP;
   })();
 
-  if (
-    // isLoading ||
-    isMembershipsLoading ||
-    isLoadingCurrentMember ||
-    isItemTagsLoading
-  ) {
+  if (isMembershipsLoading || isCurrentMemberLoading || isItemTagsLoading) {
     return <Loader />;
   }
 
-  if (!canEdit || !canAdmin) {
+  if (!canWrite || !canAdmin) {
     return (
       <Typography variant="body1">
         {translateBuilder(
@@ -230,7 +224,7 @@ const ItemPublishTab = (): JSX.Element => {
         <Typography variant="body1">
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS)}
         </Typography>
-        <VisibilitySelect item={item} edit={canEdit} />
+        <VisibilitySelect item={item} edit={canWrite} />
         <Typography variant="h6" mt={2} mr={2}>
           <LooksTwo color="primary" />
           {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_TITLE)}

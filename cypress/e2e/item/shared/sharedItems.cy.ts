@@ -9,7 +9,7 @@ import {
 import { BUILDER } from '@/langs/constants';
 
 import { SHARED_ITEMS_PATH } from '../../../../src/config/paths';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
 
@@ -24,7 +24,7 @@ describe('Shared Items', () => {
   });
   describe('Grid', () => {
     it('visit Shared Items', () => {
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       cy.wait('@getSharedItems').then(({ response: { body } }) => {
         // check item is created and displayed
@@ -51,7 +51,7 @@ describe('Shared Items', () => {
       );
     });
     it('move should be prevented', () => {
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
       const itemId = SAMPLE_ITEMS.items[1].id;
       const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
       cy.get(menuSelector).click();
@@ -62,7 +62,7 @@ describe('Shared Items', () => {
   });
 
   it('move should be prevented in list', () => {
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
     const itemId = SAMPLE_ITEMS.items[1].id;
     const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
     cy.get(menuSelector).click();

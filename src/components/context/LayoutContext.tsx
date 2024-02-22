@@ -1,13 +1,14 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { Dispatch, createContext, useContext, useMemo, useState } from 'react';
 
 import { ChatStatus } from '@graasp/sdk';
 
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../config/constants';
-import { ITEM_LAYOUT_MODES } from '../../enums';
+import { DEFAULT_ITEM_LAYOUT_MODE } from '@/enums/itemLayoutMode';
+
+import { ItemLayoutMode } from '../../enums';
 
 interface LayoutContextInterface {
-  mode: string;
-  setMode: (mode: string) => void;
+  mode: ItemLayoutMode;
+  setMode: Dispatch<ItemLayoutMode>;
   editingItemId: string | null;
   setEditingItemId: (itemId: string | null) => void;
   openedActionTabId: string | null;
@@ -17,7 +18,7 @@ interface LayoutContextInterface {
 }
 
 export const LayoutContext = createContext<LayoutContextInterface>({
-  mode: ITEM_LAYOUT_MODES.LIST,
+  mode: ItemLayoutMode.List,
   setMode: () => {
     // do nothing
   },
@@ -41,7 +42,7 @@ export const LayoutContextProvider = ({
   children: JSX.Element;
 }): JSX.Element => {
   // layout mode: grid or list
-  const [mode, setMode] = useState<string>(DEFAULT_ITEM_LAYOUT_MODE);
+  const [mode, setMode] = useState<ItemLayoutMode>(DEFAULT_ITEM_LAYOUT_MODE);
 
   // item screen editing id
   // todo: separate in item specific context
