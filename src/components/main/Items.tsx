@@ -5,6 +5,7 @@ import { ShowOnlyMeChangeType } from '@/config/types';
 import { hooks } from '../../config/queryClient';
 import { ItemLayoutMode } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
+import MapView from '../item/MapView';
 import { useItemsStatuses } from '../table/BadgesCellRenderer';
 import ItemsGrid from './ItemsGrid';
 import ItemsTable from './ItemsTable';
@@ -73,6 +74,8 @@ const Items = ({
     itemsTags,
   });
   switch (mode) {
+    case ItemLayoutMode.Map:
+      return <MapView title={title} parentId={parentId} />;
     case ItemLayoutMode.Grid:
       return (
         <ItemsGrid

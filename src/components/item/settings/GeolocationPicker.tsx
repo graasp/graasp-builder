@@ -1,26 +1,15 @@
-import { ChangeEventHandler } from 'react';
-
 import Clear from '@mui/icons-material/Clear';
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  LinearProgress,
-  List,
-  ListItemButton,
-  OutlinedInput,
-  Stack,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
 
+import {
+  type GeolocationPickerProps,
+  GeolocationPicker as MapGeolocationPicker,
+} from '@graasp/map';
 import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks, mutations } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
-
-import { OpenStreetMapResult, useSearchAddress } from './hooks';
 
 const GeolocationPicker = ({
   item,
@@ -32,42 +21,26 @@ const GeolocationPicker = ({
   const { mutate: putGeoloc } = mutations.usePutItemGeolocation();
   const { mutate: deleteGeoloc } = mutations.useDeleteItemGeolocation();
 
-  const {
-    query,
-    setQuery,
-    isDebounced,
-    setResults,
-    results,
-    loading,
-    clearQuery,
-  } = useSearchAddress({
-    lang: item.lang,
-    geoloc,
-  });
-
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const onChangeOption = (option: OpenStreetMapResult): void => {
-    const {
-      raw: { lat, lon: lng },
-      label,
-    } = option;
+  const onChangeOption: GeolocationPickerProps['onChangeOption'] = (option: {
+    addressLabel: string;
+    lat: number;
+    lng: number;
+    country: string;
+  }): void => {
+    const { addressLabel, lat, lng, country } = option;
     putGeoloc({
       itemId: item.id,
       geolocation: {
-        lng: parseFloat(lng),
-        lat: parseFloat(lat),
-        addressLabel: label,
+        addressLabel,
+        lat,
+        lng,
+        country,
       },
     });
-    setResults([]);
   };
 
   const clearGeoloc = () => {
     deleteGeoloc({ itemId: item.id });
-    clearQuery();
   };
 
   // the input is disabled if the geoloc is defined in parent
@@ -86,30 +59,18 @@ const GeolocationPicker = ({
       </Stack>
       <Stack direction="row" alignItems="center">
         <Stack flexGrow={1}>
-          <OutlinedInput
-            disabled={isDisabled}
-            fullWidth
-            multiline
-            placeholder={t(BUILDER.ITEM_SETTINGS_GEOLOCATION_PLACEHOLDER)}
-            onChange={onChange}
-            value={query}
-            endAdornment={
-              query && !isDisabled ? (
-                <InputAdornment position="end">
-                  <Tooltip title={t(BUILDER.ITEM_SETTINGS_CLEAR_GEOLOCATION)}>
-                    <IconButton onClick={clearGeoloc}>
-                      <Clear />
-                    </IconButton>
-                  </Tooltip>
-                </InputAdornment>
-              ) : undefined
-            }
+          <MapGeolocationPicker
+            onChangeOption={onChangeOption}
+            initialValue={geoloc?.addressLabel}
+            useSuggestionsForAddress={hooks.useSuggestionsForAddress}
           />
-          {loading && (
-            <Box sx={{ width: '100%' }}>
-              <LinearProgress />
-            </Box>
-          )}
+        </Stack>
+        <Stack>
+          <Tooltip title={t(BUILDER.ITEM_SETTINGS_CLEAR_GEOLOCATION)}>
+            <IconButton onClick={clearGeoloc}>
+              <Clear />
+            </IconButton>
+          </Tooltip>
         </Stack>
       </Stack>
       {isDisabled && (
@@ -117,26 +78,6 @@ const GeolocationPicker = ({
           {t(BUILDER.ITEM_SETTINGS_GEOLOCATION_INHERITED_EXPLANATION)}
         </Typography>
       )}
-      <Stack>
-        {results && (
-          <List>
-            {results.map((r) => (
-              <ListItemButton
-                key={r.raw.osm_id}
-                onClick={() => onChangeOption(r)}
-              >
-                {r.label}
-              </ListItemButton>
-            ))}
-            {!results.length &&
-              query &&
-              query !== geoloc?.addressLabel &&
-              !loading &&
-              !isDebounced &&
-              t(BUILDER.ITEM_SETTINGS_GEOLOCATION_NO_ADDRESS)}
-          </List>
-        )}
-      </Stack>
     </Stack>
   );
 };
