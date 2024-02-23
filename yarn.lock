@@ -1522,22 +1522,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.6.2":
-  version: 2.6.2
-  resolution: "@graasp/query-client@npm:2.6.2"
+"@graasp/query-client@github:graasp/graasp-query-client#831-send-ws-feedback-after-transaction-move":
+  version: 2.6.3
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=18661c32e30451e958211ba3d51dbe33267b4963"
   dependencies:
-    "@graasp/sdk": "npm:3.8.3"
-    "@graasp/translations": "npm:1.23.0"
     axios: "npm:0.27.2"
     crypto-js: "npm:4.2.0"
-    date-fns: "npm:3.3.1"
     http-status-codes: "npm:2.3.0"
     qs: "npm:6.11.2"
     react-query: "npm:3.39.3"
-    uuid: "npm:9.0.1"
   peerDependencies:
+    "@graasp/sdk": ^3.8.3
+    "@graasp/translations": ^1.23.0
     react: ^17.0.0 || ^18.0.0
-  checksum: 10/f0e790c26c4d97c6a6e012799ac07ef66b5349a40398109dabb4c83eabe5513d1aa2d005748790226115c5ce11b338071a228d27c5f7a00debfdc4eda9ef64cc
+  checksum: 10/b881477f76d8ac3f841fa0ef31dd702383bb25878b339e42f8cacca1cbfa6bac6925b6c6c59c0e32b146eb04c69d7e19e44128be95d1e874bcb14c60e390fd8d
   languageName: node
   linkType: hard
 
@@ -1552,15 +1550,6 @@ __metadata:
     date-fns: ^3
     uuid: ^9
   checksum: 10/3968defd8bc2eb9c4165ae8a89ae43c0cbe22bef9934f0eb4a2645188b793639c193a79016cb961052068601754f0cc1ef8b2abf23b691231aa9ad0594ad56f2
-  languageName: node
-  linkType: hard
-
-"@graasp/translations@npm:1.23.0":
-  version: 1.23.0
-  resolution: "@graasp/translations@npm:1.23.0"
-  dependencies:
-    i18next: "npm:23.7.16"
-  checksum: 10/dc0d605b520a28deb1ad3054323dc4b71f709b79adf5924552c602f3c3ed2fa7c3c8538a3015c86c8db05867159df4b2f6ad18583766b2b97c8dd850952d29e2
   languageName: node
   linkType: hard
 
@@ -7476,7 +7465,7 @@ __metadata:
     "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.0.3"
-    "@graasp/query-client": "npm:2.6.2"
+    "@graasp/query-client": "github:graasp/graasp-query-client#831-send-ws-feedback-after-transaction-move"
     "@graasp/sdk": "npm:3.8.3"
     "@graasp/translations": "npm:1.24.0"
     "@graasp/ui": "npm:4.8.1"
@@ -7531,6 +7520,7 @@ __metadata:
     filesize: "npm:10.1.0"
     http-status-codes: "npm:2.3.0"
     husky: "npm:9.0.11"
+    i18next: "npm:23.10.0"
     katex: "npm:0.16.9"
     leaflet-geosearch: "npm:3.11.0"
     lodash.debounce: "npm:4.0.8"
@@ -7860,21 +7850,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"i18next@npm:23.10.0":
+  version: 23.10.0
+  resolution: "i18next@npm:23.10.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+  checksum: 10/d32293a40650783ac746ce476d220ac3285133de729b2c1da0e7c91bc396ec6728629e84ea4c06311ae37dc6b7984ca962d5b296deb58cf713ba477a2edbd0ea
+  languageName: node
+  linkType: hard
+
 "i18next@npm:23.7.11":
   version: 23.7.11
   resolution: "i18next@npm:23.7.11"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
   checksum: 10/1127bc17f94459d40bd9aaa0350e9786d3853eb82449aabb4514e187fafc752c76a3f52c6be1c2722bfdadaa74f0d26b4f7dd04528ba6b2de7e34f5c6c019c21
-  languageName: node
-  linkType: hard
-
-"i18next@npm:23.7.16":
-  version: 23.7.16
-  resolution: "i18next@npm:23.7.16"
-  dependencies:
-    "@babel/runtime": "npm:^7.23.2"
-  checksum: 10/77e74c07a73316f6fb6678a5a3e8ce58a6e66be457dd1ccd23941e9fc57ad8e1da55193fa6328c70b86073337b776cd267f3c13c6309f548b3116f27a1e41787
   languageName: node
   linkType: hard
 
