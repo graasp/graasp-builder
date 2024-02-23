@@ -14,9 +14,9 @@ import {
   AppItemType,
   DiscriminatedItem,
   DocumentItemType,
-  EmbeddedLinkItemType,
   FolderItemType,
   ItemType,
+  LinkItemType,
 } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -52,7 +52,7 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
 
 type PropertiesPerType = {
   [ItemType.FOLDER]: Partial<FolderItemType>;
-  [ItemType.LINK]: Partial<EmbeddedLinkItemType>;
+  [ItemType.LINK]: Partial<LinkItemType>;
   [ItemType.APP]: Partial<AppItemType>;
   [ItemType.DOCUMENT]: Partial<DocumentItemType>;
 };

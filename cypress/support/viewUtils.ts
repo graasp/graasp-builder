@@ -1,7 +1,7 @@
 import {
   CompleteMember,
   DocumentItemType,
-  EmbeddedLinkItemType,
+  LinkItemType,
   getDocumentExtra,
   getLinkExtra,
 } from '@graasp/sdk';
@@ -81,7 +81,7 @@ export const expectLinkViewScreenLayout = ({
   item,
   currentMember = CURRENT_USER,
 }: {
-  item: EmbeddedLinkItemType;
+  item: LinkItemType;
   currentMember?: MemberForTest;
 }): void => {
   const { id, description, settings } = item;

@@ -1,10 +1,6 @@
 import { TextField, TextFieldProps, Typography } from '@mui/material';
 
-import {
-  EmbeddedLinkItemType,
-  buildEmbeddedLinkExtra,
-  getLinkExtra,
-} from '@graasp/sdk';
+import { LinkItemType, buildLinkExtra, getLinkExtra } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_LINK_INPUT_ID } from '../../../config/selectors';
@@ -12,8 +8,8 @@ import { BUILDER } from '../../../langs/constants';
 import { isUrlValid } from '../../../utils/item';
 
 type Props = {
-  onChange: (item: Partial<EmbeddedLinkItemType>) => void;
-  item?: EmbeddedLinkItemType;
+  onChange: (item: Partial<LinkItemType>) => void;
+  item?: LinkItemType;
 };
 
 const LinkForm = ({ onChange, item }: Props): JSX.Element => {
@@ -25,7 +21,7 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
     onChange({
       ...item,
       name: translateBuilder(BUILDER.LINK_DEFAULT_NAME), // todo: this is replaced by iframely
-      extra: buildEmbeddedLinkExtra({
+      extra: buildLinkExtra({
         // when used inside the NewItem Modal this component does not receive the item prop
         // so the https will not show, but it will be added when we submit the url.
         url: hasProtocol.test(newValue) ? newValue : `https://${newValue}`,

@@ -8,11 +8,11 @@ import {
   CompleteMember,
   Context,
   DocumentItemType,
-  EmbeddedLinkItemType,
   EtherpadItemType,
   FolderItemType,
   H5PItemType,
   ItemType,
+  LinkItemType,
   LocalFileItemType,
   Member,
   PermissionLevel,
@@ -103,7 +103,7 @@ const LinkContent = ({
   item,
   member,
 }: {
-  item: EmbeddedLinkItemType;
+  item: LinkItemType;
   member?: Member | null;
 }): JSX.Element => (
   <StyledContainer>

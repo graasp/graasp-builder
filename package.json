@@ -19,11 +19,11 @@
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.3",
     "@emotion/styled": "11.11.0",
-    "@graasp/chatbox": "3.0.3",
-    "@graasp/query-client": "2.6.2",
-    "@graasp/sdk": "github:graasp/graasp-sdk#esm-package",
-    "@graasp/translations": "1.24.0",
-    "@graasp/ui": "4.8.1",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#esm-package",
+    "@graasp/query-client": "github:graasp/graasp-query-client#use-esm-sdk",
+    "@graasp/sdk": "github:graasp/graasp-sdk#fix-exports-issues",
+    "@graasp/translations": "1.25.0",
+    "@graasp/ui": "github:graasp/graasp-ui#use-esm-sdk",
     "@mui/icons-material": "5.15.8",
     "@mui/lab": "5.0.0-alpha.162",
     "@mui/material": "5.15.8",
@@ -41,6 +41,7 @@
     "date-fns": "3.3.1",
     "filesize": "10.1.0",
     "http-status-codes": "2.3.0",
+    "i18next": "23.10.0",
     "katex": "0.16.9",
     "leaflet-geosearch": "3.11.0",
     "lodash.debounce": "4.0.8",
@@ -151,7 +152,9 @@
     "vite-plugin-istanbul": "5.0.0"
   },
   "resolutions": {
-    "@graasp/sdk": "github:graasp/graasp-sdk#esm-package"
+    "@graasp/ui": "github:graasp/graasp-ui#use-esm-sdk",
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#esm-package",
+    "@graasp/sdk": "github:graasp/graasp-sdk#fix-exports-issues"
   },
   "packageManager": "yarn@4.1.0"
 }
