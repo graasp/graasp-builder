@@ -74,13 +74,22 @@ describe('Move Items in List', () => {
     const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
     moveItems({ itemIds, toItemPath: MY_GRAASP_ITEM_PATH });
 
+    // Since we are invalidating the query cache and the API is mocked,
+    // the items received remain unchanged even after the websockets update.
+    // It's not feasible to verify the addition of new items in this test scenario
+    // unless a real backend is utilized for testing purposes.
+
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);
       itemIds.forEach((movedItem) => expect(url).to.contain(movedItem));
 
-      itemIds.forEach((id) => {
-        cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('not.exist');
-      });
+      //   itemIds.forEach((id) => {
+      //     cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('not.exist');
+      //   });
     });
+
+    // Therefore, in this test, we can only verify that upon receiving a websocket message,
+    // the cache is invalidated and a refetch is triggered.
+    cy.wait('@getChildren');
   });
 });

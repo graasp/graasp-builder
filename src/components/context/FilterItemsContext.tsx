@@ -46,7 +46,7 @@ export const FilterItemsContextProvider = ({
       itemTypes,
       setItemTypes,
       shouldDisplayItem: (itemType: ItemTypeConst) =>
-        itemTypes.length === 0 || itemTypes.includes(itemType),
+        Boolean(!itemTypes.length || itemTypes.includes(itemType)),
     }),
     [itemTypes],
   );

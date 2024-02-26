@@ -174,7 +174,7 @@ const FolderContent = ({
   item: FolderItemType;
   enableEditing: boolean;
 }): JSX.Element => {
-  const { shouldDisplayItem } = useFilterItemsContext();
+  const { itemTypes } = useFilterItemsContext();
 
   const {
     data: children,
@@ -182,10 +182,8 @@ const FolderContent = ({
     isError,
   } = useChildren(item.id, {
     ordered: true,
+    types: itemTypes,
   });
-
-  // TODO: use hook's filter when available
-  const folderChildren = children?.filter((f) => shouldDisplayItem(f.type));
 
   if (isLoading) {
     return <Loader />;
@@ -200,14 +198,14 @@ const FolderContent = ({
       parentId={item.id}
       id={buildItemsTableId(item.id)}
       title={item.name}
-      items={folderChildren ?? []}
+      items={children ?? []}
       headerElements={
         enableEditing ? [<NewItemButton key="newButton" />] : undefined
       }
       // todo: not exactly correct, since you could have write rights on some child,
       // but it's more tedious to check permissions over all selected items
       ToolbarActions={enableEditing ? ItemActions : undefined}
-      totalCount={folderChildren?.length}
+      totalCount={children?.length}
     />
   );
 };
