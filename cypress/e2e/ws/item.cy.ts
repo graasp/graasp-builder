@@ -115,9 +115,18 @@ describe('Websocket interactions', () => {
         },
       });
 
-      cy.wait(WEBSOCKETS_DELAY_TIME);
+      // Since we are invalidating the query cache and the API is mocked,
+      // the items received remain unchanged even after the websockets update.
+      // It's not feasible to verify the addition of new items in this test scenario
+      // unless a real backend is utilized for testing purposes.
+
+      // cy.wait(WEBSOCKETS_DELAY_TIME);
       // assert item is in list
-      cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+      // cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+
+      // Therefore, in this test, we can only verify that upon receiving a websocket message,
+      // the cache is invalidated and a refetch is triggered.
+      cy.wait('@getChildren');
     });
 
     it('displays childItem delete update', () => {
@@ -136,9 +145,18 @@ describe('Websocket interactions', () => {
         },
       });
 
-      cy.wait(WEBSOCKETS_DELAY_TIME);
-      // assert item is not in list
-      cy.get(buildItemsTableRowIdAttribute(item.id)).should('not.exist');
+      // Since we are invalidating the query cache and the API is mocked,
+      // the items received remain unchanged even after the websockets update.
+      // It's not feasible to verify the suppression of old items in this test scenario
+      // unless a real backend is utilized for testing purposes.
+
+      // cy.wait(WEBSOCKETS_DELAY_TIME);
+      // assert item is in list
+      // cy.get(buildItemsTableRowIdAttribute(item.id)).should('not.exist');
+
+      // Therefore, in this test, we can only verify that upon receiving a websocket message,
+      // the cache is invalidated and a refetch is triggered.
+      cy.wait('@getChildren');
     });
   });
 });
