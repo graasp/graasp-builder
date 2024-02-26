@@ -79,19 +79,17 @@ describe('Move Items in List', () => {
     // It's not feasible to verify the addition of new items in this test scenario
     // unless a real backend is utilized for testing purposes.
 
-    // cy.wait('@moveItems').then(({ request: { body, url } }) => {
-    //   expect(body.parentId).to.equal(undefined);
-    //   itemIds.forEach((movedItem) => expect(url).to.contain(movedItem));
+    cy.wait('@moveItems').then(({ request: { body, url } }) => {
+      expect(body.parentId).to.equal(undefined);
+      itemIds.forEach((movedItem) => expect(url).to.contain(movedItem));
 
-    //   itemIds.forEach((id) => {
-    //     cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('not.exist');
-    //   });
-    // });
+      //   itemIds.forEach((id) => {
+      //     cy.get(`${buildItemsTableRowIdAttribute(id)}`).should('not.exist');
+      //   });
+    });
 
     // Therefore, in this test, we can only verify that upon receiving a websocket message,
     // the cache is invalidated and a refetch is triggered.
-
-    cy.wait('@moveItems');
     cy.wait('@getChildren');
   });
 });
