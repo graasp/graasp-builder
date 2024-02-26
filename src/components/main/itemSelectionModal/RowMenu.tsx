@@ -21,16 +21,16 @@ export interface RowMenuProps {
   isDisabled?: (item: NavigationElement) => boolean;
 }
 
-const StyledButton = styled(Button)<{ isSelected: boolean }>(
-  ({ theme, isSelected }) => ({
-    color: theme.palette.text.primary,
-    width: '100%',
-    justifyContent: 'start',
-    background: isSelected ? theme.palette.grey[200] : 'none',
-    textTransform: 'none',
-    pl: 1,
-  }),
-);
+const StyledButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'isSelected',
+})<{ isSelected: boolean }>(({ theme, isSelected }) => ({
+  color: theme.palette.text.primary,
+  width: '100%',
+  justifyContent: 'start',
+  background: isSelected ? theme.palette.grey[200] : 'none',
+  textTransform: 'none',
+  pl: 1,
+}));
 
 const RowMenu = ({
   item,

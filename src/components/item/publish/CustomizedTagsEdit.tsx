@@ -97,13 +97,15 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
             {translateBuilder(BUILDER.ITEM_TAGS_PREVIEW_TITLE)}
           </Typography>
           <br />
-          {settings?.tags?.map((tag, index) => (
-            <Chip
-              key={tag}
-              label={tag}
-              id={buildCustomizedTagsSelector(index)}
-            />
-          ))}
+          <Stack direction="row" flexWrap="wrap" spacing={1} useFlexGap>
+            {settings?.tags?.map((tag, index) => (
+              <Chip
+                key={tag}
+                label={tag}
+                id={buildCustomizedTagsSelector(index)}
+              />
+            ))}
+          </Stack>
         </>
       )}
     </>
