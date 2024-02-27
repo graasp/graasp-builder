@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.1](https://github.com/graasp/graasp-builder/compare/v2.8.0...v2.8.1) (2024-02-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/translations to v1.25.2 ([#1033](https://github.com/graasp/graasp-builder/issues/1033)) ([63456ca](https://github.com/graasp/graasp-builder/commit/63456caaecd70c28aea013b0acdb1cd96e406bde))
+* **deps:** update dependency axios to v1.6.7 ([#979](https://github.com/graasp/graasp-builder/issues/979)) ([200bb3f](https://github.com/graasp/graasp-builder/commit/200bb3f7e109d3d1aaab7271847ef5c341bb35eb))
+* **deps:** update dependency react-i18next to v14 ([#1025](https://github.com/graasp/graasp-builder/issues/1025)) ([ad75ab9](https://github.com/graasp/graasp-builder/commit/ad75ab9f2e1d101256dd85e014307b4ccf3d0aca))
+* **deps:** update dependency react-toastify to v10 ([#1026](https://github.com/graasp/graasp-builder/issues/1026)) ([37ff834](https://github.com/graasp/graasp-builder/commit/37ff834294e02cd0d26a3963acc8125cbad44abf))
+* update deploy to use VITE_GRAASP_ASSETS_URL variable ([#1018](https://github.com/graasp/graasp-builder/issues/1018)) ([827c402](https://github.com/graasp/graasp-builder/commit/827c4029f7ef347f53d1c0160e78249406ad885d))
+* update un-publish process to reflect changes ([#1002](https://github.com/graasp/graasp-builder/issues/1002)) ([3eedc45](https://github.com/graasp/graasp-builder/commit/3eedc45e8a742f6d17bdb757609022d8d536b502))
+* use esm modules for graasp dependencies ([#1032](https://github.com/graasp/graasp-builder/issues/1032)) ([9bf4348](https://github.com/graasp/graasp-builder/commit/9bf4348ca3afd7ddffc787dd599a65e6b90957e7))
+
 ## [2.8.0](https://github.com/graasp/graasp-builder/compare/v2.7.0...v2.8.0) (2024-02-20)
 
 
