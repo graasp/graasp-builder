@@ -1446,9 +1446,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@github:graasp/graasp-chatbox#use-query-4":
-  version: 3.0.5
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=13bfffb730359b175202e03ec5cd01165bfced71"
+"@graasp/chatbox@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@graasp/chatbox@npm:3.1.0"
   dependencies:
     lodash.groupby: "npm:^4.6.0"
     prism-react-renderer: "npm:^2.3.1"
@@ -1472,13 +1472,13 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^13.0.0 || ^14.0.0
-  checksum: 10/354b46a42aa02cbec2e64746d7be864503e4158d106ca10d4afe06b7f6e5617250732171dcf6af60650616519eb177e78f2b57e80569e634008d09e7e196725c
+  checksum: 10/62a929f400795ab2b47f86133c32bea910a52312a5effde45a5a9506741d65e0d8fb33f67e76ac6b5d3d04aee6207caf6c0a8abbe65c66de4f8ace80b643fec0
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#use-conditional-export":
-  version: 2.7.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=a791df20b514a08511f92b9b8c3c6d8ee4582d3f"
+"@graasp/query-client@npm:2.7.1":
+  version: 2.7.1
+  resolution: "@graasp/query-client@npm:2.7.1"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1490,7 +1490,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/e0c01c217337aed35fb2f5a0919e6894996d33bcc8a4bbc204c0a693e53207bb49ca55ae7771fcbb2cde28d0fced4cd64bc43bb8e6d39be6362289f293fe3b92
+  checksum: 10/7204cbc07cc4e2a5110bca2e5c6124d5998ca69fddb1d0d48e5f7ce397884586a520d6e8d1d09ad967cbb01d395cd1bfff46207434dd815cd01c0d62a0b6088e
   languageName: node
   linkType: hard
 
@@ -1517,9 +1517,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#use-query-4":
-  version: 4.8.2
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=640ae6aa6d50af1f08c8d7255df58de9f436cef8"
+"@graasp/ui@npm:4.8.3":
+  version: 4.8.3
+  resolution: "@graasp/ui@npm:4.8.3"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.1.1"
     "@ag-grid-community/react": "npm:^31.1.1"
@@ -1551,7 +1551,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/a5e28f90b9b1698b6e3680016ba5fc9fb72af8814736c8284cf969dbc40268dbc8a7a8ed0294b933b5fd215a3bee0c6ae81ef8969a5898463cacb8af981a4718
+  checksum: 10/95c5c9177f565d7ec1cd6f3bd41a0e87031eec3990422c2e1775a1053ed76c58ff8e65ec2adea68d0cb76efa246627c500fb724cd615f80f9ede90664d58001e
   languageName: node
   linkType: hard
 
@@ -7134,11 +7134,11 @@ __metadata:
     "@emotion/cache": "npm:11.11.0"
     "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
-    "@graasp/chatbox": "github:graasp/graasp-chatbox#use-query-4"
-    "@graasp/query-client": "github:graasp/graasp-query-client#use-conditional-export"
+    "@graasp/chatbox": "npm:3.1.0"
+    "@graasp/query-client": "npm:2.7.1"
     "@graasp/sdk": "npm:4.0.1"
     "@graasp/translations": "npm:1.25.0"
-    "@graasp/ui": "github:graasp/graasp-ui#use-query-4"
+    "@graasp/ui": "npm:4.8.3"
     "@mui/icons-material": "npm:5.15.8"
     "@mui/lab": "npm:5.0.0-alpha.162"
     "@mui/material": "npm:5.15.8"
