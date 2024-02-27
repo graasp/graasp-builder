@@ -1476,21 +1476,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:2.7.1":
+"@graasp/query-client@github:graasp/graasp-query-client#use-debounce-callback":
   version: 2.7.1
-  resolution: "@graasp/query-client@npm:2.7.1"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=3abc99f0a6c2d20af99163e7321497089d2ba224"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
     axios: "npm:1.6.7"
     crypto-js: "npm:4.2.0"
     http-status-codes: "npm:2.3.0"
+    lodash.debounce: "npm:4.0.8"
     qs: "npm:6.11.2"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/7204cbc07cc4e2a5110bca2e5c6124d5998ca69fddb1d0d48e5f7ce397884586a520d6e8d1d09ad967cbb01d395cd1bfff46207434dd815cd01c0d62a0b6088e
+  checksum: 10/c79c9bdd5fd9abba622f61cd50a9a0c31620493acbc0da47009c739f733cf2d6f66d75ab11fc712f4e8a2dd84508b03bc51b704d9d01ddbe8bf8b47dde369450
   languageName: node
   linkType: hard
 
@@ -7124,7 +7125,7 @@ __metadata:
     "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.1.0"
-    "@graasp/query-client": "npm:2.7.1"
+    "@graasp/query-client": "github:graasp/graasp-query-client#use-debounce-callback"
     "@graasp/sdk": "npm:4.0.1"
     "@graasp/translations": "npm:1.25.2"
     "@graasp/ui": "npm:4.8.3"

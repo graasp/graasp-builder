@@ -8,6 +8,8 @@ import {
   Stack,
 } from '@mui/material';
 
+import { useDebounceCallback } from '@graasp/query-client';
+
 import CancelButton from '@/components/common/CancelButton';
 import { SHORT_LINK_API_CALL_DEBOUNCE_MS } from '@/config/constants';
 import { useBuilderTranslation } from '@/config/i18n';
@@ -18,7 +20,6 @@ import {
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 import { ShortLinkPlatform } from '@/utils/shortLink';
-import { useDebouncedCallback } from '@/utils/useDebounce';
 
 import AliasInput from './AliasInput';
 import AliasValidation from './AliasValidation';
@@ -66,7 +67,7 @@ const ShortLinkDialogContent = ({
     }
   }, [isValidAlias, search]);
 
-  const { isDebounced } = useDebouncedCallback(
+  const { isDebounced } = useDebounceCallback(
     setSendAPICallBack,
     SHORT_LINK_API_CALL_DEBOUNCE_MS,
   );

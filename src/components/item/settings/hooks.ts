@@ -1,10 +1,9 @@
 import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useDebounceCallback } from '@graasp/query-client';
 import { ItemGeolocation } from '@graasp/sdk';
 
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
-
-import useDebouncedCallback from '@/utils/useDebounce';
 
 type Props = {
   geoloc?: ItemGeolocation | null;
@@ -65,7 +64,7 @@ export const useSearchAddress = ({ lang, geoloc }: Props): ReturnedValue => {
     setQuery('');
   };
 
-  const { isDebounced } = useDebouncedCallback(callback, DELAY_MS);
+  const { isDebounced } = useDebounceCallback(callback, DELAY_MS);
 
   return {
     results,
