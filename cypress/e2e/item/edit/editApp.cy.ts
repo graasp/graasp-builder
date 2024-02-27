@@ -1,3 +1,5 @@
+import { buildAppExtra } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
@@ -7,7 +9,6 @@ import {
   buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
-import { buildAppExtra } from '../../../../src/utils/itemExtra';
 import {
   GRAASP_APP_CHILDREN_ITEM,
   GRAASP_APP_ITEM,

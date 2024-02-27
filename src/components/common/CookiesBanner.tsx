@@ -1,4 +1,4 @@
-import { COOKIE_KEYS } from '@graasp/sdk';
+import { CookieKeys } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { CookiesBanner } from '@graasp/ui';
 
@@ -13,7 +13,7 @@ const Component = (): JSX.Element => {
     <CookiesBanner
       acceptText={t(COMMON.COOKIE_BANNER_ACCEPT_BUTTON)}
       declineButtonText={t(COMMON.COOKIE_BANNER_DECLINE_BUTTON)}
-      cookieName={COOKIE_KEYS.ACCEPT_COOKIES_KEY}
+      cookieName={CookieKeys.AcceptCookies}
       text={t(COMMON.COOKIE_BANNER_TEXT)}
       domain={DOMAIN}
     />

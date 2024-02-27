@@ -4,7 +4,7 @@ import { ArrowBack } from '@mui/icons-material';
 import { Alert, Box, Stack, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, buildAppExtra } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
@@ -15,7 +15,6 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
 import addNewImage from '../../../resources/addNew.png';
-import { buildAppExtra } from '../../../utils/itemExtra';
 import NameForm from './NameForm';
 
 type AppGridProps = {
@@ -105,8 +104,6 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
       onChange({
         name: newValue.name,
         // todo: use better type here (partial of discriminated item is not a good type)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         extra: buildAppExtra({
           url: newValue.url,
         }),
@@ -159,8 +156,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
             label={translateBuilder(BUILDER.APP_URL)}
             onChange={(e) =>
               // todo: use better type here (partial of discriminated item is not a good type)
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
+
               onChange({ extra: buildAppExtra({ url: e.target.value }) })
             }
             value={currentUrl}

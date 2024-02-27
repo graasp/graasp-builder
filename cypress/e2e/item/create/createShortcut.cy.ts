@@ -1,4 +1,4 @@
-import { ItemType } from '@graasp/sdk';
+import { ItemType, buildShortcutExtra } from '@graasp/sdk';
 
 import * as qs from 'qs';
 
@@ -10,7 +10,6 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
-import { buildShortcutExtra } from '../../../../src/utils/itemExtra';
 import { IMAGE_ITEM_DEFAULT } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 

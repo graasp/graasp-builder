@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { COOKIE_KEYS } from '@graasp/sdk';
+import { CookieKeys } from '@graasp/sdk';
 
 import 'cypress-localstorage-commands';
 
@@ -173,7 +172,7 @@ Cypress.Commands.add(
     const cachedShortLinks = JSON.parse(JSON.stringify(shortLinks));
 
     // hide cookie banner by default
-    cy.setCookie(COOKIE_KEYS.ACCEPT_COOKIES_KEY, 'true');
+    cy.setCookie(CookieKeys.AcceptCookies, 'true');
 
     mockGetAppListRoute(APPS_LIST);
 

@@ -5,7 +5,7 @@ import { Container, Divider, Grid, Typography } from '@mui/material';
 import {
   ItemMembership,
   PermissionLevelCompare,
-  isPseudonymizedMember,
+  isPseudoMember,
 } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
@@ -91,7 +91,7 @@ const ItemSharingTab = (): JSX.Element => {
     }
     const [authenticatedMemberships, authorizedMemberships] = partition(
       memberships,
-      ({ member }) => member?.email && isPseudonymizedMember(member.email),
+      ({ member }) => member?.email && isPseudoMember(member),
     );
 
     return (

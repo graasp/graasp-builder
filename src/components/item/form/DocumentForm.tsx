@@ -17,6 +17,7 @@ import {
   DocumentItemExtraProperties,
   DocumentItemType,
   ItemType,
+  buildDocumentExtra,
 } from '@graasp/sdk';
 import { withFlavor } from '@graasp/ui';
 import TextEditor from '@graasp/ui/text-editor';
@@ -27,7 +28,6 @@ import {
   ITEM_FORM_DOCUMENT_TEXT_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import { buildDocumentExtra } from '../../../utils/itemExtra';
 import type { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
 

@@ -1,4 +1,4 @@
-import { DiscriminatedItem, ItemSettings, ResultOf } from '@graasp/sdk';
+import { DiscriminatedItem, ResultOf } from '@graasp/sdk';
 
 import { ITEM_SELECT_MODAL_TITLE_MAX_NAME_LENGTH } from '@/config/constants';
 
@@ -7,7 +7,7 @@ import { applyEllipsisOnLength } from './item';
 type TFunction = (key: string, params?: { [key: string]: unknown }) => string;
 
 type TitleProps = {
-  items?: ResultOf<DiscriminatedItem<ItemSettings>>;
+  items?: ResultOf<DiscriminatedItem>;
   count: number;
   translateBuilder: TFunction;
   translateKey: string;

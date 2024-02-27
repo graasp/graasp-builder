@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   DiscriminatedItem,
-  Item,
   ItemMembership,
   ItemType,
   ResultOf,
@@ -146,7 +145,7 @@ const ItemsTable = ({
     return true;
   };
 
-  const onDragEnd = (displayRows: { data: Item }[]) => {
+  const onDragEnd = (displayRows: { data: DiscriminatedItem }[]) => {
     if (!itemId) {
       console.error('no item id defined');
     } else {

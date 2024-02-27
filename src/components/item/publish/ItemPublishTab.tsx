@@ -21,7 +21,6 @@ import {
   Typography,
 } from '@mui/material';
 
-import { DATA_KEYS } from '@graasp/query-client';
 import {
   ItemTagType,
   ItemValidationStatus,
@@ -36,7 +35,7 @@ import { OutletType } from '@/components/pages/item/type';
 
 import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, mutations, useQueryClient } from '../../../config/queryClient';
+import { hooks, mutations } from '../../../config/queryClient';
 import {
   ITEM_PUBLISH_SECTION_TITLE_ID,
   ITEM_VALIDATION_BUTTON_ID,
@@ -64,7 +63,6 @@ const enum PublishFlow {
 
 const ItemPublishTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const queryClient = useQueryClient();
   const { item, permission = PermissionLevel.Read } =
     useOutletContext<OutletType>();
 
@@ -92,7 +90,7 @@ const ItemPublishTab = (): JSX.Element => {
   // item validation
   const { mutate: validateItem } = usePostItemValidation();
 
-  const { data: lastItemValidationGroup } = useLastItemValidationGroup(
+  const { data: lastItemValidationGroup, refetch } = useLastItemValidationGroup(
     item?.id,
   );
 
@@ -159,12 +157,6 @@ const ItemPublishTab = (): JSX.Element => {
       validateItem({ itemId: item.id });
     }
     setValidationStatus(ItemValidationStatus.Pending);
-  };
-
-  const handleRefresh = () => {
-    queryClient.invalidateQueries(
-      DATA_KEYS.buildLastItemValidationGroupKey(item.id),
-    );
   };
 
   // display icon indicating current status of given item
@@ -267,7 +259,7 @@ const ItemPublishTab = (): JSX.Element => {
           <Button
             id={ITEM_VALIDATION_REFRESH_BUTTON_ID}
             variant="outlined"
-            onClick={handleRefresh}
+            onClick={() => refetch()}
             color="primary"
             disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
           >

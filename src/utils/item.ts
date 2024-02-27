@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 import {
   DiscriminatedItem,
   FolderItemExtra,
-  Item,
   ItemType,
   getAppExtra,
-  getEmbeddedLinkExtra,
+  getLinkExtra,
 } from '@graasp/sdk';
 
 import { UUID_LENGTH } from '../config/constants';
@@ -48,7 +47,7 @@ export const buildPath = ({
   ids: string[];
 }): string => `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
 
-export function getItemById<T extends Item>(
+export function getItemById<T extends DiscriminatedItem>(
   items: T[],
   id: string,
 ): T | undefined {
@@ -71,8 +70,10 @@ export const isChild = (
   return ({ path }) => path.match(reg);
 };
 
-export const getChildren = (items: Item[], id: string): Item[] =>
-  items.filter(isChild(id));
+export const getChildren = (
+  items: DiscriminatedItem[],
+  id: string,
+): DiscriminatedItem[] => items.filter(isChild(id));
 
 export const isRootItem = ({ path }: { path: string }): boolean =>
   path.length === UUID_LENGTH;
@@ -109,7 +110,7 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
     case ItemType.LINK: {
       let url;
       if (item.extra) {
-        ({ url } = getEmbeddedLinkExtra(item.extra) || {});
+        ({ url } = getLinkExtra(item.extra) || {});
       }
       hasValidTypeProperties = isUrlValid(url);
       break;
@@ -151,7 +152,7 @@ export function useIsParentInstance({
   instance,
   item,
 }: {
-  instance: { item: Item };
+  instance: { item: DiscriminatedItem };
   item: DiscriminatedItem;
 }): boolean {
   const [isParentMembership, setIsParentMembership] = useState(false);

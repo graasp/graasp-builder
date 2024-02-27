@@ -1,12 +1,12 @@
 import {
   DocumentItemFactory,
   DocumentItemType,
-  Item,
+  FolderItemType,
   ItemType,
+  buildDocumentExtra,
 } from '@graasp/sdk';
 import { DEFAULT_LANG } from '@graasp/translations';
 
-import { buildDocumentExtra } from '../../src/utils/itemExtra';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
 
@@ -42,7 +42,7 @@ export const GRAASP_DOCUMENT_BLANK_NAME_ITEM: DocumentItemType =
     }),
   });
 
-export const GRAASP_DOCUMENT_PARENT_FOLDER: Item = {
+export const GRAASP_DOCUMENT_PARENT_FOLDER: FolderItemType = {
   ...DEFAULT_FOLDER_ITEM,
   id: 'bdf09f5a-5688-11eb-ae93-0242ac130002',
   name: 'graasp document parent',

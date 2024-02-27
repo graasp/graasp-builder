@@ -1,22 +1,19 @@
 import { createContext, useContext, useEffect, useMemo } from 'react';
-import { QueryObserverResult } from 'react-query';
-
-import { CompleteMember } from '@graasp/sdk';
 
 import i18n from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 
-type CurrentUserContextType =
-  | QueryObserverResult<null | CompleteMember>
-  | Record<string, never>;
+const { useCurrentMember } = hooks;
 
-const CurrentUserContext = createContext<CurrentUserContextType>({});
+type CurrentUserContextType = ReturnType<typeof useCurrentMember>;
+
+const CurrentUserContext = createContext<CurrentUserContextType>(
+  {} as CurrentUserContextType,
+);
 
 type Props = {
   children: JSX.Element | JSX.Element[];
 };
-
-const { useCurrentMember } = hooks;
 
 export const CurrentUserContextProvider = ({
   children,

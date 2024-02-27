@@ -2,8 +2,8 @@ import {
   AppItemType,
   DiscriminatedItem,
   DocumentItemType,
-  EmbeddedLinkItemType,
   ItemType,
+  LinkItemType,
 } from '@graasp/sdk';
 
 import {
@@ -48,7 +48,7 @@ export const createFolder = (
 };
 
 export const createLink = (
-  payload: EmbeddedLinkItemType,
+  payload: LinkItemType,
   options?: { confirm?: boolean },
 ): void => {
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();

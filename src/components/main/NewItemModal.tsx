@@ -12,11 +12,11 @@ import {
 
 import {
   AppItemType,
+  DiscriminatedItem,
   DocumentItemType,
-  EmbeddedLinkItemType,
   FolderItemType,
-  Item,
   ItemType,
+  LinkItemType,
 } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -52,7 +52,7 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
 
 type PropertiesPerType = {
   [ItemType.FOLDER]: Partial<FolderItemType>;
-  [ItemType.LINK]: Partial<EmbeddedLinkItemType>;
+  [ItemType.LINK]: Partial<LinkItemType>;
   [ItemType.APP]: Partial<AppItemType>;
   [ItemType.DOCUMENT]: Partial<DocumentItemType>;
 };
@@ -135,7 +135,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
     );
   };
 
-  const updateItem = (item: Partial<Item>) => {
+  const updateItem = (item: Partial<DiscriminatedItem>) => {
     // update content given current type
     const type = selectedItemType as keyof PropertiesPerType;
     setUpdatedPropertiesPerType({

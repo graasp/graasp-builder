@@ -4,11 +4,12 @@ import Clear from '@mui/icons-material/Clear';
 import {
   Box,
   IconButton,
+  InputAdornment,
   LinearProgress,
   List,
   ListItemButton,
+  OutlinedInput,
   Stack,
-  TextField,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -83,15 +84,26 @@ const GeolocationPicker = ({
           {t(BUILDER.ITEM_SETTINGS_GEOLOCATION_EXPLANATION)}
         </Typography>
       </Stack>
-      <Stack direction="row">
+      <Stack direction="row" alignItems="center">
         <Stack flexGrow={1}>
-          <TextField
+          <OutlinedInput
             disabled={isDisabled}
             fullWidth
             multiline
             placeholder={t(BUILDER.ITEM_SETTINGS_GEOLOCATION_PLACEHOLDER)}
             onChange={onChange}
             value={query}
+            endAdornment={
+              query && !isDisabled ? (
+                <InputAdornment position="end">
+                  <Tooltip title={t(BUILDER.ITEM_SETTINGS_CLEAR_GEOLOCATION)}>
+                    <IconButton onClick={clearGeoloc}>
+                      <Clear />
+                    </IconButton>
+                  </Tooltip>
+                </InputAdornment>
+              ) : undefined
+            }
           />
           {loading && (
             <Box sx={{ width: '100%' }}>
@@ -99,15 +111,6 @@ const GeolocationPicker = ({
             </Box>
           )}
         </Stack>
-        {query && !isDisabled && (
-          <Stack>
-            <Tooltip title={t(BUILDER.ITEM_SETTINGS_CLEAR_GEOLOCATION)}>
-              <IconButton onClick={clearGeoloc}>
-                <Clear />
-              </IconButton>
-            </Tooltip>
-          </Stack>
-        )}
       </Stack>
       {isDisabled && (
         <Typography variant="caption">
