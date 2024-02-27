@@ -4181,17 +4181,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.6":
-  version: 1.6.6
-  resolution: "axios@npm:1.6.6"
-  dependencies:
-    follow-redirects: "npm:^1.15.4"
-    form-data: "npm:^4.0.0"
-    proxy-from-env: "npm:^1.1.0"
-  checksum: 10/499401107e237e6fe91db3f68122a4d83496bc8da325aefc97f1fa4a0624333423262eb55b9e1f9a2ec50804a74bc47377fe15bf689f435e68ade9b0bff5399b
-  languageName: node
-  linkType: hard
-
 "axios@npm:1.6.7":
   version: 1.6.7
   resolution: "axios@npm:1.6.7"
@@ -7173,7 +7162,7 @@ __metadata:
     "@uppy/tus": "npm:3.1.2"
     "@uppy/xhr-upload": "npm:3.3.1"
     "@vitejs/plugin-react": "npm:4.2.0"
-    axios: "npm:1.6.6"
+    axios: "npm:1.6.7"
     concurrently: "npm:8.2.2"
     cypress: "npm:13.6.3"
     cypress-localstorage-commands: "npm:2.2.5"
