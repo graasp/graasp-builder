@@ -13,10 +13,7 @@ const {
   VITE_SENTRY_ENV,
   VITE_GA_MEASUREMENT_ID,
   VITE_SENTRY_DSN,
-} =
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  window.Cypress ? Cypress.env() : import.meta.env;
+} = window.Cypress ? Cypress.env() : import.meta.env;
 
 export const APP_VERSION = VITE_VERSION;
 export const DOMAIN = VITE_GRAASP_DOMAIN;

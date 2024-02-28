@@ -22,7 +22,7 @@
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
 
-    "types": ["vite/client"],
+    "types": ["vite/client", "cypress"],
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"],
