@@ -6,7 +6,7 @@ import {
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
 import {
@@ -53,7 +53,7 @@ describe('Edit Link', () => {
     it('edit link on Home', () => {
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       const itemToEdit = GRAASP_LINK_ITEM;
 
@@ -63,7 +63,7 @@ describe('Edit Link', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.LIST,
+        ItemLayoutMode.List,
       );
 
       cy.wait('@editItem').then(
@@ -85,7 +85,7 @@ describe('Edit Link', () => {
   describe('Grid', () => {
     it('edit link on Home', () => {
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const itemToEdit = GRAASP_LINK_ITEM;
 
@@ -95,7 +95,7 @@ describe('Edit Link', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.GRID,
+        ItemLayoutMode.Grid,
       );
 
       cy.wait('@editItem').then(

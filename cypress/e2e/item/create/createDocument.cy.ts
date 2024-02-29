@@ -1,7 +1,7 @@
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '@/config/selectors';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import {
   GRAASP_DOCUMENT_BLANK_NAME_ITEM,
   GRAASP_DOCUMENT_ITEM,
@@ -14,7 +14,7 @@ describe('Create Document', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createDocument(GRAASP_DOCUMENT_ITEM);
@@ -32,7 +32,7 @@ describe('Create Document', () => {
     // go to children item
     cy.visit(buildItemPath(id));
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createDocument(GRAASP_DOCUMENT_ITEM);
@@ -47,7 +47,7 @@ describe('Create Document', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
     createDocument(GRAASP_DOCUMENT_BLANK_NAME_ITEM, { confirm: false });
 
     cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(

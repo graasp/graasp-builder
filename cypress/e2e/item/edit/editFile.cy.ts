@@ -4,7 +4,7 @@ import {
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
@@ -65,7 +65,7 @@ describe('Edit File', () => {
     it('edit file on Home', () => {
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       const itemToEdit = IMAGE_ITEM_DEFAULT;
 
@@ -75,7 +75,7 @@ describe('Edit File', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.LIST,
+        ItemLayoutMode.List,
       );
 
       cy.wait('@editItem').then(
@@ -97,7 +97,7 @@ describe('Edit File', () => {
   describe('Grid', () => {
     it('edit file on Home', () => {
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const itemToEdit = VIDEO_ITEM_S3;
 
@@ -107,7 +107,7 @@ describe('Edit File', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.GRID,
+        ItemLayoutMode.Grid,
       );
 
       cy.wait('@editItem').then(

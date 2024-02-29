@@ -5,7 +5,7 @@ import {
   ITEM_FORM_NAME_INPUT_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import ITEM_LAYOUT_MODES from '../../../../src/enums/itemLayoutModes';
+import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import {
   CREATED_BLANK_NAME_ITEM,
   CREATED_ITEM,
@@ -19,7 +19,7 @@ describe('Create Folder', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createFolder(CREATED_ITEM);
@@ -34,7 +34,7 @@ describe('Create Folder', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createFolder(CREATED_ITEM);
@@ -58,7 +58,7 @@ describe('Create Folder', () => {
     it('create folder on Home', () => {
       cy.setUpApi();
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       // create
       createFolder(CREATED_ITEM);
@@ -77,7 +77,7 @@ describe('Create Folder', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       // create
       createFolder(CREATED_ITEM);
@@ -97,7 +97,7 @@ describe('Create Folder', () => {
       // go to children item
       cy.visit(buildItemPath(id));
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createFolder(CREATED_ITEM);

@@ -1,6 +1,6 @@
 // import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 // import { UPLOADER_ID } from '../../../../src/config/selectors';
-// import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+// import { ItemLayoutMode } from '../../../../src/enums';
 // import { ICON_FILEPATH, TEXT_FILEPATH } from '../../../fixtures/files';
 // import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
@@ -22,7 +22,7 @@
 //       beforeEach(() => {
 //         cy.visit(HOME_PATH);
 
-//         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+//         cy.switchMode(ItemLayoutMode.List);
 //       });
 
 //       it('upload one file successfully', () => {
@@ -53,7 +53,7 @@
 //       beforeEach(() => {
 //         cy.visit(buildItemPath(id));
 
-//         cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+//         cy.switchMode(ItemLayoutMode.List);
 //       });
 
 //       it('upload one file successfully', () => {

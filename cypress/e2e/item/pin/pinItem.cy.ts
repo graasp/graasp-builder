@@ -5,7 +5,7 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import {
   ITEMS_SETTINGS,
   PINNED_ITEM,
@@ -73,7 +73,7 @@ describe('Pinning Item', () => {
     beforeEach(() => {
       cy.setUpApi(ITEMS_SETTINGS);
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
     });
 
     it('Pin an item', () => {

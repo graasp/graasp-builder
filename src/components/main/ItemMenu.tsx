@@ -39,14 +39,14 @@ import CreateShortcutButton from './CreateShortcutButton';
 
 type Props = {
   item: DiscriminatedItem;
-  canEdit?: boolean;
+  canWrite?: boolean;
   canAdmin?: boolean;
   canMove?: boolean;
 };
 
 const ItemMenu = ({
   item,
-  canEdit = false,
+  canWrite = false,
   canAdmin = false,
   canMove = true,
 }: Props): JSX.Element | null => {
@@ -82,7 +82,7 @@ const ItemMenu = ({
     });
   };
   const renderEditorActions = () => {
-    if (canEdit) {
+    if (canWrite) {
       return [
         canMove ? (
           <MoveButton

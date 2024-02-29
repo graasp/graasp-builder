@@ -7,3 +7,13 @@ export enum InternalItemType {
 
 export type NewItemTabType = DiscriminatedItem['type'] | InternalItemType.ZIP;
 export type ShowOnlyMeChangeType = (checked: boolean) => void;
+
+// extend the Window interface with the new properties
+declare global {
+  interface Window {
+    Cypress: boolean;
+  }
+}
+
+// empty export to remove the "module" error
+export {};

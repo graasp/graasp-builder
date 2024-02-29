@@ -12,7 +12,7 @@ import {
   buildItemsTableRowIdAttribute,
   buildItemsTableRowSelector,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { BUILDER } from '../../../../src/langs/constants';
 import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
@@ -43,7 +43,7 @@ describe('Home', () => {
         });
         i18n.changeLanguage(CURRENT_USER.extra.lang as string);
         cy.visit(HOME_PATH);
-        cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+        cy.switchMode(ItemLayoutMode.Grid);
       });
 
       it('Show only created by me checkbox should trigger refetch', () => {
@@ -143,7 +143,7 @@ describe('Home', () => {
         cy.setUpApi(SAMPLE_ITEMS);
         i18n.changeLanguage(CURRENT_USER.extra.lang as string);
         cy.visit(HOME_PATH);
-        cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+        cy.switchMode(ItemLayoutMode.Grid);
       });
 
       it('visit Home', () => {
@@ -211,7 +211,7 @@ describe('Home', () => {
       beforeEach(() => {
         cy.setUpApi(SAMPLE_ITEMS);
         cy.visit(HOME_PATH);
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+        cy.switchMode(ItemLayoutMode.List);
       });
 
       it('visit Home', () => {
@@ -252,7 +252,7 @@ describe('Home', () => {
           items: sampleItems,
         });
         cy.visit(HOME_PATH);
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+        cy.switchMode(ItemLayoutMode.List);
       });
 
       it('Show only created by me checkbox should trigger refetch', () => {

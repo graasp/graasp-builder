@@ -1,5 +1,5 @@
 import { HOME_PATH } from '../../../../src/config/paths';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { GRAASP_H5P_ITEM } from '../../../fixtures/h5p';
 import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
@@ -14,7 +14,7 @@ describe('Edit H5P', () => {
     it('edit h5p on Home', () => {
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       const itemToEdit = GRAASP_H5P_ITEM;
 
@@ -24,7 +24,7 @@ describe('Edit H5P', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.LIST,
+        ItemLayoutMode.List,
       );
 
       cy.wait('@editItem').then(
@@ -46,7 +46,7 @@ describe('Edit H5P', () => {
   describe('Grid', () => {
     it('edit h5p on Home', () => {
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const itemToEdit = GRAASP_H5P_ITEM;
 
@@ -56,7 +56,7 @@ describe('Edit H5P', () => {
           ...itemToEdit,
           ...EDITED_FIELDS,
         },
-        ITEM_LAYOUT_MODES.GRID,
+        ItemLayoutMode.Grid,
       );
 
       cy.wait('@editItem').then(

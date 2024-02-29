@@ -1,6 +1,7 @@
 import { Navigate, useOutletContext, useParams } from 'react-router';
 
-import { PERMISSIONS_EDITION_ALLOWED } from '@/config/constants';
+import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
+
 import { buildItemPath } from '@/config/paths';
 
 import ItemSettings from '../../item/settings/ItemSettings';
@@ -11,7 +12,7 @@ const ItemSettingsPage = (): JSX.Element => {
   const { permission } = useOutletContext<OutletType>();
 
   const enableEditing = permission
-    ? PERMISSIONS_EDITION_ALLOWED.includes(permission)
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
     : false;
 
   if (enableEditing) {

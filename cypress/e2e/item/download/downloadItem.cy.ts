@@ -1,5 +1,5 @@
 import { buildDownloadButtonId } from '@/config/selectors';
-import { ITEM_LAYOUT_MODES } from '@/enums';
+import { ItemLayoutMode } from '@/enums';
 
 import { SHARED_ITEMS_PATH, buildItemPath } from '../../../../src/config/paths';
 import { SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
@@ -19,7 +19,7 @@ describe('Download Item', () => {
   it('Grid view', () => {
     cy.setUpApi(SHARED_ITEMS);
     cy.visit(SHARED_ITEMS_PATH);
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+    cy.switchMode(ItemLayoutMode.Grid);
     cy.wait('@getSharedItems').then(({ response: { body } }) => {
       for (const item of body) {
         cy.get(`#${buildDownloadButtonId(item.id)}`).should('exist');

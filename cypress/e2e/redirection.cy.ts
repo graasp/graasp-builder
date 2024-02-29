@@ -3,7 +3,7 @@ import { saveUrlForRedirection } from '@graasp/sdk';
 import { REDIRECT_PATH } from '../../src/config/paths';
 import { ACCESSIBLE_ITEMS_TABLE_ID } from '../../src/config/selectors';
 
-const DOMAIN = Cypress.env('REACT_APP_GRAASP_DOMAIN');
+const DOMAIN = Cypress.env('VITE_GRAASP_DOMAIN');
 
 describe('Redirection', () => {
   it('Redirection to saved url', () => {

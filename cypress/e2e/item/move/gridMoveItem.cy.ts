@@ -5,7 +5,7 @@ import {
   buildItemMenu,
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const moveItem = ({
@@ -28,7 +28,7 @@ describe('Move Item in Grid', () => {
   it('move item from Home', () => {
     cy.setUpApi(SAMPLE_ITEMS);
     cy.visit(HOME_PATH);
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+    cy.switchMode(ItemLayoutMode.Grid);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[0];
@@ -47,7 +47,7 @@ describe('Move Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+    cy.switchMode(ItemLayoutMode.Grid);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];
@@ -66,7 +66,7 @@ describe('Move Item in Grid', () => {
 
     // go to children item
     cy.visit(buildItemPath(id));
-    cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+    cy.switchMode(ItemLayoutMode.Grid);
 
     // move
     const { id: movedItem } = SAMPLE_ITEMS.items[2];

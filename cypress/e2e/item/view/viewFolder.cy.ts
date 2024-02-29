@@ -5,7 +5,7 @@ import {
   buildItemCard,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
@@ -31,7 +31,7 @@ describe('View Folder', () => {
     it('visit item by id', () => {
       const { id } = SAMPLE_ITEMS.items[0];
       cy.visit(buildItemPath(id));
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       // should get current item
       cy.wait('@getItem');
@@ -76,7 +76,7 @@ describe('View Folder', () => {
         const { id } = SAMPLE_ITEMS.items[0];
         cy.visit(buildItemPath(id));
 
-        cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+        cy.switchMode(ItemLayoutMode.List);
 
         // should get current item
         cy.wait('@getItem');

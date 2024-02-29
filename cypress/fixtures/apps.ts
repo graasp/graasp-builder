@@ -10,7 +10,7 @@ import { APPS_LIST } from './apps/apps';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER, MEMBERS } from './members';
 
-const API_HOST = Cypress.env('API_HOST');
+const API_HOST = Cypress.env('VITE_GRAASP_API_HOST');
 
 export const buildAppApiAccessTokenRoute = (id: string): string =>
   `app-items/${id}/api-access-token`;
@@ -21,8 +21,8 @@ export const buildAppItemLinkForTest = (filename = '.*'): string =>
 
 export const GRAASP_APP_ITEM: AppItemType = {
   ...DEFAULT_FOLDER_ITEM,
-  id: 'ecafbd2a-5688-12eb-ae91-0272ac130002',
-  path: 'ecafbd2a_5688_12eb_ae91_0272ac130002',
+  id: 'ecafbd2a-5688-12eb-ae91-0272ac130012',
+  path: 'ecafbd2a_5688_12eb_ae91_0272ac130012',
   name: 'test app',
   description: 'my app description',
   type: ItemType.APP,

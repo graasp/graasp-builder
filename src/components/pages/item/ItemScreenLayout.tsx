@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router';
 
+import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
-import { PERMISSIONS_EDITION_ALLOWED } from '../../../config/constants';
+import { useGetPermissionForItem } from '@/hooks/authorization';
+
 import { hooks } from '../../../config/queryClient';
-import { getHighestPermissionForMemberFromMemberships } from '../../../utils/membership';
 import ErrorAlert from '../../common/ErrorAlert';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import { useLayoutContext } from '../../context/LayoutContext';
 import { UppyContextProvider } from '../../file/UppyContext';
 import WrappedAuthItemScreen from './ItemLoginWrapper';
@@ -19,7 +19,6 @@ const ItemScreenLayout = (): JSX.Element => {
 
   const { data: item, isLoading } = useItem(itemId);
   const { setEditingItemId } = useLayoutContext();
-  const { data: currentMember } = useCurrentUserContext();
   const { data: memberships, isLoading: isLoadingItemMemberships } =
     useItemMemberships(itemId);
 
@@ -28,19 +27,15 @@ const ItemScreenLayout = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
-  const itemMembership = getHighestPermissionForMemberFromMemberships({
-    memberships,
-    memberId: currentMember?.id,
-  });
-  const permission = itemMembership?.permission;
-  const canEdit = permission
-    ? PERMISSIONS_EDITION_ALLOWED.includes(permission)
+  const { data: permission } = useGetPermissionForItem(item);
+  const canWrite = permission
+    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
     : false;
 
   if (item && itemId && memberships) {
     return (
-      <UppyContextProvider enable={canEdit} itemId={itemId}>
-        <Outlet context={{ item, permission, canEdit }} />
+      <UppyContextProvider enable={canWrite} itemId={itemId}>
+        <Outlet context={{ item, permission, canWrite }} />
       </UppyContextProvider>
     );
   }

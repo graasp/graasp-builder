@@ -102,7 +102,7 @@ describe('Item Settings', () => {
         cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
       });
 
-      it.only('file', () => {
+      it('file', () => {
         const { id, name, type, extra, creator } = IMAGE_ITEM_DEFAULT;
         cy.visit(buildItemSettingsPath(id));
 

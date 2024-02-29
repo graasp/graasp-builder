@@ -3,7 +3,7 @@ name: Cypress CI
 on:
   push:
     branches:
-      - "main"
+      - 'main'
   merge_group:
   pull_request:
 
@@ -45,11 +45,11 @@ jobs:
           VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
           VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
-          VITE_GRAASP_REDIRECTION_HOST:  ${{ vars.VITE_GRAASP_REDIRECTION_HOST }}
+          VITE_GRAASP_REDIRECTION_HOST: ${{ vars.VITE_GRAASP_REDIRECTION_HOST }}
 
       #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks

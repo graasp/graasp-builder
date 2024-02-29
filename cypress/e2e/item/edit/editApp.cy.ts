@@ -8,7 +8,7 @@ import {
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import {
   GRAASP_APP_CHILDREN_ITEM,
   GRAASP_APP_ITEM,
@@ -66,7 +66,7 @@ describe('Edit App', () => {
       cy.setUpApi({ items: [itemToEdit, GRAASP_LINK_ITEM] });
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // edit
       editItem(
@@ -74,7 +74,7 @@ describe('Edit App', () => {
           ...itemToEdit,
           ...newFields,
         },
-        ITEM_LAYOUT_MODES.LIST,
+        ItemLayoutMode.List,
       );
 
       cy.wait('@editItem').then(
@@ -99,7 +99,7 @@ describe('Edit App', () => {
       // go to children item
       cy.visit(buildItemPath(parent.id));
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
 
       // edit
       editItem(
@@ -107,7 +107,7 @@ describe('Edit App', () => {
           ...itemToEdit,
           ...newFields,
         },
-        ITEM_LAYOUT_MODES.LIST,
+        ItemLayoutMode.List,
       );
 
       cy.wait('@editItem').then(
@@ -130,7 +130,7 @@ describe('Edit App', () => {
     it('edit app on Home', () => {
       cy.setUpApi({ items: GRAASP_APP_ITEMS_FIXTURE });
       cy.visit(HOME_PATH);
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const itemToEdit = GRAASP_APP_ITEM;
 
@@ -140,7 +140,7 @@ describe('Edit App', () => {
           ...itemToEdit,
           ...newFields,
         },
-        ITEM_LAYOUT_MODES.GRID,
+        ItemLayoutMode.Grid,
       );
 
       cy.wait('@editItem').then(
@@ -163,7 +163,7 @@ describe('Edit App', () => {
       // go to children item
       const parent = GRAASP_APP_PARENT_FOLDER;
       cy.visit(buildItemPath(parent.id));
-      cy.switchMode(ITEM_LAYOUT_MODES.GRID);
+      cy.switchMode(ItemLayoutMode.Grid);
 
       const itemToEdit = GRAASP_APP_CHILDREN_ITEM;
 
@@ -173,7 +173,7 @@ describe('Edit App', () => {
           ...itemToEdit,
           ...newFields,
         },
-        ITEM_LAYOUT_MODES.GRID,
+        ItemLayoutMode.Grid,
       );
 
       cy.wait('@editItem').then(

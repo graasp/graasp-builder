@@ -1,4 +1,4 @@
-import ITEM_LAYOUT_MODES from './itemLayoutModes';
+import ItemLayoutMode from './itemLayoutMode';
 import Ordering from './orderingTypes';
 
 enum TreePreventSelection {
@@ -11,4 +11,4 @@ enum ButtonVariants {
   Button = 'button',
 }
 
-export { Ordering, TreePreventSelection, ButtonVariants, ITEM_LAYOUT_MODES };
+export { Ordering, TreePreventSelection, ButtonVariants, ItemLayoutMode };

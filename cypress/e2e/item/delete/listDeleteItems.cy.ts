@@ -4,7 +4,7 @@ import {
   ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import { RECYCLED_ITEM_DATA, SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const deleteItems = (itemIds: string[]) => {
@@ -26,7 +26,7 @@ describe('Delete Items in List', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, recycledItemData: RECYCLED_ITEM_DATA });
     cy.visit(RECYCLE_BIN_PATH);
 
-    cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+    cy.switchMode(ItemLayoutMode.List);
 
     // delete
     deleteItems(itemIds);

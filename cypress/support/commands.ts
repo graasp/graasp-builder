@@ -2,12 +2,7 @@ import { CookieKeys } from '@graasp/sdk';
 
 import 'cypress-localstorage-commands';
 
-import { DEFAULT_ITEM_LAYOUT_MODE } from '../../src/config/constants';
-import {
-  MODE_GRID_BUTTON_ID,
-  MODE_LIST_BUTTON_ID,
-} from '../../src/config/selectors';
-import ITEM_LAYOUT_MODES from '../../src/enums/itemLayoutModes';
+import { LAYOUT_MODE_BUTTON_ID } from '../../src/config/selectors';
 import { APPS_LIST } from '../fixtures/apps/apps';
 import { SAMPLE_CATEGORIES } from '../fixtures/categories';
 import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
@@ -343,14 +338,21 @@ Cypress.Commands.add(
   },
 );
 
+const ItemLayoutMode = {
+  Grid: 'grid',
+  List: 'list',
+};
+const DEFAULT_ITEM_LAYOUT_MODE = ItemLayoutMode.List;
+
 Cypress.Commands.add('switchMode', (mode) => {
   if (DEFAULT_ITEM_LAYOUT_MODE !== mode) {
+    cy.get(`#${LAYOUT_MODE_BUTTON_ID}`).click({ force: true });
     switch (mode) {
-      case ITEM_LAYOUT_MODES.GRID:
-        cy.get(`#${MODE_GRID_BUTTON_ID}`).click({ force: true });
+      case ItemLayoutMode.Grid:
+        cy.get(`li[value="${ItemLayoutMode.Grid}"]`).click({ force: true });
         break;
-      case ITEM_LAYOUT_MODES.LIST:
-        cy.get(`#${MODE_LIST_BUTTON_ID}`).click({ force: true });
+      case ItemLayoutMode.List:
+        cy.get(`li[value="${ItemLayoutMode.List}"]`).click({ force: true });
         break;
       default:
         console.error(`invalid mode ${mode} provided`);

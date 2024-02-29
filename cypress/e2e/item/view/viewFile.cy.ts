@@ -1,6 +1,6 @@
 import { HOME_PATH } from '../../../../src/config/paths';
 import { buildItemsTableRowIdAttribute } from '../../../../src/config/selectors';
-import { ITEM_LAYOUT_MODES } from '../../../../src/enums';
+import { ItemLayoutMode } from '../../../../src/enums';
 import {
   IMAGE_ITEM_DEFAULT,
   IMAGE_ITEM_S3,
@@ -19,7 +19,7 @@ describe('View Files', () => {
       });
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
     });
     it('image', () => {
       // item is displayed in table
@@ -62,7 +62,7 @@ describe('View Files', () => {
       });
       cy.visit(HOME_PATH);
 
-      cy.switchMode(ITEM_LAYOUT_MODES.LIST);
+      cy.switchMode(ItemLayoutMode.List);
     });
     it('image', () => {
       // item is displayed in table
