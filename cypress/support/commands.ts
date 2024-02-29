@@ -3,9 +3,6 @@ import { CookieKeys } from '@graasp/sdk';
 import 'cypress-localstorage-commands';
 
 import { LAYOUT_MODE_BUTTON_ID } from '../../src/config/selectors';
-import ItemLayoutMode, {
-  DEFAULT_ITEM_LAYOUT_MODE,
-} from '../../src/enums/itemLayoutMode';
 import { APPS_LIST } from '../fixtures/apps/apps';
 import { SAMPLE_CATEGORIES } from '../fixtures/categories';
 import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
@@ -340,6 +337,12 @@ Cypress.Commands.add(
     mockDeleteShortLink(cachedShortLinks, deleteShortLinkError);
   },
 );
+
+const ItemLayoutMode = {
+  Grid: 'grid',
+  List: 'list',
+};
+const DEFAULT_ITEM_LAYOUT_MODE = ItemLayoutMode.List;
 
 Cypress.Commands.add('switchMode', (mode) => {
   if (DEFAULT_ITEM_LAYOUT_MODE !== mode) {
