@@ -1,7 +1,5 @@
 import { ItemType, buildShortcutExtra } from '@graasp/sdk';
 
-import * as qs from 'qs';
-
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
@@ -66,7 +64,9 @@ const checkCreateShortcutRequest = ({
     expect(body.type).to.eql(ItemType.SHORTCUT);
 
     if (toItemId) {
-      expect(url).to.include(qs.stringify({ parentId: toItemId }));
+      const search = new URLSearchParams();
+      search.set('parentId', toItemId);
+      expect(url).to.include(search.toString());
     } else {
       expect(url).to.not.include('parentId');
       cy.wait('@getAccessibleItems');
