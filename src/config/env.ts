@@ -19,7 +19,6 @@ export const APP_VERSION = VITE_VERSION;
 export const DOMAIN = VITE_GRAASP_DOMAIN;
 
 export const API_HOST = VITE_GRAASP_API_HOST || 'http://localhost:3000';
-
 export const GRAASP_AUTH_HOST =
   VITE_GRAASP_AUTH_HOST || 'http://localhost:3001';
 export const GRAASP_PLAYER_HOST =

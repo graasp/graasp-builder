@@ -101,7 +101,7 @@ const {
   buildDeleteShortLinkRoute,
 } = API_ROUTES;
 
-const API_HOST = Cypress.env('VITE_API_HOST');
+const API_HOST = Cypress.env('VITE_GRAASP_API_HOST');
 
 const checkMembership = ({
   item,
