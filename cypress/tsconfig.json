@@ -6,8 +6,8 @@
     "types": ["cypress", "node", "vite/client"],
     "strictNullChecks": false,
     "strict": true,
-    "sourceMap": false,
+    "sourceMap": false
   },
   "include": ["**/*.ts", "cypress.d.ts"],
-  "exclude": ["coverage", ".nyc_output"],
+  "exclude": ["coverage", ".nyc_output"]
 }
