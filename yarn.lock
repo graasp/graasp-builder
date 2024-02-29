@@ -5103,6 +5103,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cypress-vite@npm:1.5.0":
+  version: 1.5.0
+  resolution: "cypress-vite@npm:1.5.0"
+  dependencies:
+    chokidar: "npm:^3.5.3"
+    debug: "npm:^4.3.4"
+  peerDependencies:
+    vite: ^2.9.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+  checksum: 10/905f903ccdd00d12f1b5b91d75123a9dfc3b33e678a9fbe89be244ad802c8ec46c876ac389900b385d3ca421310d4ea15c77f802be794549e1975de1f04b5848
+  languageName: node
+  linkType: hard
+
 "cypress@npm:13.6.6":
   version: 13.6.6
   resolution: "cypress@npm:13.6.6"
@@ -7166,6 +7178,7 @@ __metadata:
     concurrently: "npm:8.2.2"
     cypress: "npm:13.6.6"
     cypress-localstorage-commands: "npm:2.2.5"
+    cypress-vite: "npm:1.5.0"
     date-fns: "npm:3.3.1"
     env-cmd: "npm:10.1.0"
     eslint: "npm:^8.56.0"

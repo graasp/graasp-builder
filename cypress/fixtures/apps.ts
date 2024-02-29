@@ -10,7 +10,7 @@ import { APPS_LIST } from './apps/apps';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER, MEMBERS } from './members';
 
-const API_HOST = Cypress.env('API_HOST');
+const API_HOST = Cypress.env('VITE_API_HOST');
 
 export const buildAppApiAccessTokenRoute = (id: string): string =>
   `app-items/${id}/api-access-token`;
