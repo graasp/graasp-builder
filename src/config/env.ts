@@ -13,6 +13,7 @@ const {
   VITE_SENTRY_ENV,
   VITE_GA_MEASUREMENT_ID,
   VITE_SENTRY_DSN,
+  VITE_GRAASP_REDIRECTION_HOST,
 } = window.Cypress ? Cypress.env() : import.meta.env;
 
 export const APP_VERSION = VITE_VERSION;
@@ -30,8 +31,7 @@ export const GRAASP_ANALYZER_HOST =
 export const GRAASP_ACCOUNT_HOST =
   VITE_GRAASP_ACCOUNT_HOST || 'http://localhost:3114';
 
-export const GRAASP_REDIRECTION_HOST = import.meta.env
-  .VITE_GRAASP_REDIRECTION_HOST;
+export const GRAASP_REDIRECTION_HOST = VITE_GRAASP_REDIRECTION_HOST;
 
 export const H5P_INTEGRATION_URL =
   VITE_H5P_INTEGRATION_URL || `${API_HOST}/p/h5p-integration`;
