@@ -106,7 +106,7 @@ const HomeLoadableContent = (): JSX.Element => {
     return (
       <UppyContextProvider enable={isSuccess}>
         <FileUploader />
-        <Box m={2}>
+        <Box p={2} height="100%">
           <ItemHeader showNavigation={false} />
           <Items
             id={ACCESSIBLE_ITEMS_TABLE_ID}
@@ -124,6 +124,7 @@ const HomeLoadableContent = (): JSX.Element => {
             totalCount={accessibleItems.totalCount}
             onSortChanged={onSortChanged}
             pageSize={ITEM_PAGE_SIZE}
+            showDropzoneHelper
           />
           {isFetching && (
             <Box sx={{ width: '100%' }}>

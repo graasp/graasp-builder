@@ -28,6 +28,7 @@ const StyledContainer = styled(Box)<{ open: boolean }>(({ theme, open }) => {
     marginRight: 0,
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
 
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -50,7 +51,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
   const { isChatboxMenuOpen, setIsChatboxMenuOpen } = useLayoutContext();
 
   return (
-    <Box id={id} m={2} className={ITEM_MAIN_CLASS}>
+    <Box id={id} p={2} className={ITEM_MAIN_CLASS} height="100%">
       {isChatboxMenuOpen && (
         <ItemPanel open={isChatboxMenuOpen}>
           <DrawerHeader
