@@ -8,6 +8,7 @@ import SelectTypes from '../common/SelectTypes';
 
 type Props = {
   title: string;
+  subTitleElement?: JSX.Element | null;
   headerElements?: JSX.Element[];
   onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
@@ -15,6 +16,7 @@ type Props = {
 
 const ItemsToolbar = ({
   title,
+  subTitleElement,
   headerElements,
   onShowOnlyMeChange,
   showOnlyMe,
@@ -35,6 +37,7 @@ const ItemsToolbar = ({
           {headerElements}
         </Stack>
       </Stack>
+      {subTitleElement}
       <Stack direction="column" mt={2} mb={2} spacing={1}>
         {onShowOnlyMeChange && (
           <FormControlLabel

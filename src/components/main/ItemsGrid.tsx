@@ -78,11 +78,11 @@ const ItemsGrid = ({
     <div id={gridId}>
       <ItemsToolbar
         title={title}
+        subTitleElement={<FolderDescription itemId={parentId} />}
         headerElements={headerElements}
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}
       />
-      <FolderDescription itemId={parentId} />
       <Grid container spacing={2}>
         {renderItems()}
       </Grid>
