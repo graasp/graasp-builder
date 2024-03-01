@@ -274,11 +274,11 @@ const ItemsTable = ({
     <>
       <ItemsToolbar
         title={tableTitle}
+        subTitleElement={itemId ? <FolderDescription itemId={itemId} /> : null}
         headerElements={headerElements}
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}
       />
-      {itemId && <FolderDescription itemId={itemId} />}
       <GraaspTable
         onSortChanged={onSortChanged}
         id={tableId}
