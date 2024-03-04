@@ -14,8 +14,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@ag-grid-community/core": "31.0.3",
-    "@ag-grid-community/styles": "31.0.3",
+    "@ag-grid-community/core": "31.1.1",
+    "@ag-grid-community/styles": "31.1.1",
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.3",
     "@emotion/styled": "11.11.0",
