@@ -21,7 +21,6 @@ import {
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import { StatusCodes } from 'http-status-codes';
-import * as qs from 'qs';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { SETTINGS } from '../../src/config/constants';
@@ -274,8 +273,6 @@ export const mockDeleteItems = (
       url: new RegExp(`${API_HOST}/${buildDeleteItemsRoute([])}`),
     },
     ({ reply }) => {
-      // const ids = qs.parse(url.slice(url.indexOf('?') + 1)).id;
-
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
@@ -297,14 +294,7 @@ export const mockRecycleItems = (
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/recycle\\?id\\=`),
       query: { id: new RegExp(ID_FORMAT) },
     },
-    ({ url, reply }) => {
-      let ids = qs.parse(url.slice(url.indexOf('?') + 1)).id as
-        | string
-        | string[];
-      if (!Array.isArray(ids)) {
-        ids = [ids];
-      }
-
+    ({ reply }) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
@@ -327,21 +317,13 @@ export const mockRestoreItems = (
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}/restore\\?id\\=`),
       query: { id: new RegExp(ID_FORMAT) },
     },
-    ({ url, reply }) => {
-      let ids = qs.parse(url.slice(url.indexOf('?') + 1)).id as
-        | string
-        | string[];
-      if (!Array.isArray(ids)) {
-        ids = [ids];
-      }
-
+    ({ reply }) => {
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST, body: null });
       }
 
       return reply({
         statusCode: StatusCodes.ACCEPTED,
-        // body: ids.map((id) => getItemById(items, id)),
       });
     },
   ).as('restoreItems');
@@ -405,10 +387,8 @@ export const mockGetItems = ({
       url: new RegExp(`${API_HOST}/${ITEMS_ROUTE}\\?id\\=`),
     },
     ({ url, reply }) => {
-      let itemIds = qs.parse(url.slice(url.indexOf('?') + 1)).id as string[];
-      if (!Array.isArray(itemIds)) {
-        itemIds = [itemIds];
-      }
+      const search = new URL(url).searchParams;
+      const itemIds = search.getAll('id');
       const result: {
         data: { [key: string]: ItemForTest };
         errors: { statusCode: number }[];
@@ -719,10 +699,7 @@ export const mockGetMembers = (members: Member[]): void => {
       url: `${API_HOST}/${buildGetMembersRoute([''])}*`,
     },
     ({ url, reply }) => {
-      let memberIds = qs.parse(url.slice(url.indexOf('?') + 1)).id as string[];
-      if (!Array.isArray(memberIds)) {
-        memberIds = [memberIds];
-      }
+      const memberIds = new URL(url).searchParams.getAll('id');
 
       const result: {
         data: { [key: string]: Member };
@@ -766,11 +743,7 @@ export const mockGetMembersBy = (
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
-      const querystrings = url.split('?')[1];
-      let emails = qs.parse(querystrings).email as string[];
-      if (!Array.isArray(emails)) {
-        emails = [emails];
-      }
+      const emails = new URL(url).searchParams.getAll('email');
 
       // TODO
       const result: {
@@ -871,7 +844,7 @@ export const mockDefaultDownloadFile = (
 
       const id = url.slice(API_HOST.length).split('/')[2];
       const { readFilepath } = items.find(({ id: thisId }) => id === thisId);
-      const { replyUrl } = qs.parse(url.slice(url.indexOf('?') + 1));
+      const replyUrl = new URL(url).searchParams.get('replyUrl');
 
       // either return the file url or the fixture data
       // info: we don't test fixture data anymore since the frontend uses url only
@@ -1080,7 +1053,7 @@ export const mockGetItemMembershipsForItem = (
       ),
     },
     ({ reply, url }) => {
-      const itemId = qs.parse(url.slice(url.indexOf('?') + 1)).itemId as string;
+      const itemId = new URL(url).searchParams.get('itemId');
       const selectedItems = items.filter(({ id }) => itemId.includes(id));
       // todo: use reduce
       const result: {
@@ -1173,11 +1146,8 @@ export const mockGetItemsTags = (items: ItemForTest[]): void => {
       url: `${API_HOST}/items/tags?id=*`,
     },
     ({ reply, url }) => {
-      let { id: ids } = qs.parse(url.split('?')[1]);
-      if (typeof ids === 'string') {
-        ids = [ids];
-      }
-      const result = (ids as string[])?.map(
+      const ids = new URL(url).searchParams.getAll('id');
+      const result = ids.map(
         (itemId) =>
           items.find(({ id }) => id === itemId)?.tags || [
             { statusCode: StatusCodes.NOT_FOUND },
@@ -1575,7 +1545,6 @@ export const mockGetAvatarUrl = (
 
       const [link] = url.split('?');
       const id = link.slice(API_HOST.length).split('/')[2];
-      // const { size } = qs.parse(querystrings);
 
       const { thumbnails } =
         members.find(({ id: thisId }) => id === thisId) ?? {};
@@ -1926,11 +1895,7 @@ export const mockGetManyPublishItemInformations = (
       url: new RegExp(`${API_HOST}/items/collections/informations`),
     },
     ({ reply, url }) => {
-      let itemIds = qs.parse(url.slice(url.indexOf('?') + 1))
-        .itemId as string[];
-      if (!Array.isArray(itemIds)) {
-        itemIds = [itemIds];
-      }
+      const itemIds = new URL(url).searchParams.getAll('itemId');
       const completeItems = items.filter((i) => itemIds.includes(i.id));
 
       const result = {
