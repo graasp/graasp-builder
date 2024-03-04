@@ -87,6 +87,10 @@ const EditModalWrapper = ({
         extra: !isEqual(item.extra, updatedItem.extra)
           ? (updatedItem.extra as any)
           : undefined,
+        // only patch settings it it has been changed
+        ...(!isEqual(item.settings, updatedItem.settings)
+          ? { settings: updatedItem.settings }
+          : {}),
       });
     }
 

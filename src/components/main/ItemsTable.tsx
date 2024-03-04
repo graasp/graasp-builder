@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
+  DescriptionPlacement,
   DiscriminatedItem,
   ItemMembership,
   ItemType,
@@ -275,6 +276,10 @@ const ItemsTable = ({
       <ItemsToolbar
         title={tableTitle}
         subTitleElement={itemId ? <FolderDescription itemId={itemId} /> : null}
+        showSubTitleAbove={
+          parentItem?.settings.descriptionPlacement ===
+          DescriptionPlacement.ABOVE
+        }
         headerElements={headerElements}
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}
