@@ -90,7 +90,6 @@ export const DocumentExtraForm = ({
               onFlavorChange?.(value as `${DocumentItemExtraFlavor}`);
             }}
           >
-            <MenuItem value="">None</MenuItem>
             {flavorsTranslations.map(([f, name]) => (
               <MenuItem key={f} value={f}>
                 {name}
