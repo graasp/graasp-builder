@@ -23,7 +23,7 @@
     "@graasp/query-client": "2.7.1",
     "@graasp/sdk": "4.0.1",
     "@graasp/translations": "1.25.2",
-    "@graasp/ui": "4.8.4",
+    "@graasp/ui": "4.8.5",
     "@mui/icons-material": "5.15.11",
     "@mui/lab": "5.0.0-alpha.166",
     "@mui/material": "5.15.11",
