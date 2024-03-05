@@ -14,7 +14,7 @@
   "COPY_ITEM_MODAL_TITLE": "Dove vuoi copiare questo elemento?",
   "COPY_ITEM_MODAL_TITLE_zero": "Dove vuoi copiare {{name}}?",
   "COPY_ITEM_MODAL_TITLE_one": "Dove vuoi copiare {{name}} e un altro?",
-  "COPY_ITEM_MODAL_TITLE_other": "Dove vuoi copiare {{name}} e {{count}} altri?\n",
+  "COPY_ITEM_MODAL_TITLE_other": "Dove vuoi copiare {{name}} e {{count}} altri?",
   "CREATE_ITEM_ADD_BUTTON": "Aggiungi",
   "CREATE_ITEM_LINK_INVALID_LINK_ERROR": "Questo link non è valido",
   "CREATE_ITEM_LINK_LABEL": "Link",
