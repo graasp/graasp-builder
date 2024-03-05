@@ -25,7 +25,7 @@ const GeolocationPicker = ({
     addressLabel: string;
     lat: number;
     lng: number;
-    country: string;
+    country?: string;
   }): void => {
     const { addressLabel, lat, lng, country } = option;
     putGeoloc({
@@ -61,7 +61,7 @@ const GeolocationPicker = ({
         <Stack flexGrow={1}>
           <MapGeolocationPicker
             onChangeOption={onChangeOption}
-            initialValue={geoloc?.addressLabel}
+            initialValue={geoloc?.addressLabel ?? undefined}
             useSuggestionsForAddress={hooks.useSuggestionsForAddress}
           />
         </Stack>
