@@ -338,5 +338,7 @@
   "ITEM_SETTINGS_IS_COLLAPSED_DISABLED_TEXT": "Cet élément n'est pas minifié",
   "ITEM_SETTINGS_IS_COLLAPSED_ENABLED_TEXT": "Cet élément est minifié",
   "ITEM_SETTINGS_IS_COLLAPSED_TITLE": "Minifier un élément",
-  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE": "Afficher la description au-dessus du contenu"
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE": "Afficher la description au-dessus du contenu",
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_BELOW": "Afficher la description en-dessous du contenu",
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_LABEL": "Placement de la description"
 }

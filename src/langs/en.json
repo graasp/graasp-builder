@@ -349,5 +349,7 @@
   "ITEM_SETTINGS_IS_COLLAPSED_DISABLED_TEXT": "This item is not collapsed",
   "ITEM_SETTINGS_IS_COLLAPSED_ENABLED_TEXT": "This item is collapsed",
   "ITEM_SETTINGS_IS_COLLAPSED_TITLE": "Collapse item",
-  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE": "Display the description above the content"
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE": "Display the description above the content",
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_BELOW": "Display the description below the content",
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_LABEL": "Placement of the description"
 }
