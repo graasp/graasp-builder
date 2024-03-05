@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://github.com/graasp/graasp-builder/compare/v2.8.1...v2.9.0) (2024-03-05)
+
+
+### Features
+
+* move the description in ItemsToolbar to display it directly below the title ([#1045](https://github.com/graasp/graasp-builder/issues/1045)) ([06c895a](https://github.com/graasp/graasp-builder/commit/06c895a7095642b0553f95c4c089fbb3dfa6310b))
+* update mode button, refactor ([#1030](https://github.com/graasp/graasp-builder/issues/1030)) ([1ee57ef](https://github.com/graasp/graasp-builder/commit/1ee57efc18c0aa9538d6a75213b4dd3d23db30e0))
+
+
+### Bug Fixes
+
+* **deps:** update ag-grid monorepo to v31.1.1 ([#1035](https://github.com/graasp/graasp-builder/issues/1035)) ([27bb94d](https://github.com/graasp/graasp-builder/commit/27bb94d7de130b782815207875c8038356146bec))
+* **deps:** update dependency @emotion/react to v11.11.4 ([#1036](https://github.com/graasp/graasp-builder/issues/1036)) ([e053640](https://github.com/graasp/graasp-builder/commit/e053640b6bdb182d7cb93607d7392496590b242d))
+* **deps:** update dependency @sentry/react to v7.105.0 ([#1037](https://github.com/graasp/graasp-builder/issues/1037)) ([5158738](https://github.com/graasp/graasp-builder/commit/5158738e07c0a4f04d4eee0f279831e4afbb0a18))
+* **deps:** update mui (non-major) ([#884](https://github.com/graasp/graasp-builder/issues/884)) ([6009375](https://github.com/graasp/graasp-builder/commit/6009375f14a8d7a3f4be9c9a98f348b6344835f4))
+* **deps:** update react-router monorepo to v6.22.2 ([#1023](https://github.com/graasp/graasp-builder/issues/1023)) ([0432e8f](https://github.com/graasp/graasp-builder/commit/0432e8f27844a0384d74c29f0c3f251398a45b86))
+* remove duplicate none doc flavor ([#1055](https://github.com/graasp/graasp-builder/issues/1055)) ([8dde1db](https://github.com/graasp/graasp-builder/commit/8dde1dbf5db2f5846cf1df92fd34072840e77444))
+* remove qs dependency ([#1041](https://github.com/graasp/graasp-builder/issues/1041)) ([09abf3e](https://github.com/graasp/graasp-builder/commit/09abf3ed99013359b7478b5528e4571ed03f664e))
+
 ## [2.8.1](https://github.com/graasp/graasp-builder/compare/v2.8.0...v2.8.1) (2024-02-27)
 
 
