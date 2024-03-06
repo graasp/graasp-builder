@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.2](https://github.com/graasp/graasp-builder/compare/v2.9.1...v2.9.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* revert previous published item layout ([#1058](https://github.com/graasp/graasp-builder/issues/1058)) ([c635e5b](https://github.com/graasp/graasp-builder/commit/c635e5b6bab0665039b1f70d7c923fe1925dc6f5))
+
 ## [2.9.1](https://github.com/graasp/graasp-builder/compare/v2.9.0...v2.9.1) (2024-03-06)
 
 
