@@ -1,7 +1,12 @@
+import { DescriptionPlacement } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+  ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID,
   TEXT_EDITOR_CLASS,
+  buildDescriptionPlacementId,
   buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
@@ -25,6 +30,26 @@ describe('Edit File', () => {
         expect(url).to.contain(id);
         // caption content might be wrapped with html tags
         expect(body?.description).to.contain(caption);
+      });
+    });
+
+    it('edit description placement to above', () => {
+      const { id } = IMAGE_ITEM_DEFAULT;
+      cy.visit(buildItemPath(id));
+
+      cy.get(`#${buildEditButtonId(id)}`).click();
+
+      cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).click();
+      cy.get(
+        `#${buildDescriptionPlacementId(DescriptionPlacement.ABOVE)}`,
+      ).click();
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
+
+      cy.wait(`@editItem`).then(({ request: { url, body } }) => {
+        expect(url).to.contain(id);
+        expect(body?.settings).to.contain({
+          descriptionPlacement: DescriptionPlacement.ABOVE,
+        });
       });
     });
 

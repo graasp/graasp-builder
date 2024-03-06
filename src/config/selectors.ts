@@ -1,5 +1,7 @@
 // todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
+import { DescriptionPlacementType } from '@graasp/sdk';
+
 import { ShortLinkPlatform } from '@/utils/shortLink';
 
 export const SHARED_ITEMS_ROOT_CONTAINER = 'sharedItemsPageRootContainer';
@@ -348,3 +350,8 @@ export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_T
 export const MY_GRAASP_ITEM_PATH = 'myGraaspItemPath';
 export const LANGUAGE_SELECTOR_ID = 'languageSelector';
 export const LAYOUT_MODE_BUTTON_ID = 'layoutModeButton';
+export const ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID =
+  'itemSettingDescriptionPlacementSelect';
+export const buildDescriptionPlacementId = (
+  placement: DescriptionPlacementType,
+): string => `itemSettingDescriptionPlacement-${placement}`;

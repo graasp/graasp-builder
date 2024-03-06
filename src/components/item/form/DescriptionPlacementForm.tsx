@@ -7,6 +7,10 @@ import {
 } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
+import {
+  ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID,
+  buildDescriptionPlacementId,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 import ItemSettingProperty from '../settings/ItemSettingProperty';
@@ -34,6 +38,7 @@ const DescriptionPlacementForm = ({
       valueText={t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TEXT)}
       inputSetting={
         <Select
+          id={ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}
           value={
             updatedProperties.settings?.descriptionPlacement ??
             DEFAULT_PLACEMENT
@@ -41,10 +46,16 @@ const DescriptionPlacementForm = ({
           onChange={(e) => handlePlacementChanged(e.target.value)}
           size="small"
         >
-          <MenuItem value={DescriptionPlacement.ABOVE}>
+          <MenuItem
+            id={buildDescriptionPlacementId(DescriptionPlacement.ABOVE)}
+            value={DescriptionPlacement.ABOVE}
+          >
             {t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE)}
           </MenuItem>
-          <MenuItem value={DescriptionPlacement.BELOW}>
+          <MenuItem
+            id={buildDescriptionPlacementId(DescriptionPlacement.BELOW)}
+            value={DescriptionPlacement.BELOW}
+          >
             {t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_BELOW)}
           </MenuItem>
         </Select>
