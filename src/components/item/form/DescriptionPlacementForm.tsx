@@ -35,7 +35,6 @@ const DescriptionPlacementForm = ({
   return (
     <ItemSettingProperty
       title={t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE)}
-      valueText={t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TEXT)}
       inputSetting={
         <Select
           id={ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}

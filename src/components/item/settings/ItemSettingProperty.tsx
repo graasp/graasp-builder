@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material';
 
 type Props = {
   title: string;
-  valueText: string;
+  valueText?: string;
   inputSetting: JSX.Element;
   icon?: JSX.Element;
 };
@@ -27,9 +27,11 @@ const ItemSettingProperty = ({
             {title}
           </Typography>
         </Stack>
-        <Stack>
-          <Typography variant="body2">{valueText}</Typography>
-        </Stack>
+        {valueText && (
+          <Stack>
+            <Typography variant="body2">{valueText}</Typography>
+          </Stack>
+        )}
       </Stack>
     </Stack>
     <Stack>{inputSetting}</Stack>
