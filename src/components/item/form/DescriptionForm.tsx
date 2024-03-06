@@ -1,22 +1,13 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-} from '@mui/material';
+import { Stack } from '@mui/material';
 
 import {
-  DescriptionPlacement,
   DescriptionPlacementType,
   DiscriminatedItem,
+  ItemType,
 } from '@graasp/sdk';
 import TextEditor from '@graasp/ui/text-editor';
 
-import { useBuilderTranslation } from '@/config/i18n';
-import { BUILDER } from '@/langs/constants';
-
-const DEFAULT_PLACEMENT = DescriptionPlacement.BELOW;
+import DescriptionPlacementForm from './DescriptionPlacementForm';
 
 type DescriptionFormProps = {
   id?: string;
@@ -31,51 +22,35 @@ const DescriptionForm = ({
   item,
   setChanges,
 }: DescriptionFormProps): JSX.Element => {
-  const { t } = useBuilderTranslation();
-
   const onChange = (content: string): void => {
     setChanges({
       description: content,
     });
   };
 
-  const onPlacementChanged = (placement: string): void => {
+  const onPlacementChanged = (placement: DescriptionPlacementType): void => {
     setChanges({
       settings: {
-        descriptionPlacement: placement as DescriptionPlacementType,
+        descriptionPlacement: placement,
       },
     });
   };
 
   return (
-    <Stack>
+    <Stack spacing={2}>
       <TextEditor
         id={id}
         value={(updatedProperties?.description || item?.description) ?? ''}
         onChange={onChange}
         showActions={false}
       />
-      <FormControl sx={{ mt: 2, minWidth: 120 }} size="small">
-        <InputLabel id="description-placement-label">
-          {t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_LABEL)}
-        </InputLabel>
-        <Select
-          labelId="description-placement-label"
-          value={
-            updatedProperties.settings?.descriptionPlacement ??
-            DEFAULT_PLACEMENT
-          }
-          label={t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_LABEL)}
-          onChange={(e) => onPlacementChanged(e.target.value)}
-        >
-          <MenuItem value={DescriptionPlacement.ABOVE}>
-            {t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE)}
-          </MenuItem>
-          <MenuItem value={DescriptionPlacement.BELOW}>
-            {t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_BELOW)}
-          </MenuItem>
-        </Select>
-      </FormControl>
+
+      {updatedProperties.type !== ItemType.FOLDER && (
+        <DescriptionPlacementForm
+          updatedProperties={updatedProperties}
+          onPlacementChanged={onPlacementChanged}
+        />
+      )}
     </Stack>
   );
 };

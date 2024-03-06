@@ -18,13 +18,16 @@ import {
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
+import DescriptionPlacementForm from '../form/DescriptionPlacementForm';
 import FileSettings from './FileSettings';
-import ItemSettingProperty from './ItemSettingProperty';
+import ItemSettingCheckBoxProperty from './ItemSettingCheckBoxProperty';
 import LinkSettings from './LinkSettings';
 
 type Props = {
   item: DiscriminatedItem;
 };
+
+type ItemSetting = DiscriminatedItem['settings'];
 
 const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -32,11 +35,11 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
 
   const { settings } = item;
 
-  const handleOnToggle = (
-    event: { target: { checked: boolean } },
-    settingKey: string,
-  ): void => {
-    const newValue = event.target.checked;
+  // TODO: remove | string in settingKey when enableAnalytics is added to settings in SDK...
+  const handleSettingChanged = <K extends keyof ItemSetting>(
+    settingKey: K | string,
+    newValue: unknown,
+  ) => {
     editItem({
       id: item.id,
       name: item.name,
@@ -44,6 +47,13 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
         [settingKey]: newValue,
       },
     });
+  };
+
+  const handleOnToggle = <K extends keyof ItemSetting>(
+    event: { target: { checked: boolean } },
+    settingKey: K | string,
+  ): void => {
+    handleSettingChanged(settingKey, event.target.checked);
   };
 
   const renderSettingsPerType = () => {
@@ -55,7 +65,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
         return <FileSettings item={item} />;
       case ItemType.APP:
         return (
-          <ItemSettingProperty
+          <ItemSettingCheckBoxProperty
             id={SETTINGS_RESIZE_TOGGLE_ID}
             title={translateBuilder(
               BUILDER.ITEM_SETTINGS_RESIZABLE_ENABLED_TEXT,
@@ -83,7 +93,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
       <Typography variant="h6" mt={3}>
         {translateBuilder(BUILDER.SETTINGS_TITLE)}
       </Typography>
-      <ItemSettingProperty
+      <ItemSettingCheckBoxProperty
         title={translateBuilder(BUILDER.ITEM_SETTINGS_IS_COLLAPSED_TITLE)}
         icon={<CollapseButton type={ActionButton.ICON} item={item} />}
         checked={Boolean(settings.isCollapsible)}
@@ -105,7 +115,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
         })()}
       />
 
-      <ItemSettingProperty
+      <ItemSettingCheckBoxProperty
         id={SETTINGS_PINNED_TOGGLE_ID}
         icon={
           <PinButton
@@ -125,7 +135,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
         }
       />
 
-      <ItemSettingProperty
+      <ItemSettingCheckBoxProperty
         icon={
           <ChatboxButton
             showChat={Boolean(settings.showChatbox)}
@@ -144,13 +154,14 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
             : translateBuilder(BUILDER.ITEM_SETTINGS_SHOW_CHAT_DISABLED_TEXT)
         }
       />
-      <ItemSettingProperty
+      <ItemSettingCheckBoxProperty
         id={SETTINGS_SAVE_ACTIONS_TOGGLE_ID}
         title={translateBuilder(BUILDER.SETTINGS_SAVE_ACTIONS)}
         checked={Boolean(
           settings?.enableSaveActions ?? DEFAULT_SAVE_ACTIONS_SETTING,
         )}
         onClick={(checked: boolean): void => {
+          // TODO: add enableAnalytics in the ItemSettings type
           handleOnToggle({ target: { checked } }, 'enableAnalytics');
         }}
         valueText="Coming soon"
@@ -158,6 +169,15 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
       />
 
       {renderSettingsPerType()}
+
+      {item.type !== ItemType.FOLDER && (
+        <DescriptionPlacementForm
+          updatedProperties={item}
+          onPlacementChanged={(newPlacement) =>
+            handleSettingChanged('descriptionPlacement', newPlacement)
+          }
+        />
+      )}
     </>
   );
 };
