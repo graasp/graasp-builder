@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.1](https://github.com/graasp/graasp-builder/compare/v2.9.0...v2.9.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/ui to v4.8.5 ([#1046](https://github.com/graasp/graasp-builder/issues/1046)) ([10ef4b6](https://github.com/graasp/graasp-builder/commit/10ef4b6def70d9b02a4c5ea88b2d79e762072f34))
+
 ## [2.9.0](https://github.com/graasp/graasp-builder/compare/v2.8.1...v2.9.0) (2024-03-05)
 
 
