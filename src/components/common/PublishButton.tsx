@@ -31,7 +31,14 @@ const PublishButton = ({ itemId }: Props): JSX.Element => {
         to={buildItemPublishPath(itemId)}
         component={Link}
       >
-        <LibraryIcon size={24} showSetting primaryColor="#777" />
+        <LibraryIcon
+          size={24}
+          showSetting
+          primaryColor="#777"
+          secondaryColor="#fff"
+          disableHover
+          selected
+        />
       </IconButton>
     </Tooltip>
   );

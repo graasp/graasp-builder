@@ -181,6 +181,7 @@
   "MOVE_ITEM_MODAL_TITLE_other": "Où déplacer {{name}} et {{count}} autres éléments ?",
   "MY_ITEMS_TITLE": "Mon Graasp",
   "NAVIGATION_FAVORITE_ITEMS_TITLE": "Éléments Favoris",
+  "NAVIGATION_PUBLISHED_ITEMS_TITLE": "Éléments Publiés",
   "NAVIGATION_MY_ITEMS_TITLE": "Mon Graasp",
   "NAVIGATION_SHARED_ITEMS_TITLE": "Éléments Partagés",
   "NEW_ITEM_APP_TAB_TEXT": "Application",

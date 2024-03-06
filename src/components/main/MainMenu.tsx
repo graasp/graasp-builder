@@ -120,12 +120,14 @@ const MainMenu = (): JSX.Element => {
         <MenuItem
           onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
           selected={pathname === PUBLISHED_ITEMS_PATH}
-          text="Published items"
+          text={translateBuilder(BUILDER.NAVIGATION_PUBLISHED_ITEMS_TITLE)}
           icon={
             <LibraryIcon
               primaryColor={iconColor}
               secondaryColor="#fff"
               size={24}
+              disableHover
+              selected
             />
           }
         />
