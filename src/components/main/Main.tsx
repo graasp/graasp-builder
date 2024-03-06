@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { Stack, styled } from '@mui/material';
+import { Stack, styled, useTheme } from '@mui/material';
 
 import { Context } from '@graasp/sdk';
 import {
@@ -47,6 +47,7 @@ type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main = ({ children }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
+  const theme = useTheme();
 
   const itemId = useParams()[ITEM_ID_PARAMS];
 
@@ -89,6 +90,8 @@ const Main = ({ children }: Props): JSX.Element => {
           id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
           selected={Platform.Builder}
           platformsProps={platformProps}
+          color={theme.palette.primary.main}
+          accentColor={theme.palette.secondary.main}
         />
       }
     >
