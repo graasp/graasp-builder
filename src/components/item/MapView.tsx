@@ -26,6 +26,7 @@ const MapView = ({ parentId, title }: Props): JSX.Element => {
           useAddressFromGeolocation={hooks.useAddressFromGeolocation}
           useSuggestionsForAddress={hooks.useSuggestionsForAddress}
           useItemsInMap={hooks.useItemsInMap}
+          useItemGeolocation={hooks.useItemGeolocation}
           viewItem={() => {
             // eslint-disable-next-line no-console
             console.log('view item');
