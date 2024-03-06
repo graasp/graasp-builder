@@ -1458,21 +1458,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#694-display-description-above-or-below-item":
-  version: 2.7.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=38a39f2d84011762b35b81b7fbb7f88a53d92e58"
+"@graasp/query-client@npm:2.8.0":
+  version: 2.8.0
+  resolution: "@graasp/query-client@npm:2.8.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
     axios: "npm:1.6.7"
-    crypto-js: "npm:4.2.0"
     http-status-codes: "npm:2.3.0"
     qs: "npm:6.11.2"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/38eb9762c13c029dca861c03b36ecad70e3718a90bded965c14cb1435397feea96ca6dcfaaca190d52f8a2386d8dd8c9d38bd847ea8e321a4296187eea9f3b4f
+  checksum: 10/45b85f125668c5824c26fc866a89d71ee38d886bf1172c0176bbd8b4f64eda88c47ea9668c9705ec5ef4c2dd1204464ae7d62befd72c82ac2963b1f2bee5f050
   languageName: node
   linkType: hard
 
@@ -5085,13 +5084,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-js@npm:4.2.0":
-  version: 4.2.0
-  resolution: "crypto-js@npm:4.2.0"
-  checksum: 10/c7bcc56a6e01c3c397e95aa4a74e4241321f04677f9a618a8f48a63b5781617248afb9adb0629824792e7ec20ca0d4241a49b6b2938ae6f973ec4efc5c53c924
-  languageName: node
-  linkType: hard
-
 "css-box-model@npm:^1.2.0":
   version: 1.2.1
   resolution: "css-box-model@npm:1.2.1"
@@ -7239,7 +7231,7 @@ __metadata:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.1.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#694-display-description-above-or-below-item"
+    "@graasp/query-client": "npm:2.8.0"
     "@graasp/sdk": "npm:4.1.0"
     "@graasp/translations": "npm:1.25.2"
     "@graasp/ui": "npm:4.9.0"

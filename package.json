@@ -20,7 +20,7 @@
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.1.0",
-    "@graasp/query-client": "github:graasp/graasp-query-client#694-display-description-above-or-below-item",
+    "@graasp/query-client": "2.8.0",
     "@graasp/sdk": "4.1.0",
     "@graasp/translations": "1.25.2",
     "@graasp/ui": "4.9.0",
