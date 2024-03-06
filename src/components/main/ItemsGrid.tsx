@@ -1,13 +1,7 @@
 import { Box, Grid, Pagination } from '@mui/material';
 
-import {
-  DescriptionPlacement,
-  DiscriminatedItem,
-  ItemMembership,
-  ResultOf,
-} from '@graasp/sdk';
+import { DiscriminatedItem, ItemMembership, ResultOf } from '@graasp/sdk';
 
-import { hooks } from '@/config/queryClient';
 import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { ITEM_PAGE_SIZE } from '../../config/constants';
@@ -19,8 +13,6 @@ import { ItemsStatuses } from '../table/BadgesCellRenderer';
 import EmptyItem from './EmptyItem';
 import ItemCard from './ItemCard';
 import ItemsToolbar from './ItemsToolbar';
-
-const { useItem } = hooks;
 
 type Props = {
   id?: string;
@@ -58,7 +50,6 @@ const ItemsGrid = ({
   page = 1,
 }: Props): JSX.Element => {
   const pagesCount = Math.ceil(Math.max(1, totalCount / ITEM_PAGE_SIZE));
-  const { data: parentItem } = useItem(parentId);
   const renderItems = () => {
     if (!items?.length) {
       return (
@@ -88,10 +79,6 @@ const ItemsGrid = ({
       <ItemsToolbar
         title={title}
         subTitleElement={<FolderDescription itemId={parentId} />}
-        showSubTitleAbove={
-          parentItem?.settings.descriptionPlacement ===
-          DescriptionPlacement.ABOVE
-        }
         headerElements={headerElements}
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}

@@ -9,7 +9,6 @@ import SelectTypes from '../common/SelectTypes';
 type Props = {
   title: string;
   subTitleElement?: JSX.Element | null;
-  showSubTitleAbove?: boolean;
   headerElements?: JSX.Element[];
   onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
@@ -18,7 +17,6 @@ type Props = {
 const ItemsToolbar = ({
   title,
   subTitleElement,
-  showSubTitleAbove,
   headerElements,
   onShowOnlyMeChange,
   showOnlyMe,
@@ -26,22 +24,20 @@ const ItemsToolbar = ({
   const { t } = useBuilderTranslation();
   return (
     <>
-      <Stack direction={showSubTitleAbove ? 'column-reverse' : 'column'}>
-        <Stack direction="row" justifyContent="space-between" spacing={1}>
-          <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
-            {title}
-          </Typography>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-end"
-            spacing={1}
-          >
-            {headerElements}
-          </Stack>
+      <Stack direction="row" justifyContent="space-between" spacing={1}>
+        <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+          {title}
+        </Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+          spacing={1}
+        >
+          {headerElements}
         </Stack>
-        {subTitleElement}
       </Stack>
+      {subTitleElement}
       <Stack direction="column" mt={2} mb={2} spacing={1}>
         {onShowOnlyMeChange && (
           <FormControlLabel
