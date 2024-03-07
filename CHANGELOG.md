@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.10.0](https://github.com/graasp/graasp-builder/compare/v2.9.4...v2.10.0) (2024-03-07)
+
+
+### Features
+
+* add checkbox in DescriptionForm to allow to add description above ([#1050](https://github.com/graasp/graasp-builder/issues/1050)) ([a38f27d](https://github.com/graasp/graasp-builder/commit/a38f27d7e488cea317ee3a25ac3c045891a7c5f1))
+
 ## [2.9.4](https://github.com/graasp/graasp-builder/compare/v2.9.3...v2.9.4) (2024-03-07)
 
 
