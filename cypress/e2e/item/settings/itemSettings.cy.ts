@@ -1,4 +1,9 @@
-import { ItemType, MaxWidth, getFileExtra } from '@graasp/sdk';
+import {
+  DescriptionPlacement,
+  ItemType,
+  MaxWidth,
+  getFileExtra,
+} from '@graasp/sdk';
 import { langs } from '@graasp/translations';
 
 import { getMemberById } from '@/utils/member';
@@ -17,12 +22,14 @@ import {
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
   ITEM_SETTINGS_BUTTON_CLASS,
+  ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID,
   LANGUAGE_SELECTOR_ID,
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_LINK_SHOW_BUTTON_ID,
   SETTINGS_LINK_SHOW_IFRAME_ID,
   SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
+  buildDescriptionPlacementId,
 } from '../../../../src/config/selectors';
 import {
   ITEM_WITH_CHATBOX_MESSAGES,
@@ -370,6 +377,36 @@ describe('Item Settings', () => {
           'have.value',
           IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH.settings.maxWidth,
         );
+      });
+    });
+
+    describe('DescriptionPlacement Settings', () => {
+      it('folder should not have description placement', () => {
+        const { id, type } = ITEMS_SETTINGS.items[1];
+        cy.visit(buildItemSettingsPath(id));
+
+        cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(type);
+
+        cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).should(
+          'not.exist',
+        );
+      });
+
+      it('update placement to above for file', () => {
+        const { id } = IMAGE_ITEM_DEFAULT;
+        cy.visit(buildItemSettingsPath(id));
+
+        cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).click();
+        cy.get(
+          `#${buildDescriptionPlacementId(DescriptionPlacement.ABOVE)}`,
+        ).click();
+
+        cy.wait(`@editItem`).then(({ request: { url, body } }) => {
+          expect(url).to.contain(id);
+          expect(body?.settings).to.contain({
+            descriptionPlacement: DescriptionPlacement.ABOVE,
+          });
+        });
       });
     });
   });

@@ -1,5 +1,13 @@
-import { DiscriminatedItem } from '@graasp/sdk';
+import { Stack } from '@mui/material';
+
+import {
+  DescriptionPlacementType,
+  DiscriminatedItem,
+  ItemType,
+} from '@graasp/sdk';
 import TextEditor from '@graasp/ui/text-editor';
+
+import DescriptionPlacementForm from './DescriptionPlacementForm';
 
 type DescriptionFormProps = {
   id?: string;
@@ -20,13 +28,30 @@ const DescriptionForm = ({
     });
   };
 
+  const onPlacementChanged = (placement: DescriptionPlacementType): void => {
+    setChanges({
+      settings: {
+        descriptionPlacement: placement,
+      },
+    });
+  };
+
   return (
-    <TextEditor
-      id={id}
-      value={(updatedProperties?.description || item?.description) ?? ''}
-      onChange={onChange}
-      showActions={false}
-    />
+    <Stack spacing={2}>
+      <TextEditor
+        id={id}
+        value={(updatedProperties?.description || item?.description) ?? ''}
+        onChange={onChange}
+        showActions={false}
+      />
+
+      {updatedProperties.type !== ItemType.FOLDER && (
+        <DescriptionPlacementForm
+          updatedProperties={updatedProperties}
+          onPlacementChanged={onPlacementChanged}
+        />
+      )}
+    </Stack>
   );
 };
 

@@ -1,23 +1,17 @@
-import { Stack, Switch, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 type Props = {
-  onClick: (checked: boolean) => void;
   title: string;
-  checked: boolean;
-  valueText: string;
-  id?: string;
-  disabled?: boolean;
+  valueText?: string;
+  inputSetting: JSX.Element;
   icon?: JSX.Element;
 };
 
 const ItemSettingProperty = ({
-  onClick,
   title,
-  checked = false,
-  id,
-  disabled,
-  icon,
   valueText,
+  inputSetting,
+  icon,
 }: Props): JSX.Element => (
   <Stack
     direction="row"
@@ -33,21 +27,14 @@ const ItemSettingProperty = ({
             {title}
           </Typography>
         </Stack>
-        <Stack>
-          <Typography variant="body2">{valueText}</Typography>
-        </Stack>
+        {valueText && (
+          <Stack>
+            <Typography variant="body2">{valueText}</Typography>
+          </Stack>
+        )}
       </Stack>
     </Stack>
-    <Stack>
-      <Switch
-        id={id}
-        disabled={disabled}
-        checked={checked}
-        onChange={(e) => {
-          onClick(e.target.checked);
-        }}
-      />
-    </Stack>
+    <Stack>{inputSetting}</Stack>
   </Stack>
 );
 

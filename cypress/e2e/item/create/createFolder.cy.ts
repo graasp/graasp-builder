@@ -3,6 +3,7 @@ import {
   CREATE_ITEM_BUTTON_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
   ITEM_FORM_NAME_INPUT_ID,
+  ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
@@ -50,6 +51,17 @@ describe('Create Folder', () => {
         'have.prop',
         'disabled',
         true,
+      );
+    });
+
+    it('description placement should not exist for folder', () => {
+      // create
+      cy.setUpApi();
+      cy.visit(HOME_PATH);
+      createFolder(CREATED_BLANK_NAME_ITEM, { confirm: false });
+
+      cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).should(
+        'not.exist',
       );
     });
   });
