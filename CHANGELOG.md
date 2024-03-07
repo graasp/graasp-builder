@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.4](https://github.com/graasp/graasp-builder/compare/v2.9.3...v2.9.4) (2024-03-07)
+
+
+### Bug Fixes
+
+* invert colors for mobile platform switch ([#1066](https://github.com/graasp/graasp-builder/issues/1066)) ([dcfd9da](https://github.com/graasp/graasp-builder/commit/dcfd9da57c1934adee35212268ae3cf806d13127))
+
 ## [2.9.3](https://github.com/graasp/graasp-builder/compare/v2.9.2...v2.9.3) (2024-03-06)
 
 
