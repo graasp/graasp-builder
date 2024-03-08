@@ -86,7 +86,16 @@ export const buildExtraItems = ({
       return [
         {
           name: translate(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON),
-          icon: <LibraryIcon size={24} showSetting primaryColor="#777" />,
+          icon: (
+            <LibraryIcon
+              size={24}
+              showSetting
+              primaryColor="#777"
+              secondaryColor="#fff"
+              disableHover
+              selected
+            />
+          ),
           path: buildItemPublishPath(itemId),
           menuItems: [],
         },
