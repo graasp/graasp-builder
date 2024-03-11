@@ -1,9 +1,11 @@
 import { Typography } from '@mui/material';
 
 import { Map } from '@graasp/map';
-import { DiscriminatedItem } from '@graasp/sdk';
+import { type DiscriminatedItem, redirect } from '@graasp/sdk';
 
+import { buildGraaspPlayerView } from '@/config/externalPaths';
 import { hooks, mutations } from '@/config/queryClient';
+import { buildPlayerTabName } from '@/config/selectors';
 
 type Props = {
   parentId?: DiscriminatedItem['id'];
@@ -26,10 +28,11 @@ const MapView = ({ parentId, title }: Props): JSX.Element => {
           useAddressFromGeolocation={hooks.useAddressFromGeolocation}
           useSuggestionsForAddress={hooks.useSuggestionsForAddress}
           useItemsInMap={hooks.useItemsInMap}
-          useItemGeolocation={hooks.useItemGeolocation}
-          viewItem={() => {
-            // eslint-disable-next-line no-console
-            console.log('view item');
+          viewItem={(item) => {
+            redirect(window, buildGraaspPlayerView(item.id), {
+              name: buildPlayerTabName(item.id),
+              openInNewTab: true,
+            });
           }}
           currentMember={currentMember}
           itemId={parentId}

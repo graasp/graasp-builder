@@ -1,6 +1,6 @@
 enum ItemLayoutMode {
-  Grid = 'grid',
   List = 'list',
+  Grid = 'grid',
   Map = 'map',
 }
 
