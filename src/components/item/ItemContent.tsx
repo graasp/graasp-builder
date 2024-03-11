@@ -208,6 +208,7 @@ const FolderContent = ({
       // but it's more tedious to check permissions over all selected items
       ToolbarActions={enableEditing ? ItemActions : undefined}
       totalCount={folderChildren?.length}
+      showDropzoneHelper
     />
   );
 };

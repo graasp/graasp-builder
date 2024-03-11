@@ -38,6 +38,7 @@ type Props = {
   totalCount?: number;
   onSortChanged?: (e: any) => void;
   pageSize?: number;
+  showDropzoneHelper?: boolean;
 };
 
 const Items = ({
@@ -61,6 +62,7 @@ const Items = ({
   totalCount = 0,
   onSortChanged,
   pageSize,
+  showDropzoneHelper = false,
 }: Props): JSX.Element | null => {
   const { mode } = useLayoutContext();
   const itemIds = items?.map(({ id: itemId }) => itemId);
@@ -116,6 +118,7 @@ const Items = ({
           setPage={setPage}
           totalCount={totalCount}
           pageSize={pageSize}
+          showDropzoneHelper={showDropzoneHelper}
         />
       );
   }

@@ -21,6 +21,7 @@ import {
 } from '@ag-grid-community/core';
 
 import { ShowOnlyMeChangeType } from '@/config/types';
+import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
@@ -33,6 +34,7 @@ import { hooks, mutations } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
+import DropzoneHelper from '../file/DropzoneHelper';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
@@ -68,6 +70,7 @@ export type ItemsTableProps = {
   totalCount?: number;
   onSortChanged?: (e: SortChangedEvent) => void;
   pageSize?: number;
+  showDropzoneHelper?: boolean;
 };
 
 const ItemsTable = ({
@@ -91,6 +94,7 @@ const ItemsTable = ({
   totalCount,
   onSortChanged,
   pageSize,
+  showDropzoneHelper = false,
 }: ItemsTableProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -270,6 +274,10 @@ const ItemsTable = ({
       count: selected.length,
     });
 
+  const { data: itemPermission } = useGetPermissionForItem(parentItem);
+  const shouldShowDropzoneHelper = showDropzoneHelper && rows?.length === 0;
+  const canEditItem = itemPermission === 'admin' || itemPermission === 'write';
+
   return (
     <>
       <ItemsToolbar
@@ -279,33 +287,37 @@ const ItemsTable = ({
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}
       />
-      <GraaspTable
-        onSortChanged={onSortChanged}
-        id={tableId}
-        columnDefs={columnDefs}
-        tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
-        rowData={rows}
-        emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
-        onDragEnd={onDragEnd}
-        onCellClicked={onCellClicked}
-        getRowId={getRowNodeId}
-        isClickable={clickable}
-        enableDrag={canDrag()}
-        // kinda duplicate props but it needs to be enabled for ui
-        rowDragManaged={canDrag()}
-        rowDragText={itemRowDragText}
-        ToolbarActions={ToolbarActions}
-        pagination
-        page={Math.max(0, page - 1)}
-        onPageChange={(e, newPage) => {
-          setPage?.(newPage + 1);
-        }}
-        countTextFunction={countTextFunction}
-        totalCount={totalCount}
-        // has to be fixed, otherwise the pagination is false on the last page
-        // rows can contain less for the last page
-        pageSize={pageSize ?? rows.length}
-      />
+      {shouldShowDropzoneHelper && (!parentItem || canEditItem) ? (
+        <DropzoneHelper />
+      ) : (
+        <GraaspTable
+          onSortChanged={onSortChanged}
+          id={tableId}
+          columnDefs={columnDefs}
+          tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
+          rowData={rows}
+          emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
+          onDragEnd={onDragEnd}
+          onCellClicked={onCellClicked}
+          getRowId={getRowNodeId}
+          isClickable={clickable}
+          enableDrag={canDrag()}
+          // kinda duplicate props but it needs to be enabled for ui
+          rowDragManaged={canDrag()}
+          rowDragText={itemRowDragText}
+          ToolbarActions={ToolbarActions}
+          pagination
+          page={Math.max(0, page - 1)}
+          onPageChange={(e, newPage) => {
+            setPage?.(newPage + 1);
+          }}
+          countTextFunction={countTextFunction}
+          totalCount={totalCount}
+          // has to be fixed, otherwise the pagination is false on the last page
+          // rows can contain less for the last page
+          pageSize={pageSize ?? rows.length}
+        />
+      )}
     </>
   );
 };

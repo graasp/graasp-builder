@@ -349,9 +349,12 @@ export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
 export const MY_GRAASP_ITEM_PATH = 'myGraaspItemPath';
 export const LANGUAGE_SELECTOR_ID = 'languageSelector';
+
 export const LAYOUT_MODE_BUTTON_ID = 'layoutModeButton';
 export const ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID =
   'itemSettingDescriptionPlacementSelect';
 export const buildDescriptionPlacementId = (
   placement: DescriptionPlacementType,
 ): string => `itemSettingDescriptionPlacement-${placement}`;
+
+export const DROPZONE_HELPER_ID = 'dropzoneHelper';
