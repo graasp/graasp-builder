@@ -23,7 +23,7 @@
     "@graasp/query-client": "2.8.0",
     "@graasp/sdk": "4.1.0",
     "@graasp/translations": "1.25.2",
-    "@graasp/ui": "github:graasp/graasp-ui#disable-hover-true",
+    "@graasp/ui": "4.9.1",
     "@mui/icons-material": "5.15.11",
     "@mui/lab": "5.0.0-alpha.166",
     "@mui/material": "5.15.11",
