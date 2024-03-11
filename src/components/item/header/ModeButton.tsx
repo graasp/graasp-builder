@@ -4,7 +4,7 @@ import {
   List as ListIcon,
   ViewModule as ViewModuleIcon,
 } from '@mui/icons-material';
-// import MapIcon from '@mui/icons-material/Map';
+import MapIcon from '@mui/icons-material/Map';
 import { IconButton } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,8 +16,8 @@ import { useLayoutContext } from '../../context/LayoutContext';
 
 const modeToIcon = (mode: ItemLayoutMode) => {
   switch (mode) {
-    // case ItemLayoutMode.Map:
-    //   return <MapIcon color="primary" />;
+    case ItemLayoutMode.Map:
+      return <MapIcon color="primary" />;
     case ItemLayoutMode.Grid:
       return <ViewModuleIcon color="primary" />;
     case ItemLayoutMode.List:
