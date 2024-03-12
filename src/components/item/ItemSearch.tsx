@@ -31,7 +31,7 @@ export const useItemSearch = ({
   onSearch,
 }: {
   onSearch?: () => void;
-}): {
+} = {}): {
   results?: DiscriminatedItem[];
   text: string;
   input: JSX.Element;

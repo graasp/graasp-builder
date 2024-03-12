@@ -53,6 +53,7 @@ import ItemActions from '../main/ItemActions';
 import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
 import { OutletType } from '../pages/item/type';
+import { useItemSearch } from './ItemSearch';
 
 const { useChildren, useFileContentUrl, useEtherpad } = hooks;
 
@@ -183,9 +184,12 @@ const FolderContent = ({
   } = useChildren(item.id, {
     ordered: true,
   });
+  const itemSearch = useItemSearch();
 
   // TODO: use hook's filter when available
-  const folderChildren = children?.filter((f) => shouldDisplayItem(f.type));
+  const folderChildren = children?.filter(
+    (f) => shouldDisplayItem(f.type) && f.name.includes(itemSearch.text),
+  );
 
   if (isLoading) {
     return <Loader />;
@@ -202,7 +206,9 @@ const FolderContent = ({
       title={item.name}
       items={folderChildren ?? []}
       headerElements={
-        enableEditing ? [<NewItemButton key="newButton" />] : undefined
+        enableEditing
+          ? [itemSearch.input, <NewItemButton key="newButton" />]
+          : [itemSearch.input]
       }
       // todo: not exactly correct, since you could have write rights on some child,
       // but it's more tedious to check permissions over all selected items
