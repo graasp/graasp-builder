@@ -1584,6 +1584,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/ui@npm:4.9.3":
+  version: 4.9.3
+  resolution: "@graasp/ui@npm:4.9.3"
+  dependencies:
+    "@ag-grid-community/client-side-row-model": "npm:31.1.1"
+    "@ag-grid-community/react": "npm:^31.1.1"
+    "@ag-grid-community/styles": "npm:^31.1.1"
+    "@storybook/react-vite": "npm:7.6.17"
+    http-status-codes: "npm:2.3.0"
+    interweave: "npm:13.1.0"
+    katex: "npm:0.16.9"
+    lodash.truncate: "npm:4.4.2"
+    react-cookie-consent: "npm:9.0.0"
+    react-quill: "npm:2.0.0"
+    react-rnd: "npm:10.4.1"
+    react-text-mask: "npm:5.5.0"
+    uuid: "npm:9.0.1"
+    vitest: "npm:1.3.1"
+  peerDependencies:
+    "@emotion/cache": ~11.10.7 || ~11.11.0
+    "@emotion/react": ~11.10.6 || ~11.11.0
+    "@emotion/styled": ~11.10.6 || ~11.11.0
+    "@graasp/sdk": ^4.0.0
+    "@graasp/translations": ^1.23.0
+    "@mui/icons-material": ~5.14.0 || ~5.15.0
+    "@mui/lab": ~5.0.0-alpha.150
+    "@mui/material": ~5.14.0 || ~5.15.0
+    i18next: ^22.4.15 || ^23.0.0
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    react-i18next: ^13.0.0 || ^14.0.0
+    react-router-dom: ^6.11.0
+    stylis: ^4.1.3
+    stylis-plugin-rtl: ^2.1.1
+  checksum: 10/190d5c7bf0dbb1fe7fc042359c0f9f6f6fb8fb7fd72c1631082bf98ef4bc422a7792a0f89f1a67b7463ac63dbce70598f39903fe74c79decc646508457474549
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -7471,7 +7509,7 @@ __metadata:
     "@graasp/query-client": "npm:2.9.0"
     "@graasp/sdk": "npm:4.1.0"
     "@graasp/translations": "npm:1.25.2"
-    "@graasp/ui": "npm:4.9.1"
+    "@graasp/ui": "npm:4.9.3"
     "@mui/icons-material": "npm:5.15.11"
     "@mui/lab": "npm:5.0.0-alpha.166"
     "@mui/material": "npm:5.15.11"
