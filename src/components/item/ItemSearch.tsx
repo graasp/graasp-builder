@@ -52,6 +52,7 @@ export const useItemSearch = ({
       value={searchText}
       inputBaseId={ITEM_SEARCH_INPUT_ID}
       placeholder={translateBuilder(BUILDER.ITEM_SEARCH_PLACEHOLDER)}
+      size="small"
     />
   );
   return { text: searchText, input: itemSearchInput };
