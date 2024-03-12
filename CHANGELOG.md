@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.11.0](https://github.com/graasp/graasp-builder/compare/v2.10.0...v2.11.0) (2024-03-12)
+
+
+### Features
+
+* add dropzone header ([#1042](https://github.com/graasp/graasp-builder/issues/1042)) ([b8f7011](https://github.com/graasp/graasp-builder/commit/b8f7011353d1b7f8ffb3b82ce1c8c6916834df1c))
+* add map view ([#1060](https://github.com/graasp/graasp-builder/issues/1060)) ([95df7a5](https://github.com/graasp/graasp-builder/commit/95df7a5df5de0a3364f24b47e9a5ab0cf7c6942a))
+
+
+### Bug Fixes
+
+* **italian:** translations and add missing phrases ([#1056](https://github.com/graasp/graasp-builder/issues/1056)) ([0456c3c](https://github.com/graasp/graasp-builder/commit/0456c3cd59c76dd0330c389f07210ecb1130a768))
+* update hover state of icons ([#1075](https://github.com/graasp/graasp-builder/issues/1075)) ([73bab05](https://github.com/graasp/graasp-builder/commit/73bab050245670dc49e5a1a7078808a1832e0f4b))
+
 ## [2.10.0](https://github.com/graasp/graasp-builder/compare/v2.9.4...v2.10.0) (2024-03-07)
 
 
