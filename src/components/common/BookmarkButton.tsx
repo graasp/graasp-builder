@@ -3,12 +3,12 @@ import { IconButtonProps } from '@mui/material';
 import { DiscriminatedItem, ItemBookmark } from '@graasp/sdk';
 import {
   ActionButtonVariant,
-  FavoriteButton as GraaspFavoriteButton,
+  BookmarkButton as GraaspBookmarkButton,
 } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, mutations } from '../../config/queryClient';
-import { FAVORITE_ITEM_BUTTON_CLASS } from '../../config/selectors';
+import { BOOKMARKED_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
@@ -19,50 +19,50 @@ type Props = {
   size?: IconButtonProps['size'];
 };
 
-const isItemFavorite = (
+const isItemBookmarked = (
   item: DiscriminatedItem,
-  favorites?: ItemBookmark[],
-): boolean => favorites?.some((f) => f.item.id === item.id) || false;
+  bookmarks?: ItemBookmark[],
+): boolean => bookmarks?.some((f) => f.item.id === item.id) || false;
 
-const FavoriteButton = ({
+const BookmarkButton = ({
   item,
   size,
   type,
   onClick,
 }: Props): JSX.Element | null => {
   const { data: member } = useCurrentUserContext();
-  const { data: favorites } = hooks.useFavoriteItems();
+  const { data: bookmarks } = hooks.useBookmarkedItems();
   const { t: translateBuilder } = useBuilderTranslation();
-  const addFavorite = mutations.useAddFavoriteItem();
-  const deleteFavorite = mutations.useRemoveFavoriteItem();
+  const addFavorite = mutations.useAddBookmarkedItem();
+  const deleteFavorite = mutations.useRemoveBookmarkedItem();
 
   if (!member) {
     return null;
   }
 
-  const isFavorite = isItemFavorite(item, favorites);
+  const isFavorite = isItemBookmarked(item, bookmarks);
 
   const handleFavorite = () => {
     addFavorite.mutate(item.id);
     onClick?.();
   };
 
-  const handleUnfavorite = () => {
+  const handleUnbookmark = () => {
     deleteFavorite.mutate(item.id);
     onClick?.();
   };
 
   const text = isFavorite
-    ? translateBuilder(BUILDER.FAVORITE_ITEM_REMOVE_TEXT)
-    : translateBuilder(BUILDER.FAVORITE_ITEM_ADD_TEXT);
+    ? translateBuilder(BUILDER.BOOKMARKED_ITEM_REMOVE_TEXT)
+    : translateBuilder(BUILDER.BOOKMARKED_ITEM_ADD_TEXT);
 
   return (
-    <GraaspFavoriteButton
+    <GraaspBookmarkButton
       isFavorite={isFavorite}
-      className={FAVORITE_ITEM_BUTTON_CLASS}
+      className={BOOKMARKED_ITEM_BUTTON_CLASS}
       ariaLabel={text}
-      handleUnfavorite={handleUnfavorite}
-      handleFavorite={handleFavorite}
+      handleUnbookmark={handleUnbookmark}
+      handleBookmark={handleFavorite}
       tooltip={text}
       type={type}
       size={size}
@@ -71,4 +71,4 @@ const FavoriteButton = ({
   );
 };
 
-export default FavoriteButton;
+export default BookmarkButton;

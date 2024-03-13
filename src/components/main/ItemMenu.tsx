@@ -26,8 +26,8 @@ import {
   buildItemMenuButtonId,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
+import BookmarkButton from '../common/BookmarkButton';
 import CollapseButton from '../common/CollapseButton';
-import FavoriteButton from '../common/FavoriteButton';
 import HideButton from '../common/HideButton';
 import MoveButton from '../common/MoveButton';
 import PinButton from '../common/PinButton';
@@ -151,9 +151,9 @@ const ItemMenu = ({
             item={item}
             onClick={handleClose}
           />
-          <FavoriteButton
+          <BookmarkButton
             size="medium"
-            key="favorite"
+            key="bookmark"
             type={ActionButton.MENU_ITEM}
             item={item}
           />

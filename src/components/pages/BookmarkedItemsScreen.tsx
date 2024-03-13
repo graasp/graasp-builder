@@ -5,8 +5,8 @@ import { Loader } from '@graasp/ui';
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
+  BOOKMARKED_ITEMS_ID,
   FAVORITE_ITEMS_ERROR_ALERT_ID,
-  FAVORITE_ITEMS_ID,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
@@ -14,9 +14,13 @@ import { useFilterItemsContext } from '../context/FilterItemsContext';
 import ItemHeader from '../item/header/ItemHeader';
 import Items from '../main/Items';
 
-const FavoriteItemsLoadableContent = (): JSX.Element | null => {
+const BookmarkedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data, isLoading: isItemsLoading, isError } = hooks.useFavoriteItems();
+  const {
+    data,
+    isLoading: isItemsLoading,
+    isError,
+  } = hooks.useBookmarkedItems();
   const { shouldDisplayItem } = useFilterItemsContext();
   // TODO: implement filter in the hooks directly ?
   const filteredData = data?.filter((d) => shouldDisplayItem(d.item.type));
@@ -26,8 +30,8 @@ const FavoriteItemsLoadableContent = (): JSX.Element | null => {
       <Box m={2}>
         <ItemHeader showNavigation={false} />
         <Items
-          id={FAVORITE_ITEMS_ID}
-          title={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
+          id={BOOKMARKED_ITEMS_ID}
+          title={translateBuilder(BUILDER.BOOKMARKED_ITEMS_TITLE)}
           items={filteredData.map((d) => d.item)}
         />
       </Box>
@@ -43,6 +47,8 @@ const FavoriteItemsLoadableContent = (): JSX.Element | null => {
   return null;
 };
 
-const FavoriteItemsScreen = (): JSX.Element => <FavoriteItemsLoadableContent />;
+const BookmarkedItemsScreen = (): JSX.Element => (
+  <BookmarkedItemsLoadableContent />
+);
 
-export default FavoriteItemsScreen;
+export default BookmarkedItemsScreen;

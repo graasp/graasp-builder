@@ -21,8 +21,8 @@ import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
 import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
+import BookmarkButton from '../common/BookmarkButton';
 import EditButton from '../common/EditButton';
-import FavoriteButton from '../common/FavoriteButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import DownloadButton from './DownloadButton';
@@ -103,7 +103,7 @@ const ItemComponent = ({
       {((member && member.id) || itemsStatuses?.[item.id]?.isPublic) && (
         <DownloadButton id={item.id} name={item.name} />
       )}
-      {member && member.id && <FavoriteButton size="medium" item={item} />}
+      {member && member.id && <BookmarkButton size="medium" item={item} />}
     </>
   );
   // here we use the same component as the table this is why it is instantiated a bit weirdly

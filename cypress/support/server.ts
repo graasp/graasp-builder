@@ -6,7 +6,7 @@ import {
   DiscriminatedItem,
   HttpMethod,
   Invitation,
-  ItemFavorite,
+  ItemBookmark,
   ItemMembership,
   ItemPublished,
   ItemTagType,
@@ -59,6 +59,7 @@ const {
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
   GET_CURRENT_MEMBER_ROUTE,
+  GET_BOOKMARKED_ITEMS_ROUTE,
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
   buildGetItemLoginSchemaRoute,
@@ -75,7 +76,6 @@ const {
   buildPostItemChatMessageRoute,
   buildClearItemChatRoute,
   GET_RECYCLED_ITEMS_DATA_ROUTE,
-  GET_FAVORITE_ITEMS_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
   buildGetMembersRoute,
@@ -1964,13 +1964,13 @@ export const mockUpdatePassword = (
 };
 
 export const mockGetItemFavorites = (
-  itemFavorites: ItemFavorite[],
+  itemFavorites: ItemBookmark[],
   shouldThrowError: boolean,
 ): void => {
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: `${API_HOST}/${GET_FAVORITE_ITEMS_ROUTE}`,
+      url: `${API_HOST}/${GET_BOOKMARKED_ITEMS_ROUTE}`,
     },
     ({ reply }) => {
       if (shouldThrowError) {
@@ -1989,7 +1989,7 @@ export const mockAddFavorite = (
   cy.intercept(
     {
       method: HttpMethod.Post,
-      url: new RegExp(`${API_HOST}/${GET_FAVORITE_ITEMS_ROUTE}/${ID_FORMAT}`),
+      url: new RegExp(`${API_HOST}/${GET_BOOKMARKED_ITEMS_ROUTE}/${ID_FORMAT}`),
     },
     ({ reply, body }) => {
       if (shouldThrowError) {
@@ -1998,14 +1998,14 @@ export const mockAddFavorite = (
 
       return reply(body);
     },
-  ).as('favoriteItem');
+  ).as('bookmarkItem');
 };
 
 export const mockDeleteFavorite = (shouldThrowError: boolean): void => {
   cy.intercept(
     {
       method: HttpMethod.Delete,
-      url: new RegExp(`${API_HOST}/${GET_FAVORITE_ITEMS_ROUTE}/${ID_FORMAT}`),
+      url: new RegExp(`${API_HOST}/${GET_BOOKMARKED_ITEMS_ROUTE}/${ID_FORMAT}`),
     },
     ({ reply, body }) => {
       if (shouldThrowError) {
@@ -2014,7 +2014,7 @@ export const mockDeleteFavorite = (shouldThrowError: boolean): void => {
 
       return reply(body);
     },
-  ).as('unfavoriteItem');
+  ).as('unbookmarkItem');
 };
 
 // Intercept ShortLinks calls

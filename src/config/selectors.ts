@@ -37,7 +37,7 @@ export const buildItemRowArrowId = (id: string): string =>
 export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
-export const FAVORITE_ITEM_BUTTON_CLASS = 'favoriteButton';
+export const BOOKMARKED_ITEM_BUTTON_CLASS = 'bookmarkedButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const COLLAPSE_ITEM_BUTTON_CLASS = 'collapseButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
@@ -53,7 +53,7 @@ export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 
 export const SHARED_ITEMS_ID = 'sharedItems';
 export const PUBLISHED_ITEMS_ID = 'publishedItems';
-export const FAVORITE_ITEMS_ID = 'favoriteItems';
+export const BOOKMARKED_ITEMS_ID = 'bookmarkedItems';
 export const RECYCLED_ITEMS_ID = 'recycledItems';
 export const OWNED_ITEMS_ID = 'ownedItems';
 export const ITEMS_TABLE_BODY = 'itemsTableBody';
@@ -96,7 +96,7 @@ export const ITEM_LOGIN_SIGN_IN_MODE_ID = 'itemLoginSignInMode';
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
 export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
-export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'favoriteItemsErrorAlert';
+export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'bookmarkedItemsErrorAlert';
 export const PUBLISHED_ITEMS_ERROR_ALERT_ID = 'publishedItemsErrorAlert';
 export const RECYCLED_ITEMS_ERROR_ALERT_ID = 'recycledItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
