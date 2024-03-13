@@ -1497,9 +1497,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#682-bookmark":
-  version: 2.9.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=5d568f5885ab386668a5e79ce193a87784d40489"
+"@graasp/query-client@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@graasp/query-client@npm:3.0.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1510,7 +1510,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/d6e9952d072991d8a0084a9e447e5cacca350d95b9c73c5688eb2db785a4b5f6e9090768cf1c4ca2021f3997d0b283fab9de14862c67e07e98d8537e02650c2f
+  checksum: 10/7d4290286c0d31fa2fb0fe9e68226b5fb75275f1d9846b3379a5a1526404926662d78c1b665551d66a8fd045d1aed1884b7274e2717b8dc93b1486b5aeccad3b
   languageName: node
   linkType: hard
 
@@ -1546,9 +1546,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#759-bookmark":
-  version: 4.9.3
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=66e613d4d20c1154dfbb2929ea7a494848615251"
+"@graasp/ui@npm:4.11.0":
+  version: 4.11.0
+  resolution: "@graasp/ui@npm:4.11.0"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.1.1"
     "@ag-grid-community/react": "npm:^31.1.1"
@@ -1580,7 +1580,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/44fd0035cfd8c398289cda3bc8b27eec76c9393d2c9777d31fcb6dfd6c425f2bdda7836b9aafbabafdf14226048d70fb3361989168caa211d2759e8a50361cfc
+  checksum: 10/4fefdb4e23d0f4838cfbd895512ed55b2757167edee68f3d76220b130cff4bbb7b093480a32f361be63d0ff8d74f5ca8b7a6367156d13060fa24d0e6876797f5
   languageName: node
   linkType: hard
 
@@ -7506,10 +7506,10 @@ __metadata:
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.4.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#682-bookmark"
+    "@graasp/query-client": "npm:3.0.0"
     "@graasp/sdk": "npm:4.1.0"
     "@graasp/translations": "npm:1.25.2"
-    "@graasp/ui": "github:graasp/graasp-ui#759-bookmark"
+    "@graasp/ui": "npm:4.11.0"
     "@mui/icons-material": "npm:5.15.11"
     "@mui/lab": "npm:5.0.0-alpha.166"
     "@mui/material": "npm:5.15.11"
