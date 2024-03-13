@@ -191,7 +191,7 @@
   "MOVE_ITEM_MODAL_TITLE_one": "Where do you want to move {{name}} and one other?",
   "MOVE_ITEM_MODAL_TITLE_other": "Where do you want to move {{name}} and {{count}} others?",
   "MY_ITEMS_TITLE": "My Graasp",
-  "NAVIGATION_BOOKMARKED_ITEMS_TITLE": "Favorite Items",
+  "NAVIGATION_BOOKMARKED_ITEMS_TITLE": "Bookmarks",
   "NAVIGATION_PUBLISHED_ITEMS_TITLE": "Published Items",
   "NAVIGATION_MY_ITEMS_TITLE": "My Graasp",
   "NAVIGATION_SHARED_ITEMS_TITLE": "Shared Items",

@@ -180,7 +180,7 @@
   "MOVE_ITEM_MODAL_TITLE_two": "Où déplacer {{name}} et un autre ?",
   "MOVE_ITEM_MODAL_TITLE_other": "Où déplacer {{name}} et {{count}} autres éléments ?",
   "MY_ITEMS_TITLE": "Mon Graasp",
-  "NAVIGATION_BOOKMARKED_ITEMS_TITLE": "Éléments Favoris",
+  "NAVIGATION_BOOKMARKED_ITEMS_TITLE": "Signets",
   "NAVIGATION_PUBLISHED_ITEMS_TITLE": "Éléments Publiés",
   "NAVIGATION_MY_ITEMS_TITLE": "Mon Graasp",
   "NAVIGATION_SHARED_ITEMS_TITLE": "Éléments Partagés",

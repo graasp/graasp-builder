@@ -19,7 +19,7 @@ type Props = {
   size?: IconButtonProps['size'];
 };
 
-const isItemFavorite = (
+const isItemBookmarked = (
   item: DiscriminatedItem,
   bookmarks?: ItemBookmark[],
 ): boolean => bookmarks?.some((f) => f.item.id === item.id) || false;
@@ -40,7 +40,7 @@ const BookmarkButton = ({
     return null;
   }
 
-  const isFavorite = isItemFavorite(item, bookmarks);
+  const isFavorite = isItemBookmarked(item, bookmarks);
 
   const handleFavorite = () => {
     addFavorite.mutate(item.id);
