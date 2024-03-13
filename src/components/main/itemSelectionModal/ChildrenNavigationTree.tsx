@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Alert, Box, Skeleton } from '@mui/material';
 
 import { ItemType } from '@graasp/sdk';
 
@@ -25,28 +25,43 @@ const ChildrenNavigationTree = ({
   isDisabled,
 }: ChildrenNavigationTreeProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: children } = hooks.useChildren(selectedNavigationItem.id);
+  const { data: children, isLoading } = hooks.useChildren(
+    selectedNavigationItem.id,
+  );
   // TODO: use hook's filter when available
   const folders = children?.filter((f) => f.type === ItemType.FOLDER);
-  return (
-    <>
-      {folders?.map((ele) => (
-        <RowMenu
-          key={ele.id}
-          item={ele}
-          onNavigate={onNavigate}
-          selectedId={selectedId}
-          onClick={onClick}
-          isDisabled={isDisabled}
-        />
-      ))}
-      {!folders?.length && (
-        <Box sx={{ color: 'darkgrey', pt: 1 }}>
-          {translateBuilder(BUILDER.EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM)}
-        </Box>
-      )}
-    </>
-  );
+
+  if (children) {
+    return (
+      <>
+        {folders?.map((ele) => (
+          <RowMenu
+            key={ele.id}
+            item={ele}
+            onNavigate={onNavigate}
+            selectedId={selectedId}
+            onClick={onClick}
+            isDisabled={isDisabled}
+          />
+        ))}
+        {!folders?.length && (
+          <Box sx={{ color: 'darkgrey', pt: 1 }}>
+            {translateBuilder(BUILDER.EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM)}
+          </Box>
+        )}
+      </>
+    );
+  }
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton height={50} />
+        <Skeleton height={50} />
+        <Skeleton height={50} />
+      </>
+    );
+  }
+  return <Alert severity="error">An unexpected error happened</Alert>;
 };
 
 export default ChildrenNavigationTree;

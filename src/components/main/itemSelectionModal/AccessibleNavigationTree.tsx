@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Pagination, Stack } from '@mui/material';
+import { Alert, Pagination, Skeleton, Stack } from '@mui/material';
 
 import { ItemType, PermissionLevel } from '@graasp/sdk';
 
@@ -26,7 +26,7 @@ const AccessibleNavigationTree = ({
   // todo: to change with real recent items (most used)
   const [page, setPage] = useState(1);
   // todo: show only items with admin rights
-  const { data: accessibleItems } = hooks.useAccessibleItems(
+  const { data: accessibleItems, isLoading } = hooks.useAccessibleItems(
     {
       permissions: [PermissionLevel.Write, PermissionLevel.Admin],
       types: [ItemType.FOLDER],
@@ -38,38 +38,52 @@ const AccessibleNavigationTree = ({
     ? Math.ceil(accessibleItems.totalCount / PAGE_SIZE)
     : 0;
 
-  return (
-    <Stack
-      height="100%"
-      flex={1}
-      direction="column"
-      justifyContent="space-between"
-    >
-      <Stack>
-        {accessibleItems?.data?.map((ele) => (
-          <RowMenu
-            key={ele.id}
-            item={ele}
-            onNavigate={onNavigate}
-            selectedId={selectedId}
-            onClick={onClick}
-            isDisabled={isDisabled}
-          />
-        ))}
+  if (accessibleItems) {
+    return (
+      <Stack
+        height="100%"
+        flex={1}
+        direction="column"
+        justifyContent="space-between"
+      >
+        <Stack>
+          {accessibleItems.data.map((ele) => (
+            <RowMenu
+              key={ele.id}
+              item={ele}
+              onNavigate={onNavigate}
+              selectedId={selectedId}
+              onClick={onClick}
+              isDisabled={isDisabled}
+            />
+          ))}
+        </Stack>
+        <Stack direction="row" justifyContent="end">
+          {nbPages > 1 && (
+            <Pagination
+              sx={{ justifyContent: 'end' }}
+              size="small"
+              count={nbPages}
+              page={page}
+              onChange={(_, p) => setPage(p)}
+            />
+          )}
+        </Stack>
       </Stack>
-      <Stack direction="row" justifyContent="end">
-        {nbPages > 1 && (
-          <Pagination
-            sx={{ justifyContent: 'end' }}
-            size="small"
-            count={nbPages}
-            page={page}
-            onChange={(_, p) => setPage(p)}
-          />
-        )}
-      </Stack>
-    </Stack>
-  );
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton height={50} />
+        <Skeleton height={50} />
+        <Skeleton height={50} />
+      </>
+    );
+  }
+
+  return <Alert severity="error">An unexpected error happened</Alert>;
 };
 
 export default AccessibleNavigationTree;
