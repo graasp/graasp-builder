@@ -8,7 +8,7 @@ import { DOMAIN } from '@/config/env';
 import { SIGN_IN_PATH } from '@/config/externalPaths';
 
 import {
-  FAVORITE_ITEMS_PATH,
+  BOOKMARKED_ITEMS_PATH,
   HOME_PATH,
   ITEMS_PATH,
   ITEM_INFORMATION_PATH,
@@ -25,7 +25,7 @@ import { hooks } from '../config/queryClient';
 import { useCurrentUserContext } from './context/CurrentUserContext';
 import Main from './main/Main';
 import Redirect from './main/Redirect';
-import FavoriteItemsScreen from './pages/FavoriteItemsScreen';
+import BookmarkedItemsScreen from './pages/BookmarkedItemsScreen';
 import HomeScreen from './pages/HomeScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
@@ -68,7 +68,7 @@ const App = (): JSX.Element => {
     withAuthorizationProps,
   );
   const FavoriteWithAuthorization = withAuthorization(
-    FavoriteItemsScreen,
+    BookmarkedItemsScreen,
     withAuthorizationProps,
   );
   const PublishedWithAuthorization = withAuthorization(
@@ -92,7 +92,7 @@ const App = (): JSX.Element => {
         <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
         <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
         <Route
-          path={FAVORITE_ITEMS_PATH}
+          path={BOOKMARKED_ITEMS_PATH}
           element={<FavoriteWithAuthorization />}
         />
         <Route

@@ -99,7 +99,7 @@ Cypress.Commands.add(
   ({
     items = [],
     recycledItemData = [],
-    favoriteItems = [],
+    bookmarkedItems = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     mentions = SAMPLE_MENTIONS,
@@ -320,7 +320,7 @@ Cypress.Commands.add(
 
     mockDeleteItemLoginSchemaRoute(items);
 
-    mockGetItemFavorites(favoriteItems, getFavoriteError);
+    mockGetItemFavorites(bookmarkedItems, getFavoriteError);
 
     mockAddFavorite(cachedItems, addFavoriteError);
 

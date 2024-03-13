@@ -1,72 +1,72 @@
 import i18n from '../../../../src/config/i18n';
-import { FAVORITE_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
+import { BOOKMARKED_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
 import {
+  BOOKMARKED_ITEMS_ID,
+  BOOKMARKED_ITEM_BUTTON_CLASS,
   CREATE_ITEM_BUTTON_ID,
-  FAVORITE_ITEMS_ID,
-  FAVORITE_ITEM_BUTTON_CLASS,
   buildItemMenu,
   buildItemMenuButtonId,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import { SAMPLE_FAVORITE, SAMPLE_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_BOOKMARK, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 
-const toggleFavoriteButton = (itemId: string) => {
+const toggleBookmarkButton = (itemId: string) => {
   cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
-  cy.get(`#${buildItemMenu(itemId)} .${FAVORITE_ITEM_BUTTON_CLASS}`).click();
+  cy.get(`#${buildItemMenu(itemId)} .${BOOKMARKED_ITEM_BUTTON_CLASS}`).click();
 };
 
-describe('Favorite Item', () => {
-  describe('Member has no favorite items', () => {
+describe('Bookmarked Item', () => {
+  describe('Member has no bookmarked items', () => {
     beforeEach(() => {
       cy.setUpApi({
         ...SAMPLE_ITEMS,
       });
-      cy.visit(FAVORITE_ITEMS_PATH);
+      cy.visit(BOOKMARKED_ITEMS_PATH);
     });
 
     it('Show empty table', () => {
-      cy.get(`#${FAVORITE_ITEMS_ID}`).should('exist');
+      cy.get(`#${BOOKMARKED_ITEMS_ID}`).should('exist');
     });
   });
 
-  describe('Member has several valid favorite items', () => {
+  describe('Member has several valid bookmarked items', () => {
     beforeEach(() => {
       cy.setUpApi({
         ...SAMPLE_ITEMS,
-        favoriteItems: SAMPLE_FAVORITE,
+        bookmarkedItems: SAMPLE_BOOKMARK,
       });
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
       cy.visit(HOME_PATH);
     });
 
     it("New button doesn't exist", () => {
-      cy.visit(FAVORITE_ITEMS_PATH);
+      cy.visit(BOOKMARKED_ITEMS_PATH);
       cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 
-    it('add item to favorites', () => {
+    it('add item to bookmarkeds', () => {
       const item = SAMPLE_ITEMS.items[0];
 
-      toggleFavoriteButton(item.id);
+      toggleBookmarkButton(item.id);
 
-      cy.wait('@favoriteItem').then(({ request }) => {
+      cy.wait('@bookmarkItem').then(({ request }) => {
         expect(request.url).to.contain(item.id);
       });
     });
 
-    it('remove item from favorites', () => {
+    it('remove item from bookmarkeds', () => {
       const itemId = SAMPLE_ITEMS.items[1].id;
 
-      toggleFavoriteButton(itemId);
+      toggleBookmarkButton(itemId);
 
-      cy.wait('@unfavoriteItem').then(({ request }) => {
+      cy.wait('@unbookmarkItem').then(({ request }) => {
         expect(request.url).to.contain(itemId);
       });
     });
 
-    it('check favorite items view', () => {
-      cy.visit(FAVORITE_ITEMS_PATH);
+    it('check bookmarked items view', () => {
+      cy.visit(BOOKMARKED_ITEMS_PATH);
 
       const itemId = SAMPLE_ITEMS.items[1].id;
 
@@ -75,15 +75,15 @@ describe('Favorite Item', () => {
   });
 
   describe('Error Handling', () => {
-    it('check favorite items view with server error', () => {
+    it('check bookmarked items view with server error', () => {
       cy.setUpApi({
         ...SAMPLE_ITEMS,
         getFavoriteError: true,
       });
-      cy.visit(FAVORITE_ITEMS_PATH);
+      cy.visit(BOOKMARKED_ITEMS_PATH);
 
       it('Show empty table', () => {
-        cy.get(`#${FAVORITE_ITEMS_ID}`).should('exist');
+        cy.get(`#${BOOKMARKED_ITEMS_ID}`).should('exist');
       });
     });
   });

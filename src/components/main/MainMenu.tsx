@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from 'react-router';
 // import { BugReport } from '@mui/icons-material';
 import {
   AutoStories,
+  Bookmark,
   Delete,
   Folder,
   FolderShared,
-  Star,
 } from '@mui/icons-material';
 import {
   ListItem,
@@ -23,7 +23,7 @@ import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
 import { TUTORIALS_LINK } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
-  FAVORITE_ITEMS_PATH,
+  BOOKMARKED_ITEMS_PATH,
   HOME_PATH,
   PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
@@ -112,10 +112,10 @@ const MainMenu = (): JSX.Element => {
           selected={pathname === SHARED_ITEMS_PATH}
         />
         <MenuItem
-          onClick={() => goTo(FAVORITE_ITEMS_PATH)}
-          selected={pathname === FAVORITE_ITEMS_PATH}
-          text={translateBuilder(BUILDER.FAVORITE_ITEMS_TITLE)}
-          icon={<Star />}
+          onClick={() => goTo(BOOKMARKED_ITEMS_PATH)}
+          selected={pathname === BOOKMARKED_ITEMS_PATH}
+          text={translateBuilder(BUILDER.BOOKMARKED_ITEMS_TITLE)}
+          icon={<Bookmark />}
         />
         <MenuItem
           onClick={() => goTo(PUBLISHED_ITEMS_PATH)}

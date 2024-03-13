@@ -4,7 +4,7 @@ import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import {
-  FAVORITE_ITEMS_PATH,
+  BOOKMARKED_ITEMS_PATH,
   HOME_PATH,
   SHARED_ITEMS_PATH,
   buildItemPath,
@@ -65,9 +65,9 @@ const Navigator = (): JSX.Element | null => {
       to: SHARED_ITEMS_PATH,
     },
     {
-      name: translateBuilder(BUILDER.NAVIGATION_FAVORITE_ITEMS_TITLE),
-      id: 'favorite',
-      to: FAVORITE_ITEMS_PATH,
+      name: translateBuilder(BUILDER.NAVIGATION_BOOKMARKED_ITEMS_TITLE),
+      id: 'bookmark',
+      to: BOOKMARKED_ITEMS_PATH,
     },
   ];
 

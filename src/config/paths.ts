@@ -1,6 +1,6 @@
 export const HOME_PATH = '/';
 export const SHARED_ITEMS_PATH = '/shared';
-export const FAVORITE_ITEMS_PATH = '/favorite';
+export const BOOKMARKED_ITEMS_PATH = '/bookmarks';
 export const PUBLISHED_ITEMS_PATH = '/published';
 export const SIGN_UP_PATH = '/signUp';
 export const ITEMS_PATH = '/items';

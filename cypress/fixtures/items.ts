@@ -247,7 +247,7 @@ export const SAMPLE_READ_ITEMS: ApiConfig = {
   ],
 };
 
-export const SAMPLE_FAVORITE: ItemFavorite[] = [
+export const SAMPLE_BOOKMARK: ItemFavorite[] = [
   {
     id: '49883c9b-050b-43d5-bd37-6921e25b55da5',
     createdAt: '2021-08-11T12:56:36.834Z',
