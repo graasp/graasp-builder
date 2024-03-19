@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.12.0](https://github.com/graasp/graasp-builder/compare/v2.11.0...v2.12.0) (2024-03-19)
+
+
+### Features
+
+* add skeleton for modal ([#1083](https://github.com/graasp/graasp-builder/issues/1083)) ([26a7e53](https://github.com/graasp/graasp-builder/commit/26a7e53972ac30aa279806c55c69728eb2534773))
+* rename favorite to bookmark ([#1082](https://github.com/graasp/graasp-builder/issues/1082)) ([4cc6a4c](https://github.com/graasp/graasp-builder/commit/4cc6a4c8ca87014dc7706a5ee26e69d85a3d1aa9))
+
+
+### Bug Fixes
+
+* add item search in folder view ([#1080](https://github.com/graasp/graasp-builder/issues/1080)) ([f29d176](https://github.com/graasp/graasp-builder/commit/f29d1765d6d24362f917f613f0ceedc0e0d80828))
+
 ## [2.11.0](https://github.com/graasp/graasp-builder/compare/v2.10.0...v2.11.0) (2024-03-12)
 
 
