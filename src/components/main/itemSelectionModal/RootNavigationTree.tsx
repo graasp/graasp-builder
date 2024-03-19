@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Alert, Skeleton, Typography } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, PermissionLevel } from '@graasp/sdk';
 
@@ -29,7 +29,7 @@ const RootNavigationTree = ({
   const { t: translateBuilder } = useBuilderTranslation();
 
   // todo: to change with real recent items (most used)
-  const { data: recentItems } = hooks.useAccessibleItems(
+  const { data: recentItems, isLoading } = hooks.useAccessibleItems(
     // you can move into an item you have at least write permission
     {
       permissions: [PermissionLevel.Admin, PermissionLevel.Write],
@@ -46,55 +46,69 @@ const RootNavigationTree = ({
     path: items[0].path,
   });
 
-  return (
-    <>
-      <Typography color="darkgrey" variant="subtitle2">
-        {translateBuilder(BUILDER.HOME_TITLE)}
-      </Typography>
-      {rootMenuItems.map((mi) => (
-        <RowMenu
-          key={mi.name}
-          item={mi}
-          onNavigate={onNavigate}
-          selectedId={selectedId}
-          onClick={onClick}
-          //   root items cannot be disabled - but they are disabled by the button
-        />
-      ))}
-      {recentFolders && (
-        <>
-          <Typography color="darkgrey" variant="subtitle2">
-            {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_RECENT_ITEMS)}
-          </Typography>
-          {recentFolders.map((item) => (
+  if (recentItems) {
+    return (
+      <>
+        <Typography color="darkgrey" variant="subtitle2">
+          {translateBuilder(BUILDER.HOME_TITLE)}
+        </Typography>
+        {rootMenuItems.map((mi) => (
+          <RowMenu
+            key={mi.name}
+            item={mi}
+            onNavigate={onNavigate}
+            selectedId={selectedId}
+            onClick={onClick}
+            //   root items cannot be disabled - but they are disabled by the button
+          />
+        ))}
+        {recentFolders && (
+          <>
+            <Typography color="darkgrey" variant="subtitle2">
+              {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_RECENT_ITEMS)}
+            </Typography>
+            {recentFolders.map((item) => (
+              <RowMenu
+                key={item.name}
+                item={item}
+                onNavigate={onNavigate}
+                selectedId={selectedId}
+                onClick={onClick}
+                isDisabled={isDisabled}
+              />
+            ))}
+          </>
+        )}
+        {/* show second parent to allow moving a level above */}
+        {parents && parents.length > 1 && (
+          <>
+            <Typography color="darkgrey" variant="subtitle2">
+              {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_PARENT)}
+            </Typography>
             <RowMenu
-              key={item.name}
-              item={item}
+              item={parents[parents.length - 2]}
               onNavigate={onNavigate}
               selectedId={selectedId}
               onClick={onClick}
               isDisabled={isDisabled}
             />
-          ))}
-        </>
-      )}
-      {/* show second parent to allow moving a level above */}
-      {parents && parents.length > 1 && (
-        <>
-          <Typography color="darkgrey" variant="subtitle2">
-            {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_PARENT)}
-          </Typography>
-          <RowMenu
-            item={parents[parents.length - 2]}
-            onNavigate={onNavigate}
-            selectedId={selectedId}
-            onClick={onClick}
-            isDisabled={isDisabled}
-          />
-        </>
-      )}
-    </>
-  );
+          </>
+        )}
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton height={50} />
+        <Skeleton height={50} />
+        <Skeleton height={50} />
+      </>
+    );
+  }
+
+  return <Alert severity="error">An unexpected error happened</Alert>;
 };
 
 export default RootNavigationTree;

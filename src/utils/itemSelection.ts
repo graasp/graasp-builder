@@ -7,7 +7,7 @@ import { applyEllipsisOnLength } from './item';
 type TFunction = (key: string, params?: { [key: string]: unknown }) => string;
 
 type TitleProps = {
-  items?: ResultOf<DiscriminatedItem>;
+  items: ResultOf<DiscriminatedItem>;
   count: number;
   translateBuilder: TFunction;
   translateKey: string;
@@ -19,7 +19,7 @@ export const computeTitle = ({
   translateBuilder,
   translateKey,
 }: TitleProps): string =>
-  items && Object.values(items.data ?? {}).length
+  Object.values(items.data ?? {}).length
     ? translateBuilder(translateKey, {
         name: applyEllipsisOnLength(
           Object.values(items.data)[0].name,

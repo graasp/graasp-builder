@@ -1,7 +1,14 @@
 import { useState } from 'react';
 
 import { KeyboardArrowRight } from '@mui/icons-material';
-import { Button, IconButton, Stack, Typography, styled } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  Stack,
+  Typography,
+  styled,
+} from '@mui/material';
 
 import { ItemType } from '@graasp/sdk';
 import { ItemIcon } from '@graasp/ui';
@@ -40,6 +47,7 @@ const RowMenu = ({
   isDisabled,
 }: RowMenuProps): JSX.Element | null => {
   const [isHoverActive, setIsHoverActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleHover = () => {
     setIsHoverActive(true);
@@ -82,9 +90,13 @@ const RowMenu = ({
             {item.name}
           </Typography>
         </StyledButton>
-        {(isHoverActive || selectedId === item.id) && (
+        {isLoading && <CircularProgress size={20} />}
+        {!isLoading && (isHoverActive || selectedId === item.id) && (
           <IconButton
-            onClick={() => onNavigate(item)}
+            onClick={() => {
+              setIsLoading(true);
+              onNavigate(item);
+            }}
             id={buildItemRowArrowId(item.id)}
             size="small"
           >

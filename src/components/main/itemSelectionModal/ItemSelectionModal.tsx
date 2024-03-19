@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Skeleton,
   Stack,
 } from '@mui/material';
 
@@ -57,14 +58,18 @@ const ItemSelectionModal = ({
   titleKey,
 }: ItemSelectionModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: items } = hooks.useItems(itemIds);
+  const { data: items, isLoading } = hooks.useItems(itemIds);
 
-  const title = computeTitle({
-    items,
-    count: itemIds.length - 1,
-    translateBuilder,
-    translateKey: titleKey,
-  });
+  const title = items ? (
+    computeTitle({
+      items,
+      count: itemIds.length - 1,
+      translateBuilder,
+      translateKey: titleKey,
+    })
+  ) : (
+    <Skeleton height={50} />
+  );
 
   // special elements for breadcrumbs
   // root displays specific paths
@@ -180,6 +185,13 @@ const ItemSelectionModal = ({
               items={Object.values(items.data)}
               rootMenuItems={[MY_GRAASP_BREADCRUMB]}
             />
+          )}
+          {isLoading && (
+            <>
+              <Skeleton height={50} />
+              <Skeleton height={50} />
+              <Skeleton height={50} />
+            </>
           )}
           {selectedNavigationItem.id === MY_GRAASP_BREADCRUMB.id && (
             <AccessibleNavigationTree
