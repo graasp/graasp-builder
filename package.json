@@ -87,12 +87,11 @@
     "prettier:write": "prettier --write {src,cypress}/**/*.{js,ts,tsx,json}",
     "type-check": "tsc --noEmit && tsc --noEmit -p cypress/tsconfig.json",
     "check": "yarn prettier:check && yarn lint && yarn type-check",
-    "hooks:uninstall": "husky uninstall",
-    "hooks:install": "husky install",
+    "postinstall": "yarn husky",
     "cypress:open": "env-cmd -f ./.env.test cypress open --browser chrome",
-    "test": "yarn build:test && concurrently -k -s first \"yarn preview:test\" \"yarn cypress:run\"",
+    "test": "yarn test:unit && yarn build:test && concurrently -k -s first \"yarn preview:test\" \"yarn cypress:run\"",
     "cypress:run": "env-cmd -f ./.env.test cypress run --browser chrome",
-    "postinstall": "husky install"
+    "test:unit": "yarn vitest"
   },
   "browserslist": {
     "production": [
@@ -148,7 +147,8 @@
     "typescript": "5.3.3",
     "vite": "5.1.4",
     "vite-plugin-checker": "0.6.4",
-    "vite-plugin-istanbul": "5.0.0"
+    "vite-plugin-istanbul": "5.0.0",
+    "vitest": "1.4.0"
   },
   "packageManager": "yarn@4.1.1"
 }

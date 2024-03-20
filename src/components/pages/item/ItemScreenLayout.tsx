@@ -28,6 +28,7 @@ const ItemScreenLayout = (): JSX.Element => {
   }, [itemId]);
 
   const { data: permission } = useGetPermissionForItem(item);
+  console.log('permission', permission);
   const canWrite = permission
     ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
     : false;
