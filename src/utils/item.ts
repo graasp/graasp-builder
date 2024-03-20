@@ -195,12 +195,12 @@ export const getHighestPermissionForMemberFromMemberships = ({
     ({ item: { path: mPath }, member: { id: mId } }) =>
       mId === memberId && itemPath.includes(mPath),
   );
-  if (!itemMemberships) {
+  if (!itemMemberships || itemMemberships.length === 0) {
     return null;
   }
 
   const sorted = [...itemMemberships];
-  sorted?.sort((a, b) => (a.item.path.length > b.item.path.length ? 1 : -1));
+  sorted?.sort((a, b) => (a.item.path.length > b.item.path.length ? -1 : 1));
 
   return sorted[0];
 };
