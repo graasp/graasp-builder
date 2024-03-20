@@ -11,7 +11,7 @@ import {
 describe('item utils', () => {
   it('isUrlValid', () => {
     expect(isUrlValid(null)).toBeFalsy();
-    expect(isUrlValid(undefined)).toBeFalsy();
+    expect(isUrlValid()).toBeFalsy();
     expect(isUrlValid('somelink')).toBeFalsy();
     expect(isUrlValid('graasp.eu')).toBeTruthy();
     expect(isUrlValid('https://graasp')).toBeFalsy();
@@ -50,7 +50,7 @@ describe('item utils', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       expect(getParentsIdsFromPath(null)).toEqual([]);
-      expect(getParentsIdsFromPath(undefined)).toEqual([]);
+      expect(getParentsIdsFromPath()).toEqual([]);
     });
     it('ignoreSelf = true', () => {
       expect(getParentsIdsFromPath('someid', { ignoreSelf: true })).toEqual([]);
