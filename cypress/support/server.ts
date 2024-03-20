@@ -18,6 +18,8 @@ import {
   RecycledItemData,
   ShortLink,
   ShortLinkPayload,
+  buildPathFromIds,
+  isRootItem,
 } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
@@ -25,12 +27,7 @@ import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { SETTINGS } from '../../src/config/constants';
-import {
-  getItemById,
-  isChild,
-  isRootItem,
-  transformIdForPath,
-} from '../../src/utils/item';
+import { getItemById } from '../../src/utils/item';
 import { getMemberById } from '../../src/utils/member';
 import {
   buildAppApiAccessTokenRoute,
@@ -262,7 +259,7 @@ export const mockPostItem = (
       return reply({
         ...body,
         id,
-        path: transformIdForPath(id),
+        path: buildPathFromIds(id),
         creator: CURRENT_USER.id,
       });
     },
@@ -437,7 +434,7 @@ export const mockGetChildren = ({
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
 
-      const children = items.filter(isChild(id));
+      const children = items.filter((elem) => isRootItem(elem));
 
       if (item.public) {
         return reply(children);
@@ -506,7 +503,7 @@ export const mockMoveItems = (
       const updated = ids.map((id) => getItemById(items, id));
       // actually update cached items
       for (const item of updated) {
-        let path = transformIdForPath(item.id);
+        let path = buildPathFromIds(item.id);
         if (body.parentId) {
           const parentItem = getItemById(items, body.parentId);
           path = `${parentItem.path}.${path}`;
@@ -546,7 +543,7 @@ export const mockCopyItems = (
       for (const item of original) {
         const newId = uuidv4();
         // actually copy
-        let path = transformIdForPath(newId);
+        let path = buildPathFromIds(newId);
         if (body.parentId) {
           const parentItem = getItemById(items, body.parentId);
           path = `${parentItem.path}.${path}`;

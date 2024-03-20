@@ -3,18 +3,11 @@ import { useEffect, useState } from 'react';
 
 import {
   DiscriminatedItem,
-  FolderItemExtra,
   ItemMembership,
   ItemType,
   getAppExtra,
   getLinkExtra,
 } from '@graasp/sdk';
-
-import { UUID_LENGTH } from '../config/constants';
-
-export const transformIdForPath = (id: string): string =>
-  // eslint-disable-next-line no-useless-escape
-  id.replace(/\-/g, '_');
 
 export const getParentsIdsFromPath = (
   path?: string,
@@ -40,14 +33,6 @@ export const getParentsIdsFromPath = (
   return ids;
 };
 
-export const buildPath = ({
-  prefix,
-  ids,
-}: {
-  prefix: string;
-  ids: string[];
-}): string => `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
-
 export function getItemById<T extends DiscriminatedItem>(
   items: T[],
   id: string,
@@ -63,21 +48,6 @@ export const getDirectParentId = (path: string): string | null => {
   }
   return ids[parentIdx];
 };
-
-export const isChild = (
-  id: string,
-): (({ path }: { path: string }) => RegExpMatchArray | null) => {
-  const reg = new RegExp(`${transformIdForPath(id)}(?=\\.[^\\.]*$)`);
-  return ({ path }) => path.match(reg);
-};
-
-export const getChildren = (
-  items: DiscriminatedItem[],
-  id: string,
-): DiscriminatedItem[] => items.filter(isChild(id));
-
-export const isRootItem = ({ path }: { path: string }): boolean =>
-  path.length === UUID_LENGTH;
 
 export const isUrlValid = (str?: string | null): boolean => {
   if (!str) {
@@ -131,10 +101,6 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
   return shouldHaveName && Boolean(hasValidTypeProperties);
 };
 
-export const getChildrenOrderFromFolderExtra = (
-  extra: FolderItemExtra,
-): string[] => extra[ItemType.FOLDER]?.childrenOrder ?? [];
-
 export const stripHtml = (str?: string | null): string =>
   str?.replace(/<[^>]*>?/gm, '') || '';
 
@@ -169,7 +135,7 @@ export function useIsParentInstance({
 
 // todo: to remove
 // get highest permission a member have over an item,
-// longer the itemPath, deeper is the permission, thus highested
+// longer the itemPath, deeper is the permission, thus highest
 export const getHighestPermissionForMemberFromMemberships = ({
   memberships,
   memberId,
@@ -192,6 +158,8 @@ export const getHighestPermissionForMemberFromMemberships = ({
   }
 
   const sorted = [...itemMemberships];
+
+  // sort memberships by the closest to you first (longest path)
   sorted?.sort((a, b) => (a.item.path.length > b.item.path.length ? -1 : 1));
 
   return sorted[0];
