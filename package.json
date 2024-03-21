@@ -42,7 +42,7 @@
     "date-fns": "3.3.1",
     "filesize": "10.1.0",
     "http-status-codes": "2.3.0",
-    "i18next": "23.10.0",
+    "i18next": "23.10.1",
     "katex": "0.16.9",
     "leaflet-geosearch": "3.11.1",
     "lodash.debounce": "4.0.8",

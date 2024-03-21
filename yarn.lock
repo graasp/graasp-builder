@@ -7614,7 +7614,7 @@ __metadata:
     filesize: "npm:10.1.0"
     http-status-codes: "npm:2.3.0"
     husky: "npm:9.0.11"
-    i18next: "npm:23.10.0"
+    i18next: "npm:23.10.1"
     katex: "npm:0.16.9"
     leaflet-geosearch: "npm:3.11.1"
     lodash.debounce: "npm:4.0.8"
@@ -7932,12 +7932,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:23.10.0":
-  version: 23.10.0
-  resolution: "i18next@npm:23.10.0"
+"i18next@npm:23.10.1":
+  version: 23.10.1
+  resolution: "i18next@npm:23.10.1"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10/d32293a40650783ac746ce476d220ac3285133de729b2c1da0e7c91bc396ec6728629e84ea4c06311ae37dc6b7984ca962d5b296deb58cf713ba477a2edbd0ea
+  checksum: 10/e4cfb143bdb6fd343f68749a40cf562aa47f11c7af0243c0533868ae097912c3ddd6c384eb4116d1fced024a91279424abd8c2d1f694bbf304c42ebe3968ecca
   languageName: node
   linkType: hard
 
