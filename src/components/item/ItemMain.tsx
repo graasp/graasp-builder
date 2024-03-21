@@ -62,7 +62,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
             direction="rtl"
           >
             <Typography variant="h6">
-              {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+            {translateBuilder(`${item.name}`)}
             </Typography>
           </DrawerHeader>
           <Divider />
