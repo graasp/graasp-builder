@@ -1658,20 +1658,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@graasp/query-client@npm:3.0.0"
+"@graasp/query-client@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@graasp/query-client@npm:3.0.1"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
-    axios: "npm:1.6.7"
+    axios: "npm:1.6.8"
     http-status-codes: "npm:2.3.0"
     qs: "npm:6.12.0"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/7d4290286c0d31fa2fb0fe9e68226b5fb75275f1d9846b3379a5a1526404926662d78c1b665551d66a8fd045d1aed1884b7274e2717b8dc93b1486b5aeccad3b
+  checksum: 10/f4a343d47157e1d79fdbfb423e38d8670e8b289528b30671b6cfafa87f9d99c116fdb385e46b75bcd8cb3e6fa4c258a15ec1c542a9d47ba8ca4b02b2a3eae045
   languageName: node
   linkType: hard
 
@@ -4804,6 +4804,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:1.6.8":
+  version: 1.6.8
+  resolution: "axios@npm:1.6.8"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/3f9a79eaf1d159544fca9576261ff867cbbff64ed30017848e4210e49f3b01e97cf416390150e6fdf6633f336cd43dc1151f890bbd09c3c01ad60bb0891eee63
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^3.2.1":
   version: 3.2.1
   resolution: "axobject-query@npm:3.2.1"
@@ -7447,6 +7458,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.15.6":
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 10/70c7612c4cab18e546e36b991bbf8009a1a41cf85354afe04b113d1117569abf760269409cb3eb842d9f7b03d62826687086b081c566ea7b1e6613cf29030bf7
+  languageName: node
+  linkType: hard
+
 "for-each@npm:^0.3.3":
   version: 0.3.3
   resolution: "for-each@npm:0.3.3"
@@ -7899,7 +7920,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.4.0"
-    "@graasp/query-client": "npm:3.0.0"
+    "@graasp/query-client": "npm:3.0.1"
     "@graasp/sdk": "npm:4.2.1"
     "@graasp/translations": "npm:1.25.2"
     "@graasp/ui": "npm:4.11.0"
