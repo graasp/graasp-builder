@@ -7630,7 +7630,7 @@ __metadata:
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
     react-ga4: "npm:2.1.0"
-    react-i18next: "npm:14.0.5"
+    react-i18next: "npm:14.0.8"
     react-image-crop: "npm:11.0.5"
     react-qr-code: "npm:2.0.12"
     react-query: "npm:3.39.3"
@@ -11412,24 +11412,6 @@ __metadata:
   version: 2.1.0
   resolution: "react-ga4@npm:2.1.0"
   checksum: 10/e47edd040b7a272d35df732e08c4a8b6b14add659db04fb81a3a2cbde59bf34dc6eae9e0b8b4abd8937d11c837954773a6ba86feb2c605e5eb916f4c99e420c7
-  languageName: node
-  linkType: hard
-
-"react-i18next@npm:14.0.5":
-  version: 14.0.5
-  resolution: "react-i18next@npm:14.0.5"
-  dependencies:
-    "@babel/runtime": "npm:^7.23.9"
-    html-parse-stringify: "npm:^3.0.1"
-  peerDependencies:
-    i18next: ">= 23.2.3"
-    react: ">= 16.8.0"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 10/4c91d4b889ab1ab05d7cda050890f7f41c4a73dadfef4778770a53b0d2f98e9d80f04da5086790706349d8a80cf09eec0c539fc1020a7c6fead562511dd2a2cf
   languageName: node
   linkType: hard
 
