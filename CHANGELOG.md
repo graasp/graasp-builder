@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.12.1](https://github.com/graasp/graasp-builder/compare/v2.12.0...v2.12.1) (2024-03-21)
+
+
+### Bug Fixes
+
+* permision function ([#1086](https://github.com/graasp/graasp-builder/issues/1086)) ([b6d5ab0](https://github.com/graasp/graasp-builder/commit/b6d5ab0ac8d17ed96b582281165f0fd0c82e5e2a))
+
 ## [2.12.0](https://github.com/graasp/graasp-builder/compare/v2.11.0...v2.12.0) (2024-03-19)
 
 
