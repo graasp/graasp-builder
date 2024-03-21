@@ -7976,7 +7976,7 @@ __metadata:
     react-quill: "npm:2.0.0"
     react-router: "npm:6.22.3"
     react-router-dom: "npm:6.22.3"
-    react-toastify: "npm:10.0.4"
+    react-toastify: "npm:10.0.5"
     short-uuid: "npm:4.2.2"
     stylis: "npm:4.3.1"
     stylis-plugin-rtl: "npm:2.1.1"
@@ -12021,6 +12021,18 @@ __metadata:
     react: ">=16"
     react-dom: ">=16"
   checksum: 10/57f4d0032bf328381bdfeb78ab5efa988d425627a61ffa43b0caa184633a0ea44253a349d6b967247fa3d480ad82a2bbaa9063ce3f89be9550eb9b30398a6837
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:10.0.5":
+  version: 10.0.5
+  resolution: "react-toastify@npm:10.0.5"
+  dependencies:
+    clsx: "npm:^2.1.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10/6630f4b6d6902d827efd5e66c09df693c7ab8abeeb6ef24d880080f47b636614ef9cc251dd5e6564d49fe2f6f25f720ce0f7ef72cd4b0cd58a65b7c4b8052fac
   languageName: node
   linkType: hard
 
