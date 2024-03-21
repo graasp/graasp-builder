@@ -7623,7 +7623,7 @@ __metadata:
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
     react-ga4: "npm:2.1.0"
-    react-i18next: "npm:14.0.5"
+    react-i18next: "npm:14.1.0"
     react-image-crop: "npm:11.0.5"
     react-qr-code: "npm:2.0.12"
     react-query: "npm:3.39.3"
@@ -11408,24 +11408,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:14.0.5":
-  version: 14.0.5
-  resolution: "react-i18next@npm:14.0.5"
-  dependencies:
-    "@babel/runtime": "npm:^7.23.9"
-    html-parse-stringify: "npm:^3.0.1"
-  peerDependencies:
-    i18next: ">= 23.2.3"
-    react: ">= 16.8.0"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 10/4c91d4b889ab1ab05d7cda050890f7f41c4a73dadfef4778770a53b0d2f98e9d80f04da5086790706349d8a80cf09eec0c539fc1020a7c6fead562511dd2a2cf
-  languageName: node
-  linkType: hard
-
 "react-i18next@npm:14.0.8":
   version: 14.0.8
   resolution: "react-i18next@npm:14.0.8"
@@ -11441,6 +11423,24 @@ __metadata:
     react-native:
       optional: true
   checksum: 10/5481cafa322476663e339d6eed2e4fb13e14fcb575bce9fc205bbc71da6d3a3392a1377d7eb59371357d14994b147d36214ec319ca2f7d85cd3526abfda54705
+  languageName: node
+  linkType: hard
+
+"react-i18next@npm:14.1.0":
+  version: 14.1.0
+  resolution: "react-i18next@npm:14.1.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.9"
+    html-parse-stringify: "npm:^3.0.1"
+  peerDependencies:
+    i18next: ">= 23.2.3"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 10/47b050ff3d8e43e8b56ca6b57f67c3feaecdb629b47eeb3923b4f43312b89af3e9373e93ada72420ad3199fc340605929512134eefcb55844f0eaa6bc0785613
   languageName: node
   linkType: hard
 
