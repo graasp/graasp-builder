@@ -3,6 +3,8 @@ import { Box, Divider, Typography, styled } from '@mui/material';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { DrawerHeader } from '@graasp/ui';
 
+import { BUILDER } from '@/langs/constants';
+
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
@@ -61,7 +63,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
             direction="rtl"
           >
             <Typography variant="h6">
-              {translateBuilder(`"${item.name}"`)} chat
+              {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)} {`"${item.name}"`}
             </Typography>
           </DrawerHeader>
           <Divider />
