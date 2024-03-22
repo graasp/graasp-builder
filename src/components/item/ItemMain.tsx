@@ -6,7 +6,6 @@ import { DrawerHeader } from '@graasp/ui';
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
 import Chatbox from '../common/Chatbox';
 import { useLayoutContext } from '../context/LayoutContext';
 import ItemPanel from './ItemPanel';
@@ -62,7 +61,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
             direction="rtl"
           >
             <Typography variant="h6">
-            {translateBuilder(`${item.name}`)}
+              {translateBuilder(`"${item.name}"`)} chat
             </Typography>
           </DrawerHeader>
           <Divider />
