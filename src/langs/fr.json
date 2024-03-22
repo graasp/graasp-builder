@@ -79,7 +79,7 @@
   "INVITATIONS_TABLE_INVITATION_HEADER": "Invitation",
   "INVITATIONS_TABLE_PERMISSION_HEADER": "Permission",
   "ITEM_CATEGORIES_SELECTION_TITLE": "Catégories",
-  "ITEM_CHATBOX_TITLE": "Discussion pour",
+  "ITEM_CHATBOX_TITLE": "Discussion pour \"{{name}}\"",
   "ITEM_MEMBERSHIP_PERMISSION_LABEL": "Permission",
   "ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER": "Actions",
   "ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP": "Cette permission est définie dans l'élément parent, et ne peut pas être supprimée ici.",
