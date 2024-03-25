@@ -41,6 +41,7 @@ const NameForm = ({
       // only take full width when on small screen size
       fullWidth={!largeScreen}
       sx={{ my: 1, width: largeScreen ? '50%' : undefined }}
+      helperText={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_HELPER_TEXT)}
     />
   );
 };
