@@ -12,11 +12,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { CountryForm } from '@graasp/map';
 import { DiscriminatedItem } from '@graasp/sdk';
+import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
 import notifier from '@/config/notifier';
 import { hooks, mutations } from '@/config/queryClient';
+import { BUILDER } from '@/langs/constants';
 
 type Props = {
   item: DiscriminatedItem;
@@ -39,10 +41,8 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
     setOpen(true);
   };
 
-  const handleClose = (value: string) => {
+  const handleClose = () => {
     setOpen(false);
-    // eslint-disable-next-line no-console
-    console.log(value);
   };
 
   const onSave = () => {
@@ -51,8 +51,10 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
 
     if (!lat || !lng) {
       notifier({
-        type: 'geolocation error',
-        payload: { error: new Error('error') },
+        type: 'PUT_GEOLOCATION_ERROR',
+        payload: {
+          error: new Error(t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_ERROR)),
+        },
       });
       return;
     }
@@ -70,39 +72,21 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
     setOpen(false);
   };
 
-  // const onChangeOption: GeolocationPickerProps['onChangeOption'] = (option: {
-  //   addressLabel: string;
-  //   lat: number;
-  //   lng: number;
-  //   country?: string;
-  // }): void => {
-  //   const { addressLabel, lat, lng, country } = option;
-  //   // putGeoloc({
-  //   //   itemId: item.id,
-  //   //   geolocation: {
-  //   //     addressLabel,
-  //   //     lat,
-  //   //     lng,
-  //   //     country,
-  //   //   },
-  //   // });
-  // };
-
   return (
     <>
       <Button variant="text" onClick={handleClickOpen}>
-        {t('Advanced')}
+        {t(BUILDER.ITEM_GEOLOCATION_ADVANCED_BUTTON)}
       </Button>
       <Dialog onClose={handleClose} open={open} scroll="body">
-        <DialogTitle>{t('Geolocation Advanced Settings')}</DialogTitle>
+        <DialogTitle>
+          {t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_TITLE)}
+        </DialogTitle>
 
         <DialogContent>
           <Stack gap={2}>
             <Stack>
               <DialogContentText>
-                {t(
-                  "Any information submitted with this form won't be validated. You are responsible for the accuracy of the data.",
-                )}
+                {t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_DESCRIPTION)}
               </DialogContentText>
             </Stack>
             <Stack direction="row" gap={2}>
@@ -110,7 +94,9 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                 <TextField
                   inputRef={latRef}
                   defaultValue={geoloc?.lat}
-                  label="latitude"
+                  label={t(
+                    BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_LATITUDE_LABEL,
+                  )}
                   type="number"
                 />
               </Stack>
@@ -118,7 +104,9 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                 <TextField
                   inputRef={lngRef}
                   defaultValue={geoloc?.lng}
-                  label="longitude"
+                  label={t(
+                    BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_LONGITUDE_LABEL,
+                  )}
                   type="number"
                 />
               </Stack>
@@ -126,7 +114,7 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
             <Stack>
               <TextField
                 inputRef={addressLabelRef}
-                label="Address"
+                label={t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_ADDRESS_LABEL)}
                 multiline
                 defaultValue={geoloc?.addressLabel ?? undefined}
               />
@@ -136,13 +124,17 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                 inputRef={helperLabelRef}
                 defaultValue={geoloc?.helperLabel ?? undefined}
                 multiline
-                label="Complementary information (optional)"
-                placeholder="red door on the right, ..."
+                label={t(
+                  BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_LABEL,
+                )}
+                placeholder={t(
+                  BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_PLACEHOLDER,
+                )}
               />
             </Stack>
             <Stack>
               <CountryForm
-                label="Country"
+                label={t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_COUNTRY_LABEL)}
                 initialValue={geoloc?.country ?? undefined}
                 onChange={(e) => {
                   // eslint-disable-next-line no-console
@@ -153,8 +145,8 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button variant="text">{commonT('Close')}</Button>
-          <Button onClick={onSave}>{commonT('Save')}</Button>
+          <Button variant="text">{commonT(COMMON.CANCEL_BUTTON)}</Button>
+          <Button onClick={onSave}>{commonT(COMMON.SAVE_BUTTON)}</Button>
         </DialogActions>
       </Dialog>
     </>
