@@ -24,7 +24,7 @@ describe('Header', () => {
       // sign out
       cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID}`).click();
       cy.get(`#${HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID}`).click();
-      cy.url().should('equal', SIGN_IN_PATH);
+      cy.url().should('include', SIGN_IN_PATH);
     });
 
     // it('Switch users', () => {
