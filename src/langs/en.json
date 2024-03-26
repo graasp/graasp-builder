@@ -90,7 +90,7 @@
   "INVITATIONS_TABLE_INVITATION_HEADER": "Invitation",
   "INVITATIONS_TABLE_PERMISSION_HEADER": "Permission",
   "ITEM_CATEGORIES_SELECTION_TITLE": "Category",
-  "ITEM_CHATBOX_TITLE": "Chatbox",
+  "ITEM_CHATBOX_TITLE": "\"{{name}}\" Chatbox ",
   "ITEM_MEMBERSHIP_PERMISSION_LABEL": "Permission",
   "ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER": "Actions",
   "ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP": "This membership is defined in the parent item and cannot be deleted here.",

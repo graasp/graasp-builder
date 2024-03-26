@@ -3,10 +3,11 @@ import { Box, Divider, Typography, styled } from '@mui/material';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { DrawerHeader } from '@graasp/ui';
 
+import { BUILDER } from '@/langs/constants';
+
 import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
 import Chatbox from '../common/Chatbox';
 import { useLayoutContext } from '../context/LayoutContext';
 import ItemPanel from './ItemPanel';
@@ -62,7 +63,9 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
             direction="rtl"
           >
             <Typography variant="h6">
-              {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+              {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE, {
+                name: item.name,
+              })}
             </Typography>
           </DrawerHeader>
           <Divider />
