@@ -343,7 +343,7 @@
   "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE": "Placement de la description",
   "ITEM_GEOLOCATION_ADVANCED_BUTTON": "Localisation avancée",
   "ITEM_GEOLOCATION_ADVANCED_MODAL_TITLE": "Paramètres avancés pour la localisation",
-  "ITEM_GEOLOCATION_ADVANCED_MODAL_DESCRIPTION": "Aucune information soumise par ce formulaire ne sera validée. L'exactitude des données revient à l'éditeur.",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_DESCRIPTION": "Les informations fournies via ce formulaire ne sont pas validées. Vérifiez l'exactitude des données.",
   "ITEM_GEOLOCATION_ADVANCED_MODAL_LATITUDE_LABEL": "Latitude",
   "ITEM_GEOLOCATION_ADVANCED_MODAL_LONGITUDE_LABEL": "Longitude",
   "ITEM_GEOLOCATION_ADVANCED_MODAL_ADDRESS_LABEL": "Adresse",
