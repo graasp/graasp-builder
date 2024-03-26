@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.13.0](https://github.com/graasp/graasp-builder/compare/v2.12.1...v2.13.0) (2024-03-26)
+
+
+### Features
+
+* add geolocation modal ([#1112](https://github.com/graasp/graasp-builder/issues/1112)) ([efcda2e](https://github.com/graasp/graasp-builder/commit/efcda2e98293eb3d3d36d7878c12e24a3403e7d5))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/query-client to v3.0.1 ([#1091](https://github.com/graasp/graasp-builder/issues/1091)) ([a487532](https://github.com/graasp/graasp-builder/commit/a487532325adadfc20fa89721a877a547e2509de))
+* **deps:** update dependency @graasp/sdk to v4.2.1 ([#1048](https://github.com/graasp/graasp-builder/issues/1048)) ([fcbb627](https://github.com/graasp/graasp-builder/commit/fcbb627a1b9406d1d524b85d7141b70a628a7477))
+* **deps:** update dependency @graasp/translations to v1.25.3 ([#1092](https://github.com/graasp/graasp-builder/issues/1092)) ([65e7209](https://github.com/graasp/graasp-builder/commit/65e7209c1018581c347f31d9ef57d57d10fb283c))
+* **deps:** update dependency @sentry/react to v7.107.0 ([#1078](https://github.com/graasp/graasp-builder/issues/1078)) ([4247b52](https://github.com/graasp/graasp-builder/commit/4247b522b141e9502eefeaa308377767f9ff1955))
+* **deps:** update dependency axios to v1.6.8 ([#1093](https://github.com/graasp/graasp-builder/issues/1093)) ([b38bb1e](https://github.com/graasp/graasp-builder/commit/b38bb1e5cc10f7bce2aa2e560b4649403d58874d))
+* **deps:** update dependency date-fns to v3.6.0 ([#1105](https://github.com/graasp/graasp-builder/issues/1105)) ([a12bedd](https://github.com/graasp/graasp-builder/commit/a12bedda2c3cdd4c838facfbb644cfe765e5de9a))
+* **deps:** update dependency filesize to v10.1.1 ([#1097](https://github.com/graasp/graasp-builder/issues/1097)) ([3b93b2b](https://github.com/graasp/graasp-builder/commit/3b93b2b8185b69f315077ce3803fc4dbab2d2acf))
+* **deps:** update dependency i18next to v23.10.1 ([#1073](https://github.com/graasp/graasp-builder/issues/1073)) ([b4a5b0d](https://github.com/graasp/graasp-builder/commit/b4a5b0d0094c859d7bbca185548497638c1f50de))
+* **deps:** update dependency katex to v0.16.10 ([#1107](https://github.com/graasp/graasp-builder/issues/1107)) ([63c9d66](https://github.com/graasp/graasp-builder/commit/63c9d668709022593ddc3128abf205e3ce56f5b4))
+* **deps:** update dependency react-i18next to v14.1.0 ([#1070](https://github.com/graasp/graasp-builder/issues/1070)) ([4f766d0](https://github.com/graasp/graasp-builder/commit/4f766d05f05432ac7a0c31b76f277add3daba7b0))
+* **deps:** update dependency react-toastify to v10.0.5 ([#1098](https://github.com/graasp/graasp-builder/issues/1098)) ([277a409](https://github.com/graasp/graasp-builder/commit/277a409c126fc2836ccc224fd993b3e283a32e5e))
+* **deps:** update react-router monorepo to v6.22.3 ([#1072](https://github.com/graasp/graasp-builder/issues/1072)) ([04e9ace](https://github.com/graasp/graasp-builder/commit/04e9aceaab83ab99e8d37c2c30a5b96e655df445))
+* **deps:** update uppy packages ([#1079](https://github.com/graasp/graasp-builder/issues/1079)) ([3c8ed96](https://github.com/graasp/graasp-builder/commit/3c8ed963e3c4a46c7cb7031600dca69a7f217b1d))
+* rename chatbox title ([#1094](https://github.com/graasp/graasp-builder/issues/1094)) ([4cef3af](https://github.com/graasp/graasp-builder/commit/4cef3afb7b76914e54a6406f77d78d5673434d4b))
+
 ## [2.12.1](https://github.com/graasp/graasp-builder/compare/v2.12.0...v2.12.1) (2024-03-21)
 
 
