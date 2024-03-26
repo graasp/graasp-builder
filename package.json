@@ -21,7 +21,7 @@
     "@emotion/styled": "11.11.0",
     "@graasp/chatbox": "3.1.0",
     "@graasp/map": "1.5.0",
-    "@graasp/query-client": "github:graasp/graasp-query-client#helper-label-geoloc",
+    "@graasp/query-client": "3.2.0",
     "@graasp/sdk": "4.3.1",
     "@graasp/translations": "1.25.3",
     "@graasp/ui": "4.12.1",

@@ -1754,9 +1754,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#helper-label-geoloc":
-  version: 3.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=60cdf7e21b0b337df1a008645ed87cddfbc66a56"
+"@graasp/query-client@npm:3.2.0":
+  version: 3.2.0
+  resolution: "@graasp/query-client@npm:3.2.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1767,7 +1767,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/d726c9a8cd9b20919746aacad6dec99fb120dc2f687f4777c5469d731eecc25dda98d79b52ab13818cc1bf3cba870ebe8557155cf202606df113a4470c0511aa
+  checksum: 10/58a27034f5c7fb4cd2530f3d15d5a22259e28f9d8fa028e2e3a93a10bbf7f5916b3f126d5b85a7a1c256103d9f26802751112ee74ba1cff4484676ad55940797
   languageName: node
   linkType: hard
 
@@ -8065,7 +8065,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.5.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#helper-label-geoloc"
+    "@graasp/query-client": "npm:3.2.0"
     "@graasp/sdk": "npm:4.3.1"
     "@graasp/translations": "npm:1.25.3"
     "@graasp/ui": "npm:4.12.1"
