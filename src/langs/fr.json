@@ -340,5 +340,15 @@
   "ITEM_SETTINGS_IS_COLLAPSED_TITLE": "Minifier un élément",
   "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE": "Au-dessus du contenu",
   "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_BELOW": "En-dessous du contenu",
-  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE": "Placement de la description"
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE": "Placement de la description",
+  "ITEM_GEOLOCATION_ADVANCED_BUTTON": "Localisation avancée",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_TITLE": "Paramètres avancés pour la localisation",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_DESCRIPTION": "Les informations fournies via ce formulaire ne sont pas validées. Vérifiez l'exactitude des données.",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_LATITUDE_LABEL": "Latitude",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_LONGITUDE_LABEL": "Longitude",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_ADDRESS_LABEL": "Adresse",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_LABEL": "Informations complémentaires (optionel)",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_PLACEHOLDER": "porte rouge sur la droite, ...",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_COUNTRY_LABEL": "Pays",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_ERROR": "La latitude et longitude doivent être définies"
 }

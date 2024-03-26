@@ -355,5 +355,15 @@
   "ITEM_SETTINGS_IS_COLLAPSED_TITLE": "Collapse item",
   "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE": "Above the content",
   "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_BELOW": "Below the content",
-  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE": "Placement of the description"
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE": "Placement of the description",
+  "ITEM_GEOLOCATION_ADVANCED_BUTTON": "Advanced Location",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_TITLE": "Geolocation Advanced Settings",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_DESCRIPTION": "Any information submitted with this form won't be validated. You are responsible for the accuracy of the data.",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_LATITUDE_LABEL": "Latitude",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_LONGITUDE_LABEL": "Longitude",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_ADDRESS_LABEL": "Address",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_LABEL": "Complementary information (optional)",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_PLACEHOLDER": "red door on the right, ...",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_COUNTRY_LABEL": "Country",
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_ERROR": "Latitude and longitude have to be defined"
 }
