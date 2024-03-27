@@ -43,6 +43,7 @@ const licensePreviewStyle = {
   border: '1px solid #eee',
   borderRadius: 2,
   minWidth: 300,
+  alignItems: 'center',
 };
 
 const CCLicenseSelection = ({
@@ -283,11 +284,7 @@ const CCLicenseSelection = ({
 
       {settings?.ccLicenseAdaption && !confirmationStep && (
         <>
-          <Typography
-            variant="subtitle1"
-            mt={2}
-            textAlign={alignLicenseToCenter ? 'center' : 'left'}
-          >
+          <Typography variant="subtitle1" mt={2}>
             {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
           </Typography>
           <Box
