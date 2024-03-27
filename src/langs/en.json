@@ -355,5 +355,8 @@
   "ITEM_SETTINGS_IS_COLLAPSED_TITLE": "Collapse item",
   "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_ABOVE": "Above the content",
   "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_BELOW": "Below the content",
-  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE": "Placement of the description"
+  "ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE": "Placement of the description",
+  "ITEM_SETTINGS_LICENSE_TITLE": "License Settings",
+  "CANCEL_BUTTON": "Cancel",
+  "UPDATE_LICENSE": "Update License"
 }

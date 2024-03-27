@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 import {
   Box,
+  Button,
   FormControlLabel,
   Radio,
   RadioGroup,
@@ -32,6 +33,10 @@ type CCSharingLicenseChoice = CCLicenseChoice | 'alike';
 type Props = {
   item: DiscriminatedItem;
   disabled: boolean;
+  confirmSubmitInNewDialog?: boolean;
+  setConfirmationStep?: (b: boolean) => void;
+  confirmationStep?: boolean;
+  onSubmit?: () => void;
 };
 
 const licensePreviewStyle = {
@@ -40,7 +45,14 @@ const licensePreviewStyle = {
   minWidth: 300,
 };
 
-const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
+const CCLicenseSelection = ({
+  item,
+  disabled,
+  confirmSubmitInNewDialog = true,
+  setConfirmationStep,
+  confirmationStep,
+  onSubmit,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: updateCCLicense } = mutations.useEditItem();
 
@@ -124,132 +136,164 @@ const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
       console.error(`optionValue "${requireAttributionValue}" is undefined`);
     }
     setOpen(false);
+    onSubmit?.();
   };
+
+  const alignLicenseToCenter = !confirmSubmitInNewDialog;
 
   return (
     <Box mx={3}>
-      <Typography variant="body1">
-        {translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
-      </Typography>
-      <Box mx={3}>
-        <RadioGroup
-          aria-label={translateBuilder(
-            BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE,
-          )}
-          name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
-          value={requireAttributionValue}
-          onChange={handleAttributionChange}
-        >
-          <FormControlLabel
-            id={CC_REQUIRE_ATTRIBUTION_CONTROL_ID}
-            value="yes"
-            control={<Radio color="primary" />}
-            disabled={disabled}
-            label={translateBuilder(
-              BUILDER.ITEM_SETTINGS_CC_REQUIRE_ATTRIBUTION_OPTION_LABEL,
-            )}
-          />
-          <FormControlLabel
-            id={CC_CC0_CONTROL_ID}
-            value="no"
-            control={<Radio color="primary" />}
-            disabled={disabled}
-            label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_CC0_OPTION_LABEL)}
-          />
-        </RadioGroup>
-      </Box>
-      {requireAttributionValue === 'yes' && (
+      {!confirmationStep && (
         <>
           <Typography variant="body1">
-            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE)}
+            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
           </Typography>
           <Box mx={3}>
             <RadioGroup
               aria-label={translateBuilder(
-                BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE,
+                BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE,
               )}
-              name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE)}
-              value={allowCommercialValue}
-              onChange={handleCommercialChange}
+              name={translateBuilder(
+                BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE,
+              )}
+              value={requireAttributionValue}
+              onChange={handleAttributionChange}
             >
               <FormControlLabel
-                id={CC_ALLOW_COMMERCIAL_CONTROL_ID}
+                id={CC_REQUIRE_ATTRIBUTION_CONTROL_ID}
                 value="yes"
                 control={<Radio color="primary" />}
                 disabled={disabled}
                 label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_ALLOW_COMMERCIAL_OPTION_LABEL,
+                  BUILDER.ITEM_SETTINGS_CC_REQUIRE_ATTRIBUTION_OPTION_LABEL,
                 )}
               />
               <FormControlLabel
-                id={CC_DISALLOW_COMMERCIAL_CONTROL_ID}
+                id={CC_CC0_CONTROL_ID}
                 value="no"
                 control={<Radio color="primary" />}
                 disabled={disabled}
                 label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_DISALLOW_COMMERCIAL_OPTION_LABEL,
+                  BUILDER.ITEM_SETTINGS_CC_CC0_OPTION_LABEL,
                 )}
               />
             </RadioGroup>
           </Box>
-          <Typography variant="body1">
-            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_REMIX_TITLE)}
-          </Typography>
-          <Box mx={3}>
-            <RadioGroup
-              aria-label={translateBuilder(
-                BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL,
-              )}
-              name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
-              value={allowSharingValue}
-              onChange={handleSharingChange}
-            >
-              <FormControlLabel
-                id={CC_DERIVATIVE_CONTROL_ID}
-                value="yes"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_ALLOW_REMIX_OPTION_LABEL,
-                )}
-              />
-              <FormControlLabel
-                id={CC_SHARE_ALIKE_CONTROL_ID}
-                value="alike"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_ALLOW_SHARE_ALIKE_REMIX_OPTION_LABEL,
-                )}
-              />
-              <FormControlLabel
-                id={CC_NO_DERIVATIVE_CONTROL_ID}
-                value="no"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_DISALLOW_REMIX_OPTION_LABEL,
-                )}
-              />
-            </RadioGroup>
-          </Box>
+          {requireAttributionValue === 'yes' && (
+            <>
+              <Typography variant="body1">
+                {translateBuilder(BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE)}
+              </Typography>
+              <Box mx={3}>
+                <RadioGroup
+                  aria-label={translateBuilder(
+                    BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE,
+                  )}
+                  name={translateBuilder(
+                    BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE,
+                  )}
+                  value={allowCommercialValue}
+                  onChange={handleCommercialChange}
+                >
+                  <FormControlLabel
+                    id={CC_ALLOW_COMMERCIAL_CONTROL_ID}
+                    value="yes"
+                    control={<Radio color="primary" />}
+                    disabled={disabled}
+                    label={translateBuilder(
+                      BUILDER.ITEM_SETTINGS_CC_ALLOW_COMMERCIAL_OPTION_LABEL,
+                    )}
+                  />
+                  <FormControlLabel
+                    id={CC_DISALLOW_COMMERCIAL_CONTROL_ID}
+                    value="no"
+                    control={<Radio color="primary" />}
+                    disabled={disabled}
+                    label={translateBuilder(
+                      BUILDER.ITEM_SETTINGS_CC_DISALLOW_COMMERCIAL_OPTION_LABEL,
+                    )}
+                  />
+                </RadioGroup>
+              </Box>
+              <Typography variant="body1">
+                {translateBuilder(BUILDER.ITEM_SETTINGS_CC_REMIX_TITLE)}
+              </Typography>
+              <Box mx={3}>
+                <RadioGroup
+                  aria-label={translateBuilder(
+                    BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL,
+                  )}
+                  name={translateBuilder(
+                    BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL,
+                  )}
+                  value={allowSharingValue}
+                  onChange={handleSharingChange}
+                >
+                  <FormControlLabel
+                    id={CC_DERIVATIVE_CONTROL_ID}
+                    value="yes"
+                    control={<Radio color="primary" />}
+                    disabled={disabled}
+                    label={translateBuilder(
+                      BUILDER.ITEM_SETTINGS_CC_ALLOW_REMIX_OPTION_LABEL,
+                    )}
+                  />
+                  <FormControlLabel
+                    id={CC_SHARE_ALIKE_CONTROL_ID}
+                    value="alike"
+                    control={<Radio color="primary" />}
+                    disabled={disabled}
+                    label={translateBuilder(
+                      BUILDER.ITEM_SETTINGS_CC_ALLOW_SHARE_ALIKE_REMIX_OPTION_LABEL,
+                    )}
+                  />
+                  <FormControlLabel
+                    id={CC_NO_DERIVATIVE_CONTROL_ID}
+                    value="no"
+                    control={<Radio color="primary" />}
+                    disabled={disabled}
+                    label={translateBuilder(
+                      BUILDER.ITEM_SETTINGS_CC_DISALLOW_REMIX_OPTION_LABEL,
+                    )}
+                  />
+                </RadioGroup>
+              </Box>
+            </>
+          )}
         </>
       )}
+
+      {confirmSubmitInNewDialog && (
+        <Button
+          variant="contained"
+          onClick={() => setOpen(true)}
+          disabled={disabled || !requireAttributionValue} // disable the button if no option is selected
+        >
+          {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_SUBMIT_BUTTON)}
+        </Button>
+      )}
       <CCLicenseDialog
-        disabled={disabled}
         open={open}
         setOpen={setOpen}
-        buttonName={translateBuilder(
-          BUILDER.ITEM_SETTINGS_CC_LICENSE_SUBMIT_BUTTON,
-        )}
+        handleBack={() => setConfirmationStep?.(false)}
+        isNewDialog={!confirmationStep}
         handleSubmit={handleSubmit}
+        disableSubmission={!requireAttributionValue}
       />
-      {settings?.ccLicenseAdaption && (
+
+      {settings?.ccLicenseAdaption && !confirmationStep && (
         <>
-          <Typography variant="subtitle1">
+          <Typography
+            variant="subtitle1"
+            mt={2}
+            textAlign={alignLicenseToCenter ? 'center' : 'left'}
+          >
             {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
           </Typography>
-          <Box display="flex" justifyContent="left">
+          <Box
+            display="flex"
+            justifyContent={alignLicenseToCenter ? 'center' : 'left'}
+          >
             <CreativeCommons
               requireAccreditation={requireAttributionValue === 'yes'}
               allowSharedAdaptation={allowSharingValue as CCSharingVariant}
