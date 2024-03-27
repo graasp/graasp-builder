@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
-import { TextField, useMediaQuery, useTheme } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import { IconButton, TextField, useMediaQuery, useTheme } from '@mui/material';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
@@ -27,6 +28,10 @@ const NameForm = ({
     setChanges({ name: event.target.value });
   };
 
+  const handleClearClick = () => {
+    setChanges({ name: '' });
+  };
+
   return (
     <TextField
       variant="standard"
@@ -38,6 +43,17 @@ const NameForm = ({
       onChange={handleNameInput}
       // always shrink because setting name from defined app does not shrink automatically
       InputLabelProps={{ shrink: true }}
+      // add a clear icon button
+      InputProps={{
+        endAdornment: (
+          <IconButton
+            onClick={handleClearClick}
+            sx={{ visibility: updatedProperties?.name ? 'visible' : 'hidden' }}
+          >
+            <ClearIcon fontSize="small" />
+          </IconButton>
+        ),
+      }}
       // only take full width when on small screen size
       fullWidth={!largeScreen}
       sx={{ my: 1, width: largeScreen ? '50%' : undefined }}
