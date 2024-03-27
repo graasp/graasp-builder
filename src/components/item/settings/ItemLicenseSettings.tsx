@@ -28,7 +28,7 @@ const convertLicense = (ccLicenseAdaption: string) => {
     requireAccreditation: ccLicenseAdaption?.includes('BY'),
     allowCommercialUse: !ccLicenseAdaption?.includes('NC'),
     allowSharing: (() => {
-      if (!ccLicenseAdaption || !ccLicenseAdaption.length) {
+      if (!ccLicenseAdaption?.length) {
         return '';
       }
       if (ccLicenseAdaption?.includes('SA')) {
