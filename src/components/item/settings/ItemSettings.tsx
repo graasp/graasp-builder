@@ -7,6 +7,7 @@ import { OutletType } from '@/components/pages/item/type';
 import CustomizedTagsEdit from '../publish/CustomizedTagsEdit';
 import AdminChatSettings from './AdminChatSettings';
 import GeolocationPicker from './GeolocationPicker';
+import ItemLicenseSettings from './ItemLicenseSettings';
 import ItemMetadataContent from './ItemMetadataContent';
 import ItemSettingsProperties from './ItemSettingsProperties';
 
@@ -21,6 +22,8 @@ const ItemSettings = (): JSX.Element => {
       <GeolocationPicker item={item} />
 
       <ItemSettingsProperties item={item} />
+
+      <ItemLicenseSettings />
 
       <AdminChatSettings item={item} />
     </Container>
