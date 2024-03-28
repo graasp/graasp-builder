@@ -24,7 +24,7 @@
     "@graasp/query-client": "3.2.0",
     "@graasp/sdk": "4.3.1",
     "@graasp/translations": "1.25.3",
-    "@graasp/ui": "4.12.1",
+    "@graasp/ui": "github:graasp/graasp-ui#772-change-fonts",
     "@mui/icons-material": "5.15.11",
     "@mui/lab": "5.0.0-alpha.166",
     "@mui/material": "5.15.11",
