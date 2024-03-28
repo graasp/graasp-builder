@@ -861,7 +861,7 @@ export const mockSignInRedirection = (): void => {
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: SIGN_IN_PATH,
+      pathname: new URL(SIGN_IN_PATH).pathname,
     },
     ({ reply }) => {
       reply(redirectionReply);

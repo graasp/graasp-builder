@@ -1,11 +1,10 @@
 import { Outlet, useLocation } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 
-import { saveUrlForRedirection } from '@graasp/sdk';
+import { buildSignInPath, saveUrlForRedirection } from '@graasp/sdk';
 import { CustomInitialLoader, withAuthorization } from '@graasp/ui';
 
-import { DOMAIN } from '@/config/env';
-import { SIGN_IN_PATH } from '@/config/externalPaths';
+import { DOMAIN, GRAASP_AUTH_HOST } from '@/config/env';
 
 import {
   BOOKMARKED_ITEMS_PATH,
@@ -53,7 +52,10 @@ const App = (): JSX.Element => {
 
   const withAuthorizationProps = {
     currentMember,
-    redirectionLink: SIGN_IN_PATH,
+    redirectionLink: buildSignInPath({
+      host: GRAASP_AUTH_HOST,
+      redirectionUrl: window.location.toString(),
+    }),
     onRedirect: () => {
       // save current url for later redirection after sign in
       saveUrlForRedirection(pathname, DOMAIN);
