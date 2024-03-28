@@ -28,6 +28,7 @@ import {
   ITEM_FORM_DOCUMENT_TEXT_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
+import DisplayNameForm from './DisplayNameForm';
 import type { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
 
@@ -68,6 +69,22 @@ export const DocumentExtraForm = ({
     ],
   );
 
+  const getFlavorColor = (flavor: DocumentItemExtraFlavor) => {
+    switch (flavor) {
+      // TODO: apply color through theme settings
+      case DocumentItemExtraFlavor.Info:
+        return '#E5F6FD';
+      case DocumentItemExtraFlavor.Error:
+        return '#FDEDED';
+      case DocumentItemExtraFlavor.Success:
+        return '#EDF7ED';
+      case DocumentItemExtraFlavor.Warning:
+        return '#FFF4E5';
+      default:
+        return null;
+    }
+  };
+
   const handleChangeEditorMode = (mode: string) => {
     // send editor mode change
     onEditorChange?.(mode === EditorMode.Raw.toString());
@@ -77,7 +94,7 @@ export const DocumentExtraForm = ({
   return (
     <Stack direction="column" spacing={1} minHeight={0}>
       <Box sx={{ width: '100%' }}>
-        <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
+        <FormControl variant="standard" sx={{ width: '100%', my: 1 }}>
           <InputLabel shrink id={FLAVOR_SELECT_ID}>
             {t(BUILDER.DOCUMENT_FLAVOR_SELECT_LABEL)}
           </InputLabel>
@@ -91,7 +108,13 @@ export const DocumentExtraForm = ({
             }}
           >
             {flavorsTranslations.map(([f, name]) => (
-              <MenuItem key={f} value={f}>
+              <MenuItem
+                key={f}
+                value={f}
+                sx={{
+                  backgroundColor: getFlavorColor(f as DocumentItemExtraFlavor),
+                }}
+              >
                 {name}
               </MenuItem>
             ))}
@@ -103,6 +126,8 @@ export const DocumentExtraForm = ({
           <TabList
             onChange={(_, value) => handleChangeEditorMode(value)}
             aria-label={t(BUILDER.DOCUMENT_EDITOR_MODE_ARIA_LABEL)}
+            centered
+            variant="fullWidth"
           >
             <Tab
               label={t(BUILDER.DOCUMENT_EDITOR_MODE_RICH_TEXT)}
@@ -131,14 +156,19 @@ export const DocumentExtraForm = ({
           })}
         </TabPanel>
         <TabPanel value={EditorMode.Raw.toString()} sx={{ minHeight: '0px' }}>
-          <TextField
-            multiline
-            fullWidth
-            minRows={5}
-            maxRows={25}
-            value={extra.content}
-            onChange={({ target: { value } }) => onContentChange?.(value)}
-          />
+          {withFlavor({
+            content: (
+              <TextField
+                multiline
+                fullWidth
+                minRows={5}
+                maxRows={25}
+                value={extra.content}
+                onChange={({ target: { value } }) => onContentChange?.(value)}
+              />
+            ),
+            flavor: extra.flavor,
+          })}
         </TabPanel>
       </TabContext>
     </Stack>
@@ -188,12 +218,19 @@ const DocumentForm = ({
 
   return (
     <Box id="document" display="flex" flexDirection="column" minHeight="0px">
-      <NameForm
-        setChanges={setChanges}
-        item={item}
-        required
-        updatedProperties={updatedProperties}
-      />
+      <Box display="flex" flexDirection="row" sx={{ gap: '10px' }}>
+        <NameForm
+          setChanges={setChanges}
+          item={item}
+          required
+          updatedProperties={updatedProperties}
+        />
+        <DisplayNameForm
+          setChanges={setChanges}
+          item={item}
+          updatedProperties={updatedProperties}
+        />
+      </Box>
       <DocumentExtraForm
         documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
         extra={currentExtra.document}
