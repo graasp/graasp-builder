@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.13.1](https://github.com/graasp/graasp-builder/compare/v2.13.0...v2.13.1) (2024-03-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.108.0 ([#1103](https://github.com/graasp/graasp-builder/issues/1103)) ([afc15ef](https://github.com/graasp/graasp-builder/commit/afc15ef370079d82630388cc94d068fc70e5174c))
+* set redirection for auth signin ([#1113](https://github.com/graasp/graasp-builder/issues/1113)) ([083c071](https://github.com/graasp/graasp-builder/commit/083c07127e563f0890b491a2d1e56e72f6b0994c))
+* update notifs and dismiss uppy status ([#1120](https://github.com/graasp/graasp-builder/issues/1120)) ([571ddc2](https://github.com/graasp/graasp-builder/commit/571ddc2f7a6ec6dcd80e27dcb66fdd7bace492b3))
+
 ## [2.13.0](https://github.com/graasp/graasp-builder/compare/v2.12.1...v2.13.0) (2024-03-26)
 
 
