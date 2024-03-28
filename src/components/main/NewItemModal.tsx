@@ -163,7 +163,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
         );
       case ItemType.S3_FILE:
       case ItemType.LOCAL_FILE:
-        return <FileDashboardUploader />;
+        return <FileDashboardUploader onComplete={handleClose} />;
       case InternalItemType.ZIP:
         return <ImportZip />;
       case ItemType.H5P:

@@ -49,7 +49,11 @@ const ModeButton = (): JSX.Element | null => {
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {Object.values(ItemLayoutMode).map((value) => (
-          <MenuItem onClick={() => handleChange(value)} value={value}>
+          <MenuItem
+            key={value}
+            onClick={() => handleChange(value)}
+            value={value}
+          >
             {modeToIcon(value)}
           </MenuItem>
         ))}
