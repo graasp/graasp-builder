@@ -25,7 +25,7 @@ const NameForm = ({
   // when the screen is large, us only half of the width for the input.
   const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
   const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
-    setChanges({ name: event.target.value });
+    setChanges({ name: event.target.value, displayName: event.target.value });
   };
 
   const handleClearClick = () => {
