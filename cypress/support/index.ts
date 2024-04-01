@@ -55,7 +55,11 @@ declare global {
         options?: { confirm?: boolean },
       ): void;
       fillDocumentModal(
-        payload: { name: string; extra?: DocumentItemExtra },
+        payload: {
+          name: string;
+          displayName: string;
+          extra?: DocumentItemExtra;
+        },
         options?: { confirm?: boolean },
       ): void;
       fillAppModal(
