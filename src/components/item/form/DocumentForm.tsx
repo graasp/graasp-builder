@@ -218,7 +218,7 @@ const DocumentForm = ({
 
   return (
     <Box id="document" display="flex" flexDirection="column" minHeight="0px">
-      <Box display="flex" flexDirection="row" sx={{ gap: '10px' }}>
+      <Stack direction="row" spacing={2}>
         <NameForm
           setChanges={setChanges}
           item={item}
