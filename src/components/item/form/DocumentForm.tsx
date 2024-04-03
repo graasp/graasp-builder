@@ -230,7 +230,7 @@ const DocumentForm = ({
           item={item}
           updatedProperties={updatedProperties}
         />
-      </Box>
+      </Stack>
       <DocumentExtraForm
         documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
         extra={currentExtra.document}
