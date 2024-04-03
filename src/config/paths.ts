@@ -12,6 +12,7 @@ export const ITEM_ID_PARAMS = 'itemId';
 export const ITEM_SHARE_PATH = 'share';
 export const ITEM_PUBLISH_PATH = 'publish';
 export const ITEM_SETTINGS_PATH = 'settings';
+export const MAP_ITEMS_PATH = 'map';
 export const ITEM_INFORMATION_PATH = 'information';
 export const buildItemSettingsPath = (id = ':itemId'): string =>
   `${ITEMS_PATH}/${id}/${ITEM_SETTINGS_PATH}`;

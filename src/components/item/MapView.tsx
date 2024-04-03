@@ -9,18 +9,21 @@ import { buildPlayerTabName } from '@/config/selectors';
 
 type Props = {
   parentId?: DiscriminatedItem['id'];
-  title: string;
+  title?: string;
+  height?: string;
 };
 
-const MapView = ({ parentId, title }: Props): JSX.Element => {
+const MapView = ({ parentId, title, height = '80vh' }: Props): JSX.Element => {
   const { data: currentMember } = hooks.useCurrentMember();
 
   return (
     <>
-      <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
-        {title}
-      </Typography>
-      <div style={{ width: '100%', height: '80vh' }}>
+      {title && (
+        <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+          {title}
+        </Typography>
+      )}
+      <div style={{ width: '100%', height }}>
         <Map
           useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
           usePostItem={mutations.usePostItem}

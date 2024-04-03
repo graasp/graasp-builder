@@ -14,6 +14,7 @@ import {
   ITEM_PUBLISH_PATH,
   ITEM_SETTINGS_PATH,
   ITEM_SHARE_PATH,
+  MAP_ITEMS_PATH,
   PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
   REDIRECT_PATH,
@@ -26,6 +27,7 @@ import Main from './main/Main';
 import Redirect from './main/Redirect';
 import BookmarkedItemsScreen from './pages/BookmarkedItemsScreen';
 import HomeScreen from './pages/HomeScreen';
+import MapItemsScreen from './pages/MapItemsScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
 import SharedItemsScreen from './pages/SharedItemsScreen';
@@ -81,9 +83,11 @@ const App = (): JSX.Element => {
     RecycledItemsScreen,
     withAuthorizationProps,
   );
+  const MapWithAuthorization = MapItemsScreen;
 
   return (
     <Routes>
+      <Route path={MAP_ITEMS_PATH} element={<MapWithAuthorization />} />
       <Route
         element={
           <Main>
