@@ -20,7 +20,7 @@ const DisplayNameForm = ({
 }: DisplayNameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const theme = useTheme();
-  // when the screen is large, us only half of the width for the input.
+  // when the screen is large, use only half of the width for the input.
   const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   // autofill displayName with the value of name
