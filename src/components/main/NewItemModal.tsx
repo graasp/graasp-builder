@@ -182,7 +182,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       case ItemType.DOCUMENT:
         return (
           <>
-            <Typography variant="h2" color="primary">
+            <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
             </Typography>
             <DocumentForm
