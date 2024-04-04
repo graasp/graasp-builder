@@ -15,15 +15,12 @@ import { ITEM_FORM_DISPLAY_NAME_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import type { EditModalContentPropType } from './EditModalWrapper';
 
-export type DisplayNameFormProps = EditModalContentPropType & {
-  autoFocus?: boolean;
-};
+export type DisplayNameFormProps = EditModalContentPropType;
 
 const DisplayNameForm = ({
   item,
   updatedProperties,
   setChanges,
-  autoFocus = true,
 }: DisplayNameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const theme = useTheme();
@@ -52,7 +49,6 @@ const DisplayNameForm = ({
   return (
     <TextField
       variant="standard"
-      autoFocus={autoFocus}
       id={ITEM_FORM_DISPLAY_NAME_INPUT_ID}
       label={
         <div style={{ display: 'flex', alignItems: 'center' }}>
