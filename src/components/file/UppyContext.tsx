@@ -43,6 +43,7 @@ const UppyContextProvider = ({
       // @ts-ignore
       const data = result.successful[0].response?.body;
       onFileUploadComplete({ id: itemId, data });
+      setOpenStatusBar(false);
     }
 
     return false;
