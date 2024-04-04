@@ -11,33 +11,9 @@ import { OutletType } from '@/components/pages/item/type';
 import { CC_LICENSE_ABOUT_URL } from '@/config/constants';
 import { useBuilderTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
+import { convertLicense } from '@/utils/itemLicense';
 
 import UpdateLicenseDialog from './UpdateLicenseDialog';
-
-const convertLicense = (ccLicenseAdaption: string) => {
-  // Legacy licenses.
-  if (['alike', 'allow'].includes(ccLicenseAdaption)) {
-    return {
-      requireAccreditation: true,
-      allowCommercialUse: true,
-      allowSharing: ccLicenseAdaption === 'alike' ? 'alike' : 'yes',
-    };
-  }
-
-  return {
-    requireAccreditation: ccLicenseAdaption?.includes('BY'),
-    allowCommercialUse: !ccLicenseAdaption?.includes('NC'),
-    allowSharing: (() => {
-      if (!ccLicenseAdaption?.length) {
-        return '';
-      }
-      if (ccLicenseAdaption?.includes('SA')) {
-        return 'alike';
-      }
-      return ccLicenseAdaption?.includes('ND') ? 'no' : 'yes';
-    })(),
-  };
-};
 
 const ItemLicenseSettings = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
