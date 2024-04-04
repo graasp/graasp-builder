@@ -176,7 +176,9 @@ export const DocumentExtraForm = ({
                   ...(name === 'Standard' && !extra.flavor
                     ? {
                         border: '1px solid black',
-                        backgroundColor: 'transparent',
+                        backgroundColor: getFlavorColor(
+                          f as DocumentItemExtraFlavor,
+                        ),
                       }
                     : {}),
                 }}
