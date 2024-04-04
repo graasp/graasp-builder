@@ -1,7 +1,14 @@
 import { ChangeEvent } from 'react';
 
 import ClearIcon from '@mui/icons-material/Clear';
-import { IconButton, TextField, useMediaQuery, useTheme } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import {
+  IconButton,
+  TextField,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
@@ -36,9 +43,20 @@ const NameForm = ({
     <TextField
       variant="standard"
       autoFocus={autoFocus}
-      required={required}
       id={ITEM_FORM_NAME_INPUT_ID}
-      label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
+      label={
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
+          {required && <span>*</span>}
+          <Tooltip
+            title={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_HELPER_TEXT)}
+          >
+            <IconButton size="small">
+              <InfoIcon fontSize="small" color="primary" />
+            </IconButton>
+          </Tooltip>
+        </div>
+      }
       value={updatedProperties?.name ?? item?.name ?? ''}
       onChange={handleNameInput}
       // always shrink because setting name from defined app does not shrink automatically
@@ -57,7 +75,6 @@ const NameForm = ({
       // only take full width when on small screen size
       fullWidth={!largeScreen}
       sx={{ my: 1, width: largeScreen ? '50%' : undefined }}
-      helperText={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_HELPER_TEXT)}
     />
   );
 };

@@ -116,7 +116,7 @@ export const DocumentExtraForm = ({
   };
 
   return (
-    <Stack direction="column" spacing={1} minHeight={0}>
+    <Stack direction="column" spacing={1} minHeight={0} marginTop={1}>
       <Box sx={{ width: '100%' }}>
         <FormControl variant="standard" sx={{ width: '100%', my: 1 }}>
           <InputLabel shrink id={FLAVOR_SELECT_ID}>
