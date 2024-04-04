@@ -170,15 +170,13 @@ export const DocumentExtraForm = ({
                     ),
                   },
                   '&.Mui-selected:hover': {
-                    //
+                    // TODO: change hover color
                   },
                   // by default, 'Standard' option is selected
                   ...(name === 'Standard' && !extra.flavor
                     ? {
                         border: '1px solid black',
-                        backgroundColor: getFlavorColor(
-                          f as DocumentItemExtraFlavor,
-                        ),
+                        backgroundColor: 'transparent',
                       }
                     : {}),
                 }}
