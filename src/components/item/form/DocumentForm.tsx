@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import {
   Box,
@@ -10,6 +14,8 @@ import {
   Stack,
   Tab,
   TextField,
+  lighten,
+  useTheme,
 } from '@mui/material';
 
 import {
@@ -69,17 +75,35 @@ export const DocumentExtraForm = ({
     ],
   );
 
+  const theme = useTheme();
+
   const getFlavorColor = (flavor: DocumentItemExtraFlavor) => {
     switch (flavor) {
-      // TODO: apply color through theme settings
       case DocumentItemExtraFlavor.Info:
-        return '#E5F6FD';
+        return lighten(theme.palette.info.light, 0.9);
       case DocumentItemExtraFlavor.Error:
-        return '#FDEDED';
+        return lighten(theme.palette.error.light, 0.9);
       case DocumentItemExtraFlavor.Success:
-        return '#EDF7ED';
+        return lighten(theme.palette.success.light, 0.9);
       case DocumentItemExtraFlavor.Warning:
-        return '#FFF4E5';
+        return lighten(theme.palette.warning.light, 0.9);
+      default:
+        return 'transparent';
+    }
+  };
+
+  const getIcon = (flavor: DocumentItemExtraFlavor) => {
+    switch (flavor) {
+      case DocumentItemExtraFlavor.Info:
+        return <InfoOutlinedIcon fontSize="small" color="info" />;
+      case DocumentItemExtraFlavor.Success:
+        return (
+          <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
+        );
+      case DocumentItemExtraFlavor.Warning:
+        return <ReportProblemOutlinedIcon fontSize="small" color="warning" />;
+      case DocumentItemExtraFlavor.Error:
+        return <ErrorOutlineOutlinedIcon fontSize="small" color="error" />;
       default:
         return null;
     }
@@ -102,20 +126,64 @@ export const DocumentExtraForm = ({
             id={FLAVOR_SELECT_ID}
             variant="standard"
             label="flavor"
-            value={extra.flavor ?? ''}
+            value={extra.flavor ?? 'Standard'}
             onChange={({ target: { value } }) => {
               onFlavorChange?.(value as `${DocumentItemExtraFlavor}`);
             }}
+            defaultValue={DocumentItemExtraFlavor.None}
+            renderValue={(selected) => (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 8,
+                  alignItems: 'center',
+                  backgroundColor:
+                    getFlavorColor(selected as DocumentItemExtraFlavor) ||
+                    'transparent',
+                  borderRadius: '10px',
+                  padding: '6px 16px',
+                }}
+              >
+                {getIcon(selected as DocumentItemExtraFlavor)}{' '}
+                {flavorsTranslations.find(([f]) => f === selected)?.[1] ??
+                  'Standard'}
+              </div>
+            )}
+            disableUnderline
           >
             {flavorsTranslations.map(([f, name]) => (
               <MenuItem
                 key={f}
                 value={f}
                 sx={{
+                  display: 'flex',
+                  gap: 1,
+                  alignItems: 'center',
                   backgroundColor: getFlavorColor(f as DocumentItemExtraFlavor),
+                  mb: 1,
+                  mx: 1,
+                  borderRadius: '10px',
+                  '&.Mui-selected': {
+                    border: '1px solid black',
+                    backgroundColor: getFlavorColor(
+                      f as DocumentItemExtraFlavor,
+                    ),
+                  },
+                  '&.Mui-selected:hover': {
+                    //
+                  },
+                  // by default, 'Standard' option is selected
+                  ...(name === 'Standard' && !extra.flavor
+                    ? {
+                        border: '1px solid black',
+                        backgroundColor: getFlavorColor(
+                          f as DocumentItemExtraFlavor,
+                        ),
+                      }
+                    : {}),
                 }}
               >
-                {name}
+                {getIcon(f as DocumentItemExtraFlavor)} {name}
               </MenuItem>
             ))}
           </Select>
