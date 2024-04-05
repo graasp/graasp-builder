@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 
 import ClearIcon from '@mui/icons-material/Clear';
 import InfoIcon from '@mui/icons-material/Info';
@@ -19,7 +19,6 @@ import type { EditModalContentPropType } from './EditModalWrapper';
 export type DisplayNameFormProps = EditModalContentPropType;
 
 const DisplayNameForm = ({
-  item,
   updatedProperties,
   setChanges,
 }: DisplayNameFormProps): JSX.Element => {
@@ -28,22 +27,11 @@ const DisplayNameForm = ({
   // when the screen is large, use only half of the width for the input.
   const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
-  // autofill displayName with the value of name
-  const [displayName, setDisplayName] = useState(
-    updatedProperties?.displayName ?? item?.displayName ?? '',
-  );
-
-  useEffect(() => {
-    setDisplayName(updatedProperties?.name ?? '');
-  }, [updatedProperties?.name]);
-
   const handleDisplayNameInput = (event: ChangeEvent<{ value: string }>) => {
-    setDisplayName(event.target.value);
     setChanges({ displayName: event.target.value });
   };
 
   const handleClearClick = () => {
-    setDisplayName('');
     setChanges({ displayName: '' });
   };
 
@@ -65,7 +53,7 @@ const DisplayNameForm = ({
           </Tooltip>
         </Stack>
       }
-      value={displayName}
+      value={updatedProperties?.displayName}
       onChange={handleDisplayNameInput}
       // always shrink because setting name from defined app does not shrink automatically
       InputLabelProps={{ shrink: true }}
@@ -74,7 +62,9 @@ const DisplayNameForm = ({
         endAdornment: (
           <IconButton
             onClick={handleClearClick}
-            sx={{ visibility: displayName ? 'visible' : 'hidden' }}
+            sx={{
+              visibility: updatedProperties?.displayName ? 'visible' : 'hidden',
+            }}
           >
             <ClearIcon fontSize="small" />
           </IconButton>
