@@ -1,6 +1,7 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import { Dialog, Stack, Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import { Dialog, Stack, Typography, styled, useTheme } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 import { Thumbnail } from '@graasp/ui';
@@ -35,6 +36,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
     id: itemId,
     size: ThumbnailSize.Medium,
   });
+  const theme = useTheme();
 
   useEffect(() => {
     setUppy(
@@ -114,26 +116,74 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
   const imgUrl = thumbnailUrl ?? defaultImage;
 
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+
   return (
     <>
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
       <Stack spacing={2} mb={3} alignItems="center">
-        <Thumbnail
-          id={itemId}
-          isLoading={isLoading}
-          // TODO: fix type
-          url={
-            imgUrl ??
-            (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
-              ?.thumbnails?.[0]
-          }
-          alt={alt}
-          maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
-          maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
-        />
-        <input
+        <div
+          style={{
+            position: 'relative',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            cursor: 'pointer',
+            borderRadius: '50%',
+          }}
+          onClick={() => inputRef.current?.click()}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              inputRef.current?.click();
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label="change folder avatar"
+        >
+          <Thumbnail
+            id={itemId}
+            isLoading={isLoading}
+            // TODO: fix type
+            url={
+              imgUrl ??
+              (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
+                ?.thumbnails?.[0]
+            }
+            alt={alt}
+            maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
+            maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
+            sx={{
+              borderRadius: '50%',
+            }}
+          />
+          <EditIcon
+            fontSize="large"
+            style={{
+              position: 'absolute',
+              bottom: '10',
+              right: '10',
+              borderRadius: '50%',
+              color: 'white',
+              backgroundColor: theme.palette.primary.main,
+              padding: 2,
+            }}
+          />
+        </div>
+        <VisuallyHiddenInput
           type="file"
           accept="image/*"
           onInput={onSelectFile}
