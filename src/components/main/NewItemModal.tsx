@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 
 import {
-  Box,
   Dialog,
   DialogActions,
   DialogContent,
+  Stack,
   Typography,
   styled,
 } from '@mui/material';
@@ -152,7 +152,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
       case ItemType.FOLDER:
         return (
           <>
-            <Typography variant="h6">
+            <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
             </Typography>
             <FolderForm
@@ -163,26 +163,66 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
         );
       case ItemType.S3_FILE:
       case ItemType.LOCAL_FILE:
-        return <FileDashboardUploader onComplete={handleClose} />;
+        return (
+          <>
+            <Typography variant="h6" color="primary">
+              {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
+            </Typography>
+            <FileDashboardUploader onComplete={handleClose} />
+          </>
+        );
       case InternalItemType.ZIP:
-        return <ImportZip />;
+        return (
+          <>
+            <Typography variant="h6" color="primary">
+              {translateBuilder(BUILDER.IMPORT_ZIP_TITLE)}
+            </Typography>
+            <ImportZip />
+          </>
+        );
       case ItemType.H5P:
-        return <ImportH5P />;
+        return (
+          <>
+            <Typography variant="h6" color="primary">
+              {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
+            </Typography>
+            <ImportH5P />
+          </>
+        );
       case ItemType.ETHERPAD:
-        return <EtherpadForm />;
+        return (
+          <>
+            <Typography variant="h6" color="primary">
+              {translateBuilder(BUILDER.CREATE_NEW_ITEM_ETHERPAD_TITLE)}
+            </Typography>
+            <EtherpadForm />
+          </>
+        );
       case ItemType.APP:
         return (
-          <AppForm
-            onChange={updateItem}
-            updatedProperties={updatedPropertiesPerType[ItemType.APP]}
-          />
+          <>
+            <Typography variant="h6" color="primary">
+              {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
+            </Typography>
+            <AppForm
+              onChange={updateItem}
+              updatedProperties={updatedPropertiesPerType[ItemType.APP]}
+            />
+          </>
         );
       case ItemType.LINK:
-        return <LinkForm onChange={updateItem} />;
+        return (
+          <>
+            <Typography variant="h6" color="primary">
+              {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
+            </Typography>
+            <LinkForm onChange={updateItem} />
+          </>
+        );
       case ItemType.DOCUMENT:
         return (
           <>
-            <Typography variant="h6">
+            <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
             </Typography>
             <DocumentForm
@@ -253,9 +293,9 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
           onTypeChange={setSelectedItemType}
           initialValue={selectedItemType}
         />
-        <Box px={2} width="100%" overflow="hidden">
+        <Stack direction="column" px={2} width="100%" overflow="hidden">
           {renderContent()}
-        </Box>
+        </Stack>
       </StyledDialogContent>
       <DialogActions>{renderActions()}</DialogActions>
     </Dialog>

@@ -4,6 +4,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   IconButton,
+  Stack,
   TextField,
   Tooltip,
   useMediaQuery,
@@ -11,54 +12,49 @@ import {
 } from '@mui/material';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
+import { ITEM_FORM_DISPLAY_NAME_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import type { EditModalContentPropType } from './EditModalWrapper';
 
-export type NameFormProps = EditModalContentPropType & {
-  required?: boolean;
-  autoFocus?: boolean;
-};
+export type DisplayNameFormProps = EditModalContentPropType;
 
-const NameForm = ({
-  item,
-  required,
+const DisplayNameForm = ({
   updatedProperties,
   setChanges,
-  autoFocus = true,
-}: NameFormProps): JSX.Element => {
+}: DisplayNameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const theme = useTheme();
-  // when the screen is large, us only half of the width for the input.
+  // when the screen is large, use only half of the width for the input.
   const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
-  const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
-    setChanges({ name: event.target.value, displayName: event.target.value });
+
+  const handleDisplayNameInput = (event: ChangeEvent<{ value: string }>) => {
+    setChanges({ displayName: event.target.value });
   };
 
   const handleClearClick = () => {
-    setChanges({ name: '' });
+    setChanges({ displayName: '' });
   };
 
   return (
     <TextField
       variant="standard"
-      autoFocus={autoFocus}
-      id={ITEM_FORM_NAME_INPUT_ID}
+      id={ITEM_FORM_DISPLAY_NAME_INPUT_ID}
       label={
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
-          {required && <span>*</span>}
+        <Stack direction="row" alignItems="center">
+          {translateBuilder(BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_LABEL)}
           <Tooltip
-            title={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_HELPER_TEXT)}
+            title={translateBuilder(
+              BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_HELPER_TEXT,
+            )}
           >
             <IconButton size="small">
               <InfoIcon fontSize="small" color="primary" />
             </IconButton>
           </Tooltip>
-        </div>
+        </Stack>
       }
-      value={updatedProperties?.name ?? item?.name ?? ''}
-      onChange={handleNameInput}
+      value={updatedProperties?.displayName}
+      onChange={handleDisplayNameInput}
       // always shrink because setting name from defined app does not shrink automatically
       InputLabelProps={{ shrink: true }}
       // add a clear icon button
@@ -66,7 +62,9 @@ const NameForm = ({
         endAdornment: (
           <IconButton
             onClick={handleClearClick}
-            sx={{ visibility: updatedProperties?.name ? 'visible' : 'hidden' }}
+            sx={{
+              visibility: updatedProperties?.displayName ? 'visible' : 'hidden',
+            }}
           >
             <ClearIcon fontSize="small" />
           </IconButton>
@@ -79,4 +77,4 @@ const NameForm = ({
   );
 };
 
-export default NameForm;
+export default DisplayNameForm;

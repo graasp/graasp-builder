@@ -3,7 +3,7 @@ import '@uppy/dashboard/dist/style.css';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { routines } from '@graasp/query-client';
 import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
@@ -67,10 +67,7 @@ const ImportH5P = () => {
   }
 
   return (
-    <>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
-      </Typography>
+    <Box overflow="auto">
       <Typography variant="body" paragraph>
         {translateBuilder(BUILDER.IMPORT_H5P_INFORMATIONS)}
       </Typography>
@@ -90,7 +87,7 @@ const ImportH5P = () => {
           proudlyDisplayPoweredByUppy={false}
         />
       </div>
-    </>
+    </Box>
   );
 };
 

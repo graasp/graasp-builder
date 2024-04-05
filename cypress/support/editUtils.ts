@@ -18,6 +18,7 @@ export const editItem = (
     id: string;
     type: DiscriminatedItem['type'] | string;
     name: string;
+    displayName: string;
     description: string;
   },
   mode = DEFAULT_ITEM_LAYOUT_MODE,

@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import {
   Box,
@@ -8,8 +12,12 @@ import {
   MenuItem,
   Select,
   Stack,
+  SxProps,
   Tab,
   TextField,
+  Typography,
+  lighten,
+  useTheme,
 } from '@mui/material';
 
 import {
@@ -28,6 +36,7 @@ import {
   ITEM_FORM_DOCUMENT_TEXT_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
+import DisplayNameForm from './DisplayNameForm';
 import type { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
 
@@ -35,6 +44,38 @@ enum EditorMode {
   Rich,
   Raw,
 }
+
+const getIcon = (flavor: DocumentItemExtraFlavor) => {
+  switch (flavor) {
+    case DocumentItemExtraFlavor.Info:
+      return <InfoOutlinedIcon fontSize="small" color="info" />;
+    case DocumentItemExtraFlavor.Success:
+      return (
+        <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
+      );
+    case DocumentItemExtraFlavor.Warning:
+      return <ReportProblemOutlinedIcon fontSize="small" color="warning" />;
+    case DocumentItemExtraFlavor.Error:
+      return <ErrorOutlineOutlinedIcon fontSize="small" color="error" />;
+    default:
+      return null;
+  }
+};
+
+const DocumentFlavorListElement = ({
+  sx,
+  flavor,
+  name,
+}: {
+  flavor: DocumentItemExtraFlavor;
+  name: string;
+  sx?: SxProps;
+}) => (
+  <Stack direction="row" alignItems="center" height="100%" spacing={1} sx={sx}>
+    {getIcon(flavor as DocumentItemExtraFlavor)}
+    <Typography>{name}</Typography>
+  </Stack>
+);
 
 export const DocumentExtraForm = ({
   documentItemId,
@@ -62,22 +103,42 @@ export const DocumentExtraForm = ({
       f,
       t(
         BUILDER[
-          `DOCUMENT_FLAVOR_${f.toUpperCase() as Uppercase<`${DocumentItemExtraFlavor}`>}`
+          `DOCUMENT_FLAVOR_${
+            f.toUpperCase() as Uppercase<`${DocumentItemExtraFlavor}`>
+          }`
         ],
       ),
     ],
-  );
+  ) as [DocumentItemExtraFlavor, string][];
 
+  const theme = useTheme();
+
+  const getFlavorColor = (flavor: DocumentItemExtraFlavor) => {
+    switch (flavor) {
+      case DocumentItemExtraFlavor.Info:
+        return lighten(theme.palette.info.light, 0.9);
+      case DocumentItemExtraFlavor.Error:
+        return lighten(theme.palette.error.light, 0.9);
+      case DocumentItemExtraFlavor.Success:
+        return lighten(theme.palette.success.light, 0.9);
+      case DocumentItemExtraFlavor.Warning:
+        return lighten(theme.palette.warning.light, 0.9);
+      default:
+        return 'transparent';
+    }
+  };
   const handleChangeEditorMode = (mode: string) => {
     // send editor mode change
     onEditorChange?.(mode === EditorMode.Raw.toString());
     setEditorMode(mode);
   };
 
+  const flavorValue: string = extra.flavor || `${DocumentItemExtraFlavor.None}`;
+
   return (
-    <Stack direction="column" spacing={1} minHeight={0}>
+    <Stack direction="column" spacing={1} minHeight={0} marginTop={1}>
       <Box sx={{ width: '100%' }}>
-        <FormControl variant="standard" sx={{ width: '50%', my: 1 }}>
+        <FormControl variant="standard" sx={{ width: '100%', my: 1 }}>
           <InputLabel shrink id={FLAVOR_SELECT_ID}>
             {t(BUILDER.DOCUMENT_FLAVOR_SELECT_LABEL)}
           </InputLabel>
@@ -85,14 +146,56 @@ export const DocumentExtraForm = ({
             id={FLAVOR_SELECT_ID}
             variant="standard"
             label="flavor"
-            value={extra.flavor ?? ''}
+            value={flavorValue}
             onChange={({ target: { value } }) => {
               onFlavorChange?.(value as `${DocumentItemExtraFlavor}`);
             }}
+            renderValue={(selected) => (
+              <DocumentFlavorListElement
+                sx={{
+                  borderRadius: 2,
+                  backgroundColor: getFlavorColor(
+                    selected as DocumentItemExtraFlavor,
+                  ),
+                  p: 1,
+                }}
+                name={
+                  flavorsTranslations.find(
+                    ([flavor]) => flavor === selected,
+                  )?.[1] ?? t(BUILDER.DOCUMENT_FLAVOR_INFO)
+                }
+                flavor={selected as DocumentItemExtraFlavor}
+              />
+            )}
+            disableUnderline
           >
             {flavorsTranslations.map(([f, name]) => (
-              <MenuItem key={f} value={f}>
-                {name}
+              <MenuItem
+                key={f}
+                value={f}
+                sx={{
+                  margin: 1,
+                  borderRadius: 2,
+                  backgroundColor: getFlavorColor(f as DocumentItemExtraFlavor),
+                  '&.Mui-selected': {
+                    outline: ({ palette }) =>
+                      `2px solid ${palette.primary.main}`,
+                    backgroundColor: `${getFlavorColor(
+                      f as DocumentItemExtraFlavor,
+                    )} !important`,
+                  },
+                  '&:hover': {
+                    outline: ({ palette }) =>
+                      f !== DocumentItemExtraFlavor.None
+                        ? `1px solid ${palette[f].main}`
+                        : '1px solid gray',
+                    backgroundColor: `${getFlavorColor(
+                      f as DocumentItemExtraFlavor,
+                    )} !important`,
+                  },
+                }}
+              >
+                <DocumentFlavorListElement name={name} flavor={f} />
               </MenuItem>
             ))}
           </Select>
@@ -103,6 +206,8 @@ export const DocumentExtraForm = ({
           <TabList
             onChange={(_, value) => handleChangeEditorMode(value)}
             aria-label={t(BUILDER.DOCUMENT_EDITOR_MODE_ARIA_LABEL)}
+            centered
+            variant="fullWidth"
           >
             <Tab
               label={t(BUILDER.DOCUMENT_EDITOR_MODE_RICH_TEXT)}
@@ -131,14 +236,19 @@ export const DocumentExtraForm = ({
           })}
         </TabPanel>
         <TabPanel value={EditorMode.Raw.toString()} sx={{ minHeight: '0px' }}>
-          <TextField
-            multiline
-            fullWidth
-            minRows={5}
-            maxRows={25}
-            value={extra.content}
-            onChange={({ target: { value } }) => onContentChange?.(value)}
-          />
+          {withFlavor({
+            content: (
+              <TextField
+                multiline
+                fullWidth
+                minRows={5}
+                maxRows={25}
+                value={extra.content}
+                onChange={({ target: { value } }) => onContentChange?.(value)}
+              />
+            ),
+            flavor: extra.flavor,
+          })}
         </TabPanel>
       </TabContext>
     </Stack>
@@ -187,13 +297,20 @@ const DocumentForm = ({
   }, [content, flavor, isRaw]);
 
   return (
-    <Box id="document" display="flex" flexDirection="column" minHeight="0px">
-      <NameForm
-        setChanges={setChanges}
-        item={item}
-        required
-        updatedProperties={updatedProperties}
-      />
+    <Box id="document" display="flex" flexDirection="column" overflow="auto">
+      <Stack direction="row" spacing={2}>
+        <NameForm
+          setChanges={setChanges}
+          item={item}
+          required
+          updatedProperties={updatedProperties}
+        />
+        <DisplayNameForm
+          setChanges={setChanges}
+          item={item}
+          updatedProperties={updatedProperties}
+        />
+      </Stack>
       <DocumentExtraForm
         documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
         extra={currentExtra.document}
