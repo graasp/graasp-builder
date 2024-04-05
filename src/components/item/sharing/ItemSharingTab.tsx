@@ -4,7 +4,6 @@ import { Container, Divider, Grid, Typography } from '@mui/material';
 
 import {
   ItemMembership,
-  PermissionLevel,
   PermissionLevelCompare,
   isPseudoMember,
 } from '@graasp/sdk';
@@ -13,7 +12,6 @@ import { Loader } from '@graasp/ui';
 import partition from 'lodash.partition';
 
 import { OutletType } from '@/components/pages/item/type';
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
@@ -49,7 +47,7 @@ const selectHighestMemberships = (
 
 const ItemSharingTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { item } = useOutletContext<OutletType>();
+  const { item, canWrite, canAdmin } = useOutletContext<OutletType>();
   const { itemId } = useParams();
 
   const { data: memberships } = hooks.useItemMemberships(itemId);
@@ -58,16 +56,7 @@ const ItemSharingTab = (): JSX.Element => {
   const { data: itemLoginSchema, isLoading: isItemLoginLoading } =
     hooks.useItemLoginSchema({ itemId: item.id });
 
-  const { data: permission, isLoading } = useGetPermissionForItem(item);
-
-  const canWrite = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
-    : false;
-  const canAdmin = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
-    : false;
-
-  if (isLoading && isItemLoginLoading) {
+  if (isItemLoginLoading) {
     return <Loader />;
   }
 

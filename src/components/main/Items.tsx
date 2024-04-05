@@ -1,4 +1,4 @@
-import { DiscriminatedItem, redirect } from '@graasp/sdk';
+import { DiscriminatedItem, PackedItem, redirect } from '@graasp/sdk';
 
 import { buildGraaspPlayerView } from '@/config/externalPaths';
 import { buildPlayerTabName } from '@/config/selectors';
@@ -16,7 +16,7 @@ const { useManyItemMemberships, useItemsTags } = hooks;
 
 type Props = {
   id?: string;
-  items?: DiscriminatedItem[];
+  items?: PackedItem[];
   title: string;
   headerElements?: JSX.Element[];
   actions?: ({ data }: { data: DiscriminatedItem }) => JSX.Element;
@@ -102,7 +102,6 @@ const Items = ({
           parentId={parentId}
           title={title}
           items={items}
-          manyMemberships={manyMemberships}
           itemsStatuses={itemsStatuses}
           // This enables the possibility to display messages (item is empty, no search result)
           itemSearch={itemSearch}

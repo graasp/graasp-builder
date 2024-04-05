@@ -7,7 +7,6 @@ import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ITEM_TYPES_WITH_CAPTIONS } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -31,12 +30,11 @@ const ItemHeaderActions = (): JSX.Element => {
 
   const { data: item } = useItem(itemId);
 
-  const { data: permission } = useGetPermissionForItem(item);
-  const canWrite = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+  const canWrite = item?.permission
+    ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
     : false;
-  const canAdmin = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
+  const canAdmin = item?.permission
+    ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Admin)
     : false;
 
   const onClickChatbox = () => {

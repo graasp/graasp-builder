@@ -5,6 +5,8 @@ import {
   DiscriminatedItem,
   ItemMembership,
   ItemType,
+  PermissionLevel,
+  PermissionLevelCompare,
   ResultOf,
   formatDate,
   getFolderExtra,
@@ -21,7 +23,6 @@ import {
 } from '@ag-grid-community/core';
 
 import { ShowOnlyMeChangeType } from '@/config/types';
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
@@ -274,9 +275,10 @@ const ItemsTable = ({
       count: selected.length,
     });
 
-  const { data: itemPermission } = useGetPermissionForItem(parentItem);
   const shouldShowDropzoneHelper = showDropzoneHelper && rows?.length === 0;
-  const canEditItem = itemPermission === 'admin' || itemPermission === 'write';
+  const canEditItem = parentItem?.permission
+    ? PermissionLevelCompare.gte(parentItem.permission, PermissionLevel.Write)
+    : false;
 
   return (
     <>

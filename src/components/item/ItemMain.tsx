@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet';
 
 import { Box, Divider, Typography, styled } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { PackedItem } from '@graasp/sdk';
 import { DrawerHeader } from '@graasp/ui';
 
 import { BUILDER } from '@/langs/constants';
@@ -44,7 +44,7 @@ const StyledContainer = styled(Box)<{ open: boolean }>(({ theme, open }) => {
 
 type Props = {
   children: JSX.Element | JSX.Element[];
-  item: DiscriminatedItem;
+  item: PackedItem;
   id?: string;
 };
 

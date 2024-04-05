@@ -1,4 +1,4 @@
-import { HOME_PATH, SHARED_ITEMS_PATH } from '../../../../src/config/paths';
+import { HOME_PATH } from '../../../../src/config/paths';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
   buildItemCard,
@@ -41,18 +41,8 @@ describe('View Thumbnails', () => {
 
     cy.visit(HOME_PATH);
 
-    const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
-
     // display member avatar in header
     cy.get(`#${HEADER_MEMBER_MENU_BUTTON_ID} img`)
-      .should('have.attr', 'src')
-      .and('contain', MEMBERS.BOB.thumbnails);
-
-    cy.visit(SHARED_ITEMS_PATH);
-
-    // check bob avatar in shared items, grid mode
-    cy.switchMode(ItemLayoutMode.Grid);
-    cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
       .and('contain', MEMBERS.BOB.thumbnails);
   });

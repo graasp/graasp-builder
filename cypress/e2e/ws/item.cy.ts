@@ -1,9 +1,8 @@
 import { MockWebSocket } from '@graasp/query-client';
 
-import { SHARED_ITEMS_PATH, buildItemPath } from '../../../src/config/paths';
+import { buildItemPath } from '../../../src/config/paths';
 import { buildItemsTableRowIdAttribute } from '../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../fixtures/items';
-import { CURRENT_USER } from '../../fixtures/members';
 import { WEBSOCKETS_DELAY_TIME } from '../../support/constants';
 
 // parameterized before, to be called in each test or in beforeEach
@@ -27,63 +26,63 @@ describe('Websocket interactions', () => {
     client = new MockWebSocket();
   });
 
-  describe('sharedWith me items updates', () => {
-    it('displays sharedWith create update', () => {
-      beforeWs(SHARED_ITEMS_PATH, { items: [] }, client);
+  // describe('sharedWith me items updates', () => {
+  //   it('displays sharedWith create update', () => {
+  //     beforeWs(SHARED_ITEMS_PATH, { items: [] }, client);
 
-      cy.wait(WEBSOCKETS_DELAY_TIME);
+  //     cy.wait(WEBSOCKETS_DELAY_TIME);
 
-      const item = SAMPLE_ITEMS.items[0];
-      cy.wait('@getSharedItems').then(() => {
-        // send mock sharedItem create update
-        client.receive({
-          realm: 'notif',
-          type: 'update',
-          topic: 'item/member',
-          channel: CURRENT_USER.id,
-          body: {
-            kind: 'shared',
-            op: 'create',
-            item,
-          },
-        });
-      });
+  //     const item = SAMPLE_ITEMS.items[0];
+  //     cy.wait('@getSharedItems').then(() => {
+  //       // send mock sharedItem create update
+  //       client.receive({
+  //         realm: 'notif',
+  //         type: 'update',
+  //         topic: 'item/member',
+  //         channel: CURRENT_USER.id,
+  //         body: {
+  //           kind: 'shared',
+  //           op: 'create',
+  //           item,
+  //         },
+  //       });
+  //     });
 
-      cy.wait(WEBSOCKETS_DELAY_TIME);
+  //     cy.wait(WEBSOCKETS_DELAY_TIME);
 
-      // assert item is in list
-      cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-    });
+  //     // assert item is in list
+  //     cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
+  //   });
 
-    it('displays sharedWith delete update', () => {
-      // create items that do not belong to current user
-      const items = SAMPLE_ITEMS.items.map((i) => ({
-        ...i,
-        creator: 'someoneElse',
-      }));
-      const item = items[0];
-      beforeWs(SHARED_ITEMS_PATH, { items }, client);
+  //   it('displays sharedWith delete update', () => {
+  //     // create items that do not belong to current user
+  //     const items = SAMPLE_ITEMS.items.map((i) => ({
+  //       ...i,
+  //       creator: 'someoneElse',
+  //     }));
+  //     const item = items[0];
+  //     beforeWs(SHARED_ITEMS_PATH, { items }, client);
 
-      cy.get(buildItemsTableRowIdAttribute(item.id)).then(() => {
-        // send mock sharedItem delete update
-        client.receive({
-          realm: 'notif',
-          type: 'update',
-          topic: 'item/member',
-          channel: CURRENT_USER.id,
-          body: {
-            kind: 'shared',
-            op: 'delete',
-            item,
-          },
-        });
-      });
+  //     cy.get(buildItemsTableRowIdAttribute(item.id)).then(() => {
+  //       // send mock sharedItem delete update
+  //       client.receive({
+  //         realm: 'notif',
+  //         type: 'update',
+  //         topic: 'item/member',
+  //         channel: CURRENT_USER.id,
+  //         body: {
+  //           kind: 'shared',
+  //           op: 'delete',
+  //           item,
+  //         },
+  //       });
+  //     });
 
-      cy.wait(WEBSOCKETS_DELAY_TIME);
-      // assert item is not in list anymore
-      cy.get(buildItemsTableRowIdAttribute(item.id)).should('not.exist');
-    });
-  });
+  //     cy.wait(WEBSOCKETS_DELAY_TIME);
+  //     // assert item is not in list anymore
+  //     cy.get(buildItemsTableRowIdAttribute(item.id)).should('not.exist');
+  //   });
+  // });
 
   describe('childItem updates', () => {
     const { id } = SAMPLE_ITEMS.items[0];

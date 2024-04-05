@@ -1494,20 +1494,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.7.0":
-  version: 3.7.0
-  resolution: "@graasp/query-client@npm:3.7.0"
+"@graasp/query-client@github:graasp/graasp-query-client#more-packed":
+  version: 3.3.0
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1520cf9b19c0b849064d373d7886fbc1fa866db0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
     axios: "npm:1.6.8"
     http-status-codes: "npm:2.3.0"
-    qs: "npm:6.12.1"
+    qs: "npm:6.12.0"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/649e0f1f1db5355f50ec5af4ce5ed1c77aae5eeb330d56d50309e3a0317b2f96727ef9caea21de13cb88c8621a3c5d2fed787f9de2409005d8bf8ade8e6fab3d
+  checksum: 10/7d315d4cbc4d2a8749953baf4c41bdd55abe01e7467a250fd41ffc4457c65808d62cf7904e4118b33205739b966608a775039c27cc3c28d4fca98adf0db8c614
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@github:graasp/graasp-sdk#more-packed":
+  version: 4.6.0
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=8cd4b52738ae041d8adae43adc4d3a604cfbb45f"
+  dependencies:
+    "@faker-js/faker": "npm:8.4.1"
+    js-cookie: "npm:3.0.5"
+    validator: "npm:13.11.0"
+  peerDependencies:
+    date-fns: ^3
+    uuid: ^9
+  checksum: 10/b9f9ba4578bec38b1ca69536bbfd5da4fc6f241f3597d363718ec093e165812a2834c0ef0730262dec105c95e637d03c4119aa6f2db3124f3556ba50789deee2
   languageName: node
   linkType: hard
 
@@ -1522,21 +1536,6 @@ __metadata:
     date-fns: ^3
     uuid: ^9
   checksum: 10/182e2a33fbdf7ed2cac7fbdf5a01378a059415a753345cca501d2ddda4985b9448c81bb2931a7157dc34cd613412c5da42da38cb037e9a46438755707e4ea2aa
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@npm:4.9.0":
-  version: 4.9.0
-  resolution: "@graasp/sdk@npm:4.9.0"
-  dependencies:
-    "@faker-js/faker": "npm:8.4.1"
-    filesize: "npm:10.1.1"
-    js-cookie: "npm:3.0.5"
-    validator: "npm:13.11.0"
-  peerDependencies:
-    date-fns: ^3
-    uuid: ^9
-  checksum: 10/921439fcfcc67e18c5e93ee1c405b82e1da9600cf33769a029efa4bacbaab78d30c357a0c19f98687e53101e4de19c924be78fad55eb4c9451ef734596d26b3c
   languageName: node
   linkType: hard
 
@@ -7370,8 +7369,8 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.11.1"
-    "@graasp/query-client": "npm:3.7.0"
-    "@graasp/sdk": "npm:4.9.0"
+    "@graasp/query-client": "github:graasp/graasp-query-client#more-packed"
+    "@graasp/sdk": "github:graasp/graasp-sdk#more-packed"
     "@graasp/translations": "npm:1.28.0"
     "@graasp/ui": "npm:4.17.0"
     "@mui/icons-material": "npm:5.15.15"
@@ -11033,12 +11032,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.12.1":
-  version: 6.12.1
-  resolution: "qs@npm:6.12.1"
+"qs@npm:6.12.0":
+  version: 6.12.0
+  resolution: "qs@npm:6.12.0"
   dependencies:
     side-channel: "npm:^1.0.6"
-  checksum: 10/035bcad2a1ab0175bac7a74c904c15913bdac252834149ccff988c93a51de02642fe7be10e43058ba4dc4094bb28ce9b59d12b9e91d40997f445cfde3ecc1c29
+  checksum: 10/6156d3f0d74278b7e93a3a6b56e6b87b513ebd45ae65c7330c96d70270d0844fb0af9454a194124cd56b9ebf47b456dd01e28b223cde93c8ab01d1cb53a0e491
   languageName: node
   linkType: hard
 

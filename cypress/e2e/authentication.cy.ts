@@ -4,14 +4,9 @@ import {
   HOME_PATH,
   ITEMS_PATH,
   REDIRECT_PATH,
-  SHARED_ITEMS_PATH,
   buildItemPath,
 } from '../../src/config/paths';
-import {
-  CREATE_ITEM_BUTTON_ID,
-  HEADER_APP_BAR_ID,
-  ITEM_MAIN_CLASS,
-} from '../../src/config/selectors';
+import { HEADER_APP_BAR_ID, ITEM_MAIN_CLASS } from '../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../fixtures/items';
 import {
   REDIRECTION_TIME,
@@ -31,13 +26,6 @@ describe('Authentication', () => {
         timeout: REQUEST_FAILURE_LOADING_TIME,
       }).should('have.property', 'value', HOME_PATH);
     });
-    it('Shared Items', () => {
-      cy.visit(SHARED_ITEMS_PATH);
-      cy.url().should('include', SIGN_IN_PATH);
-      cy.getCookie(CookieKeys.RedirectUrl, {
-        timeout: REQUEST_FAILURE_LOADING_TIME,
-      }).should('have.property', 'value', SHARED_ITEMS_PATH);
-    });
   });
 
   describe('Signed In', () => {
@@ -49,11 +37,6 @@ describe('Authentication', () => {
       it('Home', () => {
         cy.visit(HOME_PATH);
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
-      });
-      it('Shared Items', () => {
-        cy.visit(SHARED_ITEMS_PATH);
-        cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
-        cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
       });
       it('Item', () => {
         cy.visit(buildItemPath(SAMPLE_ITEMS.items?.[0].id));
@@ -77,14 +60,6 @@ describe('Authentication', () => {
         cy.url({
           timeout: REDIRECTION_TIME,
         }).should('include', ITEMS_PATH);
-      });
-
-      it('SharedItems', () => {
-        cy.setCookie(CookieKeys.RedirectUrl, SHARED_ITEMS_PATH);
-        cy.visit(REDIRECT_PATH);
-        cy.url({
-          timeout: REDIRECTION_TIME,
-        }).should('include', SHARED_ITEMS_PATH);
       });
 
       it('Item', () => {

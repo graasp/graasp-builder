@@ -21,19 +21,12 @@ import {
   Typography,
 } from '@mui/material';
 
-import {
-  ItemTagType,
-  ItemValidationStatus,
-  PermissionLevel,
-  PermissionLevelCompare,
-  redirect,
-} from '@graasp/sdk';
+import { ItemTagType, ItemValidationStatus, redirect } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import groupBy from 'lodash.groupby';
 
 import { OutletType } from '@/components/pages/item/type';
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -63,23 +56,11 @@ const enum PublishFlow {
 
 const ItemPublishTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { item } = useOutletContext<OutletType>();
+  const { item, canWrite, canAdmin } = useOutletContext<OutletType>();
 
   const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
     item?.id,
   );
-
-  const {
-    data: permission,
-    isCurrentMemberLoading,
-    isMembershipsLoading,
-  } = useGetPermissionForItem(item);
-  const canWrite = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
-    : false;
-  const canAdmin = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
-    : false;
 
   const [validationStatus, setValidationStatus] =
     useState<ItemValidationStatus | null>(null);
@@ -131,7 +112,7 @@ const ItemPublishTab = (): JSX.Element => {
     return PublishFlow.PUBLISH_STEP;
   })();
 
-  if (isMembershipsLoading || isCurrentMemberLoading || isItemTagsLoading) {
+  if (isItemTagsLoading) {
     return <Loader />;
   }
 
