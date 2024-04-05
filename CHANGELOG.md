@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.15.0](https://github.com/graasp/graasp-builder/compare/v2.14.0...v2.15.0) (2024-04-05)
+
+
+### Features
+
+* redesign 'add text' modal ([#1117](https://github.com/graasp/graasp-builder/issues/1117)) ([514fbaf](https://github.com/graasp/graasp-builder/commit/514fbaf7e0fba9e9c319084f6d2fc6bf296d781f))
+
 ## [2.14.0](https://github.com/graasp/graasp-builder/compare/v2.13.0...v2.14.0) (2024-04-04)
 
 
