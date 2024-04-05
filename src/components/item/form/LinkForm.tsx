@@ -1,4 +1,4 @@
-import { TextField, TextFieldProps, Typography } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 
 import { LinkItemType, buildLinkExtra, getLinkExtra } from '@graasp/sdk';
 
@@ -39,25 +39,20 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
   const isLinkInvalid = Boolean(url?.length) && !isUrlValid(url);
 
   return (
-    <>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
-      </Typography>
-      <TextField
-        id={ITEM_FORM_LINK_INPUT_ID}
-        error={isLinkInvalid}
-        autoFocus
-        margin="dense"
-        label={translateBuilder(BUILDER.CREATE_ITEM_LINK_LABEL)}
-        value={url}
-        onChange={handleLinkInput}
-        helperText={
-          Boolean(isLinkInvalid) &&
-          translateBuilder(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR)
-        }
-        fullWidth
-      />
-    </>
+    <TextField
+      id={ITEM_FORM_LINK_INPUT_ID}
+      error={isLinkInvalid}
+      autoFocus
+      margin="dense"
+      label={translateBuilder(BUILDER.CREATE_ITEM_LINK_LABEL)}
+      value={url}
+      onChange={handleLinkInput}
+      helperText={
+        Boolean(isLinkInvalid) &&
+        translateBuilder(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR)
+      }
+      fullWidth
+    />
   );
 };
 

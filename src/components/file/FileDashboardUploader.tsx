@@ -40,9 +40,6 @@ const FileDashboardUploader = ({ onComplete }: Props): JSX.Element => {
 
   return (
     <>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
-      </Typography>
       <Typography variant="body1" paragraph>
         {translateBuilder(BUILDER.UPLOAD_FILE_INFORMATIONS)}
       </Typography>

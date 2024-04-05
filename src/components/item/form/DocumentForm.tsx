@@ -297,7 +297,7 @@ const DocumentForm = ({
   }, [content, flavor, isRaw]);
 
   return (
-    <Box id="document" display="flex" flexDirection="column" minHeight="0px">
+    <Box id="document" display="flex" flexDirection="column" overflow="auto">
       <Stack direction="row" spacing={2}>
         <NameForm
           setChanges={setChanges}

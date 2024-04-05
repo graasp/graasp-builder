@@ -10,7 +10,7 @@ const BaseItemForm = ({
   updatedProperties,
   setChanges,
 }: EditModalContentPropType): JSX.Element => (
-  <>
+  <Box overflow="auto">
     <NameForm
       setChanges={setChanges}
       item={item}
@@ -26,7 +26,7 @@ const BaseItemForm = ({
         setChanges={setChanges}
       />
     </Box>
-  </>
+  </Box>
 );
 
 export default BaseItemForm;

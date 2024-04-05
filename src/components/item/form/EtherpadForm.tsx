@@ -16,9 +16,6 @@ const useEtherpadForm = (): {
     const { t: translateBuilder } = useBuilderTranslation();
     return (
       <>
-        <Typography variant="h6">
-          {translateBuilder(BUILDER.CREATE_NEW_ITEM_ETHERPAD_TITLE)}
-        </Typography>
         <Typography variant="body1" paragraph>
           {translateBuilder(BUILDER.CREATE_NEW_ITEM_ETHERPAD_INFORMATIONS)}
         </Typography>
