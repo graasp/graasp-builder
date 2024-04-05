@@ -81,6 +81,7 @@ const EditModalWrapper = ({
       editItem({
         id: updatedItem.id,
         name: updatedItem.name,
+        displayName: updatedItem.displayName,
         description: updatedItem.description,
         // only post extra if it has been changed
         // todo: fix type

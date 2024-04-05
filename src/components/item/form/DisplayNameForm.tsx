@@ -4,6 +4,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   IconButton,
+  Stack,
   TextField,
   Tooltip,
   useMediaQuery,
@@ -51,7 +52,7 @@ const DisplayNameForm = ({
       variant="standard"
       id={ITEM_FORM_DISPLAY_NAME_INPUT_ID}
       label={
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Stack alignItems="center">
           {translateBuilder(BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_LABEL)}
           <Tooltip
             title={translateBuilder(
@@ -62,7 +63,7 @@ const DisplayNameForm = ({
               <InfoIcon fontSize="small" color="primary" />
             </IconButton>
           </Tooltip>
-        </div>
+        </Stack>
       }
       value={displayName}
       onChange={handleDisplayNameInput}
