@@ -1,6 +1,6 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import { Dialog, Stack, Typography } from '@mui/material';
+import { Dialog, Stack, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 
@@ -8,13 +8,23 @@ import Uppy from '@uppy/core';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
-import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import defaultImage from '../../../resources/avatar.png';
 import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal, { MODAL_TITLE_ARIA_LABEL_ID } from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
-import ThumbnailWithDeleteButton from './ThumbnailWithDeleteButton';
+import ThumbnailWithControls from './ThumbnailWithControls';
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
 type Props = { item: DiscriminatedItem };
 
@@ -28,11 +38,15 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
 
   const { mutate: deleteThumbnail } = mutations.useDeleteItemThumbnail();
-  const itemId = item.id;
+  const { id: itemId, type: itemType } = item;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
     size: ThumbnailSize.Medium,
   });
+
+  const handleClose = () => {
+    setOpenStatusBar(false);
+  };
 
   useEffect(() => {
     setUppy(
@@ -51,7 +65,8 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
             const data = result.successful[0].response.body;
             onFileUploadComplete({ id: itemId, data });
           }
-
+          // close progress bar of uppy
+          handleClose();
           return false;
         },
       }),
@@ -62,10 +77,6 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   if (!uppy) {
     return null;
   }
-
-  const handleClose = () => {
-    setOpenStatusBar(false);
-  };
 
   const onSelectFile: FormEventHandler<HTMLInputElement> = (e) => {
     const t = e.target as HTMLInputElement;
@@ -109,21 +120,29 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
     return true;
   };
 
-  const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
-  const imgUrl = item.settings?.hasThumbnail ? thumbnailUrl : defaultImage;
-
   const onDelete = () => {
     deleteThumbnail(itemId);
   };
+
+  const onEdit = () => {
+    inputRef.current?.click();
+  };
+
+  const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
+  const imgUrl = item.settings?.hasThumbnail
+    ? thumbnailUrl
+    : (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
+        ?.icons?.[0];
 
   return (
     <>
       {uppy && (
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
+
       <Stack spacing={2} mb={3} alignItems="center">
-        <ThumbnailWithDeleteButton
-          itemId={itemId}
+        <ThumbnailWithControls
+          item={item}
           alt={alt}
           url={
             imgUrl ??
@@ -132,19 +151,16 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
           }
           isLoading={isLoading}
           onDelete={onDelete}
+          onEdit={onEdit}
           hasThumbnail={item.settings?.hasThumbnail}
         />
-        <input
+        <VisuallyHiddenInput
           type="file"
           accept="image/*"
           onInput={onSelectFile}
           onChange={onSelectFile}
           ref={inputRef}
-          className={THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}
         />
-        <Typography variant="caption">
-          {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_SETTINGS_INFORMATIONS)}
-        </Typography>
       </Stack>
       {fileSource && (
         <Dialog
