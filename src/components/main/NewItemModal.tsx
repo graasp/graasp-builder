@@ -168,7 +168,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
             </Typography>
-            <FileDashboardUploader onComplete={handleClose} />;
+            <FileDashboardUploader onComplete={handleClose} />
           </>
         );
       case InternalItemType.ZIP:
