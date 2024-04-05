@@ -52,7 +52,7 @@ const DisplayNameForm = ({
       variant="standard"
       id={ITEM_FORM_DISPLAY_NAME_INPUT_ID}
       label={
-        <Stack alignItems="center">
+        <Stack direction="row" alignItems="center">
           {translateBuilder(BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_LABEL)}
           <Tooltip
             title={translateBuilder(

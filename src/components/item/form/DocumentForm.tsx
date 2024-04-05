@@ -12,6 +12,7 @@ import {
   MenuItem,
   Select,
   Stack,
+  SxProps,
   Tab,
   TextField,
   Typography,
@@ -62,19 +63,15 @@ const getIcon = (flavor: DocumentItemExtraFlavor) => {
 };
 
 const DocumentFlavorListElement = ({
+  sx,
   flavor,
   name,
 }: {
   flavor: DocumentItemExtraFlavor;
   name: string;
+  sx?: SxProps;
 }) => (
-  <Stack
-    direction="row"
-    alignItems="center"
-    width="100%"
-    height="100%"
-    spacing={1}
-  >
+  <Stack direction="row" alignItems="center" height="100%" spacing={1} sx={sx}>
     {getIcon(flavor as DocumentItemExtraFlavor)}
     <Typography>{name}</Typography>
   </Stack>
@@ -155,6 +152,13 @@ export const DocumentExtraForm = ({
             }}
             renderValue={(selected) => (
               <DocumentFlavorListElement
+                sx={{
+                  borderRadius: 2,
+                  backgroundColor: getFlavorColor(
+                    selected as DocumentItemExtraFlavor,
+                  ),
+                  p: 1,
+                }}
                 name={
                   flavorsTranslations.find(
                     ([flavor]) => flavor === selected,
