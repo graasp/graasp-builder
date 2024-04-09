@@ -14,6 +14,7 @@ import {
   ItemValidationReview,
   Member,
   PermissionLevel,
+  PermissionLevelCompare,
   RecycledItemData,
   ShortLink,
   ShortLinkPayload,
@@ -106,18 +107,16 @@ const API_HOST = Cypress.env('VITE_GRAASP_API_HOST');
 
 const checkMembership = ({
   item,
-  currentMember,
 }: {
   item: ItemForTest;
   currentMember: Member;
+  // eslint-disable-next-line arrow-body-style
 }) => {
-  // mock membership
-  const creator = item?.creator;
-  const haveMembership =
-    creator?.id === currentMember?.id ||
-    item.memberships?.find(({ member }) => member.id === currentMember?.id);
-
-  return haveMembership;
+  // todo: public
+  // TODO!!!
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return PermissionLevelCompare.gte(item.permission, PermissionLevel.Read);
 };
 
 export const redirectionReply = {
@@ -398,13 +397,7 @@ export const mockGetItems = ({
       itemIds.forEach((id) => {
         const item = getItemById(items, id);
 
-        // mock membership
-        const creator = item?.creator;
-        const haveMembership =
-          creator?.id === currentMember.id ||
-          item?.memberships?.find(
-            ({ member }) => member.id === currentMember.id,
-          );
+        const haveMembership = checkMembership({ item, currentMember });
 
         if (!haveMembership) {
           result.errors.push({
@@ -1278,7 +1271,7 @@ export const mockGetItemChat = (
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
 
-      return reply(item?.chat);
+      return reply(item?.chat ?? []);
     },
   ).as('getItemChat');
 };

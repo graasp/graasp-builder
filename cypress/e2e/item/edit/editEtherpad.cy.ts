@@ -1,9 +1,15 @@
+import { PackedEtherpadItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH } from '../../../../src/config/paths';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { GRAASP_ETHERPAD_ITEM } from '../../../fixtures/etherpad';
-import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editItem } from '../../../support/editUtils';
+
+const EDITED_FIELDS = {
+  name: 'new name',
+};
+
+const GRAASP_ETHERPAD_ITEM = PackedEtherpadItemFactory();
 
 describe('Edit Etherpad', () => {
   beforeEach(() => {

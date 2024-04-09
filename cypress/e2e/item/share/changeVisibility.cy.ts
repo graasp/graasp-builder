@@ -1,4 +1,8 @@
-import { ItemLoginSchemaType, ItemTagType } from '@graasp/sdk';
+import {
+  ItemLoginSchemaType,
+  ItemTagType,
+  PackedFolderItemFactory,
+} from '@graasp/sdk';
 
 import { buildItemPath } from '@/config/paths';
 
@@ -8,11 +12,6 @@ import {
   SHARE_ITEM_VISIBILITY_SELECT_ID,
   buildShareButtonId,
 } from '../../../../src/config/selectors';
-import {
-  ITEM_LOGIN_ITEMS,
-  SAMPLE_ITEMS,
-  SAMPLE_PUBLIC_ITEMS,
-} from '../../../fixtures/items';
 
 const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
@@ -21,8 +20,8 @@ const changeVisibility = (value: string): void => {
 
 describe('Visibility of an Item', () => {
   it('Change Private Item to Public', () => {
-    const item = SAMPLE_ITEMS.items[0];
-    cy.setUpApi({ ...SAMPLE_ITEMS });
+    const item = PackedFolderItemFactory();
+    cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
@@ -43,8 +42,8 @@ describe('Visibility of an Item', () => {
   });
 
   it('Change Public Item to Private', () => {
-    const item = SAMPLE_PUBLIC_ITEMS.items[0];
-    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
+    const item = PackedFolderItemFactory({}, { publicTag: {} });
+    cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
     cy.wait(1000);
@@ -65,8 +64,8 @@ describe('Visibility of an Item', () => {
   });
 
   it('Change Public Item to Item Login', () => {
-    const item = SAMPLE_PUBLIC_ITEMS.items[0];
-    cy.setUpApi({ ...SAMPLE_PUBLIC_ITEMS });
+    const item = PackedFolderItemFactory({}, { publicTag: {} });
+    cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
     cy.wait(1000);
@@ -92,8 +91,18 @@ describe('Visibility of an Item', () => {
   });
 
   it('Change Pseudonymized Item to Private Item', () => {
-    const item = ITEM_LOGIN_ITEMS.items[0];
-    cy.setUpApi({ items: [item] });
+    const item = PackedFolderItemFactory();
+    const ITEM_LOGIN_ITEM = {
+      ...item,
+      itemLoginSchema: {
+        item,
+        type: ItemLoginSchemaType.Username,
+        id: 'efaf3d5a-5688-11eb-ae93-0242ac130002',
+        createdAt: '2021-08-11T12:56:36.834Z',
+        updatedAt: '2021-08-11T12:56:36.834Z',
+      },
+    };
+    cy.setUpApi({ items: [ITEM_LOGIN_ITEM] });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 

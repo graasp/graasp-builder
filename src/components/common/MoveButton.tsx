@@ -69,7 +69,7 @@ const MoveButton = ({
     item: NavigationElement,
     homeId: string,
   ) => {
-    if (items) {
+    if (items?.length) {
       // cannot move inside self and below
       const moveInSelf = items.some((i) => item.path.includes(i.path));
 
@@ -81,9 +81,8 @@ const MoveButton = ({
       // cannot move to home if was already on home
       let moveToHome = false;
 
-      if (items) {
-        moveToHome = item.id === homeId && !getDirectParentId(items[0].path);
-      }
+      moveToHome = item.id === homeId && !getDirectParentId(items[0].path);
+
       return moveInSelf || moveInDirectParent || moveToHome;
     }
     return false;

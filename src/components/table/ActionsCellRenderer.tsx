@@ -1,10 +1,7 @@
 import {
-  ItemMembership,
-  Member,
   PackedItem,
   PermissionLevel,
   PermissionLevelCompare,
-  ResultOf,
 } from '@graasp/sdk';
 
 import EditButton from '../common/EditButton';
@@ -12,8 +9,6 @@ import DownloadButton from '../main/DownloadButton';
 import ItemMenu from '../main/ItemMenu';
 
 type Props = {
-  manyMemberships?: ResultOf<ItemMembership[]>;
-  member?: Member | null;
   canMove?: boolean;
 };
 

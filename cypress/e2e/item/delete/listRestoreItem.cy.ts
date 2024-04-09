@@ -1,3 +1,5 @@
+import { PackedRecycledItemDataFactory } from '@graasp/sdk';
+
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
   ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID,
@@ -5,7 +7,6 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { RECYCLED_ITEM_DATA, SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const restoreItem = (id: string) => {
   cy.get(
@@ -24,11 +25,18 @@ const restoreItems = (itemIds: string[]) => {
 
 describe('Restore Items in List', () => {
   it('restore one item', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, recycledItemData: RECYCLED_ITEM_DATA });
+    const recycledItemData = [
+      PackedRecycledItemDataFactory(),
+      PackedRecycledItemDataFactory(),
+    ];
+    cy.setUpApi({
+      items: recycledItemData.map(({ item }) => item),
+      recycledItemData,
+    });
     cy.visit(RECYCLE_BIN_PATH);
 
     cy.switchMode(ItemLayoutMode.List);
-    const { id } = RECYCLED_ITEM_DATA[0].item;
+    const { id } = recycledItemData[0].item;
 
     // restore
     restoreItem(id);
@@ -39,13 +47,21 @@ describe('Restore Items in List', () => {
   });
 
   it('restore multiple items', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, recycledItemData: RECYCLED_ITEM_DATA });
+    const recycledItemData = [
+      PackedRecycledItemDataFactory(),
+      PackedRecycledItemDataFactory(),
+    ];
+    const items = recycledItemData.map(({ item }) => item);
+    cy.setUpApi({
+      items,
+      recycledItemData,
+    });
     cy.visit(RECYCLE_BIN_PATH);
 
     cy.switchMode(ItemLayoutMode.List);
 
     // restore
-    const itemIds = RECYCLED_ITEM_DATA.map(({ item }) => item.id);
+    const itemIds = items.map(({ id }) => id);
     restoreItems(itemIds);
     cy.wait('@restoreItems').then(({ request: { url } }) => {
       for (const id of itemIds) {

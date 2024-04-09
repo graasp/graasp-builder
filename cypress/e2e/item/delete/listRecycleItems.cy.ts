@@ -1,10 +1,11 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const recycleItems = (itemIds: string[]) => {
   // check selected ids
@@ -15,31 +16,35 @@ const recycleItems = (itemIds: string[]) => {
   cy.get(`#${ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID}`).click();
 };
 
+const FOLDER = PackedFolderItemFactory();
+const PARENT = PackedFolderItemFactory();
+const CHILD1 = PackedFolderItemFactory({ parentItem: PARENT });
+const CHILD2 = PackedFolderItemFactory({ parentItem: PARENT });
+const items = [FOLDER, PARENT, CHILD1, CHILD2];
+
 describe('Recycle Items in List', () => {
   it('recycle 2 items in Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    cy.setUpApi({ items });
     cy.visit(HOME_PATH);
 
     cy.switchMode(ItemLayoutMode.List);
 
     // delete
-    recycleItems([SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[1].id]);
+    recycleItems([FOLDER.id, PARENT.id]);
     cy.wait(['@recycleItems', '@getAccessibleItems']);
   });
 
   it('recycle 2 items in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    cy.visit(buildItemPath(SAMPLE_ITEMS.items[0].id));
+    cy.setUpApi({ items });
+    cy.visit(buildItemPath(PARENT.id));
 
     cy.switchMode(ItemLayoutMode.List);
 
     // delete
-    recycleItems([SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[3].id]);
+    recycleItems([CHILD1.id, CHILD2.id]);
     cy.wait('@recycleItems').then(() => {
       // check item is deleted, others are still displayed
-      cy.wait('@getItem')
-        .its('response.url')
-        .should('contain', SAMPLE_ITEMS.items[0].id);
+      cy.wait('@getItem').its('response.url').should('contain', PARENT.id);
     });
   });
 });

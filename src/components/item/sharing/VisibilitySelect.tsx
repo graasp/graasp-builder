@@ -1,13 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 
-import {
-  DiscriminatedItem,
-  ItemLoginSchemaType,
-  ItemTag,
-  ItemTagType,
-} from '@graasp/sdk';
+import { ItemLoginSchemaType, ItemTagType, PackedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { SETTINGS } from '../../../config/constants';
@@ -17,7 +12,7 @@ import { SHARE_ITEM_VISIBILITY_SELECT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import ItemLoginSchemaSelect from './ItemLoginSchemaSelect';
 
-const { useItemTags, useItemLoginSchema, useItemPublishedInformation } = hooks;
+const { useItemLoginSchema, useItemPublishedInformation } = hooks;
 const {
   useDeleteItemTag,
   usePostItemTag,
@@ -27,34 +22,25 @@ const {
 } = mutations;
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
   edit?: boolean;
 };
 
-const useVisibility = (item: DiscriminatedItem) => {
-  const [itemId] = useState(item.id);
-
-  // get item public
-  const {
-    data: itemTags,
-    isLoading: isItemTagsLoading,
-    isError: isItemTagsError,
-  } = useItemTags(itemId);
+const useVisibility = (item: PackedItem) => {
   const { mutate: postItemTag } = usePostItemTag();
   const { mutate: deleteItemTag } = useDeleteItemTag();
-  const [publicTag, setPublicTag] = useState<ItemTag | undefined>();
-  useEffect(() => {
-    setPublicTag(itemTags?.find(({ type }) => type === ItemTagType.Public));
-  }, [itemTags]);
 
   // get item published
   const { data: itemPublishEntry, isLoading: isItemPublishEntryLoading } =
-    useItemPublishedInformation({ itemId }, { enabled: Boolean(publicTag) });
+    useItemPublishedInformation(
+      { itemId: item.id },
+      { enabled: Boolean(item.public) },
+    );
   const { mutate: unpublish } = useUnpublishItem();
 
   // item login tag and item extra value
   const { data: itemLoginSchema, isLoading: isItemLoginLoading } =
-    useItemLoginSchema({ itemId });
+    useItemLoginSchema({ itemId: item.id });
   const { mutate: deleteItemLoginSchema } = useDeleteItemLoginSchema();
   const { mutate: putItemLoginSchema } = usePutItemLoginSchema();
 
@@ -65,30 +51,25 @@ const useVisibility = (item: DiscriminatedItem) => {
     setIsDisabled(
       Boolean(
         (itemLoginSchema && itemLoginSchema?.item?.path !== item?.path) ||
-          (publicTag && publicTag?.item?.path !== item?.path),
+          (item?.public && item?.public?.item?.path !== item?.path),
       ),
     );
-  }, [publicTag, itemLoginSchema, item]);
+  }, [itemLoginSchema, item]);
 
   // is loading
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    setIsLoading(
-      isItemPublishEntryLoading || isItemTagsLoading || isItemLoginLoading,
-    );
-  }, [isItemPublishEntryLoading, isItemTagsLoading, isItemLoginLoading]);
+    setIsLoading(isItemPublishEntryLoading || isItemLoginLoading);
+  }, [isItemPublishEntryLoading, isItemLoginLoading]);
 
   // is error
-  const [isError, setIsError] = useState(false);
-  useEffect(() => {
-    setIsError(isItemTagsError);
-  }, [isItemTagsError]);
+  const [isError] = useState(false);
 
   // visibility
   const [visibility, setVisibility] = useState<string>();
   useEffect(() => {
     switch (true) {
-      case Boolean(publicTag?.id): {
+      case Boolean(item.public): {
         setVisibility(SETTINGS.ITEM_PUBLIC.name);
         break;
       }
@@ -99,67 +80,92 @@ const useVisibility = (item: DiscriminatedItem) => {
       default:
         setVisibility(SETTINGS.ITEM_PRIVATE.name);
     }
-  }, [itemPublishEntry, publicTag, itemLoginSchema]);
+  }, [itemPublishEntry, item, itemLoginSchema]);
 
-  const handleChange = (event: SelectChangeEvent<string>) => {
-    const newTag = event.target.value;
+  const handleChange = useMemo(
+    () => (event: SelectChangeEvent<string>) => {
+      const newTag = event.target.value;
 
-    // deletes both public and published tags if they exists
-    const deletePublishedAndPublic = () => {
-      if (itemPublishEntry) {
-        unpublish({ id: itemId });
-      }
+      // deletes both public and published tags if they exists
+      const deletePublishedAndPublic = () => {
+        if (itemPublishEntry) {
+          unpublish({ id: item.id });
+        }
 
-      if (publicTag) {
-        deleteItemTag({ itemId, type: ItemTagType.Public });
-      }
-    };
+        if (item.public) {
+          deleteItemTag({ itemId: item.id, type: ItemTagType.Public });
+        }
+      };
 
-    const deleteLoginSchema = () => {
-      if (itemLoginSchema) {
-        deleteItemLoginSchema({
-          itemId,
-        });
-      }
-    };
+      const deleteLoginSchema = () => {
+        if (itemLoginSchema) {
+          deleteItemLoginSchema({
+            itemId: item.id,
+          });
+        }
+      };
 
-    switch (newTag) {
-      case SETTINGS.ITEM_PRIVATE.name: {
-        deletePublishedAndPublic();
-        deleteLoginSchema();
-        break;
+      switch (newTag) {
+        case SETTINGS.ITEM_PRIVATE.name: {
+          deletePublishedAndPublic();
+          deleteLoginSchema();
+          break;
+        }
+        case SETTINGS.ITEM_LOGIN.name: {
+          deletePublishedAndPublic();
+          putItemLoginSchema({
+            itemId: item.id,
+            type: ItemLoginSchemaType.Username,
+          });
+          break;
+        }
+        case SETTINGS.ITEM_PUBLIC.name: {
+          postItemTag({
+            itemId: item.id,
+            type: ItemTagType.Public,
+          });
+          deleteLoginSchema();
+          break;
+        }
+        default:
+          break;
       }
-      case SETTINGS.ITEM_LOGIN.name: {
-        deletePublishedAndPublic();
-        putItemLoginSchema({
-          itemId,
-          type: ItemLoginSchemaType.Username,
-        });
-        break;
-      }
-      case SETTINGS.ITEM_PUBLIC.name: {
-        postItemTag({
-          itemId,
-          type: ItemTagType.Public,
-        });
-        deleteLoginSchema();
-        break;
-      }
-      default:
-        break;
-    }
-  };
+    },
+    [
+      deleteItemLoginSchema,
+      deleteItemTag,
+      item.id,
+      itemLoginSchema,
+      itemPublishEntry,
+      postItemTag,
+      item.public,
+      putItemLoginSchema,
+      unpublish,
+    ],
+  );
 
-  return {
-    isLoading,
-    isError,
-    isDisabled,
-    itemPublishEntry,
-    itemLoginSchema,
-    publicTag,
-    visibility,
-    handleChange,
-  };
+  return useMemo(
+    () => ({
+      isLoading,
+      isError,
+      isDisabled,
+      itemPublishEntry,
+      itemLoginSchema,
+      publicTag: item.public,
+      visibility,
+      handleChange,
+    }),
+    [
+      isLoading,
+      isError,
+      isDisabled,
+      itemPublishEntry,
+      itemLoginSchema,
+      item.public,
+      visibility,
+      handleChange,
+    ],
+  );
 };
 
 const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {

@@ -1,28 +1,48 @@
+import { PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
+
 import { buildDownloadButtonId } from '@/config/selectors';
 import { ItemLayoutMode } from '@/enums';
 
-import { buildItemPath } from '../../../../src/config/paths';
+import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
 import { SIGNED_OUT_MEMBER } from '../../../fixtures/members';
-import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
+
+const SHARED_ITEM = PackedFolderItemFactory(
+  {},
+  { permission: PermissionLevel.Read },
+);
 
 describe('Download Item', () => {
   it('Table View', () => {
-    cy.setUpApi(SHARED_ITEMS);
-    cy.wait('@getSharedItems').then(({ response: { body } }) => {
-      for (const item of body) {
-        cy.get(`#${buildDownloadButtonId(item.id)}`).should('exist');
-      }
-    });
+    cy.setUpApi({ items: [SHARED_ITEM] });
+    cy.visit(HOME_PATH);
+    cy.wait('@getAccessibleItems').then(
+      ({
+        response: {
+          body: { data },
+        },
+      }) => {
+        for (const item of data) {
+          cy.get(`#${buildDownloadButtonId(item.id)}`).should('exist');
+        }
+      },
+    );
   });
   it('Grid view', () => {
-    cy.setUpApi(SHARED_ITEMS);
+    cy.setUpApi({ items: [SHARED_ITEM] });
+    cy.visit(HOME_PATH);
     cy.switchMode(ItemLayoutMode.Grid);
-    cy.wait('@getSharedItems').then(({ response: { body } }) => {
-      for (const item of body) {
-        cy.get(`#${buildDownloadButtonId(item.id)}`).should('exist');
-      }
-    });
+    cy.wait('@getAccessibleItems').then(
+      ({
+        response: {
+          body: { data },
+        },
+      }) => {
+        for (const item of data) {
+          cy.get(`#${buildDownloadButtonId(item.id)}`).should('exist');
+        }
+      },
+    );
   });
   it('download button for public item should be exist', () => {
     const currentMember = SIGNED_OUT_MEMBER;

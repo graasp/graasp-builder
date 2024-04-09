@@ -1,9 +1,13 @@
-import { DiscriminatedItem, Invitation, PermissionLevel } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  Invitation,
+  PackedFolderItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { v4 } from 'uuid';
 
 import { ApiConfig } from '../support/types';
-import { DEFAULT_FOLDER_ITEM } from './items';
 import { MEMBERS } from './members';
 
 export const buildInvitation = (args: {
@@ -24,20 +28,19 @@ export const buildInvitation = (args: {
   };
 };
 
+// warning: default permission admin
 const itemsWithInvitations: DiscriminatedItem[] = [
-  {
-    ...DEFAULT_FOLDER_ITEM,
+  PackedFolderItemFactory({
     id: 'bcafbd2a-5688-11eb-ae93-0242ac130002',
     name: 'parent',
     path: 'bcafbd2a_5688_11eb_ae93_0242ac130002',
-  },
-  {
-    ...DEFAULT_FOLDER_ITEM,
+  }),
+  PackedFolderItemFactory({
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
     name: 'own_item_name1',
     creator: MEMBERS.BOB,
     path: 'bcafbd2a_5688_11eb_ae93_0242ac130002.ecafbd2a_5688_11eb_ae93_0242ac130002',
-  },
+  }),
 ];
 
 // eslint-disable-next-line import/prefer-default-export
@@ -101,36 +104,45 @@ export const ITEMS_WITH_INVITATIONS: ApiConfig = {
   members: [MEMBERS.FANNY, MEMBERS.ANNA, MEMBERS.EVAN],
 };
 
+// warning: default permission admin
+const itemsWithInvitationsWriteAccess: DiscriminatedItem[] = [
+  PackedFolderItemFactory(
+    {
+      id: 'bcafbd2a-5688-11eb-ae93-0242ac130002',
+      path: 'bcafbd2a_5688_11eb_ae93_0242ac130002',
+    },
+    { permission: PermissionLevel.Write },
+  ),
+  PackedFolderItemFactory(
+    {
+      id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+      creator: MEMBERS.BOB,
+      path: 'bcafbd2a_5688_11eb_ae93_0242ac130002.ecafbd2a_5688_11eb_ae93_0242ac130002',
+    },
+    { permission: PermissionLevel.Write },
+  ),
+];
 export const ITEM_WITH_INVITATIONS_WRITE_ACCESS: ApiConfig = {
   items: [
     {
-      ...itemsWithInvitations[1],
+      ...itemsWithInvitationsWriteAccess[1],
 
       // for tests only
       memberships: [
         {
           id: 'ecafbd2a-5688-11eb-be93-0242ac130002',
-          item: itemsWithInvitations[0],
+          item: itemsWithInvitationsWriteAccess[0],
           permission: PermissionLevel.Write,
           member: MEMBERS.ANNA,
           createdAt: '2021-08-11T12:56:36.834Z',
           updatedAt: '2021-08-11T12:56:36.834Z',
           creator: MEMBERS.ANNA,
         },
-        // {
-        //   id: 'ecafbd2a-5688-11eb-be93-0242ac130004',
-        //   item: itemsWithInvitations[0],
-        //   permission: PermissionLevel.Admin,
-        //   email: MEMBERS.BOB.email,
-        //   createdAt: '2021-08-11T12:56:36.834Z',
-        //   updatedAt: '2021-08-11T12:56:36.834Z',
-        //   creator: MEMBERS.ANNA
-        // },
       ],
       invitations: [
         {
           id: 'ecafbd2a-5688-11eb-be92-0242ac130005',
-          item: itemsWithInvitations[0],
+          item: itemsWithInvitationsWriteAccess[0],
           permission: PermissionLevel.Write,
           email: MEMBERS.CEDRIC.email,
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -139,7 +151,7 @@ export const ITEM_WITH_INVITATIONS_WRITE_ACCESS: ApiConfig = {
         },
         {
           id: 'ecafbd1a-5688-11eb-be93-0242ac130006',
-          item: itemsWithInvitations[1],
+          item: itemsWithInvitationsWriteAccess[1],
           permission: PermissionLevel.Read,
           email: MEMBERS.DAVID.email,
           createdAt: '2021-08-11T12:56:36.834Z',

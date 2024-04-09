@@ -4,15 +4,12 @@ import { buildGraaspPlayerView } from '@/config/externalPaths';
 import { buildPlayerTabName } from '@/config/selectors';
 import { ShowOnlyMeChangeType } from '@/config/types';
 
-import { hooks } from '../../config/queryClient';
 import { ItemLayoutMode } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
 import MapView from '../item/MapView';
 import { useItemsStatuses } from '../table/BadgesCellRenderer';
 import ItemsGrid from './ItemsGrid';
 import ItemsTable from './ItemsTable';
-
-const { useManyItemMemberships, useItemsTags } = hooks;
 
 type Props = {
   id?: string;
@@ -30,7 +27,6 @@ type Props = {
   };
   parentId?: string;
   showThumbnails?: boolean;
-  enableMemberships?: boolean;
   canMove?: boolean;
   onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
@@ -55,7 +51,6 @@ const Items = ({
   parentId,
   defaultSortedColumn,
   showThumbnails = true,
-  enableMemberships = true,
   canMove = true,
   showOnlyMe = false,
   itemSearch,
@@ -68,14 +63,8 @@ const Items = ({
   showDropzoneHelper = false,
 }: Props): JSX.Element | null => {
   const { mode } = useLayoutContext();
-  const itemIds = items?.map(({ id: itemId }) => itemId);
-  const { data: manyMemberships } = useManyItemMemberships(
-    enableMemberships ? itemIds : [],
-  );
-  const { data: itemsTags } = useItemsTags(itemIds);
   const itemsStatuses = useItemsStatuses({
     items,
-    itemsTags,
   });
   switch (mode) {
     case ItemLayoutMode.Map: {
@@ -123,7 +112,6 @@ const Items = ({
           defaultSortedColumn={defaultSortedColumn}
           onSortChanged={onSortChanged}
           items={items}
-          manyMemberships={manyMemberships}
           itemsStatuses={itemsStatuses}
           headerElements={headerElements}
           isSearching={Boolean(itemSearch?.text)}

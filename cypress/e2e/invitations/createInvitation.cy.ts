@@ -1,4 +1,4 @@
-import { PermissionLevel } from '@graasp/sdk';
+import { PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
 
 import { buildItemPath } from '../../../src/config/paths';
 import {
@@ -7,7 +7,6 @@ import {
   SHARE_ITEM_SHARE_BUTTON_ID,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
 const inviteItem = ({
@@ -33,9 +32,10 @@ const inviteItem = ({
 
 describe('Create Invitation', () => {
   it('invite one new member', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    const items = [PackedFolderItemFactory()];
+    cy.setUpApi({ items, members: Object.values(MEMBERS) });
 
-    const id = SAMPLE_ITEMS.items?.[0].id;
+    const { id } = items[0];
     cy.visit(buildItemPath(id));
 
     // invite
@@ -55,24 +55,37 @@ describe('Create Invitation', () => {
   });
 
   it('cannot invite member with membership', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    const item = PackedFolderItemFactory({ creator: MEMBERS.ANNA });
+    const items = [
+      {
+        ...item,
+        memberships: [
+          {
+            item,
+            member: MEMBERS.ANNA,
+            permission: PermissionLevel.Admin,
+          },
+        ],
+      },
+    ];
+    cy.setUpApi({ items, members: Object.values(MEMBERS) });
 
     // go to child item
-    const { id } = SAMPLE_ITEMS.items[1];
+    const { id } = items[0];
     cy.visit(buildItemPath(id));
 
-    // invite
+    // person to invite
     const { email } = MEMBERS.ANNA;
-    const permission = PermissionLevel.Read;
-    inviteItem({ id, email, permission });
+    inviteItem({ id, email, permission: PermissionLevel.Read });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
   });
 
   it('cannot invite with invalid data', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    const items = [PackedFolderItemFactory()];
+    cy.setUpApi({ items, members: Object.values(MEMBERS) });
 
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = items[0];
     cy.visit(buildItemPath(id));
 
     // invite

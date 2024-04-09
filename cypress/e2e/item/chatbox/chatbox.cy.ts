@@ -1,4 +1,5 @@
 import { MockWebSocket } from '@graasp/query-client';
+import { PackedFolderItemFactory } from '@graasp/sdk';
 
 import { v4 } from 'uuid';
 
@@ -8,10 +9,7 @@ import {
   CHATBOX_INPUT_BOX_ID,
   ITEM_CHATBOX_BUTTON_ID,
 } from '../../../../src/config/selectors';
-import {
-  ITEM_WITHOUT_CHATBOX_MESSAGES,
-  ITEM_WITH_CHATBOX_MESSAGES,
-} from '../../../fixtures/chatbox';
+import { ITEM_WITH_CHATBOX_MESSAGES } from '../../../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
 import { CHATBOX_LOADING_TIME } from '../../../support/constants';
 
@@ -79,8 +77,12 @@ describe('Chatbox Scenarios', () => {
   });
 
   it('Receive messages in chatbox from websockets', () => {
-    const item = ITEM_WITHOUT_CHATBOX_MESSAGES;
-    cy.visitAndMockWs(buildItemPath(item.id), { items: [item] }, client);
+    const item = PackedFolderItemFactory();
+    cy.visitAndMockWs(
+      buildItemPath(item.id),
+      { items: [item], members: [MEMBERS] },
+      client,
+    );
 
     openChatbox();
 

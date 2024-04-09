@@ -4,6 +4,7 @@ import {
   FolderItemType,
   ItemType,
   MentionStatus,
+  PackedFolderItemFactory,
   PermissionLevel,
 } from '@graasp/sdk';
 
@@ -22,8 +23,9 @@ const item: FolderItemType = {
   settings: {},
 };
 
+// warning: permission admin by default
 export const ITEM_WITH_CHATBOX_MESSAGES: ItemForTest = {
-  ...item,
+  ...PackedFolderItemFactory(item),
   memberships: [
     {
       item,
@@ -64,7 +66,7 @@ const items: DiscriminatedItem[] = [
   },
 ];
 
-export const ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN: ItemForTest = {
+const ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN: ItemForTest = {
   ...items[0],
   memberships: [
     {

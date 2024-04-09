@@ -1,4 +1,4 @@
-import { CookieKeys } from '@graasp/sdk';
+import { CookieKeys, PackedFolderItemFactory } from '@graasp/sdk';
 
 import {
   HOME_PATH,
@@ -7,7 +7,6 @@ import {
   buildItemPath,
 } from '../../src/config/paths';
 import { HEADER_APP_BAR_ID, ITEM_MAIN_CLASS } from '../../src/config/selectors';
-import { SAMPLE_ITEMS } from '../fixtures/items';
 import {
   REDIRECTION_TIME,
   REQUEST_FAILURE_LOADING_TIME,
@@ -17,7 +16,7 @@ import { SIGN_IN_PATH } from '../support/paths';
 describe('Authentication', () => {
   describe('Signed Off > Redirect to sign in route', () => {
     beforeEach(() => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, currentMember: null });
+      cy.setUpApi({ currentMember: null });
     });
     it('Home', () => {
       cy.visit(HOME_PATH);
@@ -29,8 +28,10 @@ describe('Authentication', () => {
   });
 
   describe('Signed In', () => {
+    const ENV = { items: [PackedFolderItemFactory()] };
+
     beforeEach(() => {
-      cy.setUpApi(SAMPLE_ITEMS);
+      cy.setUpApi(ENV);
     });
 
     describe('Load page correctly', () => {
@@ -39,7 +40,7 @@ describe('Authentication', () => {
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
       });
       it('Item', () => {
-        cy.visit(buildItemPath(SAMPLE_ITEMS.items?.[0].id));
+        cy.visit(buildItemPath(ENV.items?.[0].id));
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
         cy.get(`.${ITEM_MAIN_CLASS}`).should('exist');
       });
@@ -63,14 +64,11 @@ describe('Authentication', () => {
       });
 
       it('Item', () => {
-        cy.setCookie(
-          CookieKeys.RedirectUrl,
-          buildItemPath(SAMPLE_ITEMS.items?.[0].id),
-        );
+        cy.setCookie(CookieKeys.RedirectUrl, buildItemPath(ENV.items?.[0].id));
         cy.visit(REDIRECT_PATH);
         cy.url({ timeout: REDIRECTION_TIME }).should(
           'include',
-          buildItemPath(SAMPLE_ITEMS.items?.[0].id),
+          buildItemPath(ENV.items?.[0].id),
         );
       });
     });

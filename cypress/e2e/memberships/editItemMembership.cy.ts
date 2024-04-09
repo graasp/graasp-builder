@@ -8,7 +8,6 @@ import {
   buildShareButtonId,
 } from '../../../src/config/selectors';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
-import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 
 const editItemMembership = ({
   itemId,
@@ -21,8 +20,6 @@ const editItemMembership = ({
 }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-  cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
-
   const select = cy.get(
     `${buildItemMembershipRowSelector(
       id,
@@ -34,7 +31,7 @@ const editItemMembership = ({
 
 describe('Edit Membership', () => {
   it('edit item membership', () => {
-    cy.setUpApi({ ...ITEMS_WITH_MEMBERSHIPS });
+    cy.setUpApi(ITEMS_WITH_MEMBERSHIPS);
 
     // go to children item
     const { id, memberships } = ITEMS_WITH_MEMBERSHIPS.items[0];

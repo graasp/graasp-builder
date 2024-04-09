@@ -11,7 +11,7 @@ import {
   MenuItem,
 } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { PackedItem } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
 
 import { mutations } from '@/config/queryClient';
@@ -39,7 +39,7 @@ import CopyButton from './CopyButton';
 import CreateShortcutButton from './CreateShortcutButton';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
   canWrite?: boolean;
   canAdmin?: boolean;
   canMove?: boolean;

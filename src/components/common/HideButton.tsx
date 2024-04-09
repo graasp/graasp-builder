@@ -1,11 +1,11 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
-import { DiscriminatedItem, ItemTagType } from '@graasp/sdk';
+import { ItemTagType, PackedItem } from '@graasp/sdk';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import { hooks, mutations } from '../../config/queryClient';
+import { mutations } from '../../config/queryClient';
 import {
   HIDDEN_ITEM_BUTTON_CLASS,
   buildHideButtonId,
@@ -13,7 +13,7 @@ import {
 import { BUILDER } from '../../langs/constants';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
   type?: ActionButtonVariant;
   onClick?: () => void;
 };
@@ -25,13 +25,10 @@ const HideButton = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { data: tags } = hooks.useItemTags(item.id);
   const postTag = mutations.usePostItemTag();
   const deleteTag = mutations.useDeleteItemTag();
 
-  const hiddenTag = tags?.filter(
-    ({ type: tagType }) => tagType === ItemTagType.Hidden,
-  )?.[0];
+  const hiddenTag = item.hidden;
   // since children items are hidden because parent is hidden, the hidden tag should be removed from the root item
   // if hiddenTag is undefined -> the item is not hidden
   const isOriginalHiddenItem =

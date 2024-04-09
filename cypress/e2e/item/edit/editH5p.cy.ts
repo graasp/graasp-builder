@@ -1,9 +1,15 @@
+import { PackedH5PItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH } from '../../../../src/config/paths';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { GRAASP_H5P_ITEM } from '../../../fixtures/h5p';
-import { EDITED_FIELDS } from '../../../fixtures/items';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editItem } from '../../../support/editUtils';
+
+const EDITED_FIELDS = {
+  name: 'new name',
+};
+
+const GRAASP_H5P_ITEM = PackedH5PItemFactory();
 
 describe('Edit H5P', () => {
   beforeEach(() => {

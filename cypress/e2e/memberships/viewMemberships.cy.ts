@@ -14,7 +14,7 @@ import {
 
 describe('View Memberships', () => {
   beforeEach(() => {
-    cy.setUpApi({ ...ITEMS_WITH_MEMBERSHIPS });
+    cy.setUpApi(ITEMS_WITH_MEMBERSHIPS);
   });
 
   it('view membership in settings', () => {

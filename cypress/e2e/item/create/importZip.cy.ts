@@ -1,8 +1,9 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ZIP_DASHBOARD_UPLOADER_ID } from '../../../../src/config/selectors';
 import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { ZIP_DEFAULT } from '../../../fixtures/files';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { createItem } from '../../../support/createUtils';
 
 describe('Import Zip', () => {
@@ -21,8 +22,10 @@ describe('Import Zip', () => {
   });
 
   it('create file in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    const FOLDER = PackedFolderItemFactory();
+
+    cy.setUpApi({ items: [FOLDER] });
+    const { id } = FOLDER;
     cy.visit(buildItemPath(id));
 
     cy.switchMode(ItemLayoutMode.List);
@@ -36,8 +39,10 @@ describe('Import Zip', () => {
   });
 
   it('catch error', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, importZipError: true });
-    const { id } = SAMPLE_ITEMS.items[0];
+    const FOLDER = PackedFolderItemFactory();
+
+    cy.setUpApi({ items: [FOLDER], importZipError: true });
+    const { id } = FOLDER;
     cy.visit(buildItemPath(id));
 
     cy.switchMode(ItemLayoutMode.List);

@@ -1,10 +1,20 @@
+import { ItemType, PackedAppItemFactory } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../../src/config/paths';
-import { APP_USING_CONTEXT_ITEM } from '../../../fixtures/apps';
+import { buildAppItemLinkForTest } from '../../../fixtures/apps';
+
+const APP = PackedAppItemFactory({
+  extra: {
+    [ItemType.APP]: {
+      url: `${Cypress.env('VITE_GRAASP_API_HOST')}/${buildAppItemLinkForTest('app.html')}`,
+    },
+  },
+});
 
 describe('Apps', () => {
   it('App should request context', () => {
-    const { id, name } = APP_USING_CONTEXT_ITEM;
-    cy.setUpApi({ items: [APP_USING_CONTEXT_ITEM] });
+    const { id, name } = APP;
+    cy.setUpApi({ items: [APP] });
     cy.visit(buildItemPath(id));
 
     cy.wait(2000);

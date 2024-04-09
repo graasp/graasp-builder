@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import i18n from '../../../../src/config/i18n';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
@@ -7,30 +9,29 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { IMAGE_ITEM_DEFAULT, VIDEO_ITEM_S3 } from '../../../fixtures/files';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
-import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
 import { CURRENT_USER } from '../../../fixtures/members';
-import { SHARED_ITEMS } from '../../../fixtures/sharedItems';
 import { expectFolderViewScreenLayout } from '../../../support/viewUtils';
+
+const parentItem = PackedFolderItemFactory();
+const item1 = PackedFolderItemFactory();
+
+const child1 = PackedFolderItemFactory({ parentItem });
+const child2 = PackedFolderItemFactory({ parentItem });
+const children = [child1, child2];
+
+const items = [parentItem, item1, child1, child2];
 
 describe('View Folder', () => {
   describe('Grid', () => {
     beforeEach(() => {
       cy.setUpApi({
-        items: [
-          ...SAMPLE_ITEMS.items,
-          ...SHARED_ITEMS.items,
-          GRAASP_LINK_ITEM,
-          IMAGE_ITEM_DEFAULT,
-          VIDEO_ITEM_S3,
-        ],
+        items,
       });
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
     });
 
     it('visit item by id', () => {
-      const { id } = SAMPLE_ITEMS.items[0];
+      const { id } = parentItem;
       cy.visit(buildItemPath(id));
       cy.switchMode(ItemLayoutMode.Grid);
 
@@ -38,13 +39,13 @@ describe('View Folder', () => {
       cy.wait('@getItem');
 
       // should get children
-      cy.wait('@getChildren').then(({ response: { body } }) => {
+      cy.wait('@getChildren').then(() => {
         // check all children are created and displayed
-        for (const item of body) {
+        for (const item of children) {
           cy.get(`#${buildItemCard(item.id)}`).should('exist');
         }
       });
-      expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
+      expectFolderViewScreenLayout({ item: parentItem });
 
       // visit home
       cy.get(`#${NAVIGATION_HOME_ID}`).click();
@@ -59,36 +60,26 @@ describe('View Folder', () => {
     });
 
     it('search', () => {
-      const { id } = SAMPLE_ITEMS.items[0];
+      const { id } = parentItem;
       cy.visit(buildItemPath(id));
       cy.switchMode(ItemLayoutMode.Grid);
 
-      cy.get(`#${buildItemCard(SAMPLE_ITEMS.items[2].id)}`).should(
-        'be.visible',
-      );
-      cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(SAMPLE_ITEMS.items[3].name);
-      cy.get(`#${buildItemCard(SAMPLE_ITEMS.items[3].id)}`).should(
-        'be.visible',
-      );
+      cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
+      cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);
+      cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
     });
   });
 
   describe('List', () => {
-    const allItems = [
-      ...SAMPLE_ITEMS.items,
-      GRAASP_LINK_ITEM,
-      IMAGE_ITEM_DEFAULT,
-      VIDEO_ITEM_S3,
-    ];
     beforeEach(() => {
       cy.setUpApi({
-        items: allItems,
+        items,
       });
     });
 
     describe('Navigation', () => {
       it('visit folder by id', () => {
-        const { id } = SAMPLE_ITEMS.items[0];
+        const { id } = parentItem;
         cy.visit(buildItemPath(id));
 
         cy.switchMode(ItemLayoutMode.List);
@@ -103,7 +94,7 @@ describe('View Folder', () => {
           }
         });
 
-        expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
+        expectFolderViewScreenLayout({ item: parentItem });
         // visit home
         cy.get(`#${NAVIGATION_HOME_ID}`).click();
 
@@ -117,17 +108,13 @@ describe('View Folder', () => {
     });
 
     it('search', () => {
-      const { id } = SAMPLE_ITEMS.items[0];
+      const { id } = parentItem;
       cy.visit(buildItemPath(id));
       cy.switchMode(ItemLayoutMode.List);
 
-      cy.get(buildItemsTableRowIdAttribute(SAMPLE_ITEMS.items[2].id)).should(
-        'be.visible',
-      );
-      cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(SAMPLE_ITEMS.items[3].name);
-      cy.get(buildItemsTableRowIdAttribute(SAMPLE_ITEMS.items[3].id)).should(
-        'be.visible',
-      );
+      cy.get(buildItemsTableRowIdAttribute(child1.id)).should('be.visible');
+      cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);
+      cy.get(buildItemsTableRowIdAttribute(child1.id)).should('be.visible');
     });
   });
 });

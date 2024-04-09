@@ -46,8 +46,9 @@ const RootNavigationTree = ({
   );
 
   const { data: parents } = hooks.useParents({
-    id: items[0].id,
-    path: items[0].path,
+    id: items[0]?.id,
+    path: items[0]?.path,
+    enabled: Boolean(items[0]),
   });
 
   if (recentItems?.data?.length) {

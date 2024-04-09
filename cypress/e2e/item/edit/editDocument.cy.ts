@@ -1,4 +1,9 @@
-import { buildDocumentExtra, getDocumentExtra } from '@graasp/sdk';
+import {
+  PackedDocumentItemFactory,
+  PackedFolderItemFactory,
+  buildDocumentExtra,
+  getDocumentExtra,
+} from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
@@ -9,14 +14,6 @@ import {
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
 import {
-  GRAASP_DOCUMENT_CHILDREN_ITEM,
-  GRAASP_DOCUMENT_ITEM,
-  GRAASP_DOCUMENT_ITEMS_FIXTURE,
-  GRAASP_DOCUMENT_PARENT_FOLDER,
-} from '../../../fixtures/documents';
-import { EDITED_FIELDS } from '../../../fixtures/items';
-import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
-import {
   CAPTION_EDIT_PAUSE,
   EDIT_ITEM_PAUSE,
 } from '../../../support/constants';
@@ -24,14 +21,29 @@ import { editItem } from '../../../support/editUtils';
 
 const content = 'new text';
 const newFields = {
-  ...EDITED_FIELDS,
+  name: 'new name',
   extra: buildDocumentExtra({ content }),
 };
+
+const GRAASP_DOCUMENT_ITEM = PackedDocumentItemFactory({
+  name: 'graasp text',
+  extra: buildDocumentExtra({
+    content: '<h1>Some Title</h1>',
+  }),
+});
+const GRAASP_FOLDER_PARENT = PackedFolderItemFactory();
+const GRAASP_DOCUMENT_ITEM_CHILD = PackedDocumentItemFactory({
+  name: 'graasp text',
+  extra: buildDocumentExtra({
+    content: '<h1>Some Title</h1>',
+  }),
+  parentItem: GRAASP_FOLDER_PARENT,
+});
 
 describe('Edit Document', () => {
   describe('List', () => {
     it('edit on Home', () => {
-      cy.setUpApi({ items: [GRAASP_DOCUMENT_ITEM, GRAASP_LINK_ITEM] });
+      cy.setUpApi({ items: [GRAASP_DOCUMENT_ITEM] });
       cy.visit(HOME_PATH);
 
       cy.switchMode(ItemLayoutMode.List);
@@ -64,14 +76,13 @@ describe('Edit Document', () => {
     });
 
     it('edit in folder', () => {
-      cy.setUpApi({ items: GRAASP_DOCUMENT_ITEMS_FIXTURE });
-      const parent = GRAASP_DOCUMENT_PARENT_FOLDER;
+      const parent = GRAASP_FOLDER_PARENT;
+      const itemToEdit = GRAASP_DOCUMENT_ITEM_CHILD;
+      cy.setUpApi({ items: [parent, itemToEdit] });
       // go to children item
       cy.visit(buildItemPath(parent.id));
 
       cy.switchMode(ItemLayoutMode.List);
-
-      const itemToEdit = GRAASP_DOCUMENT_CHILDREN_ITEM;
 
       // edit
       editItem(
@@ -101,11 +112,10 @@ describe('Edit Document', () => {
 
   describe('Grid', () => {
     it('edit on Home', () => {
-      cy.setUpApi({ items: GRAASP_DOCUMENT_ITEMS_FIXTURE });
+      const itemToEdit = GRAASP_DOCUMENT_ITEM;
+      cy.setUpApi({ items: [itemToEdit] });
       cy.visit(HOME_PATH);
       cy.switchMode(ItemLayoutMode.Grid);
-
-      const itemToEdit = GRAASP_DOCUMENT_ITEM;
 
       // edit
       editItem(
@@ -133,13 +143,11 @@ describe('Edit Document', () => {
     });
 
     it('edit in folder', () => {
-      cy.setUpApi({ items: GRAASP_DOCUMENT_ITEMS_FIXTURE });
-      // go to children item
-      const parent = GRAASP_DOCUMENT_PARENT_FOLDER;
+      const parent = GRAASP_FOLDER_PARENT;
+      const itemToEdit = GRAASP_DOCUMENT_ITEM_CHILD;
+      cy.setUpApi({ items: [parent, itemToEdit] });
       cy.visit(buildItemPath(parent.id));
       cy.switchMode(ItemLayoutMode.Grid);
-
-      const itemToEdit = GRAASP_DOCUMENT_CHILDREN_ITEM;
 
       // edit
       editItem(

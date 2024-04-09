@@ -1,3 +1,5 @@
+import { PackedLinkItemFactory, buildLinkExtra } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
@@ -7,17 +9,33 @@ import {
   buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { EDITED_FIELDS } from '../../../fixtures/items';
-import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
+import { CURRENT_USER } from '../../../fixtures/members';
 import {
   EDIT_ITEM_PAUSE,
   ITEM_LOADING_PAUSE,
 } from '../../../support/constants';
 import { editCaptionFromViewPage, editItem } from '../../../support/editUtils';
 
+const EDITED_FIELDS = {
+  name: 'new name',
+};
+
+const GRAASP_LINK_ITEM = PackedLinkItemFactory({
+  creator: CURRENT_USER,
+  description: 'my link',
+  extra: buildLinkExtra({
+    url: 'https://graasp.eu',
+    html: '',
+    thumbnails: ['https://graasp.eu/img/epfl/logo-tile.png'],
+    icons: [
+      'https://graasp.eu/cdn/img/epfl/favicons/favicon-32x32.png?v=yyxJ380oWY',
+    ],
+  }),
+});
+
 describe('Edit Link', () => {
   beforeEach(() => {
-    cy.setUpApi({ items: [GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM] });
+    cy.setUpApi({ items: [GRAASP_LINK_ITEM] });
   });
 
   describe('View Page', () => {

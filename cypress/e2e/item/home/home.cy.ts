@@ -1,3 +1,8 @@
+import {
+  PackedFolderItemFactory,
+  PackedLocalFileItemFactory,
+} from '@graasp/sdk';
+
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 
 import i18n from '../../../../src/config/i18n';
@@ -14,12 +19,22 @@ import {
   buildItemsTableRowSelector,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
+import { generateOwnItems } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
 import { ItemForTest } from '../../../support/types';
 
-const sampleItems = generateOwnItems(30);
+const ownItems = generateOwnItems(30);
+
+const IMAGE_ITEM = PackedLocalFileItemFactory();
+const FOLDER = PackedFolderItemFactory();
+const FOLDER_CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
+const IMAGE_ITEM_CHILD = PackedLocalFileItemFactory({
+  parentItem: FOLDER,
+});
+const FOLDER2 = PackedFolderItemFactory();
+
+const ITEMS = [IMAGE_ITEM, FOLDER, FOLDER2, FOLDER_CHILD, IMAGE_ITEM_CHILD];
 
 // register a custom one time interceptor to listen specifically
 // to the request made with the search parameter we want
@@ -36,7 +51,7 @@ describe('Home', () => {
     describe('Features', () => {
       beforeEach(() => {
         cy.setUpApi({
-          items: sampleItems,
+          items: generateOwnItems(30),
         });
         i18n.changeLanguage(CURRENT_USER.extra.lang as string);
         cy.visit(HOME_PATH);
@@ -91,7 +106,7 @@ describe('Home', () => {
             expect(query.name).to.eq(searchText);
             expect(query.page).to.eq('1');
           });
-          cy.get(`#${buildItemCard(sampleItems[0].id)}`).should('be.visible');
+          cy.get(`#${buildItemCard(ownItems[0].id)}`).should('be.visible');
         });
       });
 
@@ -130,14 +145,14 @@ describe('Home', () => {
 
         it('shows only items of each page', () => {
           // using default items per page count
-          checkGridPagination(sampleItems);
+          checkGridPagination(ownItems);
         });
       });
     });
 
     describe('Navigation', () => {
       beforeEach(() => {
-        cy.setUpApi(SAMPLE_ITEMS);
+        cy.setUpApi({ items: ITEMS });
         i18n.changeLanguage(CURRENT_USER.extra.lang as string);
         cy.visit(HOME_PATH);
         cy.switchMode(ItemLayoutMode.Grid);
@@ -145,7 +160,6 @@ describe('Home', () => {
 
       it('visit Home', () => {
         cy.wait('@getAccessibleItems').then(({ response: { body } }) => {
-          cy.wait('@getItemMemberships');
           // check item is created and displayed
           for (const item of body.data) {
             cy.get(`#${buildItemCard(item.id)}`).should('exist');
@@ -153,7 +167,7 @@ describe('Home', () => {
         });
 
         // visit child
-        const { id: childId } = SAMPLE_ITEMS.items[0];
+        const { id: childId } = FOLDER;
         cy.goToItemInGrid(childId);
 
         // should get children
@@ -165,7 +179,7 @@ describe('Home', () => {
         });
 
         // visit child
-        const { id: childChildId } = SAMPLE_ITEMS.items[3];
+        const { id: childChildId } = FOLDER_CHILD;
         cy.goToItemInGrid(childChildId);
 
         // expect no children
@@ -177,11 +191,7 @@ describe('Home', () => {
         // should get children
         cy.wait('@getChildren').then(() => {
           // check item is created and displayed
-          for (const item of [
-            SAMPLE_ITEMS.items[2],
-            SAMPLE_ITEMS.items[3],
-            SAMPLE_ITEMS.items[4],
-          ]) {
+          for (const item of [IMAGE_ITEM_CHILD, FOLDER_CHILD]) {
             cy.get(`#${buildItemCard(item.id)}`).should('exist');
           }
         });
@@ -192,14 +202,14 @@ describe('Home', () => {
   describe('List', () => {
     describe('Navigation', () => {
       beforeEach(() => {
-        cy.setUpApi(SAMPLE_ITEMS);
+        cy.setUpApi({ items: ITEMS });
         cy.visit(HOME_PATH);
         cy.switchMode(ItemLayoutMode.List);
       });
 
       it('visit Home', () => {
         // visit child
-        const { id: childId } = SAMPLE_ITEMS.items[0];
+        const { id: childId } = FOLDER;
         cy.goToItemInList(childId);
 
         // should get children
@@ -211,7 +221,7 @@ describe('Home', () => {
         });
 
         // visit child
-        const { id: childChildId } = SAMPLE_ITEMS.items[3];
+        const { id: childChildId } = FOLDER_CHILD;
         cy.goToItemInList(childChildId);
 
         // expect no children
@@ -232,7 +242,7 @@ describe('Home', () => {
     describe('Features', () => {
       beforeEach(() => {
         cy.setUpApi({
-          items: sampleItems,
+          items: generateOwnItems(30),
         });
         cy.visit(HOME_PATH);
         cy.switchMode(ItemLayoutMode.List);

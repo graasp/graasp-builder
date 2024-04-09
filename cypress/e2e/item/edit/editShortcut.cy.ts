@@ -1,13 +1,19 @@
+import { PackedShortcutItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH } from '../../../../src/config/paths';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { EDITED_FIELDS, SHORTCUT } from '../../../fixtures/items';
-import { GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM } from '../../../fixtures/links';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editItem } from '../../../support/editUtils';
 
+const EDITED_FIELDS = {
+  name: 'new name',
+};
+
+const SHORTCUT = PackedShortcutItemFactory();
+
 describe('Edit Shortcut', () => {
   beforeEach(() => {
-    cy.setUpApi({ items: [SHORTCUT, GRAASP_LINK_ITEM, YOUTUBE_LINK_ITEM] });
+    cy.setUpApi({ items: [SHORTCUT] });
   });
 
   describe('List', () => {

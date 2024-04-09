@@ -23,6 +23,8 @@ export const editItem = (
   },
   mode = DEFAULT_ITEM_LAYOUT_MODE,
 ): void => {
+  // todo: remove on table refactor
+  cy.wait(500);
   const { id, type } = payload;
   switch (mode) {
     case ItemLayoutMode.Grid: {

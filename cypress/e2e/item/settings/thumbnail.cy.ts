@@ -1,26 +1,32 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { buildItemSettingsPath } from '../../../../src/config/paths';
 import {
   CROP_MODAL_CONFIRM_BUTTON_ID,
   ITEM_THUMBNAIL_DELETE_BTN_ID,
   THUMBNAIL_SETTING_UPLOAD_INPUT_ID,
 } from '../../../../src/config/selectors';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import {
-  SAMPLE_ITEMS_WITH_THUMBNAILS,
+  ITEM_THUMBNAIL_LINK,
   THUMBNAIL_MEDIUM_PATH,
-} from '../../../fixtures/thumbnails';
+} from '../../../fixtures/thumbnails/links';
 import { FILE_LOADING_PAUSE } from '../../../support/constants';
 
 describe('Item Thumbnail', () => {
+  const item = PackedFolderItemFactory();
+  const itemWithThumbnails = {
+    ...PackedFolderItemFactory(),
+    thumnails: ITEM_THUMBNAIL_LINK,
+    settings: { hasThumbnail: true },
+  };
   beforeEach(() => {
     cy.setUpApi({
-      items: [...SAMPLE_ITEMS_WITH_THUMBNAILS.items, SAMPLE_ITEMS.items[4]],
+      items: [item, itemWithThumbnails],
     });
   });
   describe('Upload Thumbnails', () => {
     it(`upload item thumbnail`, () => {
-      const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
-      cy.visit(buildItemSettingsPath(items[0].id));
+      cy.visit(buildItemSettingsPath(item.id));
 
       // change item thumbnail
       // target visually hidden input
@@ -37,20 +43,19 @@ describe('Item Thumbnail', () => {
 
   describe('Delete thumbnail', () => {
     it('Delete thumbnail button should exist for item with thumbnail', () => {
-      const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
-      cy.visit(buildItemSettingsPath(items[1].id));
+      cy.visit(buildItemSettingsPath(itemWithThumbnails.id));
 
       cy.get(`#${ITEM_THUMBNAIL_DELETE_BTN_ID}`)
         .invoke('show')
         .should('be.visible');
       cy.get(`#${ITEM_THUMBNAIL_DELETE_BTN_ID}`).click();
       cy.wait(`@deleteItemThumbnail`).then(({ request: { url } }) => {
-        expect(url).to.contain(items[1].id);
+        expect(url).to.contain(itemWithThumbnails.id);
       });
     });
 
     it('Delete thumbnail button should not exist for item with no thumbnail', () => {
-      cy.visit(buildItemSettingsPath(SAMPLE_ITEMS.items[4].id));
+      cy.visit(buildItemSettingsPath(item.id));
       Cypress.on('fail', (error) => {
         expect(error.message).to.include(
           `Expected to find element: \`#${ITEM_THUMBNAIL_DELETE_BTN_ID}\`, but never found it.`,

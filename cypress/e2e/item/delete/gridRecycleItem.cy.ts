@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
@@ -5,7 +7,6 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const recycleItem = (id: string) => {
   const menuSelector = `#${buildItemMenuButtonId(id)}`;
@@ -15,11 +16,13 @@ const recycleItem = (id: string) => {
 
 describe('Recycle Item in Grid', () => {
   it('recycle item on Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    const FOLDER = PackedFolderItemFactory();
+
+    cy.setUpApi({ items: [FOLDER] });
     cy.visit(HOME_PATH);
     cy.switchMode(ItemLayoutMode.Grid);
 
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = FOLDER;
 
     // recycle
     recycleItem(id);
@@ -27,9 +30,11 @@ describe('Recycle Item in Grid', () => {
   });
 
   it('recycle item inside parent', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
-    const { id: idToDelete } = SAMPLE_ITEMS.items[2];
+    const FOLDER = PackedFolderItemFactory();
+    const CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
+    cy.setUpApi({ items: [FOLDER, CHILD] });
+    const { id } = FOLDER;
+    const { id: idToDelete } = CHILD;
 
     // go to children item
     cy.visit(buildItemPath(id));

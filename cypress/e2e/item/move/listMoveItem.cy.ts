@@ -1,3 +1,8 @@
+import {
+  PackedFolderItemFactory,
+  PackedLocalFileItemFactory,
+} from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
@@ -7,9 +12,18 @@ import {
   buildNavigationModalItemId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
+
+const IMAGE_ITEM = PackedLocalFileItemFactory();
+const FOLDER = PackedFolderItemFactory();
+const CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
+const CHILD_CHILD = PackedFolderItemFactory({ parentItem: CHILD });
+const FOLDER2 = PackedFolderItemFactory();
+
+const items = [IMAGE_ITEM, FOLDER, FOLDER2, CHILD, CHILD_CHILD];
 
 const openMoveModal = ({ id: movedItemId }: { id: string }) => {
+  // todo: remove on table refactor
+  cy.wait(1000);
   cy.get(`#${buildItemMenuButtonId(movedItemId)}`).click();
   cy.get(
     `#${buildItemMenu(movedItemId)} .${ITEM_MENU_MOVE_BUTTON_CLASS}`,
@@ -26,20 +40,19 @@ const moveItem = ({
   rootId?: string;
 }) => {
   openMoveModal({ id: movedItemId });
-
   cy.handleTreeMenu(toItemPath, rootId);
 };
 
 describe('Move Item in List', () => {
   it('move item on Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    cy.setUpApi({ items });
     cy.visit(HOME_PATH);
 
     cy.switchMode(ItemLayoutMode.List);
 
     // move
-    const { id: movedItem } = SAMPLE_ITEMS.items[0];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    const { id: movedItem } = FOLDER2;
+    const { id: toItem, path: toItemPath } = FOLDER;
     moveItem({ id: movedItem, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { url, body } }) => {
@@ -49,8 +62,8 @@ describe('Move Item in List', () => {
   });
 
   it('move item in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -58,8 +71,8 @@ describe('Move Item in List', () => {
     cy.switchMode(ItemLayoutMode.List);
 
     // move
-    const { id: movedItem } = SAMPLE_ITEMS.items[2];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    const { id: movedItem } = CHILD;
+    const { id: toItem, path: toItemPath } = FOLDER2;
     moveItem({ id: movedItem, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
@@ -69,18 +82,20 @@ describe('Move Item in List', () => {
   });
 
   it('cannot move inside self children', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
 
     cy.switchMode(ItemLayoutMode.List);
 
-    const { id: movedItemId } = SAMPLE_ITEMS.items[2];
-    const parentId = SAMPLE_ITEMS.items[0].id;
-    const childId = SAMPLE_ITEMS.items[6].id;
+    const { id: movedItemId } = CHILD;
+    const { id: parentId } = FOLDER;
+    const { id: childId } = CHILD_CHILD;
+
     openMoveModal({ id: movedItemId });
+
     // parent is disabled
     cy.get(`#${buildNavigationModalItemId(parentId)} button`).should(
       'be.disabled',
@@ -100,8 +115,8 @@ describe('Move Item in List', () => {
   });
 
   it('move item to Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -109,7 +124,7 @@ describe('Move Item in List', () => {
     cy.switchMode(ItemLayoutMode.List);
 
     // move
-    const { id: movedItem } = SAMPLE_ITEMS.items[2];
+    const { id: movedItem } = CHILD;
     moveItem({ id: movedItem, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {

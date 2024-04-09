@@ -1,4 +1,8 @@
-import { ItemTagType } from '@graasp/sdk';
+import {
+  ItemTagType,
+  PackedFolderItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
@@ -8,13 +12,49 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import {
-  CHILD_HIDDEN_ITEM,
-  HIDDEN_ITEM,
-  ITEMS_SETTINGS,
-} from '../../../fixtures/items';
+import { MEMBERS } from '../../../fixtures/members';
+import { ItemForTest } from '../../../support/types';
+
+const hiddenItem = PackedFolderItemFactory(
+  {},
+  { hiddenTag: { type: ItemTagType.Hidden } },
+);
+const HIDDEN_ITEM: ItemForTest = {
+  ...hiddenItem,
+  memberships: [
+    {
+      item: hiddenItem,
+      permission: PermissionLevel.Admin,
+      member: MEMBERS.ANNA,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: '2021-08-11T12:56:36.834Z',
+      updatedAt: '2021-08-11T12:56:36.834Z',
+    },
+    {
+      item: hiddenItem,
+      permission: PermissionLevel.Read,
+      member: MEMBERS.BOB,
+      creator: MEMBERS.ANNA,
+      id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
+      createdAt: '2021-08-11T12:56:36.834Z',
+      updatedAt: '2021-08-11T12:56:36.834Z',
+    },
+  ],
+};
+
+const CHILD_HIDDEN_ITEM = PackedFolderItemFactory({ parentItem: HIDDEN_ITEM });
+
+const ITEM = PackedFolderItemFactory(
+  {},
+  {
+    permission: PermissionLevel.Admin,
+  },
+);
 
 const toggleHideButton = (itemId: string, isHidden = false) => {
+  // todo: remove on table refactor
+  cy.wait(500);
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
 
@@ -26,19 +66,18 @@ const toggleHideButton = (itemId: string, isHidden = false) => {
 describe('Hiding Item', () => {
   describe('Successfully hide item in List', () => {
     beforeEach(() => {
-      cy.setUpApi(ITEMS_SETTINGS);
+      cy.setUpApi({ items: [ITEM, HIDDEN_ITEM, CHILD_HIDDEN_ITEM] });
     });
 
     it('Hide an item', () => {
       cy.visit(HOME_PATH);
-      const item = ITEMS_SETTINGS.items[1];
 
-      toggleHideButton(item.id, false);
+      toggleHideButton(ITEM.id, false);
 
       cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
         ({ request: { url } }) => {
           expect(url).to.contain(ItemTagType.Hidden);
-          expect(url).to.contain(item.id);
+          expect(url).to.contain(ITEM.id);
         },
       );
     });
@@ -73,13 +112,13 @@ describe('Hiding Item', () => {
 
   describe('Successfully hide item in Grid', () => {
     beforeEach(() => {
-      cy.setUpApi(ITEMS_SETTINGS);
+      cy.setUpApi({ items: [ITEM, HIDDEN_ITEM, CHILD_HIDDEN_ITEM] });
     });
 
     it('Hide an item', () => {
       cy.visit(HOME_PATH);
       cy.switchMode(ItemLayoutMode.Grid);
-      const item = ITEMS_SETTINGS.items[1];
+      const item = ITEM;
 
       toggleHideButton(item.id, false);
 
@@ -94,7 +133,7 @@ describe('Hiding Item', () => {
     it('Show an Item', () => {
       cy.visit(HOME_PATH);
       cy.switchMode(ItemLayoutMode.Grid);
-      const item = ITEMS_SETTINGS.items[0];
+      const item = HIDDEN_ITEM;
 
       toggleHideButton(item.id, true);
 

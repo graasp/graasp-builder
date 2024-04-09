@@ -74,7 +74,6 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
             actions={RowActions}
             ToolbarActions={ToolbarActions}
             showThumbnails={false}
-            enableMemberships={false}
             totalCount={recycledItems?.length}
           />
         </Box>

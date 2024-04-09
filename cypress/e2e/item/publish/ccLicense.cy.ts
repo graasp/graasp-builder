@@ -1,3 +1,5 @@
+import { ItemTagType, PackedFolderItemFactory } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   CC_ALLOW_COMMERCIAL_CONTROL_ID,
@@ -9,8 +11,104 @@ import {
   CC_SHARE_ALIKE_CONTROL_ID,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
-import { PUBLISHED_ITEMS_WITH_CC_LICENSE } from '../../../fixtures/items';
+import { MEMBERS } from '../../../fixtures/members';
 import { ItemForTest } from '../../../support/types';
+
+const itemCCLicenseCCBY = PackedFolderItemFactory({
+  name: 'public item with cc by',
+  settings: { ccLicenseAdaption: 'CC BY' },
+});
+const itemCCLicenseCCBYNC = PackedFolderItemFactory({
+  name: 'public item with cc by nc',
+  settings: { ccLicenseAdaption: 'CC BY-NC' },
+});
+const itemCCLicenseCCBYSA = PackedFolderItemFactory({
+  name: 'public item with cc by sa',
+  settings: { ccLicenseAdaption: 'CC BY-SA' },
+});
+const itemCCLicenseCCBYNCND = PackedFolderItemFactory({
+  name: 'public item with cc by nc nd',
+  settings: { ccLicenseAdaption: 'CC BY-NC-ND' },
+});
+
+const PUBLISHED_ITEMS_WITH_CC_LICENSE: ItemForTest[] = [
+  {
+    ...itemCCLicenseCCBY,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item: itemCCLicenseCCBY,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+      item: itemCCLicenseCCBY,
+      createdAt: '2021-08-11T12:56:36.834Z',
+      creator: MEMBERS.ANNA,
+      totalViews: 0,
+    },
+  },
+  {
+    ...itemCCLicenseCCBYNC,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item: itemCCLicenseCCBYNC,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+      item: itemCCLicenseCCBYNC,
+      createdAt: '2021-08-11T12:56:36.834Z',
+      creator: MEMBERS.ANNA,
+      totalViews: 0,
+    },
+  },
+  {
+    ...itemCCLicenseCCBYSA,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item: itemCCLicenseCCBYSA,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+      item: itemCCLicenseCCBYSA,
+      createdAt: '2021-08-11T12:56:36.834Z',
+      creator: MEMBERS.ANNA,
+      totalViews: 0,
+    },
+  },
+  {
+    ...itemCCLicenseCCBYNCND,
+    tags: [
+      {
+        id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+        type: ItemTagType.Public,
+        item: itemCCLicenseCCBYNCND,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+      },
+    ],
+    published: {
+      id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+      item: itemCCLicenseCCBYNCND,
+      createdAt: '2021-08-11T12:56:36.834Z',
+      creator: MEMBERS.ANNA,
+      totalViews: 0,
+    },
+  },
+];
 
 const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();

@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   CREATE_ITEM_BUTTON_ID,
@@ -7,11 +9,6 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
-import {
-  CREATED_BLANK_NAME_ITEM,
-  CREATED_ITEM,
-  SAMPLE_ITEMS,
-} from '../../../fixtures/items';
 import { createFolder } from '../../../support/createUtils';
 
 describe('Create Folder', () => {
@@ -23,14 +20,15 @@ describe('Create Folder', () => {
       cy.switchMode(ItemLayoutMode.List);
 
       // create
-      createFolder(CREATED_ITEM);
+      createFolder({ name: 'created item' });
 
       cy.wait(['@postItem', '@getAccessibleItems']);
     });
 
     it('create folder in item', () => {
-      cy.setUpApi(SAMPLE_ITEMS);
-      const { id } = SAMPLE_ITEMS.items[0];
+      const FOLDER = PackedFolderItemFactory();
+      cy.setUpApi({ items: [FOLDER] });
+      const { id } = FOLDER;
 
       // go to children item
       cy.visit(buildItemPath(id));
@@ -38,14 +36,14 @@ describe('Create Folder', () => {
       cy.switchMode(ItemLayoutMode.List);
 
       // create
-      createFolder(CREATED_ITEM);
+      createFolder({ name: 'created item' });
     });
 
     it('cannot create folder with blank name in item', () => {
       // create
       cy.setUpApi();
       cy.visit(HOME_PATH);
-      createFolder(CREATED_BLANK_NAME_ITEM, { confirm: false });
+      createFolder({ name: ' ' }, { confirm: false });
 
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
         'have.prop',
@@ -58,7 +56,7 @@ describe('Create Folder', () => {
       // create
       cy.setUpApi();
       cy.visit(HOME_PATH);
-      createFolder(CREATED_BLANK_NAME_ITEM, { confirm: false });
+      createFolder({ name: ' ' }, { confirm: false });
 
       cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).should(
         'not.exist',
@@ -73,7 +71,7 @@ describe('Create Folder', () => {
       cy.switchMode(ItemLayoutMode.Grid);
 
       // create
-      createFolder(CREATED_ITEM);
+      createFolder({ name: 'created item' });
 
       cy.wait('@postItem');
       // small necessary pause required in order for the form to be able to reset
@@ -84,15 +82,16 @@ describe('Create Folder', () => {
     });
 
     it('create folder in item', () => {
-      cy.setUpApi(SAMPLE_ITEMS);
-      const { id } = SAMPLE_ITEMS.items[0];
+      const FOLDER = PackedFolderItemFactory();
+      cy.setUpApi({ items: [FOLDER] });
+      const { id } = FOLDER;
 
       // go to children item
       cy.visit(buildItemPath(id));
       cy.switchMode(ItemLayoutMode.Grid);
 
       // create
-      createFolder(CREATED_ITEM);
+      createFolder({ name: 'created item' });
 
       cy.wait('@postItem').then(() => {
         // expect update
@@ -103,8 +102,9 @@ describe('Create Folder', () => {
 
   describe('Error handling', () => {
     it('error while creating folder does not create in interface', () => {
-      cy.setUpApi({ ...SAMPLE_ITEMS, postItemError: true });
-      const { id } = SAMPLE_ITEMS.items[0];
+      const FOLDER = PackedFolderItemFactory();
+      cy.setUpApi({ items: [FOLDER], postItemError: true });
+      const { id } = FOLDER;
 
       // go to children item
       cy.visit(buildItemPath(id));
@@ -112,7 +112,7 @@ describe('Create Folder', () => {
       cy.switchMode(ItemLayoutMode.List);
 
       // create
-      createFolder(CREATED_ITEM);
+      createFolder({ name: 'created item' });
 
       cy.wait('@postItem').then(({ response: { body } }) => {
         // check item is created and displayed

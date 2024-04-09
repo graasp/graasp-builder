@@ -1,4 +1,9 @@
-import { Context, ShortLink } from '@graasp/sdk';
+import {
+  Context,
+  PackedFolderItemFactory,
+  PermissionLevel,
+  ShortLink,
+} from '@graasp/sdk';
 
 import { StatusCodes } from 'http-status-codes';
 
@@ -18,11 +23,9 @@ import {
   buildShortLinkShortenBtnId,
 } from '@/config/selectors';
 
-import {
-  PUBLISHED_ITEM,
-  SAMPLE_ITEMS,
-  SAMPLE_READ_ITEMS,
-} from '../../../fixtures/items';
+import { PUBLISHED_ITEM } from '../../../fixtures/items';
+
+const items = [PackedFolderItemFactory(), PackedFolderItemFactory()];
 
 describe('Short links', () => {
   describe('Admin permission', () => {
@@ -31,10 +34,10 @@ describe('Short links', () => {
       beforeEach(() => {
         const shortLinks: ShortLink[] = [];
 
-        itemId = SAMPLE_ITEMS.items[1].id;
+        itemId = items[1].id;
 
         cy.setUpApi({
-          ...SAMPLE_ITEMS,
+          items,
           getShortLinkAvailable: true, // indicates that the short link is available
           shortLinks,
           itemId,
@@ -127,7 +130,7 @@ describe('Short links', () => {
       let itemId: string;
       let shortLinks: ShortLink[];
       beforeEach(() => {
-        itemId = SAMPLE_ITEMS.items[1].id;
+        itemId = items[1].id;
 
         shortLinks = [
           {
@@ -145,7 +148,7 @@ describe('Short links', () => {
         ];
 
         cy.setUpApi({
-          ...SAMPLE_ITEMS,
+          items,
           getShortLinkAvailable: true, // indicates that the short link is available
           shortLinks,
           itemId,
@@ -273,7 +276,7 @@ describe('Short links', () => {
       let patchAlias: string;
 
       beforeEach(() => {
-        itemId = SAMPLE_ITEMS.items[1].id;
+        itemId = items[1].id;
 
         shortLinks = [
           {
@@ -293,7 +296,7 @@ describe('Short links', () => {
         patchAlias = shortLinks[0].alias;
 
         cy.setUpApi({
-          ...SAMPLE_ITEMS,
+          items,
           getShortLinkAvailable: false, // indicates that the short link is not available
           shortLinks,
           itemId,
@@ -429,8 +432,14 @@ describe('Short links', () => {
   describe('Read permission', () => {
     let itemId: string;
     let shortLinks: ShortLink[];
+
+    const READ_ITEMS = [
+      PackedFolderItemFactory({}, { permission: PermissionLevel.Read }),
+      PackedFolderItemFactory({}, { permission: PermissionLevel.Read }),
+    ];
+
     beforeEach(() => {
-      itemId = SAMPLE_READ_ITEMS.items[0].id;
+      itemId = READ_ITEMS[0].id;
 
       shortLinks = [
         {
@@ -442,7 +451,7 @@ describe('Short links', () => {
       ];
 
       cy.setUpApi({
-        ...SAMPLE_READ_ITEMS,
+        items: READ_ITEMS,
         getShortLinkAvailable: true, // indicates that the short link is available
         shortLinks,
         itemId,
