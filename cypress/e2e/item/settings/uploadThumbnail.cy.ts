@@ -23,6 +23,7 @@ describe('Upload Thumbnails', () => {
     cy.attachFile(
       cy.get(`.${THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME}`),
       THUMBNAIL_MEDIUM_PATH,
+      { force: true },
     );
     cy.wait(FILE_LOADING_PAUSE);
     cy.get(`.${CROP_MODAL_CONFIRM_BUTTON_CLASSNAME}`).click();
