@@ -67,7 +67,9 @@ const ItemHeaderActions = (): JSX.Element => {
           <ShareButton itemId={item.id} />
           <ChatboxButton
             showChat
-            tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE)}
+            tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE, {
+              name: item.name,
+            })}
             id={ITEM_CHATBOX_BUTTON_ID}
             onClick={onClickChatbox}
           />
