@@ -77,7 +77,8 @@ const Items = ({
   });
   switch (mode) {
     case ItemLayoutMode.Map:
-      return <MapView title={title} parentId={parentId} />;
+      // todo: change when we deal with item screen
+      return <MapView title={title} parentId={parentId} height="90%" />;
     case ItemLayoutMode.Grid:
       return (
         <ItemsGrid
