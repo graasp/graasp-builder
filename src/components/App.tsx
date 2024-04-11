@@ -83,11 +83,10 @@ const App = (): JSX.Element => {
     RecycledItemsScreen,
     withAuthorizationProps,
   );
-  const MapWithAuthorization = MapItemsScreen;
 
   return (
     <Routes>
-      <Route path={MAP_ITEMS_PATH} element={<MapWithAuthorization />} />
+      <Route path={MAP_ITEMS_PATH} element={<MapItemsScreen />} />
       <Route
         element={
           <Main>
