@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.16.0](https://github.com/graasp/graasp-builder/compare/v2.15.0...v2.16.0) (2024-04-12)
+
+
+### Features
+
+* update map for mobile use ([#1130](https://github.com/graasp/graasp-builder/issues/1130)) ([05c779e](https://github.com/graasp/graasp-builder/commit/05c779e80728ad93e6fd9e9668012e891a5a39e4))
+
+
+### Bug Fixes
+
+* display interpolation data on mouse hover for chatbox name ([#1142](https://github.com/graasp/graasp-builder/issues/1142)) ([1c154fc](https://github.com/graasp/graasp-builder/commit/1c154fc3b219ac2b6001203f83d1981b360b7fef))
+* favicon ([#1134](https://github.com/graasp/graasp-builder/issues/1134)) ([8d83261](https://github.com/graasp/graasp-builder/commit/8d83261f084abf58adc6d3d026cce8895f468940))
+* update graasp ui to use improved font scale ([#1144](https://github.com/graasp/graasp-builder/issues/1144)) ([fbba563](https://github.com/graasp/graasp-builder/commit/fbba563e30bbbe67f3d04f2c1f3e74f103085c7e))
+
 ## [2.15.0](https://github.com/graasp/graasp-builder/compare/v2.14.0...v2.15.0) (2024-04-05)
 
 
