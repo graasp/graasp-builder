@@ -37,13 +37,10 @@ const useItemLicense = ({
     useState<CCLicenseChoice>('');
   const [allowSharingValue, setAllowSharingValue] =
     useState<CCSharingLicenseChoice>('');
-  // itemId
-  const itemId = item?.id;
-
-  const settings = item?.settings;
-  const itemName = item?.name;
 
   const { mutate: updateCCLicense } = mutations.useEditItem();
+
+  const { id, settings } = item;
 
   useEffect(() => {
     if (settings?.ccLicenseAdaption) {
@@ -58,8 +55,7 @@ const useItemLicense = ({
   const handleSubmit = () => {
     if (requireAttributionValue) {
       updateCCLicense({
-        id: itemId,
-        name: itemName,
+        id,
         settings: {
           ccLicenseAdaption: convertSelectionToLicense({
             allowCommercialValue,
