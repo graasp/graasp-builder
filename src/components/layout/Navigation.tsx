@@ -26,7 +26,13 @@ import {
 } from '../../config/selectors';
 import { buildExtraItems } from './utils';
 
-const { useItem, useParents, useCurrentMember, useChildren } = hooks;
+const {
+  useItem,
+  useParents,
+  useCurrentMember,
+  useChildren,
+  useBookmarkedItems,
+} = hooks;
 
 const Navigator = (): JSX.Element | null => {
   const [searchParams] = useSearchParams();
@@ -34,6 +40,7 @@ const Navigator = (): JSX.Element | null => {
   const { itemId } = useParams();
   const { pathname } = useLocation();
   const { data: currentMember } = useCurrentMember();
+  const { data: bookmarks } = useBookmarkedItems();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
 
@@ -71,6 +78,11 @@ const Navigator = (): JSX.Element | null => {
     if (!currentMember) {
       return null;
     }
+
+    const selected =
+      pathname === HOME_PATH || !bookmarks?.find((b) => b.item.id === itemId)
+        ? menu[0]
+        : menu[1];
 
     return (
       <>
