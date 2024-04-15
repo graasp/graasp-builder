@@ -1483,9 +1483,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/map@github:graasp/graasp-map#current-location-add-modal":
-  version: 1.6.0
-  resolution: "@graasp/map@https://github.com/graasp/graasp-map.git#commit=3ed03fd897ffe058b72519e307c235e4449f3b08"
+"@graasp/map@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@graasp/map@npm:1.8.0"
   dependencies:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
@@ -1518,7 +1518,7 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^14.0.0
-  checksum: 10/21674a210c3825048748a243e3c5e14c158bfa1a265318a0086916662c97d97b1c536b5a3a53588346a9b44cff21ff89a803a9c422d8911494bb3c2f1145f03f
+  checksum: 10/6a31cba71c3c4a2e0e3f0db05d716897dcdf064348b8e9896695b9addbd5152311f6e7f2760a1262570841124e246d1a9783520d37a1d9744e685474d78b00d1
   languageName: node
   linkType: hard
 
@@ -7563,7 +7563,7 @@ __metadata:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.0"
     "@graasp/chatbox": "npm:3.1.0"
-    "@graasp/map": "github:graasp/graasp-map#current-location-add-modal"
+    "@graasp/map": "npm:1.8.0"
     "@graasp/query-client": "npm:3.3.0"
     "@graasp/sdk": "npm:4.6.0"
     "@graasp/translations": "npm:1.25.3"
