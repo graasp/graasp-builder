@@ -15,6 +15,7 @@ import {
   DiscriminatedItem,
   DocumentItemType,
   FolderItemType,
+  ItemGeolocation,
   ItemType,
   LinkItemType,
 } from '@graasp/sdk';
@@ -60,6 +61,7 @@ type PropertiesPerType = {
 type Props = {
   open: boolean;
   handleClose: () => void;
+  geolocation?: Partial<ItemGeolocation>;
 };
 
 const DEFAULT_PROPERTIES: PropertiesPerType = {
@@ -69,7 +71,11 @@ const DEFAULT_PROPERTIES: PropertiesPerType = {
   [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
 };
 
-const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
+const NewItemModal = ({
+  open,
+  handleClose,
+  geolocation,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
@@ -119,7 +125,12 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
 
     // todo: fix types
     return submitAndDisableConfirmButtonFor(
-      () => postItem({ parentId, ...(updatedPropertiesPerType[type] as any) }),
+      () =>
+        postItem({
+          geolocation,
+          parentId,
+          ...(updatedPropertiesPerType[type] as any),
+        }),
       DOUBLE_CLICK_DELAY_MS,
     );
   };
