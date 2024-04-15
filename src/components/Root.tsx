@@ -1,3 +1,4 @@
+import './styles.css';
 import '@ag-grid-community/styles/ag-grid.min.css';
 import '@ag-grid-community/styles/ag-theme-material.min.css';
 import '@uppy/core/dist/style.css';
@@ -33,7 +34,7 @@ const Root = (): JSX.Element => (
     <I18nextProvider i18n={i18nConfig}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ToastContainer position="bottom-right" theme="colored" />
+        <ToastContainer stacked position="bottom-right" theme="colored" />
         <Router>
           <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
             <ModalProviders>

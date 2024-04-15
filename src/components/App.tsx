@@ -1,11 +1,10 @@
 import { Outlet, useLocation } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 
-import { saveUrlForRedirection } from '@graasp/sdk';
+import { buildSignInPath, saveUrlForRedirection } from '@graasp/sdk';
 import { CustomInitialLoader, withAuthorization } from '@graasp/ui';
 
-import { DOMAIN } from '@/config/env';
-import { SIGN_IN_PATH } from '@/config/externalPaths';
+import { DOMAIN, GRAASP_AUTH_HOST } from '@/config/env';
 
 import {
   BOOKMARKED_ITEMS_PATH,
@@ -15,6 +14,7 @@ import {
   ITEM_PUBLISH_PATH,
   ITEM_SETTINGS_PATH,
   ITEM_SHARE_PATH,
+  MAP_ITEMS_PATH,
   PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
   REDIRECT_PATH,
@@ -27,6 +27,7 @@ import Main from './main/Main';
 import Redirect from './main/Redirect';
 import BookmarkedItemsScreen from './pages/BookmarkedItemsScreen';
 import HomeScreen from './pages/HomeScreen';
+import MapItemsScreen from './pages/MapItemsScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
 import SharedItemsScreen from './pages/SharedItemsScreen';
@@ -53,7 +54,10 @@ const App = (): JSX.Element => {
 
   const withAuthorizationProps = {
     currentMember,
-    redirectionLink: SIGN_IN_PATH,
+    redirectionLink: buildSignInPath({
+      host: GRAASP_AUTH_HOST,
+      redirectionUrl: window.location.toString(),
+    }),
     onRedirect: () => {
       // save current url for later redirection after sign in
       saveUrlForRedirection(pathname, DOMAIN);
@@ -82,6 +86,7 @@ const App = (): JSX.Element => {
 
   return (
     <Routes>
+      <Route path={MAP_ITEMS_PATH} element={<MapItemsScreen />} />
       <Route
         element={
           <Main>

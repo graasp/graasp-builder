@@ -113,7 +113,10 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
     // there is no new value to use
     if (!newValue) {
       // unset the name and the url in the extra
-      onChange({ name: undefined, extra: undefined });
+      onChange({
+        name: undefined,
+        extra: undefined,
+      });
     }
   };
 
@@ -127,78 +130,77 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
     handleAppSelection(null);
   };
 
+  if (isCustomApp) {
+    return (
+      <Stack direction="column" alignItems="start" mt={1} spacing={2}>
+        <Button
+          startIcon={<ArrowBack fontSize="small" />}
+          variant="text"
+          onClick={() => {
+            setIsCustomApp(false);
+            handleAppSelection(null);
+          }}
+        >
+          {translateBuilder(BUILDER.CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON)}
+        </Button>
+        <Typography>
+          {translateBuilder(BUILDER.CREATE_CUSTOM_APP_HELPER_TEXT)}
+        </Typography>
+        <TextField
+          id={CUSTOM_APP_URL_ID}
+          fullWidth
+          variant="standard"
+          autoFocus
+          label={translateBuilder(BUILDER.APP_URL)}
+          onChange={(e) =>
+            // todo: use better type here (partial of discriminated item is not a good type)
+
+            onChange({ extra: buildAppExtra({ url: e.target.value }) })
+          }
+          value={currentUrl}
+        />
+        <NameForm
+          setChanges={onChange}
+          updatedProperties={updatedProperties}
+          autoFocus={false}
+        />
+      </Stack>
+    );
+  }
   return (
-    <Stack direction="column" height="100%" spacing={2}>
-      <Typography variant="h6">
-        {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
-      </Typography>
-
-      {isCustomApp ? (
-        <Stack direction="column" alignItems="start" mt={1} spacing={2}>
-          <Button
-            startIcon={<ArrowBack fontSize="small" />}
-            variant="text"
-            onClick={() => {
-              setIsCustomApp(false);
-              handleAppSelection(null);
-            }}
-          >
-            {translateBuilder(BUILDER.CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON)}
-          </Button>
-          <Typography>
-            {translateBuilder(BUILDER.CREATE_CUSTOM_APP_HELPER_TEXT)}
-          </Typography>
-          <TextField
-            id={CUSTOM_APP_URL_ID}
-            fullWidth
-            variant="standard"
-            autoFocus
-            label={translateBuilder(BUILDER.APP_URL)}
-            onChange={(e) =>
-              // todo: use better type here (partial of discriminated item is not a good type)
-
-              onChange({ extra: buildAppExtra({ url: e.target.value }) })
-            }
-            value={currentUrl}
+    <Stack direction="column" height="100%" spacing={2} minHeight="0px">
+      <TextField
+        fullWidth
+        placeholder={translateBuilder('Search for an app')}
+        variant="outlined"
+        autoFocus
+        size="small"
+        onChange={searchAnApp}
+      />
+      <Box display="flex" flexGrow={1} minHeight="0px" overflow="scroll" p={1}>
+        <Grid2
+          container
+          spacing={2}
+          height="max-content"
+          maxHeight={400}
+          alignItems="stretch"
+        >
+          <AppGrid
+            currentUrl={currentUrl}
+            handleSelection={handleAppSelection}
+            searchQuery={searchQuery}
           />
-        </Stack>
-      ) : (
-        <>
-          <TextField
-            fullWidth
-            placeholder={translateBuilder('Search for an app')}
-            variant="outlined"
-            autoFocus
-            size="small"
-            onChange={searchAnApp}
+          <AppCard
+            id={CUSTOM_APP_CYPRESS_ID}
+            name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
+            description={translateBuilder(
+              BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
+            )}
+            image={addNewImage}
+            onClick={addCustomApp}
           />
-          <Box display="flex" flexGrow={1}>
-            <Grid2
-              container
-              spacing={2}
-              height="max-content"
-              maxHeight={400}
-              alignItems="stretch"
-              overflow="auto"
-            >
-              <AppGrid
-                currentUrl={currentUrl}
-                handleSelection={handleAppSelection}
-                searchQuery={searchQuery}
-              />
-              <AppCard
-                id={CUSTOM_APP_CYPRESS_ID}
-                name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
-                description={translateBuilder(
-                  BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
-                )}
-                image={addNewImage}
-                onClick={addCustomApp}
-              />
-            </Grid2>
-          </Box>
-        </>
-      )}
+        </Grid2>
+      </Box>
       <NameForm
         setChanges={onChange}
         updatedProperties={updatedProperties}

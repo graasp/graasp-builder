@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.16.0](https://github.com/graasp/graasp-builder/compare/v2.15.0...v2.16.0) (2024-04-12)
+
+
+### Features
+
+* update map for mobile use ([#1130](https://github.com/graasp/graasp-builder/issues/1130)) ([05c779e](https://github.com/graasp/graasp-builder/commit/05c779e80728ad93e6fd9e9668012e891a5a39e4))
+
+
+### Bug Fixes
+
+* display interpolation data on mouse hover for chatbox name ([#1142](https://github.com/graasp/graasp-builder/issues/1142)) ([1c154fc](https://github.com/graasp/graasp-builder/commit/1c154fc3b219ac2b6001203f83d1981b360b7fef))
+* favicon ([#1134](https://github.com/graasp/graasp-builder/issues/1134)) ([8d83261](https://github.com/graasp/graasp-builder/commit/8d83261f084abf58adc6d3d026cce8895f468940))
+* update graasp ui to use improved font scale ([#1144](https://github.com/graasp/graasp-builder/issues/1144)) ([fbba563](https://github.com/graasp/graasp-builder/commit/fbba563e30bbbe67f3d04f2c1f3e74f103085c7e))
+
+## [2.15.0](https://github.com/graasp/graasp-builder/compare/v2.14.0...v2.15.0) (2024-04-05)
+
+
+### Features
+
+* redesign 'add text' modal ([#1117](https://github.com/graasp/graasp-builder/issues/1117)) ([514fbaf](https://github.com/graasp/graasp-builder/commit/514fbaf7e0fba9e9c319084f6d2fc6bf296d781f))
+
+## [2.14.0](https://github.com/graasp/graasp-builder/compare/v2.13.0...v2.14.0) (2024-04-04)
+
+
+### Features
+
+* use new font ([#1124](https://github.com/graasp/graasp-builder/issues/1124)) ([2ea52b6](https://github.com/graasp/graasp-builder/commit/2ea52b6ff487010c69024afa86517fd3ec8596e1))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.108.0 ([#1103](https://github.com/graasp/graasp-builder/issues/1103)) ([afc15ef](https://github.com/graasp/graasp-builder/commit/afc15ef370079d82630388cc94d068fc70e5174c))
+* set redirection for auth signin ([#1113](https://github.com/graasp/graasp-builder/issues/1113)) ([083c071](https://github.com/graasp/graasp-builder/commit/083c07127e563f0890b491a2d1e56e72f6b0994c))
+* update notifs and dismiss uppy status ([#1120](https://github.com/graasp/graasp-builder/issues/1120)) ([571ddc2](https://github.com/graasp/graasp-builder/commit/571ddc2f7a6ec6dcd80e27dcb66fdd7bace492b3))
+
 ## [2.13.0](https://github.com/graasp/graasp-builder/compare/v2.12.1...v2.13.0) (2024-03-26)
 
 
