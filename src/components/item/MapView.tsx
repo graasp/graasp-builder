@@ -21,16 +21,16 @@ type Props = {
 const MapView = ({ parentId, title, height = '100vh' }: Props): JSX.Element => {
   const { data: currentMember } = hooks.useCurrentMember();
   const { isMobile } = useMobileView();
-  const [location, setLocation] = useState<Partial<ItemGeolocation>>();
+  const [geolocation, setGeolocation] = useState<Partial<ItemGeolocation>>();
   const [open, setOpen] = useState(false);
 
   const handleAddOnClick = (args: { location: Partial<ItemGeolocation> }) => {
-    setLocation(args.location);
+    setGeolocation(args.location);
     setOpen(true);
   };
 
   const handleClose = () => {
-    setLocation(undefined);
+    setGeolocation(undefined);
     setOpen(false);
   };
 
@@ -72,7 +72,7 @@ const MapView = ({ parentId, title, height = '100vh' }: Props): JSX.Element => {
         <NewItemModal
           open={open}
           handleClose={handleClose}
-          location={location}
+          geolocation={geolocation}
         />
       )}
     </>

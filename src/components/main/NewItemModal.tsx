@@ -61,7 +61,7 @@ type PropertiesPerType = {
 type Props = {
   open: boolean;
   handleClose: () => void;
-  location?: Partial<ItemGeolocation>;
+  geolocation?: Partial<ItemGeolocation>;
 };
 
 const DEFAULT_PROPERTIES: PropertiesPerType = {
@@ -71,7 +71,11 @@ const DEFAULT_PROPERTIES: PropertiesPerType = {
   [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
 };
 
-const NewItemModal = ({ open, handleClose, location }: Props): JSX.Element => {
+const NewItemModal = ({
+  open,
+  handleClose,
+  geolocation,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
@@ -123,7 +127,7 @@ const NewItemModal = ({ open, handleClose, location }: Props): JSX.Element => {
     return submitAndDisableConfirmButtonFor(
       () =>
         postItem({
-          geolocation: location,
+          geolocation,
           parentId,
           ...(updatedPropertiesPerType[type] as any),
         }),
