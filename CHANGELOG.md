@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.17.0](https://github.com/graasp/graasp-builder/compare/v2.16.0...v2.17.0) (2024-04-15)
+
+
+### Features
+
+* update license at settings page ([#1115](https://github.com/graasp/graasp-builder/issues/1115)) ([ec0ad24](https://github.com/graasp/graasp-builder/commit/ec0ad24d242665475209008214186c2116ad66c8))
+* use builder modal for new item with map ([#1147](https://github.com/graasp/graasp-builder/issues/1147)) ([27155c6](https://github.com/graasp/graasp-builder/commit/27155c6fb462b480db63f3c74315f30e029c2950))
+
 ## [2.16.0](https://github.com/graasp/graasp-builder/compare/v2.15.0...v2.16.0) (2024-04-12)
 
 
