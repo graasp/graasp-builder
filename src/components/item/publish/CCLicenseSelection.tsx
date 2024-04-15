@@ -1,240 +1,43 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import {
-  Box,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import { CCLicenseAdaptions, DiscriminatedItem } from '@graasp/sdk';
-import { CCSharingVariant, CreativeCommons, Loader } from '@graasp/ui';
+import { DiscriminatedItem } from '@graasp/sdk';
+import { Loader } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../../config/i18n';
-import { mutations } from '../../../config/queryClient';
-import {
-  CC_ALLOW_COMMERCIAL_CONTROL_ID,
-  CC_CC0_CONTROL_ID,
-  CC_DERIVATIVE_CONTROL_ID,
-  CC_DISALLOW_COMMERCIAL_CONTROL_ID,
-  CC_NO_DERIVATIVE_CONTROL_ID,
-  CC_REQUIRE_ATTRIBUTION_CONTROL_ID,
-  CC_SHARE_ALIKE_CONTROL_ID,
-} from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import CCLicenseDialog from './CCLicenseDialog';
-
-type CCLicenseChoice = 'yes' | 'no' | '';
-type CCSharingLicenseChoice = CCLicenseChoice | 'alike';
+import useItemLicense from './useItemLicense';
 
 type Props = {
   item: DiscriminatedItem;
   disabled: boolean;
 };
 
-const licensePreviewStyle = {
-  border: '1px solid #eee',
-  borderRadius: 2,
-  minWidth: 300,
-};
-
 const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: updateCCLicense } = mutations.useEditItem();
-
-  const [requireAttributionValue, setRequireAttributionValue] =
-    useState<CCLicenseChoice>('');
-  const [allowCommercialValue, setAllowCommercialValue] =
-    useState<CCLicenseChoice>('');
-  const [allowSharingValue, setAllowSharingValue] =
-    useState<CCSharingLicenseChoice>('');
-
-  const [open, setOpen] = useState(false);
+  const { handleSubmit, licenseForm, creativeCommons } = useItemLicense({
+    item,
+  });
 
   // user
   const { isLoading: isMemberLoading } = useCurrentUserContext();
 
-  // itemId
-  const itemId = item?.id;
+  const [open, setOpen] = useState(false);
 
   const settings = item?.settings;
-  const itemName = item?.name;
-
-  useEffect(() => {
-    if (settings?.ccLicenseAdaption) {
-      // Handles old license formats.
-      if (['alike', 'allow'].includes(settings?.ccLicenseAdaption)) {
-        setRequireAttributionValue('yes');
-        setAllowCommercialValue('no');
-        setAllowSharingValue(
-          settings?.ccLicenseAdaption === 'alike' ? 'alike' : 'yes',
-        );
-      } else if (typeof settings?.ccLicenseAdaption === 'string') {
-        setRequireAttributionValue(
-          settings.ccLicenseAdaption !== CCLicenseAdaptions.CC0 ? 'yes' : 'no',
-        );
-        setAllowCommercialValue(
-          settings.ccLicenseAdaption.includes('NC') ? 'no' : 'yes',
-        );
-        if (settings.ccLicenseAdaption.includes('SA')) {
-          setAllowSharingValue('alike');
-        } else if (settings.ccLicenseAdaption.includes('ND')) {
-          setAllowSharingValue('no');
-        } else {
-          setAllowSharingValue('yes');
-        }
-      }
-    }
-  }, [settings]);
 
   if (isMemberLoading) return <Loader />;
 
-  const convertSelectionToLicense = (): CCLicenseAdaptions => {
-    if (requireAttributionValue !== 'yes') {
-      return CCLicenseAdaptions.CC0;
-    }
-
-    return `CC BY${allowCommercialValue === 'yes' ? '' : '-NC'}${
-      allowSharingValue === 'alike' ? '-SA' : ''
-    }${allowSharingValue === 'no' ? '-ND' : ''}` as CCLicenseAdaptions;
-  };
-
-  const handleAttributionChange = (event: ChangeEvent<{ value: string }>) => {
-    setRequireAttributionValue(event.target.value as CCLicenseChoice);
-  };
-
-  const handleCommercialChange = (event: ChangeEvent<{ value: string }>) => {
-    setAllowCommercialValue(event.target.value as CCLicenseChoice);
-  };
-
-  const handleSharingChange = (event: ChangeEvent<{ value: string }>) => {
-    setAllowSharingValue(event.target.value as CCSharingLicenseChoice);
-  };
-
-  const handleSubmit = () => {
-    if (requireAttributionValue) {
-      updateCCLicense({
-        id: itemId,
-        name: itemName,
-        settings: { ccLicenseAdaption: convertSelectionToLicense() },
-      });
-    } else {
-      console.error(`optionValue "${requireAttributionValue}" is undefined`);
-    }
+  const onSubmit = () => {
+    handleSubmit();
     setOpen(false);
   };
-
   return (
     <Box mx={3}>
-      <Typography variant="body1">
-        {translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
-      </Typography>
-      <Box mx={3}>
-        <RadioGroup
-          aria-label={translateBuilder(
-            BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE,
-          )}
-          name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_ATTRIBUTION_TITLE)}
-          value={requireAttributionValue}
-          onChange={handleAttributionChange}
-        >
-          <FormControlLabel
-            id={CC_REQUIRE_ATTRIBUTION_CONTROL_ID}
-            value="yes"
-            control={<Radio color="primary" />}
-            disabled={disabled}
-            label={translateBuilder(
-              BUILDER.ITEM_SETTINGS_CC_REQUIRE_ATTRIBUTION_OPTION_LABEL,
-            )}
-          />
-          <FormControlLabel
-            id={CC_CC0_CONTROL_ID}
-            value="no"
-            control={<Radio color="primary" />}
-            disabled={disabled}
-            label={translateBuilder(BUILDER.ITEM_SETTINGS_CC_CC0_OPTION_LABEL)}
-          />
-        </RadioGroup>
-      </Box>
-      {requireAttributionValue === 'yes' && (
-        <>
-          <Typography variant="body1">
-            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE)}
-          </Typography>
-          <Box mx={3}>
-            <RadioGroup
-              aria-label={translateBuilder(
-                BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE,
-              )}
-              name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_COMMERCIAL_TITLE)}
-              value={allowCommercialValue}
-              onChange={handleCommercialChange}
-            >
-              <FormControlLabel
-                id={CC_ALLOW_COMMERCIAL_CONTROL_ID}
-                value="yes"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_ALLOW_COMMERCIAL_OPTION_LABEL,
-                )}
-              />
-              <FormControlLabel
-                id={CC_DISALLOW_COMMERCIAL_CONTROL_ID}
-                value="no"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_DISALLOW_COMMERCIAL_OPTION_LABEL,
-                )}
-              />
-            </RadioGroup>
-          </Box>
-          <Typography variant="body1">
-            {translateBuilder(BUILDER.ITEM_SETTINGS_CC_REMIX_TITLE)}
-          </Typography>
-          <Box mx={3}>
-            <RadioGroup
-              aria-label={translateBuilder(
-                BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL,
-              )}
-              name={translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_LABEL)}
-              value={allowSharingValue}
-              onChange={handleSharingChange}
-            >
-              <FormControlLabel
-                id={CC_DERIVATIVE_CONTROL_ID}
-                value="yes"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_ALLOW_REMIX_OPTION_LABEL,
-                )}
-              />
-              <FormControlLabel
-                id={CC_SHARE_ALIKE_CONTROL_ID}
-                value="alike"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_ALLOW_SHARE_ALIKE_REMIX_OPTION_LABEL,
-                )}
-              />
-              <FormControlLabel
-                id={CC_NO_DERIVATIVE_CONTROL_ID}
-                value="no"
-                control={<Radio color="primary" />}
-                disabled={disabled}
-                label={translateBuilder(
-                  BUILDER.ITEM_SETTINGS_CC_DISALLOW_REMIX_OPTION_LABEL,
-                )}
-              />
-            </RadioGroup>
-          </Box>
-        </>
-      )}
+      {licenseForm}
       <CCLicenseDialog
         disabled={disabled}
         open={open}
@@ -242,7 +45,7 @@ const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
         buttonName={translateBuilder(
           BUILDER.ITEM_SETTINGS_CC_LICENSE_SUBMIT_BUTTON,
         )}
-        handleSubmit={handleSubmit}
+        handleSubmit={onSubmit}
       />
       {settings?.ccLicenseAdaption && (
         <>
@@ -250,12 +53,7 @@ const CCLicenseSelection = ({ item, disabled }: Props): JSX.Element => {
             {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_PREVIEW_TITLE)}
           </Typography>
           <Box display="flex" justifyContent="left">
-            <CreativeCommons
-              requireAccreditation={requireAttributionValue === 'yes'}
-              allowSharedAdaptation={allowSharingValue as CCSharingVariant}
-              allowCommercialUse={allowCommercialValue === 'yes'}
-              sx={licensePreviewStyle}
-            />
+            {creativeCommons}
           </Box>
         </>
       )}
