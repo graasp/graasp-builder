@@ -1,5 +1,5 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Grid } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { Button, ForbiddenContent } from '@graasp/ui';
 
@@ -8,7 +8,6 @@ import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
-import Main from './Main';
 
 const ItemForbiddenScreen = (): JSX.Element => {
   const { data: member } = useCurrentUserContext();
@@ -23,21 +22,16 @@ const ItemForbiddenScreen = (): JSX.Element => {
   );
 
   return (
-    <Main>
-      <Grid
-        id={ITEM_LOGIN_SCREEN_FORBIDDEN_ID}
-        container
-        justifyContent="center"
-        alignItems="center"
-        textAlign="center"
-        height="90%"
-      >
-        <Grid item>
-          <ForbiddenContent memberId={member?.id} />
-          <UserSwitchWrapper ButtonContent={ButtonContent} />
-        </Grid>
-      </Grid>
-    </Main>
+    <Stack
+      id={ITEM_LOGIN_SCREEN_FORBIDDEN_ID}
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      height="100%"
+    >
+      <ForbiddenContent memberId={member?.id} />
+      <UserSwitchWrapper ButtonContent={ButtonContent} />
+    </Stack>
   );
 };
 
