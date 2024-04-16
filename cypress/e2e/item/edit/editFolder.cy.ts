@@ -15,7 +15,7 @@ const EDITED_FIELDS = {
 
 describe('Edit Folder', () => {
   describe('List', () => {
-    it('confirm with empty name', () => {
+    it.only('confirm with empty name', () => {
       const item = PackedFolderItemFactory();
       cy.setUpApi({ items: [item] });
       cy.visit(HOME_PATH);
