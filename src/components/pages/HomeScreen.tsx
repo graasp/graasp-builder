@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import { Box, LinearProgress } from '@mui/material';
 
@@ -104,35 +105,40 @@ const HomeLoadableContent = (): JSX.Element => {
 
   if (accessibleItems) {
     return (
-      <UppyContextProvider enable={isSuccess}>
-        <FileUploader />
-        <Box p={2} height="100%">
-          <ItemHeader showNavigation={false} />
-          <Items
-            id={ACCESSIBLE_ITEMS_TABLE_ID}
-            title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-            items={accessibleItems.data}
-            headerElements={[
-              itemSearch.input,
-              <NewItemButton key="newButton" />,
-            ]}
-            ToolbarActions={ItemActions}
-            onShowOnlyMeChange={onShowOnlyMeChange}
-            showOnlyMe={showOnlyMe}
-            page={page}
-            setPage={setPage}
-            totalCount={accessibleItems.totalCount}
-            onSortChanged={onSortChanged}
-            pageSize={ITEM_PAGE_SIZE}
-            showDropzoneHelper
-          />
-          {isFetching && (
-            <Box sx={{ width: '100%' }}>
-              <LinearProgress />
-            </Box>
-          )}
-        </Box>
-      </UppyContextProvider>
+      <>
+        <Helmet>
+          <title>{translateBuilder(BUILDER.MY_ITEMS_TITLE)}</title>
+        </Helmet>
+        <UppyContextProvider enable={isSuccess}>
+          <FileUploader />
+          <Box p={2} height="100%">
+            <ItemHeader showNavigation={false} />
+            <Items
+              id={ACCESSIBLE_ITEMS_TABLE_ID}
+              title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
+              items={accessibleItems.data}
+              headerElements={[
+                itemSearch.input,
+                <NewItemButton key="newButton" />,
+              ]}
+              ToolbarActions={ItemActions}
+              onShowOnlyMeChange={onShowOnlyMeChange}
+              showOnlyMe={showOnlyMe}
+              page={page}
+              setPage={setPage}
+              totalCount={accessibleItems.totalCount}
+              onSortChanged={onSortChanged}
+              pageSize={ITEM_PAGE_SIZE}
+              showDropzoneHelper
+            />
+            {isFetching && (
+              <Box sx={{ width: '100%' }}>
+                <LinearProgress />
+              </Box>
+            )}
+          </Box>
+        </UppyContextProvider>
+      </>
     );
   }
 

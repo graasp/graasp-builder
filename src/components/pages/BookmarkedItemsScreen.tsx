@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import { Box } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
@@ -27,14 +29,19 @@ const BookmarkedItemsLoadableContent = (): JSX.Element | null => {
 
   if (filteredData) {
     return (
-      <Box m={2}>
-        <ItemHeader showNavigation={false} />
-        <Items
-          id={BOOKMARKED_ITEMS_ID}
-          title={translateBuilder(BUILDER.BOOKMARKED_ITEMS_TITLE)}
-          items={filteredData.map((d) => d.item)}
-        />
-      </Box>
+      <>
+        <Helmet>
+          <title>{translateBuilder(BUILDER.BOOKMARKED_ITEMS_TITLE)}</title>
+        </Helmet>
+        <Box m={2}>
+          <ItemHeader showNavigation={false} />
+          <Items
+            id={BOOKMARKED_ITEMS_ID}
+            title={translateBuilder(BUILDER.BOOKMARKED_ITEMS_TITLE)}
+            items={filteredData.map((d) => d.item)}
+          />
+        </Box>
+      </>
     );
   }
 
