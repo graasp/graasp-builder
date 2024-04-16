@@ -30,6 +30,9 @@ import {
   SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
   buildDescriptionPlacementId,
+  buildItemMenu,
+  buildItemMenuButtonId,
+  buildSettingsButtonId,
 } from '../../../../src/config/selectors';
 import {
   ITEM_WITH_CHATBOX_MESSAGES,
@@ -407,6 +410,41 @@ describe('Item Settings', () => {
             descriptionPlacement: DescriptionPlacement.ABOVE,
           });
         });
+      });
+    });
+  });
+
+  describe('in item menu', () => {
+    describe('read', () => {
+      beforeEach(() => {
+        cy.setUpApi({
+          ...SAMPLE_ITEMS,
+          currentMember: MEMBERS.BOB,
+        });
+      });
+      it('does not have access to settings', () => {
+        const itemId = SAMPLE_ITEMS.items[1].id;
+        cy.visit('/');
+        cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
+        cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
+        cy.get(`#${buildSettingsButtonId(itemId)}`).should('not.exist');
+      });
+    });
+    describe('write', () => {
+      beforeEach(() => {
+        cy.setUpApi({
+          ...SAMPLE_ITEMS,
+          currentMember: MEMBERS.ALICE,
+        });
+      });
+      it.only('has access to settings', () => {
+        const itemId = SAMPLE_ITEMS.items[1].id;
+        cy.visit('/');
+        cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
+        cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
+        cy.get(`#${buildSettingsButtonId(itemId)}`).should('be.visible');
+        cy.get(`#${buildSettingsButtonId(itemId)}`).click();
+        cy.url().should('contain', buildItemSettingsPath(itemId));
       });
     });
   });
