@@ -437,7 +437,7 @@ describe('Item Settings', () => {
           currentMember: MEMBERS.ALICE,
         });
       });
-      it.only('has access to settings', () => {
+      it('has access to settings', () => {
         const itemId = SAMPLE_ITEMS.items[1].id;
         cy.visit('/');
         cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
