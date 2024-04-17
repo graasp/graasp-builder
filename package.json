@@ -18,7 +18,7 @@
     "@ag-grid-community/styles": "31.1.1",
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.4",
-    "@emotion/styled": "11.11.0",
+    "@emotion/styled": "11.11.5",
     "@graasp/chatbox": "3.1.0",
     "@graasp/map": "1.8.0",
     "@graasp/query-client": "3.3.0",
