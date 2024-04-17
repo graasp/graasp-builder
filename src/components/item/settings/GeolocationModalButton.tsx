@@ -98,6 +98,7 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                     BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_LATITUDE_LABEL,
                   )}
                   type="number"
+                  required
                 />
               </Stack>
               <Stack flexGrow={1}>
@@ -108,6 +109,7 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                     BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_LONGITUDE_LABEL,
                   )}
                   type="number"
+                  required
                 />
               </Stack>
             </Stack>
@@ -116,6 +118,7 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                 inputRef={addressLabelRef}
                 label={t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_ADDRESS_LABEL)}
                 multiline
+                type="text"
                 defaultValue={geoloc?.addressLabel ?? undefined}
               />
             </Stack>
@@ -130,6 +133,7 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                 placeholder={t(
                   BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_PLACEHOLDER,
                 )}
+                type="text"
               />
             </Stack>
             <Stack>
@@ -145,7 +149,9 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button variant="text">{commonT(COMMON.CANCEL_BUTTON)}</Button>
+          <Button onClick={handleClose} variant="text">
+            {commonT(COMMON.CANCEL_BUTTON)}
+          </Button>
           <Button onClick={onSave}>{commonT(COMMON.SAVE_BUTTON)}</Button>
         </DialogActions>
       </Dialog>
