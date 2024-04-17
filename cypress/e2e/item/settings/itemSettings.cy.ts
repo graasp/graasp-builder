@@ -21,7 +21,6 @@ import {
   ITEM_MAIN_CLASS,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
-  ITEM_SETTINGS_BUTTON_CLASS,
   ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID,
   LANGUAGE_SELECTOR_ID,
   SETTINGS_CHATBOX_TOGGLE_ID,
@@ -30,6 +29,9 @@ import {
   SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
   buildDescriptionPlacementId,
+  buildItemMenu,
+  buildItemMenuButtonId,
+  buildSettingsButtonId,
 } from '../../../../src/config/selectors';
 import {
   ITEM_WITH_CHATBOX_MESSAGES,
@@ -57,7 +59,7 @@ describe('Item Settings', () => {
       const item = SAMPLE_ITEMS.items[1];
       // manual click to verify settings button works correctly
       cy.visit(buildItemPath(item.id));
-      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).should('not.exist');
+      cy.get(`#${buildSettingsButtonId(item.id)}`).should('not.exist');
     });
 
     it('settings page redirects to item', () => {
@@ -88,7 +90,7 @@ describe('Item Settings', () => {
       const itemId = ITEMS_SETTINGS.items[1].id;
       // manual click to verify settings button works correctly
       cy.visit(buildItemPath(itemId));
-      cy.get(`.${ITEM_SETTINGS_BUTTON_CLASS}`).click();
+      cy.get(`#${buildSettingsButtonId(itemId)}`).click();
 
       cy.get(`#${SETTINGS_CHATBOX_TOGGLE_ID}`).should('be.checked');
     });
@@ -407,6 +409,41 @@ describe('Item Settings', () => {
             descriptionPlacement: DescriptionPlacement.ABOVE,
           });
         });
+      });
+    });
+  });
+
+  describe('in item menu', () => {
+    describe('read', () => {
+      beforeEach(() => {
+        cy.setUpApi({
+          ...SAMPLE_ITEMS,
+          currentMember: MEMBERS.BOB,
+        });
+      });
+      it('does not have access to settings', () => {
+        const itemId = SAMPLE_ITEMS.items[1].id;
+        cy.visit('/');
+        cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
+        cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
+        cy.get(`#${buildSettingsButtonId(itemId)}`).should('not.exist');
+      });
+    });
+    describe('write', () => {
+      beforeEach(() => {
+        cy.setUpApi({
+          ...SAMPLE_ITEMS,
+          currentMember: MEMBERS.ALICE,
+        });
+      });
+      it('has access to settings', () => {
+        const itemId = SAMPLE_ITEMS.items[1].id;
+        cy.visit('/');
+        cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
+        cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
+        cy.get(`#${buildSettingsButtonId(itemId)}`).should('be.visible');
+        cy.get(`#${buildSettingsButtonId(itemId)}`).click();
+        cy.url().should('contain', buildItemSettingsPath(itemId));
       });
     });
   });

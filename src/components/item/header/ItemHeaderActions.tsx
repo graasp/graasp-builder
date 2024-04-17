@@ -74,7 +74,7 @@ const ItemHeaderActions = (): JSX.Element => {
             onClick={onClickChatbox}
           />
           {canAdmin && <PublishButton itemId={item.id} />}
-          {canWrite && <ItemSettingsButton id={item.id} />}
+          {canWrite && <ItemSettingsButton itemId={item.id} />}
         </>
       );
     }

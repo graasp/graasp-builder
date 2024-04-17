@@ -34,6 +34,7 @@ import PinButton from '../common/PinButton';
 import RecycleButton from '../common/RecycleButton';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { FlagItemModalContext } from '../context/FlagItemModalContext';
+import ItemSettingsButton from '../item/settings/ItemSettingsButton';
 import CopyButton from './CopyButton';
 import CreateShortcutButton from './CreateShortcutButton';
 
@@ -84,6 +85,11 @@ const ItemMenu = ({
   const renderEditorActions = () => {
     if (canWrite) {
       return [
+        <ItemSettingsButton
+          key="settings"
+          itemId={item.id}
+          type={ActionButton.MENU_ITEM}
+        />,
         canMove ? (
           <MoveButton
             key="move"

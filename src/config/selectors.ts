@@ -129,7 +129,6 @@ export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
 export const buildMemberAvatarClass = (id?: string): string =>
   `memberAvatar-${id}`;
-export const ITEM_SETTINGS_BUTTON_CLASS = 'itemSettingsButton';
 export const buildItemMembershipRowId = (id: string): string =>
   `itemMembershipRow-${id}`;
 export const buildItemMembershipRowSelector = (id: string): string =>
