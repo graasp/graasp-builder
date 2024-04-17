@@ -135,26 +135,15 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
     );
   };
 
-  const updateItem = (item: Partial<DiscriminatedItem>) => {
+  const updateItem = (
+    item: Partial<DiscriminatedItem> & { thumbnail?: Blob },
+  ) => {
     // update content given current type
     const type = selectedItemType as keyof PropertiesPerType;
     setUpdatedPropertiesPerType({
       ...updatedPropertiesPerType,
       [type]: {
         ...updatedPropertiesPerType[type],
-        ...item,
-      },
-    });
-  };
-
-  const updateFolder = (
-    item: Partial<DiscriminatedItem> & { thumbnail?: Blob },
-  ) => {
-    const type = selectedItemType as keyof PropertiesPerType;
-    setUpdatedPropertiesPerType({
-      ...updatedPropertiesPerType,
-      [type]: {
-        ...updatedPropertiesPerType[ItemType.FOLDER],
         ...item,
       },
     });
@@ -169,7 +158,7 @@ const NewItemModal = ({ open, handleClose }: Props): JSX.Element => {
               {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
             </Typography>
             <FolderForm
-              setChanges={updateFolder}
+              setChanges={updateItem}
               updatedProperties={updatedPropertiesPerType[ItemType.FOLDER]}
             />
           </>
