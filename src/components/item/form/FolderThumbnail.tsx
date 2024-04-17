@@ -2,15 +2,13 @@ import { FormEventHandler, useRef, useState } from 'react';
 
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Dialog, Typography, styled, useTheme } from '@mui/material';
+import { Box, Dialog, styled, useTheme } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
 import CropModal, {
   MODAL_TITLE_ARIA_LABEL_ID,
 } from '@/components/common/CropModal';
-import { useBuilderTranslation } from '@/config/i18n';
-import { BUILDER } from '@/langs/constants';
 
 import defaultImage from '../../../resources/avatar.png';
 
@@ -39,7 +37,6 @@ const FolderThumbnail = ({ setChanges }: FolderThumbnailProps): JSX.Element => {
   const [showCropModal, setShowCropModal] = useState(false);
   const [newAvatar, setNewAvatar] = useState<string>();
   const [fileSource, setFileSource] = useState<string>();
-  const { t: translateBuilder } = useBuilderTranslation();
   const theme = useTheme();
 
   const onSelectFile: FormEventHandler<HTMLInputElement> = (e) => {
@@ -83,9 +80,6 @@ const FolderThumbnail = ({ setChanges }: FolderThumbnailProps): JSX.Element => {
   };
   return (
     <Box display="flex" justifyContent="flex-start" flexDirection="column">
-      <Typography variant="body2">
-        {translateBuilder(BUILDER.SETTINGS_THUMBNAIL_TITLE)}
-      </Typography>
       <div
         onClick={() => inputRef.current?.click()}
         onKeyDown={(event) => {

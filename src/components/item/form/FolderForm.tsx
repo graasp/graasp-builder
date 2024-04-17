@@ -27,7 +27,7 @@ const FolderForm = ({
       flexDirection="row"
       justifyContent="flex-start"
       alignItems="flex-end"
-      gap={2}
+      gap={3}
     >
       <FolderThumbnail setChanges={setChanges} />
       <NameForm
