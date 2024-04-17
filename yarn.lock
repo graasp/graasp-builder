@@ -1539,20 +1539,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@graasp/sdk@npm:4.6.0"
-  dependencies:
-    "@faker-js/faker": "npm:8.4.1"
-    js-cookie: "npm:3.0.5"
-    validator: "npm:13.11.0"
-  peerDependencies:
-    date-fns: ^3
-    uuid: ^9
-  checksum: 10/85456a68c8498375b298c7677db1aa221deb9c73406204b84bf15da6a699cee4f992600c0fd2b2280b71aff442c2afe7c5bfa92dbea2e4863e6edca70e49e9e3
-  languageName: node
-  linkType: hard
-
 "@graasp/sdk@npm:4.7.1":
   version: 4.7.1
   resolution: "@graasp/sdk@npm:4.7.1"
@@ -1564,6 +1550,20 @@ __metadata:
     date-fns: ^3
     uuid: ^9
   checksum: 10/182e2a33fbdf7ed2cac7fbdf5a01378a059415a753345cca501d2ddda4985b9448c81bb2931a7157dc34cd613412c5da42da38cb037e9a46438755707e4ea2aa
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@npm:4.7.2":
+  version: 4.7.2
+  resolution: "@graasp/sdk@npm:4.7.2"
+  dependencies:
+    "@faker-js/faker": "npm:8.4.1"
+    js-cookie: "npm:3.0.5"
+    validator: "npm:13.11.0"
+  peerDependencies:
+    date-fns: ^3
+    uuid: ^9
+  checksum: 10/f37de1eb4fb02fa748a00e630f8f133d937fd9eb0aa0016a6e071fa37a44d1599be61ff8754a03f77bb5996f9aebf8e6c969fdb52f4463111c71f6ce6d1fcb38
   languageName: node
   linkType: hard
 
@@ -7574,7 +7574,7 @@ __metadata:
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.8.0"
     "@graasp/query-client": "npm:3.3.0"
-    "@graasp/sdk": "npm:4.6.0"
+    "@graasp/sdk": "npm:4.7.2"
     "@graasp/translations": "npm:1.25.3"
     "@graasp/ui": "npm:4.14.2"
     "@mui/icons-material": "npm:5.15.11"
