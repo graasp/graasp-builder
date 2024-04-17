@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import { Box, Divider, Typography, styled } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
@@ -52,32 +54,37 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
   const { isChatboxMenuOpen, setIsChatboxMenuOpen } = useLayoutContext();
 
   return (
-    <Box id={id} p={2} className={ITEM_MAIN_CLASS} height="100%">
-      {isChatboxMenuOpen && (
-        <ItemPanel open={isChatboxMenuOpen}>
-          <DrawerHeader
-            handleDrawerClose={() => {
-              setIsChatboxMenuOpen(false);
-            }}
-            // todo
-            direction="rtl"
-          >
-            <Typography variant="h6">
-              {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE, {
-                name: item.name,
-              })}
-            </Typography>
-          </DrawerHeader>
-          <Divider />
-          <Chatbox item={item} />
-        </ItemPanel>
-      )}
-      <StyledContainer open={isChatboxMenuOpen}>
-        <ItemHeader showNavigation />
+    <>
+      <Helmet>
+        <title>{item.name}</title>
+      </Helmet>
+      <Box id={id} p={2} className={ITEM_MAIN_CLASS} height="100%">
+        {isChatboxMenuOpen && (
+          <ItemPanel open={isChatboxMenuOpen}>
+            <DrawerHeader
+              handleDrawerClose={() => {
+                setIsChatboxMenuOpen(false);
+              }}
+              // todo
+              direction="rtl"
+            >
+              <Typography variant="h6">
+                {translateBuilder(BUILDER.ITEM_CHATBOX_TITLE, {
+                  name: item.name,
+                })}
+              </Typography>
+            </DrawerHeader>
+            <Divider />
+            <Chatbox item={item} />
+          </ItemPanel>
+        )}
+        <StyledContainer open={isChatboxMenuOpen}>
+          <ItemHeader showNavigation />
 
-        {children}
-      </StyledContainer>
-    </Box>
+          {children}
+        </StyledContainer>
+      </Box>
+    </>
   );
 };
 

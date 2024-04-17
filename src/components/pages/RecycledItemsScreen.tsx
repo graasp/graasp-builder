@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import { Box } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
@@ -58,20 +60,25 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
 
   if (filteredData) {
     return (
-      <Box id={RECYCLED_ITEMS_ROOT_CONTAINER} mx={2}>
-        <ItemHeader showNavigation={false} />
-        <Items
-          id={RECYCLED_ITEMS_ID}
-          clickable={false}
-          title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-          items={filteredData}
-          actions={RowActions}
-          ToolbarActions={ToolbarActions}
-          showThumbnails={false}
-          enableMemberships={false}
-          totalCount={recycledItems?.length}
-        />
-      </Box>
+      <>
+        <Helmet>
+          <title>{translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}</title>
+        </Helmet>
+        <Box id={RECYCLED_ITEMS_ROOT_CONTAINER} mx={2}>
+          <ItemHeader showNavigation={false} />
+          <Items
+            id={RECYCLED_ITEMS_ID}
+            clickable={false}
+            title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
+            items={filteredData}
+            actions={RowActions}
+            ToolbarActions={ToolbarActions}
+            showThumbnails={false}
+            enableMemberships={false}
+            totalCount={recycledItems?.length}
+          />
+        </Box>
+      </>
     );
   }
 

@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import { Alert, Box } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
@@ -25,21 +27,26 @@ const SharedItemsLoadableContent = (): JSX.Element | null => {
 
   if (filteredItems) {
     return (
-      <Box id={SHARED_ITEMS_ROOT_CONTAINER} mx={2}>
-        <Alert severity="warning" sx={{ mt: 3 }}>
-          {translateBuilder(
-            "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
-          )}
-        </Alert>
-        <ItemHeader showNavigation={false} />
-        <Items
-          id={SHARED_ITEMS_ID}
-          title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-          items={filteredItems}
-          canMove={false}
-          totalCount={filteredItems?.length}
-        />
-      </Box>
+      <>
+        <Helmet>
+          <title>{translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}</title>
+        </Helmet>
+        <Box id={SHARED_ITEMS_ROOT_CONTAINER} mx={2}>
+          <Alert severity="warning" sx={{ mt: 3 }}>
+            {translateBuilder(
+              "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.",
+            )}
+          </Alert>
+          <ItemHeader showNavigation={false} />
+          <Items
+            id={SHARED_ITEMS_ID}
+            title={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
+            items={filteredItems}
+            canMove={false}
+            totalCount={filteredItems?.length}
+          />
+        </Box>
+      </>
     );
   }
   if (isError) {
