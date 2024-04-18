@@ -9,11 +9,14 @@ import { ITEM_FORM_DISPLAY_NAME_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import type { EditModalContentPropType } from './EditModalWrapper';
 
-export type DisplayNameFormProps = EditModalContentPropType;
+export type DisplayNameFormProps = EditModalContentPropType & {
+  linkForm?: boolean;
+};
 
 const DisplayNameForm = ({
   updatedProperties,
   setChanges,
+  linkForm,
 }: DisplayNameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -33,9 +36,15 @@ const DisplayNameForm = ({
         <Stack direction="row" alignItems="center">
           {translateBuilder(BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_LABEL)}
           <Tooltip
-            title={translateBuilder(
-              BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_HELPER_TEXT,
-            )}
+            title={
+              linkForm
+                ? translateBuilder(
+                    BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_HELPER_TEXT_LINKFORM,
+                  )
+                : translateBuilder(
+                    BUILDER.CREATE_NEW_ITEM_DISPLAY_NAME_HELPER_TEXT,
+                  )
+            }
           >
             <IconButton size="small">
               <InfoIcon fontSize="small" color="primary" />
