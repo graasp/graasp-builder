@@ -137,17 +137,6 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                 type="text"
               />
             </Stack>
-            {/* <Stack>
-              <CountryForm
-                label={t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_COUNTRY_LABEL)}
-                initialValue={geoloc?.country ?? undefined}
-                onChange={(e) => {
-                  // eslint-disable-next-line no-console
-                  setCountry(e.alpha2);
-                }}
-                lang={i18n.language}
-              />
-            </Stack> */}
           </Stack>
         </DialogContent>
         <DialogActions>
