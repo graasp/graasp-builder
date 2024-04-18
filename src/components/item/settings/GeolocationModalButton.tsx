@@ -10,7 +10,6 @@ import {
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { CountryForm } from '@graasp/map';
 import { DiscriminatedItem } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
@@ -35,7 +34,7 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
   const addressLabelRef = useRef<HTMLInputElement>(null);
   const latRef = useRef<HTMLInputElement>(null);
   const lngRef = useRef<HTMLInputElement>(null);
-  const [country, setCountry] = useState<string>();
+  // const [country, setCountry] = useState<string>();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -64,7 +63,9 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
       geolocation: {
         helperLabel: helperLabelRef.current?.value ?? geoloc?.helperLabel,
         addressLabel: addressLabelRef.current?.value ?? geoloc?.addressLabel,
-        country: country ?? geoloc?.country,
+        // country is sent, but actually not used in the backend
+        // it is because the backend compute automatically the country given lat and lng to prevent mismatch
+        // country: country ?? geoloc?.country,
         lat: +lat,
         lng: +lng,
       },
@@ -136,7 +137,7 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                 type="text"
               />
             </Stack>
-            <Stack>
+            {/* <Stack>
               <CountryForm
                 label={t(BUILDER.ITEM_GEOLOCATION_ADVANCED_MODAL_COUNTRY_LABEL)}
                 initialValue={geoloc?.country ?? undefined}
@@ -144,8 +145,9 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
                   // eslint-disable-next-line no-console
                   setCountry(e.alpha2);
                 }}
+                lang={i18n.language}
               />
-            </Stack>
+            </Stack> */}
           </Stack>
         </DialogContent>
         <DialogActions>
