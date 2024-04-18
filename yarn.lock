@@ -1472,9 +1472,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/map@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@graasp/map@npm:1.9.0"
+"@graasp/map@npm:1.10.0":
+  version: 1.10.0
+  resolution: "@graasp/map@npm:1.10.0"
   dependencies:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
@@ -1484,6 +1484,7 @@ __metadata:
     "@mui/icons-material": "npm:5.15.15"
     "@mui/lab": "npm:5.0.0-alpha.170"
     "@mui/material": "npm:5.15.15"
+    i18n-iso-countries: "npm:7.11.0"
     leaflet: "npm:^1.9.4"
     leaflet-easybutton: "npm:2.4.0"
     leaflet-geosearch: "npm:3.11.1"
@@ -1508,7 +1509,7 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^14.0.0
-  checksum: 10/655783fc0b378f327a366b1e9d12ca3965fbf5bfc0dea2926162083b8ec570171d0630f225b8a23f552195849229f6b36c0f27d174bb1e2168e1f45da81c580e
+  checksum: 10/dceb9733555e3c2f9213cf9ee5caa9aa2ed83ff42c8fb3c9d2b165ce94131bd828a877f70c9af869e6955bf8db93bd65c0877d5d5d72a52f1713d30125e55cb7
   languageName: node
   linkType: hard
 
@@ -5627,6 +5628,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"diacritics@npm:1.3.0":
+  version: 1.3.0
+  resolution: "diacritics@npm:1.3.0"
+  checksum: 10/c5a7d6843a3569f1c5aaf643d2e01aaaf695dd369d0f7868300a1c637b91157fe89cf78aa2e87224042d7f4fc87ab39d20aadb7e006c25e0a7c6a2ef92972e74
+  languageName: node
+  linkType: hard
+
 "diff-sequences@npm:^29.6.3":
   version: 29.6.3
   resolution: "diff-sequences@npm:29.6.3"
@@ -7424,7 +7432,7 @@ __metadata:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
-    "@graasp/map": "npm:1.9.0"
+    "@graasp/map": "npm:1.10.0"
     "@graasp/query-client": "npm:3.4.1"
     "@graasp/sdk": "npm:4.7.2"
     "@graasp/translations": "npm:1.26.0"
@@ -7780,6 +7788,15 @@ __metadata:
   bin:
     husky: bin.mjs
   checksum: 10/8a9b7cb9dc8494b470b3b47b386e65d579608c6206da80d3cc8b71d10e37947264af3dfe00092368dad9673b51d2a5ee87afb4b2291e77ba9e7ec1ac36e56cd1
+  languageName: node
+  linkType: hard
+
+"i18n-iso-countries@npm:7.11.0":
+  version: 7.11.0
+  resolution: "i18n-iso-countries@npm:7.11.0"
+  dependencies:
+    diacritics: "npm:1.3.0"
+  checksum: 10/30f5ab51b58599854130f41d42bd51aa99027917711cd307984dee45684c2c4c3493ff39241ed5b89feca1d49d5e3f9b247f6b2c32c8768224b7975149eaa049
   languageName: node
   linkType: hard
 
