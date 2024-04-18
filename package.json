@@ -21,7 +21,7 @@
     "@emotion/styled": "11.11.5",
     "@graasp/chatbox": "3.1.0",
     "@graasp/map": "1.9.0",
-    "@graasp/query-client": "3.4.1",
+    "@graasp/query-client": "https://github.com/graasp/graasp-query-client.git#763-delete-thumbnail-query",
     "@graasp/sdk": "4.7.2",
     "@graasp/translations": "1.26.0",
     "@graasp/ui": "4.15.0",

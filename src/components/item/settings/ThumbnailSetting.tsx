@@ -3,14 +3,9 @@ import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { Dialog, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
-import { Thumbnail } from '@graasp/ui';
 
 import Uppy from '@uppy/core';
 
-import {
-  THUMBNAIL_SETTING_MAX_HEIGHT,
-  THUMBNAIL_SETTING_MAX_WIDTH,
-} from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
 import { THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME } from '../../../config/selectors';
@@ -19,6 +14,7 @@ import defaultImage from '../../../resources/avatar.png';
 import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal, { MODAL_TITLE_ARIA_LABEL_ID } from '../../common/CropModal';
 import StatusBar from '../../file/StatusBar';
+import ThumbnailWithDeleteButton from './ThumbnailWithDeleteButton';
 
 type Props = { item: DiscriminatedItem };
 
@@ -30,6 +26,8 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
+
+  const { mutate: deleteThumbnailApi } = mutations.useDeleteItemThumbnail();
   const itemId = item.id;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
@@ -112,7 +110,11 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   };
 
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
-  const imgUrl = thumbnailUrl ?? defaultImage;
+  const imgUrl = item.settings?.hasThumbnail ? thumbnailUrl : defaultImage;
+
+  const deleteThumbnail = () => {
+    deleteThumbnailApi(itemId);
+  };
 
   return (
     <>
@@ -120,18 +122,17 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
         <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
       )}
       <Stack spacing={2} mb={3} alignItems="center">
-        <Thumbnail
-          id={itemId}
-          isLoading={isLoading}
-          // TODO: fix type
+        <ThumbnailWithDeleteButton
+          itemId={itemId}
+          alt={alt}
           url={
             imgUrl ??
             (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
               ?.thumbnails?.[0]
           }
-          alt={alt}
-          maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
-          maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
+          isLoading={isLoading}
+          onDelete={deleteThumbnail}
+          hasThumbnail={item.settings?.hasThumbnail}
         />
         <input
           type="file"
