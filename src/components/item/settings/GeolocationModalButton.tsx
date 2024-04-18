@@ -34,7 +34,6 @@ export const GeolocationModalButton = ({ item }: Props): JSX.Element => {
   const addressLabelRef = useRef<HTMLInputElement>(null);
   const latRef = useRef<HTMLInputElement>(null);
   const lngRef = useRef<HTMLInputElement>(null);
-  // const [country, setCountry] = useState<string>();
 
   const handleClickOpen = () => {
     setOpen(true);
