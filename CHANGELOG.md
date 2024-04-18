@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.18.0](https://github.com/graasp/graasp-builder/compare/v2.17.0...v2.18.0) (2024-04-18)
+
+
+### Features
+
+* add settings in item menu ([#1154](https://github.com/graasp/graasp-builder/issues/1154)) ([3670228](https://github.com/graasp/graasp-builder/commit/3670228cb007ad21ad7a580800c7773b21c4bc98))
+* remove country form, update map ([#1164](https://github.com/graasp/graasp-builder/issues/1164)) ([18ec37a](https://github.com/graasp/graasp-builder/commit/18ec37a04c32125aa30e9c76ae5e72b2e2a54dca))
+
+
+### Bug Fixes
+
+* **deps:** update ag-grid monorepo to v31.2.1 ([#1102](https://github.com/graasp/graasp-builder/issues/1102)) ([598de99](https://github.com/graasp/graasp-builder/commit/598de99abba46f4965791610751781657159d21c))
+* geoloc modal ([#1156](https://github.com/graasp/graasp-builder/issues/1156)) ([2216ac1](https://github.com/graasp/graasp-builder/commit/2216ac10b9e9856b7f456f534a755dcb703c0279))
+* provide dynamic titles for pages ([#1153](https://github.com/graasp/graasp-builder/issues/1153)) ([fc1daa1](https://github.com/graasp/graasp-builder/commit/fc1daa14b80321c79910fb7e315fdfbb8e641d9e))
+* remove double wraping of main ([#1149](https://github.com/graasp/graasp-builder/issues/1149)) ([c3ae649](https://github.com/graasp/graasp-builder/commit/c3ae649e28009282539df8e45602ea04e6d4fe06))
+
 ## [2.17.0](https://github.com/graasp/graasp-builder/compare/v2.16.0...v2.17.0) (2024-04-15)
 
 
