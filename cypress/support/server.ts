@@ -98,6 +98,7 @@ const {
   buildPostShortLinkRoute,
   buildPatchShortLinkRoute,
   buildDeleteShortLinkRoute,
+  buildDeleteItemThumbnailRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('VITE_GRAASP_API_HOST');
@@ -1524,6 +1525,25 @@ export const mockPostItemThumbnail = (
       return reply({ statusCode: StatusCodes.OK });
     },
   ).as('uploadItemThumbnail');
+};
+
+export const mockDeleteItemThumbnail = (
+  _items: ItemForTest[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Delete,
+      url: new RegExp(`${buildDeleteItemThumbnailRoute(ID_FORMAT)}`),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ statusCode: StatusCodes.NO_CONTENT });
+    },
+  ).as('deleteItemThumbnail');
 };
 
 export const mockGetAvatarUrl = (

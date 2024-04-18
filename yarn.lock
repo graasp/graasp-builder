@@ -1512,9 +1512,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@https://github.com/graasp/graasp-query-client.git#763-delete-thumbnail-query-copy":
+"@graasp/query-client@https://github.com/graasp/graasp-query-client.git#763-delete-thumbnail-query":
   version: 3.4.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7ef3cca7a3fef767949e8626fc5ed10c3966ebdd"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=4e62326ba924023ee3fe71868765e64197f3d820"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1525,7 +1525,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/8c1233a37d4dc7be68f597a5afbcd6fd123a440f78810fb2b43e91036908f97b9e03904c711b4c2423e893c8b22731db1c5f7e39a49a45b94372186c16fdd3c7
+  checksum: 10/b34ae8e6ba9e1891522274ca3bb22811aeb9ac414397390cfdc6b76cd9781a1e5b03a5bca45642b1000880e1a5d8176c1506cb8d8e1c1978310ad8bd6aeb60cd
   languageName: node
   linkType: hard
 
@@ -7425,7 +7425,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.9.0"
-    "@graasp/query-client": "https://github.com/graasp/graasp-query-client.git#763-delete-thumbnail-query-copy"
+    "@graasp/query-client": "https://github.com/graasp/graasp-query-client.git#763-delete-thumbnail-query"
     "@graasp/sdk": "npm:4.7.2"
     "@graasp/translations": "npm:1.26.0"
     "@graasp/ui": "npm:4.15.0"

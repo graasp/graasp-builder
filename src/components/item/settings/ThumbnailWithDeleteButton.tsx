@@ -7,6 +7,11 @@ import { grey } from '@mui/material/colors';
 import { Thumbnail } from '@graasp/ui';
 
 import {
+  ITEM_THUMBNAIL_CONTAINER_ID,
+  ITEM_THUMBNAIL_DELETE_BTN_ID,
+} from '@/config/selectors';
+
+import {
   THUMBNAIL_SETTING_MAX_HEIGHT,
   THUMBNAIL_SETTING_MAX_WIDTH,
 } from '../../../config/constants';
@@ -39,6 +44,7 @@ const ThumbnailWithDeleteButton = ({
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      id={ITEM_THUMBNAIL_CONTAINER_ID}
     >
       <Thumbnail
         id={itemId}
@@ -62,6 +68,7 @@ const ThumbnailWithDeleteButton = ({
             },
           }}
           onClick={onDelete}
+          id={ITEM_THUMBNAIL_DELETE_BTN_ID}
         >
           <DeleteIcon />
         </IconButton>
