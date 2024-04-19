@@ -1,6 +1,6 @@
 {
   "name": "graasp-builder",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "private": true,
   "license": "AGPL-3.0-only",
   "author": "Graasp",
@@ -20,7 +20,7 @@
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
     "@graasp/chatbox": "3.1.0",
-    "@graasp/map": "1.9.0",
+    "@graasp/map": "1.10.0",
     "@graasp/query-client": "https://github.com/graasp/graasp-query-client.git#763-delete-thumbnail-query",
     "@graasp/sdk": "4.7.2",
     "@graasp/translations": "1.26.0",
