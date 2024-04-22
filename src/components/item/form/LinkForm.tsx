@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
 import ClearIcon from '@mui/icons-material/Clear';
+import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   FormControl,
@@ -36,12 +37,14 @@ import DisplayNameForm from './DisplayNameForm';
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
   item?: LinkItemType;
+  required: boolean;
   updatedProperties: Partial<DiscriminatedItem>;
 };
 
 const LinkForm = ({
   onChange,
   item,
+  required,
   updatedProperties,
 }: Props): JSX.Element => {
   const [linkType, setLinkType] = useState<string>('default');
@@ -98,7 +101,21 @@ const LinkForm = ({
           error={isLinkInvalid}
           autoFocus
           margin="dense"
-          label={translateBuilder(BUILDER.CREATE_ITEM_LINK_LABEL)}
+          label={
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {translateBuilder(BUILDER.CREATE_ITEM_LINK_LABEL)}
+              {required && <span>*</span>}
+              <Tooltip
+                title={translateBuilder(
+                  BUILDER.CREATE_NEW_ITEM_NAME_HELPER_TEXT,
+                )}
+              >
+                <IconButton size="small">
+                  <InfoIcon fontSize="small" color="primary" />
+                </IconButton>
+              </Tooltip>
+            </div>
+          }
           value={linkContent}
           onChange={handleLinkInput}
           helperText={
@@ -121,7 +138,6 @@ const LinkForm = ({
           // only take full width when on small screen size
           fullWidth={!largeScreen}
           sx={{ my: 1, width: largeScreen ? '50%' : undefined }}
-          required
         />
         <DisplayNameForm
           updatedProperties={updatedProperties}

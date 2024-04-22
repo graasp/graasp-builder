@@ -232,6 +232,7 @@ const NewItemModal = ({
             </Typography>
             <LinkForm
               onChange={updateItem}
+              required
               updatedProperties={updatedPropertiesPerType[ItemType.LINK]}
             />
           </>
