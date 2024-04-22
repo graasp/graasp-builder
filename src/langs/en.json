@@ -23,7 +23,7 @@
   "CREATE_ITEM_LINK_TITLE": "Add a Link",
   "CREATE_ITEM_NEW_FOLDER_TITLE": "Add a Folder",
   "CREATE_NEW_ITEM_APP_TITLE": "Add an Application",
-  "CREATE_ITEM_LINK_TYPE_TITLE": "Type",
+  "CREATE_ITEM_LINK_TYPE_TITLE": "Preview Type",
   "CREATE_ITEM_LINK_TYPE_HELPER_TEXT": "To preview, please firstly insert your link above...",
   "CREATE_ITEM_LINK_EMBED_TITLE": "Embed the website",
   "CREATE_ITEM_LINK_EMBED_HELPER_TEXT": "Some websites may limit access when embedded.",
