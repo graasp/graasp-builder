@@ -20,7 +20,7 @@
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
     "@graasp/chatbox": "3.1.0",
-    "@graasp/map": "1.10.0",
+    "@graasp/map": "1.11.0",
     "@graasp/query-client": "3.4.1",
     "@graasp/sdk": "4.7.5",
     "@graasp/translations": "1.27.0",
