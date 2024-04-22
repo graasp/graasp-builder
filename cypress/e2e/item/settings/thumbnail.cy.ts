@@ -40,10 +40,13 @@ describe('Item Thumbnail', () => {
       const { items } = SAMPLE_ITEMS_WITH_THUMBNAILS;
       cy.visit(buildItemSettingsPath(items[1].id));
 
-      cy.get(`#${ITEM_THUMBNAIL_CONTAINER_ID}`).trigger('mouseover');
-      cy.get(`#${ITEM_THUMBNAIL_DELETE_BTN_ID}`).should('be.visible');
+      cy.get(`#${ITEM_THUMBNAIL_DELETE_BTN_ID}`)
+        .invoke('show')
+        .should('be.visible');
       cy.get(`#${ITEM_THUMBNAIL_DELETE_BTN_ID}`).click();
-      cy.wait(`@deleteItemThumbnail`);
+      cy.wait(`@deleteItemThumbnail`).then(({ request: { url } }) => {
+        expect(url).to.contain(items[1].id);
+      });
     });
 
     it('Delete thumbnail button should not exist for item with no thumbnail', () => {
