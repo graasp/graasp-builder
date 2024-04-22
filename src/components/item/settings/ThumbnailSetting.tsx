@@ -27,7 +27,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
 
-  const { mutate: deleteThumbnailApi } = mutations.useDeleteItemThumbnail();
+  const { mutate: deleteThumbnail } = mutations.useDeleteItemThumbnail();
   const itemId = item.id;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
@@ -112,8 +112,8 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
   const imgUrl = item.settings?.hasThumbnail ? thumbnailUrl : defaultImage;
 
-  const deleteThumbnail = () => {
-    deleteThumbnailApi(itemId);
+  const onDelete = () => {
+    deleteThumbnail(itemId);
   };
 
   return (
@@ -131,7 +131,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
               ?.thumbnails?.[0]
           }
           isLoading={isLoading}
-          onDelete={deleteThumbnail}
+          onDelete={onDelete}
           hasThumbnail={item.settings?.hasThumbnail}
         />
         <input

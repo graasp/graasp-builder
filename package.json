@@ -23,7 +23,7 @@
     "@graasp/map": "1.10.0",
     "@graasp/query-client": "https://github.com/graasp/graasp-query-client.git#763-delete-thumbnail-query",
     "@graasp/sdk": "4.7.2",
-    "@graasp/translations": "1.26.0",
+    "@graasp/translations": "1.27.0",
     "@graasp/ui": "4.15.0",
     "@mui/icons-material": "5.15.15",
     "@mui/lab": "5.0.0-alpha.170",
