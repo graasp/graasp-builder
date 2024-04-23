@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.19.0](https://github.com/graasp/graasp-builder/compare/v2.18.0...v2.19.0) (2024-04-23)
+
+
+### Features
+
+* delete item thumbnail ([#1168](https://github.com/graasp/graasp-builder/issues/1168)) ([d4e36c8](https://github.com/graasp/graasp-builder/commit/d4e36c8cb735f9571ac4153d02febce00ffeddf1))
+* update translation, update map ([#1173](https://github.com/graasp/graasp-builder/issues/1173)) ([20dd874](https://github.com/graasp/graasp-builder/commit/20dd87492bafeaf5bc4b1dc8a0ddd034760543ff))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/query-client to v3.5.0 ([#1175](https://github.com/graasp/graasp-builder/issues/1175)) ([51fef38](https://github.com/graasp/graasp-builder/commit/51fef3884b39ed902161af821a805097cfe7aead))
+* **deps:** update dependency @graasp/sdk to v4.7.5 ([#1169](https://github.com/graasp/graasp-builder/issues/1169)) ([db34935](https://github.com/graasp/graasp-builder/commit/db34935122603ad9784694915f152cfc5478eb97))
+* **deps:** update dependency @graasp/translations to v1.27.0 ([#1170](https://github.com/graasp/graasp-builder/issues/1170)) ([e6ea1e7](https://github.com/graasp/graasp-builder/commit/e6ea1e7190a1e04ec5e3267b4295d7b2cc5d01c6))
+* **deps:** update dependency @graasp/ui to v4.15.1 ([#1174](https://github.com/graasp/graasp-builder/issues/1174)) ([5a62459](https://github.com/graasp/graasp-builder/commit/5a6245968ff95cc919716c4c0327be237ea36cad))
+* **deps:** update dependency @sentry/react to v7.111.0 ([#1125](https://github.com/graasp/graasp-builder/issues/1125)) ([7f190b7](https://github.com/graasp/graasp-builder/commit/7f190b7993429f5fd45320bed438193ec63e3cd8))
+
 ## [2.18.0](https://github.com/graasp/graasp-builder/compare/v2.17.0...v2.18.0) (2024-04-18)
 
 
