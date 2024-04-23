@@ -24,6 +24,7 @@ import {
   mockDeleteItemLoginSchemaRoute,
   mockDeleteItemMembershipForItem,
   mockDeleteItemTag,
+  mockDeleteItemThumbnail,
   mockDeleteItems,
   mockDeleteShortLink,
   mockDownloadItemChat,
@@ -276,6 +277,8 @@ Cypress.Commands.add(
 
     // mockGetItemThumbnail(items, getItemThumbnailError);
     mockGetItemThumbnailUrl(items, getItemThumbnailError);
+
+    mockDeleteItemThumbnail(items, getItemThumbnailError);
 
     mockGetAvatarUrl(members, getAvatarUrlError);
 

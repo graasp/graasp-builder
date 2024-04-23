@@ -61,7 +61,7 @@ export const SAMPLE_ITEMS_WITH_THUMBNAILS: ApiConfig = {
         {
           item: sampleItems[1],
           permission: PermissionLevel.Admin,
-          member: MEMBERS.CEDRIC,
+          member: MEMBERS.ANNA,
           creator: MEMBERS.ANNA,
           id: 'eb1a0d13-2a9b-489e-b2fa-93a15ce574c0',
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -78,6 +78,7 @@ export const SAMPLE_ITEMS_WITH_THUMBNAILS: ApiConfig = {
         },
       ],
       thumbnails: ITEM_THUMBNAIL_LINK,
+      settings: { hasThumbnail: true },
     },
     {
       ...sampleItems[2],
