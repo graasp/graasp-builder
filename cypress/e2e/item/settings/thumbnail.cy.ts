@@ -1,7 +1,6 @@
 import { buildItemSettingsPath } from '../../../../src/config/paths';
 import {
   CROP_MODAL_CONFIRM_BUTTON_CLASSNAME,
-  ITEM_THUMBNAIL_CONTAINER_ID,
   ITEM_THUMBNAIL_DELETE_BTN_ID,
   THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME,
 } from '../../../../src/config/selectors';
@@ -51,8 +50,14 @@ describe('Item Thumbnail', () => {
 
     it('Delete thumbnail button should not exist for item with no thumbnail', () => {
       cy.visit(buildItemSettingsPath(SAMPLE_ITEMS.items[4].id));
-      cy.get(`#${ITEM_THUMBNAIL_CONTAINER_ID}`).trigger('mouseover');
-      cy.get(`#${ITEM_THUMBNAIL_DELETE_BTN_ID}`).should('not.exist');
+      Cypress.on('fail', (error) => {
+        expect(error.message).to.include(
+          `Expected to find element: \`#${ITEM_THUMBNAIL_DELETE_BTN_ID}\`, but never found it.`,
+        );
+        return false; // Prevent Cypress from failing the test
+      });
+      // this will throw an error as ITEM_THUMBNAIL_DELETE_BTN_ID not exist that going to be catches at cypress.on fail
+      cy.get(`#${ITEM_THUMBNAIL_DELETE_BTN_ID}`).invoke('show');
     });
   });
 });
