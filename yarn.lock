@@ -7426,7 +7426,7 @@ __metadata:
     react-dom: "npm:18.2.0"
     react-ga4: "npm:2.1.0"
     react-helmet: "npm:6.1.0"
-    react-i18next: "npm:14.1.0"
+    react-i18next: "npm:14.1.1"
     react-image-crop: "npm:11.0.5"
     react-qr-code: "npm:2.0.12"
     react-query: "npm:3.39.3"
@@ -11234,9 +11234,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:14.1.0":
-  version: 14.1.0
-  resolution: "react-i18next@npm:14.1.0"
+"react-i18next@npm:14.1.1":
+  version: 14.1.1
+  resolution: "react-i18next@npm:14.1.1"
   dependencies:
     "@babel/runtime": "npm:^7.23.9"
     html-parse-stringify: "npm:^3.0.1"
@@ -11248,7 +11248,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 10/47b050ff3d8e43e8b56ca6b57f67c3feaecdb629b47eeb3923b4f43312b89af3e9373e93ada72420ad3199fc340605929512134eefcb55844f0eaa6bc0785613
+  checksum: 10/6ad103e0fb5eaedda8a87bf9f6ac0071ef73e7b1ec0d5a5d7ccd2c326183038b7d4722c87a253209f08878c51e5943be327cd48b0c6f3a87a8dc0fc2fca8cbfe
   languageName: node
   linkType: hard
 
