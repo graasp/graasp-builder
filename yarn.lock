@@ -5267,9 +5267,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.7.3":
-  version: 13.7.3
-  resolution: "cypress@npm:13.7.3"
+"cypress@npm:13.8.1":
+  version: 13.8.1
+  resolution: "cypress@npm:13.8.1"
   dependencies:
     "@cypress/request": "npm:^3.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -5315,7 +5315,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/eca6f204b59523fb22c6e55811e8506ff22559f01d6bc3aafa4c4fcda1613518f895169c480b5a53910878549143d9b9529cc4ce6f2948d5e6c233683ca360ec
+  checksum: 10/ff5410ef53dd2498a7143dc10e6c90d4fe0314ac536ebef8cdd503a2d2bfff267e91ffda0f2ede8da68cdae9b05ddbb59c2f177090ce3e6d51b6506b0e8a35d5
   languageName: node
   linkType: hard
 
@@ -7394,7 +7394,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:4.2.1"
     axios: "npm:1.6.8"
     concurrently: "npm:8.2.2"
-    cypress: "npm:13.7.3"
+    cypress: "npm:13.8.1"
     cypress-localstorage-commands: "npm:2.2.5"
     date-fns: "npm:3.6.0"
     env-cmd: "npm:10.1.0"
