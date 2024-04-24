@@ -11,6 +11,7 @@ import GeolocationPicker from './GeolocationPicker';
 import ItemLicenseSettings from './ItemLicenseSettings';
 import ItemMetadataContent from './ItemMetadataContent';
 import ItemSettingsProperties from './ItemSettingsProperties';
+import ThumbnailSetting from './ThumbnailSetting';
 
 const ItemSettings = (): JSX.Element => {
   const { item } = useOutletContext<OutletType>();
@@ -18,15 +19,12 @@ const ItemSettings = (): JSX.Element => {
   return (
     <Container disableGutters sx={{ mt: 2, mb: 4 }}>
       <Stack gap={2}>
+        <ThumbnailSetting item={item} />
         <ItemMetadataContent />
         <CustomizedTagsEdit item={item} />
-
         <GeolocationPicker item={item} />
-
         <ItemSettingsProperties item={item} />
-
         <AdminChatSettings item={item} />
-
         <ItemLicenseSettings />
       </Stack>
     </Container>

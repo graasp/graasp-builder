@@ -50,7 +50,11 @@ const ItemLicenseSettings = (): JSX.Element => {
         additionalInfo={
           item.settings?.ccLicenseAdaption && (
             <CreativeCommons
-              sx={{ border: '1px solid #bbb', borderRadius: 2 }}
+              sx={{
+                border: '1px solid #bbb',
+                borderRadius: 2,
+                backgroundColor: 'white',
+              }}
               requireAccreditation={requireAccreditation}
               allowSharedAdaptation={allowSharing as CCSharingVariant}
               allowCommercialUse={allowCommercialUse}

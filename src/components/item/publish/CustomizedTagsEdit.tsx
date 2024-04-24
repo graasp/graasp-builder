@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Chip, Stack, TextField, Typography } from '@mui/material';
+import { Box, Chip, Stack, TextField, Typography } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
@@ -53,13 +53,21 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
   };
 
   return (
-    <Stack direction="column">
-      <Typography variant="h4">
-        {translateBuilder(BUILDER.ITEM_TAGS_TITLE)}
-      </Typography>
-      <Typography variant="body1">
-        {translateBuilder(BUILDER.ITEM_TAGS_INFORMATION)}
-      </Typography>
+    <Stack
+      gap={1}
+      // bgcolor="white"
+      // p={2}
+      // borderRadius={2}
+      // border="1px solid #ddd"
+    >
+      <Box>
+        <Typography variant="h4">
+          {translateBuilder(BUILDER.ITEM_TAGS_TITLE)}
+        </Typography>
+        <Typography variant="body1">
+          {translateBuilder(BUILDER.ITEM_TAGS_INFORMATION)}
+        </Typography>
+      </Box>
       <Stack direction="row" alignItems="center" spacing={1}>
         <Stack flexGrow={1}>
           <TextField

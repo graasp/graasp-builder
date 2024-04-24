@@ -1,5 +1,5 @@
 import Clear from '@mui/icons-material/Clear';
-import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 
 import {
   type GeolocationPickerProps,
@@ -50,13 +50,21 @@ const GeolocationPicker = ({
   const isDisabled = Boolean(geoloc && geoloc?.item?.id !== item.id);
 
   return (
-    <Stack>
-      <Typography variant="h4">
-        {t(BUILDER.ITEM_SETTINGS_GEOLOCATION_TITLE)}
-      </Typography>
-      <Typography variant="body1">
-        {t(BUILDER.ITEM_SETTINGS_GEOLOCATION_EXPLANATION)}
-      </Typography>
+    <Stack
+      gap={1}
+      // bgcolor="white"
+      // p={2}
+      // borderRadius={2}
+      // border="1px solid #ddd"
+    >
+      <Box>
+        <Typography variant="h4">
+          {t(BUILDER.ITEM_SETTINGS_GEOLOCATION_TITLE)}
+        </Typography>
+        <Typography variant="body1">
+          {t(BUILDER.ITEM_SETTINGS_GEOLOCATION_EXPLANATION)}
+        </Typography>
+      </Box>
       <Stack direction="row" alignItems="center">
         <MapGeolocationPicker
           onChangeOption={onChangeOption}
