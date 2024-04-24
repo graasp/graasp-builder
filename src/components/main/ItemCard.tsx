@@ -114,6 +114,7 @@ const ItemComponent = ({
       description={truncate(stripHtml(item.description || ''), {
         length: DESCRIPTION_MAX_LENGTH,
       })}
+      fullWidth
       Actions={Actions}
       Badges={<Badges data={item} />}
       name={item.name}

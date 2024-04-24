@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 
+import { Stack } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import { OutletType } from '@/components/pages/item/type';
@@ -16,16 +17,18 @@ const ItemSettings = (): JSX.Element => {
 
   return (
     <Container disableGutters sx={{ mt: 2, mb: 4 }}>
-      <ItemMetadataContent />
-      <CustomizedTagsEdit item={item} />
+      <Stack gap={2}>
+        <ItemMetadataContent />
+        <CustomizedTagsEdit item={item} />
 
-      <GeolocationPicker item={item} />
+        <GeolocationPicker item={item} />
 
-      <ItemSettingsProperties item={item} />
+        <ItemSettingsProperties item={item} />
 
-      <ItemLicenseSettings />
+        <AdminChatSettings item={item} />
 
-      <AdminChatSettings item={item} />
+        <ItemLicenseSettings />
+      </Stack>
     </Container>
   );
 };

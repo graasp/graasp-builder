@@ -7,15 +7,14 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
   Stack,
-  Tooltip,
   Typography,
 } from '@mui/material';
 
 import { CHATBOX } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
+import { mutations } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
 import {
@@ -28,49 +27,28 @@ import {
   CLEAR_CHAT_DIALOG_ID,
   CLEAR_CHAT_SETTING_ID,
 } from '../../../config/selectors';
-import { ButtonVariants } from '../../../enums';
 
 type Props = {
   chatId: string;
-  clearChat?: (chatId: string) => void;
-  variant: ButtonVariants;
 };
 
-const ClearChatButton = ({
-  chatId,
-  clearChat,
-  variant = ButtonVariants.Button,
-}: Props): JSX.Element | null => {
+const ClearChatButton = ({ chatId }: Props): JSX.Element | null => {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const { t } = useChatboxTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
-
-  if (!clearChat) {
-    return null;
-  }
+  const { mutate: clearChat } = mutations.useClearItemChat();
 
   const handleClearChat = () => {
     clearChat(chatId);
   };
 
-  const getContent = (contentType: ButtonVariants) => {
-    const text = t(CHATBOX.CLEAR_ALL_CHAT);
-
-    switch (contentType) {
-      case ButtonVariants.IconButton:
-        return (
-          <Tooltip title={text}>
-            <IconButton
-              id={CLEAR_CHAT_SETTING_ID}
-              onClick={() => setOpenConfirmation(true)}
-            >
-              <DeleteForever color="primary" />
-            </IconButton>
-          </Tooltip>
-        );
-      case ButtonVariants.Button:
-      default:
-        return (
+  return (
+    <>
+      <Stack direction="column" spacing={2}>
+        <Typography variant="body1" maxWidth="50ch">
+          {}
+        </Typography>
+        <Box width="max-content">
           <Button
             id={CLEAR_CHAT_SETTING_ID}
             startIcon={<DeleteForever />}
@@ -78,19 +56,9 @@ const ClearChatButton = ({
             color="error"
             onClick={() => setOpenConfirmation(true)}
           >
-            <Typography noWrap>{text}</Typography>
+            <Typography noWrap>{t(CHATBOX.CLEAR_ALL_CHAT)}</Typography>
           </Button>
-        );
-    }
-  };
-
-  return (
-    <>
-      <Stack direction="column" spacing={2}>
-        <Typography variant="body1" maxWidth="50ch">
-          {translateBuilder(BUILDER.ITEM_SETTINGS_CLEAR_CHAT_EXPLANATION)}
-        </Typography>
-        <Box width="max-content">{getContent(variant)}</Box>
+        </Box>
       </Stack>
       <Dialog open={openConfirmation} id={CLEAR_CHAT_DIALOG_ID}>
         <DialogTitle>{t(CHATBOX.CLEAR_ALL_CHAT_TITLE)}</DialogTitle>

@@ -127,7 +127,7 @@ export const FLAVOR_SELECT_ID = 'flavorSelect';
 
 export const REDIRECTION_CONTENT_ID = 'redirectionContent';
 export const ITEM_MEMBERSHIPS_CONTENT_ID = 'itemMembershipsContent';
-export const buildMemberAvatarClass = (id?: string): string =>
+export const buildMemberAvatarId = (id?: string): string =>
   `memberAvatar-${id}`;
 export const buildItemMembershipRowId = (id: string): string =>
   `itemMembershipRow-${id}`;

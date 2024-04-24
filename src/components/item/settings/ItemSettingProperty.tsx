@@ -2,9 +2,10 @@ import { Stack, Typography } from '@mui/material';
 
 type Props = {
   title: string;
-  valueText?: string;
+  valueText?: string | JSX.Element;
   inputSetting: JSX.Element;
   icon?: JSX.Element;
+  additionalInfo?: JSX.Element;
 };
 
 const ItemSettingProperty = ({
@@ -12,29 +13,26 @@ const ItemSettingProperty = ({
   valueText,
   inputSetting,
   icon,
+  additionalInfo,
 }: Props): JSX.Element => (
-  <Stack
-    direction="row"
-    alignItems="center"
-    justifyContent="space-between"
-    pb={1}
-  >
-    <Stack direction="row" alignItems="center" gap={1}>
-      <Stack>{icon}</Stack>
-      <Stack>
-        <Stack>
-          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+  <Stack>
+    <Stack direction="row" alignItems="center" justifyContent="space-between">
+      <Stack direction="row" alignItems="center" gap={1}>
+        {icon}
+        <Stack direction="column">
+          <Typography variant="body1" fontWeight="bold">
             {title}
           </Typography>
+          {valueText && (
+            <Typography variant="body2" maxWidth="50ch">
+              {valueText}
+            </Typography>
+          )}
         </Stack>
-        {valueText && (
-          <Stack>
-            <Typography variant="body2">{valueText}</Typography>
-          </Stack>
-        )}
       </Stack>
+      {inputSetting}
     </Stack>
-    <Stack>{inputSetting}</Stack>
+    {additionalInfo}
   </Stack>
 );
 

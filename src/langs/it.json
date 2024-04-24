@@ -330,7 +330,7 @@
   "ITEM_SETTINGS_GEOLOCATION_PLACEHOLDER": "Scrivi il tuo indirizzo qui",
   "ITEM_SETTINGS_GEOLOCATION_NO_ADDRESS": "Indirizzo non trovato",
   "ITEM_SETTINGS_GEOLOCATION_TITLE": "Geolocalizzazione",
-  "ITEM_SETTINGS_CLEAR_GEOLOCATION": "Elimina geolocalizzazione",
+  "ITEM_SETTINGS_GEOLOCATION_CLEAR": "Elimina geolocalizzazione",
   "ITEM_SETTINGS_GEOLOCATION_INHERITED_EXPLANATION": "Non puoi modificare la geolocalizzazione perché è ereditata dalla cartella principale",
   "ITEM_SETTINGS_GEOLOCATION_EXPLANATION": "Se l'elemento ha la geolocalizzazione specificata, comparrà nella mappa.",
   "ITEM_SETTINGS_CHAT_SETTINGS_TITLE": "Impostazioni Chat",

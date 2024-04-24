@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import {
   ItemType,
   formatDate,
+  formatFileSize,
   getFileExtra,
   getS3FileExtra,
 } from '@graasp/sdk';
@@ -93,7 +94,7 @@ const ItemMetadataContent = (): JSX.Element => {
                 <TableCell component="th" scope="row">
                   {translateBuilder(BUILDER.ITEM_METADATA_SIZE_TITLE)}
                 </TableCell>
-                <TableCell align="right">{size}</TableCell>
+                <TableCell align="right">{formatFileSize(size)}</TableCell>
               </TableRow>
             )}
             <TableRow>

@@ -320,7 +320,7 @@
   "ITEM_SETTINGS_GEOLOCATION_PLACEHOLDER": "Entrer l'adresse ici",
   "ITEM_SETTINGS_GEOLOCATION_NO_ADDRESS": "Aucune adresse trouvée",
   "ITEM_SETTINGS_GEOLOCATION_TITLE": "Localisation Géographique",
-  "ITEM_SETTINGS_CLEAR_GEOLOCATION": "Supprimer la Localisation Géolocalisation",
+  "ITEM_SETTINGS_GEOLOCATION_CLEAR": "Supprimer la Localisation Géolocalisation",
   "ITEM_SETTINGS_GEOLOCATION_INHERITED_EXPLANATION": "La localisation ne peut pas être modifiée car elle a été définie dans un élément au-dessus.",
   "ITEM_SETTINGS_GEOLOCATION_EXPLANATION": "Si l'élément a une localisation géographique, il sera visible sur la Vue Carte.",
   "ITEM_SETTINGS_CHAT_SETTINGS_TITLE": "Paramètres du Chat",
