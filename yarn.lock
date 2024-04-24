@@ -807,9 +807,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.12.35":
-  version: 3.12.35
-  resolution: "@cypress/code-coverage@npm:3.12.35"
+"@cypress/code-coverage@npm:3.12.36":
+  version: 3.12.36
+  resolution: "@cypress/code-coverage@npm:3.12.36"
   dependencies:
     "@cypress/webpack-preprocessor": "npm:^6.0.0"
     chalk: "npm:4.1.2"
@@ -826,7 +826,7 @@ __metadata:
     babel-loader: ^8.3 || ^9
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: 10/d481e188248d7639a70d6178f283faf03fa1f87853fce6e7427679ca016408a004f4745269c0432e0b7ad420b255021ad3ed648fd741da22b91e65783bf0c3f6
+  checksum: 10/3dddeab4be5a29c26cbfed7500f80d2bb921b5b8ef6003adf0e1e27d5eaef6a807994d3af4ea6187202742d4e3190f8cd8dc72f4e56757dff3243f82ca6d339b
   languageName: node
   linkType: hard
 
@@ -2750,8 +2750,8 @@ __metadata:
   linkType: hard
 
 "@testing-library/react@npm:^15.0.2":
-  version: 15.0.2
-  resolution: "@testing-library/react@npm:15.0.2"
+  version: 15.0.4
+  resolution: "@testing-library/react@npm:15.0.4"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
     "@testing-library/dom": "npm:^10.0.0"
@@ -2759,7 +2759,7 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 10/6327e465733cec9455792acee7781d1437f7494ddbb976ca72e07446daaf8e7fe5dadd27d05690f09e8d4adce651984ed9aeca4ede9b87bf69b172f450085ede
+  checksum: 10/c4362b753408e43a4527a5bdeda447fcb0d37d1764591c2e8a2be12001081d6ccb618904a8f3e328c35a9a37b3561fed3e520e780cf318bd68031c51ad7873e4
   languageName: node
   linkType: hard
 
@@ -7368,7 +7368,7 @@ __metadata:
     "@ag-grid-community/styles": "npm:31.2.1"
     "@commitlint/cli": "npm:19.3.0"
     "@commitlint/config-conventional": "npm:19.2.2"
-    "@cypress/code-coverage": "npm:3.12.35"
+    "@cypress/code-coverage": "npm:3.12.36"
     "@emotion/cache": "npm:11.11.0"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
@@ -7460,7 +7460,7 @@ __metadata:
     typescript: "npm:5.4.5"
     uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-    vite: "npm:5.2.9"
+    vite: "npm:5.2.10"
     vite-plugin-checker: "npm:0.6.4"
     vite-plugin-istanbul: "npm:6.0.0"
     vitest: "npm:1.5.0"
@@ -13497,47 +13497,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.2.9":
-  version: 5.2.9
-  resolution: "vite@npm:5.2.9"
-  dependencies:
-    esbuild: "npm:^0.20.1"
-    fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.38"
-    rollup: "npm:^4.13.0"
-  peerDependencies:
-    "@types/node": ^18.0.0 || >=20.0.0
-    less: "*"
-    lightningcss: ^1.21.0
-    sass: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: 10/26342c8dde540e4161fdad2c9c8f2f0e23567f051c7a40abb8e4796d6c4292fbd118ab7a4ac252515e78c4f99525b557731e6117287b2bccde0ea61d73bcff27
-  languageName: node
-  linkType: hard
-
-"vite@npm:^5.0.0":
+"vite@npm:5.2.10, vite@npm:^5.0.0":
   version: 5.2.10
   resolution: "vite@npm:5.2.10"
   dependencies:
