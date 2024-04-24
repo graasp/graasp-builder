@@ -6,6 +6,7 @@ import {
   ActionButtonVariant,
   ColorVariants,
   MoveButton as GraaspMoveButton,
+  type NavigationElement,
 } from '@graasp/ui';
 
 import { mutations } from '@/config/queryClient';
@@ -18,7 +19,6 @@ import {
   ITEM_MOVE_BUTTON_CLASS,
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { NavigationElement } from '../main/itemSelectionModal/Breadcrumbs';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
 } from '../main/itemSelectionModal/ItemSelectionModal';

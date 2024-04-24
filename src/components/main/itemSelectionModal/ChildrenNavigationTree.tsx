@@ -1,13 +1,11 @@
 import { Alert, Box, Skeleton } from '@mui/material';
 
 import { ItemType } from '@graasp/sdk';
+import { NavigationElement, type RowMenuProps, RowMenus } from '@graasp/ui';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
-
-import { NavigationElement } from './Breadcrumbs';
-import RowMenu, { RowMenuProps } from './RowMenu';
 
 interface ChildrenNavigationTreeProps {
   isDisabled?: RowMenuProps['isDisabled'];
@@ -34,16 +32,13 @@ const ChildrenNavigationTree = ({
   if (children) {
     return (
       <>
-        {folders?.map((ele) => (
-          <RowMenu
-            key={ele.id}
-            item={ele}
-            onNavigate={onNavigate}
-            selectedId={selectedId}
-            onClick={onClick}
-            isDisabled={isDisabled}
-          />
-        ))}
+        <RowMenus
+          elements={folders}
+          onNavigate={onNavigate}
+          selectedId={selectedId}
+          onClick={onClick}
+          isDisabled={isDisabled}
+        />
         {!folders?.length && (
           <Box sx={{ color: 'darkgrey', pt: 1 }}>
             {translateBuilder(BUILDER.EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM)}

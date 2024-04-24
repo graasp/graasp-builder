@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { Alert, Pagination, Skeleton, Stack } from '@mui/material';
 
 import { ItemType, PermissionLevel } from '@graasp/sdk';
+import { type RowMenuProps, RowMenus } from '@graasp/ui';
 
 import { hooks } from '@/config/queryClient';
-
-import RowMenu, { RowMenuProps } from './RowMenu';
 
 interface AccessibleNavigationTreeProps {
   isDisabled?: RowMenuProps['isDisabled'];
@@ -38,7 +37,7 @@ const AccessibleNavigationTree = ({
     ? Math.ceil(accessibleItems.totalCount / PAGE_SIZE)
     : 0;
 
-  if (accessibleItems) {
+  if (accessibleItems?.data) {
     return (
       <Stack
         height="100%"
@@ -47,16 +46,13 @@ const AccessibleNavigationTree = ({
         justifyContent="space-between"
       >
         <Stack>
-          {accessibleItems.data.map((ele) => (
-            <RowMenu
-              key={ele.id}
-              item={ele}
-              onNavigate={onNavigate}
-              selectedId={selectedId}
-              onClick={onClick}
-              isDisabled={isDisabled}
-            />
-          ))}
+          <RowMenus
+            elements={accessibleItems.data}
+            onNavigate={onNavigate}
+            selectedId={selectedId}
+            onClick={onClick}
+            isDisabled={isDisabled}
+          />
         </Stack>
         <Stack direction="row" justifyContent="end">
           {nbPages > 1 && (
