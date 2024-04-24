@@ -8,6 +8,7 @@ import { useBuilderTranslation } from '@/config/i18n';
 import { DROPZONE_HELPER_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
+import NewItemButton from '../main/NewItemButton';
 import { UppyContext } from './UppyContext';
 
 const DropzoneHelper = (): JSX.Element => {
@@ -55,24 +56,35 @@ const DropzoneHelper = (): JSX.Element => {
       <Typography variant="h5" color="text.secondary">
         {t(BUILDER.DROPZONE_HELPER_OPTIONAL_ACTION_TEXT)}
       </Typography>
-      <Button
-        variant="contained"
-        size="large"
-        onClick={handleClick}
-        startIcon={<FolderOutlinedIcon />}
-      >
-        {t(BUILDER.DROPZONE_HELPER_ACTION)}
-      </Button>
-      <input
-        style={{ display: 'none' }}
-        type="file"
-        multiple
-        ref={ref}
-        onChange={handleFiles}
-      />
-      <Typography variant="body1" sx={{ color: '#757575' }}>
-        {t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
+      <Stack alignItems="center" gap={1}>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={handleClick}
+          startIcon={<FolderOutlinedIcon />}
+        >
+          {t(BUILDER.DROPZONE_HELPER_ACTION)}
+        </Button>
+        <input
+          style={{ display: 'none' }}
+          type="file"
+          multiple
+          ref={ref}
+          onChange={handleFiles}
+        />
+        <Typography variant="body1" color="text.secondary">
+          {t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
+        </Typography>
+      </Stack>
+      <Typography variant="h5" color="text.secondary">
+        {t(BUILDER.DROPZONE_HELPER_OPTIONAL_ACTION_TEXT)}
       </Typography>
+      <Stack alignItems="center" gap={1}>
+        <Typography variant="body1" color="text.secondary">
+          {t(BUILDER.NEW_ITEM_BUTTON_HELPER_TEXT)}
+        </Typography>
+        <NewItemButton />
+      </Stack>
     </Stack>
   );
 };

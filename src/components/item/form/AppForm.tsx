@@ -171,7 +171,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
     <Stack direction="column" height="100%" spacing={2} minHeight="0px">
       <TextField
         fullWidth
-        placeholder={translateBuilder('Search for an app')}
+        placeholder={translateBuilder(BUILDER.CREATE_APP_SEARCH_FIELD_HELPER)}
         variant="outlined"
         autoFocus
         size="small"
