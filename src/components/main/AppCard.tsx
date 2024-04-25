@@ -3,11 +3,13 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Grid,
   Skeleton,
+  Tooltip,
   Typography,
   styled,
+  useTheme,
 } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2';
 
 import { buildItemFormAppOptionId } from '@/config/selectors';
 
@@ -17,9 +19,10 @@ const StyledCardActionArea = styled(CardActionArea)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
-  justifyContent: 'flex-start',
+  justifyContent: 'center',
   height: '100%',
   width: '100%',
+  padding: '8px',
 });
 
 export type Props = {
@@ -38,78 +41,59 @@ const AppCard = ({
   image,
   onClick,
   selected = false,
-}: Props): JSX.Element => (
-  <Card
-    sx={{
-      width: '100%',
-      outline: selected ? '2px solid #5050d2' : '',
-    }}
-    onClick={onClick}
-    id={buildItemFormAppOptionId(id ?? name)}
-  >
-    <StyledCardActionArea>
-      <Grid2
-        container
-        direction="row"
-        alignItems="center"
-        width="100%"
-        spacing={[0, 1]}
+}: Props): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Tooltip title={description || ''}>
+      <Card
+        sx={{
+          flex: '1 0 calc(50% - 8px)',
+          outline: selected ? `2px solid ${theme.palette.primary.main}` : '',
+        }}
+        onClick={onClick}
+        id={buildItemFormAppOptionId(id ?? name)}
       >
-        <Grid2 xs={2} p={[0, 1.5]}>
-          <Box
-            component="img"
-            src={image ?? defaultImage}
-            alt={name}
-            width="100%"
-            display="flex"
-            flexShrink={0}
-            minWidth={0}
-            borderRadius={1}
-            overflow="hidden"
-          />
-        </Grid2>
-        <Grid2 xs={10}>
-          <CardContent
-            sx={{
-              pt: 1,
-              paddingBottom: '0 !important',
-              minWidth: 0,
-            }}
-          >
-            <Typography
-              fontWeight="bold"
-              gutterBottom
-              variant="body1"
-              component="div"
-              width="100%"
-              noWrap
-            >
-              {name ?? <Skeleton />}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              width="100%"
-              sx={{
-                display: { xs: 'none', sm: 'block', md: 'block' },
-              }}
-              noWrap
-            >
-              {description ?? <Skeleton height={20} />}
-            </Typography>
-          </CardContent>
-        </Grid2>
-      </Grid2>
-    </StyledCardActionArea>
-  </Card>
-);
-const AppCardWrapper = (props: Props): JSX.Element => (
-  <Grid2 xs={12} display="flex">
-    <AppCard
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    />
-  </Grid2>
-);
+        <StyledCardActionArea>
+          <Grid container direction="row" alignItems="center">
+            <Grid xs={2} display="flex" justifyContent="center">
+              <Box
+                component="img"
+                src={image ?? defaultImage}
+                alt={name}
+                width="100%"
+                flexShrink={0}
+                minWidth={0}
+                borderRadius={1}
+                overflow="hidden"
+                justifyContent="center"
+              />
+            </Grid>
+            <Grid xs={10}>
+              <CardContent
+                sx={{
+                  minWidth: 0,
+                  paddingBottom: '16px !important',
+                }}
+              >
+                <Typography gutterBottom variant="label" component="div">
+                  {name ?? <Skeleton />}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  textOverflow="ellipsis"
+                  overflow="hidden"
+                  noWrap
+                >
+                  {description ?? ''}
+                </Typography>
+              </CardContent>
+            </Grid>
+          </Grid>
+        </StyledCardActionArea>
+      </Card>
+    </Tooltip>
+  );
+};
 
-export default AppCardWrapper;
+export default AppCard;

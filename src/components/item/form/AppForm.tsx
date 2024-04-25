@@ -1,68 +1,109 @@
 import { ChangeEventHandler, useState } from 'react';
 
-import { ArrowBack } from '@mui/icons-material';
-import { Alert, Box, Stack, TextField, Typography } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { Add, ArrowBack } from '@mui/icons-material';
+import { Alert, Stack, TextField, Typography, alpha } from '@mui/material';
 
-import { DiscriminatedItem, ItemType, buildAppExtra } from '@graasp/sdk';
+import { App, DiscriminatedItem, ItemType, buildAppExtra } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
-import { CUSTOM_APP_CYPRESS_ID, CUSTOM_APP_URL_ID } from '@/config/selectors';
+import { CUSTOM_APP_BUTTON_ID, CUSTOM_APP_URL_ID } from '@/config/selectors';
+import defaultImage from '@/resources/defaultApp.png';
 import { sortByName } from '@/utils/item';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
-import addNewImage from '../../../resources/addNew.png';
 import NameForm from './NameForm';
 
 type AppGridProps = {
+  showFull: boolean;
   currentUrl: string;
   handleSelection: (value: null | { name: string; url: string }) => void;
   searchQuery?: string;
 };
 
+type MostUsedApp = {
+  url: string;
+  name: string;
+  count: number;
+};
+
+type AppCardListProps = {
+  apps: (App | MostUsedApp)[];
+  currentUrl: string;
+  handleSelection: (value: null | { name: string; url: string }) => void;
+  searchQuery?: string;
+};
+
+const AppCardList = ({
+  apps,
+  currentUrl,
+  handleSelection,
+  searchQuery,
+}: AppCardListProps) => {
+  // filter out with search query
+  const dataToShow = searchQuery
+    ? apps.filter((app) =>
+        app.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      )
+    : apps;
+  dataToShow.sort(sortByName);
+  return (
+    <>
+      {dataToShow.map((ele) => (
+        <AppCard
+          key={ele.name}
+          id={'id' in ele ? ele.id : ''}
+          name={ele.name}
+          description={'description' in ele ? ele.description : ''}
+          image={'extra' in ele ? ele.extra?.image : defaultImage}
+          selected={ele.url === currentUrl}
+          onClick={() => {
+            if (ele.url === currentUrl) {
+              // reset fields
+              handleSelection(null);
+            } else {
+              handleSelection({ url: ele.url, name: ele.name });
+            }
+          }}
+        />
+      ))}
+    </>
+  );
+};
+
 const AppGrid = ({
+  showFull,
   currentUrl,
   handleSelection,
   searchQuery,
 }: AppGridProps): JSX.Element | JSX.Element[] => {
-  const { useApps } = hooks;
-  const { data, isLoading } = useApps();
-
+  const { useApps, useMostUsedApps } = hooks;
+  const { data: allApps, isLoading } = useApps();
+  const { data: mostUsedApps } = useMostUsedApps();
   const { t: translateBuilder } = useBuilderTranslation();
 
-  if (data) {
-    // filter out with search query
-    const dataToShow = searchQuery
-      ? data.filter((d) =>
-          d.name.toLowerCase().includes(searchQuery.toLowerCase()),
-        )
-      : data;
-    dataToShow.sort(sortByName);
-
+  // at first, try to present the user the 'most used' data
+  if (mostUsedApps && mostUsedApps.length !== 0 && !showFull) {
     return (
-      <>
-        {dataToShow.map((ele) => (
-          <AppCard
-            id={ele.id}
-            key={ele.name}
-            name={ele.name}
-            description={ele.description}
-            image={ele.extra.image}
-            selected={ele.url === currentUrl}
-            onClick={() => {
-              if (ele.url === currentUrl) {
-                // reset fields
-                handleSelection(null);
-              } else {
-                handleSelection({ url: ele.url, name: ele.name });
-              }
-            }}
-          />
-        ))}
-      </>
+      <AppCardList
+        apps={mostUsedApps}
+        currentUrl={currentUrl}
+        handleSelection={handleSelection}
+        searchQuery={searchQuery}
+      />
+    );
+  }
+
+  if (allApps) {
+    return (
+      <AppCardList
+        apps={allApps}
+        currentUrl={currentUrl}
+        handleSelection={handleSelection}
+        searchQuery={searchQuery}
+      />
     );
   }
 
@@ -85,6 +126,7 @@ type Props = {
 };
 
 const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
+  const [showFull, setShowFull] = useState<boolean>(false);
   const { t: translateBuilder } = useBuilderTranslation();
   const [isCustomApp, setIsCustomApp] = useState<boolean>(false);
 
@@ -168,39 +210,75 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
     );
   }
   return (
-    <Stack direction="column" height="100%" spacing={2} minHeight="0px">
-      <TextField
-        fullWidth
-        placeholder={translateBuilder(BUILDER.CREATE_APP_SEARCH_FIELD_HELPER)}
-        variant="outlined"
-        autoFocus
-        size="small"
-        onChange={searchAnApp}
-      />
-      <Box display="flex" flexGrow={1} minHeight="0px" overflow="scroll" p={1}>
-        <Grid2
-          container
-          spacing={2}
-          height="max-content"
-          maxHeight={400}
-          alignItems="stretch"
+    <Stack spacing={2} mt={1}>
+      <Stack
+        direction="column"
+        maxHeight={400}
+        spacing={1}
+        bgcolor={alpha('#ADADAD', 0.06)}
+        padding={2}
+        borderRadius={2}
+      >
+        <TextField
+          fullWidth
+          placeholder={translateBuilder(BUILDER.ADD_BUILT_IN_APP_TEXT)}
+          variant="outlined"
+          autoFocus
+          size="small"
+          onChange={searchAnApp}
+        />
+        <Stack direction="row" alignItems="center">
+          <Typography variant="label">
+            {!showFull
+              ? translateBuilder(BUILDER.APP_SECTION_MOST_USED)
+              : translateBuilder(BUILDER.APP_SECTION_ALL_APP)}
+          </Typography>
+          <Button
+            size="small"
+            variant="text"
+            onClick={() => setShowFull(!showFull)}
+            id={CUSTOM_APP_BUTTON_ID}
+          >
+            {!showFull
+              ? translateBuilder(BUILDER.APP_SECTION_ALL_APP_BUTTON_TEXT)
+              : translateBuilder(BUILDER.APP_SECTION_MOST_USED_BUTTON_TEXT)}
+          </Button>
+        </Stack>
+        <Stack
+          flex={2}
+          flexDirection="row"
+          flexWrap="wrap"
+          width="100%"
+          gap={1}
+          sx={{
+            overflowY: 'scroll',
+          }}
+          padding={1}
+          alignContent="flex-start"
+          direction={{ xs: 'column', sm: 'row' }}
         >
           <AppGrid
+            showFull={showFull}
             currentUrl={currentUrl}
             handleSelection={handleAppSelection}
             searchQuery={searchQuery}
           />
-          <AppCard
-            id={CUSTOM_APP_CYPRESS_ID}
-            name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
-            description={translateBuilder(
-              BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
-            )}
-            image={addNewImage}
-            onClick={addCustomApp}
-          />
-        </Grid2>
-      </Box>
+        </Stack>
+      </Stack>
+      <Stack direction="row" alignItems="center" gap={1} flex={1}>
+        <Typography variant="body2">
+          {translateBuilder(BUILDER.CREATE_CUSTOM_APP_LABEL)}
+        </Typography>
+        <Button
+          startIcon={<Add fontSize="small" />}
+          variant="outlined"
+          onClick={addCustomApp}
+          id={CUSTOM_APP_BUTTON_ID}
+          size="small"
+        >
+          {translateBuilder(BUILDER.CREATE_CUSTOM_APP_DESCRIPTION)}
+        </Button>
+      </Stack>
       <NameForm
         setChanges={onChange}
         updatedProperties={updatedProperties}
