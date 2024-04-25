@@ -135,7 +135,7 @@ const ItemSelectionModal = ({
           direction="column"
           sx={{
             // needs a min height to avoid too small modal (reduce flickering)
-            minHeight: 270,
+            minHeight: 250,
             position: 'relative',
           }}
           id={HOME_MODAL_ITEM_ID}

@@ -6,6 +6,10 @@ import { ItemType, PermissionLevel } from '@graasp/sdk';
 import { type RowMenuProps, RowMenus } from '@graasp/ui';
 
 import { hooks } from '@/config/queryClient';
+import {
+  buildItemRowArrowId,
+  buildNavigationModalItemId,
+} from '@/config/selectors';
 
 interface AccessibleNavigationTreeProps {
   isDisabled?: RowMenuProps['isDisabled'];
@@ -52,6 +56,8 @@ const AccessibleNavigationTree = ({
             selectedId={selectedId}
             onClick={onClick}
             isDisabled={isDisabled}
+            buildRowMenuId={buildNavigationModalItemId}
+            buildRowMenuArrowId={buildItemRowArrowId}
           />
         </Stack>
         <Stack direction="row" justifyContent="end">

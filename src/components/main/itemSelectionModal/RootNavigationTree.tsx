@@ -10,6 +10,10 @@ import {
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
+import {
+  buildItemRowArrowId,
+  buildNavigationModalItemId,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 interface RootNavigationTreeProps {
@@ -60,7 +64,8 @@ const RootNavigationTree = ({
           onNavigate={onNavigate}
           selectedId={selectedId}
           onClick={onClick}
-          //   root items cannot be disabled - but they are disabled by the button
+          buildRowMenuId={buildNavigationModalItemId}
+          buildRowMenuArrowId={buildItemRowArrowId}
         />
         {recentFolders && (
           <>
@@ -73,6 +78,8 @@ const RootNavigationTree = ({
               selectedId={selectedId}
               onClick={onClick}
               isDisabled={isDisabled}
+              buildRowMenuId={buildNavigationModalItemId}
+              buildRowMenuArrowId={buildItemRowArrowId}
             />
           </>
         )}

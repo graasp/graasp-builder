@@ -5,6 +5,10 @@ import { NavigationElement, type RowMenuProps, RowMenus } from '@graasp/ui';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
+import {
+  buildItemRowArrowId,
+  buildNavigationModalItemId,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 interface ChildrenNavigationTreeProps {
@@ -38,6 +42,8 @@ const ChildrenNavigationTree = ({
           selectedId={selectedId}
           onClick={onClick}
           isDisabled={isDisabled}
+          buildRowMenuId={buildNavigationModalItemId}
+          buildRowMenuArrowId={buildItemRowArrowId}
         />
         {!folders?.length && (
           <Box sx={{ color: 'darkgrey', pt: 1 }}>
