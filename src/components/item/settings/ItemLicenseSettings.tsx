@@ -20,11 +20,6 @@ const ItemLicenseSettings = (): JSX.Element => {
 
   const { item } = useOutletContext<OutletType>();
 
-  // const handleClick = () => {
-  //   const url = CC_LICENSE_ABOUT_URL;
-  //   redirect(window, url, { openInNewTab: true });
-  // };
-
   const { allowSharing, allowCommercialUse, requireAccreditation } = useMemo(
     () => convertLicense(item.settings.ccLicenseAdaption ?? ''),
     [item.settings.ccLicenseAdaption],

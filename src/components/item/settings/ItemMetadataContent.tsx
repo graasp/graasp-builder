@@ -70,9 +70,7 @@ const ItemMetadataContent = (): JSX.Element => {
   };
 
   return (
-    <Box
-    // bgcolor="white" borderRadius={2} border="1px solid #ddd"
-    >
+    <Box>
       <TableContainer sx={{ boxSizing: 'border-box' }}>
         <Typography variant="h5" id={ITEM_PANEL_NAME_ID} noWrap>
           {item.name}

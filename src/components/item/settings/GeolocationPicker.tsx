@@ -50,13 +50,7 @@ const GeolocationPicker = ({
   const isDisabled = Boolean(geoloc && geoloc?.item?.id !== item.id);
 
   return (
-    <Stack
-      gap={1}
-      // bgcolor="white"
-      // p={2}
-      // borderRadius={2}
-      // border="1px solid #ddd"
-    >
+    <Stack gap={1}>
       <Box>
         <Typography variant="h4">
           {t(BUILDER.ITEM_SETTINGS_GEOLOCATION_TITLE)}

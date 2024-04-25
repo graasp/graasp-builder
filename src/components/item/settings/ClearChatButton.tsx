@@ -45,9 +45,6 @@ const ClearChatButton = ({ chatId }: Props): JSX.Element | null => {
   return (
     <>
       <Stack direction="column" spacing={2}>
-        <Typography variant="body1" maxWidth="50ch">
-          {}
-        </Typography>
         <Box width="max-content">
           <Button
             id={CLEAR_CHAT_SETTING_ID}

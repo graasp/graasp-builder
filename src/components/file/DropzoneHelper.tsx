@@ -2,7 +2,7 @@ import { useContext, useRef } from 'react';
 
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
-import { Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { DROPZONE_HELPER_ID } from '@/config/selectors';
@@ -56,34 +56,29 @@ const DropzoneHelper = (): JSX.Element => {
       <Typography variant="h5" color="text.secondary">
         {t(BUILDER.DROPZONE_HELPER_OPTIONAL_ACTION_TEXT)}
       </Typography>
-      <Stack alignItems="center" gap={1}>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={handleClick}
-          startIcon={<FolderOutlinedIcon />}
-        >
-          {t(BUILDER.DROPZONE_HELPER_ACTION)}
-        </Button>
-        <input
-          style={{ display: 'none' }}
-          type="file"
-          multiple
-          ref={ref}
-          onChange={handleFiles}
-        />
-        <Typography variant="body1" color="text.secondary">
-          {t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
-        </Typography>
-      </Stack>
-      <Typography variant="h5" color="text.secondary">
-        {t(BUILDER.DROPZONE_HELPER_OPTIONAL_ACTION_TEXT)}
-      </Typography>
-      <Stack alignItems="center" gap={1}>
-        <Typography variant="body1" color="text.secondary">
-          {t(BUILDER.NEW_ITEM_BUTTON_HELPER_TEXT)}
-        </Typography>
-        <NewItemButton />
+      <Stack direction="row" gap={2}>
+        <Stack alignItems="center" gap={1}>
+          <Button
+            variant="contained"
+            onClick={handleClick}
+            startIcon={<FolderOutlinedIcon />}
+          >
+            {t(BUILDER.DROPZONE_HELPER_ACTION)}
+          </Button>
+          <input
+            style={{ display: 'none' }}
+            type="file"
+            multiple
+            ref={ref}
+            onChange={handleFiles}
+          />
+          <Typography variant="caption" color="text.secondary">
+            {t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
+          </Typography>
+        </Stack>
+        <Box>
+          <NewItemButton />
+        </Box>
       </Stack>
     </Stack>
   );

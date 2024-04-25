@@ -34,6 +34,7 @@ const LanguageSelect = ({ item }: { item: DiscriminatedItem }): JSX.Element => {
       size="small"
       values={values}
       value={item.lang}
+      sx={{ fontSize: '14px' }}
       onChange={onChange}
     />
   );

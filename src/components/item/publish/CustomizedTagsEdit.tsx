@@ -53,13 +53,7 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
   };
 
   return (
-    <Stack
-      gap={1}
-      // bgcolor="white"
-      // p={2}
-      // borderRadius={2}
-      // border="1px solid #ddd"
-    >
+    <Stack gap={1}>
       <Box>
         <Typography variant="h4">
           {translateBuilder(BUILDER.ITEM_TAGS_TITLE)}
