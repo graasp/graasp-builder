@@ -26,7 +26,7 @@ const ItemsToolbar = ({
   return (
     <>
       <Stack direction="row" justifyContent="space-between" spacing={1}>
-        <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+        <Typography variant="h2" component="h1" sx={{ wordWrap: 'break-word' }}>
           {title}
         </Typography>
         <Stack
