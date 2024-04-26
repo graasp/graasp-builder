@@ -2,12 +2,13 @@ import { useContext, useRef } from 'react';
 
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
-import { Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { DROPZONE_HELPER_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
+import NewItemButton from '../main/NewItemButton';
 import { UppyContext } from './UppyContext';
 
 const DropzoneHelper = (): JSX.Element => {
@@ -30,7 +31,7 @@ const DropzoneHelper = (): JSX.Element => {
         // add files selected to uppy, this will upload them
         [...files].map((file) =>
           // add name to display file name in the ItemsTable
-          uppy?.addFile({ data: file, name: file.name }),
+          uppy?.addFile({ data: file, name: file.name, type: file.type }),
         );
       } else {
         console.error('no files found !');
@@ -55,24 +56,30 @@ const DropzoneHelper = (): JSX.Element => {
       <Typography variant="h5" color="text.secondary">
         {t(BUILDER.DROPZONE_HELPER_OPTIONAL_ACTION_TEXT)}
       </Typography>
-      <Button
-        variant="contained"
-        size="large"
-        onClick={handleClick}
-        startIcon={<FolderOutlinedIcon />}
-      >
-        {t(BUILDER.DROPZONE_HELPER_ACTION)}
-      </Button>
-      <input
-        style={{ display: 'none' }}
-        type="file"
-        multiple
-        ref={ref}
-        onChange={handleFiles}
-      />
-      <Typography variant="body1" sx={{ color: '#757575' }}>
-        {t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
-      </Typography>
+      <Stack direction="row" gap={2}>
+        <Stack alignItems="center" gap={1}>
+          <Button
+            variant="contained"
+            onClick={handleClick}
+            startIcon={<FolderOutlinedIcon />}
+          >
+            {t(BUILDER.DROPZONE_HELPER_ACTION)}
+          </Button>
+          <input
+            style={{ display: 'none' }}
+            type="file"
+            multiple
+            ref={ref}
+            onChange={handleFiles}
+          />
+          <Typography variant="caption" color="text.secondary">
+            {t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
+          </Typography>
+        </Stack>
+        <Box>
+          <NewItemButton />
+        </Box>
+      </Stack>
     </Stack>
   );
 };

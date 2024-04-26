@@ -1,6 +1,8 @@
 import { CSSProperties, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Box } from '@mui/material';
+
 import {
   DiscriminatedItem,
   ItemMembership,
@@ -9,7 +11,7 @@ import {
   PermissionLevelCompare,
   ThumbnailSize,
 } from '@graasp/sdk';
-import { Card as GraaspCard, Thumbnail } from '@graasp/ui';
+import { Card as GraaspCard, ItemIcon, Thumbnail } from '@graasp/ui';
 
 import truncate from 'lodash.truncate';
 
@@ -19,7 +21,6 @@ import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import { buildItemCard, buildItemLink } from '../../config/selectors';
-import defaultImage from '../../resources/avatar.png';
 import { stripHtml } from '../../utils/item';
 import BookmarkButton from '../common/BookmarkButton';
 import EditButton from '../common/EditButton';
@@ -60,15 +61,20 @@ const ItemComponent = ({
 
   const alt = name;
   const defaultValueComponent = (
-    <img
-      style={{
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-      }}
-      src={defaultImage}
-      alt={alt}
-    />
+    <Box
+      height="100%"
+      width="100%"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bgcolor="#E4DFFF"
+    >
+      <ItemIcon
+        sx={{ fontSize: '3rem', color: '#5050D1' }}
+        type={item.type}
+        alt={item.name}
+      />
+    </Box>
   );
 
   const linkUrl =
@@ -114,6 +120,7 @@ const ItemComponent = ({
       description={truncate(stripHtml(item.description || ''), {
         length: DESCRIPTION_MAX_LENGTH,
       })}
+      fullWidth
       Actions={Actions}
       Badges={<Badges data={item} />}
       name={item.name}

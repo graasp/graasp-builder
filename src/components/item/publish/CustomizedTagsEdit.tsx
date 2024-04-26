@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { Chip, Stack, TextField, Typography } from '@mui/material';
+import { Box, Chip, Stack, TextField, Typography } from '@mui/material';
 import type { TextFieldProps } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { Loader, SaveButton } from '@graasp/ui';
+import { SaveButton } from '@graasp/ui';
 
 import {
   useBuilderTranslation,
@@ -18,7 +18,6 @@ import {
   buildCustomizedTagsSelector,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 
 type Props = { item: DiscriminatedItem; disabled?: boolean };
 
@@ -27,11 +26,7 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
   const { mutate: updateCustomizedTags } = mutations.useEditItem();
 
-  // user
-  const { isLoading: isMemberLoading } = useCurrentUserContext();
-
-  const settings = item?.settings;
-  const itemId = item?.id;
+  const { settings, id: itemId } = item;
 
   const [displayValues, setDisplayValues] = useState<string>();
 
@@ -40,8 +35,6 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
       setDisplayValues(settings.tags?.join(', '));
     }
   }, [settings]);
-
-  if (isMemberLoading) return <Loader />;
 
   const handleChange: TextFieldProps['onChange'] = (event) => {
     setDisplayValues(event.target.value);
@@ -60,13 +53,15 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
   };
 
   return (
-    <>
-      <Typography variant="h6" mt={2}>
-        {translateBuilder(BUILDER.ITEM_TAGS_TITLE)}
-      </Typography>
-      <Typography variant="body1">
-        {translateBuilder(BUILDER.ITEM_TAGS_INFORMATION)}
-      </Typography>
+    <Stack gap={1}>
+      <Box>
+        <Typography variant="h4">
+          {translateBuilder(BUILDER.ITEM_TAGS_TITLE)}
+        </Typography>
+        <Typography variant="body1">
+          {translateBuilder(BUILDER.ITEM_TAGS_INFORMATION)}
+        </Typography>
+      </Box>
       <Stack direction="row" alignItems="center" spacing={1}>
         <Stack flexGrow={1}>
           <TextField
@@ -76,9 +71,9 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
             defaultValue={displayValues}
             onChange={handleChange}
             id={ITEM_TAGS_EDIT_INPUT_ID}
-            sx={{ mt: 1, mb: 1 }}
             disabled={disabled}
             fullWidth
+            size="small"
             placeholder={translateBuilder(BUILDER.ITEM_TAGS_PLACEHOLDER)}
           />
         </Stack>
@@ -108,7 +103,7 @@ const CustomizedTagsEdit = ({ item, disabled }: Props): JSX.Element => {
           </Stack>
         </>
       )}
-    </>
+    </Stack>
   );
 };
 

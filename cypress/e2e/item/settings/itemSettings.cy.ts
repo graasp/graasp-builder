@@ -2,6 +2,7 @@ import {
   DescriptionPlacement,
   ItemType,
   MaxWidth,
+  formatFileSize,
   getFileExtra,
 } from '@graasp/sdk';
 import { langs } from '@graasp/translations';
@@ -129,7 +130,7 @@ describe('Item Settings', () => {
           const { mimetype, size } = getFileExtra(extra);
           cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(mimetype);
 
-          cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(size);
+          cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(formatFileSize(size));
         }
       });
     });

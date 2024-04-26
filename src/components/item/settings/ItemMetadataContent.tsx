@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 
+import { Box } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import {
   ItemType,
   formatDate,
+  formatFileSize,
   getFileExtra,
   getS3FileExtra,
 } from '@graasp/sdk';
@@ -27,7 +29,6 @@ import {
 import { BUILDER } from '../../../langs/constants';
 import { OutletType } from '../../pages/item/type';
 import LanguageSelect from './LanguageSelect';
-import ThumbnailSetting from './ThumbnailSetting';
 
 const { useMember } = hooks;
 
@@ -69,10 +70,8 @@ const ItemMetadataContent = (): JSX.Element => {
   };
 
   return (
-    <>
-      <ThumbnailSetting item={item} />
-
-      <TableContainer sx={{ p: 2, boxSizing: 'border-box' }}>
+    <Box>
+      <TableContainer sx={{ boxSizing: 'border-box' }}>
         <Typography variant="h5" id={ITEM_PANEL_NAME_ID} noWrap>
           {item.name}
         </Typography>
@@ -93,7 +92,7 @@ const ItemMetadataContent = (): JSX.Element => {
                 <TableCell component="th" scope="row">
                   {translateBuilder(BUILDER.ITEM_METADATA_SIZE_TITLE)}
                 </TableCell>
-                <TableCell align="right">{size}</TableCell>
+                <TableCell align="right">{formatFileSize(size)}</TableCell>
               </TableRow>
             )}
             <TableRow>
@@ -136,7 +135,7 @@ const ItemMetadataContent = (): JSX.Element => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

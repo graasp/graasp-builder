@@ -3,6 +3,7 @@ import { FormControlLabel, Stack, Switch, Typography } from '@mui/material';
 import { useBuilderTranslation } from '@/config/i18n';
 import { ACCESSIBLE_ITEMS_ONLY_ME_ID } from '@/config/selectors';
 import { ShowOnlyMeChangeType } from '@/config/types';
+import { BUILDER } from '@/langs/constants';
 
 import SelectTypes from '../common/SelectTypes';
 
@@ -49,7 +50,7 @@ const ItemsToolbar = ({
                 onChange={(_, checked) => onShowOnlyMeChange(checked)}
               />
             }
-            label={t('Show only created by me')}
+            label={t(BUILDER.HOME_SHOW_ONLY_CREATED_BY_ME)}
           />
         )}
         <SelectTypes />

@@ -1,7 +1,9 @@
-import { Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
-import { ActionButton, ChatboxButton, PinButton } from '@graasp/ui';
+import { ActionButton, PinButton } from '@graasp/ui';
+
+import { BarChart3, MessageSquareOff, MessageSquareText } from 'lucide-react';
 
 import CollapseButton from '@/components/common/CollapseButton';
 import {
@@ -89,10 +91,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
   };
 
   return (
-    <>
-      <Typography variant="h6" mt={3}>
-        {translateBuilder(BUILDER.SETTINGS_TITLE)}
-      </Typography>
+    <Stack direction="column" gap={2}>
       <ItemSettingCheckBoxProperty
         title={translateBuilder(BUILDER.ITEM_SETTINGS_IS_COLLAPSED_TITLE)}
         icon={<CollapseButton type={ActionButton.ICON} item={item} />}
@@ -136,14 +135,11 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
       />
 
       <ItemSettingCheckBoxProperty
-        icon={
-          <ChatboxButton
-            showChat={Boolean(settings.showChatbox)}
-            type={ActionButton.ICON}
-          />
-        }
         id={SETTINGS_CHATBOX_TOGGLE_ID}
         title={translateBuilder(BUILDER.ITEM_SETTINGS_SHOW_CHAT_TITLE)}
+        icon={
+          settings.showChatbox ? <MessageSquareText /> : <MessageSquareOff />
+        }
         checked={Boolean(settings.showChatbox)}
         onClick={(checked: boolean): void => {
           handleOnToggle({ target: { checked } }, 'showChatbox');
@@ -157,6 +153,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
       <ItemSettingCheckBoxProperty
         id={SETTINGS_SAVE_ACTIONS_TOGGLE_ID}
         title={translateBuilder(BUILDER.SETTINGS_SAVE_ACTIONS)}
+        icon={<BarChart3 />}
         checked={Boolean(
           settings?.enableSaveActions ?? DEFAULT_SAVE_ACTIONS_SETTING,
         )}
@@ -178,7 +175,7 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
           }
         />
       )}
-    </>
+    </Stack>
   );
 };
 

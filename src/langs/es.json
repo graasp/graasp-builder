@@ -271,7 +271,6 @@
   "APP_URL": "URL de la aplicación",
   "CREATE_CUSTOM_APP": "Añade tu aplicación personalizada",
   "CREATE_CUSTOM_APP_DESCRIPTION": "Opción avanzada para crear una aplicación personalizada",
-  "BACK_TO_APP_LIST": "Volver a la lista de aplicaciones",
   "DOWNGRADE_PERMISSION_TITLE": "Degradar su propio permiso",
   "DOWNGRADE_PERMISSION_DESCRIPTION": "¿Está seguro de que desea degradar su propio permiso? Una vez hecho esto no puedes deshacerlo.",
   "CREATE_CUSTOM_APP_HELPER_TEXT": "Si conoce la URL de una aplicación interactiva que puede aprovechar la API de Graasp, puede ingresarla aquí.",

@@ -1,3 +1,5 @@
+import { ITEM_PAGE_SIZE } from '@/config/constants';
+
 import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
 import { HOME_PATH, ITEMS_PATH } from '../../../../src/config/paths';
 import {
@@ -101,7 +103,7 @@ describe('Home', () => {
       describe('Pagination', () => {
         const checkGridPagination = (
           items: ItemForTest[],
-          itemsPerPage: number = 10,
+          itemsPerPage: number = ITEM_PAGE_SIZE,
         ) => {
           const numberPages = Math.ceil(items.length / itemsPerPage);
 
@@ -305,17 +307,16 @@ describe('Home', () => {
       });
 
       describe('Pagination', () => {
-        const itemsPerPage = 10;
         const items = generateOwnItems(30);
-        const numberPages = Math.ceil(items.length / itemsPerPage);
+        const numberPages = Math.ceil(items.length / ITEM_PAGE_SIZE);
 
         it('shows only items of each page', () => {
           // for each page
           for (let i = 0; i < numberPages; i += 1) {
             // compute items that should be on this page
             const shouldDisplay = items.slice(
-              i * itemsPerPage,
-              (i + 1) * itemsPerPage,
+              i * ITEM_PAGE_SIZE,
+              (i + 1) * ITEM_PAGE_SIZE,
             );
             // compute items that should not be on this page
             const shouldNotDisplay = items.filter(

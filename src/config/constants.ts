@@ -95,9 +95,8 @@ export const GRAASP_LOGO_HEADER_HEIGHT = 40;
 export const ITEMS_TABLE_CONTAINER_HEIGHT = '65vh';
 
 export const THUMBNAIL_ASPECT = 1;
-export const THUMBNAIL_EXTENSION = 'image/jpeg';
-export const THUMBNAIL_SETTING_MAX_WIDTH = 200;
-export const THUMBNAIL_SETTING_MAX_HEIGHT = 200;
+export const THUMBNAIL_SETTING_MAX_WIDTH = 256;
+export const THUMBNAIL_SETTING_MAX_HEIGHT = 256;
 
 export const H5P_FILE_DOT_EXTENSION = '.h5p';
 
@@ -149,4 +148,4 @@ export const SHORT_LINK_ID_MAX_LENGTH = 10;
 export const SHORT_LINK_API_CALL_DEBOUNCE_MS = 500;
 
 // todo: to remove once we dynamically compute how many items we display
-export const ITEM_PAGE_SIZE = 10;
+export const ITEM_PAGE_SIZE = 12;

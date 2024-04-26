@@ -8,7 +8,6 @@ import { ItemLayoutMode } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
 import { SAMPLE_ITEMS_WITH_THUMBNAILS } from '../../../fixtures/thumbnails';
 
-// THESE TESTS ARE SKIPPED SINCE THEY FAIL IN CI
 describe('View Thumbnails', () => {
   it(`display thumbnail icons`, () => {
     cy.setUpApi(SAMPLE_ITEMS_WITH_THUMBNAILS);
@@ -26,9 +25,8 @@ describe('View Thumbnails', () => {
 
     // GRID
     cy.switchMode(ItemLayoutMode.Grid);
-    cy.get(`#${buildItemCard(items[0].id)} img`)
-      .should('have.attr', 'src')
-      .and('contain', 'data:');
+    // first element has default folder svg
+    cy.get(`#${buildItemCard(items[0].id)} svg path`).should('exist');
 
     cy.get(`#${buildItemCard(items[1].id)} img`)
       .should('have.attr', 'src')
