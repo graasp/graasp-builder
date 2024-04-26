@@ -28,7 +28,6 @@ const AccessibleNavigationTree = ({
 }: AccessibleNavigationTreeProps): JSX.Element => {
   // todo: to change with real recent items (most used)
   const [page, setPage] = useState(1);
-  // todo: show only items with admin rights
   const { data: accessibleItems, isLoading } = hooks.useAccessibleItems(
     {
       permissions: [PermissionLevel.Write, PermissionLevel.Admin],

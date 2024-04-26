@@ -167,14 +167,6 @@ export function useIsParentInstance({
   return isParentMembership;
 }
 
-export const applyEllipsisOnLength = (
-  longString: string,
-  maxLength: number,
-): string =>
-  `${longString.slice(0, maxLength)}${
-    (longString.length || 0) > maxLength ? '…' : ''
-  }`;
-
 // todo: to remove
 // get highest permission a member have over an item,
 // longer the itemPath, deeper is the permission, thus highested

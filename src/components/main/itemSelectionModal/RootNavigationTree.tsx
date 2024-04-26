@@ -44,16 +44,13 @@ const RootNavigationTree = ({
     },
     { pageSize: 5 },
   );
-  const recentFolders = recentItems?.data?.filter(
-    ({ type }) => type === ItemType.FOLDER,
-  );
 
   const { data: parents } = hooks.useParents({
     id: items[0].id,
     path: items[0].path,
   });
 
-  if (recentItems) {
+  if (recentItems?.data?.length) {
     return (
       <>
         <Typography color="darkgrey" variant="subtitle2">
@@ -67,13 +64,13 @@ const RootNavigationTree = ({
           buildRowMenuId={buildNavigationModalItemId}
           buildRowMenuArrowId={buildItemRowArrowId}
         />
-        {recentFolders && (
+        {recentItems && (
           <>
             <Typography color="darkgrey" variant="subtitle2">
               {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_RECENT_ITEMS)}
             </Typography>
             <RowMenus
-              elements={recentFolders}
+              elements={recentItems.data}
               onNavigate={onNavigate}
               selectedId={selectedId}
               onClick={onClick}

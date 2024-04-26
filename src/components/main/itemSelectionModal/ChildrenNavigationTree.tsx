@@ -29,15 +29,14 @@ const ChildrenNavigationTree = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: children, isLoading } = hooks.useChildren(
     selectedNavigationItem.id,
+    { types: [ItemType.FOLDER] },
   );
-  // TODO: use hook's filter when available
-  const folders = children?.filter((f) => f.type === ItemType.FOLDER);
 
   if (children) {
     return (
       <>
         <RowMenus
-          elements={folders}
+          elements={children}
           onNavigate={onNavigate}
           selectedId={selectedId}
           onClick={onClick}
@@ -45,7 +44,7 @@ const ChildrenNavigationTree = ({
           buildRowMenuId={buildNavigationModalItemId}
           buildRowMenuArrowId={buildItemRowArrowId}
         />
-        {!folders?.length && (
+        {!children?.length && (
           <Box sx={{ color: 'darkgrey', pt: 1 }}>
             {translateBuilder(BUILDER.EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM)}
           </Box>
