@@ -31,7 +31,7 @@ const DropzoneHelper = (): JSX.Element => {
         // add files selected to uppy, this will upload them
         [...files].map((file) =>
           // add name to display file name in the ItemsTable
-          uppy?.addFile({ data: file, name: file.name }),
+          uppy?.addFile({ data: file, name: file.name, type: file.type }),
         );
       } else {
         console.error('no files found !');
