@@ -61,21 +61,19 @@ const ItemComponent = ({
 
   const alt = name;
   const defaultValueComponent = (
-    <Box height="100%">
-      <Box
-        p={3}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        bgcolor="#E4DFFF"
-        borderRadius={2}
-      >
-        <ItemIcon
-          sx={{ fontSize: '3rem', color: '#5050D1' }}
-          type={item.type}
-          alt={item.name}
-        />
-      </Box>
+    <Box
+      height="100%"
+      width="100%"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bgcolor="#E4DFFF"
+    >
+      <ItemIcon
+        sx={{ fontSize: '3rem', color: '#5050D1' }}
+        type={item.type}
+        alt={item.name}
+      />
     </Box>
   );
 
