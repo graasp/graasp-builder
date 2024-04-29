@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.19.1](https://github.com/graasp/graasp-builder/compare/v2.19.0...v2.19.1) (2024-04-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/sdk to v4.7.6 ([#1179](https://github.com/graasp/graasp-builder/issues/1179)) ([45c14c5](https://github.com/graasp/graasp-builder/commit/45c14c58bfd42403903c28874899672d6c954765))
+* **deps:** update dependency @sentry/react to v7.112.1 ([#1181](https://github.com/graasp/graasp-builder/issues/1181)) ([933bc93](https://github.com/graasp/graasp-builder/commit/933bc9352759c7efc69e9731b1ffaf458af4472d))
+* **deps:** update dependency react-i18next to v14.1.1 ([#1180](https://github.com/graasp/graasp-builder/issues/1180)) ([4aa0c05](https://github.com/graasp/graasp-builder/commit/4aa0c059790f4089bd608eb0ff1b676b437f2036))
+* **deps:** update dependency stylis to v4.3.2 ([#1178](https://github.com/graasp/graasp-builder/issues/1178)) ([782681e](https://github.com/graasp/graasp-builder/commit/782681e1fba650a04921f92377d7da1b6a6371ba))
+* **deps:** update react-router monorepo to v6.23.0 ([#1182](https://github.com/graasp/graasp-builder/issues/1182)) ([29e8bb4](https://github.com/graasp/graasp-builder/commit/29e8bb4ecf659c838fbec755410c0930b4fa978c))
+* improve settings page and overall ([#1184](https://github.com/graasp/graasp-builder/issues/1184)) ([0f3cb22](https://github.com/graasp/graasp-builder/commit/0f3cb22a1a2b3af7a195c5afe78b138bab7fb184))
+* some margin inconsistencies ([#1198](https://github.com/graasp/graasp-builder/issues/1198)) ([b9dd11c](https://github.com/graasp/graasp-builder/commit/b9dd11cc8700395c730d4d8b762b06fbb17d5679))
+
 ## [2.19.0](https://github.com/graasp/graasp-builder/compare/v2.18.0...v2.19.0) (2024-04-23)
 
 
