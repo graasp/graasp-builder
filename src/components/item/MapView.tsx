@@ -16,9 +16,15 @@ type Props = {
   parentId?: DiscriminatedItem['id'];
   title?: string;
   height?: string;
+  isMobileApp?: boolean;
 };
 
-const MapView = ({ parentId, title, height = '100vh' }: Props): JSX.Element => {
+const MapView = ({
+  isMobileApp = false,
+  parentId,
+  title,
+  height = '100vh',
+}: Props): JSX.Element => {
   const { data: currentMember } = hooks.useCurrentMember();
   const { isMobile } = useMobileView();
   const [geolocation, setGeolocation] = useState<Partial<ItemGeolocation>>();
@@ -47,6 +53,7 @@ const MapView = ({ parentId, title, height = '100vh' }: Props): JSX.Element => {
         <Stack flex={1}>
           <div style={{ width: '100%', height: '100%' }}>
             <Map
+              isMobileApp={isMobileApp}
               useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
               usePostItem={mutations.usePostItem}
               useRecycleItems={mutations.useRecycleItems}

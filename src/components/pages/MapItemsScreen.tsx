@@ -6,7 +6,12 @@ import MapView from '../item/MapView';
 const MapItemScreen = (): JSX.Element | null => {
   const [urlSearchParams] = useSearchParams();
 
-  return <MapView parentId={urlSearchParams.get('parentId') ?? undefined} />;
+  return (
+    <MapView
+      isMobileApp={urlSearchParams.get('isMobileApp') === 'true'}
+      parentId={urlSearchParams.get('parentId') ?? undefined}
+    />
+  );
 };
 
 export default MapItemScreen;
