@@ -70,9 +70,10 @@ Cypress.Commands.add(
         ) {
           cy.wrap($tree)
             .get(`#${buildNavigationModalItemId(value)}`)
-            .trigger('mouseover')
             .get(`#${buildItemRowArrowId(value)}`)
             .first()
+            // hack to show button - cannot trigger with cypress
+            .invoke('attr', 'style', 'visibility: visible')
             .click();
         }
       });
