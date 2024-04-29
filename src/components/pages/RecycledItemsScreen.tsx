@@ -64,7 +64,7 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
         <Helmet>
           <title>{translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}</title>
         </Helmet>
-        <Box id={RECYCLED_ITEMS_ROOT_CONTAINER} mx={2}>
+        <Box id={RECYCLED_ITEMS_ROOT_CONTAINER} m={2}>
           <ItemHeader showNavigation={false} />
           <Items
             id={RECYCLED_ITEMS_ID}

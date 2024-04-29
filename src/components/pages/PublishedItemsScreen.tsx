@@ -35,7 +35,7 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
         <Helmet>
           <title>{translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}</title>
         </Helmet>
-        <Box mx={2}>
+        <Box m={2}>
           <ItemHeader showNavigation={false} />
           <Items
             id={PUBLISHED_ITEMS_ID}
