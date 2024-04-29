@@ -47,6 +47,16 @@ Cypress.Commands.add(
   },
 );
 
+Cypress.Commands.add('clickTreeMenuItem', (value: string) => {
+  // cy.wrap(tree)
+  cy.get(`#${buildNavigationModalItemId(value)}`)
+    .get(`#${buildItemRowArrowId(value)}`)
+    .first()
+    // hack to show button - cannot trigger with cypress
+    .invoke('attr', 'style', 'visibility: visible')
+    .click();
+});
+
 Cypress.Commands.add(
   'handleTreeMenu',
   (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
@@ -68,13 +78,7 @@ Cypress.Commands.add(
           idx !== array.length - 1 &&
           !$tree.find(`#${buildTreeItemId(array[idx + 1], treeRootId)}`).length
         ) {
-          cy.wrap($tree)
-            .get(`#${buildNavigationModalItemId(value)}`)
-            .get(`#${buildItemRowArrowId(value)}`)
-            .first()
-            // hack to show button - cannot trigger with cypress
-            .invoke('attr', 'style', 'visibility: visible')
-            .click();
+          cy.clickTreeMenuItem(value);
         }
       });
     });
