@@ -68,7 +68,7 @@ const UpdateLicenseDialog = ({ open, setOpen, item }: Props): JSX.Element => {
       {!confirmationStep ? (
         <>
           <DialogContent sx={{ paddingX: 3 }}>{licenseForm}</DialogContent>
-          {item.settings?.ccLicenseAdaption && (
+          {requireAttributionValue && (
             <Box display="flex" justifyContent="center">
               {creativeCommons}
             </Box>
