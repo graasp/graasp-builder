@@ -11,6 +11,7 @@ import {
   ITEM_FORM_LINK_INPUT_ID,
   ITEM_FORM_NAME_INPUT_ID,
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
+  MY_GRAASP_ITEM_PATH,
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
@@ -46,6 +47,16 @@ Cypress.Commands.add(
   },
 );
 
+Cypress.Commands.add('clickTreeMenuItem', (value: string) => {
+  // cy.wrap(tree)
+  cy.get(`#${buildNavigationModalItemId(value)}`)
+    .get(`#${buildItemRowArrowId(value)}`)
+    .first()
+    // hack to show button - cannot trigger with cypress
+    .invoke('attr', 'style', 'visibility: visible')
+    .click();
+});
+
 Cypress.Commands.add(
   'handleTreeMenu',
   (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
@@ -53,7 +64,7 @@ Cypress.Commands.add(
 
     cy.wait(TREE_VIEW_PAUSE);
 
-    [HOME_MODAL_ITEM_ID, ...ids].forEach((value, idx, array) => {
+    [MY_GRAASP_ITEM_PATH, ...ids].forEach((value, idx, array) => {
       cy.get(`#${treeRootId}`).then(($tree) => {
         // click on the element
         if (idx === array.length - 1) {
@@ -67,12 +78,7 @@ Cypress.Commands.add(
           idx !== array.length - 1 &&
           !$tree.find(`#${buildTreeItemId(array[idx + 1], treeRootId)}`).length
         ) {
-          cy.wrap($tree)
-            .get(`#${buildNavigationModalItemId(value)}`)
-            .trigger('mouseover')
-            .get(`#${buildItemRowArrowId(value)}`)
-            .first()
-            .click();
+          cy.clickTreeMenuItem(value);
         }
       });
     });

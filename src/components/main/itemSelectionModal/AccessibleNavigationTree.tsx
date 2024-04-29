@@ -3,10 +3,13 @@ import { useState } from 'react';
 import { Alert, Pagination, Skeleton, Stack } from '@mui/material';
 
 import { ItemType, PermissionLevel } from '@graasp/sdk';
+import { type RowMenuProps, RowMenus } from '@graasp/ui';
 
 import { hooks } from '@/config/queryClient';
-
-import RowMenu, { RowMenuProps } from './RowMenu';
+import {
+  buildItemRowArrowId,
+  buildNavigationModalItemId,
+} from '@/config/selectors';
 
 interface AccessibleNavigationTreeProps {
   isDisabled?: RowMenuProps['isDisabled'];
@@ -25,7 +28,6 @@ const AccessibleNavigationTree = ({
 }: AccessibleNavigationTreeProps): JSX.Element => {
   // todo: to change with real recent items (most used)
   const [page, setPage] = useState(1);
-  // todo: show only items with admin rights
   const { data: accessibleItems, isLoading } = hooks.useAccessibleItems(
     {
       permissions: [PermissionLevel.Write, PermissionLevel.Admin],
@@ -38,7 +40,7 @@ const AccessibleNavigationTree = ({
     ? Math.ceil(accessibleItems.totalCount / PAGE_SIZE)
     : 0;
 
-  if (accessibleItems) {
+  if (accessibleItems?.data) {
     return (
       <Stack
         height="100%"
@@ -47,16 +49,15 @@ const AccessibleNavigationTree = ({
         justifyContent="space-between"
       >
         <Stack>
-          {accessibleItems.data.map((ele) => (
-            <RowMenu
-              key={ele.id}
-              item={ele}
-              onNavigate={onNavigate}
-              selectedId={selectedId}
-              onClick={onClick}
-              isDisabled={isDisabled}
-            />
-          ))}
+          <RowMenus
+            elements={accessibleItems.data}
+            onNavigate={onNavigate}
+            selectedId={selectedId}
+            onClick={onClick}
+            isDisabled={isDisabled}
+            buildRowMenuId={buildNavigationModalItemId}
+            buildRowMenuArrowId={buildItemRowArrowId}
+          />
         </Stack>
         <Stack direction="row" justifyContent="end">
           {nbPages > 1 && (

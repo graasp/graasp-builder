@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
+import { Breadcrumbs, type NavigationElement } from '@graasp/ui';
 
 import { computeTitle } from '@/utils/itemSelection';
 
@@ -25,7 +26,6 @@ import {
 import { BUILDER } from '../../../langs/constants';
 import CancelButton from '../../common/CancelButton';
 import AccessibleNavigationTree from './AccessibleNavigationTree';
-import Breadcrumbs, { NavigationElement } from './Breadcrumbs';
 import ChildrenNavigationTree from './ChildrenNavigationTree';
 import RootNavigationTree from './RootNavigationTree';
 
@@ -118,34 +118,6 @@ const ItemSelectionModal = ({
     setSelectedItem(item);
   };
 
-  // does not show breadcrumbs on root
-  const renderBreadcrumbs = () => {
-    if (selectedNavigationItem.id === ROOT_BREADCRUMB.id) {
-      return null;
-    }
-
-    // always show root
-    const elements: NavigationElement[] = [ROOT_BREADCRUMB];
-
-    // show graasp if not on root
-    if (selectedNavigationItem.id !== MY_GRAASP_BREADCRUMB.id) {
-      elements.push(MY_GRAASP_BREADCRUMB);
-    }
-
-    // parents: needs a check on current selected value as parents might keep the previous data
-    if (
-      !SPECIAL_BREADCRUMB_IDS.includes(selectedNavigationItem.id) &&
-      navigationParents
-    ) {
-      elements.push(...navigationParents);
-    }
-
-    // element itself
-    elements.push(selectedNavigationItem);
-
-    return <Breadcrumbs elements={elements} onSelect={onNavigate} />;
-  };
-
   const isDisabledLocal = (item: NavigationElement) =>
     !items?.data ||
     isDisabled(Object.values(items.data), item, MY_GRAASP_BREADCRUMB.id);
@@ -163,12 +135,19 @@ const ItemSelectionModal = ({
           direction="column"
           sx={{
             // needs a min height to avoid too small modal (reduce flickering)
-            minHeight: 270,
+            minHeight: 250,
             position: 'relative',
           }}
           id={HOME_MODAL_ITEM_ID}
         >
-          {renderBreadcrumbs()}
+          {selectedNavigationItem.id !== ROOT_BREADCRUMB.id && (
+            <Breadcrumbs
+              elements={[...(navigationParents ?? []), selectedNavigationItem]}
+              rootElements={[ROOT_BREADCRUMB, MY_GRAASP_BREADCRUMB]}
+              selectedId={selectedNavigationItem.id}
+              onSelect={onNavigate}
+            />
+          )}
 
           {items?.data && selectedNavigationItem.id === ROOT_BREADCRUMB.id && (
             <RootNavigationTree

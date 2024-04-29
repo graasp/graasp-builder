@@ -42,6 +42,7 @@ declare global {
         wsClientStub: any,
       ): void;
 
+      clickTreeMenuItem(value: string): void;
       handleTreeMenu(path: string, rootId?: string): void;
       switchMode(mode: string): void;
       goToItemInGrid(path: string): void;

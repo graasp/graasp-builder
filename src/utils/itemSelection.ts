@@ -1,8 +1,8 @@
 import { DiscriminatedItem, ResultOf } from '@graasp/sdk';
 
-import { ITEM_SELECT_MODAL_TITLE_MAX_NAME_LENGTH } from '@/config/constants';
+import truncate from 'lodash.truncate';
 
-import { applyEllipsisOnLength } from './item';
+import { ITEM_SELECT_MODAL_TITLE_MAX_NAME_LENGTH } from '@/config/constants';
 
 type TFunction = (key: string, params?: { [key: string]: unknown }) => string;
 
@@ -21,10 +21,9 @@ export const computeTitle = ({
 }: TitleProps): string =>
   Object.values(items.data ?? {}).length
     ? translateBuilder(translateKey, {
-        name: applyEllipsisOnLength(
-          Object.values(items.data)[0].name,
-          ITEM_SELECT_MODAL_TITLE_MAX_NAME_LENGTH,
-        ),
+        name: truncate(Object.values(items.data)[0].name, {
+          length: ITEM_SELECT_MODAL_TITLE_MAX_NAME_LENGTH,
+        }),
         count,
       })
     : translateBuilder(translateKey);

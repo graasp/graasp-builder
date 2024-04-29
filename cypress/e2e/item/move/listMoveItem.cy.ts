@@ -4,7 +4,6 @@ import {
   MY_GRAASP_ITEM_PATH,
   buildItemMenu,
   buildItemMenuButtonId,
-  buildItemRowArrowId,
   buildNavigationModalItemId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
@@ -86,15 +85,13 @@ describe('Move Item in List', () => {
     cy.get(`#${buildNavigationModalItemId(parentId)} button`).should(
       'be.disabled',
     );
-    cy.get(`#${buildNavigationModalItemId(parentId)}`).trigger('mouseover');
-    cy.get(`#${buildItemRowArrowId(parentId)}`).click();
+    cy.clickTreeMenuItem(parentId);
 
     // self is disabled
     cy.get(`#${buildNavigationModalItemId(movedItemId)} button`).should(
       'be.disabled',
     );
-    cy.get(`#${buildNavigationModalItemId(movedItemId)}`).trigger('mouseover');
-    cy.get(`#${buildItemRowArrowId(movedItemId)}`).click();
+    cy.clickTreeMenuItem(movedItemId);
 
     // inner child is disabled
     cy.get(`#${buildNavigationModalItemId(childId)} button`).should(
