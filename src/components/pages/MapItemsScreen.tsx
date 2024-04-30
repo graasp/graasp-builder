@@ -16,20 +16,10 @@ const MapItemScreen = (): JSX.Element | null => {
 
   const viewItem = (item: DiscriminatedItem) => {
     if (isMobileApp) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      // eslint-disable-next-line no-lonely-if
-      if (window.ReactNativeWebView) {
-        // todo: replace with universal/deep link? not sure it works inside iframe..
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({ item, action: 'open-player' }),
-          '*',
-        );
-      } else {
-        console.error('cannot open item in mobile player');
-      }
+      // todo: replace with universal/deep link? not sure it works inside iframe..
+      window.parent.postMessage(
+        JSON.stringify({ item, action: 'open-player' }),
+      );
     } else {
       redirect(window, buildGraaspPlayerView(item.id), {
         name: buildPlayerTabName(item.id),
