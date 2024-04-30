@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Skeleton, Stack, Typography } from '@mui/material';
 
@@ -15,6 +15,7 @@ type Props = {
   title?: string;
   height?: string;
   viewItem: (item: DiscriminatedItem) => void;
+  enableGeolocation?: boolean;
 };
 
 const options = {
@@ -34,40 +35,26 @@ const useCurrentLocation = () => {
 
   // get current location
   useEffect(() => {
-    alert('weiofj');
-    if (navigator.geolocation.getCurrentPosition) {
-      alert('weiergergofj');
-      const success = (pos: {
-        coords: { latitude: number; longitude: number };
-      }) => {
-        const crd = pos.coords;
-        setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
-        setHasFetchedCurrentLocation(true);
-        alert('ergerg');
-      };
-
-      navigator.geolocation.getCurrentPosition(
-        success,
-        (err: { code: number; message: string }) => {
-          // eslint-disable-next-line no-console
-          console.warn(`ERROR(${err.code}): ${err.message}`);
-          setHasFetchedCurrentLocation(true);
-          alert('weiofherhgj');
-        },
-        options,
-      );
-    } else {
+    const success = (pos: {
+      coords: { latitude: number; longitude: number };
+    }) => {
+      const crd = pos.coords;
+      setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
       setHasFetchedCurrentLocation(true);
-      alert('wefweiofj');
-    }
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      success,
+      (err: { code: number; message: string }) => {
+        // eslint-disable-next-line no-console
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+        setHasFetchedCurrentLocation(true);
+      },
+      options,
+    );
   }, []);
 
-  const returnValue = useMemo(
-    () => ({ hasFetchedCurrentLocation, currentPosition }),
-    [hasFetchedCurrentLocation, currentPosition],
-  );
-
-  return returnValue;
+  return { hasFetchedCurrentLocation, currentPosition };
 };
 
 const MapView = ({
@@ -75,6 +62,7 @@ const MapView = ({
   title,
   height = '100vh',
   viewItem,
+  enableGeolocation = true,
 }: Props): JSX.Element => {
   const { data: currentMember } = hooks.useCurrentMember();
   const { isMobile } = useMobileView();
@@ -91,7 +79,6 @@ const MapView = ({
     setGeolocation(undefined);
     setOpen(false);
   };
-  alert(hasFetchedCurrentLocation);
 
   return (
     <>
@@ -104,7 +91,7 @@ const MapView = ({
           )}
         </Stack>
         <Stack flex={1}>
-          {!hasFetchedCurrentLocation ? (
+          {enableGeolocation && !hasFetchedCurrentLocation ? (
             <Skeleton width="100%" height="100%" />
           ) : (
             <div style={{ width: '100%', height: '100%' }}>
