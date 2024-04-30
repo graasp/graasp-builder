@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Skeleton, Stack, Typography } from '@mui/material';
 
@@ -57,7 +57,12 @@ const useCurrentLocation = () => {
     }
   }, []);
 
-  return { hasFetchedCurrentLocation, currentPosition };
+  const returnValue = useMemo(
+    () => ({ hasFetchedCurrentLocation, currentPosition }),
+    [hasFetchedCurrentLocation, currentPosition],
+  );
+
+  return returnValue;
 };
 
 const MapView = ({
