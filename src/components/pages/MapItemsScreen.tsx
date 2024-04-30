@@ -23,7 +23,7 @@ const MapItemScreen = (): JSX.Element | null => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         window.ReactNativeWebView.postMessage(
-          JSON.stringify({ itemId: item.id, action: 'open-player' }),
+          JSON.stringify({ item, action: 'open-player' }),
           '*',
         );
       } else {

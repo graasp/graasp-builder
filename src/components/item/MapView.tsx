@@ -93,26 +93,27 @@ const MapView = ({
           )}
         </Stack>
         <Stack flex={1}>
-          {!hasFetchedCurrentLocation && (
+          {!hasFetchedCurrentLocation ? (
             <Skeleton width="100%" height="100%" />
+          ) : (
+            <div style={{ width: '100%', height: '100%' }}>
+              <Map
+                currentPosition={currentPosition}
+                useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
+                usePostItem={mutations.usePostItem}
+                useRecycleItems={mutations.useRecycleItems}
+                useAddressFromGeolocation={hooks.useAddressFromGeolocation}
+                useSuggestionsForAddress={hooks.useSuggestionsForAddress}
+                useItemsInMap={hooks.useItemsInMap}
+                viewItem={viewItem}
+                currentMember={currentMember}
+                itemId={parentId}
+                // use builder modal to add new item if the screen is big enough
+                // todo: always use builder modal when it is responsive
+                handleAddOnClick={isMobile ? undefined : handleAddOnClick}
+              />
+            </div>
           )}
-          <div style={{ width: '100%', height: '100%' }}>
-            <Map
-              currentPosition={currentPosition}
-              useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
-              usePostItem={mutations.usePostItem}
-              useRecycleItems={mutations.useRecycleItems}
-              useAddressFromGeolocation={hooks.useAddressFromGeolocation}
-              useSuggestionsForAddress={hooks.useSuggestionsForAddress}
-              useItemsInMap={hooks.useItemsInMap}
-              viewItem={viewItem}
-              currentMember={currentMember}
-              itemId={parentId}
-              // use builder modal to add new item if the screen is big enough
-              // todo: always use builder modal when it is responsive
-              handleAddOnClick={isMobile ? undefined : handleAddOnClick}
-            />
-          </div>
         </Stack>
       </Stack>
       {!isMobile && (
