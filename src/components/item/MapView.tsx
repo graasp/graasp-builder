@@ -25,7 +25,7 @@ const options = {
 
 const useCurrentLocation = () => {
   const [hasFetchedCurrentLocation, setHasFetchedCurrentLocation] =
-    useState<boolean>(false);
+    useState(false);
 
   const [currentPosition, setCurrentPosition] = useState<{
     lat: number;
@@ -82,10 +82,6 @@ const MapView = ({
     setOpen(false);
   };
 
-  if (!hasFetchedCurrentLocation) {
-    return <Skeleton width="100%" height="100%" />;
-  }
-
   return (
     <>
       <Stack height={height}>
@@ -97,6 +93,9 @@ const MapView = ({
           )}
         </Stack>
         <Stack flex={1}>
+          {!hasFetchedCurrentLocation && (
+            <Skeleton width="100%" height="100%" />
+          )}
           <div style={{ width: '100%', height: '100%' }}>
             <Map
               currentPosition={currentPosition}
