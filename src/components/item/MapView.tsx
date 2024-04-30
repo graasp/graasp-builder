@@ -34,13 +34,16 @@ const useCurrentLocation = () => {
 
   // get current location
   useEffect(() => {
+    alert('weiofj');
     if (navigator.geolocation.getCurrentPosition) {
+      alert('weiergergofj');
       const success = (pos: {
         coords: { latitude: number; longitude: number };
       }) => {
         const crd = pos.coords;
         setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
         setHasFetchedCurrentLocation(true);
+        alert('ergerg');
       };
 
       navigator.geolocation.getCurrentPosition(
@@ -49,11 +52,13 @@ const useCurrentLocation = () => {
           // eslint-disable-next-line no-console
           console.warn(`ERROR(${err.code}): ${err.message}`);
           setHasFetchedCurrentLocation(true);
+          alert('weiofherhgj');
         },
         options,
       );
     } else {
       setHasFetchedCurrentLocation(true);
+      alert('wefweiofj');
     }
   }, []);
 
@@ -86,6 +91,7 @@ const MapView = ({
     setGeolocation(undefined);
     setOpen(false);
   };
+  alert(hasFetchedCurrentLocation);
 
   return (
     <>
