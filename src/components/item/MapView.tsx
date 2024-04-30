@@ -34,23 +34,27 @@ const useCurrentLocation = () => {
 
   // get current location
   useEffect(() => {
-    const success = (pos: {
-      coords: { latitude: number; longitude: number };
-    }) => {
-      const crd = pos.coords;
-      setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
-      setHasFetchedCurrentLocation(true);
-    };
-
-    navigator.geolocation.getCurrentPosition(
-      success,
-      (err: { code: number; message: string }) => {
-        // eslint-disable-next-line no-console
-        console.warn(`ERROR(${err.code}): ${err.message}`);
+    if (navigator.geolocation.getCurrentPosition) {
+      const success = (pos: {
+        coords: { latitude: number; longitude: number };
+      }) => {
+        const crd = pos.coords;
+        setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
         setHasFetchedCurrentLocation(true);
-      },
-      options,
-    );
+      };
+
+      navigator.geolocation.getCurrentPosition(
+        success,
+        (err: { code: number; message: string }) => {
+          // eslint-disable-next-line no-console
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+          setHasFetchedCurrentLocation(true);
+        },
+        options,
+      );
+    } else {
+      setHasFetchedCurrentLocation(true);
+    }
   }, []);
 
   return { hasFetchedCurrentLocation, currentPosition };
