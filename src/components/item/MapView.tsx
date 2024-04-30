@@ -80,10 +80,6 @@ const MapView = ({
     setOpen(false);
   };
 
-  alert(currentPosition);
-  alert(enableGeolocation);
-  alert(hasFetchedCurrentLocation);
-
   return (
     <>
       <Stack height={height}>
