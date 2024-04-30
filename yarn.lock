@@ -1491,7 +1491,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#723-add-endpoint-thumbnail":
   version: 3.3.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=012eac7a10965806f807a7cca4b95a5f7b5a7c12"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=2fce5b97b1cc4010bb318030f6a32083d813a38b"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1502,7 +1502,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/c13b8563c305084e23b309d5c57b54153975d55c58880ba4ee4285cbb5c7e875d74bad877a925cb9fb1a9fe138b929b73548116ba3be3c60a65c6c20481c2a36
+  checksum: 10/14baa213a57a193d2040c744bf2cb1b41a38280738660f4767e8dfce95b7e7b8b7c23f000810a6958a71376b55d7cbed68ed8acfcda9350fef97dc5cca93f360
   languageName: node
   linkType: hard
 
