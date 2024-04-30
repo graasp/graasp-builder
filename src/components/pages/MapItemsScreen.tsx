@@ -12,7 +12,9 @@ const MapItemScreen = (): JSX.Element | null => {
   const [urlSearchParams] = useSearchParams();
 
   const isMobileApp = urlSearchParams.get('isMobileApp') === 'true';
-  const enableGeolocation = urlSearchParams.get('enableGeolocation') === 'true';
+  const enableGeolocation = urlSearchParams.get('enableGeolocation')
+    ? urlSearchParams.get('enableGeolocation') === 'true'
+    : true;
 
   const viewItem = (item: DiscriminatedItem) => {
     if (isMobileApp) {
