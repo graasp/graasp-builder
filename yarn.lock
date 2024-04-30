@@ -1455,7 +1455,7 @@ __metadata:
 
 "@graasp/map@github:graasp/graasp-map#open-in-player-mobile":
   version: 1.10.0
-  resolution: "@graasp/map@https://github.com/graasp/graasp-map.git#commit=8f9da90a12f065102d1464a25ab356c2579a2b69"
+  resolution: "@graasp/map@https://github.com/graasp/graasp-map.git#commit=e4b4b22810d35129376cc8661b3b654180af77e4"
   dependencies:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
@@ -1490,7 +1490,7 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^14.0.0
-  checksum: 10/4ed30aeb91cde57a580feec2c1ddf65f5ab430275a5f2e89a13c54c45147f9471ff0ced5612c490455a26d92a350e53217dd5ba0f1bb2c2325d0bb1e95e6936a
+  checksum: 10/aa25c87b2042a3ec55fe105a6e1ce730d668c2f5ab6a1509743c4f29450b58d516a33652c5658abe5e3f5783273611d458ffc8409261ac57be2ef76e060c495e
   languageName: node
   linkType: hard
 

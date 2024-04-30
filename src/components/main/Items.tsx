@@ -1,5 +1,7 @@
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, redirect } from '@graasp/sdk';
 
+import { buildGraaspPlayerView } from '@/config/externalPaths';
+import { buildPlayerTabName } from '@/config/selectors';
 import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { hooks } from '../../config/queryClient';
@@ -76,9 +78,23 @@ const Items = ({
     itemsTags,
   });
   switch (mode) {
-    case ItemLayoutMode.Map:
-      // todo: change when we deal with item screen
-      return <MapView title={title} parentId={parentId} height="90%" />;
+    case ItemLayoutMode.Map: {
+      const viewItem = (item: DiscriminatedItem) => {
+        redirect(window, buildGraaspPlayerView(item.id), {
+          name: buildPlayerTabName(item.id),
+          openInNewTab: true,
+        });
+      };
+
+      return (
+        <MapView
+          viewItem={viewItem}
+          title={title}
+          parentId={parentId}
+          height="90%"
+        />
+      );
+    }
     case ItemLayoutMode.Grid:
       return (
         <ItemsGrid
