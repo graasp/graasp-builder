@@ -303,7 +303,7 @@ describe('Item Settings', () => {
     });
 
     describe('Analytics Settings', () => {
-      it('Layout', () => {
+      it.only('Layout', () => {
         const FILE = PackedLocalFileItemFactory();
         cy.setUpApi({ items: [FILE] });
         const { id: itemId } = FILE;
