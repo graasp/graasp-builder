@@ -6,7 +6,10 @@ import { ItemIcon, Thumbnail } from '@graasp/ui';
 import { PenIcon, Trash2 } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
-import { ITEM_THUMBNAIL_DELETE_BTN_ID } from '@/config/selectors';
+import {
+  ITEM_THUMBNAIL_DELETE_BTN_ID,
+  THUMBNAIL_SETTING_UPLOAD_BUTTON_ID,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 import {
@@ -61,7 +64,11 @@ const ThumbnailWithDeleteButton = ({
         </Typography>
       )}
       <Stack direction="row" gap={2}>
-        <IconButton color="primary" onClick={onEdit}>
+        <IconButton
+          id={THUMBNAIL_SETTING_UPLOAD_BUTTON_ID}
+          color="primary"
+          onClick={onEdit}
+        >
           <PenIcon color={theme.palette.primary.main} />
         </IconButton>
         {hasThumbnail && (

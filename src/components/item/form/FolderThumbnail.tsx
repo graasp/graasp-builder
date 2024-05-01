@@ -117,7 +117,6 @@ const FolderThumbnail = ({ setChanges }: FolderThumbnailProps): JSX.Element => {
       <VisuallyHiddenInput
         type="file"
         accept="image/*"
-        // onInput={onSelectFile}
         onChange={onSelectFile}
         ref={inputRef}
       />

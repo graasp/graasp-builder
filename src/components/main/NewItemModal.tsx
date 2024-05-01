@@ -122,7 +122,8 @@ const NewItemModal = ({
       // todo: notify user
       return false;
     }
-
+    // eslint-disable-next-line no-console
+    console.log(updatedPropertiesPerType[type]);
     // todo: fix types
     return submitAndDisableConfirmButtonFor(
       () =>

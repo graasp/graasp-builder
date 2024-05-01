@@ -157,7 +157,6 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
         <VisuallyHiddenInput
           type="file"
           accept="image/*"
-          onInput={onSelectFile}
           onChange={onSelectFile}
           ref={inputRef}
         />
