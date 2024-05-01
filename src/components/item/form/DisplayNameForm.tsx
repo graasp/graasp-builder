@@ -2,14 +2,7 @@ import { ChangeEvent } from 'react';
 
 import ClearIcon from '@mui/icons-material/Clear';
 import InfoIcon from '@mui/icons-material/Info';
-import {
-  IconButton,
-  Stack,
-  TextField,
-  Tooltip,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { IconButton, Stack, TextField, Tooltip } from '@mui/material';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_DISPLAY_NAME_INPUT_ID } from '../../../config/selectors';
@@ -23,9 +16,6 @@ const DisplayNameForm = ({
   setChanges,
 }: DisplayNameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const theme = useTheme();
-  // when the screen is large, use only half of the width for the input.
-  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   const handleDisplayNameInput = (event: ChangeEvent<{ value: string }>) => {
     setChanges({ displayName: event.target.value });
@@ -71,8 +61,8 @@ const DisplayNameForm = ({
         ),
       }}
       // only take full width when on small screen size
-      fullWidth={!largeScreen}
-      sx={{ my: 1, width: largeScreen ? '50%' : undefined }}
+      fullWidth
+      sx={{ my: 1 }}
     />
   );
 };

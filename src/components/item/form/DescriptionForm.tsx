@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, FormLabel, Stack, Typography } from '@mui/material';
 
 import {
   DescriptionPlacementType,
@@ -42,15 +42,19 @@ const DescriptionForm = ({
 
   return (
     <Stack spacing={2}>
-      <Typography variant="body2">
-        {translateBuilder(BUILDER.DESCRIPTION_LABEL)}
-      </Typography>
-      <TextEditor
-        id={id}
-        value={(updatedProperties?.description || item?.description) ?? ''}
-        onChange={onChange}
-        showActions={false}
-      />
+      <Box>
+        <FormLabel>
+          <Typography variant="caption">
+            {translateBuilder(BUILDER.DESCRIPTION_LABEL)}
+          </Typography>
+        </FormLabel>
+        <TextEditor
+          id={id}
+          value={(updatedProperties?.description || item?.description) ?? ''}
+          onChange={onChange}
+          showActions={false}
+        />
+      </Box>
 
       {updatedProperties.type !== ItemType.FOLDER && (
         <DescriptionPlacementForm

@@ -1,18 +1,16 @@
 import { FormEventHandler, useRef, useState } from 'react';
 
-import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, Dialog, styled, useTheme } from '@mui/material';
+import { Dialog, Stack, styled, useTheme } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
+
+import { ImageUp as ImageUpIcon } from 'lucide-react';
 
 import CropModal, {
   MODAL_TITLE_ARIA_LABEL_ID,
 } from '@/components/common/CropModal';
 
-import defaultImage from '../../../resources/avatar.png';
-
-// import { EditModalContentPropType } from './EditModalWrapper';
+const THUMBNAIL_DIMENSION = 60;
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -78,87 +76,44 @@ const FolderThumbnail = ({ setChanges }: FolderThumbnailProps): JSX.Element => {
 
     return true;
   };
+
+  const onEdit = () => {
+    inputRef.current?.click();
+  };
+
   return (
-    <Box display="flex" justifyContent="flex-start" flexDirection="column">
-      <div
-        onClick={() => inputRef.current?.click()}
+    <Stack justifyContent="flex-start" direction="column">
+      <Stack
+        onClick={onEdit}
         onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            inputRef.current?.click();
+          if (['Enter', ' '].includes(event.key)) {
+            onEdit();
           }
         }}
-        tabIndex={0}
-        role="button"
         aria-label="change folder avatar"
-        style={{
-          cursor: 'pointer',
-          height: 60,
-          width: 60,
-        }}
+        role="button"
+        tabIndex={0}
+        height={THUMBNAIL_DIMENSION}
+        width={THUMBNAIL_DIMENSION}
+        borderRadius={2}
+        bgcolor="#E4DFFF"
+        alignItems="center"
+        justifyContent="center"
+        overflow="hidden"
+        position="relative"
+        sx={{ cursor: 'pointer' }}
       >
         {newAvatar ? (
-          <Box
-            component="div"
-            sx={{
-              position: 'relative',
-              height: 60,
-              width: 60,
-              borderRadius: '50%',
-              // maxHeight: { xs: 40, md: 55 },
-              // maxWidth: { xs: 40, md: 55 },
-            }}
-          >
-            <img
-              alt="default folder thumbnail"
-              src={newAvatar || defaultImage}
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                height: '90%',
-                width: '90%',
-                borderRadius: '50%',
-              }}
-            />
-            <EditIcon
-              fontSize="small"
-              style={{
-                position: 'absolute',
-                bottom: '1',
-                right: '1',
-                borderRadius: '50%',
-                color: 'white',
-                backgroundColor: theme.palette.primary.main,
-                padding: 2,
-              }}
-            />
-          </Box>
+          <img
+            alt="folder thumbnail"
+            src={newAvatar}
+            height={THUMBNAIL_DIMENSION}
+            width={THUMBNAIL_DIMENSION}
+          />
         ) : (
-          <Box
-            sx={{
-              position: 'relative',
-              height: 60,
-              width: 60,
-              borderRadius: '50%',
-              backgroundColor: 'lightblue',
-              // maxHeight: { xs: 40, md: 55 },
-              // maxWidth: { xs: 40, md: 55 },
-            }}
-          >
-            <AddToPhotosIcon
-              fontSize="medium"
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: 'darkblue',
-              }}
-            />
-          </Box>
+          <ImageUpIcon color={theme.palette.primary.main} />
         )}
-      </div>
+      </Stack>
       <VisuallyHiddenInput
         type="file"
         accept="image/*"
@@ -179,7 +134,7 @@ const FolderThumbnail = ({ setChanges }: FolderThumbnailProps): JSX.Element => {
           />
         </Dialog>
       )}
-    </Box>
+    </Stack>
   );
 };
 

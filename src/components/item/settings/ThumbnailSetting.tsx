@@ -38,7 +38,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
 
   const { mutate: deleteThumbnail } = mutations.useDeleteItemThumbnail();
-  const { id: itemId, type: itemType } = item;
+  const { id: itemId } = item;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
     size: ThumbnailSize.Medium,
