@@ -1,60 +1,27 @@
-import {
-  PackedItem,
-  PermissionLevel,
-  PermissionLevelCompare,
-} from '@graasp/sdk';
+import { Stack } from '@mui/material';
 
-import EditButton from '../common/EditButton';
+import { DiscriminatedItem } from '@graasp/sdk';
+
+import BookmarkButton from '../common/BookmarkButton';
 import DownloadButton from '../main/DownloadButton';
-import ItemMenu from '../main/ItemMenu';
 
 type Props = {
-  canMove?: boolean;
-};
-
-type ChildCompProps = {
-  data: PackedItem;
+  // manyMemberships?: ResultOf<ItemMembership[]>;
+  // member?: Member | null;
+  data: DiscriminatedItem;
 };
 
 // items and memberships match by index
-const ActionsCellRenderer = ({
-  canMove,
-}: Props): ((arg: ChildCompProps) => JSX.Element) => {
-  const ChildComponent = ({ data: item }: ChildCompProps) => {
-    const canWrite = item.permission
-      ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
-      : false;
-    const canAdmin = item.permission
-      ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Admin)
-      : false;
-
-    const renderAnyoneActions = () => (
-      <>
-        <DownloadButton id={item.id} name={item.name} />
-        <ItemMenu
-          item={item}
-          canMove={canMove}
-          canAdmin={canAdmin}
-          canWrite={canWrite}
-        />
-      </>
-    );
-
-    const renderEditorActions = () => {
-      if (canWrite) {
-        return <EditButton item={item} />;
-      }
-      return null;
-    };
-
-    return (
-      <>
-        {renderEditorActions()}
-        {renderAnyoneActions()}
-      </>
-    );
-  };
-  return ChildComponent;
-};
+const ActionsCellRenderer = ({ data: item }: Props): JSX.Element => (
+  <Stack direction="row" justifyContent="center" alignItems="center">
+    <BookmarkButton
+      size="medium"
+      key="bookmark"
+      //   type={ActionButton.MENU_ITEM}
+      item={item}
+    />
+    <DownloadButton id={item.id} name={item.name} />
+  </Stack>
+);
 
 export default ActionsCellRenderer;

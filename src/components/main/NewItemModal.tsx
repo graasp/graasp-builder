@@ -62,6 +62,7 @@ type Props = {
   open: boolean;
   handleClose: () => void;
   geolocation?: Partial<ItemGeolocation>;
+  previousItemId?: DiscriminatedItem['id'];
 };
 
 const DEFAULT_PROPERTIES: PropertiesPerType = {
@@ -75,6 +76,7 @@ const NewItemModal = ({
   open,
   handleClose,
   geolocation,
+  previousItemId,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -129,6 +131,7 @@ const NewItemModal = ({
         postItem({
           geolocation,
           parentId,
+          previousItemId,
           ...(updatedPropertiesPerType[type] as any),
         }),
       DOUBLE_CLICK_DELAY_MS,

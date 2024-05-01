@@ -82,6 +82,10 @@ const FileUploader = ({
     onComplete?.();
   };
 
+  const onDrop = (files: File[]) => {
+    uploadFiles({ files, id: parentItemId });
+  };
+
   return (
     <Box width="100%" id={id}>
       <FileDropper

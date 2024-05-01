@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet';
 
-import { Box } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
 
@@ -14,8 +14,10 @@ import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
-import ItemHeader from '../item/header/ItemHeader';
-import Items from '../main/Items';
+import { useItemSearch } from '../item/ItemSearch';
+import ItemsTable, { useSorting } from '../main/ItemsTable';
+import TableToolbar from '../main/TableToolbar';
+import { SortingOptions } from '../table/SortingSelect';
 
 const PublishedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -26,8 +28,16 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
     isError,
   } = hooks.usePublishedItemsForMember(member?.id);
   const { shouldDisplayItem } = useFilterItemsContext();
+  const { sortBy, setSortBy, ordering, setOrdering, sortFn } = useSorting({
+    sortBy: SortingOptions.ItemUpdatedAt,
+    ordering: 'desc',
+  });
+  const { input, text } = useItemSearch();
   // TODO: implement filter in the hooks directly ?
-  const filteredData = publishedItems?.filter((d) => shouldDisplayItem(d.type));
+  const filteredData = publishedItems?.filter(
+    (d) => shouldDisplayItem(d.type) && d.name.includes(text),
+  );
+  filteredData?.sort(sortFn);
 
   if (filteredData) {
     return (
@@ -35,14 +45,43 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
         <Helmet>
           <title>{translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}</title>
         </Helmet>
-        <Box m={2}>
-          <ItemHeader showNavigation={false} />
-          <Items
-            id={PUBLISHED_ITEMS_ID}
-            title={translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
-            items={filteredData ?? []}
+        <Container sx={{ my: 3 }}>
+          <Stack direction="row" justifyContent="space-between" spacing={1}>
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{ wordWrap: 'break-word' }}
+            >
+              {translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
+            </Typography>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="flex-end"
+              spacing={1}
+            >
+              {input}
+            </Stack>
+          </Stack>
+
+          <TableToolbar
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            ordering={ordering}
+            setOrdering={setOrdering}
           />
-        </Box>
+          {filteredData.length ? (
+            <ItemsTable
+              id={PUBLISHED_ITEMS_ID}
+              items={filteredData ?? []}
+              canMove={false}
+              totalCount={filteredData.length}
+              pageSize={filteredData.length}
+            />
+          ) : (
+            <Typography>{translateBuilder('No recycled item')}</Typography>
+          )}
+        </Container>
       </>
     );
   }

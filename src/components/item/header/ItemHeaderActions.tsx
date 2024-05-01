@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Stack } from '@mui/material';
 
 import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
-import { ChatboxButton } from '@graasp/ui';
+import { ChatboxButton, MenuButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
 import DownloadButton from '@/components/main/DownloadButton';
@@ -16,9 +16,8 @@ import { BUILDER } from '../../../langs/constants';
 import PublishButton from '../../common/PublishButton';
 import ShareButton from '../../common/ShareButton';
 import { useLayoutContext } from '../../context/LayoutContext';
-import ItemMenu from '../../main/ItemMenu';
+import ItemMenuContent from '../../main/ItemMenuContent';
 import ItemSettingsButton from '../settings/ItemSettingsButton';
-import ModeButton from './ModeButton';
 
 const { useItem } = hooks;
 
@@ -52,15 +51,8 @@ const ItemHeaderActions = (): JSX.Element => {
 
       return (
         <>
-          {showEditButton && <EditButton item={item} />}
+          {showEditButton && <EditButton type="iconButton" item={item} />}
           <DownloadButton id={item.id} name={item.name} />
-          {/* prevent moving from top header to avoid confusion */}
-          <ItemMenu
-            item={item}
-            canMove={false}
-            canAdmin={canAdmin}
-            canWrite={showEditButton}
-          />
 
           <ShareButton itemId={item.id} />
           <ChatboxButton
@@ -73,18 +65,23 @@ const ItemHeaderActions = (): JSX.Element => {
           />
           {canAdmin && <PublishButton itemId={item.id} />}
           {canWrite && <ItemSettingsButton itemId={item.id} />}
+          {/* prevent moving from top header to avoid confusion */}
+          <MenuButton
+            renderMenuItems={ItemMenuContent({
+              item,
+              // TODO
+              canWrite: showEditButton,
+              canAdmin,
+              canMove: false,
+            })}
+          />
         </>
       );
     }
     return null;
   };
 
-  return (
-    <Stack direction="row">
-      {renderItemActions()}
-      <ModeButton />
-    </Stack>
-  );
+  return <Stack direction="row">{renderItemActions()}</Stack>;
 };
 
 export default ItemHeaderActions;

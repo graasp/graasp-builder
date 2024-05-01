@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { Add } from '@mui/icons-material';
-import { ButtonProps } from '@mui/material';
+import { Add as AddIcon } from '@mui/icons-material';
+import { Fab, Tooltip } from '@mui/material';
 
-import { Button } from '@graasp/ui';
+import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
@@ -11,10 +11,10 @@ import { BUILDER } from '../../langs/constants';
 import NewItemModal from './NewItemModal';
 
 type Props = {
-  size?: ButtonProps['size'];
+  previousItemId?: DiscriminatedItem['id'];
 };
 
-const NewItemButton = ({ size }: Props): JSX.Element => {
+const NewItemButton = ({ previousItemId }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -28,11 +28,25 @@ const NewItemButton = ({ size }: Props): JSX.Element => {
 
   return (
     <>
-      <Button size={size} id={CREATE_ITEM_BUTTON_ID} onClick={handleClickOpen}>
-        <Add />
-        {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
-      </Button>
-      <NewItemModal open={open} handleClose={handleClose} />
+      <Tooltip title={translateBuilder(BUILDER.NEW_ITEM_BUTTON)}>
+        <Fab
+          sx={{ position: 'fixed', bottom: 20, right: 20 }}
+          id={CREATE_ITEM_BUTTON_ID}
+          onClick={handleClickOpen}
+          color="primary"
+          aria-label="add"
+        >
+          <AddIcon />
+        </Fab>
+      </Tooltip>
+      {/* TODO: necessary space for scroll */}
+      <br />
+      <br />
+      <NewItemModal
+        open={open}
+        handleClose={handleClose}
+        previousItemId={previousItemId}
+      />
     </>
   );
 };

@@ -9,7 +9,6 @@ import {
   Context,
   DocumentItemType,
   EtherpadItemType,
-  FolderItemType,
   H5PItemType,
   ItemType,
   LinkItemType,
@@ -40,21 +39,16 @@ import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
   ITEM_SCREEN_ERROR_ALERT_ID,
   buildFileItemId,
-  buildItemsTableId,
 } from '../../config/selectors';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
-import { useFilterItemsContext } from '../context/FilterItemsContext';
-import ItemActions from '../main/ItemActions';
-import Items from '../main/Items';
-import NewItemButton from '../main/NewItemButton';
 import { OutletType } from '../pages/item/type';
-import { useItemSearch } from './ItemSearch';
+import FolderContent from './FolderContent';
 import FileAlignmentSetting from './settings/file/FileAlignmentSetting';
 import FileMaxWidthSetting from './settings/file/FileMaxWidthSetting';
 import { SettingVariant } from './settings/settingTypes';
 
-const { useChildren, useFileContentUrl, useEtherpad } = hooks;
+const { useFileContentUrl, useEtherpad } = hooks;
 
 const StyledContainer = styled(Container)(() => ({
   flexGrow: 1,
@@ -162,63 +156,6 @@ const AppContent = ({
     }}
   />
 );
-
-/**
- * Helper component to render typed folder items
- */
-const FolderContent = ({
-  item,
-  enableEditing,
-}: {
-  item: FolderItemType;
-  enableEditing: boolean;
-}): JSX.Element => {
-  const { shouldDisplayItem } = useFilterItemsContext();
-
-  const {
-    data: children,
-    isLoading,
-    isError,
-  } = useChildren(item.id, {
-    ordered: true,
-  });
-  const itemSearch = useItemSearch();
-  const { canWrite, canAdmin } = useOutletContext<OutletType>();
-
-  // TODO: use hook's filter when available
-  const folderChildren = children?.filter(
-    (f) => shouldDisplayItem(f.type) && f.name.includes(itemSearch.text),
-  );
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError) {
-    return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
-  }
-
-  return (
-    <Items
-      canEdit={canWrite}
-      canMove={canAdmin}
-      parentId={item.id}
-      id={buildItemsTableId(item.id)}
-      title={item.name}
-      items={folderChildren ?? []}
-      headerElements={
-        enableEditing
-          ? [itemSearch.input, <NewItemButton key="newButton" />]
-          : [itemSearch.input]
-      }
-      // todo: not exactly correct, since you could have write rights on some child,
-      // but it's more tedious to check permissions over all selected items
-      ToolbarActions={enableEditing ? ItemActions : undefined}
-      totalCount={folderChildren?.length}
-      showDropzoneHelper
-    />
-  );
-};
 
 /**
  * Helper component to render typed H5P items

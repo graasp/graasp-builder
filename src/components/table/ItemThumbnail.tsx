@@ -1,5 +1,3 @@
-import { Box, Typography } from '@mui/material';
-
 import {
   DiscriminatedItem,
   ItemType,
@@ -9,13 +7,10 @@ import {
 import { ItemIcon, Thumbnail } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
-import { buildNameCellRendererId } from '../../config/selectors';
 
-const ItemNameCellRenderer = ({
-  showThumbnails,
+const ItemThumbnail = ({
   data: item,
 }: {
-  showThumbnails: boolean;
   data: DiscriminatedItem;
 }): JSX.Element => {
   const linkExtra =
@@ -38,26 +33,15 @@ const ItemNameCellRenderer = ({
   });
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      id={buildNameCellRendererId(item.id)}
-    >
-      {showThumbnails && (
-        <Thumbnail
-          url={thumbnailUrl ?? thumbnailSrc}
-          maxWidth={30}
-          maxHeight={30}
-          alt={alt}
-          isLoading={isLoading}
-          defaultComponent={defaultValueComponent}
-        />
-      )}
-      <Typography noWrap ml={1}>
-        {item.name}
-      </Typography>
-    </Box>
+    <Thumbnail
+      url={thumbnailUrl ?? thumbnailSrc}
+      maxWidth={30}
+      maxHeight={30}
+      alt={alt}
+      isLoading={isLoading}
+      defaultComponent={defaultValueComponent}
+    />
   );
 };
 
-export default ItemNameCellRenderer;
+export default ItemThumbnail;
