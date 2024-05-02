@@ -87,7 +87,7 @@ describe('View Folder', () => {
     });
 
     describe('Navigation', () => {
-      it.only('visit folder by id', () => {
+      it('visit folder by id', () => {
         const { id } = SAMPLE_ITEMS.items[0];
         cy.visit(buildItemPath(id));
 
