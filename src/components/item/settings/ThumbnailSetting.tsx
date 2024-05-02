@@ -6,6 +6,8 @@ import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 
 import Uppy from '@uppy/core';
 
+import { THUMBNAIL_SETTING_UPLOAD_INPUT_ID } from '@/config/selectors';
+
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
@@ -155,6 +157,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
           hasThumbnail={item.settings?.hasThumbnail}
         />
         <VisuallyHiddenInput
+          id={THUMBNAIL_SETTING_UPLOAD_INPUT_ID}
           type="file"
           accept="image/*"
           onChange={onSelectFile}

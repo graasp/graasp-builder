@@ -2,7 +2,7 @@ import { buildItemSettingsPath } from '../../../../src/config/paths';
 import {
   CROP_MODAL_CONFIRM_BUTTON_ID,
   ITEM_THUMBNAIL_DELETE_BTN_ID,
-  THUMBNAIL_SETTING_UPLOAD_BUTTON_ID,
+  THUMBNAIL_SETTING_UPLOAD_INPUT_ID,
 } from '../../../../src/config/selectors';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import {
@@ -23,10 +23,11 @@ describe('Item Thumbnail', () => {
       cy.visit(buildItemSettingsPath(items[0].id));
 
       // change item thumbnail
-      // selectFile ???
-      cy.attachFile(
-        cy.get(`#${THUMBNAIL_SETTING_UPLOAD_BUTTON_ID}`),
+      // target visually hidden input
+      cy.get(`#${THUMBNAIL_SETTING_UPLOAD_INPUT_ID}`).selectFile(
         THUMBNAIL_MEDIUM_PATH,
+        // use force because the input is visually hidden
+        { force: true },
       );
       cy.wait(FILE_LOADING_PAUSE);
       cy.get(`#${CROP_MODAL_CONFIRM_BUTTON_ID}`).click();
