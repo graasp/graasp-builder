@@ -7423,7 +7423,7 @@ __metadata:
     lodash.isequal: "npm:4.5.0"
     lodash.partition: "npm:4.6.0"
     lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.373.0"
+    lucide-react: "npm:0.376.0"
     nyc: "npm:15.1.0"
     papaparse: "npm:5.4.1"
     prettier: "npm:3.2.5"
