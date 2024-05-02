@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.20.0](https://github.com/graasp/graasp-builder/compare/v2.19.1...v2.20.0) (2024-05-02)
+
+
+### Features
+
+* add folder redesign amendments ([#1207](https://github.com/graasp/graasp-builder/issues/1207)) ([0858e44](https://github.com/graasp/graasp-builder/commit/0858e44ad875d818563d2929acfaac3010c37ed2))
+* send mobile-app param to map ([#1202](https://github.com/graasp/graasp-builder/issues/1202)) ([c041a99](https://github.com/graasp/graasp-builder/commit/c041a996de62f2cc8487e7ed0decf7bfac773234))
+
+
+### Bug Fixes
+
+* allow license preview for license modal ([#1201](https://github.com/graasp/graasp-builder/issues/1201)) ([c6224f2](https://github.com/graasp/graasp-builder/commit/c6224f255d1abf70a56a08a2beee6a753bd56f6a))
+* **deps:** update dependency lucide-react to v0.376.0 ([#1196](https://github.com/graasp/graasp-builder/issues/1196)) ([4054fc6](https://github.com/graasp/graasp-builder/commit/4054fc6f1327985c549085df170fd5ccae22350a))
+
 ## [2.19.1](https://github.com/graasp/graasp-builder/compare/v2.19.0...v2.19.1) (2024-04-29)
 
 
