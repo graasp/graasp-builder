@@ -201,14 +201,15 @@ export const buildNameCellRendererId = (id: string): string =>
   `nameCellRenderer-${id}`;
 export const ITEM_CARD_MEDIA_CLASSNAME = 'itemCardMedia';
 export const ITEM_CARD_HEADER_CLASSNAME = 'itemCardHeader';
-export const THUMBNAIL_SETTING_UPLOAD_BUTTON_CLASSNAME =
+export const THUMBNAIL_SETTING_UPLOAD_BUTTON_ID =
   'thumbnailSettingUploadButton';
+export const THUMBNAIL_SETTING_UPLOAD_INPUT_ID = 'thumbnailSettingUploadInput';
 export const CLEAR_CHAT_SETTING_ID = 'clearChatSettingButton';
 export const CLEAR_CHAT_DIALOG_ID = 'clearChatDialog';
 export const CLEAR_CHAT_CANCEL_BUTTON_ID = 'clearChatCancelButton';
 export const CLEAR_CHAT_CONFIRM_BUTTON_ID = 'clearChatConfirmButton';
 export const DOWNLOAD_CHAT_BUTTON_ID = 'downloadChatButton';
-export const CROP_MODAL_CONFIRM_BUTTON_CLASSNAME = 'cropModalConfirmButton';
+export const CROP_MODAL_CONFIRM_BUTTON_ID = 'cropModalConfirmButton';
 export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
 export const H5P_DASHBOARD_UPLOADER_ID = 'h5pDashboardUploader';
 

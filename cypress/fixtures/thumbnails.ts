@@ -5,7 +5,7 @@ import { DEFAULT_FOLDER_ITEM } from './items';
 import { MEMBERS } from './members';
 import { ITEM_THUMBNAIL_LINK } from './thumbnails/links';
 
-export const THUMBNAIL_MEDIUM_PATH = 'thumbnails/medium.jpeg';
+export const THUMBNAIL_MEDIUM_PATH = 'cypress/fixtures/thumbnails/medium.jpeg';
 
 const sampleItems: DiscriminatedItem[] = [
   {
