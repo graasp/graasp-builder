@@ -11,6 +11,7 @@ import { useBuilderTranslation } from '../../config/i18n';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import {
+  NAVIGATION_HOME_ID,
   NAVIGATION_ROOT_ID,
   buildNavigationLink,
 } from '../../config/selectors';
@@ -49,7 +50,7 @@ const Navigator = (): JSX.Element | null => {
 
     return (
       <>
-        <IconButton onClick={() => navigate(HOME_PATH)}>
+        <IconButton id={NAVIGATION_HOME_ID} onClick={() => navigate(HOME_PATH)}>
           <Home />
         </IconButton>
         <ArrowForwardIosIcon sx={{ m: 2 }} fontSize="inherit" />
