@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton } from '@mui/material';
@@ -20,7 +20,6 @@ import { buildExtraItems } from './utils';
 const { useItem, useParents, useCurrentMember, useChildren } = hooks;
 
 const Navigator = (): JSX.Element | null => {
-  const navigate = useNavigate();
   const { t: translateBuilder } = useBuilderTranslation();
   const { itemId } = useParams();
   const { pathname } = useLocation();
@@ -50,9 +49,11 @@ const Navigator = (): JSX.Element | null => {
 
     return (
       <>
-        <IconButton id={NAVIGATION_HOME_ID} onClick={() => navigate(HOME_PATH)}>
-          <Home />
-        </IconButton>
+        <Link to={HOME_PATH}>
+          <IconButton id={NAVIGATION_HOME_ID}>
+            <Home />
+          </IconButton>
+        </Link>
         <ArrowForwardIosIcon sx={{ m: 2 }} fontSize="inherit" />
       </>
     );
