@@ -13,11 +13,7 @@ import { Navigation } from '@graasp/ui';
 import { Home } from 'lucide-react';
 
 import { useBuilderTranslation } from '../../config/i18n';
-import {
-  BOOKMARKED_ITEMS_PATH,
-  HOME_PATH,
-  buildItemPath,
-} from '../../config/paths';
+import { HOME_PATH, buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import {
   NAVIGATION_HOME_ID,
@@ -26,13 +22,7 @@ import {
 } from '../../config/selectors';
 import { buildExtraItems } from './utils';
 
-const {
-  useItem,
-  useParents,
-  useCurrentMember,
-  useChildren,
-  useBookmarkedItems,
-} = hooks;
+const { useItem, useParents, useCurrentMember, useChildren } = hooks;
 
 const Navigator = (): JSX.Element | null => {
   const [searchParams] = useSearchParams();
@@ -40,7 +30,6 @@ const Navigator = (): JSX.Element | null => {
   const { itemId } = useParams();
   const { pathname } = useLocation();
   const { data: currentMember } = useCurrentMember();
-  const { data: bookmarks } = useBookmarkedItems();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
 
@@ -59,30 +48,11 @@ const Navigator = (): JSX.Element | null => {
   const buildToItemPath = (id: string) =>
     `${buildItemPath(id)}?${searchParams.toString()}`;
 
-  const menu = [
-    // todo: remove distinction -> not a good idea to show the whole root in arrow
-    {
-      name: translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
-      id: 'home',
-      to: HOME_PATH,
-    },
-    {
-      name: translateBuilder(BUILDER.NAVIGATION_BOOKMARKED_ITEMS_TITLE),
-      id: 'bookmark',
-      to: BOOKMARKED_ITEMS_PATH,
-    },
-  ];
-
   const renderRoot = () => {
     // no access to root if signed out
     if (!currentMember) {
       return null;
     }
-
-    const selected =
-      pathname === HOME_PATH || !bookmarks?.find((b) => b.item.id === itemId)
-        ? menu[0]
-        : menu[1];
 
     return (
       <>
