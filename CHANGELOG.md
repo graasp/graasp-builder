@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.20.1](https://github.com/graasp/graasp-builder/compare/v2.20.0...v2.20.1) (2024-05-03)
+
+
+### Bug Fixes
+
+* remove navigation root and own and shared calls ([#1211](https://github.com/graasp/graasp-builder/issues/1211)) ([4acd5ba](https://github.com/graasp/graasp-builder/commit/4acd5baddba0ffab9e413ab043d11d3fe498f161))
+
 ## [2.20.0](https://github.com/graasp/graasp-builder/compare/v2.19.1...v2.20.0) (2024-05-02)
 
 
