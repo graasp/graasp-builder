@@ -1494,20 +1494,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#more-packed":
-  version: 3.3.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1e7dfba7777cd004a3ff0fc1e9798299ad94bdbf"
+"@graasp/query-client@npm:3.8.0":
+  version: 3.8.0
+  resolution: "@graasp/query-client@npm:3.8.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
     axios: "npm:1.6.8"
     http-status-codes: "npm:2.3.0"
-    qs: "npm:6.12.0"
+    qs: "npm:6.12.1"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/642dc4ac75afa382466f73c6ff3478108d87a20fef0945a539795cd2619098ac2b4755e7e17f4f8a877536fabb5f1d73f7363c0aedcda5e82e1a603d068ca650
+  checksum: 10/8657f66530cfe5e28c28c54cb29cf392d41aae9365bf7f1dceb9ed1876211b34d7032a892d33c0317e6a90d48d4a203bd44a3cecb8f2337121f35dcc789fdbef
+  languageName: node
+  linkType: hard
+
+"@graasp/sdk@npm:4.7.1":
+  version: 4.7.1
+  resolution: "@graasp/sdk@npm:4.7.1"
+  dependencies:
+    "@faker-js/faker": "npm:8.4.1"
+    js-cookie: "npm:3.0.5"
+    validator: "npm:13.11.0"
+  peerDependencies:
+    date-fns: ^3
+    uuid: ^9
+  checksum: 10/182e2a33fbdf7ed2cac7fbdf5a01378a059415a753345cca501d2ddda4985b9448c81bb2931a7157dc34cd613412c5da42da38cb037e9a46438755707e4ea2aa
   languageName: node
   linkType: hard
 
@@ -1541,45 +1555,6 @@ __metadata:
   peerDependencies:
     i18next: ^23.8.1
   checksum: 10/b085ca521f4b65d69ee4154b6d3f96682259acab212605cd221dbe7d3d7867eeeeffac60f1294115849221570cad8a418c576edb8cc405ee6cb031d18e20414b
-  languageName: node
-  linkType: hard
-
-"@graasp/ui@npm:4.17.0":
-  version: 4.17.0
-  resolution: "@graasp/ui@npm:4.17.0"
-  dependencies:
-    "@ag-grid-community/client-side-row-model": "npm:31.2.1"
-    "@ag-grid-community/react": "npm:^31.1.1"
-    "@ag-grid-community/styles": "npm:^31.1.1"
-    "@storybook/react-vite": "npm:7.6.18"
-    http-status-codes: "npm:2.3.0"
-    interweave: "npm:13.1.0"
-    katex: "npm:0.16.10"
-    lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.373.0"
-    react-cookie-consent: "npm:9.0.0"
-    react-quill: "npm:2.0.0"
-    react-rnd: "npm:10.4.1"
-    react-text-mask: "npm:5.5.0"
-    uuid: "npm:9.0.1"
-    vitest: "npm:1.5.2"
-  peerDependencies:
-    "@emotion/cache": ~11.10.7 || ~11.11.0
-    "@emotion/react": ~11.10.6 || ~11.11.0
-    "@emotion/styled": ~11.10.6 || ~11.11.0
-    "@graasp/sdk": ^4.0.0
-    "@graasp/translations": ^1.23.0
-    "@mui/icons-material": ~5.14.0 || ~5.15.0
-    "@mui/lab": ~5.0.0-alpha.150
-    "@mui/material": ~5.14.0 || ~5.15.0
-    i18next: ^22.4.15 || ^23.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    react-i18next: ^13.0.0 || ^14.0.0
-    react-router-dom: ^6.11.0
-    stylis: ^4.1.3
-    stylis-plugin-rtl: ^2.1.1
-  checksum: 10/97f94c7ca77010b1363af2ccc1c9c64e8d2e5457fd8d350e8938afe522db2049ff7ec5901e6185a57281555b9c37e313177b66709d77b5508df35a8ba674685b
   languageName: node
   linkType: hard
 
@@ -7356,10 +7331,10 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.11.1"
-    "@graasp/query-client": "github:graasp/graasp-query-client#more-packed"
-    "@graasp/sdk": "github:graasp/graasp-sdk#more-packed"
+    "@graasp/query-client": "npm:3.8.0"
+    "@graasp/sdk": "npm:4.9.0"
     "@graasp/translations": "npm:1.28.0"
-    "@graasp/ui": "npm:4.17.0"
+    "@graasp/ui": "npm:4.17.1"
     "@mui/icons-material": "npm:5.15.15"
     "@mui/lab": "npm:5.0.0-alpha.170"
     "@mui/material": "npm:5.15.15"
@@ -9171,15 +9146,6 @@ __metadata:
   dependencies:
     yallist: "npm:^4.0.0"
   checksum: 10/fc1fe2ee205f7c8855fa0f34c1ab0bcf14b6229e35579ec1fd1079f31d6fc8ef8eb6fd17f2f4d99788d7e339f50e047555551ebd5e434dda503696e7c6591825
-  languageName: node
-  linkType: hard
-
-"lucide-react@npm:0.373.0":
-  version: 0.373.0
-  resolution: "lucide-react@npm:0.373.0"
-  peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: 10/e474e456fadee6595a25738507102985bc50a754164d7daba4252e8301cdbacf5499ba206529058ac3dadcf7d57937c565ac8bc0ee2a90d0dcd0204e3a8e5b39
   languageName: node
   linkType: hard
 
@@ -11019,12 +10985,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.12.0":
-  version: 6.12.0
-  resolution: "qs@npm:6.12.0"
+"qs@npm:6.12.1":
+  version: 6.12.1
+  resolution: "qs@npm:6.12.1"
   dependencies:
     side-channel: "npm:^1.0.6"
-  checksum: 10/6156d3f0d74278b7e93a3a6b56e6b87b513ebd45ae65c7330c96d70270d0844fb0af9454a194124cd56b9ebf47b456dd01e28b223cde93c8ab01d1cb53a0e491
+  checksum: 10/035bcad2a1ab0175bac7a74c904c15913bdac252834149ccff988c93a51de02642fe7be10e43058ba4dc4094bb28ce9b59d12b9e91d40997f445cfde3ecc1c29
   languageName: node
   linkType: hard
 

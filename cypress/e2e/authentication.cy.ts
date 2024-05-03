@@ -40,7 +40,7 @@ describe('Authentication', () => {
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
       });
       it('Item', () => {
-        cy.visit(buildItemPath(ENV.items?.[0].id));
+        cy.visit(buildItemPath(ENV.items[0].id));
         cy.get(`#${HEADER_APP_BAR_ID}`).should('exist');
         cy.get(`.${ITEM_MAIN_CLASS}`).should('exist');
       });
@@ -64,11 +64,11 @@ describe('Authentication', () => {
       });
 
       it('Item', () => {
-        cy.setCookie(CookieKeys.RedirectUrl, buildItemPath(ENV.items?.[0].id));
+        cy.setCookie(CookieKeys.RedirectUrl, buildItemPath(ENV.items[0].id));
         cy.visit(REDIRECT_PATH);
         cy.url({ timeout: REDIRECTION_TIME }).should(
           'include',
-          buildItemPath(ENV.items?.[0].id),
+          buildItemPath(ENV.items[0].id),
         );
       });
     });

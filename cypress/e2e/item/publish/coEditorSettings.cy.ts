@@ -32,7 +32,7 @@ const visitItemPage = () => {
 };
 
 describe('Co-editor Setting', () => {
-  it.only('Display choices', () => {
+  it('Display choices', () => {
     visitItemPage();
 
     Object.values(DISPLAY_CO_EDITORS_OPTIONS).forEach((option) => {

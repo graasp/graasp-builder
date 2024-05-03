@@ -5,7 +5,7 @@ import {
   PermissionLevel,
 } from '@graasp/sdk';
 
-import { v4 as uuidv4, v4 } from 'uuid';
+import { v4 } from 'uuid';
 
 import {
   SETTINGS,
@@ -140,7 +140,7 @@ describe('Item Login', () => {
 
         // use memberid
         fillItemLoginScreenLayout({
-          memberId: uuidv4(),
+          memberId: v4(),
         });
         cy.wait('@postItemLogin');
 
@@ -167,7 +167,7 @@ describe('Item Login', () => {
 
         // use memberid
         fillItemLoginScreenLayout({
-          memberId: uuidv4(),
+          memberId: v4(),
           password: 'password',
         });
         cy.wait('@postItemLogin');
@@ -246,7 +246,7 @@ describe('Item Login', () => {
   });
 
   describe('Error handling', () => {
-    it.only('error while signing in', () => {
+    it('error while signing in', () => {
       const item = addItemLoginSchema(
         PackedFolderItemFactory({}, { permission: null }),
         ItemLoginSchemaType.UsernameAndPassword,

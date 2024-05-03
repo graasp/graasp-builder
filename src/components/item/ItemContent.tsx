@@ -109,6 +109,7 @@ const LinkContent = ({
 }): JSX.Element => (
   <StyledContainer>
     <LinkItem
+      id={item.id}
       memberId={member?.id}
       isResizable
       item={item}

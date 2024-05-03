@@ -59,7 +59,7 @@ describe('Bookmarked Item', () => {
       cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 
-    it.only('add item to bookmarks', () => {
+    it('add item to bookmarks', () => {
       const item = NON_BOOKMARKED_ITEM;
 
       toggleBookmarkButton(item.id);
