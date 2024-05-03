@@ -1,6 +1,6 @@
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 
-import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
+import i18n from '../../../../src/config/i18n';
 import { HOME_PATH, ITEMS_PATH } from '../../../../src/config/paths';
 import {
   ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR,
@@ -9,20 +9,15 @@ import {
   ITEMS_GRID_PAGINATION_ID,
   ITEMS_TABLE_ROW,
   ITEM_SEARCH_INPUT_ID,
-  NAVIGATION_ROOT_ID,
   buildItemCard,
   buildItemsTableRowIdAttribute,
   buildItemsTableRowSelector,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { BUILDER } from '../../../../src/langs/constants';
 import { SAMPLE_ITEMS, generateOwnItems } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 import { NAVIGATION_LOAD_PAUSE } from '../../../support/constants';
 import { ItemForTest } from '../../../support/types';
-
-const translateBuilder = (key: string) =>
-  i18n.t(key, { ns: BUILDER_NAMESPACE });
 
 const sampleItems = generateOwnItems(30);
 
@@ -169,22 +164,12 @@ describe('Home', () => {
           }
         });
 
-        // root title
-        cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
-          translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
-        );
-
         // visit child
         const { id: childChildId } = SAMPLE_ITEMS.items[3];
         cy.goToItemInGrid(childChildId);
 
         // expect no children
         cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
-
-        // root title
-        cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
-          translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
-        );
 
         // return parent with navigation and should display children
         cy.wait(NAVIGATION_LOAD_PAUSE);
@@ -200,10 +185,6 @@ describe('Home', () => {
             cy.get(`#${buildItemCard(item.id)}`).should('exist');
           }
         });
-        // root title
-        cy.get(`#${NAVIGATION_ROOT_ID}`).contains(
-          translateBuilder(BUILDER.NAVIGATION_MY_ITEMS_TITLE),
-        );
       });
     });
   });

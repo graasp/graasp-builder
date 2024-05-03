@@ -1,8 +1,8 @@
 import i18n from '../../../../src/config/i18n';
-import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
+import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_SEARCH_INPUT_ID,
-  NAVIGATION_ROOT_ID,
+  NAVIGATION_HOME_ID,
   buildItemCard,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
@@ -47,7 +47,7 @@ describe('View Folder', () => {
       expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
 
       // visit home
-      cy.get(`#${NAVIGATION_ROOT_ID} [href="${HOME_PATH}"]`).click();
+      cy.get(`#${NAVIGATION_HOME_ID}`).click();
 
       // should get accessible items
       cy.wait('@getAccessibleItems').then(({ response: { body } }) => {
@@ -105,7 +105,7 @@ describe('View Folder', () => {
 
         expectFolderViewScreenLayout({ item: SAMPLE_ITEMS.items[0] });
         // visit home
-        cy.get(`#${NAVIGATION_ROOT_ID} [href="${HOME_PATH}"]`).click();
+        cy.get(`#${NAVIGATION_HOME_ID}`).click();
 
         cy.wait('@getAccessibleItems').then(({ response: { body } }) => {
           // check item is created and displayed
