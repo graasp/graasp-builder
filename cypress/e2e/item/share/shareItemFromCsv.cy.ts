@@ -1,21 +1,22 @@
-import { PermissionLevel } from '@graasp/sdk';
-
-import * as Papa from 'papaparse';
-
-import { buildItemPath } from '../../../../src/config/paths';
+import { buildItemSharePath } from '../../../../src/config/paths';
 import {
+  CSV_FILE_SELECTION_DELETE_BUTTON_ID,
+  SHARE_CSV_TEMPLATE_SELECTION_BUTTON_ID,
+  SHARE_CSV_TEMPLATE_SELECTION_DELETE_BUTTON_ID,
+  SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID,
   SHARE_ITEM_CSV_PARSER_BUTTON_ID,
+  SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID,
   SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR,
   SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
-  SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID,
-  buildShareButtonId,
+  SHARE_ITEM_FROM_CSV_CANCEL_BUTTON_ID,
+  SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID,
+  TREE_MODAL_CONFIRM_BUTTON_ID,
+  buildNavigationModalItemId,
 } from '../../../../src/config/selectors';
-import { ITEMS_WITH_INVITATIONS } from '../../../fixtures/invitations';
 import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
 
-const shareItem = ({ id, fixture }: { id: string; fixture: string }) => {
-  cy.get(`#${buildShareButtonId(id)}`).click();
+const shareItem = ({ fixture }: { id: string; fixture: string }) => {
   cy.get(`#${SHARE_ITEM_CSV_PARSER_BUTTON_ID}`).click();
   cy.attachFile(
     cy.get(`#${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR}`),
@@ -24,17 +25,45 @@ const shareItem = ({ id, fixture }: { id: string; fixture: string }) => {
   );
 };
 
+const selectTemplate = (id: string) => {
+  cy.get(`#${SHARE_CSV_TEMPLATE_SELECTION_BUTTON_ID}`).click();
+
+  cy.get(`#${buildNavigationModalItemId(id)}`).click();
+  cy.get(`#${TREE_MODAL_CONFIRM_BUTTON_ID}`).click();
+};
+
 describe('Share Item From CSV', () => {
-  it('empty csv', () => {
-    const fixture = 'share/empty.csv';
+  it('simple file without group column', () => {
+    const fixture = 'share/simple.csv';
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     const { id } = SAMPLE_ITEMS.items[0];
-    cy.visit(buildItemPath(id));
+    cy.visit(buildItemSharePath(id));
 
     shareItem({ id, fixture });
 
-    cy.get(`#${SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID}`).should('be.visible');
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).should(
+      'not.be.disabled',
+    );
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).click();
+    cy.wait('@uploadCSV');
+  });
+
+  it('add file and remove file', () => {
+    const fixture = 'share/simple.csv';
+    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+
+    const { id } = SAMPLE_ITEMS.items[0];
+    cy.visit(buildItemSharePath(id));
+
+    shareItem({ id, fixture });
+
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).should(
+      'not.be.disabled',
+    );
+
+    cy.get(`#${CSV_FILE_SELECTION_DELETE_BUTTON_ID}`).click();
+    cy.get(`#${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID}`).should('be.visible');
   });
 
   it('incorrect columns', () => {
@@ -42,97 +71,39 @@ describe('Share Item From CSV', () => {
     cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
     const { id } = SAMPLE_ITEMS.items[0];
-    cy.visit(buildItemPath(id));
+    cy.visit(buildItemSharePath(id));
 
     shareItem({ id, fixture });
 
     cy.get(`#${SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID}`).should('be.visible');
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).should('be.disabled');
   });
 
-  it('share item from csv with many entries', () => {
-    const fixture = 'share/invite.csv';
-    cy.setUpApi(ITEMS_WITH_INVITATIONS);
+  it('upload file with groups and select template', () => {
+    const fixture = 'share/groups.csv';
+    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
 
-    // go to children item
-    const { members: registeredMembers, items } = ITEMS_WITH_INVITATIONS;
-    const { id, invitations: itemInvitations } = items[1];
-    cy.visit(buildItemPath(id));
+    const { id } = SAMPLE_ITEMS.items[0];
+    cy.visit(buildItemSharePath(id));
 
     shareItem({ id, fixture });
+    const templateItemId = SAMPLE_ITEMS.items[1].id;
+    cy.get(`#${SHARE_CSV_TEMPLATE_SELECTION_BUTTON_ID}`).should('be.visible');
+    selectTemplate(templateItemId);
 
-    cy.fixture(fixture).then((data) => {
-      // get content from csv and remove last line: no content
-      const { data: csvContent } = Papa.parse<{
-        name: string;
-        permission: PermissionLevel;
-        email: string;
-      }>(data, { header: true });
-      const csv = csvContent.filter(({ name }) => name);
-
-      // david, cedric already has an invitation
-      // garry is a new invitation
-      cy.wait('@postInvitations').then(({ request: { url, body } }) => {
-        expect(url).to.contain(id);
-        const { invitations } = body as {
-          invitations: {
-            email: string;
-            permission: PermissionLevel;
-            name: string;
-            itemPath: string;
-          }[];
-        };
-        csv.forEach(({ permission, email }) => {
-          const member = registeredMembers.find(
-            ({ email: mEmail }) => mEmail === email,
-          );
-          const invitation = invitations.find(
-            ({ email: thisEmail }) => thisEmail === email,
-          );
-          if (member) {
-            expect(invitation).to.equal(undefined);
-          } else {
-            expect(invitation.permission).to.equal(permission);
-          }
-        });
-      });
-
-      // evan is a new membership
-      // fanny is already a membership
-      cy.wait('@postManyItemMemberships').then(({ request: { url, body } }) => {
-        expect(url).to.contain(id);
-        const { memberships } = body as {
-          memberships: {
-            name: string;
-            email: string;
-            permission: PermissionLevel;
-            itemPath: string;
-            memberId: string;
-          }[];
-        };
-        csv.forEach(({ permission, email }) => {
-          const member = registeredMembers.find(
-            ({ email: mEmail }) => mEmail === email,
-          );
-          const membership = memberships.find(
-            ({ email: thisEmail }) => thisEmail === email,
-          );
-          if (member) {
-            expect(membership.permission).to.equal(permission);
-          } else {
-            expect(membership).to.equal(undefined);
-          }
-        });
-      });
-
-      // bob, cedric, david alredy have an invitation
-      const duplicateInvitations = itemInvitations.filter(({ email }) =>
-        csv.find(({ email: thisEmail }) => thisEmail === email),
-      );
-      duplicateInvitations.forEach(({ email }) => {
-        cy.get(`#${SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID}`)
-          .should('be.visible')
-          .should('contain', email);
-      });
+    cy.get(`#${SHARE_CSV_TEMPLATE_SELECTION_DELETE_BUTTON_ID}`).should(
+      'be.visible',
+    );
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).should('be.enabled');
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).click();
+    cy.wait('@uploadCSV').then(({ request }) => {
+      expect(request.query.templateId).equal(templateItemId);
     });
+    cy.get(`#${SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID}`)
+      .scrollIntoView()
+      .should('be.visible');
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CANCEL_BUTTON_ID}`).should('be.disabled');
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).should('be.enabled');
+    cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).click();
   });
 });

@@ -6,6 +6,7 @@ import { FAILURE_MESSAGES } from '@graasp/translations';
 import { AxiosError } from 'axios';
 
 import { useBuilderTranslation, useMessagesTranslation } from '@/config/i18n';
+import { SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 import { getErrorFromPayload } from '@/utils/errorMessages';
 
@@ -68,7 +69,7 @@ const DisplayInvitationSummary = ({
     // display group creation
     if (Array.isArray(userCsvData)) {
       return (
-        <Alert severity="info">
+        <Alert severity="info" id={SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID}>
           <AlertTitle>{t('Summary of the structure created')}</AlertTitle>
           <Stack direction="column" gap={2}>
             {userCsvData.map(({ groupName, memberships, invitations }) => (

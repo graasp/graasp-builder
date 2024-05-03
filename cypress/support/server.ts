@@ -90,6 +90,7 @@ const {
   buildDeleteInvitationRoute,
   buildPatchInvitationRoute,
   buildResendInvitationRoute,
+  buildPostUserCSVUploadRoute,
   buildItemPublishRoute,
   buildUpdateMemberPasswordRoute,
   buildPostItemValidationRoute,
@@ -1859,6 +1860,30 @@ export const mockDeleteInvitation = (
       return reply(invitation);
     },
   ).as('deleteInvitation');
+};
+
+export const mockUploadInvitationCSV = (
+  items: ItemForTest[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Post,
+      url: new RegExp(`${API_HOST}/${buildPostUserCSVUploadRoute(ID_FORMAT)}`),
+    },
+    ({ reply, url }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+      const query = new URL(url).searchParams;
+      if (query.get('templateId')) {
+        return reply([{ groupName: 'A', memberships: [], invitations: [] }]);
+      }
+      const itemId = url.split('/').at(-3);
+      const item = items.find(({ id }) => id === itemId);
+      return reply({ memberships: item.memberships });
+    },
+  ).as('uploadCSV');
 };
 
 export const mockPublishItem = (items: ItemForTest[]): void => {

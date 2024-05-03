@@ -1,6 +1,7 @@
 import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
 import {
+  Alert,
   Button,
   DialogActions,
   DialogContent,
@@ -15,10 +16,19 @@ import { COMMON } from '@graasp/translations';
 import { Table2 } from 'lucide-react';
 import Papa from 'papaparse';
 
-import { GROUP_COLUMN_NAME } from '@/config/constants';
+import {
+  CSV_EMAIL_COLUMN_NAME,
+  CSV_GROUP_COLUMN_NAME,
+} from '@/config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
-import { SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID } from '@/config/selectors';
+import {
+  CSV_FILE_SELECTION_DELETE_BUTTON_ID,
+  SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID,
+  SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID,
+  SHARE_ITEM_FROM_CSV_CANCEL_BUTTON_ID,
+  SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 import ChoiceDisplay from './ChoiceDisplay';
@@ -41,7 +51,13 @@ const CSVFileSelectionButton = ({
 }: CSVFileSelectionButtonProps) => {
   const { t } = useBuilderTranslation();
   if (csvFile) {
-    return <ChoiceDisplay onDelete={removeFile} name={csvFile.name} />;
+    return (
+      <ChoiceDisplay
+        deleteButtonId={CSV_FILE_SELECTION_DELETE_BUTTON_ID}
+        onDelete={removeFile}
+        name={csvFile.name}
+      />
+    );
   }
   return (
     <Button
@@ -76,6 +92,7 @@ const ImportUsersDialogContent = ({
   // const { t } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const [csvFile, setCsvFile] = useState<File>();
+  const [csvFileErrors, setCsvFileErrors] = useState<string>();
   const [showTemplateSelectionButton, setShowTemplateSelectionButton] =
     useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
@@ -104,7 +121,17 @@ const ImportUsersDialogContent = ({
           },
           complete(_results) {
             const headers = _results.meta.fields;
-            if (headers?.includes(GROUP_COLUMN_NAME) && isFolder) {
+
+            // check for errors in the column names
+            if (!headers?.includes(CSV_EMAIL_COLUMN_NAME.toLowerCase())) {
+              setCsvFileErrors(
+                t(BUILDER.SHARE_ITEM_CSV_IMPORT_ERROR_MISSING_COLUMN, {
+                  column: CSV_EMAIL_COLUMN_NAME,
+                }),
+              );
+              return;
+            }
+            if (headers?.includes(CSV_GROUP_COLUMN_NAME) && isFolder) {
               setShowTemplateSelectionButton(true);
             } else {
               setShowTemplateSelectionButton(false);
@@ -157,6 +184,11 @@ const ImportUsersDialogContent = ({
             handleFileChange={handleFileChange}
             removeFile={removeFile}
           />
+          {csvFileErrors && (
+            <Alert id={SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID} severity="error">
+              {csvFileErrors}
+            </Alert>
+          )}
           {showTemplateSelectionButton && (
             <TemplateSelectionButton
               targetItemId={item.id}
@@ -172,6 +204,7 @@ const ImportUsersDialogContent = ({
       </DialogContent>
       <DialogActions>
         <Button
+          id={SHARE_ITEM_FROM_CSV_CANCEL_BUTTON_ID}
           variant="text"
           onClick={handleClose}
           disabled={isSuccessPostingCSV}
@@ -180,6 +213,7 @@ const ImportUsersDialogContent = ({
         </Button>
 
         <Button
+          id={SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}
           variant="contained"
           onClick={isSuccessPostingCSV ? handleClose : handlePostUserCSV}
           color="primary"

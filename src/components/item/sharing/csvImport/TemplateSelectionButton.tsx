@@ -1,13 +1,18 @@
 import { useState } from 'react';
 
-import FolderCopy from '@mui/icons-material/FolderCopy';
 import { Button, DialogContentText, Typography } from '@mui/material';
+
+import { FolderIcon } from 'lucide-react';
 
 import { hooks } from '@/config/queryClient';
 import { computeButtonText } from '@/utils/itemSelection';
 
 import { useBuilderTranslation } from '../../../../config/i18n';
-import { SELECT_TEMPLATE_FOLDER } from '../../../../config/selectors';
+import {
+  SHARE_CSV_TEMPLATE_SELECTION_BUTTON_ID,
+  SHARE_CSV_TEMPLATE_SELECTION_DELETE_BUTTON_ID,
+  SHARE_ITEM_FROM_CSV_WITH_GROUP_COLUMN_TEXT_ID,
+} from '../../../../config/selectors';
 import { BUILDER } from '../../../../langs/constants';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
@@ -59,13 +64,14 @@ const TemplateSelectionButton = ({
 
   return (
     <>
-      <DialogContentText>
+      <DialogContentText id={SHARE_ITEM_FROM_CSV_WITH_GROUP_COLUMN_TEXT_ID}>
         {t(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT_GROUP_COLUMN_DETECTED)}
       </DialogContentText>
 
       {selectedItem ? (
         <>
           <ChoiceDisplay
+            deleteButtonId={SHARE_CSV_TEMPLATE_SELECTION_DELETE_BUTTON_ID}
             onDelete={handleDeleteTemplate}
             name={selectedItem.name}
           />
@@ -77,9 +83,9 @@ const TemplateSelectionButton = ({
         </>
       ) : (
         <Button
+          id={SHARE_CSV_TEMPLATE_SELECTION_BUTTON_ID}
           variant="outlined"
-          id={SELECT_TEMPLATE_FOLDER}
-          startIcon={<FolderCopy />}
+          startIcon={<FolderIcon />}
           component="label"
           onClick={openTemplateSelectionModal}
         >
