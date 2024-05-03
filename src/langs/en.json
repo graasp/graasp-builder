@@ -240,7 +240,7 @@
   "SHARE_ITEM_CSV_IMPORT_BUTTON": "Import from CSV",
   "SHARE_ITEM_CSV_IMPORT_ERROR_MESSAGE": "The import failed for these entries",
   "SHARE_ITEM_CSV_IMPORT_INPUT_BUTTON": "Select a CSV file",
-  "SHARE_ITEM_CSV_IMPORT_SELECTED_TEMPLATE_CAPTION": "'{{itemName}}' will be used as the template for the creation of the user groups. All groups will have a copy of the content.",
+  "SHARE_ITEM_CSV_IMPORT_SELECTED_TEMPLATE_CAPTION": "This item will be used as the template for the creation of the user groups. All groups will have a copy of this item's content.",
   "INVITATION_SUMMARY_GROUP_TITLE": "Group {{groupName}}",
   "SELECT_TEMPLATE_INPUT_BUTTON": "Choose a folder",
   "IMPORT_CSV_SUCCESS_TITLE": "Operation successful",

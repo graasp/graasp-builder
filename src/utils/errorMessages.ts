@@ -12,7 +12,7 @@ export const getErrorFromPayload = (
   };
   if (inputError && axios.isAxiosError(inputError)) {
     const errorData = inputError.response?.data;
-    const result = { name: errorData.name, message: errorData.message };
+    const result = { name: errorData?.name, message: errorData?.message };
     return result;
   }
 

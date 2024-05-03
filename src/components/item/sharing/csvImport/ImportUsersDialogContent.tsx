@@ -1,6 +1,5 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
-import PublishIcon from '@mui/icons-material/Publish';
 import {
   Button,
   DialogActions,
@@ -13,6 +12,7 @@ import {
 import { DiscriminatedItem } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 
+import { Table2 } from 'lucide-react';
 import Papa from 'papaparse';
 
 import { GROUP_COLUMN_NAME } from '@/config/constants';
@@ -21,12 +21,46 @@ import { mutations } from '@/config/queryClient';
 import { SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
+import ChoiceDisplay from './ChoiceDisplay';
 import DisplayInvitationSummary from './DisplayInvitationSummary';
 import TemplateSelectionButton from './TemplateSelectionButton';
 
 export const DIALOG_ID_LABEL = 'shareItemFromCsvLabel';
 
 const allowedExtensions = ['.csv'].join(',');
+
+type CSVFileSelectionButtonProps = {
+  csvFile: File | undefined;
+  removeFile: () => void;
+  handleFileChange: ChangeEventHandler<HTMLInputElement>;
+};
+const CSVFileSelectionButton = ({
+  csvFile,
+  removeFile,
+  handleFileChange,
+}: CSVFileSelectionButtonProps) => {
+  const { t } = useBuilderTranslation();
+  if (csvFile) {
+    return <ChoiceDisplay onDelete={removeFile} name={csvFile.name} />;
+  }
+  return (
+    <Button
+      id={SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID}
+      startIcon={<Table2 />}
+      variant="outlined"
+      component="label"
+      sx={{ width: 'max-content', textTransform: 'none' }}
+    >
+      {t(BUILDER.SHARE_ITEM_CSV_IMPORT_INPUT_BUTTON)}
+      <input
+        type="file"
+        hidden
+        onChange={handleFileChange}
+        accept={allowedExtensions}
+      />
+    </Button>
+  );
+};
 
 type ImportUsersDialogContentProps = {
   item: DiscriminatedItem;
@@ -86,6 +120,12 @@ const ImportUsersDialogContent = ({
     }
   };
 
+  const removeFile = () => {
+    setShowTemplateSelectionButton(false);
+    setIsConfirmButtonEnabled(false);
+    setCsvFile(undefined);
+  };
+
   const handlePostUserCSV = () => {
     if (csvFile) {
       postUserCsv({
@@ -98,7 +138,7 @@ const ImportUsersDialogContent = ({
     }
   };
 
-  const onTemplateSelected = (selectedTemplateItemId: string) => {
+  const onTemplateSelected = (selectedTemplateItemId: string | undefined) => {
     setSelectedTemplateId(selectedTemplateItemId);
   };
 
@@ -112,21 +152,11 @@ const ImportUsersDialogContent = ({
           <DialogContentText>
             {t(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT)}
           </DialogContentText>
-          <Button
-            id={SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID}
-            startIcon={<PublishIcon />}
-            variant="contained"
-            component="label"
-            sx={{ width: 'max-content' }}
-          >
-            {t(BUILDER.SHARE_ITEM_CSV_IMPORT_INPUT_BUTTON)}
-            <input
-              type="file"
-              hidden
-              onChange={handleFileChange}
-              accept={allowedExtensions}
-            />
-          </Button>
+          <CSVFileSelectionButton
+            csvFile={csvFile}
+            handleFileChange={handleFileChange}
+            removeFile={removeFile}
+          />
           {showTemplateSelectionButton && (
             <TemplateSelectionButton
               targetItemId={item.id}
@@ -150,7 +180,7 @@ const ImportUsersDialogContent = ({
         </Button>
 
         <Button
-          variant={isSuccessPostingCSV ? 'contained' : 'text'}
+          variant="contained"
           onClick={isSuccessPostingCSV ? handleClose : handlePostUserCSV}
           color="primary"
           disabled={!isConfirmButtonEnabled}

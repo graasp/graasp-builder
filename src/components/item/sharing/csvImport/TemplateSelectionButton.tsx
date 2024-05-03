@@ -12,11 +12,12 @@ import { BUILDER } from '../../../../langs/constants';
 import ItemSelectionModal, {
   ItemSelectionModalProps,
 } from '../../../main/itemSelectionModal/ItemSelectionModal';
+import ChoiceDisplay from './ChoiceDisplay';
 
 export type Props = {
   targetItemId: string;
   selectedItemId: string | undefined;
-  onTemplateSelected: (itemId: string) => void;
+  onTemplateSelected: (itemId: string | undefined) => void;
 };
 
 const TemplateSelectionButton = ({
@@ -45,6 +46,10 @@ const TemplateSelectionButton = ({
     onClose();
   };
 
+  const handleDeleteTemplate = () => {
+    onTemplateSelected(undefined);
+  };
+
   const buttonText = (name?: string) =>
     computeButtonText({
       translateBuilder: t,
@@ -57,21 +62,29 @@ const TemplateSelectionButton = ({
       <DialogContentText>
         {t(BUILDER.SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT_GROUP_COLUMN_DETECTED)}
       </DialogContentText>
-      <Button
-        variant="outlined"
-        id={SELECT_TEMPLATE_FOLDER}
-        startIcon={<FolderCopy />}
-        component="label"
-        onClick={openTemplateSelectionModal}
-      >
-        {t(BUILDER.SELECT_TEMPLATE_INPUT_BUTTON)}
-      </Button>
-      {selectedItem?.name && (
-        <Typography variant="caption">
-          {t(BUILDER.SHARE_ITEM_CSV_IMPORT_SELECTED_TEMPLATE_CAPTION, {
-            itemName: selectedItem.name,
-          })}
-        </Typography>
+
+      {selectedItem ? (
+        <>
+          <ChoiceDisplay
+            onDelete={handleDeleteTemplate}
+            name={selectedItem.name}
+          />
+          <DialogContentText>
+            <Typography>
+              {t(BUILDER.SHARE_ITEM_CSV_IMPORT_SELECTED_TEMPLATE_CAPTION)}
+            </Typography>
+          </DialogContentText>
+        </>
+      ) : (
+        <Button
+          variant="outlined"
+          id={SELECT_TEMPLATE_FOLDER}
+          startIcon={<FolderCopy />}
+          component="label"
+          onClick={openTemplateSelectionModal}
+        >
+          {t(BUILDER.SELECT_TEMPLATE_INPUT_BUTTON)}
+        </Button>
       )}
 
       {targetItemId && open && (
