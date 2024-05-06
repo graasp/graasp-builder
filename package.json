@@ -155,5 +155,5 @@
     "vite-plugin-istanbul": "6.0.0",
     "vitest": "1.6.0"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.2.1"
 }
