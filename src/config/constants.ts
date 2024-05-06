@@ -147,5 +147,8 @@ export const TUTORIALS_LINK =
 export const SHORT_LINK_ID_MAX_LENGTH = 10;
 export const SHORT_LINK_API_CALL_DEBOUNCE_MS = 500;
 
+export const CSV_GROUP_COLUMN_NAME = 'group_name';
+export const CSV_EMAIL_COLUMN_NAME = 'email';
+
 // todo: to remove once we dynamically compute how many items we display
 export const ITEM_PAGE_SIZE = 12;

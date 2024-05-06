@@ -283,10 +283,23 @@ export const USER_CONFIRM_PASSWORD_INPUT_ID = 'confirmPasswordInput';
 export const SHARE_ITEM_CSV_PARSER_BUTTON_ID = 'shareItemCsvParserButton';
 export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID =
   'shareItemCsvParserInputButton';
+export const SHARE_CSV_TEMPLATE_SELECTION_BUTTON_ID = 'selectTemplateFolder';
 export const SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR = `${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_ID} input`;
-export const SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID = 'shareITemFromCsvAlertError';
+export const SHARE_ITEM_FROM_CSV_ALERT_ERROR_ID = 'shareItemFromCsvAlertError';
 export const SHARE_ITEM_FROM_CSV_RESULT_FAILURES_ID =
   'shareItemFromCsvResultFailures';
+export const SHARE_ITEM_FROM_CSV_CANCEL_BUTTON_ID =
+  'shareItemFromCSVCancelButton';
+export const SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID =
+  'shareItemFromCSVConfirmButton';
+export const SHARE_ITEM_FROM_CSV_WITH_GROUP_COLUMN_TEXT_ID =
+  'shareItemFromCSVTemplateSelectionText';
+export const CSV_FILE_SELECTION_DELETE_BUTTON_ID =
+  'csvFileSelectionDeleteButton';
+export const SHARE_CSV_TEMPLATE_SELECTION_DELETE_BUTTON_ID =
+  'shareCSVTemplateSelectionDeleteButton';
+export const SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID =
+  'shareCSVTemplateSummaryContainer';
 export const SETTINGS_LINK_SHOW_IFRAME_ID = 'settingsLinkShowIframe';
 export const SETTINGS_LINK_SHOW_BUTTON_ID = 'settingsLinkShowButton';
 export const buildCategorySelectionOptionId = (

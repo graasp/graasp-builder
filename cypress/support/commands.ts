@@ -92,6 +92,7 @@ import {
   mockSignOut,
   mockUnpublishItem,
   mockUpdatePassword,
+  mockUploadInvitationCSV,
   mockUploadItem,
 } from './server';
 
@@ -309,6 +310,8 @@ Cypress.Commands.add(
     mockPatchInvitation(items, patchInvitationError);
 
     mockDeleteInvitation(items, deleteInvitationError);
+
+    mockUploadInvitationCSV(items, false);
 
     mockPublishItem(items);
     mockUnpublishItem(items);
