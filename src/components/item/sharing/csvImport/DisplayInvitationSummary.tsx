@@ -15,9 +15,7 @@ const ErrorDisplay = ({ errorMessage }: { errorMessage: string }): string => {
   const { t: translateMessages } = useMessagesTranslation();
   switch (errorMessage) {
     case 'MODIFY_EXISTING': {
-      return t(
-        'You are trying to import a user that already has a permission on this item. We currently do not support this. Please remove users that already have permissions on this item from your csv file and try again.',
-      );
+      return t(BUILDER.SHARE_ITEM_CSV_SUMMARY_MODIFYING_EXISTING);
     }
     default: {
       return translateMessages(FAILURE_MESSAGES.UNEXPECTED_ERROR);
@@ -70,7 +68,9 @@ const DisplayInvitationSummary = ({
     if (Array.isArray(userCsvData)) {
       return (
         <Alert severity="info" id={SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID}>
-          <AlertTitle>{t('Summary of the structure created')}</AlertTitle>
+          <AlertTitle>
+            {t(BUILDER.SHARE_ITEM_CSV_SUMMARY_GROUP_TITLE)}
+          </AlertTitle>
           <Stack direction="column" gap={2}>
             {userCsvData.map(({ groupName, memberships, invitations }) => (
               <Stack>
@@ -104,6 +104,8 @@ const DisplayInvitationSummary = ({
       </Alert>
     );
   }
+
+  // no error and no data, display nothing
   return false;
 };
 export default DisplayInvitationSummary;

@@ -247,6 +247,8 @@
   "IMPORT_CSV_SUCCESS_TITLE": "Operation successful",
   "IMPORT_CSV_SUCCESS_TEXT": "You can close this dialog.",
   "IMPORT_CSV_ERROR_TITLE": "Operation returned errors, please try again after fixing the issues",
+  "SHARE_ITEM_CSV_SUMMARY_GROUP_TITLE": "Summary of the structure created",
+  "SHARE_ITEM_CSV_SUMMARY_MODIFYING_EXISTING": "You are trying to import a user that already has a permission on this item. We currently do not support this. Please remove users that already have permissions on this item from your csv file and try again.",
   "SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT": "Your CSV should have at least the column 'email'. The columns 'name', 'permission' and 'group_name' are optional.\n A CSV entry cannot override the data already saved. If a user already has permission, update the value in the table manually. Once a CSV file is selected, please click on the confirm button to start the importation of users",
   "SHARE_ITEM_CSV_IMPORT_MODAL_CONTENT_GROUP_COLUMN_DETECTED": "'group_name' column has been detected. Importing the CSV will create group folders in the current directory and invite the corresponding users to them.",
   "SHARE_ITEM_CSV_IMPORT_MODAL_TITLE": "Import users from a CSV file",

@@ -40,7 +40,7 @@ export const DIALOG_ID_LABEL = 'shareItemFromCsvLabel';
 const allowedExtensions = ['.csv'].join(',');
 
 type CSVFileSelectionButtonProps = {
-  csvFile: File | undefined;
+  csvFile?: File;
   removeFile: () => void;
   handleFileChange: ChangeEventHandler<HTMLInputElement>;
 };
@@ -89,7 +89,6 @@ const ImportUsersDialogContent = ({
   isFolder,
   handleClose,
 }: ImportUsersDialogContentProps): JSX.Element => {
-  // const { t } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const [csvFile, setCsvFile] = useState<File>();
   const [csvFileErrors, setCsvFileErrors] = useState<string>();
@@ -119,8 +118,8 @@ const ImportUsersDialogContent = ({
           transformHeader(header) {
             return header.trim().toLowerCase();
           },
-          complete(_results) {
-            const headers = _results.meta.fields;
+          complete(results) {
+            const headers = results.meta.fields;
 
             // check for errors in the column names
             if (!headers?.includes(CSV_EMAIL_COLUMN_NAME.toLowerCase())) {
