@@ -16,6 +16,9 @@ const ITEM_WITHOUT_THUMBNAIL = PackedFolderItemFactory({
 const ITEM_WITH_THUMBNAIL = {
   ...PackedFolderItemFactory({
     name: 'own_item_name2',
+    settings: {
+      hasThumbnail: true,
+    },
   }),
   thumbnails: ITEM_THUMBNAIL_LINK,
 };
