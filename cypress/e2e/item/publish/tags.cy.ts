@@ -1,3 +1,9 @@
+import {
+  ItemTagType,
+  PackedFolderItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_HEADER_ID,
@@ -11,7 +17,7 @@ import {
   ITEM_WITH_CATEGORIES_CONTEXT,
   NEW_CUSTOMIZED_TAG,
 } from '../../../fixtures/categories';
-import { PUBLISHED_ITEM } from '../../../fixtures/items';
+import { PUBLISHED_ITEM_NO_TAGS } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 import { ItemForTest } from '../../../support/types';
@@ -29,7 +35,7 @@ const visitItemPage = (item: ItemForTest) => {
 describe('Customized Tags', () => {
   it('Display item without tags', () => {
     // check for not displaying if no tags
-    const item = PUBLISHED_ITEM;
+    const item = PUBLISHED_ITEM_NO_TAGS;
     cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
@@ -67,9 +73,31 @@ describe('Customized Tags', () => {
 
 describe('Tags permissions', () => {
   it('User signed out cannot edit tags', () => {
-    const item = PUBLISHED_ITEM;
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: null, publicTag: {} },
+    );
+    const publishedItem = {
+      ...item,
+      tags: [
+        {
+          id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+          type: ItemTagType.Public,
+          item,
+          createdAt: '2021-08-11T12:56:36.834Z',
+          creator: MEMBERS.ANNA,
+        },
+      ],
+      published: {
+        id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+        item,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+        totalViews: 0,
+      },
+    };
     cy.setUpApi({
-      items: [item],
+      items: [publishedItem],
       currentMember: SIGNED_OUT_MEMBER,
     });
     cy.visit(buildItemPath(item.id));
@@ -81,9 +109,31 @@ describe('Tags permissions', () => {
   });
 
   it('Read-only user cannot edit tags', () => {
-    const item = PUBLISHED_ITEM;
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: PermissionLevel.Read, publicTag: {} },
+    );
+    const publishedItem = {
+      ...item,
+      tags: [
+        {
+          id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
+          type: ItemTagType.Public,
+          item,
+          createdAt: '2021-08-11T12:56:36.834Z',
+          creator: MEMBERS.ANNA,
+        },
+      ],
+      published: {
+        id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+        item,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+        totalViews: 0,
+      },
+    };
     cy.setUpApi({
-      items: [item],
+      items: [publishedItem],
       currentMember: MEMBERS.BOB,
     });
     cy.visit(buildItemPath(item.id));

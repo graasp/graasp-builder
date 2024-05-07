@@ -13,7 +13,7 @@ import {
 
 describe('View Invitations', () => {
   beforeEach(() => {
-    cy.setUpApi({ ...ITEMS_WITH_INVITATIONS });
+    cy.setUpApi(ITEMS_WITH_INVITATIONS);
   });
 
   it('view invitation in share item modal', () => {

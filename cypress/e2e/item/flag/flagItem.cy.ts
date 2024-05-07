@@ -1,4 +1,4 @@
-import { FlagType } from '@graasp/sdk';
+import { FlagType, PackedFolderItemFactory } from '@graasp/sdk';
 
 import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
 import { HOME_PATH } from '../../../../src/config/paths';
@@ -9,10 +9,11 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { BUILDER } from '../../../../src/langs/constants';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 
 const openFlagItemModal = (itemId: string) => {
+  // todo: remove on table refactor
+  cy.wait(500);
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
 
@@ -37,14 +38,16 @@ const flagItem = (itemId: string, type: FlagType) => {
   flagItemButton.click();
 };
 
+const FOLDER = PackedFolderItemFactory();
+
 describe('Flag Item', () => {
   beforeEach(() => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    cy.setUpApi({ items: [FOLDER] });
     cy.visit(HOME_PATH);
   });
 
   it('flag item', () => {
-    const item = SAMPLE_ITEMS.items[0];
+    const item = FOLDER;
     const type = FlagType.FalseInformation;
 
     flagItem(item.id, type);

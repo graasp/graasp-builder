@@ -27,6 +27,8 @@ import {
 import { CURRENT_USER } from '../fixtures/members';
 import { ItemForTest, MemberForTest } from './types';
 
+const BR_REGEX = /<br(?:\s*\/?)>/g;
+
 export const expectItemHeaderLayout = ({
   item: { id, type, memberships, path },
   currentMember,
@@ -110,7 +112,12 @@ export const expectLinkViewScreenLayout = ({
   }
 
   if (description) {
-    cy.get(`.${TEXT_EDITOR_CLASS}`).should('contain', description);
+    cy.get(`.${TEXT_EDITOR_CLASS}`).then((element) => {
+      // fix a few flacky tests that fail because the element contains br tags,
+      // as opposed to the description, which contains \n.
+      const cleanElement = element.html().replace(BR_REGEX, '\n');
+      expect(cleanElement).to.contain(description);
+    });
   }
 
   expectItemHeaderLayout({ item, currentMember });

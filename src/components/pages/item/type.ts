@@ -1,7 +1,8 @@
-import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
+import { PackedItem, PermissionLevel } from '@graasp/sdk';
 
 export interface OutletType {
-  item: DiscriminatedItem;
+  item: PackedItem;
   permission?: PermissionLevel;
   canWrite: boolean;
+  canAdmin: boolean;
 }

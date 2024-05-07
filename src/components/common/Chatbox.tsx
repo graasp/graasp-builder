@@ -1,5 +1,5 @@
 import { Chatbox as GraaspChatbox } from '@graasp/chatbox';
-import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
+import { PackedItem, PermissionLevel } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { hooks, mutations } from '../../config/queryClient';
@@ -14,7 +14,7 @@ const {
 } = mutations;
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
 };
 
 const Chatbox = ({ item }: Props): JSX.Element | null => {
@@ -39,9 +39,7 @@ const Chatbox = ({ item }: Props): JSX.Element | null => {
   }
 
   // only show export chat when user has admin right on the item
-  const isAdmin =
-    itemPermissions?.find((perms) => perms.member.id === currentMember.id)
-      ?.permission === PermissionLevel.Admin;
+  const isAdmin = item.permission === PermissionLevel.Admin;
 
   return (
     <GraaspChatbox

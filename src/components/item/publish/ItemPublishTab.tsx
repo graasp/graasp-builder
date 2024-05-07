@@ -21,19 +21,11 @@ import {
   Typography,
 } from '@mui/material';
 
-import {
-  ItemTagType,
-  ItemValidationStatus,
-  PermissionLevel,
-  PermissionLevelCompare,
-  redirect,
-} from '@graasp/sdk';
-import { Loader } from '@graasp/ui';
+import { ItemValidationStatus, redirect } from '@graasp/sdk';
 
 import groupBy from 'lodash.groupby';
 
 import { OutletType } from '@/components/pages/item/type';
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -51,7 +43,7 @@ import CoEditorSettings from './CoEditorSettings';
 import CustomizedTagsEdit from './CustomizedTagsEdit';
 import ItemPublishButton from './ItemPublishButton';
 
-const { useItemTags, useLastItemValidationGroup } = hooks;
+const { useLastItemValidationGroup } = hooks;
 
 const { usePostItemValidation } = mutations;
 
@@ -63,28 +55,12 @@ const enum PublishFlow {
 
 const ItemPublishTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { item } = useOutletContext<OutletType>();
-
-  const { data: itemTags, isLoading: isItemTagsLoading } = useItemTags(
-    item?.id,
-  );
-
-  const {
-    data: permission,
-    isCurrentMemberLoading,
-    isMembershipsLoading,
-  } = useGetPermissionForItem(item);
-  const canWrite = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
-    : false;
-  const canAdmin = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
-    : false;
+  const { item, canWrite, canAdmin } = useOutletContext<OutletType>();
 
   const [validationStatus, setValidationStatus] =
     useState<ItemValidationStatus | null>(null);
 
-  const isPublic = itemTags?.find(({ type }) => type === ItemTagType.Public);
+  const isPublic = item.public;
 
   // item validation
   const { mutate: validateItem } = usePostItemValidation();
@@ -130,10 +106,6 @@ const ItemPublishTab = (): JSX.Element => {
     }
     return PublishFlow.PUBLISH_STEP;
   })();
-
-  if (isMembershipsLoading || isCurrentMemberLoading || isItemTagsLoading) {
-    return <Loader />;
-  }
 
   if (!canWrite || !canAdmin) {
     return (

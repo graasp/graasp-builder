@@ -1,4 +1,4 @@
-import { ItemMembership, ResultOf } from '@graasp/sdk';
+import { ItemMembership, PermissionLevelCompare } from '@graasp/sdk';
 
 // todo: better check with typescript
 export const isError = (
@@ -12,10 +12,24 @@ export const membershipsWithoutUser = (
 ): ItemMembership[] =>
   memberships?.filter(({ member: { id: memberId } }) => memberId !== userId);
 
-export const getMembershipsForItem = ({
-  itemId,
-  manyMemberships,
-}: {
-  itemId: string;
-  manyMemberships?: ResultOf<ItemMembership[]>;
-}): ItemMembership[] | undefined => manyMemberships?.data?.[itemId];
+interface PermissionMap {
+  [key: string]: ItemMembership;
+}
+
+export const selectHighestMemberships = (
+  memberships: ItemMembership[],
+): ItemMembership[] => {
+  const permissionMap = memberships.reduce<PermissionMap>((acc, curr) => {
+    const { member, permission } = curr;
+
+    if (
+      !acc[member.id] ||
+      PermissionLevelCompare.gt(permission, acc[member.id].permission)
+    ) {
+      acc[member.id] = curr;
+    }
+    return acc;
+  }, {});
+
+  return Object.values(permissionMap);
+};

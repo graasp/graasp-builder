@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import {
-  DiscriminatedItem,
-  ItemMembership,
   ItemType,
+  PackedItem,
   PermissionLevel,
   PermissionLevelCompare,
   ThumbnailSize,
@@ -14,8 +13,6 @@ import {
 import { Card as GraaspCard, ItemIcon, Thumbnail } from '@graasp/ui';
 
 import truncate from 'lodash.truncate';
-
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { DESCRIPTION_MAX_LENGTH } from '../../config/constants';
 import { buildItemPath } from '../../config/paths';
@@ -41,15 +38,13 @@ const NameWrapper = ({ id, style }: { id: string; style: CSSProperties }) => {
 };
 
 type Props = {
-  item: DiscriminatedItem;
-  memberships?: ItemMembership[];
+  item: PackedItem;
   itemsStatuses?: ItemsStatuses;
   canMove?: boolean;
 };
 
 const ItemComponent = ({
   item,
-  memberships,
   itemsStatuses,
   canMove = true,
 }: Props): JSX.Element => {
@@ -94,13 +89,12 @@ const ItemComponent = ({
   );
 
   const { data: member } = useCurrentUserContext();
-  const { data: permission } = useGetPermissionForItem(item, memberships);
 
-  const canWrite = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+  const canWrite = item.permission
+    ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
     : false;
-  const canAdmin = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
+  const canAdmin = item.permission
+    ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Admin)
     : false;
 
   const Actions = (

@@ -1,26 +1,19 @@
 import {
-  DiscriminatedItem,
-  ItemMembership,
-  Member,
+  PackedItem,
   PermissionLevel,
   PermissionLevelCompare,
-  ResultOf,
 } from '@graasp/sdk';
-
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import EditButton from '../common/EditButton';
 import DownloadButton from '../main/DownloadButton';
 import ItemMenu from '../main/ItemMenu';
 
 type Props = {
-  manyMemberships?: ResultOf<ItemMembership[]>;
-  member?: Member | null;
   canMove?: boolean;
 };
 
 type ChildCompProps = {
-  data: DiscriminatedItem;
+  data: PackedItem;
 };
 
 // items and memberships match by index
@@ -28,13 +21,11 @@ const ActionsCellRenderer = ({
   canMove,
 }: Props): ((arg: ChildCompProps) => JSX.Element) => {
   const ChildComponent = ({ data: item }: ChildCompProps) => {
-    const { data: permission } = useGetPermissionForItem(item);
-
-    const canWrite = permission
-      ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+    const canWrite = item.permission
+      ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
       : false;
-    const canAdmin = permission
-      ? PermissionLevelCompare.gte(permission, PermissionLevel.Admin)
+    const canAdmin = item.permission
+      ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Admin)
       : false;
 
     const renderAnyoneActions = () => (

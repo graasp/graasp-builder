@@ -1,3 +1,8 @@
+import {
+  PackedFolderItemFactory,
+  PackedItemBookmarkFactory,
+} from '@graasp/sdk';
+
 import i18n from '../../../../src/config/i18n';
 import { BOOKMARKED_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
 import {
@@ -8,10 +13,18 @@ import {
   buildItemMenuButtonId,
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
-import { SAMPLE_BOOKMARK, SAMPLE_ITEMS } from '../../../fixtures/items';
 import { CURRENT_USER } from '../../../fixtures/members';
 
+const BOOKMARKED_ITEMS = [
+  PackedItemBookmarkFactory(),
+  PackedItemBookmarkFactory(),
+];
+const ITEMS = BOOKMARKED_ITEMS.map(({ item }) => item);
+const NON_BOOKMARKED_ITEM = PackedFolderItemFactory();
+
 const toggleBookmarkButton = (itemId: string) => {
+  // todo: remove when refactoring the table
+  cy.wait(500);
   cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
   cy.get(`#${buildItemMenu(itemId)} .${BOOKMARKED_ITEM_BUTTON_CLASS}`).click();
 };
@@ -20,7 +33,8 @@ describe('Bookmarked Item', () => {
   describe('Member has no bookmarked items', () => {
     beforeEach(() => {
       cy.setUpApi({
-        ...SAMPLE_ITEMS,
+        items: ITEMS,
+        bookmarkedItems: BOOKMARKED_ITEMS,
       });
       cy.visit(BOOKMARKED_ITEMS_PATH);
     });
@@ -33,8 +47,8 @@ describe('Bookmarked Item', () => {
   describe('Member has several valid bookmarked items', () => {
     beforeEach(() => {
       cy.setUpApi({
-        ...SAMPLE_ITEMS,
-        bookmarkedItems: SAMPLE_BOOKMARK,
+        items: [...ITEMS, NON_BOOKMARKED_ITEM],
+        bookmarkedItems: BOOKMARKED_ITEMS,
       });
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
       cy.visit(HOME_PATH);
@@ -45,8 +59,8 @@ describe('Bookmarked Item', () => {
       cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 
-    it('add item to bookmarkeds', () => {
-      const item = SAMPLE_ITEMS.items[0];
+    it('add item to bookmarks', () => {
+      const item = NON_BOOKMARKED_ITEM;
 
       toggleBookmarkButton(item.id);
 
@@ -55,8 +69,8 @@ describe('Bookmarked Item', () => {
       });
     });
 
-    it('remove item from bookmarkeds', () => {
-      const itemId = SAMPLE_ITEMS.items[1].id;
+    it('remove item from bookmarks', () => {
+      const itemId = ITEMS[1].id;
 
       toggleBookmarkButton(itemId);
 
@@ -68,7 +82,7 @@ describe('Bookmarked Item', () => {
     it('check bookmarked items view', () => {
       cy.visit(BOOKMARKED_ITEMS_PATH);
 
-      const itemId = SAMPLE_ITEMS.items[1].id;
+      const itemId = ITEMS[1].id;
 
       cy.get(buildItemsTableRowIdAttribute(itemId)).should('exist');
     });
@@ -77,7 +91,7 @@ describe('Bookmarked Item', () => {
   describe('Error Handling', () => {
     it('check bookmarked items view with server error', () => {
       cy.setUpApi({
-        ...SAMPLE_ITEMS,
+        items: ITEMS,
         getFavoriteError: true,
       });
       cy.visit(BOOKMARKED_ITEMS_PATH);

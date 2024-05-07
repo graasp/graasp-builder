@@ -13,6 +13,7 @@ import {
   ItemValidationGroup,
   LocalFileItemType,
   Member,
+  PermissionLevel,
   S3FileItemType,
 } from '@graasp/sdk';
 
@@ -27,6 +28,8 @@ export type ItemForTest = DiscriminatedItem & {
   memberships?: ItemMembership[];
   invitations?: Invitation[];
   published?: ItemPublished;
+  permission?: PermissionLevel;
+  public?: ItemTag;
 };
 
 // TODO: not ideal, to change?

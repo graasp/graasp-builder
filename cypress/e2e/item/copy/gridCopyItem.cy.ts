@@ -1,3 +1,8 @@
+import {
+  PackedFolderItemFactory,
+  PackedLocalFileItemFactory,
+} from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_COPY_BUTTON_CLASS,
@@ -7,7 +12,6 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const copyItem = ({
   id,
@@ -24,16 +28,22 @@ const copyItem = ({
   cy.handleTreeMenu(toItemPath, rootId);
 };
 
+const IMAGE_ITEM = PackedLocalFileItemFactory();
+const FOLDER = PackedFolderItemFactory();
+const IMAGE_ITEM_CHILD = PackedLocalFileItemFactory({ parentItem: FOLDER });
+const FOLDER2 = PackedFolderItemFactory();
+
+const items = [IMAGE_ITEM, FOLDER, FOLDER2, IMAGE_ITEM_CHILD];
+
 describe('Copy Item in Grid', () => {
   it('copy item on Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    cy.setUpApi({ items });
     cy.visit(HOME_PATH);
     cy.switchMode(ItemLayoutMode.Grid);
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS.items[0];
-    const { path: toItemPath } = SAMPLE_ITEMS.items[1];
-    copyItem({ id: copyItemId, toItemPath });
+    const { id: copyItemId } = FOLDER;
+    copyItem({ id: copyItemId, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
@@ -42,16 +52,16 @@ describe('Copy Item in Grid', () => {
   });
 
   it('copy item in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
     cy.switchMode(ItemLayoutMode.Grid);
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const { id: toItemId, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    const { id: copyItemId } = IMAGE_ITEM_CHILD;
+    const { id: toItemId, path: toItemPath } = FOLDER2;
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url, body } }) => {
@@ -62,21 +72,20 @@ describe('Copy Item in Grid', () => {
   });
 
   it('copy item to Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
 
     // go to children item
-    cy.visit(buildItemPath(id));
+    cy.visit(buildItemPath(FOLDER.id));
     cy.switchMode(ItemLayoutMode.Grid);
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS.items[2];
+    const { id } = IMAGE_ITEM_CHILD;
     const toItemPath = MY_GRAASP_ITEM_PATH;
-    copyItem({ id: copyItemId, toItemPath });
+    copyItem({ id, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
-      cy.get(`#${buildItemCard(copyItemId)}`).should('exist');
-      expect(url).to.contain(copyItemId);
+      cy.get(`#${buildItemCard(id)}`).should('exist');
+      expect(url).to.contain(id);
     });
   });
 });

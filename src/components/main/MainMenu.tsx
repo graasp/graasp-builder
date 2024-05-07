@@ -1,13 +1,7 @@
 import { useLocation, useNavigate } from 'react-router';
 
 // import { BugReport } from '@mui/icons-material';
-import {
-  AutoStories,
-  Bookmark,
-  Delete,
-  Folder,
-  FolderShared,
-} from '@mui/icons-material';
+import { AutoStories, Bookmark, Delete, Folder } from '@mui/icons-material';
 import {
   ListItem,
   ListItemButton,
@@ -27,7 +21,6 @@ import {
   HOME_PATH,
   PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
-  SHARED_ITEMS_PATH,
 } from '../../config/paths';
 import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
@@ -104,12 +97,6 @@ const MainMenu = (): JSX.Element => {
           selected={pathname === HOME_PATH}
           icon={<Folder />}
           text={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-        />
-        <MenuItem
-          onClick={() => goTo(SHARED_ITEMS_PATH)}
-          text={translateBuilder(BUILDER.SHARED_ITEMS_TITLE)}
-          icon={<FolderShared />}
-          selected={pathname === SHARED_ITEMS_PATH}
         />
         <MenuItem
           onClick={() => goTo(BOOKMARKED_ITEMS_PATH)}

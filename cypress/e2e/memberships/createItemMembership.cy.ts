@@ -1,4 +1,8 @@
-import { PermissionLevel } from '@graasp/sdk';
+import {
+  PackedFolderItemFactory,
+  PackedLocalFileItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { buildItemPath } from '../../../src/config/paths';
 import {
@@ -7,7 +11,6 @@ import {
   SHARE_ITEM_SHARE_BUTTON_ID,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import { SAMPLE_ITEMS } from '../../fixtures/items';
 import { MEMBERS } from '../../fixtures/members';
 
 const shareItem = ({
@@ -31,12 +34,17 @@ const shareItem = ({
   });
 };
 
+const IMAGE_ITEM = PackedLocalFileItemFactory();
+const FOLDER = PackedFolderItemFactory();
+
+const ITEMS = [IMAGE_ITEM, FOLDER];
+
 describe('Create Membership', () => {
   it('share item', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ items: ITEMS, members: Object.values(MEMBERS) });
 
     // go to children item
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = FOLDER;
     cy.visit(buildItemPath(id));
 
     // share
@@ -62,14 +70,29 @@ describe('Create Membership', () => {
   });
 
   it('cannot share item twice', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    const ITEM = PackedFolderItemFactory();
+    const member = MEMBERS.ANNA;
+    cy.setUpApi({
+      items: [
+        {
+          ...ITEM,
+          memberships: [
+            {
+              item: ITEM,
+              permission: PermissionLevel.Read,
+              member,
+            },
+          ],
+        },
+      ],
+      members: Object.values(MEMBERS),
+    });
 
     // go to children item
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = ITEM;
     cy.visit(buildItemPath(id));
 
     // fill
-    const member = MEMBERS.ANNA;
     const permission = PermissionLevel.Read;
     shareItem({ id, member, permission });
 
@@ -77,10 +100,10 @@ describe('Create Membership', () => {
   });
 
   it('cannot share item with invalid data', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, members: Object.values(MEMBERS) });
+    cy.setUpApi({ items: ITEMS, members: Object.values(MEMBERS) });
 
     // go to children item
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = FOLDER;
     cy.visit(buildItemPath(id));
 
     // fill

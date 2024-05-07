@@ -1,4 +1,9 @@
-import { buildAppExtra } from '@graasp/sdk';
+import {
+  ItemType,
+  PackedAppItemFactory,
+  PackedFolderItemFactory,
+  buildAppExtra,
+} from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
@@ -9,22 +14,38 @@ import {
   buildEditButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import {
-  GRAASP_APP_CHILDREN_ITEM,
-  GRAASP_APP_ITEM,
-  GRAASP_APP_ITEMS_FIXTURE,
-  GRAASP_APP_PARENT_FOLDER,
-} from '../../../fixtures/apps';
-import { EDITED_FIELDS } from '../../../fixtures/items';
-import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
+import { buildAppItemLinkForTest } from '../../../fixtures/apps';
+import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editCaptionFromViewPage, editItem } from '../../../support/editUtils';
 
 const url = 'http://localhost:3334';
+
 const newFields = {
-  ...EDITED_FIELDS,
+  name: 'new name',
   extra: buildAppExtra({ url }),
 };
+
+const GRAASP_APP_ITEM = PackedAppItemFactory({
+  name: 'test app',
+  description: 'my app description',
+  creator: CURRENT_USER,
+});
+
+const GRAASP_APP_PARENT_FOLDER = PackedFolderItemFactory({
+  name: 'graasp app parent',
+});
+
+const APP_USING_CONTEXT_ITEM = PackedAppItemFactory({
+  name: 'my app',
+  extra: {
+    [ItemType.APP]: {
+      url: `${Cypress.env('VITE_GRAASP_API_HOST')}/${buildAppItemLinkForTest('app.html')}`,
+    },
+  },
+  creator: MEMBERS.ANNA,
+  parentItem: GRAASP_APP_PARENT_FOLDER,
+});
 
 describe('Edit App', () => {
   describe('View Page', () => {
@@ -63,7 +84,7 @@ describe('Edit App', () => {
   describe('List', () => {
     it('edit app on Home', () => {
       const itemToEdit = GRAASP_APP_ITEM;
-      cy.setUpApi({ items: [itemToEdit, GRAASP_LINK_ITEM] });
+      cy.setUpApi({ items: [itemToEdit] });
       cy.visit(HOME_PATH);
 
       cy.switchMode(ItemLayoutMode.List);
@@ -93,11 +114,13 @@ describe('Edit App', () => {
     });
 
     it('edit app in item', () => {
-      const itemToEdit = GRAASP_APP_CHILDREN_ITEM;
-      cy.setUpApi({ items: GRAASP_APP_ITEMS_FIXTURE });
-      const parent = GRAASP_APP_PARENT_FOLDER;
+      const parentItem = PackedFolderItemFactory();
+      const itemToEdit = PackedAppItemFactory({ parentItem });
+      cy.setUpApi({
+        items: [parentItem, itemToEdit],
+      });
       // go to children item
-      cy.visit(buildItemPath(parent.id));
+      cy.visit(buildItemPath(parentItem.id));
 
       cy.switchMode(ItemLayoutMode.List);
 
@@ -120,7 +143,9 @@ describe('Edit App', () => {
           cy.wait(EDIT_ITEM_PAUSE);
           expect(id).to.equal(itemToEdit.id);
           expect(name).to.equal(newFields.name);
-          cy.get('@getItem').its('response.url').should('contain', parent.id);
+          cy.get('@getItem')
+            .its('response.url')
+            .should('contain', parentItem.id);
         },
       );
     });
@@ -128,11 +153,10 @@ describe('Edit App', () => {
 
   describe('Grid', () => {
     it('edit app on Home', () => {
-      cy.setUpApi({ items: GRAASP_APP_ITEMS_FIXTURE });
+      const itemToEdit = GRAASP_APP_ITEM;
+      cy.setUpApi({ items: [itemToEdit] });
       cy.visit(HOME_PATH);
       cy.switchMode(ItemLayoutMode.Grid);
-
-      const itemToEdit = GRAASP_APP_ITEM;
 
       // edit
       editItem(
@@ -159,13 +183,12 @@ describe('Edit App', () => {
     });
 
     it('edit app in item', () => {
-      cy.setUpApi({ items: GRAASP_APP_ITEMS_FIXTURE });
-      // go to children item
+      const itemToEdit = APP_USING_CONTEXT_ITEM;
       const parent = GRAASP_APP_PARENT_FOLDER;
+      cy.setUpApi({ items: [parent, itemToEdit] });
+      // go to children item
       cy.visit(buildItemPath(parent.id));
       cy.switchMode(ItemLayoutMode.Grid);
-
-      const itemToEdit = GRAASP_APP_CHILDREN_ITEM;
 
       // edit
       editItem(

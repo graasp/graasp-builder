@@ -18,7 +18,6 @@ import {
   PUBLISHED_ITEMS_PATH,
   RECYCLE_BIN_PATH,
   REDIRECT_PATH,
-  SHARED_ITEMS_PATH,
   buildItemPath,
 } from '../config/paths';
 import { hooks } from '../config/queryClient';
@@ -30,7 +29,6 @@ import HomeScreen from './pages/HomeScreen';
 import MapItemsScreen from './pages/MapItemsScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
-import SharedItemsScreen from './pages/SharedItemsScreen';
 import ItemInformationPage from './pages/item/ItemInformationPage';
 import ItemPageLayout from './pages/item/ItemPageLayout';
 import ItemScreen from './pages/item/ItemScreen';
@@ -67,10 +65,6 @@ const App = (): JSX.Element => {
     HomeScreen,
     withAuthorizationProps,
   );
-  const SharedWithAuthorization = withAuthorization(
-    SharedItemsScreen,
-    withAuthorizationProps,
-  );
   const FavoriteWithAuthorization = withAuthorization(
     BookmarkedItemsScreen,
     withAuthorizationProps,
@@ -95,7 +89,6 @@ const App = (): JSX.Element => {
         }
       >
         <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
-        <Route path={SHARED_ITEMS_PATH} element={<SharedWithAuthorization />} />
         <Route
           path={BOOKMARKED_ITEMS_PATH}
           element={<FavoriteWithAuthorization />}

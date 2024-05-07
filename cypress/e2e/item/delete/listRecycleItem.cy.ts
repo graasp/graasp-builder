@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_RECYCLE_BUTTON_CLASS,
@@ -5,21 +7,27 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const recycleItem = (id: string) => {
+  // I need this wait because the table reloads and I lose the menu
+  // todo: remove on table refactor
+  cy.wait(500);
   cy.get(`#${buildItemMenuButtonId(id)}`).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_RECYCLE_BUTTON_CLASS}`).click();
 };
 
+const FOLDER = PackedFolderItemFactory();
+const CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
+const items = [FOLDER, CHILD, PackedFolderItemFactory()];
+
 describe('Recycle Item in List', () => {
   it('recycle item on Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    cy.setUpApi({ items });
     cy.visit(HOME_PATH);
 
     cy.switchMode(ItemLayoutMode.List);
 
-    const { id } = SAMPLE_ITEMS.items[0];
+    const { id } = items[0];
 
     // delete
     recycleItem(id);
@@ -30,9 +38,9 @@ describe('Recycle Item in List', () => {
   });
 
   it('recycle item inside parent', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
-    const { id: idToDelete } = SAMPLE_ITEMS.items[2];
+    cy.setUpApi({ items });
+    const { id } = FOLDER;
+    const { id: idToDelete } = CHILD;
 
     // go to children item
     cy.visit(buildItemPath(id));

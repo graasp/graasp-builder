@@ -11,10 +11,10 @@ import {
   MenuItem,
 } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { PackedItem } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
 
-import { hooks, mutations } from '@/config/queryClient';
+import { mutations } from '@/config/queryClient';
 import { getParentsIdsFromPath } from '@/utils/item';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -39,7 +39,7 @@ import CopyButton from './CopyButton';
 import CreateShortcutButton from './CreateShortcutButton';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
   canWrite?: boolean;
   canAdmin?: boolean;
   canMove?: boolean;
@@ -56,7 +56,6 @@ const ItemMenu = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { openModal: openFlagModal } = useContext(FlagItemModalContext);
   const { mutate: copyItems } = mutations.useCopyItems();
-  const { data: memberships } = hooks.useItemMemberships(item.id);
 
   const handleClick: IconButtonProps['onClick'] = (event) => {
     setAnchorEl(event.currentTarget);
@@ -118,7 +117,7 @@ const ItemMenu = ({
     return null;
   };
 
-  if (memberships && member?.id) {
+  if (member?.id) {
     return (
       <>
         <IconButton

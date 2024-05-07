@@ -1,10 +1,9 @@
-import { DiscriminatedItem, ItemTag, ResultOf } from '@graasp/sdk';
+import { DiscriminatedItem, PackedItem } from '@graasp/sdk';
 import { ItemBadges } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import { BUILDER } from '../../langs/constants';
-import { isItemHidden, isItemPublic } from '../../utils/itemTag';
 
 const { useManyItemPublishedInformations } = hooks;
 
@@ -38,23 +37,20 @@ type ChildCompProps = {
 
 export const useItemsStatuses = ({
   items = [],
-  itemsTags,
 }: {
-  items?: DiscriminatedItem[];
-  itemsTags?: ResultOf<ItemTag[]>;
+  items?: PackedItem[];
 }): ItemsStatuses => {
   const { data: publishedInformations } = useManyItemPublishedInformations({
     itemIds: items.map((i) => i.id),
   });
 
   return items.reduce((acc, r) => {
-    const itemTags = itemsTags?.data?.[r.id];
     const { showChatbox, isPinned, isCollapsible } = {
       ...DEFAULT_ITEM_STATUSES,
       ...r.settings,
     };
-    const isHidden = isItemHidden({ itemTags });
-    const isPublic = isItemPublic({ itemTags });
+    const isHidden = Boolean(r.hidden);
+    const isPublic = Boolean(r.public);
     const isPublished = Boolean(publishedInformations?.data?.[r.id]);
 
     return {

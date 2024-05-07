@@ -1,6 +1,11 @@
-import { ItemLoginSchemaType } from '@graasp/sdk';
+import {
+  ItemLoginSchemaType,
+  PackedFolderItemFactory,
+  PackedItem,
+  PermissionLevel,
+} from '@graasp/sdk';
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 
 import {
   SETTINGS,
@@ -17,9 +22,22 @@ import {
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   buildShareButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_LOGIN_ITEMS } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { ITEM_LOGIN_PAUSE } from '../../../support/constants';
+
+const addItemLoginSchema = (
+  item: PackedItem,
+  itemLoginSchemaType: ItemLoginSchemaType,
+) => ({
+  ...item,
+  itemLoginSchema: {
+    item,
+    type: itemLoginSchemaType,
+    id: v4(),
+    createdAt: '2021-08-11T12:56:36.834Z',
+    updatedAt: '2021-08-11T12:56:36.834Z',
+  },
+});
 
 const changeSignInMode = (mode: string) => {
   cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
@@ -94,26 +112,27 @@ const editItemLoginSetting = (mode: string) => {
 
 describe('Item Login', () => {
   it('Item Login not allowed', () => {
+    const item = PackedFolderItemFactory({}, { permission: null });
     cy.setUpApi({
-      ...ITEM_LOGIN_ITEMS,
+      items: [item],
       currentMember: MEMBERS.BOB,
     });
-    cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[4].id));
+    cy.visit(buildItemPath(item.id));
     cy.wait(ITEM_LOGIN_PAUSE);
     cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('exist');
   });
 
   describe('User is signed out', () => {
-    beforeEach(() => {
-      cy.setUpApi({ ...ITEM_LOGIN_ITEMS, currentMember: SIGNED_OUT_MEMBER });
-    });
-
     describe('Display Item Login Screen', () => {
       it('username or member id', () => {
-        cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[0].id));
-        checkItemLoginScreenLayout(
-          ITEM_LOGIN_ITEMS.items[0].itemLoginSchema.type,
+        const item = addItemLoginSchema(
+          PackedFolderItemFactory({}, { permission: null }),
+          ItemLoginSchemaType.Username,
         );
+        cy.setUpApi({ items: [item], currentMember: SIGNED_OUT_MEMBER });
+
+        cy.visit(buildItemPath(item.id));
+        checkItemLoginScreenLayout(item.itemLoginSchema.type);
         fillItemLoginScreenLayout({
           username: 'username',
         });
@@ -121,7 +140,7 @@ describe('Item Login', () => {
 
         // use memberid
         fillItemLoginScreenLayout({
-          memberId: uuidv4(),
+          memberId: v4(),
         });
         cy.wait('@postItemLogin');
 
@@ -132,10 +151,14 @@ describe('Item Login', () => {
         cy.wait('@postItemLogin');
       });
       it('username or member id and password', () => {
-        cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[3].id));
-        checkItemLoginScreenLayout(
-          ITEM_LOGIN_ITEMS.items[3].itemLoginSchema.type,
+        const item = addItemLoginSchema(
+          PackedFolderItemFactory({}, { permission: null }),
+          ItemLoginSchemaType.UsernameAndPassword,
         );
+        cy.setUpApi({ items: [item], currentMember: SIGNED_OUT_MEMBER });
+
+        cy.visit(buildItemPath(item.id));
+        checkItemLoginScreenLayout(item.itemLoginSchema.type);
         fillItemLoginScreenLayout({
           username: 'username',
           password: 'password',
@@ -144,7 +167,7 @@ describe('Item Login', () => {
 
         // use memberid
         fillItemLoginScreenLayout({
-          memberId: uuidv4(),
+          memberId: v4(),
           password: 'password',
         });
         cy.wait('@postItemLogin');
@@ -161,11 +184,12 @@ describe('Item Login', () => {
 
   describe('User is signed in as normal user', () => {
     it('Should not be able to access the item', () => {
-      cy.setUpApi({
-        ...ITEM_LOGIN_ITEMS,
-        currentMember: MEMBERS.BOB,
-      });
-      cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[4].id));
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory({}, { permission: null }),
+        ItemLoginSchemaType.UsernameAndPassword,
+      );
+      cy.setUpApi({ items: [item], currentMember: MEMBERS.BOB });
+      cy.visit(buildItemPath(item.id));
 
       // avoid to detect intermediate screens because of loading
       // to remove when requests loading time is properly managed
@@ -177,8 +201,16 @@ describe('Item Login', () => {
 
   describe('Display Item Login Setting', () => {
     it('edit item login setting', () => {
-      cy.setUpApi(ITEM_LOGIN_ITEMS);
-      const item = ITEM_LOGIN_ITEMS.items[0];
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory(),
+        ItemLoginSchemaType.Username,
+      );
+      const child = {
+        ...PackedFolderItemFactory({ parentItem: item }),
+        // inherited schema
+        itemLoginSchema: item.itemLoginSchema,
+      };
+      cy.setUpApi({ items: [item, child] });
       // check item with item login enabled
       cy.visit(buildItemPath(item.id));
       cy.get(`#${buildShareButtonId(item.id)}`).click();
@@ -190,9 +222,8 @@ describe('Item Login', () => {
       editItemLoginSetting(ItemLoginSchemaType.UsernameAndPassword);
 
       // disabled at child level
-      const item2 = ITEM_LOGIN_ITEMS.items[5];
-      cy.visit(buildItemPath(item2.id));
-      cy.get(`#${buildShareButtonId(item2.id)}`).click();
+      cy.visit(buildItemPath(child.id));
+      cy.get(`#${buildShareButtonId(child.id)}`).click();
       checkItemLoginSetting({
         isEnabled: true,
         mode: ItemLoginSchemaType.UsernameAndPassword,
@@ -201,26 +232,33 @@ describe('Item Login', () => {
     });
 
     it('read permission', () => {
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory({}, { permission: PermissionLevel.Read }),
+        ItemLoginSchemaType.UsernameAndPassword,
+      );
       cy.setUpApi({
-        ...ITEM_LOGIN_ITEMS,
+        items: [item],
         currentMember: MEMBERS.BOB,
       });
-      cy.visit(buildItemPath(ITEM_LOGIN_ITEMS.items[3].id));
+      cy.visit(buildItemPath(item.id));
       cy.wait(ITEM_LOGIN_PAUSE);
     });
   });
 
   describe('Error handling', () => {
     it('error while signing in', () => {
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory({}, { permission: null }),
+        ItemLoginSchemaType.UsernameAndPassword,
+      );
       cy.setUpApi({
-        ...ITEM_LOGIN_ITEMS,
+        items: [item],
         postItemLoginError: true,
         currentMember: SIGNED_OUT_MEMBER,
       });
-      const { id } = ITEM_LOGIN_ITEMS.items[4];
 
       // go to children item
-      cy.visit(buildItemPath(id));
+      cy.visit(buildItemPath(item.id));
 
       fillItemLoginScreenLayout({
         username: 'username',

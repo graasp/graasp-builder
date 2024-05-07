@@ -1,12 +1,11 @@
 import { Box, Grid, Pagination } from '@mui/material';
 
-import { DiscriminatedItem, ItemMembership, ResultOf } from '@graasp/sdk';
+import { PackedItem } from '@graasp/sdk';
 
 import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { ITEM_PAGE_SIZE } from '../../config/constants';
 import { ITEMS_GRID_PAGINATION_ID } from '../../config/selectors';
-import { getMembershipsForItem } from '../../utils/membership';
 import FolderDescription from '../item/FolderDescription';
 import { NoItemSearchResult } from '../item/ItemSearch';
 import { ItemsStatuses } from '../table/BadgesCellRenderer';
@@ -16,8 +15,7 @@ import ItemsToolbar from './ItemsToolbar';
 
 type Props = {
   id?: string;
-  items?: DiscriminatedItem[];
-  manyMemberships?: ResultOf<ItemMembership[]>;
+  items?: PackedItem[];
   itemsStatuses?: ItemsStatuses;
   title: string;
   itemSearch?: {
@@ -39,7 +37,6 @@ const ItemsGrid = ({
   title,
   itemSearch,
   headerElements = [],
-  manyMemberships,
   itemsStatuses,
   parentId,
   onShowOnlyMeChange,
@@ -61,15 +58,7 @@ const ItemsGrid = ({
 
     return items.map((item) => (
       <Grid key={item.id} item xs={12} sm={12} md={6} lg={6} xl={4}>
-        <ItemCard
-          canMove={canMove}
-          item={item}
-          memberships={getMembershipsForItem({
-            manyMemberships,
-            itemId: item.id,
-          })}
-          itemsStatuses={itemsStatuses}
-        />
+        <ItemCard canMove={canMove} item={item} itemsStatuses={itemsStatuses} />
       </Grid>
     ));
   };

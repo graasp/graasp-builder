@@ -59,7 +59,6 @@ const ItemSelectionModal = ({
 }: ItemSelectionModalProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: items, isLoading } = hooks.useItems(itemIds);
-
   const title = items ? (
     computeTitle({
       items,

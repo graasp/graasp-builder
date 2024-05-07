@@ -1,3 +1,8 @@
+import {
+  PackedFolderItemFactory,
+  PackedLocalFileItemFactory,
+} from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID,
@@ -5,7 +10,6 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const moveItems = ({
   itemIds,
@@ -23,16 +27,34 @@ const moveItems = ({
   cy.handleTreeMenu(toItemPath);
 };
 
+const IMAGE_ITEM = PackedLocalFileItemFactory();
+const FOLDER = PackedFolderItemFactory();
+const IMAGE_ITEM_CHILD = PackedLocalFileItemFactory({ parentItem: FOLDER });
+const IMAGE_ITEM_CHILD2 = PackedLocalFileItemFactory({ parentItem: FOLDER });
+const FOLDER_CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
+const FOLDER2 = PackedFolderItemFactory();
+const FOLDER3 = PackedFolderItemFactory();
+
+const items = [
+  IMAGE_ITEM,
+  FOLDER,
+  FOLDER3,
+  FOLDER2,
+  IMAGE_ITEM_CHILD,
+  IMAGE_ITEM_CHILD2,
+  FOLDER_CHILD,
+];
+
 describe('Move Items in List', () => {
   it('Move items on Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    cy.setUpApi({ items });
     cy.visit(HOME_PATH);
 
     cy.switchMode(ItemLayoutMode.List);
 
     // move
-    const itemIds = [SAMPLE_ITEMS.items[0].id, SAMPLE_ITEMS.items[5].id];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    const itemIds = [FOLDER3.id, FOLDER2.id];
+    const { id: toItem, path: toItemPath } = FOLDER;
     moveItems({ itemIds, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { url, body } }) => {
@@ -42,8 +64,8 @@ describe('Move Items in List', () => {
   });
 
   it('Move items in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id: start } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id: start } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(start));
@@ -51,8 +73,8 @@ describe('Move Items in List', () => {
     cy.switchMode(ItemLayoutMode.List);
 
     // move
-    const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[1];
+    const itemIds = [IMAGE_ITEM_CHILD.id, IMAGE_ITEM_CHILD2.id];
+    const { id: toItem, path: toItemPath } = FOLDER_CHILD;
     moveItems({ itemIds, toItemPath });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
@@ -62,8 +84,8 @@ describe('Move Items in List', () => {
   });
 
   it('Move items to Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id: start } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id: start } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(start));
@@ -71,7 +93,7 @@ describe('Move Items in List', () => {
     cy.switchMode(ItemLayoutMode.List);
 
     // move
-    const itemIds = [SAMPLE_ITEMS.items[2].id, SAMPLE_ITEMS.items[4].id];
+    const itemIds = [IMAGE_ITEM_CHILD.id, IMAGE_ITEM_CHILD2.id];
     moveItems({ itemIds, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@moveItems').then(({ request: { body, url } }) => {

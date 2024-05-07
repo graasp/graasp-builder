@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   ROW_DRAGGER_CLASS,
@@ -5,8 +7,15 @@ import {
   buildItemsTableRowId,
   buildItemsTableRowSelector,
 } from '../../../../src/config/selectors';
-import { ITEM_REORDER_ITEMS } from '../../../fixtures/items';
 import { ROW_HEIGHT } from '../../../support/constants';
+
+const PARENT = PackedFolderItemFactory();
+const CHILDREN = [
+  PackedFolderItemFactory({ parentItem: PARENT }),
+  PackedFolderItemFactory({ parentItem: PARENT }),
+  PackedFolderItemFactory({ parentItem: PARENT }),
+];
+const ITEM_REORDER_ITEMS = [PARENT, ...CHILDREN];
 
 const reorderAndCheckItem = (
   id: string,
@@ -36,9 +45,9 @@ describe('Order Items', () => {
   describe('Move Item', () => {
     beforeEach(() => {
       cy.setUpApi({
-        items: [ITEM_REORDER_ITEMS.parent, ...ITEM_REORDER_ITEMS.children],
+        items: ITEM_REORDER_ITEMS,
       });
-      cy.visit(buildItemPath(ITEM_REORDER_ITEMS.parent.id));
+      cy.visit(buildItemPath(PARENT.id));
     });
 
     // flaky test is skipped
@@ -46,7 +55,7 @@ describe('Order Items', () => {
       const currentPosition = 0;
       const newPosition = 1;
 
-      const { id: childId } = ITEM_REORDER_ITEMS.children[currentPosition];
+      const { id: childId } = CHILDREN[currentPosition];
 
       reorderAndCheckItem(childId, currentPosition, newPosition);
     });
@@ -56,7 +65,7 @@ describe('Order Items', () => {
       const currentPosition = 0;
       const newPosition = 2;
 
-      const { id: childId } = ITEM_REORDER_ITEMS.children[currentPosition];
+      const { id: childId } = CHILDREN[currentPosition];
 
       reorderAndCheckItem(childId, currentPosition, newPosition);
     });
@@ -66,7 +75,7 @@ describe('Order Items', () => {
       const currentPosition = 1;
       const newPosition = 0;
 
-      const { id: childId } = ITEM_REORDER_ITEMS.children[currentPosition];
+      const { id: childId } = CHILDREN[currentPosition];
 
       reorderAndCheckItem(childId, currentPosition, newPosition);
     });
@@ -75,14 +84,14 @@ describe('Order Items', () => {
   describe('Check Order', () => {
     it('check item order in folder with non-existing item in ordering', () => {
       cy.setUpApi({
-        items: [ITEM_REORDER_ITEMS.parent, ...ITEM_REORDER_ITEMS.children],
+        items: ITEM_REORDER_ITEMS,
       });
 
-      cy.visit(buildItemPath(ITEM_REORDER_ITEMS.parent.id));
+      cy.visit(buildItemPath(PARENT.id));
 
-      const tableBody = `#${buildItemsTableId(ITEM_REORDER_ITEMS.parent.id)}`;
+      const tableBody = `#${buildItemsTableId(PARENT.id)}`;
 
-      ITEM_REORDER_ITEMS.children.forEach(({ id }, index) => {
+      CHILDREN.forEach(({ id }, index) => {
         // this will find multiple row instances because ag-grid renders several
         // this should be okay as all of them should have the same row-index
         cy.get(tableBody)

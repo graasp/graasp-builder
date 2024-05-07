@@ -1,3 +1,5 @@
+import { PackedRecycledItemDataFactory } from '@graasp/sdk';
+
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
   CONFIRM_DELETE_BUTTON_ID,
@@ -5,7 +7,6 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import { RECYCLED_ITEM_DATA, SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const deleteItems = (itemIds: string[]) => {
   // check selected ids
@@ -18,12 +19,14 @@ const deleteItems = (itemIds: string[]) => {
 };
 
 describe('Delete Items in List', () => {
-  const itemIds = [
-    RECYCLED_ITEM_DATA[0].item.id,
-    RECYCLED_ITEM_DATA[1].item.id,
+  const recycledItemData = [
+    PackedRecycledItemDataFactory(),
+    PackedRecycledItemDataFactory(),
   ];
+  const items = recycledItemData.map(({ item }) => item);
+  const itemIds = items.map(({ id }) => id);
   it('delete items', () => {
-    cy.setUpApi({ ...SAMPLE_ITEMS, recycledItemData: RECYCLED_ITEM_DATA });
+    cy.setUpApi({ items, recycledItemData });
     cy.visit(RECYCLE_BIN_PATH);
 
     cy.switchMode(ItemLayoutMode.List);

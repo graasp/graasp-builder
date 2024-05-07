@@ -1,19 +1,21 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { getParentsIdsFromPath } from '@/utils/item';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import duplicateItem from '../../../support/actionsUtils';
 
 describe('duplicate Item in Home', () => {
   Object.values([ItemLayoutMode.Grid, ItemLayoutMode.List]).forEach((view) => {
     it(`duplicate item on Home in ${view} view`, () => {
-      cy.setUpApi(SAMPLE_ITEMS);
+      const FOLDER = PackedFolderItemFactory();
+      cy.setUpApi({ items: [FOLDER] });
       cy.visit(HOME_PATH);
       cy.switchMode(view);
 
       // duplicate
-      const { id: duplicateItemId } = SAMPLE_ITEMS.items[0];
+      const { id: duplicateItemId } = FOLDER;
       duplicateItem({ id: duplicateItemId });
 
       cy.wait('@copyItems').then(({ request: { url, body } }) => {
@@ -27,8 +29,10 @@ describe('duplicate Item in Home', () => {
 describe('duplicate Item in item', () => {
   Object.values([ItemLayoutMode.Grid, ItemLayoutMode.List]).forEach((view) => {
     it(`duplicate item in item in ${view} view`, () => {
-      cy.setUpApi(SAMPLE_ITEMS);
-      const { id, path } = SAMPLE_ITEMS.items[0];
+      const FOLDER = PackedFolderItemFactory();
+      const CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
+      cy.setUpApi({ items: [FOLDER, CHILD] });
+      const { id, path } = FOLDER;
       const parentsIds = getParentsIdsFromPath(path);
 
       // go to children item
@@ -36,7 +40,7 @@ describe('duplicate Item in item', () => {
       cy.switchMode(view);
 
       // duplicate
-      const { id: duplicateItemId } = SAMPLE_ITEMS.items[2];
+      const { id: duplicateItemId } = CHILD;
       duplicateItem({ id: duplicateItemId });
 
       cy.wait('@copyItems').then(({ request: { url, body } }) => {

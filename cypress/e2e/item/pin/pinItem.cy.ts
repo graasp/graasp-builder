@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   PIN_ITEM_BUTTON_CLASS,
@@ -6,21 +8,21 @@ import {
   buildItemMenuButtonId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
-import {
-  ITEMS_SETTINGS,
-  PINNED_ITEM,
-  PUBLISHED_ITEM,
-} from '../../../fixtures/items';
 
 const togglePinButton = (itemId: string) => {
+  // todo: remove on table refactor
+  cy.wait(500);
   cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
   cy.get(`#${buildItemMenu(itemId)} .${PIN_ITEM_BUTTON_CLASS}`).click();
 };
 
+const PINNED_ITEM = PackedFolderItemFactory({ settings: { isPinned: true } });
+const ITEM = PackedFolderItemFactory({ settings: { isPinned: false } });
+
 describe('Anonymous', () => {
-  const itemId = PUBLISHED_ITEM.id;
+  const itemId = ITEM.id;
   beforeEach(() => {
-    cy.setUpApi({ currentMember: null, items: [PUBLISHED_ITEM] });
+    cy.setUpApi({ currentMember: null, items: [ITEM] });
     cy.visit(buildItemPath(itemId));
   });
   it("Can see item but can't pin", () => {
@@ -32,12 +34,12 @@ describe('Anonymous', () => {
 describe('Pinning Item', () => {
   describe('Successfully pinning item in List', () => {
     beforeEach(() => {
-      cy.setUpApi(ITEMS_SETTINGS);
+      cy.setUpApi({ items: [PINNED_ITEM, ITEM] });
       cy.visit(HOME_PATH);
     });
 
     it('Pin an item', () => {
-      const item = ITEMS_SETTINGS.items[0];
+      const item = ITEM;
 
       togglePinButton(item.id);
 
@@ -71,13 +73,13 @@ describe('Pinning Item', () => {
 
   describe('Successfully pinning item in Grid', () => {
     beforeEach(() => {
-      cy.setUpApi(ITEMS_SETTINGS);
+      cy.setUpApi({ items: [PINNED_ITEM, ITEM] });
       cy.visit(HOME_PATH);
       cy.switchMode(ItemLayoutMode.Grid);
     });
 
     it('Pin an item', () => {
-      const item = ITEMS_SETTINGS.items[0];
+      const item = ITEM;
 
       togglePinButton(item.id);
 

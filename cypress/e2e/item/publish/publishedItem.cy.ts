@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
+
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_PUBLISH_BUTTON_ID,
@@ -8,8 +10,6 @@ import {
 import {
   PUBLISHED_ITEM,
   PUBLISHED_ITEM_VALIDATIONS,
-  SAMPLE_ITEMS,
-  SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
 import { PAGE_LOAD_WAITING_PAUSE } from '../../../support/constants';
@@ -25,7 +25,10 @@ export const publishItem = (): void => {
 
 describe('Public', () => {
   it('Should not view publish tab', () => {
-    const item = SAMPLE_PUBLIC_ITEMS.items[0];
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: null, publicTag: {} },
+    );
     cy.setUpApi({
       items: [item],
       currentMember: null,
@@ -40,7 +43,10 @@ describe('Public', () => {
 
 describe('Read', () => {
   it('Should not view publish tab', () => {
-    const item = SAMPLE_ITEMS.items[1];
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: PermissionLevel.Read },
+    );
     cy.setUpApi({
       items: [item],
       currentMember: MEMBERS.BOB,
@@ -55,8 +61,12 @@ describe('Read', () => {
 
 describe('Public Item', () => {
   it('Validate item', () => {
-    cy.setUpApi(SAMPLE_PUBLIC_ITEMS);
-    const item = SAMPLE_ITEMS.items[0];
+    const items = [
+      PackedFolderItemFactory({}, { publicTag: {} }),
+      PackedFolderItemFactory(),
+    ];
+    cy.setUpApi({ items });
+    const item = items[0];
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
 

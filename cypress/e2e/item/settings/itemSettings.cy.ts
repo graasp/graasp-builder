@@ -2,12 +2,15 @@ import {
   DescriptionPlacement,
   ItemType,
   MaxWidth,
+  MimeTypes,
+  PackedFolderItemFactory,
+  PackedLinkItemFactory,
+  PackedLocalFileItemFactory,
+  PermissionLevel,
   formatFileSize,
   getFileExtra,
 } from '@graasp/sdk';
 import { langs } from '@graasp/translations';
-
-import { getMemberById } from '@/utils/member';
 
 import {
   buildItemPath,
@@ -34,37 +37,31 @@ import {
   buildItemMenuButtonId,
   buildSettingsButtonId,
 } from '../../../../src/config/selectors';
-import {
-  ITEM_WITH_CHATBOX_MESSAGES,
-  ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN,
-} from '../../../fixtures/chatbox';
-import {
-  IMAGE_ITEM_DEFAULT,
-  IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH,
-} from '../../../fixtures/files';
-import { ITEMS_SETTINGS, SAMPLE_ITEMS } from '../../../fixtures/items';
-import { GRAASP_LINK_ITEM } from '../../../fixtures/links';
-import { MEMBERS } from '../../../fixtures/members';
+import { ITEM_WITH_CHATBOX_MESSAGES } from '../../../fixtures/chatbox';
+import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 
 describe('Item Settings', () => {
   describe('read rights', () => {
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: PermissionLevel.Read },
+    );
+
     beforeEach(() => {
       cy.setUpApi({
-        ...SAMPLE_ITEMS,
+        items: [item],
         currentMember: MEMBERS.BOB,
       });
     });
 
     it('settings button does not open settings page', () => {
-      const item = SAMPLE_ITEMS.items[1];
       // manual click to verify settings button works correctly
       cy.visit(buildItemPath(item.id));
       cy.get(`#${buildSettingsButtonId(item.id)}`).should('not.exist');
     });
 
     it('settings page redirects to item', () => {
-      const item = SAMPLE_ITEMS.items[1];
       // manual click to verify settings button works correctly
       cy.visit(buildItemSettingsPath(item.id));
       cy.get(`.${ITEM_MAIN_CLASS}`).should('contain', item.name);
@@ -72,59 +69,45 @@ describe('Item Settings', () => {
   });
 
   describe('admin rights', () => {
-    beforeEach(() => {
-      cy.setUpApi({
-        ...ITEMS_SETTINGS,
-        items: [
-          ...ITEMS_SETTINGS.items,
-          GRAASP_LINK_ITEM,
-          ITEM_WITH_CHATBOX_MESSAGES,
-          ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN,
-          IMAGE_ITEM_DEFAULT,
-          IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH,
-          IMAGE_ITEM_DEFAULT,
-        ],
-      });
-    });
-
     it('setting button opens settings page', () => {
-      const itemId = ITEMS_SETTINGS.items[1].id;
+      const item = PackedFolderItemFactory({ settings: { showChatbox: true } });
+      cy.setUpApi({ items: [item] });
       // manual click to verify settings button works correctly
-      cy.visit(buildItemPath(itemId));
-      cy.get(`#${buildSettingsButtonId(itemId)}`).click();
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildSettingsButtonId(item.id)}`).click();
 
       cy.get(`#${SETTINGS_CHATBOX_TOGGLE_ID}`).should('be.checked');
     });
 
     describe('Metadata table', () => {
       it('folder', () => {
-        const { id, name, type, creator } = ITEMS_SETTINGS.items[1];
+        const item = PackedFolderItemFactory({ creator: MEMBERS.BOB });
+        const { id, name, type, creator } = item;
+        cy.setUpApi({ items: [item] });
+
         cy.visit(buildItemSettingsPath(id));
 
         cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
         cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(type);
 
-        const creatorName = getMemberById(
-          Object.values(MEMBERS),
-          creator?.id,
-        ).name;
-
-        cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
+        cy.get(`#${ITEM_PANEL_TABLE_ID}`)
+          .should('exist')
+          .contains(creator.name);
       });
 
       it('file', () => {
-        const { id, name, type, extra, creator } = IMAGE_ITEM_DEFAULT;
+        const FILE = PackedLocalFileItemFactory({ creator: MEMBERS.BOB });
+        cy.setUpApi({ items: [FILE] });
+
+        const { id, name, type, extra, creator } = FILE;
         cy.visit(buildItemSettingsPath(id));
 
         cy.get(`#${ITEM_PANEL_NAME_ID}`).contains(name);
         cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(extra.file.mimetype);
 
-        const creatorName = getMemberById(
-          Object.values(MEMBERS),
-          creator?.id,
-        ).name;
-
-        cy.get(`#${ITEM_PANEL_TABLE_ID}`).should('exist').contains(creatorName);
+        cy.get(`#${ITEM_PANEL_TABLE_ID}`)
+          .should('exist')
+          .contains(creator.name);
 
         if (type === ItemType.LOCAL_FILE || type === ItemType.S3_FILE) {
           const { mimetype, size } = getFileExtra(extra);
@@ -137,7 +120,9 @@ describe('Item Settings', () => {
 
     describe('Language', () => {
       it('change item language', () => {
-        const { id, lang } = ITEMS_SETTINGS.items[1];
+        const FILE = PackedLocalFileItemFactory();
+        cy.setUpApi({ items: [FILE] });
+        const { id, lang } = FILE;
         cy.visit(buildItemSettingsPath(id));
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
@@ -154,7 +139,11 @@ describe('Item Settings', () => {
 
     describe('Chatbox Settings', () => {
       it('Disabling Chatbox', () => {
-        const itemId = ITEMS_SETTINGS.items[1].id;
+        const FILE = PackedLocalFileItemFactory({
+          settings: { showChatbox: true },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
 
         cy.visit(buildItemSettingsPath(itemId));
 
@@ -176,7 +165,11 @@ describe('Item Settings', () => {
       });
 
       it('Enabling Chatbox', () => {
-        const itemId = ITEMS_SETTINGS.items[2].id;
+        const FILE = PackedLocalFileItemFactory({
+          settings: { showChatbox: false },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
 
         cy.visit(buildItemSettingsPath(itemId));
 
@@ -198,9 +191,32 @@ describe('Item Settings', () => {
       });
 
       it('Clear Chat', () => {
-        const itemId = ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN.id;
+        const item = PackedFolderItemFactory();
+        const ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN = {
+          ...item,
+          chat: [
+            {
+              id: '78ad2166-3862-4593-a10c-d380e7b66674',
+              body: 'message1',
+              item,
+              createdAt: '2021-08-11T12:56:36.834Z',
+              updatedAt: '2021-08-11T12:56:36.834Z',
+              creator: CURRENT_USER,
+            },
+            {
+              id: '78ad1166-3862-1593-a10c-d380e7b66674',
+              body: 'message2',
+              item,
+              createdAt: '2021-08-11T12:56:36.834Z',
+              updatedAt: '2021-08-11T12:56:36.834Z',
+              creator: MEMBERS.BOB,
+            },
+          ],
+        };
+        cy.setUpApi({ items: [ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN] });
+
         // navigate to the item settings
-        cy.visit(buildItemSettingsPath(itemId));
+        cy.visit(buildItemSettingsPath(item.id));
 
         // click on the clear chat button
         cy.get(`#${CLEAR_CHAT_SETTING_ID}`).scrollIntoView();
@@ -220,6 +236,8 @@ describe('Item Settings', () => {
       });
 
       it('Unauthorized to clear Chat', () => {
+        cy.setUpApi({ items: [ITEM_WITH_CHATBOX_MESSAGES] });
+
         const itemId = ITEM_WITH_CHATBOX_MESSAGES.id;
         // navigate to the item settings
         cy.visit(buildItemSettingsPath(itemId));
@@ -234,7 +252,11 @@ describe('Item Settings', () => {
 
     describe('Pinned Settings', () => {
       it('Unpin items', () => {
-        const itemId = ITEMS_SETTINGS.items[1].id;
+        const FILE = PackedLocalFileItemFactory({
+          settings: { isPinned: true },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
 
         cy.visit(buildItemSettingsPath(itemId));
 
@@ -256,7 +278,11 @@ describe('Item Settings', () => {
       });
 
       it('Pin Item', () => {
-        const itemId = ITEMS_SETTINGS.items[2].id;
+        const FILE = PackedLocalFileItemFactory({
+          settings: { isPinned: false },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
         cy.visit(buildItemSettingsPath(itemId));
         cy.get(`#${SETTINGS_PINNED_TOGGLE_ID}`).should('not.be.checked');
 
@@ -278,19 +304,22 @@ describe('Item Settings', () => {
 
     describe('Analytics Settings', () => {
       it('Layout', () => {
-        const itemId = ITEMS_SETTINGS.items[2].id;
+        const FILE = PackedLocalFileItemFactory();
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
         cy.visit(buildItemSettingsPath(itemId));
 
         cy.get(`#${SETTINGS_SAVE_ACTIONS_TOGGLE_ID}`)
           .should('exist')
-          .should('be.disabled')
-          .should('not.be.checked');
+          .should('be.disabled');
       });
     });
 
     describe('Link Settings', () => {
       it('Does not show link settings for folder item', () => {
-        const itemId = ITEMS_SETTINGS.items[0].id;
+        const FILE = PackedFolderItemFactory();
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
 
         cy.visit(buildItemSettingsPath(itemId));
 
@@ -299,7 +328,11 @@ describe('Item Settings', () => {
       });
 
       it('Toggle Iframe', () => {
-        const itemId = GRAASP_LINK_ITEM.id;
+        const FILE = PackedLinkItemFactory({
+          settings: { showLinkIframe: false },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
 
         cy.visit(buildItemSettingsPath(itemId));
 
@@ -321,7 +354,11 @@ describe('Item Settings', () => {
       });
 
       it('Toggle Button', () => {
-        const itemId = GRAASP_LINK_ITEM.id;
+        const FILE = PackedLinkItemFactory({
+          settings: { showLinkIframe: true },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
         cy.visit(buildItemSettingsPath(itemId));
 
         cy.get(`#${SETTINGS_LINK_SHOW_BUTTON_ID}`).should('be.checked');
@@ -344,7 +381,19 @@ describe('Item Settings', () => {
 
     describe('File Settings', () => {
       it('Change default maximum width', () => {
-        const itemId = IMAGE_ITEM_DEFAULT.id;
+        const FILE = PackedLocalFileItemFactory({
+          extra: {
+            [ItemType.LOCAL_FILE]: {
+              mimetype: MimeTypes.Image.JPEG,
+              size: 30,
+              name: 'name',
+              path: 'path',
+              content: '',
+            },
+          },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
 
         cy.visit(buildItemSettingsPath(itemId));
 
@@ -372,20 +421,38 @@ describe('Item Settings', () => {
       });
 
       it('Shows set maximum width for file', () => {
-        const itemId = IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH.id;
+        const FILE = PackedLocalFileItemFactory({
+          extra: {
+            [ItemType.LOCAL_FILE]: {
+              mimetype: MimeTypes.Image.JPEG,
+              size: 30,
+              name: 'name',
+              path: 'path',
+              content: '',
+            },
+          },
+          settings: {
+            maxWidth: MaxWidth.ExtraLarge,
+          },
+        });
+        cy.setUpApi({ items: [FILE] });
+        const { id: itemId } = FILE;
 
         cy.visit(buildItemSettingsPath(itemId));
 
         cy.get(`#${FILE_SETTING_MAX_WIDTH_ID} + input`).should(
           'have.value',
-          IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH.settings.maxWidth,
+          FILE.settings.maxWidth,
         );
       });
     });
 
     describe('DescriptionPlacement Settings', () => {
       it('folder should not have description placement', () => {
-        const { id, type } = ITEMS_SETTINGS.items[1];
+        const FOLDER = PackedFolderItemFactory();
+        cy.setUpApi({ items: [FOLDER] });
+        const { id, type } = FOLDER;
+
         cy.visit(buildItemSettingsPath(id));
 
         cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(type);
@@ -396,7 +463,10 @@ describe('Item Settings', () => {
       });
 
       it('update placement to above for file', () => {
-        const { id } = IMAGE_ITEM_DEFAULT;
+        const LINK = PackedLinkItemFactory();
+        cy.setUpApi({ items: [LINK] });
+        const { id } = LINK;
+
         cy.visit(buildItemSettingsPath(id));
 
         cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).click();
@@ -415,33 +485,51 @@ describe('Item Settings', () => {
   });
 
   describe('in item menu', () => {
+    const openItemMenu = (itemId: string) => {
+      cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
+      // There is a weird behaviour that scroll on menu button click, causing the close of the menu item.
+      // To avoid that, the menu button is click again if the menu is not visible.
+      cy.get(`#${buildItemMenu(itemId)}`).then(($itemMenu) => {
+        // If the item menu is not visible, click on the button again
+        if (!$itemMenu.is(':visible')) {
+          cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
+        }
+      });
+      cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
+    };
     describe('read', () => {
+      const item = PackedFolderItemFactory(
+        {},
+        { permission: PermissionLevel.Read },
+      );
+      const itemId = item.id;
       beforeEach(() => {
         cy.setUpApi({
-          ...SAMPLE_ITEMS,
+          items: [item],
           currentMember: MEMBERS.BOB,
         });
+        cy.visit('/');
       });
       it('does not have access to settings', () => {
-        const itemId = SAMPLE_ITEMS.items[1].id;
-        cy.visit('/');
-        cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
-        cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
+        openItemMenu(itemId);
         cy.get(`#${buildSettingsButtonId(itemId)}`).should('not.exist');
       });
     });
     describe('write', () => {
+      const item = PackedFolderItemFactory(
+        {},
+        { permission: PermissionLevel.Admin },
+      );
+      const itemId = item.id;
       beforeEach(() => {
         cy.setUpApi({
-          ...SAMPLE_ITEMS,
+          items: [item],
           currentMember: MEMBERS.ALICE,
         });
+        cy.visit('/');
       });
       it('has access to settings', () => {
-        const itemId = SAMPLE_ITEMS.items[1].id;
-        cy.visit('/');
-        cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
-        cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
+        openItemMenu(itemId);
         cy.get(`#${buildSettingsButtonId(itemId)}`).should('be.visible');
         cy.get(`#${buildSettingsButtonId(itemId)}`).click();
         cy.url().should('contain', buildItemSettingsPath(itemId));

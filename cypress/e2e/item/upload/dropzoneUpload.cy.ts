@@ -1,7 +1,9 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { buildItemPath } from '@/config/paths';
 import { DROPZONE_HELPER_ID } from '@/config/selectors';
 
-import { SAMPLE_ITEMS, SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
+import { SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
 
 describe('Dropzone Helper Visibility', () => {
   describe('Home screen', () => {
@@ -17,8 +19,9 @@ describe('Dropzone Helper Visibility', () => {
 
   describe('Empty folder', () => {
     it('should show dropzone helper when no items (logged in)', () => {
-      cy.setUpApi(SAMPLE_ITEMS);
-      cy.visit(buildItemPath(SAMPLE_ITEMS.items[1].id));
+      const ITEMS = [PackedFolderItemFactory()];
+      cy.setUpApi({ items: ITEMS });
+      cy.visit(buildItemPath(ITEMS[0].id));
       cy.get(`#${DROPZONE_HELPER_ID}`).should('be.visible');
     });
 

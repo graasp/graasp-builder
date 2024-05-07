@@ -1,3 +1,8 @@
+import {
+  PackedFolderItemFactory,
+  PackedLocalFileItemFactory,
+} from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_COPY_BUTTON_CLASS,
@@ -7,7 +12,6 @@ import {
   buildItemsTableRowIdAttribute,
 } from '../../../../src/config/selectors';
 import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 
 const copyItem = ({
   id,
@@ -18,21 +22,30 @@ const copyItem = ({
   toItemPath: string;
   rootId?: string;
 }) => {
+  // I need this wait because the table reloads and I lose the menu
+  // todo: remove on table refactor
+  cy.wait(500);
   cy.get(`#${buildItemMenuButtonId(id)}`).click();
   cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_COPY_BUTTON_CLASS}`).click();
   cy.handleTreeMenu(toItemPath, rootId);
 };
 
+const IMAGE_ITEM = PackedLocalFileItemFactory();
+const FOLDER = PackedFolderItemFactory();
+const IMAGE_ITEM_CHILD = PackedLocalFileItemFactory({ parentItem: FOLDER });
+const FOLDER2 = PackedFolderItemFactory();
+
+const items = [IMAGE_ITEM, FOLDER, FOLDER2, IMAGE_ITEM_CHILD];
+
 describe('Copy Item in List', () => {
   it('copy item on Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
+    cy.setUpApi({ items });
     cy.visit(HOME_PATH);
     cy.switchMode(ItemLayoutMode.List);
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS.items[0];
-    const { path: toItemPath } = SAMPLE_ITEMS.items[1];
-    copyItem({ id: copyItemId, toItemPath });
+    const { id: copyItemId } = IMAGE_ITEM;
+    copyItem({ id: copyItemId, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       expect(url).to.contain(copyItemId);
@@ -41,16 +54,16 @@ describe('Copy Item in List', () => {
   });
 
   it('copy item in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
     cy.switchMode(ItemLayoutMode.List);
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS.items[2];
-    const { id: toItem, path: toItemPath } = SAMPLE_ITEMS.items[3];
+    const { id: copyItemId } = IMAGE_ITEM_CHILD;
+    const { id: toItem, path: toItemPath } = FOLDER2;
     copyItem({ id: copyItemId, toItemPath });
 
     cy.wait('@copyItems').then(({ request: { url, body } }) => {
@@ -61,15 +74,15 @@ describe('Copy Item in List', () => {
   });
 
   it('copy item to Home', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    cy.setUpApi({ items });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
     cy.switchMode(ItemLayoutMode.List);
 
     // copy
-    const { id: copyItemId } = SAMPLE_ITEMS.items[2];
+    const { id: copyItemId } = IMAGE_ITEM_CHILD;
     copyItem({ id: copyItemId, toItemPath: MY_GRAASP_ITEM_PATH });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {

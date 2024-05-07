@@ -31,7 +31,6 @@ const ItemPublishButton = ({
 }: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  // item tags
   const { mutate: unpublish, isLoading: isUnPublishing } = useUnpublishItem();
   const { mutate: publishItem, isLoading: isPublishing } = usePublishItem();
 

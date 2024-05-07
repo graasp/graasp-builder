@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   DiscriminatedItem,
-  ItemMembership,
   ItemType,
-  ResultOf,
+  PermissionLevel,
+  PermissionLevelCompare,
   formatDate,
   getFolderExtra,
   getShortcutExtra,
@@ -21,7 +21,6 @@ import {
 } from '@ag-grid-community/core';
 
 import { ShowOnlyMeChangeType } from '@/config/types';
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
 import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
 import i18n, {
@@ -33,7 +32,6 @@ import { buildItemPath } from '../../config/paths';
 import { hooks, mutations } from '../../config/queryClient';
 import { buildItemsTableRowId } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 import DropzoneHelper from '../file/DropzoneHelper';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
@@ -47,7 +45,6 @@ const { useItem } = hooks;
 export type ItemsTableProps = {
   id?: string;
   items?: DiscriminatedItem[];
-  manyMemberships?: ResultOf<ItemMembership[]>;
   itemsStatuses?: ItemsStatuses;
   tableTitle: string;
   headerElements?: JSX.Element[];
@@ -77,7 +74,6 @@ const ItemsTable = ({
   tableTitle,
   id: tableId = '',
   items: rows = [],
-  manyMemberships,
   itemsStatuses,
   headerElements = [],
   isSearching = false,
@@ -104,7 +100,6 @@ const ItemsTable = ({
   const { itemId } = useParams();
 
   const { data: parentItem } = useItem(itemId);
-  const { data: member } = useCurrentUserContext();
 
   const { mutate: editItem } = mutations.useEditItem();
 
@@ -178,8 +173,6 @@ const ItemsTable = ({
     translateBuilder(BUILDER.ITEMS_TABLE_DRAG_DEFAULT_MESSAGE);
 
   const ActionComponent = ActionsCellRenderer({
-    manyMemberships,
-    member,
     canMove,
   });
 
@@ -274,9 +267,10 @@ const ItemsTable = ({
       count: selected.length,
     });
 
-  const { data: itemPermission } = useGetPermissionForItem(parentItem);
   const shouldShowDropzoneHelper = showDropzoneHelper && rows?.length === 0;
-  const canEditItem = itemPermission === 'admin' || itemPermission === 'write';
+  const canEditItem = parentItem?.permission
+    ? PermissionLevelCompare.gte(parentItem.permission, PermissionLevel.Write)
+    : false;
 
   return (
     <>

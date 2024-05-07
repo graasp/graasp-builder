@@ -1,7 +1,7 @@
 import { SelectProps } from '@mui/material';
 
 import {
-  DiscriminatedItem,
+  PackedItem,
   PermissionLevel,
   PermissionLevelCompare,
 } from '@graasp/sdk';
@@ -10,14 +10,12 @@ import { Select } from '@graasp/ui';
 
 import { mutations } from '@/config/queryClient';
 import { LANGUAGE_SELECTOR_ID } from '@/config/selectors';
-import { useGetPermissionForItem } from '@/hooks/authorization';
 
-const LanguageSelect = ({ item }: { item: DiscriminatedItem }): JSX.Element => {
+const LanguageSelect = ({ item }: { item: PackedItem }): JSX.Element => {
   const { mutate: changeLang } = mutations.useEditItem();
-  const { data: permission } = useGetPermissionForItem(item);
 
-  const canWrite = permission
-    ? PermissionLevelCompare.gte(permission, PermissionLevel.Write)
+  const canWrite = item.permission
+    ? PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
     : false;
 
   const onChange: SelectProps['onChange'] = (e) => {

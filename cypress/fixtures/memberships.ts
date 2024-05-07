@@ -2,6 +2,7 @@ import {
   DiscriminatedItem,
   ItemMembership,
   Member,
+  PackedFolderItemFactory,
   PermissionLevel,
 } from '@graasp/sdk';
 
@@ -27,27 +28,24 @@ export const buildItemMembership = (args: {
 });
 
 const sampleItems: DiscriminatedItem[] = [
-  {
-    ...DEFAULT_FOLDER_ITEM,
+  PackedFolderItemFactory({
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
     name: 'own_item_name1',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-  },
-  {
-    ...DEFAULT_FOLDER_ITEM,
+  }),
+  PackedFolderItemFactory({
     id: 'fcafbd2a-5688-11eb-ae93-0242ac130002',
     name: 'own_item_name1',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002.fcafbd2a_5688_11eb_ae93_0242ac130002',
-  },
-  {
-    ...DEFAULT_FOLDER_ITEM,
+  }),
+  PackedFolderItemFactory({
     id: 'fdf09f5a-5688-11eb-ae93-0242ac130002',
     name: 'own_item_name2',
     path: 'fdf09f5a_5688_11eb_ae93_0242ac130002',
-  },
+  }),
 ];
 
-// eslint-disable-next-line import/prefer-default-export
+// warning: actor has admin permission
 export const ITEMS_WITH_MEMBERSHIPS: ApiConfig = {
   items: [
     {
@@ -118,14 +116,17 @@ export const ITEMS_WITH_MEMBERSHIPS: ApiConfig = {
   ],
 };
 
-const sampleItemsWithWriteAccess: DiscriminatedItem[] = [
-  {
-    ...DEFAULT_FOLDER_ITEM,
-    id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
-    creator: MEMBERS.BOB,
-    name: 'own_item_name1',
-    path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
-  },
+const sampleItemsWithWriteAccess = [
+  PackedFolderItemFactory(
+    {
+      ...DEFAULT_FOLDER_ITEM,
+      id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
+      creator: MEMBERS.BOB,
+      name: 'own_item_name1',
+      path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+    },
+    { permission: PermissionLevel.Write },
+  ),
 ];
 
 export const ITEM_WITH_WRITE_ACCESS: ApiConfig = {

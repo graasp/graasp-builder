@@ -225,6 +225,9 @@ const ItemMembershipsTable = ({
         isClickable={false}
         emptyMessage={emptyMessage}
         countTextFunction={countTextFunction}
+        totalCount={memberships.length}
+        pageSize={memberships.length}
+        page={0}
       />
       {open && (
         <DeleteItemDialog

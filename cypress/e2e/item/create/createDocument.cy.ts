@@ -1,4 +1,10 @@
 import {
+  DocumentItemFactory,
+  ItemType,
+  PackedFolderItemFactory,
+} from '@graasp/sdk';
+
+import {
   CREATE_ITEM_BUTTON_ID,
   CREATE_ITEM_DOCUMENT_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
@@ -8,11 +14,6 @@ import {
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
-import {
-  GRAASP_DOCUMENT_BLANK_NAME_ITEM,
-  GRAASP_DOCUMENT_ITEM,
-} from '../../../fixtures/documents';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import { createDocument } from '../../../support/createUtils';
 
 describe('Create Document', () => {
@@ -23,7 +24,7 @@ describe('Create Document', () => {
     cy.switchMode(ItemLayoutMode.List);
 
     // create
-    createDocument(GRAASP_DOCUMENT_ITEM);
+    createDocument(DocumentItemFactory());
 
     cy.wait('@postItem').then(() => {
       // should update view
@@ -32,8 +33,9 @@ describe('Create Document', () => {
   });
 
   it('create document in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    const FOLDER = PackedFolderItemFactory();
+    cy.setUpApi({ items: [FOLDER] });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -41,7 +43,7 @@ describe('Create Document', () => {
     cy.switchMode(ItemLayoutMode.List);
 
     // create
-    createDocument(GRAASP_DOCUMENT_ITEM);
+    createDocument(DocumentItemFactory());
 
     cy.wait('@postItem').then(() => {
       // expect update
@@ -54,7 +56,17 @@ describe('Create Document', () => {
     cy.visit(HOME_PATH);
 
     cy.switchMode(ItemLayoutMode.List);
-    createDocument(GRAASP_DOCUMENT_BLANK_NAME_ITEM, { confirm: false });
+    createDocument(
+      DocumentItemFactory({
+        name: '',
+        extra: {
+          [ItemType.DOCUMENT]: {
+            content: '<h1>Some Title</h1>',
+          },
+        },
+      }),
+      { confirm: false },
+    );
 
     cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
       'have.prop',

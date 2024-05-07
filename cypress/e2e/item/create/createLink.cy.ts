@@ -1,7 +1,8 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../../../src/config/selectors';
 import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
-import { SAMPLE_ITEMS } from '../../../fixtures/items';
 import {
   GRAASP_LINK_ITEM,
   GRAASP_LINK_ITEM_NO_PROTOCOL,
@@ -48,8 +49,10 @@ describe('Create Link', () => {
   });
 
   it('create folder in item', () => {
-    cy.setUpApi(SAMPLE_ITEMS);
-    const { id } = SAMPLE_ITEMS.items[0];
+    const FOLDER = PackedFolderItemFactory();
+
+    cy.setUpApi({ items: [FOLDER] });
+    const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
@@ -70,8 +73,9 @@ describe('Create Link', () => {
 
   describe('Error handling', () => {
     it('cannot add an invalid link', () => {
-      cy.setUpApi(SAMPLE_ITEMS);
-      const { id } = SAMPLE_ITEMS.items[0];
+      const FOLDER = PackedFolderItemFactory();
+      cy.setUpApi({ items: [FOLDER] });
+      const { id } = FOLDER;
 
       // go to children item
       cy.visit(buildItemPath(id));

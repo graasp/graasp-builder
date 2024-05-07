@@ -1,30 +1,26 @@
-import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
+import { PackedItem, PermissionLevel } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 
-import { hooks } from '../../../config/queryClient';
 import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import ClearChatButton from './ClearChatButton';
 import ItemSettingProperty from './ItemSettingProperty';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
 };
 
 const AdminChatSettings = ({ item }: Props): JSX.Element | null => {
   const itemId = item.id;
   const { t } = useBuilderTranslation();
-  const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
-    hooks.useItemMemberships(item.id);
   const { data: currentMember } = useCurrentUserContext();
   // only show export chat when user has admin right on the item
   const isAdmin = currentMember
-    ? itemPermissions?.find((perms) => perms.member.id === currentMember.id)
-        ?.permission === PermissionLevel.Admin
+    ? item?.permission === PermissionLevel.Admin
     : false;
 
-  if (!isAdmin || isLoadingItemPermissions) {
+  if (!isAdmin) {
     return null;
   }
 

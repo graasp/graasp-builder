@@ -1494,9 +1494,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.7.0":
-  version: 3.7.0
-  resolution: "@graasp/query-client@npm:3.7.0"
+"@graasp/query-client@npm:3.8.0":
+  version: 3.8.0
+  resolution: "@graasp/query-client@npm:3.8.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1507,7 +1507,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/649e0f1f1db5355f50ec5af4ce5ed1c77aae5eeb330d56d50309e3a0317b2f96727ef9caea21de13cb88c8621a3c5d2fed787f9de2409005d8bf8ade8e6fab3d
+  checksum: 10/8657f66530cfe5e28c28c54cb29cf392d41aae9365bf7f1dceb9ed1876211b34d7032a892d33c0317e6a90d48d4a203bd44a3cecb8f2337121f35dcc789fdbef
   languageName: node
   linkType: hard
 
@@ -1555,45 +1555,6 @@ __metadata:
   peerDependencies:
     i18next: ^23.8.1
   checksum: 10/b085ca521f4b65d69ee4154b6d3f96682259acab212605cd221dbe7d3d7867eeeeffac60f1294115849221570cad8a418c576edb8cc405ee6cb031d18e20414b
-  languageName: node
-  linkType: hard
-
-"@graasp/ui@npm:4.17.0":
-  version: 4.17.0
-  resolution: "@graasp/ui@npm:4.17.0"
-  dependencies:
-    "@ag-grid-community/client-side-row-model": "npm:31.2.1"
-    "@ag-grid-community/react": "npm:^31.1.1"
-    "@ag-grid-community/styles": "npm:^31.1.1"
-    "@storybook/react-vite": "npm:7.6.18"
-    http-status-codes: "npm:2.3.0"
-    interweave: "npm:13.1.0"
-    katex: "npm:0.16.10"
-    lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.373.0"
-    react-cookie-consent: "npm:9.0.0"
-    react-quill: "npm:2.0.0"
-    react-rnd: "npm:10.4.1"
-    react-text-mask: "npm:5.5.0"
-    uuid: "npm:9.0.1"
-    vitest: "npm:1.5.2"
-  peerDependencies:
-    "@emotion/cache": ~11.10.7 || ~11.11.0
-    "@emotion/react": ~11.10.6 || ~11.11.0
-    "@emotion/styled": ~11.10.6 || ~11.11.0
-    "@graasp/sdk": ^4.0.0
-    "@graasp/translations": ^1.23.0
-    "@mui/icons-material": ~5.14.0 || ~5.15.0
-    "@mui/lab": ~5.0.0-alpha.150
-    "@mui/material": ~5.14.0 || ~5.15.0
-    i18next: ^22.4.15 || ^23.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    react-i18next: ^13.0.0 || ^14.0.0
-    react-router-dom: ^6.11.0
-    stylis: ^4.1.3
-    stylis-plugin-rtl: ^2.1.1
-  checksum: 10/97f94c7ca77010b1363af2ccc1c9c64e8d2e5457fd8d350e8938afe522db2049ff7ec5901e6185a57281555b9c37e313177b66709d77b5508df35a8ba674685b
   languageName: node
   linkType: hard
 
@@ -7370,10 +7331,10 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.11.1"
-    "@graasp/query-client": "npm:3.7.0"
+    "@graasp/query-client": "npm:3.8.0"
     "@graasp/sdk": "npm:4.9.0"
     "@graasp/translations": "npm:1.28.0"
-    "@graasp/ui": "npm:4.17.0"
+    "@graasp/ui": "npm:4.17.1"
     "@mui/icons-material": "npm:5.15.15"
     "@mui/lab": "npm:5.0.0-alpha.170"
     "@mui/material": "npm:5.15.15"
@@ -9185,15 +9146,6 @@ __metadata:
   dependencies:
     yallist: "npm:^4.0.0"
   checksum: 10/fc1fe2ee205f7c8855fa0f34c1ab0bcf14b6229e35579ec1fd1079f31d6fc8ef8eb6fd17f2f4d99788d7e339f50e047555551ebd5e434dda503696e7c6591825
-  languageName: node
-  linkType: hard
-
-"lucide-react@npm:0.373.0":
-  version: 0.373.0
-  resolution: "lucide-react@npm:0.373.0"
-  peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: 10/e474e456fadee6595a25738507102985bc50a754164d7daba4252e8301cdbacf5499ba206529058ac3dadcf7d57937c565ac8bc0ee2a90d0dcd0204e3a8e5b39
   languageName: node
   linkType: hard
 
