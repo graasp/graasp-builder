@@ -1,3 +1,5 @@
+import { PackedFolderItemFactory } from '@graasp/sdk';
+
 import { StatusCodes } from 'http-status-codes';
 
 import { buildItemPath } from '../../../../src/config/paths';
@@ -52,13 +54,13 @@ describe('Public Items', () => {
   });
 
   describe('Disabled', () => {
+    const item = PackedFolderItemFactory({}, { permission: null });
     it('Signed out user cannot access a private item', () => {
       const currentMember = SIGNED_OUT_MEMBER;
       cy.setUpApi({
-        ...SAMPLE_PUBLIC_ITEMS,
+        items: [item],
         currentMember,
       });
-      const item = SAMPLE_PUBLIC_ITEMS.items[1];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
         expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);
@@ -69,10 +71,9 @@ describe('Public Items', () => {
     it('User without a membership cannot access a private item', () => {
       const currentMember = MEMBERS.BOB;
       cy.setUpApi({
-        ...SAMPLE_PUBLIC_ITEMS,
+        items: [item],
         currentMember,
       });
-      const item = SAMPLE_PUBLIC_ITEMS.items[1];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
         expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);
@@ -83,10 +84,9 @@ describe('Public Items', () => {
     it('User without a membership cannot access a child of a private item', () => {
       const currentMember = MEMBERS.BOB;
       cy.setUpApi({
-        ...SAMPLE_PUBLIC_ITEMS,
+        items: [item],
         currentMember,
       });
-      const item = SAMPLE_PUBLIC_ITEMS.items[6];
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
         expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);

@@ -1,20 +1,18 @@
 import {
-  DiscriminatedItem,
-  FolderItemFactory,
-  FolderItemType,
   ItemTagType,
   ItemType,
   ItemValidation,
   ItemValidationProcess,
   ItemValidationStatus,
   PackedFolderItemFactory,
+  PackedItem,
   PermissionLevel,
 } from '@graasp/sdk';
 
 import { ApiConfig, ItemForTest } from '../support/types';
 import { CURRENT_USER, MEMBERS } from './members';
 
-export const DEFAULT_FOLDER_ITEM: FolderItemType = FolderItemFactory({
+export const DEFAULT_FOLDER_ITEM = PackedFolderItemFactory({
   name: 'default folder',
   extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
   creator: CURRENT_USER,
@@ -53,7 +51,7 @@ export const generateOwnItems = (number: number): ItemForTest[] => {
     });
 };
 
-const samplePublicItems: DiscriminatedItem[] = [
+const samplePublicItems: PackedItem[] = [
   {
     ...DEFAULT_FOLDER_ITEM,
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
@@ -230,7 +228,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
 };
 
 // warning: admin permission on item
-const item: DiscriminatedItem = PackedFolderItemFactory(
+const item = PackedFolderItemFactory(
   {
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
     name: 'parent public item',

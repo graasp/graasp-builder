@@ -1,3 +1,5 @@
+import { ItemTagType, PackedFolderItemFactory } from '@graasp/sdk';
+
 import {
   DISPLAY_CO_EDITORS_OPTIONS,
   SETTINGS,
@@ -11,7 +13,6 @@ import {
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_WITH_CATEGORIES_CONTEXT } from '../../../fixtures/categories';
-import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 
@@ -63,9 +64,13 @@ describe('Co-editor Setting', () => {
   });
 });
 
-describe('Co-editor setting permissions', () => {
+const item = PackedFolderItemFactory(
+  {},
+  { permission: null, publicTag: { type: ItemTagType.Public } },
+);
+
+describe.only('Co-editor setting permissions', () => {
   it('User signed out cannot edit co-editor setting', () => {
-    const item = PUBLISHED_ITEM;
     cy.setUpApi({
       items: [item],
       currentMember: SIGNED_OUT_MEMBER,
@@ -79,7 +84,6 @@ describe('Co-editor setting permissions', () => {
   });
 
   it('Read-only user cannot edit co-editor setting', () => {
-    const item = PUBLISHED_ITEM;
     cy.setUpApi({
       items: [item],
       currentMember: MEMBERS.BOB,

@@ -356,7 +356,7 @@ export const mockGetItem = (
         });
       }
 
-      if (item?.tags?.find(({ type }) => type === ItemTagType.Public)) {
+      if (item.public) {
         return reply({
           body: item,
           statusCode: StatusCodes.OK,
@@ -434,7 +434,7 @@ export const mockGetChildren = ({
 
       const children = items.filter(isChild(id));
 
-      if (item?.tags?.find(({ type }) => type === ItemTagType.Public)) {
+      if (item.public) {
         return reply(children);
       }
 

@@ -10,7 +10,6 @@ import {
 import {
   PUBLISHED_ITEM,
   PUBLISHED_ITEM_VALIDATIONS,
-  SAMPLE_PUBLIC_ITEMS,
 } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
 import { PAGE_LOAD_WAITING_PAUSE } from '../../../support/constants';
@@ -26,7 +25,10 @@ export const publishItem = (): void => {
 
 describe('Public', () => {
   it('Should not view publish tab', () => {
-    const item = SAMPLE_PUBLIC_ITEMS.items[0];
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: null, publicTag: {} },
+    );
     cy.setUpApi({
       items: [item],
       currentMember: null,
