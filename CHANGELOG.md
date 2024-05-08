@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.21.0](https://github.com/graasp/graasp-builder/compare/v2.20.1...v2.21.0) (2024-05-07)
+
+
+### Features
+
+* add structure import from csv ([#1138](https://github.com/graasp/graasp-builder/issues/1138)) ([a4ad84e](https://github.com/graasp/graasp-builder/commit/a4ad84ef9fa07e2e761a789c24b515e84474d3f3))
+* use packed item ([#1140](https://github.com/graasp/graasp-builder/issues/1140)) ([65ea828](https://github.com/graasp/graasp-builder/commit/65ea828c307b20a943c6e790d2736e880bfea032))
+
+
+### Bug Fixes
+
+* **arabic:** translations ([#1230](https://github.com/graasp/graasp-builder/issues/1230)) ([25c7966](https://github.com/graasp/graasp-builder/commit/25c7966080d7e1918a16015eddb715d8deaead54))
+* **deps:** update dependency @graasp/sdk to v4.9.0 ([#1192](https://github.com/graasp/graasp-builder/issues/1192)) ([630f0fb](https://github.com/graasp/graasp-builder/commit/630f0fbfeabe99e5b62a44abbae6af3b84e754f1))
+* **deps:** update dependency @sentry/react to v7.112.2 ([#1186](https://github.com/graasp/graasp-builder/issues/1186)) ([b77e98c](https://github.com/graasp/graasp-builder/commit/b77e98c6fa8bfafa85464c5528d1d37fa2e93a56))
+* **deps:** update dependency i18next to v23.11.3 ([#1199](https://github.com/graasp/graasp-builder/issues/1199)) ([b6993d3](https://github.com/graasp/graasp-builder/commit/b6993d3f8787f3725599d8ab471c64fce26082c1))
+* **deps:** update react monorepo to v18.3.1 ([#1194](https://github.com/graasp/graasp-builder/issues/1194)) ([96784ab](https://github.com/graasp/graasp-builder/commit/96784ab2e113b36036104e2f800a68bb6be3e792))
+* **french:** translations ([#1228](https://github.com/graasp/graasp-builder/issues/1228)) ([3601457](https://github.com/graasp/graasp-builder/commit/3601457d996fee5bf70e2742ec0136846f8f89a1))
+* **german:** update translations ([#1226](https://github.com/graasp/graasp-builder/issues/1226)) ([90765f9](https://github.com/graasp/graasp-builder/commit/90765f9c9f22a396f78c7c8b71f4d83ebbceae44))
+* **italian:** translations ([#1229](https://github.com/graasp/graasp-builder/issues/1229)) ([b637dd3](https://github.com/graasp/graasp-builder/commit/b637dd33edc3b3734315e5091727ae8e810437ae))
+* **spanish:** translations ([#1227](https://github.com/graasp/graasp-builder/issues/1227)) ([657921e](https://github.com/graasp/graasp-builder/commit/657921e354e6be614132113e21bce988f7ee1ed3))
+
 ## [2.20.1](https://github.com/graasp/graasp-builder/compare/v2.20.0...v2.20.1) (2024-05-03)
 
 
