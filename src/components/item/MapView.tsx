@@ -69,6 +69,7 @@ const MapView = ({
   const [geolocation, setGeolocation] = useState<Partial<ItemGeolocation>>();
   const [open, setOpen] = useState(false);
   const { hasFetchedCurrentLocation, currentPosition } = useCurrentLocation();
+  const { data: parent, isLoading: isLoadingParent } = hooks.useItem(parentId);
 
   const handleAddOnClick = (args: { location: Partial<ItemGeolocation> }) => {
     setGeolocation(args.location);
@@ -91,7 +92,8 @@ const MapView = ({
           )}
         </Stack>
         <Stack flex={1}>
-          {enableGeolocation && !hasFetchedCurrentLocation ? (
+          {(parentId && isLoadingParent) ||
+          (enableGeolocation && !hasFetchedCurrentLocation) ? (
             <Skeleton width="100%" height="100%" />
           ) : (
             <div style={{ width: '100%', height: '100%' }}>
@@ -105,7 +107,7 @@ const MapView = ({
                 useItemsInMap={hooks.useItemsInMap}
                 viewItem={viewItem}
                 currentMember={currentMember}
-                itemId={parentId}
+                item={parent}
                 // use builder modal to add new item if the screen is big enough
                 // todo: always use builder modal when it is responsive
                 handleAddOnClick={isMobile ? undefined : handleAddOnClick}
