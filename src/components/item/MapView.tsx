@@ -24,7 +24,7 @@ const options = {
   maximumAge: 0,
 };
 
-const useCurrentLocation = () => {
+const useCurrentLocation = (enableGeolocation = false) => {
   const [hasFetchedCurrentLocation, setHasFetchedCurrentLocation] =
     useState(false);
 
@@ -35,24 +35,39 @@ const useCurrentLocation = () => {
 
   // get current location
   useEffect(() => {
-    const success = (pos: {
-      coords: { latitude: number; longitude: number };
-    }) => {
-      const crd = pos.coords;
-      setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
-      setHasFetchedCurrentLocation(true);
-    };
-
-    navigator.geolocation.getCurrentPosition(
-      success,
-      (err: { code: number; message: string }) => {
-        // eslint-disable-next-line no-console
-        console.warn(`ERROR(${err.code}): ${err.message}`);
+    if (enableGeolocation) {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions#examples
+      if (!navigator.permissions) {
         setHasFetchedCurrentLocation(true);
-      },
-      options,
-    );
-  }, []);
+      } else {
+        navigator.permissions
+          .query({ name: 'geolocation' })
+          .then(({ state }) => {
+            if (state === 'granted') {
+              const success = (pos: {
+                coords: { latitude: number; longitude: number };
+              }) => {
+                const crd = pos.coords;
+                setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
+                setHasFetchedCurrentLocation(true);
+              };
+
+              navigator.geolocation.getCurrentPosition(
+                success,
+                (err: { code: number; message: string }) => {
+                  // eslint-disable-next-line no-console
+                  console.warn(`ERROR(${err.code}): ${err.message}`);
+                  setHasFetchedCurrentLocation(true);
+                },
+                options,
+              );
+            } else {
+              console.error('geolocation denied:', state);
+            }
+          });
+      }
+    }
+  }, [enableGeolocation]);
 
   return { hasFetchedCurrentLocation, currentPosition };
 };
@@ -68,8 +83,9 @@ const MapView = ({
   const { isMobile } = useMobileView();
   const [geolocation, setGeolocation] = useState<Partial<ItemGeolocation>>();
   const [open, setOpen] = useState(false);
-  const { hasFetchedCurrentLocation, currentPosition } = useCurrentLocation();
   const { data: parent, isLoading: isLoadingParent } = hooks.useItem(parentId);
+  const { hasFetchedCurrentLocation, currentPosition } =
+    useCurrentLocation(enableGeolocation);
 
   const handleAddOnClick = (args: { location: Partial<ItemGeolocation> }) => {
     setGeolocation(args.location);
