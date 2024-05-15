@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
-import { Outlet, useOutletContext, useParams } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
+import {
+  Outlet,
+  useOutletContext,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { Box } from '@mui/material';
 

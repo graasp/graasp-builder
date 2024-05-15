@@ -1,5 +1,9 @@
-import { Navigate, useOutletContext, useParams } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
+import {
+  Navigate,
+  useOutletContext,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 

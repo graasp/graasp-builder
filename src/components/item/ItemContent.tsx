@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react-router';
+import { useOutletContext } from 'react-router-dom';
 
 import { Container, Skeleton, styled } from '@mui/material';
 
@@ -107,21 +107,19 @@ const LinkContent = ({
   item: LinkItemType;
   member?: Member | null;
 }): JSX.Element => (
-  <StyledContainer>
-    <LinkItem
-      id={item.id}
-      memberId={member?.id}
-      isResizable
-      item={item}
-      height={ITEM_DEFAULT_HEIGHT}
-      showButton={Boolean(
-        item.settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON,
-      )}
-      showIframe={Boolean(
-        item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
-      )}
-    />
-  </StyledContainer>
+  <LinkItem
+    id={item.id}
+    memberId={member?.id}
+    isResizable
+    item={item}
+    height={ITEM_DEFAULT_HEIGHT}
+    showButton={Boolean(
+      item.settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON,
+    )}
+    showIframe={Boolean(
+      item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
+    )}
+  />
 );
 
 /**
