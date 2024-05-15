@@ -1453,9 +1453,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/map@github:graasp/graasp-map#read-access-add":
-  version: 1.11.1
-  resolution: "@graasp/map@https://github.com/graasp/graasp-map.git#commit=038e7012c85113d3e8bf2db4d9b427a62147c7df"
+"@graasp/map@npm:1.12.1":
+  version: 1.12.1
+  resolution: "@graasp/map@npm:1.12.1"
   dependencies:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
@@ -1490,7 +1490,7 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^14.0.0
-  checksum: 10/9c45a8266496ade78322b68ea17ef141d34a8de2b16b20c842174287d4ef733f7a3a7228db58097b69ebd78dc177ae04e45920558a42cf142646905d5c08240e
+  checksum: 10/4274d83b66105867ddebcb9a515dd528d3aa18b8036461b3e35e90333180e21ea8046f49af15fc54da22b108d34f32be6f9d3e784583cb6be8c1b178357f6b1f
   languageName: node
   linkType: hard
 
@@ -7330,7 +7330,7 @@ __metadata:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
-    "@graasp/map": "github:graasp/graasp-map#read-access-add"
+    "@graasp/map": "npm:1.12.1"
     "@graasp/query-client": "npm:3.8.0"
     "@graasp/sdk": "npm:4.9.0"
     "@graasp/translations": "npm:1.28.0"
