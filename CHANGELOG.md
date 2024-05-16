@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.22.0](https://github.com/graasp/graasp-builder/compare/v2.21.0...v2.22.0) (2024-05-16)
+
+
+### Features
+
+* update map, pass parent item ([#1234](https://github.com/graasp/graasp-builder/issues/1234)) ([3eb32ab](https://github.com/graasp/graasp-builder/commit/3eb32abc63cde03d81dc3e415b29c2f7df4274be))
+
+
+### Bug Fixes
+
+* check permission before accessing geolocation ([#1235](https://github.com/graasp/graasp-builder/issues/1235)) ([ea97bd3](https://github.com/graasp/graasp-builder/commit/ea97bd3c8af32ed57536bd994f62c10710958fcf))
+* **deps:** remove dependency short-uuid to v5 ([#1232](https://github.com/graasp/graasp-builder/issues/1232)) ([2d6cf93](https://github.com/graasp/graasp-builder/commit/2d6cf9353593fc016fe355fd50e0684f579701cd))
+* **deps:** update ag-grid monorepo to v31.3.2 ([#1222](https://github.com/graasp/graasp-builder/issues/1222)) ([cb85001](https://github.com/graasp/graasp-builder/commit/cb850015e06cabbd761707bc3124aee99283229b))
+* **deps:** update dependency @uppy/core to v3.11.3 ([#1225](https://github.com/graasp/graasp-builder/issues/1225)) ([201c2fe](https://github.com/graasp/graasp-builder/commit/201c2fe2618c5af3edb6ec00289c7af4749af493))
+* **deps:** update dependency lucide-react to v0.378.0 ([#1231](https://github.com/graasp/graasp-builder/issues/1231)) ([4f5dd6b](https://github.com/graasp/graasp-builder/commit/4f5dd6b744db07749fa25d856d5d28290fb33768))
+* **deps:** update mui (non-major) to v5.15.18 ([#1218](https://github.com/graasp/graasp-builder/issues/1218)) ([5141451](https://github.com/graasp/graasp-builder/commit/514145125ba85876bbbaa307adf0cf6332ea21ce))
+
 ## [2.21.0](https://github.com/graasp/graasp-builder/compare/v2.20.1...v2.21.0) (2024-05-07)
 
 
