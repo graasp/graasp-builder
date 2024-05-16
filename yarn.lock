@@ -38,6 +38,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ag-grid-community/core@npm:31.3.2":
+  version: 31.3.2
+  resolution: "@ag-grid-community/core@npm:31.3.2"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  checksum: 10/1293814e121c08527ca07f544d9c58e7e35db08f42111363f714f38c56db943273942f00cc42714c462f8091e1c987c8d492232e82c91da731dfb280219d031a
+  languageName: node
+  linkType: hard
+
 "@ag-grid-community/react@npm:^31.1.1":
   version: 31.2.1
   resolution: "@ag-grid-community/react@npm:31.2.1"
@@ -51,10 +60,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ag-grid-community/styles@npm:31.2.1":
-  version: 31.2.1
-  resolution: "@ag-grid-community/styles@npm:31.2.1"
-  checksum: 10/d13200a7136cc60b2bc5e3d9957b3e23c79405959bf7ef448df0aa844ee2d9e08f0cce4c9d6b4887cd4702b08c50d9acc8a944c8765600c16e699d28b4fc276d
+"@ag-grid-community/styles@npm:31.3.2":
+  version: 31.3.2
+  resolution: "@ag-grid-community/styles@npm:31.3.2"
+  checksum: 10/b651750803577419e6bbbc45b64d717d64c500332364f4523f84d9d384351f69a7d8eb83bd8343a4ec1530b0db0f26288e91e69516c6ade6e5f7dcf9a7e3078c
   languageName: node
   linkType: hard
 
@@ -7331,8 +7340,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "graasp-builder@workspace:."
   dependencies:
-    "@ag-grid-community/core": "npm:31.2.1"
-    "@ag-grid-community/styles": "npm:31.2.1"
+    "@ag-grid-community/core": "npm:31.3.2"
+    "@ag-grid-community/styles": "npm:31.3.2"
     "@commitlint/cli": "npm:19.3.0"
     "@commitlint/config-conventional": "npm:19.2.2"
     "@cypress/code-coverage": "npm:3.12.36"
