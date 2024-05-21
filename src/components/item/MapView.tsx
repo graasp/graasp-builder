@@ -8,6 +8,7 @@ import { useMobileView } from '@graasp/ui';
 
 import { hooks, mutations } from '@/config/queryClient';
 
+import { buildMapViewId } from '../../config/selectors';
 import NewItemModal from '../main/NewItemModal';
 
 type Props = {
@@ -63,7 +64,12 @@ const useCurrentLocation = (enableGeolocation = false) => {
               );
             } else {
               console.error('geolocation denied:', state);
+              setHasFetchedCurrentLocation(true);
             }
+          })
+          .catch((e) => {
+            console.error('geolocation denied:', e);
+            setHasFetchedCurrentLocation(true);
           });
       }
     }
@@ -112,7 +118,10 @@ const MapView = ({
           (enableGeolocation && !hasFetchedCurrentLocation) ? (
             <Skeleton width="100%" height="100%" />
           ) : (
-            <div style={{ width: '100%', height: '100%' }}>
+            <div
+              id={buildMapViewId(parentId)}
+              style={{ width: '100%', height: '100%' }}
+            >
               <Map
                 currentPosition={currentPosition}
                 useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}

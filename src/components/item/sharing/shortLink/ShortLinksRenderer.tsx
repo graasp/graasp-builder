@@ -9,6 +9,7 @@ import {
   appendPathToUrl,
 } from '@graasp/sdk';
 
+import { useLayoutContext } from '@/components/context/LayoutContext';
 import { GRAASP_REDIRECTION_HOST } from '@/config/env';
 import { hooks } from '@/config/queryClient';
 import { ShortLinkPlatform, randomAlias } from '@/utils/shortLink';
@@ -35,6 +36,7 @@ const ShortLinksRenderer = ({
   itemId,
   canAdminShortLink,
 }: Props): JSX.Element => {
+  const { mode } = useLayoutContext();
   const { data: apiLinks, isLoading } = useShortLinksItem(itemId);
   const { data: publishedEntry } = useItemPublishedInformation({ itemId });
   const [modalOpen, setOpen] = useState(false);
@@ -58,6 +60,11 @@ const ShortLinksRenderer = ({
       }
       const clientHostManager = ClientHostManager.getInstance();
       const url = clientHostManager.getItemAsURL(platform, itemId);
+
+      // not ideal
+      if (platform === Context.Builder) {
+        url.searchParams.set('mode', mode);
+      }
 
       const shortLink = {
         alias: randomAlias(),

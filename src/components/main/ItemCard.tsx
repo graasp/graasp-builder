@@ -1,5 +1,5 @@
 import { CSSProperties, PropsWithChildren } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
@@ -27,10 +27,15 @@ import DownloadButton from './DownloadButton';
 import ItemMenu from './ItemMenu';
 
 const NameWrapper = ({ id, style }: { id: string; style: CSSProperties }) => {
+  const [searchParams] = useSearchParams();
   const NameComponent = ({
     children,
   }: PropsWithChildren<unknown>): JSX.Element => (
-    <Link to={buildItemPath(id)} id={buildItemLink(id)} style={style}>
+    <Link
+      to={{ pathname: buildItemPath(id), search: searchParams.toString() }}
+      id={buildItemLink(id)}
+      style={style}
+    >
       {children}
     </Link>
   );

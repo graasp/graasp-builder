@@ -10,7 +10,6 @@ import {
   BOOKMARKED_ITEMS_PATH,
   HOME_PATH,
   ITEMS_PATH,
-  ITEM_INFORMATION_PATH,
   ITEM_PUBLISH_PATH,
   ITEM_SETTINGS_PATH,
   ITEM_SHARE_PATH,
@@ -29,7 +28,6 @@ import HomeScreen from './pages/HomeScreen';
 import MapItemsScreen from './pages/MapItemsScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
-import ItemInformationPage from './pages/item/ItemInformationPage';
 import ItemPageLayout from './pages/item/ItemPageLayout';
 import ItemScreen from './pages/item/ItemScreen';
 import ItemScreenLayout from './pages/item/ItemScreenLayout';
@@ -103,10 +101,6 @@ const App = (): JSX.Element => {
             <Route path={ITEM_SHARE_PATH} element={<ItemSharingPage />} />
             <Route path={ITEM_PUBLISH_PATH} element={<LibrarySettingsPage />} />
             <Route path={ITEM_SETTINGS_PATH} element={<ItemSettingsPage />} />
-            <Route
-              path={ITEM_INFORMATION_PATH}
-              element={<ItemInformationPage />}
-            />
           </Route>
         </Route>
         <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
