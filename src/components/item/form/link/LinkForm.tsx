@@ -161,11 +161,19 @@ const LinkForm = ({
   // this is only run once.
   useEffect(
     () => {
+      // this is the object on which we will define the props to be updated
+      const updatedProps: Partial<DiscriminatedItem> = {};
+
       if (!isDescriptionDirty && linkData?.description) {
-        onChange({ description: linkData?.description });
+        updatedProps.description = linkData?.description;
       }
       if (linkData?.title) {
-        onChange({ name: linkData.title });
+        updatedProps.name = linkData.title;
+      }
+      // update props in one call to remove issue of race updates
+      if (Object.keys(updatedProps).length) {
+        // this should be called only once !
+        onChange(updatedProps);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -258,17 +266,19 @@ const LinkForm = ({
         InputProps={{
           endAdornment: (
             <>
-              <IconButton
-                onClick={onClickRestoreDefaultDescription}
-                sx={{
-                  visibility:
-                    description !== linkData?.description
-                      ? 'visible'
-                      : 'hidden',
-                }}
-              >
-                <Undo2Icon size="20" />
-              </IconButton>
+              {isDescriptionDirty ? (
+                <IconButton
+                  onClick={onClickRestoreDefaultDescription}
+                  sx={{
+                    visibility:
+                      description !== linkData?.description
+                        ? 'visible'
+                        : 'hidden',
+                  }}
+                >
+                  <Undo2Icon size="20" />
+                </IconButton>
+              ) : undefined}
               <IconButton
                 onClick={onClickClearDescription}
                 sx={{
