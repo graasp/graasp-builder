@@ -18,5 +18,5 @@ Cypress.Commands.add('goToHome', () => {
 });
 
 Cypress.Commands.add('goToItemWithNavigation', (id) => {
-  cy.get(`[href="${buildItemPath(id)}"]`).click();
+  cy.get(`[href^="${buildItemPath(id)}"]`).click();
 });

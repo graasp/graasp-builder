@@ -56,7 +56,7 @@ const Navigator = (): JSX.Element | null => {
 
     return (
       <>
-        <Link to={HOME_PATH}>
+        <Link to={{ pathname: HOME_PATH, search: searchParams.toString() }}>
           <IconButton id={NAVIGATION_HOME_ID}>
             <Home />
           </IconButton>

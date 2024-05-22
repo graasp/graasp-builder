@@ -69,7 +69,7 @@ const item = PackedFolderItemFactory(
   { permission: null, publicTag: { type: ItemTagType.Public } },
 );
 
-describe.only('Co-editor setting permissions', () => {
+describe('Co-editor setting permissions', () => {
   it('User signed out cannot edit co-editor setting', () => {
     cy.setUpApi({
       items: [item],
