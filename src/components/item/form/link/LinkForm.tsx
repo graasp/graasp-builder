@@ -14,7 +14,6 @@ import {
   TextFieldProps,
   Typography,
   styled,
-  useTheme,
 } from '@mui/material';
 
 import {
@@ -28,7 +27,7 @@ import {
 } from '@graasp/sdk';
 import { LinkCard, LinkItem } from '@graasp/ui';
 
-import { TriangleAlertIcon, Undo2Icon } from 'lucide-react';
+import { Undo2Icon } from 'lucide-react';
 
 import { hooks } from '@/config/queryClient';
 
@@ -81,10 +80,8 @@ const LinkForm = ({
   const [isDescriptionDirty, setIsDescriptionDirty] = useState<boolean>(false);
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: linkData } = hooks.useMetadata(linkContent);
-  const theme = useTheme();
 
   // get value from the updatedProperties
-  const description = updatedProperties.description || '';
   const linkType = getLinkType(updatedProperties.settings);
 
   const handleLinkInput: TextFieldProps['onChange'] = (event) => {
@@ -104,9 +101,10 @@ const LinkForm = ({
   };
 
   let url = '';
+  let description: string | undefined = '';
   const extraProps = updatedProperties.extra;
   if (extraProps && ItemType.LINK in extraProps) {
-    ({ url } = getLinkExtra(extraProps) || {});
+    ({ url, description } = getLinkExtra(extraProps) || {});
   }
   // link is considered valid if it is either empty, or it is a valid url
   const isLinkInvalid = !(isUrlValid(url) || url.length === 0);
@@ -162,13 +160,20 @@ const LinkForm = ({
   useEffect(
     () => {
       // this is the object on which we will define the props to be updated
-      const updatedProps: Partial<DiscriminatedItem> = {};
+      const updatedProps: Partial<LinkItemType> = {};
 
       if (!isDescriptionDirty && linkData?.description) {
         updatedProps.description = linkData?.description;
       }
       if (linkData?.title) {
         updatedProps.name = linkData.title;
+      }
+      if (linkData?.description) {
+        updatedProps.extra = buildLinkExtra({
+          ...updatedProperties.extra?.embeddedLink,
+          url: updatedProperties.extra?.embeddedLink.url || '',
+          description: linkData.description,
+        });
       }
       // update props in one call to remove issue of race updates
       if (Object.keys(updatedProps).length) {
@@ -243,26 +248,26 @@ const LinkForm = ({
         label="Description"
         variant="standard"
         InputLabelProps={{ shrink: true }}
-        value={description}
+        value={updatedProperties.description}
         onChange={onChangeDescription}
-        helperText={
-          isDescriptionDirty ? (
-            <Stack direction="row" alignItems="center" gap={0.5}>
-              <TriangleAlertIcon
-                strokeWidth="2.5"
-                size={theme.typography.caption.fontSize}
-                color={theme.palette.warning.main}
-              />
-              <Typography variant="caption">
-                {translateBuilder(
-                  'You have edited this description, to use the automatic description clear the field',
-                )}
-              </Typography>
-            </Stack>
-          ) : (
-            ' '
-          )
-        }
+        // helperText={
+        //   isDescriptionDirty ? (
+        //     <Stack direction="row" alignItems="center" gap={0.5}>
+        //       <TriangleAlertIcon
+        //         strokeWidth="2.5"
+        //         size={theme.typography.caption.fontSize}
+        //         color={theme.palette.warning.main}
+        //       />
+        //       <Typography variant="caption">
+        //         {translateBuilder(
+        //           'You have edited this description, to use the automatic description clear the field',
+        //         )}
+        //       </Typography>
+        //     </Stack>
+        //   ) : (
+        //     ' '
+        //   )
+        // }
         InputProps={{
           endAdornment: (
             <>
@@ -315,7 +320,7 @@ const LinkForm = ({
                     title={linkData?.title || ''}
                     url={linkContent}
                     thumbnail={linkData?.thumbnails[0]}
-                    description={linkData?.description || ''}
+                    description={description || ''}
                   />
                 }
                 control={<Radio />}

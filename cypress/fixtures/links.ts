@@ -55,6 +55,10 @@ export const YOUTUBE_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
     thumbnails: ['https://i.ytimg.com/vi/FmiEgBMTPLo/maxresdefault.jpg'],
     icons: ['https://www.youtube.com/s/desktop/f0ff6c1d/img/favicon_96.png'],
   }),
+  settings: {
+    // this is necessary for Youtube to show the embed
+    showLinkIframe: true,
+  },
 });
 
 export const INVALID_LINK_ITEM: LinkItemType = PackedLinkItemFactory({

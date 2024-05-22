@@ -108,7 +108,8 @@ export const expectLinkViewScreenLayout = ({
   }
 
   if (!html && (settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON)) {
-    cy.get('[data-testid="OpenInNewIcon"]').should('be.visible');
+    // this data-testid is set in graasp/ui
+    cy.get('[data-testid="fancy-link-card"]').should('be.visible');
   }
 
   if (description) {
