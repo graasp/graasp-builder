@@ -2195,3 +2195,29 @@ export const mockDeleteShortLink = (
     },
   ).as('deleteShortLink');
 };
+
+export const mockGetLinkMetadata = (): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Get,
+      url: new RegExp(`${API_HOST}/items/embedded-links/metadata*`),
+    },
+    ({ reply, url }) => {
+      let linkUrl = new URL(url).searchParams.get('link');
+
+      if (!linkUrl.includes('http')) {
+        linkUrl = `https://${linkUrl}`;
+      }
+      if (URL.canParse(linkUrl)) {
+        return reply({
+          title: 'Page title',
+          description: 'Page description',
+          html: '',
+          icons: [],
+          thumbnails: [],
+        });
+      }
+      return reply({ statusCode: StatusCodes.BAD_REQUEST });
+    },
+  ).as('getLinkMetadata');
+};
