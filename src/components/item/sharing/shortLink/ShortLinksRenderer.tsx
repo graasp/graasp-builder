@@ -61,7 +61,7 @@ const ShortLinksRenderer = ({
       const clientHostManager = ClientHostManager.getInstance();
       const url = clientHostManager.getItemAsURL(platform, itemId);
 
-      // not ideal
+      // not ideal, provide a select to choose the mode?
       if (platform === Context.Builder) {
         url.searchParams.set('mode', mode);
       }

@@ -9,10 +9,11 @@ export const buildItemPath = (
   id = ':itemId',
   args: { mode?: ItemLayoutMode } = {},
 ): string => {
-  let qs = '';
+  const search = new URLSearchParams();
   if (args.mode) {
-    qs = `?mode=${args.mode}`;
+    search.set('mode', args.mode);
   }
+  const qs = search.toString().length ? `?${search.toString()}` : '';
   return `${ITEMS_PATH}/${id}${qs}`;
 };
 export const REDIRECT_PATH = '/redirect';

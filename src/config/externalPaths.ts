@@ -15,7 +15,7 @@ export const buildGraaspBuilderView = (
   id: string,
   mode = DEFAULT_ITEM_LAYOUT_MODE,
 ): string => {
-  const url = new URL(`${window.location.origin}${buildItemPath(id)}`);
+  const url = new URL(buildItemPath(id), window.location.origin);
   url.searchParams.set('mode', mode);
   return url.toString();
 };
