@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.23.0](https://github.com/graasp/graasp-builder/compare/v2.22.0...v2.23.0) (2024-05-23)
+
+
+### Features
+
+* add query param for mode ([#1246](https://github.com/graasp/graasp-builder/issues/1246)) ([279193e](https://github.com/graasp/graasp-builder/commit/279193e59d103daa3ce7df83f02968728f2cf162))
+
 ## [2.22.0](https://github.com/graasp/graasp-builder/compare/v2.21.0...v2.22.0) (2024-05-16)
 
 
