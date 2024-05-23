@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import { ShareButton as GraaspShareButton } from '@graasp/ui';
 
@@ -16,10 +16,16 @@ type Props = {
 };
 
 const ShareButton = ({ itemId }: Props): JSX.Element => {
+  const [searchParams] = useSearchParams();
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
-    <Link to={buildItemSharePath(itemId)}>
+    <Link
+      to={{
+        pathname: buildItemSharePath(itemId),
+        search: searchParams.toString(),
+      }}
+    >
       <GraaspShareButton
         tooltip={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
         ariaLabel={translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}

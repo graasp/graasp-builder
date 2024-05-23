@@ -1,4 +1,5 @@
 import { Navigate, useOutletContext, useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 
@@ -8,6 +9,7 @@ import ItemSettings from '../../item/settings/ItemSettings';
 import { OutletType } from './type';
 
 const ItemSettingsPage = (): JSX.Element => {
+  const [searchParams] = useSearchParams();
   const { itemId } = useParams();
   const { permission } = useOutletContext<OutletType>();
 
@@ -19,7 +21,12 @@ const ItemSettingsPage = (): JSX.Element => {
     return <ItemSettings />;
   }
   // redirect the user to the item if he doesn't have the permission to access this page
-  return <Navigate to={buildItemPath(itemId)} replace />;
+  return (
+    <Navigate
+      to={{ pathname: buildItemPath(itemId), search: searchParams.toString() }}
+      replace
+    />
+  );
 };
 
 export default ItemSettingsPage;

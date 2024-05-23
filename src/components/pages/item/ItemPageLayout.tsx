@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { Outlet, useNavigate, useOutletContext, useParams } from 'react-router';
+import { Outlet, useOutletContext, useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
@@ -14,9 +15,9 @@ import { OutletType } from './type';
 
 const ItemPageLayout = (): JSX.Element => {
   const { itemId } = useParams();
+  const [search] = useSearchParams();
   const outletContext = useOutletContext<OutletType>();
   const { setEditingItemId } = useLayoutContext();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setEditingItemId(null);
@@ -27,7 +28,12 @@ const ItemPageLayout = (): JSX.Element => {
     return (
       <Box py={1} px={2}>
         <Box display="flex" alignItems="center">
-          <BackButton onClick={() => navigate(buildItemPath(itemId))} />
+          <BackButton
+            to={{
+              pathname: buildItemPath(itemId),
+              search: search.toString(),
+            }}
+          />
           <Navigation />
         </Box>
         <Box px={2}>

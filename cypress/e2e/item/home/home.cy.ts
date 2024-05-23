@@ -17,6 +17,7 @@ import {
   buildItemCard,
   buildItemsTableRowIdAttribute,
   buildItemsTableRowSelector,
+  buildMapViewId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
 import { generateOwnItems } from '../../../fixtures/items';
@@ -47,6 +48,16 @@ const interceptAccessibleItemsSearch = (searchTerm: string) =>
     .as('getAccessibleSearch');
 
 describe('Home', () => {
+  it('visit Home on map by default', () => {
+    cy.setUpApi({
+      items: generateOwnItems(30),
+    });
+    i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+    cy.visit(`${HOME_PATH}?mode=map`);
+
+    cy.get(`#${buildMapViewId()}`).should('be.visible');
+  });
+
   describe('Grid', () => {
     describe('Features', () => {
       beforeEach(() => {

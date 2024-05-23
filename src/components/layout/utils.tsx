@@ -1,16 +1,12 @@
 import GroupsIcon from '@mui/icons-material/Groups';
-import InfoIcon from '@mui/icons-material/Info';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import { LibraryIcon } from '@graasp/ui';
 
 import {
-  ITEM_INFORMATION_PATH,
   ITEM_PUBLISH_PATH,
   ITEM_SETTINGS_PATH,
   ITEM_SHARE_PATH,
-  buildItemInformationPath,
-  buildItemPath,
   buildItemPublishPath,
   buildItemSettingsPath,
   buildItemSharePath,
@@ -41,7 +37,7 @@ export const buildExtraItems = ({
     return [];
   }
 
-  const page = buildItemPath(location);
+  const page = location;
 
   // we don't switch to sub pages
   // const menuItems = [
@@ -97,15 +93,6 @@ export const buildExtraItems = ({
             />
           ),
           path: buildItemPublishPath(itemId),
-          menuItems: [],
-        },
-      ];
-    case page.includes(ITEM_INFORMATION_PATH):
-      return [
-        {
-          name: translate(BUILDER.ITEM_ACTION_INFORMATION),
-          icon: <InfoIcon />,
-          path: buildItemInformationPath(itemId),
           menuItems: [],
         },
       ];

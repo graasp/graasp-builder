@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import {
   DiscriminatedItem,
@@ -95,6 +95,7 @@ const ItemsTable = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const { itemId } = useParams();
@@ -129,7 +130,10 @@ const ItemsTable = ({
       if (data && data.type === ItemType.SHORTCUT) {
         targetId = getShortcutExtra(data.extra)?.target;
       }
-      navigate(buildItemPath(targetId));
+      navigate({
+        pathname: buildItemPath(targetId),
+        search: searchParams.toString(),
+      });
     }
   };
 

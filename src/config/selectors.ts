@@ -376,3 +376,5 @@ export const ITEM_THUMBNAIL_CONTAINER_ID = 'itemThumbnailContainer';
 export const ITEM_THUMBNAIL_DELETE_BTN_ID = 'itemThumbnailDeleteBtn';
 
 export const DROPZONE_HELPER_ID = 'dropzoneHelper';
+export const buildMapViewId = (parentId?: string): string =>
+  `map-view-${parentId}`;

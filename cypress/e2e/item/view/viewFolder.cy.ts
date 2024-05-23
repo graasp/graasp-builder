@@ -7,6 +7,7 @@ import {
   NAVIGATION_HOME_ID,
   buildItemCard,
   buildItemsTableRowIdAttribute,
+  buildMapViewId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
 import { CURRENT_USER } from '../../../fixtures/members';
@@ -22,6 +23,17 @@ const children = [child1, child2];
 const items = [parentItem, item1, child1, child2];
 
 describe('View Folder', () => {
+  it('View folder on map by default', () => {
+    cy.setUpApi({
+      items,
+    });
+
+    const { id } = parentItem;
+    cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Map }));
+
+    cy.get(`#${buildMapViewId(id)}`).should('be.visible');
+  });
+
   describe('Grid', () => {
     beforeEach(() => {
       cy.setUpApi({
@@ -32,8 +44,7 @@ describe('View Folder', () => {
 
     it('visit item by id', () => {
       const { id } = parentItem;
-      cy.visit(buildItemPath(id));
-      cy.switchMode(ItemLayoutMode.Grid);
+      cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
 
       // should get current item
       cy.wait('@getItem');
@@ -61,8 +72,7 @@ describe('View Folder', () => {
 
     it('search', () => {
       const { id } = parentItem;
-      cy.visit(buildItemPath(id));
-      cy.switchMode(ItemLayoutMode.Grid);
+      cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
 
       cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
       cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);
@@ -80,9 +90,7 @@ describe('View Folder', () => {
     describe('Navigation', () => {
       it('visit folder by id', () => {
         const { id } = parentItem;
-        cy.visit(buildItemPath(id));
-
-        cy.switchMode(ItemLayoutMode.List);
+        cy.visit(buildItemPath(id, { mode: ItemLayoutMode.List }));
 
         // should get current item
         cy.wait('@getItem');
@@ -109,8 +117,7 @@ describe('View Folder', () => {
 
     it('search', () => {
       const { id } = parentItem;
-      cy.visit(buildItemPath(id));
-      cy.switchMode(ItemLayoutMode.List);
+      cy.visit(buildItemPath(id, { mode: ItemLayoutMode.List }));
 
       cy.get(buildItemsTableRowIdAttribute(child1.id)).should('be.visible');
       cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);

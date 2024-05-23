@@ -25,7 +25,7 @@ const MapItemScreen = (): JSX.Element | null => {
     } else {
       redirect(window, buildGraaspPlayerView(item.id), {
         name: buildPlayerTabName(item.id),
-        openInNewTab: true,
+        openInNewTab: false,
       });
     }
   };

@@ -1,5 +1,7 @@
 import { Context } from '@graasp/sdk';
 
+import { DEFAULT_ITEM_LAYOUT_MODE } from '@/enums/itemLayoutMode';
+
 import {
   GRAASP_ANALYZER_HOST,
   GRAASP_LIBRARY_HOST,
@@ -9,8 +11,14 @@ import { buildItemPath } from './paths';
 
 export const buildGraaspPlayerView = (id: string): string =>
   `${GRAASP_PLAYER_HOST}/${id}`;
-export const buildGraaspBuilderView = (id: string): string =>
-  `${window.location.origin}${buildItemPath(id)}`;
+export const buildGraaspBuilderView = (
+  id: string,
+  mode = DEFAULT_ITEM_LAYOUT_MODE,
+): string => {
+  const url = new URL(buildItemPath(id), window.location.origin);
+  url.searchParams.set('mode', mode);
+  return url.toString();
+};
 export const buildGraaspAnalyzerLink = (id: string): string =>
   `${GRAASP_ANALYZER_HOST}/embedded/${id}`;
 

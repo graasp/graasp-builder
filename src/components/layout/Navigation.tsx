@@ -1,4 +1,9 @@
-import { Link, useLocation, useParams } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton } from '@mui/material';
@@ -20,6 +25,7 @@ import { buildExtraItems } from './utils';
 const { useItem, useParents, useCurrentMember, useChildren } = hooks;
 
 const Navigator = (): JSX.Element | null => {
+  const [searchParams] = useSearchParams();
   const { t: translateBuilder } = useBuilderTranslation();
   const { itemId } = useParams();
   const { pathname } = useLocation();
@@ -39,7 +45,8 @@ const Navigator = (): JSX.Element | null => {
     return null;
   }
 
-  const buildToItemPath = (id: string) => buildItemPath(id);
+  const buildToItemPath = (id: string) =>
+    `${buildItemPath(id)}?${searchParams.toString()}`;
 
   const renderRoot = () => {
     // no access to root if signed out
@@ -49,7 +56,7 @@ const Navigator = (): JSX.Element | null => {
 
     return (
       <>
-        <Link to={HOME_PATH}>
+        <Link to={{ pathname: HOME_PATH, search: searchParams.toString() }}>
           <IconButton id={NAVIGATION_HOME_ID}>
             <Home />
           </IconButton>
