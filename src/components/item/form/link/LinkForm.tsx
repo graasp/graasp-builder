@@ -71,6 +71,13 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
   },
 }));
 
+const StyledDiv = styled('div')(() => ({
+  '& > div': {
+    height: '200px !important',
+    paddingBottom: '0 !important',
+  },
+}));
+
 const LinkForm = ({
   onChange,
   item,
@@ -79,7 +86,7 @@ const LinkForm = ({
   const [linkContent, setLinkContent] = useState<string>('');
   const [isDescriptionDirty, setIsDescriptionDirty] = useState<boolean>(false);
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: linkData } = hooks.useMetadata(linkContent);
+  const { data: linkData } = hooks.useLinkMetadata(linkContent);
 
   // get value from the updatedProperties
   const linkType = getLinkType(updatedProperties.settings);
@@ -344,6 +351,31 @@ const LinkForm = ({
                       width: '100%',
                     },
                   }}
+                />
+              )}
+              {linkData?.html && linkData.html !== '' && (
+                <StyledFormControlLabel
+                  value={LinkType.Embedded}
+                  label={
+                    // eslint-disable-next-line react/no-danger
+                    <StyledDiv
+                      sx={{}}
+                      dangerouslySetInnerHTML={{ __html: linkData.html }}
+                    />
+                  }
+                  control={<Radio />}
+                  slotProps={{
+                    typography: {
+                      width: '100%',
+                      minWidth: '0px',
+                    },
+                  }}
+                  // sx={{
+                  //   // this ensure the iframe takes up all horizontal space
+                  //   '& iframe': {
+                  //     width: '100%',
+                  //   },
+                  // }}
                 />
               )}
             </RadioGroup>

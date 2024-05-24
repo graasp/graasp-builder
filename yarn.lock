@@ -1581,26 +1581,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.8.0":
-  version: 3.8.0
-  resolution: "@graasp/query-client@npm:3.8.0"
+"@graasp/query-client@npm:3.9.0":
+  version: 3.9.0
+  resolution: "@graasp/query-client@npm:3.9.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
-    axios: "npm:1.6.8"
+    axios: "npm:1.7.2"
     http-status-codes: "npm:2.3.0"
     qs: "npm:6.12.1"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/8657f66530cfe5e28c28c54cb29cf392d41aae9365bf7f1dceb9ed1876211b34d7032a892d33c0317e6a90d48d4a203bd44a3cecb8f2337121f35dcc789fdbef
+  checksum: 10/23490dceb1be2f95759b296099165c2d20be0a7a5fa3b7176c034e2fd30242635d167af39e69074385704d4bc11c8b3aba694c9a5f11e954099b75c395da537b
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.11.0":
-  version: 4.11.0
-  resolution: "@graasp/sdk@npm:4.11.0"
+"@graasp/sdk@npm:4.12.0":
+  version: 4.12.0
+  resolution: "@graasp/sdk@npm:4.12.0"
   dependencies:
     "@faker-js/faker": "npm:8.4.1"
     filesize: "npm:10.1.2"
@@ -1609,7 +1609,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3
     uuid: ^9
-  checksum: 10/629401ee513c8f74010aeb38e2efe1a36bfab2c8b4129e00fa8ab5ce10b4103de4e2b374de3aa4f63bb9bb4e13acf39a3dadb6f4dbf51439514e8ae17cc9ca95
+  checksum: 10/10f37882a6d926d0fd1e8e26edaa312a6ef12d69df98e909f4841d7873a4e15a0b45eb04f3cb6e79eb112b6e37bc1e5993591e81a13ddf8eef96c6db57f6b826
   languageName: node
   linkType: hard
 
@@ -4882,6 +4882,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:1.7.2":
+  version: 1.7.2
+  resolution: "axios@npm:1.7.2"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/6ae80dda9736bb4762ce717f1a26ff997d94672d3a5799ad9941c24d4fb019c1dff45be8272f08d1975d7950bac281f3ba24aff5ecd49ef5a04d872ec428782f
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^3.2.1":
   version: 3.2.1
   resolution: "axobject-query@npm:3.2.1"
@@ -7908,8 +7919,8 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.12.1"
-    "@graasp/query-client": "npm:3.8.0"
-    "@graasp/sdk": "npm:4.11.0"
+    "@graasp/query-client": "npm:3.9.0"
+    "@graasp/sdk": "npm:4.12.0"
     "@graasp/translations": "npm:1.28.0"
     "@graasp/ui": "github:graasp/graasp-ui#835-fancy-link-ui"
     "@mui/icons-material": "npm:5.15.18"
