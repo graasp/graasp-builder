@@ -95,7 +95,7 @@ const LinkForm = ({
     ({ url, description } = getLinkExtra(extraProps) || {});
   }
   // link is considered valid if it is either empty, or it is a valid url
-  const isLinkValid = isUrlValid(url) || url.length === 0;
+  const isLinkValid = linkContent.length === 0 || isUrlValid(url);
 
   const onChangeLinkType = ({
     target: { value },

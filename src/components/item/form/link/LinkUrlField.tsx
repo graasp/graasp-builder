@@ -25,7 +25,7 @@ const LinkUrlField = ({
     <TextField
       variant="standard"
       id={ITEM_FORM_LINK_INPUT_ID}
-      error={isValid}
+      error={!isValid}
       autoFocus
       margin="dense"
       label={t(BUILDER.CREATE_ITEM_LINK_LABEL)}
@@ -33,9 +33,7 @@ const LinkUrlField = ({
       onChange={({
         target: { value: newValue },
       }: ChangeEvent<HTMLInputElement>) => onChange(newValue)}
-      helperText={
-        isValid ? t(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR) : ' '
-      }
+      helperText={isValid ? '' : t(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR)}
       InputLabelProps={{ shrink: true }}
       InputProps={{
         endAdornment: (
