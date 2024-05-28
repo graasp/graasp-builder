@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, useParams } from 'react-router';
+import { Outlet, useParams } from 'react-router-dom';
 
 import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';

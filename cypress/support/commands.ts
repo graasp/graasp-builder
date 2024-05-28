@@ -54,6 +54,7 @@ import {
   mockGetItems,
   mockGetItemsTags,
   mockGetLatestValidationGroup,
+  mockGetLinkMetadata,
   mockGetManyPublishItemInformations,
   mockGetMember,
   mockGetMemberMentions,
@@ -341,6 +342,8 @@ Cypress.Commands.add(
     mockPatchShortLink(cachedShortLinks, patchShortLinkError);
 
     mockDeleteShortLink(cachedShortLinks, deleteShortLinkError);
+
+    mockGetLinkMetadata();
   },
 );
 

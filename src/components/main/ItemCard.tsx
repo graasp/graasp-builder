@@ -69,11 +69,7 @@ const ItemComponent = ({
       justifyContent="center"
       bgcolor="#E4DFFF"
     >
-      <ItemIcon
-        sx={{ fontSize: '3rem', color: '#5050D1' }}
-        type={item.type}
-        alt={item.name}
-      />
+      <ItemIcon size="3rem" color="#5050D1" type={item.type} alt={item.name} />
     </Box>
   );
 

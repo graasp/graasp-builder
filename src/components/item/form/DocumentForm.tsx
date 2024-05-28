@@ -36,7 +36,6 @@ import {
   ITEM_FORM_DOCUMENT_TEXT_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import DisplayNameForm from './DisplayNameForm';
 import type { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
 
@@ -303,11 +302,6 @@ const DocumentForm = ({
           setChanges={setChanges}
           item={item}
           required
-          updatedProperties={updatedProperties}
-        />
-        <DisplayNameForm
-          setChanges={setChanges}
-          item={item}
           updatedProperties={updatedProperties}
         />
       </Stack>

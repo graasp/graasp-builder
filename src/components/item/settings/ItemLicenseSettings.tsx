@@ -43,7 +43,7 @@ const ItemLicenseSettings = (): JSX.Element => {
           </Link>
         }
         additionalInfo={
-          item.settings?.ccLicenseAdaption && (
+          item.settings?.ccLicenseAdaption ? (
             <CreativeCommons
               sx={{
                 border: '1px solid #bbb',
@@ -55,7 +55,7 @@ const ItemLicenseSettings = (): JSX.Element => {
               allowCommercialUse={allowCommercialUse}
               iconSize={30}
             />
-          )
+          ) : undefined
         }
       />
       <UpdateLicenseDialog

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { Tab, Tabs, styled } from '@mui/material';
 
-import { ItemType, LocalFileItemExtra, MimeTypes } from '@graasp/sdk';
+import { ItemType, MimeTypes } from '@graasp/sdk';
 import { ItemIcon } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -52,8 +52,7 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
     <ItemIcon
       alt={translateBuilder(BUILDER.NEW_ITEM_ZIP_TAB_TEXT)}
       type={ItemType.LOCAL_FILE}
-      sx={{ mb: 0 }}
-      extra={{ file: { mimetype: MimeTypes.ZIP } } as LocalFileItemExtra}
+      mimetype={MimeTypes.ZIP}
     />
   );
 
@@ -73,7 +72,6 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_FOLDER_TAB_TEXT)}
             type={ItemType.FOLDER}
-            sx={{ mb: 0 }}
           />
         }
       />
@@ -85,7 +83,6 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_FILE_TAB_TEXT)}
             type="upload"
-            sx={{ mb: 0 }}
           />
         }
       />
@@ -97,7 +94,6 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_LINK_TAB_TEXT)}
             type={ItemType.LINK}
-            sx={{ mb: 0 }}
           />
         }
       />
@@ -109,7 +105,6 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_DOCUMENT_TAB_TEXT)}
             type={ItemType.DOCUMENT}
-            sx={{ mb: 0 }}
           />
         }
       />
@@ -121,7 +116,6 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_APP_TAB_TEXT)}
             type={ItemType.APP}
-            sx={{ mb: 0 }}
           />
         }
       />
@@ -139,7 +133,6 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_H5P_TAB_TEXT)}
             type={ItemType.H5P}
-            sx={{ mb: 0 }}
           />
         }
       />
@@ -151,7 +144,6 @@ const ItemTypeTabs = ({ onTypeChange, initialValue }: Props): JSX.Element => {
           <ItemIcon
             alt={translateBuilder(BUILDER.NEW_ITEM_ETHERPAD_TAB_TEXT)}
             type={ItemType.ETHERPAD}
-            sx={{ mb: 0 }}
           />
         }
       />

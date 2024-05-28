@@ -3,6 +3,7 @@ import { FormEventHandler, useRef, useState } from 'react';
 import { Dialog, Stack, styled, useTheme } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
+import { DEFAULT_LIGHT_PRIMARY_COLOR } from '@graasp/ui';
 
 import { ImageUp as ImageUpIcon } from 'lucide-react';
 
@@ -96,7 +97,7 @@ const FolderThumbnail = ({ setChanges }: FolderThumbnailProps): JSX.Element => {
         height={THUMBNAIL_DIMENSION}
         width={THUMBNAIL_DIMENSION}
         borderRadius={2}
-        bgcolor="#E4DFFF"
+        bgcolor={DEFAULT_LIGHT_PRIMARY_COLOR}
         alignItems="center"
         justifyContent="center"
         overflow="hidden"

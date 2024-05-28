@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 import {
   Dialog,
@@ -38,7 +38,7 @@ import AppForm from '../item/form/AppForm';
 import DocumentForm from '../item/form/DocumentForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
 import FolderForm from '../item/form/FolderForm';
-import LinkForm from '../item/form/LinkForm';
+import LinkForm from '../item/form/link/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
 import ItemTypeTabs from './ItemTypeTabs';
@@ -122,8 +122,7 @@ const NewItemModal = ({
       // todo: notify user
       return false;
     }
-    // eslint-disable-next-line no-console
-    console.log(updatedPropertiesPerType[type]);
+
     // todo: fix types
     return submitAndDisableConfirmButtonFor(
       () =>
@@ -230,7 +229,10 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
             </Typography>
-            <LinkForm onChange={updateItem} />
+            <LinkForm
+              onChange={updateItem}
+              updatedProperties={updatedPropertiesPerType[ItemType.LINK]}
+            />
           </>
         );
       case ItemType.DOCUMENT:

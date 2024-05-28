@@ -1,5 +1,4 @@
-import { Outlet, useLocation } from 'react-router';
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
 import { buildSignInPath, saveUrlForRedirection } from '@graasp/sdk';
 import { CustomInitialLoader, withAuthorization } from '@graasp/ui';
