@@ -39,7 +39,11 @@ const MapItemScreen = (): JSX.Element | null => {
         JSON.stringify({ item, action: 'open-builder' }),
       );
     } else {
-      navigate(buildItemPath(item.id));
+      // navigate to item in map
+      navigate({
+        pathname: buildItemPath(item.id),
+        search: urlSearchParams.toString(),
+      });
     }
   };
 
