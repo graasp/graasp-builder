@@ -221,25 +221,6 @@ const LinkForm = ({
                 slotProps={{ typography: { width: '100%', minWidth: '0px' } }}
                 sx={{ minWidth: '0px', width: '100%' }}
               />
-              {linkData?.isEmbeddingAllowed && (
-                <StyledFormControlLabel
-                  value={LinkType.Embedded}
-                  label={embeddedLinkPreview}
-                  control={<Radio />}
-                  slotProps={{
-                    typography: {
-                      width: '100%',
-                      minWidth: '0px',
-                    },
-                  }}
-                  sx={{
-                    // this ensure the iframe takes up all horizontal space
-                    '& iframe': {
-                      width: '100%',
-                    },
-                  }}
-                />
-              )}
               {linkData?.html && linkData.html !== '' && (
                 <StyledFormControlLabel
                   value={LinkType.Embedded}
@@ -259,6 +240,30 @@ const LinkForm = ({
                   }}
                 />
               )}
+              {
+                // only show this options when embedding is allowed and there is no html code
+                // as the html will take precedence over showing the site as an iframe
+                // and some sites like daily motion actually allow both, we want to allow show the html setting
+                linkData?.isEmbeddingAllowed && linkData?.html === '' && (
+                  <StyledFormControlLabel
+                    value={LinkType.Embedded}
+                    label={embeddedLinkPreview}
+                    control={<Radio />}
+                    slotProps={{
+                      typography: {
+                        width: '100%',
+                        minWidth: '0px',
+                      },
+                    }}
+                    sx={{
+                      // this ensure the iframe takes up all horizontal space
+                      '& iframe': {
+                        width: '100%',
+                      },
+                    }}
+                  />
+                )
+              }
             </RadioGroup>
           ) : (
             <Typography fontStyle="italic">
