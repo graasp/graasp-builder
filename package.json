@@ -24,7 +24,7 @@
     "@graasp/query-client": "3.9.0",
     "@graasp/sdk": "4.12.0",
     "@graasp/translations": "1.28.0",
-    "@graasp/ui": "github:graasp/graasp-ui#iframe-div-issue",
+    "@graasp/ui": "4.19.1",
     "@mui/icons-material": "5.15.18",
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.18",

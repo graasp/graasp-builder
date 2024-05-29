@@ -29,13 +29,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ag-grid-community/client-side-row-model@npm:31.3.1":
-  version: 31.3.1
-  resolution: "@ag-grid-community/client-side-row-model@npm:31.3.1"
+"@ag-grid-community/client-side-row-model@npm:31.3.2":
+  version: 31.3.2
+  resolution: "@ag-grid-community/client-side-row-model@npm:31.3.2"
   dependencies:
-    "@ag-grid-community/core": "npm:31.3.1"
+    "@ag-grid-community/core": "npm:31.3.2"
     tslib: "npm:^2.3.0"
-  checksum: 10/39e313831fa91062bcfa978b55690cc2728d091b44a26a9df3cf1e20aa4f97ba3ee6f49dde938f470db99b5d802e23d63b93510b2abad264f85b14fe3b405cf1
+  checksum: 10/305c8d46604c35f7e8d6ee8fad1db1d14babb4eff40c2c457abd4134f4a43eb81cbdcc1c3343ddabd3af166efaf19750d654195faa01ab9d6906192a0f7422e0
   languageName: node
   linkType: hard
 
@@ -45,15 +45,6 @@ __metadata:
   dependencies:
     tslib: "npm:^2.3.0"
   checksum: 10/2bf06604fd620b543a3422fb2039f32ee28a405a7eea1c374e13e317c3a7d2fa146d4af73edbf131732bab5ab0d75ee9ba199ed0c9bad5f60afbfc8759e98aad
-  languageName: node
-  linkType: hard
-
-"@ag-grid-community/core@npm:31.3.1":
-  version: 31.3.1
-  resolution: "@ag-grid-community/core@npm:31.3.1"
-  dependencies:
-    tslib: "npm:^2.3.0"
-  checksum: 10/03caf838d0a23cbbe2701322bd4e98d62931d35c04e2e77a074ab5cabc7e862acb4a09e774ee321f5dd267ca768e378907ef7ddbcdbe90e4b5646054becbd108
   languageName: node
   linkType: hard
 
@@ -1645,45 +1636,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#iframe-div-issue":
-  version: 4.19.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=1e1593d4f4f4f925b1a3d5f994ef8d1d2d5d5caa"
-  dependencies:
-    "@ag-grid-community/client-side-row-model": "npm:31.3.1"
-    "@ag-grid-community/react": "npm:^31.3.1"
-    "@ag-grid-community/styles": "npm:^31.3.1"
-    "@storybook/react-vite": "npm:8.1.3"
-    http-status-codes: "npm:2.3.0"
-    interweave: "npm:13.1.0"
-    katex: "npm:0.16.10"
-    lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.379.0"
-    react-cookie-consent: "npm:9.0.0"
-    react-quill: "npm:2.0.0"
-    react-rnd: "npm:10.4.10"
-    react-text-mask: "npm:5.5.0"
-    uuid: "npm:9.0.1"
-    vitest: "npm:1.6.0"
-  peerDependencies:
-    "@emotion/cache": ~11.10.7 || ~11.11.0
-    "@emotion/react": ~11.10.6 || ~11.11.0
-    "@emotion/styled": ~11.10.6 || ~11.11.0
-    "@graasp/sdk": ^4.0.0
-    "@graasp/translations": ^1.23.0
-    "@mui/icons-material": ~5.14.0 || ~5.15.0
-    "@mui/lab": ~5.0.0-alpha.150
-    "@mui/material": ~5.14.0 || ~5.15.0
-    i18next: ^22.4.15 || ^23.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    react-i18next: ^13.0.0 || ^14.0.0
-    react-router-dom: ^6.11.0
-    stylis: ^4.1.3
-    stylis-plugin-rtl: ^2.1.1
-  checksum: 10/8437f27c2e2244121e8f7173ac7af95dd2572eded739f1d67a42d43588d6b2335757c791ae7d0ea726dbdb5be2fa5f238a3fec3b7cc2b2b6d796cb3517eb2179
-  languageName: node
-  linkType: hard
-
 "@graasp/ui@npm:4.17.1":
   version: 4.17.1
   resolution: "@graasp/ui@npm:4.17.1"
@@ -1720,6 +1672,45 @@ __metadata:
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
   checksum: 10/99be0678ea73a84fa6e2175f3aa61eb5c9dd8025bde4e7012706c26d73a14dfe584977e48b2487944002badb5d2888ae7aea9126ae7713e207fcc648502eb522
+  languageName: node
+  linkType: hard
+
+"@graasp/ui@npm:4.19.1":
+  version: 4.19.1
+  resolution: "@graasp/ui@npm:4.19.1"
+  dependencies:
+    "@ag-grid-community/client-side-row-model": "npm:31.3.2"
+    "@ag-grid-community/react": "npm:^31.3.1"
+    "@ag-grid-community/styles": "npm:^31.3.1"
+    "@storybook/react-vite": "npm:8.1.3"
+    http-status-codes: "npm:2.3.0"
+    interweave: "npm:13.1.0"
+    katex: "npm:0.16.10"
+    lodash.truncate: "npm:4.4.2"
+    lucide-react: "npm:0.379.0"
+    react-cookie-consent: "npm:9.0.0"
+    react-quill: "npm:2.0.0"
+    react-rnd: "npm:10.4.10"
+    react-text-mask: "npm:5.5.0"
+    uuid: "npm:9.0.1"
+    vitest: "npm:1.6.0"
+  peerDependencies:
+    "@emotion/cache": ~11.10.7 || ~11.11.0
+    "@emotion/react": ~11.10.6 || ~11.11.0
+    "@emotion/styled": ~11.10.6 || ~11.11.0
+    "@graasp/sdk": ^4.0.0
+    "@graasp/translations": ^1.23.0
+    "@mui/icons-material": ~5.14.0 || ~5.15.0
+    "@mui/lab": ~5.0.0-alpha.150
+    "@mui/material": ~5.14.0 || ~5.15.0
+    i18next: ^22.4.15 || ^23.0.0
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    react-i18next: ^13.0.0 || ^14.0.0
+    react-router-dom: ^6.11.0
+    stylis: ^4.1.3
+    stylis-plugin-rtl: ^2.1.1
+  checksum: 10/51f885c2e73b97a2e8ee8f8f53e643c7f6c8e7d09b60f1aafdc000a77cf05f472773cffc46ba4218a1e4fa6b9bab4bce7e6bb3147b9d3a62ce23835ff39ac14b
   languageName: node
   linkType: hard
 
@@ -7922,7 +7913,7 @@ __metadata:
     "@graasp/query-client": "npm:3.9.0"
     "@graasp/sdk": "npm:4.12.0"
     "@graasp/translations": "npm:1.28.0"
-    "@graasp/ui": "github:graasp/graasp-ui#iframe-div-issue"
+    "@graasp/ui": "npm:4.19.1"
     "@mui/icons-material": "npm:5.15.18"
     "@mui/lab": "npm:5.0.0-alpha.170"
     "@mui/material": "npm:5.15.18"
