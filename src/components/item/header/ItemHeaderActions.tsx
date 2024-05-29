@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import { Stack } from '@mui/material';
 
-import { ItemType, PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
+import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 import { ChatboxButton } from '@graasp/ui';
 
 import EditButton from '@/components/common/EditButton';
@@ -82,10 +82,7 @@ const ItemHeaderActions = (): JSX.Element => {
   return (
     <Stack direction="row">
       {renderItemActions()}
-      {
-        // show only for content with tables : root or folders
-        (item?.type === ItemType.FOLDER || !item?.id) && <ModeButton />
-      }
+      <ModeButton />
     </Stack>
   );
 };

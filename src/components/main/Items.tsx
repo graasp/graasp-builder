@@ -1,6 +1,10 @@
+import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+
 import { DiscriminatedItem, PackedItem, redirect } from '@graasp/sdk';
 
 import { buildGraaspPlayerView } from '@/config/externalPaths';
+import { buildItemPath } from '@/config/paths';
 import { buildPlayerTabName } from '@/config/selectors';
 import { ShowOnlyMeChangeType } from '@/config/types';
 
@@ -63,6 +67,8 @@ const Items = ({
   showDropzoneHelper = false,
 }: Props): JSX.Element | null => {
   const { mode } = useLayoutContext();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const itemsStatuses = useItemsStatuses({
     items,
   });
@@ -71,13 +77,21 @@ const Items = ({
       const viewItem = (item: DiscriminatedItem) => {
         redirect(window, buildGraaspPlayerView(item.id), {
           name: buildPlayerTabName(item.id),
-          openInNewTab: true,
+          openInNewTab: false,
+        });
+      };
+      const viewItemInBuilder = (item: DiscriminatedItem) => {
+        // navigate to item in map
+        navigate({
+          pathname: buildItemPath(item.id),
+          search: searchParams.toString(),
         });
       };
 
       return (
         <MapView
           viewItem={viewItem}
+          viewItemInBuilder={viewItemInBuilder}
           title={title}
           parentId={parentId}
           height="90%"

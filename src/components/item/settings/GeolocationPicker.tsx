@@ -64,12 +64,16 @@ const GeolocationPicker = ({
           onChangeOption={onChangeOption}
           initialValue={geoloc?.addressLabel ?? undefined}
           useSuggestionsForAddress={hooks.useSuggestionsForAddress}
+          disabled={isDisabled}
         />
-        <Tooltip title={t(BUILDER.ITEM_SETTINGS_GEOLOCATION_CLEAR)}>
-          <IconButton onClick={clearGeoloc}>
-            <Clear />
-          </IconButton>
-        </Tooltip>
+        {/* show clear only if not disabled */}
+        {!isDisabled && (
+          <Tooltip title={t(BUILDER.ITEM_SETTINGS_GEOLOCATION_CLEAR)}>
+            <IconButton onClick={clearGeoloc}>
+              <Clear />
+            </IconButton>
+          </Tooltip>
+        )}
       </Stack>
       {isDisabled && (
         <Typography variant="caption">

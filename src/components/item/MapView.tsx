@@ -16,6 +16,7 @@ type Props = {
   title?: string;
   height?: string;
   viewItem: (item: DiscriminatedItem) => void;
+  viewItemInBuilder: (item: DiscriminatedItem) => void;
   enableGeolocation?: boolean;
 };
 
@@ -83,6 +84,7 @@ const MapView = ({
   title,
   height = '100vh',
   viewItem,
+  viewItemInBuilder,
   enableGeolocation = true,
 }: Props): JSX.Element => {
   const { data: currentMember } = hooks.useCurrentMember();
@@ -131,6 +133,7 @@ const MapView = ({
                 useSuggestionsForAddress={hooks.useSuggestionsForAddress}
                 useItemsInMap={hooks.useItemsInMap}
                 viewItem={viewItem}
+                viewItemInBuilder={viewItemInBuilder}
                 currentMember={currentMember}
                 item={parent}
                 // use builder modal to add new item if the screen is big enough
