@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.24.0](https://github.com/graasp/graasp-builder/compare/v2.23.0...v2.24.0) (2024-05-29)
+
+
+### Features
+
+* redesign add link interface ([#1165](https://github.com/graasp/graasp-builder/issues/1165)) ([36e7511](https://github.com/graasp/graasp-builder/commit/36e7511c66328ca4c847c06e8e67cdc77bfd3f71))
+* update map ([#1248](https://github.com/graasp/graasp-builder/issues/1248)) ([768f62a](https://github.com/graasp/graasp-builder/commit/768f62af12d5e5093605f4779ecd777b12c2e702))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.116.0 ([#1224](https://github.com/graasp/graasp-builder/issues/1224)) ([02e80ad](https://github.com/graasp/graasp-builder/commit/02e80adc747c9fd00b4300e78fbc1f7f77a5bcb9))
+* embedding setting and iframe display ([#1255](https://github.com/graasp/graasp-builder/issues/1255)) ([6ad88e7](https://github.com/graasp/graasp-builder/commit/6ad88e7e0637f61e1bc49dc661f190f98e52a37a))
+
 ## [2.23.0](https://github.com/graasp/graasp-builder/compare/v2.22.0...v2.23.0) (2024-05-23)
 
 
