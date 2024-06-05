@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import LinkIcon from '@mui/icons-material/Link';
 import { LoadingButton } from '@mui/lab';
 import { Alert, Button, Stack, Typography } from '@mui/material';
@@ -28,6 +30,13 @@ type PublicationButtonMap = PublicationStatusMap<{
   elements: JSX.Element | JSX.Element[];
 }>;
 
+enum ActionOnValidate {
+  PUBLISH,
+  VALIDATE,
+}
+
+type ActionOnValidateMap = { name: ActionOnValidate; action: () => void };
+
 const { useUnpublishItem, usePublishItem, usePostItemValidation } = mutations;
 
 export const PublicationButton = ({
@@ -45,22 +54,36 @@ export const PublicationButton = ({
   const { mutate: unpublish, isLoading: isUnPublishing } = useUnpublishItem();
   const { mutate: publish, isLoading: isPublishing } = usePublishItem();
 
+  const [actionOnValidate, setActionOnValidate] =
+    useState<ActionOnValidateMap>();
+
   const publishItem = () =>
     publish({ id: itemId, notification: notifyCoEditors });
 
-  const handlePublishItem = () => {
+  const handleActionOrOpenModal = (actionMap: ActionOnValidateMap) => {
     if (isPublic) {
-      publishItem();
+      actionMap.action();
     } else {
+      setActionOnValidate(actionMap);
       openModal();
     }
   };
 
-  const handleValidateItem = () => validateItem({ itemId });
+  const handlePublishItem = () => {
+    const action = () => publishItem();
+    handleActionOrOpenModal({ name: ActionOnValidate.PUBLISH, action });
+  };
+
+  const handleValidateItem = () => {
+    const action = () => validateItem({ itemId });
+    handleActionOrOpenModal({ name: ActionOnValidate.VALIDATE, action });
+  };
+
   const handleUnPublishItem = () => unpublish({ id: itemId });
 
   const handleModalValidate = () => {
-    publishItem();
+    actionOnValidate?.action();
+    setActionOnValidate(undefined);
     closeModal();
   };
 
@@ -194,6 +217,9 @@ export const PublicationButton = ({
         <PublicVisibilityModal
           item={item}
           isOpen={isOpen}
+          enableUpdateVisibility={
+            actionOnValidate?.name === ActionOnValidate.PUBLISH
+          }
           onClose={closeModal}
           onValidate={handleModalValidate}
         />
