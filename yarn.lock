@@ -1710,9 +1710,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/map@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@graasp/map@npm:1.14.0"
+"@graasp/map@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@graasp/map@npm:1.15.0"
   dependencies:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
@@ -1747,7 +1747,7 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^14.0.0
-  checksum: 10/ab968e938b7133fdd110406865c364c5f4bb053702bec7441e2c488402c0e98c75fb49aece3225970d9a0119b3390c5eb16248284d3ca45dfba0b66fbd729a8b
+  checksum: 10/d197f9cd3087247fcf75ea4a5371847f6bcdcc4d29755cf0332c9eea3b5029ea87c89b3a0e06e2025a6853ba9377c5da03ba9383ca660cba99a471a21251ce93
   languageName: node
   linkType: hard
 
@@ -8060,7 +8060,7 @@ __metadata:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
-    "@graasp/map": "npm:1.14.0"
+    "@graasp/map": "npm:1.15.0"
     "@graasp/query-client": "npm:3.9.0"
     "@graasp/sdk": "npm:4.12.0"
     "@graasp/translations": "npm:1.28.0"
