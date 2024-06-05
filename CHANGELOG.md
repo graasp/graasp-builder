@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.25.0](https://github.com/graasp/graasp-builder/compare/v2.24.0...v2.25.0) (2024-06-05)
+
+
+### Features
+
+* update map ([#1261](https://github.com/graasp/graasp-builder/issues/1261)) ([1591b3f](https://github.com/graasp/graasp-builder/commit/1591b3f5aead43215a5f84cac864df96b86a7a78))
+
+
+### Bug Fixes
+
+* allow apps to dynamically resize in builder ([#1260](https://github.com/graasp/graasp-builder/issues/1260)) ([9a74092](https://github.com/graasp/graasp-builder/commit/9a74092e24249cba2818c5e652ce44ed5584ff16))
+* **french:** new item modal texts ([#1263](https://github.com/graasp/graasp-builder/issues/1263)) ([890be71](https://github.com/graasp/graasp-builder/commit/890be7102b12b0b1c279c3517d3595dbb13a77d0))
+
 ## [2.24.0](https://github.com/graasp/graasp-builder/compare/v2.23.0...v2.24.0) (2024-05-29)
 
 
