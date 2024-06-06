@@ -66,7 +66,7 @@ type Props = {
 
 const DEFAULT_PROPERTIES: PropertiesPerType = {
   [ItemType.FOLDER]: { type: ItemType.FOLDER },
-  [ItemType.LINK]: { type: ItemType.LINK },
+  [ItemType.LINK]: { type: ItemType.LINK, settings: { showLinkButton: false } },
   [ItemType.APP]: { type: ItemType.APP },
   [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
 };
