@@ -1,6 +1,13 @@
 import { toast } from 'react-toastify';
 
-import { Notifier, routines } from '@graasp/query-client';
+import {
+  EnableNotifications,
+  NotificationStatus,
+  Notifier,
+  NotifierOptions,
+  isNotificationEnabled,
+  routines,
+} from '@graasp/query-client';
 import buildI18n, {
   FAILURE_MESSAGES,
   REQUEST_MESSAGES,
@@ -74,13 +81,73 @@ const {
   deleteItemThumbnailRoutine,
 } = routines;
 
-const notifier: Notifier = ({
-  type,
-  payload,
+const notify = ({
+  enableNotifications,
+  notificationStatus,
+  onEnabled,
+  onDisabled,
 }: {
-  type: string;
-  payload?: Payload;
+  enableNotifications: EnableNotifications | undefined;
+  notificationStatus: NotificationStatus;
+  onEnabled: () => void;
+  onDisabled: () => void;
 }) => {
+  if (isNotificationEnabled(enableNotifications, notificationStatus)) {
+    onEnabled();
+  } else {
+    onDisabled();
+  }
+};
+
+const notifyError = (
+  message: string,
+  enableNotifications: EnableNotifications | undefined,
+) => {
+  notify({
+    enableNotifications,
+    notificationStatus: NotificationStatus.ERROR,
+    onEnabled: () => toast.error(message),
+    onDisabled: () => console.error(message),
+  });
+};
+
+const notifySuccess = (
+  message: string,
+  enableNotifications: EnableNotifications | undefined,
+) => {
+  notify({
+    enableNotifications,
+    notificationStatus: NotificationStatus.SUCCESS,
+    onEnabled: () => toast.success(message),
+    // eslint-disable-next-line no-console
+    onDisabled: () => console.log(message),
+  });
+};
+
+const notifyInfo = (
+  message: string,
+  enableNotifications: EnableNotifications | undefined,
+) => {
+  notify({
+    enableNotifications,
+    notificationStatus: NotificationStatus.INFO,
+    onEnabled: () => toast.info(message),
+    // eslint-disable-next-line no-console
+    onDisabled: () => console.log(message),
+  });
+};
+
+const notifier: Notifier = (
+  {
+    type,
+    payload,
+  }: {
+    type: string;
+    payload?: Payload;
+  },
+  options?: NotifierOptions,
+) => {
+  const enableNotifications = options?.enableNotifications;
   let message = null;
   switch (type) {
     // error messages
@@ -162,20 +229,17 @@ const notifier: Notifier = ({
 
     // progress messages
     // todo: this might be handled differently
-    case uploadFileRoutine.REQUEST: {
-      toast.info(i18n.t(REQUEST_MESSAGES.UPLOAD_FILES));
-      break;
-    }
+    case uploadFileRoutine.REQUEST:
     case uploadItemThumbnailRoutine.REQUEST: {
-      toast.info(i18n.t(REQUEST_MESSAGES.UPLOAD_FILES));
+      notifyInfo(i18n.t(REQUEST_MESSAGES.UPLOAD_FILES), enableNotifications);
       break;
     }
     case importZipRoutine.REQUEST: {
-      toast.info(i18n.t(REQUEST_MESSAGES.IMPORT_ZIP));
+      notifyInfo(i18n.t(REQUEST_MESSAGES.IMPORT_ZIP), enableNotifications);
       break;
     }
     case importH5PRoutine.REQUEST: {
-      toast.info(i18n.t(REQUEST_MESSAGES.IMPORT_H5P));
+      notifyInfo(i18n.t(REQUEST_MESSAGES.IMPORT_H5P), enableNotifications);
       break;
     }
     default:
@@ -183,16 +247,17 @@ const notifier: Notifier = ({
   // error notification
   if (payload?.error) {
     if (message) {
-      toast.error(i18n.t(message));
+      notifyError(i18n.t(message), enableNotifications);
     } else {
-      toast.error(payload.error.toString());
+      notifyError(payload.error.toString(), enableNotifications);
     }
   }
   // success notification
   else if (message) {
     // TODO: enable if not websockets
     // allow resend invitation
-    toast.success(i18n.t(message));
+    notifySuccess(i18n.t(message), enableNotifications);
   }
 };
+
 export default notifier;

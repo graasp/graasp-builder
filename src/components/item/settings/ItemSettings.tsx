@@ -5,8 +5,8 @@ import Container from '@mui/material/Container';
 
 import { OutletType } from '@/components/pages/item/type';
 
-import CustomizedTagsEdit from '../publish/CustomizedTagsEdit';
 import AdminChatSettings from './AdminChatSettings';
+import CustomizedTagsSettings from './CustomizedTagsSettings';
 import GeolocationPicker from './GeolocationPicker';
 import ItemLicenseSettings from './ItemLicenseSettings';
 import ItemMetadataContent from './ItemMetadataContent';
@@ -21,7 +21,7 @@ const ItemSettings = (): JSX.Element => {
       <Stack gap={2}>
         <ThumbnailSetting item={item} />
         <ItemMetadataContent />
-        <CustomizedTagsEdit item={item} />
+        <CustomizedTagsSettings item={item} />
         <GeolocationPicker item={item} />
         <ItemSettingsProperties item={item} />
         <AdminChatSettings item={item} />

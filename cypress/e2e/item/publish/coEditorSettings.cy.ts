@@ -1,15 +1,12 @@
 import { ItemTagType, PackedFolderItemFactory } from '@graasp/sdk';
 
-import {
-  DISPLAY_CO_EDITORS_OPTIONS,
-  SETTINGS,
-} from '../../../../src/config/constants';
+import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
+  CO_EDITOR_SETTINGS_CHECKBOX_ID,
   CO_EDITOR_SETTINGS_RADIO_GROUP_ID,
   ITEM_HEADER_ID,
-  SHARE_ITEM_VISIBILITY_SELECT_ID,
-  buildCoEditorSettingsRadioButtonId,
+  buildDataCyWrapper,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_WITH_CATEGORIES_CONTEXT } from '../../../fixtures/categories';
@@ -19,12 +16,6 @@ import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
-
-const changeVisibility = (value: string): void => {
-  cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
-  cy.get(`li[data-value="${value}"]`, { timeout: 1000 }).click();
-};
-
 const visitItemPage = () => {
   cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
   const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
@@ -36,31 +27,27 @@ describe('Co-editor Setting', () => {
   it('Display choices', () => {
     visitItemPage();
 
-    Object.values(DISPLAY_CO_EDITORS_OPTIONS).forEach((option) => {
-      cy.get(`#${buildCoEditorSettingsRadioButtonId(option.value)}`)
-        .scrollIntoView()
-        .should('be.visible');
-    });
+    cy.get(buildDataCyWrapper(CO_EDITOR_SETTINGS_CHECKBOX_ID)).should(
+      'be.visible',
+    );
+  });
+});
+
+it('Change choice', () => {
+  visitItemPage();
+  const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
+  const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
+
+  cy.wait('@getLatestValidationGroup').then(() => {
+    cy.get(buildDataCyWrapper(CO_EDITOR_SETTINGS_CHECKBOX_ID)).click();
   });
 
-  it('Change choice', () => {
-    visitItemPage();
-    const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
-
-    const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
-
-    changeVisibility(SETTINGS.ITEM_PUBLIC.name);
-    cy.wait('@getLatestValidationGroup').then(() => {
-      cy.get(`#${buildCoEditorSettingsRadioButtonId(newOptionValue)}`).click();
-    });
-
-    cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
-      const {
-        request: { url, body },
-      } = data;
-      expect(url.split('/')).contains(item.id);
-      expect(body.settings.displayCoEditors).equals(newOptionValue);
-    });
+  cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
+    const {
+      request: { url, body },
+    } = data;
+    expect(url.split('/')).contains(item.id);
+    expect(body.settings.displayCoEditors).equals(newOptionValue);
   });
 });
 

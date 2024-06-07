@@ -42,7 +42,12 @@ import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import { AVATAR_LINK, ITEM_THUMBNAIL_LINK } from '../fixtures/thumbnails/links';
 import { SIGN_IN_PATH } from './paths';
 import { ItemForTest, MemberForTest } from './types';
-import { ID_FORMAT, SHORTLINK_FORMAT, parseStringToRegExp } from './utils';
+import {
+  ID_FORMAT,
+  SHORTLINK_FORMAT,
+  extractItemIdOrThrow,
+  parseStringToRegExp,
+} from './utils';
 
 const {
   buildGetItemPublishedInformationRoute,
@@ -1880,27 +1885,41 @@ export const mockUploadInvitationCSV = (
 };
 
 export const mockPublishItem = (items: ItemForTest[]): void => {
+  const interceptingPathFormat = buildItemPublishRoute(ID_FORMAT);
   cy.intercept(
     {
       method: HttpMethod.Post,
-      url: new RegExp(`${API_HOST}/${buildItemPublishRoute(ID_FORMAT)}`),
+      url: new RegExp(`${API_HOST}/${interceptingPathFormat}`),
     },
     ({ reply, url }) => {
-      const itemId = url.slice(API_HOST.length).split('/')[2];
-      reply(items.find((item) => item?.id === itemId));
+      const itemId = extractItemIdOrThrow(interceptingPathFormat, new URL(url));
+      const searchItem = items.find((item) => item?.id === itemId);
+
+      if (!searchItem) {
+        return reply({ statusCode: StatusCodes.NOT_FOUND });
+      }
+
+      return reply(searchItem);
     },
   ).as('publishItem');
 };
 
 export const mockUnpublishItem = (items: ItemForTest[]): void => {
+  const interceptingPathFormat = buildItemUnpublishRoute(ID_FORMAT);
   cy.intercept(
     {
       method: HttpMethod.Delete,
-      url: new RegExp(`${API_HOST}/${buildItemUnpublishRoute(ID_FORMAT)}`),
+      url: new RegExp(`${API_HOST}/${interceptingPathFormat}`),
     },
     ({ reply, url }) => {
-      const itemId = url.slice(API_HOST.length).split('/')[3];
-      reply(items.find((item) => item?.id === itemId));
+      const itemId = extractItemIdOrThrow(interceptingPathFormat, new URL(url));
+      const searchItem = items.find((item) => item?.id === itemId);
+
+      if (!searchItem) {
+        return reply({ statusCode: StatusCodes.NOT_FOUND });
+      }
+
+      return reply(searchItem);
     },
   ).as('unpublishItem');
 };

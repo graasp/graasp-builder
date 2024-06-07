@@ -7,15 +7,18 @@ import {
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_HEADER_ID,
-  ITEM_TAGS_EDIT_INPUT_ID,
-  ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID,
+  ITEM_TAGS_OPEN_MODAL_BUTTON_ID,
+  MUI_CHIP_REMOVE_BTN,
+  MULTI_SELECT_CHIP_ADD_BUTTON_ID,
+  MULTI_SELECT_CHIP_INPUT_ID,
   buildCustomizedTagsSelector,
+  buildDataCyWrapper,
+  buildDataTestIdWrapper,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
 import {
   ITEM_WITH_CATEGORIES,
   ITEM_WITH_CATEGORIES_CONTEXT,
-  NEW_CUSTOMIZED_TAG,
 } from '../../../fixtures/categories';
 import { PUBLISHED_ITEM_NO_TAGS } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
@@ -39,8 +42,9 @@ describe('Customized Tags', () => {
     cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
-    cy.get(`#${buildCustomizedTagsSelector(0)}`).should('not.exist');
-    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('have.text', '');
+    cy.get(buildDataCyWrapper(buildCustomizedTagsSelector(0))).should(
+      'not.exist',
+    );
   });
 
   it('Display tags', () => {
@@ -48,25 +52,47 @@ describe('Customized Tags', () => {
     visitItemPage(item);
     expect(item.settings.tags).to.have.lengthOf.above(0);
     item.settings.tags!.forEach((tag, index) => {
-      const displayTags = cy.get(`#${buildCustomizedTagsSelector(index)}`);
+      const displayTags = cy.get(
+        buildDataCyWrapper(buildCustomizedTagsSelector(index)),
+      );
       displayTags.contains(tag);
     });
   });
 
-  it('Edit tags', () => {
+  it('Remove tag', () => {
     const item = ITEM_WITH_CATEGORIES;
+    const removeIdx = 0;
+    const removedTag = item.settings.tags[removeIdx];
+
     visitItemPage(item);
-    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`)
-      .clear()
-      .type(NEW_CUSTOMIZED_TAG)
-      .should('have.text', NEW_CUSTOMIZED_TAG);
-    cy.get(`#${ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID}`).click();
+    cy.get(buildDataCyWrapper(buildCustomizedTagsSelector(removeIdx)))
+      .find(buildDataTestIdWrapper(MUI_CHIP_REMOVE_BTN))
+      .click();
+
     cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
       const {
         request: { url, body },
       } = data;
       expect(url.split('/')).contains(item.id);
-      expect(body.settings.tags).contains(NEW_CUSTOMIZED_TAG);
+      expect(body.settings.tags).not.contains(removedTag);
+    });
+  });
+
+  it('Add tag', () => {
+    const item = ITEM_WITH_CATEGORIES;
+    const newTag = 'My new tag';
+
+    visitItemPage(item);
+    cy.get(buildDataCyWrapper(ITEM_TAGS_OPEN_MODAL_BUTTON_ID)).click();
+    cy.get(buildDataCyWrapper(MULTI_SELECT_CHIP_INPUT_ID)).type(newTag);
+    cy.get(buildDataCyWrapper(MULTI_SELECT_CHIP_ADD_BUTTON_ID)).click();
+
+    cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
+      const {
+        request: { url, body },
+      } = data;
+      expect(url.split('/')).contains(item.id);
+      expect(body.settings.tags).contains(newTag);
     });
   });
 });
@@ -105,7 +131,6 @@ describe('Tags permissions', () => {
     cy.get(`#${ITEM_HEADER_ID}`).should('be.visible');
     // signed out user can not see the publish menu
     cy.get(`#${buildPublishButtonId(item.id)}`).should('not.exist');
-    cy.get(`#${ITEM_TAGS_EDIT_INPUT_ID}`).should('not.exist');
   });
 
   it('Read-only user cannot edit tags', () => {

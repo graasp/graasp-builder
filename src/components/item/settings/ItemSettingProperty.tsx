@@ -5,7 +5,7 @@ type Props = {
   valueText?: string | JSX.Element;
   inputSetting: JSX.Element;
   icon?: JSX.Element;
-  additionalInfo?: JSX.Element;
+  additionalInfo?: JSX.Element | null;
 };
 
 const ItemSettingProperty = ({

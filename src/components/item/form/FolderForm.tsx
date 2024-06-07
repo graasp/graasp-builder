@@ -3,8 +3,8 @@ import { Stack } from '@mui/material';
 import { DiscriminatedItem } from '@graasp/sdk';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
+import ThumbnailCrop from '../../thumbnails/ThumbnailCrop';
 import DescriptionForm from './DescriptionForm';
-import FolderThumbnail from './FolderThumbnail';
 import NameForm from './NameForm';
 
 export type FolderFormProps = {
@@ -27,7 +27,7 @@ const FolderForm = ({
       alignItems="flex-end"
       gap={3}
     >
-      <FolderThumbnail setChanges={setChanges} />
+      <ThumbnailCrop setChanges={setChanges} />
       <NameForm
         required
         setChanges={setChanges}

@@ -14,8 +14,8 @@ import { DiscriminatedItem } from '@graasp/sdk';
 import { useBuilderTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 
-import ConfirmLicenseDialogContent from '../publish/ConfirmLicenseDialogContent';
-import useItemLicense from '../publish/useItemLicense';
+import ConfirmLicenseDialogContent from '../../common/ConfirmLicenseDialogContent';
+import useItemLicense from '../../hooks/useItemLicense';
 
 type Props = {
   open: boolean;

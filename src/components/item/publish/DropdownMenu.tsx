@@ -20,7 +20,7 @@ import {
 import { BUILDER } from '../../../langs/constants';
 
 type Props = {
-  disabled: boolean;
+  disabled?: boolean;
   type: CategoryType;
   title: string;
   values: Category[];
@@ -34,7 +34,7 @@ type Props = {
 };
 
 const DropdownMenu = ({
-  disabled,
+  disabled = false,
   type,
   title,
   handleChange,
@@ -58,7 +58,7 @@ const DropdownMenu = ({
       </Typography>
       <Autocomplete
         data-cy={buildCategoryDropdownParentSelector(type)}
-        sx={{ width: 'auto', maxWidth: '85%' }}
+        sx={{ width: 'auto' }}
         disabled={disabled || !values}
         multiple
         disableClearable
