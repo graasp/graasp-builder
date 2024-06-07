@@ -7491,13 +7491,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"filesize@npm:10.1.1":
-  version: 10.1.1
-  resolution: "filesize@npm:10.1.1"
-  checksum: 10/3d4d05930ec3de16d9cb8c8f4061df1218d3eac4d69521deb3f768cbe7451ff82fe4af3bbf562e1f3a491b96c42e445d65af3cefec90a5deff0ec302dda42ede
-  languageName: node
-  linkType: hard
-
 "filesize@npm:10.1.2":
   version: 10.1.2
   resolution: "filesize@npm:10.1.2"
@@ -8094,7 +8087,7 @@ __metadata:
     eslint-plugin-jsx-a11y: "npm:6.8.0"
     eslint-plugin-react: "npm:7.34.1"
     eslint-plugin-react-hooks: "npm:4.6.2"
-    filesize: "npm:10.1.1"
+    filesize: "npm:10.1.2"
     http-status-codes: "npm:2.3.0"
     husky: "npm:9.0.11"
     i18next: "npm:23.11.3"
