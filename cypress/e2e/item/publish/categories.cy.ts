@@ -2,11 +2,17 @@ import { Category, CategoryType } from '@graasp/sdk';
 
 import { buildItemPath } from '../../../../src/config/paths';
 import {
+  CATEGORIES_ADD_BUTTON_HEADER,
   LIBRARY_SETTINGS_CATEGORIES_ID,
+  MUI_CHIP_REMOVE_BTN,
   buildCategoryDropdownParentSelector,
   buildCategorySelectionId,
   buildCategorySelectionOptionId,
+  buildDataCyWrapper,
+  buildDataTestIdWrapper,
   buildPublishButtonId,
+  buildPublishChip,
+  buildPublishChipContainer,
 } from '../../../../src/config/selectors';
 import {
   ITEM_WITH_CATEGORIES,
@@ -15,39 +21,44 @@ import {
 } from '../../../fixtures/categories';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
-import { PUBLISH_TAB_LOADING_TIME } from '../../../support/constants';
 
-const openPublishItemTab = (id: string) => {
+const CATEGORIES_DATA_CY = buildDataCyWrapper(
+  buildPublishChipContainer(LIBRARY_SETTINGS_CATEGORIES_ID),
+);
+
+const openPublishItemTab = (id: string) =>
   cy.get(`#${buildPublishButtonId(id)}`).click();
-  cy.wait(PUBLISH_TAB_LOADING_TIME);
-};
 
 const toggleOption = (
   id: string,
   categoryType: CategoryType | `${CategoryType}`,
 ) => {
   cy.get(`#${buildCategorySelectionId(categoryType)}`).click();
-
   cy.get(`#${buildCategorySelectionOptionId(categoryType, id)}`).click();
+};
+
+const openCategoriesModal = () => {
+  cy.get(buildDataCyWrapper(CATEGORIES_ADD_BUTTON_HEADER)).click();
 };
 
 describe('Categories', () => {
   describe('Item without category', () => {
-    it('Display item without category', () => {
+    beforeEach(() => {
       const item = { ...ITEM_WITH_CATEGORIES, categories: [] as Category[] };
       cy.setUpApi({ items: [item] });
       cy.visit(buildItemPath(item.id));
       openPublishItemTab(item.id);
+    });
 
+    it('Display item without category', () => {
       // check for not displaying if no categories
-      cy.get(`#${LIBRARY_SETTINGS_CATEGORIES_ID} .MuiChip-label`).should(
-        'not.exist',
-      );
+      cy.get(CATEGORIES_DATA_CY).should('not.exist');
     });
   });
 
   describe('Item with category', () => {
     const item = ITEM_WITH_CATEGORIES;
+
     beforeEach(() => {
       cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
       cy.visit(buildItemPath(item.id));
@@ -60,20 +71,26 @@ describe('Categories', () => {
         categories: [{ category }],
       } = item;
       const { name } = SAMPLE_CATEGORIES.find(({ id }) => id === category.id);
-      const categoryContent = cy.get(`#${LIBRARY_SETTINGS_CATEGORIES_ID}`);
+      const categoryContent = cy.get(CATEGORIES_DATA_CY);
       categoryContent.contains(name);
     });
 
     describe('Delete a category', () => {
-      it('Using Dropdown', () => {
+      let id: string;
+      let category: Category;
+      let categoryType: Category['type'];
+
+      beforeEach(() => {
         const {
           categories: [itemCategory],
         } = item;
-        const { category, id } = itemCategory;
-        const categoryType = SAMPLE_CATEGORIES.find(
+        ({ category, id } = itemCategory);
+        categoryType = SAMPLE_CATEGORIES.find(
           ({ id: cId }) => cId === category.id,
         )?.type;
-        toggleOption(category.id, categoryType);
+      });
+
+      afterEach(() => {
         cy.wait('@deleteItemCategory').then((data) => {
           const {
             request: { url },
@@ -82,50 +99,33 @@ describe('Categories', () => {
         });
       });
 
-      it('Using cross on category tag', () => {
-        const {
-          categories: [itemCategory],
-        } = item;
-        const { category, id } = itemCategory;
-        const categoryType = SAMPLE_CATEGORIES.find(
-          ({ id: cId }) => cId === category.id,
-        )?.type;
-        cy.get(`[data-cy=${buildCategoryDropdownParentSelector(categoryType)}]`)
+      it('Using Dropdown in modal', () => {
+        openCategoriesModal();
+        toggleOption(category.id, categoryType);
+      });
+
+      it('Using cross on category tag in modal', () => {
+        openCategoriesModal();
+
+        cy.get(
+          buildDataCyWrapper(buildCategoryDropdownParentSelector(categoryType)),
+        )
           .find(`[data-tag-index=0] > svg`)
           .click();
-        cy.wait('@deleteItemCategory').then((data) => {
-          const {
-            request: { url },
-          } = data;
-          expect(url.split('/')).contains(id);
-        });
       });
 
-      it('Using backspace in textfield', () => {
-        const {
-          categories: [itemCategory],
-        } = item;
-        const { category, id } = itemCategory;
-        const categoryType = SAMPLE_CATEGORIES.find(
-          ({ id: cId }) => cId === category.id,
-        )?.type;
-        cy.get(
-          `[data-cy=${buildCategoryDropdownParentSelector(
-            categoryType,
-          )}] input`,
-        ).type('{backspace}');
-        cy.wait('@deleteItemCategory').then((data) => {
-          const {
-            request: { url },
-          } = data;
-          expect(url.split('/')).contains(id);
-        });
+      it('Using cross on category container', () => {
+        cy.get(buildDataCyWrapper(buildPublishChip(category.name)))
+          .find(buildDataTestIdWrapper(MUI_CHIP_REMOVE_BTN))
+          .click();
       });
     });
 
     it('Add a category', () => {
+      openCategoriesModal();
       const { type, id } = SAMPLE_CATEGORIES[1];
       toggleOption(id, type);
+
       cy.wait('@postItemCategory').then((data) => {
         const {
           request: { url },
@@ -139,6 +139,7 @@ describe('Categories', () => {
   describe('Categories permissions', () => {
     it('User signed out cannot edit category level', () => {
       const item = PUBLISHED_ITEM;
+
       cy.setUpApi({
         items: [item],
         currentMember: SIGNED_OUT_MEMBER,

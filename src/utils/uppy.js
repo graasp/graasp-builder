@@ -106,7 +106,7 @@ export const configureThumbnailUppy = ({
   onUpload,
   onComplete,
   onError,
-  onProgress = null,
+  onProgress = (_progression) => {},
 }) =>
   configureUppy({
     itemId,

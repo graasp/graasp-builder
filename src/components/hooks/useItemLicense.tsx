@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SxProps } from '@mui/material';
 
@@ -8,37 +8,56 @@ import { CCSharingVariant, CreativeCommons } from '@graasp/ui';
 import { mutations } from '@/config/queryClient';
 import { convertLicense, convertSelectionToLicense } from '@/utils/itemLicense';
 
-import LicenseForm from './LicenseForm';
-import { CCLicenseChoice, CCSharingLicenseChoice } from './type';
+import LicenseForm from '../item/publish/LicenseForm';
+import { CCLicenseChoice, CCSharingLicenseChoice } from '../item/publish/type';
+
+const { useEditItem } = mutations;
 
 const licensePreviewStyle = {
   border: '1px solid #eee',
   borderRadius: 2,
-  minWidth: 300,
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+};
+
+export type UseItemLicense = {
+  handleSubmit: () => void;
+  removeLicense: () => void;
+  licenseForm: JSX.Element;
+  creativeCommons: JSX.Element;
+  requireAttributionValue: CCLicenseChoice;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
 };
 
 const useItemLicense = ({
   item,
+  iconSize,
   disabled,
   commonsSx,
+  enableNotifications = true,
 }: {
   item: DiscriminatedItem;
+  iconSize?: number;
   disabled?: boolean;
   commonsSx?: SxProps;
-}): {
-  handleSubmit: () => void;
-  licenseForm: JSX.Element;
-  creativeCommons: JSX.Element;
-  requireAttributionValue: CCLicenseChoice;
-} => {
+  enableNotifications?: boolean;
+}): UseItemLicense => {
   const [requireAttributionValue, setRequireAttributionValue] =
-    useState<CCLicenseChoice>('');
+    useState<CCLicenseChoice>('no');
   const [allowCommercialValue, setAllowCommercialValue] =
-    useState<CCLicenseChoice>('');
+    useState<CCLicenseChoice>('yes');
   const [allowSharingValue, setAllowSharingValue] =
-    useState<CCSharingLicenseChoice>('');
+    useState<CCSharingLicenseChoice>('yes');
 
-  const { mutate: updateCCLicense } = mutations.useEditItem();
+  const {
+    mutate: updateItem,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useEditItem({ enableNotifications });
 
   const { id, settings } = item;
 
@@ -54,7 +73,7 @@ const useItemLicense = ({
 
   const handleSubmit = () => {
     if (requireAttributionValue) {
-      updateCCLicense({
+      updateItem({
         id,
         settings: {
           ccLicenseAdaption: convertSelectionToLicense({
@@ -68,6 +87,9 @@ const useItemLicense = ({
       console.error(`optionValue "${requireAttributionValue}" is undefined`);
     }
   };
+
+  const removeLicense = () =>
+    updateItem({ id, settings: { ccLicenseAdaption: null } });
 
   const licenseForm = (
     <LicenseForm
@@ -87,13 +109,18 @@ const useItemLicense = ({
       allowSharedAdaptation={allowSharingValue as CCSharingVariant}
       allowCommercialUse={allowCommercialValue === 'yes'}
       sx={commonsSx || licensePreviewStyle}
+      iconSize={iconSize}
     />
   );
   return {
     handleSubmit,
+    removeLicense,
     licenseForm,
     creativeCommons,
     requireAttributionValue,
+    isError,
+    isLoading,
+    isSuccess,
   };
 };
 

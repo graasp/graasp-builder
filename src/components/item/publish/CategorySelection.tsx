@@ -1,65 +1,56 @@
 import { SyntheticEvent } from 'react';
-import { useParams } from 'react-router-dom';
 
-import { AutocompleteChangeReason, Box, Typography } from '@mui/material';
+import { AutocompleteChangeReason, Stack } from '@mui/material';
 
-import { routines } from '@graasp/query-client';
 import { Category, CategoryType } from '@graasp/sdk';
-import { FAILURE_MESSAGES } from '@graasp/translations';
 import { Loader } from '@graasp/ui';
 
 import groupBy from 'lodash.groupby';
 
-import {
-  useBuilderTranslation,
-  useCategoriesTranslation,
-} from '../../../config/i18n';
-import notifier from '../../../config/notifier';
-import { hooks, mutations } from '../../../config/queryClient';
-import { LIBRARY_SETTINGS_CATEGORIES_ID } from '../../../config/selectors';
-import { BUILDER } from '../../../langs/constants';
-import { sortByName } from '../../../utils/item';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
+import { useCategoriesTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
+import { Filter } from '@/types/array';
+import { sortByName } from '@/utils/item';
+
 import DropdownMenu from './DropdownMenu';
 
-const { postItemCategoryRoutine } = routines;
-
 const { useCategories, useItemCategories } = hooks;
-const { usePostItemCategory, useDeleteItemCategory } = mutations;
 
 const SELECT_OPTION = 'selectOption';
 const REMOVE_OPTION = 'removeOption';
 
 type Props = {
-  disabled: boolean;
+  itemId: string;
+  titleContent?: JSX.Element;
+  filterCategories?: Filter<Category>;
+  onCreate: (categoryId: string) => void;
+  onDelete: (itemCategoryId: string) => void;
 };
-
-const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
-  const { t: translateBuilder } = useBuilderTranslation();
+const CategorySelection = ({
+  itemId,
+  titleContent,
+  filterCategories = () => true,
+  onCreate,
+  onDelete,
+}: Props): JSX.Element | null => {
   const { t: translateCategories } = useCategoriesTranslation();
-  const { mutate: createItemCategory } = usePostItemCategory();
-  const { mutate: deleteItemCategory } = useDeleteItemCategory();
-
-  // user
-  const { isLoading: isMemberLoading } = useCurrentUserContext();
-
-  // current item
-  const { itemId } = useParams();
-
-  // get itemCategories, categoryTypes and allCategories
   const { data: itemCategories, isLoading: isItemCategoriesLoading } =
     useItemCategories(itemId);
   const { data: allCategories, isLoading: isCategoriesLoading } =
     useCategories();
+  const isLoading = isItemCategoriesLoading || isCategoriesLoading;
+  const filteredCategories = allCategories?.filter(filterCategories);
+  const categoriesByType = groupBy(filteredCategories, (entry) => entry.type);
 
-  // process data
-  const categoriesMap = groupBy(allCategories, (entry) => entry.type);
-
-  if (isMemberLoading || isItemCategoriesLoading || isCategoriesLoading) {
-    return <Loader />;
+  if (isLoading) {
+    return (
+      <Stack alignItems="center">
+        <Loader />
+      </Stack>
+    );
   }
 
-  if (!Object.values(categoriesMap).length) {
+  if (!Object.values(categoriesByType).length) {
     return null;
   }
 
@@ -77,40 +68,31 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
     if (reason === SELECT_OPTION) {
       // post new category
       const newCategoryId = details?.option.id;
-      if (!newCategoryId) {
-        notifier({
-          type: postItemCategoryRoutine.FAILURE,
-          payload: { error: new Error(FAILURE_MESSAGES.UNEXPECTED_ERROR) },
-        });
+      if (newCategoryId) {
+        onCreate(newCategoryId);
       } else {
-        createItemCategory({
-          itemId,
-          categoryId: newCategoryId,
-        });
+        console.error('Unable to create the category!');
       }
     }
     if (reason === REMOVE_OPTION) {
       const deletedCategoryId = details?.option.id;
-      const itemCategoryIdToDelete = itemCategories?.find(
+      const itemCategoryIdToRemove = itemCategories?.find(
         ({ category }) => category.id === deletedCategoryId,
       )?.id;
-      if (itemCategoryIdToDelete) {
-        deleteItemCategory({
-          itemId,
-          itemCategoryId: itemCategoryIdToDelete,
-        });
+      if (itemCategoryIdToRemove) {
+        onDelete(itemCategoryIdToRemove);
+      } else {
+        console.error('Unable to delete the category!');
       }
     }
   };
 
   return (
-    <Box mt={2} id={LIBRARY_SETTINGS_CATEGORIES_ID}>
-      <Typography variant="h6" mt={2}>
-        {translateBuilder(BUILDER.ITEM_CATEGORIES_SELECTION_TITLE)}
-      </Typography>
+    <Stack>
+      {titleContent}
       {Object.values(CategoryType)?.map((type) => {
         const values =
-          categoriesMap[type]
+          categoriesByType[type]
             ?.map((c: Category) => ({
               ...c,
               name: translateCategories(c.name),
@@ -120,7 +102,6 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
         return (
           <DropdownMenu
             key={type}
-            disabled={disabled}
             title={translateCategories(type)}
             handleChange={handleChange}
             values={values}
@@ -129,7 +110,7 @@ const CategorySelection = ({ disabled }: Props): JSX.Element | null => {
           />
         );
       })}
-    </Box>
+    </Stack>
   );
 };
 

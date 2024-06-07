@@ -2,6 +2,7 @@
 // import { Platform } from '@graasp/ui';
 import { DescriptionPlacementType } from '@graasp/sdk';
 
+import { PublicationStatus } from '@/types/publication';
 import { ShortLinkPlatform } from '@/utils/shortLink';
 
 export const SHARED_ITEMS_ROOT_CONTAINER = 'sharedItemsPageRootContainer';
@@ -213,8 +214,12 @@ export const CROP_MODAL_CONFIRM_BUTTON_ID = 'cropModalConfirmButton';
 export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
 export const H5P_DASHBOARD_UPLOADER_ID = 'h5pDashboardUploader';
 
-export const ITEM_TAGS_EDIT_INPUT_ID = 'itemTagsEditInput';
-export const ITEM_TAGS_EDIT_SUBMIT_BUTTON_ID = 'itemTagsEditSubmitButton';
+export const ITEM_TAGS_OPEN_MODAL_BUTTON_ID = 'itemTagsOpenModalButton';
+export const MULTI_SELECT_CHIP_INPUT_ID = 'multiSelectChipInput';
+export const MULTI_SELECT_CHIP_ADD_BUTTON_ID = 'multiSelectChipAddButton';
+export const MULTI_SELECT_CHIP_CONTAINER_ID = 'multiSelectChipContainer';
+export const buildMultiSelectChipsSelector = (index: number): string =>
+  `multiSelectChips-${index}`;
 export const buildCustomizedTagsSelector = (index: number): string =>
   `customizedTagsPreview-${index}`;
 
@@ -230,8 +235,6 @@ export const buildDashboardButtonId = (id: string): string =>
 export const buildPlayerTabName = (id: string): string => `builder-tab-${id}`;
 
 export const ITEM_PUBLISH_SECTION_TITLE_ID = 'itemPublishSectionTitle';
-export const ITEM_VALIDATION_BUTTON_ID = 'itemValidationButton';
-export const ITEM_VALIDATION_REFRESH_BUTTON_ID = 'itemValidationRefreshButton';
 export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
 // cannot use graasp ui because it slows down a lot cypress
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
@@ -241,8 +244,8 @@ export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
   Analytics: 'appNavigationPlatformSwitchButtonAnalytics',
 };
 
-export const ITEM_PUBLISH_BUTTON_ID = 'itemPublishButton';
-export const ITEM_UNPUBLISH_BUTTON_ID = 'itemUnpublishButton';
+export const buildItemPublicationButton = (status: PublicationStatus): string =>
+  `item${status}Button`;
 export const buildItemInvitationRowDeleteButtonId = (id: string): string =>
   `itemInvitationRowDeleteButton-${id}`;
 export const buildInvitationEmailTableRowId = (id: string): string =>
@@ -266,9 +269,7 @@ export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
 export const buildMemberMenuItemId = (id: string): string =>
   `memberMenuItem-${id}`;
 export const CO_EDITOR_SETTINGS_RADIO_GROUP_ID = 'coEditorSettingsRadioGroup';
-export const buildCoEditorSettingsRadioButtonId = (
-  id: string | boolean,
-): string => `coEditorSettingsRadioButton-${id}`;
+export const CO_EDITOR_SETTINGS_CHECKBOX_ID = `coEditorSettingsCheckBox`;
 export const EMAIL_NOTIFICATION_CHECKBOX = 'emailNotificationCheckbox';
 
 export const MEMBER_CURRENT_PASSWORD_ID = 'memberCurrentPassword';
@@ -307,6 +308,19 @@ export const buildCategorySelectionOptionId = (
   id: string,
 ): string => `category-${typeId}-option-${id}`;
 export const LIBRARY_SETTINGS_CATEGORIES_ID = 'librarySettingsCategories';
+export const LIBRARY_SETTINGS_LANGUAGES_ID = 'librarySettingsLanguages';
+export const LIBRARY_SETTINGS_CC_SETTINGS_ID = 'librarySettingsCC';
+export const buildLibraryAddButtonHeader = (containerId: string): string =>
+  `librarySettingsAddButtonHeader${containerId}`;
+export const CATEGORIES_ADD_BUTTON_HEADER = buildLibraryAddButtonHeader(
+  LIBRARY_SETTINGS_CATEGORIES_ID,
+);
+export const LANGUAGES_ADD_BUTTON_HEADER = buildLibraryAddButtonHeader(
+  LIBRARY_SETTINGS_LANGUAGES_ID,
+);
+export const CC_EDIT_BUTTON_HEADER = `libarySettingsCCEditButtonHeader`;
+export const CC_DELETE_BUTTON_HEADER = `libarySettingsCCDeleteButtonHeader`;
+export const CC_SAVE_BUTTON = 'librarySettingsCCSaveButton';
 export const buildLanguageOptionId = (value: string): string =>
   `languageOption-${value}`;
 
@@ -378,3 +392,40 @@ export const ITEM_THUMBNAIL_DELETE_BTN_ID = 'itemThumbnailDeleteBtn';
 export const DROPZONE_HELPER_ID = 'dropzoneHelper';
 export const buildMapViewId = (parentId?: string): string =>
   `map-view-${parentId}`;
+
+export const buildDataCyWrapper = (dataCy: string): string =>
+  `[data-cy="${dataCy}"]`;
+export const buildDataTestIdWrapper = (dataCy: string): string =>
+  `[data-testid="${dataCy}"]`;
+
+// Publication page
+export const buildPublishAttrContainer = (id: string): string =>
+  `publicationAttributeContainer${id}`;
+
+export const buildPublishWarningIcon = (warningId: string): string =>
+  `publicationWarning${warningId}`;
+
+export const buildPublishTitleAction = (id: string): string =>
+  `publicationTitleAction${id}`;
+
+export const buildPublishAttrEmptyContainer = (id: string): string =>
+  `publicationEmptyContainer${id}`;
+
+export const buildPublishChip = (id: string): string => `publicationChip${id}`;
+export const buildPublishChipContainer = (id: string): string =>
+  `publicationChipContainer${id}`;
+
+export const buildPublicationStatus = (status: PublicationStatus): string =>
+  `publicationStatus${status}`;
+
+export const PUBLIC_VISIBILITY_MODAL_VALIDATE_BUTTON =
+  'publicVisbilityModalValidateButton';
+
+export const DEBOUNCED_TEXT_FIELD_ID = 'debouncedTextfield';
+
+export const IMAGE_THUMBNAIL_FOLDER = 'imageThumbnailFolder';
+export const IMAGE_PLACEHOLDER_FOLDER = 'imagePlaceholderFolder';
+export const IMAGE_THUMBNAIL_UPLOADER = 'imageThumbnailUploader';
+export const REMOVE_THUMBNAIL_BUTTON = 'removeThumbnailButton';
+
+export const MUI_CHIP_REMOVE_BTN = 'CancelIcon';

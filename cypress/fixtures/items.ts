@@ -1,7 +1,9 @@
 import {
+  DiscriminatedItem,
   ItemTagType,
   ItemType,
   ItemValidation,
+  ItemValidationGroup,
   ItemValidationProcess,
   ItemValidationStatus,
   PackedFolderItemFactory,
@@ -19,8 +21,10 @@ export const DEFAULT_FOLDER_ITEM = PackedFolderItemFactory({
 });
 
 export const generateOwnItems = (number: number): ItemForTest[] => {
-  const id = (i: number) =>
-    `cafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;
+  const id = (i: number) => {
+    const paddedI = `${i}`.padStart(12, '0');
+    return `cafebabe-dead-beef-1234-${paddedI}`;
+  };
   const path = (i: number) => id(i).replace(/-/g, '_');
 
   return Array(number)
@@ -33,7 +37,8 @@ export const generateOwnItems = (number: number): ItemForTest[] => {
         path: path(i),
       };
 
-      const mId = `dafebabe-dead-beef-1234-${`${i}`.padStart(12, '0')}`;
+      const paddedI = `${i}`.padStart(12, '0');
+      const mId = `dafebabe-dead-beef-1234-${paddedI}`;
       return {
         ...item,
         memberships: [
@@ -227,18 +232,34 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
   ],
 };
 
+const YESTERDAY_DATE = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
 // warning: admin permission on item
 const item = PackedFolderItemFactory(
   {
     id: 'ecafbd2a-5688-11eb-ae93-0242ac130002',
     name: 'parent public item',
     path: 'ecafbd2a_5688_11eb_ae93_0242ac130002',
+    updatedAt: YESTERDAY_DATE.toISOString(),
   },
   {
     permission: PermissionLevel.Admin,
     publicTag: { type: ItemTagType.Public },
   },
 );
+
+export const PublishedItemFactory = (
+  itemToPublish: PackedItem,
+): ItemForTest => ({
+  ...itemToPublish,
+  published: {
+    id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
+    item,
+    createdAt: new Date().toISOString(),
+    creator: itemToPublish.creator,
+    totalViews: 0,
+  },
+});
 
 export const PUBLISHED_ITEM: ItemForTest = {
   ...item,
@@ -254,7 +275,7 @@ export const PUBLISHED_ITEM: ItemForTest = {
   published: {
     id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
     item,
-    createdAt: '2021-08-11T12:56:36.834Z',
+    createdAt: new Date().toISOString(),
     creator: MEMBERS.ANNA,
     totalViews: 0,
   },
@@ -286,11 +307,48 @@ export const PUBLISHED_ITEM_NO_TAGS: ItemForTest = {
     tags: undefined,
   },
 };
+
+export const ItemValidationGroupFactory = (
+  validatedItem: DiscriminatedItem,
+  {
+    status = ItemValidationStatus.Success,
+    isOutDated = false,
+  }: {
+    status?: ItemValidationStatus;
+    isOutDated?: boolean;
+  } = { status: ItemValidationStatus.Success, isOutDated: false },
+): ItemValidationGroup => {
+  const itemUpdateDate = new Date(validatedItem.updatedAt);
+  const tmp = isOutDated ? -1 : +1;
+  const validationDate = new Date(itemUpdateDate);
+  validationDate.setDate(validationDate.getDate() + tmp);
+
+  const ivFactory = (id: string, process: ItemValidationProcess) => ({
+    id,
+    item: validatedItem,
+    process,
+    status,
+    result: '',
+    updatedAt: validationDate,
+    createdAt: validationDate,
+  });
+
+  return {
+    id: '65c57d69-0e59-4569-a422-f330c31c995c',
+    item: validatedItem,
+    createdAt: validationDate.toISOString(),
+    itemValidations: [
+      ivFactory('id1', ItemValidationProcess.BadWordsDetection),
+      ivFactory('id2', ItemValidationProcess.ImageChecking),
+    ] as unknown as ItemValidation[],
+  };
+};
+
 export const PUBLISHED_ITEM_VALIDATIONS = [
   {
     id: '65c57d69-0e59-4569-a422-f330c31c995c',
     item: PUBLISHED_ITEM,
-    createdAt: '2021-08-11T12:56:36.834Z',
+    createdAt: new Date().toISOString(),
     itemValidations: [
       {
         id: 'id1',
@@ -299,8 +357,8 @@ export const PUBLISHED_ITEM_VALIDATIONS = [
         process: ItemValidationProcess.BadWordsDetection,
         status: ItemValidationStatus.Success,
         result: '',
-        updatedAt: new Date('2021-04-13 14:56:34.749946'),
-        createdAt: new Date('2021-04-13 14:56:34.749946'),
+        updatedAt: new Date(),
+        createdAt: new Date(),
       },
       {
         id: 'id2',
@@ -309,8 +367,8 @@ export const PUBLISHED_ITEM_VALIDATIONS = [
         process: ItemValidationProcess.ImageChecking,
         status: ItemValidationStatus.Success,
         result: '',
-        updatedAt: new Date('2021-04-13 14:56:34.749946'),
-        createdAt: new Date('2021-04-13 14:56:34.749946'),
+        updatedAt: new Date(),
+        createdAt: new Date(),
       },
       // todo: fix this issue with circular types
     ] as unknown as ItemValidation[],

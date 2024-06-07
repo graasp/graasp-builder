@@ -27,6 +27,11 @@ export const SAMPLE_CATEGORIES: Category[] = [
     name: 'language-1',
     type: CategoryType.Language,
   },
+  {
+    id: 'af7f7e3d-dc75-4070-b892-381fbf4759d5',
+    name: 'language-2',
+    type: CategoryType.Language,
+  },
 ];
 
 export const SAMPLE_ITEM_CATEGORIES: ItemCategory[] = [
@@ -39,9 +44,17 @@ export const SAMPLE_ITEM_CATEGORIES: ItemCategory[] = [
   },
 ];
 
-export const CUSTOMIZED_TAGS = ['water', 'ice', 'temperature'];
+export const SAMPLE_ITEM_LANGUAGE: ItemCategory[] = [
+  {
+    id: 'e75e1950-c5b4-4e21-95a2-c7c3bfa4072b',
+    item: PUBLISHED_ITEM,
+    category: SAMPLE_CATEGORIES[2],
+    createdAt: '2021-08-11T12:56:36.834Z',
+    creator: MEMBERS.ANNA,
+  },
+];
 
-export const NEW_CUSTOMIZED_TAG = 'newTag';
+export const CUSTOMIZED_TAGS = ['water', 'ice', 'temperature'];
 
 export const ITEM_WITH_CATEGORIES: ItemForTest = {
   ...PUBLISHED_ITEM,
@@ -51,6 +64,16 @@ export const ITEM_WITH_CATEGORIES: ItemForTest = {
   },
   // for tests
   categories: SAMPLE_ITEM_CATEGORIES,
+};
+
+export const ITEM_WITH_LANGUAGE: ItemForTest = {
+  ...PUBLISHED_ITEM,
+  settings: {
+    tags: CUSTOMIZED_TAGS,
+    displayCoEditors: true,
+  },
+  // for tests
+  categories: SAMPLE_ITEM_LANGUAGE,
 };
 
 export const ITEM_WITH_CATEGORIES_CONTEXT = {

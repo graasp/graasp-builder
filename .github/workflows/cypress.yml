@@ -47,13 +47,36 @@ jobs:
           VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
           VITE_GRAASP_REDIRECTION_HOST: ${{ vars.VITE_GRAASP_REDIRECTION_HOST }}
 
-      #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
+      #  use the Cypress GitHub Action to run Cypress Component tests within the chrome browser
+      - name: Cypress run components
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          component: true
+          # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
+          start: yarn preview:test
+          browser: chrome
+          quiet: true
+          config-file: cypress.config.ts
+          cache-key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        env:
+          VITE_PORT: ${{ vars.VITE_PORT }}
+          VITE_VERSION: ${{ vars.VITE_VERSION }}
+          VITE_GRAASP_DOMAIN: ${{ vars.VITE_GRAASP_DOMAIN }}
+          VITE_GRAASP_API_HOST: ${{ vars.VITE_GRAASP_API_HOST }}
+          VITE_GRAASP_AUTH_HOST: ${{ vars.VITE_GRAASP_AUTH_HOST }}
+          VITE_GRAASP_PLAYER_HOST: ${{ vars.VITE_GRAASP_PLAYER_HOST }}
+          VITE_GRAASP_LIBRARY_HOST: ${{ vars.VITE_GRAASP_LIBRARY_HOST }}
+          VITE_GRAASP_ANALYZER_HOST: ${{ vars.VITE_GRAASP_ANALYZER_HOST }}
+          VITE_SHOW_NOTIFICATIONS: ${{ vars.VITE_SHOW_NOTIFICATIONS }}
+          VITE_GRAASP_REDIRECTION_HOST: ${{ vars.VITE_GRAASP_REDIRECTION_HOST }}
+
+      #  use the Cypress GitHub Action to run Cypress E2E tests within the chrome browser
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           install: false
-          # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
-          start: yarn preview:test
+          # the app preview is already run for the component tests
           browser: chrome
           quiet: true
           config-file: cypress.config.ts

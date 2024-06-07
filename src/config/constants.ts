@@ -152,3 +152,5 @@ export const CSV_EMAIL_COLUMN_NAME = 'email';
 
 // todo: to remove once we dynamically compute how many items we display
 export const ITEM_PAGE_SIZE = 12;
+export const WARNING_COLOR = '#FFCC02';
+export const DIALOG_CONTENT_WIDTH = { xs: '300px', sm: '500px' };

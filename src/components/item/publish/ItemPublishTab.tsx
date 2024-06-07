@@ -1,303 +1,143 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
+import { Container, Stack, Typography, useMediaQuery } from '@mui/material';
+
+import { Loader, theme } from '@graasp/ui';
+
+import SyncIcon from '@/components/common/SyncIcon';
+import { useCurrentUserContext } from '@/components/context/CurrentUserContext';
 import {
-  Cancel,
-  CheckCircle,
-  Help,
-  Looks3,
-  Looks4,
-  Looks5,
-  LooksOne,
-  LooksTwo,
-  Update,
-} from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-
-import { ItemValidationStatus, redirect } from '@graasp/sdk';
-
-import groupBy from 'lodash.groupby';
-
+  DataSyncContextProvider,
+  useDataSyncContext,
+} from '@/components/context/DataSyncContext';
+import CategoriesContainer from '@/components/item/publish/CategoriesContainer';
+import CoEditorsContainer from '@/components/item/publish/CoEditorsContainer';
+import EditItemDescription from '@/components/item/publish/EditItemDescription';
+import LanguagesContainer from '@/components/item/publish/LanguagesContainer';
+import LicenseContainer from '@/components/item/publish/LicenseContainer';
+import PublicationButton from '@/components/item/publish/PublicationButton';
+import PublicationStatusComponent from '@/components/item/publish/PublicationStatusComponent';
+import PublicationThumbnail from '@/components/item/publish/PublicationThumbnail';
 import { OutletType } from '@/components/pages/item/type';
+import { useBuilderTranslation } from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
+import { SomeBreakPoints } from '@/types/breakpoint';
 
-import { ADMIN_CONTACT, CC_LICENSE_ABOUT_URL } from '../../../config/constants';
-import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, mutations } from '../../../config/queryClient';
-import {
-  ITEM_PUBLISH_SECTION_TITLE_ID,
-  ITEM_VALIDATION_BUTTON_ID,
-  ITEM_VALIDATION_REFRESH_BUTTON_ID,
-} from '../../../config/selectors';
-import { BUILDER } from '../../../langs/constants';
-import VisibilitySelect from '../sharing/VisibilitySelect';
-import CCLicenseSelection from './CCLicenseSelection';
-import CategorySelection from './CategorySelection';
-import CoEditorSettings from './CoEditorSettings';
-import CustomizedTagsEdit from './CustomizedTagsEdit';
-import ItemPublishButton from './ItemPublishButton';
+import EditItemName from './EditItemName';
+import CustomizedTags from './customizedTags/CustomizedTags';
 
-const { useLastItemValidationGroup } = hooks;
-
-const { usePostItemValidation } = mutations;
-
-const enum PublishFlow {
-  SET_ITEM_VISIBILITY_PUBLIC_STEP,
-  VALIDATE_ITEM_STEP,
-  PUBLISH_STEP,
-}
+type StackOrder = { order?: number | SomeBreakPoints<number> };
 
 const ItemPublishTab = (): JSX.Element => {
-  const { t: translateBuilder } = useBuilderTranslation();
-  const { item, canWrite, canAdmin } = useOutletContext<OutletType>();
+  const { t } = useBuilderTranslation();
+  const { item, canAdmin } = useOutletContext<OutletType>();
+  const { isLoading: isMemberLoading } = useCurrentUserContext();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { status } = useDataSyncContext();
 
-  const [validationStatus, setValidationStatus] =
-    useState<ItemValidationStatus | null>(null);
+  const [notifyCoEditors, setNotifyCoEditors] = useState<boolean>(false);
 
-  const isPublic = item.public;
+  if (isMemberLoading) {
+    return <Loader />;
+  }
 
-  // item validation
-  const { mutate: validateItem } = usePostItemValidation();
-
-  const { data: lastItemValidationGroup, refetch } = useLastItemValidationGroup(
-    item?.id,
-  );
-
-  useEffect(() => {
-    // check if validation is still valid
-    const isOutdated =
-      Boolean(!lastItemValidationGroup) ||
-      Boolean(!lastItemValidationGroup?.createdAt) ||
-      (lastItemValidationGroup?.createdAt
-        ? lastItemValidationGroup.createdAt <= item?.updatedAt
-        : true);
-    // QUESTION: should this be null instead?
-    if (isOutdated) {
-      setValidationStatus(ItemValidationStatus.Failure);
-    }
-
-    const mapByStatus = groupBy(
-      lastItemValidationGroup?.itemValidations,
-      ({ status }) => status,
-    );
-    let status = null;
-    if (mapByStatus[ItemValidationStatus.Failure]) {
-      status = ItemValidationStatus.Failure;
-    } else if (mapByStatus[ItemValidationStatus.Pending]) {
-      status = ItemValidationStatus.Pending;
-    } else if (mapByStatus[ItemValidationStatus.Success]) {
-      status = ItemValidationStatus.Success;
-    }
-    setValidationStatus(status);
-  }, [lastItemValidationGroup, item?.updatedAt]);
-
-  const step = (() => {
-    if (!isPublic) {
-      return PublishFlow.SET_ITEM_VISIBILITY_PUBLIC_STEP;
-    }
-    if (validationStatus !== ItemValidationStatus.Success) {
-      return PublishFlow.VALIDATE_ITEM_STEP;
-    }
-    return PublishFlow.PUBLISH_STEP;
-  })();
-
-  if (!canWrite || !canAdmin) {
+  if (!canAdmin) {
     return (
-      <Typography variant="body1">
-        {translateBuilder(
-          BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_INFORMATIONS,
-        )}
+      <Typography mt={3} variant="h3" textAlign="center">
+        {t(BUILDER.LIBRARY_SETTINGS_UNAUTHORIZED)}
       </Typography>
     );
   }
 
-  const handleValidate = () => {
-    // prevent re-send request if the item is already successfully validated
-    if (!(validationStatus === ItemValidationStatus.Success)) {
-      validateItem({ itemId: item.id });
-    }
-    setValidationStatus(ItemValidationStatus.Pending);
-  };
+  const customizedTags = <CustomizedTags item={item} warningWhenNoTags />;
 
-  // display icon indicating current status of given item
-  const displayItemValidationIcon = () => {
-    switch (validationStatus) {
-      case ItemValidationStatus.Success:
-        return <CheckCircle color="primary" />;
-      case ItemValidationStatus.Pending:
-        return <Update color="primary" />;
-      case ItemValidationStatus.PendingManual:
-        return <Update color="primary" />;
-      case ItemValidationStatus.Failure:
-        return <Cancel color="primary" />;
-      default:
-    }
-    return null;
-  };
+  const buildPreviewHeader = (): JSX.Element => (
+    <Stack spacing={2}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+        <PublicationThumbnail item={item} fullWidth={isMobile} />
+        <Stack justifyContent="space-between">
+          <EditItemName item={item} />
+          {!isMobile && customizedTags}
+        </Stack>
+      </Stack>
+      {isMobile && customizedTags}
+      <EditItemDescription item={item} />
+    </Stack>
+  );
 
-  const handleClick = () => {
-    const url = CC_LICENSE_ABOUT_URL;
-    redirect(window, url, { openInNewTab: true });
-  };
+  const buildPreviewContent = (): JSX.Element => (
+    <Stack spacing={1}>
+      <CategoriesContainer itemId={item.id} />
+      <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }}>
+        <LanguagesContainer itemId={item.id} />
+        <LicenseContainer item={item} />
+      </Stack>
+    </Stack>
+  );
 
-  const displayItemValidationMessage = () => {
-    switch (validationStatus) {
-      case ItemValidationStatus.Pending:
-        return (
-          <Typography variant="body1">
-            {translateBuilder(
-              BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_AUTOMATIC,
-            )}
-          </Typography>
-        );
-      case ItemValidationStatus.PendingManual:
-        return (
-          <Typography variant="body1">
-            {translateBuilder(
-              BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_MANUAL,
-            )}
-          </Typography>
-        );
-      case ItemValidationStatus.Failure:
-        return (
-          <Typography variant="body1">
-            {translateBuilder(
-              BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_FAILURE,
-              {
-                contact: ADMIN_CONTACT,
-              },
-            )}
-          </Typography>
-        );
-      default:
-    }
-    return null;
-  };
+  const buildPreviewSection = ({ order }: StackOrder): JSX.Element => (
+    <Stack spacing={1} flexBasis="100%" order={order}>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Typography variant="h3" fontWeight={650}>
+          {t(BUILDER.LIBRARY_SETTINGS_PREVIEW_TITLE)}
+        </Typography>
+        <SyncIcon syncStatus={status} />
+      </Stack>
+      <Typography>{t(BUILDER.LIBRARY_SETTINGS_PREVIEW_DESCRIPTION)}</Typography>
+
+      {buildPreviewHeader()}
+      {buildPreviewContent()}
+    </Stack>
+  );
+
+  const buildPublicationHeader = ({ order }: StackOrder = {}): JSX.Element => (
+    <Stack spacing={1} order={order}>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography variant="h3" fontWeight={650}>
+          {t(BUILDER.LIBRARY_SETTINGS_TITLE)}
+        </Typography>
+        <PublicationStatusComponent item={item} />
+      </Stack>
+      <Typography>{t(BUILDER.LIBRARY_SETTINGS_INFORMATION)}</Typography>
+    </Stack>
+  );
+
+  const buildPublicationSection = ({ order }: StackOrder = {}): JSX.Element => (
+    <Stack spacing={3} flexBasis="100%" order={order}>
+      <CoEditorsContainer
+        item={item}
+        notifyCoEditors={notifyCoEditors}
+        onNotificationChanged={(enabled) => setNotifyCoEditors(enabled)}
+      />
+      <PublicationButton item={item} notifyCoEditors={notifyCoEditors} />
+    </Stack>
+  );
 
   return (
-    <Box m={2}>
-      <>
-        <Typography variant="h5" mt={2} id={ITEM_PUBLISH_SECTION_TITLE_ID}>
-          {translateBuilder(BUILDER.LIBRARY_SETTINGS_TITLE)}
-        </Typography>
-        <Typography variant="body1">
-          {translateBuilder(BUILDER.LIBRARY_SETTINGS_INFORMATION)}
-        </Typography>
-        <Typography variant="h6" mt={2} mr={2}>
-          <LooksOne color="primary" />
-          {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
-        </Typography>
-        <Typography variant="body1">
-          {translateBuilder(BUILDER.LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS)}
-        </Typography>
-        <VisibilitySelect item={item} edit={canWrite} />
-        <Typography variant="h6" mt={2} mr={2}>
-          <LooksTwo color="primary" />
-          {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_TITLE)}
-        </Typography>
-        <Typography variant="body1">
-          {translateBuilder(BUILDER.LIBRARY_SETTINGS_VALIDATION_INFORMATIONS)}
-        </Typography>
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
-          spacing={2}
-        >
-          <Button
-            id={ITEM_VALIDATION_BUTTON_ID}
-            disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
-            variant="outlined"
-            onClick={handleValidate}
-            color="primary"
-            endIcon={displayItemValidationIcon()}
-          >
-            {translateBuilder(
-              BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON,
-            )}
-          </Button>
-          <Button
-            id={ITEM_VALIDATION_REFRESH_BUTTON_ID}
-            variant="outlined"
-            onClick={() => refetch()}
-            color="primary"
-            disabled={step < PublishFlow.VALIDATE_ITEM_STEP}
-          >
-            {translateBuilder(
-              BUILDER.LIBRARY_SETTINGS_VALIDATION_REFRESH_BUTTON,
-            )}
-          </Button>
-        </Stack>
-        {displayItemValidationMessage()}
-        <Typography variant="h6" mt={2} mr={2}>
-          <Looks3 color="primary" />
-          {translateBuilder(
-            BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_TITLE,
-          )}
-        </Typography>
-        <Typography variant="body1">
-          {translateBuilder(
-            BUILDER.LIBRARY_SETTINGS_VALIDATION_CONFIGURATION_INFORMATIONS,
-          )}
-        </Typography>
-        <Box mx={3}>
-          <CoEditorSettings
-            item={item}
-            disabled={step < PublishFlow.PUBLISH_STEP}
-          />
-          <CategorySelection disabled={step < PublishFlow.PUBLISH_STEP} />
-          <CustomizedTagsEdit
-            item={item}
-            disabled={step < PublishFlow.PUBLISH_STEP}
-          />
-        </Box>
-
-        <Typography variant="h6" mt={2}>
-          <Looks4 color="primary" />
-          {translateBuilder(BUILDER.ITEM_SETTINGS_CC_LICENSE_TITLE)}
-          <Tooltip
-            title={translateBuilder(
-              BUILDER.ITEM_SETTINGS_CC_LICENSE_MORE_INFORMATIONS,
-            )}
-            arrow
-          >
-            <span>
-              <IconButton aria-label="info" onClick={handleClick}>
-                <Help />
-              </IconButton>
-            </span>
-          </Tooltip>
-        </Typography>
-        <CCLicenseSelection
-          disabled={step < PublishFlow.PUBLISH_STEP}
-          item={item}
-        />
-
-        <Typography variant="h6" mt={2} mr={2}>
-          <Looks5 color="primary" />
-          {translateBuilder(
-            BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_TITLE,
-          )}
-        </Typography>
-        <Typography variant="body1">
-          {translateBuilder(
-            BUILDER.LIBRARY_SETTINGS_VALIDATION_PUBLICATION_INFORMATIONS,
-          )}
-        </Typography>
-        <ItemPublishButton
-          item={item}
-          isValidated={validationStatus === ItemValidationStatus.Success}
-          disabled={step < PublishFlow.PUBLISH_STEP}
-        />
-      </>
-    </Box>
+    <Container disableGutters sx={{ mt: 2 }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} gap={6}>
+        {buildPreviewSection({ order: { xs: 1, md: 0 } })}
+        {isMobile ? (
+          <>
+            {buildPublicationHeader({ order: { xs: 0 } })}
+            {buildPublicationSection({ order: { xs: 2 } })}
+          </>
+        ) : (
+          <Stack flexBasis="100%" spacing={2}>
+            {buildPublicationHeader()}
+            {buildPublicationSection()}
+          </Stack>
+        )}
+      </Stack>
+    </Container>
   );
 };
 
-export default ItemPublishTab;
+const ItemPublishWithContext = (): JSX.Element => (
+  <DataSyncContextProvider>
+    <ItemPublishTab />
+  </DataSyncContextProvider>
+);
+
+export default ItemPublishWithContext;

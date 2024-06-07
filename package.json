@@ -21,7 +21,7 @@
     "@emotion/styled": "11.11.5",
     "@graasp/chatbox": "3.1.0",
     "@graasp/map": "1.15.0",
-    "@graasp/query-client": "3.9.0",
+    "@graasp/query-client": "3.11.0",
     "@graasp/sdk": "4.12.0",
     "@graasp/translations": "1.28.0",
     "@graasp/ui": "4.19.2",
@@ -93,6 +93,7 @@
     "cypress:open": "env-cmd -f ./.env.test cypress open --browser chrome",
     "test": "yarn test:unit && yarn build:test && concurrently -k -s first \"yarn preview:test\" \"yarn cypress:run\"",
     "cypress:run": "env-cmd -f ./.env.test cypress run --browser chrome",
+    "cypress:run:component": "env-cmd -f ./.env.test cypress run --component --browser chrome",
     "postinstall": "husky install",
     "test:unit": "yarn vitest"
   },

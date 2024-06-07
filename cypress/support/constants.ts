@@ -23,4 +23,3 @@ export const ROW_HEIGHT = 48;
 export const TABLE_MEMBERSHIP_RENDER_TIME = 1000;
 export const FIXTURES_THUMBNAILS_FOLDER = './thumbnails';
 export const CHATBOX_LOADING_TIME = 5000;
-export const PUBLISH_TAB_LOADING_TIME = 3000;
