@@ -1,3 +1,5 @@
+import { DiscriminatedItem } from '@graasp/sdk';
+
 import { validate as uuidValidate, version as uuidVersion } from 'uuid';
 
 // use simple id format for tests
@@ -80,3 +82,10 @@ export const extractItemIdOrThrow = (
 
   return itemId;
 };
+
+export function getItemById<T extends DiscriminatedItem>(
+  items: T[],
+  id: string,
+): T | undefined {
+  return items.find(({ id: thisId }) => id === thisId);
+}

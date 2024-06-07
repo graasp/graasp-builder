@@ -19,6 +19,7 @@ import {
   ShortLink,
   ShortLinkPayload,
   buildPathFromIds,
+  getIdsFromPath,
   isRootItem,
 } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
@@ -27,7 +28,6 @@ import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4, v4 } from 'uuid';
 
 import { SETTINGS } from '../../src/config/constants';
-import { getItemById } from '../../src/utils/item';
 import { getMemberById } from '../../src/utils/member';
 import {
   buildAppApiAccessTokenRoute,
@@ -43,6 +43,7 @@ import {
   ID_FORMAT,
   SHORTLINK_FORMAT,
   extractItemIdOrThrow,
+  getItemById,
   parseStringToRegExp,
 } from './utils';
 
@@ -433,9 +434,14 @@ export const mockGetChildren = ({
     ({ url, reply }) => {
       const id = url.slice(API_HOST.length).split('/')[2];
       const item = getItemById(items, id);
-
-      const children = items.filter((elem) => isRootItem(elem));
-
+      const itemDepthLevel = getIdsFromPath(item.path).length;
+      const children = items.filter(
+        (elem) =>
+          // should be a descendant of the the item
+          elem.path.startsWith(item.path) &&
+          // should be a direct child
+          getIdsFromPath(elem.path).length === itemDepthLevel + 1,
+      );
       if (item.public) {
         return reply(children);
       }

@@ -53,8 +53,8 @@ const ITEM = PackedFolderItemFactory(
 );
 
 const toggleHideButton = (itemId: string, isHidden = false) => {
-  // todo: remove on table refactor
-  cy.wait(500);
+  // table re-renders when this resolves, so we wait for the call to be made
+  cy.wait('@getManyPublishItemInformations');
   const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
   cy.get(menuSelector).click();
 
