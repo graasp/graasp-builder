@@ -34,11 +34,7 @@ import { DocumentItem } from '@graasp/ui/text-editor';
 
 import { API_HOST, GRAASP_ASSETS_URL, H5P_INTEGRATION_URL } from '@/config/env';
 
-import {
-  DEFAULT_LINK_SHOW_BUTTON,
-  DEFAULT_LINK_SHOW_IFRAME,
-  ITEM_DEFAULT_HEIGHT,
-} from '../../config/constants';
+import { ITEM_DEFAULT_HEIGHT } from '../../config/constants';
 import { axios, hooks } from '../../config/queryClient';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_ID,
@@ -113,12 +109,8 @@ const LinkContent = ({
     isResizable
     item={item}
     height={ITEM_DEFAULT_HEIGHT}
-    showButton={Boolean(
-      item.settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON,
-    )}
-    showIframe={Boolean(
-      item.settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME,
-    )}
+    showButton={Boolean(item.settings?.showLinkButton)}
+    showIframe={Boolean(item.settings?.showLinkIframe)}
   />
 );
 
