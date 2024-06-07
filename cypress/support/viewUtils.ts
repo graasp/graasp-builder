@@ -10,11 +10,7 @@ import {
 
 import { getHighestPermissionForMemberFromMemberships } from '@/utils/item';
 
-import {
-  DEFAULT_LINK_SHOW_BUTTON,
-  DEFAULT_LINK_SHOW_IFRAME,
-  ITEM_TYPES_WITH_CAPTIONS,
-} from '../../src/config/constants';
+import { ITEM_TYPES_WITH_CAPTIONS } from '../../src/config/constants';
 import {
   DOCUMENT_ITEM_TEXT_EDITOR_SELECTOR,
   ITEM_HEADER_ID,
@@ -97,17 +93,19 @@ export const expectLinkViewScreenLayout = ({
   const { url, html } = getLinkExtra(item.extra) || {};
 
   // embedded element
-  if (html) {
-    cy.get(`#${id}`).then((element) => {
-      // transform innerhtml content to match provided html
-      const parsedHtml = element.html().replaceAll('=""', '');
-      expect(parsedHtml).to.contain(html);
-    });
-  } else if (settings?.showLinkIframe ?? DEFAULT_LINK_SHOW_IFRAME) {
-    cy.get(`iframe#${id}`).should('have.attr', 'src', url);
+  if (settings?.showLinkIframe) {
+    if (html) {
+      cy.get(`#${id}`).then((element) => {
+        // transform innerhtml content to match provided html
+        const parsedHtml = element.html().replaceAll('=""', '');
+        expect(parsedHtml).to.contain(html);
+      });
+    } else {
+      cy.get(`iframe#${id}`).should('have.attr', 'src', url);
+    }
   }
 
-  if (!html && (settings?.showLinkButton ?? DEFAULT_LINK_SHOW_BUTTON)) {
+  if (settings?.showLinkButton) {
     // this data-testid is set in graasp/ui
     cy.get('[data-testid="fancy-link-card"]').should('be.visible');
   }
