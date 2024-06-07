@@ -1048,9 +1048,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.12.36":
-  version: 3.12.36
-  resolution: "@cypress/code-coverage@npm:3.12.36"
+"@cypress/code-coverage@npm:3.12.39":
+  version: 3.12.39
+  resolution: "@cypress/code-coverage@npm:3.12.39"
   dependencies:
     "@cypress/webpack-preprocessor": "npm:^6.0.0"
     chalk: "npm:4.1.2"
@@ -1067,7 +1067,7 @@ __metadata:
     babel-loader: ^8.3 || ^9
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: 10/3dddeab4be5a29c26cbfed7500f80d2bb921b5b8ef6003adf0e1e27d5eaef6a807994d3af4ea6187202742d4e3190f8cd8dc72f4e56757dff3243f82ca6d339b
+  checksum: 10/f045265ab942aa6f48d9ecedc4626f85f8db863b7e52edc699f07276c4acf89eb619fbf2472ef2e12028dba21b743f8984bf41568cdc0ad1eff75387ba9afe65
   languageName: node
   linkType: hard
 
@@ -3285,8 +3285,8 @@ __metadata:
   linkType: hard
 
 "@testing-library/jest-dom@npm:^6.4.2":
-  version: 6.4.2
-  resolution: "@testing-library/jest-dom@npm:6.4.2"
+  version: 6.4.5
+  resolution: "@testing-library/jest-dom@npm:6.4.5"
   dependencies:
     "@adobe/css-tools": "npm:^4.3.2"
     "@babel/runtime": "npm:^7.9.2"
@@ -3294,7 +3294,7 @@ __metadata:
     chalk: "npm:^3.0.0"
     css.escape: "npm:^1.5.1"
     dom-accessibility-api: "npm:^0.6.3"
-    lodash: "npm:^4.17.15"
+    lodash: "npm:^4.17.21"
     redent: "npm:^3.0.0"
   peerDependencies:
     "@jest/globals": ">= 28"
@@ -3313,21 +3313,25 @@ __metadata:
       optional: true
     vitest:
       optional: true
-  checksum: 10/7ee1e51caffad032734a4a43a00bf72d49080cf1bbf53021b443e91c7fa3762a66f55ce68f1c6643590fe66fbc4df92142659b8cf17c92166a3fb22691987e0d
+  checksum: 10/6d9e6cc01ec9111ea631657d93596fa9505d294fdfc4172fbd750b8df6268f02d55900626423b195dac5b067a302557453894a5814bdf4e770dee37cdb1c0f2d
   languageName: node
   linkType: hard
 
 "@testing-library/react@npm:^15.0.2":
-  version: 15.0.4
-  resolution: "@testing-library/react@npm:15.0.4"
+  version: 15.0.7
+  resolution: "@testing-library/react@npm:15.0.7"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
     "@testing-library/dom": "npm:^10.0.0"
     "@types/react-dom": "npm:^18.0.0"
   peerDependencies:
+    "@types/react": ^18.0.0
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 10/c4362b753408e43a4527a5bdeda447fcb0d37d1764591c2e8a2be12001081d6ccb618904a8f3e328c35a9a37b3561fed3e520e780cf318bd68031c51ad7873e4
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10/a9342ad09b019b0f99688fb50265899bc93adfe23c22aa6743fd920635b43fdc66877e66d95f240923aa6f7d3aa360837f5b053fb363a31975788974dff7bc93
   languageName: node
   linkType: hard
 
@@ -3711,12 +3715,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.12.7":
+"@types/node@npm:*":
   version: 20.12.7
   resolution: "@types/node@npm:20.12.7"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10/b4a28a3b593a9bdca5650880b6a9acef46911d58cf7cfa57268f048e9a7157a7c3196421b96cea576850ddb732e3b54bc982c8eb5e1e5ef0635d4424c2fce801
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.12.14":
+  version: 20.12.14
+  resolution: "@types/node@npm:20.12.14"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 10/8ce987f0b7e15116e92894c51ee53fe0cbd98dafb5693a2e7d490f16396552528114d055ca1b144d3fdc5ba7d5f5ce28ad091a693c24337615f047cefc3faa36
   languageName: node
   linkType: hard
 
@@ -3856,13 +3869,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.3.1":
-  version: 18.3.1
-  resolution: "@types/react@npm:18.3.1"
+"@types/react@npm:18.3.3":
+  version: 18.3.3
+  resolution: "@types/react@npm:18.3.3"
   dependencies:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/baa6b8a75c471c89ebf3477b4feab57102ced25f0c1e553dd04ef6a1f0def28d5e0172fa626a631f22e223f840b5aaa2403b2d4bb671c83c5a9d6c7ae39c7a05
+  checksum: 10/68e203b7f1f91d6cf21f33fc7af9d6d228035a26c83f514981e54aa3da695d0ec6af10c277c6336de1dd76c4adbe9563f3a21f80c4462000f41e5f370b46e96c
   languageName: node
   linkType: hard
 
@@ -3943,10 +3956,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/validator@npm:13.11.9":
-  version: 13.11.9
-  resolution: "@types/validator@npm:13.11.9"
-  checksum: 10/2d397c69293cc726e0cf1b4c74c563ca4e459b00f216f3ff0ac184c9648103be27169e8c67f85be9c6e7a3fcbb149c6add66a2547b185a1b25aa79e4b61261bd
+"@types/validator@npm:13.11.10":
+  version: 13.11.10
+  resolution: "@types/validator@npm:13.11.10"
+  checksum: 10/5f074f7d0bb92ba035ebac28692599755d7285c6961aff2092e6c13e11b6a3f50101e602197bc15a3b1eb7f40d5d5efc485790e79c58e30042c7f915e74c85c5
   languageName: node
   linkType: hard
 
@@ -5892,12 +5905,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-localstorage-commands@npm:2.2.5":
-  version: 2.2.5
-  resolution: "cypress-localstorage-commands@npm:2.2.5"
+"cypress-localstorage-commands@npm:2.2.6":
+  version: 2.2.6
+  resolution: "cypress-localstorage-commands@npm:2.2.6"
   peerDependencies:
     cypress: ">=2.1.0"
-  checksum: 10/ec2bcb3a1fc4d9b78c51451eca5970a108bcd2d03b0970b4b2cb5cfb2b8a7db22a0d3b58a6527a58d81c9c7afa34aada426eb707d71f757681fddb0470c481ee
+  checksum: 10/b71946fac9c0449833809fc5d6e8b9f26650a079a07222ca7f6ca7bdee208958040dc98301615e95ef5fb0c7509c3bfd6cafad657aeacce874d30cb0c28c661a
   languageName: node
   linkType: hard
 
@@ -8036,7 +8049,7 @@ __metadata:
     "@ag-grid-community/styles": "npm:31.3.2"
     "@commitlint/cli": "npm:19.3.0"
     "@commitlint/config-conventional": "npm:19.2.2"
-    "@cypress/code-coverage": "npm:3.12.36"
+    "@cypress/code-coverage": "npm:3.12.39"
     "@emotion/cache": "npm:11.11.0"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
@@ -8060,14 +8073,14 @@ __metadata:
     "@types/lodash.isequal": "npm:4.5.8"
     "@types/lodash.partition": "npm:4.6.9"
     "@types/lodash.truncate": "npm:4.4.9"
-    "@types/node": "npm:20.12.7"
+    "@types/node": "npm:20.12.14"
     "@types/papaparse": "npm:5.3.14"
-    "@types/react": "npm:18.3.1"
+    "@types/react": "npm:18.3.3"
     "@types/react-csv": "npm:1.1.10"
     "@types/react-dom": "npm:18.3.0"
     "@types/react-helmet": "npm:^6.1.11"
     "@types/uuid": "npm:9.0.8"
-    "@types/validator": "npm:13.11.9"
+    "@types/validator": "npm:13.11.10"
     "@typescript-eslint/eslint-plugin": "npm:7.12.0"
     "@typescript-eslint/parser": "npm:7.12.0"
     "@uppy/core": "npm:3.11.3"
@@ -8083,7 +8096,7 @@ __metadata:
     axios: "npm:1.6.8"
     concurrently: "npm:8.2.2"
     cypress: "npm:13.10.0"
-    cypress-localstorage-commands: "npm:2.2.5"
+    cypress-localstorage-commands: "npm:2.2.6"
     date-fns: "npm:3.6.0"
     env-cmd: "npm:10.1.0"
     eslint: "npm:^8.57.0"
@@ -8128,9 +8141,9 @@ __metadata:
     typescript: "npm:5.4.5"
     uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-    vite: "npm:5.2.10"
+    vite: "npm:5.2.12"
     vite-plugin-checker: "npm:0.6.4"
-    vite-plugin-istanbul: "npm:6.0.0"
+    vite-plugin-istanbul: "npm:6.0.2"
     vitest: "npm:1.6.0"
   languageName: unknown
   linkType: soft
@@ -9792,7 +9805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
+"lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10/c08619c038846ea6ac754abd6dd29d2568aa705feb69339e836dfa8d8b09abbb2f859371e86863eda41848221f9af43714491467b5b0299122431e202bb0c532
@@ -14326,9 +14339,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-istanbul@npm:6.0.0":
-  version: 6.0.0
-  resolution: "vite-plugin-istanbul@npm:6.0.0"
+"vite-plugin-istanbul@npm:6.0.2":
+  version: 6.0.2
+  resolution: "vite-plugin-istanbul@npm:6.0.2"
   dependencies:
     "@istanbuljs/load-nyc-config": "npm:^1.1.0"
     espree: "npm:^10.0.1"
@@ -14338,13 +14351,13 @@ __metadata:
     test-exclude: "npm:^6.0.0"
   peerDependencies:
     vite: ">=4 <=6"
-  checksum: 10/9a989707b7d6faed1d3d6e58f246f4632d229d0d5524b1886a0338f7ec082b37a172a648132bced5a3e439639a0052dfe5117123944ac7c352df73298687c34a
+  checksum: 10/fddd8367fa02159a047179c9c576c309f9a14bb970116e35fe543d40e3acc615c1671387b9de2394a5bc75d2ab0cfb7b7ebb9e29ec4ddff5411fa7bfee663e42
   languageName: node
   linkType: hard
 
-"vite@npm:5.2.10":
-  version: 5.2.10
-  resolution: "vite@npm:5.2.10"
+"vite@npm:5.2.12":
+  version: 5.2.12
+  resolution: "vite@npm:5.2.12"
   dependencies:
     esbuild: "npm:^0.20.1"
     fsevents: "npm:~2.3.3"
@@ -14378,7 +14391,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/a0c4ac7b95e9a2a59f4e73e5b42a63f33569f5ec505af9dd019f19ff419fd20d66ad9aad6708987d4da173d485358f0024f410af78ac97cf5c92a38f8c96c451
+  checksum: 10/c27d3efff93016e8171b6a362f605ad5f78e24086292987097ad4a7382ae78d9e0659065976a13bf7b51ba0f593d675579010692097ef36d8a5cc965f3efec4c
   languageName: node
   linkType: hard
 
