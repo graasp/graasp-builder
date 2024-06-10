@@ -33,13 +33,6 @@ export const getParentsIdsFromPath = (
   return ids;
 };
 
-export function getItemById<T extends DiscriminatedItem>(
-  items: T[],
-  id: string,
-): T | undefined {
-  return items.find(({ id: thisId }) => id === thisId);
-}
-
 export const getDirectParentId = (path: string): string | null => {
   const ids = getParentsIdsFromPath(path);
   const parentIdx = ids.length - 2;
