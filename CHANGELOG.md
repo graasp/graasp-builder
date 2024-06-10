@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.26.0](https://github.com/graasp/graasp-builder/compare/v2.25.0...v2.26.0) (2024-06-10)
+
+
+### Features
+
+* improve publication page ([#1238](https://github.com/graasp/graasp-builder/issues/1238)) ([647d960](https://github.com/graasp/graasp-builder/commit/647d96019b32464661e45753684b337c0343c276))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/sdk to v4.12.1 ([#1264](https://github.com/graasp/graasp-builder/issues/1264)) ([9825ea4](https://github.com/graasp/graasp-builder/commit/9825ea42603fb478371385fbfdab1d40cf0f2dd9))
+* **deps:** update dependency filesize to v10.1.2 ([#1240](https://github.com/graasp/graasp-builder/issues/1240)) ([16a372e](https://github.com/graasp/graasp-builder/commit/16a372e570c71891ef1cbb5a0189ac7f946ff6e6))
+* **deps:** update dependency i18next to v23.11.5 ([#1241](https://github.com/graasp/graasp-builder/issues/1241)) ([ba5c3fc](https://github.com/graasp/graasp-builder/commit/ba5c3fcbbf602a8f624887f9619f56dc78230902))
+* **deps:** update dependency react-i18next to v14.1.2 ([#1257](https://github.com/graasp/graasp-builder/issues/1257)) ([2057989](https://github.com/graasp/graasp-builder/commit/2057989c54b62f463cad78c6fb8bb6e9d56d63c4))
+* **deps:** update dependency react-qr-code to v2.0.14 ([#1242](https://github.com/graasp/graasp-builder/issues/1242)) ([c7de7e8](https://github.com/graasp/graasp-builder/commit/c7de7e8b93a4643e1079395c48d16b502c916d9c))
+* **deps:** update mui (non-major) to v5.15.19 ([#1258](https://github.com/graasp/graasp-builder/issues/1258)) ([ad34019](https://github.com/graasp/graasp-builder/commit/ad34019077c09d0c8bb57c1d9b8002ac98900fc9))
+* **deps:** update react-router monorepo to v6.23.1 ([#1243](https://github.com/graasp/graasp-builder/issues/1243)) ([2814922](https://github.com/graasp/graasp-builder/commit/28149226d0a211ef3ee38819422762a2666295ac))
+* **deps:** update uppy packages ([#1203](https://github.com/graasp/graasp-builder/issues/1203)) ([711c8d8](https://github.com/graasp/graasp-builder/commit/711c8d8139e24e8e09492466f1f0a6d11b8e53be))
+* link default to use showLinkButton = false ([#1266](https://github.com/graasp/graasp-builder/issues/1266)) ([fcba8e6](https://github.com/graasp/graasp-builder/commit/fcba8e64d8b8b067c6288d8179f558a64f80cbbc))
+
 ## [2.25.0](https://github.com/graasp/graasp-builder/compare/v2.24.0...v2.25.0) (2024-06-05)
 
 
