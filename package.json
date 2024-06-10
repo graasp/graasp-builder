@@ -88,13 +88,11 @@
     "prettier:write": "prettier --write {src,cypress}/**/*.{js,ts,tsx,json}",
     "type-check": "tsc --noEmit && tsc --noEmit -p cypress/tsconfig.json",
     "check": "yarn prettier:check && yarn lint && yarn type-check",
-    "hooks:uninstall": "husky uninstall",
-    "hooks:install": "husky install",
+    "postinstall": "husky install",
     "cypress:open": "env-cmd -f ./.env.test cypress open --browser chrome",
     "test": "yarn test:unit && yarn build:test && concurrently -k -s first \"yarn preview:test\" \"yarn cypress:run\"",
     "cypress:run": "env-cmd -f ./.env.test cypress run --browser chrome",
     "cypress:run:component": "env-cmd -f ./.env.test cypress run --component --browser chrome",
-    "postinstall": "husky install",
     "test:unit": "yarn vitest"
   },
   "browserslist": {

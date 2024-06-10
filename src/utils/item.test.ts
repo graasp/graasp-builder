@@ -6,7 +6,6 @@ import {
   getHighestPermissionForMemberFromMemberships,
   getParentsIdsFromPath,
   isUrlValid,
-  transformIdForPath,
 } from './item';
 
 describe('item utils', () => {
@@ -20,21 +19,6 @@ describe('item utils', () => {
     expect(isUrlValid('https://graasp.eu')).toBeTruthy();
     expect(isUrlValid('http://graasp.eu')).toBeTruthy();
     expect(isUrlValid('https://www.youtube.com/')).toBeTruthy();
-  });
-
-  it('transformIdForPath', () => {
-    expect(transformIdForPath('someid')).toEqual('someid');
-    expect(transformIdForPath('some-id')).toEqual('some_id');
-    const id = 'ecafbd2a-5688-11eb-ae93-0242ac130002';
-    const path = 'ecafbd2a_5688_11eb_ae93_0242ac130002';
-    expect(transformIdForPath(id)).toEqual(path);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    expect(() => transformIdForPath(null)).toThrow();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    expect(() => transformIdForPath(undefined)).toThrow();
   });
 
   describe('getParentsIdsFromPath', () => {
@@ -66,7 +50,7 @@ describe('item utils', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       expect(getParentsIdsFromPath(null)).toEqual([]);
-      expect(getParentsIdsFromPath(undefined)).toEqual([]);
+      expect(getParentsIdsFromPath()).toEqual([]);
     });
     it('ignoreSelf = true', () => {
       expect(getParentsIdsFromPath('someid', { ignoreSelf: true })).toEqual([]);
