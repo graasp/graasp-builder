@@ -16,7 +16,6 @@ import CoEditorsContainer from '@/components/item/publish/CoEditorsContainer';
 import EditItemDescription from '@/components/item/publish/EditItemDescription';
 import LanguagesContainer from '@/components/item/publish/LanguagesContainer';
 import LicenseContainer from '@/components/item/publish/LicenseContainer';
-import PublicationButton from '@/components/item/publish/PublicationButton';
 import PublicationStatusComponent from '@/components/item/publish/PublicationStatusComponent';
 import PublicationThumbnail from '@/components/item/publish/PublicationThumbnail';
 import { OutletType } from '@/components/pages/item/type';
@@ -26,6 +25,7 @@ import { SomeBreakPoints } from '@/types/breakpoint';
 
 import EditItemName from './EditItemName';
 import CustomizedTags from './customizedTags/CustomizedTags';
+import PublicationButtonSelector from './publicationButtons/PublicationButtonSelector';
 
 type StackOrder = { order?: number | SomeBreakPoints<number> };
 
@@ -110,7 +110,10 @@ const ItemPublishTab = (): JSX.Element => {
         notifyCoEditors={notifyCoEditors}
         onNotificationChanged={(enabled) => setNotifyCoEditors(enabled)}
       />
-      <PublicationButton item={item} notifyCoEditors={notifyCoEditors} />
+      <PublicationButtonSelector
+        item={item}
+        notifyCoEditors={notifyCoEditors}
+      />
     </Stack>
   );
 

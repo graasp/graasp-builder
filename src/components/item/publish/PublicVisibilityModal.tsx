@@ -19,12 +19,17 @@ import useVisibility from '../../hooks/useVisibility';
 type Props = {
   item: PackedItem;
   isOpen: boolean;
+  // if set to false, the item will not be public after validating the modal.
+  // this allows to set the item to public only after the validation on the backend side.
+  shouldUpdateVisibility?: boolean;
   onClose: () => void;
-  onValidate: () => void;
+  onValidate?: () => void;
 };
+
 export const PublicVisibilityModal = ({
   item,
   isOpen,
+  shouldUpdateVisibility = true,
   onClose,
   onValidate,
 }: Props): JSX.Element => {
@@ -32,8 +37,10 @@ export const PublicVisibilityModal = ({
   const { updateVisibility } = useVisibility(item);
 
   const handleValidate = async () => {
-    await updateVisibility(SETTINGS.ITEM_PUBLIC.name);
-    onValidate();
+    if (shouldUpdateVisibility) {
+      await updateVisibility(SETTINGS.ITEM_PUBLIC.name);
+    }
+    onValidate?.();
   };
 
   return (

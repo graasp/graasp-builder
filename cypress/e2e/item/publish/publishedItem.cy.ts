@@ -133,6 +133,8 @@ describe('Private Item', () => {
 
     it('Item can be validated', () => {
       getPublicationButton(status).click(); // Click on validate
+      // confirming the modal will not send to the backend until the validation is done
+      confirmSetItemToPublic();
       waitOnItemValidation(privateItem);
     });
   });
@@ -206,6 +208,8 @@ describe('Private Item', () => {
 
     it('Item can be validated again', () => {
       getPublicationButton(status).click(); // click on retry
+      // confirming the modal will not send to the backend until the validation is done
+      confirmSetItemToPublic();
       waitOnItemValidation(privateItem);
     });
   });
