@@ -12,7 +12,6 @@ export const PendingButton = (): JSX.Element => {
       description={t(
         BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_PENDING_AUTOMATIC,
       )}
-      elements={[]}
     />
   );
 };

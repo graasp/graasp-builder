@@ -10,7 +10,6 @@ export const PublishedChildrenButton = (): JSX.Element => {
     <PublicationButton
       isLoading={false}
       description={t(BUILDER.LIBRARY_SETTINGS_CHILD_PUBLISHED_STATUS)}
-      elements={[]}
     />
   );
 };

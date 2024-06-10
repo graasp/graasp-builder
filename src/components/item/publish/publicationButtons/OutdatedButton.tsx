@@ -27,23 +27,18 @@ export const OutdatedButton = ({ item, isLoading }: Props): JSX.Element => {
   const handleValidateItem = () => validateItem({ itemId });
 
   const description = t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_OUTDATED);
-  const elements = (
-    <LoadingButton
-      variant="contained"
-      onClick={handleValidateItem}
-      loading={isValidating}
-      data-cy={buildItemPublicationButton(PublicationStatus.Outdated)}
-    >
-      {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON)}
-    </LoadingButton>
-  );
 
   return (
-    <PublicationButton
-      isLoading={isLoading}
-      description={description}
-      elements={elements}
-    />
+    <PublicationButton isLoading={isLoading} description={description}>
+      <LoadingButton
+        variant="contained"
+        onClick={handleValidateItem}
+        loading={isValidating}
+        data-cy={buildItemPublicationButton(PublicationStatus.Outdated)}
+      >
+        {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON)}
+      </LoadingButton>
+    </PublicationButton>
   );
 };
 

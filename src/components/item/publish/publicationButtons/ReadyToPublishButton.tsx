@@ -51,19 +51,9 @@ export const ReadyToPublishButton = ({
   };
 
   const description = (
-    <Alert icon={<CheckIcon fontSize="inherit" />} severity="info">
+    <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
       {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_READY_TO_PUBLISH)}
     </Alert>
-  );
-  const elements = (
-    <LoadingButton
-      variant="contained"
-      loading={isPublishing}
-      onClick={handlePublishItem}
-      data-cy={buildItemPublicationButton(PublicationStatus.ReadyToPublish)}
-    >
-      {t(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
-    </LoadingButton>
   );
 
   return (
@@ -76,11 +66,16 @@ export const ReadyToPublishButton = ({
           onValidate={handleModalValidate}
         />
       )}
-      <PublicationButton
-        isLoading={isLoading}
-        description={description}
-        elements={elements}
-      />
+      <PublicationButton isLoading={isLoading} description={description}>
+        <LoadingButton
+          variant="contained"
+          loading={isPublishing}
+          onClick={handlePublishItem}
+          data-cy={buildItemPublicationButton(PublicationStatus.ReadyToPublish)}
+        >
+          {t(BUILDER.LIBRARY_SETTINGS_PUBLISH_BUTTON)}
+        </LoadingButton>
+      </PublicationButton>
     </>
   );
 };

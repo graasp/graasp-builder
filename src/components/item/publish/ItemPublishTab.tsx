@@ -25,7 +25,7 @@ import { SomeBreakPoints } from '@/types/breakpoint';
 
 import EditItemName from './EditItemName';
 import CustomizedTags from './customizedTags/CustomizedTags';
-import usePublicationButton from './publicationButtons/PublicationButton.hook';
+import PublicationButtonSelector from './publicationButtons/PublicationButtonSelector';
 
 type StackOrder = { order?: number | SomeBreakPoints<number> };
 
@@ -37,7 +37,6 @@ const ItemPublishTab = (): JSX.Element => {
   const { status } = useDataSyncContext();
 
   const [notifyCoEditors, setNotifyCoEditors] = useState<boolean>(false);
-  const { publicationButton } = usePublicationButton({ item, notifyCoEditors });
 
   if (isMemberLoading) {
     return <Loader />;
@@ -111,7 +110,10 @@ const ItemPublishTab = (): JSX.Element => {
         notifyCoEditors={notifyCoEditors}
         onNotificationChanged={(enabled) => setNotifyCoEditors(enabled)}
       />
-      {publicationButton}
+      <PublicationButtonSelector
+        item={item}
+        notifyCoEditors={notifyCoEditors}
+      />
     </Stack>
   );
 

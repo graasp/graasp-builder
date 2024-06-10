@@ -20,30 +20,20 @@ export const NotPublicButton = ({ item }: Props): JSX.Element => {
   const { isOpen, openModal, closeModal } = useModalStatus();
 
   const description = t(BUILDER.LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS);
-  const elements = (
-    <LoadingButton
-      variant="contained"
-      onClick={openModal}
-      data-cy={buildItemPublicationButton(PublicationStatus.NotPublic)}
-    >
-      {t(BUILDER.LIBRARY_SETTINGS_VISIBILITY_CHANGE_BUTTON)}
-    </LoadingButton>
-  );
 
   return (
     <>
-      <PublicVisibilityModal
-        item={item}
-        isOpen={isOpen}
-        onClose={closeModal}
-        onValidate={() => {}}
-      />
+      <PublicVisibilityModal item={item} isOpen={isOpen} onClose={closeModal} />
 
-      <PublicationButton
-        isLoading={false}
-        description={description}
-        elements={elements}
-      />
+      <PublicationButton isLoading={false} description={description}>
+        <LoadingButton
+          variant="contained"
+          onClick={openModal}
+          data-cy={buildItemPublicationButton(PublicationStatus.NotPublic)}
+        >
+          {t(BUILDER.LIBRARY_SETTINGS_VISIBILITY_CHANGE_BUTTON)}
+        </LoadingButton>
+      </PublicationButton>
     </>
   );
 };

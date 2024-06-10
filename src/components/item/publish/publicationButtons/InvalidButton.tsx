@@ -44,16 +44,6 @@ export const InvalidButton = ({ item, isLoading }: Props): JSX.Element => {
   const description = t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_FAILURE, {
     contact: ADMIN_CONTACT,
   });
-  const elements = (
-    <LoadingButton
-      variant="contained"
-      onClick={handleValidateItem}
-      loading={isValidating}
-      data-cy={buildItemPublicationButton(PublicationStatus.Invalid)}
-    >
-      {t(BUILDER.LIBRARY_SETTINGS_RETRY_BUTTON)}
-    </LoadingButton>
-  );
 
   return (
     <>
@@ -61,16 +51,21 @@ export const InvalidButton = ({ item, isLoading }: Props): JSX.Element => {
         <PublicVisibilityModal
           item={item}
           isOpen={isOpen}
-          enableUpdateVisibility={false}
+          shouldUpdateVisibility={false}
           onClose={closeModal}
           onValidate={handleModalValidate}
         />
       )}
-      <PublicationButton
-        isLoading={isLoading}
-        description={description}
-        elements={elements}
-      />
+      <PublicationButton isLoading={isLoading} description={description}>
+        <LoadingButton
+          variant="contained"
+          onClick={handleValidateItem}
+          loading={isValidating}
+          data-cy={buildItemPublicationButton(PublicationStatus.Invalid)}
+        >
+          {t(BUILDER.LIBRARY_SETTINGS_RETRY_BUTTON)}
+        </LoadingButton>
+      </PublicationButton>
     </>
   );
 };

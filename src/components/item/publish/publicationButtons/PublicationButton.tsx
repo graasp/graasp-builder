@@ -1,34 +1,28 @@
-import { Stack, Typography } from '@mui/material';
+import { ReactNode } from 'react';
+
+import { Stack } from '@mui/material';
 
 import ContentLoader from '@/components/common/ContentLoader';
 
-const getDescriptionElement = (
-  description: string | JSX.Element,
-): JSX.Element => {
-  if (typeof description === 'string') {
-    return <Typography>{description}</Typography>;
-  }
-
-  return description;
-};
+import DescriptionElement from './DescriptionElement';
 
 type Props = {
   isLoading: boolean;
-  description: string | JSX.Element;
-  elements: JSX.Element | JSX.Element[];
+  description: ReactNode;
+  children?: ReactNode;
 };
 
 export const PublicationButton = ({
   isLoading,
   description,
-  elements,
+  children = [],
 }: Props): JSX.Element => (
   <ContentLoader isLoading={isLoading}>
     <Stack spacing={4}>
-      {getDescriptionElement(description)}
+      <DescriptionElement description={description} />
 
       <Stack justifyContent="center" direction="row" spacing={2}>
-        {elements}
+        {children}
       </Stack>
     </Stack>
   </ContentLoader>
