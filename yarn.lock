@@ -8147,7 +8147,7 @@ __metadata:
     lodash.isequal: "npm:4.5.0"
     lodash.partition: "npm:4.6.0"
     lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.378.0"
+    lucide-react: "npm:0.394.0"
     nyc: "npm:15.1.0"
     papaparse: "npm:5.4.1"
     prettier: "npm:3.3.1"
@@ -9924,21 +9924,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:0.378.0":
-  version: 0.378.0
-  resolution: "lucide-react@npm:0.378.0"
-  peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: 10/ecdd8c1be974346a03f078e9213336aa01ebee13b65815e338e626cba68ca326ac63058ddd8e9d396a7c2e2253beb9af9c34e521b6aac42fd96abf84f4788122
-  languageName: node
-  linkType: hard
-
 "lucide-react@npm:0.379.0":
   version: 0.379.0
   resolution: "lucide-react@npm:0.379.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0
   checksum: 10/e2231158df68e08c1a4adbbd14c92380f6b4b541ce0dcacef1a05a17d8bc7e7329bb9f3f34ed0800afda82ef5c3f972749ab4d2f56a536f25ee42d81d8abcbc6
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:0.394.0":
+  version: 0.394.0
+  resolution: "lucide-react@npm:0.394.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+  checksum: 10/5933b227c66370629cfc32402fc28e61369424410843c187d8c5d22316782249b1fc465846123f1b6d68f6019aff79493b6e6e398ae79ff4e850518aa9739ba7
   languageName: node
   linkType: hard
 
