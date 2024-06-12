@@ -8169,7 +8169,7 @@ __metadata:
     stylis-plugin-rtl: "npm:2.1.1"
     typescript: "npm:5.4.5"
     uuid: "npm:9.0.1"
-    validator: "npm:13.11.0"
+    validator: "npm:13.12.0"
     vite: "npm:5.2.13"
     vite-plugin-checker: "npm:0.6.4"
     vite-plugin-istanbul: "npm:6.0.2"
