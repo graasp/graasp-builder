@@ -28,7 +28,7 @@
     "@mui/icons-material": "5.15.19",
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.19",
-    "@sentry/react": "7.116.0",
+    "@sentry/react": "7.117.0",
     "@uppy/core": "3.11.3",
     "@uppy/dashboard": "3.8.3",
     "@uppy/drag-drop": "3.1.0",
