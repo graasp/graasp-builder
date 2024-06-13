@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.27.0](https://github.com/graasp/graasp-builder/compare/v2.26.0...v2.27.0) (2024-06-13)
+
+
+### Features
+
+* handle automatic publication after validation ([#1265](https://github.com/graasp/graasp-builder/issues/1265)) ([565bbcc](https://github.com/graasp/graasp-builder/commit/565bbcc822ca0ad1a017b2707a93480aa644ac0e))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.117.0 ([#1277](https://github.com/graasp/graasp-builder/issues/1277)) ([8ad36f8](https://github.com/graasp/graasp-builder/commit/8ad36f8ae16533ef7ebee570abc74943c22aa3d0))
+* **deps:** update dependency axios to v1.7.2 ([#1276](https://github.com/graasp/graasp-builder/issues/1276)) ([062d1f3](https://github.com/graasp/graasp-builder/commit/062d1f35d5fe98511fd44443ef0de22cfeca95c1))
+* **deps:** update dependency lucide-react to v0.394.0 ([#1278](https://github.com/graasp/graasp-builder/issues/1278)) ([6cc4903](https://github.com/graasp/graasp-builder/commit/6cc49034581d5c4765f0afae3ac4bd0ea00d5daa))
+* **deps:** update dependency validator to v13.12.0 ([#1280](https://github.com/graasp/graasp-builder/issues/1280)) ([72cc47d](https://github.com/graasp/graasp-builder/commit/72cc47df9d206eab77df65d04622274dcaf63836))
+* **german:** translations ([#1271](https://github.com/graasp/graasp-builder/issues/1271)) ([4a0786f](https://github.com/graasp/graasp-builder/commit/4a0786febc71ddd4ea6b69696d2f900fd23d68ee))
+* update app max height setting ([#1285](https://github.com/graasp/graasp-builder/issues/1285)) ([91b53bd](https://github.com/graasp/graasp-builder/commit/91b53bd81e4b4b52cc1c1f89e3d33cee0136b98f))
+
 ## [2.26.0](https://github.com/graasp/graasp-builder/compare/v2.25.0...v2.26.0) (2024-06-10)
 
 
