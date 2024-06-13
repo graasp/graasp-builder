@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.28.0](https://github.com/graasp/graasp-builder/compare/v2.27.0...v2.28.0) (2024-06-13)
+
+
+### Features
+
+* restrict publication to folders only ([#1284](https://github.com/graasp/graasp-builder/issues/1284)) ([9c737dd](https://github.com/graasp/graasp-builder/commit/9c737dd7c448860f8368a0e22d1a8e17d763e331))
+
 ## [2.27.0](https://github.com/graasp/graasp-builder/compare/v2.26.0...v2.27.0) (2024-06-13)
 
 
