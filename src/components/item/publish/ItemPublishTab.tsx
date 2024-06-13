@@ -11,6 +11,7 @@ import {
   DataSyncContextProvider,
   useDataSyncContext,
 } from '@/components/context/DataSyncContext';
+import usePublicationStatus from '@/components/hooks/usePublicationStatus';
 import CategoriesContainer from '@/components/item/publish/CategoriesContainer';
 import CoEditorsContainer from '@/components/item/publish/CoEditorsContainer';
 import EditItemDescription from '@/components/item/publish/EditItemDescription';
@@ -22,6 +23,7 @@ import { OutletType } from '@/components/pages/item/type';
 import { useBuilderTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 import { SomeBreakPoints } from '@/types/breakpoint';
+import { PublicationStatus } from '@/types/publication';
 
 import EditItemName from './EditItemName';
 import CustomizedTags from './customizedTags/CustomizedTags';
@@ -35,11 +37,26 @@ const ItemPublishTab = (): JSX.Element => {
   const { isLoading: isMemberLoading } = useCurrentUserContext();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { status } = useDataSyncContext();
+  const {
+    status: publicationStatus,
+    isinitialLoading: isPublicationStatusLoading,
+  } = usePublicationStatus({
+    item,
+  });
 
   const [notifyCoEditors, setNotifyCoEditors] = useState<boolean>(false);
 
-  if (isMemberLoading) {
-    return <Loader />;
+  if (isMemberLoading || isPublicationStatusLoading) {
+    return (
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="70vh"
+      >
+        <Loader />
+      </Stack>
+    );
   }
 
   if (!canAdmin) {
@@ -117,8 +134,19 @@ const ItemPublishTab = (): JSX.Element => {
     </Stack>
   );
 
-  return (
-    <Container disableGutters sx={{ mt: 2 }}>
+  const buildPublicationStack = (): JSX.Element => (
+    <Stack flexBasis="100%" spacing={2}>
+      {buildPublicationHeader()}
+      {buildPublicationSection()}
+    </Stack>
+  );
+
+  const buildView = () => {
+    if (publicationStatus === PublicationStatus.ItemTypeNotAllowed) {
+      return buildPublicationStack();
+    }
+
+    return (
       <Stack direction={{ xs: 'column', md: 'row' }} gap={6}>
         {buildPreviewSection({ order: { xs: 1, md: 0 } })}
         {isMobile ? (
@@ -127,12 +155,15 @@ const ItemPublishTab = (): JSX.Element => {
             {buildPublicationSection({ order: { xs: 2 } })}
           </>
         ) : (
-          <Stack flexBasis="100%" spacing={2}>
-            {buildPublicationHeader()}
-            {buildPublicationSection()}
-          </Stack>
+          buildPublicationStack()
         )}
       </Stack>
+    );
+  };
+
+  return (
+    <Container disableGutters sx={{ mt: 2 }}>
+      {buildView()}
     </Container>
   );
 };

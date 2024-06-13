@@ -1,4 +1,4 @@
-import { LoadingButton } from '@mui/lab';
+import { Alert, LoadingButton } from '@mui/lab';
 
 import { PackedItem } from '@graasp/sdk';
 
@@ -41,9 +41,13 @@ export const InvalidButton = ({ item, isLoading }: Props): JSX.Element => {
     closeModal();
   };
 
-  const description = t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_FAILURE, {
-    contact: ADMIN_CONTACT,
-  });
+  const description = (
+    <Alert severity="error">
+      {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_FAILURE, {
+        contact: ADMIN_CONTACT,
+      })}
+    </Alert>
+  );
 
   return (
     <>

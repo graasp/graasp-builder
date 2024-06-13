@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 
 import {
   ItemPublished,
+  ItemTypeUnion,
   ItemValidation,
   ItemValidationGroup,
   ItemValidationStatus,
   PackedItem,
+  PublishableItemTypeChecker,
 } from '@graasp/sdk';
 
 import groupBy from 'lodash.groupby';
@@ -59,6 +61,9 @@ const isPublishedChildren = ({
   publishedEntry?: ItemPublished;
 }) => Boolean(publishedEntry) && publishedEntry?.item?.path !== item?.path;
 
+const isTypeNotAllowedToBePublished = (itemType: ItemTypeUnion) =>
+  !PublishableItemTypeChecker.isItemTypeAllowedToBePublished(itemType);
+
 type Props = { item: PackedItem };
 type UsePublicationStatus = {
   status: PublicationStatus;
@@ -83,6 +88,8 @@ const computePublicationStatus = ({
   switch (true) {
     case isPublishedChildren({ item, publishedEntry }):
       return PublicationStatus.PublishedChildren;
+    case isTypeNotAllowedToBePublished(item.type):
+      return PublicationStatus.ItemTypeNotAllowed;
     case isUnpublished(validationGroup):
       return PublicationStatus.Unpublished;
     case isValidationOutdated({ item, validationGroup }):

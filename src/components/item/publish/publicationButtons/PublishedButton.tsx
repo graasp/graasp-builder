@@ -1,6 +1,6 @@
 import LinkIcon from '@mui/icons-material/Link';
 import { LoadingButton } from '@mui/lab';
-import { Button } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 
 import { ClientHostManager, PackedItem, ShortLinkPlatform } from '@graasp/sdk';
 
@@ -32,7 +32,9 @@ export const PublishedButton = ({ item, isLoading }: Props): JSX.Element => {
     return clientHostManager.getItemLink(ShortLinkPlatform.library, itemId);
   };
 
-  const description = t(BUILDER.LIBRARY_SETTINGS_PUBLISHED_STATUS);
+  const description = (
+    <Alert>{t(BUILDER.LIBRARY_SETTINGS_PUBLISHED_STATUS)}</Alert>
+  );
 
   return (
     <PublicationButton isLoading={isLoading} description={description}>

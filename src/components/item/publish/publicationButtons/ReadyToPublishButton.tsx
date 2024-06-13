@@ -3,8 +3,6 @@ import { Alert } from '@mui/material';
 
 import { PackedItem } from '@graasp/sdk';
 
-import { CheckIcon } from 'lucide-react';
-
 import useModalStatus from '@/components/hooks/useModalStatus';
 import { useBuilderTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
@@ -51,7 +49,7 @@ export const ReadyToPublishButton = ({
   };
 
   const description = (
-    <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+    <Alert severity="success">
       {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_READY_TO_PUBLISH)}
     </Alert>
   );
