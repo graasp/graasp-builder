@@ -1,11 +1,14 @@
 import {
   ItemTagType,
+  ItemType,
+  ItemTypeUnion,
   ItemValidationGroup,
   ItemValidationStatus,
   Member,
   PackedFolderItemFactory,
   PackedItem,
   PermissionLevel,
+  PublishableItemTypeChecker,
 } from '@graasp/sdk';
 
 import { PublicationStatus } from '@/types/publication';
@@ -24,6 +27,7 @@ import {
   PublishedItemFactory,
 } from '../../../fixtures/items';
 import { MEMBERS } from '../../../fixtures/members';
+import { createPublicItemByType } from '../../../fixtures/publish/publish';
 import { ItemForTest } from '../../../support/types';
 
 const openPublishItemTab = (id: string) => {
@@ -338,6 +342,47 @@ describe('Public Item', () => {
     it('Unpublish the item', () => {
       getPublicationButton(status).click(); // click on unpublish
       waitOnUnpublishItem(publicItem);
+    });
+  });
+
+  describe('Only authorized types can be published', () => {
+    const testItemType = (
+      testTitle: string,
+      item: ItemForTest,
+      statusExpected: PublicationStatus,
+    ) => {
+      it(testTitle, () => {
+        setUpAndVisitItemPage(item);
+        openPublishItemTab(item.id);
+        getPublicationStatusComponent(statusExpected)
+          .should('exist')
+          .should('be.visible');
+      });
+    };
+
+    const testAuthorizedType = (item: ItemForTest) => {
+      testItemType(
+        `Publication should be allowed for type "${item.type}"`,
+        item,
+        PublicationStatus.Unpublished,
+      );
+    };
+
+    const testUnauthorizedType = (item: ItemForTest) => {
+      testItemType(
+        `Publication should NOT be allowed for type "${item.type}"`,
+        item,
+        PublicationStatus.ItemTypeNotAllowed,
+      );
+    };
+
+    Object.values(ItemType).forEach((itemType: ItemTypeUnion) => {
+      const item = createPublicItemByType(itemType);
+      if (PublishableItemTypeChecker.isItemTypeAllowedToBePublished(itemType)) {
+        testAuthorizedType(item);
+      } else {
+        testUnauthorizedType(item);
+      }
     });
   });
 });

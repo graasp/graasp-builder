@@ -6,6 +6,7 @@ import { usePublicationStatus } from '@/components/hooks/usePublicationStatus';
 import { PublicationStatus } from '@/types/publication';
 
 import InvalidButton from './InvalidButton';
+import NotAllowedItemTypeButton from './NotAllowedItemTypeButton';
 import NotPublicButton from './NotPublicButton';
 import OutdatedButton from './OutdatedButton';
 import PendingButton from './PendingButton';
@@ -49,6 +50,8 @@ export const PublicationButtonSelector = ({
       return <InvalidButton item={item} isLoading={isStatusFirstLoading} />;
     case PublicationStatus.Outdated:
       return <OutdatedButton item={item} isLoading={isStatusFirstLoading} />;
+    case PublicationStatus.ItemTypeNotAllowed:
+      return <NotAllowedItemTypeButton />;
     default:
       console.error(`The status "${status}" is unknown.`);
       return undefined;

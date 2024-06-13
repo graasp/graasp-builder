@@ -7,6 +7,7 @@ export enum PublicationStatus {
   Invalid = 'invalid',
   Outdated = 'outdated',
   NotPublic = 'notPublic',
+  ItemTypeNotAllowed = 'itemTypeNotAllowed',
 }
 
 export type PublicationStatusMap<T> = {

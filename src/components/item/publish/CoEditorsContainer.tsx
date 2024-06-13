@@ -36,6 +36,11 @@ export const CoEditorsContainer = ({
     settings.displayCoEditors ?? false,
   );
 
+  const hiddenStatus = [
+    PublicationStatus.PublishedChildren,
+    PublicationStatus.ItemTypeNotAllowed,
+  ];
+
   const {
     mutate: updateDisplayCoEditors,
     isLoading,
@@ -68,8 +73,7 @@ export const CoEditorsContainer = ({
   const handleNotifyCoEditorsChange = (isChecked: boolean): void =>
     onNotificationChanged(isChecked);
 
-  // The publication is managed by the parent
-  if (status === PublicationStatus.PublishedChildren) {
+  if (hiddenStatus.includes(status)) {
     return null;
   }
 

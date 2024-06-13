@@ -1,4 +1,4 @@
-import { LoadingButton } from '@mui/lab';
+import { Alert, LoadingButton } from '@mui/lab';
 
 import { PackedItem } from '@graasp/sdk';
 
@@ -26,7 +26,11 @@ export const OutdatedButton = ({ item, isLoading }: Props): JSX.Element => {
 
   const handleValidateItem = () => validateItem({ itemId });
 
-  const description = t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_OUTDATED);
+  const description = (
+    <Alert severity="warning">
+      {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_OUTDATED)}
+    </Alert>
+  );
 
   return (
     <PublicationButton isLoading={isLoading} description={description}>

@@ -1,4 +1,4 @@
-import { LoadingButton } from '@mui/lab';
+import { Alert, LoadingButton } from '@mui/lab';
 
 import { PackedItem } from '@graasp/sdk';
 
@@ -19,7 +19,11 @@ export const NotPublicButton = ({ item }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
   const { isOpen, openModal, closeModal } = useModalStatus();
 
-  const description = t(BUILDER.LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS);
+  const description = (
+    <Alert severity="error">
+      {t(BUILDER.LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS)}
+    </Alert>
+  );
 
   return (
     <>
