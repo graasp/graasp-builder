@@ -10,6 +10,7 @@ import {
   HOME_PATH,
   ITEMS_PATH,
   ITEM_PUBLISH_PATH,
+  ITEM_SEARCH_PATH,
   ITEM_SETTINGS_PATH,
   ITEM_SHARE_PATH,
   MAP_ITEMS_PATH,
@@ -33,6 +34,7 @@ import ItemScreenLayout from './pages/item/ItemScreenLayout';
 import ItemSettingsPage from './pages/item/ItemSettingsPage';
 import ItemSharingPage from './pages/item/ItemSharingPage';
 import LibrarySettingsPage from './pages/item/LibrarySettingsPage';
+import ItemSearchPage from './search/SearchPage';
 
 const { useItemFeedbackUpdates } = hooks;
 
@@ -74,6 +76,10 @@ const App = (): JSX.Element => {
     RecycledItemsScreen,
     withAuthorizationProps,
   );
+  const SearchWithAuthorization = withAuthorization(
+    ItemSearchPage,
+    withAuthorizationProps,
+  );
 
   return (
     <Routes>
@@ -105,6 +111,7 @@ const App = (): JSX.Element => {
         <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
         <Route path={buildItemPath()} element={<ItemScreen />} />
         <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
+        <Route path={ITEM_SEARCH_PATH} element={<SearchWithAuthorization />} />
         <Route path={REDIRECT_PATH} element={<Redirect />} />
         <Route path="*" element={<Redirect />} />
       </Route>

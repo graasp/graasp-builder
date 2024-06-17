@@ -22,6 +22,7 @@ export const RECYCLE_BIN_PATH = '/recycle-bin';
 export const ITEM_ID_PARAMS = 'itemId';
 export const ITEM_SHARE_PATH = 'share';
 export const ITEM_PUBLISH_PATH = 'publish';
+export const ITEM_SEARCH_PATH = 'search';
 export const ITEM_SETTINGS_PATH = 'settings';
 export const MAP_ITEMS_PATH = 'map';
 export const buildItemSettingsPath = (id = ':itemId'): string =>
