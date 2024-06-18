@@ -4119,9 +4119,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/core@npm:3.11.3":
-  version: 3.11.3
-  resolution: "@uppy/core@npm:3.11.3"
+"@uppy/core@npm:3.13.0":
+  version: 3.13.0
+  resolution: "@uppy/core@npm:3.13.0"
   dependencies:
     "@transloadit/prettier-bytes": "npm:^0.3.4"
     "@uppy/store-default": "npm:^3.2.2"
@@ -4131,17 +4131,17 @@ __metadata:
     namespace-emitter: "npm:^2.0.1"
     nanoid: "npm:^4.0.0"
     preact: "npm:^10.5.13"
-  checksum: 10/ecc533785ef3459f2cfe3d131d082ffbaf9b99b88619b71d7ca7664cd6073c2771df6314386ce5d88631da544dce101d88770c7ebb91ea72eafcd07929082df3
+  checksum: 10/45b9f88170e1204b83258b818f2fbcf89ceea78de1b1fb4b4f0351260d3ed54441740d5c74dc2cefd4d1b798a9897e7af21822bc8b1bca4af42fcaefb1e0c72c
   languageName: node
   linkType: hard
 
-"@uppy/dashboard@npm:3.8.3":
-  version: 3.8.3
-  resolution: "@uppy/dashboard@npm:3.8.3"
+"@uppy/dashboard@npm:3.9.0":
+  version: 3.9.0
+  resolution: "@uppy/dashboard@npm:3.9.0"
   dependencies:
     "@transloadit/prettier-bytes": "npm:^0.3.4"
     "@uppy/informer": "npm:^3.1.0"
-    "@uppy/provider-views": "npm:^3.12.0"
+    "@uppy/provider-views": "npm:^3.13.0"
     "@uppy/status-bar": "npm:^3.3.3"
     "@uppy/thumbnail-generator": "npm:^3.1.0"
     "@uppy/utils": "npm:^5.9.0"
@@ -4152,8 +4152,8 @@ __metadata:
     nanoid: "npm:^4.0.0"
     preact: "npm:^10.5.13"
   peerDependencies:
-    "@uppy/core": ^3.11.2
-  checksum: 10/c1483cc24acaa3a748ba9d13bd732b305d98f7d30ea89c09c46d8b69bd42bdcc73f708c7b014aab16f7eb0141d904dce00b85f7245fc07a344cfdb33a9b08c34
+    "@uppy/core": ^3.13.0
+  checksum: 10/3fe3328584afbe5de2dab511f5ed2a4c7e9cd82a395211c7f84464cffbed42f99e028776f30c421e803609d5d7aefc6a6281a0752d395bca4a9c0be43db3804c
   languageName: node
   linkType: hard
 
@@ -4205,9 +4205,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/provider-views@npm:^3.12.0":
-  version: 3.12.0
-  resolution: "@uppy/provider-views@npm:3.12.0"
+"@uppy/provider-views@npm:^3.13.0":
+  version: 3.13.0
+  resolution: "@uppy/provider-views@npm:3.13.0"
   dependencies:
     "@uppy/utils": "npm:^5.9.0"
     classnames: "npm:^2.2.6"
@@ -4215,24 +4215,24 @@ __metadata:
     p-queue: "npm:^7.3.4"
     preact: "npm:^10.5.13"
   peerDependencies:
-    "@uppy/core": ^3.11.0
-  checksum: 10/bd3eee247d7e080695db95b537b2b968e1c8479cf6aa6f4e62b78e4b1390d9476eebb5670e71de96a2092283413468623f6501bf92208bb83c95921f24719b57
+    "@uppy/core": ^3.13.0
+  checksum: 10/d89237add39da40195772324daf74441238607efeedea56dfc83d70f3d5accace9b30a89209e77bac7d8e95b5683127956185a7d2578a32362cee61ca063cf75
   languageName: node
   linkType: hard
 
-"@uppy/react@npm:3.3.1":
-  version: 3.3.1
-  resolution: "@uppy/react@npm:3.3.1"
+"@uppy/react@npm:3.4.0":
+  version: 3.4.0
+  resolution: "@uppy/react@npm:3.4.0"
   dependencies:
     "@uppy/utils": "npm:^5.9.0"
     prop-types: "npm:^15.6.1"
   peerDependencies:
-    "@uppy/core": ^3.11.0
-    "@uppy/dashboard": ^3.8.2
+    "@uppy/core": ^3.13.0
+    "@uppy/dashboard": ^3.9.0
     "@uppy/drag-drop": ^3.1.0
     "@uppy/file-input": ^3.1.2
     "@uppy/progress-bar": ^3.1.1
-    "@uppy/status-bar": ^3.3.2
+    "@uppy/status-bar": ^3.3.3
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
   peerDependenciesMeta:
     "@uppy/dashboard":
@@ -4245,7 +4245,7 @@ __metadata:
       optional: true
     "@uppy/status-bar":
       optional: true
-  checksum: 10/460d11178a19c10c1d8f1cf00c6d798742b30fc10f4807b3e5e1ae02be2fac462b5c53a5beab4290e1515dcc86c0d54ce47147225b357ba0e8dda96785e6317e
+  checksum: 10/77a48e2b83e54c414b76465753045405b0fe34c5ff0f39a7e309244fecbc6b07f7fa8978961e4fbf28d7540dd563f027a69c66379f8a321d0b3bf52f07950fae
   languageName: node
   linkType: hard
 
@@ -8101,12 +8101,12 @@ __metadata:
     "@types/validator": "npm:13.11.10"
     "@typescript-eslint/eslint-plugin": "npm:7.12.0"
     "@typescript-eslint/parser": "npm:7.12.0"
-    "@uppy/core": "npm:3.11.3"
-    "@uppy/dashboard": "npm:3.8.3"
+    "@uppy/core": "npm:3.13.0"
+    "@uppy/dashboard": "npm:3.9.0"
     "@uppy/drag-drop": "npm:3.1.0"
     "@uppy/file-input": "npm:3.1.2"
     "@uppy/progress-bar": "npm:3.1.1"
-    "@uppy/react": "npm:3.3.1"
+    "@uppy/react": "npm:3.4.0"
     "@uppy/status-bar": "npm:3.3.3"
     "@uppy/tus": "npm:3.5.5"
     "@uppy/xhr-upload": "npm:3.6.7"
