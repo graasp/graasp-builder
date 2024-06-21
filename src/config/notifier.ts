@@ -55,7 +55,7 @@ const {
   copyItemsRoutine,
   editItemRoutine,
   postItemMembershipRoutine,
-  uploadFileRoutine,
+  uploadFilesRoutine,
   signOutRoutine,
   postItemTagRoutine,
   deleteItemTagRoutine,
@@ -162,7 +162,7 @@ const notifier: Notifier = (
     case copyItemsRoutine.FAILURE:
     case editItemRoutine.FAILURE:
     case postItemMembershipRoutine.FAILURE:
-    case uploadFileRoutine.FAILURE:
+    case uploadFilesRoutine.FAILURE:
     case signOutRoutine.FAILURE:
     case postItemTagRoutine.FAILURE:
     case deleteItemTagRoutine.FAILURE:
@@ -188,7 +188,7 @@ const notifier: Notifier = (
       break;
     }
     // success messages
-    case uploadFileRoutine.SUCCESS:
+    case uploadFilesRoutine.SUCCESS:
     case signOutRoutine.SUCCESS:
     case COPY_MEMBER_ID_TO_CLIPBOARD.SUCCESS:
     case editItemMembershipRoutine.SUCCESS:
@@ -229,7 +229,7 @@ const notifier: Notifier = (
 
     // progress messages
     // todo: this might be handled differently
-    case uploadFileRoutine.REQUEST:
+    case uploadFilesRoutine.REQUEST:
     case uploadItemThumbnailRoutine.REQUEST: {
       notifyInfo(i18n.t(REQUEST_MESSAGES.UPLOAD_FILES), enableNotifications);
       break;

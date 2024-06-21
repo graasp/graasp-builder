@@ -1,148 +1,107 @@
-import '@uppy/drag-drop/dist/style.css';
+import { useState } from 'react';
+import { useParams } from 'react-router';
 
-import { DragEventHandler, useContext, useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 
-import { Box, styled } from '@mui/material';
+import { MAX_NUMBER_OF_FILES_UPLOAD } from '@graasp/sdk';
+import { FileDropper } from '@graasp/ui';
 
-import { MAX_FILE_SIZE } from '@graasp/sdk';
+import { AxiosProgressEvent } from 'axios';
 
-import { DragDrop } from '@uppy/react';
+import { useBuilderTranslation } from '@/config/i18n';
+import { mutations } from '@/config/queryClient';
+import { BUILDER } from '@/langs/constants';
 
-import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
-import { useBuilderTranslation } from '../../config/i18n';
 import { UPLOADER_ID } from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
-import { humanFileSize } from '../../utils/uppy';
-import { UppyContext } from './UppyContext';
 
-const StyledContainer = styled(Box)(({ theme }) => ({
-  display: 'none',
+type Props = {
+  onComplete?: () => void;
+  onUpdate?: (e: AxiosProgressEvent) => void;
+  onError?: (e: Error) => void;
+  buttons?: JSX.Element;
+  onStart?: () => void;
+};
 
-  // used to position the uppy container above the rest of the content
-  position: 'absolute',
-  // sets the borders of the container to stick to the border of the parent
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
+const FileUploader = ({
+  onError,
+  onUpdate,
+  onComplete,
+  onStart,
+  buttons,
+}: Props): JSX.Element | null => {
+  const { t } = useBuilderTranslation();
+  const { itemId: parentItemId } = useParams();
+  const [error, setError] = useState<string>();
 
-  boxSizing: 'border-box',
+  const { mutateAsync: uploadFiles, isLoading } = mutations.useUploadFiles();
 
-  // show above drawer
-  zIndex: theme.zIndex.drawer + 1,
-  opacity: 0.8,
-}));
+  const [totalProgress, setTotalProgress] = useState(0);
 
-const StyledDragDrop = styled(DragDrop)(({ theme }) => ({
-  // sets uppy to stretch to full width
-  width: '100%',
-  boxSizing: 'border-box',
-  padding: theme.spacing(2),
-  // these styles are necessary and can not be lifted up
-  '& > div': {
-    boxSizing: 'border-box',
-    height: '100%',
-  },
-}));
+  // send n request as long as the backend cannot handle multi files
+  // complex notification handling to keep one uploading toast
+  // trigger n success toast
+  const onDrop = async (files: File[]): Promise<void> => {
+    // update progress callback function scaled over the number of files sent
+    const updateForManyFiles = (e: AxiosProgressEvent) => {
+      const progress = totalProgress + (e.progress ?? 0) / files.length;
+      setTotalProgress(progress);
+      onUpdate?.({ ...e, progress });
+    };
 
-const FileUploader = (): JSX.Element | null => {
-  const { uppy } = useContext(UppyContext);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isValid, setIsValid] = useState(true);
-  const { t: translateBuilder, i18n } = useBuilderTranslation();
+    if (files.length > MAX_NUMBER_OF_FILES_UPLOAD) {
+      setError(
+        t(BUILDER.CANNOT_UPLOAD_MORE_FILES, {
+          count: MAX_NUMBER_OF_FILES_UPLOAD,
+        }),
+      );
+      onError?.({
+        message: t(BUILDER.CANNOT_UPLOAD_MORE_FILES, {
+          count: MAX_NUMBER_OF_FILES_UPLOAD,
+        }),
+      } as Error);
+      return;
+    }
+    setError(undefined);
 
-  const closeUploader = () => {
-    setIsDragging(false);
-  };
+    onStart?.();
 
-  useEffect(() => {
-    uppy?.on('files-added', () => {
-      closeUploader();
-    });
-  }, [uppy]);
-
-  const handleWindowDragEnter = () => {
-    setIsDragging(true);
-  };
-
-  const handleDragEnd = () => {
-    closeUploader();
-  };
-
-  const handleDragEnter: DragEventHandler<HTMLDivElement> = (event) => {
-    // detect whether the dragged files number exceeds limit
-    if (event?.dataTransfer?.items) {
-      const nbFiles = event.dataTransfer.items.length;
-
-      if (nbFiles > FILE_UPLOAD_MAX_FILES) {
-        return setIsValid(false);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const f of files) {
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        await uploadFiles({
+          files: [f],
+          id: parentItemId,
+          onUploadProgress: updateForManyFiles,
+        });
+      } catch (e) {
+        onError?.(e as Error);
       }
     }
-
-    return setIsValid(true);
-  };
-
-  useEffect(() => {
-    window.addEventListener('dragenter', handleWindowDragEnter);
-    window.addEventListener('mouseout', handleDragEnd);
-
-    return () => {
-      window.removeEventListener('dragenter', handleWindowDragEnter);
-      window.removeEventListener('mouseout', handleDragEnd);
-
-      uppy?.close();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleDrop = () => {
-    // todo: trigger error that only MAX_FILES was uploaded
-    // or cancel drop
-    closeUploader();
-  };
-
-  if (!uppy) {
-    return null;
-  }
-
-  const buildSx = () => {
-    let sx = {};
-    if (isDragging) {
-      sx = { ...sx, display: 'flex' };
-    }
-    if (!isValid) {
-      sx = {
-        ...sx,
-        '& div button': {
-          backgroundColor: 'red !important',
-        },
-      };
-    }
-    return sx;
+    onComplete?.();
   };
 
   return (
-    <StyledContainer
-      id={UPLOADER_ID}
-      sx={buildSx()}
-      onDragEnter={(e) => handleDragEnter(e)}
-      onDragEnd={() => handleDragEnd()}
-      onDragLeave={() => handleDragEnd()}
-      onDrop={handleDrop}
-    >
-      <StyledDragDrop
-        uppy={uppy}
-        note={translateBuilder(BUILDER.UPLOAD_FILE_LIMITATIONS_TEXT, {
-          maxFiles: FILE_UPLOAD_MAX_FILES,
-          maxSize: humanFileSize(MAX_FILE_SIZE),
-        })}
-        locale={
-          i18n.options.resources && {
-            strings: i18n.options.resources[i18n.language],
+    <Box width="100%" id={UPLOADER_ID}>
+      <FileDropper
+        message={t(BUILDER.DROPZONE_HELPER_TEXT)}
+        onChange={(e) => {
+          if (e.target.files) {
+            // transform from filelist to file array
+            onDrop([...e.target.files]);
           }
-        }
+        }}
+        isLoading={isLoading}
+        uploadProgress={Math.ceil(totalProgress * 100)}
+        multiple
+        onDrop={onDrop}
+        error={error}
+        buttonText={t(BUILDER.DROPZONE_HELPER_ACTION)}
+        hints={t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
+        buttons={buttons}
+        maxNumberFiles={10}
       />
-    </StyledContainer>
+    </Box>
   );
 };
 

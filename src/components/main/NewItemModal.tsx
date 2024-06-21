@@ -33,7 +33,7 @@ import { InternalItemType, NewItemTabType } from '../../config/types';
 import { BUILDER } from '../../langs/constants';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
-import FileDashboardUploader from '../file/FileDashboardUploader';
+import UploadFiles from '../file/UploadFiles';
 import AppForm from '../item/form/AppForm';
 import DocumentForm from '../item/form/DocumentForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
@@ -181,7 +181,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
             </Typography>
-            <FileDashboardUploader onComplete={handleClose} />
+            <UploadFiles onComplete={handleClose} />
           </>
         );
       case InternalItemType.ZIP:
@@ -199,7 +199,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
             </Typography>
-            <ImportH5P />
+            <ImportH5P onComplete={handleClose} />
           </>
         );
       case ItemType.ETHERPAD:

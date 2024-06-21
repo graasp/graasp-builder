@@ -277,7 +277,7 @@
   "TREE_MODAL_CONFIRM_BUTTON": "Confirmer",
   "UPLOAD_FILE_BROWSE": "Parcourir",
   "UPLOAD_FILE_DROP_TEXT": "Déposer ici ou",
-  "UPLOAD_FILE_INFORMATIONS": "Si un fichier zip ou H5P est téléchargé comme un \"FICHIER\", ils seront sauvegardé tels quels. Pour les extraire, utiliser les options dédiées \"IMPORTER UN ZIP\" ou \"IMPORTER UN H5P\".",
+  "UPLOAD_FILE_INFORMATIONS": "Si un fichier zip ou H5P est téléchargé comme un \"FICHIER\", ils seront sauvegardé tels quels. Pour les extraire, utiliser les options dédiées \"Archive\" ou \"H5P\".",
   "UPLOAD_FILE_LIMITATIONS_TEXT": "Vous pouvez télécharger jusqu'à {{maxFiles}} fichiers de {{maxSize}} à la fois.",
   "UPLOAD_FILE_TITLE": "Déposez un fichier",
   "USER_SWITCH_PROFILE_BUTTON": "Voir le Profil",

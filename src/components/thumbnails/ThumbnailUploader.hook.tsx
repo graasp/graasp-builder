@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { DiscriminatedItem, ThumbnailSize } from '@graasp/sdk';
 
-import Uppy from '@uppy/core';
+import { AxiosProgressEvent } from 'axios';
 
 import { hooks, mutations } from '@/config/queryClient';
-import { configureThumbnailUppy } from '@/utils/uppy';
 
-const { useDeleteItemThumbnail, useUploadFiles } = mutations;
+import { useUploadWithProgress } from '../hooks/uploadWithProgress';
+
+const { useDeleteItemThumbnail } = mutations;
 const { useItemThumbnailUrl } = hooks;
 
 type ItemThumbnail = {
@@ -27,10 +28,7 @@ type UseThumbnailUploader = {
   isThumbnailUploading: boolean;
   isUploadingError: boolean;
   itemThumbnail: ItemThumbnail;
-  openStatusBar: boolean;
-  uppy?: Uppy;
   uploadingProgress: number;
-  closeStatusBar: () => void;
   handleDelete: () => void;
   onThumbnailUpload: (payload: ThumbnailUploadPayload) => void;
 };
@@ -40,7 +38,13 @@ export const useThumbnailUploader = ({
   thumbnailSize = ThumbnailSize.Medium,
 }: Props): UseThumbnailUploader => {
   const { mutate: deleteThumbnail } = useDeleteItemThumbnail();
-  const { mutate: onFileUploadComplete } = useUploadFiles();
+  const { mutateAsync: uploadItemThumbnail } =
+    mutations.useUploadItemThumbnail();
+  const {
+    update,
+    close: closeNotification,
+    closeAndShowError,
+  } = useUploadWithProgress();
 
   const { id: itemId, settings } = item;
   const {
@@ -53,8 +57,6 @@ export const useThumbnailUploader = ({
   });
 
   const [itemThumbnail, setItemThumbnail] = useState<ItemThumbnail>({});
-  const [uppy, setUppy] = useState<Uppy>();
-  const [openStatusBar, setOpenStatusBar] = useState(false);
   const [isThumbnailUploading, setIsThumbnailUploading] = useState(false);
   const [isUploadingError, setIsUploadingError] = useState(false);
   const [uploadingProgress, setUploadingProgress] = useState(0);
@@ -77,70 +79,34 @@ export const useThumbnailUploader = ({
     }
   }, [settings, thumbnailUrl]);
 
-  const closeStatusBar = () => setOpenStatusBar(false);
-
-  const updateHasThumbnail = (hasThumbnail: boolean) =>
-    setItemThumbnail((current) => ({ ...current, hasThumbnail }));
-
-  useEffect(() => {
-    setUppy(
-      configureThumbnailUppy({
-        itemId,
-        onProgress: (progression) => {
-          setUploadingProgress(progression);
-        },
-        onUpload: () => {
-          // remove waiting files
-          uppy?.cancelAll();
-          setUploadingProgress(0);
-          setOpenStatusBar(true);
-          updateHasThumbnail(true);
-          setIsThumbnailUploading(true);
-        },
-        onError: (error: Error) => {
-          onFileUploadComplete({ id: itemId, error });
-          setIsThumbnailUploading(false);
-          setIsUploadingError(true);
-          updateHasThumbnail(settings.hasThumbnail ?? false);
-        },
-        onComplete: (result: {
-          successful: { response: { body: unknown } }[];
-        }) => {
-          if (result?.successful?.length) {
-            const data = result.successful[0].response.body;
-            setIsUploadingError(false);
-            onFileUploadComplete({ id: itemId, data });
-          }
-          // close progress bar of uppy
-          closeStatusBar();
-          setIsThumbnailUploading(false);
-          setShouldLoad(false);
-          return false;
-        },
-      }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemId]);
-
   const handleDelete = () => {
     setItemThumbnail({ hasThumbnail: false, url: undefined });
     deleteThumbnail(itemId);
   };
 
-  const onThumbnailUpload = (payload: ThumbnailUploadPayload) => {
+  const onThumbnailUpload = async (payload: ThumbnailUploadPayload) => {
     const { thumbnail } = payload;
     if (!thumbnail) {
       return;
     }
     try {
-      // remove waiting files
-      uppy?.cancelAll();
-      uppy?.addFile({
-        type: thumbnail.type,
-        data: thumbnail,
+      setIsThumbnailUploading(true);
+      await uploadItemThumbnail({
+        id: itemId,
+        file: thumbnail,
+        onUploadProgress: (e: AxiosProgressEvent) => {
+          setUploadingProgress((e.progress ?? 0) * 100);
+          update(e);
+        },
       });
+      closeNotification();
     } catch (error) {
       console.error(error);
+      setIsUploadingError(true);
+      closeAndShowError(error as Error);
+    } finally {
+      setIsThumbnailUploading(false);
+      setUploadingProgress(0);
     }
   };
 
@@ -149,10 +115,7 @@ export const useThumbnailUploader = ({
     isThumbnailLoading,
     isUploadingError,
     itemThumbnail,
-    openStatusBar,
-    uppy,
     uploadingProgress,
-    closeStatusBar,
     handleDelete,
     onThumbnailUpload,
   };

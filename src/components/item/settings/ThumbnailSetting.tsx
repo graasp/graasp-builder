@@ -1,19 +1,16 @@
-import { FormEventHandler, useEffect, useRef, useState } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
 
 import { Dialog, Stack, styled } from '@mui/material';
 
 import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
 
-import Uppy from '@uppy/core';
-
+import { useUploadWithProgress } from '@/components/hooks/uploadWithProgress';
 import { THUMBNAIL_SETTING_UPLOAD_INPUT_ID } from '@/config/selectors';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks, mutations } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
-import { configureThumbnailUppy } from '../../../utils/uppy';
 import CropModal, { MODAL_TITLE_ARIA_LABEL_ID } from '../../common/CropModal';
-import StatusBar from '../../file/StatusBar';
 import ThumbnailWithControls from './ThumbnailWithControls';
 
 const VisuallyHiddenInput = styled('input')({
@@ -32,53 +29,18 @@ type Props = { item: DiscriminatedItem };
 
 const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [uppy, setUppy] = useState<Uppy>();
   const [showCropModal, setShowCropModal] = useState(false);
   const [fileSource, setFileSource] = useState<string>();
-  const [openStatusBar, setOpenStatusBar] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
-  const { mutate: onFileUploadComplete } = mutations.useUploadFiles();
-
+  const { mutateAsync: uploadItemThumbnail } =
+    mutations.useUploadItemThumbnail();
+  const { update, close: closeNotification } = useUploadWithProgress();
   const { mutate: deleteThumbnail } = mutations.useDeleteItemThumbnail();
   const { id: itemId } = item;
   const { data: thumbnailUrl, isLoading } = hooks.useItemThumbnailUrl({
     id: itemId,
     size: ThumbnailSize.Medium,
   });
-
-  const handleClose = () => {
-    setOpenStatusBar(false);
-  };
-
-  useEffect(() => {
-    setUppy(
-      configureThumbnailUppy({
-        itemId,
-        onUpload: () => {
-          setOpenStatusBar(true);
-        },
-        onError: (error: Error) => {
-          onFileUploadComplete({ id: itemId, error });
-        },
-        onComplete: (result: {
-          successful: { response: { body: unknown } }[];
-        }) => {
-          if (result?.successful?.length) {
-            const data = result.successful[0].response.body;
-            onFileUploadComplete({ id: itemId, data });
-          }
-          // close progress bar of uppy
-          handleClose();
-          return false;
-        },
-      }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemId]);
-
-  if (!uppy) {
-    return null;
-  }
 
   const onSelectFile: FormEventHandler<HTMLInputElement> = (e) => {
     const t = e.target as HTMLInputElement;
@@ -110,10 +72,13 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
     // submit cropped image
     try {
       // remove waiting files
-      uppy.cancelAll();
-      uppy.addFile({
-        type: croppedImage.type,
-        data: croppedImage,
+      uploadItemThumbnail({
+        // type: croppedImage.type,
+        file: croppedImage,
+        id: item.id,
+        onUploadProgress: update,
+      }).then(() => {
+        closeNotification();
       });
     } catch (error) {
       console.error(error);
@@ -138,10 +103,6 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
 
   return (
     <>
-      {uppy && (
-        <StatusBar uppy={uppy} handleClose={handleClose} open={openStatusBar} />
-      )}
-
       <Stack spacing={2} mb={3} alignItems="center">
         <ThumbnailWithControls
           item={item}

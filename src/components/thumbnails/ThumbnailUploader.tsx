@@ -7,7 +7,6 @@ import { theme } from '@graasp/ui';
 
 import ContentLoader from '@/components/common/ContentLoader';
 import { useDataSyncContext } from '@/components/context/DataSyncContext';
-import StatusBar from '@/components/file/StatusBar';
 
 import ThumbnailCrop from './ThumbnailCrop';
 import useThumbnailUploader from './ThumbnailUploader.hook';
@@ -47,9 +46,7 @@ export const ThumbnailUploader = ({
     isThumbnailLoading,
     isUploadingError,
     itemThumbnail,
-    openStatusBar,
-    uppy,
-    closeStatusBar,
+
     handleDelete,
     onThumbnailUpload,
   } = useThumbnailUploader({ item });
@@ -91,44 +88,35 @@ export const ThumbnailUploader = ({
   ]);
 
   return (
-    <>
-      <ContentLoader isLoading={isThumbnailLoading} maxWidth="fit-content">
-        <Box position="relative">
-          <ThumbnailCrop
-            currentThumbnail={itemThumbnail.url}
-            thumbnailSize={thumbnailSize}
-            fullWidth={fullWidth}
-            onDelete={handleDelete}
-            setChanges={onThumbnailUpload}
-            isUploading={isThumbnailUploading}
-            border={THUMBNAIL_BORDER}
-          />
-          <Box
-            position="absolute"
-            top={15}
-            right={15}
-            zIndex={theme.zIndex.drawer - 1}
-          >
-            {topCornerElement}
-            {isThumbnailUploading && (
-              <CircularProgress
-                variant="determinate"
-                value={uploadingProgress}
-                size={25}
-                sx={{ bgcolor: 'white', borderRadius: '50%' }}
-              />
-            )}
-          </Box>
-        </Box>
-      </ContentLoader>
-      {uppy && (
-        <StatusBar
-          uppy={uppy}
-          handleClose={closeStatusBar}
-          open={openStatusBar}
+    <ContentLoader isLoading={isThumbnailLoading} maxWidth="fit-content">
+      <Box position="relative">
+        <ThumbnailCrop
+          currentThumbnail={itemThumbnail.url}
+          thumbnailSize={thumbnailSize}
+          fullWidth={fullWidth}
+          onDelete={handleDelete}
+          setChanges={onThumbnailUpload}
+          isUploading={isThumbnailUploading}
+          border={THUMBNAIL_BORDER}
         />
-      )}
-    </>
+        <Box
+          position="absolute"
+          top={15}
+          right={15}
+          zIndex={theme.zIndex.drawer - 1}
+        >
+          {topCornerElement}
+          {isThumbnailUploading && (
+            <CircularProgress
+              variant="determinate"
+              value={uploadingProgress}
+              size={25}
+              sx={{ bgcolor: 'white', borderRadius: '50%' }}
+            />
+          )}
+        </Box>
+      </Box>
+    </ContentLoader>
   );
 };
 

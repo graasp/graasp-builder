@@ -1,7 +1,6 @@
 import './styles.css';
 import '@ag-grid-community/styles/ag-grid.min.css';
 import '@ag-grid-community/styles/ag-theme-material.min.css';
-import '@uppy/core/dist/style.css';
 // hack to have the text editor styles available without having to bundle them with graasp/ui
 import 'katex/dist/katex.min.css';
 import 'react-quill/dist/quill.snow.css';

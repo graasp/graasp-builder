@@ -7,7 +7,6 @@ import { Loader } from '@graasp/ui';
 import { hooks } from '../../../config/queryClient';
 import ErrorAlert from '../../common/ErrorAlert';
 import { useLayoutContext } from '../../context/LayoutContext';
-import { UppyContextProvider } from '../../file/UppyContext';
 import WrappedAuthItemScreen from './ItemLoginWrapper';
 
 const { useItem } = hooks;
@@ -33,11 +32,9 @@ const ItemScreenLayout = (): JSX.Element => {
 
   if (item && itemId) {
     return (
-      <UppyContextProvider enable={canWrite} itemId={itemId}>
-        <Outlet
-          context={{ item, permission: item.permission, canWrite, canAdmin }}
-        />
-      </UppyContextProvider>
+      <Outlet
+        context={{ item, permission: item.permission, canWrite, canAdmin }}
+      />
     );
   }
 
