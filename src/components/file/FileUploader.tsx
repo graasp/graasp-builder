@@ -12,14 +12,13 @@ import { useBuilderTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
-import { UPLOADER_ID } from '../../config/selectors';
-
 type Props = {
   onComplete?: () => void;
   onUpdate?: (e: AxiosProgressEvent) => void;
   onError?: (e: Error) => void;
   buttons?: JSX.Element;
   onStart?: () => void;
+  id?: string;
 };
 
 const FileUploader = ({
@@ -28,6 +27,7 @@ const FileUploader = ({
   onComplete,
   onStart,
   buttons,
+  id,
 }: Props): JSX.Element | null => {
   const { t } = useBuilderTranslation();
   const { itemId: parentItemId } = useParams();
@@ -82,7 +82,7 @@ const FileUploader = ({
   };
 
   return (
-    <Box width="100%" id={UPLOADER_ID}>
+    <Box width="100%" id={id}>
       <FileDropper
         message={t(BUILDER.DROPZONE_HELPER_TEXT)}
         onChange={(e) => {
@@ -99,7 +99,6 @@ const FileUploader = ({
         buttonText={t(BUILDER.DROPZONE_HELPER_ACTION)}
         hints={t(BUILDER.DROPZONE_HELPER_LIMIT_REMINDER_TEXT)}
         buttons={buttons}
-        maxNumberFiles={10}
       />
     </Box>
   );

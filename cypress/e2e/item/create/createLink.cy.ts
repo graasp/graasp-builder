@@ -48,7 +48,7 @@ describe('Create Link', () => {
     });
   });
 
-  it('create folder in item', () => {
+  it('create link in item', () => {
     const FOLDER = PackedFolderItemFactory();
 
     cy.setUpApi({ items: [FOLDER] });

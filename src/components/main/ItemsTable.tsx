@@ -30,7 +30,10 @@ import i18n, {
 } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
 import { hooks, mutations } from '../../config/queryClient';
-import { buildItemsTableRowId } from '../../config/selectors';
+import {
+  DROPZONE_HELPER_ID,
+  buildItemsTableRowId,
+} from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import FileUploader from '../file/FileUploader';
 import { useUploadWithProgress } from '../hooks/uploadWithProgress';
@@ -296,6 +299,7 @@ const ItemsTable = ({
       {/* we need to show toast notifications since the websockets reset the view as soon as one file is uploaded */}
       {shouldShowDropzoneHelper && (!parentItem || canEditItem) ? (
         <FileUploader
+          id={DROPZONE_HELPER_ID}
           onStart={show}
           onComplete={closeNotification}
           onError={closeAndShowError}

@@ -11,7 +11,7 @@ describe('Dropzone Helper Visibility', () => {
       cy.setUpApi();
     });
 
-    it(' should display the dropzone on the home screen when no items', () => {
+    it('should display the dropzone on the home screen when no items', () => {
       cy.visit('/');
       cy.get(`#${DROPZONE_HELPER_ID}`).should('be.visible');
     });

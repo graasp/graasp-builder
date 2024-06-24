@@ -66,6 +66,7 @@ import {
   mockGetRecycledItems,
   mockGetSharedItems,
   mockGetShortLinksItem,
+  mockImportH5p,
   mockImportZip,
   mockMoveItems,
   mockPatchAppData,
@@ -162,6 +163,7 @@ Cypress.Commands.add(
     postShortLinkError = false,
     patchShortLinkError = false,
     deleteShortLinkError = false,
+    importH5pError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -344,6 +346,8 @@ Cypress.Commands.add(
     mockDeleteShortLink(cachedShortLinks, deleteShortLinkError);
 
     mockGetLinkMetadata();
+
+    mockImportH5p(importH5pError);
   },
 );
 

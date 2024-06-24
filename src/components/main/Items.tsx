@@ -33,6 +33,7 @@ type Props = {
   parentId?: string;
   showThumbnails?: boolean;
   canMove?: boolean;
+  canEdit?: boolean;
   onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
   itemSearch?: { text: string };
@@ -57,6 +58,7 @@ const Items = ({
   defaultSortedColumn,
   showThumbnails = true,
   canMove = true,
+  canEdit = true,
   showOnlyMe = false,
   itemSearch,
   page,
@@ -116,6 +118,7 @@ const Items = ({
             showOnlyMe={showOnlyMe}
             page={page}
             onPageChange={setPage}
+            canEdit={canEdit}
             totalCount={totalCount}
           />
         </>

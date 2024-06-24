@@ -20,7 +20,11 @@ const ImportH5P = ({
 }): JSX.Element => {
   const { itemId } = useParams();
   const { mutateAsync: importH5P, isLoading } = mutations.useImportH5P();
-  const { update, close: closeNotification } = useUploadWithProgress();
+  const {
+    update,
+    close: closeNotification,
+    closeAndShowError,
+  } = useUploadWithProgress();
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
@@ -45,10 +49,14 @@ const ImportH5P = ({
               onUploadProgress: update,
               id: itemId,
               file: e.target.files[0],
-            }).then(() => {
-              closeNotification();
-              onComplete?.();
-            });
+            })
+              .then(() => {
+                closeNotification();
+                onComplete?.();
+              })
+              .catch((error) => {
+                closeAndShowError(error);
+              });
           }
         }}
         accept=".h5p"
