@@ -4,7 +4,6 @@ import { buildDownloadButtonId } from '@/config/selectors';
 import { ItemLayoutMode } from '@/enums';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import { buildItemPath } from '../../../../src/config/paths';
 import { SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
 import { SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 

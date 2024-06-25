@@ -75,8 +75,8 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
               id={PUBLISHED_ITEMS_ID}
               items={filteredData ?? []}
               canMove={false}
-              totalCount={filteredData.length}
-              pageSize={filteredData.length}
+              // totalCount={filteredData.length}
+              // pageSize={filteredData.length}
             />
           ) : (
             <Typography>{translateBuilder('No recycled item')}</Typography>

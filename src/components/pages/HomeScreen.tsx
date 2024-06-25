@@ -24,6 +24,7 @@ import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useLayoutContext } from '../context/LayoutContext';
+import FileUploader from '../file/FileUploader';
 import { useItemSearch } from '../item/ItemSearch';
 import MapView from '../item/MapView';
 import ModeButton from '../item/header/ModeButton';
@@ -91,7 +92,7 @@ const HomeScreen = (): JSX.Element => {
             />
           ) : (
             // empty data shows drop zone
-            <DropzoneHelper />
+            <FileUploader />
           )}
         </>
       );

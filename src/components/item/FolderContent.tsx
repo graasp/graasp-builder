@@ -18,7 +18,7 @@ import { ItemLayoutMode } from '@/enums';
 import ErrorAlert from '../common/ErrorAlert';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useLayoutContext } from '../context/LayoutContext';
-import DropzoneHelper from '../file/DropzoneHelper';
+import FileUploader from '../file/FileUploader';
 import ItemsTable, { useSorting } from '../main/ItemsTable';
 import NewItemButton from '../main/NewItemButton';
 import TableToolbar from '../main/TableToolbar';
@@ -118,7 +118,7 @@ const FolderContent = ({
     item.permission &&
     PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
   ) {
-    return <DropzoneHelper />;
+    return <FileUploader />;
   }
 
   return <Typography>{translateBuilder('No item')}</Typography>;

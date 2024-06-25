@@ -78,8 +78,8 @@ const BookmarkedItemsLoadableContent = (): JSX.Element | null => {
                 id={BOOKMARKED_ITEMS_ID}
                 items={filteredData}
                 canMove={false}
-                pageSize={filteredData.length}
-                totalCount={filteredData.length}
+                // pageSize={filteredData.length}
+                // totalCount={filteredData.length}
               />
             ) : (
               <Typography variant="body2">

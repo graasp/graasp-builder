@@ -116,6 +116,8 @@ const ItemsTable = ({
   const onDropInRow = (movedItem: PackedItem | any, targetItem: PackedItem) => {
     // upload files in item
     if (movedItem.files) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       uploadItems({
         files: movedItem.files,
         id: targetItem.id,
@@ -160,7 +162,6 @@ const ItemsTable = ({
       <DraggingWrapper
         id={tableId}
         isMovable={canMove}
-        getRowId={(item) => item.id}
         renderComponent={(droppedEl, { isDragging, isOver }) => {
           if ('files' in droppedEl) {
             return (

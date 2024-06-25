@@ -33,7 +33,7 @@ import { InternalItemType, NewItemTabType } from '../../config/types';
 import { BUILDER } from '../../langs/constants';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
-import UploadFiles from '../file/UploadFiles';
+import FileUploader from '../file/FileUploader';
 import AppForm from '../item/form/AppForm';
 import DocumentForm from '../item/form/DocumentForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
@@ -184,7 +184,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
             </Typography>
-            <UploadFiles onComplete={handleClose} />
+            <FileUploader onComplete={handleClose} />
           </>
         );
       case InternalItemType.ZIP:

@@ -1,25 +1,23 @@
 import { useEffect, useState } from 'react';
 
-import { Skeleton, Stack } from '@mui/material';
+import { Skeleton, Stack, Typography } from '@mui/material';
 
-import { Map } from '@graasp/map';
-import { type DiscriminatedItem, ItemGeolocation, redirect } from '@graasp/sdk';
+// import { Map } from '@graasp/map';
+import { type DiscriminatedItem, ItemGeolocation } from '@graasp/sdk';
 import { useMobileView } from '@graasp/ui';
 
-import { buildGraaspPlayerView } from '@/config/externalPaths';
 import { hooks, mutations } from '@/config/queryClient';
-import { buildPlayerTabName } from '@/config/selectors';
 
 import { buildMapViewId } from '../../config/selectors';
 import NewItemModal from '../main/NewItemModal';
 
 type Props = {
   parentId?: DiscriminatedItem['id'];
+  title?: string;
   height?: string;
   viewItem: (item: DiscriminatedItem) => void;
   viewItemInBuilder: (item: DiscriminatedItem) => void;
   enableGeolocation?: boolean;
-  isMobileApp?: boolean;
 };
 
 const options = {
@@ -83,6 +81,7 @@ const useCurrentLocation = (enableGeolocation = false) => {
 
 const MapView = ({
   parentId,
+  title,
   height = '100vh',
   viewItem,
   viewItemInBuilder,
@@ -106,35 +105,16 @@ const MapView = ({
     setOpen(false);
   };
 
-  const viewItem = (item: DiscriminatedItem) => {
-    if (isMobileApp) {
-      // todo: replace with universal/deep link? not sure it works inside iframe..
-      window.parent.postMessage(
-        JSON.stringify({ item, action: 'open-player' }),
-      );
-    } else {
-      redirect(window, buildGraaspPlayerView(item.id), {
-        name: buildPlayerTabName(item.id),
-        openInNewTab: true,
-      });
-    }
-  };
-
   return (
     <>
       <Stack height={height}>
-        {/* <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Stack>
           {title && (
             <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
               {title}
             </Typography>
           )}
-          <ModeButton />
-        </Stack> */}
+        </Stack>
         <Stack flex={1}>
           {(parentId && isLoadingParent) ||
           (enableGeolocation && !hasFetchedCurrentLocation) ? (
@@ -144,7 +124,7 @@ const MapView = ({
               id={buildMapViewId(parentId)}
               style={{ width: '100%', height: '100%' }}
             >
-              <Map
+              {/* <Map
                 currentPosition={currentPosition}
                 useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
                 usePostItem={mutations.usePostItem}
@@ -159,7 +139,7 @@ const MapView = ({
                 // use builder modal to add new item if the screen is big enough
                 // todo: always use builder modal when it is responsive
                 handleAddOnClick={isMobile ? undefined : handleAddOnClick}
-              />
+              /> */}
             </div>
           )}
         </Stack>
