@@ -30,7 +30,7 @@ type UseThumbnailUploader = {
   itemThumbnail: ItemThumbnail;
   uploadingProgress: number;
   handleDelete: () => void;
-  onThumbnailUpload: (payload: ThumbnailUploadPayload) => void;
+  onThumbnailUpload: (payload: ThumbnailUploadPayload) => Promise<void>;
 };
 
 export const useThumbnailUploader = ({
