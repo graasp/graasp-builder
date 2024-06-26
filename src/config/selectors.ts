@@ -75,7 +75,6 @@ export const ITEMS_TABLE_COPY_SELECTED_ITEMS_ID = 'itemsTableCopySelectedItems';
 export const ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID = 'itemsTableMoveSelectedItems';
 export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
 export const UPLOADER_ID = 'uploader';
-export const UPLOADER_DROP_ZONE_ITEMS_CLASS = 'uppy-Root';
 export const buildFileItemId = (id: string): string => `file-${id}`;
 export const ITEM_PANEL_ID = 'itemPanelMetadata';
 export const ITEM_PANEL_NAME_ID = 'itemPanelName';

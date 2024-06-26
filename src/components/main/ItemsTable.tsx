@@ -30,15 +30,20 @@ import i18n, {
 } from '../../config/i18n';
 import { buildItemPath } from '../../config/paths';
 import { hooks, mutations } from '../../config/queryClient';
-import { buildItemsTableRowId } from '../../config/selectors';
+import {
+  DROPZONE_HELPER_ID,
+  buildItemsTableRowId,
+} from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
-import DropzoneHelper from '../file/DropzoneHelper';
+import FileUploader from '../file/FileUploader';
+import { useUploadWithProgress } from '../hooks/uploadWithProgress';
 import FolderDescription from '../item/FolderDescription';
 import ActionsCellRenderer from '../table/ActionsCellRenderer';
 import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
 import NameCellRenderer from '../table/ItemNameCellRenderer';
 import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
 import ItemsToolbar from './ItemsToolbar';
+import NewItemButton from './NewItemButton';
 
 const { useItem } = hooks;
 
@@ -96,6 +101,12 @@ const ItemsTable = ({
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateEnums } = useEnumsTranslation();
   const [searchParams] = useSearchParams();
+  const {
+    update,
+    close: closeNotification,
+    closeAndShowError,
+    show,
+  } = useUploadWithProgress();
   const navigate = useNavigate();
 
   const { itemId } = useParams();
@@ -285,8 +296,16 @@ const ItemsTable = ({
         onShowOnlyMeChange={onShowOnlyMeChange}
         showOnlyMe={showOnlyMe}
       />
+      {/* we need to show toast notifications since the websockets reset the view as soon as one file is uploaded */}
       {shouldShowDropzoneHelper && (!parentItem || canEditItem) ? (
-        <DropzoneHelper />
+        <FileUploader
+          id={DROPZONE_HELPER_ID}
+          onStart={show}
+          onComplete={closeNotification}
+          onError={closeAndShowError}
+          onUpdate={update}
+          buttons={<NewItemButton size="small" />}
+        />
       ) : (
         <GraaspTable
           onSortChanged={onSortChanged}

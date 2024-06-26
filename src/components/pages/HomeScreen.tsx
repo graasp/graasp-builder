@@ -18,8 +18,6 @@ import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
-import FileUploader from '../file/FileUploader';
-import { UppyContextProvider } from '../file/UppyContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ItemHeader from '../item/header/ItemHeader';
 import ItemActions from '../main/ItemActions';
@@ -48,7 +46,6 @@ const HomeLoadableContent = (): JSX.Element => {
     data: accessibleItems,
     isLoading,
     isFetching,
-    isSuccess,
   } = hooks.useAccessibleItems(
     {
       // todo: in the future this can be any member from creators
@@ -109,35 +106,32 @@ const HomeLoadableContent = (): JSX.Element => {
         <Helmet>
           <title>{translateBuilder(BUILDER.MY_ITEMS_TITLE)}</title>
         </Helmet>
-        <UppyContextProvider enable={isSuccess}>
-          <FileUploader />
-          <Box p={2} height="100%">
-            <ItemHeader showNavigation={false} />
-            <Items
-              id={ACCESSIBLE_ITEMS_TABLE_ID}
-              title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-              items={accessibleItems.data}
-              headerElements={[
-                itemSearch.input,
-                <NewItemButton key="newButton" />,
-              ]}
-              ToolbarActions={ItemActions}
-              onShowOnlyMeChange={onShowOnlyMeChange}
-              showOnlyMe={showOnlyMe}
-              page={page}
-              setPage={setPage}
-              totalCount={accessibleItems.totalCount}
-              onSortChanged={onSortChanged}
-              pageSize={ITEM_PAGE_SIZE}
-              showDropzoneHelper
-            />
-            {isFetching && (
-              <Box sx={{ width: '100%' }}>
-                <LinearProgress />
-              </Box>
-            )}
-          </Box>
-        </UppyContextProvider>
+        <Box p={2} height="100%">
+          <ItemHeader showNavigation={false} />
+          <Items
+            id={ACCESSIBLE_ITEMS_TABLE_ID}
+            title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
+            items={accessibleItems.data}
+            headerElements={[
+              itemSearch.input,
+              <NewItemButton key="newButton" />,
+            ]}
+            ToolbarActions={ItemActions}
+            onShowOnlyMeChange={onShowOnlyMeChange}
+            showOnlyMe={showOnlyMe}
+            page={page}
+            setPage={setPage}
+            totalCount={accessibleItems.totalCount}
+            onSortChanged={onSortChanged}
+            pageSize={ITEM_PAGE_SIZE}
+            showDropzoneHelper
+          />
+          {isFetching && (
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress />
+            </Box>
+          )}
+        </Box>
       </>
     );
   }

@@ -91,6 +91,7 @@
   "IMPORT_H5P_INFORMATIONS": "You can upload H5P rich content by uploading exported .h5p files (e.g. from H5P.com, external Moodle services, etc).",
   "IMPORT_H5P_LIMITATIONS_TEXT": "You can upload up to one H5P of {{maxSize}} at a time.",
   "IMPORT_H5P_TITLE": "Import an H5P",
+  "UPLOAD_H5P_BUTTON": "Import an H5P",
   "IMPORT_H5P_WARNING": "Once your file is accepted, it will take several minutes for all imported files to be available.",
   "IMPORT_ZIP_INFORMATION": "You can download your resources from graasp.eu by right clicking and choosing \"Download as ZIP\".",
   "IMPORT_ZIP_LIMITATIONS_TEXT": "You can upload up to one ZIP of {{maxSize}} at a time. On error, try to upload a smaller zip.",
@@ -434,5 +435,10 @@
   "THUMBNAIL_UPLOADER_DELETE_ARIA_LABEL": "Delete the thumbnail",
   "THUMBNAIL_UPLOADER_IMAGE_ALT": "Item's thumbnail",
   "THUMBNAIL_UPLOADER_UPDATE_ARIA_LABEL": "Change the item's thumbnail",
-  "DEBOUNCED_TEXTFIELD_EMPTY_ERROR": "The value can't be empty"
+  "DEBOUNCED_TEXTFIELD_EMPTY_ERROR": "The value can't be empty",
+  "CANNOT_UPLOAD_MORE_FILES": "Cannot upload more than {{count}} files at a time",
+  "UPLOADING": "Uploading...",
+  "IMPORT_ZIP_BUTTON": "Import a ZIP archive",
+  "UPLOAD_NOTIFICATION_LOADING": "Uploading...",
+  "UPLOAD_NOTIFICATION_COMPLETE": "Upload complete!"
 }

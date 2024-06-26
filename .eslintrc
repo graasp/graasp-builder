@@ -5,38 +5,35 @@
     "prettier",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    "eslint:recommended"
+    "eslint:recommended",
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks"
-  ],
+  "plugins": ["@typescript-eslint", "react-hooks"],
   "env": {
     "browser": true,
     "node": true,
     "mocha": true,
-    "jest": true
+    "jest": true,
   },
   "globals": {
     "cy": true,
     "Cypress": true,
-    "JSX": "readonly"
+    "JSX": "readonly",
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
   },
   "rules": {
     "import/order": "off",
     "react/function-component-definition": [
       2,
       {
-        "namedComponents": "arrow-function"
-      }
+        "namedComponents": "arrow-function",
+      },
     ],
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
@@ -49,31 +46,16 @@
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        "components": [
-          "Link"
-        ],
-        "specialLink": [
-          "to",
-          "hrefLeft",
-          "hrefRight"
-        ],
-        "aspects": [
-          "noHref",
-          "invalidHref",
-          "preferButton"
-        ]
-      }
+        "components": ["Link"],
+        "specialLink": ["to", "hrefLeft", "hrefRight"],
+        "aspects": ["noHref", "invalidHref", "preferButton"],
+      },
     ],
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      }
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+      },
     ],
     "import/no-named-as-default": "off",
     "react/static-property-placement": [
@@ -85,20 +67,15 @@
         "contextType": "static public field",
         "defaultProps": "static public field",
         "displayName": "static public field",
-        "propTypes": "static public field"
-      }
+        "propTypes": "static public field",
+      },
     ],
-    "react/state-in-constructor": [
-      "error",
-      "never"
-    ],
+    "react/state-in-constructor": ["error", "never"],
     "no-console": [
       1,
       {
-        "allow": [
-          "error"
-        ]
-      }
+        "allow": ["error"],
+      },
     ],
     "import/extensions": [
       "error",
@@ -107,87 +84,60 @@
         "js": "never",
         "jsx": "never",
         "ts": "never",
-        "tsx": "never"
-      }
+        "tsx": "never",
+      },
     ],
     "react/prop-types": "off",
     "react/require-default-props": "off",
     // eslint rule reports false error
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": [
-      "error"
-    ],
+    "@typescript-eslint/no-shadow": ["error"],
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_",
-        "caughtErrorsIgnorePattern": "^_"
-      }
+        "caughtErrorsIgnorePattern": "^_",
+      },
     ],
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": true
-      }
+        "devDependencies": true,
+      },
     ],
+    "import/prefer-default-export": "off",
   },
   "overrides": [
     {
       // enable the rule specifically for TypeScript files
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
+      "files": ["*.ts", "*.tsx"],
       "rules": {
-        "@typescript-eslint/explicit-module-boundary-types": [
-          "error"
-        ]
-      }
+        "@typescript-eslint/explicit-module-boundary-types": ["error"],
+      },
     },
     {
       // enable the rule specifically for src files
-      "files": [
-        "src/**/*.js",
-        "src/**/*.tsx",
-        "src/**/*.ts"
-      ],
+      "files": ["src/**/*.js", "src/**/*.tsx", "src/**/*.ts"],
       "rules": {
-        "no-restricted-syntax": [
-          "error"
-        ]
-      }
-    }
+        "no-restricted-syntax": ["error"],
+      },
+    },
   ],
   "settings": {
-    "import/extensions": [
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx"
-    ],
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
+      "@typescript-eslint/parser": [".ts", ".tsx"],
     },
     "import/resolver": {
       "typescript": {
-        "directory": "./tsconfig.json"
+        "directory": "./tsconfig.json",
       },
       "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      }
-    }
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
   },
-  "ignorePatterns": [
-    "node_modules/*"
-  ]
+  "ignorePatterns": ["node_modules/*"],
 }

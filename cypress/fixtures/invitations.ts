@@ -43,7 +43,6 @@ const itemsWithInvitations: DiscriminatedItem[] = [
   }),
 ];
 
-// eslint-disable-next-line import/prefer-default-export
 export const ITEMS_WITH_INVITATIONS: ApiConfig = {
   items: [
     itemsWithInvitations[0],

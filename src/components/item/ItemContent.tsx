@@ -176,6 +176,7 @@ const FolderContent = ({
     ordered: true,
   });
   const itemSearch = useItemSearch();
+  const { canWrite, canAdmin } = useOutletContext<OutletType>();
 
   // TODO: use hook's filter when available
   const folderChildren = children?.filter(
@@ -192,6 +193,8 @@ const FolderContent = ({
 
   return (
     <Items
+      canEdit={canWrite}
+      canMove={canAdmin}
       parentId={item.id}
       id={buildItemsTableId(item.id)}
       title={item.name}

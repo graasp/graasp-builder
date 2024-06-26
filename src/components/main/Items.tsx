@@ -10,6 +10,7 @@ import { ShowOnlyMeChangeType } from '@/config/types';
 
 import { ItemLayoutMode } from '../../enums';
 import { useLayoutContext } from '../context/LayoutContext';
+import FileUploaderOverlay from '../file/FileUploaderOverlay';
 import MapView from '../item/MapView';
 import { useItemsStatuses } from '../table/BadgesCellRenderer';
 import ItemsGrid from './ItemsGrid';
@@ -32,6 +33,7 @@ type Props = {
   parentId?: string;
   showThumbnails?: boolean;
   canMove?: boolean;
+  canEdit?: boolean;
   onShowOnlyMeChange?: ShowOnlyMeChangeType;
   showOnlyMe?: boolean;
   itemSearch?: { text: string };
@@ -56,6 +58,7 @@ const Items = ({
   defaultSortedColumn,
   showThumbnails = true,
   canMove = true,
+  canEdit = true,
   showOnlyMe = false,
   itemSearch,
   page,
@@ -100,47 +103,54 @@ const Items = ({
     }
     case ItemLayoutMode.Grid:
       return (
-        <ItemsGrid
-          canMove={canMove}
-          parentId={parentId}
-          title={title}
-          items={items}
-          itemsStatuses={itemsStatuses}
-          // This enables the possibility to display messages (item is empty, no search result)
-          itemSearch={itemSearch}
-          headerElements={headerElements}
-          onShowOnlyMeChange={onShowOnlyMeChange}
-          showOnlyMe={showOnlyMe}
-          page={page}
-          onPageChange={setPage}
-          totalCount={totalCount}
-        />
+        <>
+          {totalCount ? <FileUploaderOverlay /> : undefined}
+          <ItemsGrid
+            canMove={canMove}
+            parentId={parentId}
+            title={title}
+            items={items}
+            itemsStatuses={itemsStatuses}
+            // This enables the possibility to display messages (item is empty, no search result)
+            itemSearch={itemSearch}
+            headerElements={headerElements}
+            onShowOnlyMeChange={onShowOnlyMeChange}
+            showOnlyMe={showOnlyMe}
+            page={page}
+            onPageChange={setPage}
+            canEdit={canEdit}
+            totalCount={totalCount}
+          />
+        </>
       );
     case ItemLayoutMode.List:
     default:
       return (
-        <ItemsTable
-          id={id}
-          actions={actions}
-          tableTitle={title}
-          defaultSortedColumn={defaultSortedColumn}
-          onSortChanged={onSortChanged}
-          items={items}
-          itemsStatuses={itemsStatuses}
-          headerElements={headerElements}
-          isSearching={Boolean(itemSearch?.text)}
-          ToolbarActions={ToolbarActions}
-          clickable={clickable}
-          showThumbnails={showThumbnails}
-          canMove={canMove}
-          onShowOnlyMeChange={onShowOnlyMeChange}
-          showOnlyMe={showOnlyMe}
-          page={page}
-          setPage={setPage}
-          totalCount={totalCount}
-          pageSize={pageSize}
-          showDropzoneHelper={showDropzoneHelper}
-        />
+        <>
+          {totalCount ? <FileUploaderOverlay /> : undefined}
+          <ItemsTable
+            id={id}
+            actions={actions}
+            tableTitle={title}
+            defaultSortedColumn={defaultSortedColumn}
+            onSortChanged={onSortChanged}
+            items={items}
+            itemsStatuses={itemsStatuses}
+            headerElements={headerElements}
+            isSearching={Boolean(itemSearch?.text)}
+            ToolbarActions={ToolbarActions}
+            clickable={clickable}
+            showThumbnails={showThumbnails}
+            canMove={canMove}
+            onShowOnlyMeChange={onShowOnlyMeChange}
+            showOnlyMe={showOnlyMe}
+            page={page}
+            setPage={setPage}
+            totalCount={totalCount}
+            pageSize={pageSize}
+            showDropzoneHelper={showDropzoneHelper}
+          />
+        </>
       );
   }
 };

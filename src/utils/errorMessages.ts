@@ -2,7 +2,6 @@ import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import axios, { AxiosError } from 'axios';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getErrorFromPayload = (
   inputError?: Error | AxiosError,
 ): { name: string; message: string } => {

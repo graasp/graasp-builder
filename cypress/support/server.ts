@@ -54,7 +54,6 @@ const {
   buildEditItemRoute,
   buildItemUnpublishRoute,
   buildGetItemRoute,
-  buildPostItemRoute,
   GET_OWN_ITEMS_ROUTE,
   buildPostItemMembershipRoute,
   buildGetMember,
@@ -104,6 +103,7 @@ const {
   buildPatchShortLinkRoute,
   buildDeleteShortLinkRoute,
   buildDeleteItemThumbnailRoute,
+  buildImportH5PRoute,
 } = API_ROUTES;
 
 const API_HOST = Cypress.env('VITE_GRAASP_API_HOST');
@@ -244,11 +244,7 @@ export const mockPostItem = (
   cy.intercept(
     {
       method: HttpMethod.Post,
-      url: new RegExp(
-        `${API_HOST}/${parseStringToRegExp(
-          buildPostItemRoute(ID_FORMAT),
-        )}$|${API_HOST}/${buildPostItemRoute()}$`,
-      ),
+      url: new RegExp(`${API_HOST}/items\\?parentId|${API_HOST}/items$`),
     },
     ({ body, reply }) => {
       if (shouldThrowError) {
@@ -825,9 +821,27 @@ export const mockImportZip = (shouldThrowError: boolean): void => {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
-      return reply();
+      return reply({ statusCode: StatusCodes.ACCEPTED });
     },
   ).as('importZip');
+};
+
+export const mockImportH5p = (shouldThrowError: boolean): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Post,
+      url: new RegExp(
+        `${API_HOST}/${parseStringToRegExp(buildImportH5PRoute())}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+
+      return reply({ statusCode: StatusCodes.ACCEPTED });
+    },
+  ).as('importH5p');
 };
 
 export const mockDefaultDownloadFile = (

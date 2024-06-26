@@ -3,7 +3,6 @@ import { DiscriminatedItem, ItemType, buildDocumentExtra } from '@graasp/sdk';
 import { DEFAULT_FOLDER_ITEM } from './items';
 import { CURRENT_USER } from './members';
 
-// eslint-disable-next-line import/prefer-default-export
 export const FOLDER_WITH_TWO_DOCUMENTS: DiscriminatedItem[] = [
   {
     ...DEFAULT_FOLDER_ITEM,

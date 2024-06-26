@@ -10,7 +10,7 @@ import { HOME_PATH, ITEMS_PATH } from '../../../../src/config/paths';
 import {
   ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR,
   ACCESSIBLE_ITEMS_ONLY_ME_ID,
-  ITEMS_GRID_NO_ITEM_ID,
+  DROPZONE_HELPER_ID,
   ITEMS_GRID_PAGINATION_ID,
   ITEMS_TABLE_ROW,
   ITEM_SEARCH_INPUT_ID,
@@ -193,8 +193,8 @@ describe('Home', () => {
         const { id: childChildId } = FOLDER_CHILD;
         cy.goToItemInGrid(childChildId);
 
-        // expect no children
-        cy.get(`#${ITEMS_GRID_NO_ITEM_ID}`).should('exist');
+        // expect dropzone
+        cy.get(`#${DROPZONE_HELPER_ID}`).should('exist');
 
         // return parent with navigation and should display children
         cy.wait(NAVIGATION_LOAD_PAUSE);
