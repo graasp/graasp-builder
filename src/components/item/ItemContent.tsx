@@ -50,12 +50,11 @@ import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
 import { OutletType } from '../pages/item/type';
 import { useItemSearch } from './ItemSearch';
+import FileSettings from './settings/FileSettings';
 
 const { useChildren, useFileContentUrl, useEtherpad } = hooks;
 
 const StyledContainer = styled(Container)(() => ({
-  textAlign: 'center',
-  height: '80vh',
   flexGrow: 1,
 }));
 
@@ -72,6 +71,7 @@ const FileContent = ({
   if (fileUrl) {
     return (
       <StyledContainer>
+        <FileSettings item={item} />
         <FileItem
           fileUrl={fileUrl}
           id={buildFileItemId(item.id)}

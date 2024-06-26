@@ -8,9 +8,10 @@ import {
   isNotificationEnabled,
   routines,
 } from '@graasp/query-client';
-import buildI18n, {
+import {
   FAILURE_MESSAGES,
   REQUEST_MESSAGES,
+  buildI18n,
 } from '@graasp/translations';
 
 import axios from 'axios';

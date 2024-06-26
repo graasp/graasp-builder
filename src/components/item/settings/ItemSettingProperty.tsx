@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 type Props = {
   title: string;
@@ -18,8 +18,8 @@ const ItemSettingProperty = ({
   <Stack>
     <Stack direction="row" alignItems="center" justifyContent="space-between">
       <Stack direction="row" alignItems="center" gap={1}>
-        {icon}
-        <Stack direction="column">
+        <Box flexShrink={0}>{icon}</Box>
+        <Stack direction="column" alignItems="flex-start">
           <Typography variant="body1" fontWeight="bold">
             {title}
           </Typography>

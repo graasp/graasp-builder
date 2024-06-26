@@ -70,7 +70,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ag-grid-community/react@npm:^31.3.1":
+"@ag-grid-community/react@npm:^31.3.2":
   version: 31.3.2
   resolution: "@ag-grid-community/react@npm:31.3.2"
   dependencies:
@@ -83,7 +83,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ag-grid-community/styles@npm:31.3.2":
+"@ag-grid-community/styles@npm:31.3.2, @ag-grid-community/styles@npm:^31.3.2":
   version: 31.3.2
   resolution: "@ag-grid-community/styles@npm:31.3.2"
   checksum: 10/b651750803577419e6bbbc45b64d717d64c500332364f4523f84d9d384351f69a7d8eb83bd8343a4ec1530b0db0f26288e91e69516c6ade6e5f7dcf9a7e3078c
@@ -94,13 +94,6 @@ __metadata:
   version: 31.2.0
   resolution: "@ag-grid-community/styles@npm:31.2.0"
   checksum: 10/f2ac0e9dfb046dcf930276725650e1a3bc82c14497e2133adf814034b6d2fbd1d22765e7331aeb7714e7ffbdaf334c628c0b45e9902570df6f776e28e2adb528
-  languageName: node
-  linkType: hard
-
-"@ag-grid-community/styles@npm:^31.3.1":
-  version: 31.3.1
-  resolution: "@ag-grid-community/styles@npm:31.3.1"
-  checksum: 10/34c4e80f62891fe1d8881e233df38ace6ba03eb2934b3015bb8537937164dc2c261479d8d15d5c06e36f2bb84c3b27c7b65aaab773236190729bdfe32ec2c225
   languageName: node
   linkType: hard
 
@@ -1806,12 +1799,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.28.0":
-  version: 1.28.0
-  resolution: "@graasp/translations@npm:1.28.0"
+"@graasp/translations@npm:1.30.3":
+  version: 1.30.3
+  resolution: "@graasp/translations@npm:1.30.3"
   peerDependencies:
     i18next: ^23.8.1
-  checksum: 10/b085ca521f4b65d69ee4154b6d3f96682259acab212605cd221dbe7d3d7867eeeeffac60f1294115849221570cad8a418c576edb8cc405ee6cb031d18e20414b
+  checksum: 10/4b1dce4a5dba01994607337698c9dd57d1c1d2bb82a8bb14b5bc8dc184376255e764891457310d3f030b8ac15fec1cda48cbbb427ba247f8c3fc1f30a96436da
   languageName: node
   linkType: hard
 
@@ -1854,19 +1847,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:4.20.0":
-  version: 4.20.0
-  resolution: "@graasp/ui@npm:4.20.0"
+"@graasp/ui@npm:4.20.1":
+  version: 4.20.1
+  resolution: "@graasp/ui@npm:4.20.1"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.3.2"
-    "@ag-grid-community/react": "npm:^31.3.1"
-    "@ag-grid-community/styles": "npm:^31.3.1"
+    "@ag-grid-community/react": "npm:^31.3.2"
+    "@ag-grid-community/styles": "npm:^31.3.2"
     "@storybook/react-vite": "npm:8.1.10"
     http-status-codes: "npm:2.3.0"
     interweave: "npm:13.1.0"
     katex: "npm:0.16.10"
     lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.395.0"
+    lucide-react: "npm:0.397.0"
     react-cookie-consent: "npm:9.0.0"
     react-dnd: "npm:16.0.1"
     react-dnd-html5-backend: "npm:16.0.1"
@@ -1891,7 +1884,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/2259b603ddffb00187f5684215a9e16e91a192612a84f7807759f385b7121fe198bdb20ae17fc978b1996a0b921dd2381283f22a3a84ad40c3b8a0031efdaf05
+  checksum: 10/7a46bb3f4b0c1db52008e8239ec60feb88fdafe27acc8b8b2d8aa5e5ebc0cb0270ae77f76f15592fd5b0fe1423d638545f545b36cfbf9ca3b3089599ec356228
   languageName: node
   linkType: hard
 
@@ -7805,8 +7798,8 @@ __metadata:
     "@graasp/map": "npm:1.15.0"
     "@graasp/query-client": "npm:3.14.0"
     "@graasp/sdk": "npm:4.15.0"
-    "@graasp/translations": "npm:1.28.0"
-    "@graasp/ui": "npm:4.20.0"
+    "@graasp/translations": "npm:1.30.3"
+    "@graasp/ui": "npm:4.20.1"
     "@mui/icons-material": "npm:5.15.19"
     "@mui/lab": "npm:5.0.0-alpha.170"
     "@mui/material": "npm:5.15.19"
@@ -9549,12 +9542,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:0.395.0":
-  version: 0.395.0
-  resolution: "lucide-react@npm:0.395.0"
+"lucide-react@npm:0.397.0":
+  version: 0.397.0
+  resolution: "lucide-react@npm:0.397.0"
   peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: 10/6ba49ba045b250e2d5de9ce431ac146fab3464f082ddfd6ffc7d1e8ccdd74f5d5d82e3288a1c965dff90fa0353aba116549ffc5349041c068be65cb48dd890e2
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/7b64919d3f25046cd53ed3bfdcf4adf00d54d92a6f2a5d200b0fb70ec74864789e76fbb3c1e58121d2f8dc9b75cbc16a26b3d2dd4d73772516a19399b2e39396
   languageName: node
   linkType: hard
 
