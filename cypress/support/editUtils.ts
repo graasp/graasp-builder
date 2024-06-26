@@ -11,7 +11,6 @@ import {
 import { ItemLayoutMode } from '../../src/enums';
 import { CAPTION_EDIT_PAUSE } from './constants';
 
-// eslint-disable-next-line import/prefer-default-export
 // bug: use string for type to fit usage
 export const editItem = (
   payload: {

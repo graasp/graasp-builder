@@ -6,7 +6,6 @@ import {
   getS3FileExtra,
 } from '@graasp/sdk';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getExtraFromPartial = (
   testItem: Partial<DiscriminatedItem>,
 ): Partial<FileItemProperties> => {

@@ -2,11 +2,10 @@ import { useParams } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { MAX_ZIP_FILE_SIZE } from '@graasp/sdk';
+import { MAX_ZIP_FILE_SIZE, formatFileSize } from '@graasp/sdk';
 import { UploadFileButton } from '@graasp/ui';
 
 import { mutations } from '@/config/queryClient';
-import { humanFileSize } from '@/utils/file';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { H5P_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
@@ -37,7 +36,7 @@ const ImportH5P = ({
       </Typography>
       <Typography variant="body1" paragraph>
         {translateBuilder(BUILDER.IMPORT_H5P_LIMITATIONS_TEXT, {
-          maxSize: humanFileSize(MAX_ZIP_FILE_SIZE),
+          maxSize: formatFileSize(MAX_ZIP_FILE_SIZE),
         })}
       </Typography>
       <UploadFileButton

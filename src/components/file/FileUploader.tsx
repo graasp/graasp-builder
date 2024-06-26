@@ -42,8 +42,9 @@ const FileUploader = ({
   // trigger n success toast
   const onDrop = async (files: File[]): Promise<void> => {
     // update progress callback function scaled over the number of files sent
-    const updateForManyFiles = (e: AxiosProgressEvent) => {
-      const progress = totalProgress + (e.progress ?? 0) / files.length;
+    const updateForManyFiles = (idx: number) => (e: AxiosProgressEvent) => {
+      // suppose previous files are completely uploaded
+      const progress = ((e.progress ?? 0) + idx) / files.length;
       setTotalProgress(progress);
       onUpdate?.({ ...e, progress });
     };
@@ -66,13 +67,13 @@ const FileUploader = ({
     onStart?.();
 
     // eslint-disable-next-line no-restricted-syntax
-    for (const f of files) {
+    for (let idx = 0; idx < files.length; idx += 1) {
       try {
         // eslint-disable-next-line no-await-in-loop
         await uploadFiles({
-          files: [f],
+          files: [files[idx]],
           id: parentItemId,
-          onUploadProgress: updateForManyFiles,
+          onUploadProgress: updateForManyFiles(idx),
         });
       } catch (e) {
         onError?.(e as Error);
@@ -91,7 +92,8 @@ const FileUploader = ({
             onDrop([...e.target.files]);
           }
         }}
-        loading={isLoading && Math.ceil(totalProgress * 100)}
+        isLoading={isLoading}
+        uploadProgress={Math.ceil(totalProgress * 100)}
         multiple
         onDrop={onDrop}
         error={error}

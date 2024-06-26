@@ -1,11 +1,11 @@
 import { useRef } from 'react';
 import { Id, toast } from 'react-toastify';
 
-import { AxiosProgressEvent } from 'axios';
+import type { AxiosProgressEvent } from 'axios';
 
 import { useBuilderTranslation } from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
 
-// eslint-disable-next-line import/prefer-default-export
 export const useUploadWithProgress = (): {
   update: (p: AxiosProgressEvent) => void;
   close: () => void;
@@ -18,13 +18,17 @@ export const useUploadWithProgress = (): {
   const toastId = useRef<Id | null>(null);
 
   const show = (progress = 0) => {
-    toastId.current = toast.info(translateBuilder('Uploading...'), {
-      progress,
-      position: 'bottom-left',
-    });
+    toastId.current = toast.info(
+      translateBuilder(BUILDER.UPLOAD_NOTIFICATION_LOADING),
+      {
+        progress,
+        position: 'bottom-left',
+      },
+    );
   };
 
-  const update = ({ progress }: AxiosProgressEvent) => {
+  const update = (e: AxiosProgressEvent) => {
+    const { progress } = e;
     // check if we already displayed a toast
     if (toastId.current === null && progress && progress < 1) {
       show(progress);
@@ -37,10 +41,18 @@ export const useUploadWithProgress = (): {
   const close = () => {
     if (toastId.current) {
       toast.done(toastId.current);
+      // does not work correctly in chrome, workaround solution to close the notification
+      toast.update(toastId.current, {
+        type: 'success',
+        render: translateBuilder(BUILDER.UPLOAD_NOTIFICATION_COMPLETE),
+        autoClose: 1000,
+        progress: null,
+      });
       toastId.current = null;
     }
   };
   const closeAndShowError = (e: Error) => {
+    close();
     toast.error(e.message);
     if (toastId.current) {
       toastId.current = null;

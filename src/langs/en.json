@@ -438,5 +438,7 @@
   "DEBOUNCED_TEXTFIELD_EMPTY_ERROR": "The value can't be empty",
   "CANNOT_UPLOAD_MORE_FILES": "Cannot upload more than {{count}} files at a time",
   "UPLOADING": "Uploading...",
-  "IMPORT_ZIP_BUTTON": "Import a ZIP archive"
+  "IMPORT_ZIP_BUTTON": "Import a ZIP archive",
+  "UPLOAD_NOTIFICATION_LOADING": "Uploading...",
+  "UPLOAD_NOTIFICATION_COMPLETE": "Upload complete!"
 }

@@ -1751,9 +1751,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#upload-files":
-  version: 3.13.3
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=c4e2888aac89d24798dfd43508bda57844f7bc59"
+"@graasp/query-client@npm:3.14.0":
+  version: 3.14.0
+  resolution: "@graasp/query-client@npm:3.14.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1764,7 +1764,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/541d211a12aa998a73acf16649c33ea0864103c94684795000c3105cab0eb3d1bbca67bdbfbd8d52de0cfdb2b1aefcfebcdfb7a7f88a6435f3e3e98daffc76cd
+  checksum: 10/2d47d8de6092572ccc525e54b6d78a7d34095e1da6e44de60a126e13c48b604040e24a372f858583f1cc30a0387992474d3dbb917bead4423cd14df98b26e556
   languageName: node
   linkType: hard
 
@@ -1815,47 +1815,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui#file-uploader":
-  version: 4.19.3
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=255a5502c7b9bb4af3fbbb88aacef547c9f9d238"
-  dependencies:
-    "@ag-grid-community/client-side-row-model": "npm:31.3.2"
-    "@ag-grid-community/react": "npm:^31.3.1"
-    "@ag-grid-community/styles": "npm:^31.3.1"
-    "@storybook/react-vite": "npm:8.1.10"
-    http-status-codes: "npm:2.3.0"
-    interweave: "npm:13.1.0"
-    katex: "npm:0.16.10"
-    lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.395.0"
-    react-cookie-consent: "npm:9.0.0"
-    react-dnd: "npm:16.0.1"
-    react-dnd-html5-backend: "npm:16.0.1"
-    react-quill: "npm:2.0.0"
-    react-rnd: "npm:10.4.11"
-    react-text-mask: "npm:5.5.0"
-    uuid: "npm:10.0.0"
-    vitest: "npm:1.6.0"
-  peerDependencies:
-    "@emotion/cache": ~11.10.7 || ~11.11.0
-    "@emotion/react": ~11.10.6 || ~11.11.0
-    "@emotion/styled": ~11.10.6 || ~11.11.0
-    "@graasp/sdk": ^4.14.0
-    "@graasp/translations": ^1.23.0
-    "@mui/icons-material": ~5.14.0 || ~5.15.0
-    "@mui/lab": ~5.0.0-alpha.150
-    "@mui/material": ~5.14.0 || ~5.15.0
-    i18next: ^22.4.15 || ^23.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    react-i18next: ^13.0.0 || ^14.0.0
-    react-router-dom: ^6.11.0
-    stylis: ^4.1.3
-    stylis-plugin-rtl: ^2.1.1
-  checksum: 10/47bed5b82ff59704c04782b2d78cc5eb1818f3eb57052500d9112b477d672748689ecb9bd5f4f4a903dc25b0e7bea7a27d029754c856e44dbe9613bea9d8928d
-  languageName: node
-  linkType: hard
-
 "@graasp/ui@npm:4.17.1":
   version: 4.17.1
   resolution: "@graasp/ui@npm:4.17.1"
@@ -1892,6 +1851,47 @@ __metadata:
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
   checksum: 10/99be0678ea73a84fa6e2175f3aa61eb5c9dd8025bde4e7012706c26d73a14dfe584977e48b2487944002badb5d2888ae7aea9126ae7713e207fcc648502eb522
+  languageName: node
+  linkType: hard
+
+"@graasp/ui@npm:4.20.0":
+  version: 4.20.0
+  resolution: "@graasp/ui@npm:4.20.0"
+  dependencies:
+    "@ag-grid-community/client-side-row-model": "npm:31.3.2"
+    "@ag-grid-community/react": "npm:^31.3.1"
+    "@ag-grid-community/styles": "npm:^31.3.1"
+    "@storybook/react-vite": "npm:8.1.10"
+    http-status-codes: "npm:2.3.0"
+    interweave: "npm:13.1.0"
+    katex: "npm:0.16.10"
+    lodash.truncate: "npm:4.4.2"
+    lucide-react: "npm:0.395.0"
+    react-cookie-consent: "npm:9.0.0"
+    react-dnd: "npm:16.0.1"
+    react-dnd-html5-backend: "npm:16.0.1"
+    react-quill: "npm:2.0.0"
+    react-rnd: "npm:10.4.11"
+    react-text-mask: "npm:5.5.0"
+    uuid: "npm:10.0.0"
+    vitest: "npm:1.6.0"
+  peerDependencies:
+    "@emotion/cache": ~11.10.7 || ~11.11.0
+    "@emotion/react": ~11.10.6 || ~11.11.0
+    "@emotion/styled": ~11.10.6 || ~11.11.0
+    "@graasp/sdk": ^4.14.0
+    "@graasp/translations": ^1.23.0
+    "@mui/icons-material": ~5.14.0 || ~5.15.0
+    "@mui/lab": ~5.0.0-alpha.150
+    "@mui/material": ~5.14.0 || ~5.15.0
+    i18next: ^22.4.15 || ^23.0.0
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    react-i18next: ^13.0.0 || ^14.0.0
+    react-router-dom: ^6.11.0
+    stylis: ^4.1.3
+    stylis-plugin-rtl: ^2.1.1
+  checksum: 10/2259b603ddffb00187f5684215a9e16e91a192612a84f7807759f385b7121fe198bdb20ae17fc978b1996a0b921dd2381283f22a3a84ad40c3b8a0031efdaf05
   languageName: node
   linkType: hard
 
@@ -7803,10 +7803,10 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.15.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#upload-files"
+    "@graasp/query-client": "npm:3.14.0"
     "@graasp/sdk": "npm:4.14.0"
     "@graasp/translations": "npm:1.28.0"
-    "@graasp/ui": "github:graasp/graasp-ui#file-uploader"
+    "@graasp/ui": "npm:4.20.0"
     "@mui/icons-material": "npm:5.15.19"
     "@mui/lab": "npm:5.0.0-alpha.170"
     "@mui/material": "npm:5.15.19"
