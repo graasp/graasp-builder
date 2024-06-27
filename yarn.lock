@@ -1768,9 +1768,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.14.0":
-  version: 4.14.0
-  resolution: "@graasp/sdk@npm:4.14.0"
+"@graasp/sdk@npm:4.15.0":
+  version: 4.15.0
+  resolution: "@graasp/sdk@npm:4.15.0"
   dependencies:
     "@faker-js/faker": "npm:8.4.1"
     filesize: "npm:10.1.2"
@@ -1779,7 +1779,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3
     uuid: ^9 || ^10.0.0
-  checksum: 10/899b1003f605e944a00d306e7c0d1f9329e7d4cdf8f13ea2f731130ec16ab14e648ee2d884fbc1baa12ea167bd26f7e974b69031484cc243c615578cf69a74ea
+  checksum: 10/02bd822171627b980804d702ac772635ba7288e10da9f8e2cce47893b79c663c410c51e3152e527151449c20f902b08e518a0aac420e059b027e387fb0b6f9e4
   languageName: node
   linkType: hard
 
@@ -7804,7 +7804,7 @@ __metadata:
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.15.0"
     "@graasp/query-client": "npm:3.14.0"
-    "@graasp/sdk": "npm:4.14.0"
+    "@graasp/sdk": "npm:4.15.0"
     "@graasp/translations": "npm:1.28.0"
     "@graasp/ui": "npm:4.20.0"
     "@mui/icons-material": "npm:5.15.19"

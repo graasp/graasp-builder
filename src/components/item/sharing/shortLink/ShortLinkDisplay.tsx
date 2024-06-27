@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Link, Stack, styled } from '@mui/material';
 
-import { ShortLinkPayload } from '@graasp/sdk';
+import { ShortLink, ShortLinkPayload } from '@graasp/sdk';
 import { AccentColors } from '@graasp/ui';
 
 import {
@@ -16,7 +16,6 @@ import {
   buildShortLinkPlatformTextId,
   buildShortLinkUrlTextId,
 } from '@/config/selectors';
-import { ShortLinkPlatform } from '@/utils/shortLink';
 
 import ConfirmDeleteLink from './ConfirmDeleteLink';
 import PlatformIcon from './PlatformIcon';
@@ -30,7 +29,7 @@ type Props = {
   isShorten: boolean;
   canAdminShortLink: boolean;
   onUpdate: () => void;
-  onCreate: (platform: ShortLinkPlatform) => void;
+  onCreate: (platform: ShortLink['platform']) => void;
 };
 
 const StyledBox = styled(Stack)(({ theme }) => ({
@@ -54,7 +53,7 @@ const StyledText = styled('p')(({ color = 'auto' }) => ({
   textTransform: 'capitalize',
 }));
 
-const ShortLink = ({
+const ShortLinkDisplay = ({
   url,
   shortLink,
   isShorten,
@@ -139,4 +138,4 @@ const ShortLink = ({
   );
 };
 
-export default ShortLink;
+export default ShortLinkDisplay;
