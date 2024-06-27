@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Skeleton, Stack, Typography } from '@mui/material';
 
-// import { Map } from '@graasp/map';
+import { Map } from '@graasp/map';
 import { type DiscriminatedItem, ItemGeolocation } from '@graasp/sdk';
 import { useMobileView } from '@graasp/ui';
 
@@ -124,7 +124,7 @@ const MapView = ({
               id={buildMapViewId(parentId)}
               style={{ width: '100%', height: '100%' }}
             >
-              {/* <Map
+              <Map
                 currentPosition={currentPosition}
                 useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
                 usePostItem={mutations.usePostItem}
@@ -139,7 +139,7 @@ const MapView = ({
                 // use builder modal to add new item if the screen is big enough
                 // todo: always use builder modal when it is responsive
                 handleAddOnClick={isMobile ? undefined : handleAddOnClick}
-              /> */}
+              />
             </div>
           )}
         </Stack>

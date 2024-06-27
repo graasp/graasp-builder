@@ -37,7 +37,7 @@ export const useSorting = ({
   setOrdering: Dispatch<'asc' | 'desc'>;
   sortFn: (a: PackedItem, b: PackedItem) => number;
 } => {
-  const [sortBy, setSortBy] = useState<SortingOptions>(s);
+  const [sortBy, setSortBy] = useState<SortingOptions | undefined>(s);
   const [ordering, setOrdering] = useState<'asc' | 'desc'>(o);
 
   const sortFn = (a: PackedItem, b: PackedItem) => {
@@ -116,8 +116,6 @@ const ItemsTable = ({
   const onDropInRow = (movedItem: PackedItem | any, targetItem: PackedItem) => {
     // upload files in item
     if (movedItem.files) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       uploadItems({
         files: movedItem.files,
         id: targetItem.id,

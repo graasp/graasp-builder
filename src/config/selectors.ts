@@ -1,6 +1,6 @@
 // todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
-import { DescriptionPlacementType } from '@graasp/sdk';
+import { DescriptionPlacementType, ShortLink } from '@graasp/sdk';
 
 import { PublicationStatus } from '@/types/publication';
 
@@ -364,12 +364,14 @@ export const buildShortLinkEditBtnId = (alias: string): string =>
   `shortLinkEditBtn-${alias}`;
 export const buildShortLinkShortenBtnId = (
   itemId: string,
-  platform: string,
+  platform: ShortLink['platform'],
 ): string => `${SHORT_LINK_SHORTEN_START_ID}-${platform}-${itemId}`;
-export const buildShortLinkPlatformTextId = (platform: string): string =>
-  `shortLinkPlatformText-${platform}`;
-export const buildShortLinkUrlTextId = (platform: string): string =>
-  `shortLinkUrlText-${platform}`;
+export const buildShortLinkPlatformTextId = (
+  platform: ShortLink['platform'],
+): string => `shortLinkPlatformText-${platform}`;
+export const buildShortLinkUrlTextId = (
+  platform: ShortLink['platform'],
+): string => `shortLinkUrlText-${platform}`;
 export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;

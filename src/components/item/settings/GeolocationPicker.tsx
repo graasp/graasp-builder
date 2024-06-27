@@ -1,10 +1,10 @@
 import Clear from '@mui/icons-material/Clear';
 import { Box, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 
-// import {
-//   type GeolocationPickerProps,
-//   GeolocationPicker as MapGeolocationPicker,
-// } from '@graasp/map';
+import {
+  type GeolocationPickerProps,
+  GeolocationPicker as MapGeolocationPicker,
+} from '@graasp/map';
 import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -60,12 +60,12 @@ const GeolocationPicker = ({
         </Typography>
       </Box>
       <Stack direction="row" alignItems="center">
-        {/* <MapGeolocationPicker
+        <MapGeolocationPicker
           onChangeOption={onChangeOption}
           initialValue={geoloc?.addressLabel ?? undefined}
           useSuggestionsForAddress={hooks.useSuggestionsForAddress}
           disabled={isDisabled}
-        /> */}
+        />
         {/* show clear only if not disabled */}
         {!isDisabled && (
           <Tooltip title={t(BUILDER.ITEM_SETTINGS_GEOLOCATION_CLEAR)}>
