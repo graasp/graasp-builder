@@ -1,12 +1,10 @@
-import { Context } from '@graasp/sdk';
+import { Context, ShortLink } from '@graasp/sdk';
 import { BuildIcon, GraaspLogo, LibraryIcon, PlayIcon } from '@graasp/ui';
-
-import { ShortLinkPlatform } from '@/utils/shortLink';
 
 const DEFAULT_ICON_SIZE = 25;
 
 type Props = {
-  platform: ShortLinkPlatform;
+  platform: ShortLink['platform'];
   accentColor: string;
   size?: number;
 };

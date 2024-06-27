@@ -1,11 +1,11 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-import { Context, ItemPublished } from '@graasp/sdk';
+import { Context, ItemPublished, ShortLink } from '@graasp/sdk';
 
 import { useEnumsTranslation } from '@/config/i18n';
 import { SHORT_LINK_PLATFORM_SELECT_ID } from '@/config/selectors';
-import { ShortLinkPlatform } from '@/utils/shortLink';
 
+type ShortLinkPlatform = ShortLink['platform'];
 type Props = {
   platform: ShortLinkPlatform;
   publishedEntry?: ItemPublished;

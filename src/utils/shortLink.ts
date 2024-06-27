@@ -1,5 +1,3 @@
-import { ShortLinkPlatform as ShortLinkPlatformConst } from '@graasp/sdk';
-
 import { BUILDER } from '@/langs/constants';
 
 export const MIN_SHORT_LINK_LENGTH = 6;
@@ -82,7 +80,3 @@ export function isValidAlias(alias: string): InvalidAliasCause {
     isValid: true,
   };
 }
-
-export type ShortLinkPlatform = keyof typeof ShortLinkPlatformConst;
-export type ShortLinkPlatformType =
-  (typeof ShortLinkPlatformConst)[keyof typeof ShortLinkPlatformConst];

@@ -3,7 +3,6 @@
 import { DescriptionPlacementType } from '@graasp/sdk';
 
 import { PublicationStatus } from '@/types/publication';
-import { ShortLinkPlatform } from '@/utils/shortLink';
 
 export const SHARED_ITEMS_ROOT_CONTAINER = 'sharedItemsPageRootContainer';
 export const RECYCLED_ITEMS_ROOT_CONTAINER = 'recycledItemsPageRootContainer';
@@ -365,12 +364,11 @@ export const buildShortLinkEditBtnId = (alias: string): string =>
   `shortLinkEditBtn-${alias}`;
 export const buildShortLinkShortenBtnId = (
   itemId: string,
-  platform: ShortLinkPlatform,
+  platform: string,
 ): string => `${SHORT_LINK_SHORTEN_START_ID}-${platform}-${itemId}`;
-export const buildShortLinkPlatformTextId = (
-  platform: ShortLinkPlatform,
-): string => `shortLinkPlatformText-${platform}`;
-export const buildShortLinkUrlTextId = (platform: ShortLinkPlatform): string =>
+export const buildShortLinkPlatformTextId = (platform: string): string =>
+  `shortLinkPlatformText-${platform}`;
+export const buildShortLinkUrlTextId = (platform: string): string =>
   `shortLinkUrlText-${platform}`;
 export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';

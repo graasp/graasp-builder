@@ -2,7 +2,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import { LoadingButton } from '@mui/lab';
 import { Alert, Button } from '@mui/material';
 
-import { ClientHostManager, PackedItem, ShortLinkPlatform } from '@graasp/sdk';
+import { ClientHostManager, Context, PackedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
@@ -29,7 +29,7 @@ export const PublishedButton = ({ item, isLoading }: Props): JSX.Element => {
 
   const getLibraryLink = () => {
     const clientHostManager = ClientHostManager.getInstance();
-    return clientHostManager.getItemLink(ShortLinkPlatform.library, itemId);
+    return clientHostManager.getItemLink(Context.Library, itemId);
   };
 
   const description = (

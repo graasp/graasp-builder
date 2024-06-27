@@ -1,7 +1,6 @@
 import { Context, ShortLink, appendPathToUrl } from '@graasp/sdk';
 
 import { buildItemPath, buildItemSharePath } from '@/config/paths';
-import { ShortLinkPlatform } from '@/utils/shortLink';
 
 import {
   SHARE_ITEM_QR_BTN_ID,
@@ -18,6 +17,8 @@ import {
   buildGraaspLibraryLink,
   buildGraaspPlayerView,
 } from '../../../support/paths';
+
+type ShortLinkPlatform = ShortLink['platform'];
 
 export const checkContainPlatformText = (platform: ShortLinkPlatform): void => {
   cy.get(`#${buildShortLinkPlatformTextId(platform)}`).should(

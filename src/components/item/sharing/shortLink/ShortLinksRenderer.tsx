@@ -5,20 +5,22 @@ import { Box, Dialog, Stack } from '@mui/material';
 import {
   ClientHostManager,
   Context,
-  ShortLinkPlatform as ShortLinkPlatformConst,
+  ShortLink,
   appendPathToUrl,
 } from '@graasp/sdk';
 
 import { useLayoutContext } from '@/components/context/LayoutContext';
 import { GRAASP_REDIRECTION_HOST } from '@/config/env';
 import { hooks } from '@/config/queryClient';
-import { ShortLinkPlatform, randomAlias } from '@/utils/shortLink';
+import { randomAlias } from '@/utils/shortLink';
 
-import ShortLink from './ShortLink';
 import ShortLinkDialogContent from './ShortLinkDialogContent';
+import ShortLinkDisplay from './ShortLinkDisplay';
 import ShortLinkSkeleton from './ShortLinkSkeleton';
 
 const { useShortLinksItem, useItemPublishedInformation } = hooks;
+
+type ShortLinkPlatform = ShortLink['platform'];
 
 type Props = {
   itemId: string;
@@ -48,14 +50,14 @@ const ShortLinksRenderer = ({
 
   // List of available platforms, the order matters
   const platforms = [
-    ShortLinkPlatformConst.builder,
-    ShortLinkPlatformConst.player,
-    ShortLinkPlatformConst.library,
+    Context.Builder as const,
+    Context.Player as const,
+    Context.Library as const,
   ];
 
   const shortLinks: ShortLinkType[] = platforms
     .map<ShortLinkType | undefined>((platform) => {
-      if (!publishedEntry && platform === ShortLinkPlatformConst.library) {
+      if (!publishedEntry && platform === Context.Library) {
         return undefined;
       }
       const clientHostManager = ClientHostManager.getInstance();
@@ -131,7 +133,7 @@ const ShortLinksRenderer = ({
         <Stack alignItems="center" justifyContent="center">
           <Box width={{ xs: '100%', sm: '80%' }}>
             {shortLinks.map((shortLink) => (
-              <ShortLink
+              <ShortLinkDisplay
                 key={shortLink.platform}
                 url={`${shortLink.url}`}
                 shortLink={{

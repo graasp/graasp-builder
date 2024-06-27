@@ -15,7 +15,7 @@ import {
   Tooltip,
 } from '@mui/material';
 
-import { ShortLinkPayload } from '@graasp/sdk';
+import { ShortLink, ShortLinkPayload } from '@graasp/sdk';
 import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from '@graasp/translations';
 
 import QRCode from '@/components/common/QRCode';
@@ -30,14 +30,13 @@ import {
 import { BUILDER } from '@/langs/constants';
 import { COPY_ITEM_LINK_TO_CLIPBOARD } from '@/types/clipboard';
 import { copyToClipboard } from '@/utils/clipboard';
-import { ShortLinkPlatform } from '@/utils/shortLink';
 
 type Props = {
   shortLink: ShortLinkPayload;
   url: string;
   isShorten: boolean;
   canAdminShortLink: boolean;
-  onCreate: (platform: ShortLinkPlatform) => void;
+  onCreate: (platform: ShortLink['platform']) => void;
   onUpdate: () => void;
   onDelete: () => void;
 };

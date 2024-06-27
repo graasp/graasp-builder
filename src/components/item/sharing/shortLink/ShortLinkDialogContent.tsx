@@ -8,6 +8,8 @@ import {
   Stack,
 } from '@mui/material';
 
+import { ShortLink } from '@graasp/sdk';
+
 import CancelButton from '@/components/common/CancelButton';
 import { SHORT_LINK_API_CALL_DEBOUNCE_MS } from '@/config/constants';
 import { useBuilderTranslation } from '@/config/i18n';
@@ -17,7 +19,6 @@ import {
   buildShortLinkCancelBtnId,
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
-import { ShortLinkPlatform } from '@/utils/shortLink';
 import { useDebouncedCallback } from '@/utils/useDebounce';
 
 import AliasInput from './AliasInput';
@@ -29,7 +30,7 @@ const { useShortLinkAvailable } = hooks;
 type Props = {
   itemId: string;
   initialAlias: string;
-  initialPlatform: ShortLinkPlatform;
+  initialPlatform: ShortLink['platform'];
   isNew: boolean;
   handleClose: () => void;
 };
