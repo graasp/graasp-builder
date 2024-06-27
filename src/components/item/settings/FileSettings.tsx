@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 
 import {
+  Alignment,
   AlignmentType,
   DEFAULT_FILE_ALIGNMENT_SETTING,
   DEFAULT_FILE_MAX_WIDTH_SETTING,
@@ -119,16 +120,33 @@ const FileSettings = ({
               value={alignment}
               exclusive
               onChange={onChangeAlignment}
-              aria-label="text alignment"
+              aria-label={translateBuilder(
+                BUILDER.SETTINGS_ALIGNMENT_ARIA_LABEL,
+              )}
               size="small"
             >
-              <ToggleButton value="left" aria-label="left aligned">
+              <ToggleButton
+                value={Alignment.Left}
+                aria-label={translateBuilder(
+                  BUILDER.SETTINGS_ALIGNMENT_LEFT_ARIA_LABEL,
+                )}
+              >
                 <AlignLeftIcon />
               </ToggleButton>
-              <ToggleButton value="center" aria-label="centered">
+              <ToggleButton
+                value={Alignment.Center}
+                aria-label={translateBuilder(
+                  BUILDER.SETTINGS_ALIGNMENT_CENTER_ARIA_LABEL,
+                )}
+              >
                 <AlignCenterIcon />
               </ToggleButton>
-              <ToggleButton value="right" aria-label="right aligned">
+              <ToggleButton
+                value={Alignment.Right}
+                aria-label={translateBuilder(
+                  BUILDER.SETTINGS_ALIGNMENT_RIGHT_ARIA_LABEL,
+                )}
+              >
                 <AlignRightIcon />
               </ToggleButton>
             </StyledToggleButtonGroup>
