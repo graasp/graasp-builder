@@ -1,4 +1,5 @@
 import {
+  DEFAULT_FILE_MAX_WIDTH_SETTING,
   DescriptionPlacement,
   ItemType,
   MaxWidth,
@@ -400,7 +401,7 @@ describe('Item Settings', () => {
         // default value
         cy.get(`#${FILE_SETTING_MAX_WIDTH_ID} + input`).should(
           'have.value',
-          MaxWidth.ExtraLarge,
+          DEFAULT_FILE_MAX_WIDTH_SETTING,
         );
 
         const newMaxWidth = MaxWidth.Small;
