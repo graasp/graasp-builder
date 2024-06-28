@@ -21,9 +21,11 @@ import {
 import { BUILDER } from '@/langs/constants';
 
 import DescriptionPlacementForm from '../form/DescriptionPlacementForm';
-import FileSettings from './FileSettings';
 import ItemSettingCheckBoxProperty from './ItemSettingCheckBoxProperty';
 import LinkSettings from './LinkSettings';
+import FileAlignmentSetting from './file/FileAlignmentSetting';
+import FileMaxWidthSetting from './file/FileMaxWidthSetting';
+import { SettingVariant } from './settingTypes';
 
 type Props = {
   item: DiscriminatedItem;
@@ -64,7 +66,13 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
         return <LinkSettings item={item} />;
       case ItemType.S3_FILE:
       case ItemType.LOCAL_FILE:
-        return <FileSettings item={item} />;
+        return (
+          <>
+            <FileMaxWidthSetting item={item} variant={SettingVariant.List} />
+            <FileAlignmentSetting item={item} variant={SettingVariant.List} />
+          </>
+        );
+
       case ItemType.APP:
         return (
           <ItemSettingCheckBoxProperty

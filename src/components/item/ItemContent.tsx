@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 
-import { Container, Skeleton, styled } from '@mui/material';
+import { Container, Skeleton, Stack, styled } from '@mui/material';
 
 import { Api } from '@graasp/query-client';
 import {
@@ -50,7 +50,9 @@ import Items from '../main/Items';
 import NewItemButton from '../main/NewItemButton';
 import { OutletType } from '../pages/item/type';
 import { useItemSearch } from './ItemSearch';
-import FileSettings from './settings/FileSettings';
+import FileAlignmentSetting from './settings/file/FileAlignmentSetting';
+import FileMaxWidthSetting from './settings/file/FileMaxWidthSetting';
+import { SettingVariant } from './settings/settingTypes';
 
 const { useChildren, useFileContentUrl, useEtherpad } = hooks;
 
@@ -71,13 +73,18 @@ const FileContent = ({
   if (fileUrl) {
     return (
       <StyledContainer>
-        <FileSettings item={item} />
-        <FileItem
-          fileUrl={fileUrl}
-          id={buildFileItemId(item.id)}
-          item={item}
-          pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
-        />
+        <Stack direction="column" alignItems="center" gap={2} width="100%">
+          <Stack direction="row" gap={1}>
+            <FileMaxWidthSetting item={item} variant={SettingVariant.Button} />
+            <FileAlignmentSetting item={item} variant={SettingVariant.Button} />
+          </Stack>
+          <FileItem
+            fileUrl={fileUrl}
+            id={buildFileItemId(item.id)}
+            item={item}
+            pdfViewerLink={buildPdfViewerLink(GRAASP_ASSETS_URL)}
+          />
+        </Stack>
       </StyledContainer>
     );
   }
