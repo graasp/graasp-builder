@@ -399,14 +399,14 @@ describe('Item Settings', () => {
         cy.visit(buildItemSettingsPath(itemId));
 
         // default value
-        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID} + input`).should(
+        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).should(
           'have.value',
           DEFAULT_FILE_MAX_WIDTH_SETTING,
         );
 
         const newMaxWidth = MaxWidth.Small;
-        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).click();
-        cy.get(`[role="option"][data-value="${newMaxWidth}"]`).click();
+        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).select(newMaxWidth);
+        // cy.get(`[role="option"][data-value="${newMaxWidth}"]`).click();
 
         cy.wait('@editItem').then(
           ({
@@ -441,7 +441,7 @@ describe('Item Settings', () => {
 
         cy.visit(buildItemSettingsPath(itemId));
 
-        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID} + input`).should(
+        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).should(
           'have.value',
           FILE.settings.maxWidth,
         );

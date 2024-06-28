@@ -29,7 +29,7 @@ const StyledSelect = styled('select')(({ theme }) => ({
   fontSize: 'inherit',
   lineHeight: 'inherit',
 
-  width: '100%',
+  // width: '100%',
   minWidth: '15ch',
   maxWidth: 'min-content',
   height: theme.spacing(6),
