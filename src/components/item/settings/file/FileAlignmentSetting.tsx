@@ -11,7 +11,6 @@ import {
 import {
   Alignment,
   AlignmentType,
-  DEFAULT_FILE_ALIGNMENT_SETTING,
   LocalFileItemType,
   S3FileItemType,
 } from '@graasp/sdk';
@@ -78,7 +77,7 @@ export const FileAlignmentSetting = ({
     }
   };
 
-  const alignment = item.settings.alignment ?? DEFAULT_FILE_ALIGNMENT_SETTING;
+  const { alignment } = item.settings;
   const control = (
     <StyledPaper elevation={0}>
       <StyledToggleButtonGroup

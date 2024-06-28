@@ -2,12 +2,7 @@ import { ChangeEvent } from 'react';
 
 import { styled } from '@mui/material';
 
-import {
-  DEFAULT_FILE_MAX_WIDTH_SETTING,
-  LocalFileItemType,
-  MaxWidth,
-  S3FileItemType,
-} from '@graasp/sdk';
+import { LocalFileItemType, MaxWidth, S3FileItemType } from '@graasp/sdk';
 
 import { ExpandIcon } from 'lucide-react';
 
@@ -51,7 +46,7 @@ export const FileMaxWidthSetting = ({
 
   const { mutate: editItem } = mutations.useEditItem();
 
-  const maxWidth = item.settings.maxWidth ?? DEFAULT_FILE_MAX_WIDTH_SETTING;
+  const { maxWidth } = item.settings;
 
   const onChangeMaxWidth = (e: ChangeEvent<HTMLSelectElement>) => {
     editItem({
@@ -66,6 +61,10 @@ export const FileMaxWidthSetting = ({
       onChange={onChangeMaxWidth}
       value={maxWidth}
     >
+      {/* option used when the maxWidth is not set */}
+      <option value={undefined} hidden>
+        {translateEnum('default')}
+      </option>
       {Object.values(MaxWidth).map((s) => (
         <option value={s}>{translateEnum(s)}</option>
       ))}
