@@ -1,5 +1,4 @@
 import {
-  DEFAULT_FILE_MAX_WIDTH_SETTING,
   DescriptionPlacement,
   ItemType,
   MaxWidth,
@@ -399,10 +398,7 @@ describe('Item Settings', () => {
         cy.visit(buildItemSettingsPath(itemId));
 
         // default value
-        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).should(
-          'have.value',
-          DEFAULT_FILE_MAX_WIDTH_SETTING,
-        );
+        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).should('have.value', 'default');
 
         const newMaxWidth = MaxWidth.Small;
         cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).select(newMaxWidth);
@@ -433,7 +429,7 @@ describe('Item Settings', () => {
             },
           },
           settings: {
-            maxWidth: MaxWidth.ExtraLarge,
+            maxWidth: MaxWidth.Large,
           },
         });
         cy.setUpApi({ items: [FILE] });
