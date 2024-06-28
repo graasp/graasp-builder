@@ -69,10 +69,6 @@ const ItemHeaderActions = (): JSX.Element => {
           <MenuButton
             renderMenuItems={ItemMenuContent({
               item,
-              // TODO
-              canWrite: showEditButton,
-              canAdmin,
-              canMove: false,
             })}
           />
         </>

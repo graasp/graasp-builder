@@ -83,7 +83,7 @@ const FileUploader = ({
   };
 
   return (
-    <Box width="100%" id={id}>
+    <Box width="100%" id={id} height="100%">
       <FileDropper
         message={t(BUILDER.DROPZONE_HELPER_TEXT)}
         onChange={(e) => {

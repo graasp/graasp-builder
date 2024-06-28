@@ -13,16 +13,11 @@ import {
 
 import { ArrowDownNarrowWide, ArrowUpWideNarrow } from 'lucide-react';
 
-import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
+import { useBuilderTranslation } from '@/config/i18n';
+import { Ordering } from '@/enums';
 import { BUILDER } from '@/langs/constants';
 
-// corresponds to the value that should be sent in the request
-export enum SortingOptions {
-  ItemName = 'item.name',
-  ItemType = 'item.type',
-  ItemCreator = 'item.creator.name',
-  ItemUpdatedAt = 'item.updated_at',
-}
+import { AllSortingOptions, SortingOptions } from './useSorting';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -36,33 +31,28 @@ const MenuProps = {
 
 const LABEL_ID = 'sort-by-filter-label';
 
-// TODO: desc asc
-
-export type SortingSelectProps = {
-  sortBy: SortingOptions;
-  setSortBy: Dispatch<SortingOptions>;
-  ordering: 'asc' | 'desc';
-  setOrdering: Dispatch<'asc' | 'desc'>;
+export type SortingSelectProps<T extends AllSortingOptions = SortingOptions> = {
+  sortBy: T;
+  setSortBy: Dispatch<T>;
+  ordering: Ordering;
+  setOrdering: Dispatch<Ordering>;
+  options: T[];
 };
 
-export const SortingSelect = ({
-  sortBy = SortingOptions.ItemUpdatedAt,
+export const SortingSelect = <T extends AllSortingOptions = SortingOptions>({
+  sortBy,
   setSortBy,
   ordering,
   setOrdering,
-}: SortingSelectProps): JSX.Element => {
-  const { t: translateEnums } = useEnumsTranslation();
+  options,
+}: SortingSelectProps<T>): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const options = Object.values(SortingOptions).sort((t1, t2) =>
-    translateEnums(t1).localeCompare(translateEnums(t2)),
-  );
-
-  const handleChange = (event: SelectChangeEvent<SortingOptions>) => {
+  const handleChange = (event: SelectChangeEvent) => {
     const {
       target: { value: v },
     } = event;
-    setSortBy(v as SortingOptions);
+    setSortBy(v as T);
   };
 
   const label = translateBuilder(BUILDER.SORT_BY_LABEL);
@@ -71,10 +61,11 @@ export const SortingSelect = ({
     <FormControl size="small">
       <FormGroup row>
         <InputLabel id={LABEL_ID}>{label}</InputLabel>
-        <Select<SortingOptions>
+
+        <Select
           labelId={LABEL_ID}
           label={label}
-          value={sortBy}
+          value={sortBy ?? SortingOptions.ItemUpdatedAt}
           onChange={handleChange}
           input={<OutlinedInput label={label} />}
           MenuProps={MenuProps}
@@ -90,10 +81,16 @@ export const SortingSelect = ({
         </Select>
         <IconButton
           onClick={() => {
-            setOrdering(ordering === 'asc' ? 'desc' : 'asc');
+            setOrdering(
+              ordering === Ordering.ASC ? Ordering.DESC : Ordering.ASC,
+            );
           }}
         >
-          {ordering === 'asc' ? <ArrowDownNarrowWide /> : <ArrowUpWideNarrow />}
+          {ordering === Ordering.ASC ? (
+            <ArrowDownNarrowWide />
+          ) : (
+            <ArrowUpWideNarrow />
+          )}
         </IconButton>
       </FormGroup>
     </FormControl>

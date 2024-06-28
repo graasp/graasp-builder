@@ -453,6 +453,15 @@
   "item.creator.name": "Creator",
   "item.type": "Type",
   "item.name": "Name",
+  "order": "Order",
   "TRASH_NO_ITEM": "No trashed item",
-  "BOOKMARKS_NO_ITEM": "No bookmarked item"
+  "BOOKMARKS_NO_ITEM": "No bookmarked item",
+  "UPLOAD_BETWEEN_FILES": "+ upload your files here",
+  "MOVE_WARNING": "This operation might give access to {{name}} to more persons than previously.\nDo you want to proceed?",
+  "MOVE_IN_NON_FOLDER_ERROR_MESSAGE": "Cannot add items in {{type}}",
+  "MOVE_CONFIRM_TITLE": "Confirm moving <1>{{name}}</1> inside <1>{{targetName}}</1>",
+  "ITEM_SEARCH_NOTHING_FOUND": "No item found with these parameters",
+  "ITEM_SEARCH_NOTHING_FOUND_QUERY_TITLE": "search",
+  "ITEM_SEARCH_NOTHING_FOUND_TYPES_TITLE": "types",
+  "HOME_SCREEN_LOAD_MORE_BUTTON": "Load More"
 }

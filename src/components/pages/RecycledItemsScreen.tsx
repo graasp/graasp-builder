@@ -4,6 +4,8 @@ import { Container, Stack, Typography } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
 
+import { Ordering } from '@/enums';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
@@ -14,26 +16,33 @@ import { BUILDER } from '../../langs/constants';
 import DeleteButton from '../common/DeleteButton';
 import ErrorAlert from '../common/ErrorAlert';
 import RestoreButton from '../common/RestoreButton';
+import SelectTypes from '../common/SelectTypes';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
-import { useSorting } from '../main/ItemsTable';
-import TableToolbar from '../main/TableToolbar';
+import ModeButton from '../item/header/ModeButton';
 import ItemCard from '../table/ItemCard';
-import { SortingOptions } from '../table/SortingSelect';
+import SortingSelect from '../table/SortingSelect';
+import {
+  SortingOptions,
+  useSorting,
+  useTranslatedSortingOptions,
+} from '../table/useSorting';
 
 const RecycleBinLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
+  const options = useTranslatedSortingOptions();
   const { shouldDisplayItem } = useFilterItemsContext();
   // TODO: implement filter in the hooks directly ?
   const itemSearch = useItemSearch();
   const filteredData = recycledItems?.filter(
     (d) => shouldDisplayItem(d.type) && d.name.includes(itemSearch.text),
   );
-  const { sortBy, setSortBy, ordering, setOrdering, sortFn } = useSorting({
-    sortBy: SortingOptions.ItemUpdatedAt,
-    ordering: 'desc',
-  });
+  const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
+    useSorting<SortingOptions>({
+      sortBy: SortingOptions.ItemUpdatedAt,
+      ordering: Ordering.DESC,
+    });
   filteredData?.sort(sortFn);
 
   if (filteredData) {
@@ -66,12 +75,34 @@ const RecycleBinLoadableContent = (): JSX.Element | null => {
             </Stack>
           </Stack>
           <Stack gap={1}>
-            <TableToolbar
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              ordering={ordering}
-              setOrdering={setOrdering}
-            />
+            <Stack
+              alignItems="space-between"
+              direction="column"
+              mt={2}
+              gap={1}
+              width="100%"
+            >
+              <Stack
+                spacing={1}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <SelectTypes />
+                <Stack direction="row" gap={1}>
+                  {sortBy && setSortBy && (
+                    <SortingSelect
+                      sortBy={sortBy}
+                      options={options}
+                      setSortBy={setSortBy}
+                      ordering={ordering}
+                      setOrdering={setOrdering}
+                    />
+                  )}
+                  <ModeButton />
+                </Stack>
+              </Stack>
+            </Stack>
             {filteredData.length ? (
               filteredData.map((item) => (
                 <ItemCard

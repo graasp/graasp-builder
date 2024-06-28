@@ -15,7 +15,6 @@ import {
   LocalFileItemType,
   Member,
   PermissionLevel,
-  PermissionLevelCompare,
   S3FileItemType,
   buildPdfViewerLink,
   getH5PExtra,
@@ -234,16 +233,7 @@ const ItemContent = (): JSX.Element => {
     case ItemType.APP:
       return <AppContent item={item} member={member} permission={permission} />;
     case ItemType.FOLDER:
-      return (
-        <FolderContent
-          item={item}
-          enableEditing={
-            permission
-              ? PermissionLevelCompare.lte(PermissionLevel.Write, permission)
-              : false
-          }
-        />
-      );
+      return <FolderContent item={item} />;
 
     case ItemType.H5P: {
       return <H5PContent item={item} />;

@@ -1,10 +1,11 @@
 import {
-  CompleteMember,
   PackedItem,
   PermissionLevel,
   PermissionLevelCompare,
 } from '@graasp/sdk';
 import { ActionButton } from '@graasp/ui';
+
+import { hooks } from '@/config/queryClient';
 
 import BookmarkButton from '../common/BookmarkButton';
 import CollapseButton from '../common/CollapseButton';
@@ -21,12 +22,12 @@ import CreateShortcutButton from './CreateShortcutButton';
 
 type Props = {
   item: PackedItem;
-  member?: CompleteMember | null;
 };
 
 const ItemMenuContent =
-  ({ item, member }: Props) =>
+  ({ item }: Props) =>
   (closeMenu: () => void): JSX.Element[] => {
+    const { data: member } = hooks.useCurrentMember();
     const canWrite =
       item.permission &&
       PermissionLevelCompare.gte(item.permission, PermissionLevel.Write);
@@ -47,7 +48,7 @@ const ItemMenuContent =
             <MoveButton
               key="move"
               type={ActionButton.MENU_ITEM}
-              itemIds={[item.id]}
+              items={[item]}
               onClick={closeMenu}
             />
           ) : undefined,

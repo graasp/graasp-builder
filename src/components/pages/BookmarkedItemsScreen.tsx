@@ -4,6 +4,8 @@ import { Container, Stack, Typography } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
 
+import { Ordering } from '@/enums';
+
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
 import {
@@ -12,11 +14,17 @@ import {
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
+import SelectTypes from '../common/SelectTypes';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
-import ItemsTable, { useSorting } from '../main/ItemsTable';
-import TableToolbar from '../main/TableToolbar';
-import { SortingOptions } from '../table/SortingSelect';
+import ModeButton from '../item/header/ModeButton';
+import ItemsTable from '../main/ItemsTable';
+import SortingSelect from '../table/SortingSelect';
+import {
+  SortingOptions,
+  useSorting,
+  useTranslatedSortingOptions,
+} from '../table/useSorting';
 
 const BookmarkedItemsLoadableContent = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -29,10 +37,12 @@ const BookmarkedItemsLoadableContent = (): JSX.Element | null => {
   // TODO: implement filter in the hooks directly ?
   const { input, text } = useItemSearch();
 
-  const { sortBy, setSortBy, ordering, setOrdering, sortFn } = useSorting({
-    sortBy: SortingOptions.ItemUpdatedAt,
-    ordering: 'desc',
-  });
+  const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
+    useSorting<SortingOptions>({
+      sortBy: SortingOptions.ItemUpdatedAt,
+      ordering: Ordering.DESC,
+    });
+  const options = useTranslatedSortingOptions();
 
   const filteredData = data
     ?.map((d) => d.item)
@@ -67,19 +77,39 @@ const BookmarkedItemsLoadableContent = (): JSX.Element | null => {
             </Stack>
           </Stack>
           <Stack gap={1}>
-            <TableToolbar
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              ordering={ordering}
-              setOrdering={setOrdering}
-            />
+            <Stack
+              alignItems="space-between"
+              direction="column"
+              mt={2}
+              gap={1}
+              width="100%"
+            >
+              <Stack
+                spacing={1}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <SelectTypes />
+                <Stack direction="row" gap={1}>
+                  {sortBy && setSortBy && (
+                    <SortingSelect
+                      options={options}
+                      sortBy={sortBy}
+                      setSortBy={setSortBy}
+                      ordering={ordering}
+                      setOrdering={setOrdering}
+                    />
+                  )}
+                  <ModeButton />
+                </Stack>
+              </Stack>
+            </Stack>
             {filteredData.length ? (
               <ItemsTable
                 id={BOOKMARKED_ITEMS_ID}
                 items={filteredData}
                 canMove={false}
-                // pageSize={filteredData.length}
-                // totalCount={filteredData.length}
               />
             ) : (
               <Typography variant="body2">

@@ -7,39 +7,41 @@ import {
 } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
-import { useBuilderTranslation } from '@/config/i18n';
+import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
 import {
   ITEM_SCREEN_ERROR_ALERT_ID,
   buildItemsTableId,
 } from '@/config/selectors';
-import { ItemLayoutMode } from '@/enums';
+import { ItemLayoutMode, Ordering } from '@/enums';
+import { BUILDER } from '@/langs/constants';
 
 import ErrorAlert from '../common/ErrorAlert';
+import SelectTypes from '../common/SelectTypes';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useLayoutContext } from '../context/LayoutContext';
 import FileUploader from '../file/FileUploader';
-import ItemsTable, { useSorting } from '../main/ItemsTable';
+import ItemsTable from '../main/ItemsTable';
 import NewItemButton from '../main/NewItemButton';
-import TableToolbar from '../main/TableToolbar';
+import { DesktopMap } from '../map/DesktopMap';
+import SortingSelect from '../table/SortingSelect';
+import { SortingOptionsForFolder, useSorting } from '../table/useSorting';
 import FolderDescription from './FolderDescription';
 import { useItemSearch } from './ItemSearch';
-import MapView from './MapView';
 import ModeButton from './header/ModeButton';
 
 /**
  * Helper component to render typed folder items
  */
-const FolderContent = ({
-  item,
-  enableEditing,
-}: {
-  item: PackedItem;
-  enableEditing: boolean;
-}): JSX.Element => {
+const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   const { shouldDisplayItem } = useFilterItemsContext();
   const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateEnums } = useEnumsTranslation();
   const { mode } = useLayoutContext();
+
+  const enableEditing = item.permission
+    ? PermissionLevelCompare.lte(PermissionLevel.Write, item.permission)
+    : false;
 
   const {
     data: children,
@@ -50,14 +52,18 @@ const FolderContent = ({
   });
 
   const itemSearch = useItemSearch();
-  const { ordering, setOrdering } = useSorting({
-    ordering: 'desc',
-  });
+  const { ordering, setOrdering, setSortBy, sortBy, sortFn } =
+    useSorting<SortingOptionsForFolder>({
+      sortBy: SortingOptionsForFolder.Order,
+      ordering: Ordering.ASC,
+    });
 
   // TODO: use hook's filter when available
-  const folderChildren = children?.filter(
-    (f) => shouldDisplayItem(f.type) && f.name.includes(itemSearch.text),
-  );
+  const folderChildren = children
+    ?.filter(
+      (f) => shouldDisplayItem(f.type) && f.name.includes(itemSearch.text),
+    )
+    .sort(sortFn);
 
   if (children?.length) {
     return (
@@ -83,24 +89,55 @@ const FolderContent = ({
         {mode === ItemLayoutMode.Map && (
           <>
             <ModeButton />
-            <MapView parentId={item.id} height="65vh" />
+            <DesktopMap parentId={item.id} />
           </>
         )}
         {mode !== ItemLayoutMode.Map && (
           <>
-            <TableToolbar ordering={ordering} setOrdering={setOrdering} />
+            <Stack
+              alignItems="space-between"
+              direction="column"
+              mt={2}
+              gap={1}
+              width="100%"
+            >
+              <Stack
+                spacing={1}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <SelectTypes />
+                <Stack direction="row" gap={1}>
+                  {sortBy && setSortBy && (
+                    <SortingSelect
+                      ordering={ordering}
+                      sortBy={sortBy}
+                      setSortBy={setSortBy}
+                      options={Object.values(SortingOptionsForFolder).sort(
+                        (t1, t2) =>
+                          translateEnums(t1).localeCompare(translateEnums(t2)),
+                      )}
+                      setOrdering={setOrdering}
+                    />
+                  )}
+                  <ModeButton />
+                </Stack>
+              </Stack>
+            </Stack>
             <ItemsTable
+              enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
               id={buildItemsTableId(item.id)}
               items={folderChildren ?? []}
             />
+            {enableEditing && (
+              <NewItemButton
+                key="newButton"
+                // add new items at the end of the list
+                previousItemId={children[children.length - 1]?.id}
+              />
+            )}
           </>
-        )}
-        {enableEditing && mode !== ItemLayoutMode.Map && (
-          <NewItemButton
-            key="newButton"
-            // add new items at the end of the list
-            previousItemId={children[children.length - 1]?.id}
-          />
         )}
       </>
     );
@@ -118,10 +155,23 @@ const FolderContent = ({
     item.permission &&
     PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
   ) {
-    return <FileUploader />;
+    return (
+      <>
+        <FileUploader />
+        <NewItemButton
+          key="newButton"
+          // add new items at the end of the list
+          previousItemId={children[children.length - 1]?.id}
+        />
+      </>
+    );
   }
 
-  return <Typography>{translateBuilder('No item')}</Typography>;
+  return (
+    <Typography>
+      {translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
+    </Typography>
+  );
 };
 
 export default FolderContent;

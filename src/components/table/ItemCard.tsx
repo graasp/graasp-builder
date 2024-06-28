@@ -17,6 +17,7 @@ type Props = {
   renderMenuItems?: (fn: () => void) => JSX.Element[];
   isOver?: boolean;
   isDragging?: boolean;
+  disabled?: boolean;
 };
 
 const ItemCard = ({
@@ -27,6 +28,7 @@ const ItemCard = ({
   isDragging = false,
   isOver = false,
   showThumbnail = true,
+  disabled,
 }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
   const { data: thumbnailUrl } = hooks.useItemThumbnailUrl({
@@ -74,6 +76,7 @@ const ItemCard = ({
 
   return (
     <Card
+      sx={{ background: disabled ? 'lightgrey' : undefined }}
       dense={dense}
       elevation={false}
       thumbnail={thumbnailUrl}
