@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.29.0](https://github.com/graasp/graasp-builder/compare/v2.28.0...v2.29.0) (2024-06-27)
+
+
+### Features
+
+* remove uppy and use upload hooks ([#1295](https://github.com/graasp/graasp-builder/issues/1295)) ([153f503](https://github.com/graasp/graasp-builder/commit/153f503484abec0ea52832a5eba1fd539700c3bc))
+
+
+### Bug Fixes
+
+* shortlinks ([#1301](https://github.com/graasp/graasp-builder/issues/1301)) ([241ee02](https://github.com/graasp/graasp-builder/commit/241ee022744dc3c7a21dee6322eac467ffcd8f61))
+
 ## [2.28.0](https://github.com/graasp/graasp-builder/compare/v2.27.0...v2.28.0) (2024-06-13)
 
 
