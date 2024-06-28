@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { ErrorOutline } from '@mui/icons-material';
 import {
-  Grid,
   IconButton,
+  Stack,
   TextField,
   TextFieldProps,
   Tooltip,
@@ -140,59 +140,43 @@ const CreateItemMembershipForm = ({
     }
   };
 
-  const renderInvitationStatus = () => (
-    <Tooltip
-      title={translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
+  return (
+    <Stack
+      id={CREATE_MEMBERSHIP_FORM_ID}
+      direction="row"
+      alignItems="center"
+      justifyContent="center"
+      spacing={1}
     >
-      <span>
-        <IconButton aria-label="status">
-          <ErrorOutline />
-        </IconButton>
-      </span>
-    </Tooltip>
-  );
-
-  const renderButton = () => {
-    const disabled = Boolean(error);
-    return (
+      <TextField
+        id={SHARE_ITEM_EMAIL_INPUT_ID}
+        variant="outlined"
+        label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
+        helperText={error}
+        value={invitation.email}
+        onChange={onChangeEmail}
+        error={Boolean(error)}
+        sx={{ flexGrow: 1 }}
+      />
+      <ItemMembershipSelect
+        value={invitation.permission}
+        onChange={onChangePermission}
+      />
       <Button
         onClick={handleShare}
-        disabled={disabled}
+        disabled={Boolean(error)}
         id={SHARE_ITEM_SHARE_BUTTON_ID}
       >
         {translateBuilder(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
       </Button>
-    );
-  };
-
-  return (
-    <Grid container id={CREATE_MEMBERSHIP_FORM_ID}>
-      <Grid container alignItems="center" justifyContent="center" spacing={1}>
-        <Grid item xs={5}>
-          <TextField
-            value={invitation.email}
-            sx={{
-              width: '100%',
-              marginTop: 1,
-            }}
-            id={SHARE_ITEM_EMAIL_INPUT_ID}
-            variant="outlined"
-            label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
-            error={Boolean(error)}
-            helperText={error}
-            onChange={onChangeEmail}
-          />
-        </Grid>
-        <Grid item>
-          <ItemMembershipSelect
-            value={invitation.permission}
-            onChange={onChangePermission}
-          />
-        </Grid>
-        <Grid item>{renderButton()}</Grid>
-        <Grid item>{renderInvitationStatus()}</Grid>
-      </Grid>
-    </Grid>
+      <Tooltip
+        title={translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
+      >
+        <IconButton aria-label="status">
+          <ErrorOutline />
+        </IconButton>
+      </Tooltip>
+    </Stack>
   );
 };
 

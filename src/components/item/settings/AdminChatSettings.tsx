@@ -1,5 +1,7 @@
 import { PackedItem, PermissionLevel } from '@graasp/sdk';
 
+import { MessageSquareTextIcon } from 'lucide-react';
+
 import { useBuilderTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 
@@ -28,6 +30,7 @@ const AdminChatSettings = ({ item }: Props): JSX.Element | null => {
     <ItemSettingProperty
       title={t(BUILDER.ITEM_SETTINGS_CHAT_SETTINGS_TITLE)}
       valueText={t(BUILDER.ITEM_SETTINGS_CLEAR_CHAT_EXPLANATION)}
+      icon={<MessageSquareTextIcon />}
       inputSetting={<ClearChatButton chatId={itemId} />}
     />
   );
