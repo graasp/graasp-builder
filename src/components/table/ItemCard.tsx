@@ -3,7 +3,7 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
 import { ItemType, PackedItem, ThumbnailSize, formatDate } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { Card } from '@graasp/ui';
+import { Card, TextDisplay } from '@graasp/ui';
 
 import i18n, { useCommonTranslation } from '@/config/i18n';
 import { buildItemPath } from '@/config/paths';
@@ -67,8 +67,9 @@ const ItemCard = ({
         </>
       ) : (
         <Grid2 xs={12}>
-          {/* TODO: html?? */}
-          <Typography variant="caption">{item.description}</Typography>
+          <Typography variant="caption">
+            <TextDisplay content={item.description ?? ''} />
+          </Typography>
         </Grid2>
       )}
     </Grid2>

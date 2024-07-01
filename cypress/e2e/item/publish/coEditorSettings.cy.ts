@@ -24,7 +24,7 @@ const visitItemPage = () => {
 };
 
 describe('Co-editor Setting', () => {
-  it.only('Display choices', () => {
+  it('Display choices', () => {
     visitItemPage();
 
     cy.get(buildDataCyWrapper(CO_EDITOR_SETTINGS_CHECKBOX_ID)).should(

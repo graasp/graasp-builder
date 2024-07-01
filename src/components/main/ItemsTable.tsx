@@ -28,10 +28,8 @@ import { BUILDER } from '@/langs/constants';
 import { hooks, mutations } from '../../config/queryClient';
 import { useLayoutContext } from '../context/LayoutContext';
 import { useUploadWithProgress } from '../hooks/uploadWithProgress';
-import ActionsCellRenderer from '../table/ActionsCellRenderer';
-import BadgesCellRenderer, {
-  useItemsStatuses,
-} from '../table/BadgesCellRenderer';
+import Badges, { useItemsStatuses } from '../table/Badges';
+import ItemActions from '../table/ItemActions';
 import ItemCard from '../table/ItemCard';
 import ItemMenuContent from './ItemMenuContent';
 
@@ -191,11 +189,8 @@ const ItemsTable = ({
                     alignItems="center"
                     justifyContent="space-between"
                   >
-                    <BadgesCellRenderer
-                      itemsStatuses={itemsStatuses}
-                      data={droppedEl}
-                    />
-                    <ActionsCellRenderer data={droppedEl} />
+                    <Badges itemsStatuses={itemsStatuses} data={droppedEl} />
+                    <ItemActions data={droppedEl} />
                   </Stack>
                 }
               />

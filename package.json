@@ -23,7 +23,7 @@
     "@graasp/map": "1.16.0",
     "@graasp/query-client": "3.14.0",
     "@graasp/sdk": "4.15.1",
-    "@graasp/translations": "1.30.3",
+    "@graasp/translations": "1.31.0",
     "@graasp/ui": "github:graasp/graasp-ui#dnd-table-1",
     "@mui/icons-material": "5.15.21",
     "@mui/lab": "5.0.0-alpha.170",

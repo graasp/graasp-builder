@@ -1607,6 +1607,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/translations@npm:1.31.0":
+  version: 1.31.0
+  resolution: "@graasp/translations@npm:1.31.0"
+  peerDependencies:
+    i18next: ^23.8.1
+  checksum: 10/32d0bd0a8ff50326195b573e95f645715bb66d96a21b1598f3fc30fba71ce0010f8db67003aebdfd1e521d7bafe82803b7b36f459aeca6265dd6f7bc6258a1ca
+  languageName: node
+  linkType: hard
+
 "@graasp/ui@github:graasp/graasp-ui#dnd-table-1":
   version: 4.20.2
   resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=890b0c18b15ffca169091c9150a1d2d69c9ec6bd"
@@ -7538,7 +7547,7 @@ __metadata:
     "@graasp/map": "npm:1.16.0"
     "@graasp/query-client": "npm:3.14.0"
     "@graasp/sdk": "npm:4.15.1"
-    "@graasp/translations": "npm:1.30.3"
+    "@graasp/translations": "npm:1.31.0"
     "@graasp/ui": "github:graasp/graasp-ui#dnd-table-1"
     "@mui/icons-material": "npm:5.15.21"
     "@mui/lab": "npm:5.0.0-alpha.170"

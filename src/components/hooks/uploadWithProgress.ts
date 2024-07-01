@@ -4,6 +4,7 @@ import { Id, toast } from 'react-toastify';
 import { AxiosProgressEvent } from 'axios';
 
 import { useBuilderTranslation } from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useUploadWithProgress = (): {
@@ -18,7 +19,7 @@ export const useUploadWithProgress = (): {
   const toastId = useRef<Id | null>(null);
 
   const show = (progress = 0) => {
-    toastId.current = toast.info(translateBuilder('Uploading...'), {
+    toastId.current = toast.info(translateBuilder(BUILDER.UPLOADING), {
       progress,
       position: 'bottom-left',
     });

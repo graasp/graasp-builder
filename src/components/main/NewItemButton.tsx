@@ -39,9 +39,8 @@ const NewItemButton = ({ previousItemId }: Props): JSX.Element => {
           <AddIcon />
         </Fab>
       </Tooltip>
-      {/* TODO: necessary space for scroll */}
-      <br />
-      <br />
+      {/* necessary space for scroll */}
+      <div style={{ height: 40 }} />
       <NewItemModal
         open={open}
         handleClose={handleClose}

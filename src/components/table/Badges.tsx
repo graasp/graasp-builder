@@ -64,10 +64,7 @@ export const useItemsStatuses = ({
   }, {} as ItemsStatuses);
 };
 
-const BadgesCellRenderer = ({
-  itemsStatuses,
-  data: item,
-}: ChildCompProps): JSX.Element => {
+const Badges = ({ itemsStatuses, data: item }: ChildCompProps): JSX.Element => {
   const { t } = useBuilderTranslation();
   // this is useful because the item.id we are looking for may not be present and the itemStatuses will be undefined
   const itemStatuses = itemsStatuses?.[item.id] || DEFAULT_ITEM_STATUSES;
@@ -97,4 +94,4 @@ const BadgesCellRenderer = ({
   );
 };
 
-export default BadgesCellRenderer;
+export default Badges;
