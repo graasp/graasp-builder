@@ -7888,7 +7888,7 @@ __metadata:
     react-helmet: "npm:6.1.0"
     react-i18next: "npm:14.1.2"
     react-image-crop: "npm:11.0.5"
-    react-qr-code: "npm:2.0.14"
+    react-qr-code: "npm:2.0.15"
     react-query: "npm:3.39.3"
     react-quill: "npm:2.0.0"
     react-router: "npm:6.23.1"
@@ -11804,19 +11804,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-qr-code@npm:2.0.14":
-  version: 2.0.14
-  resolution: "react-qr-code@npm:2.0.14"
+"react-qr-code@npm:2.0.15":
+  version: 2.0.15
+  resolution: "react-qr-code@npm:2.0.15"
   dependencies:
     prop-types: "npm:^15.8.1"
     qr.js: "npm:0.0.0"
   peerDependencies:
     react: "*"
-    react-native-svg: "*"
-  peerDependenciesMeta:
-    react-native-svg:
-      optional: true
-  checksum: 10/ca17f24ef18339a17bea31e98412339fe66c6679d2ea15365c8213ab004bcd33b7b16338ff456f2d8d524fd23d9204fda8a385e16bfc4b35d976a256cd3039a3
+  checksum: 10/4124b7c2ce71bfe94279d85322175c881ba87dcc9b67f3c6d6e2806854a8792cf5f9ed8e10ea04c22e39aa060ef12fb39e679e780cba14f168d3cd6cffb7086d
   languageName: node
   linkType: hard
 
