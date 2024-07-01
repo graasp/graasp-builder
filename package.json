@@ -28,7 +28,7 @@
     "@mui/icons-material": "5.15.21",
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.21",
-    "@sentry/react": "7.117.0",
+    "@sentry/react": "7.118.0",
     "axios": "1.7.2",
     "date-fns": "3.6.0",
     "filesize": "10.1.2",
