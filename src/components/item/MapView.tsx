@@ -35,17 +35,22 @@ const useCurrentLocation = (enableGeolocation = false) => {
     lng: number;
   }>();
 
+  console.log('enableGeolocation', enableGeolocation);
+
   // get current location
   useEffect(() => {
     if (enableGeolocation) {
       // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions#examples
       if (!navigator.permissions) {
+        console.log('enableGeolocation', navigator.permissions);
         setHasFetchedCurrentLocation(true);
       } else {
         navigator.permissions
           .query({ name: 'geolocation' })
           .then(({ state }) => {
             if (state === 'granted') {
+              console.log('enableGeolocation', state);
+
               const success = (pos: {
                 coords: { latitude: number; longitude: number };
               }) => {
