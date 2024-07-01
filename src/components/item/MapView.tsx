@@ -58,18 +58,17 @@ const useCurrentLocation = (enableGeolocation = false) => {
   // get current location
   useEffect(() => {
     if (enableGeolocation) {
-      // still get position for safari
       if (navigator.permissions) {
         // check permissions
         // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions#examples
         navigator.permissions
           .query({ name: 'geolocation' })
           .then(({ state }) => {
-            if (state === 'granted') {
-              getCurrentPosition();
-            } else {
+            if (state === 'denied') {
               console.error('geolocation denied:', state);
               setHasFetchedCurrentLocation(true);
+            } else {
+              getCurrentPosition();
             }
           })
           .catch((e) => {
@@ -77,7 +76,8 @@ const useCurrentLocation = (enableGeolocation = false) => {
             setHasFetchedCurrentLocation(true);
           });
       } else {
-        // still get position for safari
+        // navigator.permissions does not exist in safari
+        // still try to get position for webview's ios
         getCurrentPosition();
       }
     }
