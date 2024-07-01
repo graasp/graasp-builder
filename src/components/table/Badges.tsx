@@ -27,12 +27,9 @@ const DEFAULT_ITEM_STATUSES: ItemStatuses = {
 
 export type ItemsStatuses = { [key: DiscriminatedItem['id']]: ItemStatuses };
 
-type Props = {
-  itemsStatuses?: ItemsStatuses;
-};
-
 type ChildCompProps = {
   data: DiscriminatedItem;
+  itemsStatuses?: ItemsStatuses;
 };
 
 export const useItemsStatuses = ({
@@ -67,39 +64,34 @@ export const useItemsStatuses = ({
   }, {} as ItemsStatuses);
 };
 
-const BadgesCellRenderer = ({
-  itemsStatuses,
-}: Props): ((arg: ChildCompProps) => JSX.Element) => {
-  const ChildComponent = ({ data: item }: ChildCompProps) => {
-    const { t } = useBuilderTranslation();
-    // this is useful because the item.id we are looking for may not be present and the itemStatuses will be undefined
-    const itemStatuses = itemsStatuses?.[item.id] || DEFAULT_ITEM_STATUSES;
-    const {
-      showChatbox,
-      isPinned,
-      isHidden,
-      isPublic,
-      isPublished,
-      isCollapsible,
-    } = itemStatuses;
-    return (
-      <ItemBadges
-        isPinned={isPinned}
-        isPinnedTooltip={t(BUILDER.STATUS_TOOLTIP_IS_PINNED)}
-        isHidden={isHidden}
-        isHiddenTooltip={t(BUILDER.STATUS_TOOLTIP_IS_HIDDEN)}
-        isPublic={isPublic}
-        isPublicTooltip={t(BUILDER.STATUS_TOOLTIP_IS_PUBLIC)}
-        isPublished={isPublished}
-        isPublishedTooltip={t(BUILDER.STATUS_TOOLTIP_IS_PUBLISHED)}
-        isCollapsible={isCollapsible}
-        isCollapsibleTooltip={t(BUILDER.STATUS_TOOLTIP_IS_COLLAPSIBLE)}
-        showChatbox={showChatbox}
-        showChatboxTooltip={t(BUILDER.STATUS_TOOLTIP_SHOW_CHATBOX)}
-      />
-    );
-  };
-  return ChildComponent;
+const Badges = ({ itemsStatuses, data: item }: ChildCompProps): JSX.Element => {
+  const { t } = useBuilderTranslation();
+  // this is useful because the item.id we are looking for may not be present and the itemStatuses will be undefined
+  const itemStatuses = itemsStatuses?.[item.id] || DEFAULT_ITEM_STATUSES;
+  const {
+    showChatbox,
+    isPinned,
+    isHidden,
+    isPublic,
+    isPublished,
+    isCollapsible,
+  } = itemStatuses;
+  return (
+    <ItemBadges
+      isPinned={isPinned}
+      isPinnedTooltip={t(BUILDER.STATUS_TOOLTIP_IS_PINNED)}
+      isHidden={isHidden}
+      isHiddenTooltip={t(BUILDER.STATUS_TOOLTIP_IS_HIDDEN)}
+      isPublic={isPublic}
+      isPublicTooltip={t(BUILDER.STATUS_TOOLTIP_IS_PUBLIC)}
+      isPublished={isPublished}
+      isPublishedTooltip={t(BUILDER.STATUS_TOOLTIP_IS_PUBLISHED)}
+      isCollapsible={isCollapsible}
+      isCollapsibleTooltip={t(BUILDER.STATUS_TOOLTIP_IS_COLLAPSIBLE)}
+      showChatbox={showChatbox}
+      showChatboxTooltip={t(BUILDER.STATUS_TOOLTIP_SHOW_CHATBOX)}
+    />
+  );
 };
 
-export default BadgesCellRenderer;
+export default Badges;

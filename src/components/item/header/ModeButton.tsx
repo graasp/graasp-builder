@@ -1,4 +1,5 @@
 import { MouseEvent, useState } from 'react';
+import { useMatch } from 'react-router';
 
 import {
   List as ListIcon,
@@ -9,6 +10,7 @@ import { IconButton } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
+import { HOME_PATH, buildItemPath } from '@/config/paths';
 import { LAYOUT_MODE_BUTTON_ID } from '@/config/selectors';
 
 import { ItemLayoutMode } from '../../../enums';
@@ -33,6 +35,9 @@ const ModeButton = (): JSX.Element | null => {
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const isHomePath = useMatch(HOME_PATH);
+  const isItemPath = useMatch(buildItemPath());
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -42,13 +47,19 @@ const ModeButton = (): JSX.Element | null => {
     handleClose();
   };
 
+  // show map only for home and path
+  let options = Object.values(ItemLayoutMode);
+  if (!isHomePath && !isItemPath) {
+    options = options.filter((o) => o !== ItemLayoutMode.Map);
+  }
+
   return (
     <>
       <IconButton id={LAYOUT_MODE_BUTTON_ID} onClick={handleClick}>
         {modeToIcon(mode)}
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {Object.values(ItemLayoutMode).map((value) => (
+        {options.map((value) => (
           <MenuItem
             key={value}
             onClick={() => handleChange(value)}

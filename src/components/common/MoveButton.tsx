@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, PackedItem } from '@graasp/sdk';
 import {
   ActionButton,
   ActionButtonVariant,
@@ -24,7 +24,7 @@ import ItemSelectionModal, {
 } from '../main/itemSelectionModal/ItemSelectionModal';
 
 type MoveButtonProps = {
-  itemIds: string[];
+  items: PackedItem[];
   color?: ColorVariants;
   id?: string;
   type?: ActionButtonVariant;
@@ -32,7 +32,7 @@ type MoveButtonProps = {
 };
 
 const MoveButton = ({
-  itemIds,
+  items,
   color = 'primary',
   id,
   type = ActionButton.ICON_BUTTON,
@@ -53,7 +53,7 @@ const MoveButton = ({
 
   const onConfirm: ItemSelectionModalProps['onConfirm'] = (destination) => {
     moveItems({
-      ids: itemIds,
+      items,
       to: destination,
     });
     onClose();
@@ -65,23 +65,23 @@ const MoveButton = ({
   };
 
   const isDisabled = (
-    items: DiscriminatedItem[],
+    itemsArray: DiscriminatedItem[],
     item: NavigationElement,
     homeId: string,
   ) => {
-    if (items?.length) {
+    if (itemsArray?.length) {
       // cannot move inside self and below
-      const moveInSelf = items.some((i) => item.path.includes(i.path));
+      const moveInSelf = itemsArray.some((i) => item.path.includes(i.path));
 
       // cannot move in same direct parent
       // todo: not opti because we only have the ids from the table
-      const directParentIds = items.map((i) => getDirectParentId(i.path));
+      const directParentIds = itemsArray.map((i) => getDirectParentId(i.path));
       const moveInDirectParent = directParentIds.includes(item.id);
 
       // cannot move to home if was already on home
       let moveToHome = false;
 
-      moveToHome = item.id === homeId && !getDirectParentId(items[0].path);
+      moveToHome = item.id === homeId && !getDirectParentId(itemsArray[0].path);
 
       return moveInSelf || moveInDirectParent || moveToHome;
     }
@@ -106,7 +106,7 @@ const MoveButton = ({
         menuItemClassName={ITEM_MENU_MOVE_BUTTON_CLASS}
         iconClassName={ITEM_MOVE_BUTTON_CLASS}
       />
-      {itemIds && open && (
+      {items.length && open && (
         <ItemSelectionModal
           titleKey={BUILDER.MOVE_ITEM_MODAL_TITLE}
           isDisabled={isDisabled}
@@ -114,7 +114,7 @@ const MoveButton = ({
           onClose={onClose}
           open={open}
           onConfirm={onConfirm}
-          itemIds={itemIds}
+          itemIds={items.map((i) => i.id)}
         />
       )}
     </>

@@ -54,7 +54,7 @@ export const SelectTypes = (): JSX.Element => {
   const renderValues = (value: typeof itemTypes) => (
     <Stack direction="row" spacing={1} flexWrap="wrap">
       {value.map((type) => (
-        <ItemIcon alt={type} type={type} />
+        <ItemIcon key={type} alt={type} type={type} />
       ))}
     </Stack>
   );
@@ -71,6 +71,9 @@ export const SelectTypes = (): JSX.Element => {
         input={<OutlinedInput label={label} />}
         renderValue={renderValues}
         MenuProps={MenuProps}
+        sx={{
+          borderRadius: 40,
+        }}
       >
         {types.map((type) => (
           <MenuItem key={type} value={type} disableGutters sx={{ padding: 0 }}>
