@@ -2,7 +2,11 @@ import { useParams } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { MAX_ZIP_FILE_SIZE, formatFileSize } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  MAX_ZIP_FILE_SIZE,
+  formatFileSize,
+} from '@graasp/sdk';
 import { UploadFileButton } from '@graasp/ui';
 
 import { mutations } from '@/config/queryClient';
@@ -14,8 +18,10 @@ import { useUploadWithProgress } from '../hooks/uploadWithProgress';
 
 const ImportH5P = ({
   onComplete,
+  previousItemId,
 }: {
   onComplete?: () => void;
+  previousItemId?: DiscriminatedItem['id'];
 }): JSX.Element => {
   const { itemId } = useParams();
   const { mutateAsync: importH5P, isLoading } = mutations.useImportH5P();
@@ -47,6 +53,7 @@ const ImportH5P = ({
             importH5P({
               onUploadProgress: update,
               id: itemId,
+              previousItemId,
               file: e.target.files[0],
             })
               .then(() => {

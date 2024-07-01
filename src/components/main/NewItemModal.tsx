@@ -184,7 +184,10 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
             </Typography>
-            <FileUploader onComplete={handleClose} />
+            <FileUploader
+              previousItemId={previousItemId}
+              onComplete={handleClose}
+            />
           </>
         );
       case InternalItemType.ZIP:
@@ -193,7 +196,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.IMPORT_ZIP_TITLE)}
             </Typography>
-            <ImportZip />
+            <ImportZip previousItemId={previousItemId} />
           </>
         );
       case ItemType.H5P:
@@ -202,7 +205,10 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
             </Typography>
-            <ImportH5P onComplete={handleClose} />
+            <ImportH5P
+              onComplete={handleClose}
+              previousItemId={previousItemId}
+            />
           </>
         );
       case ItemType.ETHERPAD:
