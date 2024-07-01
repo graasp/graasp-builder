@@ -398,14 +398,11 @@ describe('Item Settings', () => {
         cy.visit(buildItemSettingsPath(itemId));
 
         // default value
-        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID} + input`).should(
-          'have.value',
-          MaxWidth.ExtraLarge,
-        );
+        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).should('have.value', 'default');
 
         const newMaxWidth = MaxWidth.Small;
-        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).click();
-        cy.get(`[role="option"][data-value="${newMaxWidth}"]`).click();
+        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).select(newMaxWidth);
+        // cy.get(`[role="option"][data-value="${newMaxWidth}"]`).click();
 
         cy.wait('@editItem').then(
           ({
@@ -432,7 +429,7 @@ describe('Item Settings', () => {
             },
           },
           settings: {
-            maxWidth: MaxWidth.ExtraLarge,
+            maxWidth: MaxWidth.Large,
           },
         });
         cy.setUpApi({ items: [FILE] });
@@ -440,7 +437,7 @@ describe('Item Settings', () => {
 
         cy.visit(buildItemSettingsPath(itemId));
 
-        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID} + input`).should(
+        cy.get(`#${FILE_SETTING_MAX_WIDTH_ID}`).should(
           'have.value',
           FILE.settings.maxWidth,
         );

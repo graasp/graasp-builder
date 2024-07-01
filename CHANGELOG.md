@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.30.0](https://github.com/graasp/graasp-builder/compare/v2.29.0...v2.30.0) (2024-07-01)
+
+
+### Features
+
+* add alignment and sizing settings ([#1300](https://github.com/graasp/graasp-builder/issues/1300)) ([4ef2378](https://github.com/graasp/graasp-builder/commit/4ef237860b5ca554e35f6175b73a267de5a06f0f))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.118.0 ([#1308](https://github.com/graasp/graasp-builder/issues/1308)) ([87bd02f](https://github.com/graasp/graasp-builder/commit/87bd02fef4f69cce738220666c73172968b44511))
+* **deps:** update dependency leaflet-geosearch to v4 ([#1289](https://github.com/graasp/graasp-builder/issues/1289)) ([5892105](https://github.com/graasp/graasp-builder/commit/58921055c6e22cdc7e674307c51516f3d9728c58))
+* **deps:** update dependency react-qr-code to v2.0.15 ([#1307](https://github.com/graasp/graasp-builder/issues/1307)) ([3ab3da4](https://github.com/graasp/graasp-builder/commit/3ab3da4fcd13af951cc8bb2113b0561924c960cf))
+* **deps:** update dependency uuid to v10 ([#1290](https://github.com/graasp/graasp-builder/issues/1290)) ([a6450b1](https://github.com/graasp/graasp-builder/commit/a6450b1870a6f37c85fcbc7d1164c4ce45c47feb))
+* **deps:** update mui (non-major) to v5.15.21 ([#1287](https://github.com/graasp/graasp-builder/issues/1287)) ([b68674b](https://github.com/graasp/graasp-builder/commit/b68674b58334ebe4ca1821f71276bc5d62968f7f))
+
+## [2.29.0](https://github.com/graasp/graasp-builder/compare/v2.28.0...v2.29.0) (2024-06-27)
+
+
+### Features
+
+* remove uppy and use upload hooks ([#1295](https://github.com/graasp/graasp-builder/issues/1295)) ([153f503](https://github.com/graasp/graasp-builder/commit/153f503484abec0ea52832a5eba1fd539700c3bc))
+
+
+### Bug Fixes
+
+* shortlinks ([#1301](https://github.com/graasp/graasp-builder/issues/1301)) ([241ee02](https://github.com/graasp/graasp-builder/commit/241ee022744dc3c7a21dee6322eac467ffcd8f61))
+
 ## [2.28.0](https://github.com/graasp/graasp-builder/compare/v2.27.0...v2.28.0) (2024-06-13)
 
 
