@@ -61,7 +61,9 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   // TODO: use hook's filter when available
   const folderChildren = children
     ?.filter(
-      (f) => shouldDisplayItem(f.type) && f.name.includes(itemSearch.text),
+      (f) =>
+        shouldDisplayItem(f.type) &&
+        f.name.toLowerCase().includes(itemSearch.text.toLowerCase()),
     )
     .sort(sortFn);
 
