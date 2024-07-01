@@ -67,7 +67,9 @@ const useCurrentLocation = (enableGeolocation = false) => {
             if (state === 'denied') {
               console.error('geolocation denied:', state);
               setHasFetchedCurrentLocation(true);
-            } else {
+            }
+            // allows granted and prompt values (safari)
+            else {
               getCurrentPosition();
             }
           })
