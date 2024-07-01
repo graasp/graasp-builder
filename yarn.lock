@@ -1539,9 +1539,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.15.1":
+"@graasp/sdk@github:graasp/graasp-sdk#568-new-membertype":
   version: 4.15.1
-  resolution: "@graasp/sdk@npm:4.15.1"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=ec6b7ef94c002b82d2a4a70decd4d9ea24455cd0"
   dependencies:
     "@faker-js/faker": "npm:8.4.1"
     filesize: "npm:10.1.2"
@@ -1550,7 +1550,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3
     uuid: ^9 || ^10.0.0
-  checksum: 10/17722029c75b0d43d0cbcbef24f7947434980ad26792c2fbb14ac3dc5b1a4a7dfc791b3d273c7a03b0650dbad7074598ac2bc04d307ea43d5d66bacaf3bc6edd
+  checksum: 10/12c77a7f81caa438698dcff8c368e7ac69f3c63a45493f27973121490ea4594837286cf552bc1b76452c6fa71f58b066a7350c87397f7ed93a479697c7a0b750
   languageName: node
   linkType: hard
 
@@ -7166,7 +7166,7 @@ __metadata:
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.16.0"
     "@graasp/query-client": "npm:3.14.0"
-    "@graasp/sdk": "npm:4.15.1"
+    "@graasp/sdk": "github:graasp/graasp-sdk#568-new-membertype"
     "@graasp/translations": "npm:1.31.0"
     "@graasp/ui": "npm:4.20.2"
     "@mui/icons-material": "npm:5.15.21"

@@ -27,10 +27,10 @@ const ItemSharingTab = (): JSX.Element => {
 
   const { data: memberships } = hooks.useItemMemberships(itemId);
 
-  const [authenticatedMemberships, authorizedMemberships] = partition(
-    memberships,
-    ({ member }) => member?.email && isPseudoMember(member),
-  );
+  // const [authenticatedMemberships, authorizedMemberships] = partition(
+  //   memberships,
+  //   ({ member }) => member?.email && isPseudoMember(member),
+  // );
 
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 

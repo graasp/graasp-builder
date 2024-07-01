@@ -72,15 +72,15 @@ const CreateItemMembershipForm = ({
       );
     }
     // check mail does not already exist
-    if (
-      memberships.find(
-        ({ member: { email: thisEmail } }) => thisEmail === email,
-      )
-    ) {
-      return translateBuilder(
-        BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
-      );
-    }
+    // if (
+    //   memberships.find(
+    //     ({ member: { email: thisEmail } }) => thisEmail === email,
+    //   )
+    // ) {
+    //   return translateBuilder(
+    //     BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
+    //   );
+    // }
     return null;
   };
 
