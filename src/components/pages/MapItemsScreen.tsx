@@ -18,8 +18,6 @@ const MapItemScreen = (): JSX.Element | null => {
     ? urlSearchParams.get('enableGeolocation') === 'true'
     : true;
 
-  console.log('enableGeolocation', enableGeolocation);
-
   const viewItem = (item: DiscriminatedItem) => {
     if (isMobileApp) {
       // todo: replace with universal/deep link? not sure it works inside iframe..

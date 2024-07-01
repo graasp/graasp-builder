@@ -35,39 +35,38 @@ const useCurrentLocation = (enableGeolocation = false) => {
     lng: number;
   }>();
 
-  console.log('enableGeolocation', enableGeolocation);
+  const getCurrentPosition = () => {
+    const success = (pos: {
+      coords: { latitude: number; longitude: number };
+    }) => {
+      const crd = pos.coords;
+      setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
+      setHasFetchedCurrentLocation(true);
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      success,
+      (err: { code: number; message: string }) => {
+        // eslint-disable-next-line no-console
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+        setHasFetchedCurrentLocation(true);
+      },
+      options,
+    );
+  };
 
   // get current location
   useEffect(() => {
     if (enableGeolocation) {
-      // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions#examples
-      if (!navigator.permissions) {
-        console.log('enableGeolocation', navigator.permissions);
-        setHasFetchedCurrentLocation(true);
-      } else {
+      // still get position for safari
+      if (navigator.permissions) {
+        // check permissions
+        // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions#examples
         navigator.permissions
           .query({ name: 'geolocation' })
           .then(({ state }) => {
             if (state === 'granted') {
-              console.log('enableGeolocation', state);
-
-              const success = (pos: {
-                coords: { latitude: number; longitude: number };
-              }) => {
-                const crd = pos.coords;
-                setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
-                setHasFetchedCurrentLocation(true);
-              };
-
-              navigator.geolocation.getCurrentPosition(
-                success,
-                (err: { code: number; message: string }) => {
-                  // eslint-disable-next-line no-console
-                  console.warn(`ERROR(${err.code}): ${err.message}`);
-                  setHasFetchedCurrentLocation(true);
-                },
-                options,
-              );
+              getCurrentPosition();
             } else {
               console.error('geolocation denied:', state);
               setHasFetchedCurrentLocation(true);
@@ -77,6 +76,9 @@ const useCurrentLocation = (enableGeolocation = false) => {
             console.error('geolocation denied:', e);
             setHasFetchedCurrentLocation(true);
           });
+      } else {
+        // still get position for safari
+        getCurrentPosition();
       }
     }
   }, [enableGeolocation]);
