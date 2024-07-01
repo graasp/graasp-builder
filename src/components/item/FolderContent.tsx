@@ -86,13 +86,12 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
           </Stack>
         </Stack>
         <FolderDescription itemId={item.id} />
-        {mode === ItemLayoutMode.Map && (
+        {mode === ItemLayoutMode.Map ? (
           <>
             <ModeButton />
             <DesktopMap parentId={item.id} />
           </>
-        )}
-        {mode !== ItemLayoutMode.Map && (
+        ) : (
           <>
             <Stack
               alignItems="space-between"

@@ -92,7 +92,8 @@ const FileUploader = ({
             onDrop([...e.target.files]);
           }
         }}
-        loading={isLoading && Math.ceil(totalProgress * 100)}
+        isLoading={isLoading}
+        uploadProgress={Math.ceil(totalProgress * 100)}
         multiple
         onDrop={onDrop}
         error={error}
