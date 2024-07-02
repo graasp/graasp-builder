@@ -31,7 +31,8 @@ describe('View Folder', () => {
     const { id } = parentItem;
     cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Map }));
 
-    cy.get(`#${buildMapViewId(id)}`).should('be.visible');
+    // wait on getting geoloc
+    cy.get(`#${buildMapViewId(id)}`, { timeout: 10000 }).should('be.visible');
   });
 
   describe('Grid', () => {
