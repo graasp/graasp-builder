@@ -26,7 +26,7 @@ const options = {
   maximumAge: 0,
 };
 
-const useCurrentLocation = (enableGeolocation = false) => {
+const useCurrentLocation = (enableGeolocation = true) => {
   const [hasFetchedCurrentLocation, setHasFetchedCurrentLocation] =
     useState(false);
 
@@ -57,6 +57,7 @@ const useCurrentLocation = (enableGeolocation = false) => {
 
   // get current location
   useEffect(() => {
+    console.log(getCurrentPosition());
     if (enableGeolocation) {
       if (navigator.permissions) {
         // check permissions

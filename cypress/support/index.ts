@@ -85,6 +85,8 @@ declare global {
         item: { name?: string },
         options?: { confirm?: boolean },
       ): void;
+
+      stubGeolocationPermission(): void;
     }
   }
 }

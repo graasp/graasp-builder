@@ -28,6 +28,8 @@ describe('View Folder', () => {
       items,
     });
 
+    cy.stubGeolocationPermission();
+
     const { id } = parentItem;
     cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Map }));
 
