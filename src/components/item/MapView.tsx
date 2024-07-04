@@ -57,7 +57,6 @@ const useCurrentLocation = (enableGeolocation = true) => {
 
   // get current location
   useEffect(() => {
-    console.log(getCurrentPosition());
     if (enableGeolocation) {
       if (navigator.permissions) {
         // check permissions
