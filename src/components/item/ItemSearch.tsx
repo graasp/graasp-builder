@@ -2,7 +2,6 @@ import { ChangeEvent, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
 import { SearchInput } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -32,7 +31,6 @@ export const useItemSearch = ({
 }: {
   onSearch?: () => void;
 } = {}): {
-  results?: DiscriminatedItem[];
   text: string;
   input: JSX.Element;
 } => {
@@ -41,7 +39,7 @@ export const useItemSearch = ({
 
   const handleSearchInput = (event: ChangeEvent<{ value: string }>) => {
     const text = event.target.value;
-    setSearchText(text.toLowerCase());
+    setSearchText(text);
     onSearch?.();
   };
 

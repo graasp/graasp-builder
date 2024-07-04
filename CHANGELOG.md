@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.30.1](https://github.com/graasp/graasp-builder/compare/v2.30.0...v2.30.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* allow children search case ([#1299](https://github.com/graasp/graasp-builder/issues/1299)) ([1d7de28](https://github.com/graasp/graasp-builder/commit/1d7de28b84ee1d30b0c908808a45850669bd5d9e))
+* **deps:** update dependency @sentry/react to v7.118.0 ([#1313](https://github.com/graasp/graasp-builder/issues/1313)) ([68a9b1e](https://github.com/graasp/graasp-builder/commit/68a9b1e47e37268b751e1e0f76f87eb77c6bc675))
+* **deps:** update dependency react-qr-code to v2.0.15 ([#1312](https://github.com/graasp/graasp-builder/issues/1312)) ([949a64a](https://github.com/graasp/graasp-builder/commit/949a64aa3e76086d9ea016253620ad77a4de9f9e))
+* **deps:** update graasp packages (minor) ([#1310](https://github.com/graasp/graasp-builder/issues/1310)) ([b0fc421](https://github.com/graasp/graasp-builder/commit/b0fc4217233af2435a3b417734c11154e3d71477))
+
 ## [2.30.0](https://github.com/graasp/graasp-builder/compare/v2.29.0...v2.30.0) (2024-07-01)
 
 
