@@ -418,14 +418,3 @@ Cypress.Commands.add('attachFiles', (selector, filenames, options = {}) => {
   );
   selector.selectFile(correctFilenames, options);
 });
-
-Cypress.Commands.add('stubGeolocationPermission', () => {
-  cy.stub(window.navigator, 'permissions').callsFake(() => 'denied');
-
-  // force Barcelona geolocation
-  const latitude = 41.38879;
-  const longitude = 2.15899;
-  cy.stub(window.navigator.geolocation, 'getCurrentPosition').callsFake((cb) =>
-    cb({ coords: { latitude, longitude } }),
-  );
-});

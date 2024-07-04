@@ -24,8 +24,6 @@ const items = [parentItem, item1, child1, child2];
 
 describe('View Folder', () => {
   it('View folder on map by default', () => {
-    cy.stubGeolocationPermission();
-
     cy.setUpApi({
       items,
     });

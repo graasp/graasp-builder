@@ -125,14 +125,14 @@ const MapView = ({
           )}
         </Stack>
         <Stack flex={1}>
-          {(parentId && isLoadingParent) ||
-          (enableGeolocation && !hasFetchedCurrentLocation) ? (
-            <Skeleton width="100%" height="100%" />
-          ) : (
-            <div
-              id={buildMapViewId(parentId)}
-              style={{ width: '100%', height: '100%' }}
-            >
+          <div
+            id={buildMapViewId(parentId)}
+            style={{ width: '100%', height: '100%' }}
+          >
+            {(parentId && isLoadingParent) ||
+            (enableGeolocation && !hasFetchedCurrentLocation) ? (
+              <Skeleton width="100%" height="100%" />
+            ) : (
               <Map
                 currentPosition={currentPosition}
                 useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
@@ -149,8 +149,8 @@ const MapView = ({
                 // todo: always use builder modal when it is responsive
                 handleAddOnClick={isMobile ? undefined : handleAddOnClick}
               />
-            </div>
-          )}
+            )}
+          </div>
         </Stack>
       </Stack>
       {!isMobile && (

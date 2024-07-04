@@ -48,9 +48,7 @@ const interceptAccessibleItemsSearch = (searchTerm: string) =>
     .as('getAccessibleSearch');
 
 describe('Home', () => {
-  it.only('visit Home on map by default', () => {
-    cy.stubGeolocationPermission();
-
+  it('visit Home on map by default', () => {
     cy.setUpApi({
       items: generateOwnItems(30),
     });
