@@ -49,13 +49,13 @@ const interceptAccessibleItemsSearch = (searchTerm: string) =>
 
 describe('Home', () => {
   it.only('visit Home on map by default', () => {
+    cy.stubGeolocationPermission();
+
     cy.setUpApi({
       items: generateOwnItems(30),
     });
     i18n.changeLanguage(CURRENT_USER.extra.lang as string);
     cy.visit(`${HOME_PATH}?mode=map`);
-
-    cy.stubGeolocationPermission();
 
     cy.get(`#${buildMapViewId()}`, { timeout: 10000 }).should('be.visible');
   });
