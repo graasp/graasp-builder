@@ -26,7 +26,7 @@ const options = {
   maximumAge: 0,
 };
 
-const useCurrentLocation = (enableGeolocation = false) => {
+const useCurrentLocation = (enableGeolocation = true) => {
   const [hasFetchedCurrentLocation, setHasFetchedCurrentLocation] =
     useState(false);
 
@@ -35,43 +35,52 @@ const useCurrentLocation = (enableGeolocation = false) => {
     lng: number;
   }>();
 
+  const getCurrentPosition = () => {
+    const success = (pos: {
+      coords: { latitude: number; longitude: number };
+    }) => {
+      const crd = pos.coords;
+      setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
+      setHasFetchedCurrentLocation(true);
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      success,
+      (err: { code: number; message: string }) => {
+        // eslint-disable-next-line no-console
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+        setHasFetchedCurrentLocation(true);
+      },
+      options,
+    );
+  };
+
   // get current location
   useEffect(() => {
     if (enableGeolocation) {
-      // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions#examples
-      if (!navigator.permissions) {
-        setHasFetchedCurrentLocation(true);
-      } else {
+      if (navigator.permissions) {
+        // check permissions
+        // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions#examples
         navigator.permissions
           .query({ name: 'geolocation' })
           .then(({ state }) => {
-            if (state === 'granted') {
-              const success = (pos: {
-                coords: { latitude: number; longitude: number };
-              }) => {
-                const crd = pos.coords;
-                setCurrentPosition({ lat: crd.latitude, lng: crd.longitude });
-                setHasFetchedCurrentLocation(true);
-              };
-
-              navigator.geolocation.getCurrentPosition(
-                success,
-                (err: { code: number; message: string }) => {
-                  // eslint-disable-next-line no-console
-                  console.warn(`ERROR(${err.code}): ${err.message}`);
-                  setHasFetchedCurrentLocation(true);
-                },
-                options,
-              );
-            } else {
+            if (state === 'denied') {
               console.error('geolocation denied:', state);
               setHasFetchedCurrentLocation(true);
+            }
+            // allows granted and prompt values (safari)
+            else {
+              getCurrentPosition();
             }
           })
           .catch((e) => {
             console.error('geolocation denied:', e);
             setHasFetchedCurrentLocation(true);
           });
+      } else {
+        // navigator.permissions does not exist in safari
+        // still try to get position for webview's ios
+        getCurrentPosition();
       }
     }
   }, [enableGeolocation]);
@@ -116,14 +125,14 @@ const MapView = ({
           )}
         </Stack>
         <Stack flex={1}>
-          {(parentId && isLoadingParent) ||
-          (enableGeolocation && !hasFetchedCurrentLocation) ? (
-            <Skeleton width="100%" height="100%" />
-          ) : (
-            <div
-              id={buildMapViewId(parentId)}
-              style={{ width: '100%', height: '100%' }}
-            >
+          <div
+            id={buildMapViewId(parentId)}
+            style={{ width: '100%', height: '100%' }}
+          >
+            {(parentId && isLoadingParent) ||
+            (enableGeolocation && !hasFetchedCurrentLocation) ? (
+              <Skeleton width="100%" height="100%" />
+            ) : (
               <Map
                 currentPosition={currentPosition}
                 useDeleteItemGeolocation={mutations.useDeleteItemGeolocation}
@@ -140,8 +149,8 @@ const MapView = ({
                 // todo: always use builder modal when it is responsive
                 handleAddOnClick={isMobile ? undefined : handleAddOnClick}
               />
-            </div>
-          )}
+            )}
+          </div>
         </Stack>
       </Stack>
       {!isMobile && (

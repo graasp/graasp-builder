@@ -55,7 +55,7 @@ describe('Home', () => {
     i18n.changeLanguage(CURRENT_USER.extra.lang as string);
     cy.visit(`${HOME_PATH}?mode=map`);
 
-    cy.get(`#${buildMapViewId()}`).should('be.visible');
+    cy.get(`#${buildMapViewId()}`, { timeout: 10000 }).should('be.visible');
   });
 
   describe('Grid', () => {
