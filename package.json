@@ -101,7 +101,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@cypress/code-coverage": "3.12.39",
+    "@cypress/code-coverage": "3.12.41",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -112,7 +112,7 @@
     "@types/lodash.isequal": "4.5.8",
     "@types/lodash.partition": "4.6.9",
     "@types/lodash.truncate": "4.4.9",
-    "@types/node": "20.14.9",
+    "@types/node": "20.14.10",
     "@types/papaparse": "5.3.14",
     "@types/react": "18.3.3",
     "@types/react-csv": "1.1.10",
