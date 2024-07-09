@@ -1529,20 +1529,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.15.2":
-  version: 3.15.2
-  resolution: "@graasp/query-client@npm:3.15.2"
+"@graasp/query-client@github:graasp/graasp-query-client#renovate/qs-6.12.x":
+  version: 3.15.1
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=5486715c2921a15696d1a092e231da0550c6ab75"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
     axios: "npm:1.7.2"
     http-status-codes: "npm:2.3.0"
-    qs: "npm:6.12.1"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/137cbbdc721b244ee85b3e3a658b0aef3ecfd816eddafaaa8408783d5a5d97680303b2bde61d1b4de9939562b556c6224a18f0d1891c8f27cd44d7983a923c2e
+  checksum: 10/717eda8ad7f2b1f5bf2d1ae9ff642ddb7d6c31f2e3d9e55aadac974748e7fa0d3df728f55e4fc8029bbb15ddf0f9a38ae8754bd6d52e07a0f2ef2beb34126bc1
   languageName: node
   linkType: hard
 
@@ -7680,7 +7679,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.16.0"
-    "@graasp/query-client": "npm:3.15.2"
+    "@graasp/query-client": "github:graasp/graasp-query-client#renovate/qs-6.12.x"
     "@graasp/sdk": "npm:4.17.0"
     "@graasp/translations": "npm:1.32.0"
     "@graasp/ui": "npm:4.21.0"
@@ -11239,15 +11238,6 @@ __metadata:
   dependencies:
     side-channel: "npm:^1.0.4"
   checksum: 10/5a3bfea3e2f359ede1bfa5d2f0dbe54001aa55e40e27dc3e60fab814362d83a9b30758db057c2011b6f53a2d4e4e5150194b5bac45372652aecb3e3c0d4b256e
-  languageName: node
-  linkType: hard
-
-"qs@npm:6.12.1":
-  version: 6.12.1
-  resolution: "qs@npm:6.12.1"
-  dependencies:
-    side-channel: "npm:^1.0.6"
-  checksum: 10/035bcad2a1ab0175bac7a74c904c15913bdac252834149ccff988c93a51de02642fe7be10e43058ba4dc4094bb28ce9b59d12b9e91d40997f445cfde3ecc1c29
   languageName: node
   linkType: hard
 
