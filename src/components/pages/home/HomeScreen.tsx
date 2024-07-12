@@ -29,9 +29,9 @@ import ShowOnlyMeButton from '../../table/ShowOnlyMeButton';
 import SortingSelect from '../../table/SortingSelect';
 import { SortingOptions } from '../../table/types';
 import { useSorting } from '../../table/useSorting';
+import NoItemFilters from '../NoItemFilters';
 import PageWrapper from '../PageWrapper';
 import HomeScreenLoading from './HomeScreenLoading';
-import HomeScreenNoItemFilters from './HomeScreenNoItemForFilters';
 
 const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -110,7 +110,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
         </>
       );
     } else if (itemTypes.length || searchText) {
-      content = <HomeScreenNoItemFilters searchText={searchText} />;
+      content = <NoItemFilters searchText={searchText} />;
     }
 
     return (

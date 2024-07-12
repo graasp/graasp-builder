@@ -4,11 +4,7 @@ import { useFilterItemsContext } from '@/components/context/FilterItemsContext';
 import { useBuilderTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 
-const HomeScreenNoItemFilters = ({
-  searchText,
-}: {
-  searchText: string;
-}): JSX.Element => {
+const NoItemFilters = ({ searchText }: { searchText: string }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { itemTypes } = useFilterItemsContext();
 
@@ -29,12 +25,12 @@ const HomeScreenNoItemFilters = ({
         <Typography variant="body1" textAlign="center">
           <strong>
             {translateBuilder(BUILDER.ITEM_SEARCH_NOTHING_FOUND_TYPES_TITLE)}:{' '}
-            {itemTypes.join(', ')}
           </strong>
+          {itemTypes.join(', ')}
         </Typography>
       ) : null}
     </>
   );
 };
 
-export default HomeScreenNoItemFilters;
+export default NoItemFilters;

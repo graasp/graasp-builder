@@ -24,6 +24,7 @@ import FileUploader from '../file/FileUploader';
 import ItemsTable from '../main/ItemsTable';
 import NewItemButton from '../main/NewItemButton';
 import { DesktopMap } from '../map/DesktopMap';
+import NoItemFilters from '../pages/NoItemFilters';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptionsForFolder } from '../table/types';
 import { useSorting } from '../table/useSorting';
@@ -35,7 +36,7 @@ import ModeButton from './header/ModeButton';
  * Helper component to render typed folder items
  */
 const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
-  const { shouldDisplayItem } = useFilterItemsContext();
+  const { shouldDisplayItem, itemTypes } = useFilterItemsContext();
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateEnums } = useEnumsTranslation();
   const { mode } = useLayoutContext();
@@ -97,7 +98,9 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
         <FolderDescription itemId={item.id} />
         {mode === ItemLayoutMode.Map ? (
           <>
-            <ModeButton />
+            <Stack direction="row" justifyContent="right">
+              <ModeButton />
+            </Stack>
             <DesktopMap parentId={item.id} />
           </>
         ) : (
@@ -133,22 +136,33 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
                 </Stack>
               </Stack>
             </Stack>
-            <ItemsTable
-              enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
-              id={buildItemsTableId(item.id)}
-              items={folderChildren ?? []}
-            />
-            {/* do not show new button on search or reset */}
-            {Boolean(enableEditing && !itemSearch.text) && (
-              <Stack alignItems="center" mb={2}>
-                <NewItemButton
-                  type="icon"
-                  key="newButton"
-                  // add new items at the end of the list
-                  previousItemId={children[children.length - 1]?.id}
+            {/* items to show */}
+            {folderChildren?.length ? (
+              <>
+                <ItemsTable
+                  enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
+                  id={buildItemsTableId(item.id)}
+                  items={folderChildren ?? []}
                 />
-              </Stack>
-            )}
+                {Boolean(
+                  enableEditing && !itemSearch.text && !itemTypes?.length,
+                ) && (
+                  <Stack alignItems="center" mb={2}>
+                    <NewItemButton
+                      type="icon"
+                      key="newButton"
+                      // add new items at the end of the list
+                      previousItemId={children[children.length - 1]?.id}
+                    />
+                  </Stack>
+                )}
+              </>
+            ) : null}
+
+            {/* no items to show because of filters */}
+            {Boolean(
+              !folderChildren?.length && (itemSearch.text || itemTypes.length),
+            ) && <NoItemFilters searchText={itemSearch.text} />}
           </>
         )}
       </>

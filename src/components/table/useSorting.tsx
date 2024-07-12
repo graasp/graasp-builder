@@ -34,7 +34,7 @@ export const useSorting = <T extends AllSortingOptions = SortingOptions>({
     let value = 0;
     switch (sortBy) {
       case SortingOptions.ItemName:
-        value = a.name > b.name ? 1 : -1;
+        value = a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
         break;
       case SortingOptions.ItemCreator:
         if (!a.creator) {
@@ -42,7 +42,10 @@ export const useSorting = <T extends AllSortingOptions = SortingOptions>({
         } else if (!b.creator) {
           value = 1;
         } else {
-          value = a.creator?.name > b.creator?.name ? 1 : -1;
+          value =
+            a.creator?.name?.toLowerCase() > b.creator?.name?.toLowerCase()
+              ? 1
+              : -1;
         }
         break;
       case SortingOptions.ItemType:
