@@ -7,10 +7,7 @@ import {
 
 import { v4 } from 'uuid';
 
-import {
-  SETTINGS,
-  SETTINGS_ITEM_LOGIN_DEFAULT,
-} from '../../../../src/config/constants';
+import { SETTINGS_ITEM_LOGIN_DEFAULT } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
@@ -37,10 +34,6 @@ const addItemLoginSchema = (
   },
 });
 
-const changeSignInMode = (mode: string) => {
-  cy.get(`li[data-value="${mode}"]`).click();
-};
-
 const checkItemLoginScreenLayout = (
   itemLoginSchema:
     | ItemLoginSchemaType
@@ -60,7 +53,6 @@ const fillItemLoginScreenLayout = ({
   username?: string;
   password?: string;
 }) => {
-  changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM);
   cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).clear().type(username);
 
   if (password) {
@@ -114,7 +106,7 @@ describe('Item Login', () => {
 
   describe('User is signed out', () => {
     describe('Display Item Login Screen', () => {
-      it('username or member id', () => {
+      it('username', () => {
         const item = addItemLoginSchema(
           PackedFolderItemFactory({}, { permission: null }),
           ItemLoginSchemaType.Username,
@@ -134,7 +126,7 @@ describe('Item Login', () => {
         });
         cy.wait('@postItemLogin');
       });
-      it('username or member id and password', () => {
+      it('username and password', () => {
         const item = addItemLoginSchema(
           PackedFolderItemFactory({}, { permission: null }),
           ItemLoginSchemaType.UsernameAndPassword,

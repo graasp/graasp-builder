@@ -83,7 +83,9 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
       </Box>
     );
     if (data.pages[0].data.length) {
-      const totalFetchedItems = data ? data.pages[0].totalCount : 0;
+      const totalFetchedItems = data
+        ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
+        : 0;
       content = (
         <>
           <ItemsTable
