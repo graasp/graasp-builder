@@ -76,9 +76,14 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   }
 
   if (data && data.pages.length) {
-    let content = <FileUploader buttons={<NewItemButton />} />;
+    // default show upload zone
+    let content = (
+      <Box mt={2}>
+        <FileUploader buttons={<NewItemButton />} />
+      </Box>
+    );
     if (data.pages[0].data.length) {
-      const totalFetchedItems = data ? data.pages.length * ITEM_PAGE_SIZE : 0;
+      const totalFetchedItems = data ? data.pages[0].totalCount : 0;
       content = (
         <>
           <ItemsTable
@@ -97,7 +102,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
           {!isFetching && data.pages[0].totalCount === totalFetchedItems && (
             // avoids button fullwidth
             <Stack alignItems="center" mb={2}>
-              <NewItemButton />
+              <NewItemButton type="icon" />
             </Stack>
           )}
         </>

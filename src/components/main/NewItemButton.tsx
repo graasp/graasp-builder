@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Add as AddIcon } from '@mui/icons-material';
-import { ButtonProps } from '@mui/material';
+import { ButtonProps, IconButton, useTheme } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
@@ -14,14 +14,17 @@ import NewItemModal from './NewItemModal';
 type Props = {
   previousItemId?: DiscriminatedItem['id'];
   size?: ButtonProps['size'];
+  type?: 'button' | 'icon';
 };
 
 const NewItemButton = ({
   previousItemId,
   size = 'small',
+  type = 'button',
 }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
+  const theme = useTheme();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,16 +36,29 @@ const NewItemButton = ({
 
   return (
     <>
-      <Button
-        id={CREATE_ITEM_BUTTON_ID}
-        onClick={handleClickOpen}
-        color="primary"
-        aria-label="add"
-        startIcon={<AddIcon />}
-        size={size}
-      >
-        {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
-      </Button>
+      {type === 'icon' ? (
+        <IconButton
+          onClick={handleClickOpen}
+          color="secondary"
+          sx={{
+            background: theme.palette.primary.main,
+            '&:hover': { background: 'grey' },
+          }}
+        >
+          <AddIcon />
+        </IconButton>
+      ) : (
+        <Button
+          id={CREATE_ITEM_BUTTON_ID}
+          onClick={handleClickOpen}
+          color="primary"
+          aria-label="add"
+          startIcon={<AddIcon />}
+          size={size}
+        >
+          {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+        </Button>
+      )}
       <NewItemModal
         open={open}
         handleClose={handleClose}

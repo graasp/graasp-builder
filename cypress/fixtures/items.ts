@@ -16,7 +16,7 @@ import { CURRENT_USER, MEMBERS } from './members';
 
 export const DEFAULT_FOLDER_ITEM = PackedFolderItemFactory({
   name: 'default folder',
-  extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
+  extra: { [ItemType.FOLDER]: {} },
   creator: CURRENT_USER,
 });
 

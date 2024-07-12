@@ -142,6 +142,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
             {Boolean(enableEditing && !itemSearch.text) && (
               <Stack alignItems="center" mb={2}>
                 <NewItemButton
+                  type="icon"
                   key="newButton"
                   // add new items at the end of the list
                   previousItemId={children[children.length - 1]?.id}

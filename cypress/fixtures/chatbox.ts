@@ -15,7 +15,7 @@ import { CURRENT_USER, MEMBERS } from './members';
 const item: FolderItemType = {
   ...DEFAULT_FOLDER_ITEM,
   type: ItemType.FOLDER,
-  extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
+  extra: { [ItemType.FOLDER]: {} },
   id: 'adf09f5a-5688-11eb-ae93-0242ac130004',
   path: 'adf09f5a_5688_11eb_ae93_0242ac130004',
   name: 'item with chatbox messages',

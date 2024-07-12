@@ -196,7 +196,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.IMPORT_ZIP_TITLE)}
             </Typography>
-            <ImportZip previousItemId={previousItemId} />
+            <ImportZip />
           </>
         );
       case ItemType.H5P:

@@ -15,8 +15,6 @@ import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
-  ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
-  ITEM_LOGIN_SIGN_IN_MODE_ID,
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
@@ -40,7 +38,6 @@ const addItemLoginSchema = (
 });
 
 const changeSignInMode = (mode: string) => {
-  cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
   cy.get(`li[data-value="${mode}"]`).click();
 };
 
@@ -59,19 +56,12 @@ const checkItemLoginScreenLayout = (
 const fillItemLoginScreenLayout = ({
   username,
   password,
-  memberId,
 }: {
   username?: string;
   password?: string;
-  memberId?: string;
 }) => {
-  if (!memberId) {
-    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM);
-    cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).clear().type(username);
-  } else {
-    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.MEMBER_ID);
-    cy.get(`#${ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID}`).clear().type(memberId);
-  }
+  changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM);
+  cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).clear().type(username);
 
   if (password) {
     cy.get(`#${ITEM_LOGIN_SIGN_IN_PASSWORD_ID}`).clear().type(password);
@@ -138,12 +128,6 @@ describe('Item Login', () => {
         });
         cy.wait('@postItemLogin');
 
-        // use memberid
-        fillItemLoginScreenLayout({
-          memberId: v4(),
-        });
-        cy.wait('@postItemLogin');
-
         // use username to check no member id is incorrectly sent
         fillItemLoginScreenLayout({
           username: 'username',
@@ -161,13 +145,6 @@ describe('Item Login', () => {
         checkItemLoginScreenLayout(item.itemLoginSchema.type);
         fillItemLoginScreenLayout({
           username: 'username',
-          password: 'password',
-        });
-        cy.wait('@postItemLogin');
-
-        // use memberid
-        fillItemLoginScreenLayout({
-          memberId: v4(),
           password: 'password',
         });
         cy.wait('@postItemLogin');
