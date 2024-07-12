@@ -1,16 +1,14 @@
 import { buildItemPath } from '../../../src/config/paths';
 import {
   NAVIGATION_HOME_LINK_ID,
-  buildItemLink,
-  buildItemsTableRowIdAttribute,
+  buildItemCard,
 } from '../../../src/config/selectors';
 
-Cypress.Commands.add('goToItemInGrid', (id) => {
-  cy.get(`#${buildItemLink(id)}`).click();
-});
-
-Cypress.Commands.add('goToItemInList', (id) => {
-  cy.get(buildItemsTableRowIdAttribute(id)).click();
+Cypress.Commands.add('goToItemInCard', (id) => {
+  // card component might have many click zone
+  cy.get(`#${buildItemCard(id)} a[href="${buildItemPath(id)}"]`)
+    .first()
+    .click();
 });
 
 Cypress.Commands.add('goToHome', () => {

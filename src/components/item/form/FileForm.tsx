@@ -7,8 +7,8 @@ import { ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID } from '@/config/selectors';
 import { getExtraFromPartial } from '@/utils/itemExtra';
 
 import { BUILDER } from '../../../langs/constants';
+import type { EditModalContentPropType } from '../edit/EditModal';
 import DescriptionForm from './DescriptionForm';
-import { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
 
 const FileForm = (props: EditModalContentPropType): JSX.Element | null => {

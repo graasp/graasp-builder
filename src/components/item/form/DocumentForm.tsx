@@ -36,7 +36,7 @@ import {
   ITEM_FORM_DOCUMENT_TEXT_ID,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import type { EditModalContentPropType } from './EditModalWrapper';
+import type { EditModalContentPropType } from '../edit/EditModal';
 import NameForm from './NameForm';
 
 enum EditorMode {

@@ -94,6 +94,7 @@ const {
   buildPatchInvitationRoute,
   buildResendInvitationRoute,
   buildPostUserCSVUploadRoute,
+  buildGetPublishedItemsForMemberRoute,
   buildItemPublishRoute,
   buildUpdateMemberPasswordRoute,
   buildPostItemValidationRoute,
@@ -203,6 +204,7 @@ export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
 
 export const mockGetRecycledItems = (
   recycledItemData: RecycledItemData[],
+  shouldThrowError: boolean,
 ): void => {
   cy.intercept(
     {
@@ -210,6 +212,11 @@ export const mockGetRecycledItems = (
       url: `${API_HOST}/${GET_RECYCLED_ITEMS_DATA_ROUTE}`,
     },
     (req) => {
+      if (shouldThrowError) {
+        req.reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
       req.reply(recycledItemData);
     },
   ).as('getRecycledItems');
@@ -1986,6 +1993,31 @@ export const mockGetManyPublishItemInformations = (
       return reply(result);
     },
   ).as('getManyPublishItemInformations');
+};
+
+export const mockGetPublishItemsForMember = (
+  publishedItemData: ItemPublished[],
+  shoulThrow = false,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Get,
+      url: new RegExp(
+        `${API_HOST}/${buildGetPublishedItemsForMemberRoute(ID_FORMAT)}`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shoulThrow) {
+        return reply({ statusCode: StatusCodes.INTERNAL_SERVER_ERROR });
+      }
+
+      const memberId = url.slice(API_HOST.length).split('/')[4];
+      const published = publishedItemData
+        .filter((p) => p.item.creator.id === memberId)
+        .map((i) => i.item);
+      return reply(published);
+    },
+  ).as('getPublishedItemsForMember');
 };
 
 export const mockGetLatestValidationGroup = (

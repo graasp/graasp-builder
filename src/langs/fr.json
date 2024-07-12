@@ -156,7 +156,7 @@
   "ITEMS_TABLE_ACTIONS_HEADER": "Actions",
   "ITEMS_TABLE_CREATOR_HEADER": "Créateur",
   "ITEMS_TABLE_DRAG_DEFAULT_MESSAGE": "Déplacer un élément",
-  "ITEMS_TABLE_EMPTY_MESSAGE": "Aucun élément",
+  "ITEMS_TABLE_EMPTY_MESSAGE": "Ce dossier ne contient aucun élément",
   "ITEMS_TABLE_NAME_HEADER": "Nom",
   "ITEMS_TABLE_STATUS_HEADER": "Statut",
   "ITEMS_TABLE_SELECTION_TEXT_one": "{{count}} sélectionné",
@@ -381,5 +381,9 @@
   "ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_LABEL": "Informations complémentaires",
   "ITEM_GEOLOCATION_ADVANCED_MODAL_SECONDARY_ADDRESS_PLACEHOLDER": "porte rouge sur la droite, ...",
   "ITEM_GEOLOCATION_ADVANCED_MODAL_COUNTRY_LABEL": "Pays (ex: CH, FR...)",
-  "ITEM_GEOLOCATION_ADVANCED_MODAL_ERROR": "La latitude et longitude doivent être définies"
+  "ITEM_GEOLOCATION_ADVANCED_MODAL_ERROR": "La latitude et longitude doivent être définies",
+  "item.updated_at": "Date d'édition",
+  "item.creator.name": "Créateur",
+  "item.type": "Type",
+  "item.name": "Nom"
 }

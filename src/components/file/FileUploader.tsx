@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 import { Box } from '@mui/material';
 
-import { MAX_NUMBER_OF_FILES_UPLOAD } from '@graasp/sdk';
+import { DiscriminatedItem, MAX_NUMBER_OF_FILES_UPLOAD } from '@graasp/sdk';
 import { FileDropper } from '@graasp/ui';
 
 import { AxiosProgressEvent } from 'axios';
@@ -18,7 +18,9 @@ type Props = {
   onError?: (e: Error) => void;
   buttons?: JSX.Element;
   onStart?: () => void;
+  /** id of the component */
   id?: string;
+  previousItemId?: DiscriminatedItem['id'];
 };
 
 const FileUploader = ({
@@ -28,6 +30,7 @@ const FileUploader = ({
   onStart,
   buttons,
   id,
+  previousItemId,
 }: Props): JSX.Element | null => {
   const { t } = useBuilderTranslation();
   const { itemId: parentItemId } = useParams();
@@ -73,6 +76,7 @@ const FileUploader = ({
         await uploadFiles({
           files: [files[idx]],
           id: parentItemId,
+          previousItemId,
           onUploadProgress: updateForManyFiles(idx),
         });
       } catch (e) {
@@ -83,7 +87,7 @@ const FileUploader = ({
   };
 
   return (
-    <Box width="100%" id={id}>
+    <Box width="100%" id={id} height="100%">
       <FileDropper
         message={t(BUILDER.DROPZONE_HELPER_TEXT)}
         onChange={(e) => {

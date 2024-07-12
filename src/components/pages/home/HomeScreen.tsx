@@ -1,0 +1,193 @@
+import { useState } from 'react';
+
+import { Alert, Box, LinearProgress, Stack } from '@mui/material';
+
+import { Button } from '@graasp/ui';
+
+import { ITEM_PAGE_SIZE } from '@/config/constants';
+import { ShowOnlyMeChangeType } from '@/config/types';
+import { ItemLayoutMode, Ordering } from '@/enums';
+
+import {
+  useBuilderTranslation,
+  useEnumsTranslation,
+} from '../../../config/i18n';
+import { hooks } from '../../../config/queryClient';
+import { ACCESSIBLE_ITEMS_TABLE_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
+import SelectTypes from '../../common/SelectTypes';
+import { useCurrentUserContext } from '../../context/CurrentUserContext';
+import { useFilterItemsContext } from '../../context/FilterItemsContext';
+import { useLayoutContext } from '../../context/LayoutContext';
+import FileUploader from '../../file/FileUploader';
+import { useItemSearch } from '../../item/ItemSearch';
+import ModeButton from '../../item/header/ModeButton';
+import ItemsTable from '../../main/ItemsTable';
+import NewItemButton from '../../main/NewItemButton';
+import { DesktopMap } from '../../map/DesktopMap';
+import ShowOnlyMeButton from '../../table/ShowOnlyMeButton';
+import SortingSelect from '../../table/SortingSelect';
+import { SortingOptions } from '../../table/types';
+import { useSorting } from '../../table/useSorting';
+import PageWrapper from '../PageWrapper';
+import HomeScreenLoading from './HomeScreenLoading';
+import HomeScreenNoItemFilters from './HomeScreenNoItemForFilters';
+
+const HomeScreenContent = ({ searchText }: { searchText: string }) => {
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateEnums } = useEnumsTranslation();
+  const { data: currentMember } = useCurrentUserContext();
+  const { itemTypes } = useFilterItemsContext();
+  const [showOnlyMe, setShowOnlyMe] = useState(false);
+
+  const { mode } = useLayoutContext();
+  const { sortBy, setSortBy, ordering, setOrdering } =
+    useSorting<SortingOptions>({
+      sortBy: SortingOptions.ItemUpdatedAt,
+      ordering: Ordering.DESC,
+    });
+  const { data, fetchNextPage, isLoading, isFetching } =
+    hooks.useInfiniteAccessibleItems(
+      {
+        // todo: in the future this can be any member from creators
+        creatorId: showOnlyMe ? currentMember?.id : undefined,
+        name: searchText,
+        sortBy,
+        ordering,
+        types: itemTypes,
+      },
+      // todo: adapt page size given the user window height
+      { pageSize: ITEM_PAGE_SIZE },
+    );
+
+  const onShowOnlyMeChange: ShowOnlyMeChangeType = (checked) => {
+    setShowOnlyMe(checked);
+  };
+
+  if (mode === ItemLayoutMode.Map) {
+    return (
+      <>
+        <Stack direction="row" justifyContent="flex-end">
+          <ModeButton />
+        </Stack>
+        <DesktopMap />
+      </>
+    );
+  }
+
+  if (data && data.pages.length) {
+    let content = <FileUploader buttons={<NewItemButton />} />;
+    if (data.pages[0].data.length) {
+      const totalFetchedItems = data ? data.pages.length * ITEM_PAGE_SIZE : 0;
+      content = (
+        <>
+          <ItemsTable
+            canMove={!searchText}
+            id={ACCESSIBLE_ITEMS_TABLE_ID}
+            items={data.pages.flatMap(({ data: i }) => i)}
+            enableMoveInBetween={false}
+          />
+          {!isFetching && data.pages[0].totalCount > totalFetchedItems && (
+            <Stack textAlign="center" alignItems="center">
+              <Button variant="outlined" onClick={fetchNextPage} role="feed">
+                {translateBuilder(BUILDER.HOME_SCREEN_LOAD_MORE_BUTTON)}
+              </Button>
+            </Stack>
+          )}
+          {!isFetching && data.pages[0].totalCount === totalFetchedItems && (
+            // avoids button fullwidth
+            <Stack alignItems="center" mb={2}>
+              <NewItemButton />
+            </Stack>
+          )}
+        </>
+      );
+    } else if (itemTypes.length || searchText) {
+      content = <HomeScreenNoItemFilters searchText={searchText} />;
+    }
+
+    return (
+      <>
+        <Stack
+          alignItems="space-between"
+          direction="column"
+          mt={2}
+          gap={1}
+          width="100%"
+        >
+          <Stack spacing={1}>
+            <ShowOnlyMeButton
+              onClick={onShowOnlyMeChange}
+              enabled={showOnlyMe}
+            />
+          </Stack>
+          <Stack
+            spacing={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <SelectTypes />
+            <Stack direction="row" gap={1}>
+              {sortBy && setSortBy && (
+                <SortingSelect<SortingOptions>
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                  ordering={ordering}
+                  setOrdering={setOrdering}
+                  options={Object.values(SortingOptions).sort((t1, t2) =>
+                    translateEnums(t1).localeCompare(translateEnums(t2)),
+                  )}
+                />
+              )}
+              <ModeButton />
+            </Stack>
+          </Stack>
+        </Stack>
+        <Stack>
+          {content}
+          {data && isFetching && (
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress />
+            </Box>
+          )}
+        </Stack>
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return <HomeScreenLoading />;
+  }
+
+  return (
+    <Alert severity="error">{translateBuilder(BUILDER.ERROR_MESSAGE)}</Alert>
+  );
+};
+
+const HomeScreen = (): JSX.Element => {
+  const { t: translateBuilder } = useBuilderTranslation();
+
+  const itemSearch = useItemSearch();
+
+  return (
+    <PageWrapper
+      title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
+      options={
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+          spacing={1}
+        >
+          {itemSearch.input}
+          <NewItemButton key="newButton" size="medium" />
+        </Stack>
+      }
+    >
+      <HomeScreenContent searchText={itemSearch.text} />
+    </PageWrapper>
+  );
+};
+
+export default HomeScreen;

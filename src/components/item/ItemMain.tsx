@@ -1,6 +1,6 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
-import { Box, Divider, Typography, styled } from '@mui/material';
+import { Box, Container, Divider, Typography, styled } from '@mui/material';
 
 import { PackedItem } from '@graasp/sdk';
 import { DrawerHeader } from '@graasp/ui';
@@ -58,7 +58,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
       <Helmet>
         <title>{item.name}</title>
       </Helmet>
-      <Box id={id} p={2} className={ITEM_MAIN_CLASS} height="100%">
+      <Box id={id} pt={2} className={ITEM_MAIN_CLASS} height="100%">
         {isChatboxMenuOpen && (
           <ItemPanel open={isChatboxMenuOpen}>
             <DrawerHeader
@@ -79,9 +79,11 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
           </ItemPanel>
         )}
         <StyledContainer open={isChatboxMenuOpen}>
-          <ItemHeader showNavigation />
+          <Container>
+            <ItemHeader showNavigation />
 
-          {children}
+            {children}
+          </Container>
         </StyledContainer>
       </Box>
     </>

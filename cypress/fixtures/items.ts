@@ -254,7 +254,7 @@ export const PublishedItemFactory = (
   ...itemToPublish,
   published: {
     id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-    item,
+    item: itemToPublish,
     createdAt: new Date().toISOString(),
     creator: itemToPublish.creator,
     totalViews: 0,

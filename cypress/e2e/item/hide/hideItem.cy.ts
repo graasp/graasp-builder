@@ -8,10 +8,8 @@ import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   HIDDEN_ITEM_BUTTON_CLASS,
   buildHideButtonId,
-  buildItemMenu,
-  buildItemMenuButtonId,
+  buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
-import { ItemLayoutMode } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
 import { ItemForTest } from '../../../support/types';
 
@@ -53,110 +51,53 @@ const ITEM = PackedFolderItemFactory(
 );
 
 const toggleHideButton = (itemId: string, isHidden = false) => {
-  // table re-renders when this resolves, so we wait for the call to be made
-  cy.wait('@getManyPublishItemInformations');
-  const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
-  cy.get(menuSelector).click();
+  cy.get(buildItemsGridMoreButtonSelector(itemId)).click();
 
-  cy.get(`#${buildItemMenu(itemId)} .${HIDDEN_ITEM_BUTTON_CLASS}`)
+  cy.get(`.${HIDDEN_ITEM_BUTTON_CLASS}`)
     .should('have.attr', 'data-cy', buildHideButtonId(isHidden))
     .click();
 };
 
-describe('Hiding Item', () => {
-  describe('Successfully hide item in List', () => {
-    beforeEach(() => {
-      cy.setUpApi({ items: [ITEM, HIDDEN_ITEM, CHILD_HIDDEN_ITEM] });
-    });
-
-    it('Hide an item', () => {
-      cy.visit(HOME_PATH);
-
-      toggleHideButton(ITEM.id, false);
-
-      cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
-        ({ request: { url } }) => {
-          expect(url).to.contain(ItemTagType.Hidden);
-          expect(url).to.contain(ITEM.id);
-        },
-      );
-    });
-
-    it('Show an item', () => {
-      cy.visit(HOME_PATH);
-      const item = HIDDEN_ITEM;
-
-      // make sure to wait for the tags to be fetched
-      toggleHideButton(item.id, true);
-
-      cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
-        ({ request: { url } }) => {
-          expect(url).to.contain(ItemTagType.Hidden);
-          expect(url).to.contain(item.id);
-        },
-      );
-    });
-
-    it('Cannot hide child of hidden item', () => {
-      cy.visit(buildItemPath(HIDDEN_ITEM.id));
-      cy.get(`#${buildItemMenuButtonId(CHILD_HIDDEN_ITEM.id)}`).click();
-      cy.get(
-        `#${buildItemMenu(CHILD_HIDDEN_ITEM.id)} .${HIDDEN_ITEM_BUTTON_CLASS}`,
-      ).should(($menuItem) => {
-        const classList = Array.from($menuItem[0].classList);
-        // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
-        expect(classList.some((c) => c.includes('disabled'))).to.be.true;
-      });
-    });
+describe('Hide Item', () => {
+  beforeEach(() => {
+    cy.setUpApi({ items: [ITEM, HIDDEN_ITEM, CHILD_HIDDEN_ITEM] });
   });
 
-  describe('Successfully hide item in Grid', () => {
-    beforeEach(() => {
-      cy.setUpApi({ items: [ITEM, HIDDEN_ITEM, CHILD_HIDDEN_ITEM] });
-    });
+  it('Hide an item', () => {
+    cy.visit(HOME_PATH);
 
-    it('Hide an item', () => {
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
-      const item = ITEM;
+    toggleHideButton(ITEM.id, false);
 
-      toggleHideButton(item.id, false);
+    cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
+      ({ request: { url } }) => {
+        expect(url).to.contain(ItemTagType.Hidden);
+        expect(url).to.contain(ITEM.id);
+      },
+    );
+  });
 
-      cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
-        ({ request: { url } }) => {
-          expect(url).to.contain(ItemTagType.Hidden);
-          expect(url).to.contain(item.id);
-        },
-      );
-    });
+  it('Show an item', () => {
+    cy.visit(HOME_PATH);
+    const item = HIDDEN_ITEM;
 
-    it('Show an Item', () => {
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
-      const item = HIDDEN_ITEM;
+    // make sure to wait for the tags to be fetched
+    toggleHideButton(item.id, true);
 
-      toggleHideButton(item.id, true);
+    cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
+      ({ request: { url } }) => {
+        expect(url).to.contain(ItemTagType.Hidden);
+        expect(url).to.contain(item.id);
+      },
+    );
+  });
 
-      cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
-        ({ request: { url } }) => {
-          expect(url).to.contain(item.id);
-          expect(url).to.contain(ItemTagType.Hidden);
-        },
-      );
-    });
-
-    it('Cannot hide child of hidden item', () => {
-      cy.visit(buildItemPath(HIDDEN_ITEM.id));
-      cy.switchMode(ItemLayoutMode.Grid);
-
-      cy.get(`#${buildItemMenuButtonId(CHILD_HIDDEN_ITEM.id)}`).click();
-      cy.get(
-        `#${buildItemMenu(CHILD_HIDDEN_ITEM.id)} .${HIDDEN_ITEM_BUTTON_CLASS}`,
-      ).should(($menuItem) => {
-        const classList = Array.from($menuItem[0].classList);
-        // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
-        expect(classList.some((c) => c.includes('disabled'))).to.be.true;
-      });
+  it('Cannot hide child of hidden item', () => {
+    cy.visit(buildItemPath(HIDDEN_ITEM.id));
+    cy.get(buildItemsGridMoreButtonSelector(CHILD_HIDDEN_ITEM.id)).click();
+    cy.get(`.${HIDDEN_ITEM_BUTTON_CLASS}`).should(($menuItem) => {
+      const classList = Array.from($menuItem[0].classList);
+      // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
+      expect(classList.some((c) => c.includes('disabled'))).to.be.true;
     });
   });
 });

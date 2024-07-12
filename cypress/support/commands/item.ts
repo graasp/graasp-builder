@@ -27,7 +27,6 @@ import {
   CUSTOM_APP_URL,
   NEW_APP_NAME,
 } from '../../fixtures/apps/apps';
-import { TREE_VIEW_PAUSE } from '../constants';
 
 Cypress.Commands.add(
   'fillShareForm',
@@ -61,8 +60,6 @@ Cypress.Commands.add(
   'handleTreeMenu',
   (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
     const ids = getParentsIdsFromPath(toItemPath);
-
-    cy.wait(TREE_VIEW_PAUSE);
 
     [MY_GRAASP_ITEM_PATH, ...ids].forEach((value, idx, array) => {
       cy.get(`#${treeRootId}`).then(($tree) => {

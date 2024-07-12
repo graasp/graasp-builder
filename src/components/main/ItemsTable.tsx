@@ -1,340 +1,200 @@
-import { useCallback } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Trans } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import {
-  DiscriminatedItem,
-  ItemType,
-  PermissionLevel,
-  PermissionLevelCompare,
-  formatDate,
-  getFolderExtra,
-  getShortcutExtra,
-} from '@graasp/sdk';
+import { DialogActions, DialogContent, Skeleton } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import { ItemType, PackedItem } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { Table as GraaspTable } from '@graasp/ui/table';
+import { Button, DraggingWrapper } from '@graasp/ui';
 
 import {
-  CellClickedEvent,
-  ColDef,
-  IRowDragItem,
-  SortChangedEvent,
-} from '@ag-grid-community/core';
-
-import { ShowOnlyMeChangeType } from '@/config/types';
-
-import { ITEMS_TABLE_CONTAINER_HEIGHT } from '../../config/constants';
-import i18n, {
   useBuilderTranslation,
   useCommonTranslation,
   useEnumsTranslation,
-} from '../../config/i18n';
-import { buildItemPath } from '../../config/paths';
+} from '@/config/i18n';
+import { BUILDER } from '@/langs/constants';
+
 import { hooks, mutations } from '../../config/queryClient';
-import {
-  DROPZONE_HELPER_ID,
-  buildItemsTableRowId,
-} from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
-import FileUploader from '../file/FileUploader';
 import { useUploadWithProgress } from '../hooks/uploadWithProgress';
-import FolderDescription from '../item/FolderDescription';
-import ActionsCellRenderer from '../table/ActionsCellRenderer';
-import BadgesCellRenderer, { ItemsStatuses } from '../table/BadgesCellRenderer';
-import NameCellRenderer from '../table/ItemNameCellRenderer';
-import MemberNameCellRenderer from '../table/MemberNameCellRenderer';
-import ItemsToolbar from './ItemsToolbar';
-import NewItemButton from './NewItemButton';
+import { useItemsStatuses } from '../table/Badges';
+import ItemsTableCard from './ItemsTableCard';
 
 const { useItem } = hooks;
 
 export type ItemsTableProps = {
   id?: string;
-  items?: DiscriminatedItem[];
-  itemsStatuses?: ItemsStatuses;
-  tableTitle: string;
-  headerElements?: JSX.Element[];
-  isSearching?: boolean;
-  actions?: ({ data }: { data: DiscriminatedItem }) => JSX.Element;
-  ToolbarActions?: ({ selectedIds }: { selectedIds: string[] }) => JSX.Element;
-  clickable?: boolean;
-  defaultSortedColumn?: {
-    updatedAt?: 'desc' | 'asc' | null;
-    createdAt?: 'desc' | 'asc' | null;
-    type?: 'desc' | 'asc' | null;
-    name?: 'desc' | 'asc' | null;
-  };
+  items?: PackedItem[];
   showThumbnails?: boolean;
   canMove?: boolean;
-  onShowOnlyMeChange?: ShowOnlyMeChangeType;
-  showOnlyMe?: boolean;
-  page?: number;
-  setPage?: (p: number) => void;
-  totalCount?: number;
-  onSortChanged?: (e: SortChangedEvent) => void;
-  pageSize?: number;
-  showDropzoneHelper?: boolean;
+  enableMoveInBetween?: boolean;
 };
 
 const ItemsTable = ({
-  tableTitle,
   id: tableId = '',
   items: rows = [],
-  itemsStatuses,
-  headerElements = [],
-  isSearching = false,
-  actions,
-  ToolbarActions,
-  clickable = true,
-  defaultSortedColumn,
   showThumbnails = true,
   canMove = true,
-  showOnlyMe,
-  onShowOnlyMeChange,
-  page = 1,
-  setPage,
-  totalCount,
-  onSortChanged,
-  pageSize,
-  showDropzoneHelper = false,
+  enableMoveInBetween = true,
 }: ItemsTableProps): JSX.Element => {
-  const { t: translateBuilder } = useBuilderTranslation();
+  const [open, setOpen] = useState(false);
   const { t: translateCommon } = useCommonTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateEnums } = useEnumsTranslation();
-  const [searchParams] = useSearchParams();
-  const {
-    update,
-    close: closeNotification,
-    closeAndShowError,
-    show,
-  } = useUploadWithProgress();
-  const navigate = useNavigate();
 
   const { itemId } = useParams();
 
   const { data: parentItem } = useItem(itemId);
 
-  const { mutate: editItem } = mutations.useEditItem();
+  const { update, close } = useUploadWithProgress();
+  const { mutateAsync: reorder } = mutations.useReorderItem();
+  const [movingId, setMovingId] = useState<PackedItem['id'] | undefined>();
+  const { mutate: moveItems } = mutations.useMoveItems();
+  const { mutateAsync: uploadItems } = mutations.useUploadFiles();
+  const [moveData, setMoveData] = useState<{
+    movedItem: PackedItem;
+    to: PackedItem;
+  }>();
 
-  const noStatusesToShow =
-    !itemsStatuses ||
-    !Object.values(itemsStatuses)
-      .map((obj) => Object.values(obj).some((e) => e === true))
-      .some((e) => e === true);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  const isFolder = useCallback(() => Boolean(itemId), [itemId]);
-  const canDrag = useCallback(
-    () => isFolder() && !isSearching,
-    [isFolder, isSearching],
-  );
+  const itemsStatuses = useItemsStatuses({
+    items: rows,
+  });
 
-  const getRowNodeId = ({ data }: { data: DiscriminatedItem }) =>
-    buildItemsTableRowId(data.id);
+  const onDropInRow = (movedItem: PackedItem | any, targetItem: PackedItem) => {
+    // prevent drop in non-folder item
+    if (targetItem.type !== ItemType.FOLDER) {
+      toast.error(
+        translateBuilder(BUILDER.MOVE_IN_NON_FOLDER_ERROR_MESSAGE, {
+          type: translateEnums(targetItem.type),
+        }),
+      );
+      return;
+    }
 
-  const onCellClicked = ({
-    column,
-    data,
-  }: CellClickedEvent<DiscriminatedItem, any>) => {
-    if (column.getColId() !== 'actions') {
-      let targetId = data?.id;
+    // upload files in item
+    if (movedItem.files) {
+      uploadItems({
+        files: movedItem.files,
+        id: targetItem.id,
+        onUploadProgress: update,
+      })
+        .then(() => {
+          close();
+        })
+        .catch((e) => {
+          close(e);
+        });
+    } else if (movedItem.id !== targetItem.id) {
+      setOpen(true);
+      setMoveData({ movedItem, to: targetItem });
+    }
+  };
 
-      // redirect to target if shortcut
-      if (data && data.type === ItemType.SHORTCUT) {
-        targetId = getShortcutExtra(data.extra)?.target;
-      }
-      navigate({
-        pathname: buildItemPath(targetId),
-        search: searchParams.toString(),
+  // warning: this won't work anymore with pagination!
+  const onDropBetweenRow = (
+    { files, id }: PackedItem | any,
+    previousItem?: PackedItem,
+  ) => {
+    // upload files at row
+    if (files) {
+      uploadItems({
+        files,
+        id: parentItem?.id,
+        previousItemId: previousItem?.id,
+        onUploadProgress: update,
+      })
+        .then(() => {
+          close();
+        })
+        .catch((e) => {
+          close(e);
+        });
+    } else if (!itemId || !parentItem) {
+      console.error('cannot move in root');
+      toast.error(BUILDER.ERROR_MESSAGE);
+    } else {
+      setMovingId(id);
+      reorder({
+        id,
+        previousItemId: previousItem?.id,
+        parentItemId: parentItem.id,
+      }).finally(() => {
+        setMovingId(undefined);
       });
     }
   };
 
-  const hasOrderChanged = (rowIds: string[]) => {
-    if (parentItem && parentItem.type === ItemType.FOLDER) {
-      const { childrenOrder = [] } = getFolderExtra(parentItem.extra) || {};
-      return (
-        rowIds.length !== childrenOrder.length ||
-        !childrenOrder.every((id, i) => id === rowIds[i])
-      );
-    }
-    return true;
-  };
-
-  const onDragEnd = (displayRows: { data: DiscriminatedItem }[]) => {
-    if (!itemId) {
-      console.error('no item id defined');
-    } else {
-      const rowIds = displayRows.map((r) => r.data.id);
-      if (canDrag() && hasOrderChanged(rowIds)) {
-        editItem({
-          id: itemId,
-          extra: {
-            folder: {
-              childrenOrder: rowIds,
-            },
-          },
-        });
-      }
+  const handleMoveItems = () => {
+    if (moveData) {
+      moveItems({ items: [moveData.movedItem], to: moveData.to.id });
+      setMoveData(undefined);
+      handleClose();
     }
   };
-
-  const dateColumnFormatter = ({ value }: { value: string }) =>
-    formatDate(value, {
-      locale: i18n.language,
-      defaultValue: translateCommon(COMMON.UNKNOWN_DATE),
-    });
-
-  const itemRowDragText = (params: IRowDragItem) =>
-    params?.rowNode?.data?.name ??
-    translateBuilder(BUILDER.ITEMS_TABLE_DRAG_DEFAULT_MESSAGE);
-
-  const ActionComponent = ActionsCellRenderer({
-    canMove,
-  });
-
-  const BadgesComponent = BadgesCellRenderer({
-    itemsStatuses,
-  });
-
-  const columnDefs: ColDef[] = [
-    {
-      field: 'name',
-      headerName: translateBuilder(BUILDER.ITEMS_TABLE_NAME_HEADER),
-      headerCheckboxSelection: true,
-      checkboxSelection: true,
-      cellRenderer: NameCellRenderer(showThumbnails),
-      flex: 4,
-      comparator: GraaspTable.textComparator,
-      sort: defaultSortedColumn?.name,
-      tooltipField: 'name',
-    },
-    {
-      field: 'creator',
-      headerName: translateBuilder(BUILDER.ITEMS_TABLE_CREATOR_HEADER),
-      colId: 'creator',
-      type: 'rightAligned',
-      cellRenderer: MemberNameCellRenderer({
-        defaultValue: translateCommon(COMMON.MEMBER_DEFAULT_NAME),
-      }),
-      cellStyle: {
-        display: 'flex',
-        justifyContent: 'end',
-      },
-      sortable: false,
-    },
-    {
-      field: 'status',
-      headerName: translateBuilder(BUILDER.ITEMS_TABLE_STATUS_HEADER),
-      cellRenderer: BadgesComponent,
-      hide: noStatusesToShow,
-      type: 'rightAligned',
-      flex: 1,
-      suppressAutoSize: true,
-      maxWidth: 100,
-      cellStyle: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-    },
-    {
-      field: 'type',
-      headerName: translateBuilder(BUILDER.ITEMS_TABLE_TYPE_HEADER),
-      type: 'rightAligned',
-      cellRenderer: ({ data }: { data: DiscriminatedItem }) =>
-        translateEnums(data.type),
-      minWidth: 90,
-      maxWidth: 120,
-      comparator: GraaspTable.textComparator,
-      sort: defaultSortedColumn?.type,
-    },
-    {
-      field: 'updatedAt',
-      headerName: translateBuilder(BUILDER.ITEMS_TABLE_UPDATED_AT_HEADER),
-      maxWidth: 160,
-      minWidth: 80,
-      type: 'rightAligned',
-      valueFormatter: dateColumnFormatter,
-      comparator: GraaspTable.dateComparator,
-      sort: defaultSortedColumn?.updatedAt,
-    },
-    {
-      field: 'actions',
-      cellRenderer: actions ?? ActionComponent,
-      suppressKeyboardEvent: GraaspTable.suppressKeyboardEventForParentCell,
-      headerName: translateBuilder(BUILDER.ITEMS_TABLE_ACTIONS_HEADER),
-      colId: 'actions',
-      type: 'rightAligned',
-      cellStyle: {
-        paddingLeft: '0!important',
-        paddingRight: '0!important',
-        textAlign: 'right',
-      },
-      sortable: false,
-      suppressAutoSize: true,
-      // prevent ellipsis for small screens
-      minWidth: 140,
-    },
-  ];
-
-  const countTextFunction = (selected: string[]) =>
-    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
-      count: selected.length,
-    });
-
-  const shouldShowDropzoneHelper = showDropzoneHelper && rows?.length === 0;
-  const canEditItem = parentItem?.permission
-    ? PermissionLevelCompare.gte(parentItem.permission, PermissionLevel.Write)
-    : false;
 
   return (
     <>
-      <ItemsToolbar
-        title={tableTitle}
-        subTitleElement={itemId ? <FolderDescription itemId={itemId} /> : null}
-        headerElements={headerElements}
-        onShowOnlyMeChange={onShowOnlyMeChange}
-        showOnlyMe={showOnlyMe}
+      <DraggingWrapper
+        id={tableId}
+        isMovable={(item) => movingId !== item.id && canMove}
+        getRowId={(row) => row.id}
+        renderComponent={(droppedEl, y) => (
+          <ItemsTableCard
+            item={droppedEl}
+            isDragging={y.isDragging}
+            isOver={y.isOver}
+            isMovable={y.isMovable}
+            enableMoveInBetween={enableMoveInBetween}
+            itemsStatuses={itemsStatuses}
+            showThumbnails={showThumbnails}
+          />
+        )}
+        rows={rows}
+        onDropBetweenRow={onDropBetweenRow}
+        enableMoveInBetween={enableMoveInBetween}
+        onDropInRow={onDropInRow}
       />
-      {/* we need to show toast notifications since the websockets reset the view as soon as one file is uploaded */}
-      {shouldShowDropzoneHelper && (!parentItem || canEditItem) ? (
-        <FileUploader
-          id={DROPZONE_HELPER_ID}
-          onStart={show}
-          onComplete={closeNotification}
-          onError={closeAndShowError}
-          onUpdate={update}
-          buttons={<NewItemButton size="small" />}
-        />
-      ) : (
-        <GraaspTable
-          onSortChanged={onSortChanged}
-          id={tableId}
-          columnDefs={columnDefs}
-          tableHeight={ITEMS_TABLE_CONTAINER_HEIGHT}
-          rowData={rows}
-          emptyMessage={translateBuilder(BUILDER.ITEMS_TABLE_EMPTY_MESSAGE)}
-          onDragEnd={onDragEnd}
-          onCellClicked={onCellClicked}
-          getRowId={getRowNodeId}
-          isClickable={clickable}
-          enableDrag={canDrag()}
-          // kinda duplicate props but it needs to be enabled for ui
-          rowDragManaged={canDrag()}
-          rowDragText={itemRowDragText}
-          ToolbarActions={ToolbarActions}
-          pagination
-          page={Math.max(0, page - 1)}
-          onPageChange={(e, newPage) => {
-            setPage?.(newPage + 1);
-          }}
-          countTextFunction={countTextFunction}
-          totalCount={totalCount}
-          // has to be fixed, otherwise the pagination is false on the last page
-          // rows can contain less for the last page
-          pageSize={pageSize ?? rows.length}
-        />
-      )}
+      <Dialog onClose={handleClose} open={open}>
+        {moveData ? (
+          <>
+            <DialogTitle>
+              <Trans
+                t={translateBuilder}
+                i18nKey={BUILDER.MOVE_CONFIRM_TITLE}
+                values={{
+                  name: moveData.movedItem.name,
+                  targetName: moveData.to.name,
+                }}
+                components={{ 1: <strong /> }}
+              />
+            </DialogTitle>
+
+            <DialogContent>
+              {translateBuilder(BUILDER.MOVE_WARNING, {
+                name: moveData.movedItem.name,
+              })}
+            </DialogContent>
+          </>
+        ) : (
+          <Skeleton />
+        )}
+
+        <DialogActions>
+          <Button variant="text" onClick={handleClose}>
+            {translateCommon(COMMON.CANCEL_BUTTON)}
+          </Button>
+          <Button onClick={handleMoveItems}>
+            {translateBuilder(BUILDER.MOVE_BUTTON)}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

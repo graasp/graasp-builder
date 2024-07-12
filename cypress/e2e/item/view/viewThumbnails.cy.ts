@@ -4,9 +4,7 @@ import { HOME_PATH } from '../../../../src/config/paths';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
   buildItemCard,
-  buildNameCellRendererId,
 } from '../../../../src/config/selectors';
-import { ItemLayoutMode } from '../../../../src/enums';
 import { MEMBERS } from '../../../fixtures/members';
 import { ITEM_THUMBNAIL_LINK } from '../../../fixtures/thumbnails/links';
 
@@ -29,19 +27,6 @@ describe('View Thumbnails', () => {
 
     cy.visit(HOME_PATH);
 
-    // check default material icon
-    // first item doesn't have a thumbnail so it displays the material icon
-    cy.get(
-      `#${buildNameCellRendererId(ITEM_WITHOUT_THUMBNAIL.id)} svg path`,
-    ).should('exist');
-
-    // the second item has a defined thumbnail
-    cy.get(`#${buildNameCellRendererId(ITEM_WITH_THUMBNAIL.id)} img`).should(
-      'exist',
-    );
-
-    // GRID
-    cy.switchMode(ItemLayoutMode.Grid);
     // first element has default folder svg
     cy.get(`#${buildItemCard(ITEM_WITH_THUMBNAIL.id)} svg path`).should(
       'exist',

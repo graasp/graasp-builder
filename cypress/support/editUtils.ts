@@ -1,17 +1,14 @@
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
-import { DEFAULT_ITEM_LAYOUT_MODE } from '@/enums/itemLayoutMode';
-
 import {
+  EDIT_ITEM_BUTTON_CLASS,
   EDIT_MODAL_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
 } from '../../src/config/selectors';
-import { ItemLayoutMode } from '../../src/enums';
 import { CAPTION_EDIT_PAUSE } from './constants';
 
-// bug: use string for type to fit usage
 export const editItem = (
   payload: {
     id: string;
@@ -20,22 +17,10 @@ export const editItem = (
     displayName: string;
     description: string;
   },
-  mode = DEFAULT_ITEM_LAYOUT_MODE,
+  container: string = '',
 ): void => {
-  // todo: remove on table refactor
-  cy.wait(500);
-  const { id, type } = payload;
-  switch (mode) {
-    case ItemLayoutMode.Grid: {
-      const button = `#${buildEditButtonId(id)}`;
-      cy.get(button).click();
-      break;
-    }
-    case ItemLayoutMode.List:
-    default: {
-      cy.get(`#${buildEditButtonId(id)}`).click();
-    }
-  }
+  const { type } = payload;
+  cy.get(`${container} .${EDIT_ITEM_BUTTON_CLASS}`).click();
 
   switch (type) {
     case ItemType.H5P:

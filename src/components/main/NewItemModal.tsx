@@ -33,7 +33,7 @@ import { InternalItemType, NewItemTabType } from '../../config/types';
 import { BUILDER } from '../../langs/constants';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
-import UploadFiles from '../file/UploadFiles';
+import FileUploader from '../file/FileUploader';
 import AppForm from '../item/form/AppForm';
 import DocumentForm from '../item/form/DocumentForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
@@ -62,6 +62,7 @@ type Props = {
   open: boolean;
   handleClose: () => void;
   geolocation?: Partial<ItemGeolocation>;
+  previousItemId?: DiscriminatedItem['id'];
 };
 
 const DEFAULT_PROPERTIES: PropertiesPerType = {
@@ -75,6 +76,7 @@ const NewItemModal = ({
   open,
   handleClose,
   geolocation,
+  previousItemId,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
@@ -129,6 +131,7 @@ const NewItemModal = ({
         postItem({
           geolocation,
           parentId,
+          previousItemId,
           ...(updatedPropertiesPerType[type] as any),
         }),
       DOUBLE_CLICK_DELAY_MS,
@@ -181,7 +184,10 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
             </Typography>
-            <UploadFiles onComplete={handleClose} />
+            <FileUploader
+              previousItemId={previousItemId}
+              onComplete={handleClose}
+            />
           </>
         );
       case InternalItemType.ZIP:
@@ -190,7 +196,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.IMPORT_ZIP_TITLE)}
             </Typography>
-            <ImportZip />
+            <ImportZip previousItemId={previousItemId} />
           </>
         );
       case ItemType.H5P:
@@ -199,7 +205,10 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
             </Typography>
-            <ImportH5P onComplete={handleClose} />
+            <ImportH5P
+              onComplete={handleClose}
+              previousItemId={previousItemId}
+            />
           </>
         );
       case ItemType.ETHERPAD:

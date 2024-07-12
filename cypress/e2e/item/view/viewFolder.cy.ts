@@ -1,12 +1,17 @@
 import { PackedFolderItemFactory } from '@graasp/sdk';
 
+import { SortingOptionsForFolder } from '../../../../src/components/table/types';
 import i18n from '../../../../src/config/i18n';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
+  CREATE_ITEM_BUTTON_ID,
   ITEM_SEARCH_INPUT_ID,
   NAVIGATION_HOME_ID,
+  SORTING_ORDERING_SELECTOR_ASC,
+  SORTING_ORDERING_SELECTOR_DESC,
+  SORTING_SELECT_SELECTOR,
   buildItemCard,
-  buildItemsTableRowIdAttribute,
+  buildItemsTableId,
   buildMapViewId,
 } from '../../../../src/config/selectors';
 import { ItemLayoutMode } from '../../../../src/enums';
@@ -18,9 +23,11 @@ const item1 = PackedFolderItemFactory();
 
 const child1 = PackedFolderItemFactory({ parentItem });
 const child2 = PackedFolderItemFactory({ parentItem });
-const children = [child1, child2];
+const child3 = PackedFolderItemFactory({ parentItem });
+const child4 = PackedFolderItemFactory({ parentItem });
+const children = [child1, child2, child3, child4];
 
-const items = [parentItem, item1, child1, child2];
+const items = [parentItem, item1, ...children];
 
 describe('View Folder', () => {
   it('View folder on map by default', () => {
@@ -31,98 +38,139 @@ describe('View Folder', () => {
     const { id } = parentItem;
     cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Map }));
 
-    // wait on getting geoloc
     cy.get(`#${buildMapViewId(id)}`, { timeout: 10000 }).should('be.visible');
   });
-
-  describe('Grid', () => {
-    beforeEach(() => {
-      cy.setUpApi({
-        items,
-      });
-      i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+  it('View empty folder', () => {
+    cy.setUpApi({
+      items: [parentItem],
     });
 
-    it('visit item by id', () => {
-      const { id } = parentItem;
-      cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
+    const { id } = parentItem;
+    cy.visit(buildItemPath(id));
 
-      // should get current item
-      cy.wait('@getItem');
+    cy.get(`[role="dropzone"]`).should('be.visible');
+    cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('be.visible');
+  });
 
-      // should get children
-      cy.wait('@getChildren').then(() => {
-        // check all children are created and displayed
-        for (const item of children) {
-          cy.get(`#${buildItemCard(item.id)}`).should('exist');
-        }
-      });
-      expectFolderViewScreenLayout({ item: parentItem });
-
-      // visit home
-      cy.get(`#${NAVIGATION_HOME_ID}`).click();
-
-      // should get accessible items
-      cy.wait('@getAccessibleItems').then(({ response: { body } }) => {
-        // check item is created and displayed
-        for (const item of body.data) {
-          cy.get(`#${buildItemCard(item.id)}`).should('exist');
-        }
-      });
+  beforeEach(() => {
+    cy.setUpApi({
+      items,
     });
+    i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+  });
 
-    it('search', () => {
-      const { id } = parentItem;
-      cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
+  it('visit item by id', () => {
+    const { id } = parentItem;
+    cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
 
-      cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
-      cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);
-      cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
+    // should get current item
+    cy.wait('@getItem');
+
+    // should get children
+    cy.wait('@getChildren').then(() => {
+      // check all children are created and displayed
+      for (const item of children) {
+        cy.get(`#${buildItemCard(item.id)}`).should('exist');
+      }
+    });
+    expectFolderViewScreenLayout({ item: parentItem });
+
+    // visit home
+    cy.get(`#${NAVIGATION_HOME_ID}`).click();
+
+    // should get accessible items
+    cy.wait('@getAccessibleItems').then(({ response: { body } }) => {
+      // check item is created and displayed
+      for (const item of body.data) {
+        cy.get(`#${buildItemCard(item.id)}`).should('exist');
+      }
     });
   });
 
-  describe('List', () => {
-    beforeEach(() => {
-      cy.setUpApi({
-        items,
-      });
+  it('search', () => {
+    const { id } = parentItem;
+    cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
+
+    cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
+
+    cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);
+    cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
+  });
+
+  it('Sorting & Ordering', () => {
+    const { id } = parentItem;
+    cy.visit(buildItemPath(id));
+
+    cy.get(`${SORTING_SELECT_SELECTOR} input`).should(
+      'have.value',
+      SortingOptionsForFolder.Order,
+    );
+    cy.get(SORTING_ORDERING_SELECTOR_ASC).should('be.visible');
+
+    cy.get(SORTING_SELECT_SELECTOR).click();
+    cy.get('li[data-value="item.name"]').click();
+
+    // check items are ordered by name
+    cy.get(`#${buildItemsTableId(parentItem.id)} h5`).then(($e) => {
+      children.sort((a, b) => (a.name > b.name ? 1 : -1));
+      for (let idx = 0; idx < children.length; idx += 1) {
+        expect($e[idx].innerText).to.eq(children[idx].name);
+      }
     });
 
-    describe('Navigation', () => {
-      it('visit folder by id', () => {
-        const { id } = parentItem;
-        cy.visit(buildItemPath(id, { mode: ItemLayoutMode.List }));
-
-        // should get current item
-        cy.wait('@getItem');
-        // should get children
-        cy.wait('@getChildren').then(({ response: { body } }) => {
-          // check all children are created and displayed
-          for (const item of body) {
-            cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-          }
-        });
-
-        expectFolderViewScreenLayout({ item: parentItem });
-        // visit home
-        cy.get(`#${NAVIGATION_HOME_ID}`).click();
-
-        cy.wait('@getAccessibleItems').then(({ response: { body } }) => {
-          // check item is created and displayed
-          for (const item of body.data) {
-            cy.get(buildItemsTableRowIdAttribute(item.id)).should('exist');
-          }
-        });
-      });
-    });
-
-    it('search', () => {
-      const { id } = parentItem;
-      cy.visit(buildItemPath(id, { mode: ItemLayoutMode.List }));
-
-      cy.get(buildItemsTableRowIdAttribute(child1.id)).should('be.visible');
-      cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);
-      cy.get(buildItemsTableRowIdAttribute(child1.id)).should('be.visible');
+    // change ordering
+    cy.get(SORTING_ORDERING_SELECTOR_ASC).click();
+    cy.get(SORTING_ORDERING_SELECTOR_DESC).should('be.visible');
+    cy.get(`#${buildItemsTableId(parentItem.id)} h5`).then(($e) => {
+      children.reverse();
+      for (let idx = 0; idx < children.length; idx += 1) {
+        expect($e[idx].innerText).to.eq(children[idx].name);
+      }
     });
   });
+});
+
+describe('Folder Layout mode', () => {
+  beforeEach(() => {
+    cy.setUpApi({
+      items: [parentItem, child1],
+    });
+    cy.visit(buildItemPath(parentItem.id));
+  });
+
+  it('list', () => {
+    // default mode is list
+    cy.get(`#${buildItemCard(child1.id)}`);
+
+    // go to map
+    cy.switchMode(ItemLayoutMode.Map);
+
+    // go to list
+    cy.switchMode(ItemLayoutMode.List);
+    cy.get(`#${buildItemCard(child1.id)}`);
+  });
+
+  it('grid', () => {
+    cy.switchMode(ItemLayoutMode.Grid);
+    cy.get(`#${buildItemCard(child1.id)}`);
+  });
+
+  it('map', () => {
+    cy.switchMode(ItemLayoutMode.Map);
+    cy.get(`#${buildMapViewId(parentItem.id)}`, { timeout: 10000 }).should(
+      'be.visible',
+    );
+  });
+});
+
+it('visit Home on map by default', () => {
+  cy.setUpApi({
+    items: [parentItem, child1],
+  });
+  // access map directly
+  cy.visit(buildItemPath(parentItem.id, { mode: ItemLayoutMode.Map }));
+
+  cy.get(`#${buildMapViewId(parentItem.id)}`, { timeout: 10000 }).should(
+    'be.visible',
+  );
 });

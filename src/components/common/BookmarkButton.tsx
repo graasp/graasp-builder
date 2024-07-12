@@ -8,7 +8,6 @@ import {
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, mutations } from '../../config/queryClient';
-import { BOOKMARKED_ITEM_BUTTON_CLASS } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 
@@ -59,7 +58,6 @@ const BookmarkButton = ({
   return (
     <GraaspBookmarkButton
       isFavorite={isFavorite}
-      className={BOOKMARKED_ITEM_BUTTON_CLASS}
       ariaLabel={text}
       handleUnbookmark={handleUnbookmark}
       handleBookmark={handleFavorite}

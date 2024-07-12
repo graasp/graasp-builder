@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
+import type { EditModalContentPropType } from '../edit/EditModal';
 import DescriptionForm from './DescriptionForm';
-import { EditModalContentPropType } from './EditModalWrapper';
 import NameForm from './NameForm';
 
 const BaseItemForm = ({

@@ -12,8 +12,8 @@ import {
   TEXT_EDITOR_CLASS,
   buildDescriptionPlacementId,
   buildEditButtonId,
+  buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
-import { ItemLayoutMode } from '../../../../src/enums';
 import { MOCK_IMAGE_URL, MOCK_VIDEO_URL } from '../../../fixtures/fileLinks';
 import { ICON_FILEPATH, VIDEO_FILEPATH } from '../../../fixtures/files';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
@@ -112,68 +112,30 @@ describe('Edit File', () => {
     });
   });
 
-  describe('List', () => {
-    it('edit file on Home', () => {
-      cy.visit(HOME_PATH);
+  it('edit file on Home', () => {
+    cy.visit(HOME_PATH);
 
-      cy.switchMode(ItemLayoutMode.List);
+    const itemToEdit = IMAGE_ITEM;
 
-      const itemToEdit = IMAGE_ITEM;
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...EDITED_FIELDS,
-        },
-        ItemLayoutMode.List,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(EDITED_FIELDS.name);
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getAccessibleItems');
-        },
-      );
+    // edit
+    cy.get(buildItemsGridMoreButtonSelector(itemToEdit.id)).click();
+    editItem({
+      ...itemToEdit,
+      ...EDITED_FIELDS,
     });
-  });
 
-  describe('Grid', () => {
-    it('edit file on Home', () => {
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
-
-      const itemToEdit = VIDEO_ITEM_S3;
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...EDITED_FIELDS,
+    cy.wait('@editItem').then(
+      ({
+        response: {
+          body: { id, name },
         },
-        ItemLayoutMode.Grid,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(EDITED_FIELDS.name);
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getAccessibleItems');
-        },
-      );
-    });
+      }) => {
+        // check item is edited and updated
+        expect(id).to.equal(itemToEdit.id);
+        expect(name).to.equal(EDITED_FIELDS.name);
+        cy.wait(EDIT_ITEM_PAUSE);
+        cy.wait('@getAccessibleItems');
+      },
+    );
   });
 });

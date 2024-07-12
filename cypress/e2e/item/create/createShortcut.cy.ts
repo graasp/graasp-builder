@@ -9,10 +9,8 @@ import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_SHORTCUT_BUTTON_CLASS,
   MY_GRAASP_ITEM_PATH,
-  buildItemMenu,
-  buildItemMenuButtonId,
+  buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
-import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 
 const IMAGE_ITEM = PackedLocalFileItemFactory();
 const FOLDER = PackedFolderItemFactory();
@@ -25,39 +23,12 @@ const createShortcut = ({
   rootId,
 }: {
   id: string;
-  toItemPath: string;
+  toItemPath?: string;
   rootId?: string;
 }) => {
-  cy.get(`#${buildItemMenu(id)} .${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).click();
+  cy.get(buildItemsGridMoreButtonSelector(id)).click();
+  cy.get(`.${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).click();
   cy.handleTreeMenu(toItemPath, rootId);
-};
-
-const createShortcutInGrid = ({
-  id,
-  toItemPath,
-}: {
-  id: string;
-  toItemPath?: string;
-}) => {
-  const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  cy.get(menuSelector).click();
-  createShortcut({ id, toItemPath });
-};
-
-const createShortcutInList = ({
-  id,
-  toItemPath,
-  rootId,
-}: {
-  id: string;
-  toItemPath?: string;
-  rootId?: string;
-}) => {
-  // todo: remove on table refactor
-  cy.wait(500);
-  const menuSelector = `#${buildItemMenuButtonId(id)}`;
-  cy.get(menuSelector).click();
-  createShortcut({ id, toItemPath, rootId });
 };
 
 const checkCreateShortcutRequest = ({
@@ -85,72 +56,34 @@ const checkCreateShortcutRequest = ({
 };
 
 describe('Create Shortcut', () => {
-  describe('List', () => {
-    it('create shortcut from Home to Home', () => {
-      cy.setUpApi({ items: [IMAGE_ITEM] });
-      cy.visit(HOME_PATH);
+  it('create shortcut from Home to Home', () => {
+    cy.setUpApi({ items: [IMAGE_ITEM] });
+    cy.visit(HOME_PATH);
 
-      const { id } = IMAGE_ITEM;
-      createShortcutInList({ id, toItemPath: MY_GRAASP_ITEM_PATH });
+    const { id } = IMAGE_ITEM;
+    createShortcut({ id, toItemPath: MY_GRAASP_ITEM_PATH });
 
-      checkCreateShortcutRequest({ id });
-    });
-
-    it('create shortcut from Home to Item', () => {
-      cy.setUpApi({ items: [FOLDER, IMAGE_ITEM] });
-      cy.visit(HOME_PATH);
-
-      const { id } = IMAGE_ITEM;
-      const { id: toItemId, path: toItemPath } = FOLDER;
-      createShortcutInList({ id, toItemPath });
-
-      checkCreateShortcutRequest({ id, toItemId });
-    });
-
-    it('create shortcut from Item to Item', () => {
-      cy.setUpApi({ items: [FOLDER, FOLDER2, IMAGE_ITEM_CHILD] });
-      cy.visit(buildItemPath(FOLDER.id));
-
-      const { id } = IMAGE_ITEM_CHILD;
-      const { id: toItemId, path: toItemPath } = FOLDER2;
-      createShortcutInList({ id, toItemPath });
-      checkCreateShortcutRequest({ id, toItemId });
-    });
+    checkCreateShortcutRequest({ id });
   });
-  describe('Grid', () => {
-    it('create shortcut from Home to Home', () => {
-      cy.setUpApi({ items: [IMAGE_ITEM] });
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
 
-      const { id } = IMAGE_ITEM;
-      createShortcutInGrid({ id, toItemPath: MY_GRAASP_ITEM_PATH });
+  it('create shortcut from Home to Item', () => {
+    cy.setUpApi({ items: [FOLDER, IMAGE_ITEM] });
+    cy.visit(HOME_PATH);
 
-      checkCreateShortcutRequest({ id });
-    });
+    const { id } = IMAGE_ITEM;
+    const { id: toItemId, path: toItemPath } = FOLDER;
+    createShortcut({ id, toItemPath });
 
-    it('create shortcut from Home to Item', () => {
-      cy.setUpApi({ items: [FOLDER, IMAGE_ITEM] });
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
+    checkCreateShortcutRequest({ id, toItemId });
+  });
 
-      const { id } = IMAGE_ITEM;
-      const { id: toItemId, path: toItemPath } = FOLDER;
-      createShortcutInGrid({ id, toItemPath });
+  it('create shortcut from Item to Item', () => {
+    cy.setUpApi({ items: [FOLDER, FOLDER2, IMAGE_ITEM_CHILD] });
+    cy.visit(buildItemPath(FOLDER.id));
 
-      checkCreateShortcutRequest({ id, toItemId });
-    });
-
-    it('create shortcut from Item to Item', () => {
-      cy.setUpApi({ items: [FOLDER, FOLDER2, IMAGE_ITEM_CHILD] });
-      cy.visit(buildItemPath(FOLDER.id));
-      cy.switchMode(ItemLayoutMode.Grid);
-
-      const { id } = IMAGE_ITEM_CHILD;
-      const { id: toItemId, path: toItemPath } = FOLDER2;
-      createShortcutInGrid({ id, toItemPath });
-
-      checkCreateShortcutRequest({ id, toItemId });
-    });
+    const { id } = IMAGE_ITEM_CHILD;
+    const { id: toItemId, path: toItemPath } = FOLDER2;
+    createShortcut({ id, toItemPath });
+    checkCreateShortcutRequest({ id, toItemId });
   });
 });

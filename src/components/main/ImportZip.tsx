@@ -2,7 +2,11 @@ import { useParams } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { MAX_ZIP_FILE_SIZE, formatFileSize } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  MAX_ZIP_FILE_SIZE,
+  formatFileSize,
+} from '@graasp/sdk';
 import { UploadFileButton } from '@graasp/ui';
 
 import { mutations } from '@/config/queryClient';
@@ -12,14 +16,14 @@ import { ZIP_DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { useUploadWithProgress } from '../hooks/uploadWithProgress';
 
-const ImportZip = (): JSX.Element => {
+const ImportZip = ({
+  previousItemId,
+}: {
+  previousItemId?: DiscriminatedItem['id'];
+}): JSX.Element => {
   const { itemId } = useParams();
   const { mutateAsync: importZip } = mutations.useImportZip();
-  const {
-    update,
-    close: closeNotification,
-    closeAndShowError,
-  } = useUploadWithProgress();
+  const { update, close: closeNotification } = useUploadWithProgress();
 
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -43,13 +47,14 @@ const ImportZip = (): JSX.Element => {
             importZip({
               onUploadProgress: update,
               id: itemId,
+              previousItemId,
               file: e.target.files[0],
             })
               .then(() => {
                 closeNotification();
               })
               .catch((error) => {
-                closeAndShowError(error);
+                closeNotification(error);
               });
           }
         }}
