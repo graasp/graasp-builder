@@ -93,10 +93,10 @@ const RecycledItemsScreenContent = ({
               item={item}
               showThumbnail={false}
               footer={
-                <>
+                <Stack justifyContent="right" direction="row">
                   <RestoreButton itemIds={[item.id]} />
                   <DeleteButton itemIds={[item.id]} />
-                </>
+                </Stack>
               }
             />
           ))

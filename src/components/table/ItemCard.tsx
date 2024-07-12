@@ -54,6 +54,7 @@ const ItemCard = ({
       height="100%"
       justifyContent="flex-start"
       alignItems="center"
+      pl={1}
     >
       {dense ? (
         <>
