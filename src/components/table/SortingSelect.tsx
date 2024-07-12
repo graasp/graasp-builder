@@ -58,6 +58,10 @@ export const SortingSelect = <T extends AllSortingOptions = SortingOptions>({
 
   const label = translateBuilder(BUILDER.SORT_BY_LABEL);
 
+  const sortedOptions = options
+    .map((o) => [o, translateBuilder(o)])
+    .sort((a, b) => (a[1] > b[1] ? 1 : -1));
+
   return (
     <FormControl size="small">
       <FormGroup row>
@@ -75,9 +79,9 @@ export const SortingSelect = <T extends AllSortingOptions = SortingOptions>({
             borderRadius: 40,
           }}
         >
-          {options.map((option) => (
+          {sortedOptions.map(([option, title]) => (
             <MenuItem key={option} value={option} dense>
-              {translateBuilder(option)}
+              {title}
             </MenuItem>
           ))}
         </Select>

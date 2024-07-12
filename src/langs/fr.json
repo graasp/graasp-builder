@@ -385,5 +385,6 @@
   "item.updated_at": "Date d'édition",
   "item.creator.name": "Créateur",
   "item.type": "Type",
-  "item.name": "Nom"
+  "item.name": "Nom",
+  "item.order": "Ordre"
 }

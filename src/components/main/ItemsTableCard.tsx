@@ -3,6 +3,8 @@ import { Box, Stack } from '@mui/material';
 import { PackedItem } from '@graasp/sdk';
 import type { DroppedFile } from '@graasp/ui';
 
+import { Upload } from 'lucide-react';
+
 import { useBuilderTranslation } from '@/config/i18n';
 import { ItemLayoutMode } from '@/enums';
 import { BUILDER } from '@/langs/constants';
@@ -40,14 +42,16 @@ const ItemsTableCard = ({
 
   if ('files' in item) {
     return (
-      <Box
-        sx={{
-          boxSizing: 'border-box',
-          border: '2px dashed grey',
-        }}
+      <Stack
+        direction="row"
+        gap={1}
+        boxSizing="border-box"
+        border="2px dashed grey"
+        borderRadius={2}
+        p={1}
       >
-        {translateBuilder(BUILDER.UPLOAD_BETWEEN_FILES)}
-      </Box>
+        <Upload /> {translateBuilder(BUILDER.UPLOAD_BETWEEN_FILES)}
+      </Stack>
     );
   }
 

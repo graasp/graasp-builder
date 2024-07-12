@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { useFilterItemsContext } from '@/components/context/FilterItemsContext';
 import { useBuilderTranslation } from '@/config/i18n';
@@ -9,7 +9,7 @@ const NoItemFilters = ({ searchText }: { searchText: string }): JSX.Element => {
   const { itemTypes } = useFilterItemsContext();
 
   return (
-    <>
+    <Box mt={1}>
       <Typography variant="body1" textAlign="center">
         {translateBuilder(BUILDER.ITEM_SEARCH_NOTHING_FOUND)}
       </Typography>
@@ -29,7 +29,7 @@ const NoItemFilters = ({ searchText }: { searchText: string }): JSX.Element => {
           {itemTypes.join(', ')}
         </Typography>
       ) : null}
-    </>
+    </Box>
   );
 };
 

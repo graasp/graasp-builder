@@ -1,4 +1,4 @@
-import { Alert, Stack, Typography } from '@mui/material';
+import { Alert, Box, Stack, Typography } from '@mui/material';
 
 import {
   PackedItem,
@@ -32,18 +32,81 @@ import FolderDescription from './FolderDescription';
 import { useItemSearch } from './ItemSearch';
 import ModeButton from './header/ModeButton';
 
-/**
- * Helper component to render typed folder items
- */
-const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
-  const { shouldDisplayItem, itemTypes } = useFilterItemsContext();
-  const { t: translateBuilder } = useBuilderTranslation();
-  const { t: translateEnums } = useEnumsTranslation();
+type Props = {
+  item: PackedItem;
+  searchText: string;
+  items?: PackedItem[];
+  sortBy: SortingOptionsForFolder;
+};
+
+const Content = ({ item, searchText, items, sortBy }: Props) => {
   const { mode } = useLayoutContext();
+  const { itemTypes } = useFilterItemsContext();
 
   const enableEditing = item.permission
     ? PermissionLevelCompare.lte(PermissionLevel.Write, item.permission)
     : false;
+
+  if (mode === ItemLayoutMode.Map) {
+    return (
+      <>
+        <Stack direction="row" justifyContent="right">
+          <ModeButton />
+        </Stack>
+        <DesktopMap parentId={item.id} />
+      </>
+    );
+  }
+
+  if (items?.length) {
+    return (
+      <>
+        <ItemsTable
+          enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
+          id={buildItemsTableId(item.id)}
+          items={items ?? []}
+        />
+        {Boolean(enableEditing && !searchText && !itemTypes?.length) && (
+          <Stack alignItems="center" mb={2}>
+            <NewItemButton
+              type="icon"
+              key="newButton"
+              // add new items at the end of the list
+              previousItemId={items ? items[items.length - 1]?.id : undefined}
+            />
+          </Stack>
+        )}
+      </>
+    );
+  }
+
+  // no items to show because of filters
+  if (!items?.length && (searchText.length || itemTypes.length)) {
+    return <NoItemFilters searchText={searchText} />;
+  }
+
+  // no items show drop zone
+  if (
+    item.permission &&
+    PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
+  ) {
+    return (
+      <Box mt={1}>
+        <FileUploader buttons={<NewItemButton key="newButton" />} />
+      </Box>
+    );
+  }
+
+  return null;
+};
+
+/**
+ * Helper component to render typed folder items
+ */
+const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
+  const { t: translateEnums } = useEnumsTranslation();
+  const { shouldDisplayItem } = useFilterItemsContext();
+  const { t: translateBuilder } = useBuilderTranslation();
 
   const {
     data: children,
@@ -54,6 +117,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   });
 
   const itemSearch = useItemSearch();
+
   const { ordering, setOrdering, setSortBy, sortBy, sortFn } =
     useSorting<SortingOptionsForFolder>({
       sortBy: SortingOptionsForFolder.Order,
@@ -69,7 +133,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
     )
     .sort(sortFn);
 
-  if (children?.length) {
+  if (children) {
     return (
       <>
         <Stack direction="row" justifyContent="space-between" spacing={1}>
@@ -96,75 +160,44 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
           </Stack>
         </Stack>
         <FolderDescription itemId={item.id} />
-        {mode === ItemLayoutMode.Map ? (
-          <>
-            <Stack direction="row" justifyContent="right">
+
+        <Stack
+          alignItems="space-between"
+          direction="column"
+          mt={2}
+          gap={1}
+          width="100%"
+        >
+          <Stack
+            spacing={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <SelectTypes />
+            <Stack direction="row" gap={1}>
+              {sortBy && setSortBy && (
+                <SortingSelect
+                  ordering={ordering}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                  options={Object.values(SortingOptionsForFolder).sort(
+                    (t1, t2) =>
+                      translateEnums(t1).localeCompare(translateEnums(t2)),
+                  )}
+                  setOrdering={setOrdering}
+                />
+              )}
               <ModeButton />
             </Stack>
-            <DesktopMap parentId={item.id} />
-          </>
-        ) : (
-          <>
-            <Stack
-              alignItems="space-between"
-              direction="column"
-              mt={2}
-              gap={1}
-              width="100%"
-            >
-              <Stack
-                spacing={1}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <SelectTypes />
-                <Stack direction="row" gap={1}>
-                  {sortBy && setSortBy && (
-                    <SortingSelect
-                      ordering={ordering}
-                      sortBy={sortBy}
-                      setSortBy={setSortBy}
-                      options={Object.values(SortingOptionsForFolder).sort(
-                        (t1, t2) =>
-                          translateEnums(t1).localeCompare(translateEnums(t2)),
-                      )}
-                      setOrdering={setOrdering}
-                    />
-                  )}
-                  <ModeButton />
-                </Stack>
-              </Stack>
-            </Stack>
-            {/* items to show */}
-            {folderChildren?.length ? (
-              <>
-                <ItemsTable
-                  enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
-                  id={buildItemsTableId(item.id)}
-                  items={folderChildren ?? []}
-                />
-                {Boolean(
-                  enableEditing && !itemSearch.text && !itemTypes?.length,
-                ) && (
-                  <Stack alignItems="center" mb={2}>
-                    <NewItemButton
-                      type="icon"
-                      key="newButton"
-                      // add new items at the end of the list
-                      previousItemId={children[children.length - 1]?.id}
-                    />
-                  </Stack>
-                )}
-              </>
-            ) : null}
-
-            {/* no items to show because of filters */}
-            {Boolean(
-              !folderChildren?.length && (itemSearch.text || itemTypes.length),
-            ) && <NoItemFilters searchText={itemSearch.text} />}
-          </>
-        )}
+          </Stack>
+        </Stack>
+        <Content
+          sortBy={sortBy}
+          item={item}
+          items={folderChildren}
+          searchText={itemSearch.text}
+        />
       </>
     );
   }
@@ -175,23 +208,6 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
 
   if (isError) {
     return <ErrorAlert id={ITEM_SCREEN_ERROR_ALERT_ID} />;
-  }
-
-  if (
-    item.permission &&
-    PermissionLevelCompare.gte(item.permission, PermissionLevel.Write)
-  ) {
-    return (
-      <FileUploader
-        buttons={
-          <NewItemButton
-            key="newButton"
-            // add new items at the end of the list
-            previousItemId={children[children.length - 1]?.id}
-          />
-        }
-      />
-    );
   }
 
   return (

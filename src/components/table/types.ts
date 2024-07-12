@@ -13,7 +13,7 @@ export enum SortingOptionsForFolder {
   ItemType = 'item.type',
   ItemCreator = 'item.creator.name',
   ItemUpdatedAt = 'item.updated_at',
-  Order = 'Order',
+  Order = 'item.order',
 }
 
 export type AllSortingOptions = SortingOptions | SortingOptionsForFolder;

@@ -458,7 +458,7 @@
   "TRASH_NO_ITEM_SEARCH": "No trashed item for {{search}}",
   "BOOKMARKS_NO_ITEM": "No bookmarked item",
   "BOOKMARKS_NO_ITEM_SEARCH": "No bookmarked item for {{search}}",
-  "UPLOAD_BETWEEN_FILES": "+ upload your files here",
+  "UPLOAD_BETWEEN_FILES": "Upload your file(s) here",
   "MOVE_WARNING": "This operation might give access to {{name}} to more persons than previously. Do you want to proceed?",
   "MOVE_IN_NON_FOLDER_ERROR_MESSAGE": "Cannot add items in {{type}}",
   "MOVE_CONFIRM_TITLE": "Confirm moving <1>{{name}}</1> inside <1>{{targetName}}</1>",
@@ -467,5 +467,6 @@
   "ITEM_SEARCH_NOTHING_FOUND_TYPES_TITLE": "types",
   "HOME_SCREEN_LOAD_MORE_BUTTON": "Load More",
   "PUBLISHED_ITEMS_EMPTY": "You didn't publish any items.",
-  "PUBLISHED_ITEMS_NOT_FOUND_SEARCH": "No published item found for {{search}}"
+  "PUBLISHED_ITEMS_NOT_FOUND_SEARCH": "No published item found for {{search}}",
+  "item.order": "Order"
 }
