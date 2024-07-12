@@ -33,8 +33,7 @@ import {
   SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
   buildDescriptionPlacementId,
-  buildItemMenu,
-  buildItemMenuButtonId,
+  buildItemsGridMoreButtonSelector,
   buildSettingsButtonId,
 } from '../../../../src/config/selectors';
 import { ITEM_WITH_CHATBOX_MESSAGES } from '../../../fixtures/chatbox';
@@ -64,7 +63,8 @@ describe('Item Settings', () => {
     it('settings page redirects to item', () => {
       // manual click to verify settings button works correctly
       cy.visit(buildItemSettingsPath(item.id));
-      cy.get(`.${ITEM_MAIN_CLASS}`).should('contain', item.name);
+      // name could have ellipsis
+      cy.get(`.${ITEM_MAIN_CLASS}`).should('contain', item.name.slice(0, 10));
     });
   });
 
@@ -482,18 +482,6 @@ describe('Item Settings', () => {
   });
 
   describe('in item menu', () => {
-    const openItemMenu = (itemId: string) => {
-      cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
-      // There is a weird behaviour that scroll on menu button click, causing the close of the menu item.
-      // To avoid that, the menu button is click again if the menu is not visible.
-      cy.get(`#${buildItemMenu(itemId)}`).then(($itemMenu) => {
-        // If the item menu is not visible, click on the button again
-        if (!$itemMenu.is(':visible')) {
-          cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
-        }
-      });
-      cy.get(`#${buildItemMenu(itemId)}`).should('be.visible');
-    };
     describe('read', () => {
       const item = PackedFolderItemFactory(
         {},
@@ -508,7 +496,7 @@ describe('Item Settings', () => {
         cy.visit('/');
       });
       it('does not have access to settings', () => {
-        openItemMenu(itemId);
+        cy.get(buildItemsGridMoreButtonSelector(itemId)).click();
         cy.get(`#${buildSettingsButtonId(itemId)}`).should('not.exist');
       });
     });
@@ -526,7 +514,7 @@ describe('Item Settings', () => {
         cy.visit('/');
       });
       it('has access to settings', () => {
-        openItemMenu(itemId);
+        cy.get(buildItemsGridMoreButtonSelector(itemId)).click();
         cy.get(`#${buildSettingsButtonId(itemId)}`).should('be.visible');
         cy.get(`#${buildSettingsButtonId(itemId)}`).click();
         cy.url().should('contain', buildItemSettingsPath(itemId));

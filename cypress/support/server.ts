@@ -56,12 +56,12 @@ const {
   buildGetItemRoute,
   GET_OWN_ITEMS_ROUTE,
   buildPostItemMembershipRoute,
-  buildGetMember,
+  buildGetMemberRoute,
   buildPostManyItemMembershipsRoute,
   ITEMS_ROUTE,
   buildUploadFilesRoute,
   buildDownloadFilesRoute,
-  GET_CURRENT_MEMBER_ROUTE,
+  buildGetCurrentMemberRoute,
   GET_BOOKMARKED_ITEMS_ROUTE,
   SIGN_OUT_ROUTE,
   buildPostItemLoginSignInRoute,
@@ -69,7 +69,7 @@ const {
   buildGetItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
   buildPostItemTagRoute,
-  buildPatchMember,
+  buildPatchMemberRoute,
   SHARED_ITEM_WITH_ROUTE,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
@@ -81,7 +81,7 @@ const {
   GET_RECYCLED_ITEMS_DATA_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
-  buildGetMembersRoute,
+  buildGetMembersByIdRoute,
   buildUploadItemThumbnailRoute,
   buildUploadAvatarRoute,
   buildImportZipRoute,
@@ -94,6 +94,7 @@ const {
   buildPatchInvitationRoute,
   buildResendInvitationRoute,
   buildPostUserCSVUploadRoute,
+  buildGetPublishedItemsForMemberRoute,
   buildItemPublishRoute,
   buildUpdateMemberPasswordRoute,
   buildPostItemValidationRoute,
@@ -146,7 +147,7 @@ export const mockGetCurrentMember = (
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: `${API_HOST}/${GET_CURRENT_MEMBER_ROUTE}`,
+      url: `${API_HOST}/${buildGetCurrentMemberRoute()}`,
     },
     ({ reply }) => {
       if (shouldThrowError) {
@@ -203,6 +204,7 @@ export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
 
 export const mockGetRecycledItems = (
   recycledItemData: RecycledItemData[],
+  shouldThrowError: boolean,
 ): void => {
   cy.intercept(
     {
@@ -210,6 +212,11 @@ export const mockGetRecycledItems = (
       url: `${API_HOST}/${GET_RECYCLED_ITEMS_DATA_ROUTE}`,
     },
     (req) => {
+      if (shouldThrowError) {
+        req.reply({ statusCode: StatusCodes.BAD_REQUEST });
+        return;
+      }
+
       req.reply(recycledItemData);
     },
   ).as('getRecycledItems');
@@ -670,7 +677,7 @@ export const mockGetMember = (members: Member[]): void => {
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: new RegExp(`${API_HOST}/${buildGetMember(ID_FORMAT)}$`),
+      url: new RegExp(`${API_HOST}/${buildGetMemberRoute(ID_FORMAT)}$`),
     },
     ({ url, reply }) => {
       const memberId = url.slice(API_HOST.length).split('/')[2];
@@ -695,7 +702,7 @@ export const mockGetMembers = (members: Member[]): void => {
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: `${API_HOST}/${buildGetMembersRoute([''])}*`,
+      url: `${API_HOST}/${buildGetMembersByIdRoute([''])}*`,
     },
     ({ url, reply }) => {
       const memberIds = new URL(url).searchParams.getAll('id');
@@ -772,7 +779,7 @@ export const mockEditMember = (
   cy.intercept(
     {
       method: HttpMethod.Patch,
-      url: new RegExp(`${API_HOST}/${buildPatchMember(ID_FORMAT)}`),
+      url: new RegExp(`${API_HOST}/${buildPatchMemberRoute(ID_FORMAT)}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {
@@ -1986,6 +1993,31 @@ export const mockGetManyPublishItemInformations = (
       return reply(result);
     },
   ).as('getManyPublishItemInformations');
+};
+
+export const mockGetPublishItemsForMember = (
+  publishedItemData: ItemPublished[],
+  shoulThrow = false,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Get,
+      url: new RegExp(
+        `${API_HOST}/${buildGetPublishedItemsForMemberRoute(ID_FORMAT)}`,
+      ),
+    },
+    ({ reply, url }) => {
+      if (shoulThrow) {
+        return reply({ statusCode: StatusCodes.INTERNAL_SERVER_ERROR });
+      }
+
+      const memberId = url.slice(API_HOST.length).split('/')[4];
+      const published = publishedItemData
+        .filter((p) => p.item.creator.id === memberId)
+        .map((i) => i.item);
+      return reply(published);
+    },
+  ).as('getPublishedItemsForMember');
 };
 
 export const mockGetLatestValidationGroup = (

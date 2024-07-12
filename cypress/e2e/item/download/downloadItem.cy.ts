@@ -1,7 +1,6 @@
 import { PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
 
 import { buildDownloadButtonId } from '@/config/selectors';
-import { ItemLayoutMode } from '@/enums';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { SAMPLE_PUBLIC_ITEMS } from '../../../fixtures/items';
@@ -31,7 +30,6 @@ describe('Download Item', () => {
   it('Grid view', () => {
     cy.setUpApi({ items: [SHARED_ITEM] });
     cy.visit(HOME_PATH);
-    cy.switchMode(ItemLayoutMode.Grid);
     cy.wait('@getAccessibleItems').then(
       ({
         response: {

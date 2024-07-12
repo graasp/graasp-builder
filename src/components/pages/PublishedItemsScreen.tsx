@@ -1,8 +1,8 @@
-import { Helmet } from 'react-helmet-async';
-
-import { Box } from '@mui/material';
+import { Alert, Box, Stack } from '@mui/material';
 
 import { Loader } from '@graasp/ui';
+
+import { Ordering } from '@/enums';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -12,12 +12,22 @@ import {
 } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
+import SelectTypes from '../common/SelectTypes';
 import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
-import ItemHeader from '../item/header/ItemHeader';
-import Items from '../main/Items';
+import { useItemSearch } from '../item/ItemSearch';
+import ModeButton from '../item/header/ModeButton';
+import ItemsTable from '../main/ItemsTable';
+import SortingSelect from '../table/SortingSelect';
+import { SortingOptions } from '../table/types';
+import { useSorting, useTranslatedSortingOptions } from '../table/useSorting';
+import PageWrapper from './PageWrapper';
 
-const PublishedItemsLoadableContent = (): JSX.Element | null => {
+const PublishedItemsScreenContent = ({
+  searchText,
+}: {
+  searchText: string;
+}) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: member } = useCurrentUserContext();
   const {
@@ -25,40 +35,117 @@ const PublishedItemsLoadableContent = (): JSX.Element | null => {
     isLoading,
     isError,
   } = hooks.usePublishedItemsForMember(member?.id);
+  const options = useTranslatedSortingOptions();
   const { shouldDisplayItem } = useFilterItemsContext();
-  // TODO: implement filter in the hooks directly ?
-  const filteredData = publishedItems?.filter((d) => shouldDisplayItem(d.type));
+  const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
+    useSorting<SortingOptions>({
+      sortBy: SortingOptions.ItemUpdatedAt,
+      ordering: Ordering.DESC,
+    });
+  const filteredData = publishedItems?.filter(
+    (d) => shouldDisplayItem(d.type) && d.name.includes(searchText),
+  );
+  filteredData?.sort(sortFn);
+
+  if (isError) {
+    return (
+      <Box mt={2}>
+        <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />
+      </Box>
+    );
+  }
+
+  if (!publishedItems?.length) {
+    return (
+      <Alert severity="info">
+        {translateBuilder(BUILDER.PUBLISHED_ITEMS_EMPTY)}
+      </Alert>
+    );
+  }
 
   if (filteredData) {
     return (
       <>
-        <Helmet>
-          <title>{translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}</title>
-        </Helmet>
-        <Box m={2}>
-          <ItemHeader showNavigation={false} />
-          <Items
+        <Stack
+          alignItems="space-between"
+          direction="column"
+          mt={2}
+          gap={1}
+          width="100%"
+        >
+          <Stack
+            spacing={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <SelectTypes />
+            <Stack direction="row" gap={1}>
+              {sortBy && setSortBy && (
+                <SortingSelect
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                  ordering={ordering}
+                  setOrdering={setOrdering}
+                  options={options}
+                />
+              )}
+              <ModeButton />
+            </Stack>
+          </Stack>
+        </Stack>
+        {filteredData.length ? (
+          <ItemsTable
             id={PUBLISHED_ITEMS_ID}
-            title={translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
             items={filteredData ?? []}
+            canMove={false}
+            enableMoveInBetween={false}
           />
-        </Box>
+        ) : (
+          <Box mt={2}>
+            <Alert severity="info">
+              {translateBuilder(BUILDER.PUBLISHED_ITEMS_NOT_FOUND_SEARCH, {
+                search: searchText,
+              })}
+            </Alert>
+          </Box>
+        )}
       </>
     );
   }
-
   if (isLoading) {
     return <Loader />;
   }
 
-  if (isError) {
-    return <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
-  }
-  return null;
+  return (
+    <Box mt={2}>
+      <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
+    </Box>
+  );
 };
 
-const PublishedItemsScreen = (): JSX.Element => (
-  <PublishedItemsLoadableContent />
-);
+const PublishedItemsScreen = (): JSX.Element | null => {
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { input, text } = useItemSearch();
+
+  return (
+    <PageWrapper
+      id={PUBLISHED_ITEMS_ID}
+      title={translateBuilder(BUILDER.PUBLISHED_ITEMS_TITLE)}
+      options={
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="flex-end"
+          spacing={1}
+        >
+          {input}
+        </Stack>
+      }
+    >
+      <PublishedItemsScreenContent searchText={text} />
+    </PageWrapper>
+  );
+};
 
 export default PublishedItemsScreen;

@@ -45,8 +45,7 @@ declare global {
       clickTreeMenuItem(value: string): void;
       handleTreeMenu(path: string, rootId?: string): void;
       switchMode(mode: string): void;
-      goToItemInGrid(path: string): void;
-      goToItemInList(path: string): void;
+      goToItemInCard(path: string): void;
       goToItemWithNavigation(id: string): void;
 
       goToHome(): void;

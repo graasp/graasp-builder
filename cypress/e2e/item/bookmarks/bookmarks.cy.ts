@@ -3,15 +3,22 @@ import {
   PackedItemBookmarkFactory,
 } from '@graasp/sdk';
 
-import i18n from '../../../../src/config/i18n';
+import { SortingOptions } from '@/components/table/types';
+import { BUILDER } from '@/langs/constants';
+
+import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
 import { BOOKMARKED_ITEMS_PATH, HOME_PATH } from '../../../../src/config/paths';
 import {
+  BOOKMARKED_ITEMS_ERROR_ALERT_ID,
   BOOKMARKED_ITEMS_ID,
-  BOOKMARKED_ITEM_BUTTON_CLASS,
+  BOOKMARK_ICON_SELECTOR,
   CREATE_ITEM_BUTTON_ID,
-  buildItemMenu,
-  buildItemMenuButtonId,
-  buildItemsTableRowIdAttribute,
+  ITEM_SEARCH_INPUT_ID,
+  SORTING_ORDERING_SELECTOR_ASC,
+  SORTING_ORDERING_SELECTOR_DESC,
+  SORTING_SELECT_SELECTOR,
+  UNBOOKMARK_ICON_SELECTOR,
+  buildItemCard,
 } from '../../../../src/config/selectors';
 import { CURRENT_USER } from '../../../fixtures/members';
 
@@ -22,11 +29,12 @@ const BOOKMARKED_ITEMS = [
 const ITEMS = BOOKMARKED_ITEMS.map(({ item }) => item);
 const NON_BOOKMARKED_ITEM = PackedFolderItemFactory();
 
-const toggleBookmarkButton = (itemId: string) => {
-  // todo: remove when refactoring the table
-  cy.wait(500);
-  cy.get(`#${buildItemMenuButtonId(itemId)}`).click();
-  cy.get(`#${buildItemMenu(itemId)} .${BOOKMARKED_ITEM_BUTTON_CLASS}`).click();
+const removefromBookmark = (itemId: string) => {
+  cy.get(`#${buildItemCard(itemId)} ${UNBOOKMARK_ICON_SELECTOR}`).click();
+};
+
+const addToBookmark = (itemId: string) => {
+  cy.get(`#${buildItemCard(itemId)} ${BOOKMARK_ICON_SELECTOR}`).click();
 };
 
 describe('Bookmarked Item', () => {
@@ -34,35 +42,53 @@ describe('Bookmarked Item', () => {
     beforeEach(() => {
       cy.setUpApi({
         items: ITEMS,
-        bookmarkedItems: BOOKMARKED_ITEMS,
       });
       cy.visit(BOOKMARKED_ITEMS_PATH);
     });
 
     it('Show empty table', () => {
-      cy.get(`#${BOOKMARKED_ITEMS_ID}`).should('exist');
+      i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+      const text = i18n.t(BUILDER.BOOKMARKS_NO_ITEM, { ns: BUILDER_NAMESPACE });
+      cy.get(`#${BOOKMARKED_ITEMS_ID}`).should('contain', text);
     });
   });
 
-  describe('Member has several valid bookmarked items', () => {
+  describe('Member has bookmarked items', () => {
     beforeEach(() => {
       cy.setUpApi({
         items: [...ITEMS, NON_BOOKMARKED_ITEM],
         bookmarkedItems: BOOKMARKED_ITEMS,
       });
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
-      cy.visit(HOME_PATH);
+      cy.visit(BOOKMARKED_ITEMS_PATH);
+    });
+
+    it('Empty search', () => {
+      const searchText = 'mysearch';
+      cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
+      const text = i18n.t(BUILDER.BOOKMARKS_NO_ITEM_SEARCH, {
+        search: searchText,
+        ns: BUILDER_NAMESPACE,
+      });
+      cy.get(`#${BOOKMARKED_ITEMS_ID}`).should('contain', text);
     });
 
     it("New button doesn't exist", () => {
-      cy.visit(BOOKMARKED_ITEMS_PATH);
       cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 
-    it('add item to bookmarks', () => {
+    it('Check bookmarked items view', () => {
+      for (const { item } of BOOKMARKED_ITEMS) {
+        cy.get(`#${buildItemCard(item.id)}`).should('be.visible');
+      }
+    });
+
+    it('Add item to bookmarks', () => {
+      cy.visit(HOME_PATH);
+
       const item = NON_BOOKMARKED_ITEM;
 
-      toggleBookmarkButton(item.id);
+      addToBookmark(item.id);
 
       cy.wait('@bookmarkItem').then(({ request }) => {
         expect(request.url).to.contain(item.id);
@@ -72,19 +98,40 @@ describe('Bookmarked Item', () => {
     it('remove item from bookmarks', () => {
       const itemId = ITEMS[1].id;
 
-      toggleBookmarkButton(itemId);
+      removefromBookmark(itemId);
 
       cy.wait('@unbookmarkItem').then(({ request }) => {
         expect(request.url).to.contain(itemId);
       });
     });
 
-    it('check bookmarked items view', () => {
-      cy.visit(BOOKMARKED_ITEMS_PATH);
+    it('Sorting & Ordering', () => {
+      cy.get(`${SORTING_SELECT_SELECTOR} input`).should(
+        'have.value',
+        SortingOptions.ItemUpdatedAt,
+      );
+      cy.get(SORTING_ORDERING_SELECTOR_DESC).should('be.visible');
 
-      const itemId = ITEMS[1].id;
+      cy.get(SORTING_SELECT_SELECTOR).click();
+      cy.get('li[data-value="item.name"]').click();
 
-      cy.get(buildItemsTableRowIdAttribute(itemId)).should('exist');
+      // check items are ordered by name
+      cy.get(`#${BOOKMARKED_ITEMS_ID} h5`).then(($e) => {
+        BOOKMARKED_ITEMS.sort((a, b) => (a.item.name < b.item.name ? 1 : -1));
+        for (let idx = 0; idx < BOOKMARKED_ITEMS.length; idx += 1) {
+          expect($e[idx].innerText).to.eq(BOOKMARKED_ITEMS[idx].item.name);
+        }
+      });
+
+      // change ordering
+      cy.get(SORTING_ORDERING_SELECTOR_DESC).click();
+      cy.get(SORTING_ORDERING_SELECTOR_ASC).should('be.visible');
+      cy.get(`#${BOOKMARKED_ITEMS_ID} h5`).then(($e) => {
+        BOOKMARKED_ITEMS.reverse();
+        for (let idx = 0; idx < BOOKMARKED_ITEMS.length; idx += 1) {
+          expect($e[idx].innerText).to.eq(BOOKMARKED_ITEMS[idx].item.name);
+        }
+      });
     });
   });
 
@@ -96,9 +143,7 @@ describe('Bookmarked Item', () => {
       });
       cy.visit(BOOKMARKED_ITEMS_PATH);
 
-      it('Show empty table', () => {
-        cy.get(`#${BOOKMARKED_ITEMS_ID}`).should('exist');
-      });
+      cy.get(`#${BOOKMARKED_ITEMS_ERROR_ALERT_ID}`).should('exist');
     });
   });
 });

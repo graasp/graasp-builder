@@ -40,11 +40,7 @@ export const useThumbnailUploader = ({
   const { mutate: deleteThumbnail } = useDeleteItemThumbnail();
   const { mutateAsync: uploadItemThumbnail } =
     mutations.useUploadItemThumbnail();
-  const {
-    update,
-    close: closeNotification,
-    closeAndShowError,
-  } = useUploadWithProgress();
+  const { update, close: closeNotification } = useUploadWithProgress();
 
   const { id: itemId, settings } = item;
   const {
@@ -103,7 +99,7 @@ export const useThumbnailUploader = ({
     } catch (error) {
       console.error(error);
       setIsUploadingError(true);
-      closeAndShowError(error as Error);
+      closeNotification(error as Error);
     } finally {
       setIsThumbnailUploading(false);
       setUploadingProgress(0);

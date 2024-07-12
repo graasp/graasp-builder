@@ -7,15 +7,12 @@ import {
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '@/config/selectors';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { createDocument } from '../../../support/createUtils';
 
 describe('Create Document', () => {
   it('create document on Home', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
-
-    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createDocument(DocumentItemFactory());
@@ -28,18 +25,20 @@ describe('Create Document', () => {
 
   it('create document in item', () => {
     const FOLDER = PackedFolderItemFactory();
-    cy.setUpApi({ items: [FOLDER] });
+    const CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
+    cy.setUpApi({ items: [FOLDER, CHILD] });
     const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
 
-    cy.switchMode(ItemLayoutMode.List);
-
     // create
     createDocument(DocumentItemFactory());
 
-    cy.wait('@postItem').then(() => {
+    cy.wait('@postItem').then(({ request: { url } }) => {
+      expect(url).to.contain(FOLDER.id);
+      // add after child
+      expect(url).to.contain(CHILD.id);
       // expect update
       cy.wait('@getItem').its('response.url').should('contain', id);
     });
@@ -49,7 +48,6 @@ describe('Create Document', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ItemLayoutMode.List);
     createDocument(
       DocumentItemFactory({
         name: '',

@@ -5,23 +5,14 @@ import { HOME_PATH } from '../../../../src/config/paths';
 import {
   ITEM_MENU_FLAG_BUTTON_CLASS,
   buildFlagListItemId,
-  buildItemMenu,
-  buildItemMenuButtonId,
+  buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
 import { BUILDER } from '../../../../src/langs/constants';
 import { CURRENT_USER } from '../../../fixtures/members';
 
 const openFlagItemModal = (itemId: string) => {
-  // todo: remove on table refactor
-  cy.wait(500);
-  const menuSelector = `#${buildItemMenuButtonId(itemId)}`;
-  cy.get(menuSelector).click();
-
-  const menuFlagButton = cy.get(
-    `#${buildItemMenu(itemId)} .${ITEM_MENU_FLAG_BUTTON_CLASS}`,
-  );
-
-  menuFlagButton.click();
+  cy.get(buildItemsGridMoreButtonSelector(itemId)).click();
+  cy.get(`.${ITEM_MENU_FLAG_BUTTON_CLASS}`).click();
 };
 
 const flagItem = (itemId: string, type: FlagType) => {

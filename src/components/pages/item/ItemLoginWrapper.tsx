@@ -6,7 +6,6 @@ import { hooks, mutations } from '@/config/queryClient';
 import {
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
   ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
-  ITEM_LOGIN_SIGN_IN_MODE_ID,
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '@/config/selectors';
@@ -36,7 +35,6 @@ const ItemLoginWrapper = (WrappedComponent: () => JSX.Element): JSX.Element => {
     usernameInputId: ITEM_LOGIN_SIGN_IN_USERNAME_ID,
     signInButtonId: ITEM_LOGIN_SIGN_IN_BUTTON_ID,
     passwordInputId: ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
-    modeSelectId: ITEM_LOGIN_SIGN_IN_MODE_ID,
   })(WrappedComponent);
   return <AuthComponent />;
 };

@@ -16,7 +16,7 @@ import { CURRENT_USER, MEMBERS } from './members';
 
 export const DEFAULT_FOLDER_ITEM = PackedFolderItemFactory({
   name: 'default folder',
-  extra: { [ItemType.FOLDER]: { childrenOrder: [] } },
+  extra: { [ItemType.FOLDER]: {} },
   creator: CURRENT_USER,
 });
 
@@ -254,7 +254,7 @@ export const PublishedItemFactory = (
   ...itemToPublish,
   published: {
     id: 'ecbfbd2a-5688-12eb-ae93-0242ac130002',
-    item,
+    item: itemToPublish,
     createdAt: new Date().toISOString(),
     creator: itemToPublish.creator,
     totalViews: 0,

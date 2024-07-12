@@ -6,7 +6,7 @@ import { IconButton, TextField } from '@mui/material';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
-import type { EditModalContentPropType } from './EditModalWrapper';
+import type { EditModalContentPropType } from '../edit/EditModal';
 
 export type NameFormProps = EditModalContentPropType & {
   required?: boolean;

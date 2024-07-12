@@ -7,13 +7,10 @@ import {
   ITEM_MAIN_CLASS,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
+  buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
-import { ItemLayoutMode } from '../../../../src/enums';
 import { CURRENT_USER } from '../../../fixtures/members';
-import {
-  EDIT_ITEM_PAUSE,
-  ITEM_LOADING_PAUSE,
-} from '../../../support/constants';
+import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editCaptionFromViewPage, editItem } from '../../../support/editUtils';
 
 const EDITED_FIELDS = {
@@ -43,7 +40,6 @@ describe('Edit Link', () => {
       const { id } = GRAASP_LINK_ITEM;
       cy.visit(buildItemPath(id));
       const caption = 'new caption';
-      cy.wait(ITEM_LOADING_PAUSE);
       editCaptionFromViewPage({ id, caption });
       cy.wait(`@editItem`).then(({ request: { url, body } }) => {
         expect(url).to.contain(id);
@@ -67,68 +63,31 @@ describe('Edit Link', () => {
     });
   });
 
-  describe('List', () => {
-    it('edit link on Home', () => {
-      cy.visit(HOME_PATH);
+  it('edit link on Home', () => {
+    cy.visit(HOME_PATH);
 
-      cy.switchMode(ItemLayoutMode.List);
+    const itemToEdit = GRAASP_LINK_ITEM;
 
-      const itemToEdit = GRAASP_LINK_ITEM;
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...EDITED_FIELDS,
-        },
-        ItemLayoutMode.List,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getAccessibleItems');
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(EDITED_FIELDS.name);
-        },
-      );
+    // edit
+    cy.get(buildItemsGridMoreButtonSelector(itemToEdit.id)).click();
+    editItem({
+      ...itemToEdit,
+      ...EDITED_FIELDS,
     });
-  });
 
-  describe('Grid', () => {
-    it('edit link on Home', () => {
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
-
-      const itemToEdit = GRAASP_LINK_ITEM;
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...EDITED_FIELDS,
+    cy.get(buildItemsGridMoreButtonSelector(itemToEdit.id)).click();
+    cy.wait('@editItem').then(
+      ({
+        response: {
+          body: { id, name },
         },
-        ItemLayoutMode.Grid,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getAccessibleItems');
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(EDITED_FIELDS.name);
-        },
-      );
-    });
+      }) => {
+        // check item is edited and updated
+        cy.wait(EDIT_ITEM_PAUSE);
+        cy.get('@getAccessibleItems');
+        expect(id).to.equal(itemToEdit.id);
+        expect(name).to.equal(EDITED_FIELDS.name);
+      },
+    );
   });
 });

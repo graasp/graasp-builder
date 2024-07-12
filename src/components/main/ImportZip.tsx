@@ -15,11 +15,7 @@ import { useUploadWithProgress } from '../hooks/uploadWithProgress';
 const ImportZip = (): JSX.Element => {
   const { itemId } = useParams();
   const { mutateAsync: importZip } = mutations.useImportZip();
-  const {
-    update,
-    close: closeNotification,
-    closeAndShowError,
-  } = useUploadWithProgress();
+  const { update, close: closeNotification } = useUploadWithProgress();
 
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -49,7 +45,7 @@ const ImportZip = (): JSX.Element => {
                 closeNotification();
               })
               .catch((error) => {
-                closeAndShowError(error);
+                closeNotification(error);
               });
           }
         }}

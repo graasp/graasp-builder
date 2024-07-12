@@ -151,7 +151,6 @@
   "ITEMS_TABLE_ACTIONS_HEADER": "Comportamiento",
   "ITEMS_TABLE_CREATOR_HEADER": "Creador",
   "ITEMS_TABLE_DRAG_DEFAULT_MESSAGE": "Mover un elemento",
-  "ITEMS_TABLE_EMPTY_MESSAGE": "No hay artículos",
   "ITEMS_TABLE_NAME_HEADER": "Nombre",
   "ITEMS_TABLE_STATUS_HEADER": "Estado",
   "ITEMS_TABLE_SELECTION_TEXT_one": "{{count}} seleccionado",

@@ -1,6 +1,5 @@
 import { HOME_PATH } from '../../../../src/config/paths';
-import { buildItemsTableRowIdAttribute } from '../../../../src/config/selectors';
-import { ItemLayoutMode } from '../../../../src/enums';
+import { buildItemCard } from '../../../../src/config/selectors';
 import {
   IMAGE_ITEM_DEFAULT,
   IMAGE_ITEM_S3,
@@ -18,39 +17,31 @@ describe('View Files', () => {
         items: [IMAGE_ITEM_DEFAULT, VIDEO_ITEM_DEFAULT, PDF_ITEM_DEFAULT],
       });
       cy.visit(HOME_PATH);
-
-      cy.switchMode(ItemLayoutMode.List);
     });
     it('image', () => {
       // item is displayed in table
-      cy.get(buildItemsTableRowIdAttribute(IMAGE_ITEM_DEFAULT.id)).should(
-        'exist',
-      );
+      cy.get(`#${buildItemCard(IMAGE_ITEM_DEFAULT.id)}`).should('exist');
 
       // item metadata
-      cy.goToItemInList(IMAGE_ITEM_DEFAULT.id);
+      cy.goToItemInCard(IMAGE_ITEM_DEFAULT.id);
       expectFileViewScreenLayout({ item: IMAGE_ITEM_DEFAULT });
     });
 
     it('video', () => {
       // item is displayed in table
-      cy.get(buildItemsTableRowIdAttribute(VIDEO_ITEM_DEFAULT.id)).should(
-        'exist',
-      );
+      cy.get(`#${buildItemCard(VIDEO_ITEM_DEFAULT.id)}`).should('exist');
 
       // item metadata
-      cy.goToItemInList(VIDEO_ITEM_DEFAULT.id);
+      cy.goToItemInCard(VIDEO_ITEM_DEFAULT.id);
       expectFileViewScreenLayout({ item: VIDEO_ITEM_DEFAULT });
     });
 
     it('pdf', () => {
       // item is displayed in table
-      cy.get(buildItemsTableRowIdAttribute(PDF_ITEM_DEFAULT.id)).should(
-        'exist',
-      );
+      cy.get(`#${buildItemCard(PDF_ITEM_DEFAULT.id)}`).should('exist');
 
       // item metadata
-      cy.goToItemInList(PDF_ITEM_DEFAULT.id);
+      cy.goToItemInCard(PDF_ITEM_DEFAULT.id);
       expectFileViewScreenLayout({ item: PDF_ITEM_DEFAULT });
     });
   });
@@ -61,33 +52,31 @@ describe('View Files', () => {
         items: [IMAGE_ITEM_S3, VIDEO_ITEM_S3, PDF_ITEM_S3],
       });
       cy.visit(HOME_PATH);
-
-      cy.switchMode(ItemLayoutMode.List);
     });
     it('image', () => {
       // item is displayed in table
-      cy.get(buildItemsTableRowIdAttribute(IMAGE_ITEM_S3.id)).should('exist');
+      cy.get(`#${buildItemCard(IMAGE_ITEM_S3.id)}`).should('exist');
 
       // item metadata
-      cy.goToItemInList(IMAGE_ITEM_S3.id);
+      cy.goToItemInCard(IMAGE_ITEM_S3.id);
       expectFileViewScreenLayout({ item: IMAGE_ITEM_S3 });
     });
 
     it('video', () => {
       // item is displayed in table
-      cy.get(buildItemsTableRowIdAttribute(VIDEO_ITEM_S3.id)).should('exist');
+      cy.get(`#${buildItemCard(VIDEO_ITEM_S3.id)}`).should('exist');
 
       // item metadata
-      cy.goToItemInList(VIDEO_ITEM_S3.id);
+      cy.goToItemInCard(VIDEO_ITEM_S3.id);
       expectFileViewScreenLayout({ item: VIDEO_ITEM_S3 });
     });
 
     it('pdf', () => {
       // item is displayed in table
-      cy.get(buildItemsTableRowIdAttribute(PDF_ITEM_S3.id)).should('exist');
+      cy.get(`#${buildItemCard(PDF_ITEM_S3.id)}`).should('exist');
 
       // item metadata
-      cy.goToItemInList(PDF_ITEM_S3.id);
+      cy.goToItemInCard(PDF_ITEM_S3.id);
       expectFileViewScreenLayout({ item: PDF_ITEM_S3 });
     });
   });
