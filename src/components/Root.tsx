@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css';
 import 'react-quill/dist/quill.snow.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -29,28 +30,30 @@ import { FilterItemsContextProvider } from './context/FilterItemsContext';
 import ModalProviders from './context/ModalProviders';
 
 const Root = (): JSX.Element => (
-  <QueryClientProvider client={queryClient}>
-    <I18nextProvider i18n={i18nConfig}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ToastContainer stacked position="bottom-left" theme="colored" />
-        <Router>
-          <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
-            <ModalProviders>
-              <CurrentUserContextProvider>
-                <FilterItemsContextProvider>
-                  <App />
-                </FilterItemsContextProvider>
-              </CurrentUserContextProvider>
-            </ModalProviders>
-          </Sentry.ErrorBoundary>
-        </Router>
-      </ThemeProvider>
-    </I18nextProvider>
-    {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
-      <ReactQueryDevtools position="bottom-left" />
-    )}
-  </QueryClientProvider>
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <I18nextProvider i18n={i18nConfig}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ToastContainer stacked position="bottom-left" theme="colored" />
+          <Router>
+            <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
+              <ModalProviders>
+                <CurrentUserContextProvider>
+                  <FilterItemsContextProvider>
+                    <App />
+                  </FilterItemsContextProvider>
+                </CurrentUserContextProvider>
+              </ModalProviders>
+            </Sentry.ErrorBoundary>
+          </Router>
+        </ThemeProvider>
+      </I18nextProvider>
+      {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
+        <ReactQueryDevtools position="bottom-left" />
+      )}
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default Root;
