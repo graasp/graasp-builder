@@ -213,7 +213,9 @@ const LinkForm = ({
                   <LinkCard
                     title={linkData?.title || ''}
                     url={linkContent}
-                    thumbnail={linkData?.thumbnails[0]}
+                    thumbnail={
+                      linkData?.thumbnails?.[0] ?? linkData?.icons?.[0]
+                    }
                     description={description || ''}
                   />
                 }
