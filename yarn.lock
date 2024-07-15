@@ -7625,7 +7625,7 @@ __metadata:
     react-ga4: "npm:2.1.0"
     react-helmet-async: "npm:2.0.5"
     react-i18next: "npm:14.1.2"
-    react-image-crop: "npm:11.0.5"
+    react-image-crop: "npm:11.0.6"
     react-qr-code: "npm:2.0.15"
     react-query: "npm:3.39.3"
     react-quill: "npm:2.0.0"
@@ -11409,12 +11409,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-image-crop@npm:11.0.5":
-  version: 11.0.5
-  resolution: "react-image-crop@npm:11.0.5"
+"react-image-crop@npm:11.0.6":
+  version: 11.0.6
+  resolution: "react-image-crop@npm:11.0.6"
   peerDependencies:
     react: ">=16.13.1"
-  checksum: 10/0af15aa70758949797c992b0c1d21a398185e36a7e829d241cfc4bcfe679dd22bd4d0a0a74db78b079c3760315067ff4156dd2d0ecffa6b62a8e87f067e0f271
+  checksum: 10/c8abb8e84ea2a66416b3853e321e01b3630d479b606978f7aa94025e43c9c32b1f0322a0b8b278fbbd9df58b45c2450601bb562da771eb0c40c8f1e0ca9457c6
   languageName: node
   linkType: hard
 
