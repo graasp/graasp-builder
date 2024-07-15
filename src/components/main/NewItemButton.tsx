@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-import { Add } from '@mui/icons-material';
-import { ButtonProps } from '@mui/material';
+import { Add as AddIcon } from '@mui/icons-material';
+import { ButtonProps, IconButton, useTheme } from '@mui/material';
 
+import { DiscriminatedItem } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -11,12 +12,19 @@ import { BUILDER } from '../../langs/constants';
 import NewItemModal from './NewItemModal';
 
 type Props = {
+  previousItemId?: DiscriminatedItem['id'];
   size?: ButtonProps['size'];
+  type?: 'button' | 'icon';
 };
 
-const NewItemButton = ({ size }: Props): JSX.Element => {
+const NewItemButton = ({
+  previousItemId,
+  size = 'small',
+  type = 'button',
+}: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { t: translateBuilder } = useBuilderTranslation();
+  const theme = useTheme();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,11 +36,34 @@ const NewItemButton = ({ size }: Props): JSX.Element => {
 
   return (
     <>
-      <Button size={size} id={CREATE_ITEM_BUTTON_ID} onClick={handleClickOpen}>
-        <Add />
-        {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
-      </Button>
-      <NewItemModal open={open} handleClose={handleClose} />
+      {type === 'icon' ? (
+        <IconButton
+          onClick={handleClickOpen}
+          color="secondary"
+          sx={{
+            background: theme.palette.primary.main,
+            '&:hover': { background: 'grey' },
+          }}
+        >
+          <AddIcon />
+        </IconButton>
+      ) : (
+        <Button
+          id={CREATE_ITEM_BUTTON_ID}
+          onClick={handleClickOpen}
+          color="primary"
+          aria-label="add"
+          startIcon={<AddIcon />}
+          size={size}
+        >
+          {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
+        </Button>
+      )}
+      <NewItemModal
+        open={open}
+        handleClose={handleClose}
+        previousItemId={previousItemId}
+      />
     </>
   );
 };

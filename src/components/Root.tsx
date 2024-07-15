@@ -35,7 +35,7 @@ const Root = (): JSX.Element => (
       <I18nextProvider i18n={i18nConfig}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <ToastContainer stacked position="bottom-right" theme="colored" />
+          <ToastContainer stacked position="bottom-left" theme="colored" />
           <Router>
             <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
               <ModalProviders>
@@ -50,7 +50,7 @@ const Root = (): JSX.Element => (
         </ThemeProvider>
       </I18nextProvider>
       {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
-        <ReactQueryDevtools position="bottom-right" />
+        <ReactQueryDevtools position="bottom-left" />
       )}
     </QueryClientProvider>
   </HelmetProvider>

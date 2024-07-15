@@ -1,13 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 
-import { Box, Divider, Typography, styled } from '@mui/material';
+import { Container, Divider, Stack, Typography, styled } from '@mui/material';
 
 import { PackedItem } from '@graasp/sdk';
 import { DrawerHeader } from '@graasp/ui';
 
 import { BUILDER } from '@/langs/constants';
 
-import { RIGHT_MENU_WIDTH } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import { ITEM_MAIN_CLASS } from '../../config/selectors';
 import Chatbox from '../common/Chatbox';
@@ -15,20 +14,21 @@ import { useLayoutContext } from '../context/LayoutContext';
 import ItemPanel from './ItemPanel';
 import ItemHeader from './header/ItemHeader';
 
-const StyledContainer = styled(Box)<{ open: boolean }>(({ theme, open }) => {
+const StyledContainer = styled(Container)<{ open: boolean }>(({
+  theme,
+  open,
+}) => {
   const openStyles = open
     ? {
         transition: theme.transitions.create('margin', {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
         }),
-        marginRight: RIGHT_MENU_WIDTH,
       }
     : {};
 
   return {
     flexGrow: 1,
-    marginRight: 0,
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -58,14 +58,13 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
       <Helmet>
         <title>{item.name}</title>
       </Helmet>
-      <Box id={id} p={2} className={ITEM_MAIN_CLASS} height="100%">
+      <Stack id={id} pt={2} className={ITEM_MAIN_CLASS} height="100%">
         {isChatboxMenuOpen && (
           <ItemPanel open={isChatboxMenuOpen}>
             <DrawerHeader
               handleDrawerClose={() => {
                 setIsChatboxMenuOpen(false);
               }}
-              // todo
               direction="rtl"
             >
               <Typography variant="h6">
@@ -83,7 +82,7 @@ const ItemMain = ({ id, children, item }: Props): JSX.Element => {
 
           {children}
         </StyledContainer>
-      </Box>
+      </Stack>
     </>
   );
 };

@@ -170,7 +170,7 @@
   "ITEMS_TABLE_ACTIONS_HEADER": "اجراءات",
   "ITEMS_TABLE_CREATOR_HEADER": "المُنشئ",
   "ITEMS_TABLE_DRAG_DEFAULT_MESSAGE": "نقل عنصر واحد",
-  "ITEMS_TABLE_EMPTY_MESSAGE": "لا توجد عناصر",
+  "ITEMS_TABLE_EMPTY_MESSAGE": "هذا المجلد لا يحتوي أية عناصر",
   "ITEMS_TABLE_NAME_HEADER": "الاسم",
   "ITEMS_TABLE_STATUS_HEADER": "حالة",
   "ITEMS_TABLE_SELECTION_TEXT_one": "تم إختيار {{count}}",

@@ -7,16 +7,11 @@ import {
 
 import { v4 } from 'uuid';
 
-import {
-  SETTINGS,
-  SETTINGS_ITEM_LOGIN_DEFAULT,
-} from '../../../../src/config/constants';
+import { SETTINGS_ITEM_LOGIN_DEFAULT } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
-  ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
-  ITEM_LOGIN_SIGN_IN_MODE_ID,
   ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
@@ -39,11 +34,6 @@ const addItemLoginSchema = (
   },
 });
 
-const changeSignInMode = (mode: string) => {
-  cy.get(`#${ITEM_LOGIN_SIGN_IN_MODE_ID}`).click();
-  cy.get(`li[data-value="${mode}"]`).click();
-};
-
 const checkItemLoginScreenLayout = (
   itemLoginSchema:
     | ItemLoginSchemaType
@@ -59,19 +49,11 @@ const checkItemLoginScreenLayout = (
 const fillItemLoginScreenLayout = ({
   username,
   password,
-  memberId,
 }: {
   username?: string;
   password?: string;
-  memberId?: string;
 }) => {
-  if (!memberId) {
-    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.PSEUDONYM);
-    cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).clear().type(username);
-  } else {
-    changeSignInMode(SETTINGS.ITEM_LOGIN.SIGN_IN_MODE.MEMBER_ID);
-    cy.get(`#${ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID}`).clear().type(memberId);
-  }
+  cy.get(`#${ITEM_LOGIN_SIGN_IN_USERNAME_ID}`).clear().type(username);
 
   if (password) {
     cy.get(`#${ITEM_LOGIN_SIGN_IN_PASSWORD_ID}`).clear().type(password);
@@ -124,7 +106,7 @@ describe('Item Login', () => {
 
   describe('User is signed out', () => {
     describe('Display Item Login Screen', () => {
-      it('username or member id', () => {
+      it('username', () => {
         const item = addItemLoginSchema(
           PackedFolderItemFactory({}, { permission: null }),
           ItemLoginSchemaType.Username,
@@ -138,19 +120,13 @@ describe('Item Login', () => {
         });
         cy.wait('@postItemLogin');
 
-        // use memberid
-        fillItemLoginScreenLayout({
-          memberId: v4(),
-        });
-        cy.wait('@postItemLogin');
-
         // use username to check no member id is incorrectly sent
         fillItemLoginScreenLayout({
           username: 'username',
         });
         cy.wait('@postItemLogin');
       });
-      it('username or member id and password', () => {
+      it('username and password', () => {
         const item = addItemLoginSchema(
           PackedFolderItemFactory({}, { permission: null }),
           ItemLoginSchemaType.UsernameAndPassword,
@@ -161,13 +137,6 @@ describe('Item Login', () => {
         checkItemLoginScreenLayout(item.itemLoginSchema.type);
         fillItemLoginScreenLayout({
           username: 'username',
-          password: 'password',
-        });
-        cy.wait('@postItemLogin');
-
-        // use memberid
-        fillItemLoginScreenLayout({
-          memberId: v4(),
           password: 'password',
         });
         cy.wait('@postItemLogin');

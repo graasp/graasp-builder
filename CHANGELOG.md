@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.31.0](https://github.com/graasp/graasp-builder/compare/v2.30.1...v2.31.0) (2024-07-15)
+
+
+### Features
+
+* improve table and views ([#1215](https://github.com/graasp/graasp-builder/issues/1215)) ([57da3f3](https://github.com/graasp/graasp-builder/commit/57da3f3986d05149e839ca3906c7f15afc047e30))
+
+
+### Bug Fixes
+
+* allow current geoloc on map  ([#1314](https://github.com/graasp/graasp-builder/issues/1314)) ([4fda73c](https://github.com/graasp/graasp-builder/commit/4fda73c4532bcbd405af36bf9a682a7d90960532))
+* **deps:** update dependency @graasp/translations to v1.32.0 ([#1317](https://github.com/graasp/graasp-builder/issues/1317)) ([30c3072](https://github.com/graasp/graasp-builder/commit/30c30721508419bd1602146373cd7a2026138729))
+* **deps:** update dependency filesize to v10.1.4 ([#1329](https://github.com/graasp/graasp-builder/issues/1329)) ([5e7910b](https://github.com/graasp/graasp-builder/commit/5e7910bce81b265063a377c5a26207999619df9a))
+* **deps:** update dependency katex to v0.16.11 ([#1319](https://github.com/graasp/graasp-builder/issues/1319)) ([258b92c](https://github.com/graasp/graasp-builder/commit/258b92c96209bf20101efd0900c8539fd4af78f3))
+* **deps:** update dependency lucide-react to v0.402.0 ([#1309](https://github.com/graasp/graasp-builder/issues/1309)) ([924c1df](https://github.com/graasp/graasp-builder/commit/924c1df17ad180eda0afafe5c5ee432d3e89de8a))
+* **deps:** update dependency lucide-react to v0.408.0 ([#1327](https://github.com/graasp/graasp-builder/issues/1327)) ([240177a](https://github.com/graasp/graasp-builder/commit/240177a10adba941840bbf2aa13da2459a1f5a29))
+* **deps:** update dependency react-image-crop to v11.0.6 ([#1332](https://github.com/graasp/graasp-builder/issues/1332)) ([f621b13](https://github.com/graasp/graasp-builder/commit/f621b131549b3002aeb5d13f503830c36821fc7d))
+* **deps:** update mui (non-major) ([#1324](https://github.com/graasp/graasp-builder/issues/1324)) ([a5773cb](https://github.com/graasp/graasp-builder/commit/a5773cbbfbf017dd19416e8b71c146007061ea4a))
+* **deps:** update mui (non-major) to v5.16.0 ([#1325](https://github.com/graasp/graasp-builder/issues/1325)) ([05820cd](https://github.com/graasp/graasp-builder/commit/05820cd9c1fe459051196cd893d45a37634d2cf6))
+* **deps:** update react-router monorepo to v6.24.1 ([#1311](https://github.com/graasp/graasp-builder/issues/1311)) ([f9d95bd](https://github.com/graasp/graasp-builder/commit/f9d95bdc3eca12fdb8343d414a899473b6edc6c9))
+* warning about `UNSAFE_componentWillMount` using react-helmet-async ([#1322](https://github.com/graasp/graasp-builder/issues/1322)) ([d425527](https://github.com/graasp/graasp-builder/commit/d42552798f2482fe8b1fc6f5aaf4f04ceda35b3d))
+
 ## [2.30.1](https://github.com/graasp/graasp-builder/compare/v2.30.0...v2.30.1) (2024-07-01)
 
 

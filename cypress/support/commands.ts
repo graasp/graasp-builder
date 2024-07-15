@@ -2,6 +2,8 @@ import { CookieKeys } from '@graasp/sdk';
 
 import 'cypress-localstorage-commands';
 
+import { ItemLayoutMode } from '@/enums';
+
 import { LAYOUT_MODE_BUTTON_ID } from '../../src/config/selectors';
 import { APPS_LIST } from '../fixtures/apps/apps';
 import { SAMPLE_CATEGORIES } from '../fixtures/categories';
@@ -63,6 +65,7 @@ import {
   mockGetOwnItems,
   mockGetParents,
   mockGetPublishItemInformations,
+  mockGetPublishItemsForMember,
   mockGetRecycledItems,
   mockGetSharedItems,
   mockGetShortLinksItem,
@@ -104,6 +107,7 @@ Cypress.Commands.add(
     items = [],
     recycledItemData = [],
     bookmarkedItems = [],
+    publishedItemData = [],
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     mentions = SAMPLE_MENTIONS,
@@ -164,6 +168,8 @@ Cypress.Commands.add(
     patchShortLinkError = false,
     deleteShortLinkError = false,
     importH5pError = false,
+    getRecycledItemsError = false,
+    getPublishedItems = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -275,7 +281,7 @@ Cypress.Commands.add(
 
     mockRecycleItems(items, recycleItemsError);
 
-    mockGetRecycledItems(recycledItemData);
+    mockGetRecycledItems(recycledItemData, getRecycledItemsError);
 
     mockRestoreItems(recycledItemData, restoreItemsError);
 
@@ -348,29 +354,25 @@ Cypress.Commands.add(
     mockGetLinkMetadata();
 
     mockImportH5p(importH5pError);
+
+    mockGetPublishItemsForMember(publishedItemData, getPublishedItems);
   },
 );
 
-const ItemLayoutMode = {
-  Grid: 'grid',
-  List: 'list',
-};
-const DEFAULT_ITEM_LAYOUT_MODE = ItemLayoutMode.List;
-
 Cypress.Commands.add('switchMode', (mode) => {
-  if (DEFAULT_ITEM_LAYOUT_MODE !== mode) {
-    cy.get(`#${LAYOUT_MODE_BUTTON_ID}`).click({ force: true });
-    switch (mode) {
-      case ItemLayoutMode.Grid:
-        cy.get(`li[value="${ItemLayoutMode.Grid}"]`).click({ force: true });
-        break;
-      case ItemLayoutMode.List:
-        cy.get(`li[value="${ItemLayoutMode.List}"]`).click({ force: true });
-        break;
-      default:
-        console.error(`invalid mode ${mode} provided`);
-        break;
-    }
+  cy.get(`#${LAYOUT_MODE_BUTTON_ID}`).click({ force: true });
+  switch (mode) {
+    case ItemLayoutMode.Grid:
+      cy.get(`li[value="${ItemLayoutMode.Grid}"]`).click({ force: true });
+      break;
+    case ItemLayoutMode.List:
+      cy.get(`li[value="${ItemLayoutMode.List}"]`).click({ force: true });
+      break;
+    case ItemLayoutMode.Map:
+      cy.get(`li[value="${ItemLayoutMode.Map}"]`).click({ force: true });
+      break;
+    default:
+      throw new Error(`invalid mode ${mode} provided`);
   }
 });
 

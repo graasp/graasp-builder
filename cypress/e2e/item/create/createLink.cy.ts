@@ -2,7 +2,6 @@ import { PackedFolderItemFactory } from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../../../src/config/selectors';
-import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import {
   GRAASP_LINK_ITEM,
   GRAASP_LINK_ITEM_NO_PROTOCOL,
@@ -15,8 +14,6 @@ describe('Create Link', () => {
   it('create link on Home', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
-
-    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createLink(GRAASP_LINK_ITEM);
@@ -34,8 +31,6 @@ describe('Create Link', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ItemLayoutMode.List);
-
     // create
     createLink(GRAASP_LINK_ITEM_NO_PROTOCOL);
 
@@ -50,21 +45,21 @@ describe('Create Link', () => {
 
   it('create link in item', () => {
     const FOLDER = PackedFolderItemFactory();
+    const CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
 
-    cy.setUpApi({ items: [FOLDER] });
+    cy.setUpApi({ items: [FOLDER, CHILD] });
     const { id } = FOLDER;
 
     // go to children item
     cy.visit(buildItemPath(id));
 
-    cy.switchMode(ItemLayoutMode.List);
-
     // create
     createLink(GRAASP_LINK_ITEM);
 
-    cy.wait('@postItem').then(() => {
-      // check item is created and displayed
-      cy.wait(CREATE_ITEM_PAUSE);
+    cy.wait('@postItem').then(({ request: { url } }) => {
+      expect(url).to.contain(FOLDER.id);
+      // add after child
+      expect(url).to.contain(CHILD.id);
 
       // expect update
       cy.wait('@getItem').its('response.url').should('contain', id);
@@ -79,8 +74,6 @@ describe('Create Link', () => {
 
       // go to children item
       cy.visit(buildItemPath(id));
-
-      cy.switchMode(ItemLayoutMode.List);
 
       // create
       createLink(INVALID_LINK_ITEM, {

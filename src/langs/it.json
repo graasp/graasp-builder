@@ -151,7 +151,6 @@
   "ITEMS_TABLE_ACTIONS_HEADER": "Azioni",
   "ITEMS_TABLE_CREATOR_HEADER": "Creatore",
   "ITEMS_TABLE_DRAG_DEFAULT_MESSAGE": "Sposta un elemento",
-  "ITEMS_TABLE_EMPTY_MESSAGE": "Nessun oggetto",
   "ITEMS_TABLE_NAME_HEADER": "Nome",
   "ITEMS_TABLE_STATUS_HEADER": "Stato",
   "ITEMS_TABLE_SELECTION_TEXT_one": "{{count}} selezionato",

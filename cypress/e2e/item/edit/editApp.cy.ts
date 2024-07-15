@@ -1,5 +1,4 @@
 import {
-  ItemType,
   PackedAppItemFactory,
   PackedFolderItemFactory,
   buildAppExtra,
@@ -12,10 +11,9 @@ import {
   ITEM_MAIN_CLASS,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
+  buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
-import { ItemLayoutMode } from '../../../../src/enums';
-import { buildAppItemLinkForTest } from '../../../fixtures/apps';
-import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
+import { CURRENT_USER } from '../../../fixtures/members';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
 import { editCaptionFromViewPage, editItem } from '../../../support/editUtils';
 
@@ -30,21 +28,6 @@ const GRAASP_APP_ITEM = PackedAppItemFactory({
   name: 'test app',
   description: 'my app description',
   creator: CURRENT_USER,
-});
-
-const GRAASP_APP_PARENT_FOLDER = PackedFolderItemFactory({
-  name: 'graasp app parent',
-});
-
-const APP_USING_CONTEXT_ITEM = PackedAppItemFactory({
-  name: 'my app',
-  extra: {
-    [ItemType.APP]: {
-      url: `${Cypress.env('VITE_GRAASP_API_HOST')}/${buildAppItemLinkForTest('app.html')}`,
-    },
-  },
-  creator: MEMBERS.ANNA,
-  parentItem: GRAASP_APP_PARENT_FOLDER,
 });
 
 describe('Edit App', () => {
@@ -81,137 +64,65 @@ describe('Edit App', () => {
     });
   });
 
-  describe('List', () => {
-    it('edit app on Home', () => {
-      const itemToEdit = GRAASP_APP_ITEM;
-      cy.setUpApi({ items: [itemToEdit] });
-      cy.visit(HOME_PATH);
+  it('edit app on Home', () => {
+    const itemToEdit = GRAASP_APP_ITEM;
+    cy.setUpApi({ items: [itemToEdit] });
+    cy.visit(HOME_PATH);
 
-      cy.switchMode(ItemLayoutMode.List);
+    cy.get(buildItemsGridMoreButtonSelector(itemToEdit.id)).click();
 
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
-        },
-        ItemLayoutMode.List,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getAccessibleItems');
-        },
-      );
+    // edit
+    editItem({
+      ...itemToEdit,
+      ...newFields,
     });
 
-    it('edit app in item', () => {
-      const parentItem = PackedFolderItemFactory();
-      const itemToEdit = PackedAppItemFactory({ parentItem });
-      cy.setUpApi({
-        items: [parentItem, itemToEdit],
-      });
-      // go to children item
-      cy.visit(buildItemPath(parentItem.id));
-
-      cy.switchMode(ItemLayoutMode.List);
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
+    cy.wait('@editItem').then(
+      ({
+        response: {
+          body: { id, name },
         },
-        ItemLayoutMode.List,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-          cy.get('@getItem')
-            .its('response.url')
-            .should('contain', parentItem.id);
-        },
-      );
-    });
+      }) => {
+        // check item is edited and updated
+        expect(id).to.equal(itemToEdit.id);
+        expect(name).to.equal(newFields.name);
+        cy.wait(EDIT_ITEM_PAUSE);
+        cy.wait('@getAccessibleItems');
+      },
+    );
   });
 
-  describe('Grid', () => {
-    it('edit app on Home', () => {
-      const itemToEdit = GRAASP_APP_ITEM;
-      cy.setUpApi({ items: [itemToEdit] });
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
-        },
-        ItemLayoutMode.Grid,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getAccessibleItems');
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-        },
-      );
+  it('edit app in item', () => {
+    const parentItem = PackedFolderItemFactory();
+    const itemToEdit = PackedAppItemFactory({ parentItem });
+    cy.setUpApi({
+      items: [parentItem, itemToEdit],
     });
+    // go to children item
+    cy.visit(buildItemPath(parentItem.id));
 
-    it('edit app in item', () => {
-      const itemToEdit = APP_USING_CONTEXT_ITEM;
-      const parent = GRAASP_APP_PARENT_FOLDER;
-      cy.setUpApi({ items: [parent, itemToEdit] });
-      // go to children item
-      cy.visit(buildItemPath(parent.id));
-      cy.switchMode(ItemLayoutMode.Grid);
+    // edit
+    cy.get(buildItemsGridMoreButtonSelector(itemToEdit.id)).click();
+    editItem(
+      {
+        ...itemToEdit,
+        ...newFields,
+      },
+      'ul',
+    );
 
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
+    cy.wait('@editItem').then(
+      ({
+        response: {
+          body: { id, name },
         },
-        ItemLayoutMode.Grid,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-          cy.get('@getItem').its('response.url').should('contain', parent.id);
-        },
-      );
-    });
+      }) => {
+        // check item is edited and updated
+        cy.wait(EDIT_ITEM_PAUSE);
+        expect(id).to.equal(itemToEdit.id);
+        expect(name).to.equal(newFields.name);
+        cy.get('@getItem').its('response.url').should('contain', parentItem.id);
+      },
+    );
   });
 });

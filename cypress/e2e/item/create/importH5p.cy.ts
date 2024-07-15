@@ -5,7 +5,6 @@ import {
   CREATE_ITEM_BUTTON_ID,
   H5P_DASHBOARD_UPLOADER_ID,
 } from '../../../../src/config/selectors';
-import ItemLayoutMode from '../../../../src/enums/itemLayoutMode';
 import { createItem } from '../../../support/createUtils';
 
 const NEW_H5P_ITEM = {
@@ -18,8 +17,6 @@ describe('Import H5P', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
-    cy.switchMode(ItemLayoutMode.List);
-
     // create
 
     createItem(NEW_H5P_ITEM);
@@ -29,17 +26,22 @@ describe('Import H5P', () => {
     cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('be.visible');
   });
 
-  it('create file in item', () => {
+  it('import h5p in item', () => {
     const FOLDER = PackedFolderItemFactory();
+    const CHILD = PackedFolderItemFactory({ parentItem: FOLDER });
 
-    cy.setUpApi({ items: [FOLDER] });
+    cy.setUpApi({ items: [FOLDER, CHILD] });
     const { id } = FOLDER;
     cy.visit(buildItemPath(id));
 
-    cy.switchMode(ItemLayoutMode.List);
-
     // create
     createItem(NEW_H5P_ITEM);
+
+    cy.wait('@importH5p').then(({ request: { url } }) => {
+      expect(url).to.contain(FOLDER.id);
+      // add after child
+      expect(url).to.contain(CHILD.id);
+    });
 
     // check interface didn't crash
     cy.wait(3000);
@@ -52,8 +54,6 @@ describe('Import H5P', () => {
     cy.setUpApi({ items: [FOLDER], importH5pError: true });
     const { id } = FOLDER;
     cy.visit(buildItemPath(id));
-
-    cy.switchMode(ItemLayoutMode.List);
 
     // create
     createItem(NEW_H5P_ITEM);

@@ -11,8 +11,8 @@ import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
   TEXT_EDITOR_CLASS,
   buildEditButtonId,
+  buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
-import { ItemLayoutMode } from '../../../../src/enums';
 import {
   CAPTION_EDIT_PAUSE,
   EDIT_ITEM_PAUSE,
@@ -41,138 +41,66 @@ const GRAASP_DOCUMENT_ITEM_CHILD = PackedDocumentItemFactory({
 });
 
 describe('Edit Document', () => {
-  describe('List', () => {
-    it('edit on Home', () => {
-      cy.setUpApi({ items: [GRAASP_DOCUMENT_ITEM] });
-      cy.visit(HOME_PATH);
+  it('edit on Home', () => {
+    cy.setUpApi({ items: [GRAASP_DOCUMENT_ITEM] });
+    cy.visit(HOME_PATH);
 
-      cy.switchMode(ItemLayoutMode.List);
+    const itemToEdit = GRAASP_DOCUMENT_ITEM;
 
-      const itemToEdit = GRAASP_DOCUMENT_ITEM;
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
-        },
-        ItemLayoutMode.List,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name, extra },
-          },
-        }) => {
-          // check item is edited and updated
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-          expect(getDocumentExtra(extra)?.content).to.contain(content);
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.wait('@getAccessibleItems');
-        },
-      );
+    cy.get(buildItemsGridMoreButtonSelector(itemToEdit.id)).click();
+    // edit
+    editItem({
+      ...itemToEdit,
+      ...newFields,
     });
 
-    it('edit in folder', () => {
-      const parent = GRAASP_FOLDER_PARENT;
-      const itemToEdit = GRAASP_DOCUMENT_ITEM_CHILD;
-      cy.setUpApi({ items: [parent, itemToEdit] });
-      // go to children item
-      cy.visit(buildItemPath(parent.id));
-
-      cy.switchMode(ItemLayoutMode.List);
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
+    cy.wait('@editItem').then(
+      ({
+        response: {
+          body: { id, name, extra },
         },
-        ItemLayoutMode.List,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name, extra },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-          expect(getDocumentExtra(extra)?.content).to.contain(content);
-          cy.get('@getItem').its('response.url').should('contain', parent.id);
-        },
-      );
-    });
+      }) => {
+        // check item is edited and updated
+        expect(id).to.equal(itemToEdit.id);
+        expect(name).to.equal(newFields.name);
+        expect(getDocumentExtra(extra)?.content).to.contain(content);
+        cy.wait(EDIT_ITEM_PAUSE);
+        cy.wait('@getAccessibleItems');
+      },
+    );
   });
 
-  describe('Grid', () => {
-    it('edit on Home', () => {
-      const itemToEdit = GRAASP_DOCUMENT_ITEM;
-      cy.setUpApi({ items: [itemToEdit] });
-      cy.visit(HOME_PATH);
-      cy.switchMode(ItemLayoutMode.Grid);
+  it('edit in folder', () => {
+    const parent = GRAASP_FOLDER_PARENT;
+    const itemToEdit = GRAASP_DOCUMENT_ITEM_CHILD;
+    cy.setUpApi({ items: [parent, itemToEdit] });
+    // go to children item
+    cy.visit(buildItemPath(parent.id));
 
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
+    // edit
+    cy.get(buildItemsGridMoreButtonSelector(itemToEdit.id)).click();
+    editItem(
+      {
+        ...itemToEdit,
+        ...newFields,
+      },
+      'ul',
+    );
+
+    cy.wait('@editItem').then(
+      ({
+        response: {
+          body: { id, name, extra },
         },
-        ItemLayoutMode.Grid,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name, extra },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          cy.get('@getAccessibleItems');
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-          expect(getDocumentExtra(extra)?.content).to.contain(content);
-        },
-      );
-    });
-
-    it('edit in folder', () => {
-      const parent = GRAASP_FOLDER_PARENT;
-      const itemToEdit = GRAASP_DOCUMENT_ITEM_CHILD;
-      cy.setUpApi({ items: [parent, itemToEdit] });
-      cy.visit(buildItemPath(parent.id));
-      cy.switchMode(ItemLayoutMode.Grid);
-
-      // edit
-      editItem(
-        {
-          ...itemToEdit,
-          ...newFields,
-        },
-        ItemLayoutMode.Grid,
-      );
-
-      cy.wait('@editItem').then(
-        ({
-          response: {
-            body: { id, name, extra },
-          },
-        }) => {
-          // check item is edited and updated
-          cy.wait(EDIT_ITEM_PAUSE);
-          expect(id).to.equal(itemToEdit.id);
-          expect(name).to.equal(newFields.name);
-          expect(getDocumentExtra(extra)?.content).to.contain(content);
-          cy.get('@getItem').its('response.url').should('contain', parent.id);
-        },
-      );
-    });
+      }) => {
+        // check item is edited and updated
+        cy.wait(EDIT_ITEM_PAUSE);
+        expect(id).to.equal(itemToEdit.id);
+        expect(name).to.equal(newFields.name);
+        expect(getDocumentExtra(extra)?.content).to.contain(content);
+        cy.get('@getItem').its('response.url').should('contain', parent.id);
+      },
+    );
   });
 
   describe('View Page', () => {

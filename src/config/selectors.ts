@@ -1,6 +1,6 @@
 // todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
-import { DescriptionPlacementType } from '@graasp/sdk';
+import { DescriptionPlacementType, ShortLink } from '@graasp/sdk';
 
 import { PublicationStatus } from '@/types/publication';
 
@@ -17,7 +17,6 @@ export const ITEM_FORM_NAME_INPUT_ID = 'newItemNameInput';
 export const ITEM_FORM_DISPLAY_NAME_INPUT_ID = 'newItemDisplayNameInput';
 export const ITEM_FORM_CONFIRM_BUTTON_ID = 'newItemConfirmButton';
 export const ITEM_SCREEN_ERROR_ALERT_ID = 'itemScreenErrorAlert';
-export const buildItemLink = (id: string): string => `itemLink-${id}`;
 export const NAVIGATION_HOME_LINK_ID = 'navigationHomeLink';
 export const buildNavigationLink = (id: string): string =>
   `navigationLink-${id}`;
@@ -38,7 +37,6 @@ export const buildItemRowArrowId = (id: string): string =>
 export const TREE_MODAL_CONFIRM_BUTTON_ID = 'treeModalConfirmButton';
 export const ITEMS_GRID_NO_ITEM_ID = 'itemsGridNoItem';
 export const EDIT_ITEM_BUTTON_CLASS = 'editButton';
-export const BOOKMARKED_ITEM_BUTTON_CLASS = 'bookmarkedButton';
 export const PIN_ITEM_BUTTON_CLASS = 'pinButton';
 export const COLLAPSE_ITEM_BUTTON_CLASS = 'collapseButton';
 export const HIDDEN_ITEM_BUTTON_CLASS = 'hideButton';
@@ -52,28 +50,8 @@ export const buildPermissionOptionId = (id: string): string =>
   `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 
-export const SHARED_ITEMS_ID = 'sharedItems';
 export const PUBLISHED_ITEMS_ID = 'publishedItems';
 export const BOOKMARKED_ITEMS_ID = 'bookmarkedItems';
-export const RECYCLED_ITEMS_ID = 'recycledItems';
-export const OWNED_ITEMS_ID = 'ownedItems';
-export const ITEMS_TABLE_BODY = 'itemsTableBody';
-export const ITEMS_TABLE_ROW = '.ag-row';
-export const buildItemsTableRowId = (id: string): string =>
-  `itemsTableRow-${id}`;
-export const buildItemsTableRowSelector = (id: string): string =>
-  `[row-id="${buildItemsTableRowId(id)}"]`;
-export const buildItemsTableRowIdAttribute = (id: string): string =>
-  `.ag-center-cols-container [row-id="${buildItemsTableRowId(id)}"]`;
-export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
-export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
-  'itemsTableDeleteSelectedItems';
-export const ITEMS_TABLE_RECYCLE_SELECTED_ITEMS_ID =
-  'itemsTableDeleteSelectedItems';
-export const ITEMS_TABLE_COPY_SELECTED_ITEMS_ID = 'itemsTableCopySelectedItems';
-export const ITEMS_TABLE_MOVE_SELECTED_ITEMS_ID = 'itemsTableMoveSelectedItems';
-export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
-export const UPLOADER_ID = 'uploader';
 export const buildFileItemId = (id: string): string => `file-${id}`;
 export const ITEM_PANEL_ID = 'itemPanelMetadata';
 export const ITEM_PANEL_NAME_ID = 'itemPanelName';
@@ -96,7 +74,7 @@ export const ITEM_LOGIN_SIGN_IN_MODE_ID = 'itemLoginSignInMode';
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
 export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
-export const FAVORITE_ITEMS_ERROR_ALERT_ID = 'bookmarkedItemsErrorAlert';
+export const BOOKMARKED_ITEMS_ERROR_ALERT_ID = 'bookmarkedItemsErrorAlert';
 export const PUBLISHED_ITEMS_ERROR_ALERT_ID = 'publishedItemsErrorAlert';
 export const RECYCLED_ITEMS_ERROR_ALERT_ID = 'recycledItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
@@ -149,13 +127,10 @@ export const buildItemsGridPaginationButton = (page: number): string =>
 export const buildItemsGridPaginationButtonSelected = (page: number): string =>
   `${buildItemsGridPaginationButton(page)}.Mui-selected`;
 export const ITEM_HEADER_ID = 'itemHeader';
-export const ROW_DRAGGER_CLASS = `drag-cell-class-name`;
 export const buildShareButtonId = (id: string): string => `shareButton-${id}`;
 export const buildPublishButtonId = (id: string): string =>
   `publishButton-${id}`;
 export const buildDeleteButtonId = (id: string): string => `deleteButton-${id}`;
-export const buildItemMenuButtonId = (id: string): string =>
-  `itemMenuButton-${id}`;
 export const buildPlayerButtonId = (id: string): string => `playerButton-${id}`;
 export const buildEditButtonId = (id: string): string => `editButton-${id}`;
 export const buildSettingsButtonId = (id: string): string =>
@@ -364,12 +339,14 @@ export const buildShortLinkEditBtnId = (alias: string): string =>
   `shortLinkEditBtn-${alias}`;
 export const buildShortLinkShortenBtnId = (
   itemId: string,
-  platform: string,
+  platform: ShortLink['platform'],
 ): string => `${SHORT_LINK_SHORTEN_START_ID}-${platform}-${itemId}`;
-export const buildShortLinkPlatformTextId = (platform: string): string =>
-  `shortLinkPlatformText-${platform}`;
-export const buildShortLinkUrlTextId = (platform: string): string =>
-  `shortLinkUrlText-${platform}`;
+export const buildShortLinkPlatformTextId = (
+  platform: ShortLink['platform'],
+): string => `shortLinkPlatformText-${platform}`;
+export const buildShortLinkUrlTextId = (
+  platform: ShortLink['platform'],
+): string => `shortLinkUrlText-${platform}`;
 export const ACCESSIBLE_ITEMS_ONLY_ME_ID = 'accessibleItemsOnlyMe';
 export const ACCESSIBLE_ITEMS_TABLE_ID = 'accessibleItemsTable';
 export const ACCESSIBLE_ITEMS_NEXT_PAGE_BUTTON_SELECTOR = `#${ACCESSIBLE_ITEMS_TABLE_ID} [data-testid="KeyboardArrowRightIcon"]`;
@@ -386,7 +363,7 @@ export const buildDescriptionPlacementId = (
 export const ITEM_THUMBNAIL_CONTAINER_ID = 'itemThumbnailContainer';
 export const ITEM_THUMBNAIL_DELETE_BTN_ID = 'itemThumbnailDeleteBtn';
 
-export const DROPZONE_HELPER_ID = 'dropzoneHelper';
+export const DROPZONE_SELECTOR = '[role="dropzone"]';
 export const buildMapViewId = (parentId?: string): string =>
   `map-view-${parentId}`;
 
@@ -426,3 +403,14 @@ export const IMAGE_THUMBNAIL_UPLOADER = 'imageThumbnailUploader';
 export const REMOVE_THUMBNAIL_BUTTON = 'removeThumbnailButton';
 
 export const MUI_CHIP_REMOVE_BTN = 'CancelIcon';
+export const HOME_LOAD_MORE_BUTTON_SELECTOR = '[role="feed"]';
+export const buildItemsGridMoreButtonSelector = (id: string): string =>
+  `#${buildItemCard(id)} [data-testid="MoreVertIcon"]`;
+export const buildItemMenuId = (id: string): string => `item-menu-id-${id}`;
+export const SORTING_SELECT_SELECTOR_TEST_ID = 'sortingSelect';
+export const SORTING_SELECT_SELECTOR = `[data-testid="${SORTING_SELECT_SELECTOR_TEST_ID}"]`;
+export const SORTING_ORDERING_SELECTOR_DESC = '.lucide-arrow-up-wide-narrow';
+export const SORTING_ORDERING_SELECTOR_ASC = '.lucide-arrow-down-narrow-wide';
+export const UNBOOKMARK_ICON_SELECTOR = '[data-testid="BookmarkIcon"]';
+export const BOOKMARK_ICON_SELECTOR =
+  '[data-testid="BookmarkBorderOutlinedIcon"]';
