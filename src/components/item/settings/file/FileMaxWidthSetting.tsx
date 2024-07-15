@@ -1,8 +1,7 @@
-import { ChangeEvent } from 'react';
-
-import { styled } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
 
 import { LocalFileItemType, MaxWidth, S3FileItemType } from '@graasp/sdk';
+import { Select } from '@graasp/ui';
 
 import { ExpandIcon } from 'lucide-react';
 
@@ -14,25 +13,7 @@ import { BUILDER } from '@/langs/constants';
 import ItemSettingProperty from '../ItemSettingProperty';
 import { SettingVariant, SettingVariantType } from '../settingTypes';
 
-const StyledSelect = styled('select')(({ theme }) => ({
-  // A reset of styles, including removing the default dropdown arrow
-  // appearance: 'none',
-  // Additional resets for further consistency
-  backgroundColor: 'white',
-  margin: 0,
-  fontFamily: 'inherit',
-  fontSize: 'inherit',
-  lineHeight: 'inherit',
-
-  // width: '100%',
-  minWidth: '15ch',
-  maxWidth: 'min-content',
-  height: theme.spacing(6),
-  cursor: 'pointer',
-  borderRadius: theme.spacing(0.5),
-  border: `1px solid ${theme.palette.divider}`,
-  padding: theme.spacing(0.5, 1),
-}));
+const maxWidthDefault = 'default';
 
 export const FileMaxWidthSetting = ({
   variant = SettingVariant.List,
@@ -46,9 +27,9 @@ export const FileMaxWidthSetting = ({
 
   const { mutate: editItem } = mutations.useEditItem();
 
-  const { maxWidth } = item.settings;
+  const { maxWidth = maxWidthDefault } = item.settings;
 
-  const onChangeMaxWidth = (e: ChangeEvent<HTMLSelectElement>) => {
+  const onChangeMaxWidth = (e: SelectChangeEvent<string>) => {
     editItem({
       id: item.id,
       settings: { maxWidth: e.target.value as MaxWidth },
@@ -56,19 +37,27 @@ export const FileMaxWidthSetting = ({
   };
 
   const control = (
-    <StyledSelect
+    <Select
       id={FILE_SETTING_MAX_WIDTH_ID}
       onChange={onChangeMaxWidth}
-      value={maxWidth}
-    >
-      {/* option used when the maxWidth is not set */}
-      <option value={undefined} hidden>
-        {translateEnum('default')}
-      </option>
-      {Object.values(MaxWidth).map((s) => (
-        <option value={s}>{translateEnum(s)}</option>
-      ))}
-    </StyledSelect>
+      value={maxWidth as string}
+      values={[
+        {
+          value: maxWidthDefault,
+          text: translateEnum(maxWidthDefault),
+          disabled: true,
+        },
+        ...Object.values(MaxWidth).map((s) => ({
+          value: s,
+          text: translateEnum(s),
+        })),
+      ]}
+      size="small"
+      sx={{
+        // this ensure the select stretches to be the same height as the buttons
+        height: '100%',
+      }}
+    />
   );
 
   switch (variant) {
