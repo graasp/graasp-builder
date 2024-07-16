@@ -38,6 +38,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ag-grid-community/core@npm:31.3.4":
+  version: 31.3.4
+  resolution: "@ag-grid-community/core@npm:31.3.4"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  checksum: 10/b603872de4374798094ed0bc8f794e94e283d935392c7a0a18ad27d357596f39c2bec0efa35a153e53cf740a363058b24ff1281544a59a080f94de502491ac70
+  languageName: node
+  linkType: hard
+
 "@ag-grid-community/react@npm:^31.3.1, @ag-grid-community/react@npm:^31.3.2":
   version: 31.3.2
   resolution: "@ag-grid-community/react@npm:31.3.2"
@@ -51,10 +60,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ag-grid-community/styles@npm:31.3.2, @ag-grid-community/styles@npm:^31.3.2":
-  version: 31.3.2
-  resolution: "@ag-grid-community/styles@npm:31.3.2"
-  checksum: 10/b651750803577419e6bbbc45b64d717d64c500332364f4523f84d9d384351f69a7d8eb83bd8343a4ec1530b0db0f26288e91e69516c6ade6e5f7dcf9a7e3078c
+"@ag-grid-community/styles@npm:31.3.4":
+  version: 31.3.4
+  resolution: "@ag-grid-community/styles@npm:31.3.4"
+  checksum: 10/4f5bb45034314297f9ecbb459cec1c7e265ac4698042b109dabf939989fd7dba12de99bf0a98965e463b6ea8c3c0aef2d088a501091d6c7986103913ca025ab1
   languageName: node
   linkType: hard
 
@@ -62,6 +71,13 @@ __metadata:
   version: 31.3.1
   resolution: "@ag-grid-community/styles@npm:31.3.1"
   checksum: 10/34c4e80f62891fe1d8881e233df38ace6ba03eb2934b3015bb8537937164dc2c261479d8d15d5c06e36f2bb84c3b27c7b65aaab773236190729bdfe32ec2c225
+  languageName: node
+  linkType: hard
+
+"@ag-grid-community/styles@npm:^31.3.2":
+  version: 31.3.2
+  resolution: "@ag-grid-community/styles@npm:31.3.2"
+  checksum: 10/b651750803577419e6bbbc45b64d717d64c500332364f4523f84d9d384351f69a7d8eb83bd8343a4ec1530b0db0f26288e91e69516c6ade6e5f7dcf9a7e3078c
   languageName: node
   linkType: hard
 
@@ -7912,8 +7928,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "graasp-builder@workspace:."
   dependencies:
-    "@ag-grid-community/core": "npm:31.3.2"
-    "@ag-grid-community/styles": "npm:31.3.2"
+    "@ag-grid-community/core": "npm:31.3.4"
+    "@ag-grid-community/styles": "npm:31.3.4"
     "@commitlint/cli": "npm:19.3.0"
     "@commitlint/config-conventional": "npm:19.2.2"
     "@cypress/code-coverage": "npm:3.12.41"
