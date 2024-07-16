@@ -14,10 +14,8 @@ import {
 } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
-import { useCurrentUserContext } from '@/components/context/CurrentUserContext';
-
 import { useBuilderTranslation } from '../../../config/i18n';
-import { mutations } from '../../../config/queryClient';
+import { hooks, mutations } from '../../../config/queryClient';
 import { CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import CancelButton from '../../common/CancelButton';
@@ -41,7 +39,7 @@ const DeleteItemDialog = ({
   hasOnlyOneAdmin = false,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: member } = useCurrentUserContext();
+  const { data: member } = hooks.useCurrentMember();
 
   const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
 

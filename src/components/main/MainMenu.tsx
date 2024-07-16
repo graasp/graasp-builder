@@ -14,6 +14,8 @@ import {
 
 import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
 
+import { hooks } from '@/config/queryClient';
+
 import { TUTORIALS_LINK } from '../../config/constants';
 import { useBuilderTranslation } from '../../config/i18n';
 import {
@@ -23,7 +25,6 @@ import {
   RECYCLE_BIN_PATH,
 } from '../../config/paths';
 import { BUILDER } from '../../langs/constants';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   '&:hover': {
@@ -35,7 +36,7 @@ const MainMenu = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { data: member } = useCurrentUserContext();
+  const { data: member } = hooks.useCurrentMember();
 
   const theme = useTheme();
   const iconColor = theme.palette.action.active;

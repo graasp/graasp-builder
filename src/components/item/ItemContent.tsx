@@ -41,7 +41,6 @@ import {
   buildFileItemId,
 } from '../../config/selectors';
 import ErrorAlert from '../common/ErrorAlert';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { OutletType } from '../pages/item/type';
 import FolderContent from './FolderContent';
 import FileAlignmentSetting from './settings/file/FileAlignmentSetting';
@@ -212,7 +211,7 @@ const EtherpadContent = ({ item }: { item: EtherpadItemType }): JSX.Element => {
  * Main item renderer component
  */
 const ItemContent = (): JSX.Element => {
-  const { data: member, isLoading, isError } = useCurrentUserContext();
+  const { data: member, isLoading, isError } = hooks.useCurrentMember();
   const { item, permission } = useOutletContext<OutletType>();
 
   if (isLoading) {

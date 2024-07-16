@@ -472,5 +472,8 @@
   "HOME_SCREEN_LOAD_MORE_BUTTON": "Load More",
   "PUBLISHED_ITEMS_EMPTY": "You didn't publish any items.",
   "PUBLISHED_ITEMS_NOT_FOUND_SEARCH": "No published item found for {{search}}",
-  "item.order": "Order"
+  "item.order": "Order",
+  "MEMBER_VALIDATION_TITLE": "Account email needs to be verified",
+  "MEMBER_VALIDATION_DESCRIPTION": "In order to use all features of Graasp you need to validate your account email. You will find more information in the link below.",
+  "MEMBER_VALIDATION_LINK_TEXT": "Learn more"
 }

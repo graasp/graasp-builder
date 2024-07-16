@@ -19,7 +19,6 @@ import {
   buildItemPath,
 } from '../config/paths';
 import { hooks } from '../config/queryClient';
-import { useCurrentUserContext } from './context/CurrentUserContext';
 import Main from './main/Main';
 import Redirect from './main/Redirect';
 import BookmarkedItemsScreen from './pages/BookmarkedItemsScreen';
@@ -34,11 +33,11 @@ import ItemSettingsPage from './pages/item/ItemSettingsPage';
 import ItemSharingPage from './pages/item/ItemSharingPage';
 import LibrarySettingsPage from './pages/item/LibrarySettingsPage';
 
-const { useItemFeedbackUpdates } = hooks;
+const { useItemFeedbackUpdates, useCurrentMember } = hooks;
 
 const App = (): JSX.Element => {
   const { pathname } = useLocation();
-  const { data: currentMember, isLoading } = useCurrentUserContext();
+  const { data: currentMember, isLoading } = useCurrentMember();
 
   // registers the item updates through websockets
   useItemFeedbackUpdates?.(currentMember?.id);

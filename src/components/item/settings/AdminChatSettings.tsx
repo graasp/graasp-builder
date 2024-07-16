@@ -3,9 +3,9 @@ import { PackedItem, PermissionLevel } from '@graasp/sdk';
 import { MessageSquareTextIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import ClearChatButton from './ClearChatButton';
 import ItemSettingProperty from './ItemSettingProperty';
 
@@ -16,7 +16,7 @@ type Props = {
 const AdminChatSettings = ({ item }: Props): JSX.Element | null => {
   const itemId = item.id;
   const { t } = useBuilderTranslation();
-  const { data: currentMember } = useCurrentUserContext();
+  const { data: currentMember } = hooks.useCurrentMember();
   // only show export chat when user has admin right on the item
   const isAdmin = currentMember
     ? item?.permission === PermissionLevel.Admin

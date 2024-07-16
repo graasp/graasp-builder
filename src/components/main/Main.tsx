@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { Stack, styled, useTheme } from '@mui/material';
@@ -22,6 +23,7 @@ import {
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
   HEADER_APP_BAR_ID,
 } from '../../config/selectors';
+import MemberValidationBanner from '../alerts/MemberValidationBanner';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import MainMenu from './MainMenu';
@@ -47,11 +49,13 @@ export const platformsHostsMap = defaultHostsMapper({
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main = ({ children }: Props): JSX.Element => {
-  const { t } = useBuilderTranslation();
+  const { t, i18n } = useBuilderTranslation();
   const theme = useTheme();
   const { isMobile } = useMobileView();
 
   const itemId = useParams()[ITEM_ID_PARAMS];
+
+  useEffect(() => {}, [i18n.language]);
 
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
@@ -101,6 +105,7 @@ const Main = ({ children }: Props): JSX.Element => {
         />
       }
     >
+      <MemberValidationBanner />
       <CookiesBanner />
       {children}
     </GraaspMain>

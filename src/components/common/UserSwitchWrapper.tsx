@@ -3,7 +3,7 @@ import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
 import { GRAASP_ACCOUNT_HOST, GRAASP_AUTH_HOST } from '@/config/env';
 import { useBuilderTranslation } from '@/config/i18n';
-import { mutations } from '@/config/queryClient';
+import { hooks, mutations } from '@/config/queryClient';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
   HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID,
@@ -13,7 +13,6 @@ import {
 } from '@/config/selectors';
 
 import { BUILDER } from '../../langs/constants';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 import MemberAvatar from './MemberAvatar';
 
 type Props = {
@@ -21,7 +20,7 @@ type Props = {
 };
 
 const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
-  const { data: member, isLoading } = useCurrentUserContext();
+  const { data: member, isLoading } = hooks.useCurrentMember();
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = mutations.useSignOut();
 
