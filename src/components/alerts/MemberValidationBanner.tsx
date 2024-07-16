@@ -13,6 +13,10 @@ import { XIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
+import {
+  MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID,
+  MEMBER_VALIDATION_BANNER_ID,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 const DOCUMENTATION_ORIGIN = 'https://graasp.github.io/docs';
@@ -38,9 +42,11 @@ const MemberValidationBanner = (): JSX.Element | false => {
   if (open && member?.isValidated !== true) {
     return (
       <Alert
+        id={MEMBER_VALIDATION_BANNER_ID}
         severity="warning"
         action={
           <IconButton
+            id={MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID}
             onClick={() => {
               setOpen(false);
             }}

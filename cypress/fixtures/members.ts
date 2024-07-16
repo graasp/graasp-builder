@@ -17,6 +17,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
       lang: 'fr',
       emailFreq: 'never',
     },
+    isValidated: true,
   }),
   BOB: {
     ...MemberFactory({
@@ -80,10 +81,13 @@ export const MEMBERS: Record<string, MemberForTest> = {
     email: 'garry@email.com',
     createdAt: '2021-04-13 14:56:34.749946',
     updatedAt: '2021-04-13 14:56:34.749946',
+    isValidated: false,
   }),
 };
 
 export const CURRENT_USER = MEMBERS.ANNA;
+export const NOT_VALIDATED_MEMBER = MEMBERS.GARRY;
+export const VALIDATED_MEMBER = MEMBERS.ANNA;
 
 export const MOCK_SESSIONS = [
   { id: MEMBERS.BOB.id, token: 'bob-token', createdAt: Date.now() },
