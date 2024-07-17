@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { Stack, styled, useTheme } from '@mui/material';
@@ -49,13 +48,11 @@ export const platformsHostsMap = defaultHostsMapper({
 type Props = { children: JSX.Element | (JSX.Element & string) };
 
 const Main = ({ children }: Props): JSX.Element => {
-  const { t, i18n } = useBuilderTranslation();
+  const { t } = useBuilderTranslation();
   const theme = useTheme();
   const { isMobile } = useMobileView();
 
   const itemId = useParams()[ITEM_ID_PARAMS];
-
-  useEffect(() => {}, [i18n.language]);
 
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   const platformProps = {
