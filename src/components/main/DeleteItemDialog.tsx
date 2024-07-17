@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 
+import { PackedItem } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -20,20 +21,25 @@ const descriptionId = 'alert-dialog-description';
 type Props = {
   open?: boolean;
   handleClose: () => void;
-  itemIds: string[];
+  items: PackedItem[];
+  onConfirm?: () => void;
 };
 
 const DeleteItemDialog = ({
-  itemIds,
+  items,
   open = false,
   handleClose,
+  onConfirm,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { mutate: deleteItems } = mutations.useDeleteItems();
 
+  const itemIds = items.map(({ id }) => id);
+
   const onDelete = () => {
     deleteItems(itemIds);
+    onConfirm?.();
     handleClose();
   };
 
@@ -52,6 +58,15 @@ const DeleteItemDialog = ({
           {translateBuilder(BUILDER.DELETE_ITEM_MODAL_CONTENT, {
             count: itemIds.length,
           })}
+          <ul>
+            {items
+              .sort((a, b) =>
+                a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
+              )
+              .map(({ name }) => (
+                <li>{name}</li>
+              ))}
+          </ul>
         </DialogContentText>
       </DialogContent>
       <DialogActions>

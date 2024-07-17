@@ -7,7 +7,7 @@ import { DialogActions, DialogContent, Skeleton } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { ItemType, PackedItem } from '@graasp/sdk';
+import { DiscriminatedItem, ItemType, PackedItem } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Button, DraggingWrapper } from '@graasp/ui';
 
@@ -18,9 +18,9 @@ import {
 } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 
-import { hooks, mutations } from '../../config/queryClient';
-import { useUploadWithProgress } from '../hooks/uploadWithProgress';
-import { useItemsStatuses } from '../table/Badges';
+import { hooks, mutations } from '../../../config/queryClient';
+import { useUploadWithProgress } from '../../hooks/uploadWithProgress';
+import { useItemsStatuses } from '../../table/Badges';
 import ItemsTableCard from './ItemsTableCard';
 
 const { useItem } = hooks;
@@ -31,6 +31,8 @@ export type ItemsTableProps = {
   showThumbnails?: boolean;
   canMove?: boolean;
   enableMoveInBetween?: boolean;
+  onCardClick?: (id: DiscriminatedItem['id']) => void;
+  selectedIds?: string[];
 };
 
 const ItemsTable = ({
@@ -39,6 +41,8 @@ const ItemsTable = ({
   showThumbnails = true,
   canMove = true,
   enableMoveInBetween = true,
+  selectedIds,
+  onCardClick,
 }: ItemsTableProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { t: translateCommon } = useCommonTranslation();
@@ -154,6 +158,14 @@ const ItemsTable = ({
             enableMoveInBetween={enableMoveInBetween}
             itemsStatuses={itemsStatuses}
             showThumbnails={showThumbnails}
+            isSelected={
+              'id' in droppedEl ? selectedIds?.includes(droppedEl.id) : false
+            }
+            onThumbnailClick={() => {
+              if ('id' in droppedEl) {
+                onCardClick?.(droppedEl.id);
+              }
+            }}
           />
         )}
         rows={rows}

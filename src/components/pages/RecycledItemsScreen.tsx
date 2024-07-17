@@ -17,11 +17,16 @@ import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ModeButton from '../item/header/ModeButton';
 import LoadingScreen from '../layout/LoadingScreen';
+import {
+  SelectionContextProvider,
+  useSelectionContext,
+} from '../main/list/SelectionContext';
 import ItemCard from '../table/ItemCard';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
 import { useSorting, useTranslatedSortingOptions } from '../table/useSorting';
 import PageWrapper from './PageWrapper';
+import RecycleBinToolbar from './recycleBin/RecycleBinSelectionToolbar';
 
 const RecycledItemsScreenContent = ({
   searchText,
@@ -32,20 +37,23 @@ const RecycledItemsScreenContent = ({
   const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
   const options = useTranslatedSortingOptions();
   const { shouldDisplayItem } = useFilterItemsContext();
-  const filteredData = recycledItems?.filter(
-    (d) =>
-      shouldDisplayItem(d.type) &&
-      d.name.toLowerCase().includes(searchText.toLocaleLowerCase()),
-  );
   const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
     useSorting<SortingOptions>({
       sortBy: SortingOptions.ItemUpdatedAt,
       ordering: Ordering.DESC,
     });
-  filteredData?.sort(sortFn);
+  const filteredData = recycledItems
+    ?.filter(
+      (d) =>
+        shouldDisplayItem(d.type) &&
+        d.name.toLowerCase().includes(searchText.toLocaleLowerCase()),
+    )
+    ?.sort(sortFn);
+  const { selectedIds, toggleSelection } = useSelectionContext();
 
   // render this when there is data from the query
   if (recycledItems?.length) {
+    const hasSelection = selectedIds.length && filteredData?.length;
     return (
       <Stack gap={1}>
         <Stack
@@ -54,26 +62,30 @@ const RecycledItemsScreenContent = ({
           gap={1}
           width="100%"
         >
-          <Stack
-            spacing={1}
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <SelectTypes />
-            <Stack direction="row" gap={1}>
-              {sortBy && setSortBy && (
-                <SortingSelect
-                  sortBy={sortBy}
-                  options={options}
-                  setSortBy={setSortBy}
-                  ordering={ordering}
-                  setOrdering={setOrdering}
-                />
-              )}
-              <ModeButton />
+          {hasSelection ? (
+            <RecycleBinToolbar items={filteredData} />
+          ) : (
+            <Stack
+              spacing={1}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <SelectTypes />
+              <Stack direction="row" gap={1}>
+                {sortBy && setSortBy && (
+                  <SortingSelect
+                    sortBy={sortBy}
+                    options={options}
+                    setSortBy={setSortBy}
+                    ordering={ordering}
+                    setOrdering={setOrdering}
+                  />
+                )}
+                <ModeButton />
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </Stack>
         {
           // render the filtered data and when it is empty display that nothing matches the search
@@ -82,11 +94,14 @@ const RecycledItemsScreenContent = ({
               <ItemCard
                 // todo: should not be able to click on the card
                 item={item}
+                onThumbnailClick={() => toggleSelection(item.id)}
+                isSelected={selectedIds.includes(item.id)}
                 showThumbnail={false}
+                allowNavigation={false}
                 footer={
                   <Stack justifyContent="right" direction="row">
                     <RestoreButton itemIds={[item.id]} />
-                    <DeleteButton itemIds={[item.id]} />
+                    <DeleteButton items={[item]} />
                   </Stack>
                 }
               />
@@ -135,7 +150,9 @@ const RecycledItemsScreen = (): JSX.Element | null => {
         </Stack>
       }
     >
-      <RecycledItemsScreenContent searchText={itemSearch.text} />
+      <SelectionContextProvider>
+        <RecycledItemsScreenContent searchText={itemSearch.text} />
+      </SelectionContextProvider>
     </PageWrapper>
   );
 };

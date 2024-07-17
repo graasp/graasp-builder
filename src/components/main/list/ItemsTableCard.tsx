@@ -3,17 +3,16 @@ import { Box, Stack } from '@mui/material';
 import { PackedItem } from '@graasp/sdk';
 import type { DroppedFile } from '@graasp/ui';
 
-import { Upload } from 'lucide-react';
-
+import SmallUploadFile from '@/components/file/SmallUploadFile';
 import { useBuilderTranslation } from '@/config/i18n';
 import { ItemLayoutMode } from '@/enums';
 import { BUILDER } from '@/langs/constants';
 
-import { useLayoutContext } from '../context/LayoutContext';
-import Badges, { ItemsStatuses } from '../table/Badges';
-import ItemActions from '../table/ItemActions';
-import ItemCard from '../table/ItemCard';
-import ItemMenuContent from './ItemMenuContent';
+import { useLayoutContext } from '../../context/LayoutContext';
+import Badges, { ItemsStatuses } from '../../table/Badges';
+import ItemActions from '../../table/ItemActions';
+import ItemCard from '../../table/ItemCard';
+import ItemMenuContent from '../ItemMenuContent';
 
 type Props = {
   item: PackedItem | DroppedFile;
@@ -23,6 +22,9 @@ type Props = {
   showThumbnails: boolean;
   itemsStatuses: ItemsStatuses;
   enableMoveInBetween: boolean;
+  onClick?: (id: string) => void;
+  isSelected?: boolean;
+  onThumbnailClick?: () => void;
 };
 
 const ItemsTableCard = ({
@@ -33,6 +35,9 @@ const ItemsTableCard = ({
   showThumbnails,
   itemsStatuses,
   enableMoveInBetween,
+  onClick,
+  isSelected,
+  onThumbnailClick,
 }: Props): JSX.Element => {
   const { mode } = useLayoutContext();
 
@@ -42,27 +47,20 @@ const ItemsTableCard = ({
 
   if ('files' in item) {
     return (
-      <Stack
-        direction="row"
-        gap={1}
-        boxSizing="border-box"
-        border="2px dashed grey"
-        borderRadius={2}
-        p={1}
-      >
-        <Upload /> {translateBuilder(BUILDER.UPLOAD_BETWEEN_FILES)}
-      </Stack>
+      <SmallUploadFile text={translateBuilder(BUILDER.UPLOAD_BETWEEN_FILES)} />
     );
   }
 
   return (
-    <Box px={1}>
+    <Box px={1} onClick={() => onClick?.(item.id)}>
       <ItemCard
+        onThumbnailClick={onThumbnailClick}
         dense={dense}
         item={item}
         isOver={isOver}
         disabled={!isMovable && enableMoveInBetween}
         isDragging={isDragging}
+        isSelected={isSelected}
         showThumbnail={showThumbnails}
         menu={<ItemMenuContent item={item} />}
         footer={

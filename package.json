@@ -16,6 +16,7 @@
   "dependencies": {
     "@ag-grid-community/core": "31.3.4",
     "@ag-grid-community/styles": "31.3.4",
+    "@air/react-drag-to-select": "5.0.8",
     "@emotion/cache": "11.13.0",
     "@emotion/react": "11.13.0",
     "@emotion/styled": "11.13.0",
@@ -24,9 +25,8 @@
     "@graasp/query-client": "3.16.0",
     "@graasp/sdk": "4.19.0",
     "@graasp/translations": "1.32.0",
-    "@graasp/ui": "4.21.0",
+    "@graasp/ui": "github:graasp/graasp-ui#card-selection",
     "@mui/icons-material": "5.16.4",
-    "@mui/lab": "5.0.0-alpha.172",
     "@mui/material": "5.16.4",
     "@sentry/react": "7.118.0",
     "axios": "1.7.2",

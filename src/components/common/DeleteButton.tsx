@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { PackedItem } from '@graasp/sdk';
 import {
   ActionButtonVariant,
   ColorVariants,
@@ -12,11 +13,12 @@ import { BUILDER } from '../../langs/constants';
 import DeleteItemDialog from '../main/DeleteItemDialog';
 
 type Props = {
-  itemIds: string[];
+  items: PackedItem[];
   color?: ColorVariants;
   id?: string;
   type?: ActionButtonVariant;
-  onClick?: () => void;
+  onConfirm?: () => void;
+  onClose?: () => void;
 };
 
 /**
@@ -24,11 +26,12 @@ type Props = {
  * This button opens a dialog to confirm the action
  */
 const DeleteButton = ({
-  itemIds,
+  items,
   color,
   id,
   type,
-  onClick,
+  onConfirm,
+  onClose,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -36,11 +39,11 @@ const DeleteButton = ({
 
   const handleClickOpen = () => {
     setOpen(true);
-    onClick?.();
   };
 
   const handleClose = () => {
     setOpen(false);
+    onClose?.();
   };
 
   const text = translateBuilder(BUILDER.DELETE_BUTTON);
@@ -58,9 +61,10 @@ const DeleteButton = ({
         className={ITEM_DELETE_BUTTON_CLASS}
       />
       <DeleteItemDialog
+        onConfirm={onConfirm}
         open={open}
         handleClose={handleClose}
-        itemIds={itemIds}
+        items={items}
       />
     </>
   );

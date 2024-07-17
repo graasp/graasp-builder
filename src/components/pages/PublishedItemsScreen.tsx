@@ -15,7 +15,7 @@ import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ModeButton from '../item/header/ModeButton';
 import LoadingScreen from '../layout/LoadingScreen';
-import ItemsTable from '../main/ItemsTable';
+import ItemsTable from '../main/list/ItemsTable';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
 import { useSorting, useTranslatedSortingOptions } from '../table/useSorting';

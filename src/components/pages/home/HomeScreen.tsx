@@ -5,6 +5,10 @@ import { Alert, Box, LinearProgress, Stack } from '@mui/material';
 import { Button } from '@graasp/ui';
 
 import LoadingScreen from '@/components/layout/LoadingScreen';
+import {
+  SelectionContextProvider,
+  useSelectionContext,
+} from '@/components/main/list/SelectionContext';
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 import { ShowOnlyMeChangeType } from '@/config/types';
 import { ItemLayoutMode, Ordering } from '@/enums';
@@ -22,8 +26,8 @@ import { useLayoutContext } from '../../context/LayoutContext';
 import FileUploader from '../../file/FileUploader';
 import { useItemSearch } from '../../item/ItemSearch';
 import ModeButton from '../../item/header/ModeButton';
-import ItemsTable from '../../main/ItemsTable';
 import NewItemButton from '../../main/NewItemButton';
+import ItemsTable from '../../main/list/ItemsTable';
 import { DesktopMap } from '../../map/DesktopMap';
 import ShowOnlyMeButton from '../../table/ShowOnlyMeButton';
 import SortingSelect from '../../table/SortingSelect';
@@ -31,6 +35,7 @@ import { SortingOptions } from '../../table/types';
 import { useSorting } from '../../table/useSorting';
 import NoItemFilters from '../NoItemFilters';
 import PageWrapper from '../PageWrapper';
+import HomeSelectionToolbar from './HomeSelectionToolbar';
 
 const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -39,6 +44,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { itemTypes } = useFilterItemsContext();
   const [showOnlyMe, setShowOnlyMe] = useState(false);
 
+  const { selectedIds, toggleSelection } = useSelectionContext();
   const { mode } = useLayoutContext();
   const { sortBy, setSortBy, ordering, setOrdering } =
     useSorting<SortingOptions>({
@@ -92,6 +98,8 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
             id={ACCESSIBLE_ITEMS_TABLE_ID}
             items={data.pages.flatMap(({ data: i }) => i)}
             enableMoveInBetween={false}
+            onCardClick={toggleSelection}
+            selectedIds={selectedIds}
           />
           {!isFetching && data.pages[0].totalCount > totalFetchedItems && (
             <Stack textAlign="center" alignItems="center">
@@ -127,28 +135,35 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
               enabled={showOnlyMe}
             />
           </Stack>
-          <Stack
-            spacing={1}
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <SelectTypes />
-            <Stack direction="row" gap={1}>
-              {sortBy && setSortBy && (
-                <SortingSelect<SortingOptions>
-                  sortBy={sortBy}
-                  setSortBy={setSortBy}
-                  ordering={ordering}
-                  setOrdering={setOrdering}
-                  options={Object.values(SortingOptions).sort((t1, t2) =>
-                    translateEnums(t1).localeCompare(translateEnums(t2)),
-                  )}
-                />
-              )}
-              <ModeButton />
+
+          {selectedIds.length ? (
+            <HomeSelectionToolbar
+              items={data.pages.flatMap(({ data: i }) => i)}
+            />
+          ) : (
+            <Stack
+              spacing={1}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <SelectTypes />
+              <Stack direction="row" gap={1}>
+                {sortBy && setSortBy && (
+                  <SortingSelect<SortingOptions>
+                    sortBy={sortBy}
+                    setSortBy={setSortBy}
+                    ordering={ordering}
+                    setOrdering={setOrdering}
+                    options={Object.values(SortingOptions).sort((t1, t2) =>
+                      translateEnums(t1).localeCompare(translateEnums(t2)),
+                    )}
+                  />
+                )}
+                <ModeButton />
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </Stack>
         <Stack>
           {content}
@@ -191,7 +206,9 @@ const HomeScreen = (): JSX.Element => {
         </Stack>
       }
     >
-      <HomeScreenContent searchText={itemSearch.text} />
+      <SelectionContextProvider>
+        <HomeScreenContent searchText={itemSearch.text} />
+      </SelectionContextProvider>
     </PageWrapper>
   );
 };

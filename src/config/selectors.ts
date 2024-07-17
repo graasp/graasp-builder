@@ -424,3 +424,4 @@ export const BOOKMARK_ICON_SELECTOR =
 export const MEMBER_VALIDATION_BANNER_ID = 'memberValidationBanner';
 export const MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID =
   'memberValidationBannerCloseButton';
+export const ITEM_CARD_CLASS = 'item-card';
