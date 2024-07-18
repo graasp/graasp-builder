@@ -1,9 +1,8 @@
 import { ReactNode } from 'react';
 
-import { PackedItem } from '@graasp/sdk';
+import { PackedItem, PublicationStatus } from '@graasp/sdk';
 
-import { usePublicationStatus } from '@/components/hooks/usePublicationStatus';
-import { PublicationStatus } from '@/types/publication';
+import { hooks } from '@/config/queryClient';
 
 import InvalidButton from './InvalidButton';
 import NotAllowedItemTypeButton from './NotAllowedItemTypeButton';
@@ -20,12 +19,14 @@ type Props = {
   notifyCoEditors: boolean;
 };
 
+const { usePublicationStatus } = hooks;
+
 export const PublicationButtonSelector = ({
   item,
   notifyCoEditors,
 }: Props): ReactNode | undefined => {
-  const { status, isinitialLoading: isStatusFirstLoading } =
-    usePublicationStatus({ item });
+  const { data: status, isInitialLoading: isStatusFirstLoading } =
+    usePublicationStatus(item.id);
 
   switch (status) {
     case PublicationStatus.Unpublished:

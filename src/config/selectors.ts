@@ -1,8 +1,10 @@
 // todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
-import { DescriptionPlacementType, ShortLink } from '@graasp/sdk';
-
-import { PublicationStatus } from '@/types/publication';
+import {
+  DescriptionPlacementType,
+  PublicationStatus,
+  ShortLink,
+} from '@graasp/sdk';
 
 export const SHARED_ITEMS_ROOT_CONTAINER = 'sharedItemsPageRootContainer';
 export const RECYCLED_ITEMS_ROOT_CONTAINER = 'recycledItemsPageRootContainer';

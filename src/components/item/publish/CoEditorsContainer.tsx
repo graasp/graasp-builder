@@ -2,18 +2,16 @@ import { useEffect, useState } from 'react';
 
 import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 
-import { PackedItem } from '@graasp/sdk';
+import { PackedItem, PublicationStatus } from '@graasp/sdk';
 
 import { useDataSyncContext } from '@/components/context/DataSyncContext';
-import usePublicationStatus from '@/components/hooks/usePublicationStatus';
 import { useBuilderTranslation } from '@/config/i18n';
-import { mutations } from '@/config/queryClient';
+import { hooks, mutations } from '@/config/queryClient';
 import {
   CO_EDITOR_SETTINGS_CHECKBOX_ID,
   EMAIL_NOTIFICATION_CHECKBOX,
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
-import { PublicationStatus } from '@/types/publication';
 
 const SYNC_STATUS_KEY = 'PublishCoEditors';
 
@@ -23,6 +21,8 @@ type Props = {
   onNotificationChanged: (enabled: boolean) => void;
 };
 
+const { usePublicationStatus } = hooks;
+
 export const CoEditorsContainer = ({
   item,
   notifyCoEditors,
@@ -30,7 +30,7 @@ export const CoEditorsContainer = ({
 }: Props): JSX.Element | null => {
   const { t } = useBuilderTranslation();
   const { computeStatusFor } = useDataSyncContext();
-  const { status } = usePublicationStatus({ item });
+  const { data: status } = usePublicationStatus(item.id);
   const { settings, id: itemId, name: itemName } = item;
   const [displayCoEditors, setDisplayCoEditors] = useState(
     settings.displayCoEditors ?? false,
@@ -73,7 +73,7 @@ export const CoEditorsContainer = ({
   const handleNotifyCoEditorsChange = (isChecked: boolean): void =>
     onNotificationChanged(isChecked);
 
-  if (hiddenStatus.includes(status)) {
+  if (!status || hiddenStatus.includes(status)) {
     return null;
   }
 

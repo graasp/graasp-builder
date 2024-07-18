@@ -1,4 +1,4 @@
-import { CookieKeys } from '@graasp/sdk';
+import { CookieKeys, PublicationStatus } from '@graasp/sdk';
 
 import 'cypress-localstorage-commands';
 
@@ -64,6 +64,7 @@ import {
   mockGetMembersBy,
   mockGetOwnItems,
   mockGetParents,
+  mockGetPublicationStatus,
   mockGetPublishItemInformations,
   mockGetPublishItemsForMember,
   mockGetRecycledItems,
@@ -114,6 +115,7 @@ Cypress.Commands.add(
     categories = SAMPLE_CATEGORIES,
     itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
     itemValidationGroups = [],
+    itemPublicationStatus = PublicationStatus.Unpublished,
     deleteItemsError = false,
     postItemError = false,
     moveItemsError = false,
@@ -322,6 +324,7 @@ Cypress.Commands.add(
 
     mockUploadInvitationCSV(items, false);
 
+    mockGetPublicationStatus(itemPublicationStatus);
     mockPublishItem(items);
     mockUnpublishItem(items);
 

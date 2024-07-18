@@ -1706,26 +1706,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.15.2":
-  version: 3.15.2
-  resolution: "@graasp/query-client@npm:3.15.2"
+"@graasp/query-client@npm:3.16.0":
+  version: 3.16.0
+  resolution: "@graasp/query-client@npm:3.16.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
     axios: "npm:1.7.2"
     http-status-codes: "npm:2.3.0"
-    qs: "npm:6.12.1"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/137cbbdc721b244ee85b3e3a658b0aef3ecfd816eddafaaa8408783d5a5d97680303b2bde61d1b4de9939562b556c6224a18f0d1891c8f27cd44d7983a923c2e
+  checksum: 10/cf24eebd6ab11a6f12d8b9ff3f198bcfd141ccb73884e142320a7a81d689f15708dd5169bde31ce3dfc860819883f0439e5381e4d8afc490bb9abd1df675e069
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.18.0":
-  version: 4.18.0
-  resolution: "@graasp/sdk@npm:4.18.0"
+"@graasp/sdk@npm:4.19.0":
+  version: 4.19.0
+  resolution: "@graasp/sdk@npm:4.19.0"
   dependencies:
     "@faker-js/faker": "npm:8.4.1"
     filesize: "npm:10.1.4"
@@ -1734,7 +1733,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3
     uuid: ^9 || ^10.0.0
-  checksum: 10/9a74d520c652429e3432df2a5321179c53628c82067dfd395599cf77558e57100e40cb35dc35065e4314afb436e467512fe3586d15b113923218aacdfb60dc7d
+  checksum: 10/d2fb382f5669ab1b8e265612208d6766672be8b6fa833fe1af8e4f17d2c3f7f384e4bf3f5fd004ec76c8c1ab1ad382c37730477e90ec1ae85b3079ca6a8e68aa
   languageName: node
   linkType: hard
 
@@ -8030,8 +8029,8 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.16.0"
-    "@graasp/query-client": "npm:3.15.2"
-    "@graasp/sdk": "npm:4.18.0"
+    "@graasp/query-client": "npm:3.16.0"
+    "@graasp/sdk": "npm:4.19.0"
     "@graasp/translations": "npm:1.32.0"
     "@graasp/ui": "npm:4.21.0"
     "@mui/icons-material": "npm:5.16.4"
@@ -11596,15 +11595,6 @@ __metadata:
   dependencies:
     side-channel: "npm:^1.0.4"
   checksum: 10/5a3bfea3e2f359ede1bfa5d2f0dbe54001aa55e40e27dc3e60fab814362d83a9b30758db057c2011b6f53a2d4e4e5150194b5bac45372652aecb3e3c0d4b256e
-  languageName: node
-  linkType: hard
-
-"qs@npm:6.12.1":
-  version: 6.12.1
-  resolution: "qs@npm:6.12.1"
-  dependencies:
-    side-channel: "npm:^1.0.6"
-  checksum: 10/035bcad2a1ab0175bac7a74c904c15913bdac252834149ccff988c93a51de02642fe7be10e43058ba4dc4094bb28ce9b59d12b9e91d40997f445cfde3ecc1c29
   languageName: node
   linkType: hard
 
