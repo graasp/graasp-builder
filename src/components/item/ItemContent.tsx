@@ -18,6 +18,7 @@ import {
   S3FileItemType,
   buildPdfViewerLink,
   getH5PExtra,
+  getLinkThumbnailUrl,
 } from '@graasp/sdk';
 import { DEFAULT_LANG } from '@graasp/translations';
 import {
@@ -108,6 +109,7 @@ const LinkContent = ({
     memberId={member?.id}
     isResizable
     item={item}
+    thumbnail={getLinkThumbnailUrl(item.extra)}
     height={ITEM_DEFAULT_HEIGHT}
     showButton={Boolean(item.settings?.showLinkButton)}
     showIframe={Boolean(item.settings?.showLinkIframe)}
