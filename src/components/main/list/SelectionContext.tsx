@@ -85,16 +85,16 @@ export const SelectionContextProvider = ({
 
       setSelection(new Set(selection));
     },
-    onSelectionStart: () => {
-      // does not trigger selection
-      clearSelection();
-    },
     shouldStartSelecting: (e) => {
       // does not trigger drag selection if mousedown on card
       if (e instanceof HTMLElement) {
         return !e?.closest(`.${ITEM_CARD_CLASS}`);
       }
       return true;
+    },
+    onSelectionStart: () => {
+      // clear selection on new dragging action
+      clearSelection();
     },
     onSelectionEnd: () => {},
     selectionProps: {

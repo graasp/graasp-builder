@@ -9,7 +9,6 @@ const SelectionToolbar = ({
   children: JSX.Element;
 }): JSX.Element => {
   const { selectedIds, clearSelection } = useSelectionContext();
-  // const { t: translateEnums } = useEnumsTranslation();
 
   return (
     <Stack
