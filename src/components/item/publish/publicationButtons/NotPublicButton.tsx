@@ -1,12 +1,11 @@
 import { Alert, LoadingButton } from '@mui/lab';
 
-import { PackedItem } from '@graasp/sdk';
+import { PackedItem, PublicationStatus } from '@graasp/sdk';
 
 import useModalStatus from '@/components/hooks/useModalStatus';
 import { useBuilderTranslation } from '@/config/i18n';
 import { buildItemPublicationButton } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
-import { PublicationStatus } from '@/types/publication';
 
 import PublicVisibilityModal from '../PublicVisibilityModal';
 import PublicationButton from './PublicationButton';
