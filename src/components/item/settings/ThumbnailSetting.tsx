@@ -101,7 +101,8 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   };
 
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
-  let imgUrl = item.settings?.hasThumbnail ? thumbnailUrl : null;
+
+  let imgUrl = thumbnailUrl ?? null;
   if (!imgUrl && item.type === ItemType.LINK) {
     imgUrl = getLinkThumbnailUrl(item.extra);
   }
@@ -112,12 +113,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
         <ThumbnailWithControls
           item={item}
           alt={alt}
-          url={
-            imgUrl ??
-            (item.type === ItemType.LINK
-              ? getLinkThumbnailUrl(item.extra)
-              : undefined)
-          }
+          url={imgUrl}
           isLoading={isLoading}
           onDelete={onDelete}
           onEdit={onEdit}

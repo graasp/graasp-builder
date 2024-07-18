@@ -20,7 +20,7 @@ import {
 type Props = {
   item: DiscriminatedItem;
   isLoading: boolean;
-  url?: string;
+  url: string | null;
   alt: string;
   onDelete: () => void;
   onEdit: () => void;
@@ -51,7 +51,7 @@ const ThumbnailWithDeleteButton = ({
               mimetype={getMimetype(item.extra)}
             />
           }
-          url={url}
+          url={url ?? undefined}
           alt={alt}
           maxWidth={THUMBNAIL_SETTING_MAX_WIDTH}
           maxHeight={THUMBNAIL_SETTING_MAX_HEIGHT}
