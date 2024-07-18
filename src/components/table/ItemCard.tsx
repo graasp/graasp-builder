@@ -1,7 +1,13 @@
 import { Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
-import { ItemType, PackedItem, ThumbnailSize, formatDate } from '@graasp/sdk';
+import {
+  ItemType,
+  PackedItem,
+  ThumbnailSize,
+  formatDate,
+  getLinkThumbnailUrl,
+} from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Card, TextDisplay } from '@graasp/ui';
 
@@ -77,13 +83,19 @@ const ItemCard = ({
     </Grid2>
   );
 
+  // show link thumbnail
+  let thumbnail = thumbnailUrl;
+  if (!thumbnail && item.type === ItemType.LINK) {
+    thumbnail = getLinkThumbnailUrl(item.extra);
+  }
+
   return (
     <Card
       id={buildItemCard(item.id)}
       sx={{ background: disabled ? 'lightgrey' : undefined }}
       dense={dense}
       elevation={false}
-      thumbnail={thumbnailUrl}
+      thumbnail={thumbnail}
       to={to}
       name={item.name}
       alt={item.name}

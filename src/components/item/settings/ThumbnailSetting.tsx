@@ -2,7 +2,12 @@ import { FormEventHandler, useRef, useState } from 'react';
 
 import { Dialog, Stack, styled } from '@mui/material';
 
-import { DiscriminatedItem, ItemType, ThumbnailSize } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemType,
+  ThumbnailSize,
+  getLinkThumbnailUrl,
+} from '@graasp/sdk';
 
 import { useUploadWithProgress } from '@/components/hooks/uploadWithProgress';
 import { THUMBNAIL_SETTING_UPLOAD_INPUT_ID } from '@/config/selectors';
@@ -96,10 +101,11 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
   };
 
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
-  const imgUrl = item.settings?.hasThumbnail
-    ? thumbnailUrl
-    : (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
-        ?.icons?.[0];
+
+  let imgUrl = thumbnailUrl;
+  if (!imgUrl && item.type === ItemType.LINK) {
+    imgUrl = getLinkThumbnailUrl(item.extra);
+  }
 
   return (
     <>
@@ -107,11 +113,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
         <ThumbnailWithControls
           item={item}
           alt={alt}
-          url={
-            imgUrl ??
-            (item.type === ItemType.LINK ? item.extra[ItemType.LINK] : {})
-              ?.thumbnails?.[0]
-          }
+          url={imgUrl}
           isLoading={isLoading}
           onDelete={onDelete}
           onEdit={onEdit}

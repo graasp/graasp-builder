@@ -18,6 +18,7 @@ import {
   LinkItemType,
   buildLinkExtra,
   getLinkExtra,
+  getLinkThumbnailUrl,
 } from '@graasp/sdk';
 import { LinkCard, LinkItem } from '@graasp/ui';
 
@@ -138,6 +139,8 @@ const LinkForm = ({
           ...updatedProperties.extra?.embeddedLink,
           url: updatedProperties.extra?.embeddedLink.url || '',
           description: linkData.description,
+          thumbnails: linkData.thumbnails,
+          icons: linkData.icons,
         });
       }
       // update props in one call to remove issue of race updates
@@ -213,7 +216,10 @@ const LinkForm = ({
                   <LinkCard
                     title={linkData?.title || ''}
                     url={linkContent}
-                    thumbnail={linkData?.thumbnails[0]}
+                    thumbnail={
+                      updatedProperties.extra &&
+                      getLinkThumbnailUrl(updatedProperties.extra)
+                    }
                     description={description || ''}
                   />
                 }
