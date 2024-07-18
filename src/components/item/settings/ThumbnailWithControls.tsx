@@ -20,7 +20,7 @@ import {
 type Props = {
   item: DiscriminatedItem;
   isLoading: boolean;
-  url: string | null;
+  url?: string;
   alt: string;
   onDelete: () => void;
   onEdit: () => void;

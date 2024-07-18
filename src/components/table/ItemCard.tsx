@@ -86,8 +86,7 @@ const ItemCard = ({
   // show link thumbnail
   let thumbnail = thumbnailUrl;
   if (!thumbnail && item.type === ItemType.LINK) {
-    thumbnail =
-      getLinkThumbnailUrl(item.extra, ThumbnailSize.Small) ?? undefined;
+    thumbnail = getLinkThumbnailUrl(item.extra);
   }
 
   return (

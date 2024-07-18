@@ -102,7 +102,7 @@ const ThumbnailSetting = ({ item }: Props): JSX.Element | null => {
 
   const alt = translateBuilder(BUILDER.THUMBNAIL_SETTING_MY_THUMBNAIL_ALT);
 
-  let imgUrl = thumbnailUrl ?? null;
+  let imgUrl = thumbnailUrl;
   if (!imgUrl && item.type === ItemType.LINK) {
     imgUrl = getLinkThumbnailUrl(item.extra);
   }
