@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.32.0](https://github.com/graasp/graasp-builder/compare/v2.31.0...v2.32.0) (2024-07-18)
+
+
+### Features
+
+* improve arabic translation ([#1331](https://github.com/graasp/graasp-builder/issues/1331)) ([f980647](https://github.com/graasp/graasp-builder/commit/f9806474c5835497f4cb585f64c768a2c74e2995))
+
+
+### Bug Fixes
+
+* **deps:** update ag-grid monorepo to v31.3.4 ([#1352](https://github.com/graasp/graasp-builder/issues/1352)) ([596a444](https://github.com/graasp/graasp-builder/commit/596a4446172dfe93c63e74b843e51147c22c30fa))
+* **deps:** update dependency i18next to v23.12.1 ([#1336](https://github.com/graasp/graasp-builder/issues/1336)) ([92f31d0](https://github.com/graasp/graasp-builder/commit/92f31d01bccf02788cfd74fd5069d7135437205a))
+* **deps:** update mui (non-major) to v5.16.4 ([#1351](https://github.com/graasp/graasp-builder/issues/1351)) ([4206ab5](https://github.com/graasp/graasp-builder/commit/4206ab5a61cc73939b841dc7c61eb20bc6f8d511))
+* **deps:** update react-router monorepo to v6.25.0 ([#1353](https://github.com/graasp/graasp-builder/issues/1353)) ([e375a29](https://github.com/graasp/graasp-builder/commit/e375a29818e66db82ee7f59842a36177db3ebff0))
+* show link icon in table ([#1347](https://github.com/graasp/graasp-builder/issues/1347)) ([140cc81](https://github.com/graasp/graasp-builder/commit/140cc815f2d69da4915a71e9367816a450d63394))
+* use mui select for sizing ([#1337](https://github.com/graasp/graasp-builder/issues/1337)) ([f00eaf6](https://github.com/graasp/graasp-builder/commit/f00eaf6d5e34738e29f78157c55ef98e6d83ebfb))
+
 ## [2.31.0](https://github.com/graasp/graasp-builder/compare/v2.30.1...v2.31.0) (2024-07-15)
 
 
