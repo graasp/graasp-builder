@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -19,6 +18,8 @@ import {
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
+import useModalStatus from '../hooks/useModalStatus';
+
 const DOCUMENTATION_ORIGIN = 'https://graasp.github.io/docs';
 const MEMBER_VALIDATION_DOCUMENTATION_LINK = '/user/account/validation';
 const buildLocalizedDocumentationOrigin = (lang: string = 'en') => {
@@ -36,10 +37,13 @@ const buildLocalizedDocumentationLink = (lang: string): string => {
 };
 
 const MemberValidationBanner = (): JSX.Element | false => {
-  const [open, setOpen] = useState(true);
+  const { isOpen, closeModal } = useModalStatus({
+    isInitiallyOpen: true,
+  });
   const { t, i18n } = useBuilderTranslation();
   const { data: member } = hooks.useCurrentMember();
-  if (open && member?.isValidated !== true) {
+
+  if (isOpen && !member?.isValidated) {
     return (
       <Alert
         id={MEMBER_VALIDATION_BANNER_ID}
@@ -47,9 +51,7 @@ const MemberValidationBanner = (): JSX.Element | false => {
         action={
           <IconButton
             id={MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID}
-            onClick={() => {
-              setOpen(false);
-            }}
+            onClick={closeModal}
           >
             <XIcon />
           </IconButton>
