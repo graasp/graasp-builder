@@ -71,3 +71,15 @@ export const INVALID_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
     icons: [],
   }),
 });
+
+export const LINK_ITEM_WITH_BLANC_NAME: LinkItemType = PackedLinkItemFactory({
+  creator: CURRENT_USER,
+  name: '',
+  description: 'a description for graasp youtube link',
+  extra: buildLinkExtra({
+    url: 'https://www.youtube.com/watch?v=FmiEgBMTPLo',
+    html: '',
+    thumbnails: [],
+    icons: [],
+  }),
+});
