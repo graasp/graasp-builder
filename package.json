@@ -24,7 +24,7 @@
     "@graasp/query-client": "3.15.2",
     "@graasp/sdk": "4.17.0",
     "@graasp/translations": "1.32.0",
-    "@graasp/ui": "4.21.0",
+    "@graasp/ui": "github:graasp/graasp-ui#955-set-theme-direction",
     "@mui/icons-material": "5.16.4",
     "@mui/lab": "5.0.0-alpha.172",
     "@mui/material": "5.16.4",

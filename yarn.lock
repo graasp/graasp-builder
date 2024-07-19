@@ -1771,6 +1771,46 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/ui@github:graasp/graasp-ui#955-set-theme-direction":
+  version: 4.21.0
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=b8849a85e15e4ac1e455173f6f37f64663dacc81"
+  dependencies:
+    "@ag-grid-community/client-side-row-model": "npm:31.3.2"
+    "@ag-grid-community/react": "npm:^31.3.2"
+    "@ag-grid-community/styles": "npm:^31.3.2"
+    "@storybook/react-vite": "npm:8.1.11"
+    http-status-codes: "npm:2.3.0"
+    interweave: "npm:13.1.0"
+    katex: "npm:0.16.11"
+    lodash.truncate: "npm:4.4.2"
+    lucide-react: "npm:0.408.0"
+    react-cookie-consent: "npm:9.0.0"
+    react-dnd: "npm:16.0.1"
+    react-dnd-html5-backend: "npm:16.0.1"
+    react-quill: "npm:2.0.0"
+    react-rnd: "npm:10.4.11"
+    uuid: "npm:10.0.0"
+    vitest: "npm:2.0.2"
+  peerDependencies:
+    "@emotion/cache": ~11.10.7 || ~11.11.0
+    "@emotion/react": ~11.10.6 || ~11.11.0
+    "@emotion/styled": ~11.10.6 || ~11.11.0
+    "@graasp/sdk": ^4.14.0
+    "@graasp/translations": ^1.23.0
+    "@mui/icons-material": ~5.14.0 || ~5.15.0 || ~5.16.0
+    "@mui/lab": ~5.0.0-alpha.150
+    "@mui/material": ~5.14.0 || ~5.15.0 || ~5.16.0
+    i18next: ^22.4.15 || ^23.0.0
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    react-i18next: ^13.0.0 || ^14.0.0
+    react-router-dom: ^6.11.0
+    stylis: ^4.1.3
+    stylis-plugin-rtl: ^2.1.1
+  checksum: 10/d242a58bfb6a4163cce8e002d56e080165acb294037331c206c476692c7415056d0e6d108b71d737a3fd09bbc02e5c7cf550c6bc4fc19e92dba0d2eca7a87d81
+  languageName: node
+  linkType: hard
+
 "@graasp/ui@npm:4.20.0":
   version: 4.20.0
   resolution: "@graasp/ui@npm:4.20.0"
@@ -1809,46 +1849,6 @@ __metadata:
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
   checksum: 10/2259b603ddffb00187f5684215a9e16e91a192612a84f7807759f385b7121fe198bdb20ae17fc978b1996a0b921dd2381283f22a3a84ad40c3b8a0031efdaf05
-  languageName: node
-  linkType: hard
-
-"@graasp/ui@npm:4.21.0":
-  version: 4.21.0
-  resolution: "@graasp/ui@npm:4.21.0"
-  dependencies:
-    "@ag-grid-community/client-side-row-model": "npm:31.3.2"
-    "@ag-grid-community/react": "npm:^31.3.2"
-    "@ag-grid-community/styles": "npm:^31.3.2"
-    "@storybook/react-vite": "npm:8.1.11"
-    http-status-codes: "npm:2.3.0"
-    interweave: "npm:13.1.0"
-    katex: "npm:0.16.11"
-    lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.402.0"
-    react-cookie-consent: "npm:9.0.0"
-    react-dnd: "npm:16.0.1"
-    react-dnd-html5-backend: "npm:16.0.1"
-    react-quill: "npm:2.0.0"
-    react-rnd: "npm:10.4.11"
-    uuid: "npm:10.0.0"
-    vitest: "npm:1.6.0"
-  peerDependencies:
-    "@emotion/cache": ~11.10.7 || ~11.11.0
-    "@emotion/react": ~11.10.6 || ~11.11.0
-    "@emotion/styled": ~11.10.6 || ~11.11.0
-    "@graasp/sdk": ^4.14.0
-    "@graasp/translations": ^1.23.0
-    "@mui/icons-material": ~5.14.0 || ~5.15.0 || ~5.16.0
-    "@mui/lab": ~5.0.0-alpha.150
-    "@mui/material": ~5.14.0 || ~5.15.0 || ~5.16.0
-    i18next: ^22.4.15 || ^23.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    react-i18next: ^13.0.0 || ^14.0.0
-    react-router-dom: ^6.11.0
-    stylis: ^4.1.3
-    stylis-plugin-rtl: ^2.1.1
-  checksum: 10/6a8778ae27ebb534204a44e1f97b08fdba6d7524fe3417fd7eaab8f4cf66e19800a38812f0b10c8796c885d6cabc5823bed137aebfbf36f29308ac7f04525314
   languageName: node
   linkType: hard
 
@@ -8033,7 +8033,7 @@ __metadata:
     "@graasp/query-client": "npm:3.15.2"
     "@graasp/sdk": "npm:4.17.0"
     "@graasp/translations": "npm:1.32.0"
-    "@graasp/ui": "npm:4.21.0"
+    "@graasp/ui": "github:graasp/graasp-ui#955-set-theme-direction"
     "@mui/icons-material": "npm:5.16.4"
     "@mui/lab": "npm:5.0.0-alpha.172"
     "@mui/material": "npm:5.16.4"
@@ -9789,15 +9789,6 @@ __metadata:
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0
   checksum: 10/6ba49ba045b250e2d5de9ce431ac146fab3464f082ddfd6ffc7d1e8ccdd74f5d5d82e3288a1c965dff90fa0353aba116549ffc5349041c068be65cb48dd890e2
-  languageName: node
-  linkType: hard
-
-"lucide-react@npm:0.402.0":
-  version: 0.402.0
-  resolution: "lucide-react@npm:0.402.0"
-  peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/fe8a7d5b65e469ee9f376e65942a1cb66aa39fc650265be4153e0f0235a0a5b09cdb03e8f51ed1f2319bdf91e1ae0859c61fe3a25c68e08ecb289a692bf52a17
   languageName: node
   linkType: hard
 
