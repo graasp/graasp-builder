@@ -4,7 +4,7 @@ type LoadingScreenProps = {
   chipsPlaceholder?: boolean;
 };
 const LoadingScreen = ({
-  chipsPlaceholder = true,
+  chipsPlaceholder = false,
 }: LoadingScreenProps): JSX.Element => (
   <Stack gap={1}>
     {chipsPlaceholder && <Skeleton variant="rounded" height={40} width={180} />}

@@ -44,8 +44,8 @@ const RecycledItemsScreenContent = ({
     });
   filteredData?.sort(sortFn);
 
-  // render content, but need to check the length of the data instead of its pure existence.
-  if (filteredData?.length) {
+  // render this when there is data from the query
+  if (recycledItems?.length) {
     return (
       <Stack gap={1}>
         <Stack
@@ -75,33 +75,36 @@ const RecycledItemsScreenContent = ({
             </Stack>
           </Stack>
         </Stack>
-        {filteredData.length ? (
-          filteredData.map((item) => (
-            <ItemCard
-              // todo: should not be able to click on the card
-              item={item}
-              showThumbnail={false}
-              footer={
-                <Stack justifyContent="right" direction="row">
-                  <RestoreButton itemIds={[item.id]} />
-                  <DeleteButton itemIds={[item.id]} />
-                </Stack>
-              }
-            />
-          ))
-        ) : (
-          <Typography>
-            {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
-              search: searchText,
-            })}
-          </Typography>
-        )}
+        {
+          // render the filtered data and when it is empty display that nothing matches the search
+          filteredData?.length ? (
+            filteredData.map((item) => (
+              <ItemCard
+                // todo: should not be able to click on the card
+                item={item}
+                showThumbnail={false}
+                footer={
+                  <Stack justifyContent="right" direction="row">
+                    <RestoreButton itemIds={[item.id]} />
+                    <DeleteButton itemIds={[item.id]} />
+                  </Stack>
+                }
+              />
+            ))
+          ) : (
+            <Typography>
+              {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
+                search: searchText,
+              })}
+            </Typography>
+          )
+        }
       </Stack>
     );
   }
 
   if (isLoading) {
-    return <LoadingScreen chipsPlaceholder={false} />;
+    return <LoadingScreen />;
   }
 
   if (isError) {

@@ -1,7 +1,5 @@
 import { Alert, Box, Stack } from '@mui/material';
 
-import { Loader } from '@graasp/ui';
-
 import { Ordering } from '@/enums';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -17,6 +15,7 @@ import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ModeButton from '../item/header/ModeButton';
+import LoadingScreen from '../layout/LoadingScreen';
 import ItemsTable from '../main/ItemsTable';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
@@ -43,33 +42,18 @@ const PublishedItemsScreenContent = ({
       ordering: Ordering.DESC,
     });
   const filteredData = publishedItems?.filter(
-    (d) => shouldDisplayItem(d.type) && d.name.includes(searchText),
+    (d) =>
+      shouldDisplayItem(d.type) &&
+      d.name.toLowerCase().includes(searchText.toLowerCase()),
   );
   filteredData?.sort(sortFn);
 
-  if (isError) {
-    return (
-      <Box mt={2}>
-        <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />
-      </Box>
-    );
-  }
-
-  if (!publishedItems?.length) {
-    return (
-      <Alert severity="info">
-        {translateBuilder(BUILDER.PUBLISHED_ITEMS_EMPTY)}
-      </Alert>
-    );
-  }
-
-  if (filteredData) {
+  if (publishedItems?.length) {
     return (
       <>
         <Stack
           alignItems="space-between"
           direction="column"
-          mt={2}
           gap={1}
           width="100%"
         >
@@ -94,7 +78,7 @@ const PublishedItemsScreenContent = ({
             </Stack>
           </Stack>
         </Stack>
-        {filteredData.length ? (
+        {filteredData?.length ? (
           <ItemsTable
             id={PUBLISHED_ITEMS_ID}
             items={filteredData ?? []}
@@ -113,15 +97,24 @@ const PublishedItemsScreenContent = ({
       </>
     );
   }
-  if (isLoading) {
-    return <Loader />;
+
+  if (isError) {
+    return <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
   }
 
-  return (
-    <Box mt={2}>
-      <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
-    </Box>
-  );
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (!publishedItems?.length) {
+    return (
+      <Alert severity="info">
+        {translateBuilder(BUILDER.PUBLISHED_ITEMS_EMPTY)}
+      </Alert>
+    );
+  }
+
+  return <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
 };
 
 const PublishedItemsScreen = (): JSX.Element | null => {

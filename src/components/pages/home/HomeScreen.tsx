@@ -164,7 +164,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   }
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen chipsPlaceholder />;
   }
 
   return (
