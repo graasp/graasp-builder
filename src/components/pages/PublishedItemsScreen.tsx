@@ -1,4 +1,4 @@
-import { Alert, Box, Stack } from '@mui/material';
+import { Alert, Stack } from '@mui/material';
 
 import { Ordering } from '@/enums';
 
@@ -50,32 +50,25 @@ const PublishedItemsScreenContent = ({
 
   if (publishedItems?.length) {
     return (
-      <>
+      <Stack alignItems="space-between" direction="column" gap={1} width="100%">
         <Stack
-          alignItems="space-between"
-          direction="column"
-          gap={1}
-          width="100%"
+          spacing={1}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <Stack
-            spacing={1}
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <SelectTypes />
-            <Stack direction="row" gap={1}>
-              {sortBy && setSortBy && (
-                <SortingSelect
-                  sortBy={sortBy}
-                  setSortBy={setSortBy}
-                  ordering={ordering}
-                  setOrdering={setOrdering}
-                  options={options}
-                />
-              )}
-              <ModeButton />
-            </Stack>
+          <SelectTypes />
+          <Stack direction="row" gap={1}>
+            {sortBy && setSortBy && (
+              <SortingSelect
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                ordering={ordering}
+                setOrdering={setOrdering}
+                options={options}
+              />
+            )}
+            <ModeButton />
           </Stack>
         </Stack>
         {filteredData?.length ? (
@@ -86,15 +79,13 @@ const PublishedItemsScreenContent = ({
             enableMoveInBetween={false}
           />
         ) : (
-          <Box mt={2}>
-            <Alert severity="info">
-              {translateBuilder(BUILDER.PUBLISHED_ITEMS_NOT_FOUND_SEARCH, {
-                search: searchText,
-              })}
-            </Alert>
-          </Box>
+          <Alert severity="info">
+            {translateBuilder(BUILDER.PUBLISHED_ITEMS_NOT_FOUND_SEARCH, {
+              search: searchText,
+            })}
+          </Alert>
         )}
-      </>
+      </Stack>
     );
   }
 

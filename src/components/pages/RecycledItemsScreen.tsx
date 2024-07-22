@@ -1,4 +1,4 @@
-import { Alert, Stack, Typography } from '@mui/material';
+import { Alert, Stack } from '@mui/material';
 
 import { Ordering } from '@/enums';
 
@@ -92,11 +92,11 @@ const RecycledItemsScreenContent = ({
               />
             ))
           ) : (
-            <Typography>
+            <Alert severity="info">
               {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
                 search: searchText,
               })}
-            </Typography>
+            </Alert>
           )
         }
       </Stack>
