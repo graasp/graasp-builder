@@ -9,7 +9,6 @@ import {
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks, mutations } from '../../config/queryClient';
 import { BUILDER } from '../../langs/constants';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
   item: DiscriminatedItem;
@@ -29,7 +28,7 @@ const BookmarkButton = ({
   type,
   onClick,
 }: Props): JSX.Element | null => {
-  const { data: member } = useCurrentUserContext();
+  const { data: member } = hooks.useCurrentMember();
   const { data: bookmarks } = hooks.useBookmarkedItems();
   const { t: translateBuilder } = useBuilderTranslation();
   const addFavorite = mutations.useAddBookmarkedItem();

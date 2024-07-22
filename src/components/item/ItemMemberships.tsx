@@ -9,7 +9,6 @@ import { ITEM_MEMBERSHIPS_CONTENT_ID } from '../../config/selectors';
 import { BUILDER } from '../../langs/constants';
 import { membershipsWithoutUser } from '../../utils/membership';
 import MemberAvatar from '../common/MemberAvatar';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 type Props = {
   id?: string;
@@ -19,7 +18,7 @@ type Props = {
 const ItemMemberships = ({ id, maxAvatar = 2 }: Props): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: memberships, isError } = hooks.useItemMemberships(id);
-  const { data: currentUser } = useCurrentUserContext();
+  const { data: currentUser } = hooks.useCurrentMember();
 
   if (!id) {
     return null;

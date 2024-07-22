@@ -7,7 +7,6 @@ import { PublicationStatus } from '@graasp/sdk';
 import { Loader, theme } from '@graasp/ui';
 
 import SyncIcon from '@/components/common/SyncIcon';
-import { useCurrentUserContext } from '@/components/context/CurrentUserContext';
 import {
   DataSyncContextProvider,
   useDataSyncContext,
@@ -36,7 +35,7 @@ const { usePublicationStatus } = hooks;
 const ItemPublishTab = (): JSX.Element => {
   const { t } = useBuilderTranslation();
   const { item, canAdmin } = useOutletContext<OutletType>();
-  const { isLoading: isMemberLoading } = useCurrentUserContext();
+  const { isLoading: isMemberLoading } = hooks.useCurrentMember();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { status } = useDataSyncContext();
   const {

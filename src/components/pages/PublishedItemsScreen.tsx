@@ -11,7 +11,6 @@ import {
 import { BUILDER } from '../../langs/constants';
 import ErrorAlert from '../common/ErrorAlert';
 import SelectTypes from '../common/SelectTypes';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ModeButton from '../item/header/ModeButton';
@@ -28,7 +27,7 @@ const PublishedItemsScreenContent = ({
   searchText: string;
 }) => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: member } = useCurrentUserContext();
+  const { data: member } = hooks.useCurrentMember();
   const {
     data: publishedItems,
     isLoading,

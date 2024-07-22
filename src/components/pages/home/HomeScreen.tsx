@@ -17,7 +17,6 @@ import { hooks } from '../../../config/queryClient';
 import { ACCESSIBLE_ITEMS_TABLE_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import SelectTypes from '../../common/SelectTypes';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import { useFilterItemsContext } from '../../context/FilterItemsContext';
 import { useLayoutContext } from '../../context/LayoutContext';
 import FileUploader from '../../file/FileUploader';
@@ -36,7 +35,7 @@ import PageWrapper from '../PageWrapper';
 const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateEnums } = useEnumsTranslation();
-  const { data: currentMember } = useCurrentUserContext();
+  const { data: currentMember } = hooks.useCurrentMember();
   const { itemTypes } = useFilterItemsContext();
   const [showOnlyMe, setShowOnlyMe] = useState(false);
 

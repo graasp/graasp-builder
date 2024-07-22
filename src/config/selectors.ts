@@ -420,3 +420,7 @@ export const SORTING_ORDERING_SELECTOR_ASC = '.lucide-arrow-down-narrow-wide';
 export const UNBOOKMARK_ICON_SELECTOR = '[data-testid="BookmarkIcon"]';
 export const BOOKMARK_ICON_SELECTOR =
   '[data-testid="BookmarkBorderOutlinedIcon"]';
+
+export const MEMBER_VALIDATION_BANNER_ID = 'memberValidationBanner';
+export const MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID =
+  'memberValidationBannerCloseButton';

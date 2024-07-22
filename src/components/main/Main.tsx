@@ -22,6 +22,7 @@ import {
   APP_NAVIGATION_PLATFORM_SWITCH_ID,
   HEADER_APP_BAR_ID,
 } from '../../config/selectors';
+import MemberValidationBanner from '../alerts/MemberValidationBanner';
 import CookiesBanner from '../common/CookiesBanner';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import MainMenu from './MainMenu';
@@ -101,6 +102,7 @@ const Main = ({ children }: Props): JSX.Element => {
         />
       }
     >
+      <MemberValidationBanner />
       <CookiesBanner />
       {children}
     </GraaspMain>
