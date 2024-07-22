@@ -1,6 +1,4 @@
-import { Alert, Box, Stack, Typography } from '@mui/material';
-
-import { Loader } from '@graasp/ui';
+import { Alert, Stack, Typography } from '@mui/material';
 
 import { Ordering } from '@/enums';
 
@@ -18,6 +16,7 @@ import SelectTypes from '../common/SelectTypes';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ModeButton from '../item/header/ModeButton';
+import LoadingScreen from '../layout/LoadingScreen';
 import ItemCard from '../table/ItemCard';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
@@ -34,7 +33,9 @@ const RecycledItemsScreenContent = ({
   const options = useTranslatedSortingOptions();
   const { shouldDisplayItem } = useFilterItemsContext();
   const filteredData = recycledItems?.filter(
-    (d) => shouldDisplayItem(d.type) && d.name.includes(searchText),
+    (d) =>
+      shouldDisplayItem(d.type) &&
+      d.name.toLowerCase().includes(searchText.toLocaleLowerCase()),
   );
   const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
     useSorting<SortingOptions>({
@@ -43,26 +44,13 @@ const RecycledItemsScreenContent = ({
     });
   filteredData?.sort(sortFn);
 
-  if (isError) {
-    return (
-      <Box mt={2}>
-        <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
-      </Box>
-    );
-  }
-  if (!recycledItems?.length) {
-    return (
-      <Alert severity="info">{translateBuilder(BUILDER.TRASH_NO_ITEM)}</Alert>
-    );
-  }
-
-  if (filteredData) {
+  // render content, but need to check the length of the data instead of its pure existence.
+  if (filteredData?.length) {
     return (
       <Stack gap={1}>
         <Stack
           alignItems="space-between"
           direction="column"
-          mt={2}
           gap={1}
           width="100%"
         >
@@ -90,6 +78,7 @@ const RecycledItemsScreenContent = ({
         {filteredData.length ? (
           filteredData.map((item) => (
             <ItemCard
+              // todo: should not be able to click on the card
               item={item}
               showThumbnail={false}
               footer={
@@ -101,7 +90,7 @@ const RecycledItemsScreenContent = ({
             />
           ))
         ) : (
-          <Typography variant="body2">
+          <Typography>
             {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
               search: searchText,
             })}
@@ -112,13 +101,15 @@ const RecycledItemsScreenContent = ({
   }
 
   if (isLoading) {
-    return <Loader />;
+    return <LoadingScreen chipsPlaceholder={false} />;
+  }
+
+  if (isError) {
+    return <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
   }
 
   return (
-    <Box mt={2}>
-      <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
-    </Box>
+    <Alert severity="info">{translateBuilder(BUILDER.TRASH_NO_ITEM)}</Alert>
   );
 };
 

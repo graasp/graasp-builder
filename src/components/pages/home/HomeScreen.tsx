@@ -4,6 +4,7 @@ import { Alert, Box, LinearProgress, Stack } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
+import LoadingScreen from '@/components/layout/LoadingScreen';
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 import { ShowOnlyMeChangeType } from '@/config/types';
 import { ItemLayoutMode, Ordering } from '@/enums';
@@ -31,7 +32,6 @@ import { SortingOptions } from '../../table/types';
 import { useSorting } from '../../table/useSorting';
 import NoItemFilters from '../NoItemFilters';
 import PageWrapper from '../PageWrapper';
-import HomeScreenLoading from './HomeScreenLoading';
 
 const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -164,7 +164,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   }
 
   if (isLoading) {
-    return <HomeScreenLoading />;
+    return <LoadingScreen />;
   }
 
   return (
