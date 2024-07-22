@@ -88,6 +88,12 @@ export const MEMBERS: Record<string, MemberForTest> = {
 export const CURRENT_USER = MEMBERS.ANNA;
 export const NOT_VALIDATED_MEMBER = MEMBERS.GARRY;
 export const VALIDATED_MEMBER = MEMBERS.ANNA;
+export const LEGACY_NOT_VALIDATED_MEMBER = {
+  ...NOT_VALIDATED_MEMBER,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  isValidated: undefined,
+};
 
 export const MOCK_SESSIONS = [
   { id: MEMBERS.BOB.id, token: 'bob-token', createdAt: Date.now() },

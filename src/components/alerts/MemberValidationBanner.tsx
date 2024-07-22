@@ -43,7 +43,8 @@ const MemberValidationBanner = (): JSX.Element | false => {
   const { t, i18n } = useBuilderTranslation();
   const { data: member } = hooks.useCurrentMember();
 
-  if (isOpen && !member?.isValidated) {
+  // banner should not be shown when the member does not have the property
+  if (isOpen && member && 'isValidated' in member && !member.isValidated) {
     return (
       <Alert
         id={MEMBER_VALIDATION_BANNER_ID}
