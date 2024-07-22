@@ -1,6 +1,4 @@
-import { Alert, Box, Stack } from '@mui/material';
-
-import { Loader } from '@graasp/ui';
+import { Alert, Stack } from '@mui/material';
 
 import { Ordering } from '@/enums';
 
@@ -17,6 +15,7 @@ import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ModeButton from '../item/header/ModeButton';
+import LoadingScreen from '../layout/LoadingScreen';
 import ItemsTable from '../main/ItemsTable';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
@@ -43,16 +42,59 @@ const PublishedItemsScreenContent = ({
       ordering: Ordering.DESC,
     });
   const filteredData = publishedItems?.filter(
-    (d) => shouldDisplayItem(d.type) && d.name.includes(searchText),
+    (d) =>
+      shouldDisplayItem(d.type) &&
+      d.name.toLowerCase().includes(searchText.toLowerCase()),
   );
   filteredData?.sort(sortFn);
 
-  if (isError) {
+  if (publishedItems?.length) {
     return (
-      <Box mt={2}>
-        <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />
-      </Box>
+      <Stack alignItems="space-between" direction="column" gap={1} width="100%">
+        <Stack
+          spacing={1}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <SelectTypes />
+          <Stack direction="row" gap={1}>
+            {sortBy && setSortBy && (
+              <SortingSelect
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                ordering={ordering}
+                setOrdering={setOrdering}
+                options={options}
+              />
+            )}
+            <ModeButton />
+          </Stack>
+        </Stack>
+        {filteredData?.length ? (
+          <ItemsTable
+            id={PUBLISHED_ITEMS_ID}
+            items={filteredData ?? []}
+            canMove={false}
+            enableMoveInBetween={false}
+          />
+        ) : (
+          <Alert severity="info">
+            {translateBuilder(BUILDER.PUBLISHED_ITEMS_NOT_FOUND_SEARCH, {
+              search: searchText,
+            })}
+          </Alert>
+        )}
+      </Stack>
     );
+  }
+
+  if (isError) {
+    return <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
   }
 
   if (!publishedItems?.length) {
@@ -63,65 +105,7 @@ const PublishedItemsScreenContent = ({
     );
   }
 
-  if (filteredData) {
-    return (
-      <>
-        <Stack
-          alignItems="space-between"
-          direction="column"
-          mt={2}
-          gap={1}
-          width="100%"
-        >
-          <Stack
-            spacing={1}
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <SelectTypes />
-            <Stack direction="row" gap={1}>
-              {sortBy && setSortBy && (
-                <SortingSelect
-                  sortBy={sortBy}
-                  setSortBy={setSortBy}
-                  ordering={ordering}
-                  setOrdering={setOrdering}
-                  options={options}
-                />
-              )}
-              <ModeButton />
-            </Stack>
-          </Stack>
-        </Stack>
-        {filteredData.length ? (
-          <ItemsTable
-            id={PUBLISHED_ITEMS_ID}
-            items={filteredData ?? []}
-            canMove={false}
-            enableMoveInBetween={false}
-          />
-        ) : (
-          <Box mt={2}>
-            <Alert severity="info">
-              {translateBuilder(BUILDER.PUBLISHED_ITEMS_NOT_FOUND_SEARCH, {
-                search: searchText,
-              })}
-            </Alert>
-          </Box>
-        )}
-      </>
-    );
-  }
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  return (
-    <Box mt={2}>
-      <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
-    </Box>
-  );
+  return <ErrorAlert id={PUBLISHED_ITEMS_ERROR_ALERT_ID} />;
 };
 
 const PublishedItemsScreen = (): JSX.Element | null => {
