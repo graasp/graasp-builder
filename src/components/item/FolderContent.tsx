@@ -47,7 +47,8 @@ type Props = {
 const Content = ({ item, searchText, items, sortBy }: Props) => {
   const { mode } = useLayoutContext();
   const { itemTypes } = useFilterItemsContext();
-  const { selectedIds, toggleSelection } = useSelectionContext();
+  const { selectedIds, clearSelection, toggleSelection } =
+    useSelectionContext();
 
   const enableEditing = item.permission
     ? PermissionLevelCompare.lte(PermissionLevel.Write, item.permission)
@@ -73,6 +74,7 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
           id={buildItemsTableId(item.id)}
           items={items ?? []}
           onCardClick={toggleSelection}
+          onMove={clearSelection}
         />
         {Boolean(enableEditing && !searchText && !itemTypes?.length) && (
           <Stack alignItems="center" mb={2}>

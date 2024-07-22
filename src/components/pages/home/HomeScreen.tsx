@@ -44,7 +44,8 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { itemTypes } = useFilterItemsContext();
   const [showOnlyMe, setShowOnlyMe] = useState(false);
 
-  const { selectedIds, toggleSelection } = useSelectionContext();
+  const { selectedIds, toggleSelection, clearSelection } =
+    useSelectionContext();
   const { mode } = useLayoutContext();
   const { sortBy, setSortBy, ordering, setOrdering } =
     useSorting<SortingOptions>({
@@ -80,7 +81,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
     );
   }
 
-  if (data && data.pages.length) {
+  if (data?.pages?.length) {
     // default show upload zone
     let content = (
       <Box mt={2}>
@@ -100,6 +101,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
             enableMoveInBetween={false}
             onCardClick={toggleSelection}
             selectedIds={selectedIds}
+            onMove={clearSelection}
           />
           {!isFetching && data.pages[0].totalCount > totalFetchedItems && (
             <Stack textAlign="center" alignItems="center">

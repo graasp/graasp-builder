@@ -8,13 +8,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { DiscriminatedItem, ItemType, PackedItem } from '@graasp/sdk';
-import { COMMON } from '@graasp/translations';
+import { COMMON, FAILURE_MESSAGES } from '@graasp/translations';
 import { Button, DraggingWrapper } from '@graasp/ui';
 
 import {
   useBuilderTranslation,
   useCommonTranslation,
   useEnumsTranslation,
+  useMessagesTranslation,
 } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 
@@ -33,6 +34,7 @@ export type ItemsTableProps = {
   enableMoveInBetween?: boolean;
   onCardClick?: (id: DiscriminatedItem['id']) => void;
   selectedIds?: string[];
+  onMove?: () => void;
 };
 
 const ItemsTable = ({
@@ -43,10 +45,12 @@ const ItemsTable = ({
   enableMoveInBetween = true,
   selectedIds,
   onCardClick,
+  onMove,
 }: ItemsTableProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateMessage } = useMessagesTranslation();
   const { t: translateEnums } = useEnumsTranslation();
 
   const { itemId } = useParams();
@@ -59,7 +63,7 @@ const ItemsTable = ({
   const { mutate: moveItems } = mutations.useMoveItems();
   const { mutateAsync: uploadItems } = mutations.useUploadFiles();
   const [moveData, setMoveData] = useState<{
-    movedItem: PackedItem;
+    movedItems: PackedItem[];
     to: PackedItem;
   }>();
 
@@ -71,7 +75,10 @@ const ItemsTable = ({
     items: rows,
   });
 
-  const onDropInRow = (movedItem: PackedItem | any, targetItem: PackedItem) => {
+  const onDropInRow = (
+    movedItem: PackedItem | { files: File[] },
+    targetItem: PackedItem,
+  ) => {
     // prevent drop in non-folder item
     if (targetItem.type !== ItemType.FOLDER) {
       toast.error(
@@ -83,7 +90,7 @@ const ItemsTable = ({
     }
 
     // upload files in item
-    if (movedItem.files) {
+    if ('files' in movedItem) {
       uploadItems({
         files: movedItem.files,
         id: targetItem.id,
@@ -95,21 +102,39 @@ const ItemsTable = ({
         .catch((e) => {
           close(e);
         });
-    } else if (movedItem.id !== targetItem.id) {
-      setOpen(true);
-      setMoveData({ movedItem, to: targetItem });
+      return;
     }
+
+    // cannot move item into itself, or target cannot be part of selection if moving selection
+    if (
+      movedItem.id === targetItem.id ||
+      (selectedIds?.includes(movedItem?.id) &&
+        selectedIds?.includes(targetItem.id))
+    ) {
+      toast.error(translateMessage(FAILURE_MESSAGES.INVALID_MOVE_TARGET));
+      return;
+    }
+
+    let movedItems: PackedItem[] = [];
+    // use selected ids on drag move if moved item is part of selected ids
+    if (selectedIds?.includes(movedItem?.id)) {
+      movedItems = rows.filter(({ id }) => selectedIds.includes(id));
+    } else if (movedItem) {
+      movedItems = [movedItem];
+    }
+    setMoveData({ movedItems, to: targetItem });
+    setOpen(true);
   };
 
   // warning: this won't work anymore with pagination!
   const onDropBetweenRow = (
-    { files, id }: PackedItem | any,
+    el: PackedItem | { files: File[] },
     previousItem?: PackedItem,
   ) => {
     // upload files at row
-    if (files) {
+    if ('files' in el) {
       uploadItems({
-        files,
+        files: el.files,
         id: parentItem?.id,
         previousItemId: previousItem?.id,
         onUploadProgress: update,
@@ -124,6 +149,7 @@ const ItemsTable = ({
       console.error('cannot move in root');
       toast.error(BUILDER.ERROR_MESSAGE);
     } else {
+      const { id } = el;
       setMovingId(id);
       reorder({
         id,
@@ -137,9 +163,10 @@ const ItemsTable = ({
 
   const handleMoveItems = () => {
     if (moveData) {
-      moveItems({ items: [moveData.movedItem], to: moveData.to.id });
+      moveItems({ items: moveData.movedItems, to: moveData.to.id });
       setMoveData(undefined);
       handleClose();
+      onMove?.();
     }
   };
 
@@ -181,7 +208,7 @@ const ItemsTable = ({
                 t={translateBuilder}
                 i18nKey={BUILDER.MOVE_CONFIRM_TITLE}
                 values={{
-                  name: moveData.movedItem.name,
+                  count: moveData.movedItems.length,
                   targetName: moveData.to.name,
                 }}
                 components={{ 1: <strong /> }}
@@ -189,9 +216,12 @@ const ItemsTable = ({
             </DialogTitle>
 
             <DialogContent>
-              {translateBuilder(BUILDER.MOVE_WARNING, {
-                name: moveData.movedItem.name,
-              })}
+              {translateBuilder(BUILDER.MOVE_WARNING)}
+              <ul>
+                {moveData.movedItems.map(({ name, id }) => (
+                  <li key={id}>{name}</li>
+                ))}
+              </ul>
             </DialogContent>
           </>
         ) : (
