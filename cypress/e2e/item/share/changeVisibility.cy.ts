@@ -2,6 +2,7 @@ import {
   ItemLoginSchemaType,
   ItemTagType,
   PackedFolderItemFactory,
+  PublicationStatus,
 } from '@graasp/sdk';
 
 import { buildItemPath } from '@/config/paths';
@@ -10,8 +11,11 @@ import { SETTINGS } from '../../../../src/config/constants';
 import {
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   SHARE_ITEM_VISIBILITY_SELECT_ID,
+  UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON,
+  buildDataCyWrapper,
   buildShareButtonId,
 } from '../../../../src/config/selectors';
+import { PublishedItemFactory } from '../../../fixtures/items';
 
 const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
@@ -25,12 +29,12 @@ describe('Visibility of an Item', () => {
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    const visiblitySelect = cy.get(
+    const visibilitySelect = cy.get(
       `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
     );
 
     // visibility select default value
-    visiblitySelect.should('have.value', SETTINGS.ITEM_PRIVATE.name);
+    visibilitySelect.should('have.value', SETTINGS.ITEM_PRIVATE.name);
 
     // change private -> public
     changeVisibility(SETTINGS.ITEM_PUBLIC.name);
@@ -47,12 +51,12 @@ describe('Visibility of an Item', () => {
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
     cy.wait(1000);
-    const visiblitySelect = cy.get(
+    const visibilitySelect = cy.get(
       `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
     );
 
     // visibility select default value
-    visiblitySelect.should('have.value', SETTINGS.ITEM_PUBLIC.name);
+    visibilitySelect.should('have.value', SETTINGS.ITEM_PUBLIC.name);
 
     // change public -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
@@ -69,12 +73,12 @@ describe('Visibility of an Item', () => {
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
     cy.wait(1000);
-    const visiblitySelect = cy.get(
+    const visibilitySelect = cy.get(
       `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
     );
 
     // visibility select default value
-    visiblitySelect.should('have.value', SETTINGS.ITEM_PUBLIC.name);
+    visibilitySelect.should('have.value', SETTINGS.ITEM_PUBLIC.name);
 
     // change public -> item login
     changeVisibility(SETTINGS.ITEM_LOGIN.name);
@@ -123,6 +127,73 @@ describe('Visibility of an Item', () => {
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
     cy.wait(`@deleteItemLoginSchema`).then(({ request: { url } }) => {
       expect(url).to.include(item.id);
+    });
+  });
+
+  describe('Change visibility of published item', () => {
+    it('User should validate the change to private', () => {
+      const item = PublishedItemFactory(
+        PackedFolderItemFactory({}, { publicTag: {} }),
+      );
+      cy.setUpApi({
+        items: [item],
+        itemPublicationStatus: PublicationStatus.Published,
+      });
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
+      const visibilitySelect = cy.get(
+        `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
+      );
+
+      // visibility select default value
+      visibilitySelect.should('have.value', SETTINGS.ITEM_PUBLIC.name);
+
+      // try to change public -> private
+      changeVisibility(SETTINGS.ITEM_PRIVATE.name);
+      // the user have to confirm that changing visibility will remove the publication
+      cy.get(
+        `${buildDataCyWrapper(UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON)}`,
+      ).click();
+      cy.wait(`@deleteItemTag-${ItemTagType.Public}`).then(
+        ({ request: { url } }) => {
+          expect(url).to.contain(item.id);
+        },
+      );
+    });
+
+    it('User should validate the change to item login', () => {
+      const item = PublishedItemFactory(
+        PackedFolderItemFactory({}, { publicTag: {} }),
+      );
+      cy.setUpApi({
+        items: [item],
+        itemPublicationStatus: PublicationStatus.Published,
+      });
+      cy.visit(buildItemPath(item.id));
+      cy.get(`#${buildShareButtonId(item.id)}`).click();
+      const visibilitySelect = cy.get(
+        `#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`,
+      );
+
+      // visibility select default value
+      visibilitySelect.should('have.value', SETTINGS.ITEM_PUBLIC.name);
+
+      // try to change public -> item login
+      changeVisibility(SETTINGS.ITEM_LOGIN.name);
+      // the user have to confirm that changing visibility will remove the publication
+      cy.get(
+        `${buildDataCyWrapper(UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON)}`,
+      ).click();
+      cy.wait([
+        `@deleteItemTag-${ItemTagType.Public}`,
+        '@putItemLoginSchema',
+      ]).then((data) => {
+        const {
+          request: { url },
+        } = data[0];
+        expect(url).to.contain(item.id);
+        expect(url).to.contain(ItemTagType.Public); // originally item login
+      });
     });
   });
 });
