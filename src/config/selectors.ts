@@ -396,6 +396,10 @@ export const buildPublicationStatus = (status: PublicationStatus): string =>
 
 export const PUBLIC_VISIBILITY_MODAL_VALIDATE_BUTTON =
   'publicVisbilityModalValidateButton';
+export const UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON =
+  'updateVisbilityModalValidateButton';
+export const UPDATE_VISIBILITY_MODAL_CANCEL_BUTTON =
+  'updateVisbilityModalCancelButton';
 
 export const DEBOUNCED_TEXT_FIELD_ID = 'debouncedTextfield';
 
