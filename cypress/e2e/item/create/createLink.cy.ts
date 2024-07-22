@@ -6,7 +6,7 @@ import {
   GRAASP_LINK_ITEM,
   GRAASP_LINK_ITEM_NO_PROTOCOL,
   INVALID_LINK_ITEM,
-  LINK_ITEM_WITH_BLANC_NAME,
+  LINK_ITEM_WITH_BLANK_NAME,
 } from '../../../fixtures/links';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createLink } from '../../../support/createUtils';
@@ -97,7 +97,7 @@ describe('Create Link', () => {
       cy.visit(buildItemPath(id));
 
       // create
-      createLink(LINK_ITEM_WITH_BLANC_NAME, {
+      createLink(LINK_ITEM_WITH_BLANK_NAME, {
         confirm: false,
       });
 

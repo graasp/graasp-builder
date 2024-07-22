@@ -72,7 +72,7 @@ export const INVALID_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
   }),
 });
 
-export const LINK_ITEM_WITH_BLANC_NAME: LinkItemType = PackedLinkItemFactory({
+export const LINK_ITEM_WITH_BLANK_NAME: LinkItemType = PackedLinkItemFactory({
   creator: CURRENT_USER,
   name: '',
   description: 'a description for graasp youtube link',
