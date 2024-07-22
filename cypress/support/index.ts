@@ -1,5 +1,6 @@
 import {
   AppItemExtra,
+  DiscriminatedItem,
   DocumentItemExtra,
   ItemType,
   PermissionLevel,
@@ -77,6 +78,9 @@ declare global {
       ): void;
 
       dragAndDrop(subject: string, x: number, y: number): void;
+
+      selectItem(id: DiscriminatedItem['id']): void;
+
       // TODO
       setUpApi(args?: any): any;
 

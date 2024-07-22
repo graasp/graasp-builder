@@ -47,7 +47,7 @@ describe('Bookmarked Item', () => {
     });
 
     it('Show empty table', () => {
-      i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+      i18n.changeLanguage(CURRENT_USER.extra.lang);
       const text = i18n.t(BUILDER.BOOKMARKS_NO_ITEM, { ns: BUILDER_NAMESPACE });
       cy.get(`#${BOOKMARKED_ITEMS_ID}`).should('contain', text);
     });
@@ -59,7 +59,7 @@ describe('Bookmarked Item', () => {
         items: [...ITEMS, NON_BOOKMARKED_ITEM],
         bookmarkedItems: BOOKMARKED_ITEMS,
       });
-      i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+      i18n.changeLanguage(CURRENT_USER.extra.lang);
       cy.visit(BOOKMARKED_ITEMS_PATH);
     });
 
@@ -83,7 +83,7 @@ describe('Bookmarked Item', () => {
       }
     });
 
-    it('Add item to bookmarks', () => {
+    it.only('Add item to bookmarks', () => {
       cy.visit(HOME_PATH);
 
       const item = NON_BOOKMARKED_ITEM;

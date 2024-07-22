@@ -1939,7 +1939,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#card-selection":
   version: 4.21.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=b61d3b5ea6492d3802bceae5e92ade7a229a79de"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=686ce8b7aec07a5a6149a51c69280dab99741876"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.3.2"
     "@ag-grid-community/react": "npm:^31.3.2"
@@ -1973,7 +1973,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/3cc25f93e2b81e3e9703c0af6910d3495effb177942707329e4264dc940f3b340e36f6078db8a7b73afbddfdfa0e3506adb6a67715c688f7cbaf95561c509adf
+  checksum: 10/7702e6e02528bb2979b7ec42d7341ff868c5644b75b419552e52d2c66356c71acce3883d06025d9812f2ad06c4d167bcfaea7d6851a7f032ee6eddf18c2745c3
   languageName: node
   linkType: hard
 
@@ -2266,6 +2266,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mui/lab@npm:5.0.0-alpha.172":
+  version: 5.0.0-alpha.172
+  resolution: "@mui/lab@npm:5.0.0-alpha.172"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.9"
+    "@mui/base": "npm:5.0.0-beta.40"
+    "@mui/system": "npm:^5.16.1"
+    "@mui/types": "npm:^7.2.15"
+    "@mui/utils": "npm:^5.16.1"
+    clsx: "npm:^2.1.0"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@emotion/react": ^11.5.0
+    "@emotion/styled": ^11.3.0
+    "@mui/material": ">=5.15.0"
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    "@emotion/styled":
+      optional: true
+    "@types/react":
+      optional: true
+  checksum: 10/8d05664c115eda2d7594fe52ad2cb8cb6ee45fe01a44d88fd30abe2848c51911c8310f08122f7a98e5cc9658e3cedc9e7ccbf31c503a838cb4abd00c0c176b7a
+  languageName: node
+  linkType: hard
+
 "@mui/material@npm:5.15.20":
   version: 5.15.20
   resolution: "@mui/material@npm:5.15.20"
@@ -2481,7 +2510,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^5.16.4":
+"@mui/system@npm:^5.16.1, @mui/system@npm:^5.16.4":
   version: 5.16.4
   resolution: "@mui/system@npm:5.16.4"
   dependencies:
@@ -2551,7 +2580,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^5.16.4":
+"@mui/utils@npm:^5.16.1, @mui/utils@npm:^5.16.4":
   version: 5.16.4
   resolution: "@mui/utils@npm:5.16.4"
   dependencies:
@@ -8047,6 +8076,7 @@ __metadata:
     "@graasp/translations": "npm:1.32.0"
     "@graasp/ui": "github:graasp/graasp-ui#card-selection"
     "@mui/icons-material": "npm:5.16.4"
+    "@mui/lab": "npm:5.0.0-alpha.172"
     "@mui/material": "npm:5.16.4"
     "@sentry/react": "npm:7.118.0"
     "@testing-library/jest-dom": "npm:^6.4.2"
