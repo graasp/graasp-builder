@@ -101,7 +101,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@cypress/code-coverage": "3.12.41",
+    "@cypress/code-coverage": "3.12.44",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -112,7 +112,7 @@
     "@types/lodash.isequal": "4.5.8",
     "@types/lodash.partition": "4.6.9",
     "@types/lodash.truncate": "4.4.9",
-    "@types/node": "20.14.10",
+    "@types/node": "20.14.12",
     "@types/papaparse": "5.3.14",
     "@types/react": "18.3.3",
     "@types/react-csv": "1.1.10",
@@ -123,7 +123,7 @@
     "@typescript-eslint/parser": "7.16.0",
     "@vitejs/plugin-react": "4.3.1",
     "concurrently": "8.2.2",
-    "cypress": "13.13.0",
+    "cypress": "13.13.1",
     "cypress-localstorage-commands": "2.2.6",
     "env-cmd": "10.1.0",
     "eslint": "^8.57.0",
@@ -137,11 +137,11 @@
     "husky": "9.0.11",
     "nyc": "17.0.0",
     "prettier": "3.3.3",
-    "typescript": "5.5.3",
-    "vite": "5.3.3",
+    "typescript": "5.5.4",
+    "vite": "5.3.4",
     "vite-plugin-checker": "0.7.2",
     "vite-plugin-istanbul": "6.0.2",
-    "vitest": "2.0.2"
+    "vitest": "2.0.4"
   },
   "packageManager": "yarn@4.3.1"
 }
