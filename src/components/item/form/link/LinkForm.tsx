@@ -182,7 +182,7 @@ const LinkForm = ({
       <NameForm
         item={item}
         autoFocus={false}
-        required={false}
+        required
         setChanges={onChange}
         updatedProperties={updatedProperties}
       />
