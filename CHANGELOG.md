@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.33.0](https://github.com/graasp/graasp-builder/compare/v2.32.0...v2.33.0) (2024-07-24)
+
+
+### Features
+
+* add member validation alert ([#1350](https://github.com/graasp/graasp-builder/issues/1350)) ([110bf1c](https://github.com/graasp/graasp-builder/commit/110bf1ce8a7dbae06b7222e3fead01d108fae8c1))
+* add multi op for home, recycle bin, folder screens ([#1354](https://github.com/graasp/graasp-builder/issues/1354)) ([3440849](https://github.com/graasp/graasp-builder/commit/3440849524756ea0a017aa0d83f67a8050cf9075))
+* move publication status logic in backend ([#1355](https://github.com/graasp/graasp-builder/issues/1355)) ([50b2ae9](https://github.com/graasp/graasp-builder/commit/50b2ae9619eb83b153aefb32ac0e83d6454b5859))
+* show modal when changing visibility of published item ([#1359](https://github.com/graasp/graasp-builder/issues/1359)) ([723547b](https://github.com/graasp/graasp-builder/commit/723547b014dbe8bf55d02b7cb90f5ced066809fb))
+* validate name as a required value ([#1368](https://github.com/graasp/graasp-builder/issues/1368)) ([d46dd8a](https://github.com/graasp/graasp-builder/commit/d46dd8a6f9b6fef362b7e7c7a8f0bcf395694a4a))
+
+
+### Bug Fixes
+
+* **deps:** update dependency i18next to v23.12.2 ([#1365](https://github.com/graasp/graasp-builder/issues/1365)) ([7f42d08](https://github.com/graasp/graasp-builder/commit/7f42d089f39bd9488c4abb718439ebb91b8c1dbd))
+* **deps:** update dependency lucide-react to v0.414.0 ([#1366](https://github.com/graasp/graasp-builder/issues/1366)) ([6c9d215](https://github.com/graasp/graasp-builder/commit/6c9d2150113567131edadc9069b78fd9568d83e2))
+* **deps:** update dependency react-i18next to v15 ([#1358](https://github.com/graasp/graasp-builder/issues/1358)) ([5398684](https://github.com/graasp/graasp-builder/commit/5398684a276301e873390356756059b7c69b51b8))
+* **deps:** update emotion monorepo to v11.13.0 ([#1362](https://github.com/graasp/graasp-builder/issues/1362)) ([fb98ad2](https://github.com/graasp/graasp-builder/commit/fb98ad2c820c1b33d6efdbeb733759a416f004a9))
+* **french:** update translations ([#1370](https://github.com/graasp/graasp-builder/issues/1370)) ([b32e563](https://github.com/graasp/graasp-builder/commit/b32e5633583291147a608e4acf39559853023120))
+* **german:** update translations ([#1373](https://github.com/graasp/graasp-builder/issues/1373)) ([82bfd76](https://github.com/graasp/graasp-builder/commit/82bfd7615568cfc7af91a88962e3963924ced714))
+* **italian:** update translations ([#1371](https://github.com/graasp/graasp-builder/issues/1371)) ([7e45f9d](https://github.com/graasp/graasp-builder/commit/7e45f9dad5a31ff37c40e15aa74c07ca57983514))
+* no display for loading state in bookmarks, published and recycled ([#1369](https://github.com/graasp/graasp-builder/issues/1369)) ([bd6d322](https://github.com/graasp/graasp-builder/commit/bd6d3223afbeeb771038e0ac8ad68063519c04d4))
+* **spanish:** update translations ([#1372](https://github.com/graasp/graasp-builder/issues/1372)) ([4d395aa](https://github.com/graasp/graasp-builder/commit/4d395aa3755147bac212114016149407362b608c))
+
 ## [2.32.0](https://github.com/graasp/graasp-builder/compare/v2.31.0...v2.32.0) (2024-07-18)
 
 
