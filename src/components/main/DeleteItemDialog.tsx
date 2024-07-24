@@ -43,6 +43,10 @@ const DeleteItemDialog = ({
     handleClose();
   };
 
+  const names = items
+    .sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
+    .map(({ name }) => <li>{name}</li>);
+
   return (
     <Dialog
       open={open}
@@ -58,15 +62,7 @@ const DeleteItemDialog = ({
           {translateBuilder(BUILDER.DELETE_ITEM_MODAL_CONTENT, {
             count: itemIds.length,
           })}
-          <ul>
-            {items
-              .sort((a, b) =>
-                a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
-              )
-              .map(({ name }) => (
-                <li>{name}</li>
-              ))}
-          </ul>
+          <ul>{names}</ul>
         </DialogContentText>
       </DialogContent>
       <DialogActions>

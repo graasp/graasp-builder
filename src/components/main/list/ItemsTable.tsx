@@ -43,7 +43,7 @@ const ItemsTable = ({
   showThumbnails = true,
   canMove = true,
   enableMoveInBetween = true,
-  selectedIds,
+  selectedIds = [],
   onCardClick,
   onMove,
 }: ItemsTableProps): JSX.Element => {
@@ -108,8 +108,8 @@ const ItemsTable = ({
     // cannot move item into itself, or target cannot be part of selection if moving selection
     if (
       movedItem.id === targetItem.id ||
-      (selectedIds?.includes(movedItem?.id) &&
-        selectedIds?.includes(targetItem.id))
+      (selectedIds.includes(movedItem?.id) &&
+        selectedIds.includes(targetItem.id))
     ) {
       toast.error(translateMessage(FAILURE_MESSAGES.INVALID_MOVE_TARGET));
       return;
@@ -117,7 +117,7 @@ const ItemsTable = ({
 
     let movedItems: PackedItem[] = [];
     // use selected ids on drag move if moved item is part of selected ids
-    if (selectedIds?.includes(movedItem?.id)) {
+    if (selectedIds.includes(movedItem?.id)) {
       movedItems = rows.filter(({ id }) => selectedIds.includes(id));
     } else if (movedItem) {
       movedItems = [movedItem];
@@ -170,6 +170,9 @@ const ItemsTable = ({
     }
   };
 
+  const isSelected = (droppedEl: PackedItem | { files: File[] }): boolean =>
+    'id' in droppedEl ? selectedIds.includes(droppedEl.id) : false;
+
   return (
     <>
       <DraggingWrapper
@@ -185,9 +188,7 @@ const ItemsTable = ({
             enableMoveInBetween={enableMoveInBetween}
             itemsStatuses={itemsStatuses}
             showThumbnails={showThumbnails}
-            isSelected={
-              'id' in droppedEl ? selectedIds?.includes(droppedEl.id) : false
-            }
+            isSelected={isSelected(droppedEl)}
             onThumbnailClick={() => {
               if ('id' in droppedEl) {
                 onCardClick?.(droppedEl.id);

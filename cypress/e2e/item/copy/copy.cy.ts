@@ -5,6 +5,7 @@ import {
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
+  COPY_MANY_ITEMS_BUTTON_SELECTOR,
   ITEM_MENU_COPY_BUTTON_CLASS,
   MY_GRAASP_ITEM_PATH,
   buildItemCard,
@@ -18,7 +19,7 @@ const copyItems = ({
   toItemPath: string;
   rootId?: string;
 }) => {
-  cy.get(`[data-testid="FilterNoneIcon"]`).click();
+  cy.get(COPY_MANY_ITEMS_BUTTON_SELECTOR).click();
   cy.handleTreeMenu(toItemPath, rootId);
 };
 

@@ -25,7 +25,7 @@
     "@graasp/query-client": "3.16.0",
     "@graasp/sdk": "4.20.0",
     "@graasp/translations": "1.32.0",
-    "@graasp/ui": "github:graasp/graasp-ui#card-selection",
+    "@graasp/ui": "4.22.0",
     "@mui/icons-material": "5.16.4",
     "@mui/lab": "5.0.0-alpha.172",
     "@mui/material": "5.16.4",

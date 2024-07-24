@@ -6,6 +6,7 @@ import {
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  MOVE_MANY_ITEMS_BUTTON_SELECTOR,
   MY_GRAASP_ITEM_PATH,
   buildItemsGridMoreButtonSelector,
   buildNavigationModalItemId,
@@ -31,7 +32,7 @@ const moveItems = ({
   toItemPath: string;
   rootId?: string;
 }) => {
-  cy.get(`[data-testid="OpenWithIcon"]`).click();
+  cy.get(MOVE_MANY_ITEMS_BUTTON_SELECTOR).click();
   cy.handleTreeMenu(toItemPath, rootId);
 };
 

@@ -432,3 +432,5 @@ export const RECYCLE_BIN_DELETE_MANY_ITEMS_BUTTON_ID =
 
 export const RECYCLE_BIN_RESTORE_MANY_ITEMS_BUTTON_ID =
   'recycleBinRestoreManyButton';
+export const COPY_MANY_ITEMS_BUTTON_SELECTOR = `[data-testid="FilterNoneIcon"]`;
+export const MOVE_MANY_ITEMS_BUTTON_SELECTOR = `[data-testid="OpenWithIcon"]`;

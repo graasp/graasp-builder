@@ -88,6 +88,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
         <FileUploader buttons={<NewItemButton />} />
       </Box>
     );
+
     if (data.pages[0].data.length) {
       const totalFetchedItems = data
         ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
@@ -121,6 +122,10 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
     } else if (itemTypes.length || searchText) {
       content = <NoItemFilters searchText={searchText} />;
     }
+
+    const sortingOptions = Object.values(SortingOptions).sort((t1, t2) =>
+      translateEnums(t1).localeCompare(translateEnums(t2)),
+    );
 
     return (
       <>
@@ -157,9 +162,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
                     setSortBy={setSortBy}
                     ordering={ordering}
                     setOrdering={setOrdering}
-                    options={Object.values(SortingOptions).sort((t1, t2) =>
-                      translateEnums(t1).localeCompare(translateEnums(t2)),
-                    )}
+                    options={sortingOptions}
                   />
                 )}
                 <ModeButton />

@@ -144,6 +144,10 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
     )
     .sort(sortFn);
 
+  const sortingOptions = Object.values(SortingOptionsForFolder).sort((t1, t2) =>
+    translateEnums(t1).localeCompare(translateEnums(t2)),
+  );
+
   if (children) {
     return (
       <>
@@ -195,10 +199,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
                     ordering={ordering}
                     sortBy={sortBy}
                     setSortBy={setSortBy}
-                    options={Object.values(SortingOptionsForFolder).sort(
-                      (t1, t2) =>
-                        translateEnums(t1).localeCompare(translateEnums(t2)),
-                    )}
+                    options={sortingOptions}
                     setOrdering={setOrdering}
                   />
                 )}
