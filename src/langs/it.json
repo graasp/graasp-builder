@@ -457,7 +457,6 @@
   "UPLOAD_BETWEEN_FILES": "Carica i tuoi file qui",
   "MOVE_WARNING": "Questa operazione potrebbe consentire l'accesso a {{name}} a più persone rispetto a prima. Vuoi procedere?",
   "MOVE_IN_NON_FOLDER_ERROR_MESSAGE": "Impossibile aggiungere elementi in {{type}}",
-  "MOVE_CONFIRM_TITLE": "Conferma lo spostamento di <1>{{name}}</1> all'interno di <1>{{targetName}}</1>",
   "ITEM_SEARCH_NOTHING_FOUND": "Nessun elemento trovato con questi parametri",
   "ITEM_SEARCH_NOTHING_FOUND_QUERY_TITLE": "ricerca",
   "ITEM_SEARCH_NOTHING_FOUND_TYPES_TITLE": "tipi",

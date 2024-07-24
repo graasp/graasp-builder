@@ -461,7 +461,6 @@
   "UPLOAD_BETWEEN_FILES": "Laden Sie Ihre Datei(en) hier hoch",
   "MOVE_WARNING": "Dieser Vorgang könnte mehr Personen als zuvor Zugriff auf {{name}} gewähren. Möchten Sie fortfahren?",
   "MOVE_IN_NON_FOLDER_ERROR_MESSAGE": "Elemente in {{type}} können nicht hinzugefügt werden",
-  "MOVE_CONFIRM_TITLE": "Bestätigen Sie das Verschieben von <1>{{name}}</1> innerhalb von <1>{{targetName}}</1>",
   "ITEM_SEARCH_NOTHING_FOUND": "Kein Artikel mit diesen Parametern gefunden",
   "ITEM_SEARCH_NOTHING_FOUND_QUERY_TITLE": "suchen",
   "ITEM_SEARCH_NOTHING_FOUND_TYPES_TITLE": "Typen",
