@@ -83,7 +83,7 @@ describe('Bookmarked Item', () => {
       }
     });
 
-    it.only('Add item to bookmarks', () => {
+    it('Add item to bookmarks', () => {
       cy.visit(HOME_PATH);
 
       const item = NON_BOOKMARKED_ITEM;
