@@ -10,7 +10,7 @@ import {
   ITEM_LOGIN_SIGN_IN_USERNAME_ID,
 } from '@/config/selectors';
 
-import ItemForbiddenScreen from '../../main/ItemForbiddenScreen';
+import ItemForbiddenScreen from '../../main/list/ItemForbiddenScreen';
 
 const { useItem, useCurrentMember, useItemLoginSchemaType } = hooks;
 

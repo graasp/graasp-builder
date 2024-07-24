@@ -5,10 +5,10 @@ import { Button, ForbiddenContent } from '@graasp/ui';
 
 import { hooks } from '@/config/queryClient';
 
-import { useBuilderTranslation } from '../../config/i18n';
-import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../config/selectors';
-import { BUILDER } from '../../langs/constants';
-import UserSwitchWrapper from '../common/UserSwitchWrapper';
+import { useBuilderTranslation } from '../../../config/i18n';
+import { ITEM_LOGIN_SCREEN_FORBIDDEN_ID } from '../../../config/selectors';
+import { BUILDER } from '../../../langs/constants';
+import UserSwitchWrapper from '../../common/UserSwitchWrapper';
 
 const ItemForbiddenScreen = (): JSX.Element => {
   const { data: member } = hooks.useCurrentMember();

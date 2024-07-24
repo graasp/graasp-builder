@@ -21,14 +21,19 @@ import SelectTypes from '../common/SelectTypes';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useLayoutContext } from '../context/LayoutContext';
 import FileUploader from '../file/FileUploader';
-import ItemsTable from '../main/ItemsTable';
 import NewItemButton from '../main/NewItemButton';
+import ItemsTable from '../main/list/ItemsTable';
+import {
+  SelectionContextProvider,
+  useSelectionContext,
+} from '../main/list/SelectionContext';
 import { DesktopMap } from '../map/DesktopMap';
 import NoItemFilters from '../pages/NoItemFilters';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptionsForFolder } from '../table/types';
 import { useSorting } from '../table/useSorting';
 import FolderDescription from './FolderDescription';
+import FolderToolbar from './FolderSelectionToolbar';
 import { useItemSearch } from './ItemSearch';
 import ModeButton from './header/ModeButton';
 
@@ -42,6 +47,8 @@ type Props = {
 const Content = ({ item, searchText, items, sortBy }: Props) => {
   const { mode } = useLayoutContext();
   const { itemTypes } = useFilterItemsContext();
+  const { selectedIds, clearSelection, toggleSelection } =
+    useSelectionContext();
 
   const enableEditing = item.permission
     ? PermissionLevelCompare.lte(PermissionLevel.Write, item.permission)
@@ -62,9 +69,12 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
     return (
       <>
         <ItemsTable
+          selectedIds={selectedIds}
           enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
           id={buildItemsTableId(item.id)}
           items={items ?? []}
+          onCardClick={toggleSelection}
+          onMove={clearSelection}
         />
         {Boolean(enableEditing && !searchText && !itemTypes?.length) && (
           <Stack alignItems="center" mb={2}>
@@ -107,6 +117,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   const { t: translateEnums } = useEnumsTranslation();
   const { shouldDisplayItem } = useFilterItemsContext();
   const { t: translateBuilder } = useBuilderTranslation();
+  const { selectedIds } = useSelectionContext();
 
   const {
     data: children,
@@ -132,6 +143,10 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
         f.name.toLowerCase().includes(itemSearch.text.toLowerCase()),
     )
     .sort(sortFn);
+
+  const sortingOptions = Object.values(SortingOptionsForFolder).sort((t1, t2) =>
+    translateEnums(t1).localeCompare(translateEnums(t2)),
+  );
 
   if (children) {
     return (
@@ -168,29 +183,30 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
           gap={1}
           width="100%"
         >
-          <Stack
-            spacing={1}
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <SelectTypes />
-            <Stack direction="row" gap={1}>
-              {sortBy && setSortBy && (
-                <SortingSelect
-                  ordering={ordering}
-                  sortBy={sortBy}
-                  setSortBy={setSortBy}
-                  options={Object.values(SortingOptionsForFolder).sort(
-                    (t1, t2) =>
-                      translateEnums(t1).localeCompare(translateEnums(t2)),
-                  )}
-                  setOrdering={setOrdering}
-                />
-              )}
-              <ModeButton />
+          {selectedIds.length && folderChildren?.length ? (
+            <FolderToolbar items={folderChildren} />
+          ) : (
+            <Stack
+              spacing={1}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <SelectTypes />
+              <Stack direction="row" gap={1}>
+                {sortBy && setSortBy && (
+                  <SortingSelect
+                    ordering={ordering}
+                    sortBy={sortBy}
+                    setSortBy={setSortBy}
+                    options={sortingOptions}
+                    setOrdering={setOrdering}
+                  />
+                )}
+                <ModeButton />
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </Stack>
         <Content
           sortBy={sortBy}
@@ -217,4 +233,14 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   );
 };
 
-export default FolderContent;
+export const FolderContentWrapper = ({
+  item,
+}: {
+  item: PackedItem;
+}): JSX.Element => (
+  <SelectionContextProvider>
+    <FolderContent item={item} />
+  </SelectionContextProvider>
+);
+
+export default FolderContentWrapper;

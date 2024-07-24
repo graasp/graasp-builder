@@ -6,6 +6,7 @@ import {
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_MENU_MOVE_BUTTON_CLASS,
+  MOVE_MANY_ITEMS_BUTTON_SELECTOR,
   MY_GRAASP_ITEM_PATH,
   buildItemsGridMoreButtonSelector,
   buildNavigationModalItemId,
@@ -24,6 +25,17 @@ const openMoveModal = ({ id: movedItemId }: { id: string }) => {
   cy.get(`.${ITEM_MENU_MOVE_BUTTON_CLASS}`).click();
 };
 
+const moveItems = ({
+  toItemPath,
+  rootId,
+}: {
+  toItemPath: string;
+  rootId?: string;
+}) => {
+  cy.get(MOVE_MANY_ITEMS_BUTTON_SELECTOR).click();
+  cy.handleTreeMenu(toItemPath, rootId);
+};
+
 const moveItem = ({
   id: movedItemId,
   toItemPath,
@@ -37,7 +49,7 @@ const moveItem = ({
   cy.handleTreeMenu(toItemPath, rootId);
 };
 
-describe('Move Item', () => {
+describe('Move Items', () => {
   it('move item on Home', () => {
     cy.setUpApi({ items });
     cy.visit(HOME_PATH);
@@ -116,6 +128,92 @@ describe('Move Item', () => {
     cy.wait('@moveItems').then(({ request: { body, url } }) => {
       expect(body.parentId).to.equal(undefined);
       expect(url).to.contain(movedItem);
+    });
+  });
+
+  it('move many items from Home to folder', () => {
+    const folders = [
+      PackedFolderItemFactory(),
+      PackedFolderItemFactory(),
+      PackedFolderItemFactory(),
+    ];
+    const toItem = PackedFolderItemFactory();
+    cy.setUpApi({
+      items: [...folders, toItem],
+    });
+
+    // go to children item
+    cy.visit('/');
+
+    folders.forEach((item) => {
+      cy.selectItem(item.id);
+    });
+
+    moveItems({ toItemPath: toItem.path });
+
+    cy.wait('@moveItems').then(({ request: { url, body } }) => {
+      expect(body.parentId).to.eq(toItem.id);
+      folders.forEach((item) => {
+        expect(url).to.contain(item.id);
+      });
+    });
+  });
+
+  it('move many items from folder to folder', () => {
+    const parentItem = PackedFolderItemFactory();
+    const folders = [
+      PackedFolderItemFactory({ parentItem }),
+      PackedFolderItemFactory({ parentItem }),
+      PackedFolderItemFactory({ parentItem }),
+    ];
+    const toItem = PackedFolderItemFactory();
+    cy.setUpApi({
+      items: [...folders, parentItem, toItem],
+    });
+
+    // go to children item
+    cy.visit(buildItemPath(parentItem.id));
+
+    folders.forEach((item) => {
+      cy.selectItem(item.id);
+    });
+
+    moveItems({ toItemPath: toItem.path });
+
+    cy.wait('@moveItems').then(({ request: { url, body } }) => {
+      expect(body.parentId).to.eq(toItem.id);
+      folders.forEach((item) => {
+        expect(url).to.contain(item.id);
+      });
+    });
+  });
+
+  it('move many items from folder to Home', () => {
+    const parentItem = PackedFolderItemFactory();
+    const folders = [
+      PackedFolderItemFactory({ parentItem }),
+      PackedFolderItemFactory({ parentItem }),
+      PackedFolderItemFactory({ parentItem }),
+    ];
+    cy.setUpApi({
+      items: [...folders, parentItem],
+    });
+
+    // go to children item
+    cy.visit(buildItemPath(parentItem.id));
+
+    folders.forEach((item) => {
+      cy.selectItem(item.id);
+    });
+
+    moveItems({ toItemPath: '' });
+
+    cy.wait('@moveItems').then(({ request: { url, body } }) => {
+      // eslint-disable-next-line no-unused-expressions
+      expect(body.parentId).to.be.undefined;
+      folders.forEach((item) => {
+        expect(url).to.contain(item.id);
+      });
     });
   });
 });

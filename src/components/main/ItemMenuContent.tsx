@@ -117,19 +117,17 @@ const ItemMenuContent = ({ item }: Props): JSX.Element => {
             type={ActionButton.MENU_ITEM}
           />
         )}
-        {member?.id && (
-          <>
-            <CopyButton
-              key="copy"
-              type={ActionButton.MENU_ITEM}
-              onClick={() => {
-                openCopyModal();
-                closeMenu();
-              }}
-            />
-            <DuplicateButton key="duplicate" item={item} />
-          </>
-        )}
+        {member?.id && [
+          <CopyButton
+            key="copy"
+            type={ActionButton.MENU_ITEM}
+            onClick={() => {
+              openCopyModal();
+              closeMenu();
+            }}
+          />,
+          <DuplicateButton key="duplicate" item={item} />,
+        ]}
         {canAdmin && (
           <MoveButton
             key="move"
@@ -142,39 +140,36 @@ const ItemMenuContent = ({ item }: Props): JSX.Element => {
         )}
         <Divider />
 
-        {canWrite && (
-          <>
-            <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />
-            <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />
-            {item.type !== ItemType.FOLDER && (
-              <CollapseButton
-                key="collapse"
-                type={ActionButton.MENU_ITEM}
-                item={item}
-              />
-            )}
-          </>
+        {canWrite && [
+          <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />,
+          <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />,
+        ]}
+
+        {canWrite && item.type !== ItemType.FOLDER && (
+          <CollapseButton
+            key="collapse"
+            type={ActionButton.MENU_ITEM}
+            item={item}
+          />
         )}
 
         <Divider />
 
-        {member?.id && (
-          <>
-            <CreateShortcutButton
-              key="shortcut"
-              onClick={() => {
-                openCreateShortcutModal();
-                closeMenu();
-              }}
-            />
-            <BookmarkButton
-              size="medium"
-              key="bookmark"
-              type={ActionButton.MENU_ITEM}
-              item={item}
-            />
-          </>
-        )}
+        {member?.id && [
+          <CreateShortcutButton
+            key="shortcut"
+            onClick={() => {
+              openCreateShortcutModal();
+              closeMenu();
+            }}
+          />,
+          <BookmarkButton
+            size="medium"
+            key="bookmark"
+            type={ActionButton.MENU_ITEM}
+            item={item}
+          />,
+        ]}
         {canWrite && (
           <ItemSettingsButton
             key="settings"
@@ -184,15 +179,15 @@ const ItemMenuContent = ({ item }: Props): JSX.Element => {
         )}
 
         {canAdmin ? (
-          <>
-            <Divider />
+          [
+            <Divider />,
             <RecycleButton
               key="recycle"
               type={ActionButton.MENU_ITEM}
               itemIds={[item.id]}
               onClick={closeMenu}
-            />
-          </>
+            />,
+          ]
         ) : (
           <Divider />
         )}

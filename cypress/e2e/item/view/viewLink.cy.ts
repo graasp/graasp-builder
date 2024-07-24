@@ -71,7 +71,7 @@ describe('Links', () => {
     cy.get(`[src="${extra.embeddedLink.thumbnails[0]}"]`);
   });
 
-  it.only('view youtube', () => {
+  it('view youtube', () => {
     const { id, extra } = YOUTUBE_LINK_ITEM;
     cy.visit(buildItemPath(id));
 

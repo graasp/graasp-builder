@@ -424,3 +424,13 @@ export const BOOKMARK_ICON_SELECTOR =
 export const MEMBER_VALIDATION_BANNER_ID = 'memberValidationBanner';
 export const MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID =
   'memberValidationBannerCloseButton';
+export const ITEM_CARD_CLASS = 'item-card';
+export const buildFolderItemCardThumbnail = (id: string): string =>
+  `#${buildItemCard(id)} .lucide-folder`;
+export const RECYCLE_BIN_DELETE_MANY_ITEMS_BUTTON_ID =
+  'recycleBinDeleteManyButton';
+
+export const RECYCLE_BIN_RESTORE_MANY_ITEMS_BUTTON_ID =
+  'recycleBinRestoreManyButton';
+export const COPY_MANY_ITEMS_BUTTON_SELECTOR = `[data-testid="FilterNoneIcon"]`;
+export const MOVE_MANY_ITEMS_BUTTON_SELECTOR = `[data-testid="OpenWithIcon"]`;
