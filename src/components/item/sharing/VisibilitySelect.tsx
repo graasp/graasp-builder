@@ -10,6 +10,8 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { SHARE_ITEM_VISIBILITY_SELECT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import ItemLoginSchemaSelect from './ItemLoginSchemaSelect';
+import UpdateVisibilityModal from './UpdateVisibilityModal';
+import useVisibilitySelect from './VisibilitySelect.hook';
 
 type Props = {
   item: PackedItem;
@@ -27,6 +29,18 @@ const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {
     isLoading,
     updateVisibility,
   } = useVisibility(item);
+
+  const {
+    isModalOpen,
+    pendingVisibility,
+    onCloseModal,
+    onValidateModal,
+    onVisibilityChange,
+  } = useVisibilitySelect({
+    itemId: item.id,
+    visibility,
+    updateVisibility,
+  });
 
   if (isLoading) {
     return <Loader />;
@@ -68,10 +82,18 @@ const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {
 
   return (
     <>
+      {isModalOpen && (
+        <UpdateVisibilityModal
+          isOpen={isModalOpen}
+          newVisibility={pendingVisibility}
+          onClose={onCloseModal}
+          onValidate={onValidateModal}
+        />
+      )}
       {edit && (
         <Select
           value={visibility}
-          onChange={(e) => updateVisibility(e.target.value)}
+          onChange={(e) => onVisibilityChange(e.target.value)}
           disabled={isDisabled}
           id={SHARE_ITEM_VISIBILITY_SELECT_ID}
           sx={{ mr: 1 }}

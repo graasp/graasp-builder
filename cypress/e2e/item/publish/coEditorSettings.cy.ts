@@ -38,7 +38,7 @@ it('Change choice', () => {
   const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
   const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
 
-  cy.wait('@getLatestValidationGroup').then(() => {
+  cy.wait('@getPublicationStatus').then(() => {
     cy.get(buildDataCyWrapper(CO_EDITOR_SETTINGS_CHECKBOX_ID)).click();
   });
 

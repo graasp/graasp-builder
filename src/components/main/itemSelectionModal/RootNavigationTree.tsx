@@ -32,11 +32,15 @@ const RootNavigationTree = ({
   onNavigate,
   rootMenuItems,
   selectedId,
-}: RootNavigationTreeProps): JSX.Element => {
+}: RootNavigationTreeProps): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  // todo: to change with real recent items (most used)
-  const { data: recentItems, isLoading } = hooks.useAccessibleItems(
+  // TODO: to change with real recent items (most used)
+  const {
+    data: recentItems,
+    isLoading,
+    isSuccess,
+  } = hooks.useAccessibleItems(
     // you can move into an item you have at least write permission
     {
       permissions: [PermissionLevel.Admin, PermissionLevel.Write],
@@ -51,7 +55,7 @@ const RootNavigationTree = ({
     enabled: Boolean(items[0]),
   });
 
-  if (recentItems?.data?.length) {
+  if (isSuccess) {
     return (
       <>
         <Typography color="darkgrey" variant="subtitle2">
@@ -65,7 +69,7 @@ const RootNavigationTree = ({
           buildRowMenuId={buildNavigationModalItemId}
           buildRowMenuArrowId={buildItemRowArrowId}
         />
-        {recentItems && (
+        {Boolean(recentItems.data.length) && (
           <>
             <Typography color="darkgrey" variant="subtitle2">
               {translateBuilder(BUILDER.ITEM_SELECTION_NAVIGATION_RECENT_ITEMS)}

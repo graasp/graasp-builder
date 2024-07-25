@@ -2,13 +2,17 @@ import LinkIcon from '@mui/icons-material/Link';
 import { LoadingButton } from '@mui/lab';
 import { Alert, Button } from '@mui/material';
 
-import { ClientHostManager, Context, PackedItem } from '@graasp/sdk';
+import {
+  ClientHostManager,
+  Context,
+  PackedItem,
+  PublicationStatus,
+} from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
 import { buildItemPublicationButton } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
-import { PublicationStatus } from '@/types/publication';
 
 import PublicationButton from './PublicationButton';
 

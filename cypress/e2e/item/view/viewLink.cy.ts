@@ -44,32 +44,44 @@ describe('Links', () => {
   });
 
   it('view some link', () => {
-    const { id } = GRAASP_LINK_ITEM;
+    const { id, extra } = GRAASP_LINK_ITEM;
     cy.visit(buildItemPath(id));
 
     // should get current item
     cy.wait('@getItem');
 
     expectLinkViewScreenLayout({ item: GRAASP_LINK_ITEM });
+
+    // check home page display link thumbnail
+    cy.visit('/');
+    cy.get(`[src="${extra.embeddedLink.thumbnails[0]}"]`);
   });
 
   it('view some link with iframe', () => {
-    const { id } = GRAASP_LINK_ITEM_IFRAME_ONLY;
+    const { id, extra } = GRAASP_LINK_ITEM_IFRAME_ONLY;
     cy.visit(buildItemPath(id));
 
     // should get current item
     cy.wait('@getItem');
 
     expectLinkViewScreenLayout({ item: GRAASP_LINK_ITEM_IFRAME_ONLY });
+
+    // check home page display link thumbnail
+    cy.visit('/');
+    cy.get(`[src="${extra.embeddedLink.thumbnails[0]}"]`);
   });
 
   it('view youtube', () => {
-    const { id } = YOUTUBE_LINK_ITEM;
+    const { id, extra } = YOUTUBE_LINK_ITEM;
     cy.visit(buildItemPath(id));
 
     // should get current item
     cy.wait('@getItem');
 
     expectLinkViewScreenLayout({ item: YOUTUBE_LINK_ITEM });
+
+    // check home page display link icon because it does not have thumbnail
+    cy.visit('/');
+    cy.get(`[src="${extra.embeddedLink.icons[0]}"]`);
   });
 });

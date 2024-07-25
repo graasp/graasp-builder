@@ -52,7 +52,6 @@ export const YOUTUBE_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
   extra: buildLinkExtra({
     url: 'https://www.youtube.com/watch?v=FmiEgBMTPLo',
     html: '<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/FmiEgBMTPLo" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen scrolling="no" allow="encrypted-media"></iframe></div>',
-    thumbnails: ['https://i.ytimg.com/vi/FmiEgBMTPLo/maxresdefault.jpg'],
     icons: ['https://www.youtube.com/s/desktop/f0ff6c1d/img/favicon_96.png'],
   }),
   settings: {
@@ -67,6 +66,18 @@ export const INVALID_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
   description: 'a description for graasp youtube link',
   extra: buildLinkExtra({
     url: 'wrong link',
+    html: '',
+    thumbnails: [],
+    icons: [],
+  }),
+});
+
+export const LINK_ITEM_WITH_BLANK_NAME: LinkItemType = PackedLinkItemFactory({
+  creator: CURRENT_USER,
+  name: '',
+  description: 'a description for graasp youtube link',
+  extra: buildLinkExtra({
+    url: 'https://www.youtube.com/watch?v=FmiEgBMTPLo',
     html: '',
     thumbnails: [],
     icons: [],

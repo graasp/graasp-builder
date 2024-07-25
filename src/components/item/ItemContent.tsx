@@ -18,6 +18,7 @@ import {
   S3FileItemType,
   buildPdfViewerLink,
   getH5PExtra,
+  getLinkThumbnailUrl,
 } from '@graasp/sdk';
 import { DEFAULT_LANG } from '@graasp/translations';
 import {
@@ -40,7 +41,6 @@ import {
   buildFileItemId,
 } from '../../config/selectors';
 import ErrorAlert from '../common/ErrorAlert';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 import { OutletType } from '../pages/item/type';
 import FolderContent from './FolderContent';
 import FileAlignmentSetting from './settings/file/FileAlignmentSetting';
@@ -108,6 +108,7 @@ const LinkContent = ({
     memberId={member?.id}
     isResizable
     item={item}
+    thumbnail={getLinkThumbnailUrl(item.extra)}
     height={ITEM_DEFAULT_HEIGHT}
     showButton={Boolean(item.settings?.showLinkButton)}
     showIframe={Boolean(item.settings?.showLinkIframe)}
@@ -210,7 +211,7 @@ const EtherpadContent = ({ item }: { item: EtherpadItemType }): JSX.Element => {
  * Main item renderer component
  */
 const ItemContent = (): JSX.Element => {
-  const { data: member, isLoading, isError } = useCurrentUserContext();
+  const { data: member, isLoading, isError } = hooks.useCurrentMember();
   const { item, permission } = useOutletContext<OutletType>();
 
   if (isLoading) {

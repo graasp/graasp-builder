@@ -1,6 +1,4 @@
-import { Alert, Box, Stack } from '@mui/material';
-
-import { Loader } from '@graasp/ui';
+import { Alert, Stack } from '@mui/material';
 
 import { Ordering } from '@/enums';
 
@@ -16,21 +14,25 @@ import SelectTypes from '../common/SelectTypes';
 import { useFilterItemsContext } from '../context/FilterItemsContext';
 import { useItemSearch } from '../item/ItemSearch';
 import ModeButton from '../item/header/ModeButton';
-import ItemsTable from '../main/ItemsTable';
+import LoadingScreen from '../layout/LoadingScreen';
+import ItemsTable from '../main/list/ItemsTable';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
 import { useSorting, useTranslatedSortingOptions } from '../table/useSorting';
 import PageWrapper from './PageWrapper';
 
-const BookmarkedItems = (): JSX.Element | null => {
+const BookmarkedItems = ({
+  searchText,
+}: {
+  searchText: string;
+}): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
   const {
-    data,
-    isLoading: isItemsLoading,
+    data: bookmarkedItems,
+    isLoading,
     isError,
   } = hooks.useBookmarkedItems();
   const { shouldDisplayItem } = useFilterItemsContext();
-  const { input, text } = useItemSearch();
 
   const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
     useSorting<SortingOptions>({
@@ -39,93 +41,83 @@ const BookmarkedItems = (): JSX.Element | null => {
     });
   const options = useTranslatedSortingOptions();
 
-  const filteredData = data
+  const filteredData = bookmarkedItems
     ?.map((d) => d.item)
     ?.filter(
-      (item) => shouldDisplayItem(item.type) && item.name.includes(text),
+      (item) =>
+        shouldDisplayItem(item.type) &&
+        item.name.toLowerCase().includes(searchText.toLowerCase()),
     );
 
   filteredData?.sort(sortFn);
 
-  const renderContent = () => {
-    if (isError) {
-      return (
-        <Box mt={2}>
-          <ErrorAlert id={BOOKMARKED_ITEMS_ERROR_ALERT_ID} />
-        </Box>
-      );
-    }
-
-    if (!data?.length) {
-      return (
-        <Alert severity="info">
-          {translateBuilder(BUILDER.BOOKMARKS_NO_ITEM)}
-        </Alert>
-      );
-    }
-
-    if (filteredData) {
-      return (
-        <Stack gap={1}>
+  if (bookmarkedItems?.length) {
+    return (
+      <Stack gap={1}>
+        <Stack
+          alignItems="space-between"
+          direction="column"
+          gap={1}
+          width="100%"
+        >
           <Stack
-            alignItems="space-between"
-            direction="column"
-            mt={2}
-            gap={1}
-            width="100%"
+            spacing={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            <Stack
-              spacing={1}
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <SelectTypes />
-              <Stack direction="row" gap={1}>
-                {sortBy && setSortBy && (
-                  <SortingSelect
-                    options={options}
-                    sortBy={sortBy}
-                    setSortBy={setSortBy}
-                    ordering={ordering}
-                    setOrdering={setOrdering}
-                  />
-                )}
-                <ModeButton />
-              </Stack>
+            <SelectTypes />
+            <Stack direction="row" gap={1}>
+              {sortBy && setSortBy && (
+                <SortingSelect
+                  options={options}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                  ordering={ordering}
+                  setOrdering={setOrdering}
+                />
+              )}
+              <ModeButton />
             </Stack>
           </Stack>
-          {filteredData.length ? (
-            <ItemsTable
-              items={filteredData}
-              canMove={false}
-              enableMoveInBetween={false}
-            />
-          ) : (
-            <Alert severity="info">
-              {translateBuilder(BUILDER.BOOKMARKS_NO_ITEM_SEARCH, {
-                search: text,
-              })}
-            </Alert>
-          )}
         </Stack>
-      );
-    }
-
-    if (isItemsLoading) {
-      return <Loader />;
-    }
-
-    return (
-      <Box mt={2}>
-        <ErrorAlert id={BOOKMARKED_ITEMS_ERROR_ALERT_ID} />
-      </Box>
+        {filteredData?.length ? (
+          <ItemsTable
+            items={filteredData}
+            canMove={false}
+            enableMoveInBetween={false}
+          />
+        ) : (
+          <Alert severity="info">
+            {translateBuilder(BUILDER.BOOKMARKS_NO_ITEM_SEARCH, {
+              search: searchText,
+            })}
+          </Alert>
+        )}
+      </Stack>
     );
-  };
+  }
+
+  if (isError) {
+    return <ErrorAlert id={BOOKMARKED_ITEMS_ERROR_ALERT_ID} />;
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  return (
+    <Alert severity="info">{translateBuilder(BUILDER.BOOKMARKS_NO_ITEM)}</Alert>
+  );
+};
+
+const BookmarkedItemsWrapper = (): JSX.Element => {
+  const { t } = useBuilderTranslation();
+  const itemSearch = useItemSearch();
 
   return (
     <PageWrapper
-      title={translateBuilder(BUILDER.BOOKMARKED_ITEMS_TITLE)}
+      title={t(BUILDER.BOOKMARKED_ITEMS_TITLE)}
       id={BOOKMARKED_ITEMS_ID}
       options={
         <Stack
@@ -134,13 +126,13 @@ const BookmarkedItems = (): JSX.Element | null => {
           justifyContent="flex-end"
           spacing={1}
         >
-          {input}
+          {itemSearch.input}
         </Stack>
       }
     >
-      {renderContent()}
+      <BookmarkedItems searchText={itemSearch.text} />
     </PageWrapper>
   );
 };
 
-export default BookmarkedItems;
+export default BookmarkedItemsWrapper;

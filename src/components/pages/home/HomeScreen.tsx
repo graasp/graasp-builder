@@ -4,6 +4,11 @@ import { Alert, Box, LinearProgress, Stack } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
+import LoadingScreen from '@/components/layout/LoadingScreen';
+import {
+  SelectionContextProvider,
+  useSelectionContext,
+} from '@/components/main/list/SelectionContext';
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 import { ShowOnlyMeChangeType } from '@/config/types';
 import { ItemLayoutMode, Ordering } from '@/enums';
@@ -16,14 +21,13 @@ import { hooks } from '../../../config/queryClient';
 import { ACCESSIBLE_ITEMS_TABLE_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import SelectTypes from '../../common/SelectTypes';
-import { useCurrentUserContext } from '../../context/CurrentUserContext';
 import { useFilterItemsContext } from '../../context/FilterItemsContext';
 import { useLayoutContext } from '../../context/LayoutContext';
 import FileUploader from '../../file/FileUploader';
 import { useItemSearch } from '../../item/ItemSearch';
 import ModeButton from '../../item/header/ModeButton';
-import ItemsTable from '../../main/ItemsTable';
 import NewItemButton from '../../main/NewItemButton';
+import ItemsTable from '../../main/list/ItemsTable';
 import { DesktopMap } from '../../map/DesktopMap';
 import ShowOnlyMeButton from '../../table/ShowOnlyMeButton';
 import SortingSelect from '../../table/SortingSelect';
@@ -31,15 +35,17 @@ import { SortingOptions } from '../../table/types';
 import { useSorting } from '../../table/useSorting';
 import NoItemFilters from '../NoItemFilters';
 import PageWrapper from '../PageWrapper';
-import HomeScreenLoading from './HomeScreenLoading';
+import HomeSelectionToolbar from './HomeSelectionToolbar';
 
 const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateEnums } = useEnumsTranslation();
-  const { data: currentMember } = useCurrentUserContext();
+  const { data: currentMember } = hooks.useCurrentMember();
   const { itemTypes } = useFilterItemsContext();
   const [showOnlyMe, setShowOnlyMe] = useState(false);
 
+  const { selectedIds, toggleSelection, clearSelection } =
+    useSelectionContext();
   const { mode } = useLayoutContext();
   const { sortBy, setSortBy, ordering, setOrdering } =
     useSorting<SortingOptions>({
@@ -75,13 +81,14 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
     );
   }
 
-  if (data && data.pages.length) {
+  if (data?.pages?.length) {
     // default show upload zone
     let content = (
       <Box mt={2}>
         <FileUploader buttons={<NewItemButton />} />
       </Box>
     );
+
     if (data.pages[0].data.length) {
       const totalFetchedItems = data
         ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
@@ -93,6 +100,9 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
             id={ACCESSIBLE_ITEMS_TABLE_ID}
             items={data.pages.flatMap(({ data: i }) => i)}
             enableMoveInBetween={false}
+            onCardClick={toggleSelection}
+            selectedIds={selectedIds}
+            onMove={clearSelection}
           />
           {!isFetching && data.pages[0].totalCount > totalFetchedItems && (
             <Stack textAlign="center" alignItems="center">
@@ -113,6 +123,10 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
       content = <NoItemFilters searchText={searchText} />;
     }
 
+    const sortingOptions = Object.values(SortingOptions).sort((t1, t2) =>
+      translateEnums(t1).localeCompare(translateEnums(t2)),
+    );
+
     return (
       <>
         <Stack
@@ -128,28 +142,33 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
               enabled={showOnlyMe}
             />
           </Stack>
-          <Stack
-            spacing={1}
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <SelectTypes />
-            <Stack direction="row" gap={1}>
-              {sortBy && setSortBy && (
-                <SortingSelect<SortingOptions>
-                  sortBy={sortBy}
-                  setSortBy={setSortBy}
-                  ordering={ordering}
-                  setOrdering={setOrdering}
-                  options={Object.values(SortingOptions).sort((t1, t2) =>
-                    translateEnums(t1).localeCompare(translateEnums(t2)),
-                  )}
-                />
-              )}
-              <ModeButton />
+
+          {selectedIds.length ? (
+            <HomeSelectionToolbar
+              items={data.pages.flatMap(({ data: i }) => i)}
+            />
+          ) : (
+            <Stack
+              spacing={1}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <SelectTypes />
+              <Stack direction="row" gap={1}>
+                {sortBy && setSortBy && (
+                  <SortingSelect<SortingOptions>
+                    sortBy={sortBy}
+                    setSortBy={setSortBy}
+                    ordering={ordering}
+                    setOrdering={setOrdering}
+                    options={sortingOptions}
+                  />
+                )}
+                <ModeButton />
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </Stack>
         <Stack>
           {content}
@@ -164,7 +183,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   }
 
   if (isLoading) {
-    return <HomeScreenLoading />;
+    return <LoadingScreen chipsPlaceholder />;
   }
 
   return (
@@ -192,7 +211,9 @@ const HomeScreen = (): JSX.Element => {
         </Stack>
       }
     >
-      <HomeScreenContent searchText={itemSearch.text} />
+      <SelectionContextProvider>
+        <HomeScreenContent searchText={itemSearch.text} />
+      </SelectionContextProvider>
     </PageWrapper>
   );
 };

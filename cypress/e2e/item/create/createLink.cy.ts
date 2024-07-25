@@ -6,6 +6,7 @@ import {
   GRAASP_LINK_ITEM,
   GRAASP_LINK_ITEM_NO_PROTOCOL,
   INVALID_LINK_ITEM,
+  LINK_ITEM_WITH_BLANK_NAME,
 } from '../../../fixtures/links';
 import { CREATE_ITEM_PAUSE } from '../../../support/constants';
 import { createLink } from '../../../support/createUtils';
@@ -77,6 +78,26 @@ describe('Create Link', () => {
 
       // create
       createLink(INVALID_LINK_ITEM, {
+        confirm: false,
+      });
+
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
+        'have.prop',
+        'disabled',
+        true,
+      );
+    });
+
+    it('cannot have an empty name', () => {
+      const FOLDER = PackedFolderItemFactory();
+      cy.setUpApi({ items: [FOLDER] });
+      const { id } = FOLDER;
+
+      // go to children item
+      cy.visit(buildItemPath(id));
+
+      // create
+      createLink(LINK_ITEM_WITH_BLANK_NAME, {
         confirm: false,
       });
 

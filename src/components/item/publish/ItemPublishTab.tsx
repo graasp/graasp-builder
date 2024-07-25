@@ -3,15 +3,14 @@ import { useOutletContext } from 'react-router-dom';
 
 import { Container, Stack, Typography, useMediaQuery } from '@mui/material';
 
+import { PublicationStatus } from '@graasp/sdk';
 import { Loader, theme } from '@graasp/ui';
 
 import SyncIcon from '@/components/common/SyncIcon';
-import { useCurrentUserContext } from '@/components/context/CurrentUserContext';
 import {
   DataSyncContextProvider,
   useDataSyncContext,
 } from '@/components/context/DataSyncContext';
-import usePublicationStatus from '@/components/hooks/usePublicationStatus';
 import CategoriesContainer from '@/components/item/publish/CategoriesContainer';
 import CoEditorsContainer from '@/components/item/publish/CoEditorsContainer';
 import EditItemDescription from '@/components/item/publish/EditItemDescription';
@@ -21,9 +20,9 @@ import PublicationStatusComponent from '@/components/item/publish/PublicationSta
 import PublicationThumbnail from '@/components/item/publish/PublicationThumbnail';
 import { OutletType } from '@/components/pages/item/type';
 import { useBuilderTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 import { SomeBreakPoints } from '@/types/breakpoint';
-import { PublicationStatus } from '@/types/publication';
 
 import EditItemName from './EditItemName';
 import CustomizedTags from './customizedTags/CustomizedTags';
@@ -31,18 +30,18 @@ import PublicationButtonSelector from './publicationButtons/PublicationButtonSel
 
 type StackOrder = { order?: number | SomeBreakPoints<number> };
 
+const { usePublicationStatus } = hooks;
+
 const ItemPublishTab = (): JSX.Element => {
   const { t } = useBuilderTranslation();
   const { item, canAdmin } = useOutletContext<OutletType>();
-  const { isLoading: isMemberLoading } = useCurrentUserContext();
+  const { isLoading: isMemberLoading } = hooks.useCurrentMember();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { status } = useDataSyncContext();
   const {
-    status: publicationStatus,
-    isinitialLoading: isPublicationStatusLoading,
-  } = usePublicationStatus({
-    item,
-  });
+    data: publicationStatus,
+    isInitialLoading: isPublicationStatusLoading,
+  } = usePublicationStatus(item.id);
 
   const [notifyCoEditors, setNotifyCoEditors] = useState<boolean>(false);
 
@@ -142,7 +141,10 @@ const ItemPublishTab = (): JSX.Element => {
   );
 
   const buildView = () => {
-    if (publicationStatus === PublicationStatus.ItemTypeNotAllowed) {
+    if (
+      !publicationStatus ||
+      publicationStatus === PublicationStatus.ItemTypeNotAllowed
+    ) {
       return buildPublicationStack();
     }
 

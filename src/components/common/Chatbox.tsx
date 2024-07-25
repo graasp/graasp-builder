@@ -4,7 +4,6 @@ import { Loader } from '@graasp/ui';
 
 import { hooks, mutations } from '../../config/queryClient';
 import { CHATBOX_ID, CHATBOX_INPUT_BOX_ID } from '../../config/selectors';
-import { useCurrentUserContext } from '../context/CurrentUserContext';
 
 const { useItemChat, useAvatarUrl, useItemMemberships } = hooks;
 const {
@@ -23,7 +22,7 @@ const Chatbox = ({ item }: Props): JSX.Element | null => {
     useItemMemberships(item.id);
   const members = itemPermissions?.map(({ member }) => member);
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
-    useCurrentUserContext();
+    hooks.useCurrentMember();
   const { mutate: sendMessage } = usePostItemChatMessage();
   const { mutate: editMessage } = usePatchItemChatMessage();
   const { mutate: deleteMessage } = useDeleteItemChatMessage();

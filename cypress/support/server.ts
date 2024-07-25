@@ -15,6 +15,7 @@ import {
   Member,
   PermissionLevel,
   PermissionLevelCompare,
+  PublicationStatus,
   RecycledItemData,
   ShortLink,
   ShortLinkPayload,
@@ -55,7 +56,6 @@ const {
   buildItemUnpublishRoute,
   buildGetItemRoute,
   GET_OWN_ITEMS_ROUTE,
-  buildPostItemMembershipRoute,
   buildGetMemberRoute,
   buildPostManyItemMembershipsRoute,
   ITEMS_ROUTE,
@@ -96,6 +96,7 @@ const {
   buildPostUserCSVUploadRoute,
   buildGetPublishedItemsForMemberRoute,
   buildItemPublishRoute,
+  buildGetPublicationStatusRoute,
   buildUpdateMemberPasswordRoute,
   buildPostItemValidationRoute,
   buildGetShortLinkAvailableRoute,
@@ -595,11 +596,7 @@ export const mockPostItemMembership = (
   cy.intercept(
     {
       method: HttpMethod.Post,
-      url: new RegExp(
-        `${API_HOST}/${parseStringToRegExp(
-          buildPostItemMembershipRoute(ID_FORMAT),
-        )}`,
-      ),
+      url: `${API_HOST}/item-memberships?*`,
     },
     ({ reply, body }) => {
       if (shouldThrowError) {
@@ -1906,6 +1903,17 @@ export const mockUploadInvitationCSV = (
       return reply({ memberships: item.memberships });
     },
   ).as('uploadCSV');
+};
+
+export const mockGetPublicationStatus = (status: PublicationStatus): void => {
+  const interceptingPathFormat = buildGetPublicationStatusRoute(ID_FORMAT);
+  cy.intercept(
+    {
+      method: HttpMethod.Get,
+      url: new RegExp(`${API_HOST}/${interceptingPathFormat}`),
+    },
+    ({ reply }) => reply(status),
+  ).as('getPublicationStatus');
 };
 
 export const mockPublishItem = (items: ItemForTest[]): void => {

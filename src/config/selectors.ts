@@ -1,8 +1,10 @@
 // todo: this makes tests slow because it compiles ui everytime
 // import { Platform } from '@graasp/ui';
-import { DescriptionPlacementType, ShortLink } from '@graasp/sdk';
-
-import { PublicationStatus } from '@/types/publication';
+import {
+  DescriptionPlacementType,
+  PublicationStatus,
+  ShortLink,
+} from '@graasp/sdk';
 
 export const SHARED_ITEMS_ROOT_CONTAINER = 'sharedItemsPageRootContainer';
 export const RECYCLED_ITEMS_ROOT_CONTAINER = 'recycledItemsPageRootContainer';
@@ -394,6 +396,10 @@ export const buildPublicationStatus = (status: PublicationStatus): string =>
 
 export const PUBLIC_VISIBILITY_MODAL_VALIDATE_BUTTON =
   'publicVisbilityModalValidateButton';
+export const UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON =
+  'updateVisbilityModalValidateButton';
+export const UPDATE_VISIBILITY_MODAL_CANCEL_BUTTON =
+  'updateVisbilityModalCancelButton';
 
 export const DEBOUNCED_TEXT_FIELD_ID = 'debouncedTextfield';
 
@@ -414,3 +420,17 @@ export const SORTING_ORDERING_SELECTOR_ASC = '.lucide-arrow-down-narrow-wide';
 export const UNBOOKMARK_ICON_SELECTOR = '[data-testid="BookmarkIcon"]';
 export const BOOKMARK_ICON_SELECTOR =
   '[data-testid="BookmarkBorderOutlinedIcon"]';
+
+export const MEMBER_VALIDATION_BANNER_ID = 'memberValidationBanner';
+export const MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID =
+  'memberValidationBannerCloseButton';
+export const ITEM_CARD_CLASS = 'item-card';
+export const buildFolderItemCardThumbnail = (id: string): string =>
+  `#${buildItemCard(id)} .lucide-folder`;
+export const RECYCLE_BIN_DELETE_MANY_ITEMS_BUTTON_ID =
+  'recycleBinDeleteManyButton';
+
+export const RECYCLE_BIN_RESTORE_MANY_ITEMS_BUTTON_ID =
+  'recycleBinRestoreManyButton';
+export const COPY_MANY_ITEMS_BUTTON_SELECTOR = `[data-testid="FilterNoneIcon"]`;
+export const MOVE_MANY_ITEMS_BUTTON_SELECTOR = `[data-testid="OpenWithIcon"]`;

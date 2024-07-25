@@ -8,10 +8,9 @@ import {
   PackedFolderItemFactory,
   PackedItem,
   PermissionLevel,
+  PublicationStatus,
   PublishableItemTypeChecker,
 } from '@graasp/sdk';
-
-import { PublicationStatus } from '@/types/publication';
 
 import { buildItemPath } from '../../../../src/config/paths';
 import {
@@ -37,14 +36,22 @@ const openPublishItemTab = (id: string) => {
 const setUpAndVisitItemPage = (
   item: PackedItem | ItemForTest,
   {
+    itemPublicationStatus,
     itemValidationGroups,
     currentMember,
   }: {
+    itemPublicationStatus?: PublicationStatus;
     itemValidationGroups?: ItemValidationGroup[];
     currentMember?: Member | null;
   } = {},
 ) => {
-  cy.setUpApi({ items: [item], itemValidationGroups, currentMember });
+  cy.setUpApi({
+    items: [item],
+    itemValidationGroups,
+    currentMember,
+    itemPublicationStatus:
+      itemPublicationStatus ?? PublicationStatus.Unpublished,
+  });
   cy.visit(buildItemPath(item.id));
 };
 
@@ -125,7 +132,7 @@ describe('Private Item', () => {
     const status = PublicationStatus.Unpublished;
 
     beforeEach(() => {
-      setUpAndVisitItemPage(privateItem);
+      setUpAndVisitItemPage(privateItem, { itemPublicationStatus: status });
       openPublishItemTab(privateItem.id);
     });
 
@@ -149,6 +156,7 @@ describe('Private Item', () => {
 
     beforeEach(() => {
       setUpAndVisitItemPage(privateItem, {
+        itemPublicationStatus: status,
         itemValidationGroups: [itemValidationGroup],
       });
       openPublishItemTab(privateItem.id);
@@ -169,23 +177,25 @@ describe('Private Item', () => {
   });
 
   describe('Visibility of published item is private again', () => {
+    const status = PublicationStatus.NotPublic;
     const itemValidationGroup = ItemValidationGroupFactory(privateItem);
 
     beforeEach(() => {
       setUpAndVisitItemPage(PublishedItemFactory(privateItem), {
+        itemPublicationStatus: status,
         itemValidationGroups: [itemValidationGroup],
       });
       openPublishItemTab(privateItem.id);
     });
 
     it('Publication status should be Not Public', () => {
-      getPublicationStatusComponent(PublicationStatus.NotPublic)
+      getPublicationStatusComponent(status)
         .should('exist')
         .should('be.visible');
     });
 
     it('Should ask before change item visility to public', () => {
-      getPublicationButton(PublicationStatus.NotPublic).click(); // Click on change visibility
+      getPublicationButton(status).click(); // Click on change visibility
       confirmSetItemToPublic();
       waitOnSetItemPublic(privateItem);
     });
@@ -199,6 +209,7 @@ describe('Private Item', () => {
 
     beforeEach(() => {
       setUpAndVisitItemPage(privateItem, {
+        itemPublicationStatus: status,
         itemValidationGroups: [itemValidationGroup],
       });
       openPublishItemTab(privateItem.id);
@@ -226,7 +237,7 @@ describe('Public Item', () => {
     const status = PublicationStatus.Unpublished;
 
     beforeEach(() => {
-      setUpAndVisitItemPage(publicItem);
+      setUpAndVisitItemPage(publicItem, { itemPublicationStatus: status });
       openPublishItemTab(publicItem.id);
     });
 
@@ -250,6 +261,7 @@ describe('Public Item', () => {
 
     beforeEach(() => {
       setUpAndVisitItemPage(PublishedItemFactory(publicItem), {
+        itemPublicationStatus: status,
         itemValidationGroups: [itemValidationGroup],
       });
       openPublishItemTab(publicItem.id);
@@ -274,6 +286,7 @@ describe('Public Item', () => {
 
     beforeEach(() => {
       setUpAndVisitItemPage(publicItem, {
+        itemPublicationStatus: status,
         itemValidationGroups: [itemValidationGroup],
       });
       openPublishItemTab(publicItem.id);
@@ -305,6 +318,7 @@ describe('Public Item', () => {
 
     beforeEach(() => {
       setUpAndVisitItemPage(publicItem, {
+        itemPublicationStatus: status,
         itemValidationGroups: [itemValidationGroup],
       });
       openPublishItemTab(publicItem.id);
@@ -328,6 +342,7 @@ describe('Public Item', () => {
 
     beforeEach(() => {
       setUpAndVisitItemPage(PublishedItemFactory(publicItem), {
+        itemPublicationStatus: status,
         itemValidationGroups: [itemValidationGroup],
       });
       openPublishItemTab(publicItem.id);
@@ -352,7 +367,7 @@ describe('Public Item', () => {
       statusExpected: PublicationStatus,
     ) => {
       it(testTitle, () => {
-        setUpAndVisitItemPage(item);
+        setUpAndVisitItemPage(item, { itemPublicationStatus: statusExpected });
         openPublishItemTab(item.id);
         getPublicationStatusComponent(statusExpected)
           .should('exist')

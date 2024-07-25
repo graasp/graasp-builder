@@ -1,4 +1,9 @@
-import { ItemType, getAppExtra, getDocumentExtra } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemType,
+  getAppExtra,
+  getDocumentExtra,
+} from '@graasp/sdk';
 
 import {
   CUSTOM_APP_CYPRESS_ID,
@@ -15,6 +20,7 @@ import {
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
   TREE_MODAL_CONFIRM_BUTTON_ID,
+  buildFolderItemCardThumbnail,
   buildItemFormAppOptionId,
   buildItemRowArrowId,
   buildNavigationModalItemId,
@@ -202,4 +208,8 @@ Cypress.Commands.add('dragAndDrop', (subject, x, y) => {
         })
         .trigger('mouseup');
     });
+});
+
+Cypress.Commands.add('selectItem', (id: DiscriminatedItem['id']) => {
+  cy.get(buildFolderItemCardThumbnail(id)).click();
 });

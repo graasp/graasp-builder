@@ -10,12 +10,14 @@ type Props = {
   itemIds: string[];
   color?: IconButtonProps['color'];
   id?: string;
+  onClick?: () => void;
 };
 
 const RestoreButton = ({
   itemIds,
   color = 'default',
   id,
+  onClick: onClickFn,
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: restoreItems } = mutations.useRestoreItems();
@@ -23,6 +25,7 @@ const RestoreButton = ({
   const onClick = () => {
     // restore items
     restoreItems(itemIds);
+    onClickFn?.();
   };
 
   const title = translateBuilder(BUILDER.RESTORE_ITEM_BUTTON);
