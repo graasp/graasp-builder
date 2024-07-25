@@ -6,8 +6,6 @@ import { hooks } from '@/config/queryClient';
 
 import InvalidButton from './InvalidButton';
 import NotAllowedItemTypeButton from './NotAllowedItemTypeButton';
-import NotPublicButton from './NotPublicButton';
-import OutdatedButton from './OutdatedButton';
 import PendingButton from './PendingButton';
 import PublishedButton from './PublishedButton';
 import PublishedChildrenButton from './PublishedChildrenButton';
@@ -41,16 +39,15 @@ export const PublicationButtonSelector = ({
           notifyCoEditors={notifyCoEditors}
         />
       );
-    case PublicationStatus.NotPublic:
-      return <NotPublicButton item={item} />;
+    // For now, outdated is not implemented correctly in backend or library,
+    // so we are just ignorign this state for the moment.
     case PublicationStatus.Published:
+    case PublicationStatus.Outdated:
       return <PublishedButton item={item} isLoading={isStatusFirstLoading} />;
     case PublicationStatus.PublishedChildren:
       return <PublishedChildrenButton />;
     case PublicationStatus.Invalid:
       return <InvalidButton item={item} isLoading={isStatusFirstLoading} />;
-    case PublicationStatus.Outdated:
-      return <OutdatedButton item={item} isLoading={isStatusFirstLoading} />;
     case PublicationStatus.ItemTypeNotAllowed:
       return <NotAllowedItemTypeButton />;
     default:
