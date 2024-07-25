@@ -115,9 +115,10 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
  */
 const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   const { t: translateEnums } = useEnumsTranslation();
-  const { shouldDisplayItem } = useFilterItemsContext();
+  const { itemTypes } = useFilterItemsContext();
   const { t: translateBuilder } = useBuilderTranslation();
   const { selectedIds } = useSelectionContext();
+  const itemSearch = useItemSearch();
 
   const {
     data: children,
@@ -125,24 +126,15 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
     isError,
   } = hooks.useChildren(item.id, {
     ordered: true,
+    keywords: itemSearch.text,
+    types: itemTypes,
   });
 
-  const itemSearch = useItemSearch();
-
-  const { ordering, setOrdering, setSortBy, sortBy, sortFn } =
+  const { ordering, setOrdering, setSortBy, sortBy } =
     useSorting<SortingOptionsForFolder>({
       sortBy: SortingOptionsForFolder.Order,
       ordering: Ordering.ASC,
     });
-
-  // TODO: use hook's filter when available
-  const folderChildren = children
-    ?.filter(
-      (f) =>
-        shouldDisplayItem(f.type) &&
-        f.name.toLowerCase().includes(itemSearch.text.toLowerCase()),
-    )
-    .sort(sortFn);
 
   const sortingOptions = Object.values(SortingOptionsForFolder).sort((t1, t2) =>
     translateEnums(t1).localeCompare(translateEnums(t2)),
@@ -183,8 +175,8 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
           gap={1}
           width="100%"
         >
-          {selectedIds.length && folderChildren?.length ? (
-            <FolderToolbar items={folderChildren} />
+          {selectedIds.length ? (
+            <FolderToolbar items={children} />
           ) : (
             <Stack
               spacing={1}
@@ -211,7 +203,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
         <Content
           sortBy={sortBy}
           item={item}
-          items={folderChildren}
+          items={children}
           searchText={itemSearch.text}
         />
       </>

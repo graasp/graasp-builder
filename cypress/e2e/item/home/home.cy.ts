@@ -7,7 +7,7 @@ import { SortingOptions } from '@/components/table/types';
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 
 import i18n from '../../../../src/config/i18n';
-import { HOME_PATH, ITEMS_PATH } from '../../../../src/config/paths';
+import { HOME_PATH } from '../../../../src/config/paths';
 import {
   ACCESSIBLE_ITEMS_ONLY_ME_ID,
   CREATE_ITEM_BUTTON_ID,
@@ -36,16 +36,6 @@ const IMAGE_ITEM_CHILD = PackedLocalFileItemFactory({
 const FOLDER2 = PackedFolderItemFactory();
 
 const ITEMS = [IMAGE_ITEM, FOLDER, FOLDER2, FOLDER_CHILD, IMAGE_ITEM_CHILD];
-
-// register a custom one time interceptor to listen specifically
-// to the request made with the search parameter we want
-const interceptAccessibleItemsSearch = (searchTerm: string) =>
-  cy
-    .intercept({
-      pathname: `/${ITEMS_PATH}/accessible`,
-      query: { name: searchTerm },
-    })
-    .as('getAccessibleSearch');
 
 describe('Home', () => {
   it('visit Home on map by default', () => {
@@ -127,7 +117,6 @@ describe('Home', () => {
 
       it('Search on second page should reset page number', () => {
         const searchText = 'mysearch';
-        interceptAccessibleItemsSearch(searchText);
 
         cy.wait('@getAccessibleItems');
         // navigate to second page
@@ -140,8 +129,8 @@ describe('Home', () => {
 
         // using our custom interceptor with the search parameter we can distinguish the complete
         // search request from possibly other incomplete search requests
-        cy.wait('@getAccessibleSearch').then(({ request: { query } }) => {
-          expect(query.name).to.eq(searchText);
+        cy.wait('@getAccessibleItems').then(({ request: { query } }) => {
+          expect(query.keywords).to.eq(searchText);
           expect(query.page).to.eq('1');
         });
         cy.get(`#${buildItemCard(ownItems[0].id)}`).should('be.visible');
