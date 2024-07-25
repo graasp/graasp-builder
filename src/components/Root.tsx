@@ -40,7 +40,7 @@ const ThemeWrapper = () => {
       langs={langs}
       languageSelectSx={{ mb: 2, mr: 2 }}
       i18n={i18n}
-      defaultDirection={currentMember?.extra?.lang === 'ar' ? 'rtl' : 'ltr'}
+      defaultDirection={i18n.dir(currentMember?.extra?.lang)}
     >
       <CssBaseline />
       <ToastContainer stacked position="bottom-left" theme="colored" />
