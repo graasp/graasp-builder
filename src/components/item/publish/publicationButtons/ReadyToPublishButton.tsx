@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Alert } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { PackedItem, PublicationStatus } from '@graasp/sdk';
 
@@ -48,9 +48,9 @@ export const ReadyToPublishButton = ({
   };
 
   const description = (
-    <Alert severity="success">
+    <Typography>
       {t(BUILDER.LIBRARY_SETTINGS_VALIDATION_STATUS_READY_TO_PUBLISH)}
-    </Alert>
+    </Typography>
   );
 
   return (

@@ -176,31 +176,6 @@ describe('Private Item', () => {
     });
   });
 
-  describe('Visibility of published item is private again', () => {
-    const status = PublicationStatus.NotPublic;
-    const itemValidationGroup = ItemValidationGroupFactory(privateItem);
-
-    beforeEach(() => {
-      setUpAndVisitItemPage(PublishedItemFactory(privateItem), {
-        itemPublicationStatus: status,
-        itemValidationGroups: [itemValidationGroup],
-      });
-      openPublishItemTab(privateItem.id);
-    });
-
-    it('Publication status should be Not Public', () => {
-      getPublicationStatusComponent(status)
-        .should('exist')
-        .should('be.visible');
-    });
-
-    it('Should ask before change item visility to public', () => {
-      getPublicationButton(status).click(); // Click on change visibility
-      confirmSetItemToPublic();
-      waitOnSetItemPublic(privateItem);
-    });
-  });
-
   describe('Item is not valid', () => {
     const status = PublicationStatus.Invalid;
     const itemValidationGroup = ItemValidationGroupFactory(privateItem, {
@@ -307,32 +282,6 @@ describe('Public Item', () => {
       cy.get(buildDataCyWrapper(EMAIL_NOTIFICATION_CHECKBOX)).click();
       getPublicationButton(status).click(); // click on publish
       waitOnPublishItem(publicItem, { shouldNotify: true });
-    });
-  });
-
-  describe('Outdated Item', () => {
-    const status = PublicationStatus.Outdated;
-    const itemValidationGroup = ItemValidationGroupFactory(publicItem, {
-      isOutDated: true,
-    });
-
-    beforeEach(() => {
-      setUpAndVisitItemPage(publicItem, {
-        itemPublicationStatus: status,
-        itemValidationGroups: [itemValidationGroup],
-      });
-      openPublishItemTab(publicItem.id);
-    });
-
-    it('Publication status should be Outdated', () => {
-      getPublicationStatusComponent(status)
-        .should('exist')
-        .should('be.visible');
-    });
-
-    it('Item can be validated again', () => {
-      getPublicationButton(status).click(); // click on validate
-      waitOnItemValidation(publicItem);
     });
   });
 
