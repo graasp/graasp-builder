@@ -11,16 +11,18 @@ import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 
-import { theme } from '@graasp/ui';
+import { langs } from '@graasp/translations';
+import { ThemeProvider } from '@graasp/ui';
 
 import * as Sentry from '@sentry/react';
 
-import i18nConfig from '../config/i18n';
+import i18nConfig, { useCommonTranslation } from '../config/i18n';
 import {
   QueryClientProvider,
   ReactQueryDevtools,
+  hooks,
   queryClient,
 } from '../config/queryClient';
 import App from './App';
@@ -29,25 +31,39 @@ import { CurrentUserContextProvider } from './context/CurrentUserContext';
 import { FilterItemsContextProvider } from './context/FilterItemsContext';
 import ModalProviders from './context/ModalProviders';
 
+const ThemeWrapper = () => {
+  const { i18n } = useCommonTranslation();
+  const { data: currentMember } = hooks.useCurrentMember();
+
+  return (
+    <ThemeProvider
+      langs={langs}
+      languageSelectSx={{ mb: 2, mr: 2 }}
+      i18n={i18n}
+      defaultDirection={i18n.dir(currentMember?.extra?.lang)}
+    >
+      <CssBaseline />
+      <ToastContainer stacked position="bottom-left" theme="colored" />
+      <Router>
+        <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
+          <ModalProviders>
+            <CurrentUserContextProvider>
+              <FilterItemsContextProvider>
+                <App />
+              </FilterItemsContextProvider>
+            </CurrentUserContextProvider>
+          </ModalProviders>
+        </Sentry.ErrorBoundary>
+      </Router>
+    </ThemeProvider>
+  );
+};
+
 const Root = (): JSX.Element => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <I18nextProvider i18n={i18nConfig}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ToastContainer stacked position="bottom-left" theme="colored" />
-          <Router>
-            <Sentry.ErrorBoundary fallback={<FallbackComponent />}>
-              <ModalProviders>
-                <CurrentUserContextProvider>
-                  <FilterItemsContextProvider>
-                    <App />
-                  </FilterItemsContextProvider>
-                </CurrentUserContextProvider>
-              </ModalProviders>
-            </Sentry.ErrorBoundary>
-          </Router>
-        </ThemeProvider>
+        <ThemeWrapper />
       </I18nextProvider>
       {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
         <ReactQueryDevtools position="bottom-left" />
