@@ -1873,9 +1873,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.19.0":
-  version: 3.19.0
-  resolution: "@graasp/query-client@npm:3.19.0"
+"@graasp/query-client@github:graasp/graasp-query-client#item-export":
+  version: 3.17.0
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=fd789994b996b63f09df2612ca095d5095fcd752"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1885,22 +1885,23 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/da50eed4589e9513f1e70812c589ec533ea6045f7f8df7da7c3262ed270f7edc0f5b027ecd1faa065e01981966e155754fd1ffb68c6cad2cc495da6b3dbdd6a0
+  checksum: 10/bfaa8b095776a63142de2c98ebdcda5b9666d895c7a044efc6fbdfa1179aa325ec865f4f4208883e47aa2cea4d5cb17e2c075d61c0c7aa0b0139bb5f616c29e3
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.21.0":
-  version: 4.21.0
-  resolution: "@graasp/sdk@npm:4.21.0"
+"@graasp/sdk@npm:4.22.0":
+  version: 4.22.0
+  resolution: "@graasp/sdk@npm:4.22.0"
   dependencies:
     "@faker-js/faker": "npm:8.4.1"
     filesize: "npm:10.1.4"
     js-cookie: "npm:3.0.5"
+    mime-types: "npm:2.1.35"
     validator: "npm:13.12.0"
   peerDependencies:
     date-fns: ^3
     uuid: ^9 || ^10.0.0
-  checksum: 10/b3d0b021fcb7343ab38f5d0d701a2169123240b6d0a2feab4172662c6af451e352444e97c5e816cf87fcf6ad59ad14338a36bc46e7f0fce220e1e05ea364c934
+  checksum: 10/c1e81d401f51a9c22eb4f5bc12057aa3ea249771701c390a11dc7c1609b814d9222926bbb7d9b19f70fda67bccb854f42045d890dd850f71bf4f9f8629fcb799
   languageName: node
   linkType: hard
 
@@ -8151,8 +8152,8 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.17.0"
-    "@graasp/query-client": "npm:3.19.0"
-    "@graasp/sdk": "npm:4.21.0"
+    "@graasp/query-client": "github:graasp/graasp-query-client#item-export"
+    "@graasp/sdk": "npm:4.22.0"
     "@graasp/translations": "npm:1.32.0"
     "@graasp/ui": "npm:4.23.0"
     "@mui/icons-material": "npm:5.16.4"
@@ -10641,7 +10642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
+"mime-types@npm:2.1.35, mime-types@npm:^2.1.12, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
