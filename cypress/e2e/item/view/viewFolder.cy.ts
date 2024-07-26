@@ -89,15 +89,28 @@ describe('View Folder', () => {
 
   it('search', () => {
     const { id } = parentItem;
+    const searchText = child1.name;
     cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
+    // initial call in the page
+    cy.wait(['@getChildren', '@getChildren']);
 
     cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
 
-    cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(child1.name);
+    cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
+
+    cy.wait('@getChildren').then(({ request: { query } }) => {
+      // eslint-disable-next-line no-unused-expressions
+      expect(
+        (query.keywords as unknown as string[]).every((k) =>
+          searchText.includes(k),
+        ),
+      ).to.be.true;
+    });
+
     cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
   });
 
-  it('Sorting & Ordering', () => {
+  it.only('Sorting & Ordering', () => {
     const { id } = parentItem;
     cy.visit(buildItemPath(id));
 

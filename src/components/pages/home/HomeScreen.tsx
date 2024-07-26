@@ -57,10 +57,10 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
       {
         // todo: in the future this can be any member from creators
         creatorId: showOnlyMe ? currentMember?.id : undefined,
-        name: searchText,
         sortBy,
         ordering,
         types: itemTypes,
+        keywords: searchText,
       },
       // todo: adapt page size given the user window height
       { pageSize: ITEM_PAGE_SIZE },
