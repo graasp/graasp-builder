@@ -91,11 +91,10 @@ describe('View Folder', () => {
     const { id } = parentItem;
     const searchText = child1.name;
     cy.visit(buildItemPath(id, { mode: ItemLayoutMode.Grid }));
+    // initial call in the page
+    cy.wait(['@getChildren', '@getChildren']);
 
     cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
-
-    cy.wait('@getChildren');
-    cy.wait('@getChildren');
 
     cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
