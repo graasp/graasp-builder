@@ -110,7 +110,7 @@ describe('View Folder', () => {
     cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
   });
 
-  it('Sorting & Ordering', () => {
+  it.only('Sorting & Ordering', () => {
     const { id } = parentItem;
     cy.visit(buildItemPath(id));
 

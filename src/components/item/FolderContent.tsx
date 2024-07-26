@@ -130,11 +130,13 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
     types: itemTypes,
   });
 
-  const { ordering, setOrdering, setSortBy, sortBy } =
+  const { ordering, setOrdering, setSortBy, sortBy, sortFn } =
     useSorting<SortingOptionsForFolder>({
       sortBy: SortingOptionsForFolder.Order,
       ordering: Ordering.ASC,
     });
+
+  const sortedChildren = children?.sort(sortFn);
 
   const sortingOptions = Object.values(SortingOptionsForFolder).sort((t1, t2) =>
     translateEnums(t1).localeCompare(translateEnums(t2)),
@@ -175,8 +177,8 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
           gap={1}
           width="100%"
         >
-          {selectedIds.length ? (
-            <FolderToolbar items={children} />
+          {selectedIds.length && sortedChildren?.length ? (
+            <FolderToolbar items={sortedChildren} />
           ) : (
             <Stack
               spacing={1}
@@ -203,7 +205,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
         <Content
           sortBy={sortBy}
           item={item}
-          items={children}
+          items={sortedChildren}
           searchText={itemSearch.text}
         />
       </>
