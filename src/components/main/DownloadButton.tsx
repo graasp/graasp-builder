@@ -21,7 +21,7 @@ export const DownloadButton = ({ item }: Props): JSX.Element => {
     data,
     isSuccess,
     isLoading: isDownloading,
-  } = mutations.useExportZip();
+  } = mutations.useExportItem();
 
   useEffect(() => {
     if (isSuccess) {
