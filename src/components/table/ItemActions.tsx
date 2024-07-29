@@ -13,7 +13,7 @@ type Props = {
 const ItemActions = ({ data: item }: Props): JSX.Element => (
   <Stack direction="row" justifyContent="center" alignItems="center">
     <BookmarkButton size="medium" key="bookmark" item={item} />
-    <DownloadButton id={item.id} name={item.name} />
+    <DownloadButton item={item} />
   </Stack>
 );
 

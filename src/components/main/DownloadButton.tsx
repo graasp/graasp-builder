@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { DiscriminatedItem } from '@graasp/sdk';
 import { DownloadButton as Button } from '@graasp/ui';
 
 import { buildDownloadButtonId } from '@/config/selectors';
@@ -9,11 +10,10 @@ import { mutations } from '../../config/queryClient';
 import { BUILDER } from '../../langs/constants';
 
 type Props = {
-  id: string;
-  name: string;
+  item: DiscriminatedItem;
 };
 
-export const DownloadButton = ({ id, name }: Props): JSX.Element => {
+export const DownloadButton = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const {
@@ -21,25 +21,26 @@ export const DownloadButton = ({ id, name }: Props): JSX.Element => {
     data,
     isSuccess,
     isLoading: isDownloading,
-  } = mutations.useExportZip();
+  } = mutations.useExportItem();
 
   useEffect(() => {
     if (isSuccess) {
-      const url = window.URL.createObjectURL(new Blob([data]));
+      const url = window.URL.createObjectURL(new Blob([data.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${name}.zip`);
+
+      link.setAttribute('download', data.name);
       document.body.appendChild(link);
       link.click();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isSuccess, id]);
+  }, [data, isSuccess, item]);
 
   const handleDownload = () => {
-    downloadItem({ id });
+    downloadItem({ id: item.id });
   };
   return (
-    <span id={buildDownloadButtonId(id)}>
+    <span id={buildDownloadButtonId(item.id)}>
       <Button
         handleDownload={handleDownload}
         isLoading={isDownloading}
