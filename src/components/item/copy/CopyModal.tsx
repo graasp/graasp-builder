@@ -17,7 +17,7 @@ export const CopyModal = ({
   open: boolean;
   onClose: () => void;
   itemIds: DiscriminatedItem['id'][];
-}): JSX.Element => {
+}): JSX.Element | null => {
   const { mutate: copyItems } = mutations.useCopyItems();
   const { t: translateBuilder } = useBuilderTranslation();
 
@@ -35,6 +35,11 @@ export const CopyModal = ({
       translateKey: BUILDER.COPY_BUTTON,
       name,
     });
+
+  // prevent loading if not opened
+  if (!open) {
+    return null;
+  }
 
   return (
     <ItemSelectionModal

@@ -65,6 +65,11 @@ export const MoveModal = ({
       name,
     });
 
+  // prevent loading if not opened
+  if (!open) {
+    return null;
+  }
+
   return items ? (
     <ItemSelectionModal
       titleKey={BUILDER.MOVE_ITEM_MODAL_TITLE}
