@@ -1,7 +1,7 @@
 import {
   ActionButton,
   ActionButtonVariant,
-  ColorVariants,
+  ColorVariantsType,
   MoveButton as GraaspMoveButton,
 } from '@graasp/ui';
 
@@ -13,7 +13,7 @@ import {
 import { BUILDER } from '../../../langs/constants';
 
 type MoveButtonProps = {
-  color?: ColorVariants;
+  color?: ColorVariantsType;
   id?: string;
   type?: ActionButtonVariant;
   onClick?: () => void;

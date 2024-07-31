@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PackedItem } from '@graasp/sdk';
 import {
   ActionButtonVariant,
-  ColorVariants,
+  ColorVariantsType,
   DeleteButton as GraaspDeleteButton,
 } from '@graasp/ui';
 
@@ -14,7 +14,7 @@ import DeleteItemDialog from '../main/DeleteItemDialog';
 
 type Props = {
   items: PackedItem[];
-  color?: ColorVariants;
+  color?: ColorVariantsType;
   id?: string;
   type?: ActionButtonVariant;
   onConfirm?: () => void;
