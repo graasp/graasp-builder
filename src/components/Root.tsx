@@ -18,7 +18,7 @@ import { ThemeProvider } from '@graasp/ui';
 
 import * as Sentry from '@sentry/react';
 
-import i18nConfig, { useCommonTranslation } from '../config/i18n';
+import i18nConfig from '../config/i18n';
 import {
   QueryClientProvider,
   ReactQueryDevtools,
@@ -32,15 +32,14 @@ import { FilterItemsContextProvider } from './context/FilterItemsContext';
 import ModalProviders from './context/ModalProviders';
 
 const ThemeWrapper = () => {
-  const { i18n } = useCommonTranslation();
   const { data: currentMember } = hooks.useCurrentMember();
 
   return (
     <ThemeProvider
       langs={langs}
       languageSelectSx={{ mb: 2, mr: 2 }}
-      i18n={i18n}
-      defaultDirection={i18n.dir(currentMember?.extra?.lang)}
+      i18n={i18nConfig}
+      defaultDirection={i18nConfig.dir(currentMember?.extra?.lang)}
     >
       <CssBaseline />
       <ToastContainer stacked position="bottom-left" theme="colored" />
