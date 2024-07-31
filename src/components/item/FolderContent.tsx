@@ -1,4 +1,4 @@
-import { Alert, Box, Stack, Typography, useTheme } from '@mui/material';
+import { Alert, Box, Stack, Typography } from '@mui/material';
 
 import {
   PackedItem,
@@ -50,10 +50,7 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
   const { itemTypes } = useFilterItemsContext();
   const { selectedIds, clearSelection, toggleSelection } =
     useSelectionContext();
-  const theme = useTheme();
-  const DragSelection = useDragSelection({
-    adjustments: { marginTop: 70, marginLeft: theme.spacing(3) },
-  });
+  const DragSelection = useDragSelection();
 
   const enableEditing = item.permission
     ? PermissionLevelCompare.lte(PermissionLevel.Write, item.permission)
@@ -91,7 +88,7 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
             />
           </Stack>
         )}
-        <DragSelection />
+        {DragSelection}
       </>
     );
   }

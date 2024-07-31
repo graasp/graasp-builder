@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Alert, Box, LinearProgress, Stack, useTheme } from '@mui/material';
+import { Alert, Box, LinearProgress, Stack } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
@@ -44,7 +44,6 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { data: currentMember } = hooks.useCurrentMember();
   const { itemTypes } = useFilterItemsContext();
   const [showOnlyMe, setShowOnlyMe] = useState(false);
-  const theme = useTheme();
 
   const { selectedIds, toggleSelection, clearSelection } =
     useSelectionContext();
@@ -68,9 +67,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
       { pageSize: ITEM_PAGE_SIZE },
     );
 
-  const DragSelection = useDragSelection({
-    adjustments: { marginTop: 100, marginLeft: theme.spacing(3) },
-  });
+  const DragSelection = useDragSelection();
 
   const onShowOnlyMeChange: ShowOnlyMeChangeType = (checked) => {
     setShowOnlyMe(checked);
@@ -135,7 +132,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
 
     return (
       <>
-        <DragSelection />
+        {DragSelection}
         <Stack
           alignItems="space-between"
           direction="column"

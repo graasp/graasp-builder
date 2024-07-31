@@ -1,4 +1,4 @@
-import { Alert, Stack, useTheme } from '@mui/material';
+import { Alert, Stack } from '@mui/material';
 
 import { Ordering } from '@/enums';
 
@@ -38,7 +38,6 @@ const RecycledItemsScreenContent = ({
   const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
   const options = useTranslatedSortingOptions();
   const { shouldDisplayItem } = useFilterItemsContext();
-  const theme = useTheme();
   const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
     useSorting<SortingOptions>({
       sortBy: SortingOptions.ItemUpdatedAt,
@@ -53,9 +52,7 @@ const RecycledItemsScreenContent = ({
     ?.sort(sortFn);
   const { selectedIds, toggleSelection } = useSelectionContext();
 
-  const DragSelection = useDragSelection({
-    adjustments: { marginTop: 70, marginLeft: theme.spacing(3) },
-  });
+  const DragSelection = useDragSelection();
 
   // render this when there is data from the query
   if (recycledItems?.length) {
@@ -121,7 +118,7 @@ const RecycledItemsScreenContent = ({
             )
           }
         </Stack>
-        <DragSelection />
+        {DragSelection}
       </>
     );
   }

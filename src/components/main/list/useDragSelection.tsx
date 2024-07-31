@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { useState } from 'react';
 
 import { PRIMARY_COLOR } from '@graasp/ui';
 
@@ -14,11 +14,14 @@ import { useSelectionContext } from './SelectionContext';
 
 export const useDragSelection = ({
   elementClass = ITEM_CARD_CLASS,
-  adjustments = {},
-} = {}): (() => ReactElement) => {
+} = {}): JSX.Element => {
   const { addToSelection, clearSelection } = useSelectionContext();
+  const [boundingBox, setBoundingBox] = useState<null | {
+    top: number;
+    left: number;
+  }>(null);
 
-  const { DragSelection } = useSelectionContainer({
+  const { DragSelection: HookComponent } = useSelectionContainer({
     eventsElement: document.getElementById('root'),
     onSelectionChange: (box) => {
       /**
@@ -30,6 +33,8 @@ export const useDragSelection = ({
         top: box.top + window.scrollY,
         left: box.left + window.scrollX,
       };
+
+      setBoundingBox(scrollAwareBox);
 
       Array.from(document.getElementsByClassName(elementClass)).forEach(
         (item) => {
@@ -56,22 +61,38 @@ export const useDragSelection = ({
     onSelectionStart: () => {
       // clear selection on new dragging action
       clearSelection();
+      setBoundingBox(null);
     },
-    onSelectionEnd: () => {},
+    onSelectionEnd: () => {
+      setBoundingBox(null);
+    },
     selectionProps: {
       style: {
-        // adjustement
-        // https://github.com/AirLabsTeam/react-drag-to-select/issues/30
-        ...adjustments,
-        border: `2px dashed ${PRIMARY_COLOR}`,
-        borderRadius: 4,
-        backgroundColor: 'lightblue',
-        opacity: 0.5,
-        zIndex: 999,
+        display: 'none',
       },
     },
     isEnabled: true,
   });
+
+  // we don't use native overlay because it's bound to the wrapper
+  // https://github.com/AirLabsTeam/react-drag-to-select/issues/30
+  const DragSelection = (
+    <>
+      <div
+        style={{
+          position: 'fixed',
+          border: `2px dashed ${PRIMARY_COLOR}`,
+          borderRadius: 4,
+          backgroundColor: 'lightblue',
+          opacity: 0.5,
+          zIndex: 999,
+          display: boundingBox?.top ? 'block' : 'none',
+          ...boundingBox,
+        }}
+      />
+      <HookComponent />
+    </>
+  );
 
   return DragSelection;
 };
