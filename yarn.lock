@@ -1432,7 +1432,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#use-ts-build":
   version: 4.23.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=3895b0a9d1af668b8a47aabb29a424fd50139957"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=0e3aca9b761d12ede2403ba9397362ff59de6f46"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.3.4"
     "@ag-grid-community/react": "npm:^31.3.4"
@@ -1466,7 +1466,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/acd02c30721d7ef4ec8ea41bc4439568fe0b42a055b6f9c92fbf5d21e63df3b430d7d24360f448bd3d8f370d424d24d4745f7dbbdf0116c5a9d16815c81b71b3
+  checksum: 10/57fced38ff12001b2b7b6226453d0f5571224fe55770fd7c4f5bedaece3db352b28eb38f9dbeea88850427ee57226a0e813b0a2448f6d8356bf4760be6fff440
   languageName: node
   linkType: hard
 
