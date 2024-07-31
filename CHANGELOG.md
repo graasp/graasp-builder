@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.34.0](https://github.com/graasp/graasp-builder/compare/v2.33.0...v2.34.0) (2024-07-31)
+
+
+### Features
+
+* allow export item as raw file ([#1385](https://github.com/graasp/graasp-builder/issues/1385)) ([1bc4145](https://github.com/graasp/graasp-builder/commit/1bc4145cb9f8be3d1c66db533d7671d185c53842))
+* pass direction to theme provider ([#1363](https://github.com/graasp/graasp-builder/issues/1363)) ([0843cbd](https://github.com/graasp/graasp-builder/commit/0843cbd8eda91119c88bfd69c1b1e669db74960d))
+* remove Outdate and NotPublic states ([#1367](https://github.com/graasp/graasp-builder/issues/1367)) ([184affd](https://github.com/graasp/graasp-builder/commit/184affd4a55a6cc5f9b26f02417c81bd1e3dbd13))
+* update map to show thumbnails ([#1377](https://github.com/graasp/graasp-builder/issues/1377)) ([8b757ec](https://github.com/graasp/graasp-builder/commit/8b757ec9cc6afb112bb30c283c660e579241633a))
+* use backend search for accessible and children ([#1383](https://github.com/graasp/graasp-builder/issues/1383)) ([fff5747](https://github.com/graasp/graasp-builder/commit/fff57472262d7b9064936dd9af795026c3bdeb02))
+
+
+### Bug Fixes
+
+* prevent map loop on i18n config ([#1388](https://github.com/graasp/graasp-builder/issues/1388)) ([4ac1f83](https://github.com/graasp/graasp-builder/commit/4ac1f83ae558fbc69c654e3bc8193d4f3eafcd6e))
+* prevent modal calls on selection ([#1387](https://github.com/graasp/graasp-builder/issues/1387)) ([f78bb18](https://github.com/graasp/graasp-builder/commit/f78bb1866990faf1e4c7ce4492d5fa58b55269cc))
+
 ## [2.33.0](https://github.com/graasp/graasp-builder/compare/v2.32.0...v2.33.0) (2024-07-24)
 
 
