@@ -27,6 +27,7 @@ import {
   SelectionContextProvider,
   useSelectionContext,
 } from '../main/list/SelectionContext';
+import { useDragSelection } from '../main/list/useDragSelection';
 import { DesktopMap } from '../map/DesktopMap';
 import NoItemFilters from '../pages/NoItemFilters';
 import SortingSelect from '../table/SortingSelect';
@@ -49,6 +50,7 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
   const { itemTypes } = useFilterItemsContext();
   const { selectedIds, clearSelection, toggleSelection } =
     useSelectionContext();
+  const DragSelection = useDragSelection();
 
   const enableEditing = item.permission
     ? PermissionLevelCompare.lte(PermissionLevel.Write, item.permission)
@@ -86,6 +88,7 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
             />
           </Stack>
         )}
+        {DragSelection}
       </>
     );
   }

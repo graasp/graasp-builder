@@ -11,7 +11,6 @@ export const TREE_VIEW_MAX_WIDTH = 400;
 export const ITEM_SELECT_MODAL_TITLE_MAX_NAME_LENGTH = 15;
 export const UUID_LENGTH = 36;
 
-export const DRAWER_WIDTH = 240;
 export const DEFAULT_LOCALE = 'en-US';
 export const DEFAULT_EMAIL_FREQUENCY = 'always';
 

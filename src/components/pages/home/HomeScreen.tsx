@@ -9,6 +9,7 @@ import {
   SelectionContextProvider,
   useSelectionContext,
 } from '@/components/main/list/SelectionContext';
+import { useDragSelection } from '@/components/main/list/useDragSelection';
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 import { ShowOnlyMeChangeType } from '@/config/types';
 import { ItemLayoutMode, Ordering } from '@/enums';
@@ -65,6 +66,8 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
       // todo: adapt page size given the user window height
       { pageSize: ITEM_PAGE_SIZE },
     );
+
+  const DragSelection = useDragSelection();
 
   const onShowOnlyMeChange: ShowOnlyMeChangeType = (checked) => {
     setShowOnlyMe(checked);
@@ -129,6 +132,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
 
     return (
       <>
+        {DragSelection}
         <Stack
           alignItems="space-between"
           direction="column"

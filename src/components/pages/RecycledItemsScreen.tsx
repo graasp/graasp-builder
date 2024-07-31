@@ -21,6 +21,7 @@ import {
   SelectionContextProvider,
   useSelectionContext,
 } from '../main/list/SelectionContext';
+import { useDragSelection } from '../main/list/useDragSelection';
 import ItemCard from '../table/ItemCard';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
@@ -51,70 +52,74 @@ const RecycledItemsScreenContent = ({
     ?.sort(sortFn);
   const { selectedIds, toggleSelection } = useSelectionContext();
 
+  const DragSelection = useDragSelection();
+
   // render this when there is data from the query
   if (recycledItems?.length) {
     const hasSelection = selectedIds.length && filteredData?.length;
     return (
-      <Stack gap={1}>
-        <Stack
-          alignItems="space-between"
-          direction="column"
-          gap={1}
-          width="100%"
-        >
-          {hasSelection ? (
-            <RecycleBinToolbar items={filteredData} />
-          ) : (
-            <Stack
-              spacing={1}
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <SelectTypes />
-              <Stack direction="row" gap={1}>
-                {sortBy && setSortBy && (
-                  <SortingSelect
-                    sortBy={sortBy}
-                    options={options}
-                    setSortBy={setSortBy}
-                    ordering={ordering}
-                    setOrdering={setOrdering}
-                  />
-                )}
-                <ModeButton />
+      <>
+        <Stack gap={1}>
+          <Stack
+            alignItems="space-between"
+            direction="column"
+            gap={1}
+            width="100%"
+          >
+            {hasSelection ? (
+              <RecycleBinToolbar items={filteredData} />
+            ) : (
+              <Stack
+                spacing={1}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <SelectTypes />
+                <Stack direction="row" gap={1}>
+                  {sortBy && setSortBy && (
+                    <SortingSelect
+                      sortBy={sortBy}
+                      options={options}
+                      setSortBy={setSortBy}
+                      ordering={ordering}
+                      setOrdering={setOrdering}
+                    />
+                  )}
+                  <ModeButton />
+                </Stack>
               </Stack>
-            </Stack>
-          )}
+            )}
+          </Stack>
+          {
+            // render the filtered data and when it is empty display that nothing matches the search
+            filteredData?.length ? (
+              filteredData.map((item) => (
+                <ItemCard
+                  item={item}
+                  onThumbnailClick={() => toggleSelection(item.id)}
+                  isSelected={selectedIds.includes(item.id)}
+                  showThumbnail={false}
+                  allowNavigation={false}
+                  footer={
+                    <Stack justifyContent="right" direction="row">
+                      <RestoreButton itemIds={[item.id]} />
+                      <DeleteButton items={[item]} />
+                    </Stack>
+                  }
+                />
+              ))
+            ) : (
+              <Alert severity="info">
+                {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
+                  search: searchText,
+                })}
+              </Alert>
+            )
+          }
         </Stack>
-        {
-          // render the filtered data and when it is empty display that nothing matches the search
-          filteredData?.length ? (
-            filteredData.map((item) => (
-              <ItemCard
-                // todo: should not be able to click on the card
-                item={item}
-                onThumbnailClick={() => toggleSelection(item.id)}
-                isSelected={selectedIds.includes(item.id)}
-                showThumbnail={false}
-                allowNavigation={false}
-                footer={
-                  <Stack justifyContent="right" direction="row">
-                    <RestoreButton itemIds={[item.id]} />
-                    <DeleteButton items={[item]} />
-                  </Stack>
-                }
-              />
-            ))
-          ) : (
-            <Alert severity="info">
-              {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
-                search: searchText,
-              })}
-            </Alert>
-          )
-        }
-      </Stack>
+        {DragSelection}
+      </>
     );
   }
 
