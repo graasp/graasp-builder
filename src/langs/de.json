@@ -347,7 +347,6 @@
   "DELETE_MEMBERSHIP": "Mitgliedschaft löschen",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Bestätigen",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Sind Sie sicher, dass Sie Ihre eigene Berechtigung für dieses Element entfernen möchten? Sie verlieren den Zugriff auf dieses Element, diese Aktion ist irreversibel.",
-  "DELETE_MEMBERSHIP_MESSAGE": "Sind Sie sicher, dass Sie {{permissionLevel}} Zugang für diesen Artikel für {{name}} entfernen möchten?",
   "DELETE_LAST_ADMIN_ALERT_MESSAGE": "Sie dürfen diesen Administrator nicht löschen, da dies der einzige Administrator ist",
   "APPROVE_BUTTON_TEXT": "OK",
   "APP_URL": "App-URL",

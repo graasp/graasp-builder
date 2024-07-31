@@ -344,7 +344,6 @@
   "DELETE_MEMBERSHIP": "Elimina iscrizione",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Conferma",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Sei sicuro di voler eliminare la tua autorizzazione su questo elemento? Perderai l'accesso a questo elemento, questa azione non può essere annullata.",
-  "DELETE_MEMBERSHIP_MESSAGE": "Sei sicuro di voler rimuovere l'accesso {{permissionLevel}} a questo elemento per {{name}}? Perderanno l'accesso a questo elemento.",
   "DELETE_LAST_ADMIN_ALERT_MESSAGE": "Non ti è consentito eliminare questo amministratore perché è l'unico amministratore",
   "APPROVE_BUTTON_TEXT": "Ok",
   "APP_URL": "URL dell'app",

@@ -1,0 +1,38 @@
+import { Typography } from '@mui/material';
+
+import { PermissionLevel } from '@graasp/sdk';
+
+import ItemMembershipSelect from './ItemMembershipSelect';
+import type { ItemMembershipSelectProps } from './ItemMembershipSelect';
+
+type TableRowPermissionProps = {
+  readOnly?: boolean;
+  changePermission: (permission: PermissionLevel) => void;
+  permission: PermissionLevel;
+  allowDowngrade?: boolean;
+};
+
+const TableRowPermission = ({
+  readOnly = false,
+  changePermission,
+  permission,
+  allowDowngrade = true,
+}: TableRowPermissionProps): JSX.Element => {
+  const onChangePermission: ItemMembershipSelectProps['onChange'] = (e) => {
+    const value = e.target.value as PermissionLevel;
+    changePermission(value);
+  };
+
+  return readOnly ||
+    (!allowDowngrade && permission === PermissionLevel.Admin) ? (
+    <Typography noWrap>{permission}</Typography>
+  ) : (
+    <ItemMembershipSelect
+      value={permission}
+      showLabel={false}
+      allowDowngrade={allowDowngrade}
+      onChange={onChangePermission}
+    />
+  );
+};
+export default TableRowPermission;

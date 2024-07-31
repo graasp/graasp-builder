@@ -1,31 +1,26 @@
-import { useMemo } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 
 import { DiscriminatedItem, Invitation, PermissionLevel } from '@graasp/sdk';
-import { Table as GraaspTable } from '@graasp/ui/table';
 
-import { ColDef } from '@ag-grid-community/core';
-
-import {
-  MEMBERSHIP_TABLE_HEIGHT,
-  MEMBERSHIP_TABLE_ROW_HEIGHT,
-} from '../../../config/constants';
-import { useBuilderTranslation } from '../../../config/i18n';
-import { mutations } from '../../../config/queryClient';
+import { useBuilderTranslation } from '@/config/i18n';
+import { mutations } from '@/config/queryClient';
 import {
   buildInvitationTableRowId,
   buildItemInvitationRowDeleteButtonId,
-} from '../../../config/selectors';
-import { BUILDER } from '../../../langs/constants';
-import ResendInvitationRenderer from './ResendInvitationRenderer';
-import TableRowDeleteButtonRenderer, {
-  TableRowDeleteButtonRendererProps,
-} from './TableRowDeleteButtonRenderer';
-import TableRowPermissionRenderer from './TableRowPermissionRenderer';
+} from '@/config/selectors';
+import { BUILDER } from '@/langs/constants';
 
-const rowStyle = {
-  display: 'flex',
-  alignItems: 'center',
-};
+import ResendInvitation from './ResendInvitation';
+import TableRowDeleteButton from './TableRowDeleteButton';
+import TableRowPermission from './TableRowPermission';
 
 type Props = {
   item: DiscriminatedItem;
@@ -45,142 +40,91 @@ const InvitationsTable = ({
   const { mutate: postInvitations } = mutations.usePostInvitations();
   const { mutate: deleteInvitation } = mutations.useDeleteInvitation();
 
-  const getRowId = ({ data }: { data: Invitation }) =>
-    buildInvitationTableRowId(data.id);
-
-  const onDelete: TableRowDeleteButtonRendererProps<Invitation>['onDelete'] = ({
-    instance,
-  }) => {
-    deleteInvitation({ itemId: item.id, id: instance.id });
+  const onDelete = (invitation: Invitation) => {
+    deleteInvitation({ itemId: item.id, id: invitation.id });
   };
 
-  const ActionRenderer = TableRowDeleteButtonRenderer({
-    item,
-    onDelete,
-    buildIdFunction: buildItemInvitationRowDeleteButtonId,
-    tooltip: translateBuilder(
-      BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
-    ),
-  });
+  if (!invitations.length) {
+    return <Typography>{emptyMessage ?? 'empty'}</Typography>;
+  }
 
-  const PermissionRenderer = TableRowPermissionRenderer({
-    item,
-    editFunction: ({
-      instance,
-      value,
-    }: {
-      instance: Invitation;
-      value: PermissionLevel;
-    }) => {
-      editInvitation({
-        id: instance.id,
-        permission: value,
-        itemId: item.id,
-      });
-    },
-    createFunction: ({
-      instance,
-      value,
-    }: {
-      instance: Invitation;
-      value: PermissionLevel;
-    }) => {
-      postInvitations({
-        itemId: item.id,
-        invitations: [
-          {
-            email: instance.email,
-            permission: value,
-          },
-        ],
-      });
-    },
-    readOnly,
-  });
-
-  const InvitationRenderer = ResendInvitationRenderer(item.id);
-
-  // never changes, so we can use useMemo
-  const columnDefs = useMemo<ColDef[]>(
-    () => [
-      {
-        headerCheckboxSelection: !readOnly,
-        checkboxSelection: !readOnly,
-        comparator: GraaspTable.textComparator,
-        headerName: translateBuilder(BUILDER.INVITATIONS_TABLE_EMAIL_HEADER),
-        field: 'email',
-        cellStyle: rowStyle,
-        flex: 1,
-        tooltipField: 'email',
-      },
-      {
-        headerName: translateBuilder(
-          BUILDER.INVITATIONS_TABLE_INVITATION_HEADER,
-        ),
-        sortable: false,
-        cellRenderer: readOnly ? null : InvitationRenderer,
-        cellStyle: rowStyle,
-        flex: 1,
-        field: readOnly ? undefined : 'email',
-      },
-      {
-        headerName: translateBuilder(
-          BUILDER.INVITATIONS_TABLE_PERMISSION_HEADER,
-        ),
-        cellRenderer: PermissionRenderer,
-        comparator: GraaspTable.textComparator,
-        type: 'rightAligned',
-        field: 'permission',
-        cellStyle: readOnly
-          ? {
-              display: 'flex',
-              justifyContent: 'right',
-            }
-          : undefined,
-      },
-      {
-        field: readOnly ? undefined : 'actions',
-        cellRenderer: readOnly ? null : ActionRenderer,
-        headerName: readOnly
-          ? undefined
-          : translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER),
-        colId: 'actions',
-        type: 'rightAligned',
-        sortable: false,
-        // bug: force css
-        cellStyle: {
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-        } as any,
-      },
-    ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      translateBuilder,
-      InvitationRenderer,
-      PermissionRenderer,
-      ActionRenderer,
-      readOnly,
-    ],
-  );
-
-  const countTextFunction = (selected: string[]) =>
-    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
-      count: selected.length,
-    });
+  const changePermission =
+    (invitation: Invitation) => (permission: PermissionLevel) => {
+      if (invitation.item.path === item.path) {
+        editInvitation({
+          id: invitation.id,
+          permission,
+          itemId: item.id,
+        });
+      } else {
+        postInvitations({
+          itemId: item.id,
+          invitations: [
+            {
+              email: invitation.email,
+              permission,
+            },
+          ],
+        });
+      }
+    };
 
   return (
-    <GraaspTable
-      columnDefs={columnDefs}
-      tableHeight={MEMBERSHIP_TABLE_HEIGHT}
-      rowData={invitations}
-      emptyMessage={emptyMessage}
-      getRowId={getRowId}
-      rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
-      isClickable={false}
-      countTextFunction={countTextFunction}
-    />
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              {translateBuilder(BUILDER.INVITATIONS_TABLE_EMAIL_HEADER)}
+            </TableCell>
+            <TableCell align="right">
+              {translateBuilder(BUILDER.INVITATIONS_TABLE_PERMISSION_HEADER)}
+            </TableCell>
+            {!readOnly && (
+              <TableCell align="right">
+                {translateBuilder(BUILDER.INVITATIONS_TABLE_ACTIONS_HEADER)}
+              </TableCell>
+            )}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {invitations.map((row) => (
+            <TableRow
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              data-cy={buildInvitationTableRowId(row.id)}
+            >
+              <TableCell component="th" scope="row">
+                <Typography noWrap>{row.email}</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <TableRowPermission
+                  permission={row.permission}
+                  changePermission={changePermission(row)}
+                  readOnly={readOnly}
+                />
+              </TableCell>
+              {!readOnly && (
+                <TableCell
+                  align="right"
+                  sx={{ display: 'flex', direction: 'row' }}
+                >
+                  <TableRowDeleteButton
+                    onClick={() => onDelete(row)}
+                    id={buildItemInvitationRowDeleteButtonId(row.id)}
+                    tooltip={translateBuilder(
+                      BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+                    )}
+                    disabled={item.path !== row.item.path}
+                  />
+                  <ResendInvitation invitationId={row.id} itemId={item.id} />
+                </TableCell>
+              )}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
