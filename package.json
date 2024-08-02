@@ -22,7 +22,7 @@
     "@emotion/styled": "11.13.0",
     "@graasp/chatbox": "3.1.0",
     "@graasp/map": "1.17.0",
-    "@graasp/query-client": "3.20.0",
+    "@graasp/query-client": "github:graasp/graasp-query-client#1394-fix-import-in-root-instead-of-item",
     "@graasp/sdk": "4.22.0",
     "@graasp/translations": "1.33.0",
     "@graasp/ui": "4.23.0",

@@ -97,7 +97,7 @@ const {
   buildGetPublishedItemsForMemberRoute,
   buildItemPublishRoute,
   buildGetPublicationStatusRoute,
-  buildUpdateMemberPasswordRoute,
+  buildPatchMemberPasswordRoute,
   buildPostItemValidationRoute,
   buildGetShortLinkAvailableRoute,
   buildGetShortLinksItemRoute,
@@ -2065,7 +2065,7 @@ export const mockUpdatePassword = (
   cy.intercept(
     {
       method: HttpMethod.Patch,
-      url: new RegExp(`${API_HOST}/${buildUpdateMemberPasswordRoute()}`),
+      url: new RegExp(`${API_HOST}/${buildPatchMemberPasswordRoute()}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {

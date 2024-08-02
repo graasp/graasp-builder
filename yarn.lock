@@ -1873,9 +1873,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.20.0":
-  version: 3.20.0
-  resolution: "@graasp/query-client@npm:3.20.0"
+"@graasp/query-client@github:graasp/graasp-query-client#1394-fix-import-in-root-instead-of-item":
+  version: 3.20.1
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=815a7b5bfcad3de3c46b6fc9463b39ddaee1a683"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1885,7 +1885,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/adaf2664a47438450eafd27765b9ac66d0fc4670c28f21d1668d247ec247bc2793faddffdbd204316bbff600526253da9c1f14bda0e4f4b5c2fe221299d75906
+  checksum: 10/fd980937d276f89ead0533e59fcb1b5c078918a06f624af79d5cb4aba59eb3a739f9c8134e259ec6f5aba007de71ef7be66fc3735de70c81059b4b4eda7748be
   languageName: node
   linkType: hard
 
@@ -8152,7 +8152,7 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.17.0"
-    "@graasp/query-client": "npm:3.20.0"
+    "@graasp/query-client": "github:graasp/graasp-query-client#1394-fix-import-in-root-instead-of-item"
     "@graasp/sdk": "npm:4.22.0"
     "@graasp/translations": "npm:1.33.0"
     "@graasp/ui": "npm:4.23.0"
