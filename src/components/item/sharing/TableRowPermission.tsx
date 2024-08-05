@@ -23,10 +23,10 @@ const TableRowPermission = ({
     changePermission(value);
   };
 
-  return readOnly ||
-    (!allowDowngrade && permission === PermissionLevel.Admin) ? (
-    <Typography noWrap>{permission}</Typography>
-  ) : (
+  if (readOnly || (!allowDowngrade && permission === PermissionLevel.Admin)) {
+    return <Typography noWrap>{permission}</Typography>;
+  }
+  return (
     <ItemMembershipSelect
       value={permission}
       showLabel={false}

@@ -94,7 +94,7 @@ const InvitationsTable = ({
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               data-cy={buildInvitationTableRowId(row.id)}
             >
-              <TableCell component="th" scope="row">
+              <TableCell scope="row">
                 <Typography noWrap>{row.email}</Typography>
               </TableCell>
               <TableCell align="right">
