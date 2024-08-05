@@ -344,7 +344,6 @@
   "DELETE_MEMBERSHIP": "Eliminar membresía",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirmar",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "¿Está seguro de que desea eliminar su propio permiso sobre este elemento? Perderás el acceso a este elemento, esta acción no se puede deshacer.",
-  "DELETE_MEMBERSHIP_MESSAGE": "¿Está seguro de que desea eliminar el acceso de {{permissionLevel}} a este elemento para {{name}}? Perderán el acceso a este elemento.",
   "DELETE_LAST_ADMIN_ALERT_MESSAGE": "No tiene permiso para eliminar este administrador ya que es el único administrador.",
   "APPROVE_BUTTON_TEXT": "DE ACUERDO",
   "APP_URL": "URL de la aplicación",
