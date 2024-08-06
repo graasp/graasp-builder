@@ -101,27 +101,21 @@ const CreateItemMembershipForm = ({
 
     let returnedValue;
     try {
-      const result = await shareItem({
+      await shareItem({
         itemId,
-        data: [
+        invitations: [
           {
-            id: itemId,
             email: invitation.email,
             permission: invitation.permission,
           },
         ],
       });
 
-      // manually notify error
-      if (result?.errors?.length) {
-        console.error(result?.errors);
-      } else {
-        // reset email input
-        setInvitation({
-          ...invitation,
-          email: '',
-        });
-      }
+      // reset email input
+      setInvitation({
+        ...invitation,
+        email: '',
+      });
     } catch (e) {
       console.error(e);
     }
