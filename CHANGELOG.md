@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.35.0](https://github.com/graasp/graasp-builder/compare/v2.34.0...v2.35.0) (2024-08-06)
+
+
+### Features
+
+* remove aggrid and update memberships tables ([#1391](https://github.com/graasp/graasp-builder/issues/1391)) ([ea30405](https://github.com/graasp/graasp-builder/commit/ea30405e2a30f975216b75fffc4653224b6045d6))
+
+
+### Bug Fixes
+
+* **deps:** update react-router monorepo to v6.26.0 ([#1393](https://github.com/graasp/graasp-builder/issues/1393)) ([c0ea556](https://github.com/graasp/graasp-builder/commit/c0ea556a84892d55f8ccb4a04b1f2069c63651aa))
+* does not trigger drag on mousedown svg ([#1396](https://github.com/graasp/graasp-builder/issues/1396)) ([8595ccf](https://github.com/graasp/graasp-builder/commit/8595ccfd20c43afab1b8b3a2ad9be3ed859a0f54))
+
 ## [2.34.0](https://github.com/graasp/graasp-builder/compare/v2.33.0...v2.34.0) (2024-07-31)
 
 
