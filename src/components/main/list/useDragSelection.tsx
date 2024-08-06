@@ -53,7 +53,7 @@ export const useDragSelection = ({
     },
     shouldStartSelecting: (e) => {
       // does not trigger drag selection if mousedown on card
-      if (e instanceof HTMLElement) {
+      if (e instanceof HTMLElement || e instanceof SVGElement) {
         return !e?.closest(`.${elementClass}`);
       }
       return true;
