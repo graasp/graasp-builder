@@ -348,7 +348,7 @@
   "DELETE_MEMBERSHIP": "Supprimer l'autorisation",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirmer",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer votre propre autorisation sur cet élément ? Vous perdrez l'accès à cet élément, cette action est irréversible.",
-  "DELETE_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'accès en {{permissionLevel}} sur cet élément à {{name}} ? Il leur sera impossible d'accéder à cet élément.",
+  "DELETE_MEMBERSHIP_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'accès en {{permissionLevel}} sur cet élément à {{name}} ? Il leur sera peut-être impossible d'accéder à cet élément.",
   "DELETE_LAST_ADMIN_ALERT_MESSAGE": "Vous n'êtes pas autorisé à supprimer le dernier administrateur de cet élément.",
   "APPROVE_BUTTON_TEXT": "OK",
   "APP_URL": "URL de l'application",

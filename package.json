@@ -14,8 +14,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@ag-grid-community/core": "31.3.4",
-    "@ag-grid-community/styles": "31.3.4",
     "@air/react-drag-to-select": "5.0.8",
     "@emotion/cache": "11.13.0",
     "@emotion/react": "11.13.0",

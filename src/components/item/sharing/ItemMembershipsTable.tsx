@@ -1,60 +1,31 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
-import { Typography } from '@mui/material';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 
 import {
   DiscriminatedItem,
   ItemMembership,
   PermissionLevel,
 } from '@graasp/sdk';
-import { Table as GraaspTable } from '@graasp/ui/table';
 
-import { ColDef } from '@ag-grid-community/core';
-
-import {
-  MEMBERSHIP_TABLE_HEIGHT,
-  MEMBERSHIP_TABLE_ROW_HEIGHT,
-} from '../../../config/constants';
 import { useBuilderTranslation } from '../../../config/i18n';
-import { mutations } from '../../../config/queryClient';
+import { hooks, mutations } from '../../../config/queryClient';
 import {
   buildItemMembershipRowDeleteButtonId,
   buildItemMembershipRowId,
 } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 import DeleteItemDialog from './ConfirmMembership';
-import TableRowDeleteButtonRenderer from './TableRowDeleteButtonRenderer';
-import TableRowPermissionRenderer from './TableRowPermissionRenderer';
-
-const rowStyle = {
-  display: 'flex',
-  alignItems: 'center',
-
-  '& > div': {
-    width: '100%',
-  },
-};
-
-const NameRenderer = () => {
-  const ChildComponent = ({
-    data: membership,
-  }: {
-    data: Pick<ItemMembership, 'member'>;
-  }) => <Typography noWrap>{membership?.member?.name ?? ''}</Typography>;
-  return ChildComponent;
-};
-
-const EmailRenderer = () => {
-  const ChildComponent = ({
-    data: membership,
-  }: {
-    data: Pick<ItemMembership, 'member'>;
-  }) => <Typography noWrap>{membership?.member?.email ?? ''}</Typography>;
-  return ChildComponent;
-};
-
-const getRowId = ({ data }: { data: ItemMembership }) =>
-  buildItemMembershipRowId(data.id);
+import TableRowDeleteButton from './TableRowDeleteButton';
+import TableRowPermission from './TableRowPermission';
 
 type Props = {
   item: DiscriminatedItem;
@@ -73,6 +44,7 @@ const ItemMembershipsTable = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
+  const { data: currentMember } = hooks.useCurrentMember();
   const { mutate: editItemMembership } = mutations.useEditItemMembership();
   const { mutate: shareItem } = mutations.usePostItemMembership();
 
@@ -80,155 +52,123 @@ const ItemMembershipsTable = ({
   const [membershipToDelete, setMembershipToDelete] =
     useState<ItemMembership | null>(null);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
-  const onDelete = ({ instance }: { instance: ItemMembership }) => {
-    setMembershipToDelete(instance);
-    handleClickOpen();
+  const onDelete = (im: ItemMembership) => {
+    setMembershipToDelete(im);
+    setOpen(true);
   };
 
-  // never changes, so we can use useMemo
-  const columnDefs = useMemo(() => {
-    const ActionRenderer = TableRowDeleteButtonRenderer({
-      item,
-      onDelete,
-      buildIdFunction: buildItemMembershipRowDeleteButtonId,
-      tooltip: translateBuilder(
-        BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
-      ),
-    });
-    const PermissionRenderer = TableRowPermissionRenderer({
-      item,
-      hasOnlyOneAdmin:
-        memberships.filter((per) => per.permission === PermissionLevel.Admin)
-          .length === 1,
+  const hasOnlyOneAdmin =
+    memberships.filter((per) => per.permission === PermissionLevel.Admin)
+      .length === 1;
 
-      editFunction: ({
-        value,
-        instance,
-      }: {
-        value: PermissionLevel;
-        instance: ItemMembership;
-      }) => {
+  const changePermission =
+    (im: ItemMembership) => (permission: PermissionLevel) => {
+      if (im.item.path === item.path) {
         editItemMembership({
-          id: instance.id,
-          permission: value,
+          id: im.id,
+          permission,
           itemId: item.id,
         });
-      },
-      createFunction: ({
-        value,
-        instance,
-      }: {
-        value: PermissionLevel;
-        instance: ItemMembership;
-      }) => {
-        const { email } = instance.member;
+      } else {
         shareItem({
           id: item.id,
-          email,
-          permission: value,
+          email: im.member.email,
+          permission,
         });
-      },
-      readOnly,
-    });
-    const NameCellRenderer = NameRenderer();
+      }
+    };
 
-    const columns: ColDef[] = [];
-    if (showEmail) {
-      const EmailCellRenderer = EmailRenderer();
-      columns.push({
-        headerCheckboxSelection: !readOnly,
-        checkboxSelection: !readOnly,
-        headerName: translateBuilder(
-          BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER,
-        ),
-        cellRenderer: EmailCellRenderer,
-        field: 'email',
-        // bug: force width 100% of child div
-        cellStyle: rowStyle as any,
-        flex: 2,
-        tooltipField: 'email',
-        resizable: true,
-      });
-    }
-
-    return columns.concat([
-      {
-        headerName: translateBuilder(
-          BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER,
-        ),
-        cellRenderer: NameCellRenderer,
-        field: 'memberId', // TODO: CHANGE?
-        // bug: force width 100% of child div
-        cellStyle: rowStyle as any,
-        flex: 2,
-        tooltipField: 'name',
-      },
-      {
-        headerName: translateBuilder(
-          BUILDER.ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER,
-        ),
-        cellRenderer: PermissionRenderer,
-        comparator: GraaspTable.textComparator,
-        type: 'rightAligned',
-        field: 'permission',
-        flex: 1,
-        cellStyle: readOnly
-          ? {
-              display: 'flex',
-              justifyContent: 'right',
-            }
-          : {
-              overflow: 'visible',
-              textAlign: 'right',
-            },
-      },
-      {
-        field: readOnly ? undefined : 'actions',
-        cellRenderer: readOnly ? null : ActionRenderer,
-        headerName: readOnly
-          ? undefined
-          : translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER),
-        colId: 'actions',
-        type: 'rightAligned',
-        sortable: false,
-        cellStyle: {
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-        },
-        flex: 1,
-      },
-    ]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, showEmail, readOnly, memberships]);
-
-  const countTextFunction = (selected: string[]) =>
-    translateBuilder(BUILDER.ITEMS_TABLE_SELECTION_TEXT, {
-      count: selected.length,
-    });
+  if (!memberships.length) {
+    return <Typography>{emptyMessage ?? 'empty'}</Typography>;
+  }
 
   return (
-    <>
-      <GraaspTable
-        columnDefs={columnDefs}
-        tableHeight={MEMBERSHIP_TABLE_HEIGHT}
-        rowData={memberships}
-        getRowId={getRowId}
-        rowHeight={MEMBERSHIP_TABLE_ROW_HEIGHT}
-        isClickable={false}
-        emptyMessage={emptyMessage}
-        countTextFunction={countTextFunction}
-        totalCount={memberships.length}
-        pageSize={memberships.length}
-        page={0}
-      />
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {showEmail && (
+              <TableCell>
+                {translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER)}
+              </TableCell>
+            )}
+            <TableCell align="right">
+              {translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER)}
+            </TableCell>
+            <TableCell align="right">
+              {translateBuilder(
+                BUILDER.ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER,
+              )}
+            </TableCell>
+            {!readOnly && (
+              <TableCell align="right">
+                {translateBuilder(
+                  BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER,
+                )}
+              </TableCell>
+            )}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {memberships
+            .sort((im1, im2) => (im1.member.email > im2.member.email ? 1 : -1))
+            .map((row) => (
+              <TableRow
+                data-cy={buildItemMembershipRowId(row.id)}
+                key={row.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                {showEmail && (
+                  <TableCell component="th" scope="row">
+                    <Typography noWrap>{row.member.email}</Typography>
+                  </TableCell>
+                )}
+                <TableCell component="th" align="right" scope="row">
+                  <Typography noWrap>{row.member.name}</Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <TableRowPermission
+                    permission={row.permission}
+                    changePermission={changePermission(row)}
+                    readOnly={
+                      readOnly ||
+                      // cannot edit if is the only admin
+                      (hasOnlyOneAdmin &&
+                        row.permission === PermissionLevel.Admin)
+                    }
+                    allowDowngrade={
+                      // can downgrade for same item
+                      row.item.path === item.path &&
+                      // cannot downgrade your own membership
+                      row.member.id !== currentMember?.id
+                    }
+                  />
+                </TableCell>
+                {!readOnly && (
+                  <TableCell align="right">
+                    <TableRowDeleteButton
+                      onClick={() => onDelete(row)}
+                      id={buildItemMembershipRowDeleteButtonId(row.id)}
+                      tooltip={translateBuilder(
+                        BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+                      )}
+                      disabled={
+                        // cannot delete if not for current item
+                        row.item.path !== item.path ||
+                        // cannot delete if is the only admin
+                        (hasOnlyOneAdmin &&
+                          row.permission === PermissionLevel.Admin)
+                      }
+                    />
+                  </TableCell>
+                )}
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
       {open && (
         <DeleteItemDialog
           open={open}
@@ -242,7 +182,7 @@ const ItemMembershipsTable = ({
           }
         />
       )}
-    </>
+    </TableContainer>
   );
 };
 

@@ -61,7 +61,6 @@ const ItemSharingTab = (): JSX.Element => {
           memberships={selectHighestMemberships(authorizedMemberships)}
           readOnly={!canAdmin}
         />
-        <Divider sx={{ mt: 6, mb: 2 }} />
         <ItemLoginMembershipsTable
           memberships={authenticatedMemberships}
           item={item}

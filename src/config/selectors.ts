@@ -111,7 +111,7 @@ export const buildMemberAvatarId = (id?: string): string =>
 export const buildItemMembershipRowId = (id: string): string =>
   `itemMembershipRow-${id}`;
 export const buildItemMembershipRowSelector = (id: string): string =>
-  `[row-id="${buildItemMembershipRowId(id)}"]`;
+  `[data-cy="${buildItemMembershipRowId(id)}"]`;
 export const ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS =
   'itemMembershipPermissionSelect';
 export const buildItemMembershipRowDeleteButtonId = (id: string): string =>
@@ -228,7 +228,7 @@ export const buildInvitationEmailTableRowId = (id: string): string =>
 export const buildInvitationTableRowId = (id: string): string =>
   `invitationTableRow-${id}`;
 export const buildInvitationTableRowSelector = (id: string): string =>
-  `[row-id="${buildInvitationTableRowId(id)}"]`;
+  `[data-cy="${buildInvitationTableRowId(id)}"]`;
 export const ITEM_RESEND_INVITATION_BUTTON_CLASS = 'itemResendInvitationButton';
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
 export const NAVIGATION_ROOT_ID = 'navigationRoot';

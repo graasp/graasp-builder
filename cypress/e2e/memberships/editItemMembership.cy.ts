@@ -1,13 +1,29 @@
-import { PermissionLevel } from '@graasp/sdk';
+import {
+  ItemMembership,
+  PackedFolderItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 
-import { buildItemPath } from '../../../src/config/paths';
+import { buildItemPath, buildItemSharePath } from '../../../src/config/paths';
 import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   buildItemMembershipRowSelector,
   buildPermissionOptionId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
+import { CURRENT_USER, MEMBERS } from '../../fixtures/members';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
+import { ItemForTest } from '../../support/types';
+
+const openPermissionSelect = (id: string) => {
+  const select = cy.get(
+    `${buildItemMembershipRowSelector(
+      id,
+    )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`,
+  );
+  select.click();
+  return select;
+};
 
 const editItemMembership = ({
   itemId,
@@ -19,13 +35,7 @@ const editItemMembership = ({
   permission: PermissionLevel;
 }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
-
-  const select = cy.get(
-    `${buildItemMembershipRowSelector(
-      id,
-    )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`,
-  );
-  select.click();
+  const select = openPermissionSelect(id);
   select.get(`#${buildPermissionOptionId(permission)}`).click();
 };
 
@@ -64,5 +74,40 @@ describe('Edit Membership', () => {
       expect(url).to.contain(id);
       expect(body?.permission).to.equal(permission);
     });
+  });
+
+  it('cannot downgrade child membership', () => {
+    const item: ItemForTest = PackedFolderItemFactory();
+    const child: ItemForTest = PackedFolderItemFactory();
+    const memberships = [
+      {
+        permission: PermissionLevel.Admin,
+        member: CURRENT_USER,
+        item: child,
+      } as unknown as ItemMembership,
+      {
+        permission: PermissionLevel.Write,
+        member: MEMBERS.BOB,
+        item,
+      } as unknown as ItemMembership,
+    ];
+    const items = [
+      {
+        ...child,
+        memberships,
+      },
+    ];
+    cy.setUpApi({ items });
+
+    // go to children item
+    cy.visit(buildItemSharePath(child.id));
+
+    const m = memberships[1];
+    openPermissionSelect(m.id);
+
+    // should not show read
+    cy.get(`#${buildPermissionOptionId(PermissionLevel.Read)}`).should(
+      'not.exist',
+    );
   });
 });

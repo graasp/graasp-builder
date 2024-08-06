@@ -347,7 +347,7 @@
   "DELETE_MEMBERSHIP": "Delete Membership",
   "DELETE_MEMBERSHIP_MODAL_CONFIRM_BUTTON": "Confirm",
   "DELETE_OWN_MEMBERSHIP_MESSAGE": "Are you sure you want to delete your own permission on this item? You will loose access to this item, this action can not be undone.",
-  "DELETE_MEMBERSHIP_MESSAGE": "Are you sure you want to remove {{permissionLevel}} access on this item for {{name}}? They will loose access to this item.",
+  "DELETE_MEMBERSHIP_MESSAGE": "Are you sure you want to remove {{permissionLevel}} access on this item for {{name}}? They might loose access to this item.",
   "DELETE_LAST_ADMIN_ALERT_MESSAGE": "You are not allowed to delete this admin as this is the only admin",
   "APPROVE_BUTTON_TEXT": "OK",
   "APP_URL": "App Url",

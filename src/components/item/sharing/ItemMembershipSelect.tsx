@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { SelectProps } from '@mui/material';
 
-import { PermissionLevel } from '@graasp/sdk';
+import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 import { Select } from '@graasp/ui';
 
 import {
@@ -30,7 +30,7 @@ const defaultDisabledMap: DisabledMap = {
 };
 
 export type ItemMembershipSelectProps = {
-  value: string;
+  value: PermissionLevel;
   onChange?: SelectProps['onChange'];
   color?: SelectProps['color'];
   showLabel?: boolean;
@@ -40,6 +40,7 @@ export type ItemMembershipSelectProps = {
    * or to disable only certain options when passed an object where the keys are the values of the options
    */
   disabled?: boolean | DisabledMap;
+  allowDowngrade?: boolean;
 };
 
 const ItemMembershipSelect = ({
@@ -49,6 +50,7 @@ const ItemMembershipSelect = ({
   showLabel = true,
   displayEmpty = false,
   disabled = false,
+  allowDowngrade = true,
 }: ItemMembershipSelectProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
@@ -65,10 +67,14 @@ const ItemMembershipSelect = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  const values = Object.values(PermissionLevel).filter(
+    (p) => allowDowngrade || PermissionLevelCompare.gte(p, value),
+  );
+
   return (
     <Select
       label={label}
-      values={Object.values(PermissionLevel).map((v) => ({
+      values={values.map((v) => ({
         value: v,
         text: enumT(v),
         disabled: disabledMap[v],
@@ -81,6 +87,7 @@ const ItemMembershipSelect = ({
       displayEmpty={displayEmpty}
       className={ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}
       color={color}
+      size="small"
     />
   );
 };
