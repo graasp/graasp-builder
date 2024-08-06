@@ -8213,8 +8213,8 @@ __metadata:
     react-qr-code: "npm:2.0.15"
     react-query: "npm:3.39.3"
     react-quill: "npm:2.0.0"
-    react-router: "npm:6.25.0"
-    react-router-dom: "npm:6.25.0"
+    react-router: "npm:6.25.1"
+    react-router-dom: "npm:6.25.1"
     react-toastify: "npm:10.0.5"
     stylis: "npm:4.3.2"
     stylis-plugin-rtl: "npm:2.1.1"
@@ -12222,16 +12222,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.25.0":
-  version: 6.25.0
-  resolution: "react-router-dom@npm:6.25.0"
+"react-router-dom@npm:6.25.1":
+  version: 6.25.1
+  resolution: "react-router-dom@npm:6.25.1"
   dependencies:
     "@remix-run/router": "npm:1.18.0"
-    react-router: "npm:6.25.0"
+    react-router: "npm:6.25.1"
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 10/4f74050c64980a5acd37b62dad2e877b0e757a641b310cb233e8772277e45d60c2e44a75d14572079fee60d5469002b98b46c569761a0b9b347d083804cb3b7b
+  checksum: 10/583a0907156f8f0687817e2cd6fa2678284729fc9cf883acb0bc0a4ade1f76fc68dd771258f6b30a2fdc378a5608b973f7ecb1f7fc752295ad4eba8b2f156a82
   languageName: node
   linkType: hard
 
@@ -12246,14 +12246,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:6.25.0":
-  version: 6.25.0
-  resolution: "react-router@npm:6.25.0"
+"react-router@npm:6.25.1":
+  version: 6.25.1
+  resolution: "react-router@npm:6.25.1"
   dependencies:
     "@remix-run/router": "npm:1.18.0"
   peerDependencies:
     react: ">=16.8"
-  checksum: 10/7885b90e3abb574b2843b3efefe481ed87c1dba2a17ad301dc0df5e6e93c08c56ccbafc24ee2fc43650e11c1d7d0304762e7c98d43f35e756af76f2587b95b80
+  checksum: 10/3bfb9754cff279cabcb247f13e66315d02333dae7e251fa8975d0e5cf68ee61793ad040594d2d490a5c995efc542739e7ef80462a69bd3209f64c69086fc7786
   languageName: node
   linkType: hard
 
