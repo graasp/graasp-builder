@@ -58,12 +58,9 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
 
   if (mode === ItemLayoutMode.Map) {
     return (
-      <>
-        <Stack direction="row" justifyContent="right">
-          <ModeButton />
-        </Stack>
+      <Box mt={1}>
         <DesktopMap parentId={item.id} />
-      </>
+      </Box>
     );
   }
 

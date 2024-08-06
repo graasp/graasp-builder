@@ -91,20 +91,23 @@ const ItemMembershipsTable = ({
         <TableHead>
           <TableRow>
             {showEmail && (
-              <TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>
                 {translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_EMAIL_HEADER)}
               </TableCell>
             )}
-            <TableCell align="right">
+            <TableCell
+              sx={{ fontWeight: 'bold' }}
+              align={showEmail ? 'right' : 'left'}
+            >
               {translateBuilder(BUILDER.ITEM_MEMBERSHIPS_TABLE_NAME_HEADER)}
             </TableCell>
-            <TableCell align="right">
+            <TableCell sx={{ fontWeight: 'bold' }} align="right">
               {translateBuilder(
                 BUILDER.ITEM_MEMBERSHIPS_TABLE_PERMISSION_HEADER,
               )}
             </TableCell>
             {!readOnly && (
-              <TableCell align="right">
+              <TableCell sx={{ fontWeight: 'bold' }} align="right">
                 {translateBuilder(
                   BUILDER.ITEM_MEMBERSHIPS_TABLE_ACTIONS_HEADER,
                 )}
@@ -126,7 +129,11 @@ const ItemMembershipsTable = ({
                     <Typography noWrap>{row.member.email}</Typography>
                   </TableCell>
                 )}
-                <TableCell component="th" align="right" scope="row">
+                <TableCell
+                  component="th"
+                  align={showEmail ? 'right' : 'left'}
+                  scope="row"
+                >
                   <Typography noWrap>{row.member.name}</Typography>
                 </TableCell>
                 <TableCell align="right">
