@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.35.1](https://github.com/graasp/graasp-builder/compare/v2.35.0...v2.35.1) (2024-08-06)
+
+
+### Bug Fixes
+
+* fix item item login membership table layout ([#1401](https://github.com/graasp/graasp-builder/issues/1401)) ([aeb17a4](https://github.com/graasp/graasp-builder/commit/aeb17a4ef9163a36bb5e482baabe6b1062efef85))
+
 ## [2.35.0](https://github.com/graasp/graasp-builder/compare/v2.34.0...v2.35.0) (2024-08-06)
 
 
