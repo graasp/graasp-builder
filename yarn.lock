@@ -1873,19 +1873,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#1394-fix-import-in-root-instead-of-item":
-  version: 3.20.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=815a7b5bfcad3de3c46b6fc9463b39ddaee1a683"
+"@graasp/query-client@npm:3.20.3":
+  version: 3.20.3
+  resolution: "@graasp/query-client@npm:3.20.3"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
-    axios: "npm:1.7.2"
+    axios: "npm:1.7.3"
     http-status-codes: "npm:2.3.0"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/fd980937d276f89ead0533e59fcb1b5c078918a06f624af79d5cb4aba59eb3a739f9c8134e259ec6f5aba007de71ef7be66fc3735de70c81059b4b4eda7748be
+  checksum: 10/29b741787df01cfd537b78985a56c0b9d5a8660943902ee6f4f051a3dcef62028a577068accf590d9ef9010c6892707ee602fb0c666dbe91f81cde01a6c12fe7
   languageName: node
   linkType: hard
 
@@ -5058,6 +5058,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:1.7.3":
+  version: 1.7.3
+  resolution: "axios@npm:1.7.3"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/7f92af205705a8fb4a9d35666b663729507657f252a1d39d83582590119941872d49078017cf992e32f47aa3b7317f5439f77be772a173dac2ae0fedd38f43ae
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:~3.1.1":
   version: 3.1.1
   resolution: "axobject-query@npm:3.1.1"
@@ -8152,7 +8163,7 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.17.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#1394-fix-import-in-root-instead-of-item"
+    "@graasp/query-client": "npm:3.20.3"
     "@graasp/sdk": "npm:4.22.0"
     "@graasp/translations": "npm:1.33.0"
     "@graasp/ui": "npm:4.23.0"
