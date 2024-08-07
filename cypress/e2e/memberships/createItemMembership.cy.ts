@@ -52,16 +52,16 @@ describe('Create Membership', () => {
     const permission = PermissionLevel.Read;
     shareItem({ id, member, permission });
 
-    cy.wait('@postManyItemMemberships').then(
+    cy.wait('@postInvitations').then(
       ({
         request: {
           url,
-          body: { memberships },
+          body: { invitations },
         },
       }) => {
         expect(url).to.contain(id);
-        expect(memberships[0].permission).to.equal(permission);
-        expect(memberships[0].memberId).to.equal(member.id);
+        expect(invitations[0].permission).to.equal(permission);
+        expect(invitations[0].email).to.equal(member.email);
       },
     );
 
