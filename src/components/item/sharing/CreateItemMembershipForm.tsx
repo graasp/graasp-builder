@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 
 import {
+  AccountType,
   DiscriminatedItem,
   Invitation,
   ItemMembership,
@@ -74,7 +75,8 @@ const CreateItemMembershipForm = ({
     // check mail does not already exist
     if (
       memberships.find(
-        ({ member: { email: thisEmail } }) => thisEmail === email,
+        ({ account }) =>
+          account.type === AccountType.Individual && account.email === email,
       )
     ) {
       return translateBuilder(

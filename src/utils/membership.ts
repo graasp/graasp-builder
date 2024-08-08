@@ -10,7 +10,7 @@ export const membershipsWithoutUser = (
   memberships: ItemMembership[],
   userId?: string,
 ): ItemMembership[] =>
-  memberships?.filter(({ member: { id: memberId } }) => memberId !== userId);
+  memberships?.filter(({ account: { id: memberId } }) => memberId !== userId);
 
 interface PermissionMap {
   [key: string]: ItemMembership;
@@ -20,13 +20,13 @@ export const selectHighestMemberships = (
   memberships: ItemMembership[],
 ): ItemMembership[] => {
   const permissionMap = memberships.reduce<PermissionMap>((acc, curr) => {
-    const { member, permission } = curr;
+    const { account, permission } = curr;
 
     if (
-      !acc[member.id] ||
-      PermissionLevelCompare.gt(permission, acc[member.id].permission)
+      !acc[account.id] ||
+      PermissionLevelCompare.gt(permission, acc[account.id].permission)
     ) {
-      acc[member.id] = curr;
+      acc[account.id] = curr;
     }
     return acc;
   }, {});
