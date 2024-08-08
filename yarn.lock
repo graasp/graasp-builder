@@ -1958,7 +1958,7 @@ __metadata:
 
 "@graasp/ui@https://github.com/graasp/graasp-ui.git#975-display-docs-within-fileItem":
   version: 4.24.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=71758912dd317b56b6784ce13fb1acb73537e0b9"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=f510172bc17c126e531ef476f3e724c2ef58b695"
   dependencies:
     "@ag-grid-community/client-side-row-model": "npm:31.3.2"
     "@ag-grid-community/react": "npm:^31.3.2"
@@ -1993,7 +1993,7 @@ __metadata:
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
-  checksum: 10/994ba6dcc2a76956fc54906416d8e4c40295ae838273d0acde30bc3962c6ec10a257ef9b613ae5f38ff72bb98536ec932fed492da0a9d21c94da57c2d2ecfa0d
+  checksum: 10/a926602817215a8ad6b4cc8e4889448018107237f772cff66c2e8db19f6e833310ba17823b329894d979cdf872d7ecc592fef6be9e528530459ee49161cf84cf
   languageName: node
   linkType: hard
 

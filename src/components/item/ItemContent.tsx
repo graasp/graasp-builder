@@ -66,7 +66,13 @@ const FileContent = ({
   if (fileUrl) {
     return (
       <StyledContainer>
-        <Stack direction="column" alignItems="center" gap={2} width="100%">
+        <Stack
+          direction="column"
+          alignItems="center"
+          gap={2}
+          width="100%"
+          height="100%"
+        >
           <Stack direction="row" gap={1}>
             <FileMaxWidthSetting item={item} variant={SettingVariant.Button} />
             <FileAlignmentSetting item={item} variant={SettingVariant.Button} />
