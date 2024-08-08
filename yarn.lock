@@ -1857,9 +1857,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.21.0":
-  version: 3.21.0
-  resolution: "@graasp/query-client@npm:3.21.0"
+"@graasp/query-client@github:graasp/graasp-query-client#update-for-item-login":
+  version: 3.22.0
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=0efb6ac09f5bd77d0b127c7c29fa9c784a8dd75f"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1869,13 +1869,13 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/801a1e1b45f985f82468b2527adc2cda8b2541aac3549a22fde81dc40387867e9f7c46dee001f77d23f4b6a4de19c0d2ea85b0a2f1499e848c880ece69a34177
+  checksum: 10/4441cf9c2cae35fcb166d5eb6e7b5a7a14ebbf6e00fa0b2dc020cc9b8538e4ef2ef04d6d79341bc5847aa1867df16d184b5613b52f6c32d617e6050ab9ec932c
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.22.0":
+"@graasp/sdk@github:graasp/graasp-sdk#568-new-membertype":
   version: 4.22.0
-  resolution: "@graasp/sdk@npm:4.22.0"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=a0d7ecefb93de3004c15841706603afa305164e7"
   dependencies:
     "@faker-js/faker": "npm:8.4.1"
     filesize: "npm:10.1.4"
@@ -1885,7 +1885,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3
     uuid: ^9 || ^10.0.0
-  checksum: 10/c1e81d401f51a9c22eb4f5bc12057aa3ea249771701c390a11dc7c1609b814d9222926bbb7d9b19f70fda67bccb854f42045d890dd850f71bf4f9f8629fcb799
+  checksum: 10/205a6510b0f794d9c4c323b134ef58a55451e8b682e4ecfcacd7c5332d37aa54f0ed5c0e6b0dbb4d4b49648030e61a37ace5da1015a509507af4c5c400c92069
   languageName: node
   linkType: hard
 
@@ -1919,6 +1919,46 @@ __metadata:
   peerDependencies:
     i18next: ^23.8.1
   checksum: 10/fcbbd3a67c0e30a0a2e2da0207714e9e61ef7808ceaa241dbdf5ff73e5a98ecd7528cda269b8b14aa81b668cac97d06dfd564e4ade8312adde526f24feaddb98
+  languageName: node
+  linkType: hard
+
+"@graasp/ui@github:graasp/graasp-ui#update-sdk":
+  version: 4.24.0
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=a3d0fcd9e860de63c469f547c87aaf4d103494be"
+  dependencies:
+    "@ag-grid-community/client-side-row-model": "npm:31.3.2"
+    "@ag-grid-community/react": "npm:^31.3.2"
+    "@ag-grid-community/styles": "npm:^31.3.2"
+    "@storybook/react-vite": "npm:8.1.11"
+    http-status-codes: "npm:2.3.0"
+    interweave: "npm:13.1.0"
+    katex: "npm:0.16.11"
+    lodash.truncate: "npm:4.4.2"
+    lucide-react: "npm:0.408.0"
+    react-cookie-consent: "npm:9.0.0"
+    react-dnd: "npm:16.0.1"
+    react-dnd-html5-backend: "npm:16.0.1"
+    react-quill: "npm:2.0.0"
+    react-rnd: "npm:10.4.11"
+    uuid: "npm:10.0.0"
+    vitest: "npm:2.0.4"
+  peerDependencies:
+    "@emotion/cache": ~11.10.7 || ~11.11.0 || ~11.13.0
+    "@emotion/react": ~11.10.6 || ~11.11.0 || ~11.13.0
+    "@emotion/styled": ~11.10.6 || ~11.11.0 || ~11.13.0
+    "@graasp/sdk": ^4.14.0
+    "@graasp/translations": ^1.23.0
+    "@mui/icons-material": ~5.14.0 || ~5.15.0 || ~5.16.0
+    "@mui/lab": ~5.0.0-alpha.150
+    "@mui/material": ~5.14.0 || ~5.15.0 || ~5.16.0
+    i18next: ^22.4.15 || ^23.0.0
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    react-i18next: ^13.0.0 || ^14.0.0 || ^15.0.0
+    react-router-dom: ^6.11.0
+    stylis: ^4.1.3
+    stylis-plugin-rtl: ^2.1.1
+  checksum: 10/2e832ce12987ed9959047c066bab780e89fd814d24c7152919420a9ae62cbbb49037bff8e9c827ecc5eb38e6fad0163fcaac355ac28f028ba7a868cbc9495eff
   languageName: node
   linkType: hard
 
@@ -1960,46 +2000,6 @@ __metadata:
     stylis: ^4.1.3
     stylis-plugin-rtl: ^2.1.1
   checksum: 10/2259b603ddffb00187f5684215a9e16e91a192612a84f7807759f385b7121fe198bdb20ae17fc978b1996a0b921dd2381283f22a3a84ad40c3b8a0031efdaf05
-  languageName: node
-  linkType: hard
-
-"@graasp/ui@npm:4.23.0":
-  version: 4.23.0
-  resolution: "@graasp/ui@npm:4.23.0"
-  dependencies:
-    "@ag-grid-community/client-side-row-model": "npm:31.3.2"
-    "@ag-grid-community/react": "npm:^31.3.2"
-    "@ag-grid-community/styles": "npm:^31.3.2"
-    "@storybook/react-vite": "npm:8.1.11"
-    http-status-codes: "npm:2.3.0"
-    interweave: "npm:13.1.0"
-    katex: "npm:0.16.11"
-    lodash.truncate: "npm:4.4.2"
-    lucide-react: "npm:0.408.0"
-    react-cookie-consent: "npm:9.0.0"
-    react-dnd: "npm:16.0.1"
-    react-dnd-html5-backend: "npm:16.0.1"
-    react-quill: "npm:2.0.0"
-    react-rnd: "npm:10.4.11"
-    uuid: "npm:10.0.0"
-    vitest: "npm:2.0.2"
-  peerDependencies:
-    "@emotion/cache": ~11.10.7 || ~11.11.0
-    "@emotion/react": ~11.10.6 || ~11.11.0
-    "@emotion/styled": ~11.10.6 || ~11.11.0
-    "@graasp/sdk": ^4.14.0
-    "@graasp/translations": ^1.23.0
-    "@mui/icons-material": ~5.14.0 || ~5.15.0 || ~5.16.0
-    "@mui/lab": ~5.0.0-alpha.150
-    "@mui/material": ~5.14.0 || ~5.15.0 || ~5.16.0
-    i18next: ^22.4.15 || ^23.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    react-i18next: ^13.0.0 || ^14.0.0
-    react-router-dom: ^6.11.0
-    stylis: ^4.1.3
-    stylis-plugin-rtl: ^2.1.1
-  checksum: 10/26d99acd179daee8315b632b28590c10b13e991ef6c66fcda916937e6fff6ce6d8f424fdd2499beba6ef0c3f91d705181b73ec6fe0e551d4b50f1615d1fadb64
   languageName: node
   linkType: hard
 
@@ -4343,18 +4343,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/expect@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@vitest/expect@npm:2.0.2"
-  dependencies:
-    "@vitest/spy": "npm:2.0.2"
-    "@vitest/utils": "npm:2.0.2"
-    chai: "npm:^5.1.1"
-    tinyrainbow: "npm:^1.2.0"
-  checksum: 10/67ebe5dcc083cbaf152fa1845da5ab4cd5a37fcc8657caaec214878c145516cf270998ad300ab9c3e7d8b4fc9ab41cbc4606af3341ae06d08c5cf44354ba5a56
-  languageName: node
-  linkType: hard
-
 "@vitest/expect@npm:2.0.4":
   version: 2.0.4
   resolution: "@vitest/expect@npm:2.0.4"
@@ -4367,16 +4355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/pretty-format@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@vitest/pretty-format@npm:2.0.2"
-  dependencies:
-    tinyrainbow: "npm:^1.2.0"
-  checksum: 10/30ae021ea3b36271e00aac5a49084de9403900ae574b1ce1c26385ee792a7fed700f2deb2cd841b64724a4e428e908a5d3ffc1b4e6ca83daa351d76de925e9a6
-  languageName: node
-  linkType: hard
-
-"@vitest/pretty-format@npm:2.0.4, @vitest/pretty-format@npm:^2.0.2, @vitest/pretty-format@npm:^2.0.4":
+"@vitest/pretty-format@npm:2.0.4, @vitest/pretty-format@npm:^2.0.4":
   version: 2.0.4
   resolution: "@vitest/pretty-format@npm:2.0.4"
   dependencies:
@@ -4393,16 +4372,6 @@ __metadata:
     p-limit: "npm:^5.0.0"
     pathe: "npm:^1.1.1"
   checksum: 10/d83a608be36dace77f91a9d15ab7753f9c5923281188a8d9cb5ccec770df9cc9ba80e5e1e3465328c7605977be0f0708610855abf5f4af037a4ede5f51a83e47
-  languageName: node
-  linkType: hard
-
-"@vitest/runner@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@vitest/runner@npm:2.0.2"
-  dependencies:
-    "@vitest/utils": "npm:2.0.2"
-    pathe: "npm:^1.1.2"
-  checksum: 10/f3f9f15b5a3d0b5fe5815ed0ad04bd3fceab0768c441baf20931d78f2599261c172724955e9de35020ff79950e1fd5398d0d5aad2c5ee8a91e4cc2b85943ac81
   languageName: node
   linkType: hard
 
@@ -4427,17 +4396,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/snapshot@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@vitest/snapshot@npm:2.0.2"
-  dependencies:
-    "@vitest/pretty-format": "npm:2.0.2"
-    magic-string: "npm:^0.30.10"
-    pathe: "npm:^1.1.2"
-  checksum: 10/c0d41c3ff71ada909b34a8cbfe4ae9d59126fdae243b89e4eba5110db8eeb41234897159de20050a18aac2cbb7694e3fddd94bf7c79c1e9b169f1f4cf642bf07
-  languageName: node
-  linkType: hard
-
 "@vitest/snapshot@npm:2.0.4":
   version: 2.0.4
   resolution: "@vitest/snapshot@npm:2.0.4"
@@ -4455,15 +4413,6 @@ __metadata:
   dependencies:
     tinyspy: "npm:^2.2.0"
   checksum: 10/1c9698272a58aa47708bb8a1672d655fcec3285b02067cc3f70bfe76f4eda7a756eb379f8c945ccbe61677f5189aeb5ba93c2737a9d7db2de8c4e7bbdffcd372
-  languageName: node
-  linkType: hard
-
-"@vitest/spy@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@vitest/spy@npm:2.0.2"
-  dependencies:
-    tinyspy: "npm:^3.0.0"
-  checksum: 10/feca3d26b824350d2f4f11a1e5881f1c7eeba5b903399ee8fbc2aceb4bf4201da61088783cf56bd5a2850b3e2380905f69128106655d7d849c62c52861b5af1a
   languageName: node
   linkType: hard
 
@@ -4485,18 +4434,6 @@ __metadata:
     loupe: "npm:^2.3.7"
     pretty-format: "npm:^29.7.0"
   checksum: 10/5c5d7295ac13fcea1da039232bcc7c3fc6f070070fe12ba2ad152456af6e216e48a3ae169016cfcd5055706a00dc567b8f62e4a9b1914f069f52b8f0a3c25e60
-  languageName: node
-  linkType: hard
-
-"@vitest/utils@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@vitest/utils@npm:2.0.2"
-  dependencies:
-    "@vitest/pretty-format": "npm:2.0.2"
-    estree-walker: "npm:^3.0.3"
-    loupe: "npm:^3.1.1"
-    tinyrainbow: "npm:^1.2.0"
-  checksum: 10/771a1579c9d11bf02ed5d641619bdb9ee06f4096a2965183298c8610476316f899561dabf48e589eecccd76c75155131dc7a90d98d7519e07483b7ed09e0a5b9
   languageName: node
   linkType: hard
 
@@ -8145,10 +8082,10 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.1.0"
     "@graasp/map": "npm:1.17.0"
-    "@graasp/query-client": "npm:3.21.0"
-    "@graasp/sdk": "npm:4.22.0"
+    "@graasp/query-client": "github:graasp/graasp-query-client#update-for-item-login"
+    "@graasp/sdk": "github:graasp/graasp-sdk#568-new-membertype"
     "@graasp/translations": "npm:1.33.0"
-    "@graasp/ui": "npm:4.23.0"
+    "@graasp/ui": "github:graasp/graasp-ui#update-sdk"
     "@mui/icons-material": "npm:5.16.4"
     "@mui/lab": "npm:5.0.0-alpha.172"
     "@mui/material": "npm:5.16.4"
@@ -14218,21 +14155,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-node@npm:2.0.2":
-  version: 2.0.2
-  resolution: "vite-node@npm:2.0.2"
-  dependencies:
-    cac: "npm:^6.7.14"
-    debug: "npm:^4.3.5"
-    pathe: "npm:^1.1.2"
-    tinyrainbow: "npm:^1.2.0"
-    vite: "npm:^5.0.0"
-  bin:
-    vite-node: vite-node.mjs
-  checksum: 10/9335168dc5a20c1d0c6b53cf20f098875c7556b0eb1e1ae871aedcc796edd5906f06ab259d9b57ec12719041838cac8186e54e597c0012ee77b03a4e2be84722
-  languageName: node
-  linkType: hard
-
 "vite-node@npm:2.0.4":
   version: 2.0.4
   resolution: "vite-node@npm:2.0.4"
@@ -14443,55 +14365,6 @@ __metadata:
   bin:
     vitest: vitest.mjs
   checksum: 10/ad921a723ac9438636d37111f0b2ea5afd0ba4a7813fb75382b9f75574e10d533cf950573ebb9332a595ce197cb83593737a6b55a3b6e6eb00bddbcd0920a03e
-  languageName: node
-  linkType: hard
-
-"vitest@npm:2.0.2":
-  version: 2.0.2
-  resolution: "vitest@npm:2.0.2"
-  dependencies:
-    "@ampproject/remapping": "npm:^2.3.0"
-    "@vitest/expect": "npm:2.0.2"
-    "@vitest/pretty-format": "npm:^2.0.2"
-    "@vitest/runner": "npm:2.0.2"
-    "@vitest/snapshot": "npm:2.0.2"
-    "@vitest/spy": "npm:2.0.2"
-    "@vitest/utils": "npm:2.0.2"
-    chai: "npm:^5.1.1"
-    debug: "npm:^4.3.5"
-    execa: "npm:^8.0.1"
-    magic-string: "npm:^0.30.10"
-    pathe: "npm:^1.1.2"
-    std-env: "npm:^3.7.0"
-    tinybench: "npm:^2.8.0"
-    tinypool: "npm:^1.0.0"
-    tinyrainbow: "npm:^1.2.0"
-    vite: "npm:^5.0.0"
-    vite-node: "npm:2.0.2"
-    why-is-node-running: "npm:^2.2.2"
-  peerDependencies:
-    "@edge-runtime/vm": "*"
-    "@types/node": ^18.0.0 || >=20.0.0
-    "@vitest/browser": 2.0.2
-    "@vitest/ui": 2.0.2
-    happy-dom: "*"
-    jsdom: "*"
-  peerDependenciesMeta:
-    "@edge-runtime/vm":
-      optional: true
-    "@types/node":
-      optional: true
-    "@vitest/browser":
-      optional: true
-    "@vitest/ui":
-      optional: true
-    happy-dom:
-      optional: true
-    jsdom:
-      optional: true
-  bin:
-    vitest: vitest.mjs
-  checksum: 10/d92053b0d6e3e800d56cbe5eb860625fb9d50e66857da189ac19a68e511bbb0c59baf6a6b3a8ecb0b46c011567723e16e550136655e93767f228fb91caf4e16f
   languageName: node
   linkType: hard
 
