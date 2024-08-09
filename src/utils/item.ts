@@ -143,7 +143,7 @@ export const getHighestPermissionForMemberFromMemberships = ({
   }
 
   const itemMemberships = memberships?.filter(
-    ({ item: { path: mPath }, member: { id: mId } }) =>
+    ({ item: { path: mPath }, account: { id: mId } }) =>
       mId === memberId && itemPath.includes(mPath),
   );
   if (!itemMemberships || itemMemberships.length === 0) {

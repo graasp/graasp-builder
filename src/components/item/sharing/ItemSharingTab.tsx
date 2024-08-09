@@ -2,9 +2,7 @@ import { useOutletContext, useParams } from 'react-router-dom';
 
 import { Container, Divider, Grid, Typography } from '@mui/material';
 
-import { isPseudoMember } from '@graasp/sdk';
-
-import partition from 'lodash.partition';
+import { AccountType, isPseudoMember } from '@graasp/sdk';
 
 import { OutletType } from '@/components/pages/item/type';
 import { selectHighestMemberships } from '@/utils/membership';
@@ -26,11 +24,6 @@ const ItemSharingTab = (): JSX.Element => {
   const { itemId } = useParams();
 
   const { data: memberships } = hooks.useItemMemberships(itemId);
-
-  const [authenticatedMemberships, authorizedMemberships] = partition(
-    memberships,
-    ({ member }) => member?.email && isPseudoMember(member),
-  );
 
   const { data: invitations } = hooks.useItemInvitations(item?.id);
 
@@ -58,11 +51,21 @@ const ItemSharingTab = (): JSX.Element => {
           emptyMessage={translateBuilder(
             BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE,
           )}
-          memberships={selectHighestMemberships(authorizedMemberships)}
+          memberships={selectHighestMemberships(memberships)
+            ?.filter((m) => m.account.type === AccountType.Individual)
+            ?.sort((im1, im2) => {
+              if (im1.account.type !== AccountType.Individual) {
+                return 1;
+              }
+              if (im2.account.type !== AccountType.Individual) {
+                return -1;
+              }
+              return im1.account.email > im2.account.email ? 1 : -1;
+            })}
           readOnly={!canAdmin}
         />
         <ItemLoginMembershipsTable
-          memberships={authenticatedMemberships}
+          memberships={memberships?.filter((m) => isPseudoMember(m.account))}
           item={item}
         />
 

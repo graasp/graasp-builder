@@ -32,7 +32,6 @@ const Chatbox = ({ item }: Props): JSX.Element | null => {
   }
 
   // only signed in member can see the chat
-  // TODO: allow public??
   if (!currentMember) {
     return null;
   }

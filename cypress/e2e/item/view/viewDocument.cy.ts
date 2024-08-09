@@ -17,7 +17,7 @@ describe('View Document', () => {
             memberships: [
               buildItemMembership({
                 item: DOCUMENT,
-                member: CURRENT_USER,
+                account: CURRENT_USER,
               }),
             ],
           },

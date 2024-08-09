@@ -1786,9 +1786,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/chatbox@npm:3.1.0":
+"@graasp/chatbox@github:graasp/graasp-chatbox#update-for-item-login":
   version: 3.1.0
-  resolution: "@graasp/chatbox@npm:3.1.0"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=90e883a88c65f7b62cfa327c929d24377d42c707"
   dependencies:
     lodash.groupby: "npm:^4.6.0"
     prism-react-renderer: "npm:^2.3.1"
@@ -1812,7 +1812,7 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^13.0.0 || ^14.0.0
-  checksum: 10/62a929f400795ab2b47f86133c32bea910a52312a5effde45a5a9506741d65e0d8fb33f67e76ac6b5d3d04aee6207caf6c0a8abbe65c66de4f8ace80b643fec0
+  checksum: 10/3f5007a964d1e77fa953e33f8d157d81102997cb537f83b7a7cc92e65e1f88a9899289c9e3ea04b41ff8f5dc719171a25c56e0931470b3698d7cd5061efd2266
   languageName: node
   linkType: hard
 
@@ -8080,7 +8080,7 @@ __metadata:
     "@emotion/cache": "npm:11.13.0"
     "@emotion/react": "npm:11.13.0"
     "@emotion/styled": "npm:11.13.0"
-    "@graasp/chatbox": "npm:3.1.0"
+    "@graasp/chatbox": "github:graasp/graasp-chatbox#update-for-item-login"
     "@graasp/map": "npm:1.17.0"
     "@graasp/query-client": "github:graasp/graasp-query-client#update-for-item-login"
     "@graasp/sdk": "github:graasp/graasp-sdk#568-new-membertype"
