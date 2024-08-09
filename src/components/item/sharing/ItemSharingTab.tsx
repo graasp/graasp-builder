@@ -52,8 +52,8 @@ const ItemSharingTab = (): JSX.Element => {
             BUILDER.SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE,
           )}
           memberships={selectHighestMemberships(memberships)
-            ?.filter((m) => m.account.type === AccountType.Individual)
-            ?.sort((im1, im2) => {
+            .filter((m) => m.account.type === AccountType.Individual)
+            .sort((im1, im2) => {
               if (im1.account.type !== AccountType.Individual) {
                 return 1;
               }
@@ -65,7 +65,7 @@ const ItemSharingTab = (): JSX.Element => {
           readOnly={!canAdmin}
         />
         <ItemLoginMembershipsTable
-          memberships={memberships?.filter((m) => isPseudoMember(m.account))}
+          memberships={memberships.filter((m) => isPseudoMember(m.account))}
           item={item}
         />
 
