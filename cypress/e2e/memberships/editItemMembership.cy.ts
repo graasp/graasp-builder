@@ -79,7 +79,7 @@ describe('Edit Membership', () => {
       {
         id: 'membership-0',
         permission: PermissionLevel.Admin,
-        member: CURRENT_USER,
+        account: CURRENT_USER,
         item: child,
       },
       {
