@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.36.0](https://github.com/graasp/graasp-builder/compare/v2.35.1...v2.36.0) (2024-08-09)
+
+
+### Features
+
+* update query client for share item ([#1400](https://github.com/graasp/graasp-builder/issues/1400)) ([e6d826d](https://github.com/graasp/graasp-builder/commit/e6d826d79c31233763e8579b5c43d0f14b525f71))
+
 ## [2.35.1](https://github.com/graasp/graasp-builder/compare/v2.35.0...v2.35.1) (2024-08-06)
 
 
