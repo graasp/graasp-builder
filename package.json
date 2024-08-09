@@ -133,11 +133,11 @@
     "eslint-plugin-jsx-a11y": "6.9.0",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "4.6.2",
-    "husky": "9.0.11",
+    "husky": "9.1.4",
     "nyc": "17.0.0",
     "prettier": "3.3.3",
     "typescript": "5.5.4",
-    "vite": "5.3.4",
+    "vite": "5.4.0",
     "vite-plugin-checker": "0.7.2",
     "vite-plugin-istanbul": "6.0.2",
     "vitest": "2.0.4"
