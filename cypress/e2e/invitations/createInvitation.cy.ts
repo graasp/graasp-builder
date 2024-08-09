@@ -23,7 +23,7 @@ const inviteItem = ({
   cy.get(`#${buildShareButtonId(id)}`).click();
 
   cy.fillShareForm({
-    member: { email },
+    email,
     permission,
     submit,
     selector: `#${CREATE_MEMBERSHIP_FORM_ID}`,
@@ -62,7 +62,7 @@ describe('Create Invitation', () => {
         memberships: [
           {
             item,
-            member: MEMBERS.ANNA,
+            account: MEMBERS.ANNA,
             permission: PermissionLevel.Admin,
           },
         ],

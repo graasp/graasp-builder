@@ -1,8 +1,4 @@
-import {
-  ItemMembership,
-  PackedFolderItemFactory,
-  PermissionLevel,
-} from '@graasp/sdk';
+import { PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
 
 import { buildItemPath, buildItemSharePath } from '../../../src/config/paths';
 import {
@@ -81,15 +77,17 @@ describe('Edit Membership', () => {
     const child: ItemForTest = PackedFolderItemFactory();
     const memberships = [
       {
+        id: 'membership-0',
         permission: PermissionLevel.Admin,
         member: CURRENT_USER,
         item: child,
-      } as unknown as ItemMembership,
+      },
       {
+        id: 'membership-1',
         permission: PermissionLevel.Write,
-        member: MEMBERS.BOB,
+        account: MEMBERS.BOB,
         item,
-      } as unknown as ItemMembership,
+      },
     ];
     const items = [
       {
