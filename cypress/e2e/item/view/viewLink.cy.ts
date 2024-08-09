@@ -17,7 +17,7 @@ describe('Links', () => {
           memberships: [
             buildItemMembership({
               item: GRAASP_LINK_ITEM,
-              member: CURRENT_USER,
+              account: CURRENT_USER,
             }),
           ],
         },
@@ -26,7 +26,7 @@ describe('Links', () => {
           memberships: [
             buildItemMembership({
               item: GRAASP_LINK_ITEM_IFRAME_ONLY,
-              member: CURRENT_USER,
+              account: CURRENT_USER,
             }),
           ],
         },
@@ -35,7 +35,7 @@ describe('Links', () => {
           memberships: [
             buildItemMembership({
               item: YOUTUBE_LINK_ITEM,
-              member: CURRENT_USER,
+              account: CURRENT_USER,
             }),
           ],
         },

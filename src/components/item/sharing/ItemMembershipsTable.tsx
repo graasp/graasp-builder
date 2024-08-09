@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 
 import {
+  AccountType,
   DiscriminatedItem,
   ItemMembership,
   PermissionLevel,
@@ -72,10 +73,10 @@ const ItemMembershipsTable = ({
           permission,
           itemId: item.id,
         });
-      } else {
+      } else if (im.account.type === AccountType.Individual) {
         shareItem({
           id: item.id,
-          email: im.member.email,
+          email: im.account.email,
           permission,
         });
       }
@@ -116,64 +117,66 @@ const ItemMembershipsTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {memberships
-            .sort((im1, im2) => (im1.member.email > im2.member.email ? 1 : -1))
-            .map((row) => (
-              <TableRow
-                data-cy={buildItemMembershipRowId(row.id)}
-                key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                {showEmail && (
-                  <TableCell component="th" scope="row">
-                    <Typography noWrap>{row.member.email}</Typography>
-                  </TableCell>
-                )}
-                <TableCell
-                  component="th"
-                  align={showEmail ? 'right' : 'left'}
-                  scope="row"
-                >
-                  <Typography noWrap>{row.member.name}</Typography>
+          {memberships.map((row) => (
+            <TableRow
+              data-cy={buildItemMembershipRowId(row.id)}
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              {showEmail && (
+                <TableCell component="th" scope="row">
+                  <Typography noWrap>
+                    {row.account.type === AccountType.Individual
+                      ? row.account.email
+                      : ''}
+                  </Typography>
                 </TableCell>
+              )}
+              <TableCell
+                component="th"
+                align={showEmail ? 'right' : 'left'}
+                scope="row"
+              >
+                <Typography noWrap>{row.account.name}</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <TableRowPermission
+                  permission={row.permission}
+                  changePermission={changePermission(row)}
+                  readOnly={
+                    readOnly ||
+                    // cannot edit if is the only admin
+                    (hasOnlyOneAdmin &&
+                      row.permission === PermissionLevel.Admin)
+                  }
+                  allowDowngrade={
+                    // can downgrade for same item
+                    row.item.path === item.path &&
+                    // cannot downgrade your own membership
+                    row.account.id !== currentMember?.id
+                  }
+                />
+              </TableCell>
+              {!readOnly && (
                 <TableCell align="right">
-                  <TableRowPermission
-                    permission={row.permission}
-                    changePermission={changePermission(row)}
-                    readOnly={
-                      readOnly ||
-                      // cannot edit if is the only admin
+                  <TableRowDeleteButton
+                    onClick={() => onDelete(row)}
+                    id={buildItemMembershipRowDeleteButtonId(row.id)}
+                    tooltip={translateBuilder(
+                      BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+                    )}
+                    disabled={
+                      // cannot delete if not for current item
+                      row.item.path !== item.path ||
+                      // cannot delete if is the only admin
                       (hasOnlyOneAdmin &&
                         row.permission === PermissionLevel.Admin)
                     }
-                    allowDowngrade={
-                      // can downgrade for same item
-                      row.item.path === item.path &&
-                      // cannot downgrade your own membership
-                      row.member.id !== currentMember?.id
-                    }
                   />
                 </TableCell>
-                {!readOnly && (
-                  <TableCell align="right">
-                    <TableRowDeleteButton
-                      onClick={() => onDelete(row)}
-                      id={buildItemMembershipRowDeleteButtonId(row.id)}
-                      tooltip={translateBuilder(
-                        BUILDER.ITEM_MEMBERSHIPS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
-                      )}
-                      disabled={
-                        // cannot delete if not for current item
-                        row.item.path !== item.path ||
-                        // cannot delete if is the only admin
-                        (hasOnlyOneAdmin &&
-                          row.permission === PermissionLevel.Admin)
-                      }
-                    />
-                  </TableCell>
-                )}
-              </TableRow>
-            ))}
+              )}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
       {open && (

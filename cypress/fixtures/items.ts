@@ -45,7 +45,7 @@ export const generateOwnItems = (number: number): ItemForTest[] => {
           {
             item,
             permission: PermissionLevel.Admin,
-            member: MEMBERS.ANNA,
+            account: MEMBERS.ANNA,
             creator: MEMBERS.ANNA,
             createdAt: '2021-08-11T12:56:36.834Z',
             updatedAt: '2021-08-11T12:56:36.834Z',
@@ -118,7 +118,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
         {
           item: samplePublicItems[0],
           permission: PermissionLevel.Admin,
-          member: MEMBERS.ANNA,
+          account: MEMBERS.ANNA,
           creator: MEMBERS.ANNA,
           id: 'ecbfbd2a-5688-12db-ae93-0242ac130032',
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -127,7 +127,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
         {
           item: samplePublicItems[0],
           permission: PermissionLevel.Read,
-          member: MEMBERS.BOB,
+          account: MEMBERS.BOB,
           creator: MEMBERS.ANNA,
           id: 'ecbfbd2a-5688-12db-ae91-0242ac130002',
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -141,7 +141,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
         {
           item: samplePublicItems[1],
           permission: PermissionLevel.Admin,
-          member: MEMBERS.ANNA,
+          account: MEMBERS.ANNA,
           creator: MEMBERS.ANNA,
           id: 'ecbfbd2a-5688-121b-ae93-0242ac130002',
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -164,7 +164,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
         {
           item: samplePublicItems[2],
           permission: PermissionLevel.Admin,
-          member: MEMBERS.ANNA,
+          account: MEMBERS.ANNA,
           creator: MEMBERS.ANNA,
           id: 'ecbfbd1a-5688-12db-ae93-0242ac130002',
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -187,7 +187,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
         {
           item: samplePublicItems[1],
           permission: PermissionLevel.Admin,
-          member: MEMBERS.ANNA,
+          account: MEMBERS.ANNA,
           creator: MEMBERS.ANNA,
           id: 'ecbfbd2a-5644-12db-ae93-0242ac130002',
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -196,7 +196,7 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
         {
           item: samplePublicItems[1],
           permission: PermissionLevel.Read,
-          member: MEMBERS.BOB,
+          account: MEMBERS.BOB,
           creator: MEMBERS.ANNA,
           id: 'ecbfbd2a-5338-12db-ae93-0242ac130002',
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -283,7 +283,7 @@ export const PUBLISHED_ITEM: ItemForTest = {
     {
       item,
       permission: PermissionLevel.Admin,
-      member: MEMBERS.ANNA,
+      account: MEMBERS.ANNA,
       creator: MEMBERS.ANNA,
       id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
       createdAt: '2021-08-11T12:56:36.834Z',
@@ -292,7 +292,7 @@ export const PUBLISHED_ITEM: ItemForTest = {
     {
       item,
       permission: PermissionLevel.Read,
-      member: MEMBERS.BOB,
+      account: MEMBERS.BOB,
       creator: MEMBERS.ANNA,
       id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
       createdAt: '2021-08-11T12:56:36.834Z',

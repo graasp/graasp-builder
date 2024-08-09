@@ -34,7 +34,9 @@ const ItemLoginMembershipsTable = ({
         </Typography>
         <ItemMembershipsTable
           item={item}
-          memberships={selectHighestMemberships(memberships)}
+          memberships={selectHighestMemberships(memberships).sort((im1, im2) =>
+            im1.account.name > im2.account.name ? 1 : -1,
+          )}
           emptyMessage={translateBuilder(
             BUILDER.SHARING_AUTHENTICATED_MEMBERS_EMPTY_MESSAGE,
           )}

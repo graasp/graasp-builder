@@ -30,9 +30,9 @@ describe('View Memberships', () => {
 
     // panel only contains 2 avatars: one user, one +x
     // check contains member avatar
-    for (const { permission, member, id } of filteredMemberships) {
+    for (const { permission, account, id } of filteredMemberships) {
       const { name, email } = Object.values(MEMBERS).find(
-        ({ id: mId }) => mId === member.id,
+        ({ id: mId }) => mId === account.id,
       );
       // check name and mail
       cy.get(buildItemMembershipRowSelector(id))
@@ -66,9 +66,9 @@ describe('View Memberships Read-Only Mode', () => {
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
     // check contains member avatar
-    for (const { permission, member, id } of memberships) {
+    for (const { permission, account, id } of memberships) {
       const { name, email } = Object.values(MEMBERS).find(
-        ({ id: mId }) => mId === member.id,
+        ({ id: mId }) => mId === account.id,
       );
       // check name, mail and permission
       cy.get(buildItemMembershipRowSelector(id))
