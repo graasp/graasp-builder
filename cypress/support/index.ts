@@ -6,13 +6,15 @@ import {
   PermissionLevel,
 } from '@graasp/sdk';
 
+import { ApiConfig } from './types';
+
 // cypress/support/index.ts
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       fillShareForm(args: {
-        member: { email: string };
+        email: string;
         permission: PermissionLevel;
         submit?: boolean;
         selector?: string;
@@ -81,8 +83,7 @@ declare global {
 
       selectItem(id: DiscriminatedItem['id']): void;
 
-      // TODO
-      setUpApi(args?: any): any;
+      setUpApi(args?: ApiConfig): any;
 
       fillBaseItemModal(
         item: { name?: string },

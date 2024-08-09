@@ -36,13 +36,13 @@ import {
 
 Cypress.Commands.add(
   'fillShareForm',
-  ({ member, permission, submit = true, selector = '' }) => {
+  ({ email, permission, submit = true, selector = '' }) => {
     // select permission
     cy.get(`${selector} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`).click();
     cy.get(`#${buildPermissionOptionId(permission)}`).click();
 
     // input mail
-    cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).type(member.email);
+    cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).type(email);
 
     if (submit) {
       // wait for email to be validated and enable the button

@@ -56,13 +56,13 @@ const DeleteItemDialog = ({
   // incase of deleting the only admin
   if (isDeletingLastAdmin) {
     dialogText = translateBuilder(BUILDER.DELETE_LAST_ADMIN_ALERT_MESSAGE);
-  } else if (member?.id === membershipToDelete?.member?.id) {
+  } else if (member?.id === membershipToDelete?.account?.id) {
     // deleting yourself
     dialogText = translateBuilder(BUILDER.DELETE_OWN_MEMBERSHIP_MESSAGE);
   } else {
     // delete other members
     dialogText = translateBuilder(BUILDER.DELETE_MEMBERSHIP_MESSAGE, {
-      name: membershipToDelete?.member.name,
+      name: membershipToDelete?.account.name,
       permissionLevel: membershipToDelete?.permission,
     });
   }

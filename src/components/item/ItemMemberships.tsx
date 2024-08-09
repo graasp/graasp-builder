@@ -48,7 +48,7 @@ const ItemMemberships = ({ id, maxAvatar = 2 }: Props): JSX.Element | null => {
           aria-label={translateBuilder(BUILDER.SHARED_MEMBERS_LABEL)}
         >
           <AvatarGroup max={maxAvatar} spacing={3}>
-            {filteredMemberships.map(({ member, permission }) => {
+            {filteredMemberships.map(({ account, permission }) => {
               const badgeContent =
                 permission === PermissionLevel.Read ? (
                   <Visibility fontSize="small" />
@@ -58,7 +58,7 @@ const ItemMemberships = ({ id, maxAvatar = 2 }: Props): JSX.Element | null => {
 
               return (
                 <Badge
-                  key={member.id}
+                  key={account.id}
                   overlap="circular"
                   anchorOrigin={{
                     vertical: 'bottom',
@@ -67,7 +67,7 @@ const ItemMemberships = ({ id, maxAvatar = 2 }: Props): JSX.Element | null => {
                   badgeContent={badgeContent}
                   sx={{ border: 'none' }}
                 >
-                  <MemberAvatar id={member.id} />
+                  <MemberAvatar id={account.id} />
                 </Badge>
               );
             })}

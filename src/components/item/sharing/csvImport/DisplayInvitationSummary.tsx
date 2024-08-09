@@ -1,6 +1,11 @@
 import { Alert, AlertTitle, Stack, Typography } from '@mui/material';
 
-import { Invitation, ItemMembership, PermissionLevel } from '@graasp/sdk';
+import {
+  AccountType,
+  Invitation,
+  ItemMembership,
+  PermissionLevel,
+} from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import { AxiosError } from 'axios';
@@ -80,7 +85,11 @@ const DisplayInvitationSummary = ({
                 <Stack>
                   {memberships.map((m) => (
                     <LineDisplay
-                      email={m.member.email}
+                      email={
+                        m.account.type === AccountType.Individual
+                          ? m.account.email
+                          : '-'
+                      }
                       permission={m.permission}
                     />
                   ))}

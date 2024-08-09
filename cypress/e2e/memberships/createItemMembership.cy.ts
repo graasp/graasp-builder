@@ -15,11 +15,11 @@ import { MEMBERS } from '../../fixtures/members';
 
 const shareItem = ({
   id,
-  member,
+  email,
   permission,
   submit,
 }: {
-  member: { email: string };
+  email: string;
   permission: PermissionLevel;
   submit?: boolean;
   id: string;
@@ -27,7 +27,7 @@ const shareItem = ({
   cy.get(`#${buildShareButtonId(id)}`).click();
 
   cy.fillShareForm({
-    member,
+    email,
     permission,
     submit,
     selector: `#${CREATE_MEMBERSHIP_FORM_ID}`,
@@ -50,7 +50,7 @@ describe('Create Membership', () => {
     // share
     const member = MEMBERS.FANNY;
     const permission = PermissionLevel.Read;
-    shareItem({ id, member, permission });
+    shareItem({ id, email: member.email, permission });
 
     cy.wait('@postInvitations').then(
       ({
@@ -71,7 +71,7 @@ describe('Create Membership', () => {
 
   it('cannot share item twice', () => {
     const ITEM = PackedFolderItemFactory();
-    const member = MEMBERS.ANNA;
+    const account = MEMBERS.ANNA;
     cy.setUpApi({
       items: [
         {
@@ -80,7 +80,7 @@ describe('Create Membership', () => {
             {
               item: ITEM,
               permission: PermissionLevel.Read,
-              member,
+              account,
             },
           ],
         },
@@ -94,7 +94,7 @@ describe('Create Membership', () => {
 
     // fill
     const permission = PermissionLevel.Read;
-    shareItem({ id, member, permission });
+    shareItem({ id, email: account.email, permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
   });
@@ -108,7 +108,7 @@ describe('Create Membership', () => {
 
     // fill
     const permission = PermissionLevel.Read;
-    shareItem({ id, member: { email: 'wrong' }, permission });
+    shareItem({ id, email: 'wrong', permission });
 
     cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).should('be.disabled');
   });
