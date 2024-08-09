@@ -12,7 +12,6 @@ import {
   ItemPublished,
   ItemTagType,
   ItemValidationGroup,
-  ItemValidationReview,
   Member,
   PermissionLevel,
   PermissionLevelCompare,
@@ -1690,20 +1689,6 @@ export const mockDeleteItemCategory = (shouldThrowError: boolean): void => {
       return reply(body);
     },
   ).as('deleteItemCategory');
-};
-
-export const mockGetItemValidationAndReview = (
-  itemValidationAndReview: ItemValidationReview,
-): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: new RegExp(`${API_HOST}/items/validations/status/${ID_FORMAT}`),
-    },
-    ({ reply }) => {
-      reply(itemValidationAndReview);
-    },
-  ).as('getItemValidationAndReview');
 };
 
 export const mockGetItemValidationGroups = (
