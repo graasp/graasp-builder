@@ -199,7 +199,6 @@
   "LIBRARY_SETTINGS_VALIDATION_STATUS_OUTDATED": "L'élément a été mis à jour depuis la dernière vérification. Il faut le valider à nouveau pour être sûr qu'il est toujours valable.",
   "LIBRARY_SETTINGS_VALIDATION_TITLE": "Validation",
   "LIBRARY_SETTINGS_VALIDATION_VALIDATE_BUTTON": "Publier",
-  "LIBRARY_SETTINGS_VISIBILITY_INFORMATIONS": "L'élément publié n'est plus public. L'élément doit être public pour être disponible dans la bibliothèque Graasp.",
   "LIBRARY_SETTINGS_VISIBILITY_CHANGE_BUTTON": "Changer la visibilité",
   "LIBRARY_SETTINGS_RETRY_BUTTON": "Recommencez",
   "LIBRARY_SETTINGS_VIEW_LIBRARY_BUTTON": "Voir sur la bibliothèque Graasp",
