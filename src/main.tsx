@@ -11,7 +11,7 @@ import {
   hasAcceptedCookies,
 } from '@graasp/sdk';
 
-import { BrowserTracing, init as SentryInit } from '@sentry/react';
+import * as Sentry from '@sentry/react';
 
 import pkg from '../package.json';
 import Root from './components/Root';
@@ -30,9 +30,12 @@ if (GA_MEASUREMENT_ID && hasAcceptedCookies() && import.meta.env.PROD) {
   ReactGA.send('pageview');
 }
 
-SentryInit({
+Sentry.init({
   dsn: SENTRY_DSN,
-  integrations: [new BrowserTracing()],
+  integrations: [
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration(),
+  ],
   environment: SENTRY_ENV,
   release: `${pkg.name}@${APP_VERSION}`,
 

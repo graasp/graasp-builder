@@ -312,7 +312,7 @@
   "SHARING_AUTHENTICATED_MEMBERS_TITLE": "Membres Connectés",
   "SHARING_AUTHORIZED_MEMBERS_EMPTY_MESSAGE": "Aucun utilisateur ne peut accéder à cet élément.",
   "SHARING_AUTHORIZED_MEMBERS_TITLE": "Membres Autorisés",
-  "SHARING_INVITATIONS_EMPTY_MESSAGE": "Aucune invitation pour cet élément.",
+  "SHARING_INVITATIONS_EMPTY_MESSAGE": "Aucune invitation en attente pour cet élément.",
   "SHARING_INVITATIONS_RESEND_BUTTON": "Renvoyer l'Invitation",
   "SHARING_INVITATIONS_TITLE": "Invitations En Cours",
   "SHARING_TITLE": "Partage",

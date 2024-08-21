@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import {
   Alert,
   Dialog,
@@ -40,12 +42,23 @@ const DeleteItemDialog = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: member } = hooks.useCurrentMember();
+  const { mutateAsync: deleteItemMembership } =
+    mutations.useDeleteItemMembership();
 
-  const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
+  const navigate = useNavigate();
 
   const onDelete = () => {
     if (membershipToDelete?.id) {
-      deleteItemMembership({ id: membershipToDelete.id, itemId: item.id });
+      deleteItemMembership({
+        id: membershipToDelete.id,
+        itemId: item.id,
+      }).then(() => {
+        // if current user deleted their own membership navigate them to the home
+        if (membershipToDelete.account.id === member?.id) {
+          navigate('/');
+        }
+      });
+
       handleClose();
     }
   };
@@ -66,6 +79,7 @@ const DeleteItemDialog = ({
       permissionLevel: membershipToDelete?.permission,
     });
   }
+
   return (
     <Dialog
       open={open}

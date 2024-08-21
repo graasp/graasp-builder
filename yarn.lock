@@ -1788,7 +1788,7 @@ __metadata:
 
 "@graasp/chatbox@github:graasp/graasp-chatbox#update-for-item-login":
   version: 3.1.0
-  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=90e883a88c65f7b62cfa327c929d24377d42c707"
+  resolution: "@graasp/chatbox@https://github.com/graasp/graasp-chatbox.git#commit=ec5b10b71b5812f208b874dce7a565cd16256eed"
   dependencies:
     lodash.groupby: "npm:^4.6.0"
     prism-react-renderer: "npm:^2.3.1"
@@ -1812,7 +1812,7 @@ __metadata:
     react: "*"
     react-dom: "*"
     react-i18next: ^13.0.0 || ^14.0.0
-  checksum: 10/3f5007a964d1e77fa953e33f8d157d81102997cb537f83b7a7cc92e65e1f88a9899289c9e3ea04b41ff8f5dc719171a25c56e0931470b3698d7cd5061efd2266
+  checksum: 10/a606b0d28ff56f01c8666aa9b7c54edd84314c9ab68f81cb3b8208c4fa67ee647e058ed383e844326f30fc649ccb1133c8eea7bf5ed790f3a18367086b7a9ffb
   languageName: node
   linkType: hard
 
@@ -1859,7 +1859,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#update-for-item-login":
   version: 3.22.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=0efb6ac09f5bd77d0b127c7c29fa9c784a8dd75f"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=b4a1f8ae39c1565242742e9d43997501467b07ef"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1869,23 +1869,22 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/4441cf9c2cae35fcb166d5eb6e7b5a7a14ebbf6e00fa0b2dc020cc9b8538e4ef2ef04d6d79341bc5847aa1867df16d184b5613b52f6c32d617e6050ab9ec932c
+  checksum: 10/5b63c95e316cd8a58665a217498f9ad269ed740eea798a14b0c18366a8fc4eaf270196d1ab3494a06e912d5b490325669d63c42bfac47499b11f65ef7d09ec09
   languageName: node
   linkType: hard
 
 "@graasp/sdk@github:graasp/graasp-sdk#568-new-membertype":
-  version: 4.22.0
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=a0d7ecefb93de3004c15841706603afa305164e7"
+  version: 4.25.0
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=4ebc45231bdacbc3291e4378d98dca4b88acd209"
   dependencies:
     "@faker-js/faker": "npm:8.4.1"
     filesize: "npm:10.1.4"
     js-cookie: "npm:3.0.5"
-    mime-types: "npm:2.1.35"
     validator: "npm:13.12.0"
   peerDependencies:
     date-fns: ^3
     uuid: ^9 || ^10.0.0
-  checksum: 10/205a6510b0f794d9c4c323b134ef58a55451e8b682e4ecfcacd7c5332d37aa54f0ed5c0e6b0dbb4d4b49648030e61a37ace5da1015a509507af4c5c400c92069
+  checksum: 10/6a0c2ad0c9867e37a1f98e7398283dcadf05a882295da8009700e725b49c6a0478170e19d78a223b1d398d66dd4afc11d8d4b6f9fd4df91369a6a70250a1e9d1
   languageName: node
   linkType: hard
 
@@ -10572,7 +10571,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:2.1.35, mime-types@npm:^2.1.12, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
+"mime-types@npm:^2.1.12, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
