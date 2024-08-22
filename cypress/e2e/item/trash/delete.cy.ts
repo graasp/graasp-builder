@@ -3,12 +3,13 @@ import { PackedRecycledItemDataFactory } from '@graasp/sdk';
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
   CONFIRM_DELETE_BUTTON_ID,
+  DELETE_SINGLE_ITEM_BUTTON_SELECTOR,
   RECYCLE_BIN_DELETE_MANY_ITEMS_BUTTON_ID,
   buildItemCard,
 } from '../../../../src/config/selectors';
 
 const deleteItem = (id: string) => {
-  cy.get(`#${buildItemCard(id)} [data-testid="DeleteIcon"]`).click();
+  cy.get(`#${buildItemCard(id)} ${DELETE_SINGLE_ITEM_BUTTON_SELECTOR}`).click();
   cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };
 

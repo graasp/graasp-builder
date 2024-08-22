@@ -417,9 +417,8 @@ export const SORTING_SELECT_SELECTOR_TEST_ID = 'sortingSelect';
 export const SORTING_SELECT_SELECTOR = `[data-testid="${SORTING_SELECT_SELECTOR_TEST_ID}"]`;
 export const SORTING_ORDERING_SELECTOR_DESC = '.lucide-arrow-up-wide-narrow';
 export const SORTING_ORDERING_SELECTOR_ASC = '.lucide-arrow-down-narrow-wide';
-export const UNBOOKMARK_ICON_SELECTOR = '[data-testid="BookmarkIcon"]';
-export const BOOKMARK_ICON_SELECTOR =
-  '[data-testid="BookmarkBorderOutlinedIcon"]';
+export const UNBOOKMARK_ICON_SELECTOR = '.lucide-bookmark';
+export const BOOKMARK_ICON_SELECTOR = '.lucide-bookmark';
 
 export const MEMBER_VALIDATION_BANNER_ID = 'memberValidationBanner';
 export const MEMBER_VALIDATION_BANNER_CLOSE_BUTTON_ID =
@@ -434,3 +433,4 @@ export const RECYCLE_BIN_RESTORE_MANY_ITEMS_BUTTON_ID =
   'recycleBinRestoreManyButton';
 export const COPY_MANY_ITEMS_BUTTON_SELECTOR = `.lucide-copy`;
 export const MOVE_MANY_ITEMS_BUTTON_SELECTOR = `.lucide-move`;
+export const DELETE_SINGLE_ITEM_BUTTON_SELECTOR = `.lucide-trash`;
