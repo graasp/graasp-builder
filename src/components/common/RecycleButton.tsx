@@ -1,4 +1,3 @@
-import { Delete } from '@mui/icons-material';
 import {
   IconButton,
   IconButtonProps,
@@ -8,6 +7,8 @@ import {
 } from '@mui/material';
 
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
+
+import { TrashIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
@@ -51,7 +52,7 @@ const RecycleButton = ({
           className={ITEM_MENU_RECYCLE_BUTTON_CLASS}
         >
           <ListItemIcon>
-            <Delete />
+            <TrashIcon />
           </ListItemIcon>
           {text}
         </MenuItem>
@@ -68,7 +69,7 @@ const RecycleButton = ({
               aria-label={text}
               onClick={handleClick}
             >
-              <Delete />
+              <TrashIcon />
             </IconButton>
           </span>
         </Tooltip>

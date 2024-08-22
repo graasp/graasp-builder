@@ -28,6 +28,7 @@ const EditButton = ({ item, onClick, type = 'icon' }: Props): JSX.Element => {
       ariaLabel={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
       className={EDIT_ITEM_BUTTON_CLASS}
       onClick={onClick}
+      size="medium"
     />
   );
 };

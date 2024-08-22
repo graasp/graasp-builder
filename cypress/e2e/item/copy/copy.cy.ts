@@ -7,7 +7,6 @@ import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   COPY_MANY_ITEMS_BUTTON_SELECTOR,
   ITEM_MENU_COPY_BUTTON_CLASS,
-  MY_GRAASP_ITEM_PATH,
   buildItemCard,
   buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
@@ -51,7 +50,7 @@ describe('Copy Item', () => {
 
     // copy
     const { id: copyItemId } = FOLDER;
-    copyItem({ id: copyItemId, toItemPath: MY_GRAASP_ITEM_PATH });
+    copyItem({ id: copyItemId, toItemPath: '' });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       cy.get(`#${buildItemCard(copyItemId)}`).should('be.visible');
@@ -86,8 +85,7 @@ describe('Copy Item', () => {
 
     // copy
     const { id } = IMAGE_ITEM_CHILD;
-    const toItemPath = MY_GRAASP_ITEM_PATH;
-    copyItem({ id, toItemPath });
+    copyItem({ id, toItemPath: '' });
 
     cy.wait('@copyItems').then(({ request: { url } }) => {
       cy.get(`#${buildItemCard(id)}`).should('exist');
@@ -139,7 +137,6 @@ describe('Copy Item', () => {
     folders.forEach((item) => {
       cy.selectItem(item.id);
     });
-
     // copy on home
     copyItems({ toItemPath: toItem.path });
 

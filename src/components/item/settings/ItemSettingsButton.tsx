@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import { Settings } from '@mui/icons-material';
 import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
+
+import { SettingsIcon } from 'lucide-react';
 
 import { buildItemSettingsPath } from '@/config/paths';
 
@@ -31,7 +32,7 @@ const ItemSettingsButton = ({
       return (
         <MenuItem component={Link} to={to} key={text} id={id}>
           <ListItemIcon>
-            <Settings />
+            <SettingsIcon />
           </ListItemIcon>
           {text}
         </MenuItem>
@@ -41,7 +42,7 @@ const ItemSettingsButton = ({
       return (
         <Tooltip title={text}>
           <IconButton id={id} component={Link} to={to}>
-            <Settings />
+            <SettingsIcon />
           </IconButton>
         </Tooltip>
       );
