@@ -1,4 +1,4 @@
-import { CompleteMember, MemberFactory, MemberType } from '@graasp/sdk';
+import { AccountType, CompleteMember, MemberFactory } from '@graasp/sdk';
 
 import { MemberForTest } from '../support/types';
 import { AVATAR_LINK } from './thumbnails/links';
@@ -9,7 +9,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
   ANNA: MemberFactory({
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130002',
     name: 'anna',
-    type: MemberType.Individual,
+    type: AccountType.Individual,
     email: 'anna@email.com',
     createdAt: '2021-04-13 14:56:34.749946',
     updatedAt: '2021-04-13 14:56:34.749946',
@@ -23,7 +23,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
     ...MemberFactory({
       id: 'ecafbd2a-5642-31fb-ae93-0242ac130004',
       name: 'bob',
-      type: MemberType.Individual,
+      type: AccountType.Individual,
       email: 'bob@email.com',
       createdAt: '2021-04-13 14:56:34.749946',
       updatedAt: '2021-04-13 14:56:34.749946',
@@ -36,7 +36,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
     ...MemberFactory({
       id: 'ecafbd2a-5642-31fb-ae93-0242ac130006',
       name: 'cedric',
-      type: MemberType.Individual,
+      type: AccountType.Individual,
       extra: {},
       email: 'cedric@email.com',
       createdAt: '2021-04-13 14:56:34.749946',
@@ -49,7 +49,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
   DAVID: MemberFactory({
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130062',
     name: 'david',
-    type: MemberType.Individual,
+    type: AccountType.Individual,
     email: 'david@email.com',
     createdAt: '2021-04-13 14:56:34.749946',
     updatedAt: '2021-04-13 14:56:34.749946',
@@ -58,7 +58,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
   EVAN: MemberFactory({
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130022',
     name: 'evan',
-    type: MemberType.Individual,
+    type: AccountType.Individual,
     email: 'evan@email.com',
     createdAt: '2021-04-13 14:56:34.749946',
     updatedAt: '2021-04-13 14:56:34.749946',
@@ -68,7 +68,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130012',
     name: 'fanny',
     extra: {},
-    type: MemberType.Individual,
+    type: AccountType.Individual,
     email: 'fanny@email.com',
     createdAt: '2021-04-13 14:56:34.749946',
     updatedAt: '2021-04-13 14:56:34.749946',
@@ -77,7 +77,7 @@ export const MEMBERS: Record<string, MemberForTest> = {
     id: 'ecafbd2a-5642-31fb-ae93-0242ac130412',
     name: 'garry',
     extra: {},
-    type: MemberType.Individual,
+    type: AccountType.Individual,
     email: 'garry@email.com',
     createdAt: '2021-04-13 14:56:34.749946',
     updatedAt: '2021-04-13 14:56:34.749946',

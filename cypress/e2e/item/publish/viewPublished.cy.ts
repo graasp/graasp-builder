@@ -106,7 +106,7 @@ describe('Published Items', () => {
       cy.setUpApi({
         items,
         publishedItemData,
-        getPublishedItems: true,
+        getPublishedItemsError: true,
       });
       cy.visit(PUBLISHED_ITEMS_PATH);
 

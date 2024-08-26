@@ -20,7 +20,7 @@ const Chatbox = ({ item }: Props): JSX.Element | null => {
   const { data: chatMessages, isLoading: isChatLoading } = useItemChat(item.id);
   const { data: itemPermissions, isLoading: isLoadingItemPermissions } =
     useItemMemberships(item.id);
-  const members = itemPermissions?.map(({ member }) => member);
+  const members = itemPermissions?.map(({ account }) => account);
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     hooks.useCurrentMember();
   const { mutate: sendMessage } = usePostItemChatMessage();
@@ -32,7 +32,6 @@ const Chatbox = ({ item }: Props): JSX.Element | null => {
   }
 
   // only signed in member can see the chat
-  // TODO: allow public??
   if (!currentMember) {
     return null;
   }

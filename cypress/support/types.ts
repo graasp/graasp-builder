@@ -5,6 +5,7 @@ import {
   CompleteMember,
   DiscriminatedItem,
   Invitation,
+  ItemBookmark,
   ItemCategory,
   ItemLoginSchema,
   ItemMembership,
@@ -12,9 +13,11 @@ import {
   ItemTag,
   ItemValidationGroup,
   LocalFileItemType,
-  Member,
   PermissionLevel,
+  PublicationStatus,
+  RecycledItemData,
   S3FileItemType,
+  ShortLink,
 } from '@graasp/sdk';
 
 // TODO: not the best way, to change with mirage?
@@ -49,11 +52,16 @@ export type ApiConfig = {
   items?: ItemForTest[];
   recycledItems?: DiscriminatedItem[];
   members?: MemberForTest[];
-  currentMember?: Member;
+  currentMember?: MemberForTest;
   mentions?: ChatMention[];
   categories?: Category[];
+  shortLinks?: ShortLink[];
+  itemId?: DiscriminatedItem['id'];
+  bookmarkedItems?: ItemBookmark[];
+  recycledItemData?: RecycledItemData[];
+  itemPublicationStatus?: PublicationStatus;
+  publishedItemData?: ItemPublished[];
   // statuses = SAMPLE_STATUSES,
-  // itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
   itemValidationGroups?: ItemValidationGroup[];
   deleteItemsError?: boolean;
   postItemError?: boolean;
@@ -99,4 +107,14 @@ export type ApiConfig = {
   postAppDataError?: boolean;
   patchAppDataError?: boolean;
   deleteAppDataError?: boolean;
+  getPublishedItemsError?: boolean;
+  importH5pError?: boolean;
+  deleteShortLinkError?: boolean;
+  patchShortLinkError?: boolean;
+  postShortLinkError?: boolean;
+  getShortLinkAvailable?: boolean;
+  getShortLinksItemError?: boolean;
+  deleteFavoriteError?: boolean;
+  addFavoriteError?: boolean;
+  getFavoriteError?: boolean;
 };

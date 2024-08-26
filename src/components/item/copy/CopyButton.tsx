@@ -1,6 +1,6 @@
 import {
   ActionButtonVariant,
-  ColorVariants,
+  ColorVariantsType,
   CopyButton as GraaspCopyButton,
 } from '@graasp/ui';
 
@@ -12,7 +12,7 @@ import {
 import { BUILDER } from '../../../langs/constants';
 
 export type Props = {
-  color?: ColorVariants;
+  color?: ColorVariantsType;
   id?: string;
   onClick?: () => void;
   type?: ActionButtonVariant;

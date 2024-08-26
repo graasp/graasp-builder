@@ -9,7 +9,6 @@ import { APPS_LIST } from '../fixtures/apps/apps';
 import { SAMPLE_CATEGORIES } from '../fixtures/categories';
 import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
-import { ITEM_VALIDATION_AND_REVIEW } from '../fixtures/validations';
 import './commands/item';
 import './commands/navigation';
 import {
@@ -51,7 +50,6 @@ import {
   mockGetItemMembershipsForItem,
   mockGetItemTags,
   mockGetItemThumbnailUrl,
-  mockGetItemValidationAndReview,
   mockGetItemValidationGroups,
   mockGetItems,
   mockGetItemsTags,
@@ -113,7 +111,6 @@ Cypress.Commands.add(
     currentMember = CURRENT_USER,
     mentions = SAMPLE_MENTIONS,
     categories = SAMPLE_CATEGORIES,
-    itemValidationAndReview = ITEM_VALIDATION_AND_REVIEW,
     itemValidationGroups = [],
     itemPublicationStatus = PublicationStatus.Unpublished,
     deleteItemsError = false,
@@ -171,7 +168,7 @@ Cypress.Commands.add(
     deleteShortLinkError = false,
     importH5pError = false,
     getRecycledItemsError = false,
-    getPublishedItems = false,
+    getPublishedItemsError = false,
   } = {}) => {
     const cachedItems = JSON.parse(JSON.stringify(items));
     const cachedMembers = JSON.parse(JSON.stringify(members));
@@ -285,7 +282,7 @@ Cypress.Commands.add(
 
     mockGetRecycledItems(recycledItemData, getRecycledItemsError);
 
-    mockRestoreItems(recycledItemData, restoreItemsError);
+    mockRestoreItems(items, restoreItemsError);
 
     // mockGetItemThumbnail(items, getItemThumbnailError);
     mockGetItemThumbnailUrl(items, getItemThumbnailError);
@@ -307,8 +304,6 @@ Cypress.Commands.add(
     mockPostItemCategory(postItemCategoryError);
 
     mockDeleteItemCategory(deleteItemCategoryError);
-
-    mockGetItemValidationAndReview(itemValidationAndReview);
 
     mockGetItemValidationGroups(itemValidationGroups);
 
@@ -358,7 +353,7 @@ Cypress.Commands.add(
 
     mockImportH5p(importH5pError);
 
-    mockGetPublishItemsForMember(publishedItemData, getPublishedItems);
+    mockGetPublishItemsForMember(publishedItemData, getPublishedItemsError);
   },
 );
 

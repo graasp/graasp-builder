@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 
-import FlagIcon from '@mui/icons-material/Flag';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
 import { PackedItem } from '@graasp/sdk';
+
+import { FlagIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { ITEM_MENU_FLAG_BUTTON_CLASS } from '@/config/selectors';

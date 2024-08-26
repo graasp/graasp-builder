@@ -5,7 +5,7 @@ import {
   PermissionLevel,
   PermissionLevelCompare,
 } from '@graasp/sdk';
-import { ChatboxButton } from '@graasp/ui';
+import { ActionButton, ChatboxButton } from '@graasp/ui';
 
 import useModalStatus from '@/components/hooks/useModalStatus';
 import DownloadButton from '@/components/main/DownloadButton';
@@ -68,7 +68,11 @@ const ItemHeaderActions = ({ itemId }: Props): JSX.Element | null => {
               open={isEditModalOpen}
               item={item}
             />
-            <EditButton onClick={openEditModal} type="iconButton" item={item} />
+            <EditButton
+              onClick={openEditModal}
+              type={ActionButton.ICON_BUTTON}
+              item={item}
+            />
           </>
         )}
         <DownloadButton item={item} />

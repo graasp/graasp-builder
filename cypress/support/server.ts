@@ -1,5 +1,6 @@
 import { API_ROUTES } from '@graasp/query-client';
 import {
+  AccountType,
   App,
   Category,
   ChatMention,
@@ -11,7 +12,6 @@ import {
   ItemPublished,
   ItemTagType,
   ItemValidationGroup,
-  ItemValidationReview,
   Member,
   PermissionLevel,
   PermissionLevelCompare,
@@ -649,7 +649,7 @@ export const mockPostManyItemMemberships = (
           memberId: string;
         }) => {
           const thisM = itemMemberships?.find(
-            ({ member }) => m.memberId === member.id,
+            ({ account }) => m.memberId === account.id,
           );
           if (thisM) {
             result.errors.push({
@@ -1092,7 +1092,7 @@ export const mockGetItemMembershipsForItem = (
 
         // if the defined memberships does not contain currentMember, it should throw
         const currentMemberHasMembership = memberships?.find(
-          ({ member }) => member.id === currentMember?.id,
+          ({ account }) => account.id === currentMember?.id,
         );
         // no membership
         if (!currentMemberHasMembership && !isCreator) {
@@ -1103,7 +1103,7 @@ export const mockGetItemMembershipsForItem = (
         result.data[id] = memberships || [
           {
             permission: PermissionLevel.Admin,
-            member: creator,
+            account: { ...creator, type: AccountType.Individual },
             item,
             id: v4(),
             createdAt: '2021-08-11T12:56:36.834Z',
@@ -1689,20 +1689,6 @@ export const mockDeleteItemCategory = (shouldThrowError: boolean): void => {
       return reply(body);
     },
   ).as('deleteItemCategory');
-};
-
-export const mockGetItemValidationAndReview = (
-  itemValidationAndReview: ItemValidationReview,
-): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: new RegExp(`${API_HOST}/items/validations/status/${ID_FORMAT}`),
-    },
-    ({ reply }) => {
-      reply(itemValidationAndReview);
-    },
-  ).as('getItemValidationAndReview');
 };
 
 export const mockGetItemValidationGroups = (

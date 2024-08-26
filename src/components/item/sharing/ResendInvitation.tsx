@@ -10,9 +10,14 @@ import { BUILDER } from '../../../langs/constants';
 type Props = {
   invitationId: string;
   itemId: string;
+  disabled?: boolean;
 };
 
-const ResendInvitation = ({ itemId, invitationId }: Props): JSX.Element => {
+const ResendInvitation = ({
+  itemId,
+  invitationId,
+  disabled = false,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutate: resendInvitation } = mutations.useResendInvitation();
 
@@ -27,7 +32,7 @@ const ResendInvitation = ({ itemId, invitationId }: Props): JSX.Element => {
     <Button
       variant="outlined"
       onClick={resendEmail}
-      disabled={clicked}
+      disabled={clicked || disabled}
       className={ITEM_RESEND_INVITATION_BUTTON_CLASS}
       size="small"
     >

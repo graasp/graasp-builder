@@ -30,7 +30,7 @@ export const ITEM_WITH_CHATBOX_MESSAGES: ItemForTest = {
     {
       item,
       permission: PermissionLevel.Write,
-      member: MEMBERS.ANNA,
+      account: MEMBERS.ANNA,
       creator: MEMBERS.ANNA,
       createdAt: '2021-09-11T12:56:36.834Z',
       updatedAt: '2021-09-11T12:56:36.834Z',
@@ -72,7 +72,7 @@ const ITEM_WITH_CHATBOX_MESSAGES_AND_ADMIN: ItemForTest = {
     {
       item: items[0],
       permission: PermissionLevel.Admin,
-      member: MEMBERS.ANNA,
+      account: MEMBERS.ANNA,
       creator: MEMBERS.ANNA,
       createdAt: '2021-08-11T12:56:36.834Z',
       id: '78ad2166-3862-4593-a13c-d380e7b66674',
@@ -110,7 +110,7 @@ export const ITEM_WITHOUT_CHATBOX_MESSAGES: ItemForTest = {
 export const SAMPLE_MENTIONS: ChatMention[] = [
   {
     id: '7062d5e6-a4a0-4828-b4b9-8bc9e21f7abd',
-    member: CURRENT_USER,
+    account: CURRENT_USER,
     createdAt: '2021-08-11T12:56:36.834Z', // '2022-07-18T07:48:05.008Z',
     updatedAt: '2021-08-11T12:56:36.834Z', // '2022-07-18T07:48:05.008Z',
     status: MentionStatus.Unread,

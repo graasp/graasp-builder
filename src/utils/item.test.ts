@@ -1,4 +1,9 @@
-import { DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemMembership,
+  MemberFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { describe, expect, it } from 'vitest';
 
@@ -111,11 +116,15 @@ describe('item utils', () => {
     });
 
     it('returns closest permission when only one permission', () => {
-      const member = { id: '1234', name: 'bob', email: 'bob@graasp.org' };
+      const account = MemberFactory({
+        id: '1234',
+        name: 'bob',
+        email: 'bob@graasp.org',
+      });
       const item = { path: '1234' } as DiscriminatedItem;
       const membership = {
         id: 'membership-123',
-        member,
+        account,
         item,
         permission: PermissionLevel.Read,
         creator: null,
@@ -124,7 +133,7 @@ describe('item utils', () => {
       };
       expect(
         getHighestPermissionForMemberFromMemberships({
-          memberId: member.id,
+          memberId: account.id,
           itemPath: item.path,
           memberships: [membership],
         }),
@@ -132,21 +141,25 @@ describe('item utils', () => {
     });
 
     it('returns closest permission when multiple permissions', () => {
-      const member = { id: '1234', name: 'bob', email: 'bob@graasp.org' };
+      const account = MemberFactory({
+        id: '1234',
+        name: 'bob',
+        email: 'bob@graasp.org',
+      });
       const item1 = { path: '1234' } as DiscriminatedItem;
       const item2 = { path: '1234.5678' } as DiscriminatedItem;
-      const membership1 = {
+      const membership1: ItemMembership = {
         id: 'membership-123',
-        member,
+        account,
         item: item1,
         permission: PermissionLevel.Read,
         creator: null,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      const membership2 = {
+      const membership2: ItemMembership = {
         id: 'membership-123',
-        member,
+        account,
         item: item2,
         permission: PermissionLevel.Read,
         creator: null,
@@ -155,7 +168,7 @@ describe('item utils', () => {
       };
       expect(
         getHighestPermissionForMemberFromMemberships({
-          memberId: member.id,
+          memberId: account.id,
           itemPath: item2.path,
           memberships: [membership1, membership2],
         }),

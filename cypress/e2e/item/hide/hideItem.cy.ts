@@ -23,7 +23,7 @@ const HIDDEN_ITEM: ItemForTest = {
     {
       item: hiddenItem,
       permission: PermissionLevel.Admin,
-      member: MEMBERS.ANNA,
+      account: MEMBERS.ANNA,
       creator: MEMBERS.ANNA,
       id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
       createdAt: '2021-08-11T12:56:36.834Z',
@@ -32,7 +32,7 @@ const HIDDEN_ITEM: ItemForTest = {
     {
       item: hiddenItem,
       permission: PermissionLevel.Read,
-      member: MEMBERS.BOB,
+      account: MEMBERS.BOB,
       creator: MEMBERS.ANNA,
       id: 'ecbfbd2a-5688-12db-ae93-0242ac130002',
       createdAt: '2021-08-11T12:56:36.834Z',

@@ -67,12 +67,12 @@ describe('Delete Membership', () => {
         memberships: [
           {
             permission: PermissionLevel.Admin,
-            member: CURRENT_USER,
+            account: CURRENT_USER,
             item,
           } as unknown as ItemMembership,
           {
             permission: PermissionLevel.Read,
-            member: MEMBERS.BOB,
+            account: MEMBERS.BOB,
             item,
           } as unknown as ItemMembership,
         ],

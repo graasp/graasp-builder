@@ -24,7 +24,7 @@ import TableRowPermission from './TableRowPermission';
 
 type Props = {
   item: DiscriminatedItem;
-  invitations: Invitation[];
+  invitations?: Invitation[];
   emptyMessage?: string;
   readOnly?: boolean;
 };
@@ -44,7 +44,7 @@ const InvitationsTable = ({
     deleteInvitation({ itemId: item.id, id: invitation.id });
   };
 
-  if (!invitations.length) {
+  if (!invitations?.length) {
     return <Typography>{emptyMessage ?? 'empty'}</Typography>;
   }
 
@@ -88,40 +88,47 @@ const InvitationsTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {invitations.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              data-cy={buildInvitationTableRowId(row.id)}
-            >
-              <TableCell scope="row">
-                <Typography noWrap>{row.email}</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <TableRowPermission
-                  permission={row.permission}
-                  changePermission={changePermission(row)}
-                  readOnly={readOnly}
-                />
-              </TableCell>
-              {!readOnly && (
-                <TableCell
-                  align="right"
-                  sx={{ display: 'flex', direction: 'row' }}
-                >
-                  <TableRowDeleteButton
-                    onClick={() => onDelete(row)}
-                    id={buildItemInvitationRowDeleteButtonId(row.id)}
-                    tooltip={translateBuilder(
-                      BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
-                    )}
-                    disabled={item.path !== row.item.path}
-                  />
-                  <ResendInvitation invitationId={row.id} itemId={item.id} />
+          {invitations?.map((row) => {
+            const isDisabled = item.path !== row.item.path;
+            return (
+              <TableRow
+                key={row.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                data-cy={buildInvitationTableRowId(row.id)}
+              >
+                <TableCell scope="row">
+                  <Typography noWrap>{row.email}</Typography>
                 </TableCell>
-              )}
-            </TableRow>
-          ))}
+                <TableCell align="right">
+                  <TableRowPermission
+                    permission={row.permission}
+                    changePermission={changePermission(row)}
+                    readOnly={readOnly}
+                  />
+                </TableCell>
+                {!readOnly && (
+                  <TableCell
+                    align="right"
+                    sx={{ display: 'flex', direction: 'row' }}
+                  >
+                    <TableRowDeleteButton
+                      onClick={() => onDelete(row)}
+                      id={buildItemInvitationRowDeleteButtonId(row.id)}
+                      tooltip={translateBuilder(
+                        BUILDER.INVITATIONS_TABLE_CANNOT_DELETE_PARENT_TOOLTIP,
+                      )}
+                      disabled={isDisabled}
+                    />
+                    <ResendInvitation
+                      invitationId={row.id}
+                      itemId={item.id}
+                      disabled={isDisabled}
+                    />
+                  </TableCell>
+                )}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

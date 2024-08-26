@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import {
   Alert,
   Dialog,
@@ -40,12 +42,23 @@ const DeleteItemDialog = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: member } = hooks.useCurrentMember();
+  const { mutateAsync: deleteItemMembership } =
+    mutations.useDeleteItemMembership();
 
-  const { mutate: deleteItemMembership } = mutations.useDeleteItemMembership();
+  const navigate = useNavigate();
 
   const onDelete = () => {
     if (membershipToDelete?.id) {
-      deleteItemMembership({ id: membershipToDelete.id, itemId: item.id });
+      deleteItemMembership({
+        id: membershipToDelete.id,
+        itemId: item.id,
+      }).then(() => {
+        // if current user deleted their own membership navigate them to the home
+        if (membershipToDelete.account.id === member?.id) {
+          navigate('/');
+        }
+      });
+
       handleClose();
     }
   };
@@ -56,16 +69,17 @@ const DeleteItemDialog = ({
   // incase of deleting the only admin
   if (isDeletingLastAdmin) {
     dialogText = translateBuilder(BUILDER.DELETE_LAST_ADMIN_ALERT_MESSAGE);
-  } else if (member?.id === membershipToDelete?.member?.id) {
+  } else if (member?.id === membershipToDelete?.account?.id) {
     // deleting yourself
     dialogText = translateBuilder(BUILDER.DELETE_OWN_MEMBERSHIP_MESSAGE);
   } else {
     // delete other members
     dialogText = translateBuilder(BUILDER.DELETE_MEMBERSHIP_MESSAGE, {
-      name: membershipToDelete?.member.name,
+      name: membershipToDelete?.account.name,
       permissionLevel: membershipToDelete?.permission,
     });
   }
+
   return (
     <Dialog
       open={open}
