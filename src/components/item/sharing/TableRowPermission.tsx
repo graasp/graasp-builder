@@ -8,7 +8,7 @@ import type { ItemMembershipSelectProps } from './ItemMembershipSelect';
 type TableRowPermissionProps = {
   readOnly?: boolean;
   changePermission: (permission: PermissionLevel) => void;
-  permission: PermissionLevel;
+  permission?: PermissionLevel;
   allowDowngrade?: boolean;
 };
 

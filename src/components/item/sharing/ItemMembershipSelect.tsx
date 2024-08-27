@@ -30,7 +30,7 @@ const defaultDisabledMap: DisabledMap = {
 };
 
 export type ItemMembershipSelectProps = {
-  value: PermissionLevel;
+  value?: PermissionLevel;
   onChange?: SelectProps['onChange'];
   color?: SelectProps['color'];
   showLabel?: boolean;
@@ -67,8 +67,8 @@ const ItemMembershipSelect = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  const values = Object.values(PermissionLevel).filter(
-    (p) => allowDowngrade || PermissionLevelCompare.gte(p, value),
+  const values = Object.values(PermissionLevel).filter((p) =>
+    value ? allowDowngrade || PermissionLevelCompare.gte(p, value) : true,
   );
 
   return (

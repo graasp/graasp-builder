@@ -1,7 +1,6 @@
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 
-import { ItemLoginAuthorization } from '@graasp/ui';
-
+import LoadingScreen from '@/components/layout/LoadingScreen';
 import { hooks, mutations } from '@/config/queryClient';
 import {
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
@@ -13,42 +12,44 @@ import ItemForbiddenScreen from '../../main/list/ItemForbiddenScreen';
 
 const { useItem, useCurrentMember, useItemLoginSchemaType } = hooks;
 
-const ItemLoginWrapper = ({
-  children,
-}: {
-  children: JSX.Element;
-}): JSX.Element => {
-  const { mutate: itemLoginSignIn } = mutations.usePostItemLogin();
-  const { data: currentAccount, isLoading: isCurrentAccountLoading } =
-    useCurrentMember();
+const ItemLoginWrapper = (): JSX.Element => {
   const { itemId } = useParams();
-  const { data: item, isLoading: isItemLoading } = useItem(itemId);
-  const { data: itemLoginSchemaType, isLoading: isItemLoginSchemaTypeLoading } =
+  const { data: item, isLoading: itemIsLoading } = useItem(itemId);
+  const { data: currentMember, isLoading: currentMemberIsLoading } =
+    useCurrentMember();
+  const { data: itemLoginSchemaType, isLoading: itemLoginSchemaTypeIsLoading } =
     useItemLoginSchemaType({ itemId });
+  const { mutate: itemLoginSignIn } = mutations.usePostItemLogin();
 
-  const forbiddenContent = <ItemForbiddenScreen />;
-
-  if (!itemId) {
-    return forbiddenContent;
+  if (itemId) {
+    if (item) {
+      return <Outlet context={{ item }} />;
+    }
+    if (itemLoginSchemaType && !currentMember) {
+      return (
+        <ItemLoginScreen
+          signInButtonId={ITEM_LOGIN_SIGN_IN_BUTTON_ID}
+          usernameInputId={ITEM_LOGIN_SIGN_IN_USERNAME_ID}
+          passwordInputId={ITEM_LOGIN_SIGN_IN_PASSWORD_ID}
+          signIn={itemLoginSignIn}
+          itemLoginSchemaType={itemLoginSchemaType}
+          itemId={itemId}
+        />
+      );
+    }
   }
 
+  if (currentMemberIsLoading || itemLoginSchemaTypeIsLoading || itemIsLoading) {
+    return <LoadingScreen />;
+  }
+
+  // logged in member does not have access to item
+  // or logged out member cannot access item
   return (
-    <ItemLoginAuthorization
-      isLoading={
-        isItemLoading || isCurrentAccountLoading || isItemLoginSchemaTypeLoading
-      }
-      signIn={itemLoginSignIn}
+    <ItemForbiddenScreen
       itemId={itemId}
-      currentAccount={currentAccount}
-      item={item}
       itemLoginSchemaType={itemLoginSchemaType}
-      ForbiddenContent={forbiddenContent}
-      usernameInputId={ITEM_LOGIN_SIGN_IN_USERNAME_ID}
-      signInButtonId={ITEM_LOGIN_SIGN_IN_BUTTON_ID}
-      passwordInputId={ITEM_LOGIN_SIGN_IN_PASSWORD_ID}
-    >
-      {children}
-    </ItemLoginAuthorization>
+    />
   );
 };
 

@@ -475,5 +475,6 @@
   "MEMBER_VALIDATION_DESCRIPTION": "In order to use all features of Graasp you need to validate your account email. You will find more information in the link below.",
   "MEMBER_VALIDATION_LINK_TEXT": "Learn more",
   "GUEST_LIMITATION_TEXT": "You are currently using Graasp with the guest account <1>{{name}}</1>. In order to use all features of Graasp, you have to log out and create a Graasp account.",
-  "GUEST_SIGN_OUT_BUTTON": " Log out and Create a Graasp account"
+  "GUEST_SIGN_OUT_BUTTON": " Log out and Create a Graasp account",
+  "ITEM_LOGIN_HELPER_SIGN_OUT": "You're logged in as {{email}}"
 }

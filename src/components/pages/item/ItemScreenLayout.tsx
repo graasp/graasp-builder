@@ -1,19 +1,18 @@
 import { useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useOutletContext } from 'react-router-dom';
 
-import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
-import { Loader } from '@graasp/ui';
+import {
+  PackedItem,
+  PermissionLevel,
+  PermissionLevelCompare,
+} from '@graasp/sdk';
 
-import { hooks } from '../../../config/queryClient';
 import ErrorAlert from '../../common/ErrorAlert';
 import { useLayoutContext } from '../../context/LayoutContext';
 
-const { useItem } = hooks;
-
 const ItemScreenLayout = (): JSX.Element => {
-  const { itemId } = useParams();
-
-  const { data: item, isLoading } = useItem(itemId);
+  const { item } = useOutletContext<{ item: PackedItem }>();
+  const { id: itemId } = item;
   const { setEditingItemId } = useLayoutContext();
 
   useEffect(() => {
@@ -37,9 +36,6 @@ const ItemScreenLayout = (): JSX.Element => {
     );
   }
 
-  if (isLoading) {
-    return <Loader />;
-  }
   return <ErrorAlert />;
 };
 

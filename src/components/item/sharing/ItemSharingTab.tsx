@@ -14,6 +14,7 @@ import CreateItemMembershipForm from './CreateItemMembershipForm';
 import InvitationsTable from './InvitationsTable';
 import ItemLoginMembershipsTable from './ItemLoginMembershipsTable';
 import ItemMembershipsTable from './ItemMembershipsTable';
+import MembershipRequests from './MembershipRequests';
 import VisibilitySelect from './VisibilitySelect';
 import ImportUsersWithCSVButton from './csvImport/ImportUsersWithCSVButton';
 import ShortLinksRenderer from './shortLink/ShortLinksRenderer';
@@ -107,6 +108,7 @@ const ItemSharingTab = (): JSX.Element => {
           <VisibilitySelect item={item} edit={canAdmin} />
         </Box>
         <MembershipSettings />
+        <MembershipRequests itemId={item.id} />
       </Stack>
     </Container>
   );
