@@ -11,12 +11,14 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useBuilderTranslation } from '@/config/i18n';
 import {
   MULTI_SELECT_CHIP_ADD_BUTTON_ID,
   MULTI_SELECT_CHIP_CONTAINER_ID,
   MULTI_SELECT_CHIP_INPUT_ID,
   buildMultiSelectChipsSelector,
 } from '@/config/selectors';
+import { BUILDER } from '@/langs/constants';
 
 import { useMultiSelectChipInput } from './MultiSelectChipInput.hook';
 
@@ -31,6 +33,7 @@ export const MultiSelectChipInput = ({
   label,
   onSave,
 }: Props): JSX.Element | null => {
+  const { t } = useBuilderTranslation();
   const {
     values,
     currentValue,
@@ -68,12 +71,12 @@ export const MultiSelectChipInput = ({
       {...params}
       variant="outlined"
       label={label}
+      helperText={t(BUILDER.ITEM_TAGS_HELPER_TEXT)}
       inputProps={{
         ...params.inputProps,
         value: currentValue,
       }}
       error={hasError}
-      // helperText={error}
       sx={{
         // Avoid to resize the textfield on hover when next tag will be on new line.
         '& .MuiAutocomplete-input': {
