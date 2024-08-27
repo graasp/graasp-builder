@@ -14,7 +14,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@air/react-drag-to-select": "5.0.8",
+    "@air/react-drag-to-select": "5.0.10",
     "@emotion/cache": "11.13.0",
     "@emotion/react": "11.13.0",
     "@emotion/styled": "11.13.0",
