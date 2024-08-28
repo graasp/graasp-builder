@@ -161,6 +161,7 @@
   "ITEM_TAGS_CHIP_BUTTON_EDIT": "Edit Tags",
   "ITEM_TAGS_TITLE": "Tags",
   "ITEM_TAGS_LABEL": "Edit tags",
+  "ITEM_TAGS_HELPER_TEXT": "Use the 'Enter' key to add a new tag",
   "ITEM_TAGS_MISSING_WARNING": "Add at least one tag to better explain who could use your publication",
   "ITEMS_GRID_ITEMS_PER_PAGE_TITLE": "Items per page",
   "ITEMS_TABLE_ACTIONS_HEADER": "Actions",
