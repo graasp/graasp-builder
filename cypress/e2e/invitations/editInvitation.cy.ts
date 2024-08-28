@@ -3,7 +3,7 @@ import { PermissionLevel } from '@graasp/sdk';
 import { buildItemPath } from '../../../src/config/paths';
 import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
-  buildInvitationTableRowSelector,
+  buildInvitationTableRowId,
   buildPermissionOptionId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
@@ -19,13 +19,11 @@ const editInvitation = ({
   permission: PermissionLevel;
 }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
-  const select = cy.get(
-    `${buildInvitationTableRowSelector(
-      id,
-    )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`,
-  );
+  cy.get(`#${buildInvitationTableRowId(id)} [aria-label="Edit"]`).click();
+  const select = cy.get(`.${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`);
   select.click();
   select.get(`#${buildPermissionOptionId(permission)}`).click();
+  cy.get('button[type="submit"]').click();
 };
 
 describe('Edit Invitation', () => {

@@ -51,6 +51,7 @@ export const SHARE_ITEM_EMAIL_INPUT_ID = 'shareItemModalEmailInput';
 export const buildPermissionOptionId = (id: string): string =>
   `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
+export const SHARE_BUTTON_SELECTOR = 'shareItem';
 
 export const PUBLISHED_ITEMS_ID = 'publishedItems';
 export const BOOKMARKED_ITEMS_ID = 'bookmarkedItems';
@@ -116,6 +117,8 @@ export const ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS =
   'itemMembershipPermissionSelect';
 export const buildItemMembershipRowDeleteButtonId = (id: string): string =>
   `itemMembershipRowDeleteButtonId-${id}`;
+export const buildItemMembershipRowEditButtonId = (id: string): string =>
+  `itemMembershipRowEditButtonId-${id}`;
 export const ITEM_INFORMATION_ICON_IS_OPEN_CLASS = 'itemInformationIconIsOpen';
 export const ITEM_SEARCH_INPUT_ID = 'itemSearchInput';
 export const ITEMS_GRID_NO_SEARCH_RESULT_ID = 'itemsGridNoSearchResult';
@@ -435,3 +438,18 @@ export const COPY_MANY_ITEMS_BUTTON_SELECTOR = `.lucide-copy`;
 export const MOVE_MANY_ITEMS_BUTTON_SELECTOR = `.lucide-move`;
 export const DELETE_SINGLE_ITEM_BUTTON_SELECTOR = `.lucide-trash`;
 export const PREVENT_GUEST_MESSAGE_ID = 'preventGuestMessage';
+export const REQUEST_MEMBERSHIP_BUTTON_ID = 'requestMembershipButton';
+export const MEMBERSHIP_REQUEST_PENDING_SCREEN_SELECTOR =
+  'membershipRequestPendingScreen';
+export const MEMBERSHIPS_TAB_SELECTOR = `membershipsTab`;
+export const MEMBERSHIP_REQUESTS_TAB_SELECTOR = `membershipRequestsTab`;
+
+export const MEMBERSHIP_REQUESTS_EMPTY_SELECTOR = 'membershipRequestsEmpty';
+export const buildMembershipRequestRowSelector = (memberId: string): string =>
+  `membershipRequestRow-${memberId}`;
+export const MEMBERSHIP_REQUEST_ACCEPT_BUTTON_SELECTOR =
+  'membershipRequestAcceptButton';
+
+export const MEMBERSHIP_REQUEST_REJECT_BUTTON_SELECTOR =
+  'membershipRequestRejectButton';
+export const ENROLL_BUTTON_SELECTOR = 'enrollButton';

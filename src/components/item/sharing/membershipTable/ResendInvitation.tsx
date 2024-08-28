@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import { Button } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../../config/i18n';
-import { mutations } from '../../../config/queryClient';
-import { ITEM_RESEND_INVITATION_BUTTON_CLASS } from '../../../config/selectors';
-import { BUILDER } from '../../../langs/constants';
+import { useBuilderTranslation } from '../../../../config/i18n';
+import { mutations } from '../../../../config/queryClient';
+import { ITEM_RESEND_INVITATION_BUTTON_CLASS } from '../../../../config/selectors';
+import { BUILDER } from '../../../../langs/constants';
 
 type Props = {
   invitationId: string;
@@ -30,7 +30,7 @@ const ResendInvitation = ({
 
   return (
     <Button
-      variant="outlined"
+      variant="text"
       onClick={resendEmail}
       disabled={clicked || disabled}
       className={ITEM_RESEND_INVITATION_BUTTON_CLASS}

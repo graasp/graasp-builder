@@ -1,8 +1,9 @@
 import { LoadingButton } from '@mui/lab';
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import {
   CompleteMember,
+  CurrentAccount,
   DiscriminatedItem,
   MembershipRequestStatus,
 } from '@graasp/sdk';
@@ -11,10 +12,14 @@ import { Check, Lock } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks, mutations } from '@/config/queryClient';
+import {
+  MEMBERSHIP_REQUEST_PENDING_SCREEN_SELECTOR,
+  REQUEST_MEMBERSHIP_BUTTON_ID,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 type Props = {
-  member: CompleteMember;
+  member: CurrentAccount;
   itemId: DiscriminatedItem['id'];
 };
 
@@ -29,27 +34,39 @@ const RequestAccessContent = ({ member, itemId }: Props): JSX.Element => {
 
   if (request?.status === MembershipRequestStatus.Pending) {
     return (
-      <>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+        gap={2}
+        data-cy={MEMBERSHIP_REQUEST_PENDING_SCREEN_SELECTOR}
+      >
         <Lock size={40} />
         <Typography variant="h3">
-          {translateBuilder('You do not have access to this item')}
+          {translateBuilder(BUILDER.REQUEST_ACCESS_PENDING_TITLE)}
         </Typography>
         <Typography>
-          {translateBuilder(
-            'An admin needs to approve your request to access this item.',
-          )}
+          {translateBuilder(BUILDER.REQUEST_ACCESS_PENDING_DESCRIPTION)}
         </Typography>
-      </>
+      </Stack>
     );
   }
 
   return (
-    <>
+    <Stack
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      height="100%"
+      gap={2}
+    >
       <Lock size={40} />
       <Typography variant="h3">
-        {translateBuilder('Request access to this item')}
+        {translateBuilder(BUILDER.REQUEST_ACCESS_TITLE)}
       </Typography>
       <LoadingButton
+        id={REQUEST_MEMBERSHIP_BUTTON_ID}
         variant="contained"
         disabled={isSuccess}
         loading={isLoading}
@@ -59,15 +76,15 @@ const RequestAccessContent = ({ member, itemId }: Props): JSX.Element => {
         }}
       >
         {isSuccess
-          ? translateBuilder('request sent')
-          : translateBuilder('Request access')}
+          ? translateBuilder(BUILDER.REQUEST_ACCESS_SENT_BUTTON)
+          : translateBuilder(BUILDER.REQUEST_ACCESS_BUTTON)}
       </LoadingButton>
       <Typography variant="subtitle2">
         {translateBuilder(BUILDER.ITEM_LOGIN_HELPER_SIGN_OUT, {
           email: member.email,
         })}
       </Typography>
-    </>
+    </Stack>
   );
 };
 

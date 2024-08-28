@@ -41,6 +41,7 @@ export type ItemMembershipSelectProps = {
    */
   disabled?: boolean | DisabledMap;
   allowDowngrade?: boolean;
+  size?: SelectProps['size'];
 };
 
 const ItemMembershipSelect = ({
@@ -51,6 +52,7 @@ const ItemMembershipSelect = ({
   displayEmpty = false,
   disabled = false,
   allowDowngrade = true,
+  size = 'small',
 }: ItemMembershipSelectProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
@@ -87,7 +89,7 @@ const ItemMembershipSelect = ({
       displayEmpty={displayEmpty}
       className={ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}
       color={color}
-      size="small"
+      size={size}
     />
   );
 };

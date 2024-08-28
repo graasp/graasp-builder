@@ -34,13 +34,13 @@ import MapItemsScreen from './pages/MapItemsScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
 import HomeScreen from './pages/home/HomeScreen';
-import ItemLoginWrapper from './pages/item/ItemLoginWrapper';
 import ItemPageLayout from './pages/item/ItemPageLayout';
 import ItemScreen from './pages/item/ItemScreen';
 import ItemScreenLayout from './pages/item/ItemScreenLayout';
 import ItemSettingsPage from './pages/item/ItemSettingsPage';
 import ItemSharingPage from './pages/item/ItemSharingPage';
 import LibrarySettingsPage from './pages/item/LibrarySettingsPage';
+import ItemAccessWrapper from './pages/item/accessWrapper/ItemAccessWrapper';
 
 const { useItemFeedbackUpdates, useCurrentMember } = hooks;
 

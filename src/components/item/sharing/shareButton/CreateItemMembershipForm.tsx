@@ -1,53 +1,61 @@
 import { useState } from 'react';
 
-import { ErrorOutline } from '@mui/icons-material';
 import {
-  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Stack,
   TextField,
   TextFieldProps,
-  Tooltip,
+  Typography,
 } from '@mui/material';
 
 import {
   AccountType,
   DiscriminatedItem,
   Invitation,
-  ItemMembership,
   PermissionLevel,
 } from '@graasp/sdk';
+import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
 import validator from 'validator';
 
-import { useBuilderTranslation } from '../../../config/i18n';
-import { mutations } from '../../../config/queryClient';
+import {
+  useBuilderTranslation,
+  useCommonTranslation,
+} from '../../../../config/i18n';
+import { hooks, mutations } from '../../../../config/queryClient';
 import {
   CREATE_MEMBERSHIP_FORM_ID,
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
-} from '../../../config/selectors';
-import { BUILDER } from '../../../langs/constants';
+} from '../../../../config/selectors';
+import { BUILDER } from '../../../../langs/constants';
 import ItemMembershipSelect, {
   ItemMembershipSelectProps,
-} from './ItemMembershipSelect';
+} from '../ItemMembershipSelect';
 
 type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
 type Props = {
   item: DiscriminatedItem;
-  memberships: ItemMembership[];
+  open: boolean;
+  handleClose: () => void;
 };
 
-// todo: handle multiple invitations
 const CreateItemMembershipForm = ({
   item,
-  memberships,
+  open,
+  handleClose,
 }: Props): JSX.Element => {
   const itemId = item.id;
   const [error, setError] = useState<string | null>();
 
   const { mutateAsync: shareItem } = mutations.useShareItem();
+  const { data: memberships } = hooks.useItemMemberships(item.id);
 
+  const { t: translateCommon } = useCommonTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
 
   // use an array to later allow sending multiple invitations
@@ -74,7 +82,7 @@ const CreateItemMembershipForm = ({
     }
     // check mail does not already exist
     if (
-      memberships.find(
+      memberships?.find(
         ({ account }) =>
           account.type === AccountType.Individual && account.email === email,
       )
@@ -118,6 +126,8 @@ const CreateItemMembershipForm = ({
         ...invitation,
         email: '',
       });
+
+      handleClose();
     } catch (e) {
       console.error(e);
     }
@@ -137,42 +147,47 @@ const CreateItemMembershipForm = ({
   };
 
   return (
-    <Stack
-      id={CREATE_MEMBERSHIP_FORM_ID}
-      direction="row"
-      alignItems="center"
-      justifyContent="center"
-      spacing={1}
-    >
-      <TextField
-        id={SHARE_ITEM_EMAIL_INPUT_ID}
-        variant="outlined"
-        label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
-        helperText={error}
-        value={invitation.email}
-        onChange={onChangeEmail}
-        error={Boolean(error)}
-        sx={{ flexGrow: 1 }}
-      />
-      <ItemMembershipSelect
-        value={invitation.permission}
-        onChange={onChangePermission}
-      />
-      <Button
-        onClick={handleShare}
-        disabled={Boolean(error)}
-        id={SHARE_ITEM_SHARE_BUTTON_ID}
-      >
-        {translateBuilder(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
-      </Button>
-      <Tooltip
-        title={translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
-      >
-        <IconButton aria-label="status">
-          <ErrorOutline />
-        </IconButton>
-      </Tooltip>
-    </Stack>
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>Share item</DialogTitle>
+      <DialogContent>
+        <Typography variant="body1">
+          {translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
+        </Typography>
+        <Stack
+          id={CREATE_MEMBERSHIP_FORM_ID}
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={1}
+        >
+          <TextField
+            id={SHARE_ITEM_EMAIL_INPUT_ID}
+            variant="outlined"
+            label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
+            helperText={error}
+            value={invitation.email}
+            onChange={onChangeEmail}
+            error={Boolean(error)}
+            sx={{ flexGrow: 1 }}
+          />
+          <ItemMembershipSelect
+            value={invitation.permission}
+            onChange={onChangePermission}
+            size="medium"
+          />
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="text">{translateCommon(COMMON.CANCEL_BUTTON)}</Button>
+        <Button
+          onClick={handleShare}
+          disabled={Boolean(error)}
+          id={SHARE_ITEM_SHARE_BUTTON_ID}
+        >
+          {translateBuilder(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

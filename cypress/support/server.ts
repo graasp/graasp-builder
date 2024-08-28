@@ -4,6 +4,7 @@ import {
   App,
   Category,
   ChatMention,
+  CompleteMembershipRequest,
   DiscriminatedItem,
   HttpMethod,
   Invitation,
@@ -2282,4 +2283,68 @@ export const mockGetLinkMetadata = (): void => {
       return reply({ statusCode: StatusCodes.BAD_REQUEST });
     },
   ).as('getLinkMetadata');
+};
+
+export const mockGetOwnMembershipRequests = (
+  currentMember: Member,
+  membershipRequests: CompleteMembershipRequest[],
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Get,
+      url: new RegExp(
+        `${API_HOST}/items/${ID_FORMAT}/memberships/requests/own$`,
+      ),
+    },
+    ({ reply, url }) => {
+      const urlParams = url.split('/');
+      const itemId = urlParams[urlParams.length - 4];
+      return reply(
+        membershipRequests.find(
+          ({ item, member }) =>
+            item.id === itemId && member.id === currentMember.id,
+        ),
+      );
+    },
+  ).as('getOwnMembershipRequests');
+};
+
+export const mockRequestMembership = (): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Post,
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/memberships/requests$`),
+    },
+    ({ reply }) => reply({ statusCode: StatusCodes.OK }),
+  ).as('requestMembership');
+};
+
+export const mockGetMembershipRequestsForItem = (
+  membershipRequests: CompleteMembershipRequest[],
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Get,
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/memberships/requests$`),
+    },
+    ({ reply, url }) => {
+      const urlParams = url.split('/');
+      const itemId = urlParams[urlParams.length - 3];
+      return reply(membershipRequests.filter(({ item }) => item.id === itemId));
+    },
+  ).as('getMembershipRequestsForItem');
+};
+
+export const mockRejectMembershipRequest = (): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Delete,
+      url: new RegExp(
+        `${API_HOST}/items/${ID_FORMAT}/memberships/requests/${ID_FORMAT}`,
+      ),
+    },
+    ({ reply }) => {
+      reply({ statusCode: StatusCodes.OK });
+    },
+  ).as('rejectMembershipRequest');
 };

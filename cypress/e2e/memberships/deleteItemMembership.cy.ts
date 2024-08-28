@@ -4,10 +4,13 @@ import {
   PermissionLevel,
 } from '@graasp/sdk';
 
+import { v4 } from 'uuid';
+
 import { buildItemPath } from '../../../src/config/paths';
 import {
   CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID,
   buildItemMembershipRowDeleteButtonId,
+  buildItemMembershipRowEditButtonId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
 import { CURRENT_USER, MEMBERS } from '../../fixtures/members';
@@ -54,9 +57,8 @@ describe('Delete Membership', () => {
     cy.get(`#${buildShareButtonId(id)}`).click();
 
     const { id: mId } = memberships[1];
-    cy.get(`#${buildItemMembershipRowDeleteButtonId(mId)}`).should(
-      'be.disabled',
-    );
+    cy.get(`#${buildItemMembershipRowEditButtonId(mId)}`).should('exist');
+    cy.get(`#${buildItemMembershipRowDeleteButtonId(mId)}`).should('not.exist');
   });
 
   it('cannot delete if there is only one admin item membership', () => {
@@ -66,11 +68,13 @@ describe('Delete Membership', () => {
         ...item,
         memberships: [
           {
+            id: v4(),
             permission: PermissionLevel.Admin,
             account: CURRENT_USER,
             item,
           } as unknown as ItemMembership,
           {
+            id: v4(),
             permission: PermissionLevel.Read,
             account: MEMBERS.BOB,
             item,
@@ -85,9 +89,10 @@ describe('Delete Membership', () => {
     cy.visit(buildItemPath(id));
     cy.get(`#${buildShareButtonId(id)}`).click();
 
-    const { id: mId } = memberships[1];
-    cy.get(`#${buildItemMembershipRowDeleteButtonId(mId)}`).should(
-      'be.disabled',
+    const [m1, m2] = memberships;
+    cy.get(`#${buildItemMembershipRowDeleteButtonId(m1.id)}`).should(
+      'not.exist',
     );
+    cy.get(`#${buildItemMembershipRowDeleteButtonId(m2.id)}`).should('exist');
   });
 });
