@@ -20,7 +20,7 @@ export const DownloadButton = ({ item }: Props): JSX.Element => {
     mutate: downloadItem,
     data,
     isSuccess,
-    isLoading: isDownloading,
+    isPending: isDownloading,
   } = mutations.useExportItem();
 
   useEffect(() => {

@@ -38,10 +38,8 @@ const ItemPublishTab = (): JSX.Element => {
   const { isLoading: isMemberLoading } = hooks.useCurrentMember();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { status } = useDataSyncContext();
-  const {
-    data: publicationStatus,
-    isInitialLoading: isPublicationStatusLoading,
-  } = usePublicationStatus(item.id);
+  const { data: publicationStatus, isLoading: isPublicationStatusLoading } =
+    usePublicationStatus(item.id);
 
   const [notifyCoEditors, setNotifyCoEditors] = useState<boolean>(false);
 

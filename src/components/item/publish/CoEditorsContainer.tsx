@@ -43,7 +43,7 @@ export const CoEditorsContainer = ({
 
   const {
     mutate: updateDisplayCoEditors,
-    isLoading,
+    isPending: isLoading,
     isSuccess,
     isError,
   } = mutations.useEditItem({

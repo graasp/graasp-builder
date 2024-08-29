@@ -23,7 +23,7 @@ export const PublicationButtonSelector = ({
   item,
   notifyCoEditors,
 }: Props): ReactNode | undefined => {
-  const { data: status, isInitialLoading: isStatusFirstLoading } =
+  const { data: status, isLoading: isStatusFirstLoading } =
     usePublicationStatus(item.id);
 
   switch (status) {

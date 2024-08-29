@@ -32,7 +32,7 @@ export const useCustomizedTags = ({
   const {
     mutate: updateCustomizedTags,
     isSuccess,
-    isLoading,
+    isPending: isLoading,
     isError,
   } = mutations.useEditItem({
     enableNotifications,

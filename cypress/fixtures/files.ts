@@ -3,7 +3,8 @@ import {
   LocalFileItemFactory,
   MaxWidth,
   MimeTypes,
-  S3FileItemFactory,
+  PackedLocalFileItemFactory,
+  PackedS3FileItemFactory,
   buildFileExtra,
   buildS3FileExtra,
 } from '@graasp/sdk';
@@ -18,7 +19,7 @@ export const VIDEO_FILEPATH = 'files/video.mp4';
 export const TEXT_FILEPATH = 'files/sometext.txt';
 
 export const IMAGE_ITEM_DEFAULT: LocalFileItemForTest = {
-  ...LocalFileItemFactory({
+  ...PackedLocalFileItemFactory({
     id: 'bd5519a2-5ba9-4305-b221-185facbe6a99',
     name: 'icon.png',
     description: 'a default image description',
@@ -70,7 +71,7 @@ export const IMAGE_ITEM_DEFAULT_WITH_MAX_WIDTH: LocalFileItemForTest = {
 };
 
 export const VIDEO_ITEM_DEFAULT: LocalFileItemForTest = {
-  ...LocalFileItemFactory({
+  ...PackedLocalFileItemFactory({
     id: 'qd5519a2-5ba9-4305-b221-185facbe6a99',
     name: 'video.mp4',
     description: 'a default video description',
@@ -95,7 +96,7 @@ export const VIDEO_ITEM_DEFAULT: LocalFileItemForTest = {
 };
 
 export const PDF_ITEM_DEFAULT: LocalFileItemForTest = {
-  ...LocalFileItemFactory({
+  ...PackedLocalFileItemFactory({
     id: 'cd5519a2-5ba9-4305-b221-185facbe6a99',
     name: 'doc.pdf',
     description: 'a default pdf description',
@@ -125,7 +126,7 @@ export const ZIP_DEFAULT: ZIPInternalItem = {
 };
 
 export const IMAGE_ITEM_S3: S3FileItemForTest = {
-  ...S3FileItemFactory({
+  ...PackedS3FileItemFactory({
     id: 'ad5519a2-5ba9-4305-b221-185facbe6a99',
     name: 'icon.png',
     description: 'a default image description',
@@ -150,7 +151,7 @@ export const IMAGE_ITEM_S3: S3FileItemForTest = {
 };
 
 export const VIDEO_ITEM_S3: S3FileItemForTest = {
-  ...S3FileItemFactory({
+  ...PackedS3FileItemFactory({
     id: 'qd5519a2-5ba9-4305-b221-185facbe6a93',
     name: 'video.mp4',
     description: 'a default video description',
@@ -175,7 +176,7 @@ export const VIDEO_ITEM_S3: S3FileItemForTest = {
 };
 
 export const PDF_ITEM_S3: S3FileItemForTest = {
-  ...S3FileItemFactory({
+  ...PackedS3FileItemFactory({
     id: 'bd5519a2-5ba9-4305-b221-185facbe6a99',
     name: 'doc.pdf',
     description: 'a default pdf description',
