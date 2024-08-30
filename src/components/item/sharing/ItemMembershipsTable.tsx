@@ -47,7 +47,7 @@ const ItemMembershipsTable = ({
 
   const { data: currentMember } = hooks.useCurrentMember();
   const { mutate: editItemMembership } = mutations.useEditItemMembership();
-  const { mutate: shareItem } = mutations.usePostItemMembership();
+  const { mutate: postItemMembership } = mutations.usePostItemMembership();
 
   const [open, setOpen] = useState(false);
   const [membershipToDelete, setMembershipToDelete] =
@@ -74,9 +74,9 @@ const ItemMembershipsTable = ({
           itemId: item.id,
         });
       } else if (im.account.type === AccountType.Individual) {
-        shareItem({
+        postItemMembership({
           id: item.id,
-          email: im.account.email,
+          accountId: im.account.id,
           permission,
         });
       }
