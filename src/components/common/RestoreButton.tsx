@@ -1,5 +1,6 @@
-import { RestoreFromTrash } from '@mui/icons-material';
 import { IconButton, IconButtonProps, Tooltip } from '@mui/material';
+
+import { Undo2Icon } from 'lucide-react';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
@@ -28,7 +29,11 @@ const RestoreButton = ({
     onClickFn?.();
   };
 
-  const title = translateBuilder(BUILDER.RESTORE_ITEM_BUTTON);
+  const title =
+    // adapt the tooltip to the number of items that will be restored
+    itemIds.length > 1
+      ? translateBuilder(BUILDER.RESTORE_ALL_SELECTED_ITEMS_BUTTON)
+      : translateBuilder(BUILDER.RESTORE_ITEM_BUTTON);
 
   return (
     <Tooltip title={title}>
@@ -40,7 +45,7 @@ const RestoreButton = ({
           className={RESTORE_ITEMS_BUTTON_CLASS}
           onClick={onClick}
         >
-          <RestoreFromTrash />
+          <Undo2Icon />
         </IconButton>
       </span>
     </Tooltip>

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import QR from 'react-qr-code';
 
-import { Close, QrCode2 } from '@mui/icons-material';
 import { Box, Dialog, DialogContent, IconButton, Tooltip } from '@mui/material';
+
+import { QrCodeIcon, XIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import {
@@ -28,7 +29,7 @@ const QRCode = ({ value, disabled = false }: Props): JSX.Element => {
           id={SHARE_ITEM_QR_BTN_ID}
           disabled={disabled}
         >
-          <QrCode2 />
+          <QrCodeIcon />
         </IconButton>
       </Tooltip>
       <Dialog
@@ -45,7 +46,7 @@ const QRCode = ({ value, disabled = false }: Props): JSX.Element => {
             top: 8,
           }}
         >
-          <Close />
+          <XIcon />
         </IconButton>
         <DialogContent sx={{ p: 5 }}>
           <Box width={{ xs: '60vw', sm: '50vw', md: '30vw', lg: '24vw' }}>
