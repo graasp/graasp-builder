@@ -1,14 +1,13 @@
 import { MouseEvent, useState } from 'react';
 import { useMatch } from 'react-router';
 
-import {
-  List as ListIcon,
-  ViewModule as ViewModuleIcon,
-} from '@mui/icons-material';
-import MapIcon from '@mui/icons-material/Map';
 import { IconButton } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+
+import { useButtonColor } from '@graasp/ui';
+
+import { LayoutGridIcon, ListIcon, MapIcon } from 'lucide-react';
 
 import { HOME_PATH, buildItemPath } from '@/config/paths';
 import { LAYOUT_MODE_BUTTON_ID } from '@/config/selectors';
@@ -16,15 +15,16 @@ import { LAYOUT_MODE_BUTTON_ID } from '@/config/selectors';
 import { ItemLayoutMode } from '../../../enums';
 import { useLayoutContext } from '../../context/LayoutContext';
 
-const modeToIcon = (mode: ItemLayoutMode) => {
+const ModeIcon = ({ mode }: { mode: ItemLayoutMode }) => {
+  const { color } = useButtonColor('primary');
   switch (mode) {
     case ItemLayoutMode.Map:
-      return <MapIcon color="primary" />;
+      return <MapIcon color={color} />;
     case ItemLayoutMode.Grid:
-      return <ViewModuleIcon color="primary" />;
+      return <LayoutGridIcon color={color} />;
     case ItemLayoutMode.List:
     default:
-      return <ListIcon color="primary" />;
+      return <ListIcon color={color} />;
   }
 };
 
@@ -56,7 +56,7 @@ const ModeButton = (): JSX.Element | null => {
   return (
     <>
       <IconButton id={LAYOUT_MODE_BUTTON_ID} onClick={handleClick}>
-        {modeToIcon(mode)}
+        <ModeIcon mode={mode} />
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {options.map((value) => (
@@ -65,7 +65,7 @@ const ModeButton = (): JSX.Element | null => {
             onClick={() => handleChange(value)}
             value={value}
           >
-            {modeToIcon(value)}
+            <ModeIcon mode={value} />
           </MenuItem>
         ))}
       </Menu>
