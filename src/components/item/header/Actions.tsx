@@ -104,20 +104,16 @@ const Actions = ({ item }: Props): JSX.Element | null => {
             )}
           </>
         )}
-        {canAdmin ? (
-          <>
-            <Divider />
-            <RecycleButton
-              key="recycle"
-              type={ActionButton.MENU_ITEM}
-              itemIds={[item.id]}
-              onClick={closeMenu}
-            />
-          </>
-        ) : (
-          <Divider />
-        )}
+        <Divider />
         <FlagButton item={item} />
+        {canAdmin && (
+          <RecycleButton
+            key="recycle"
+            type={ActionButton.MENU_ITEM}
+            itemIds={[item.id]}
+            onClick={closeMenu}
+          />
+        )}
       </Menu>
     </>
   );

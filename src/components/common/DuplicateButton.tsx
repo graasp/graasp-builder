@@ -1,9 +1,8 @@
-import React from 'react';
-
-import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
+
+import { CopyIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
@@ -39,7 +38,7 @@ const DuplicateButton = ({
       className={ITEM_MENU_DUPLICATE_BUTTON_CLASS}
     >
       <ListItemIcon>
-        <FileCopyIcon />
+        <CopyIcon />
       </ListItemIcon>
       {translateBuilder(BUILDER.ITEM_MENU_DUPLICATE_MENU_ITEM)}
     </MenuItem>
