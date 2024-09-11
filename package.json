@@ -15,8 +15,8 @@
   "type": "module",
   "dependencies": {
     "@air/react-drag-to-select": "5.0.10",
-    "@emotion/cache": "11.13.0",
-    "@emotion/react": "11.13.0",
+    "@emotion/cache": "11.13.1",
+    "@emotion/react": "11.13.3",
     "@emotion/styled": "11.13.0",
     "@graasp/chatbox": "3.2.1",
     "@graasp/map": "1.17.0",
