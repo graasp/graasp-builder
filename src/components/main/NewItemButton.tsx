@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
-import { Add as AddIcon } from '@mui/icons-material';
 import { ButtonProps, IconButton, useTheme } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
+
+import { PlusIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
@@ -45,7 +46,7 @@ const NewItemButton = ({
             '&:hover': { background: 'grey' },
           }}
         >
-          <AddIcon />
+          <PlusIcon />
         </IconButton>
       ) : (
         <Button
@@ -53,7 +54,7 @@ const NewItemButton = ({
           onClick={handleClickOpen}
           color="primary"
           aria-label="add"
-          startIcon={<AddIcon />}
+          startIcon={<PlusIcon />}
           size={size}
         >
           {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}

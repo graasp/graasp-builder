@@ -5,12 +5,11 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton } from '@mui/material';
 
 import { Navigation } from '@graasp/ui';
 
-import { Home } from 'lucide-react';
+import { ChevronRightIcon, Home } from 'lucide-react';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
@@ -61,7 +60,7 @@ const Navigator = (): JSX.Element | null => {
             <Home />
           </IconButton>
         </Link>
-        <ArrowForwardIosIcon sx={{ m: 2 }} fontSize="inherit" />
+        <ChevronRightIcon />
       </>
     );
   };

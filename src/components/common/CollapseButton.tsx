@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
+
+import { ChevronsDownUpIcon, ChevronsUpDownIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { mutations } from '../../config/queryClient';
@@ -50,7 +51,7 @@ const CollapseButton = ({
     onClick?.();
   };
 
-  const icon = isCollapsible ? <ExpandLess color="primary" /> : <ExpandMore />;
+  const icon = isCollapsible ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />;
   let text;
   if (disabled) {
     text = translateBuilder(BUILDER.SETTINGS_COLLAPSE_FOLDER_INFORMATION);

@@ -1,5 +1,6 @@
-import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import { ListItemIcon, MenuItem } from '@mui/material';
+
+import { CableIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_MENU_SHORTCUT_BUTTON_CLASS } from '../../../config/selectors';
@@ -15,7 +16,7 @@ const CreateShortcutButton = ({ onClick }: Props): JSX.Element => {
   return (
     <MenuItem onClick={onClick} className={ITEM_MENU_SHORTCUT_BUTTON_CLASS}>
       <ListItemIcon>
-        <LabelImportantIcon />
+        <CableIcon />
       </ListItemIcon>
       {translateBuilder(BUILDER.ITEM_MENU_CREATE_SHORTCUT_MENU_ITEM)}
     </MenuItem>
