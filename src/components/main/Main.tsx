@@ -14,6 +14,7 @@ import {
 
 import { HOST_MAP } from '@/config/externalPaths';
 import { useBuilderTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
 import { HOME_PATH, ITEM_ID_PARAMS } from '../../config/paths';
@@ -51,6 +52,7 @@ const Main = ({ children }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
   const theme = useTheme();
   const { isMobile } = useMobileView();
+  const { data: currentMember } = hooks.useCurrentMember();
 
   const itemId = useParams()[ITEM_ID_PARAMS];
 
@@ -82,6 +84,7 @@ const Main = ({ children }: Props): JSX.Element => {
   );
   return (
     <GraaspMain
+      open={currentMember ? undefined : false}
       context={Context.Builder}
       headerId={HEADER_APP_BAR_ID}
       drawerOpenAriaLabel={t(BUILDER.ARIA_OPEN_DRAWER)}

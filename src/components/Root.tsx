@@ -62,7 +62,7 @@ const Root = (): JSX.Element => (
         <ThemeWrapper />
       </I18nextProvider>
       {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
-        <ReactQueryDevtools position="bottom-left" />
+        <ReactQueryDevtools position="bottom-right" />
       )}
     </QueryClientProvider>
   </HelmetProvider>
