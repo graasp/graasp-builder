@@ -84,7 +84,13 @@ const Main = ({ children }: Props): JSX.Element => {
   );
   return (
     <GraaspMain
-      open={currentMember ? undefined : false}
+      open={
+        /**
+         * only override the open prop when user is not logged in
+         * we want to keep the default behavior when the user is logged in
+         */
+        currentMember ? undefined : false
+      }
       context={Context.Builder}
       headerId={HEADER_APP_BAR_ID}
       drawerOpenAriaLabel={t(BUILDER.ARIA_OPEN_DRAWER)}
