@@ -1,18 +1,23 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-// import { BugReport } from '@mui/icons-material';
-import { AutoStories, Bookmark, Delete, Folder } from '@mui/icons-material';
 import {
+  Box,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Stack,
-  styled,
-  useTheme,
 } from '@mui/material';
 
-import { MainMenu as GraaspMainMenu, LibraryIcon, MenuItem } from '@graasp/ui';
+import { MainMenu as GraaspMainMenu, MenuItem } from '@graasp/ui';
+
+import {
+  BookOpenTextIcon,
+  BookmarkIcon,
+  HomeIcon,
+  LibraryBigIcon,
+  TrashIcon,
+} from 'lucide-react';
 
 import { hooks } from '@/config/queryClient';
 
@@ -26,117 +31,66 @@ import {
 } from '../../config/paths';
 import { BUILDER } from '../../langs/constants';
 
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  '&:hover': {
-    color: theme.palette.primary.main,
-  },
-}));
+const ResourceLinks = () => {
+  const { t } = useBuilderTranslation();
+  return (
+    <ListItem disablePadding>
+      <ListItemButton href={TUTORIALS_LINK} target="_blank">
+        <ListItemIcon>
+          <BookOpenTextIcon />
+        </ListItemIcon>
+        <ListItemText>{t(BUILDER.TUTORIALS)}</ListItemText>
+      </ListItemButton>
+    </ListItem>
+  );
+};
 
-const MainMenu = (): JSX.Element => {
-  const { t: translateBuilder } = useBuilderTranslation();
+const MainMenu = (): JSX.Element | false => {
+  const { t } = useBuilderTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: member } = hooks.useCurrentMember();
-
-  const theme = useTheme();
-  const iconColor = theme.palette.action.active;
 
   const goTo = (path: string) => {
     navigate(path);
   };
 
-  // sentry feedback feature
-  // const openBugReport = () => {
-  //   const eventId = captureMessage(
-  //     `Graasp Builder | User Feedback ${Date.now()}`,
-  //   );
-  //   // this will be reported in sentry user feedback issues
-  //   showReportDialog({
-  //     eventId,
-  //     title: translateBuilder(BUILDER.REPORT_A_BUG),
-  //     lang: i18n.language || DEFAULT_LANG,
-  //   });
-  // };
-
-  // const reportBugLink = (
-  //   <ListItem disablePadding>
-  //     <ListItemButton onClick={openBugReport}>
-  //       <ListItemIcon>
-  //         <BugReport />
-  //       </ListItemIcon>
-  //       <ListItemText>{translateBuilder(BUILDER.REPORT_A_BUG)}</ListItemText>
-  //     </ListItemButton>
-  //   </ListItem>
-  // );
-
-  const resourceLinks = (
-    <ListItem disablePadding>
-      <ListItemButton href={TUTORIALS_LINK} target="_blank">
-        <ListItemIcon>
-          <AutoStories />
-        </ListItemIcon>
-        <ListItemText>{translateBuilder(BUILDER.TUTORIALS)}</ListItemText>
-      </ListItemButton>
-    </ListItem>
-  );
-
-  const renderAuthenticatedMemberMenuItems = () => {
-    if (!member || !member.id) {
-      return (
-        <StyledMenuItem
-          disabled
-          text={translateBuilder(BUILDER.HOME_TITLE)}
-          icon={<Folder />}
-        />
-      );
-    }
-
-    return (
-      <div>
-        <MenuItem
-          onClick={() => goTo(HOME_PATH)}
-          selected={pathname === HOME_PATH}
-          icon={<Folder />}
-          text={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-        />
-        <MenuItem
-          onClick={() => goTo(BOOKMARKED_ITEMS_PATH)}
-          selected={pathname === BOOKMARKED_ITEMS_PATH}
-          text={translateBuilder(BUILDER.BOOKMARKED_ITEMS_TITLE)}
-          icon={<Bookmark />}
-        />
-        <MenuItem
-          onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
-          selected={pathname === PUBLISHED_ITEMS_PATH}
-          text={translateBuilder(BUILDER.NAVIGATION_PUBLISHED_ITEMS_TITLE)}
-          icon={
-            <LibraryIcon
-              primaryColor={iconColor}
-              secondaryColor="#fff"
-              size={24}
-              disableHover
-              selected
-            />
-          }
-        />
-        <MenuItem
-          onClick={() => goTo(RECYCLE_BIN_PATH)}
-          selected={pathname === RECYCLE_BIN_PATH}
-          text={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
-          icon={<Delete />}
-        />
-      </div>
-    );
-  };
+  if (!member || !member.id) {
+    return false;
+  }
 
   return (
     <GraaspMainMenu fullHeight>
       <Stack direction="column" height="100%" justifyContent="space-between">
-        {renderAuthenticatedMemberMenuItems()}
-        <div>
-          {/* {reportBugLink} */}
-          {resourceLinks}
-        </div>
+        <Box>
+          <MenuItem
+            onClick={() => goTo(HOME_PATH)}
+            selected={pathname === HOME_PATH}
+            icon={<HomeIcon />}
+            text={t(BUILDER.MY_ITEMS_TITLE)}
+          />
+          <MenuItem
+            onClick={() => goTo(BOOKMARKED_ITEMS_PATH)}
+            selected={pathname === BOOKMARKED_ITEMS_PATH}
+            text={t(BUILDER.BOOKMARKED_ITEMS_TITLE)}
+            icon={<BookmarkIcon />}
+          />
+          <MenuItem
+            onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
+            selected={pathname === PUBLISHED_ITEMS_PATH}
+            text={t(BUILDER.NAVIGATION_PUBLISHED_ITEMS_TITLE)}
+            icon={<LibraryBigIcon />}
+          />
+          <MenuItem
+            onClick={() => goTo(RECYCLE_BIN_PATH)}
+            selected={pathname === RECYCLE_BIN_PATH}
+            text={t(BUILDER.RECYCLE_BIN_TITLE)}
+            icon={<TrashIcon />}
+          />
+        </Box>
+        <Box>
+          <ResourceLinks />
+        </Box>
       </Stack>
     </GraaspMainMenu>
   );
