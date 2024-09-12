@@ -29,11 +29,9 @@ const RestoreButton = ({
     onClickFn?.();
   };
 
-  const title =
-    // adapt the tooltip to the number of items that will be restored
-    itemIds.length > 1
-      ? translateBuilder(BUILDER.RESTORE_ALL_SELECTED_ITEMS_BUTTON)
-      : translateBuilder(BUILDER.RESTORE_ITEM_BUTTON);
+  const title = translateBuilder(BUILDER.RESTORE_ITEM_BUTTON, {
+    count: itemIds.length,
+  });
 
   return (
     <Tooltip title={title}>

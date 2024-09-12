@@ -46,10 +46,7 @@ const DeleteButton = ({
     onClose?.();
   };
 
-  const text =
-    items.length > 1
-      ? translateBuilder(BUILDER.DELETE_ALL_SELECTED_ITEMS_BUTTON)
-      : translateBuilder(BUILDER.DELETE_BUTTON);
+  const text = translateBuilder(BUILDER.DELETE_BUTTON, { count: items.length });
 
   return (
     <>
