@@ -4,6 +4,7 @@ import { MoreVert } from '@mui/icons-material';
 import { Divider, IconButton, Menu } from '@mui/material';
 
 import {
+  AccountType,
   ItemType,
   PackedItem,
   PermissionLevel,
@@ -97,7 +98,7 @@ const ItemMenuContent = ({ item }: Props): JSX.Element | null => {
     ) : (
       false
     ),
-    ...(member && member.id
+    ...(member.type === AccountType.Individual
       ? [
           <CopyButton
             key="copy"
@@ -144,7 +145,7 @@ const ItemMenuContent = ({ item }: Props): JSX.Element | null => {
   ].filter(Boolean) as JSX.Element[];
 
   const miscMenus = [
-    ...(member?.id
+    ...(member?.type === AccountType.Individual
       ? [
           <CreateShortcutButton
             key="shortcut"

@@ -1,8 +1,20 @@
 import { useState } from 'react';
+import { Trans } from 'react-i18next';
 
-import { Alert, Box, LinearProgress, Stack } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Container,
+  LinearProgress,
+  Button as MuiButton,
+  Stack,
+  Typography,
+} from '@mui/material';
 
+import { AccountType } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
+
+import { ClipboardPen } from 'lucide-react';
 
 import LoadingScreen from '@/components/layout/LoadingScreen';
 import {
@@ -197,28 +209,78 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
 
 const HomeScreen = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { data: currentMember } = hooks.useCurrentMember();
 
   const itemSearch = useItemSearch();
 
-  return (
-    <PageWrapper
-      title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-      options={
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="flex-end"
-          spacing={1}
-        >
-          {itemSearch.input}
-          <NewItemButton key="newButton" size="medium" />
+  if (currentMember) {
+    // guest - should not have access to home
+    if (currentMember.type === AccountType.Guest) {
+      return (
+        <Stack height="100%" justifyContent="center" alignItems="center">
+          <Container maxWidth="md">
+            <Alert severity="info">
+              <Typography>
+                <Trans
+                  t={translateBuilder}
+                  i18nKey={BUILDER.GUEST_LIMITATION_TEXT}
+                  values={{
+                    name: currentMember.name,
+                  }}
+                  components={{ 1: <strong /> }}
+                />
+              </Typography>
+              <Box mt={2} textAlign="center">
+                <MuiButton
+                  startIcon={<ClipboardPen />}
+                  variant="contained"
+                  sx={{ textTransform: 'none' }}
+                >
+                  {translateBuilder(BUILDER.GUEST_SIGN_OUT_BUTTON)}
+                </MuiButton>
+              </Box>
+            </Alert>
+          </Container>
         </Stack>
-      }
-    >
-      <SelectionContextProvider>
-        <HomeScreenContent searchText={itemSearch.text} />
-      </SelectionContextProvider>
-    </PageWrapper>
+      );
+    }
+
+    return (
+      <PageWrapper
+        title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
+        options={
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            spacing={1}
+          >
+            {itemSearch.input}
+            <NewItemButton key="newButton" size="medium" />
+          </Stack>
+        }
+      >
+        <SelectionContextProvider>
+          <HomeScreenContent searchText={itemSearch.text} />
+        </SelectionContextProvider>
+      </PageWrapper>
+    );
+  }
+
+  // not logged in - redirection
+  return (
+    <Stack height="100%" justifyContent="center" alignItems="center">
+      <Container maxWidth="md">
+        <Alert severity="warning">
+          <Typography textAlign="right">
+            {translateBuilder(BUILDER.REDIRECTION_TEXT)}
+          </Typography>
+          <MuiButton variant="text" sx={{ textTransform: 'none' }}>
+            {translateBuilder(BUILDER.REDIRECTION_BUTTON)}
+          </MuiButton>
+        </Alert>
+      </Container>
+    </Stack>
   );
 };
 

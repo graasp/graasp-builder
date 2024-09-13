@@ -1,4 +1,9 @@
-import { PackedRecycledItemDataFactory } from '@graasp/sdk';
+import {
+  GuestFactory,
+  ItemLoginSchemaFactory,
+  PackedFolderItemFactory,
+  PackedRecycledItemDataFactory,
+} from '@graasp/sdk';
 
 import { SortingOptions } from '@/components/table/types';
 import { BUILDER } from '@/langs/constants';
@@ -8,6 +13,7 @@ import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
   CREATE_ITEM_BUTTON_ID,
   ITEM_SEARCH_INPUT_ID,
+  PREVENT_GUEST_MESSAGE_ID,
   RECYCLED_ITEMS_ERROR_ALERT_ID,
   RECYCLED_ITEMS_ROOT_CONTAINER,
   SORTING_ORDERING_SELECTOR_ASC,
@@ -24,6 +30,16 @@ const recycledItemData = [
 ];
 
 describe('View trash', () => {
+  it('Show message for guest', () => {
+    const item = PackedFolderItemFactory();
+    const guest = GuestFactory({
+      itemLoginSchema: ItemLoginSchemaFactory({ item }),
+    });
+    cy.setUpApi({ items: [item], currentMember: guest });
+    cy.visit(RECYCLE_BIN_PATH);
+    cy.get(`#${PREVENT_GUEST_MESSAGE_ID}`).should('be.visible');
+  });
+
   describe('Member has no recycled items', () => {
     it('Show empty table', () => {
       cy.setUpApi({

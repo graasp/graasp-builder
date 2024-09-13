@@ -7,6 +7,7 @@ import {
 
 import { IconButton } from '@mui/material';
 
+import { AccountType } from '@graasp/sdk';
 import { Navigation } from '@graasp/ui';
 
 import { ChevronRightIcon, Home } from 'lucide-react';
@@ -49,7 +50,7 @@ const Navigator = (): JSX.Element | null => {
 
   const renderRoot = () => {
     // no access to root if signed out
-    if (!currentMember) {
+    if (currentMember?.type !== AccountType.Individual) {
       return null;
     }
 

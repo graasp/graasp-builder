@@ -1,4 +1,8 @@
-import { PackedFolderItemFactory } from '@graasp/sdk';
+import {
+  GuestFactory,
+  ItemLoginSchemaFactory,
+  PackedFolderItemFactory,
+} from '@graasp/sdk';
 
 import { SortingOptions } from '@/components/table/types';
 import { BUILDER } from '@/langs/constants';
@@ -8,6 +12,7 @@ import { PUBLISHED_ITEMS_PATH } from '../../../../src/config/paths';
 import {
   CREATE_ITEM_BUTTON_ID,
   ITEM_SEARCH_INPUT_ID,
+  PREVENT_GUEST_MESSAGE_ID,
   PUBLISHED_ITEMS_ERROR_ALERT_ID,
   PUBLISHED_ITEMS_ID,
   SORTING_ORDERING_SELECTOR_ASC,
@@ -26,6 +31,16 @@ const items = [
 const publishedItemData = items.map(({ published }) => published);
 
 describe('Published Items', () => {
+  it('Show message for guest', () => {
+    const item = PackedFolderItemFactory();
+    const guest = GuestFactory({
+      itemLoginSchema: ItemLoginSchemaFactory({ item }),
+    });
+    cy.setUpApi({ items: [item], currentMember: guest });
+    cy.visit(PUBLISHED_ITEMS_PATH);
+    cy.get(`#${PREVENT_GUEST_MESSAGE_ID}`).should('be.visible');
+  });
+
   describe('Member has no published items', () => {
     it('Show empty table', () => {
       cy.setUpApi({

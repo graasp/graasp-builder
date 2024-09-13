@@ -14,7 +14,6 @@ import { buildItemPath } from '@/config/paths';
 
 import ErrorAlert from '../../common/ErrorAlert';
 import { useLayoutContext } from '../../context/LayoutContext';
-import WrappedAuthItemScreen from './ItemLoginWrapper';
 import { OutletType } from './type';
 
 const ItemPageLayout = (): JSX.Element => {
@@ -50,7 +49,4 @@ const ItemPageLayout = (): JSX.Element => {
   return <ErrorAlert />;
 };
 
-const WrappedItemScreen = (): JSX.Element =>
-  WrappedAuthItemScreen(ItemPageLayout);
-
-export default WrappedItemScreen;
+export default ItemPageLayout;

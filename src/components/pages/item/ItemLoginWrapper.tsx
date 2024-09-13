@@ -14,29 +14,44 @@ import ItemForbiddenScreen from '../../main/list/ItemForbiddenScreen';
 
 const { useItem, useCurrentMember, useItemLoginSchemaType } = hooks;
 
-const ItemLoginWrapper = (WrappedComponent: () => JSX.Element): JSX.Element => {
+const ItemLoginWrapper = ({
+  children,
+}: {
+  children: JSX.Element;
+}): JSX.Element => {
   const { mutate: itemLoginSignIn } = mutations.usePostItemLogin();
+  const { data: currentAccount, isLoading: isCurrentAccountLoading } =
+    useCurrentMember();
   const { itemId } = useParams();
+  const { data: item, isLoading: isItemLoading } = useItem(itemId);
+  const { data: itemLoginSchemaType, isLoading: isItemLoginSchemaTypeLoading } =
+    useItemLoginSchemaType({ itemId });
 
-  const ForbiddenContent = <ItemForbiddenScreen />;
+  const forbiddenContent = <ItemForbiddenScreen />;
 
   if (!itemId) {
-    return ForbiddenContent;
+    return forbiddenContent;
   }
 
-  const AuthComponent = ItemLoginAuthorization({
-    signIn: itemLoginSignIn,
-    itemId,
-    useCurrentMember,
-    useItem,
-    useItemLoginSchemaType,
-    ForbiddenContent,
-    memberIdInputId: ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID,
-    usernameInputId: ITEM_LOGIN_SIGN_IN_USERNAME_ID,
-    signInButtonId: ITEM_LOGIN_SIGN_IN_BUTTON_ID,
-    passwordInputId: ITEM_LOGIN_SIGN_IN_PASSWORD_ID,
-  })(WrappedComponent);
-  return <AuthComponent />;
+  return (
+    <ItemLoginAuthorization
+      isLoading={
+        isItemLoading || isCurrentAccountLoading || isItemLoginSchemaTypeLoading
+      }
+      signIn={itemLoginSignIn}
+      itemId={itemId}
+      currentAccount={currentAccount}
+      item={item}
+      itemLoginSchemaType={itemLoginSchemaType}
+      ForbiddenContent={forbiddenContent}
+      memberIdInputId={ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID}
+      usernameInputId={ITEM_LOGIN_SIGN_IN_USERNAME_ID}
+      signInButtonId={ITEM_LOGIN_SIGN_IN_BUTTON_ID}
+      passwordInputId={ITEM_LOGIN_SIGN_IN_PASSWORD_ID}
+    >
+      {children}
+    </ItemLoginAuthorization>
+  );
 };
 
 export default ItemLoginWrapper;

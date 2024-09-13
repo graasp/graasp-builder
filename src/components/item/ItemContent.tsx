@@ -4,16 +4,16 @@ import { Container, Skeleton, Stack, styled } from '@mui/material';
 
 import { Api } from '@graasp/query-client';
 import {
+  AccountType,
   AppItemType,
-  CompleteMember,
   Context,
+  CurrentAccount,
   DocumentItemType,
   EtherpadItemType,
   H5PItemType,
   ItemType,
   LinkItemType,
   LocalFileItemType,
-  Member,
   PermissionLevel,
   S3FileItemType,
   buildPdfViewerLink,
@@ -101,7 +101,7 @@ const LinkContent = ({
   member,
 }: {
   item: LinkItemType;
-  member?: Member | null;
+  member?: CurrentAccount | null;
 }): JSX.Element => (
   <LinkItem
     id={item.id}
@@ -133,7 +133,7 @@ const AppContent = ({
   permission = PermissionLevel.Read,
 }: {
   item: AppItemType;
-  member?: CompleteMember | null;
+  member?: CurrentAccount | null;
   permission?: PermissionLevel;
 }): JSX.Element => (
   <AppItem
@@ -151,7 +151,10 @@ const AppContent = ({
       accountId: member?.id,
       permission,
       settings: item.settings,
-      lang: item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
+      lang:
+        item.settings?.lang ||
+        (member?.type === AccountType.Individual && member?.extra?.lang) ||
+        DEFAULT_LANG,
       context: Context.Builder,
     }}
   />

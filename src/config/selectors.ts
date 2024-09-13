@@ -81,6 +81,7 @@ export const PUBLISHED_ITEMS_ERROR_ALERT_ID = 'publishedItemsErrorAlert';
 export const RECYCLED_ITEMS_ERROR_ALERT_ID = 'recycledItemsErrorAlert';
 export const ITEM_MENU_SHORTCUT_BUTTON_CLASS = 'itemMenuShortcutButton';
 export const ITEM_MENU_DUPLICATE_BUTTON_CLASS = 'itemMenuDuplicateButton';
+export const ITEM_MENU_BOOKMARK_BUTTON_CLASS = 'itemMenuBookmarkButton';
 export const ITEM_MENU_FAVORITE_BUTTON_CLASS = 'itemMenuFavoriteButton';
 export const ITEM_MENU_FLAG_BUTTON_CLASS = 'itemMenuFlagButton';
 export const buildFlagListItemId = (type: string): string =>
@@ -434,3 +435,4 @@ export const RECYCLE_BIN_RESTORE_MANY_ITEMS_BUTTON_ID =
 export const COPY_MANY_ITEMS_BUTTON_SELECTOR = `.lucide-copy`;
 export const MOVE_MANY_ITEMS_BUTTON_SELECTOR = `.lucide-move`;
 export const DELETE_SINGLE_ITEM_BUTTON_SELECTOR = `.lucide-trash`;
+export const PREVENT_GUEST_MESSAGE_ID = 'preventGuestMessage';

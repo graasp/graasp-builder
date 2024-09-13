@@ -72,7 +72,7 @@
   "EDIT_ITEM_ERROR_MESSAGE": "Item is invalid",
   "EDIT_ITEM_MODAL_TITLE": "Edit Item",
   "EDIT_ITEM_IMAGE_ALT_TEXT_LABEL": "Alternative text (for accessibility purposes)",
-  "EMPTY_ITEM_MESSAGE": "This item is empty.",
+  "EMPTY_FOLDER_MESSAGE": "This folder is empty.",
   "ERROR_MESSAGE": "An error occured.",
   "BOOKMARKED_ITEM_ADD_TEXT": "Add to Bookmarks",
   "BOOKMARKED_ITEM_REMOVE_TEXT": "Remove from Bookmarks",
@@ -473,5 +473,7 @@
   "item.order": "Order",
   "MEMBER_VALIDATION_TITLE": "Account email needs to be verified",
   "MEMBER_VALIDATION_DESCRIPTION": "In order to use all features of Graasp you need to validate your account email. You will find more information in the link below.",
-  "MEMBER_VALIDATION_LINK_TEXT": "Learn more"
+  "MEMBER_VALIDATION_LINK_TEXT": "Learn more",
+  "GUEST_LIMITATION_TEXT": "You are currently using Graasp with the guest account <1>{{name}}</1>. In order to use all features of Graasp, you have to log out and create a Graasp account.",
+  "GUEST_SIGN_OUT_BUTTON": " Log out and Create a Graasp account"
 }

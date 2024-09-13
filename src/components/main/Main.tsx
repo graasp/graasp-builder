@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { Stack, styled, useTheme } from '@mui/material';
 
-import { Context } from '@graasp/sdk';
+import { AccountType, Context } from '@graasp/sdk';
 import {
   Main as GraaspMain,
   Platform,
@@ -88,8 +88,9 @@ const Main = ({ children }: Props): JSX.Element => {
         /**
          * only override the open prop when user is not logged in
          * we want to keep the default behavior when the user is logged in
+         * we close the drawer if the user is a guest
          */
-        currentMember ? undefined : false
+        currentMember?.type === AccountType.Individual ? undefined : false
       }
       context={Context.Builder}
       headerId={HEADER_APP_BAR_ID}
