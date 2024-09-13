@@ -79,7 +79,7 @@ const ItemHeaderActions = ({ itemId }: Props): JSX.Element | null => {
 
         <ShareButton itemId={item.id} />
         <ChatboxButton
-          showChat
+          showChat={isChatboxMenuOpen}
           tooltip={translateBuilder(BUILDER.ITEM_CHATBOX_TITLE, {
             name: item.name,
           })}

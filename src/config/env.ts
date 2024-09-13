@@ -31,7 +31,8 @@ export const GRAASP_ANALYZER_HOST =
 export const GRAASP_ACCOUNT_HOST =
   VITE_GRAASP_ACCOUNT_HOST || 'http://localhost:3114';
 
-export const GRAASP_REDIRECTION_HOST = VITE_GRAASP_REDIRECTION_HOST;
+export const GRAASP_REDIRECTION_HOST =
+  VITE_GRAASP_REDIRECTION_HOST || 'http://localhost:3000/items/short-links';
 
 export const H5P_INTEGRATION_URL =
   VITE_H5P_INTEGRATION_URL || `${API_HOST}/p/h5p-integration`;

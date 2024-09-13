@@ -1,5 +1,6 @@
-import { Close } from '@mui/icons-material';
 import { IconButton, Stack } from '@mui/material';
+
+import { XIcon } from 'lucide-react';
 
 import { useSelectionContext } from './SelectionContext';
 
@@ -21,7 +22,7 @@ const SelectionToolbar = ({
     >
       <Stack direction="row" alignItems="center">
         <IconButton onClick={clearSelection}>
-          <Close />
+          <XIcon />
         </IconButton>
         <Stack>{selectedIds.length} selected</Stack>
       </Stack>

@@ -46,7 +46,7 @@ const PinButton = ({
 
   return (
     <GraaspPinButton
-      color={isPinned ? 'primary' : 'inherit'}
+      color="inherit"
       type={type}
       onClick={handlePin}
       isPinned={isPinned}

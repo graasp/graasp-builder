@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 
-import CreateIcon from '@mui/icons-material/Create';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   IconButton,
   ListItemIcon,
@@ -17,6 +12,8 @@ import {
 
 import { ShortLink, ShortLinkPayload } from '@graasp/sdk';
 import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from '@graasp/translations';
+
+import { CopyIcon, MoreVerticalIcon, PenIcon, TrashIcon } from 'lucide-react';
 
 import QRCode from '@/components/common/QRCode';
 import { useBuilderTranslation, useMessagesTranslation } from '@/config/i18n';
@@ -108,7 +105,7 @@ const ShortLinkMenu = ({
       <Tooltip title={translateBuilder(BUILDER.SHARE_ITEM_LINK_COPY_TOOLTIP)}>
         <span>
           <IconButton onClick={handleCopy}>
-            <FileCopyIcon />
+            <CopyIcon />
           </IconButton>
         </span>
       </Tooltip>
@@ -123,7 +120,7 @@ const ShortLinkMenu = ({
                 id={buildShortLinkMenuBtnId(alias)}
                 onClick={handleMenuClick}
               >
-                <MoreVertIcon />
+                <MoreVerticalIcon />
               </IconButton>
               <Menu
                 id={buildShortLinkMenuBtnId(alias)}
@@ -136,7 +133,7 @@ const ShortLinkMenu = ({
                   id={buildShortLinkEditBtnId(alias)}
                 >
                   <ListItemIcon>
-                    <EditIcon fontSize="small" />
+                    <PenIcon />
                   </ListItemIcon>
                   <ListItemText>
                     {translateBuilder(BUILDER.EDIT_SHORT_LINK_TITLE)}
@@ -147,7 +144,7 @@ const ShortLinkMenu = ({
                   id={buildShortLinkDeleteBtnId(alias)}
                 >
                   <ListItemIcon>
-                    <DeleteIcon fontSize="small" />
+                    <TrashIcon />
                   </ListItemIcon>
                   <ListItemText>
                     {translateBuilder(BUILDER.DELETE_SHORT_LINK_TITLE)}
@@ -164,7 +161,7 @@ const ShortLinkMenu = ({
                   id={buildShortLinkShortenBtnId(itemId, platform)}
                   onClick={() => onCreate(platform)}
                 >
-                  <CreateIcon />
+                  <PenIcon />
                 </IconButton>
               </span>
             </Tooltip>

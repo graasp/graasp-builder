@@ -1,7 +1,8 @@
 import { ChangeEvent } from 'react';
 
-import { Cached } from '@mui/icons-material';
 import { IconButton, Stack, TextField, Tooltip } from '@mui/material';
+
+import { RefreshCcwIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import {
@@ -42,7 +43,7 @@ const AliasInput = ({ alias, onChange, hasError }: Props): JSX.Element => {
             onClick={() => onChange(randomAlias())}
             id={SHORT_LINK_RANDOMIZE_BUTTON_ID}
           >
-            <Cached />
+            <RefreshCcwIcon />
           </IconButton>
         </span>
       </Tooltip>

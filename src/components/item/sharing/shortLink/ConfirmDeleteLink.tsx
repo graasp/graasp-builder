@@ -51,38 +51,36 @@ const ConfirmDeleteLink = ({
   const CONFIRM_DELETE_DIALOG_DESC = `alert-dialog-desc-delete-${shortLink}`;
 
   return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={onClose}
-        aria-labelledby={CONFIRM_DELETE_DIALOG_TITLE}
-        aria-describedby={CONFIRM_DELETE_DIALOG_DESC}
-      >
-        <DialogTitle id={CONFIRM_DELETE_DIALOG_TITLE}>
-          {translateBuilder(BUILDER.CONFIRM_DELETE_SHORT_LINK_TITLE)}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id={CONFIRM_DELETE_DIALOG_DESC}>
-            {translateBuilder(BUILDER.CONFIRM_DELETE_SHORT_LINK_MSG, {
-              shortLink,
-            })}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <CancelButton
-            onClick={handleClose}
-            id={buildShortLinkCancelBtnId(shortLink)}
-          />
-          <Button
-            onClick={handleClickDelete}
-            color="error"
-            id={buildShortLinkConfirmDeleteBtnId(shortLink)}
-          >
-            {translateBuilder(BUILDER.DELETE_BTN)}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      aria-labelledby={CONFIRM_DELETE_DIALOG_TITLE}
+      aria-describedby={CONFIRM_DELETE_DIALOG_DESC}
+    >
+      <DialogTitle id={CONFIRM_DELETE_DIALOG_TITLE}>
+        {translateBuilder(BUILDER.CONFIRM_DELETE_SHORT_LINK_TITLE)}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id={CONFIRM_DELETE_DIALOG_DESC}>
+          {translateBuilder(BUILDER.CONFIRM_DELETE_SHORT_LINK_MSG, {
+            shortLink,
+          })}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <CancelButton
+          onClick={handleClose}
+          id={buildShortLinkCancelBtnId(shortLink)}
+        />
+        <Button
+          onClick={handleClickDelete}
+          color="error"
+          id={buildShortLinkConfirmDeleteBtnId(shortLink)}
+        >
+          {translateBuilder(BUILDER.DELETE_BTN)}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

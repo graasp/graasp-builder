@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { IconButton, Tooltip } from '@mui/material';
 
-import { LibraryIcon } from '@graasp/ui';
+import { LibraryBigIcon } from 'lucide-react';
 
 import { buildItemPublishPath } from '@/config/paths';
 
@@ -31,14 +31,7 @@ const PublishButton = ({ itemId }: Props): JSX.Element => {
         to={buildItemPublishPath(itemId)}
         component={Link}
       >
-        <LibraryIcon
-          size={24}
-          showSetting
-          primaryColor="#777"
-          secondaryColor="#fff"
-          disableHover
-          selected
-        />
+        <LibraryBigIcon />
       </IconButton>
     </Tooltip>
   );
