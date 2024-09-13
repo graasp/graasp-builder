@@ -8228,7 +8228,7 @@ __metadata:
     react-router: "npm:6.26.2"
     react-router-dom: "npm:6.26.2"
     react-toastify: "npm:10.0.5"
-    stylis: "npm:4.3.2"
+    stylis: "npm:4.3.4"
     typescript: "npm:5.5.4"
     uuid: "npm:10.0.0"
     validator: "npm:13.12.0"
@@ -13407,10 +13407,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylis@npm:4.3.2":
-  version: 4.3.2
-  resolution: "stylis@npm:4.3.2"
-  checksum: 10/4d3e3cb5cbfc7abdf14e424c8631a15fd15cbf0357ffc641c319587e00c2d1036b1a71cb88b42411bc3ce10d7730ad3fb9789b034d11365e8a19d23f56486c77
+"stylis@npm:4.3.4":
+  version: 4.3.4
+  resolution: "stylis@npm:4.3.4"
+  checksum: 10/69b902a3c9fc3329c8ddb18d422f8130068356dd4d4a20ae245953679cc88ae08d49c55e32b0b57c8fe8a76f2ed7f32697240b8db4d368a25fc2db045ebaeba8
   languageName: node
   linkType: hard
 
