@@ -1946,9 +1946,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.27.0":
-  version: 4.27.0
-  resolution: "@graasp/sdk@npm:4.27.0"
+"@graasp/sdk@npm:4.28.0":
+  version: 4.28.0
+  resolution: "@graasp/sdk@npm:4.28.0"
   dependencies:
     "@faker-js/faker": "npm:9.0.0"
     filesize: "npm:10.1.6"
@@ -1957,7 +1957,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3
     uuid: ^9 || ^10
-  checksum: 10/e218576d56de950d873a349f32744ae09185ee4862f8a383fa927339088795ebdccc8d3e4a626b3435fd99cb2291c7246b7897200c3becac8f4e4becaa510b08
+  checksum: 10/89f9c559154896637ac6d02daa710288de6ac2b753270037eef95dc32a763d6b597aeaafedab312bfd558d1b42b265d23066ffa640197acf4ef1883f4029ba48
   languageName: node
   linkType: hard
 
@@ -8157,7 +8157,7 @@ __metadata:
     "@graasp/chatbox": "npm:3.2.1"
     "@graasp/map": "npm:1.17.0"
     "@graasp/query-client": "npm:3.22.3"
-    "@graasp/sdk": "npm:4.27.0"
+    "@graasp/sdk": "npm:4.28.0"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
     "@graasp/translations": "npm:1.35.1"
     "@graasp/ui": "npm:4.27.0"
