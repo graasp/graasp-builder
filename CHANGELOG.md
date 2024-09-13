@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.37.0](https://github.com/graasp/graasp-builder/compare/v2.36.0...v2.37.0) (2024-09-13)
+
+
+### Features
+
+* add helper text ([#1419](https://github.com/graasp/graasp-builder/issues/1419)) ([34946e3](https://github.com/graasp/graasp-builder/commit/34946e3a5b944632f348d82e14d28512b88c7bf3))
+* update for item login ([#1407](https://github.com/graasp/graasp-builder/issues/1407)) ([3e7f6db](https://github.com/graasp/graasp-builder/commit/3e7f6db830040e3975bc3ed3534d52aa3b70425a))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @air/react-drag-to-select to v5.0.10 ([#1414](https://github.com/graasp/graasp-builder/issues/1414)) ([da0d1da](https://github.com/graasp/graasp-builder/commit/da0d1da7036b63ac6f99420a5a8d491a1bdd85b6))
+* **deps:** update dependency i18next to v23.12.7 ([#1415](https://github.com/graasp/graasp-builder/issues/1415)) ([f729c6e](https://github.com/graasp/graasp-builder/commit/f729c6e1422255f42b19e3edcb1a3ae338e79b65))
+* **deps:** update emotion monorepo ([#1378](https://github.com/graasp/graasp-builder/issues/1378)) ([949d0c3](https://github.com/graasp/graasp-builder/commit/949d0c308baeda450548cce7a29d35e431c8a808))
+* fix post item membership ([#1427](https://github.com/graasp/graasp-builder/issues/1427)) ([06414c2](https://github.com/graasp/graasp-builder/commit/06414c22915e2e6764d23984fb338f7305d05def))
+* udpate menu icons to lucide ([#1432](https://github.com/graasp/graasp-builder/issues/1432)) ([f14deae](https://github.com/graasp/graasp-builder/commit/f14deae2c206dbfb4315fbf19d8d535ea78e2f3c))
+* update item menu icons ([#1435](https://github.com/graasp/graasp-builder/issues/1435)) ([ca3e099](https://github.com/graasp/graasp-builder/commit/ca3e099ebe210dbbf4bdd5654f07c4dc76a4bf14))
+* update mode icons ([#1434](https://github.com/graasp/graasp-builder/issues/1434)) ([dfb9288](https://github.com/graasp/graasp-builder/commit/dfb9288923a99f4cefda55eb4e6baf07b6f97aeb))
+
 ## [2.36.0](https://github.com/graasp/graasp-builder/compare/v2.35.1...v2.36.0) (2024-08-19)
 
 
