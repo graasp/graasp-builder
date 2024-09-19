@@ -121,7 +121,7 @@
     "@typescript-eslint/eslint-plugin": "7.17.0",
     "@typescript-eslint/parser": "7.17.0",
     "@vitejs/plugin-react": "4.3.1",
-    "concurrently": "8.2.2",
+    "concurrently": "9.0.1",
     "cypress": "13.13.3",
     "cypress-localstorage-commands": "2.2.6",
     "env-cmd": "10.1.0",
