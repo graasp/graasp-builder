@@ -145,7 +145,7 @@ const ItemMenuContent = ({ item }: Props): JSX.Element | null => {
   ].filter(Boolean) as JSX.Element[];
 
   const miscMenus = [
-    ...(member?.type === AccountType.Individual
+    ...(member.type === AccountType.Individual
       ? [
           <CreateShortcutButton
             key="shortcut"

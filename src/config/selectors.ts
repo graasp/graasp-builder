@@ -71,7 +71,6 @@ export const ITEM_LOGIN_SIGN_IN_PASSWORD_ID = 'itemLoginSignInPassword';
 export const ITEM_LOGIN_SIGN_IN_BUTTON_ID = 'itemLoginSignInButton';
 export const ITEM_SCREEN_MAIN_ID = 'itemScreenMain';
 export const ITEM_LOGIN_SCREEN_FORBIDDEN_ID = 'itemLoginScreenForbidden';
-export const ITEM_LOGIN_SIGN_IN_MEMBER_ID_ID = 'itemLoginSignInMemberId';
 export const ITEM_LOGIN_SIGN_IN_MODE_ID = 'itemLoginSignInMode';
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
