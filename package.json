@@ -24,7 +24,7 @@
     "@graasp/sdk": "4.29.1",
     "@graasp/stylis-plugin-rtl": "2.2.0",
     "@graasp/translations": "1.37.0",
-    "@graasp/ui": "4.27.0",
+    "@graasp/ui": "5.0.1",
     "@mui/icons-material": "5.16.4",
     "@mui/lab": "5.0.0-alpha.172",
     "@mui/material": "5.16.4",
