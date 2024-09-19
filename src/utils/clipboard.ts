@@ -6,7 +6,7 @@ export const copyToClipboard = async (
   try {
     await navigator.clipboard.writeText(s);
     onSuccess?.();
-  } catch (e) {
+  } catch {
     onError?.();
   }
 };

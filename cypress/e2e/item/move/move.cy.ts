@@ -208,7 +208,7 @@ describe('Move Items', () => {
     moveItems({ toItemPath: '' });
 
     cy.wait('@moveItems').then(({ request: { url, body } }) => {
-      // eslint-disable-next-line no-unused-expressions
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(body.parentId).to.be.undefined;
       folders.forEach((item) => {
         expect(url).to.contain(item.id);

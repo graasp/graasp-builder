@@ -148,7 +148,7 @@ const AppContent = ({
     contextPayload={{
       apiHost: API_HOST,
       itemId: item.id,
-      memberId: member?.id,
+      accountId: member?.id,
       permission,
       settings: item.settings,
       lang: item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,

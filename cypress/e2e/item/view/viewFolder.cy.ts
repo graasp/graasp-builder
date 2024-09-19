@@ -99,7 +99,7 @@ describe('View Folder', () => {
     cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
     cy.wait('@getChildren').then(({ request: { query } }) => {
-      // eslint-disable-next-line no-unused-expressions
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(
         (query.keywords as unknown as string[]).every((k) =>
           searchText.includes(k),
