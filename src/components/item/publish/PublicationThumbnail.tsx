@@ -3,7 +3,7 @@ import { useState } from 'react';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Tooltip } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { PackedItem } from '@graasp/sdk';
 
 import { title } from 'process';
 
@@ -19,7 +19,7 @@ const THUMBNAIL_SIZE = 150;
 const SYNC_STATUS_KEY = 'PublicationThumbnail';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
   thumbnailSize?: number;
   fullWidth?: boolean;
 };
