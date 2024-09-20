@@ -2,7 +2,6 @@ import { Trans } from 'react-i18next';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
 import { buildSignInPath, saveUrlForRedirection } from '@graasp/sdk';
-import { COMMON } from '@graasp/translations';
 import {
   CustomInitialLoader,
   PreventGuestWrapper,
