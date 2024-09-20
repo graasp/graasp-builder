@@ -1,10 +1,19 @@
-import { PackedFolderItemFactory } from '@graasp/sdk';
+import {
+  GuestFactory,
+  ItemLoginSchemaFactory,
+  PackedFolderItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { SortingOptionsForFolder } from '../../../../src/components/table/types';
 import i18n from '../../../../src/config/i18n';
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   CREATE_ITEM_BUTTON_ID,
+  ITEM_HEADER_ID,
+  ITEM_MENU_BOOKMARK_BUTTON_CLASS,
+  ITEM_MENU_FLAG_BUTTON_CLASS,
+  ITEM_MENU_SHORTCUT_BUTTON_CLASS,
   ITEM_SEARCH_INPUT_ID,
   NAVIGATION_HOME_ID,
   SORTING_ORDERING_SELECTOR_ASC,
@@ -28,8 +37,63 @@ const child4 = PackedFolderItemFactory({ parentItem });
 const children = [child1, child2, child3, child4];
 
 const items = [parentItem, item1, ...children];
+describe('View folder as guest', () => {
+  it('Show limited features', () => {
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: PermissionLevel.Read },
+    );
+    const guest = GuestFactory({
+      itemLoginSchema: ItemLoginSchemaFactory({
+        item,
+      }),
+    });
+    cy.setUpApi({
+      items: [item],
+      currentMember: guest,
+    });
+    cy.visit(buildItemPath(item.id));
 
-describe('View Folder', () => {
+    // no add button
+    cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
+
+    // menu item only contains flag
+    cy.get(`#${ITEM_HEADER_ID} [data-testid="MoreVertIcon"]`).click();
+    cy.get(`.${ITEM_MENU_FLAG_BUTTON_CLASS}`).should('be.visible');
+    cy.get(`.${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).should('not.exist');
+  });
+});
+
+describe('View folder as reader', () => {
+  it('Show limited features', () => {
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: PermissionLevel.Read },
+    );
+    cy.setUpApi({
+      items: [item],
+    });
+    cy.visit(buildItemPath(item.id));
+
+    // no add button
+    cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
+
+    // menu item contains flag, duplicate, shortcut, bookmark
+    cy.get(`#${ITEM_HEADER_ID} [data-testid="MoreVertIcon"]`).click();
+    cy.get(`.${ITEM_MENU_FLAG_BUTTON_CLASS}`).should('be.visible');
+    cy.get(`.${ITEM_MENU_SHORTCUT_BUTTON_CLASS}`).should('be.visible');
+    cy.get(`.${ITEM_MENU_BOOKMARK_BUTTON_CLASS}`).should('be.visible');
+  });
+});
+
+describe('view Folder as admin', () => {
+  beforeEach(() => {
+    cy.setUpApi({
+      items,
+    });
+    i18n.changeLanguage(CURRENT_USER.extra.lang as string);
+  });
+
   it('View folder on map by default', () => {
     cy.setUpApi({
       items,
@@ -50,13 +114,6 @@ describe('View Folder', () => {
 
     cy.get(`[role="dropzone"]`).should('be.visible');
     cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('be.visible');
-  });
-
-  beforeEach(() => {
-    cy.setUpApi({
-      items,
-    });
-    i18n.changeLanguage(CURRENT_USER.extra.lang as string);
   });
 
   it('visit item by id', () => {

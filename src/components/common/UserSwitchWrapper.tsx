@@ -1,4 +1,4 @@
-import { CompleteMember, buildSignInPath } from '@graasp/sdk';
+import { buildSignInPath } from '@graasp/sdk';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
 import { GRAASP_ACCOUNT_HOST, GRAASP_AUTH_HOST } from '@/config/env';
@@ -24,10 +24,6 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = mutations.useSignOut();
 
-  const renderAvatar = (m?: CompleteMember | null) => (
-    <MemberAvatar id={m?.id} />
-  );
-
   const redirectPath = buildSignInPath({
     host: GRAASP_AUTH_HOST,
     redirectionUrl: window.location.toString(),
@@ -52,7 +48,7 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
       signOutMenuItemId={HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID}
       seeProfileButtonId={HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID}
       buildMemberMenuItemId={buildMemberMenuItemId}
-      renderAvatar={renderAvatar}
+      avatar={<MemberAvatar id={member?.id} />}
     />
   );
 };

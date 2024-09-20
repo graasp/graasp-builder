@@ -1,4 +1,6 @@
 import {
+  GuestFactory,
+  ItemLoginSchemaFactory,
   PackedFolderItemFactory,
   PackedItemBookmarkFactory,
 } from '@graasp/sdk';
@@ -14,6 +16,7 @@ import {
   BOOKMARK_ICON_SELECTOR,
   CREATE_ITEM_BUTTON_ID,
   ITEM_SEARCH_INPUT_ID,
+  PREVENT_GUEST_MESSAGE_ID,
   SORTING_ORDERING_SELECTOR_ASC,
   SORTING_ORDERING_SELECTOR_DESC,
   SORTING_SELECT_SELECTOR,
@@ -38,6 +41,16 @@ const addToBookmark = (itemId: string) => {
 };
 
 describe('Bookmarked Item', () => {
+  it('Show message for guest', () => {
+    const item = PackedFolderItemFactory();
+    const guest = GuestFactory({
+      itemLoginSchema: ItemLoginSchemaFactory({ item }),
+    });
+    cy.setUpApi({ items: [item], currentMember: guest });
+    cy.visit(BOOKMARKED_ITEMS_PATH);
+    cy.get(`#${PREVENT_GUEST_MESSAGE_ID}`).should('be.visible');
+  });
+
   describe('Member has no bookmarked items', () => {
     beforeEach(() => {
       cy.setUpApi({

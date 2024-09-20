@@ -15,6 +15,7 @@ type Props = {
   type?: ActionButtonVariant;
   onClick?: () => void;
   size?: IconButtonProps['size'];
+  className?: string;
 };
 
 const isItemBookmarked = (
@@ -27,16 +28,12 @@ const BookmarkButton = ({
   size,
   type,
   onClick,
+  className,
 }: Props): JSX.Element | null => {
-  const { data: member } = hooks.useCurrentMember();
   const { data: bookmarks } = hooks.useBookmarkedItems();
   const { t: translateBuilder } = useBuilderTranslation();
   const addFavorite = mutations.useAddBookmarkedItem();
   const deleteFavorite = mutations.useRemoveBookmarkedItem();
-
-  if (!member) {
-    return null;
-  }
 
   const isFavorite = isItemBookmarked(item, bookmarks);
 
@@ -56,6 +53,7 @@ const BookmarkButton = ({
 
   return (
     <GraaspBookmarkButton
+      className={className}
       isFavorite={isFavorite}
       ariaLabel={text}
       handleUnbookmark={handleUnbookmark}

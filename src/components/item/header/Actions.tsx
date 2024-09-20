@@ -4,6 +4,7 @@ import { MoreVert } from '@mui/icons-material';
 import { Divider, IconButton, Menu } from '@mui/material';
 
 import {
+  AccountType,
   ItemType,
   PackedItem,
   PermissionLevel,
@@ -13,6 +14,7 @@ import { ActionButton } from '@graasp/ui';
 
 import useModalStatus from '@/components/hooks/useModalStatus';
 import { hooks } from '@/config/queryClient';
+import { ITEM_MENU_BOOKMARK_BUTTON_CLASS } from '@/config/selectors';
 
 import BookmarkButton from '../../common/BookmarkButton';
 import CollapseButton from '../../common/CollapseButton';
@@ -77,34 +79,47 @@ const Actions = ({ item }: Props): JSX.Element | null => {
         <MoreVert />
       </IconButton>
       <Menu id={internalId} anchorEl={anchorEl} open={open} onClose={closeMenu}>
-        <CreateShortcutButton
-          key="shortcut"
-          onClick={() => {
-            openCreateShortcutModal();
-            closeMenu();
-          }}
-        />
-        <BookmarkButton
-          size="medium"
-          key="bookmark"
-          type={ActionButton.MENU_ITEM}
-          item={item}
-        />
-        {canWrite && (
+        {member.type === AccountType.Individual ? (
           <>
-            <Divider />
-            <HideButton key="hide" type={ActionButton.MENU_ITEM} item={item} />
-            <PinButton key="pin" type={ActionButton.MENU_ITEM} item={item} />
-            {item.type !== ItemType.FOLDER && (
-              <CollapseButton
-                key="collapse"
-                type={ActionButton.MENU_ITEM}
-                item={item}
-              />
+            <CreateShortcutButton
+              key="shortcut"
+              onClick={() => {
+                openCreateShortcutModal();
+                closeMenu();
+              }}
+            />
+            <BookmarkButton
+              size="medium"
+              key="bookmark"
+              type={ActionButton.MENU_ITEM}
+              item={item}
+              className={ITEM_MENU_BOOKMARK_BUTTON_CLASS}
+            />
+            {canWrite && (
+              <>
+                <Divider />
+                <HideButton
+                  key="hide"
+                  type={ActionButton.MENU_ITEM}
+                  item={item}
+                />
+                <PinButton
+                  key="pin"
+                  type={ActionButton.MENU_ITEM}
+                  item={item}
+                />
+                {item.type !== ItemType.FOLDER && (
+                  <CollapseButton
+                    key="collapse"
+                    type={ActionButton.MENU_ITEM}
+                    item={item}
+                  />
+                )}
+              </>
             )}
+            <Divider />
           </>
-        )}
-        <Divider />
+        ) : null}
         <FlagButton item={item} />
         {canAdmin && (
           <RecycleButton

@@ -1,6 +1,14 @@
 import { useState } from 'react';
 
-import { Alert, Box, LinearProgress, Stack } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Container,
+  LinearProgress,
+  Button as MuiButton,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
@@ -197,28 +205,47 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
 
 const HomeScreen = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { data: currentMember } = hooks.useCurrentMember();
 
   const itemSearch = useItemSearch();
 
+  if (currentMember) {
+    return (
+      <PageWrapper
+        title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
+        options={
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            spacing={1}
+          >
+            {itemSearch.input}
+            <NewItemButton key="newButton" size="medium" />
+          </Stack>
+        }
+      >
+        <SelectionContextProvider>
+          <HomeScreenContent searchText={itemSearch.text} />
+        </SelectionContextProvider>
+      </PageWrapper>
+    );
+  }
+
+  // not logged in - redirection
   return (
-    <PageWrapper
-      title={translateBuilder(BUILDER.MY_ITEMS_TITLE)}
-      options={
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="flex-end"
-          spacing={1}
-        >
-          {itemSearch.input}
-          <NewItemButton key="newButton" size="medium" />
-        </Stack>
-      }
-    >
-      <SelectionContextProvider>
-        <HomeScreenContent searchText={itemSearch.text} />
-      </SelectionContextProvider>
-    </PageWrapper>
+    <Stack height="100%" justifyContent="center" alignItems="center">
+      <Container maxWidth="md">
+        <Alert severity="warning">
+          <Typography textAlign="right">
+            {translateBuilder(BUILDER.REDIRECTION_TEXT)}
+          </Typography>
+          <MuiButton variant="text" sx={{ textTransform: 'none' }}>
+            {translateBuilder(BUILDER.REDIRECTION_BUTTON)}
+          </MuiButton>
+        </Alert>
+      </Container>
+    </Stack>
   );
 };
 

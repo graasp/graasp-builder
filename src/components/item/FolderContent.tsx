@@ -1,3 +1,5 @@
+import { useOutletContext } from 'react-router-dom';
+
 import { Alert, Box, Stack, Typography } from '@mui/material';
 
 import {
@@ -30,6 +32,7 @@ import {
 import { useDragSelection } from '../main/list/useDragSelection';
 import { DesktopMap } from '../map/DesktopMap';
 import NoItemFilters from '../pages/NoItemFilters';
+import { OutletType } from '../pages/item/type';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptionsForFolder } from '../table/types';
 import { useSorting } from '../table/useSorting';
@@ -43,18 +46,21 @@ type Props = {
   searchText: string;
   items?: PackedItem[];
   sortBy: SortingOptionsForFolder;
+  canWrite?: boolean;
 };
 
-const Content = ({ item, searchText, items, sortBy }: Props) => {
+const Content = ({
+  item,
+  searchText,
+  items,
+  sortBy,
+  canWrite = false,
+}: Props) => {
   const { mode } = useLayoutContext();
   const { itemTypes } = useFilterItemsContext();
   const { selectedIds, clearSelection, toggleSelection } =
     useSelectionContext();
   const DragSelection = useDragSelection();
-
-  const enableEditing = item.permission
-    ? PermissionLevelCompare.lte(PermissionLevel.Write, item.permission)
-    : false;
 
   if (mode === ItemLayoutMode.Map) {
     return (
@@ -75,7 +81,7 @@ const Content = ({ item, searchText, items, sortBy }: Props) => {
           onCardClick={toggleSelection}
           onMove={clearSelection}
         />
-        {Boolean(enableEditing && !searchText && !itemTypes?.length) && (
+        {Boolean(canWrite && !searchText && !itemTypes?.length) && (
           <Stack alignItems="center" mb={2}>
             <NewItemButton
               type="icon"
@@ -119,6 +125,7 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { selectedIds } = useSelectionContext();
   const itemSearch = useItemSearch();
+  const { canWrite } = useOutletContext<OutletType>();
 
   const {
     data: children,
@@ -136,13 +143,13 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
       ordering: Ordering.ASC,
     });
 
-  const sortedChildren = children?.sort(sortFn);
-
   const sortingOptions = Object.values(SortingOptionsForFolder).sort((t1, t2) =>
     translateEnums(t1).localeCompare(translateEnums(t2)),
   );
 
   if (children) {
+    const sortedChildren = children.sort(sortFn);
+
     return (
       <>
         <Stack direction="row" justifyContent="space-between" spacing={1}>
@@ -160,49 +167,62 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
             spacing={1}
           >
             {itemSearch.input}
-            <NewItemButton
-              key="newButton"
-              size="medium"
-              // add new items at the end of the list
-              previousItemId={children[children.length - 1]?.id}
-            />
+            {canWrite && (
+              <NewItemButton
+                key="newButton"
+                size="medium"
+                // add new items at the end of the list
+                previousItemId={children[children.length - 1]?.id}
+              />
+            )}
           </Stack>
         </Stack>
         <FolderDescription itemId={item.id} />
 
-        <Stack
-          alignItems="space-between"
-          direction="column"
-          mt={2}
-          gap={1}
-          width="100%"
-        >
-          {selectedIds.length && sortedChildren?.length ? (
-            <FolderToolbar items={sortedChildren} />
-          ) : (
-            <Stack
-              spacing={1}
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <SelectTypes />
-              <Stack direction="row" gap={1}>
-                {sortBy && setSortBy && (
-                  <SortingSelect
-                    ordering={ordering}
-                    sortBy={sortBy}
-                    setSortBy={setSortBy}
-                    options={sortingOptions}
-                    setOrdering={setOrdering}
-                  />
-                )}
-                <ModeButton />
+        {sortedChildren.length ? (
+          <Stack
+            alignItems="space-between"
+            direction="column"
+            mt={2}
+            gap={1}
+            width="100%"
+          >
+            {selectedIds.length ? (
+              <FolderToolbar items={sortedChildren} />
+            ) : (
+              <Stack
+                spacing={1}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <SelectTypes />
+                <Stack direction="row" gap={1}>
+                  {sortBy && setSortBy && (
+                    <SortingSelect
+                      ordering={ordering}
+                      sortBy={sortBy}
+                      setSortBy={setSortBy}
+                      options={sortingOptions}
+                      setOrdering={setOrdering}
+                    />
+                  )}
+                  <ModeButton />
+                </Stack>
               </Stack>
-            </Stack>
-          )}
-        </Stack>
+            )}
+          </Stack>
+        ) : null}
+
+        {/* reader empty message */}
+        {!sortedChildren.length && !canWrite ? (
+          <Alert severity="info" sx={{ mt: 2 }}>
+            {translateBuilder(BUILDER.EMPTY_FOLDER_MESSAGE)}
+          </Alert>
+        ) : null}
+
         <Content
+          canWrite={canWrite}
           sortBy={sortBy}
           item={item}
           items={sortedChildren}

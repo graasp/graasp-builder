@@ -71,7 +71,7 @@
   "EDIT_ITEM_ERROR_MESSAGE": "L'élément n'est pas valide",
   "EDIT_ITEM_MODAL_TITLE": "Modifier l'élément",
   "EDIT_ITEM_IMAGE_ALT_TEXT_LABEL": "Texte alternatif (pour améliorer l'accessibilité)",
-  "EMPTY_ITEM_MESSAGE": "Cet élément est vide.",
+  "EMPTY_FOLDER_MESSAGE": "Ce dossier est vide.",
   "ERROR_MESSAGE": "Une erreur est survenue.",
   "BOOKMARKED_ITEM_ADD_TEXT": "Ajouter aux signets",
   "BOOKMARKED_ITEM_REMOVE_TEXT": "Retirer des signets",

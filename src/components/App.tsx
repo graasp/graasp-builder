@@ -1,9 +1,17 @@
+import { Trans } from 'react-i18next';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
 import { buildSignInPath, saveUrlForRedirection } from '@graasp/sdk';
-import { CustomInitialLoader, withAuthorization } from '@graasp/ui';
+import {
+  CustomInitialLoader,
+  PreventGuestWrapper,
+  SignedInWrapper,
+} from '@graasp/ui';
 
 import { DOMAIN, GRAASP_AUTH_HOST } from '@/config/env';
+import { useBuilderTranslation } from '@/config/i18n';
+import { PREVENT_GUEST_MESSAGE_ID } from '@/config/selectors';
+import { BUILDER } from '@/langs/constants';
 
 import {
   BOOKMARKED_ITEMS_PATH,
@@ -18,7 +26,7 @@ import {
   REDIRECT_PATH,
   buildItemPath,
 } from '../config/paths';
-import { hooks } from '../config/queryClient';
+import { hooks, mutations } from '../config/queryClient';
 import Main from './main/Main';
 import Redirect from './main/Redirect';
 import BookmarkedItemsScreen from './pages/BookmarkedItemsScreen';
@@ -26,6 +34,7 @@ import MapItemsScreen from './pages/MapItemsScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
 import HomeScreen from './pages/home/HomeScreen';
+import ItemLoginWrapper from './pages/item/ItemLoginWrapper';
 import ItemPageLayout from './pages/item/ItemPageLayout';
 import ItemScreen from './pages/item/ItemScreen';
 import ItemScreenLayout from './pages/item/ItemScreenLayout';
@@ -36,43 +45,17 @@ import LibrarySettingsPage from './pages/item/LibrarySettingsPage';
 const { useItemFeedbackUpdates, useCurrentMember } = hooks;
 
 const App = (): JSX.Element => {
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { mutate: signOut } = mutations.useSignOut();
   const { pathname } = useLocation();
-  const { data: currentMember, isLoading } = useCurrentMember();
+  const { data: currentAccount, isLoading } = useCurrentMember();
 
   // registers the item updates through websockets
-  useItemFeedbackUpdates?.(currentMember?.id);
+  useItemFeedbackUpdates?.(currentAccount?.id);
 
   if (isLoading) {
     return <CustomInitialLoader />;
   }
-
-  const withAuthorizationProps = {
-    currentMember,
-    redirectionLink: buildSignInPath({
-      host: GRAASP_AUTH_HOST,
-      redirectionUrl: window.location.toString(),
-    }),
-    onRedirect: () => {
-      // save current url for later redirection after sign in
-      saveUrlForRedirection(pathname, DOMAIN);
-    },
-  };
-  const HomeWithAuthorization = withAuthorization(
-    HomeScreen,
-    withAuthorizationProps,
-  );
-  const FavoriteWithAuthorization = withAuthorization(
-    BookmarkedItemsScreen,
-    withAuthorizationProps,
-  );
-  const PublishedWithAuthorization = withAuthorization(
-    PublishedItemsScreen,
-    withAuthorizationProps,
-  );
-  const RecycleWithAuthorization = withAuthorization(
-    RecycledItemsScreen,
-    withAuthorizationProps,
-  );
 
   return (
     <Routes>
@@ -84,16 +67,64 @@ const App = (): JSX.Element => {
           </Main>
         }
       >
-        <Route path={HOME_PATH} element={<HomeWithAuthorization />} />
+        {/* pages with personal info */}
         <Route
-          path={BOOKMARKED_ITEMS_PATH}
-          element={<FavoriteWithAuthorization />}
-        />
+          element={
+            // redirect to sign in if not signed in
+            <SignedInWrapper
+              currentAccount={currentAccount}
+              redirectionLink={buildSignInPath({
+                host: GRAASP_AUTH_HOST,
+                redirectionUrl: window.location.toString(),
+              })}
+              onRedirect={() => {
+                // save current url for later redirection after sign in
+                saveUrlForRedirection(pathname, DOMAIN);
+              }}
+            >
+              <PreventGuestWrapper
+                id={PREVENT_GUEST_MESSAGE_ID}
+                currentAccount={currentAccount}
+                buttonText={translateBuilder(BUILDER.GUEST_SIGN_OUT_BUTTON)}
+                onButtonClick={() => signOut()}
+                errorText={translateBuilder(BUILDER.ERROR_MESSAGE)}
+                text={
+                  <Trans
+                    t={translateBuilder}
+                    i18nKey={BUILDER.GUEST_LIMITATION_TEXT}
+                    values={{
+                      name: currentAccount?.name,
+                    }}
+                    components={{ 1: <strong /> }}
+                  />
+                }
+              >
+                <Outlet />
+              </PreventGuestWrapper>
+            </SignedInWrapper>
+          }
+        >
+          <Route path={HOME_PATH} element={<HomeScreen />} />
+          <Route
+            path={BOOKMARKED_ITEMS_PATH}
+            element={<BookmarkedItemsScreen />}
+          />
+          <Route
+            path={PUBLISHED_ITEMS_PATH}
+            element={<PublishedItemsScreen />}
+          />
+          <Route path={RECYCLE_BIN_PATH} element={<RecycledItemsScreen />} />
+        </Route>
+
+        {/* item pages - can be public */}
         <Route
-          path={PUBLISHED_ITEMS_PATH}
-          element={<PublishedWithAuthorization />}
-        />
-        <Route path={buildItemPath()} element={<ItemScreenLayout />}>
+          path={buildItemPath()}
+          element={
+            <ItemLoginWrapper>
+              <ItemScreenLayout />
+            </ItemLoginWrapper>
+          }
+        >
           <Route index element={<ItemScreen />} />
           <Route element={<ItemPageLayout />}>
             <Route path={ITEM_SHARE_PATH} element={<ItemSharingPage />} />
@@ -101,9 +132,9 @@ const App = (): JSX.Element => {
             <Route path={ITEM_SETTINGS_PATH} element={<ItemSettingsPage />} />
           </Route>
         </Route>
-        <Route path={RECYCLE_BIN_PATH} element={<RecycleWithAuthorization />} />
-        <Route path={buildItemPath()} element={<ItemScreen />} />
-        <Route path={ITEMS_PATH} element={<HomeWithAuthorization />} />
+
+        {/* redirection to home */}
+        <Route path={ITEMS_PATH} element={<Redirect />} />
         <Route path={REDIRECT_PATH} element={<Redirect />} />
         <Route path="*" element={<Redirect />} />
       </Route>

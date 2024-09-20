@@ -1,4 +1,6 @@
 import {
+  GuestFactory,
+  ItemLoginSchemaFactory,
   PackedFolderItemFactory,
   PackedLocalFileItemFactory,
 } from '@graasp/sdk';
@@ -14,6 +16,7 @@ import {
   DROPZONE_SELECTOR,
   HOME_LOAD_MORE_BUTTON_SELECTOR,
   ITEM_SEARCH_INPUT_ID,
+  PREVENT_GUEST_MESSAGE_ID,
   SORTING_ORDERING_SELECTOR_ASC,
   SORTING_ORDERING_SELECTOR_DESC,
   SORTING_SELECT_SELECTOR,
@@ -210,5 +213,16 @@ describe('Home', () => {
         }
       });
     });
+  });
+
+  it('Show message for guest', () => {
+    const item = PackedFolderItemFactory();
+    const guest = GuestFactory({
+      itemLoginSchema: ItemLoginSchemaFactory({ item }),
+    });
+    cy.setUpApi({ items: [item], currentMember: guest });
+    cy.visit(HOME_PATH);
+
+    cy.get(`#${PREVENT_GUEST_MESSAGE_ID}`).should('be.visible');
   });
 });

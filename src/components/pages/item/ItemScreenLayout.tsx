@@ -7,7 +7,6 @@ import { Loader } from '@graasp/ui';
 import { hooks } from '../../../config/queryClient';
 import ErrorAlert from '../../common/ErrorAlert';
 import { useLayoutContext } from '../../context/LayoutContext';
-import WrappedAuthItemScreen from './ItemLoginWrapper';
 
 const { useItem } = hooks;
 
@@ -44,7 +43,4 @@ const ItemScreenLayout = (): JSX.Element => {
   return <ErrorAlert />;
 };
 
-const WrappedItemScreen = (): JSX.Element =>
-  WrappedAuthItemScreen(ItemScreenLayout);
-
-export default WrappedItemScreen;
+export default ItemScreenLayout;

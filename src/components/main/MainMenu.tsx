@@ -9,6 +9,7 @@ import {
   Stack,
 } from '@mui/material';
 
+import { AccountType } from '@graasp/sdk';
 import { MainMenu as GraaspMainMenu, MenuItem } from '@graasp/ui';
 
 import {
@@ -59,6 +60,30 @@ const MainMenu = (): JSX.Element | false => {
     return false;
   }
 
+  const individualMenuItems =
+    member.type === AccountType.Individual ? (
+      <>
+        <MenuItem
+          onClick={() => goTo(BOOKMARKED_ITEMS_PATH)}
+          selected={pathname === BOOKMARKED_ITEMS_PATH}
+          text={t(BUILDER.BOOKMARKED_ITEMS_TITLE)}
+          icon={<BookmarkIcon />}
+        />
+        <MenuItem
+          onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
+          selected={pathname === PUBLISHED_ITEMS_PATH}
+          text={t(BUILDER.NAVIGATION_PUBLISHED_ITEMS_TITLE)}
+          icon={<LibraryBigIcon />}
+        />
+        <MenuItem
+          onClick={() => goTo(RECYCLE_BIN_PATH)}
+          selected={pathname === RECYCLE_BIN_PATH}
+          text={t(BUILDER.RECYCLE_BIN_TITLE)}
+          icon={<TrashIcon />}
+        />
+      </>
+    ) : null;
+
   return (
     <GraaspMainMenu fullHeight>
       <Stack direction="column" height="100%" justifyContent="space-between">
@@ -69,24 +94,7 @@ const MainMenu = (): JSX.Element | false => {
             icon={<HomeIcon />}
             text={t(BUILDER.MY_ITEMS_TITLE)}
           />
-          <MenuItem
-            onClick={() => goTo(BOOKMARKED_ITEMS_PATH)}
-            selected={pathname === BOOKMARKED_ITEMS_PATH}
-            text={t(BUILDER.BOOKMARKED_ITEMS_TITLE)}
-            icon={<BookmarkIcon />}
-          />
-          <MenuItem
-            onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
-            selected={pathname === PUBLISHED_ITEMS_PATH}
-            text={t(BUILDER.NAVIGATION_PUBLISHED_ITEMS_TITLE)}
-            icon={<LibraryBigIcon />}
-          />
-          <MenuItem
-            onClick={() => goTo(RECYCLE_BIN_PATH)}
-            selected={pathname === RECYCLE_BIN_PATH}
-            text={t(BUILDER.RECYCLE_BIN_TITLE)}
-            icon={<TrashIcon />}
-          />
+          {individualMenuItems}
         </Box>
         <Box>
           <ResourceLinks />
