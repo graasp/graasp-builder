@@ -2,6 +2,7 @@ import { Trans } from 'react-i18next';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
 import { buildSignInPath, saveUrlForRedirection } from '@graasp/sdk';
+import { COMMON } from '@graasp/translations';
 import {
   CustomInitialLoader,
   PreventGuestWrapper,
@@ -87,6 +88,7 @@ const App = (): JSX.Element => {
                 currentAccount={currentAccount}
                 buttonText={translateBuilder(BUILDER.GUEST_SIGN_OUT_BUTTON)}
                 onButtonClick={() => signOut()}
+                errorText={translateBuilder(BUILDER.ERROR_MESSAGE)}
                 text={
                   <Trans
                     t={translateBuilder}
