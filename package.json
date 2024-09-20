@@ -23,7 +23,7 @@
     "@graasp/query-client": "3.22.4",
     "@graasp/sdk": "4.29.1",
     "@graasp/stylis-plugin-rtl": "2.2.0",
-    "@graasp/translations": "1.37.0",
+    "@graasp/translations": "1.37.1",
     "@graasp/ui": "5.1.0",
     "@mui/icons-material": "5.16.4",
     "@mui/lab": "5.0.0-alpha.172",
