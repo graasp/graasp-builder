@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.38.0](https://github.com/graasp/graasp-builder/compare/v2.37.0...v2.38.0) (2024-09-20)
+
+
+### Features
+
+* show item login message on customer pages ([#1460](https://github.com/graasp/graasp-builder/issues/1460)) ([7e44954](https://github.com/graasp/graasp-builder/commit/7e4495444592031663513543577b9c165428e434))
+* update SDK to v4.28.0 to get latest ZIP max size ([#1441](https://github.com/graasp/graasp-builder/issues/1441)) ([d521a67](https://github.com/graasp/graasp-builder/commit/d521a671b3a1592b98ba9e32f2f0c9ef7214aa04))
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v1.7.7 ([#1421](https://github.com/graasp/graasp-builder/issues/1421)) ([be6875b](https://github.com/graasp/graasp-builder/commit/be6875bfb3fca04aad8510ecffd0492cd2a9f6ad))
+* **deps:** update dependency filesize to v10.1.6 ([#1439](https://github.com/graasp/graasp-builder/issues/1439)) ([44050e6](https://github.com/graasp/graasp-builder/commit/44050e60ebb3483f52363dc2165d15a550d568ed))
+* **deps:** update dependency i18next to v23.15.1 ([#1451](https://github.com/graasp/graasp-builder/issues/1451)) ([0935b37](https://github.com/graasp/graasp-builder/commit/0935b3762d7695a49a26261c3991f25983a38e66))
+* **deps:** update dependency lucide-react to v0.441.0 ([#1455](https://github.com/graasp/graasp-builder/issues/1455)) ([f5f27fb](https://github.com/graasp/graasp-builder/commit/f5f27fb026cc5129a49e306d28e690a3a65ad108))
+* **deps:** update dependency react-image-crop to v11.0.7 ([#1440](https://github.com/graasp/graasp-builder/issues/1440)) ([b1884b2](https://github.com/graasp/graasp-builder/commit/b1884b2bbcdd7158499b46222f5e445a1c88650e))
+* **deps:** update dependency stylis to v4.3.4 ([#1442](https://github.com/graasp/graasp-builder/issues/1442)) ([b317b89](https://github.com/graasp/graasp-builder/commit/b317b891f1fef5b6f0379501ff9e8acc0f864aa7))
+* **deps:** update graasp packages ([#1450](https://github.com/graasp/graasp-builder/issues/1450)) ([eda7d06](https://github.com/graasp/graasp-builder/commit/eda7d067e927f35c62cd54e14b98704597c01c1c))
+* **deps:** update react-router monorepo to v6.26.2 ([#1445](https://github.com/graasp/graasp-builder/issues/1445)) ([e999e6b](https://github.com/graasp/graasp-builder/commit/e999e6b0f265f9f583ec82cce1004e781af26e16))
+* **german:** update translations ([#1457](https://github.com/graasp/graasp-builder/issues/1457)) ([0780256](https://github.com/graasp/graasp-builder/commit/0780256d5612606b15c82c1c61b66407f0a89c9a))
+* update translations and dependencies ([#1462](https://github.com/graasp/graasp-builder/issues/1462)) ([3646eef](https://github.com/graasp/graasp-builder/commit/3646eef6e46c7d292be75562087948c7e8c29ae1))
+
 ## [2.37.0](https://github.com/graasp/graasp-builder/compare/v2.36.0...v2.37.0) (2024-09-13)
 
 
