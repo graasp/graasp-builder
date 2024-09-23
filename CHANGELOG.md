@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.39.0](https://github.com/graasp/graasp-builder/compare/v2.38.0...v2.39.0) (2024-09-23)
+
+
+### Features
+
+* allow user to request membership ([#1424](https://github.com/graasp/graasp-builder/issues/1424)) ([ddb0012](https://github.com/graasp/graasp-builder/commit/ddb00123634d8e0b77871a0568064ffa528d5390))
+
 ## [2.38.0](https://github.com/graasp/graasp-builder/compare/v2.37.0...v2.38.0) (2024-09-20)
 
 
