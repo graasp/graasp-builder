@@ -1831,7 +1831,7 @@ __metadata:
 
 "@graasp/ui@github:graasp/graasp-ui#enroll":
   version: 5.1.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=7fe19bb72e1f66d07fb18cb71732448359f65131"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=2aace5ecac5de1c3d06287387ba228f2f8f06e38"
   dependencies:
     http-status-codes: "npm:2.3.0"
     interweave: "npm:13.1.0"

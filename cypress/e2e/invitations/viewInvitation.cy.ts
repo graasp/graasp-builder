@@ -1,15 +1,17 @@
-import { buildItemPath } from '../../../src/config/paths';
+import { PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
+import { namespaces } from '@graasp/translations';
+
+import i18n from '@/config/i18n';
+
+import { buildItemPath, buildItemSharePath } from '../../../src/config/paths';
 import {
-  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   ITEM_RESEND_INVITATION_BUTTON_CLASS,
-  buildInvitationTableRowSelector,
+  buildInvitationTableRowId,
   buildItemInvitationRowDeleteButtonId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import {
-  ITEMS_WITH_INVITATIONS,
-  ITEM_WITH_INVITATIONS_WRITE_ACCESS,
-} from '../../fixtures/invitations';
+import { ITEMS_WITH_INVITATIONS } from '../../fixtures/invitations';
+import { CURRENT_USER, MEMBERS } from '../../fixtures/members';
 
 describe('View Invitations', () => {
   beforeEach(() => {
@@ -17,70 +19,66 @@ describe('View Invitations', () => {
   });
 
   it('view invitation in share item modal', () => {
+    i18n.changeLanguage(CURRENT_USER.extra.lang);
     const item = ITEMS_WITH_INVITATIONS.items[1];
     const { invitations } = item;
-    cy.visit(buildItemPath(item.id));
-    cy.get(`#${buildShareButtonId(item.id)}`).click();
+    cy.visit(buildItemSharePath(item.id));
 
     invitations.forEach(
       ({ item: { path: itemPath }, id, email, permission }) => {
-        cy.get(buildInvitationTableRowSelector(id)).should('contain', email);
-
         if (itemPath !== item.path) {
           cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).should(
             'be.disabled',
           );
         }
-        cy.get(
-          `${buildInvitationTableRowSelector(
-            id,
-          )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
-        ).should('have.value', permission);
+        cy.get(`#${buildInvitationTableRowId(id)}`)
+          .should('contain', email)
+          .should('contain', i18n.t(permission, { ns: namespaces.enums }));
 
         cy.get(
-          `${buildInvitationTableRowSelector(
-            id,
-          )} .${ITEM_RESEND_INVITATION_BUTTON_CLASS}`,
+          `#${buildInvitationTableRowId(id)} .${ITEM_RESEND_INVITATION_BUTTON_CLASS}`,
         ).should('exist');
       },
     );
   });
 });
 
-describe('View Invitations Read-Only Mode', () => {
-  beforeEach(() => {
-    cy.setUpApi({ ...ITEM_WITH_INVITATIONS_WRITE_ACCESS });
-  });
+describe('Cannot view Invitations for writers and readers', () => {
+  it('view invitation in share item modal write-only mode', () => {
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: PermissionLevel.Write },
+    );
+    const invitations = [
+      {
+        id: 'ecafbd2a-5688-11eb-be92-0242ac130005',
+        item,
+        permission: PermissionLevel.Write,
+        email: MEMBERS.CEDRIC.email,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        updatedAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+      },
+      {
+        id: 'ecafbd1a-5688-11eb-be93-0242ac130006',
+        item,
+        permission: PermissionLevel.Read,
+        email: MEMBERS.DAVID.email,
+        createdAt: '2021-08-11T12:56:36.834Z',
+        updatedAt: '2021-08-11T12:56:36.834Z',
+        creator: MEMBERS.ANNA,
+      },
+    ];
+    cy.setUpApi({ items: [{ ...item, invitations }] });
 
-  it('view invitation in share item modal read-only mode', () => {
-    const item = ITEM_WITH_INVITATIONS_WRITE_ACCESS.items[0];
-    const { invitations } = item;
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    invitations.forEach(({ id, email, permission }) => {
-      cy.get(buildInvitationTableRowSelector(id))
-        .should('contain', email)
-        .should('contain', permission);
-
-      // delete invitation button should not exist
-      cy.get(`#${buildItemInvitationRowDeleteButtonId(id)}`).should(
-        'not.exist',
-      );
-
-      // check no permission select component exists
-      cy.get(
-        `${buildInvitationTableRowSelector(
-          id,
-        )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
-      ).should('not.exist');
-
-      // resend invitation button should not exist
-      cy.get(
-        `${buildInvitationTableRowSelector(
-          id,
-        )} .${ITEM_RESEND_INVITATION_BUTTON_CLASS}`,
-      ).should('not.exist');
+    // should not contain given invitations
+    cy.get('tr').then((c) => {
+      invitations.forEach((inv) => {
+        expect(c[0]).not.to.contain(inv.email);
+      });
     });
   });
 });

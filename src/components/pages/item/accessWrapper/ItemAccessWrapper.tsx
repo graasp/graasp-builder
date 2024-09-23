@@ -70,7 +70,7 @@ const ItemAccessWrapper = (): JSX.Element => {
           height="100%"
           gap={2}
         >
-          <ForbiddenContent />
+          <ForbiddenContent id={ITEM_LOGIN_SCREEN_FORBIDDEN_ID} />
         </Stack>
       }
     >

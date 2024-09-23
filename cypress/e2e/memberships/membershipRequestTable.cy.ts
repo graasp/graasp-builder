@@ -79,7 +79,7 @@ describe('Membership requests table', () => {
         expect(body.permission).to.equal(PermissionLevel.Read);
       });
     });
-    it.only('reject membership requests', () => {
+    it('reject membership requests', () => {
       const { member } = membershipRequests[0];
 
       cy.get(

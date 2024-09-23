@@ -52,6 +52,7 @@ export const buildPermissionOptionId = (id: string): string =>
   `permission-${id}`;
 export const SHARE_ITEM_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 export const SHARE_BUTTON_SELECTOR = 'shareItem';
+export const SHARE_BUTTON_MORE_ID = 'shareItemMore';
 
 export const PUBLISHED_ITEMS_ID = 'publishedItems';
 export const BOOKMARKED_ITEMS_ID = 'bookmarkedItems';
@@ -230,8 +231,6 @@ export const buildInvitationEmailTableRowId = (id: string): string =>
   `invitationEmailTableRow-${id}`;
 export const buildInvitationTableRowId = (id: string): string =>
   `invitationTableRow-${id}`;
-export const buildInvitationTableRowSelector = (id: string): string =>
-  `[data-cy="${buildInvitationTableRowId(id)}"]`;
 export const ITEM_RESEND_INVITATION_BUTTON_CLASS = 'itemResendInvitationButton';
 export const CREATE_MEMBERSHIP_FORM_ID = 'createMembershipFormId';
 export const NAVIGATION_ROOT_ID = 'navigationRoot';

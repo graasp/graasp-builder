@@ -32,6 +32,7 @@ import {
   mockEditItem,
   mockEditItemMembershipForItem,
   mockEditMember,
+  mockEnroll,
   mockGetAccessibleItems,
   mockGetAppData,
   mockGetAppLink,
@@ -367,6 +368,8 @@ Cypress.Commands.add(
     mockGetMembershipRequestsForItem(membershipRequests);
 
     mockRejectMembershipRequest();
+
+    mockEnroll();
   },
 );
 

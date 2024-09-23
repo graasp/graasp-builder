@@ -6,7 +6,7 @@ import {
 
 import { buildItemPath } from '../../../../../src/config/paths';
 import {
-  ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
+  REQUEST_MEMBERSHIP_BUTTON_ID,
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   buildShareButtonId,
 } from '../../../../../src/config/selectors';
@@ -51,7 +51,7 @@ describe('Item Login', () => {
     });
     cy.visit(buildItemPath(item.id));
     cy.wait(ITEM_LOGIN_PAUSE);
-    cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('exist');
+    cy.get(`#${REQUEST_MEMBERSHIP_BUTTON_ID}`).should('exist');
   });
 
   describe('Display Item Login Setting', () => {

@@ -15,7 +15,11 @@ import { ChevronDown } from 'lucide-react';
 
 import useModalStatus from '@/components/hooks/useModalStatus';
 import { useBuilderTranslation } from '@/config/i18n';
-import { SHARE_BUTTON_SELECTOR } from '@/config/selectors';
+import {
+  SHARE_BUTTON_MORE_ID,
+  SHARE_BUTTON_SELECTOR,
+  SHARE_ITEM_CSV_PARSER_BUTTON_ID,
+} from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 import ImportUsersWithCSVDialog from '../csvImport/ImportUsersWithCSVDialog';
@@ -71,6 +75,7 @@ const ShareButton = ({ item }: Props): JSX.Element => {
           aria-label="select share option"
           aria-haspopup="menu"
           onClick={handleToggle}
+          id={SHARE_BUTTON_MORE_ID}
         >
           <ChevronDown />
         </Button>
@@ -93,7 +98,10 @@ const ShareButton = ({ item }: Props): JSX.Element => {
                   <MenuItem onClick={openShareItemModal}>
                     {translateBuilder(BUILDER.SHARE_ITEM_BUTTON)}
                   </MenuItem>
-                  <MenuItem onClick={() => openImportCsvModal()}>
+                  <MenuItem
+                    id={SHARE_ITEM_CSV_PARSER_BUTTON_ID}
+                    onClick={() => openImportCsvModal()}
+                  >
                     {translateBuilder(BUILDER.SHARE_ITEM_CSV_IMPORT_BUTTON)}
                   </MenuItem>
                 </MenuList>

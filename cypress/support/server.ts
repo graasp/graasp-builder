@@ -2348,3 +2348,15 @@ export const mockRejectMembershipRequest = (): void => {
     },
   ).as('rejectMembershipRequest');
 };
+
+export const mockEnroll = (): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Post,
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/enroll`),
+    },
+    ({ reply }) => {
+      reply({ statusCode: StatusCodes.OK });
+    },
+  ).as('enroll');
+};

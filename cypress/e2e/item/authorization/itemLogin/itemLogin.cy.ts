@@ -115,6 +115,8 @@ describe('User is signed in as normal user', () => {
 
     // enroll
     cy.get(buildDataCyWrapper(ENROLL_BUTTON_SELECTOR)).click();
-    cy.wait('ENROLL');
+    cy.wait('@enroll').then(({ request }) => {
+      expect(request.url).to.contain(item.id);
+    });
   });
 });

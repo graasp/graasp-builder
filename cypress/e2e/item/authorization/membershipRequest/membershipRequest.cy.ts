@@ -21,7 +21,9 @@ it('Request membership when signed in', () => {
   cy.get(`#${REQUEST_MEMBERSHIP_BUTTON_ID}`).click();
 
   // check endpoint
-  cy.wait('@requestMembership');
+  cy.wait('@requestMembership').then(({ request }) => {
+    expect(request.url).to.contain(item.id);
+  });
 
   // button is disabled
   cy.get(`#${REQUEST_MEMBERSHIP_BUTTON_ID}`).should('be.disabled');
