@@ -2,9 +2,8 @@ import { LoadingButton } from '@mui/lab';
 import { Stack, Typography } from '@mui/material';
 
 import {
-  CompleteMember,
-  CurrentAccount,
   DiscriminatedItem,
+  Member,
   MembershipRequestStatus,
 } from '@graasp/sdk';
 
@@ -19,7 +18,7 @@ import {
 import { BUILDER } from '@/langs/constants';
 
 type Props = {
-  member: CurrentAccount;
+  member: Member;
   itemId: DiscriminatedItem['id'];
 };
 
