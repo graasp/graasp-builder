@@ -4,7 +4,7 @@ import {
   PermissionLevel,
 } from '@graasp/sdk';
 
-import i18n from '@/config/i18n';
+import i18n, { BUILDER_NAMESPACE } from '@/config/i18n';
 import { buildItemSharePath } from '@/config/paths';
 import {
   MEMBERSHIPS_TAB_SELECTOR,
@@ -15,6 +15,7 @@ import {
   buildDataCyWrapper,
   buildMembershipRequestRowSelector,
 } from '@/config/selectors';
+import { BUILDER } from '@/langs/constants';
 
 import { CURRENT_USER } from '../../fixtures/members';
 
@@ -53,7 +54,6 @@ describe('Membership requests table', () => {
       cy.setUpApi({ items: [itemWithRequests], membershipRequests });
       cy.visit(buildItemSharePath(itemWithRequests.id));
       cy.get(buildDataCyWrapper(MEMBERSHIP_REQUESTS_TAB_SELECTOR)).click();
-
       i18n.changeLanguage(CURRENT_USER.extra.lang);
     });
     it('view membership requests', () => {
@@ -63,8 +63,18 @@ describe('Membership requests table', () => {
         )
           .should('contain', mr.member.name)
           .should('contain', mr.member.email)
-          .should('contain', i18n.t('Accept'))
-          .should('contain', i18n.t('Reject'));
+          .should(
+            'contain',
+            i18n.t(BUILDER.MEMBERSHIP_REQUEST_ACCEPT_BUTTON, {
+              ns: BUILDER_NAMESPACE,
+            }),
+          )
+          .should(
+            'contain',
+            i18n.t(BUILDER.MEMBERSHIP_REQUEST_REJECT_BUTTON, {
+              ns: BUILDER_NAMESPACE,
+            }),
+          );
       }
     });
     it('accept membership requests', () => {
