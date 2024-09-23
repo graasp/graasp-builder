@@ -1,9 +1,13 @@
-import { PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
+import {
+  ItemMembership,
+  PackedFolderItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { buildItemPath, buildItemSharePath } from '../../../src/config/paths';
 import {
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
-  buildItemMembershipRowSelector,
+  buildItemMembershipRowEditButtonId,
   buildPermissionOptionId,
   buildShareButtonId,
 } from '../../../src/config/selectors';
@@ -11,14 +15,17 @@ import { CURRENT_USER, MEMBERS } from '../../fixtures/members';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
 import { ItemForTest } from '../../support/types';
 
-const openPermissionSelect = (id: string) => {
-  const select = cy.get(
-    `${buildItemMembershipRowSelector(
-      id,
-    )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`,
-  );
+const openPermissionSelect = ({
+  id,
+  permission,
+}: {
+  id: ItemMembership['id'];
+  permission: PermissionLevel;
+}) => {
+  cy.get(`#${buildItemMembershipRowEditButtonId(id)}`).click();
+  const select = cy.get(`.${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}`);
   select.click();
-  return select;
+  select.get(`#${buildPermissionOptionId(permission)}`).click();
 };
 
 const editItemMembership = ({
@@ -31,8 +38,8 @@ const editItemMembership = ({
   permission: PermissionLevel;
 }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
-  const select = openPermissionSelect(id);
-  select.get(`#${buildPermissionOptionId(permission)}`).click();
+  openPermissionSelect({ id, permission });
+  cy.get('button[type="submit"]').click();
 };
 
 describe('Edit Membership', () => {
@@ -101,7 +108,7 @@ describe('Edit Membership', () => {
     cy.visit(buildItemSharePath(child.id));
 
     const m = memberships[1];
-    openPermissionSelect(m.id);
+    openPermissionSelect(m);
 
     // should not show read
     cy.get(`#${buildPermissionOptionId(PermissionLevel.Read)}`).should(

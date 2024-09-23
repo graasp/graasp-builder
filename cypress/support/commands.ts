@@ -32,6 +32,7 @@ import {
   mockEditItem,
   mockEditItemMembershipForItem,
   mockEditMember,
+  mockEnroll,
   mockGetAccessibleItems,
   mockGetAppData,
   mockGetAppLink,
@@ -60,7 +61,9 @@ import {
   mockGetMemberMentions,
   mockGetMembers,
   mockGetMembersBy,
+  mockGetMembershipRequestsForItem,
   mockGetOwnItems,
+  mockGetOwnMembershipRequests,
   mockGetParents,
   mockGetPublicationStatus,
   mockGetPublishItemInformations,
@@ -91,6 +94,8 @@ import {
   mockPublishItem,
   mockPutItemLoginSchema,
   mockRecycleItems,
+  mockRejectMembershipRequest,
+  mockRequestMembership,
   mockRestoreItems,
   mockSignInRedirection,
   mockSignOut,
@@ -113,6 +118,7 @@ Cypress.Commands.add(
     categories = SAMPLE_CATEGORIES,
     itemValidationGroups = [],
     itemPublicationStatus = PublicationStatus.Unpublished,
+    membershipRequests = [],
     deleteItemsError = false,
     postItemError = false,
     moveItemsError = false,
@@ -354,6 +360,16 @@ Cypress.Commands.add(
     mockImportH5p(importH5pError);
 
     mockGetPublishItemsForMember(publishedItemData, getPublishedItemsError);
+
+    mockGetOwnMembershipRequests(currentMember, membershipRequests);
+
+    mockRequestMembership();
+
+    mockGetMembershipRequestsForItem(membershipRequests);
+
+    mockRejectMembershipRequest();
+
+    mockEnroll();
   },
 );
 

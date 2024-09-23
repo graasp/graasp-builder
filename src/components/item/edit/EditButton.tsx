@@ -1,3 +1,5 @@
+import { MouseEventHandler } from 'react';
+
 import { DiscriminatedItem } from '@graasp/sdk';
 import {
   ActionButtonVariant,
@@ -12,19 +14,19 @@ import {
 import { BUILDER } from '../../../langs/constants';
 
 type Props = {
-  item: DiscriminatedItem;
-  type: ActionButtonVariant;
-  onClick?: () => void;
+  itemId: DiscriminatedItem['id'];
+  type?: ActionButtonVariant;
+  onClick?: MouseEventHandler;
 };
 
-const EditButton = ({ item, onClick, type = 'icon' }: Props): JSX.Element => {
+const EditButton = ({ itemId, onClick, type = 'icon' }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
     <GraaspEditButton
       type={type}
       title={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
-      id={buildEditButtonId(item.id)}
+      id={buildEditButtonId(itemId)}
       ariaLabel={translateBuilder(BUILDER.EDIT_ITEM_BUTTON)}
       className={EDIT_ITEM_BUTTON_CLASS}
       onClick={onClick}

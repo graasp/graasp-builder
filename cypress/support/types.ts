@@ -3,6 +3,7 @@ import {
   ChatMention,
   ChatMessage,
   CompleteMember,
+  CompleteMembershipRequest,
   DiscriminatedItem,
   Invitation,
   ItemBookmark,
@@ -20,7 +21,6 @@ import {
   ShortLink,
 } from '@graasp/sdk';
 
-// TODO: not the best way, to change with mirage?
 export type ItemForTest = DiscriminatedItem & {
   categories?: ItemCategory[];
   thumbnails?: string;
@@ -35,7 +35,6 @@ export type ItemForTest = DiscriminatedItem & {
   public?: ItemTag;
 };
 
-// TODO: not ideal, to change?
 export type MemberForTest = CompleteMember & { thumbnails?: string };
 
 export type LocalFileItemForTest = LocalFileItemType & {
@@ -61,6 +60,7 @@ export type ApiConfig = {
   recycledItemData?: RecycledItemData[];
   itemPublicationStatus?: PublicationStatus;
   publishedItemData?: ItemPublished[];
+  membershipRequests?: CompleteMembershipRequest[];
   // statuses = SAMPLE_STATUSES,
   itemValidationGroups?: ItemValidationGroup[];
   deleteItemsError?: boolean;

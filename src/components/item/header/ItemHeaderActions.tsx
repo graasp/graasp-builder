@@ -71,7 +71,7 @@ const ItemHeaderActions = ({ itemId }: Props): JSX.Element | null => {
             <EditButton
               onClick={openEditModal}
               type={ActionButton.ICON_BUTTON}
-              item={item}
+              itemId={item.id}
             />
           </>
         )}

@@ -16,11 +16,11 @@ import {
 } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
-import { useBuilderTranslation } from '../../../config/i18n';
-import { hooks, mutations } from '../../../config/queryClient';
-import { CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID } from '../../../config/selectors';
-import { BUILDER } from '../../../langs/constants';
-import CancelButton from '../../common/CancelButton';
+import { useBuilderTranslation } from '../../../../config/i18n';
+import { hooks, mutations } from '../../../../config/queryClient';
+import { CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID } from '../../../../config/selectors';
+import { BUILDER } from '../../../../langs/constants';
+import CancelButton from '../../../common/CancelButton';
 
 const labelId = 'alert-dialog-title';
 const descriptionId = 'alert-dialog-description';
@@ -28,13 +28,16 @@ const descriptionId = 'alert-dialog-description';
 type Props = {
   open?: boolean;
   handleClose: () => void;
-  item: DiscriminatedItem;
-  membershipToDelete: ItemMembership | null;
-  hasOnlyOneAdmin: boolean;
+  itemId: DiscriminatedItem['id'];
+  membershipToDelete: Pick<
+    ItemMembership,
+    'id' | 'account' | 'permission'
+  > | null;
+  hasOnlyOneAdmin?: boolean;
 };
 
-const DeleteItemDialog = ({
-  item,
+const DeleteItemMembershipDialog = ({
+  itemId,
   open = false,
   handleClose,
   membershipToDelete,
@@ -51,7 +54,7 @@ const DeleteItemDialog = ({
     if (membershipToDelete?.id) {
       deleteItemMembership({
         id: membershipToDelete.id,
-        itemId: item.id,
+        itemId,
       }).then(() => {
         // if current user deleted their own membership navigate them to the home
         if (membershipToDelete.account.id === member?.id) {
@@ -122,4 +125,4 @@ const DeleteItemDialog = ({
   );
 };
 
-export default DeleteItemDialog;
+export default DeleteItemMembershipDialog;

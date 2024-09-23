@@ -34,13 +34,12 @@ import MapItemsScreen from './pages/MapItemsScreen';
 import PublishedItemsScreen from './pages/PublishedItemsScreen';
 import RecycledItemsScreen from './pages/RecycledItemsScreen';
 import HomeScreen from './pages/home/HomeScreen';
-import ItemLoginWrapper from './pages/item/ItemLoginWrapper';
 import ItemPageLayout from './pages/item/ItemPageLayout';
 import ItemScreen from './pages/item/ItemScreen';
-import ItemScreenLayout from './pages/item/ItemScreenLayout';
 import ItemSettingsPage from './pages/item/ItemSettingsPage';
 import ItemSharingPage from './pages/item/ItemSharingPage';
 import LibrarySettingsPage from './pages/item/LibrarySettingsPage';
+import ItemAccessWrapper from './pages/item/accessWrapper/ItemAccessWrapper';
 
 const { useItemFeedbackUpdates, useCurrentMember } = hooks;
 
@@ -117,14 +116,7 @@ const App = (): JSX.Element => {
         </Route>
 
         {/* item pages - can be public */}
-        <Route
-          path={buildItemPath()}
-          element={
-            <ItemLoginWrapper>
-              <ItemScreenLayout />
-            </ItemLoginWrapper>
-          }
-        >
+        <Route path={buildItemPath()} element={<ItemAccessWrapper />}>
           <Route index element={<ItemScreen />} />
           <Route element={<ItemPageLayout />}>
             <Route path={ITEM_SHARE_PATH} element={<ItemSharingPage />} />

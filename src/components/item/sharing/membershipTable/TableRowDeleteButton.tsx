@@ -3,7 +3,7 @@ import { IconButton, Tooltip } from '@mui/material';
 import { Trash2 } from 'lucide-react';
 
 export type TableRowDeleteButtonProps = {
-  id: string;
+  id?: string;
   tooltip?: string;
   onClick: () => void;
   disabled?: boolean;

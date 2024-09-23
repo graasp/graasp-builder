@@ -1,92 +1,144 @@
+import { Member, PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
+import { namespaces } from '@graasp/translations';
+
+import i18n from '@/config/i18n';
+
 import { buildItemPath } from '../../../src/config/paths';
 import {
-  ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
+  buildDataCyWrapper,
   buildItemMembershipRowDeleteButtonId,
+  buildItemMembershipRowEditButtonId,
+  buildItemMembershipRowId,
   buildItemMembershipRowSelector,
   buildShareButtonId,
 } from '../../../src/config/selectors';
-import { membershipsWithoutUser } from '../../../src/utils/membership';
 import { CURRENT_USER, MEMBERS } from '../../fixtures/members';
-import {
-  ITEMS_WITH_MEMBERSHIPS,
-  ITEM_WITH_WRITE_ACCESS,
-} from '../../fixtures/memberships';
+import { buildItemMembership } from '../../fixtures/memberships';
+
+const itemWithAdmin = { ...PackedFolderItemFactory() };
+const adminMembership = buildItemMembership({
+  item: itemWithAdmin,
+  permission: PermissionLevel.Admin,
+  account: MEMBERS.ANNA,
+  creator: MEMBERS.ANNA,
+});
+const membershipsWithoutAdmin = [
+  buildItemMembership({
+    item: itemWithAdmin,
+    permission: PermissionLevel.Write,
+    account: MEMBERS.BOB,
+    creator: MEMBERS.ANNA,
+  }),
+  buildItemMembership({
+    item: itemWithAdmin,
+    permission: PermissionLevel.Write,
+    account: MEMBERS.CEDRIC,
+    creator: MEMBERS.ANNA,
+  }),
+  buildItemMembership({
+    item: itemWithAdmin,
+    permission: PermissionLevel.Read,
+    account: MEMBERS.DAVID,
+    creator: MEMBERS.ANNA,
+  }),
+];
 
 describe('View Memberships', () => {
   beforeEach(() => {
-    cy.setUpApi(ITEMS_WITH_MEMBERSHIPS);
+    cy.setUpApi({
+      items: [
+        {
+          ...itemWithAdmin,
+          memberships: [adminMembership, ...membershipsWithoutAdmin],
+        },
+      ],
+    });
   });
 
   it('view membership in settings', () => {
-    const [item] = ITEMS_WITH_MEMBERSHIPS.items;
-    const { memberships } = item;
+    const item = itemWithAdmin;
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    const filteredMemberships = membershipsWithoutUser(
-      memberships,
-      CURRENT_USER.id,
-    );
+    i18n.changeLanguage(CURRENT_USER.extra.lang);
 
-    // panel only contains 2 avatars: one user, one +x
-    // check contains member avatar
-    for (const { permission, account, id } of filteredMemberships) {
+    // only admin - cannot edit, delete
+    cy.get(buildDataCyWrapper(buildItemMembershipRowId(adminMembership.id)))
+      .should('contain', adminMembership.account.name)
+      .should('contain', (adminMembership.account as Member).email);
+
+    // editable rows
+    for (const { permission, account, id } of membershipsWithoutAdmin) {
       const { name, email } = Object.values(MEMBERS).find(
         ({ id: mId }) => mId === account.id,
       );
-      // check name and mail
-      cy.get(buildItemMembershipRowSelector(id))
-        .should('contain', name)
-        .should('contain', email);
 
-      // check permission select
-      cy.get(
-        `${buildItemMembershipRowSelector(
-          id,
-        )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
-      ).should('have.value', permission);
+      // check name and mail
+      cy.get(buildDataCyWrapper(buildItemMembershipRowId(id)))
+        .should('contain', name)
+        .should('contain', email)
+        .should('contain', i18n.t(permission, { ns: namespaces.enums }));
 
       // check delete button exists
       cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).should('exist');
     }
-
-    // todo: check permission level
   });
 });
 
 describe('View Memberships Read-Only Mode', () => {
-  beforeEach(() => {
-    cy.setUpApi({ ...ITEM_WITH_WRITE_ACCESS });
-  });
-
   it('view membership in settings read-only mode', () => {
-    const [item] = ITEM_WITH_WRITE_ACCESS.items;
-    const { memberships } = item;
+    const item = PackedFolderItemFactory(
+      {},
+      { permission: PermissionLevel.Write },
+    );
+    const ownMembership = buildItemMembership({
+      item,
+      permission: PermissionLevel.Write,
+      account: MEMBERS.ANNA,
+      creator: MEMBERS.ANNA,
+    });
+    const memberships = [
+      buildItemMembership({
+        item,
+        permission: PermissionLevel.Admin,
+        account: MEMBERS.BOB,
+        creator: MEMBERS.ANNA,
+      }),
+      buildItemMembership({
+        item,
+        permission: PermissionLevel.Read,
+        account: MEMBERS.CEDRIC,
+        creator: MEMBERS.ANNA,
+      }),
+    ];
+
+    cy.setUpApi({
+      items: [{ ...item, memberships: [...memberships, ownMembership] }],
+    });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-    // check contains member avatar
-    for (const { permission, account, id } of memberships) {
-      const { name, email } = Object.values(MEMBERS).find(
-        ({ id: mId }) => mId === account.id,
-      );
-      // check name, mail and permission
-      cy.get(buildItemMembershipRowSelector(id))
-        .should('contain', name)
-        .should('contain', email)
-        .should('contain', permission);
+    i18n.changeLanguage(CURRENT_USER.extra.lang);
 
-      // check no permission select component exists
-      cy.get(
-        `${buildItemMembershipRowSelector(
-          id,
-        )} .${ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS} input`,
-      ).should('not.exist');
-
-      // check no delete button exists
-      cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).should(
-        'not.exist',
+    // can only see own permission - can edit, delete
+    cy.get(buildItemMembershipRowSelector(ownMembership.id))
+      .should('contain', CURRENT_USER.email)
+      .should(
+        'contain',
+        i18n.t(ownMembership.permission, { ns: namespaces.enums }),
       );
+
+    cy.get(`#${buildItemMembershipRowEditButtonId(ownMembership.id)}`).should(
+      'be.visible',
+    );
+
+    cy.get(`#${buildItemMembershipRowDeleteButtonId(ownMembership.id)}`).should(
+      'be.visible',
+    );
+
+    // cannot see others
+    for (const { id } of memberships) {
+      cy.get(buildItemMembershipRowSelector(id)).should('not.exist');
     }
   });
 });

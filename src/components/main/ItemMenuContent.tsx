@@ -92,7 +92,7 @@ const ItemMenuContent = ({ item }: Props): JSX.Element | null => {
           closeMenu();
         }}
         key="edit"
-        item={item}
+        itemId={item.id}
         type={ActionButton.MENU_ITEM}
       />
     ) : (

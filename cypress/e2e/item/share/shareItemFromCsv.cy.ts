@@ -3,6 +3,7 @@ import { PackedFolderItemFactory } from '@graasp/sdk';
 import { buildItemSharePath } from '../../../../src/config/paths';
 import {
   CSV_FILE_SELECTION_DELETE_BUTTON_ID,
+  SHARE_BUTTON_MORE_ID,
   SHARE_CSV_TEMPLATE_SELECTION_BUTTON_ID,
   SHARE_CSV_TEMPLATE_SELECTION_DELETE_BUTTON_ID,
   SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID,
@@ -18,6 +19,7 @@ import {
 import { MEMBERS } from '../../../fixtures/members';
 
 const shareItem = ({ fixture }: { id: string; fixture: string }) => {
+  cy.get(`#${SHARE_BUTTON_MORE_ID}`).click();
   cy.get(`#${SHARE_ITEM_CSV_PARSER_BUTTON_ID}`).click();
   cy.attachFile(
     cy.get(`#${SHARE_ITEM_CSV_PARSER_INPUT_BUTTON_SELECTOR}`),

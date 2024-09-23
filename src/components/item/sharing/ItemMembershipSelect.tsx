@@ -30,7 +30,7 @@ const defaultDisabledMap: DisabledMap = {
 };
 
 export type ItemMembershipSelectProps = {
-  value: PermissionLevel;
+  value?: PermissionLevel;
   onChange?: SelectProps['onChange'];
   color?: SelectProps['color'];
   showLabel?: boolean;
@@ -41,6 +41,7 @@ export type ItemMembershipSelectProps = {
    */
   disabled?: boolean | DisabledMap;
   allowDowngrade?: boolean;
+  size?: SelectProps['size'];
 };
 
 const ItemMembershipSelect = ({
@@ -51,6 +52,7 @@ const ItemMembershipSelect = ({
   displayEmpty = false,
   disabled = false,
   allowDowngrade = true,
+  size = 'small',
 }: ItemMembershipSelectProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: enumT } = useEnumsTranslation();
@@ -67,8 +69,8 @@ const ItemMembershipSelect = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  const values = Object.values(PermissionLevel).filter(
-    (p) => allowDowngrade || PermissionLevelCompare.gte(p, value),
+  const values = Object.values(PermissionLevel).filter((p) =>
+    value ? allowDowngrade || PermissionLevelCompare.gte(p, value) : true,
   );
 
   return (
@@ -87,7 +89,7 @@ const ItemMembershipSelect = ({
       displayEmpty={displayEmpty}
       className={ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS}
       color={color}
-      size="small"
+      size={size}
     />
   );
 };
