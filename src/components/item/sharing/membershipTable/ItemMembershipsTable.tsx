@@ -63,6 +63,9 @@ const ItemMembershipsTable = ({ showEmail = true }: Props): JSX.Element => {
     hasOnlyOneAdmin,
     isLoading: isMembershipsLoading,
   } = useHighestMemberships({ canAdmin, item });
+  const { data: itemLoginSchema } = hooks.useItemLoginSchema({
+    itemId: item.id,
+  });
 
   if (memberships) {
     // map memberships to corresponding row layout and meaningful data to sort
@@ -86,7 +89,12 @@ const ItemMembershipsTable = ({ showEmail = true }: Props): JSX.Element => {
             }
           />
         ) : (
-          <GuestItemMembershipTableRow key={im.id} itemId={item.id} data={im} />
+          <GuestItemMembershipTableRow
+            itemLoginSchema={itemLoginSchema}
+            key={im.id}
+            itemId={item.id}
+            data={im}
+          />
         ),
     }));
 
