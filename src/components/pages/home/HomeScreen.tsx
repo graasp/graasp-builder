@@ -46,6 +46,8 @@ import NoItemFilters from '../NoItemFilters';
 import PageWrapper from '../PageWrapper';
 import HomeSelectionToolbar from './HomeSelectionToolbar';
 
+const CONTAINER_ID = 'home-items-container';
+
 const HomeScreenContent = ({ searchText }: { searchText: string }) => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateEnums } = useEnumsTranslation();
@@ -75,7 +77,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
       { pageSize: ITEM_PAGE_SIZE },
     );
 
-  const DragSelection = useDragSelection();
+  const DragSelection = useDragSelection({ containerId: CONTAINER_ID });
 
   const onShowOnlyMeChange: ShowOnlyMeChangeType = (checked) => {
     setShowOnlyMe(checked);
@@ -105,7 +107,13 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
         ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
         : 0;
       content = (
-        <>
+        <Stack
+          // this is a hack to allow selection dragging from margin
+          mx={-100}
+          px={100}
+          id={CONTAINER_ID}
+          height="100%"
+        >
           <ItemsTable
             canMove={!searchText}
             id={ACCESSIBLE_ITEMS_TABLE_ID}
@@ -128,7 +136,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
               <NewItemButton type="icon" />
             </Stack>
           )}
-        </>
+        </Stack>
       );
     } else if (itemTypes.length || searchText) {
       content = <NoItemFilters searchText={searchText} />;
@@ -182,7 +190,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
             </Stack>
           )}
         </Stack>
-        <Stack>
+        <Stack height="100%">
           {content}
           {data && isFetching && (
             <Box sx={{ width: '100%' }}>

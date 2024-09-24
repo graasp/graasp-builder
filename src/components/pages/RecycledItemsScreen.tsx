@@ -29,6 +29,8 @@ import { useSorting, useTranslatedSortingOptions } from '../table/useSorting';
 import PageWrapper from './PageWrapper';
 import RecycleBinToolbar from './recycleBin/RecycleBinSelectionToolbar';
 
+const CONTAINER_ID = 'recycle-items-container';
+
 const RecycledItemsScreenContent = ({
   searchText,
 }: {
@@ -52,14 +54,14 @@ const RecycledItemsScreenContent = ({
     ?.sort(sortFn);
   const { selectedIds, toggleSelection } = useSelectionContext();
 
-  const DragSelection = useDragSelection();
+  const DragSelection = useDragSelection({ containerId: CONTAINER_ID });
 
   // render this when there is data from the query
   if (recycledItems?.length) {
     const hasSelection = selectedIds.length && filteredData?.length;
     return (
       <>
-        <Stack gap={1}>
+        <Stack gap={1} height="100%">
           <Stack
             alignItems="space-between"
             direction="column"
@@ -91,32 +93,41 @@ const RecycledItemsScreenContent = ({
               </Stack>
             )}
           </Stack>
-          {
-            // render the filtered data and when it is empty display that nothing matches the search
-            filteredData?.length ? (
-              filteredData.map((item) => (
-                <ItemCard
-                  item={item}
-                  onThumbnailClick={() => toggleSelection(item.id)}
-                  isSelected={selectedIds.includes(item.id)}
-                  showThumbnail={false}
-                  allowNavigation={false}
-                  footer={
-                    <Stack justifyContent="right" direction="row">
-                      <RestoreButton itemIds={[item.id]} />
-                      <DeleteButton items={[item]} />
-                    </Stack>
-                  }
-                />
-              ))
-            ) : (
-              <Alert severity="info">
-                {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
-                  search: searchText,
-                })}
-              </Alert>
-            )
-          }
+          <Stack
+            // this is a hack to allow selection dragging from margin
+            mx={-100}
+            px={100}
+            id={CONTAINER_ID}
+            gap={1}
+            height="100%"
+          >
+            {
+              // render the filtered data and when it is empty display that nothing matches the search
+              filteredData?.length ? (
+                filteredData.map((item) => (
+                  <ItemCard
+                    item={item}
+                    onThumbnailClick={() => toggleSelection(item.id)}
+                    isSelected={selectedIds.includes(item.id)}
+                    showThumbnail={false}
+                    allowNavigation={false}
+                    footer={
+                      <Stack justifyContent="right" direction="row">
+                        <RestoreButton itemIds={[item.id]} />
+                        <DeleteButton items={[item]} />
+                      </Stack>
+                    }
+                  />
+                ))
+              ) : (
+                <Alert severity="info">
+                  {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
+                    search: searchText,
+                  })}
+                </Alert>
+              )
+            }
+          </Stack>
         </Stack>
         {DragSelection}
       </>

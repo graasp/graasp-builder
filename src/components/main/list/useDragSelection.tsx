@@ -14,7 +14,11 @@ import { useSelectionContext } from './SelectionContext';
 
 export const useDragSelection = ({
   elementClass = ITEM_CARD_CLASS,
-} = {}): JSX.Element => {
+  containerId,
+}: {
+  containerId: string;
+  elementClass?: string;
+}): JSX.Element => {
   const { addToSelection, clearSelection } = useSelectionContext();
   const [boundingBox, setBoundingBox] = useState<null | {
     top: number;
@@ -52,8 +56,13 @@ export const useDragSelection = ({
       );
     },
     shouldStartSelecting: (e) => {
-      // does not trigger drag selection if mousedown on card
       if (e instanceof HTMLElement || e instanceof SVGElement) {
+        // does not trigger if click is outside of container
+        if (!e.closest(`#${containerId}`)) {
+          return false;
+        }
+
+        // does not trigger drag selection if mousedown on card
         return !e?.closest(`.${elementClass}`);
       }
       return true;

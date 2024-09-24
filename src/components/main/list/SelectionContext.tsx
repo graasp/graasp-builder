@@ -7,6 +7,8 @@ import {
   useState,
 } from 'react';
 
+import { Stack } from '@mui/material';
+
 type SelectionContextValue = {
   selectedIds: string[];
   toggleSelection: (id: string) => void;
@@ -74,7 +76,9 @@ export const SelectionContextProvider = ({
 
   return (
     <SelectionContext.Provider value={value}>
-      <div ref={elementsContainerRef}>{children}</div>
+      <Stack height="100%" ref={elementsContainerRef}>
+        {children}
+      </Stack>
     </SelectionContext.Provider>
   );
 };

@@ -49,6 +49,8 @@ type Props = {
   canWrite?: boolean;
 };
 
+const CONTAINER_ID = 'items-container-id';
+
 const Content = ({
   item,
   searchText,
@@ -60,7 +62,7 @@ const Content = ({
   const { itemTypes } = useFilterItemsContext();
   const { selectedIds, clearSelection, toggleSelection } =
     useSelectionContext();
-  const DragSelection = useDragSelection();
+  const DragSelection = useDragSelection({ containerId: CONTAINER_ID });
 
   if (mode === ItemLayoutMode.Map) {
     return (
@@ -73,24 +75,32 @@ const Content = ({
   if (items?.length) {
     return (
       <>
-        <ItemsTable
-          selectedIds={selectedIds}
-          enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
-          id={buildItemsTableId(item.id)}
-          items={items ?? []}
-          onCardClick={toggleSelection}
-          onMove={clearSelection}
-        />
-        {Boolean(canWrite && !searchText && !itemTypes?.length) && (
-          <Stack alignItems="center" mb={2}>
-            <NewItemButton
-              type="icon"
-              key="newButton"
-              // add new items at the end of the list
-              previousItemId={items ? items[items.length - 1]?.id : undefined}
-            />
-          </Stack>
-        )}
+        <Stack
+          // this is a hack to allow selection dragging from margin
+          mx={-100}
+          px={100}
+          height="100%"
+          id={CONTAINER_ID}
+        >
+          <ItemsTable
+            selectedIds={selectedIds}
+            enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
+            id={buildItemsTableId(item.id)}
+            items={items ?? []}
+            onCardClick={toggleSelection}
+            onMove={clearSelection}
+          />
+          {Boolean(canWrite && !searchText && !itemTypes?.length) && (
+            <Stack alignItems="center" mb={2}>
+              <NewItemButton
+                type="icon"
+                key="newButton"
+                // add new items at the end of the list
+                previousItemId={items ? items[items.length - 1]?.id : undefined}
+              />
+            </Stack>
+          )}
+        </Stack>
         {DragSelection}
       </>
     );

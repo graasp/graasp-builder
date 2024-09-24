@@ -105,11 +105,16 @@ const ItemsTable = ({
       return;
     }
 
+    // silent error, happens when you want to cancel the operation
+    if (movedItem.id === targetItem.id) {
+      console.error('cannot move target into itself');
+      return;
+    }
+
     // cannot move item into itself, or target cannot be part of selection if moving selection
     if (
-      movedItem.id === targetItem.id ||
-      (selectedIds.includes(movedItem?.id) &&
-        selectedIds.includes(targetItem.id))
+      selectedIds.includes(movedItem?.id) &&
+      selectedIds.includes(targetItem.id)
     ) {
       toast.error(translateMessage(FAILURE_MESSAGES.INVALID_MOVE_TARGET));
       return;
