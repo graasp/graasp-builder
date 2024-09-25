@@ -2,6 +2,8 @@ import { useOutletContext } from 'react-router-dom';
 
 import { Box, Container, Divider, Stack, Typography } from '@mui/material';
 
+import { AccountType } from '@graasp/sdk';
+
 import { OutletType } from '@/components/pages/item/type';
 
 import { useBuilderTranslation } from '../../../config/i18n';
@@ -15,6 +17,7 @@ const ItemSharingTab = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { item, canAdmin } = useOutletContext<OutletType>();
 
+  const { data: currentAccount } = hooks.useCurrentMember();
   const { data: memberships } = hooks.useItemMemberships(item?.id);
 
   return (
@@ -30,13 +33,17 @@ const ItemSharingTab = (): JSX.Element => {
           />
         </Box>
         <Divider />
-        <Box>
-          <Typography variant="h6">
-            {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
-          </Typography>
-          <VisibilitySelect item={item} edit={canAdmin} />
-        </Box>
-        <Divider />
+        {currentAccount?.type === AccountType.Individual ? (
+          <>
+            <Box>
+              <Typography variant="h6">
+                {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
+              </Typography>
+              <VisibilitySelect item={item} edit={canAdmin} />
+            </Box>
+            <Divider />
+          </>
+        ) : null}
         <MembershipTabs />
       </Stack>
     </Container>

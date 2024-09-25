@@ -8,6 +8,7 @@ import {
 } from '@graasp/sdk';
 
 import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
 import { buildItemMembershipRowId } from '../../../../config/selectors';
@@ -27,11 +28,13 @@ const GuestItemMembershipTableRow = ({
 }): JSX.Element => {
   const { t: translateEnums } = useEnumsTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
+  const { data: currentAccount } = hooks.useCurrentMember();
 
   let isDisabled = false;
   if (
-    !itemLoginSchema ||
-    itemLoginSchema.status === ItemLoginSchemaStatus.Disabled
+    currentAccount?.id !== data.account.id &&
+    (!itemLoginSchema ||
+      itemLoginSchema.status === ItemLoginSchemaStatus.Disabled)
   ) {
     isDisabled = true;
   }

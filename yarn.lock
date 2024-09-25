@@ -1780,7 +1780,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#932-update-item-login-schema-state":
   version: 3.24.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=eedffe5f97a11dd12c93136d639589f6cb9153a5"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7edf7766357692399378ca3e4f3c96d492bf9d51"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1790,7 +1790,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/cc4aa3667c9e3fdac26b78b2442f8d9209da9fcde837a6c67d9396161d0c5888556b99be0fe1388b4a579a1622da398a88ae974d59b75535a2813fe3f815ad27
+  checksum: 10/80d7b4c67eacbb14c33293991810bdde2b047ecdda9ae8cce81526a2fe0ed5c642feeb59fee1620acb7810804a34162e49a895a719134a0d8ef003a9c17ec924
   languageName: node
   linkType: hard
 

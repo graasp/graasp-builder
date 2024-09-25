@@ -97,7 +97,7 @@ describe('Visibility of an Item', () => {
         request: { body, url: itemLoginUrl },
       } = data[1];
       expect(itemLoginUrl).to.contain(item.id);
-      expect(body.state).to.contain(ItemLoginSchemaStatus.Active);
+      expect(body.status).to.contain(ItemLoginSchemaStatus.Active);
     });
   });
 
@@ -134,7 +134,7 @@ describe('Visibility of an Item', () => {
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
     cy.wait(`@putItemLoginSchema`).then(({ request: { url, body } }) => {
       expect(url).to.include(item.id);
-      expect(body.state).to.eq(ItemLoginSchemaStatus.Disabled);
+      expect(body.status).to.eq(ItemLoginSchemaStatus.Disabled);
     });
   });
 
@@ -206,7 +206,7 @@ describe('Visibility of an Item', () => {
           request: { url: itemLoginUrl, body },
         } = data[1];
         expect(itemLoginUrl).to.contain(item.id); // originally item login
-        expect(body.state).to.eq(ItemLoginSchemaStatus.Active);
+        expect(body.status).to.eq(ItemLoginSchemaStatus.Active);
       });
     });
   });
