@@ -1778,9 +1778,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.24.0":
+"@graasp/query-client@github:graasp/graasp-query-client#932-update-item-login-schema-state":
   version: 3.24.0
-  resolution: "@graasp/query-client@npm:3.24.0"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=2e7f92de17880f0faff5a7256c2d89feea7c8db3"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1790,13 +1790,13 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/06feb022dfd7094f4e9e680acc828b1daf0d1fbf6efe8b3f1ed99e13f28ac0a17abe255bd317cb00efd22c66cea80e02a56307e82574f53df8939c53c2e10d33
+  checksum: 10/a1eb836f3499a2624011fa8475a6bfd86935974d077424dd5b00ce023a46cb8caabe51a977850a703a36b6ed7e9091014d54a137956a08afa54d407ed1bed07f
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.29.1":
+"@graasp/sdk@graasp/graasp-sdk#665-item-login-schema-state":
   version: 4.29.1
-  resolution: "@graasp/sdk@npm:4.29.1"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=5472beb2920824e9c3a53f30c530c398d471801f"
   dependencies:
     "@faker-js/faker": "npm:9.0.1"
     filesize: "npm:10.1.6"
@@ -1805,7 +1805,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3 || ^4.0.0
     uuid: ^9 || ^10
-  checksum: 10/f35a4c2dfbc7b9ac7d2112536dcded3da6d7fb32a3f4593921329340f96f21ccd558f68a77d723828f23055a6fb4d77493effbc746986ce7fcce913f3775a725
+  checksum: 10/427c65665638d6d98141e790a9ab52b9b4c3b6981ee6cf5456b1864394bbf50ab0e689e728915d900aa2bae1ca0ca19ea48569deaa1d0d9e755a0468f7aff486
   languageName: node
   linkType: hard
 
@@ -6596,8 +6596,8 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.0"
     "@graasp/map": "npm:1.18.0"
-    "@graasp/query-client": "npm:3.24.0"
-    "@graasp/sdk": "npm:4.29.1"
+    "@graasp/query-client": "github:graasp/graasp-query-client#932-update-item-login-schema-state"
+    "@graasp/sdk": "graasp/graasp-sdk#665-item-login-schema-state"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
     "@graasp/translations": "npm:1.38.0"
     "@graasp/ui": "npm:5.2.0"

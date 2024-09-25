@@ -14,6 +14,7 @@ import {
   ItemTag,
   ItemValidationGroup,
   LocalFileItemType,
+  PackedItem,
   PermissionLevel,
   PublicationStatus,
   RecycledItemData,
@@ -23,7 +24,8 @@ import {
 
 export type ItemForTest = DiscriminatedItem & {
   categories?: ItemCategory[];
-  thumbnails?: string;
+  // TODO: INCORRECT! Fix in coming
+  thumbnails?: PackedItem['thumbnails'];
   tags?: ItemTag[];
   itemLoginSchema?: ItemLoginSchema;
   readFilepath?: string;

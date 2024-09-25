@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import {
   ItemLoginSchema,
+  ItemLoginSchemaState,
   ItemLoginSchemaType,
   ItemPublished,
   ItemTag,
@@ -17,7 +18,6 @@ const {
   useDeleteItemTag,
   usePostItemTag,
   useUnpublishItem,
-  useDeleteItemLoginSchema,
   usePutItemLoginSchema,
 } = mutations;
 
@@ -47,7 +47,6 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
   // item login tag and item extra value
   const { data: itemLoginSchema, isLoading: isItemLoginLoading } =
     useItemLoginSchema({ itemId: item.id });
-  const { mutate: deleteItemLoginSchema } = useDeleteItemLoginSchema();
   const { mutate: putItemLoginSchema } = usePutItemLoginSchema();
 
   // is disabled
@@ -79,7 +78,10 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
         setVisibility(SETTINGS.ITEM_PUBLIC.name);
         break;
       }
-      case Boolean(itemLoginSchema?.id): {
+      case Boolean(
+        itemLoginSchema?.id &&
+          itemLoginSchema.state !== ItemLoginSchemaState.Disabled,
+      ): {
         setVisibility(SETTINGS.ITEM_LOGIN.name);
         break;
       }
@@ -101,10 +103,11 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
         }
       };
 
-      const deleteLoginSchema = () => {
+      const disableLoginSchema = () => {
         if (itemLoginSchema) {
-          deleteItemLoginSchema({
+          putItemLoginSchema({
             itemId: item.id,
+            state: ItemLoginSchemaState.Disabled,
           });
         }
       };
@@ -112,7 +115,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       switch (newTag) {
         case SETTINGS.ITEM_PRIVATE.name: {
           deletePublishedAndPublic();
-          deleteLoginSchema();
+          disableLoginSchema();
           break;
         }
         case SETTINGS.ITEM_LOGIN.name: {
@@ -120,6 +123,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
           putItemLoginSchema({
             itemId: item.id,
             type: ItemLoginSchemaType.Username,
+            state: ItemLoginSchemaState.Active,
           });
           break;
         }
@@ -128,7 +132,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
             itemId: item.id,
             type: ItemTagType.Public,
           });
-          deleteLoginSchema();
+          disableLoginSchema();
           break;
         }
         default:
@@ -136,7 +140,6 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       }
     },
     [
-      deleteItemLoginSchema,
       deleteItemTag,
       item.id,
       itemLoginSchema,

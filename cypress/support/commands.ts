@@ -22,7 +22,6 @@ import {
   mockDeleteFavorite,
   mockDeleteInvitation,
   mockDeleteItemCategory,
-  mockDeleteItemLoginSchemaRoute,
   mockDeleteItemMembershipForItem,
   mockDeleteItemTag,
   mockDeleteItemThumbnail,
@@ -336,8 +335,6 @@ Cypress.Commands.add(
     mockGetLatestValidationGroup(items, itemValidationGroups);
 
     mockUpdatePassword(members, updatePasswordError);
-
-    mockDeleteItemLoginSchemaRoute(items);
 
     mockGetItemFavorites(bookmarkedItems, getFavoriteError);
 

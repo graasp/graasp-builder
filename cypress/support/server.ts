@@ -948,26 +948,6 @@ export const mockPostItemLogin = (
   ).as('postItemLogin');
 };
 
-export const mockDeleteItemLoginSchemaRoute = (items: ItemForTest[]): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Delete,
-      // TODO: use build url
-      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/login-schema$`),
-    },
-    ({ reply, url }) => {
-      // check query match item login schema
-      const id = url.slice(API_HOST.length).split('/')[2];
-      const item: ItemForTest = getItemById(items, id);
-
-      // TODO: item login is not in extra anymore
-      item.itemLoginSchema = null;
-
-      reply(item);
-    },
-  ).as('deleteItemLoginSchema');
-};
-
 export const mockPutItemLoginSchema = (
   items: ItemForTest[],
   shouldThrowError: boolean,

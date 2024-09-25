@@ -1,9 +1,17 @@
-import { Member, PackedFolderItemFactory, PermissionLevel } from '@graasp/sdk';
+import {
+  GuestFactory,
+  ItemLoginSchemaFactory,
+  ItemLoginSchemaState,
+  ItemLoginSchemaType,
+  Member,
+  PackedFolderItemFactory,
+  PermissionLevel,
+} from '@graasp/sdk';
 import { namespaces } from '@graasp/translations';
 
 import i18n from '@/config/i18n';
 
-import { buildItemPath } from '../../../src/config/paths';
+import { buildItemPath, buildItemSharePath } from '../../../src/config/paths';
 import {
   buildDataCyWrapper,
   buildItemMembershipRowDeleteButtonId,
@@ -43,7 +51,7 @@ const membershipsWithoutAdmin = [
   }),
 ];
 
-describe('View Memberships', () => {
+describe('View Memberships - Individual', () => {
   beforeEach(() => {
     cy.setUpApi({
       items: [
@@ -78,6 +86,166 @@ describe('View Memberships', () => {
         .should('contain', name)
         .should('contain', email)
         .should('contain', i18n.t(permission, { ns: namespaces.enums }));
+
+      // check delete button exists
+      cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).should('exist');
+    }
+  });
+});
+
+describe('View Memberships - Guest', () => {
+  it('view guest membership', () => {
+    const itemLoginSchema = ItemLoginSchemaFactory({
+      type: ItemLoginSchemaType.Username,
+      item: itemWithAdmin,
+    });
+    const guestMemberships = [
+      buildItemMembership({
+        item: itemWithAdmin,
+        permission: PermissionLevel.Read,
+        account: GuestFactory({
+          itemLoginSchema,
+        }),
+        creator: MEMBERS.ANNA,
+      }),
+      buildItemMembership({
+        item: itemWithAdmin,
+        permission: PermissionLevel.Read,
+        account: GuestFactory({
+          itemLoginSchema,
+        }),
+        creator: MEMBERS.ANNA,
+      }),
+    ];
+    const item = itemWithAdmin;
+    cy.setUpApi({
+      items: [
+        {
+          ...itemWithAdmin,
+          itemLoginSchema,
+          memberships: [adminMembership, ...guestMemberships],
+        },
+      ],
+    });
+    i18n.changeLanguage(CURRENT_USER.extra.lang);
+    cy.visit(buildItemSharePath(item.id));
+    // editable rows
+    for (const { permission, account, id } of guestMemberships) {
+      const { name } = Object.values(
+        guestMemberships.map((m) => m.account),
+      ).find(({ id: mId }) => mId === account.id);
+
+      // check name and disabled permission
+      cy.get(buildDataCyWrapper(buildItemMembershipRowId(id)))
+        .should('contain', name)
+        .should('contain', i18n.t(permission, { ns: namespaces.enums }));
+
+      // check delete button exists
+      cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).should('exist');
+    }
+  });
+  it('view frozen guest membership', () => {
+    const itemLoginSchema = ItemLoginSchemaFactory({
+      type: ItemLoginSchemaType.Username,
+      item: itemWithAdmin,
+      state: ItemLoginSchemaState.Freeze,
+    });
+    const guestMemberships = [
+      buildItemMembership({
+        item: itemWithAdmin,
+        permission: PermissionLevel.Read,
+        account: GuestFactory({
+          itemLoginSchema,
+        }),
+        creator: MEMBERS.ANNA,
+      }),
+      buildItemMembership({
+        item: itemWithAdmin,
+        permission: PermissionLevel.Read,
+        account: GuestFactory({
+          itemLoginSchema,
+        }),
+        creator: MEMBERS.ANNA,
+      }),
+    ];
+    const item = itemWithAdmin;
+    cy.setUpApi({
+      items: [
+        {
+          ...itemWithAdmin,
+          itemLoginSchema,
+          memberships: [adminMembership, ...guestMemberships],
+        },
+      ],
+    });
+    i18n.changeLanguage(CURRENT_USER.extra.lang);
+    cy.visit(buildItemSharePath(item.id));
+    // editable rows
+    for (const { permission, account, id } of guestMemberships) {
+      const { name } = Object.values(
+        guestMemberships.map((m) => m.account),
+      ).find(({ id: mId }) => mId === account.id);
+
+      // check name and disabled permission
+      cy.get(buildDataCyWrapper(buildItemMembershipRowId(id)))
+        .should('contain', name)
+        .should('contain', i18n.t(permission, { ns: namespaces.enums }));
+
+      // check delete button exists
+      cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).should('exist');
+    }
+  });
+
+  it('view disabled guest membership', () => {
+    const itemLoginSchema = ItemLoginSchemaFactory({
+      type: ItemLoginSchemaType.Username,
+      item: itemWithAdmin,
+      state: ItemLoginSchemaState.Disabled,
+    });
+    const guestMemberships = [
+      buildItemMembership({
+        item: itemWithAdmin,
+        permission: PermissionLevel.Read,
+        account: GuestFactory({
+          itemLoginSchema,
+        }),
+        creator: MEMBERS.ANNA,
+      }),
+      buildItemMembership({
+        item: itemWithAdmin,
+        permission: PermissionLevel.Read,
+        account: GuestFactory({
+          itemLoginSchema,
+        }),
+        creator: MEMBERS.ANNA,
+      }),
+    ];
+    const item = itemWithAdmin;
+    cy.setUpApi({
+      items: [
+        {
+          ...itemWithAdmin,
+          itemLoginSchema,
+          memberships: [adminMembership, ...guestMemberships],
+        },
+      ],
+    });
+    i18n.changeLanguage(CURRENT_USER.extra.lang);
+    cy.visit(buildItemSharePath(item.id));
+    // editable rows
+    for (const { permission, account, id } of guestMemberships) {
+      const { name } = Object.values(
+        guestMemberships.map((m) => m.account),
+      ).find(({ id: mId }) => mId === account.id);
+
+      // check name and disabled permission
+      cy.get(buildDataCyWrapper(buildItemMembershipRowId(id)))
+        .should('contain', name)
+        .should('not.contain', permission)
+        .should(
+          'contain',
+          i18n.t(ItemLoginSchemaState.Disabled, { ns: namespaces.enums }),
+        );
 
       // check delete button exists
       cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).should('exist');
