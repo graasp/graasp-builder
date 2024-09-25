@@ -1,7 +1,7 @@
 import {
   GuestFactory,
   ItemLoginSchemaFactory,
-  ItemLoginSchemaState,
+  ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   Member,
   PackedFolderItemFactory,
@@ -148,7 +148,7 @@ describe('View Memberships - Guest', () => {
     const itemLoginSchema = ItemLoginSchemaFactory({
       type: ItemLoginSchemaType.Username,
       item: itemWithAdmin,
-      state: ItemLoginSchemaState.Freeze,
+      status: ItemLoginSchemaStatus.Freeze,
     });
     const guestMemberships = [
       buildItemMembership({
@@ -200,7 +200,7 @@ describe('View Memberships - Guest', () => {
     const itemLoginSchema = ItemLoginSchemaFactory({
       type: ItemLoginSchemaType.Username,
       item: itemWithAdmin,
-      state: ItemLoginSchemaState.Disabled,
+      status: ItemLoginSchemaStatus.Disabled,
     });
     const guestMemberships = [
       buildItemMembership({
@@ -244,7 +244,7 @@ describe('View Memberships - Guest', () => {
         .should('not.contain', permission)
         .should(
           'contain',
-          i18n.t(ItemLoginSchemaState.Disabled, { ns: namespaces.enums }),
+          i18n.t(ItemLoginSchemaStatus.Disabled, { ns: namespaces.enums }),
         );
 
       // check delete button exists

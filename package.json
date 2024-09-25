@@ -21,7 +21,7 @@
     "@graasp/chatbox": "3.3.0",
     "@graasp/map": "1.18.0",
     "@graasp/query-client": "github:graasp/graasp-query-client#932-update-item-login-schema-state",
-    "@graasp/sdk": "graasp/graasp-sdk#665-item-login-schema-state",
+    "@graasp/sdk": "4.31.0",
     "@graasp/stylis-plugin-rtl": "2.2.0",
     "@graasp/translations": "1.38.0",
     "@graasp/ui": "5.2.0",

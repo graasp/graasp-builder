@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import {
   ItemLoginSchema,
-  ItemLoginSchemaState,
+  ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   ItemPublished,
   ItemTag,
@@ -80,7 +80,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       }
       case Boolean(
         itemLoginSchema?.id &&
-          itemLoginSchema.state !== ItemLoginSchemaState.Disabled,
+          itemLoginSchema.status !== ItemLoginSchemaStatus.Disabled,
       ): {
         setVisibility(SETTINGS.ITEM_LOGIN.name);
         break;
@@ -107,7 +107,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
         if (itemLoginSchema) {
           putItemLoginSchema({
             itemId: item.id,
-            state: ItemLoginSchemaState.Disabled,
+            status: ItemLoginSchemaStatus.Disabled,
           });
         }
       };
@@ -123,7 +123,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
           putItemLoginSchema({
             itemId: item.id,
             type: ItemLoginSchemaType.Username,
-            state: ItemLoginSchemaState.Active,
+            status: ItemLoginSchemaStatus.Active,
           });
           break;
         }

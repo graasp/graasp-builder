@@ -3,7 +3,7 @@ import { TableCell, Tooltip, Typography } from '@mui/material';
 import {
   DiscriminatedItem,
   ItemLoginSchema,
-  ItemLoginSchemaState,
+  ItemLoginSchemaStatus,
   ItemMembership,
 } from '@graasp/sdk';
 
@@ -31,7 +31,7 @@ const GuestItemMembershipTableRow = ({
   let isDisabled = false;
   if (
     !itemLoginSchema ||
-    itemLoginSchema.state === ItemLoginSchemaState.Disabled
+    itemLoginSchema.status === ItemLoginSchemaStatus.Disabled
   ) {
     isDisabled = true;
   }
@@ -59,7 +59,7 @@ const GuestItemMembershipTableRow = ({
         <TableCell align="right">
           {isDisabled ? (
             <Typography sx={{ color: DISABLED_COLOR }}>
-              {translateEnums(ItemLoginSchemaState.Disabled)}
+              {translateEnums(ItemLoginSchemaStatus.Disabled)}
             </Typography>
           ) : (
             <Typography>{translateEnums(data.permission)}</Typography>
