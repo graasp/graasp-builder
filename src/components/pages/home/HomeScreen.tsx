@@ -17,7 +17,10 @@ import {
   SelectionContextProvider,
   useSelectionContext,
 } from '@/components/main/list/SelectionContext';
-import { useDragSelection } from '@/components/main/list/useDragSelection';
+import {
+  DragContainerStack,
+  useDragSelection,
+} from '@/components/main/list/useDragSelection';
 import { ITEM_PAGE_SIZE } from '@/config/constants';
 import { ShowOnlyMeChangeType } from '@/config/types';
 import { ItemLayoutMode, Ordering } from '@/enums';
@@ -107,13 +110,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
         ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
         : 0;
       content = (
-        <Stack
-          // this is a hack to allow selection dragging from margin
-          mx={-100}
-          px={100}
-          id={CONTAINER_ID}
-          height="100%"
-        >
+        <DragContainerStack id={CONTAINER_ID}>
           <ItemsTable
             canMove={!searchText}
             id={ACCESSIBLE_ITEMS_TABLE_ID}
@@ -136,7 +133,7 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
               <NewItemButton type="icon" />
             </Stack>
           )}
-        </Stack>
+        </DragContainerStack>
       );
     } else if (itemTypes.length || searchText) {
       content = <NoItemFilters searchText={searchText} />;

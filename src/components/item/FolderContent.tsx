@@ -29,7 +29,10 @@ import {
   SelectionContextProvider,
   useSelectionContext,
 } from '../main/list/SelectionContext';
-import { useDragSelection } from '../main/list/useDragSelection';
+import {
+  DragContainerStack,
+  useDragSelection,
+} from '../main/list/useDragSelection';
 import { DesktopMap } from '../map/DesktopMap';
 import NoItemFilters from '../pages/NoItemFilters';
 import { OutletType } from '../pages/item/type';
@@ -75,13 +78,7 @@ const Content = ({
   if (items?.length) {
     return (
       <>
-        <Stack
-          // this is a hack to allow selection dragging from margin
-          mx={-100}
-          px={100}
-          height="100%"
-          id={CONTAINER_ID}
-        >
+        <DragContainerStack id={CONTAINER_ID}>
           <ItemsTable
             selectedIds={selectedIds}
             enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
@@ -100,7 +97,7 @@ const Content = ({
               />
             </Stack>
           )}
-        </Stack>
+        </DragContainerStack>
         {DragSelection}
       </>
     );

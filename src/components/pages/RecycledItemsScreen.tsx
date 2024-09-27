@@ -21,7 +21,10 @@ import {
   SelectionContextProvider,
   useSelectionContext,
 } from '../main/list/SelectionContext';
-import { useDragSelection } from '../main/list/useDragSelection';
+import {
+  DragContainerStack,
+  useDragSelection,
+} from '../main/list/useDragSelection';
 import ItemCard from '../table/ItemCard';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
@@ -93,14 +96,7 @@ const RecycledItemsScreenContent = ({
               </Stack>
             )}
           </Stack>
-          <Stack
-            // this is a hack to allow selection dragging from margin
-            mx={-100}
-            px={100}
-            id={CONTAINER_ID}
-            gap={1}
-            height="100%"
-          >
+          <DragContainerStack id={CONTAINER_ID}>
             {
               // render the filtered data and when it is empty display that nothing matches the search
               filteredData?.length ? (
@@ -127,7 +123,7 @@ const RecycledItemsScreenContent = ({
                 </Alert>
               )
             }
-          </Stack>
+          </DragContainerStack>
         </Stack>
         {DragSelection}
       </>

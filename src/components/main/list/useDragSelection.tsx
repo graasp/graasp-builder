@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
+
+import { Stack } from '@mui/material';
 
 import { PRIMARY_COLOR } from '@graasp/ui';
 
@@ -11,6 +13,28 @@ import {
 import { ITEM_CARD_CLASS } from '@/config/selectors';
 
 import { useSelectionContext } from './SelectionContext';
+
+export const DragContainerStack = ({
+  gap,
+  id,
+  children,
+}: {
+  gap?: number;
+  id: string;
+  children: ReactNode;
+}): JSX.Element => (
+  <Stack
+    // this is a hack to allow selection dragging from margin
+    // 100 is artbitrary big
+    mx={-100}
+    px={100}
+    height="100%"
+    id={id}
+    gap={gap}
+  >
+    {children}
+  </Stack>
+);
 
 export const useDragSelection = ({
   elementClass = ITEM_CARD_CLASS,
