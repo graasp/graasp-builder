@@ -183,7 +183,6 @@ export const ITEM_CARD_MEDIA_CLASSNAME = 'itemCardMedia';
 export const ITEM_CARD_HEADER_CLASSNAME = 'itemCardHeader';
 export const THUMBNAIL_SETTING_UPLOAD_BUTTON_ID =
   'thumbnailSettingUploadButton';
-export const THUMBNAIL_SETTING_UPLOAD_INPUT_ID = 'thumbnailSettingUploadInput';
 export const CLEAR_CHAT_SETTING_ID = 'clearChatSettingButton';
 export const CLEAR_CHAT_DIALOG_ID = 'clearChatDialog';
 export const CLEAR_CHAT_CANCEL_BUTTON_ID = 'clearChatCancelButton';
@@ -363,9 +362,6 @@ export const ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID =
 export const buildDescriptionPlacementId = (
   placement: DescriptionPlacementType,
 ): string => `itemSettingDescriptionPlacement-${placement}`;
-
-export const ITEM_THUMBNAIL_CONTAINER_ID = 'itemThumbnailContainer';
-export const ITEM_THUMBNAIL_DELETE_BTN_ID = 'itemThumbnailDeleteBtn';
 
 export const DROPZONE_SELECTOR = '[role="dropzone"]';
 export const buildMapViewId = (parentId?: string): string =>
