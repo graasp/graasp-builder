@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.40.0](https://github.com/graasp/graasp-builder/compare/v2.39.0...v2.40.0) (2024-09-27)
+
+
+### Features
+
+* disable guest row in membership table ([#1479](https://github.com/graasp/graasp-builder/issues/1479)) ([5d2c0b0](https://github.com/graasp/graasp-builder/commit/5d2c0b0111c06cb4ab65169ed9d44c394558541b))
+* translate ar.json via GitLocalize ([#1475](https://github.com/graasp/graasp-builder/issues/1475)) ([9e92954](https://github.com/graasp/graasp-builder/commit/9e929541699bb0e304b74311e197d655b3696cdf))
+* translate de.json via GitLocalize ([#1474](https://github.com/graasp/graasp-builder/issues/1474)) ([31e89c3](https://github.com/graasp/graasp-builder/commit/31e89c33eb656ebfda657728ffda28eb211eb9e2))
+* translate es.json via GitLocalize ([#1473](https://github.com/graasp/graasp-builder/issues/1473)) ([aa25da1](https://github.com/graasp/graasp-builder/commit/aa25da16d49ed77ba1f249fdd83efa368efbfe78))
+* translate it.json via GitLocalize ([#1476](https://github.com/graasp/graasp-builder/issues/1476)) ([7f3ba1b](https://github.com/graasp/graasp-builder/commit/7f3ba1b384d62aeae7003cc9ec13f4dc49643670))
+* update french translations ([#1472](https://github.com/graasp/graasp-builder/issues/1472)) ([7f5546c](https://github.com/graasp/graasp-builder/commit/7f5546cf05eea9acc67df512746daf68d6dadd96))
+
 ## [2.39.0](https://github.com/graasp/graasp-builder/compare/v2.38.0...v2.39.0) (2024-09-23)
 
 
