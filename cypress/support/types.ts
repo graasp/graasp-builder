@@ -14,18 +14,17 @@ import {
   ItemTag,
   ItemValidationGroup,
   LocalFileItemType,
-  PackedItem,
   PermissionLevel,
   PublicationStatus,
   RecycledItemData,
   S3FileItemType,
   ShortLink,
+  ThumbnailsBySize,
 } from '@graasp/sdk';
 
 export type ItemForTest = DiscriminatedItem & {
   categories?: ItemCategory[];
-  // TODO: INCORRECT! Fix in coming
-  thumbnails?: PackedItem['thumbnails'];
+  thumbnails?: ThumbnailsBySize;
   tags?: ItemTag[];
   itemLoginSchema?: ItemLoginSchema;
   readFilepath?: string;

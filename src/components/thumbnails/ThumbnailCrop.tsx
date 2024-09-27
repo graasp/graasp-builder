@@ -1,6 +1,5 @@
 import { MouseEvent } from 'react';
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Dialog,
@@ -10,7 +9,7 @@ import {
   useTheme,
 } from '@mui/material';
 
-import { ImageUp as ImageUpIcon } from 'lucide-react';
+import { Trash2 as DeleteIcon, ImageUp as ImageUpIcon } from 'lucide-react';
 
 import CropModal, {
   MODAL_TITLE_ARIA_LABEL_ID,
@@ -53,6 +52,16 @@ const HoveredBox = styled(Stack)(({ zIndex }: { zIndex: number }) => ({
     opacity: 0.85,
   },
 }));
+
+const sxDeleteButton = () => {
+  const bgColor = (opacity: number) => `rgb(255, 255, 255, ${opacity})`;
+  return {
+    backgroundColor: bgColor(0.5),
+    ':hover': {
+      backgroundColor: bgColor(0.8),
+    },
+  };
+};
 
 type Props = {
   setChanges: (payload: { thumbnail?: Blob }) => void;
@@ -107,7 +116,8 @@ const ThumbnailCrop = ({
             data-cy={REMOVE_THUMBNAIL_BUTTON}
             aria-label={t(BUILDER.THUMBNAIL_UPLOADER_DELETE_ARIA_LABEL)}
             color="error"
-            size="large"
+            size="medium"
+            sx={sxDeleteButton}
             onClick={handleDelete}
           >
             <DeleteIcon />

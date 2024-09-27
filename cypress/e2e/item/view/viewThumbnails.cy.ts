@@ -1,4 +1,4 @@
-import { PackedFolderItemFactory } from '@graasp/sdk';
+import { PackedFolderItemFactory, PackedItem } from '@graasp/sdk';
 
 import { HOME_PATH } from '../../../../src/config/paths';
 import {
@@ -11,14 +11,14 @@ import { ITEM_THUMBNAIL_LINK } from '../../../fixtures/thumbnails/links';
 const ITEM_WITHOUT_THUMBNAIL = PackedFolderItemFactory({
   name: 'own_item_name1',
 });
-const ITEM_WITH_THUMBNAIL = {
+const ITEM_WITH_THUMBNAIL: PackedItem = {
   ...PackedFolderItemFactory({
     name: 'own_item_name2',
     settings: {
       hasThumbnail: true,
     },
   }),
-  thumbnails: ITEM_THUMBNAIL_LINK,
+  thumbnails: { small: ITEM_THUMBNAIL_LINK, medium: ITEM_THUMBNAIL_LINK },
 };
 
 describe('View Thumbnails', () => {
@@ -34,7 +34,7 @@ describe('View Thumbnails', () => {
 
     cy.get(`#${buildItemCard(ITEM_WITH_THUMBNAIL.id)} img`)
       .should('have.attr', 'src')
-      .and('contain', ITEM_WITH_THUMBNAIL.thumbnails);
+      .and('contain', ITEM_WITH_THUMBNAIL.thumbnails.medium);
   });
 
   it(`display member avatar`, () => {

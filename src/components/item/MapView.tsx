@@ -74,7 +74,6 @@ const MapView = ({
                 useAddressFromGeolocation={hooks.useAddressFromGeolocation}
                 useSuggestionsForAddress={hooks.useSuggestionsForAddress}
                 useItemsInMap={hooks.useItemsInMap}
-                useItemThumbnailUrl={hooks.useItemThumbnailUrl}
                 viewItem={viewItem}
                 viewItemInBuilder={viewItemInBuilder}
                 currentMember={currentMember}

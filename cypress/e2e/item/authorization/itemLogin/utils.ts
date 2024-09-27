@@ -1,6 +1,7 @@
 import {
   ItemLoginSchema,
   ItemLoginSchemaFactory,
+  ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   PackedItem,
 } from '@graasp/sdk';
@@ -13,5 +14,6 @@ export const addItemLoginSchema = (
   itemLoginSchema: ItemLoginSchemaFactory({
     item,
     type: itemLoginSchemaType,
+    status: ItemLoginSchemaStatus.Active,
   }),
 });

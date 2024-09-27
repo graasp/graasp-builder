@@ -4,7 +4,6 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import {
   ItemType,
   PackedItem,
-  ThumbnailSize,
   formatDate,
   getLinkThumbnailUrl,
 } from '@graasp/sdk';
@@ -13,7 +12,6 @@ import { Card, TextDisplay } from '@graasp/ui';
 
 import i18n, { useCommonTranslation } from '@/config/i18n';
 import { buildItemPath } from '@/config/paths';
-import { hooks } from '@/config/queryClient';
 import { ITEM_CARD_CLASS, buildItemCard } from '@/config/selectors';
 
 type Props = {
@@ -44,10 +42,8 @@ const ItemCard = ({
   onThumbnailClick,
 }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
-  const { data: thumbnailUrl } = hooks.useItemThumbnailUrl({
-    id: showThumbnail ? item.id : undefined,
-    size: ThumbnailSize.Medium,
-  });
+
+  const thumbnailUrl = showThumbnail ? item.thumbnails?.medium : undefined;
 
   const dateColumnFormatter = (value: string) =>
     formatDate(value, {

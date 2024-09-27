@@ -156,12 +156,11 @@ describe('view Folder as admin', () => {
     cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
 
     cy.wait('@getChildren').then(({ request: { query } }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(
         (query.keywords as unknown as string[]).every((k) =>
           searchText.includes(k),
         ),
-      ).to.be.true;
+      ).equal(true);
     });
 
     cy.get(`#${buildItemCard(child1.id)}`).should('be.visible');
