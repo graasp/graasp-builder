@@ -30,14 +30,12 @@ const GuestItemMembershipTableRow = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: currentAccount } = hooks.useCurrentMember();
 
-  let isDisabled = false;
-  if (
-    currentAccount?.id !== data.account.id &&
-    (!itemLoginSchema ||
-      itemLoginSchema.status === ItemLoginSchemaStatus.Disabled)
-  ) {
-    isDisabled = true;
-  }
+  const itemLoginSchemaIsDisabled =
+    !itemLoginSchema ||
+    itemLoginSchema.status === ItemLoginSchemaStatus.Disabled;
+
+  const isDisabled =
+    currentAccount?.id !== data.account.id && itemLoginSchemaIsDisabled;
 
   return (
     <Tooltip
