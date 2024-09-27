@@ -49,6 +49,13 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
         checkProd: true,
       }),
     ],
+    optimizeDeps: {
+      include: [
+        // Solves "Uncaught TypeError: styled_default is not a function"
+        // This issue seems to be introduced in Graasp Builder 2.39.0
+        '@mui/material/Tooltip',
+      ],
+    },
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),

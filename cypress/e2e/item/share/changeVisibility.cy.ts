@@ -1,4 +1,5 @@
 import {
+  ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   ItemTagType,
   PackedFolderItemFactory,
@@ -91,6 +92,12 @@ describe('Visibility of an Item', () => {
       } = data[0];
       expect(url).to.contain(item.id);
       expect(url).to.contain(ItemTagType.Public); // originally item login
+
+      const {
+        request: { body, url: itemLoginUrl },
+      } = data[1];
+      expect(itemLoginUrl).to.contain(item.id);
+      expect(body.status).to.contain(ItemLoginSchemaStatus.Active);
     });
   });
 
@@ -125,8 +132,9 @@ describe('Visibility of an Item', () => {
 
     // change pseudonymized -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait(`@deleteItemLoginSchema`).then(({ request: { url } }) => {
+    cy.wait(`@putItemLoginSchema`).then(({ request: { url, body } }) => {
       expect(url).to.include(item.id);
+      expect(body.status).to.eq(ItemLoginSchemaStatus.Disabled);
     });
   });
 
@@ -193,6 +201,12 @@ describe('Visibility of an Item', () => {
         } = data[0];
         expect(url).to.contain(item.id);
         expect(url).to.contain(ItemTagType.Public); // originally item login
+
+        const {
+          request: { url: itemLoginUrl, body },
+        } = data[1];
+        expect(itemLoginUrl).to.contain(item.id); // originally item login
+        expect(body.status).to.eq(ItemLoginSchemaStatus.Active);
       });
     });
   });

@@ -1778,9 +1778,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.24.0":
-  version: 3.24.0
-  resolution: "@graasp/query-client@npm:3.24.0"
+"@graasp/query-client@npm:3.25.0":
+  version: 3.25.0
+  resolution: "@graasp/query-client@npm:3.25.0"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1790,13 +1790,13 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/06feb022dfd7094f4e9e680acc828b1daf0d1fbf6efe8b3f1ed99e13f28ac0a17abe255bd317cb00efd22c66cea80e02a56307e82574f53df8939c53c2e10d33
+  checksum: 10/eaf22beda6f5a53b6c30b20debbffcf692ef39e9c80b878e24f529d89863ba6eb2babe4f80d4d57901d443abaa082465cd4def6e9136d6f443207048b6e69463
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:4.29.1":
-  version: 4.29.1
-  resolution: "@graasp/sdk@npm:4.29.1"
+"@graasp/sdk@npm:4.31.0":
+  version: 4.31.0
+  resolution: "@graasp/sdk@npm:4.31.0"
   dependencies:
     "@faker-js/faker": "npm:9.0.1"
     filesize: "npm:10.1.6"
@@ -1805,7 +1805,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3 || ^4.0.0
     uuid: ^9 || ^10
-  checksum: 10/f35a4c2dfbc7b9ac7d2112536dcded3da6d7fb32a3f4593921329340f96f21ccd558f68a77d723828f23055a6fb4d77493effbc746986ce7fcce913f3775a725
+  checksum: 10/9b2bf85a51cc12b6f2bdefeb7bbc0c615db9ea3188ace6d460b14e61503763aeab13fd2aa1c4135cee602c2c58465895569b2845b91d942982f96f5594dfd1d4
   languageName: node
   linkType: hard
 
@@ -6596,8 +6596,8 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.0"
     "@graasp/map": "npm:1.18.0"
-    "@graasp/query-client": "npm:3.24.0"
-    "@graasp/sdk": "npm:4.29.1"
+    "@graasp/query-client": "npm:3.25.0"
+    "@graasp/sdk": "npm:4.31.0"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
     "@graasp/translations": "npm:1.38.0"
     "@graasp/ui": "npm:5.2.0"

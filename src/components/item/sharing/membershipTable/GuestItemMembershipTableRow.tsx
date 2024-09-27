@@ -1,36 +1,76 @@
-import { TableCell, Typography } from '@mui/material';
+import { TableCell, Tooltip, Typography } from '@mui/material';
 
-import { DiscriminatedItem, ItemMembership } from '@graasp/sdk';
+import {
+  DiscriminatedItem,
+  ItemLoginSchema,
+  ItemLoginSchemaStatus,
+  ItemMembership,
+} from '@graasp/sdk';
 
-import { useEnumsTranslation } from '@/config/i18n';
+import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
+import { BUILDER } from '@/langs/constants';
 
 import { buildItemMembershipRowId } from '../../../../config/selectors';
 import DeleteItemMembershipButton from './DeleteItemMembershipButton';
 import { StyledTableRow } from './StyledTableRow';
 
+const DISABLED_COLOR = '#a5a5a5';
+
 const GuestItemMembershipTableRow = ({
   data,
   itemId,
+  itemLoginSchema,
 }: {
   data: ItemMembership;
   itemId: DiscriminatedItem['id'];
+  itemLoginSchema?: ItemLoginSchema;
 }): JSX.Element => {
   const { t: translateEnums } = useEnumsTranslation();
+  const { t: translateBuilder } = useBuilderTranslation();
+  const { data: currentAccount } = hooks.useCurrentMember();
+
+  const itemLoginSchemaIsDisabled =
+    !itemLoginSchema ||
+    itemLoginSchema.status === ItemLoginSchemaStatus.Disabled;
+
+  const isDisabled =
+    currentAccount?.id !== data.account.id && itemLoginSchemaIsDisabled;
 
   return (
-    <StyledTableRow data-cy={buildItemMembershipRowId(data.id)} key={data.id}>
-      <TableCell>
-        <Typography noWrap fontWeight="bold">
-          {data.account.name}
-        </Typography>
-      </TableCell>
-      <TableCell align="right">
-        <Typography>{translateEnums(data.permission)}</Typography>
-      </TableCell>
-      <TableCell align="right">
-        <DeleteItemMembershipButton itemId={itemId} data={data} />
-      </TableCell>
-    </StyledTableRow>
+    <Tooltip
+      title={
+        isDisabled
+          ? translateBuilder(
+              BUILDER.ITEM_LOGIN_SCHEMA_DISABLED_GUEST_ACCESS_MESSAGE,
+            )
+          : undefined
+      }
+    >
+      <StyledTableRow data-cy={buildItemMembershipRowId(data.id)} key={data.id}>
+        <TableCell>
+          <Typography
+            sx={{ color: isDisabled ? DISABLED_COLOR : undefined }}
+            noWrap
+            fontWeight="bold"
+          >
+            {data.account.name}
+          </Typography>
+        </TableCell>
+        <TableCell align="right">
+          {isDisabled ? (
+            <Typography sx={{ color: DISABLED_COLOR }}>
+              {translateEnums(ItemLoginSchemaStatus.Disabled)}
+            </Typography>
+          ) : (
+            <Typography>{translateEnums(data.permission)}</Typography>
+          )}
+        </TableCell>
+        <TableCell align="right">
+          <DeleteItemMembershipButton itemId={itemId} data={data} />
+        </TableCell>
+      </StyledTableRow>
+    </Tooltip>
   );
 };
 

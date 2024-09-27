@@ -491,5 +491,6 @@
   "REQUEST_ACCESS_TITLE": "Request access to this item",
   "REQUEST_ACCESS_BUTTON": "Request access",
   "REQUEST_ACCESS_SENT_BUTTON": "Request sent",
-  "ACCESS_MANAGEMENT_TITLE": "Access Management"
+  "ACCESS_MANAGEMENT_TITLE": "Access Management",
+  "ITEM_LOGIN_SCHEMA_DISABLED_GUEST_ACCESS_MESSAGE": "This guest cannot login because pseudonymized access is disabled."
 }
