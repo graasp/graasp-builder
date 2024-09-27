@@ -19,14 +19,25 @@ const PageWrapper = ({
     <Helmet>
       <title>{title}</title>
     </Helmet>
-    <Container id={id} sx={{ my: 2 }}>
-      <Stack mb={2} direction="row" justifyContent="space-between" spacing={1}>
-        <Typography variant="h2" component="h1" sx={{ wordWrap: 'break-word' }}>
-          {title}
-        </Typography>
-        {options}
+    <Container id={id} sx={{ pt: 1, height: '100%' }}>
+      <Stack height="100%">
+        <Stack
+          mb={2}
+          direction="row"
+          justifyContent="space-between"
+          spacing={1}
+        >
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{ wordWrap: 'break-word' }}
+          >
+            {title}
+          </Typography>
+          {options}
+        </Stack>
+        {children}
       </Stack>
-      {children}
     </Container>
   </>
 );

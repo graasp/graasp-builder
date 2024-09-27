@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
+
+import { Stack } from '@mui/material';
 
 import { PRIMARY_COLOR } from '@graasp/ui';
 
@@ -12,9 +14,35 @@ import { ITEM_CARD_CLASS } from '@/config/selectors';
 
 import { useSelectionContext } from './SelectionContext';
 
+export const DragContainerStack = ({
+  gap,
+  id,
+  children,
+}: {
+  gap?: number;
+  id: string;
+  children: ReactNode;
+}): JSX.Element => (
+  <Stack
+    // this is a hack to allow selection dragging from margin
+    // 100 is artbitrary big
+    mx={-100}
+    px={100}
+    height="100%"
+    id={id}
+    gap={gap}
+  >
+    {children}
+  </Stack>
+);
+
 export const useDragSelection = ({
   elementClass = ITEM_CARD_CLASS,
-} = {}): JSX.Element => {
+  containerId,
+}: {
+  containerId: string;
+  elementClass?: string;
+}): JSX.Element => {
   const { addToSelection, clearSelection } = useSelectionContext();
   const [boundingBox, setBoundingBox] = useState<null | {
     top: number;
@@ -52,8 +80,13 @@ export const useDragSelection = ({
       );
     },
     shouldStartSelecting: (e) => {
-      // does not trigger drag selection if mousedown on card
       if (e instanceof HTMLElement || e instanceof SVGElement) {
+        // does not trigger if click is outside of container
+        if (!e.closest(`#${containerId}`)) {
+          return false;
+        }
+
+        // does not trigger drag selection if mousedown on card
         return !e?.closest(`.${elementClass}`);
       }
       return true;

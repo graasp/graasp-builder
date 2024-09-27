@@ -29,7 +29,10 @@ import {
   SelectionContextProvider,
   useSelectionContext,
 } from '../main/list/SelectionContext';
-import { useDragSelection } from '../main/list/useDragSelection';
+import {
+  DragContainerStack,
+  useDragSelection,
+} from '../main/list/useDragSelection';
 import { DesktopMap } from '../map/DesktopMap';
 import NoItemFilters from '../pages/NoItemFilters';
 import { OutletType } from '../pages/item/type';
@@ -49,6 +52,8 @@ type Props = {
   canWrite?: boolean;
 };
 
+const CONTAINER_ID = 'items-container-id';
+
 const Content = ({
   item,
   searchText,
@@ -60,7 +65,7 @@ const Content = ({
   const { itemTypes } = useFilterItemsContext();
   const { selectedIds, clearSelection, toggleSelection } =
     useSelectionContext();
-  const DragSelection = useDragSelection();
+  const DragSelection = useDragSelection({ containerId: CONTAINER_ID });
 
   if (mode === ItemLayoutMode.Map) {
     return (
@@ -73,24 +78,26 @@ const Content = ({
   if (items?.length) {
     return (
       <>
-        <ItemsTable
-          selectedIds={selectedIds}
-          enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
-          id={buildItemsTableId(item.id)}
-          items={items ?? []}
-          onCardClick={toggleSelection}
-          onMove={clearSelection}
-        />
-        {Boolean(canWrite && !searchText && !itemTypes?.length) && (
-          <Stack alignItems="center" mb={2}>
-            <NewItemButton
-              type="icon"
-              key="newButton"
-              // add new items at the end of the list
-              previousItemId={items ? items[items.length - 1]?.id : undefined}
-            />
-          </Stack>
-        )}
+        <DragContainerStack id={CONTAINER_ID}>
+          <ItemsTable
+            selectedIds={selectedIds}
+            enableMoveInBetween={sortBy === SortingOptionsForFolder.Order}
+            id={buildItemsTableId(item.id)}
+            items={items ?? []}
+            onCardClick={toggleSelection}
+            onMove={clearSelection}
+          />
+          {Boolean(canWrite && !searchText && !itemTypes?.length) && (
+            <Stack alignItems="center" mb={2}>
+              <NewItemButton
+                type="icon"
+                key="newButton"
+                // add new items at the end of the list
+                previousItemId={items ? items[items.length - 1]?.id : undefined}
+              />
+            </Stack>
+          )}
+        </DragContainerStack>
         {DragSelection}
       </>
     );
