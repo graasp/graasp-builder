@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.41.0](https://github.com/graasp/graasp-builder/compare/v2.40.0...v2.41.0) (2024-09-27)
+
+
+### Features
+
+* use Thumbnails from PackedItem ([#1468](https://github.com/graasp/graasp-builder/issues/1468)) ([a353659](https://github.com/graasp/graasp-builder/commit/a353659cd8202e15ea559d6388e6338e9cc82540))
+
+
+### Bug Fixes
+
+* define container for drag selection ([#1481](https://github.com/graasp/graasp-builder/issues/1481)) ([62081e2](https://github.com/graasp/graasp-builder/commit/62081e2d92102b5f03f1c5a8163fe2fd54f8ca05))
+
 ## [2.40.0](https://github.com/graasp/graasp-builder/compare/v2.39.0...v2.40.0) (2024-09-27)
 
 
