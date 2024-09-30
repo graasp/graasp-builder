@@ -491,5 +491,6 @@
   "REQUEST_ACCESS_TITLE": "Zugriff auf diesen Artikel anfordern",
   "REQUEST_ACCESS_BUTTON": "Zugriff beantragen",
   "REQUEST_ACCESS_SENT_BUTTON": "Anfrage gesendet",
-  "ACCESS_MANAGEMENT_TITLE": "Zugriffsverwaltung"
+  "ACCESS_MANAGEMENT_TITLE": "Zugriffsverwaltung",
+  "ITEM_LOGIN_SCHEMA_DISABLED_GUEST_ACCESS_MESSAGE": "Dieser Gast kann sich nicht anmelden, da der pseudonymisierte Zugriff deaktiviert ist."
 }
