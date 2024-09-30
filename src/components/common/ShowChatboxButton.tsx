@@ -35,7 +35,7 @@ const ShowChatboxButton = ({
   return (
     <ChatboxButton
       color={showChatbox ? 'primary' : 'inherit'}
-      showChat={showChatbox || false}
+      showChat={showChatbox ?? false}
       type={type}
       onClick={onClick}
       showChatText={translateBuilder(showChatTextKey)}

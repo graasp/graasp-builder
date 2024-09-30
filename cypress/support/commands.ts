@@ -61,7 +61,6 @@ import {
   mockGetMembers,
   mockGetMembersBy,
   mockGetMembershipRequestsForItem,
-  mockGetOwnItems,
   mockGetOwnMembershipRequests,
   mockGetParents,
   mockGetPublicationStatus,
@@ -187,8 +186,6 @@ Cypress.Commands.add(
     mockGetAppListRoute(APPS_LIST);
 
     mockGetAccessibleItems(cachedItems);
-
-    mockGetOwnItems(cachedItems);
 
     mockGetSharedItems({ items: cachedItems, member: currentMember });
 
