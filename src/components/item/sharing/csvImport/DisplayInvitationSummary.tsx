@@ -54,7 +54,7 @@ type Props = {
 const DisplayInvitationSummary = ({
   userCsvData,
   error,
-}: Props): JSX.Element | false => {
+}: Props): JSX.Element | null => {
   const { t } = useBuilderTranslation();
   if (error) {
     const additionalMessage = getErrorFromPayload(error);
@@ -115,6 +115,6 @@ const DisplayInvitationSummary = ({
   }
 
   // no error and no data, display nothing
-  return false;
+  return null;
 };
 export default DisplayInvitationSummary;

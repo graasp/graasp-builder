@@ -36,7 +36,7 @@ const buildLocalizedDocumentationLink = (lang: string): string => {
   return `${buildLocalizedDocumentationOrigin(lang)}${MEMBER_VALIDATION_DOCUMENTATION_LINK}`;
 };
 
-const MemberValidationBanner = (): JSX.Element | false => {
+const MemberValidationBanner = (): JSX.Element | null => {
   const { isOpen, closeModal } = useModalStatus({
     isInitiallyOpen: true,
   });
@@ -71,6 +71,6 @@ const MemberValidationBanner = (): JSX.Element | false => {
       </Alert>
     );
   }
-  return false;
+  return null;
 };
 export default MemberValidationBanner;

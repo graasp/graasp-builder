@@ -46,7 +46,7 @@ const ResourceLinks = () => {
   );
 };
 
-const MainMenu = (): JSX.Element | false => {
+const MainMenu = (): JSX.Element | null => {
   const { t } = useBuilderTranslation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -57,7 +57,7 @@ const MainMenu = (): JSX.Element | false => {
   };
 
   if (!member || !member.id) {
-    return false;
+    return null;
   }
 
   const individualMenuItems =

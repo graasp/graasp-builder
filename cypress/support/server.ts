@@ -56,7 +56,6 @@ const {
   buildEditItemRoute,
   buildItemUnpublishRoute,
   buildGetItemRoute,
-  GET_OWN_ITEMS_ROUTE,
   buildGetMemberRoute,
   buildPostManyItemMembershipsRoute,
   ITEMS_ROUTE,
@@ -163,19 +162,6 @@ export const mockGetCurrentMember = (
       return reply({ statusCode: StatusCodes.OK, body: currentMember });
     },
   ).as('getCurrentMember');
-};
-
-export const mockGetOwnItems = (items: ItemForTest[]): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`,
-    },
-    (req) => {
-      const own = items.filter(isRootItem);
-      req.reply(own);
-    },
-  ).as('getOwnItems');
 };
 
 export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
