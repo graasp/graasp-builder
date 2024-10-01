@@ -4,9 +4,14 @@ import {
   PermissionLevel,
 } from '@graasp/sdk';
 
-import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
+import {
+  HOME_PATH,
+  buildItemPath,
+  buildItemSharePath,
+} from '../../../../src/config/paths';
 import {
   HIDDEN_ITEM_BUTTON_CLASS,
+  SETTINGS_HIDE_ITEM_ID,
   buildHideButtonId,
   buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
@@ -98,6 +103,39 @@ describe('Hide Item', () => {
       const classList = Array.from($menuItem[0].classList);
       // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
       expect(classList.some((c) => c.includes('disabled'))).to.be.true;
+    });
+  });
+
+  describe('Sharing tab', () => {
+    it('Hide an item', () => {
+      cy.visit(buildItemSharePath(ITEM.id));
+
+      cy.get(`#${SETTINGS_HIDE_ITEM_ID}`).click();
+
+      cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
+        ({ request: { url } }) => {
+          expect(url).to.contain(ItemTagType.Hidden);
+          expect(url).to.contain(ITEM.id);
+        },
+      );
+    });
+    it('Show an item', () => {
+      cy.visit(buildItemSharePath(HIDDEN_ITEM.id));
+
+      cy.get(`#${SETTINGS_HIDE_ITEM_ID}`).click();
+
+      cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
+        ({ request: { url } }) => {
+          expect(url).to.contain(ItemTagType.Hidden);
+          expect(url).to.contain(HIDDEN_ITEM.id);
+        },
+      );
+    });
+
+    it('Cannot hide child of hidden item', () => {
+      cy.visit(buildItemSharePath(CHILD_HIDDEN_ITEM.id));
+
+      cy.get(`#${SETTINGS_HIDE_ITEM_ID}`).should('be.disabled');
     });
   });
 });

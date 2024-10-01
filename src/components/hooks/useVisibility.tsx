@@ -53,25 +53,27 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
     // disable setting if any visiblity is set on any parent items
-    setIsDisabled(
-      Boolean(
-        (itemLoginSchema && itemLoginSchema?.item?.path !== item?.path) ||
-          (item?.public && item?.public?.item?.path !== item?.path),
-      ),
-    );
+
+    const isItemLoginDisabled =
+      itemLoginSchema &&
+      itemLoginSchema?.status !== ItemLoginSchemaStatus.Disabled &&
+      itemLoginSchema?.item?.path !== item?.path;
+    const isPublicDisabled =
+      item?.public && item?.public?.item?.path !== item?.path;
+
+    setIsDisabled(Boolean(isItemLoginDisabled || isPublicDisabled));
   }, [itemLoginSchema, item]);
 
   // is loading
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    setIsLoading(isItemPublishEntryLoading || isItemLoginLoading);
-  }, [isItemPublishEntryLoading, isItemLoginLoading]);
+  const isLoading = isItemPublishEntryLoading || isItemLoginLoading;
 
   // is error
   const [isError] = useState(false);
 
   // visibility
-  const [visibility, setVisibility] = useState<string>();
+  const [visibility, setVisibility] = useState<string>(
+    SETTINGS.ITEM_PRIVATE.name,
+  );
   useEffect(() => {
     switch (true) {
       case Boolean(item.public): {
@@ -140,14 +142,14 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       }
     },
     [
-      deleteItemTag,
-      item.id,
-      itemLoginSchema,
       itemPublishEntry,
-      postItemTag,
       item.public,
-      putItemLoginSchema,
+      item.id,
       unpublish,
+      deleteItemTag,
+      itemLoginSchema,
+      putItemLoginSchema,
+      postItemTag,
     ],
   );
 

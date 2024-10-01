@@ -2,40 +2,29 @@ import { TableCell, Tooltip, Typography } from '@mui/material';
 
 import {
   DiscriminatedItem,
-  ItemLoginSchema,
   ItemLoginSchemaStatus,
   ItemMembership,
 } from '@graasp/sdk';
+import { DEFAULT_TEXT_DISABLED_COLOR } from '@graasp/ui';
 
 import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
-import { hooks } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
 import { buildItemMembershipRowId } from '../../../../config/selectors';
 import DeleteItemMembershipButton from './DeleteItemMembershipButton';
 import { StyledTableRow } from './StyledTableRow';
 
-const DISABLED_COLOR = '#a5a5a5';
-
 const GuestItemMembershipTableRow = ({
   data,
   itemId,
-  itemLoginSchema,
+  isDisabled,
 }: {
   data: ItemMembership;
   itemId: DiscriminatedItem['id'];
-  itemLoginSchema?: ItemLoginSchema;
+  isDisabled?: boolean;
 }): JSX.Element => {
   const { t: translateEnums } = useEnumsTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: currentAccount } = hooks.useCurrentMember();
-
-  const itemLoginSchemaIsDisabled =
-    !itemLoginSchema ||
-    itemLoginSchema.status === ItemLoginSchemaStatus.Disabled;
-
-  const isDisabled =
-    currentAccount?.id !== data.account.id && itemLoginSchemaIsDisabled;
 
   return (
     <Tooltip
@@ -50,7 +39,7 @@ const GuestItemMembershipTableRow = ({
       <StyledTableRow data-cy={buildItemMembershipRowId(data.id)} key={data.id}>
         <TableCell>
           <Typography
-            sx={{ color: isDisabled ? DISABLED_COLOR : undefined }}
+            sx={{ color: isDisabled ? DEFAULT_TEXT_DISABLED_COLOR : undefined }}
             noWrap
             fontWeight="bold"
           >
@@ -59,7 +48,7 @@ const GuestItemMembershipTableRow = ({
         </TableCell>
         <TableCell align="right">
           {isDisabled ? (
-            <Typography sx={{ color: DISABLED_COLOR }}>
+            <Typography sx={{ color: DEFAULT_TEXT_DISABLED_COLOR }}>
               {translateEnums(ItemLoginSchemaStatus.Disabled)}
             </Typography>
           ) : (

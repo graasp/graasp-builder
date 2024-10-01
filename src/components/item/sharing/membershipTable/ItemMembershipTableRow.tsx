@@ -3,9 +3,11 @@ import { TableCell, Typography } from '@mui/material';
 import {
   AccountType,
   DiscriminatedItem,
+  ItemLoginSchemaStatus,
   ItemMembership,
   PermissionLevel,
 } from '@graasp/sdk';
+import { DEFAULT_TEXT_DISABLED_COLOR } from '@graasp/ui';
 
 import { useEnumsTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
@@ -23,11 +25,13 @@ const ItemMembershipTableRow = ({
   isOnlyAdmin = false,
   item,
   data,
+  isDisabled,
 }: {
   data: ItemMembership;
   item: DiscriminatedItem;
   allowDowngrade?: boolean;
   isOnlyAdmin?: boolean;
+  isDisabled: boolean;
 }): JSX.Element => {
   const { t: translateEnums } = useEnumsTranslation();
 
@@ -53,15 +57,31 @@ const ItemMembershipTableRow = ({
   return (
     <StyledTableRow data-cy={buildItemMembershipRowId(data.id)} key={data.id}>
       <TableCell>
-        <Typography noWrap fontWeight="bold">
+        <Typography
+          noWrap
+          sx={{ color: isDisabled ? DEFAULT_TEXT_DISABLED_COLOR : undefined }}
+          fontWeight="bold"
+        >
           {data.account.name}
         </Typography>
-        <Typography noWrap variant="subtitle2">
+        <Typography
+          noWrap
+          variant="subtitle2"
+          sx={{ color: isDisabled ? DEFAULT_TEXT_DISABLED_COLOR : undefined }}
+        >
           {data.account.type === AccountType.Individual && data.account.email}
         </Typography>
       </TableCell>
       <TableCell align="right">
-        <Typography>{translateEnums(data.permission)}</Typography>
+        <Typography>
+          {isDisabled ? (
+            <Typography sx={{ color: DEFAULT_TEXT_DISABLED_COLOR }}>
+              {translateEnums(ItemLoginSchemaStatus.Disabled)}
+            </Typography>
+          ) : (
+            translateEnums(data.permission)
+          )}
+        </Typography>
       </TableCell>
       <TableCell align="right">
         {!isOnlyAdmin && (
