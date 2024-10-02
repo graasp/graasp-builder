@@ -456,7 +456,6 @@
   "item.name": "Nom",
   "order": "Ordre",
   "TRASH_NO_ITEM": "La poubelle est vide.",
-  "TRASH_NO_ITEM_SEARCH": "Aucun élément de la corbeille ne correspond à {{search}}",
   "BOOKMARKS_NO_ITEM": "Aucun élément ajouté aux favoris",
   "BOOKMARKS_NO_ITEM_SEARCH": "Aucun élément favoris ne correspond à {{search}}",
   "UPLOAD_BETWEEN_FILES": "Téléchargez votre (vos) fichier(s) ici",

@@ -456,7 +456,6 @@
   "item.name": "Name",
   "order": "Order",
   "TRASH_NO_ITEM": "You trash is empty.",
-  "TRASH_NO_ITEM_SEARCH": "No trashed item for {{search}}",
   "BOOKMARKS_NO_ITEM": "No bookmarked item",
   "BOOKMARKS_NO_ITEM_SEARCH": "No bookmarked item for {{search}}",
   "UPLOAD_BETWEEN_FILES": "Upload your file(s) here",

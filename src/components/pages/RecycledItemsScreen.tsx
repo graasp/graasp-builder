@@ -1,4 +1,4 @@
-import { Alert, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
@@ -45,13 +45,13 @@ const RecycledItemsScreenContent = ({
 }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { itemTypes } = useFilterItemsContext();
-  const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
+  const { sortBy, setSortBy, ordering, setOrdering } =
     useSorting<SortingOptions>({
       sortBy: SortingOptions.ItemUpdatedAt,
       ordering: Ordering.DESC,
     });
 
-  const { data, fetchNextPage, isLoading, isError, isFetching } =
+  const { data, fetchNextPage, isLoading, isFetching } =
     hooks.useInfiniteOwnRecycledItemData(
       {
         sortBy,
@@ -62,6 +62,7 @@ const RecycledItemsScreenContent = ({
       // todo: adapt page size given the user window height
       { pageSize: ITEM_PAGE_SIZE },
     );
+
   const options = useTranslatedSortingOptions();
   const { selectedIds, toggleSelection } = useSelectionContext();
 
@@ -73,8 +74,7 @@ const RecycledItemsScreenContent = ({
       const filteredData = data.pages
         .map((p) => p.data)
         ?.flat()
-        ?.map((p) => p.item)
-        ?.sort(sortFn);
+        ?.map((p) => p.item);
 
       const totalFetchedItems = data
         ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
@@ -116,33 +116,22 @@ const RecycledItemsScreenContent = ({
               )}
             </Stack>
             <DragContainerStack id={CONTAINER_ID}>
-              {
-                // render the filtered data and when it is empty display that nothing matches the search
-                filteredData?.length ? (
-                  filteredData.map((item) => (
-                    <Stack mb={1}>
-                      <ItemCard
-                        item={item}
-                        onThumbnailClick={() => toggleSelection(item.id)}
-                        isSelected={selectedIds.includes(item.id)}
-                        allowNavigation={false}
-                        footer={
-                          <Stack justifyContent="right" direction="row">
-                            <RestoreButton itemIds={[item.id]} />
-                            <DeleteButton items={[item]} />
-                          </Stack>
-                        }
-                      />
-                    </Stack>
-                  ))
-                ) : (
-                  <Alert severity="info">
-                    {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
-                      search: searchText,
-                    })}
-                  </Alert>
-                )
-              }
+              {filteredData.map((item) => (
+                <Stack mb={1}>
+                  <ItemCard
+                    item={item}
+                    onThumbnailClick={() => toggleSelection(item.id)}
+                    isSelected={selectedIds.includes(item.id)}
+                    allowNavigation={false}
+                    footer={
+                      <Stack justifyContent="right" direction="row">
+                        <RestoreButton itemIds={[item.id]} />
+                        <DeleteButton items={[item]} />
+                      </Stack>
+                    }
+                  />
+                </Stack>
+              ))}
               {!isFetching && data.pages[0].totalCount > totalFetchedItems && (
                 <Stack textAlign="center" alignItems="center">
                   <Button
@@ -169,13 +158,7 @@ const RecycledItemsScreenContent = ({
     return <LoadingScreen />;
   }
 
-  if (isError) {
-    return <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
-  }
-
-  return (
-    <Alert severity="info">{translateBuilder(BUILDER.TRASH_NO_ITEM)}</Alert>
-  );
+  return <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
 };
 
 const RecycledItemsScreen = (): JSX.Element | null => {
