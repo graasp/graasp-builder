@@ -1,5 +1,8 @@
 import { Alert, Stack } from '@mui/material';
 
+import { Button } from '@graasp/ui';
+
+import { ITEM_PAGE_SIZE } from '@/config/constants';
 import { Ordering } from '@/enums';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -29,6 +32,7 @@ import ItemCard from '../table/ItemCard';
 import SortingSelect from '../table/SortingSelect';
 import { SortingOptions } from '../table/types';
 import { useSorting, useTranslatedSortingOptions } from '../table/useSorting';
+import NoItemFilters from './NoItemFilters';
 import PageWrapper from './PageWrapper';
 import RecycleBinToolbar from './recycleBin/RecycleBinSelectionToolbar';
 
@@ -40,96 +44,125 @@ const RecycledItemsScreenContent = ({
   searchText: string;
 }): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
-  const options = useTranslatedSortingOptions();
-  const { shouldDisplayItem } = useFilterItemsContext();
+  const { itemTypes } = useFilterItemsContext();
   const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
     useSorting<SortingOptions>({
       sortBy: SortingOptions.ItemUpdatedAt,
       ordering: Ordering.DESC,
     });
-  const filteredData = recycledItems
-    ?.filter(
-      (d) =>
-        shouldDisplayItem(d.type) &&
-        d.name.toLowerCase().includes(searchText.toLocaleLowerCase()),
-    )
-    ?.sort(sortFn);
+
+  const { data, fetchNextPage, isLoading, isError, isFetching } =
+    hooks.useInfiniteOwnRecycledItemData(
+      {
+        sortBy,
+        ordering,
+        types: itemTypes,
+        keywords: searchText,
+      },
+      // todo: adapt page size given the user window height
+      { pageSize: ITEM_PAGE_SIZE },
+    );
+  const options = useTranslatedSortingOptions();
   const { selectedIds, toggleSelection } = useSelectionContext();
 
   const DragSelection = useDragSelection({ containerId: CONTAINER_ID });
 
   // render this when there is data from the query
-  if (recycledItems?.length) {
-    const hasSelection = selectedIds.length && filteredData?.length;
-    return (
-      <>
-        <Stack gap={1} height="100%">
-          <Stack
-            alignItems="space-between"
-            direction="column"
-            gap={1}
-            width="100%"
-          >
-            {hasSelection ? (
-              <RecycleBinToolbar items={filteredData} />
-            ) : (
-              <Stack
-                spacing={1}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <SelectTypes />
-                <Stack direction="row" gap={1}>
-                  {sortBy && setSortBy && (
-                    <SortingSelect
-                      sortBy={sortBy}
-                      options={options}
-                      setSortBy={setSortBy}
-                      ordering={ordering}
-                      setOrdering={setOrdering}
-                    />
-                  )}
-                  <ModeButton />
-                </Stack>
-              </Stack>
-            )}
-          </Stack>
-          <DragContainerStack id={CONTAINER_ID}>
-            {
-              // render the filtered data and when it is empty display that nothing matches the search
-              filteredData?.length ? (
-                filteredData.map((item) => (
-                  <Stack mb={1}>
-                    <ItemCard
-                      item={item}
-                      onThumbnailClick={() => toggleSelection(item.id)}
-                      isSelected={selectedIds.includes(item.id)}
-                      showThumbnail={false}
-                      allowNavigation={false}
-                      footer={
-                        <Stack justifyContent="right" direction="row">
-                          <RestoreButton itemIds={[item.id]} />
-                          <DeleteButton items={[item]} />
-                        </Stack>
-                      }
-                    />
-                  </Stack>
-                ))
+  if (data?.pages?.length) {
+    if (data.pages[0].data.length) {
+      const filteredData = data.pages
+        .map((p) => p.data)
+        ?.flat()
+        ?.map((p) => p.item)
+        ?.sort(sortFn);
+
+      const totalFetchedItems = data
+        ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
+        : 0;
+
+      const hasSelection = selectedIds.length && filteredData?.length;
+      return (
+        <>
+          <Stack gap={1} height="100%">
+            <Stack
+              alignItems="space-between"
+              direction="column"
+              gap={1}
+              width="100%"
+            >
+              {hasSelection ? (
+                <RecycleBinToolbar items={filteredData} />
               ) : (
-                <Alert severity="info">
-                  {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
-                    search: searchText,
-                  })}
-                </Alert>
-              )
-            }
-          </DragContainerStack>
-        </Stack>
-        {DragSelection}
-      </>
-    );
+                <Stack
+                  spacing={1}
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <SelectTypes />
+                  <Stack direction="row" gap={1}>
+                    {sortBy && setSortBy && (
+                      <SortingSelect
+                        sortBy={sortBy}
+                        options={options}
+                        setSortBy={setSortBy}
+                        ordering={ordering}
+                        setOrdering={setOrdering}
+                      />
+                    )}
+                    <ModeButton />
+                  </Stack>
+                </Stack>
+              )}
+            </Stack>
+            <DragContainerStack id={CONTAINER_ID}>
+              {
+                // render the filtered data and when it is empty display that nothing matches the search
+                filteredData?.length ? (
+                  filteredData.map((item) => (
+                    <Stack mb={1}>
+                      <ItemCard
+                        item={item}
+                        onThumbnailClick={() => toggleSelection(item.id)}
+                        isSelected={selectedIds.includes(item.id)}
+                        allowNavigation={false}
+                        footer={
+                          <Stack justifyContent="right" direction="row">
+                            <RestoreButton itemIds={[item.id]} />
+                            <DeleteButton items={[item]} />
+                          </Stack>
+                        }
+                      />
+                    </Stack>
+                  ))
+                ) : (
+                  <Alert severity="info">
+                    {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
+                      search: searchText,
+                    })}
+                  </Alert>
+                )
+              }
+              {!isFetching && data.pages[0].totalCount > totalFetchedItems && (
+                <Stack textAlign="center" alignItems="center">
+                  <Button
+                    variant="outlined"
+                    onClick={fetchNextPage}
+                    role="feed"
+                  >
+                    {translateBuilder(BUILDER.HOME_SCREEN_LOAD_MORE_BUTTON)}
+                  </Button>
+                </Stack>
+              )}
+            </DragContainerStack>
+          </Stack>
+          {DragSelection}
+        </>
+      );
+    }
+    if (itemTypes.length || searchText) {
+      return <NoItemFilters searchText={searchText} />;
+    }
   }
 
   if (isLoading) {

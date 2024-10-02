@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { PackedItem } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import {
   ActionButtonVariant,
   ColorVariantsType,
@@ -13,7 +13,7 @@ import { BUILDER } from '../../langs/constants';
 import DeleteItemDialog from '../main/DeleteItemDialog';
 
 type Props = {
-  items: PackedItem[];
+  items: DiscriminatedItem[];
   color?: ColorVariantsType;
   id?: string;
   type?: ActionButtonVariant;

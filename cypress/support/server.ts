@@ -78,7 +78,6 @@ const {
   buildExportItemChatRoute,
   buildPostItemChatMessageRoute,
   buildClearItemChatRoute,
-  GET_RECYCLED_ITEMS_DATA_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
   buildGetMembersByIdRoute,
@@ -197,7 +196,7 @@ export const mockGetRecycledItems = (
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: `${API_HOST}/${GET_RECYCLED_ITEMS_DATA_ROUTE}`,
+      url: `${API_HOST}/items/recycled`,
     },
     (req) => {
       if (shouldThrowError) {
