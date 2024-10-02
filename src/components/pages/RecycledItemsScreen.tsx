@@ -101,19 +101,21 @@ const RecycledItemsScreenContent = ({
               // render the filtered data and when it is empty display that nothing matches the search
               filteredData?.length ? (
                 filteredData.map((item) => (
-                  <ItemCard
-                    item={item}
-                    onThumbnailClick={() => toggleSelection(item.id)}
-                    isSelected={selectedIds.includes(item.id)}
-                    showThumbnail={false}
-                    allowNavigation={false}
-                    footer={
-                      <Stack justifyContent="right" direction="row">
-                        <RestoreButton itemIds={[item.id]} />
-                        <DeleteButton items={[item]} />
-                      </Stack>
-                    }
-                  />
+                  <Stack mb={1}>
+                    <ItemCard
+                      item={item}
+                      onThumbnailClick={() => toggleSelection(item.id)}
+                      isSelected={selectedIds.includes(item.id)}
+                      showThumbnail={false}
+                      allowNavigation={false}
+                      footer={
+                        <Stack justifyContent="right" direction="row">
+                          <RestoreButton itemIds={[item.id]} />
+                          <DeleteButton items={[item]} />
+                        </Stack>
+                      }
+                    />
+                  </Stack>
                 ))
               ) : (
                 <Alert severity="info">
