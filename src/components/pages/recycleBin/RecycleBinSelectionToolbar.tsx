@@ -1,4 +1,4 @@
-import { PackedItem } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 
 import DeleteButton from '@/components/common/DeleteButton';
 import RestoreButton from '@/components/common/RestoreButton';
@@ -12,7 +12,7 @@ import {
 const RecycleBinSelectionToolbar = ({
   items,
 }: {
-  items: PackedItem[];
+  items: DiscriminatedItem[];
 }): JSX.Element => {
   const { selectedIds, clearSelection } = useSelectionContext();
 

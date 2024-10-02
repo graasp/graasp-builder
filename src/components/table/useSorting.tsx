@@ -1,6 +1,6 @@
 import { Dispatch, useState } from 'react';
 
-import { PackedItem } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { Ordering } from '@/enums';
@@ -22,14 +22,14 @@ export const useSorting = <T extends AllSortingOptions = SortingOptions>({
   ordering: Ordering;
   setSortBy: Dispatch<T>;
   setOrdering: Dispatch<Ordering>;
-  sortFn: (a: PackedItem, b: PackedItem) => number;
+  sortFn: (a: DiscriminatedItem, b: DiscriminatedItem) => number;
 } => {
   const [sortBy, setSortBy] = useState<T>(
     s ?? (SortingOptions.ItemUpdatedAt as T),
   );
   const [ordering, setOrdering] = useState<Ordering>(o);
 
-  const sortFn = (a: PackedItem, b: PackedItem) => {
+  const sortFn = (a: DiscriminatedItem, b: DiscriminatedItem) => {
     const f = ordering === Ordering.ASC ? 1 : -1;
     let value = 0;
     switch (sortBy) {

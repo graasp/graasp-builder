@@ -19,7 +19,7 @@ type Props = {
   isDragging: boolean;
   isOver: boolean;
   isMovable: boolean;
-  showThumbnails: boolean;
+  showThumbnail: boolean;
   itemsStatuses: ItemsStatuses;
   enableMoveInBetween: boolean;
   onClick?: (id: string) => void;
@@ -32,7 +32,7 @@ const ItemsTableCard = ({
   isDragging,
   isOver,
   isMovable,
-  showThumbnails,
+  showThumbnail,
   itemsStatuses,
   enableMoveInBetween,
   onClick,
@@ -51,6 +51,8 @@ const ItemsTableCard = ({
     );
   }
 
+  const thumbnailUrl = showThumbnail ? item.thumbnails?.medium : undefined;
+
   return (
     <Box px={1} onClick={() => onClick?.(item.id)}>
       <ItemCard
@@ -61,7 +63,7 @@ const ItemsTableCard = ({
         disabled={!isMovable && enableMoveInBetween}
         isDragging={isDragging}
         isSelected={isSelected}
-        showThumbnail={showThumbnails}
+        thumbnailUrl={thumbnailUrl}
         menu={<ItemMenuContent item={item} />}
         footer={
           <Stack
