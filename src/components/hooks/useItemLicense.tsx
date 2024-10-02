@@ -54,7 +54,7 @@ const useItemLicense = ({
 
   const {
     mutate: updateItem,
-    isLoading,
+    isPending: isLoading,
     isError,
     isSuccess,
   } = useEditItem({ enableNotifications });

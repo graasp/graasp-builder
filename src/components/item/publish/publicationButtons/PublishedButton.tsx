@@ -27,7 +27,7 @@ export const PublishedButton = ({ item, isLoading }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
   const { id: itemId } = item;
 
-  const { mutate: unpublish, isLoading: isUnPublishing } = useUnpublishItem();
+  const { mutate: unpublish, isPending: isUnPublishing } = useUnpublishItem();
 
   const handleUnPublishItem = () => unpublish({ id: itemId });
 

@@ -36,7 +36,7 @@ const FileUploader = ({
   const { itemId: parentItemId } = useParams();
   const [error, setError] = useState<string>();
 
-  const { mutateAsync: uploadFiles, isLoading } = mutations.useUploadFiles();
+  const { mutateAsync: uploadFiles, isPending } = mutations.useUploadFiles();
 
   const [totalProgress, setTotalProgress] = useState(0);
 
@@ -96,7 +96,7 @@ const FileUploader = ({
             onDrop([...e.target.files]);
           }
         }}
-        isLoading={isLoading}
+        isLoading={isPending}
         uploadProgress={Math.ceil(totalProgress * 100)}
         multiple
         onDrop={onDrop}

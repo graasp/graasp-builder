@@ -27,7 +27,7 @@ const RequestAccessContent = ({ member, itemId }: Props): JSX.Element => {
   const {
     mutateAsync: requestMembership,
     isSuccess,
-    isLoading,
+    isPending: isLoading,
   } = mutations.useRequestMembership();
   const { data: request } = hooks.useOwnMembershipRequest(itemId);
 

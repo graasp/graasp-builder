@@ -24,7 +24,8 @@ const ImportH5P = ({
   previousItemId?: DiscriminatedItem['id'];
 }): JSX.Element => {
   const { itemId } = useParams();
-  const { mutateAsync: importH5P, isLoading } = mutations.useImportH5P();
+  const { mutateAsync: importH5P, isPending: isLoading } =
+    mutations.useImportH5P();
   const { update, close: closeNotification } = useUploadWithProgress();
   const { t: translateBuilder } = useBuilderTranslation();
 

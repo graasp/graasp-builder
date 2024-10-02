@@ -44,9 +44,9 @@ const ShortLinkDialogContent = ({
 }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const { mutateAsync: postShortLink, isLoading: loadingPost } =
+  const { mutateAsync: postShortLink, isPending: loadingPost } =
     usePostShortLink();
-  const { mutateAsync: patchShortLink, isLoading: loadingDelete } =
+  const { mutateAsync: patchShortLink, isPending: loadingDelete } =
     usePatchShortLink();
 
   const DIALOG_TITLE = translateBuilder(

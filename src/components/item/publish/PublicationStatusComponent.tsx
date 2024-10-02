@@ -29,10 +29,10 @@ const { usePublicationStatus } = hooks;
 export const PublicationStatusComponent = ({ item }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
   const { t: translateEnum } = useEnumsTranslation();
-  const { data: status, isInitialLoading } = usePublicationStatus(item.id);
+  const { data: status, isLoading } = usePublicationStatus(item.id);
   const translatedType = capitalizeFirstLetter(translateEnum(item.type));
 
-  if (isInitialLoading) {
+  if (isLoading) {
     return (
       <Chip
         icon={<CircularProgress size={15} />}

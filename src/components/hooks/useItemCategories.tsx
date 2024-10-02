@@ -36,13 +36,13 @@ export const useItemCategories = ({
 
   const {
     mutate: createItemCategory,
-    isLoading: isPostLoading,
+    isPending: isPostLoading,
     isSuccess: isPostSuccess,
     isError: isPostError,
   } = usePostItemCategory();
   const {
     mutate: deleteItemCategory,
-    isLoading: isDeleteLoading,
+    isPending: isDeleteLoading,
     isSuccess: isDeleteSuccess,
     isError: isDeleteError,
   } = useDeleteItemCategory();

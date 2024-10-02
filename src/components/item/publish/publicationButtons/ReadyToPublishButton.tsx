@@ -29,7 +29,7 @@ export const ReadyToPublishButton = ({
   const { id: itemId, public: isPublic } = item;
   const { isOpen, openModal, closeModal } = useModalStatus();
 
-  const { mutate: publish, isLoading: isPublishing } = usePublishItem();
+  const { mutate: publish, isPending: isPublishing } = usePublishItem();
 
   const publishItem = () =>
     publish({ id: itemId, notification: notifyCoEditors });

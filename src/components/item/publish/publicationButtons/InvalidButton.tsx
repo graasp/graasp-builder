@@ -24,7 +24,7 @@ export const InvalidButton = ({ item, isLoading }: Props): JSX.Element => {
   const { id: itemId, public: isPublic } = item;
   const { isOpen, openModal, closeModal } = useModalStatus();
 
-  const { mutate: validateItem, isLoading: isValidating } =
+  const { mutate: validateItem, isPending: isValidating } =
     usePostItemValidation();
 
   const handleValidateItem = () => {

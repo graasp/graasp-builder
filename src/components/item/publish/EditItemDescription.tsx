@@ -32,7 +32,7 @@ export const EditItemDescription = ({ item }: Props): JSX.Element => {
   const {
     mutate: updateItem,
     isSuccess,
-    isLoading,
+    isPending: isLoading,
     isError,
   } = mutations.useEditItem({
     enableNotifications: false,
