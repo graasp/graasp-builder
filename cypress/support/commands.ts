@@ -62,12 +62,11 @@ import {
   mockGetMembersBy,
   mockGetMembershipRequestsForItem,
   mockGetOwnMembershipRequests,
+  mockGetOwnRecycledItemData,
   mockGetParents,
   mockGetPublicationStatus,
   mockGetPublishItemInformations,
   mockGetPublishItemsForMember,
-  mockGetRecycledItems,
-  mockGetSharedItems,
   mockGetShortLinksItem,
   mockImportH5p,
   mockImportZip,
@@ -187,8 +186,6 @@ Cypress.Commands.add(
 
     mockGetAccessibleItems(cachedItems);
 
-    mockGetSharedItems({ items: cachedItems, member: currentMember });
-
     mockPostItem(cachedItems, postItemError);
 
     mockDeleteItems(allItems, deleteItemsError);
@@ -282,7 +279,7 @@ Cypress.Commands.add(
 
     mockRecycleItems(items, recycleItemsError);
 
-    mockGetRecycledItems(recycledItemData, getRecycledItemsError);
+    mockGetOwnRecycledItemData(recycledItemData, getRecycledItemsError);
 
     mockRestoreItems(items, restoreItemsError);
 

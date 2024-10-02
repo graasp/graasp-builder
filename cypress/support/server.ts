@@ -29,7 +29,7 @@ import { FAILURE_MESSAGES } from '@graasp/translations';
 import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4, v4 } from 'uuid';
 
-import { SETTINGS } from '../../src/config/constants';
+import { ITEM_PAGE_SIZE, SETTINGS } from '../../src/config/constants';
 import { getMemberById } from '../../src/utils/member';
 import {
   buildAppApiAccessTokenRoute,
@@ -70,7 +70,6 @@ const {
   buildGetItemTagsRoute,
   buildPostItemTagRoute,
   buildPatchMemberRoute,
-  SHARED_ITEM_WITH_ROUTE,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
   buildPostItemFlagRoute,
@@ -189,46 +188,39 @@ export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
   ).as('getAccessibleItems');
 };
 
-export const mockGetRecycledItems = (
+export const mockGetOwnRecycledItemData = (
   recycledItemData: RecycledItemData[],
   shouldThrowError: boolean,
 ): void => {
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: `${API_HOST}/items/recycled`,
+      pathname: `/items/recycled`,
     },
-    (req) => {
+    ({ reply, url }) => {
       if (shouldThrowError) {
-        req.reply({ statusCode: StatusCodes.BAD_REQUEST });
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
         return;
       }
 
-      req.reply(recycledItemData);
-    },
-  ).as('getRecycledItems');
-};
+      const params = new URL(url).searchParams;
 
-export const mockGetSharedItems = ({
-  items,
-  member,
-}: {
-  items: ItemForTest[];
-  member?: Member;
-}): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: `${API_HOST}/${SHARED_ITEM_WITH_ROUTE}`,
+      const page = parseInt(params.get('page') ?? '1', 10);
+      const pageSize = parseInt(params.get('pageSize') ?? '10', 10);
+      const rawKeywords = params.get('keywords');
+      const keywords = Array.isArray(rawKeywords) ? rawKeywords : [rawKeywords];
+
+      const result = recycledItemData
+        .filter(({ item }) => keywords.some((k) => item.name.includes(k)))
+        .slice((page - 1) * pageSize, page * pageSize);
+
+      reply({
+        data: result,
+        totalCount: recycledItemData.length,
+        pagination: { page: 1, pageSize: ITEM_PAGE_SIZE },
+      });
     },
-    (req) => {
-      if (!member) {
-        return req.reply({ statusCode: StatusCodes.UNAUTHORIZED });
-      }
-      const shared = items.filter(({ creator }) => creator?.id !== member.id);
-      return req.reply(shared);
-    },
-  ).as('getSharedItems');
+  ).as('getOwnRecycledItemData');
 };
 
 export const mockPostItem = (

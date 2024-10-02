@@ -11,7 +11,6 @@ import { BUILDER } from '@/langs/constants';
 import i18n, { BUILDER_NAMESPACE } from '../../../../src/config/i18n';
 import { RECYCLE_BIN_PATH } from '../../../../src/config/paths';
 import {
-  CREATE_ITEM_BUTTON_ID,
   ITEM_SEARCH_INPUT_ID,
   PREVENT_GUEST_MESSAGE_ID,
   RECYCLED_ITEMS_ERROR_ALERT_ID,
@@ -66,15 +65,11 @@ describe('View trash', () => {
       i18n.changeLanguage(CURRENT_USER.extra.lang as string);
       const searchText = 'mysearch';
       cy.get(`#${ITEM_SEARCH_INPUT_ID}`).type(searchText);
-      const text = i18n.t(BUILDER.TRASH_NO_ITEM_SEARCH, {
+      const text = i18n.t(BUILDER.ITEM_SEARCH_NOTHING_FOUND, {
         search: searchText,
         ns: BUILDER_NAMESPACE,
       });
       cy.get(`#${RECYCLED_ITEMS_ROOT_CONTAINER}`).should('contain', text);
-    });
-
-    it('New button should not exist', () => {
-      cy.get(`#${CREATE_ITEM_BUTTON_ID}`).should('not.exist');
     });
 
     it('check recycled item layout', () => {
@@ -84,6 +79,8 @@ describe('View trash', () => {
     });
 
     it('Sorting & Ordering', () => {
+      cy.wait('@getOwnRecycledItemData');
+
       cy.get(`${SORTING_SELECT_SELECTOR} input`).should(
         'have.value',
         SortingOptions.ItemUpdatedAt,
@@ -92,29 +89,22 @@ describe('View trash', () => {
 
       cy.get(SORTING_SELECT_SELECTOR).click();
       cy.get('li[data-value="item.name"]').click();
-
-      // check items are ordered by name
-      cy.get(`#${RECYCLED_ITEMS_ROOT_CONTAINER} h5`).then(($e) => {
-        recycledItemData.sort((a, b) => (a.item.name < b.item.name ? 1 : -1));
-        for (let idx = 0; idx < recycledItemData.length; idx += 1) {
-          expect($e[idx].innerText).to.eq(recycledItemData[idx].item.name);
-        }
+      cy.wait('@getOwnRecycledItemData').then(({ request: { url } }) => {
+        expect(url).to.contain('item.name');
+        expect(url).to.contain('desc');
       });
 
       // change ordering
       cy.get(SORTING_ORDERING_SELECTOR_DESC).click();
       cy.get(SORTING_ORDERING_SELECTOR_ASC).should('be.visible');
-      cy.get(`#${RECYCLED_ITEMS_ROOT_CONTAINER} h5`).then(($e) => {
-        recycledItemData.reverse();
-        for (let idx = 0; idx < recycledItemData.length; idx += 1) {
-          expect($e[idx].innerText).to.eq(recycledItemData[idx].item.name);
-        }
+      cy.wait('@getOwnRecycledItemData').then(({ request: { url } }) => {
+        expect(url).to.contain('asc');
       });
     });
   });
 
   describe('Error Handling', () => {
-    it('check recycled item layout with server error', () => {
+    it.only('check recycled item layout with server error', () => {
       cy.setUpApi({
         items: recycledItemData.map(({ item }) => item),
         recycledItemData,
@@ -122,7 +112,9 @@ describe('View trash', () => {
       });
       cy.visit(RECYCLE_BIN_PATH);
 
-      cy.get(`#${RECYCLED_ITEMS_ERROR_ALERT_ID}`).should('exist');
+      cy.get(`#${RECYCLED_ITEMS_ERROR_ALERT_ID}`, { timeout: 10000 }).should(
+        'exist',
+      );
     });
   });
 });

@@ -451,7 +451,6 @@
   "item.name": "Name",
   "order": "Befehl",
   "TRASH_NO_ITEM": "Ihr Papierkorb ist leer.",
-  "TRASH_NO_ITEM_SEARCH": "Kein gelöschter Eintrag für {{search}}",
   "BOOKMARKS_NO_ITEM": "Kein mit Lesezeichen versehener Eintrag",
   "BOOKMARKS_NO_ITEM_SEARCH": "Kein Lesezeichen für {{search}}",
   "UPLOAD_BETWEEN_FILES": "Laden Sie Ihre Datei(en) hier hoch",
