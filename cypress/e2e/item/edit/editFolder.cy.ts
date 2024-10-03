@@ -3,7 +3,10 @@ import { PackedFolderItemFactory } from '@graasp/sdk';
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
   EDIT_ITEM_BUTTON_CLASS,
+  EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
+  FOLDER_FORM_DESCRIPTION_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
+  ITEM_FORM_NAME_INPUT_ID,
   buildItemsGridMoreButtonSelector,
 } from '../../../../src/config/selectors';
 import { EDIT_ITEM_PAUSE } from '../../../support/constants';
@@ -92,6 +95,32 @@ describe('Edit Folder', () => {
         expect(name).to.equal(EDITED_FIELDS.name);
         cy.get('@getItem').its('response.url').should('contain', itemToEdit.id);
       },
+    );
+  });
+
+  // moving from parent to child might not update info since the item folder component is the same
+  it.only('edit 2 folders should display the correct data', () => {
+    const parentItem = PackedFolderItemFactory();
+    const itemToEdit = PackedFolderItemFactory({
+      parentItem,
+      description: 'first description',
+    });
+    cy.setUpApi({ items: [parentItem, itemToEdit] });
+    // go to children item
+    cy.visit(buildItemPath(parentItem.id));
+
+    // open edit
+    cy.get(`.${EDIT_ITEM_BUTTON_CLASS}`).click();
+    cy.get(`#${EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}`).click();
+
+    // go to child
+    cy.goToItemInCard(itemToEdit.id);
+
+    cy.get(`.${EDIT_ITEM_BUTTON_CLASS}`).click();
+    cy.get(`#${ITEM_FORM_NAME_INPUT_ID}`).should('have.value', itemToEdit.name);
+    cy.get(`#${FOLDER_FORM_DESCRIPTION_ID} p`).should(
+      'contain',
+      itemToEdit.description,
     );
   });
 });

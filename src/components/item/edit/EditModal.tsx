@@ -1,4 +1,4 @@
-import { ComponentType as CT, useState } from 'react';
+import { ComponentType as CT, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import {
@@ -56,6 +56,12 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
   // updated properties are separated from the original item
   // so only necessary properties are sent when editing
   const [updatedItem, setUpdatedItem] = useState<DiscriminatedItem>(item);
+
+  useEffect(() => {
+    if (item.id !== updatedItem.id) {
+      setUpdatedItem(item);
+    }
+  }, [item, updatedItem.id]);
 
   const ComponentType = ((): EditModalContentType => {
     switch (item.type) {
