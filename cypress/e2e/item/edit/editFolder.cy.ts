@@ -99,7 +99,7 @@ describe('Edit Folder', () => {
   });
 
   // moving from parent to child might not update info since the item folder component is the same
-  it.only('edit 2 folders should display the correct data', () => {
+  it('edit 2 folders should display the correct data', () => {
     const parentItem = PackedFolderItemFactory();
     const itemToEdit = PackedFolderItemFactory({
       parentItem,
