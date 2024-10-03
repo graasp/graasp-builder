@@ -5,7 +5,6 @@ import {
   ItemLoginSchemaStatus,
   ItemMembership,
 } from '@graasp/sdk';
-import { DEFAULT_TEXT_DISABLED_COLOR } from '@graasp/ui';
 
 import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
@@ -39,7 +38,7 @@ const GuestItemMembershipTableRow = ({
       <StyledTableRow data-cy={buildItemMembershipRowId(data.id)} key={data.id}>
         <TableCell>
           <Typography
-            sx={{ color: isDisabled ? DEFAULT_TEXT_DISABLED_COLOR : undefined }}
+            color={{ color: isDisabled ? 'text.disabled' : undefined }}
             noWrap
             fontWeight="bold"
           >
@@ -48,7 +47,7 @@ const GuestItemMembershipTableRow = ({
         </TableCell>
         <TableCell align="right">
           {isDisabled ? (
-            <Typography sx={{ color: DEFAULT_TEXT_DISABLED_COLOR }}>
+            <Typography color="text.disabled">
               {translateEnums(ItemLoginSchemaStatus.Disabled)}
             </Typography>
           ) : (

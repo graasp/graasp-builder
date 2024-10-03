@@ -1,6 +1,6 @@
 import { ItemTagType, PackedItem } from '@graasp/sdk';
 
-import { EyeIcon } from 'lucide-react';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
@@ -14,30 +14,34 @@ const HideSettingCheckbox = ({ item }: { item: PackedItem }): JSX.Element => {
   const { mutate: deleteItemTag } = mutations.useDeleteItemTag();
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const isDisabled = item.hidden && item.hidden?.item.id !== item.id;
+  const isDisabled = item.hidden && item.hidden.item.id !== item.id;
+
+  const onClick = (checked: boolean): void => {
+    if (!checked) {
+      postItemTag({ itemId: item.id, type: ItemTagType.Hidden });
+    } else {
+      deleteItemTag({
+        itemId: item.id,
+        type: ItemTagType.Hidden,
+      });
+    }
+  };
 
   return (
     <ItemSettingCheckBoxProperty
       id={SETTINGS_HIDE_ITEM_ID}
       disabled={isDisabled}
       title={translateBuilder(BUILDER.HIDE_ITEM_SETTING_TITLE)}
-      icon={<EyeIcon />}
-      checked={Boolean(item.hidden)}
-      onClick={(checked: boolean): void => {
-        if (checked) {
-          postItemTag({ itemId: item.id, type: ItemTagType.Hidden });
-        } else {
-          deleteItemTag({
-            itemId: item.id,
-            type: ItemTagType.Hidden,
-          });
-        }
-      }}
+      icon={item.hidden ? <EyeOffIcon /> : <EyeIcon />}
+      checked={Boolean(!item.hidden)}
+      onClick={onClick}
       valueText={(() => {
         if (isDisabled) {
           return translateBuilder(BUILDER.HIDE_ITEM_HIDDEN_PARENT_INFORMATION);
         }
-        return translateBuilder(BUILDER.HIDE_ITEM_SETTING_DESCRIPTION);
+        return item.hidden
+          ? translateBuilder(BUILDER.HIDE_ITEM_SETTING_DESCRIPTION_ENABLED)
+          : translateBuilder(BUILDER.HIDE_ITEM_SETTING_DESCRIPTION_DISABLED);
       })()}
     />
   );
