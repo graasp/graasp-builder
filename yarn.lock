@@ -1639,7 +1639,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#942-recycled-pagination":
   version: 3.26.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=06a7a368457c7a990ea1a2d53a0a8f0e1ea01a28"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=1764f820018958ce77152e8924bde3be673704cf"
   dependencies:
     "@tanstack/react-query": "npm:5.59.0"
     "@tanstack/react-query-devtools": "npm:5.59.0"
@@ -1649,7 +1649,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/050db33a3da837ea81f88a7dc477288acb1ef0fa4bee8c25f29674aec7315a1c1128a4cf8866542e26053aae89818a20170c794501f930f00204850437a4ad65
+  checksum: 10/eb166ad99f1de0e5577ced686e68cb4f933b280f6110c12f42c7ec5918963e2ce2b755a47a261b1f6275cf17d64dee949250c47437aa93b663a9711a5af41055
   languageName: node
   linkType: hard
 
