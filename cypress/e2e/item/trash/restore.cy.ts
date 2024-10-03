@@ -36,7 +36,6 @@ describe('Restore Items', () => {
     cy.wait('@restoreItems').then(({ request: { url } }) => {
       expect(url).to.contain(id);
     });
-    cy.wait('@getRecycledItems');
   });
 
   it('restore many items', () => {

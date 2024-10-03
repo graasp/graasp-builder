@@ -40,7 +40,6 @@ describe('Delete Items', () => {
     cy.wait('@deleteItems').then(({ request: { url } }) => {
       expect(url).to.contain(id);
     });
-    cy.wait('@getRecycledItems');
   });
 
   it('delete many items', () => {

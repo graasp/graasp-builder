@@ -69,7 +69,7 @@ const {
   buildGetItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
   buildPostItemTagRoute,
-  buildPatchMemberRoute,
+  buildPatchCurrentMemberRoute,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
   buildPostItemFlagRoute,
@@ -207,12 +207,11 @@ export const mockGetOwnRecycledItemData = (
 
       const page = parseInt(params.get('page') ?? '1', 10);
       const pageSize = parseInt(params.get('pageSize') ?? '10', 10);
-      const rawKeywords = params.get('keywords');
-      const keywords = Array.isArray(rawKeywords) ? rawKeywords : [rawKeywords];
 
-      const result = recycledItemData
-        .filter(({ item }) => keywords.some((k) => item.name.includes(k)))
-        .slice((page - 1) * pageSize, page * pageSize);
+      const result = recycledItemData.slice(
+        (page - 1) * pageSize,
+        page * pageSize,
+      );
 
       reply({
         data: result,
@@ -757,7 +756,7 @@ export const mockEditMember = (
   cy.intercept(
     {
       method: HttpMethod.Patch,
-      url: new RegExp(`${API_HOST}/${buildPatchMemberRoute(ID_FORMAT)}`),
+      url: new RegExp(`${API_HOST}/${buildPatchCurrentMemberRoute()}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {

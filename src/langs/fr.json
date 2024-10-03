@@ -495,5 +495,7 @@
   "REQUEST_ACCESS_TITLE": "Demander l'accès à cet élément",
   "REQUEST_ACCESS_BUTTON": "Demander l'accès",
   "REQUEST_ACCESS_SENT_BUTTON": "Demande envoyée",
-  "ACCESS_MANAGEMENT_TITLE": "Gestion des accès"
+  "ACCESS_MANAGEMENT_TITLE": "Gestion des accès",
+  "TRASH_COUNT_one": "Il y a un élément dans la poubelle.",
+  "TRASH_COUNT_other": "Il y a {{count}} éléments dans la poubelle."
 }
