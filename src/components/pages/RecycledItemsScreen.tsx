@@ -1,6 +1,8 @@
-import { Alert, Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
-import { Ordering } from '@/enums';
+import { Button } from '@graasp/ui';
+
+import { ITEM_PAGE_SIZE } from '@/config/constants';
 
 import { useBuilderTranslation } from '../../config/i18n';
 import { hooks } from '../../config/queryClient';
@@ -12,10 +14,6 @@ import { BUILDER } from '../../langs/constants';
 import DeleteButton from '../common/DeleteButton';
 import ErrorAlert from '../common/ErrorAlert';
 import RestoreButton from '../common/RestoreButton';
-import SelectTypes from '../common/SelectTypes';
-import { useFilterItemsContext } from '../context/FilterItemsContext';
-import { useItemSearch } from '../item/ItemSearch';
-import ModeButton from '../item/header/ModeButton';
 import LoadingScreen from '../layout/LoadingScreen';
 import {
   SelectionContextProvider,
@@ -26,86 +24,63 @@ import {
   useDragSelection,
 } from '../main/list/useDragSelection';
 import ItemCard from '../table/ItemCard';
-import SortingSelect from '../table/SortingSelect';
-import { SortingOptions } from '../table/types';
-import { useSorting, useTranslatedSortingOptions } from '../table/useSorting';
 import PageWrapper from './PageWrapper';
 import RecycleBinToolbar from './recycleBin/RecycleBinSelectionToolbar';
 
 const CONTAINER_ID = 'recycle-items-container';
 
-const RecycledItemsScreenContent = ({
-  searchText,
-}: {
-  searchText: string;
-}): JSX.Element => {
+const RecycledItemsScreenContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: recycledItems, isLoading, isError } = hooks.useRecycledItems();
-  const options = useTranslatedSortingOptions();
-  const { shouldDisplayItem } = useFilterItemsContext();
-  const { sortBy, setSortBy, ordering, setOrdering, sortFn } =
-    useSorting<SortingOptions>({
-      sortBy: SortingOptions.ItemUpdatedAt,
-      ordering: Ordering.DESC,
-    });
-  const filteredData = recycledItems
-    ?.filter(
-      (d) =>
-        shouldDisplayItem(d.type) &&
-        d.name.toLowerCase().includes(searchText.toLocaleLowerCase()),
-    )
-    ?.sort(sortFn);
+
+  const { data, fetchNextPage, isLoading, isFetching } =
+    hooks.useInfiniteOwnRecycledItemData(
+      // todo: adapt page size given the user window height
+      { pageSize: ITEM_PAGE_SIZE },
+    );
+
   const { selectedIds, toggleSelection } = useSelectionContext();
 
   const DragSelection = useDragSelection({ containerId: CONTAINER_ID });
 
   // render this when there is data from the query
-  if (recycledItems?.length) {
-    const hasSelection = selectedIds.length && filteredData?.length;
-    return (
-      <>
-        <Stack gap={1} height="100%">
-          <Stack
-            alignItems="space-between"
-            direction="column"
-            gap={1}
-            width="100%"
-          >
-            {hasSelection ? (
-              <RecycleBinToolbar items={filteredData} />
-            ) : (
-              <Stack
-                spacing={1}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <SelectTypes />
-                <Stack direction="row" gap={1}>
-                  {sortBy && setSortBy && (
-                    <SortingSelect
-                      sortBy={sortBy}
-                      options={options}
-                      setSortBy={setSortBy}
-                      ordering={ordering}
-                      setOrdering={setOrdering}
-                    />
-                  )}
-                  <ModeButton />
-                </Stack>
-              </Stack>
-            )}
-          </Stack>
-          <DragContainerStack id={CONTAINER_ID}>
-            {
-              // render the filtered data and when it is empty display that nothing matches the search
-              filteredData?.length ? (
-                filteredData.map((item) => (
+  if (data?.pages?.length) {
+    if (data.pages[0].data.length) {
+      const filteredData = data.pages
+        .map((p) => p.data)
+        ?.flat()
+        ?.map((p) => p.item);
+
+      const totalFetchedItems = data
+        ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
+        : 0;
+
+      const hasSelection = Boolean(selectedIds.length && filteredData?.length);
+      return (
+        <>
+          <Stack gap={1} height="100%">
+            <Stack
+              alignItems="space-between"
+              direction="column"
+              gap={1}
+              width="100%"
+            >
+              {hasSelection ? (
+                <RecycleBinToolbar items={filteredData} />
+              ) : (
+                <Typography variant="body1">
+                  {translateBuilder(BUILDER.TRASH_COUNT, {
+                    count: data.pages[0].totalCount,
+                  })}
+                </Typography>
+              )}
+            </Stack>
+            <DragContainerStack id={CONTAINER_ID}>
+              {filteredData.map((item) => (
+                <Stack mb={1}>
                   <ItemCard
                     item={item}
                     onThumbnailClick={() => toggleSelection(item.id)}
                     isSelected={selectedIds.includes(item.id)}
-                    showThumbnail={false}
                     allowNavigation={false}
                     footer={
                       <Stack justifyContent="right" direction="row">
@@ -114,56 +89,44 @@ const RecycledItemsScreenContent = ({
                       </Stack>
                     }
                   />
-                ))
-              ) : (
-                <Alert severity="info">
-                  {translateBuilder(BUILDER.TRASH_NO_ITEM_SEARCH, {
-                    search: searchText,
-                  })}
-                </Alert>
-              )
-            }
-          </DragContainerStack>
-        </Stack>
-        {DragSelection}
-      </>
-    );
+                </Stack>
+              ))}
+              {!isFetching && data.pages[0].totalCount > totalFetchedItems && (
+                <Stack textAlign="center" alignItems="center">
+                  <Button
+                    variant="outlined"
+                    onClick={fetchNextPage}
+                    role="feed"
+                  >
+                    {translateBuilder(BUILDER.HOME_SCREEN_LOAD_MORE_BUTTON)}
+                  </Button>
+                </Stack>
+              )}
+            </DragContainerStack>
+          </Stack>
+          {DragSelection}
+        </>
+      );
+    }
   }
 
   if (isLoading) {
     return <LoadingScreen />;
   }
 
-  if (isError) {
-    return <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
-  }
-
-  return (
-    <Alert severity="info">{translateBuilder(BUILDER.TRASH_NO_ITEM)}</Alert>
-  );
+  return <ErrorAlert id={RECYCLED_ITEMS_ERROR_ALERT_ID} />;
 };
 
 const RecycledItemsScreen = (): JSX.Element | null => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const itemSearch = useItemSearch();
 
   return (
     <PageWrapper
       title={translateBuilder(BUILDER.RECYCLE_BIN_TITLE)}
       id={RECYCLED_ITEMS_ROOT_CONTAINER}
-      options={
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="flex-end"
-          spacing={1}
-        >
-          {itemSearch.input}
-        </Stack>
-      }
     >
       <SelectionContextProvider>
-        <RecycledItemsScreenContent searchText={itemSearch.text} />
+        <RecycledItemsScreenContent />
       </SelectionContextProvider>
     </PageWrapper>
   );

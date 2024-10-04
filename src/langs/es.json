@@ -451,7 +451,6 @@
   "item.name": "Nombre",
   "order": "Orden",
   "TRASH_NO_ITEM": "Tu basura está vacía.",
-  "TRASH_NO_ITEM_SEARCH": "No hay elementos descartados para {{search}}",
   "BOOKMARKS_NO_ITEM": "Ningún elemento marcado",
   "BOOKMARKS_NO_ITEM_SEARCH": "No hay ningún elemento marcado como favorito para {{search}}",
   "UPLOAD_BETWEEN_FILES": "Sube tu(s) archivo(s) aquí",

@@ -451,7 +451,6 @@
   "item.name": "اسم",
   "order": "طلب",
   "TRASH_NO_ITEM": "سلة المهملات فارغة.",
-  "TRASH_NO_ITEM_SEARCH": "لا يوجد عنصر محذوف لـ {{search}}",
   "BOOKMARKS_NO_ITEM": "لا يوجد عنصر مُضاف إلى الإشارات المرجعية",
   "BOOKMARKS_NO_ITEM_SEARCH": "لا يوجد عنصر مُضاف إلى قائمة الإشارات المرجعية لـ {{search}}",
   "UPLOAD_BETWEEN_FILES": "قم بتحميل ملفاتك هنا",

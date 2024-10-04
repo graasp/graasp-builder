@@ -451,7 +451,6 @@
   "item.name": "Nome",
   "order": "Ordine",
   "TRASH_NO_ITEM": "Il tuo cestino è vuoto.",
-  "TRASH_NO_ITEM_SEARCH": "Nessun elemento nel cestino per {{search}}",
   "BOOKMARKS_NO_ITEM": "Nessun elemento aggiunto ai segnalibri",
   "BOOKMARKS_NO_ITEM_SEARCH": "Nessun elemento aggiunto ai segnalibri per {{search}}",
   "UPLOAD_BETWEEN_FILES": "Carica i tuoi file qui",

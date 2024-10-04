@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 
-import { PackedItem } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import { useBuilderTranslation } from '../../config/i18n';
@@ -21,7 +21,7 @@ const descriptionId = 'alert-dialog-description';
 type Props = {
   open?: boolean;
   handleClose: () => void;
-  items: PackedItem[];
+  items: DiscriminatedItem[];
   onConfirm?: () => void;
 };
 

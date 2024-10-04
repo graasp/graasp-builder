@@ -2,8 +2,8 @@ import { Box, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
 import {
+  DiscriminatedItem,
   ItemType,
-  PackedItem,
   formatDate,
   getLinkThumbnailUrl,
 } from '@graasp/sdk';
@@ -15,9 +15,8 @@ import { buildItemPath } from '@/config/paths';
 import { ITEM_CARD_CLASS, buildItemCard } from '@/config/selectors';
 
 type Props = {
-  item: PackedItem;
+  item: DiscriminatedItem;
   dense?: boolean;
-  showThumbnail?: boolean;
   footer: JSX.Element;
   isOver?: boolean;
   isDragging?: boolean;
@@ -26,6 +25,7 @@ type Props = {
   isSelected?: boolean;
   allowNavigation?: boolean;
   onThumbnailClick?: () => void;
+  thumbnailUrl?: string;
 };
 
 const ItemCard = ({
@@ -35,15 +35,13 @@ const ItemCard = ({
   isDragging = false,
   isOver = false,
   isSelected = false,
-  showThumbnail = true,
   disabled,
   menu,
   allowNavigation = true,
+  thumbnailUrl,
   onThumbnailClick,
 }: Props): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
-
-  const thumbnailUrl = showThumbnail ? item.thumbnails?.medium : undefined;
 
   const dateColumnFormatter = (value: string) =>
     formatDate(value, {
