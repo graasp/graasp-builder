@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { ItemType, PackedItem } from '@graasp/sdk';
 import { ActionButton, PinButton } from '@graasp/ui';
 
 import { BarChart3, MessageSquareOff, MessageSquareText } from 'lucide-react';
@@ -21,6 +21,7 @@ import {
 import { BUILDER } from '@/langs/constants';
 
 import DescriptionPlacementForm from '../form/DescriptionPlacementForm';
+import HideSettingCheckbox from '../sharing/HideSettingCheckbox';
 import ItemSettingCheckBoxProperty from './ItemSettingCheckBoxProperty';
 import LinkSettings from './LinkSettings';
 import FileAlignmentSetting from './file/FileAlignmentSetting';
@@ -28,10 +29,10 @@ import FileMaxWidthSetting from './file/FileMaxWidthSetting';
 import { SettingVariant } from './settingTypes';
 
 type Props = {
-  item: DiscriminatedItem;
+  item: PackedItem;
 };
 
-type ItemSetting = DiscriminatedItem['settings'];
+type ItemSetting = PackedItem['settings'];
 
 const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
@@ -141,6 +142,8 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
             : translateBuilder(BUILDER.ITEM_SETTINGS_IS_PINNED_DISABLED_TEXT)
         }
       />
+
+      <HideSettingCheckbox item={item} />
 
       <ItemSettingCheckBoxProperty
         id={SETTINGS_CHATBOX_TOGGLE_ID}

@@ -173,6 +173,7 @@ export const SETTINGS_CHATBOX_TOGGLE_ID = 'settingsChatboxToggle';
 export const SETTINGS_COLLAPSE_TOGGLE_ID = 'settingsCollapseToggle';
 export const SETTINGS_RESIZE_TOGGLE_ID = 'settingsResizeToggle';
 export const SETTINGS_SAVE_ACTIONS_TOGGLE_ID = 'settingsSaveActionsToggle';
+export const SETTINGS_HIDE_ITEM_ID = 'settingsHideItem';
 
 export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
   'itemsTableRestoreSelectedItems';
@@ -448,3 +449,4 @@ export const MEMBERSHIP_REQUEST_ACCEPT_BUTTON_SELECTOR =
 export const MEMBERSHIP_REQUEST_REJECT_BUTTON_SELECTOR =
   'membershipRequestRejectButton';
 export const ENROLL_BUTTON_SELECTOR = 'enrollButton';
+export const VISIBILITY_HIDDEN_ALERT_ID = 'visibilityHiddenAlert';

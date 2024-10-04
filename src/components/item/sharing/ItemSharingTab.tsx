@@ -1,14 +1,23 @@
 import { useOutletContext } from 'react-router-dom';
 
-import { Box, Container, Divider, Stack, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Container,
+  Divider,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 import { AccountType } from '@graasp/sdk';
 
 import { OutletType } from '@/components/pages/item/type';
+import { VISIBILITY_HIDDEN_ALERT_ID } from '@/config/selectors';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
+import HideSettingCheckbox from './HideSettingCheckbox';
 import VisibilitySelect from './VisibilitySelect';
 import MembershipTabs from './membershipTable/MembershipTabs';
 import ShortLinksRenderer from './shortLink/ShortLinksRenderer';
@@ -39,7 +48,22 @@ const ItemSharingTab = (): JSX.Element => {
               <Typography variant="h6">
                 {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
               </Typography>
-              <VisibilitySelect item={item} edit={canAdmin} />
+              {item.hidden ? (
+                <Alert
+                  id={VISIBILITY_HIDDEN_ALERT_ID}
+                  sx={{ my: 1 }}
+                  severity="info"
+                >
+                  {translateBuilder(
+                    BUILDER.ITEM_SETTINGS_VISIBILITY_HIDDEN_INFORMATION,
+                  )}
+                </Alert>
+              ) : (
+                <Box mb={2}>
+                  <VisibilitySelect item={item} edit={canAdmin} />
+                </Box>
+              )}
+              <HideSettingCheckbox item={item} />
             </Box>
             <Divider />
           </>

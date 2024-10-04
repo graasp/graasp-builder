@@ -155,11 +155,16 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
   );
 
   if (children) {
-    const sortedChildren = children.sort(sortFn);
+    const sortedChildren = children.toSorted(sortFn);
 
     return (
       <>
-        <Stack direction="row" justifyContent="space-between" spacing={1}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          spacing={1}
+          mb={2}
+        >
           <Typography
             variant="h2"
             component="h1"

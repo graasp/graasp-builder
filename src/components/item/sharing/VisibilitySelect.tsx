@@ -23,7 +23,6 @@ const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {
 
   const {
     visibility,
-    isError,
     isDisabled,
     itemLoginSchema,
     isLoading,
@@ -44,12 +43,6 @@ const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {
 
   if (isLoading) {
     return <Loader />;
-  }
-
-  // hide visibility select if cannot access item tags
-  // this happens when accessing a public item
-  if (isError) {
-    return null;
   }
 
   const renderVisiblityIndication = () => {
