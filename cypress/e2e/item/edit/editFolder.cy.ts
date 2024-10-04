@@ -98,7 +98,7 @@ describe('Edit Folder', () => {
     );
   });
 
-  // moving from parent to child might not update info since the item folder component is the same
+  // navigating from parent to child might not update info since the item folder component is the same
   it('edit 2 folders should display the correct data', () => {
     const parentItem = PackedFolderItemFactory();
     const itemToEdit = PackedFolderItemFactory({
@@ -106,7 +106,8 @@ describe('Edit Folder', () => {
       description: 'first description',
     });
     cy.setUpApi({ items: [parentItem, itemToEdit] });
-    // go to children item
+
+    // go to parent item
     cy.visit(buildItemPath(parentItem.id));
 
     // open edit

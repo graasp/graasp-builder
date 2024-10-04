@@ -1012,6 +1012,7 @@ export const mockGetItemLoginSchemaType = (items: ItemForTest[]): void => {
       const itemId = url.slice(API_HOST.length).split('/')[2];
       const item = items.find(({ id }) => itemId === id);
 
+      // if no item login schema is defined, the backend returns null
       return reply({
         body: item?.itemLoginSchema?.type ?? null,
         statusCode: StatusCodes.OK,
