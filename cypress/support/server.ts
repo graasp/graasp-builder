@@ -358,7 +358,10 @@ export const mockGetItem = (
       }
 
       if (!checkMembership({ item, currentMember })) {
-        return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
+        if (!currentMember) {
+          return reply({ statusCode: StatusCodes.UNAUTHORIZED, body: null });
+        }
+        return reply({ statusCode: StatusCodes.FORBIDDEN, body: null });
       }
 
       return reply({
