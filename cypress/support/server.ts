@@ -69,7 +69,7 @@ const {
   buildGetItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
   buildPostItemTagRoute,
-  buildPatchMemberRoute,
+  buildPatchCurrentMemberRoute,
   SHARED_ITEM_WITH_ROUTE,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
@@ -763,7 +763,7 @@ export const mockEditMember = (
   cy.intercept(
     {
       method: HttpMethod.Patch,
-      url: new RegExp(`${API_HOST}/${buildPatchMemberRoute(ID_FORMAT)}`),
+      url: new RegExp(`${API_HOST}/${buildPatchCurrentMemberRoute()}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {
