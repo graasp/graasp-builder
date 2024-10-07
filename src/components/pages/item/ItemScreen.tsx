@@ -7,7 +7,6 @@ import { OutletType } from './type';
 
 const ItemPage = (): JSX.Element => {
   const { item } = useOutletContext<OutletType>();
-
   return (
     <ItemMain item={item}>
       <ItemContent />

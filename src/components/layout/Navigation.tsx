@@ -31,14 +31,11 @@ const Navigator = (): JSX.Element | null => {
   const { pathname } = useLocation();
   const { data: currentMember } = useCurrentMember();
   const { data: item, isLoading: isItemLoading } = useItem(itemId);
-  const itemPath = item?.path;
 
   const { pathname: location } = useLocation();
 
   const { data: parents, isLoading: areParentsLoading } = useParents({
     id: itemId,
-    path: itemPath,
-    enabled: !!itemPath,
   });
 
   if (isItemLoading || areParentsLoading) {
