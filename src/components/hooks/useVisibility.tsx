@@ -23,7 +23,6 @@ const {
 
 type UseVisibility = {
   isLoading: boolean;
-  isError: boolean;
   isDisabled: boolean;
   itemPublishEntry: ItemPublished | null | undefined;
   itemLoginSchema: ItemLoginSchema | undefined;
@@ -52,26 +51,26 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
   // is disabled
   const [isDisabled, setIsDisabled] = useState(false);
   useEffect(() => {
-    // disable setting if any visiblity is set on any parent items
-    setIsDisabled(
-      Boolean(
-        (itemLoginSchema && itemLoginSchema?.item?.path !== item?.path) ||
-          (item?.public && item?.public?.item?.path !== item?.path),
-      ),
-    );
+    // disable setting if item login schema is enabled and is not defined on the current item
+    const shouldItemLoginBeDisabled =
+      itemLoginSchema &&
+      itemLoginSchema?.status !== ItemLoginSchemaStatus.Disabled &&
+      itemLoginSchema?.item?.path !== item?.path;
+
+    // disable setting if item is public and is not defined on the current item
+    const shouldPublicBeDisabled =
+      item?.public && item?.public?.item?.path !== item?.path;
+
+    setIsDisabled(Boolean(shouldItemLoginBeDisabled || shouldPublicBeDisabled));
   }, [itemLoginSchema, item]);
 
   // is loading
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    setIsLoading(isItemPublishEntryLoading || isItemLoginLoading);
-  }, [isItemPublishEntryLoading, isItemLoginLoading]);
-
-  // is error
-  const [isError] = useState(false);
+  const isLoading = isItemPublishEntryLoading || isItemLoginLoading;
 
   // visibility
-  const [visibility, setVisibility] = useState<string>();
+  const [visibility, setVisibility] = useState<string>(
+    SETTINGS.ITEM_PRIVATE.name,
+  );
   useEffect(() => {
     switch (true) {
       case Boolean(item.public): {
@@ -140,21 +139,20 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       }
     },
     [
-      deleteItemTag,
-      item.id,
-      itemLoginSchema,
       itemPublishEntry,
-      postItemTag,
       item.public,
-      putItemLoginSchema,
+      item.id,
       unpublish,
+      deleteItemTag,
+      itemLoginSchema,
+      putItemLoginSchema,
+      postItemTag,
     ],
   );
 
   return useMemo(
     () => ({
       isLoading,
-      isError,
       isDisabled,
       itemPublishEntry,
       itemLoginSchema,
@@ -164,7 +162,6 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
     }),
     [
       isLoading,
-      isError,
       isDisabled,
       itemPublishEntry,
       itemLoginSchema,

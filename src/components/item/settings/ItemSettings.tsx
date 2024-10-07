@@ -18,14 +18,14 @@ const ItemSettings = (): JSX.Element => {
 
   return (
     <Container disableGutters sx={{ mt: 2, mb: 4 }}>
-      <Stack gap={2}>
+      <Stack gap={4}>
         <ThumbnailSetting item={item} />
         <ItemMetadataContent />
         <CustomizedTagsSettings item={item} />
-        <GeolocationPicker item={item} />
         <ItemSettingsProperties item={item} />
         <AdminChatSettings item={item} />
         <ItemLicenseSettings />
+        <GeolocationPicker item={item} />
       </Stack>
     </Container>
   );

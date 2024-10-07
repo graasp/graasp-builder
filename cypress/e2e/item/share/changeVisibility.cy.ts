@@ -13,6 +13,7 @@ import {
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
   SHARE_ITEM_VISIBILITY_SELECT_ID,
   UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON,
+  VISIBILITY_HIDDEN_ALERT_ID,
   buildDataCyWrapper,
   buildShareButtonId,
 } from '../../../../src/config/selectors';
@@ -136,6 +137,24 @@ describe('Visibility of an Item', () => {
       expect(url).to.include(item.id);
       expect(body.status).to.eq(ItemLoginSchemaStatus.Disabled);
     });
+  });
+
+  it('Show hidden alert', () => {
+    const item = PackedFolderItemFactory({}, { hiddenTag: {} });
+    const ITEM_LOGIN_ITEM = {
+      ...item,
+      itemLoginSchema: {
+        item,
+        type: ItemLoginSchemaType.Username,
+        id: 'efaf3d5a-5688-11eb-ae93-0242ac130002',
+        createdAt: '2021-08-11T12:56:36.834Z',
+        updatedAt: '2021-08-11T12:56:36.834Z',
+      },
+    };
+    cy.setUpApi({ items: [ITEM_LOGIN_ITEM] });
+    cy.visit(buildItemPath(item.id));
+    cy.get(`#${buildShareButtonId(item.id)}`).click();
+    cy.get(`#${VISIBILITY_HIDDEN_ALERT_ID}`).should('be.visible');
   });
 
   describe('Change visibility of published item', () => {

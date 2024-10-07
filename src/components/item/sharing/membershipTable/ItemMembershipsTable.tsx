@@ -10,7 +10,12 @@ import {
   TableRow,
 } from '@mui/material';
 
-import { AccountType, PermissionLevel } from '@graasp/sdk';
+import {
+  AccountType,
+  ItemLoginSchemaStatus,
+  PermissionLevel,
+  PermissionLevelCompare,
+} from '@graasp/sdk';
 
 import groupby from 'lodash.groupby';
 
@@ -66,6 +71,11 @@ const ItemMembershipsTable = ({ showEmail = true }: Props): JSX.Element => {
   const { data: itemLoginSchema } = hooks.useItemLoginSchema({
     itemId: item.id,
   });
+  const { data: currentAccount } = hooks.useCurrentMember();
+
+  const itemLoginSchemaIsDisabled =
+    !itemLoginSchema ||
+    itemLoginSchema.status === ItemLoginSchemaStatus.Disabled;
 
   if (memberships) {
     // map memberships to corresponding row layout and meaningful data to sort
@@ -87,13 +97,21 @@ const ItemMembershipsTable = ({ showEmail = true }: Props): JSX.Element => {
               // can downgrade for same item
               im.item.path === item.path
             }
+            isDisabled={
+              Boolean(item.hidden) &&
+              PermissionLevelCompare.lt(im.permission, PermissionLevel.Write)
+            }
           />
         ) : (
           <GuestItemMembershipTableRow
-            itemLoginSchema={itemLoginSchema}
             key={im.id}
             itemId={item.id}
             data={im}
+            isDisabled={
+              Boolean(item.hidden) ||
+              (currentAccount?.id !== im.account.id &&
+                itemLoginSchemaIsDisabled)
+            }
           />
         ),
     }));
