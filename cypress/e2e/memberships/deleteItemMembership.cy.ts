@@ -15,7 +15,6 @@ import {
 } from '../../../src/config/selectors';
 import { CURRENT_USER, MEMBERS } from '../../fixtures/members';
 import { ITEMS_WITH_MEMBERSHIPS } from '../../fixtures/memberships';
-import { TABLE_MEMBERSHIP_RENDER_TIME } from '../../support/constants';
 import { ItemForTest } from '../../support/types';
 
 const deleteItemMembership = ({
@@ -26,7 +25,6 @@ const deleteItemMembership = ({
   itemId: string;
 }) => {
   cy.get(`#${buildShareButtonId(itemId)}`).click();
-  cy.wait(TABLE_MEMBERSHIP_RENDER_TIME);
   cy.get(`#${buildItemMembershipRowDeleteButtonId(id)}`).click();
   cy.get(`#${CONFIRM_MEMBERSHIP_DELETE_BUTTON_ID}`).click();
 };
