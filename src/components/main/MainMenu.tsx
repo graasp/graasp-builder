@@ -68,21 +68,21 @@ const MainMenu = (): JSX.Element | null => {
     member.type === AccountType.Individual ? (
       <>
         <MenuItem
-          dataUmami="sidebar-bookmarks"
+          dataUmamiEvent="sidebar-bookmarks"
           onClick={() => goTo(BOOKMARKED_ITEMS_PATH)}
           selected={pathname === BOOKMARKED_ITEMS_PATH}
           text={t(BUILDER.BOOKMARKED_ITEMS_TITLE)}
           icon={<BookmarkIcon />}
         />
         <MenuItem
-          dataUmami="sidebar-published"
+          dataUmamiEvent="sidebar-published"
           onClick={() => goTo(PUBLISHED_ITEMS_PATH)}
           selected={pathname === PUBLISHED_ITEMS_PATH}
           text={t(BUILDER.NAVIGATION_PUBLISHED_ITEMS_TITLE)}
           icon={<LibraryBigIcon />}
         />
         <MenuItem
-          dataUmami="sidebar-trash"
+          dataUmamiEvent="sidebar-trash"
           onClick={() => goTo(RECYCLE_BIN_PATH)}
           selected={pathname === RECYCLE_BIN_PATH}
           text={t(BUILDER.RECYCLE_BIN_TITLE)}
@@ -96,7 +96,7 @@ const MainMenu = (): JSX.Element | null => {
       <Stack direction="column" height="100%" justifyContent="space-between">
         <Box>
           <MenuItem
-            dataUmami="sidebar-home"
+            dataUmamiEvent="sidebar-home"
             onClick={() => goTo(HOME_PATH)}
             selected={pathname === HOME_PATH}
             icon={<HomeIcon />}

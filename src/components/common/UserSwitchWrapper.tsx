@@ -49,7 +49,7 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
       seeProfileButtonId={HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID}
       buildMemberMenuItemId={buildMemberMenuItemId}
       avatar={<MemberAvatar id={member?.id} />}
-      dataUmami="header-avatar"
+      dataUmamiEvent="header-avatar"
     />
   );
 };
