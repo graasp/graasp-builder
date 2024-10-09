@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.42.0](https://github.com/graasp/graasp-builder/compare/v2.41.0...v2.42.0) (2024-10-07)
+
+
+### Features
+
+* **deps:** update TanStack Query to v5 ([#1446](https://github.com/graasp/graasp-builder/issues/1446)) ([dfd7197](https://github.com/graasp/graasp-builder/commit/dfd71972ef089d5f96b86ca541563a8bac3024f4))
+* show hidden setting in visibility section ([#1488](https://github.com/graasp/graasp-builder/issues/1488)) ([0e1bed2](https://github.com/graasp/graasp-builder/commit/0e1bed2f7eefc3a03720468e90439685c2a772b7))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/translations to v1.39.0 ([#1467](https://github.com/graasp/graasp-builder/issues/1467)) ([67e7cdf](https://github.com/graasp/graasp-builder/commit/67e7cdfa4a77b67fcfc5a141ac8754ede44efea0))
+* **deps:** update dependency lucide-react to v0.446.0 ([#1469](https://github.com/graasp/graasp-builder/issues/1469)) ([f6e9ef1](https://github.com/graasp/graasp-builder/commit/f6e9ef121caf55012b06b3d003e475091d838817))
+* **deps:** update dependency lucide-react to v0.447.0 ([#1492](https://github.com/graasp/graasp-builder/issues/1492)) ([e5d549c](https://github.com/graasp/graasp-builder/commit/e5d549c9d6136b91f61e8c10a57546b8b22381ff))
+* **deps:** update mui (non-major) ([#1379](https://github.com/graasp/graasp-builder/issues/1379)) ([77206ea](https://github.com/graasp/graasp-builder/commit/77206eae00219fe9d6a9b83593b606f8eb6e0be4))
+* fix edit modal content and navigation ([#1499](https://github.com/graasp/graasp-builder/issues/1499)) ([13a053c](https://github.com/graasp/graasp-builder/commit/13a053cf41a63121c5434218028ca02cf46d6daa))
+* **german:** update flagging feature text ([#1484](https://github.com/graasp/graasp-builder/issues/1484)) ([d999fc7](https://github.com/graasp/graasp-builder/commit/d999fc7813e8523ba6c1973731fb3bfe4d3e4efd))
+* remove usage of `false` in component return ([#1487](https://github.com/graasp/graasp-builder/issues/1487)) ([9def0fb](https://github.com/graasp/graasp-builder/commit/9def0fb2edf176acb9358b2d07473895e01a04c8))
+
 ## [2.41.0](https://github.com/graasp/graasp-builder/compare/v2.40.0...v2.41.0) (2024-09-27)
 
 
