@@ -24,7 +24,7 @@
     "@graasp/sdk": "4.31.0",
     "@graasp/stylis-plugin-rtl": "2.2.0",
     "@graasp/translations": "1.39.0",
-    "@graasp/ui": "github:graasp/graasp-ui#forbidden-request-access",
+    "@graasp/ui": "5.2.2",
     "@mui/icons-material": "5.16.7",
     "@mui/lab": "5.0.0-alpha.173",
     "@mui/material": "5.16.7",

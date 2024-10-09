@@ -11,10 +11,10 @@ describe('Item does not exist', () => {
     cy.setUpApi();
     cy.visit(buildItemPath(v4()));
 
-    // no add button
+    // show forbidden message
     cy.get(`#${ITEM_LOGIN_SCREEN_FORBIDDEN_ID}`).should('be.visible');
 
-    // menu item only contains flag
+    // do not show request membership button
     cy.get(`#${REQUEST_MEMBERSHIP_BUTTON_ID}`).should('not.exist');
   });
 });

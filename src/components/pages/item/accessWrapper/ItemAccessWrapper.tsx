@@ -45,13 +45,12 @@ const ItemAccessWrapper = (): JSX.Element => {
   if (!itemId) {
     return <Redirect />;
   }
-
+  const errorStatusCode =
+    (axios.isAxiosError(itemError) && itemError.status) || null;
   return (
     <ItemLoginWrapper
       item={item}
-      itemErrorStatusCode={
-        (axios.isAxiosError(itemError) && itemError.status) || null
-      }
+      itemErrorStatusCode={errorStatusCode}
       currentAccount={currentMember}
       enrollContent={<EnrollContent itemId={itemId} />}
       signInButtonId={ITEM_LOGIN_SIGN_IN_BUTTON_ID}
