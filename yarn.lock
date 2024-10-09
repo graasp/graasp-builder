@@ -1637,19 +1637,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.26.0":
-  version: 3.26.0
-  resolution: "@graasp/query-client@npm:3.26.0"
+"@graasp/query-client@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@graasp/query-client@npm:4.0.1"
   dependencies:
-    "@tanstack/react-query": "npm:5.52.0"
-    "@tanstack/react-query-devtools": "npm:5.52.0"
+    "@tanstack/react-query": "npm:5.59.0"
+    "@tanstack/react-query-devtools": "npm:5.59.0"
     axios: "npm:1.7.7"
     http-status-codes: "npm:2.3.0"
   peerDependencies:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/80e18fdfaa2ac9e34d3c3893d0fb476c6a05004c5b0ee3a4a0dbdfb5736a1aa3a4213ca7a4c50a372faf514c0331a62196c421be21aabdb5061e4d21bc2058a4
+  checksum: 10/e4d828dee829fa8150f12bc53e1b37cc6d21b4f3c6e71c38523c8f920fff76bc95333ff76c666707e33c4e8fba49f39bc768fbec46049b624d1896c2b3f42e56
   languageName: node
   linkType: hard
 
@@ -2560,40 +2560,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.52.0":
-  version: 5.52.0
-  resolution: "@tanstack/query-core@npm:5.52.0"
-  checksum: 10/cd21e87ad7a0bbb262dea21704352eb1bbaafc26776ae1602b4be9a2d0d1f16a89cc4b5951f69083e26f970d75386431240d5a573ed9bce5a37ba2dc862e376a
+"@tanstack/query-core@npm:5.59.0":
+  version: 5.59.0
+  resolution: "@tanstack/query-core@npm:5.59.0"
+  checksum: 10/2e8fd7d9bdd62cabc1a2b20b2cf0c9275174ee5550170f224bd4e30fe2d01cc8d39a0dd03caae55ddb8aea259d991966bb54b581b4046fd67c621c081f4b0ba7
   languageName: node
   linkType: hard
 
-"@tanstack/query-devtools@npm:5.51.16":
-  version: 5.51.16
-  resolution: "@tanstack/query-devtools@npm:5.51.16"
-  checksum: 10/b0e8c1f86890a515d4ddbab4743387aecd882271f7be2cbc36f69d05ba42b803ae2e9bbfd53a03450ca4827c94f6b5d7d6fa5e013bfabe6ee0aa9a7b34a223d3
+"@tanstack/query-devtools@npm:5.58.0":
+  version: 5.58.0
+  resolution: "@tanstack/query-devtools@npm:5.58.0"
+  checksum: 10/ca16c47c943ea392dfddc301f7e09ecdb0c8b905fb684b8f26b908a244e2e897679efb0ead5fa8e728711017341fdd91d8c51ebb19f746819e26ade5549f539e
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-devtools@npm:5.52.0":
-  version: 5.52.0
-  resolution: "@tanstack/react-query-devtools@npm:5.52.0"
+"@tanstack/react-query-devtools@npm:5.59.0":
+  version: 5.59.0
+  resolution: "@tanstack/react-query-devtools@npm:5.59.0"
   dependencies:
-    "@tanstack/query-devtools": "npm:5.51.16"
+    "@tanstack/query-devtools": "npm:5.58.0"
   peerDependencies:
-    "@tanstack/react-query": ^5.52.0
+    "@tanstack/react-query": ^5.59.0
     react: ^18 || ^19
-  checksum: 10/67fff9fe45a54e6823800bd15de5d5712b65bda9bb567907765481025775817b03c56925add47dd51fe19de1135b57b290570e5cb00b5a071ca3f7d409c39805
+  checksum: 10/a4deb3fe97355fcb98febd3b9cd5e871f3756771eb9eb15a2a226a0a9fb0314502522f70d12f54c25aec7985eae77b82b39bce37f86ee0312da046f4f1822bcf
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:5.52.0":
-  version: 5.52.0
-  resolution: "@tanstack/react-query@npm:5.52.0"
+"@tanstack/react-query@npm:5.59.0":
+  version: 5.59.0
+  resolution: "@tanstack/react-query@npm:5.59.0"
   dependencies:
-    "@tanstack/query-core": "npm:5.52.0"
+    "@tanstack/query-core": "npm:5.59.0"
   peerDependencies:
-    react: ^18.0.0
-  checksum: 10/6976d309d306f0dd70f25e0de820812c47bfc39b654294e1512d4bb5320d0abad1bc3d6de16a25b7ae6766eb9b928c5e396e996d7d6689d33a1c1436de68cf7b
+    react: ^18 || ^19
+  checksum: 10/48963e7d0603958390db0087c018b71e87187ad84dea03279716b4869de83509027c37f65f3c6c4a1cd7b6f9f14250afffc2aeee5d481528e2308d937422ae41
   languageName: node
   linkType: hard
 
@@ -6472,7 +6472,7 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.0"
     "@graasp/map": "npm:1.19.0"
-    "@graasp/query-client": "npm:3.26.0"
+    "@graasp/query-client": "npm:4.0.1"
     "@graasp/sdk": "npm:4.31.0"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
     "@graasp/translations": "npm:1.39.0"
