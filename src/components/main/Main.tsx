@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { Stack, styled, useTheme } from '@mui/material';
@@ -35,7 +36,7 @@ const StyledLink = styled(Link)(() => ({
   display: 'flex',
   alignItems: 'center',
 }));
-const LinkComponent = ({ children }: { children: JSX.Element }) => (
+const LinkComponent = ({ children }: { children: ReactNode }) => (
   <StyledLink to={HOME_PATH}>{children}</StyledLink>
 );
 

@@ -12,7 +12,7 @@ import { ForbiddenContent, ItemLoginWrapper } from '@graasp/ui';
 import Redirect from '@/components/main/Redirect';
 import EnrollContent from '@/components/pages/item/accessWrapper/EnrollContent';
 import RequestAccessContent from '@/components/pages/item/accessWrapper/RequestAccessContent';
-import { hooks, mutations } from '@/config/queryClient';
+import { axios, hooks, mutations } from '@/config/queryClient';
 import {
   ITEM_LOGIN_SCREEN_FORBIDDEN_ID,
   ITEM_LOGIN_SIGN_IN_BUTTON_ID,
@@ -22,7 +22,11 @@ import {
 
 const ItemAccessWrapper = (): JSX.Element => {
   const { itemId } = useParams();
-  const { data: item, isLoading: itemIsLoading } = hooks.useItem(itemId);
+  const {
+    data: item,
+    isLoading: itemIsLoading,
+    error: itemError,
+  } = hooks.useItem(itemId);
   const { data: currentMember, isLoading: currentMemberIsLoading } =
     hooks.useCurrentMember();
   const { data: itemLoginSchemaType, isLoading: itemLoginSchemaTypeIsLoading } =
@@ -41,10 +45,12 @@ const ItemAccessWrapper = (): JSX.Element => {
   if (!itemId) {
     return <Redirect />;
   }
-
+  const errorStatusCode =
+    (axios.isAxiosError(itemError) && itemError.status) || null;
   return (
     <ItemLoginWrapper
       item={item}
+      itemErrorStatusCode={errorStatusCode}
       currentAccount={currentMember}
       enrollContent={<EnrollContent itemId={itemId} />}
       signInButtonId={ITEM_LOGIN_SIGN_IN_BUTTON_ID}

@@ -79,7 +79,7 @@ describe('Public Items', () => {
       });
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
-        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);
+        expect(statusCode).to.equal(StatusCodes.FORBIDDEN);
       });
       cy.get(`#${REQUEST_MEMBERSHIP_BUTTON_ID}`).click();
       cy.wait('@requestMembership').then(({ request }) => {
@@ -95,7 +95,7 @@ describe('Public Items', () => {
       });
       cy.visit(buildItemPath(item.id));
       cy.wait('@getItem').then(({ response: { statusCode } }) => {
-        expect(statusCode).to.equal(StatusCodes.UNAUTHORIZED);
+        expect(statusCode).to.equal(StatusCodes.FORBIDDEN);
       });
       cy.get(`#${REQUEST_MEMBERSHIP_BUTTON_ID}`).click();
       cy.wait('@requestMembership').then(({ request }) => {

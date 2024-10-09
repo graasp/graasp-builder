@@ -98,19 +98,19 @@ const ItemMenuContent = ({ item }: Props): JSX.Element | null => {
     ) : (
       false
     ),
-    ...(member.type === AccountType.Individual
-      ? [
-          <CopyButton
-            key="copy"
-            type={ActionButton.MENU_ITEM}
-            onClick={() => {
-              openCopyModal();
-              closeMenu();
-            }}
-          />,
-          <DuplicateButton key="duplicate" item={item} />,
-        ]
-      : []),
+    member.type === AccountType.Individual ? (
+      <CopyButton
+        key="copy"
+        type={ActionButton.MENU_ITEM}
+        onClick={() => {
+          openCopyModal();
+          closeMenu();
+        }}
+      />
+    ) : (
+      false
+    ),
+    canWrite ? <DuplicateButton key="duplicate" item={item} /> : false,
     canAdmin ? (
       <MoveButton
         key="move"
