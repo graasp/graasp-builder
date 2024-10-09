@@ -27,7 +27,7 @@ import {
   buildItemPath,
 } from '../config/paths';
 import { hooks, mutations } from '../config/queryClient';
-import Main from './main/Main';
+import { Main } from './main/Main';
 import Redirect from './main/Redirect';
 import BookmarkedItemsScreen from './pages/BookmarkedItemsScreen';
 import MapItemsScreen from './pages/MapItemsScreen';

@@ -68,7 +68,12 @@ export const SelectTypes = (): JSX.Element => {
         multiple
         value={itemTypes}
         onChange={handleChange}
-        input={<OutlinedInput label={label} />}
+        input={
+          <OutlinedInput
+            label={label}
+            inputProps={{ 'data-umami-event': 'filter-item-type' }}
+          />
+        }
         renderValue={renderValues}
         MenuProps={MenuProps}
         sx={{

@@ -23,6 +23,9 @@ const ShowOnlyMeButton = ({
       sx={{ fontSize: '1rem', maxWidth: 'max-content' }}
       id={ACCESSIBLE_ITEMS_ONLY_ME_ID}
       label={translateBuilder(BUILDER.HOME_SHOW_ONLY_CREATED_BY_ME)}
+      // We need to have a button component so the onclick triggers an event in umami
+      component="button"
+      data-umami-event="filter-created-by-me"
     />
   );
 };

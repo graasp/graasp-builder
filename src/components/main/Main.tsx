@@ -37,7 +37,13 @@ const StyledLink = styled(Link)(() => ({
   alignItems: 'center',
 }));
 const LinkComponent = ({ children }: { children: ReactNode }) => (
-  <StyledLink to={HOME_PATH}>{children}</StyledLink>
+  <StyledLink
+    data-umami-event="header-home-link"
+    data-umami-event-context={Context.Builder}
+    to={HOME_PATH}
+  >
+    {children}
+  </StyledLink>
 );
 
 // small converter for HOST_MAP into a usePlatformNavigation mapper
@@ -47,9 +53,9 @@ export const platformsHostsMap = defaultHostsMapper({
   [Platform.Analytics]: HOST_MAP.analytics,
 });
 
-type Props = { children: JSX.Element | (JSX.Element & string) };
+type Props = { children: ReactNode };
 
-const Main = ({ children }: Props): JSX.Element => {
+export const Main = ({ children }: Props): JSX.Element => {
   const { t } = useBuilderTranslation();
   const theme = useTheme();
   const { isMobile } = useMobileView();

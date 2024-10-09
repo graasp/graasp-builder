@@ -45,6 +45,7 @@ const NewItemButton = ({
             background: theme.palette.primary.main,
             '&:hover': { background: 'grey' },
           }}
+          data-umami-event="new-item-icon-button"
         >
           <PlusIcon />
         </IconButton>
@@ -56,6 +57,7 @@ const NewItemButton = ({
           aria-label="add"
           startIcon={<PlusIcon />}
           size={size}
+          data-umami-event="new-item-button"
         >
           {translateBuilder(BUILDER.NEW_ITEM_BUTTON)}
         </Button>

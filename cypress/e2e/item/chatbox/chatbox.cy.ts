@@ -11,11 +11,11 @@ import {
 } from '../../../../src/config/selectors';
 import { ITEM_WITH_CHATBOX_MESSAGES } from '../../../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../../../fixtures/members';
-import { CHATBOX_LOADING_TIME } from '../../../support/constants';
+import { CHATBOX_TIMEOUT } from '../../../support/constants';
 
 const openChatbox = () => {
   cy.get(`#${ITEM_CHATBOX_BUTTON_ID}`).click();
-  cy.wait('@getItemChat', { timeout: CHATBOX_LOADING_TIME });
+  cy.wait('@getItemChat', { timeout: CHATBOX_TIMEOUT });
 };
 
 describe('Chatbox Scenarios', () => {

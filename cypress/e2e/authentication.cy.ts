@@ -2,15 +2,11 @@ import { CookieKeys, PackedFolderItemFactory } from '@graasp/sdk';
 
 import {
   HOME_PATH,
-  ITEMS_PATH,
   REDIRECT_PATH,
   buildItemPath,
 } from '../../src/config/paths';
 import { HEADER_APP_BAR_ID, ITEM_MAIN_CLASS } from '../../src/config/selectors';
-import {
-  REDIRECTION_TIME,
-  REQUEST_FAILURE_LOADING_TIME,
-} from '../support/constants';
+import { REQUEST_FAILURE_LOADING_TIME } from '../support/constants';
 import { SIGN_IN_PATH } from '../support/paths';
 
 describe('Authentication', () => {
@@ -46,29 +42,25 @@ describe('Authentication', () => {
       });
     });
 
-    describe('Redirect to URL in local storage', () => {
+    describe('Redirect to URL saved in cookie', () => {
       it('Home', () => {
         cy.setCookie(CookieKeys.RedirectUrl, HOME_PATH);
         cy.visit(REDIRECT_PATH);
-        cy.url({
-          timeout: REDIRECTION_TIME,
-        }).should('include', HOME_PATH);
-      });
-
-      it('Items', () => {
-        cy.setCookie(CookieKeys.RedirectUrl, ITEMS_PATH);
-        cy.visit(REDIRECT_PATH);
-        cy.url({
-          timeout: REDIRECTION_TIME,
-        }).should('include', ITEMS_PATH);
+        cy.url().should(
+          'equal',
+          new URL(HOME_PATH, Cypress.config().baseUrl).toString(),
+        );
       });
 
       it('Item', () => {
         cy.setCookie(CookieKeys.RedirectUrl, buildItemPath(ENV.items[0].id));
         cy.visit(REDIRECT_PATH);
-        cy.url({ timeout: REDIRECTION_TIME }).should(
-          'include',
-          buildItemPath(ENV.items[0].id),
+        cy.url().should(
+          'equal',
+          new URL(
+            buildItemPath(ENV.items[0].id),
+            Cypress.config().baseUrl,
+          ).toString(),
         );
       });
     });
