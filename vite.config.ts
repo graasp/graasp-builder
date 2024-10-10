@@ -36,7 +36,10 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
         ? undefined
         : checker({
             typescript: true,
-            eslint: { lintCommand: 'eslint "./**/*.{ts,tsx}"' },
+            eslint: {
+              lintCommand: 'eslint "./**/*.{ts,tsx}"',
+              useFlatConfig: true,
+            },
             overlay: { initialIsOpen: false },
           }),
       react(),
