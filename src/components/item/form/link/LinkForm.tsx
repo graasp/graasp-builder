@@ -180,7 +180,7 @@ const LinkForm = ({
         onClear={onClickClearURL}
       />
       <NameForm
-        item={item}
+        name={item?.name}
         autoFocus={false}
         required
         setChanges={onChange}

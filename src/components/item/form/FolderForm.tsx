@@ -31,7 +31,7 @@ const FolderForm = ({
       <NameForm
         required
         setChanges={setChanges}
-        item={item}
+        name={item?.name}
         updatedProperties={updatedProperties}
       />
     </Stack>

@@ -6536,6 +6536,7 @@ __metadata:
     react-dom: "npm:18.3.1"
     react-ga4: "npm:2.1.0"
     react-helmet-async: "npm:2.0.5"
+    react-hook-form: "npm:7.53.0"
     react-i18next: "npm:15.0.2"
     react-image-crop: "npm:11.0.7"
     react-qr-code: "npm:2.0.15"
@@ -9864,6 +9865,15 @@ __metadata:
   peerDependencies:
     react: ^16.6.0 || ^17.0.0 || ^18.0.0
   checksum: 10/03a8fbf4779c90899012809da09a6b174a2e11e2db4c7f4e61672903dd4e2f3bb732619da4254fc874c502251a07c8da01c752ed7d6df429c7718cf8451d176a
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:7.53.0":
+  version: 7.53.0
+  resolution: "react-hook-form@npm:7.53.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10/b7d73696b7c10e042f6ea6fcec01f951091146bfbc89d1378327a970bcd724b968e93fae1657bddada75caf648cfaf8693c5ba03c25e96816b755079d29f65da
   languageName: node
   linkType: hard
 
