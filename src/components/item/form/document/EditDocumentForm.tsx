@@ -58,7 +58,7 @@ const EditDocumentForm = ({
       <Stack direction="row" spacing={2}>
         <NameForm
           name={name}
-          nameForm={register('name')}
+          nameForm={register('name', { value: item.name })}
           required
           reset={() => reset({ name: '' })}
         />
