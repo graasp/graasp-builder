@@ -25,6 +25,9 @@ export type NameFormProps = {
   updatedProperties?: Partial<DiscriminatedItem>;
 } & {
   required?: boolean;
+  /**
+   * @deprecated use nameForm
+   */
   name?: string;
   autoFocus?: boolean;
   nameForm?: UseFormRegisterReturn;
@@ -32,11 +35,11 @@ export type NameFormProps = {
 };
 
 const NameForm = ({
-  name,
   nameForm,
   required,
   updatedProperties,
   setChanges,
+  name,
   autoFocus = true,
   reset,
 }: NameFormProps): JSX.Element => {
@@ -78,7 +81,7 @@ const NameForm = ({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       onChange={handleNameInput}
-      value={updatedProperties?.name ?? name ?? ''}
+      value={updatedProperties?.name ?? name}
       {...(nameForm ?? {})}
     />
   );

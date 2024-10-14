@@ -57,7 +57,6 @@ const EditDocumentForm = ({
     <Box id="document" display="flex" flexDirection="column" overflow="auto">
       <Stack direction="row" spacing={2}>
         <NameForm
-          name={name}
           nameForm={register('name', { value: item.name })}
           required
           reset={() => reset({ name: '' })}
