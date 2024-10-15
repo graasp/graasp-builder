@@ -3,13 +3,18 @@ import { useForm } from 'react-hook-form';
 
 import { Box, Stack } from '@mui/material';
 
-import { DocumentItemExtraFlavor, buildDocumentExtra } from '@graasp/sdk';
+import {
+  DocumentItemExtraFlavor,
+  DocumentItemType,
+  ItemType,
+  buildDocumentExtra,
+} from '@graasp/sdk';
 
 import { useBuilderTranslation } from '@/config/i18n';
 import { ITEM_FORM_DOCUMENT_TEXT_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
-import { EditModalContentPropType } from '../../edit/EditModal';
+import type { EditModalContentPropType } from '../../edit/EditModal';
 import NameForm from '../NameForm';
 import {
   DocumentContentForm,
@@ -19,15 +24,22 @@ import { DocumentFlavorSelect } from './DocumentFlavorSelect';
 
 type Inputs = {
   name: string;
-  flavor: DocumentItemExtraFlavor;
+  flavor: `${DocumentItemExtraFlavor}`;
 } & DocumentExtraFormInputs;
 
-const CreateDocumentForm = ({
+const DocumentForm = ({
   setChanges,
-}: EditModalContentPropType): JSX.Element => {
+  item,
+}: {
+  setChanges: EditModalContentPropType['setChanges'];
+  item?: DocumentItemType;
+}): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const [isRaw, setIsRaw] = useState(false);
+  const [isRaw, setIsRaw] = useState(
+    item?.extra?.[ItemType.DOCUMENT]?.isRaw ?? false,
+  );
+
   const { register, watch, control, setValue, reset } = useForm<Inputs>();
   const name = watch('name');
   const content = watch('content');
@@ -39,33 +51,39 @@ const CreateDocumentForm = ({
       name,
       extra: buildDocumentExtra({ content, flavor, isRaw }),
     });
-  }, [name, isRaw, content, flavor, setChanges]);
+  }, [content, flavor, isRaw, name, setChanges]);
 
   return (
     <Box id="document" display="flex" flexDirection="column" overflow="auto">
       <Stack direction="row" spacing={2}>
         <NameForm
-          nameForm={register('name')}
+          nameForm={register('name', { value: item?.name })}
           required
           reset={() => reset({ name: '' })}
         />
       </Stack>
       <DocumentFlavorSelect
         control={control}
-        flavorForm={register('flavor', { value: DocumentItemExtraFlavor.None })}
+        flavorForm={register('flavor', {
+          value:
+            item?.extra?.[ItemType.DOCUMENT]?.flavor ??
+            DocumentItemExtraFlavor.None,
+        })}
       />
       <DocumentContentForm
+        documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
         flavor={flavor}
         onChange={(v) => setValue('content', v)}
         setIsRaw={setIsRaw}
         isRaw={isRaw}
-        documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
-        contentForm={register('content')}
         content={content}
+        contentForm={register('content', {
+          value: item?.extra?.[ItemType.DOCUMENT]?.content || '',
+        })}
         placeholder={translateBuilder(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
       />
     </Box>
   );
 };
 
-export default CreateDocumentForm;
+export default DocumentForm;

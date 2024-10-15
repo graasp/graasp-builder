@@ -37,7 +37,7 @@ import FileUploader from '../file/FileUploader';
 import AppForm from '../item/form/AppForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
 import FolderForm from '../item/form/FolderForm';
-import CreateDocumentForm from '../item/form/document/CreateDocumentForm';
+import DocumentForm from '../item/form/document/DocumentForm';
 import LinkForm from '../item/form/link/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
@@ -249,10 +249,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
             </Typography>
-            <CreateDocumentForm
-              setChanges={updateItem}
-              updatedProperties={updatedPropertiesPerType[ItemType.DOCUMENT]}
-            />
+            <DocumentForm setChanges={updateItem} />
           </>
         );
       default:

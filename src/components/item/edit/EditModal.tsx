@@ -30,7 +30,7 @@ import { BUILDER } from '../../../langs/constants';
 import BaseItemForm from '../form/BaseItemForm';
 import FileForm from '../form/FileForm';
 import NameForm from '../form/NameForm';
-import EditDocumentForm from '../form/document/EditDocumentForm';
+import DocumentForm from '../form/document/DocumentForm';
 
 const { editItemRoutine } = routines;
 
@@ -70,7 +70,7 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
   const renderComponent = (): JSX.Element => {
     switch (item.type) {
       case ItemType.DOCUMENT:
-        return <EditDocumentForm setChanges={setChanges} item={item} />;
+        return <DocumentForm setChanges={setChanges} item={item} />;
       case ItemType.LOCAL_FILE:
       case ItemType.S3_FILE:
         return (
