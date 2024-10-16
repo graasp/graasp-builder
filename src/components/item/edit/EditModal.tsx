@@ -29,6 +29,7 @@ import { isItemValid } from '@/utils/item';
 import { BUILDER } from '../../../langs/constants';
 import BaseItemForm from '../form/BaseItemForm';
 import FileForm from '../form/FileForm';
+import FolderForm from '../form/FolderForm';
 import NameForm from '../form/NameForm';
 import DocumentForm from '../form/document/DocumentForm';
 
@@ -83,12 +84,12 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
       case ItemType.SHORTCUT:
         return (
           <NameForm
-            updatedProperties={updatedItem}
+            name={updatedItem?.name ?? item?.name}
             setChanges={setChanges}
-            item={item}
           />
         );
       case ItemType.FOLDER:
+        return <FolderForm setChanges={setChanges} item={item} />;
       case ItemType.LINK:
       case ItemType.APP:
       case ItemType.ETHERPAD:
