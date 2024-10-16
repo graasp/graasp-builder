@@ -51,7 +51,7 @@ const RecycledItemsScreenContent = (): JSX.Element => {
 
       const totalFetchedItems = fetchedItems.length;
 
-      const hasSelection = Boolean(selectedIds.length && fetchedItems?.length);
+      const hasSelection = Boolean(selectedIds.length && fetchedItems.length);
       return (
         <>
           <Stack gap={1} height="100%">
