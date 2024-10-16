@@ -1637,9 +1637,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#942-recycled-pagination":
-  version: 4.1.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=2209d08e1151ebc2daa32de49a17a3ecf3ed57b9"
+"@graasp/query-client@npm:4.2.0":
+  version: 4.2.0
+  resolution: "@graasp/query-client@npm:4.2.0"
   dependencies:
     "@tanstack/react-query": "npm:5.59.8"
     "@tanstack/react-query-devtools": "npm:5.59.8"
@@ -1649,7 +1649,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/e6edc1bdc6eb2bcbd6c5a3b337efb34e1d9f25d1fd640b8100cafc8ebfd8a1e38be57e485d14546572a9afb0a81de8b4cdd09d592759867f7adda9bbb4c882c9
+  checksum: 10/fdf06272486d4c9979459c00f7cb0d9f98c027deef0c948ff734679b46435658076aeede49d54730922f0d12e572cf9d3bac045e346ab38629a15fab6b30d00d
   languageName: node
   linkType: hard
 
@@ -6472,7 +6472,7 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.0"
     "@graasp/map": "npm:1.19.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#942-recycled-pagination"
+    "@graasp/query-client": "npm:4.2.0"
     "@graasp/sdk": "npm:4.31.0"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
     "@graasp/translations": "npm:1.39.0"

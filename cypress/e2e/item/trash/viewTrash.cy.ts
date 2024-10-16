@@ -64,7 +64,7 @@ describe('View trash', () => {
   });
 
   describe('Error Handling', () => {
-    it.only('check recycled item layout with server error', () => {
+    it('check recycled item layout with server error', () => {
       cy.setUpApi({
         items: recycledItemData.map(({ item }) => item),
         recycledItemData,
@@ -72,9 +72,7 @@ describe('View trash', () => {
       });
       cy.visit(RECYCLE_BIN_PATH);
 
-      cy.get(`#${RECYCLED_ITEMS_ERROR_ALERT_ID}`, { timeout: 10000 }).should(
-        'exist',
-      );
+      cy.get(`#${RECYCLED_ITEMS_ERROR_ALERT_ID}`).should('exist');
     });
   });
 });

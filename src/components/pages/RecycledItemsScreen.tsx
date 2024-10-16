@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Alert, Stack, Typography } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
@@ -45,16 +45,13 @@ const RecycledItemsScreenContent = (): JSX.Element => {
   // render this when there is data from the query
   if (data?.pages?.length) {
     if (data.pages[0].data.length) {
-      const filteredData = data.pages
-        .map((p) => p.data)
-        ?.flat()
+      const fetchedItems = data.pages
+        .flatMap((p) => p.data)
         ?.map((p) => p.item);
 
-      const totalFetchedItems = data
-        ? data.pages.map(({ data: d }) => d.length).reduce((a, b) => a + b, 0)
-        : 0;
+      const totalFetchedItems = fetchedItems.length;
 
-      const hasSelection = Boolean(selectedIds.length && filteredData?.length);
+      const hasSelection = Boolean(selectedIds.length && fetchedItems?.length);
       return (
         <>
           <Stack gap={1} height="100%">
@@ -65,7 +62,7 @@ const RecycledItemsScreenContent = (): JSX.Element => {
               width="100%"
             >
               {hasSelection ? (
-                <RecycleBinToolbar items={filteredData} />
+                <RecycleBinToolbar items={fetchedItems} />
               ) : (
                 <Typography variant="body1">
                   {translateBuilder(BUILDER.TRASH_COUNT, {
@@ -75,7 +72,7 @@ const RecycledItemsScreenContent = (): JSX.Element => {
               )}
             </Stack>
             <DragContainerStack id={CONTAINER_ID}>
-              {filteredData.map((item) => (
+              {fetchedItems.map((item) => (
                 <Stack mb={1}>
                   <ItemCard
                     item={item}
@@ -108,6 +105,9 @@ const RecycledItemsScreenContent = (): JSX.Element => {
         </>
       );
     }
+    return (
+      <Alert severity="info">{translateBuilder(BUILDER.TRASH_NO_ITEM)}</Alert>
+    );
   }
 
   if (isLoading) {
