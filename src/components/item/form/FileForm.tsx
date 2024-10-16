@@ -35,7 +35,7 @@ const FileForm = (props: EditModalContentPropType): JSX.Element | null => {
       <>
         <NameForm
           setChanges={setChanges}
-          item={item}
+          name={item?.name}
           updatedProperties={updatedProperties}
         />
         {mimetype && MimeTypes.isImage(mimetype) && (

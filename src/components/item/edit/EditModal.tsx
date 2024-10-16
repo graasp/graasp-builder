@@ -28,9 +28,9 @@ import { isItemValid } from '@/utils/item';
 
 import { BUILDER } from '../../../langs/constants';
 import BaseItemForm from '../form/BaseItemForm';
-import DocumentForm from '../form/DocumentForm';
 import FileForm from '../form/FileForm';
 import NameForm from '../form/NameForm';
+import DocumentForm from '../form/document/DocumentForm';
 
 const { editItemRoutine } = routines;
 
@@ -63,24 +63,46 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     }
   }, [item, updatedItem.id]);
 
-  const ComponentType = ((): EditModalContentType => {
+  const setChanges = (payload: Partial<DiscriminatedItem>) => {
+    setUpdatedItem({ ...updatedItem, ...payload } as DiscriminatedItem);
+  };
+
+  const renderComponent = (): JSX.Element => {
     switch (item.type) {
       case ItemType.DOCUMENT:
-        return DocumentForm;
+        return <DocumentForm setChanges={setChanges} item={item} />;
       case ItemType.LOCAL_FILE:
       case ItemType.S3_FILE:
-        return FileForm;
+        return (
+          <FileForm
+            updatedProperties={updatedItem}
+            setChanges={setChanges}
+            item={item}
+          />
+        );
       case ItemType.SHORTCUT:
-        return NameForm;
+        return (
+          <NameForm
+            updatedProperties={updatedItem}
+            setChanges={setChanges}
+            item={item}
+          />
+        );
       case ItemType.FOLDER:
       case ItemType.LINK:
       case ItemType.APP:
       case ItemType.ETHERPAD:
       case ItemType.H5P:
       default:
-        return BaseItemForm;
+        return (
+          <BaseItemForm
+            updatedProperties={updatedItem}
+            setChanges={setChanges}
+            item={item}
+          />
+        );
     }
-  })();
+  };
 
   const submit = () => {
     if (
@@ -120,10 +142,6 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     onClose();
   };
 
-  const setChanges = (payload: Partial<DiscriminatedItem>) => {
-    setUpdatedItem({ ...updatedItem, ...payload } as DiscriminatedItem);
-  };
-
   return (
     <Dialog
       onClose={onClose}
@@ -141,11 +159,7 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
           flexDirection: 'column',
         }}
       >
-        <ComponentType
-          updatedProperties={updatedItem}
-          setChanges={setChanges}
-          item={item}
-        />
+        {renderComponent()}
       </DialogContent>
       <DialogActions>
         <CancelButton id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID} onClick={onClose} />

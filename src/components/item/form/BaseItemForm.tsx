@@ -13,7 +13,7 @@ const BaseItemForm = ({
   <Box overflow="auto">
     <NameForm
       setChanges={setChanges}
-      item={item}
+      name={item?.name}
       required
       updatedProperties={updatedProperties}
     />

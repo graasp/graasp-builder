@@ -35,9 +35,9 @@ import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 import FileUploader from '../file/FileUploader';
 import AppForm from '../item/form/AppForm';
-import DocumentForm from '../item/form/DocumentForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
 import FolderForm from '../item/form/FolderForm';
+import DocumentForm from '../item/form/document/DocumentForm';
 import LinkForm from '../item/form/link/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
@@ -124,7 +124,6 @@ const NewItemModal = ({
       // todo: notify user
       return false;
     }
-
     // todo: fix types
     return submitAndDisableConfirmButtonFor(
       () =>
@@ -250,10 +249,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
             </Typography>
-            <DocumentForm
-              setChanges={updateItem}
-              updatedProperties={updatedPropertiesPerType[ItemType.DOCUMENT]}
-            />
+            <DocumentForm setChanges={updateItem} />
           </>
         );
       default:
