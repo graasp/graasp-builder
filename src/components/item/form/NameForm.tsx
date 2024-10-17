@@ -19,10 +19,6 @@ export type NameFormProps = {
    * @deprecated use nameForm
    */
   setChanges?: (payload: Partial<DiscriminatedItem>) => void;
-  /**
-   * @deprecated use nameForm
-   */
-  updatedProperties?: Partial<DiscriminatedItem>;
 } & {
   required?: boolean;
   /**
@@ -37,7 +33,6 @@ export type NameFormProps = {
 const NameForm = ({
   nameForm,
   required,
-  updatedProperties,
   setChanges,
   name,
   autoFocus = true,
@@ -68,7 +63,7 @@ const NameForm = ({
         endAdornment: (
           <IconButton
             onClick={handleClearClick}
-            sx={{ visibility: updatedProperties?.name ? 'visible' : 'hidden' }}
+            sx={{ visibility: name ? 'visible' : 'hidden' }}
           >
             <ClearIcon fontSize="small" />
           </IconButton>
@@ -81,7 +76,7 @@ const NameForm = ({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       onChange={handleNameInput}
-      value={updatedProperties?.name ?? name}
+      value={name}
       {...(nameForm ?? {})}
     />
   );

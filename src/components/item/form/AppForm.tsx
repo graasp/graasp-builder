@@ -161,7 +161,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
         />
         <NameForm
           setChanges={onChange}
-          updatedProperties={updatedProperties}
+          name={updatedProperties?.name}
           autoFocus={false}
         />
       </Stack>
@@ -203,7 +203,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
       </Box>
       <NameForm
         setChanges={onChange}
-        updatedProperties={updatedProperties}
+        name={updatedProperties?.name}
         autoFocus={false}
       />
     </Stack>

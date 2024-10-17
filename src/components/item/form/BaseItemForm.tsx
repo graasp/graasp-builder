@@ -13,16 +13,14 @@ const BaseItemForm = ({
   <Box overflow="auto">
     <NameForm
       setChanges={setChanges}
-      name={item?.name}
+      name={updatedProperties?.name ?? item?.name}
       required
-      updatedProperties={updatedProperties}
     />
 
     <Box sx={{ mt: 2 }}>
       <DescriptionForm
         id={FOLDER_FORM_DESCRIPTION_ID}
-        item={item}
-        updatedProperties={updatedProperties}
+        description={updatedProperties?.description ?? item?.description ?? ''}
         setChanges={setChanges}
       />
     </Box>
