@@ -29,7 +29,7 @@ import { FAILURE_MESSAGES } from '@graasp/translations';
 import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4, v4 } from 'uuid';
 
-import { SETTINGS } from '../../src/config/constants';
+import { ITEM_PAGE_SIZE, SETTINGS } from '../../src/config/constants';
 import { getMemberById } from '../../src/utils/member';
 import {
   buildAppApiAccessTokenRoute,
@@ -69,8 +69,7 @@ const {
   buildGetItemMembershipsForItemsRoute,
   buildGetItemTagsRoute,
   buildPostItemTagRoute,
-  buildPatchMemberRoute,
-  SHARED_ITEM_WITH_ROUTE,
+  buildPatchCurrentMemberRoute,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
   buildPostItemFlagRoute,
@@ -78,7 +77,6 @@ const {
   buildExportItemChatRoute,
   buildPostItemChatMessageRoute,
   buildClearItemChatRoute,
-  GET_RECYCLED_ITEMS_DATA_ROUTE,
   buildDeleteItemTagRoute,
   buildDeleteItemsRoute,
   buildGetMembersByIdRoute,
@@ -190,46 +188,38 @@ export const mockGetAccessibleItems = (items: ItemForTest[]): void => {
   ).as('getAccessibleItems');
 };
 
-export const mockGetRecycledItems = (
+export const mockGetOwnRecycledItemData = (
   recycledItemData: RecycledItemData[],
   shouldThrowError: boolean,
 ): void => {
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: `${API_HOST}/${GET_RECYCLED_ITEMS_DATA_ROUTE}`,
+      pathname: `/items/recycled`,
     },
-    (req) => {
+    ({ reply, url }) => {
       if (shouldThrowError) {
-        req.reply({ statusCode: StatusCodes.BAD_REQUEST });
+        reply({ statusCode: StatusCodes.BAD_REQUEST });
         return;
       }
 
-      req.reply(recycledItemData);
-    },
-  ).as('getRecycledItems');
-};
+      const params = new URL(url).searchParams;
 
-export const mockGetSharedItems = ({
-  items,
-  member,
-}: {
-  items: ItemForTest[];
-  member?: Member;
-}): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: `${API_HOST}/${SHARED_ITEM_WITH_ROUTE}`,
+      const page = parseInt(params.get('page') ?? '1', 10);
+      const pageSize = parseInt(params.get('pageSize') ?? '10', 10);
+
+      const result = recycledItemData.slice(
+        (page - 1) * pageSize,
+        page * pageSize,
+      );
+
+      reply({
+        data: result,
+        totalCount: recycledItemData.length,
+        pagination: { page: 1, pageSize: ITEM_PAGE_SIZE },
+      });
     },
-    (req) => {
-      if (!member) {
-        return req.reply({ statusCode: StatusCodes.UNAUTHORIZED });
-      }
-      const shared = items.filter(({ creator }) => creator?.id !== member.id);
-      return req.reply(shared);
-    },
-  ).as('getSharedItems');
+  ).as('getOwnRecycledItemData');
 };
 
 export const mockPostItem = (
@@ -766,7 +756,7 @@ export const mockEditMember = (
   cy.intercept(
     {
       method: HttpMethod.Patch,
-      url: new RegExp(`${API_HOST}/${buildPatchMemberRoute(ID_FORMAT)}`),
+      url: new RegExp(`${API_HOST}/${buildPatchCurrentMemberRoute()}`),
     },
     ({ reply }) => {
       if (shouldThrowError) {

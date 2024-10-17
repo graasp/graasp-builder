@@ -456,7 +456,6 @@
   "item.name": "Name",
   "order": "Order",
   "TRASH_NO_ITEM": "You trash is empty.",
-  "TRASH_NO_ITEM_SEARCH": "No trashed item for {{search}}",
   "BOOKMARKS_NO_ITEM": "No bookmarked item",
   "BOOKMARKS_NO_ITEM_SEARCH": "No bookmarked item for {{search}}",
   "UPLOAD_BETWEEN_FILES": "Upload your file(s) here",
@@ -497,5 +496,7 @@
   "REQUEST_ACCESS_BUTTON": "Request access",
   "REQUEST_ACCESS_SENT_BUTTON": "Request sent",
   "ACCESS_MANAGEMENT_TITLE": "Access Management",
-  "ITEM_LOGIN_SCHEMA_DISABLED_GUEST_ACCESS_MESSAGE": "This guest cannot login because pseudonymized access is disabled."
+  "ITEM_LOGIN_SCHEMA_DISABLED_GUEST_ACCESS_MESSAGE": "This guest cannot login because pseudonymized access is disabled.",
+  "TRASH_COUNT_one": "You have one item in your trash.",
+  "TRASH_COUNT_other": "You have {{count}} items in your trash."
 }

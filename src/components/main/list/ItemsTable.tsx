@@ -29,7 +29,7 @@ const { useItem } = hooks;
 export type ItemsTableProps = {
   id?: string;
   items?: PackedItem[];
-  showThumbnails?: boolean;
+  showThumbnail?: boolean;
   canMove?: boolean;
   enableMoveInBetween?: boolean;
   onCardClick?: (id: DiscriminatedItem['id']) => void;
@@ -40,7 +40,7 @@ export type ItemsTableProps = {
 const ItemsTable = ({
   id: tableId = '',
   items: rows = [],
-  showThumbnails = true,
+  showThumbnail = true,
   canMove = true,
   enableMoveInBetween = true,
   selectedIds = [],
@@ -192,7 +192,7 @@ const ItemsTable = ({
             isMovable={y.isMovable}
             enableMoveInBetween={enableMoveInBetween}
             itemsStatuses={itemsStatuses}
-            showThumbnails={showThumbnails}
+            showThumbnail={showThumbnail}
             isSelected={isSelected(droppedEl)}
             onThumbnailClick={() => {
               if ('id' in droppedEl) {

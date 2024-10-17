@@ -456,7 +456,6 @@
   "item.name": "Nom",
   "order": "Ordre",
   "TRASH_NO_ITEM": "La poubelle est vide.",
-  "TRASH_NO_ITEM_SEARCH": "Aucun élément de la corbeille ne correspond à {{search}}",
   "BOOKMARKS_NO_ITEM": "Aucun élément ajouté aux favoris",
   "BOOKMARKS_NO_ITEM_SEARCH": "Aucun élément favoris ne correspond à {{search}}",
   "UPLOAD_BETWEEN_FILES": "Téléchargez votre (vos) fichier(s) ici",
@@ -496,5 +495,7 @@
   "REQUEST_ACCESS_TITLE": "Demander l'accès à cet élément",
   "REQUEST_ACCESS_BUTTON": "Demander l'accès",
   "REQUEST_ACCESS_SENT_BUTTON": "Demande envoyée",
-  "ACCESS_MANAGEMENT_TITLE": "Gestion des accès"
+  "ACCESS_MANAGEMENT_TITLE": "Gestion des accès",
+  "TRASH_COUNT_one": "Il y a un élément dans la poubelle.",
+  "TRASH_COUNT_other": "Il y a {{count}} éléments dans la poubelle."
 }
