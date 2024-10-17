@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.43.0](https://github.com/graasp/graasp-builder/compare/v2.42.1...v2.43.0) (2024-10-17)
+
+
+### Features
+
+* add pagination to trash page  ([#1494](https://github.com/graasp/graasp-builder/issues/1494)) ([c3c5701](https://github.com/graasp/graasp-builder/commit/c3c570130fcdfe5a3db189423a22529d6ee2c2f4))
+* add umami tags to track actions ([#1500](https://github.com/graasp/graasp-builder/issues/1500)) ([263a08a](https://github.com/graasp/graasp-builder/commit/263a08aeab77a2b0ff7c1d3e140e452554a40608))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.119.1 ([#1501](https://github.com/graasp/graasp-builder/issues/1501)) ([cb64f4c](https://github.com/graasp/graasp-builder/commit/cb64f4ce668a7f0228afd0081c959dea59b79e2a))
+* **deps:** update dependency lucide-react to v0.451.0 ([#1509](https://github.com/graasp/graasp-builder/issues/1509)) ([b2bcd40](https://github.com/graasp/graasp-builder/commit/b2bcd40d998d0a5312910e7660679b19c6fbb7f9))
+* update crop modal to not inflate image sizes ([#1514](https://github.com/graasp/graasp-builder/issues/1514)) ([f6cc03b](https://github.com/graasp/graasp-builder/commit/f6cc03b67ee67edd2798d9aae40814683749a8ee))
+
 ## [2.42.1](https://github.com/graasp/graasp-builder/compare/v2.42.0...v2.42.1) (2024-10-09)
 
 
