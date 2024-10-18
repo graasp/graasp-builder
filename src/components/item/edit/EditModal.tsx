@@ -74,13 +74,7 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
         return <DocumentForm setChanges={setChanges} item={item} />;
       case ItemType.LOCAL_FILE:
       case ItemType.S3_FILE:
-        return (
-          <FileForm
-            updatedProperties={updatedItem}
-            setChanges={setChanges}
-            item={item}
-          />
-        );
+        return <FileForm setChanges={setChanges} item={item} />;
       case ItemType.SHORTCUT:
         return (
           <NameForm
