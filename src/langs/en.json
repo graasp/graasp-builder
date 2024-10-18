@@ -79,7 +79,7 @@
   "BOOKMARKED_ITEMS_TITLE": "Bookmarks",
   "FLAG_ITEM_BUTTON": "Flag",
   "FLAG_ITEM_MODAL_TITLE": "Flag Item",
-  "HIDE_ITEM_SETTING_TITLE": "Hide for readers",
+  "HIDE_ITEM_SETTING_TITLE": "Show to readers",
   "HIDE_ITEM_HIDDEN_PARENT_INFORMATION": "This item is hidden because its parent item is hidden.",
   "HIDE_ITEM_SETTING_DESCRIPTION_ENABLED": "Readers cannot see this item and its content.",
   "HIDE_ITEM_SETTING_DESCRIPTION_DISABLED": "Readers can see this item and its content.",
