@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.43.1](https://github.com/graasp/graasp-builder/compare/v2.43.0...v2.43.1) (2024-10-18)
+
+
+### Bug Fixes
+
+* remove getCurrentAccountLang and use from sdk ([#1525](https://github.com/graasp/graasp-builder/issues/1525)) ([d5f3986](https://github.com/graasp/graasp-builder/commit/d5f3986e38460cceaea3cad4fc1d4fa2c86f64dc))
+
 ## [2.43.0](https://github.com/graasp/graasp-builder/compare/v2.42.1...v2.43.0) (2024-10-17)
 
 
