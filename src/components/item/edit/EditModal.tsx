@@ -95,13 +95,7 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
       case ItemType.ETHERPAD:
       case ItemType.H5P:
       default:
-        return (
-          <BaseItemForm
-            updatedProperties={updatedItem}
-            setChanges={setChanges}
-            item={item}
-          />
-        );
+        return <BaseItemForm setChanges={setChanges} item={item} />;
     }
   };
 
