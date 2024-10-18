@@ -67,7 +67,9 @@ const FolderForm = ({
           }
         }}
         showPlacement={false}
-        descriptionPlacement={item?.settings?.descriptionPlacement}
+        descriptionPlacement={
+          descriptionPlacement ?? item?.settings?.descriptionPlacement
+        }
       />
     </Stack>
   );
