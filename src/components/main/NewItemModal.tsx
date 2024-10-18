@@ -170,10 +170,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
             </Typography>
-            <FolderForm
-              setChanges={updateItem}
-              updatedProperties={updatedPropertiesPerType[ItemType.FOLDER]}
-            />
+            <FolderForm setChanges={updateItem} showThumbnail />
           </>
         );
       case ItemType.S3_FILE:

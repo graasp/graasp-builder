@@ -35,8 +35,7 @@ const FileForm = (props: EditModalContentPropType): JSX.Element | null => {
       <>
         <NameForm
           setChanges={setChanges}
-          name={item?.name}
-          updatedProperties={updatedProperties}
+          name={updatedProperties?.name ?? item?.name}
         />
         {mimetype && MimeTypes.isImage(mimetype) && (
           <TextField
@@ -71,8 +70,13 @@ const FileForm = (props: EditModalContentPropType): JSX.Element | null => {
         )}
         <DescriptionForm
           setChanges={setChanges}
-          updatedProperties={updatedProperties}
-          item={item}
+          description={
+            updatedProperties?.description ?? item?.description ?? ''
+          }
+          descriptionPlacement={
+            updatedProperties?.settings?.descriptionPlacement ??
+            item?.settings?.descriptionPlacement
+          }
         />
       </>
     );

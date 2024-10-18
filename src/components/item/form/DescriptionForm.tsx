@@ -1,10 +1,6 @@
 import { Box, FormLabel, Stack, Typography } from '@mui/material';
 
-import {
-  DescriptionPlacementType,
-  DiscriminatedItem,
-  ItemType,
-} from '@graasp/sdk';
+import { DescriptionPlacementType, DiscriminatedItem } from '@graasp/sdk';
 import TextEditor from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -14,16 +10,18 @@ import DescriptionPlacementForm from './DescriptionPlacementForm';
 
 type DescriptionFormProps = {
   id?: string;
-  item?: DiscriminatedItem;
-  updatedProperties: Partial<DiscriminatedItem>;
   setChanges: (payload: Partial<DiscriminatedItem>) => void;
+  description?: string;
+  descriptionPlacement?: DescriptionPlacementType;
+  showPlacement?: boolean;
 };
 
 const DescriptionForm = ({
   id,
-  updatedProperties,
-  item,
+  description,
+  descriptionPlacement,
   setChanges,
+  showPlacement = true,
 }: DescriptionFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const onChange = (content: string): void => {
@@ -50,15 +48,15 @@ const DescriptionForm = ({
         </FormLabel>
         <TextEditor
           id={id}
-          value={(updatedProperties?.description || item?.description) ?? ''}
+          value={description ?? ''}
           onChange={onChange}
           showActions={false}
         />
       </Box>
 
-      {updatedProperties.type !== ItemType.FOLDER && (
+      {showPlacement && (
         <DescriptionPlacementForm
-          updatedProperties={updatedProperties}
+          updatedProperties={{ settings: { descriptionPlacement } }}
           onPlacementChanged={onPlacementChanged}
         />
       )}
