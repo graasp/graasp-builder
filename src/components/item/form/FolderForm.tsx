@@ -63,7 +63,7 @@ const FolderForm = ({
             setValue('description', v.description);
           }
           if (v.settings?.descriptionPlacement) {
-            setValue('description', v.settings?.descriptionPlacement);
+            setValue('descriptionPlacement', v.settings?.descriptionPlacement);
           }
         }}
         showPlacement={false}
