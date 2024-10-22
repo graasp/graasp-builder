@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import { Alert, Box, Stack, Typography } from '@mui/material';
@@ -66,6 +67,10 @@ const Content = ({
   const { selectedIds, clearSelection, toggleSelection } =
     useSelectionContext();
   const DragSelection = useDragSelection({ containerId: CONTAINER_ID });
+
+  useEffect(() => {
+    clearSelection();
+  }, [clearSelection, item.id]);
 
   if (mode === ItemLayoutMode.Map) {
     return (
