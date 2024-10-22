@@ -101,7 +101,7 @@ describe('Share Item From CSV', () => {
     );
     cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).should('be.enabled');
     cy.get(`#${SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}`).click();
-    cy.wait('@uploadCSV').then(({ request }) => {
+    cy.wait('@uploadCSVWithTemplate').then(({ request }) => {
       expect(request.query.templateId).equal(templateItemId);
     });
     cy.get(`#${SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID}`)

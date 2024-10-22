@@ -2,12 +2,14 @@ import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
 import {
   Alert,
+  AlertTitle,
   Button,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Stack,
+  Typography,
 } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
@@ -97,12 +99,14 @@ const ImportUsersDialogContent = ({
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false);
   const { t } = useBuilderTranslation();
+  const { mutate: postUserCsv, isSuccess: isSuccessPostingCSV } =
+    mutations.useCSVUserImport();
   const {
-    mutate: postUserCsv,
-    data: userCsvData,
-    error: userCSVError,
-    isSuccess: isSuccessPostingCSV,
-  } = mutations.useCSVUserImport();
+    mutate: postUserCsvWithTemplate,
+    data: userCsvDataWithTemplate,
+    error: userCSVErrorWithTemplate,
+    isSuccess: isSuccessPostingCSVWithTemplate,
+  } = mutations.useCSVUserImportWithTemplate();
 
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     if (target.files?.length) {
@@ -154,11 +158,18 @@ const ImportUsersDialogContent = ({
 
   const handlePostUserCSV = () => {
     if (csvFile) {
-      postUserCsv({
-        file: csvFile,
-        itemId: item.id,
-        templateItemId: selectedTemplateId,
-      });
+      if (selectedTemplateId) {
+        postUserCsvWithTemplate({
+          file: csvFile,
+          itemId: item.id,
+          templateItemId: selectedTemplateId,
+        });
+      } else {
+        postUserCsv({
+          file: csvFile,
+          itemId: item.id,
+        });
+      }
     } else {
       console.error('no file set');
     }
@@ -196,9 +207,15 @@ const ImportUsersDialogContent = ({
             />
           )}
           <DisplayInvitationSummary
-            userCsvData={userCsvData}
-            error={userCSVError}
+            userCsvDataWithTemplate={userCsvDataWithTemplate}
+            error={userCSVErrorWithTemplate}
           />
+          {isSuccessPostingCSV && (
+            <Alert severity="success">
+              <AlertTitle>{t(BUILDER.IMPORT_CSV_SUCCESS_TITLE)}</AlertTitle>
+              <Typography>{t(BUILDER.IMPORT_CSV_SUCCESS_TEXT)}</Typography>
+            </Alert>
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>
@@ -218,7 +235,7 @@ const ImportUsersDialogContent = ({
           color="primary"
           disabled={!isConfirmButtonEnabled}
         >
-          {isSuccessPostingCSV
+          {isSuccessPostingCSV || isSuccessPostingCSVWithTemplate
             ? translateCommon(COMMON.CLOSE_BUTTON)
             : translateCommon(COMMON.CONFIRM_BUTTON)}
         </Button>

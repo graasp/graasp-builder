@@ -90,6 +90,7 @@ const {
   buildGetItemInvitationsForItemRoute,
   buildDeleteInvitationRoute,
   buildPatchInvitationRoute,
+  buildPostUserCSVUploadWithTemplateRoute,
   buildResendInvitationRoute,
   buildPostUserCSVUploadRoute,
   buildGetPublishedItemsForMemberRoute,
@@ -1834,15 +1835,30 @@ export const mockUploadInvitationCSV = (
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
-      const query = new URL(url).searchParams;
-      if (query.get('templateId')) {
-        return reply([{ groupName: 'A', memberships: [], invitations: [] }]);
-      }
       const itemId = url.split('/').at(-3);
       const item = items.find(({ id }) => id === itemId);
       return reply({ memberships: item.memberships });
     },
   ).as('uploadCSV');
+};
+export const mockUploadInvitationCSVWithTemplate = (
+  items: ItemForTest[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Post,
+      url: new RegExp(
+        `${API_HOST}/${buildPostUserCSVUploadWithTemplateRoute(ID_FORMAT)}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+      return reply([{ groupName: 'A', memberships: [], invitations: [] }]);
+    },
+  ).as('uploadCSVWithTemplate');
 };
 
 export const mockGetPublicationStatus = (status: PublicationStatus): void => {

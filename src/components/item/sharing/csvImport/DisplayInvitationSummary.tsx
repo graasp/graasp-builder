@@ -42,17 +42,15 @@ const LineDisplay = ({
 );
 
 type Props = {
-  userCsvData?:
-    | { memberships: ItemMembership[]; invitations: Invitation[] }
-    | {
-        groupName: string;
-        memberships: ItemMembership[];
-        invitations: Invitation[];
-      }[];
+  userCsvDataWithTemplate?: {
+    groupName: string;
+    memberships: ItemMembership[];
+    invitations: Invitation[];
+  }[];
   error: Error | null | AxiosError;
 };
 const DisplayInvitationSummary = ({
-  userCsvData,
+  userCsvDataWithTemplate,
   error,
 }: Props): JSX.Element | null => {
   const { t } = useBuilderTranslation();
@@ -68,16 +66,14 @@ const DisplayInvitationSummary = ({
       </Alert>
     );
   }
-  if (userCsvData) {
+  if (userCsvDataWithTemplate) {
     // display group creation
-    if (Array.isArray(userCsvData)) {
-      return (
-        <Alert severity="info" id={SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID}>
-          <AlertTitle>
-            {t(BUILDER.SHARE_ITEM_CSV_SUMMARY_GROUP_TITLE)}
-          </AlertTitle>
-          <Stack direction="column" gap={2}>
-            {userCsvData.map(({ groupName, memberships, invitations }) => (
+    return (
+      <Alert severity="info" id={SHARE_CSV_TEMPLATE_SUMMARY_CONTAINER_ID}>
+        <AlertTitle>{t(BUILDER.SHARE_ITEM_CSV_SUMMARY_GROUP_TITLE)}</AlertTitle>
+        <Stack direction="column" gap={2}>
+          {userCsvDataWithTemplate.map(
+            ({ groupName, memberships, invitations }) => (
               <Stack>
                 <Typography fontWeight="bold">
                   {t(BUILDER.INVITATION_SUMMARY_GROUP_TITLE, { groupName })}
@@ -100,16 +96,9 @@ const DisplayInvitationSummary = ({
                   ))}
                 </Stack>
               </Stack>
-            ))}
-          </Stack>
-        </Alert>
-      );
-    }
-
-    return (
-      <Alert severity="success">
-        <AlertTitle>{t(BUILDER.IMPORT_CSV_SUCCESS_TITLE)}</AlertTitle>
-        <Typography>{t(BUILDER.IMPORT_CSV_SUCCESS_TEXT)}</Typography>
+            ),
+          )}
+        </Stack>
       </Alert>
     );
   }
