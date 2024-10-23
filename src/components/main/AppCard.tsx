@@ -3,11 +3,11 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Grid2 as Grid,
   Skeleton,
   Typography,
   styled,
 } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2';
 
 import { buildItemFormAppOptionId } from '@/config/selectors';
 
@@ -48,14 +48,14 @@ const AppCard = ({
     id={buildItemFormAppOptionId(id ?? name)}
   >
     <StyledCardActionArea>
-      <Grid2
+      <Grid
         container
         direction="row"
         alignItems="center"
         width="100%"
         spacing={[0, 1]}
       >
-        <Grid2 xs={2} p={[0, 1.5]}>
+        <Grid size={2} p={[0, 1.5]}>
           <Box
             component="img"
             src={image ?? defaultImage}
@@ -67,8 +67,8 @@ const AppCard = ({
             borderRadius={1}
             overflow="hidden"
           />
-        </Grid2>
-        <Grid2 xs={10}>
+        </Grid>
+        <Grid size={10}>
           <CardContent
             sx={{
               pt: 1,
@@ -98,18 +98,18 @@ const AppCard = ({
               {description ?? <Skeleton height={20} />}
             </Typography>
           </CardContent>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </StyledCardActionArea>
   </Card>
 );
 const AppCardWrapper = (props: Props): JSX.Element => (
-  <Grid2 xs={12} display="flex">
+  <Grid size={12} display="flex">
     <AppCard
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />
-  </Grid2>
+  </Grid>
 );
 
 export default AppCardWrapper;

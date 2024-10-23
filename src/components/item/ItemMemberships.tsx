@@ -1,5 +1,5 @@
 import { Edit, Visibility } from '@mui/icons-material';
-import { AvatarGroup, Badge, Grid, Tooltip } from '@mui/material';
+import { AvatarGroup, Badge, Grid2 as Grid, Tooltip } from '@mui/material';
 
 import { PermissionLevel } from '@graasp/sdk';
 
@@ -40,7 +40,7 @@ const ItemMemberships = ({ id, maxAvatar = 2 }: Props): JSX.Element | null => {
 
   return (
     <Grid container alignItems="center" id={ITEM_MEMBERSHIPS_CONTENT_ID}>
-      <Grid item>
+      <Grid>
         <Tooltip
           title={translateBuilder(BUILDER.SHARED_MEMBERS_TOOLTIP, {
             count: filteredMemberships.length,
