@@ -14,7 +14,7 @@ import {
 import CategoriesContainer from '@/components/item/publish/CategoriesContainer';
 import CoEditorsContainer from '@/components/item/publish/CoEditorsContainer';
 import EditItemDescription from '@/components/item/publish/EditItemDescription';
-import LanguagesContainer from '@/components/item/publish/LanguagesContainer';
+import LanguageContainer from '@/components/item/publish/LanguageContainer';
 import LicenseContainer from '@/components/item/publish/LicenseContainer';
 import PublicationStatusComponent from '@/components/item/publish/PublicationStatusComponent';
 import PublicationThumbnail from '@/components/item/publish/PublicationThumbnail';
@@ -84,7 +84,7 @@ const ItemPublishTab = (): JSX.Element => {
     <Stack spacing={1}>
       <CategoriesContainer itemId={item.id} />
       <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }}>
-        <LanguagesContainer itemId={item.id} />
+        <LanguageContainer item={item} />
         <LicenseContainer item={item} />
       </Stack>
     </Stack>

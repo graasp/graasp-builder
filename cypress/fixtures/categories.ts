@@ -66,16 +66,6 @@ export const ITEM_WITH_CATEGORIES: ItemForTest = {
   categories: SAMPLE_ITEM_CATEGORIES,
 };
 
-export const ITEM_WITH_LANGUAGE: ItemForTest = {
-  ...PUBLISHED_ITEM,
-  settings: {
-    tags: CUSTOMIZED_TAGS,
-    displayCoEditors: true,
-  },
-  // for tests
-  categories: SAMPLE_ITEM_LANGUAGE,
-};
-
 export const ITEM_WITH_CATEGORIES_CONTEXT = {
   items: [ITEM_WITH_CATEGORIES],
   itemValidationGroups: [

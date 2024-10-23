@@ -29,12 +29,6 @@
   },
   "rules": {
     "import/order": "off",
-    "react/function-component-definition": [
-      2,
-      {
-        "namedComponents": "arrow-function",
-      },
-    ],
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     // remove when possible
@@ -109,6 +103,7 @@
       },
     ],
     "import/prefer-default-export": "off",
+    "react/function-component-definition": "off",
   },
   "overrides": [
     {
