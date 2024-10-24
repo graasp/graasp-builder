@@ -1,10 +1,6 @@
 import { MenuItem, Select } from '@mui/material';
 
-import {
-  DescriptionPlacement,
-  DescriptionPlacementType,
-  DiscriminatedItem,
-} from '@graasp/sdk';
+import { DescriptionPlacement, DescriptionPlacementType } from '@graasp/sdk';
 
 import { CornerDownRightIcon, CornerUpRightIcon } from 'lucide-react';
 
@@ -20,22 +16,19 @@ import ItemSettingProperty from '../settings/ItemSettingProperty';
 const DEFAULT_PLACEMENT = DescriptionPlacement.BELOW;
 
 type DescriptionPlacementFormProps = {
-  updatedProperties: Partial<DiscriminatedItem>;
-  onPlacementChanged: (payload: DescriptionPlacementType) => void;
+  onPlacementChange: (payload: DescriptionPlacementType) => void;
+  descriptionPlacement?: DescriptionPlacementType;
 };
 
 const DescriptionPlacementForm = ({
-  updatedProperties,
-  onPlacementChanged,
+  onPlacementChange,
+  descriptionPlacement = DEFAULT_PLACEMENT,
 }: DescriptionPlacementFormProps): JSX.Element | null => {
   const { t } = useBuilderTranslation();
 
   const handlePlacementChanged = (placement: string): void => {
-    onPlacementChanged(placement as DescriptionPlacementType);
+    onPlacementChange(placement as DescriptionPlacementType);
   };
-  const descriptionPlacement =
-    updatedProperties.settings?.descriptionPlacement ?? DEFAULT_PLACEMENT;
-
   return (
     <ItemSettingProperty
       title={t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE)}

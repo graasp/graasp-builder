@@ -92,16 +92,11 @@ const FileForm = ({
           />
         )}
         <DescriptionForm
-          setChanges={(v) => {
-            if (v.description) {
-              setValue('description', v.description);
-            }
-            if (v.settings?.descriptionPlacement) {
-              setValue(
-                'descriptionPlacement',
-                v.settings?.descriptionPlacement,
-              );
-            }
+          onPlacementChange={(newValue) =>
+            setValue('descriptionPlacement', newValue)
+          }
+          onDescriptionChange={(newValue) => {
+            setValue('description', newValue);
           }}
           description={description ?? item?.description ?? ''}
           descriptionPlacement={
