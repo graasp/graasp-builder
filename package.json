@@ -20,7 +20,7 @@
     "@emotion/styled": "11.13.0",
     "@graasp/chatbox": "3.3.0",
     "@graasp/map": "1.19.0",
-    "@graasp/query-client": "github:graasp/graasp-query-client#upload-csv-mutations",
+    "@graasp/query-client": "5.0.0",
     "@graasp/sdk": "4.32.1",
     "@graasp/stylis-plugin-rtl": "2.2.0",
     "@graasp/translations": "1.39.0",

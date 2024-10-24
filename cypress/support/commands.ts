@@ -48,11 +48,9 @@ import {
   mockGetItemLoginSchema,
   mockGetItemLoginSchemaType,
   mockGetItemMembershipsForItem,
-  mockGetItemTags,
   mockGetItemThumbnailUrl,
   mockGetItemValidationGroups,
   mockGetItems,
-  mockGetItemsTags,
   mockGetLatestValidationGroup,
   mockGetLinkMetadata,
   mockGetManyPublishItemInformations,
@@ -237,10 +235,6 @@ Cypress.Commands.add(
     mockPutItemLoginSchema(cachedItems, putItemLoginError);
 
     mockGetItemMembershipsForItem(items, currentMember);
-
-    mockGetItemTags(items);
-
-    mockGetItemsTags(items);
 
     mockPostItemTag(cachedItems, currentMember, postItemTagError);
 

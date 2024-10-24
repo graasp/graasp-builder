@@ -67,7 +67,6 @@ const {
   buildPostItemLoginSignInRoute,
   buildGetItemLoginSchemaRoute,
   buildGetItemMembershipsForItemsRoute,
-  buildGetItemTagsRoute,
   buildPostItemTagRoute,
   buildPatchCurrentMemberRoute,
   buildEditItemMembershipRoute,
@@ -1099,39 +1098,6 @@ export const mockDeleteItemMembershipForItem = (): void => {
       reply('true');
     },
   ).as('deleteItemMembership');
-};
-
-export const mockGetItemTags = (items: ItemForTest[]): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: new RegExp(`${API_HOST}/${buildGetItemTagsRoute(ID_FORMAT)}$`),
-    },
-    ({ reply, url }) => {
-      const itemId = url.slice(API_HOST.length).split('/')[2];
-      const result = items.find(({ id }) => id === itemId)?.tags || [];
-      reply(result);
-    },
-  ).as('getItemTags');
-};
-
-export const mockGetItemsTags = (items: ItemForTest[]): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: `${API_HOST}/items/tags?id=*`,
-    },
-    ({ reply, url }) => {
-      const ids = new URL(url).searchParams.getAll('id');
-      const result = ids.map(
-        (itemId) =>
-          items.find(({ id }) => id === itemId)?.tags || [
-            { statusCode: StatusCodes.NOT_FOUND },
-          ],
-      );
-      reply(result);
-    },
-  ).as('getItemsTags');
 };
 
 export const mockPostItemTag = (
