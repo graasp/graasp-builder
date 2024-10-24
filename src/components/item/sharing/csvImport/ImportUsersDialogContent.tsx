@@ -108,6 +108,8 @@ const ImportUsersDialogContent = ({
     isSuccess: isSuccessPostingCSVWithTemplate,
   } = mutations.useCSVUserImportWithTemplate();
 
+  const isSuccess = isSuccessPostingCSV || isSuccessPostingCSVWithTemplate;
+
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     if (target.files?.length) {
       const file = target.files?.[0];
@@ -210,7 +212,7 @@ const ImportUsersDialogContent = ({
             userCsvDataWithTemplate={userCsvDataWithTemplate}
             error={userCSVErrorWithTemplate}
           />
-          {(isSuccessPostingCSV || isSuccessPostingCSVWithTemplate) && (
+          {isSuccess && (
             <Alert severity="success">
               <AlertTitle>{t(BUILDER.IMPORT_CSV_SUCCESS_TITLE)}</AlertTitle>
               <Typography>{t(BUILDER.IMPORT_CSV_SUCCESS_TEXT)}</Typography>
@@ -223,7 +225,7 @@ const ImportUsersDialogContent = ({
           id={SHARE_ITEM_FROM_CSV_CANCEL_BUTTON_ID}
           variant="text"
           onClick={handleClose}
-          disabled={isSuccessPostingCSV}
+          disabled={isSuccess}
         >
           {translateCommon(COMMON.CANCEL_BUTTON)}
         </Button>
@@ -231,11 +233,11 @@ const ImportUsersDialogContent = ({
         <Button
           id={SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}
           variant="contained"
-          onClick={isSuccessPostingCSV ? handleClose : handlePostUserCSV}
+          onClick={isSuccess ? handleClose : handlePostUserCSV}
           color="primary"
           disabled={!isConfirmButtonEnabled}
         >
-          {isSuccessPostingCSV || isSuccessPostingCSVWithTemplate
+          {isSuccess
             ? translateCommon(COMMON.CLOSE_BUTTON)
             : translateCommon(COMMON.CONFIRM_BUTTON)}
         </Button>
