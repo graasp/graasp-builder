@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { IconButton, TextField } from '@mui/material';
 
@@ -8,18 +8,18 @@ import { useBuilderTranslation } from '@/config/i18n';
 import { BUILDER } from '@/langs/constants';
 
 type LinkDescriptionFieldProps = {
-  value: string | null | undefined;
-  onChange: (newValue: string) => void;
   onRestore: () => void;
   onClear: () => void;
-  showRestore: boolean;
+  showRestoreButton?: boolean;
+  form: UseFormRegisterReturn;
+  showClearButton?: boolean;
 };
 const LinkDescriptionField = ({
-  value,
-  onChange,
+  form,
   onRestore,
   onClear,
-  showRestore,
+  showRestoreButton,
+  showClearButton,
 }: LinkDescriptionFieldProps): JSX.Element => {
   const { t } = useBuilderTranslation();
   return (
@@ -27,17 +27,14 @@ const LinkDescriptionField = ({
       label={t(BUILDER.DESCRIPTION_LABEL)}
       variant="standard"
       InputLabelProps={{ shrink: true }}
-      value={value}
-      onChange={({
-        target: { value: newValue },
-      }: ChangeEvent<HTMLInputElement>) => onChange(newValue)}
+      {...form}
       InputProps={{
         endAdornment: (
           <>
             <IconButton
               onClick={onRestore}
               sx={{
-                visibility: showRestore ? 'visible' : 'hidden',
+                visibility: showRestoreButton ? 'visible' : 'hidden',
               }}
             >
               <Undo2Icon size="20" />
@@ -46,7 +43,7 @@ const LinkDescriptionField = ({
             <IconButton
               onClick={onClear}
               sx={{
-                visibility: value ? 'visible' : 'hidden',
+                visibility: showClearButton ? 'visible' : 'hidden',
               }}
             >
               <XIcon size="20" />

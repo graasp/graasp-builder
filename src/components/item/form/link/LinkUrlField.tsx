@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { IconButton, TextField } from '@mui/material';
 
@@ -9,30 +9,26 @@ import { ITEM_FORM_LINK_INPUT_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 type LinkUrlFieldProps = {
-  value: string;
-  isValid: boolean;
   onClear: () => void;
-  onChange: (newValue: string) => void;
+  form: UseFormRegisterReturn;
+  showClearButton?: boolean;
+  isValid: boolean;
 };
 const LinkUrlField = ({
-  value,
-  isValid,
   onClear,
-  onChange,
+  form,
+  showClearButton = false,
+  isValid,
 }: LinkUrlFieldProps): JSX.Element => {
   const { t } = useBuilderTranslation();
   return (
     <TextField
       variant="standard"
       id={ITEM_FORM_LINK_INPUT_ID}
-      error={!isValid}
       autoFocus
       margin="dense"
       label={t(BUILDER.CREATE_ITEM_LINK_LABEL)}
-      value={value}
-      onChange={({
-        target: { value: newValue },
-      }: ChangeEvent<HTMLInputElement>) => onChange(newValue)}
+      {...form}
       helperText={isValid ? '' : t(BUILDER.CREATE_ITEM_LINK_INVALID_LINK_ERROR)}
       InputLabelProps={{ shrink: true }}
       InputProps={{
@@ -40,7 +36,7 @@ const LinkUrlField = ({
           <IconButton
             onClick={onClear}
             sx={{
-              visibility: value ? 'visible' : 'hidden',
+              visibility: showClearButton ? 'visible' : 'hidden',
             }}
           >
             <XIcon fontSize="20" />
