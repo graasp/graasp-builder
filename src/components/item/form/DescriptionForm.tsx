@@ -1,6 +1,6 @@
 import { Box, FormLabel, Stack, Typography } from '@mui/material';
 
-import { DescriptionPlacementType, DiscriminatedItem } from '@graasp/sdk';
+import { DescriptionPlacementType } from '@graasp/sdk';
 import TextEditor from '@graasp/ui/text-editor';
 
 import { useBuilderTranslation } from '@/config/i18n';
@@ -10,33 +10,22 @@ import DescriptionPlacementForm from './DescriptionPlacementForm';
 
 type DescriptionFormProps = {
   id?: string;
-  setChanges: (payload: Partial<DiscriminatedItem>) => void;
   description?: string;
   descriptionPlacement?: DescriptionPlacementType;
   showPlacement?: boolean;
+  onPlacementChange: (v: DescriptionPlacementType) => void;
+  onDescriptionChange: (v: string) => void;
 };
 
 const DescriptionForm = ({
   id,
-  description,
+  description = '',
   descriptionPlacement,
-  setChanges,
   showPlacement = true,
+  onPlacementChange,
+  onDescriptionChange,
 }: DescriptionFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const onChange = (content: string): void => {
-    setChanges({
-      description: content,
-    });
-  };
-
-  const onPlacementChanged = (placement: DescriptionPlacementType): void => {
-    setChanges({
-      settings: {
-        descriptionPlacement: placement,
-      },
-    });
-  };
 
   return (
     <Stack spacing={2}>
@@ -48,16 +37,16 @@ const DescriptionForm = ({
         </FormLabel>
         <TextEditor
           id={id}
-          value={description ?? ''}
-          onChange={onChange}
+          value={description}
+          onChange={onDescriptionChange}
           showActions={false}
         />
       </Box>
 
       {showPlacement && (
         <DescriptionPlacementForm
-          updatedProperties={{ settings: { descriptionPlacement } }}
-          onPlacementChanged={onPlacementChanged}
+          descriptionPlacement={descriptionPlacement}
+          onPlacementChange={onPlacementChange}
         />
       )}
     </Stack>
