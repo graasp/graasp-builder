@@ -14,7 +14,7 @@ import {
 import CategoriesContainer from '@/components/item/publish/CategoriesContainer';
 import CoEditorsContainer from '@/components/item/publish/CoEditorsContainer';
 import EditItemDescription from '@/components/item/publish/EditItemDescription';
-import LanguageContainer from '@/components/item/publish/LanguageContainer';
+import { LanguageContainer } from '@/components/item/publish/LanguageContainer';
 import LicenseContainer from '@/components/item/publish/LicenseContainer';
 import PublicationStatusComponent from '@/components/item/publish/PublicationStatusComponent';
 import PublicationThumbnail from '@/components/item/publish/PublicationThumbnail';
