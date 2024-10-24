@@ -102,7 +102,7 @@
   "ITEM_CATEGORIES_CONTAINER_EMPTY_BUTTON": "Add a category",
   "ITEM_LANGUAGE_CONTAINER_TITLE": "Language",
   "ITEM_LANGUAGE_DESCRIPTION": "Choose the language which your item is written in.",
-  "ITEM_LANGUAGE_DESCRIPTION_LIMITATION": "Graasp proposes a fixed set of languages. If your language is not in the set, you should use English.",
+  "ITEM_LANGUAGE_DESCRIPTION_LIMITATION": "Graasp proposes a fixed set of languages. If your language is not in the set, you can contact us to discuss about possible support.",
   "ITEM_LICENSE_CONTAINER_TITLE": "License",
   "ITEM_LICENSE_CONTAINER_MISSING_WARNING": "Define the license to explain how other users can use your publication",
   "ITEM_LICENSE_CONTAINER_EMPTY_BUTTON": "Add a license",

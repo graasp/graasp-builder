@@ -102,7 +102,7 @@
   "ITEM_CATEGORIES_CONTAINER_EMPTY_BUTTON": "Ajouter une catégorie",
   "ITEM_LANGUAGE_CONTAINER_TITLE": "Langue",
   "ITEM_LANGUAGE_DESCRIPTION": "Choisissez la langue dans laquelle l'élément est écrit.",
-  "ITEM_LANGUAGE_DESCRIPTION_LIMITATION": "Graasp propose un set défini de langues. Si votre langue ne fait pas partie de la liste, choisissez English.",
+  "ITEM_LANGUAGE_DESCRIPTION_LIMITATION": "Graasp propose un set défini de langues. Si votre langue ne fait pas partie de la liste, vous pouvez nous contacter pour discuter d'un éventuel support.",
   "ITEM_LICENSE_CONTAINER_TITLE": "Licence",
   "ITEM_LICENSE_CONTAINER_MISSING_WARNING": "Définir la licence pour expliquer comment les autres utilisateurs peuvent utiliser votre publication",
   "ITEM_LICENSE_CONTAINER_EMPTY_BUTTON": "Ajouter une licence",

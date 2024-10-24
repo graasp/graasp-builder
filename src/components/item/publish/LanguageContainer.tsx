@@ -46,7 +46,7 @@ export function LanguageContainer({ item }: Props): JSX.Element {
             <Typography variant="body1">
               {t(BUILDER.ITEM_LANGUAGE_DESCRIPTION)}
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="caption">
               {t(BUILDER.ITEM_LANGUAGE_DESCRIPTION_LIMITATION)}
             </Typography>
             <LanguageSelect item={item} />
