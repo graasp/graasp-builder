@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 import {
   FormControl,
@@ -17,7 +18,6 @@ import {
   ItemType,
   LinkItemType,
   buildLinkExtra,
-  getLinkExtra,
   getLinkThumbnailUrl,
 } from '@graasp/sdk';
 import { LinkCard, LinkItem } from '@graasp/ui';
@@ -30,17 +30,11 @@ import { isUrlValid } from '../../../../utils/item';
 import NameForm from '../NameForm';
 import LinkDescriptionField from './LinkDescriptionField';
 import LinkUrlField from './LinkUrlField';
-import {
-  LinkType,
-  getLinkType,
-  getSettingsFromLinkType,
-  normalizeURL,
-} from './linkUtils';
+import { LinkType, getSettingsFromLinkType, normalizeURL } from './linkUtils';
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
   item?: LinkItemType;
-  updatedProperties: Partial<LinkItemType>;
 };
 
 const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
@@ -62,96 +56,55 @@ const StyledDiv = styled('div')(() => ({
   },
 }));
 
-const LinkForm = ({
-  onChange,
-  item,
-  updatedProperties,
-}: Props): JSX.Element => {
-  const [linkContent, setLinkContent] = useState<string>('');
-  const [isDescriptionDirty, setIsDescriptionDirty] = useState<boolean>(false);
+type Inputs = {
+  name: string;
+  linkType: (typeof LinkType)[keyof typeof LinkType];
+  description: string;
+  url: string;
+};
+
+const LinkForm = ({ onChange, item }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { data: linkData } = hooks.useLinkMetadata(normalizeURL(linkContent));
+  const { register, watch, control, setValue, reset } = useForm<Inputs>();
+  const url = watch('url');
 
-  // get value from the updatedProperties
-  const linkType = getLinkType(updatedProperties.settings);
-
-  const handleLinkInput = (value: string) => {
-    setLinkContent(value);
-    onChange({
-      extra: buildLinkExtra({
-        // when used inside the NewItem Modal this component does not receive the item prop
-        // so the https will not show, but it will be added when we submit the url.
-        url: normalizeURL(value),
-        html: '',
-        thumbnails: [],
-        icons: [],
-      }),
-    });
-  };
-
-  let url = '';
-  let description: string | undefined = '';
-  const extraProps = updatedProperties.extra;
-  if (extraProps && ItemType.LINK in extraProps) {
-    ({ url, description } = getLinkExtra(extraProps) || {});
-  }
-  // link is considered valid if it is either empty, or it is a valid url
-  const isLinkValid = linkContent.length === 0 || isUrlValid(url);
-
-  const onChangeLinkType = ({
-    target: { value },
-  }: ChangeEvent<HTMLInputElement>) => {
-    const settings = getSettingsFromLinkType(value);
-    onChange({ settings });
-  };
-
-  const onClickClearURL = () => {
-    setLinkContent('');
-  };
-  const onClickClearDescription = () => {
-    onChange({ description: '' });
-    setIsDescriptionDirty(false);
-  };
-  const onClickRestoreDefaultDescription = () => {
-    onChange({ description: linkData?.description });
-    setIsDescriptionDirty(false);
-  };
-  const onChangeDescription = (value: string) => {
-    setIsDescriptionDirty(true);
-    onChange({ description: value });
-  };
+  const name = watch('name');
+  const linkType = watch('linkType');
+  const description = watch('description');
+  const { data: linkData } = hooks.useLinkMetadata(
+    isUrlValid(normalizeURL(url)) ? normalizeURL(url) : '',
+  );
 
   // apply the description from the api to the field
   // this is only run once.
   useEffect(
     () => {
-      // this is the object on which we will define the props to be updated
-      const updatedProps: Partial<LinkItemType> = {};
-
-      if (!isDescriptionDirty && linkData?.description) {
-        updatedProps.description = linkData?.description;
+      if (!description && linkData?.description) {
+        setValue('description', linkData.description);
       }
-      if (linkData?.title) {
-        updatedProps.name = linkData.title;
-      }
-      if (linkData?.description) {
-        updatedProps.extra = buildLinkExtra({
-          ...updatedProperties.extra?.embeddedLink,
-          url: updatedProperties.extra?.embeddedLink.url || '',
-          description: linkData.description,
-          thumbnails: linkData.thumbnails,
-          icons: linkData.icons,
-        });
-      }
-      // update props in one call to remove issue of race updates
-      if (Object.keys(updatedProps).length) {
-        // this should be called only once !
-        onChange(updatedProps);
+      if (!name && linkData?.title) {
+        setValue('name', linkData.title);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [linkData],
   );
+
+  // synchronize upper state after async local state change
+  useEffect(() => {
+    onChange({
+      name,
+      description,
+      extra: buildLinkExtra({
+        url,
+        description: linkData?.description,
+        thumbnails: linkData?.thumbnails,
+        icons: linkData?.icons,
+      }),
+      settings: getSettingsFromLinkType(linkType),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [description, linkData, linkType, name, url]);
 
   const embeddedLinkPreview = useMemo(
     () => (
@@ -171,105 +124,111 @@ const LinkForm = ({
     [url],
   );
 
+  const thumbnail = linkData
+    ? getLinkThumbnailUrl(buildLinkExtra({ ...linkData, url }))
+    : undefined;
+
   return (
     <Stack gap={1} overflow="scroll">
       <LinkUrlField
-        isValid={isLinkValid}
-        value={linkContent}
-        onChange={handleLinkInput}
-        onClear={onClickClearURL}
+        form={register('url', { validate: isUrlValid })}
+        onClear={() => reset({ url: '' })}
+        showClearButton={Boolean(url)}
+        isValid={isUrlValid(normalizeURL(url))}
       />
       <NameForm
-        name={updatedProperties?.name ?? item?.name}
-        autoFocus={false}
         required
-        setChanges={onChange}
+        nameForm={register('name', { value: item?.name })}
+        reset={() => reset({ name: '' })}
       />
       <LinkDescriptionField
-        value={updatedProperties.description}
-        onChange={onChangeDescription}
-        onRestore={onClickRestoreDefaultDescription}
-        onClear={onClickClearDescription}
-        showRestore={description !== linkData?.description}
+        onRestore={() => setValue('description', linkData?.description ?? '')}
+        form={register('description')}
+        onClear={() => reset({ description: '' })}
+        showRestoreButton={
+          Boolean(description) && description !== linkData?.description
+        }
+        showClearButton={Boolean(description)}
       />
       <FormControl>
         <FormLabel>
           <Typography variant="caption">
             {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_TITLE)}
           </Typography>
-          {linkContent ? (
-            <RadioGroup
-              name="use-radio-group"
-              value={linkType}
-              onChange={onChangeLinkType}
-              sx={{ display: 'flex', gap: 2 }}
-            >
-              <StyledFormControlLabel
-                value={LinkType.Default}
-                label={<Link href={url}>{linkContent}</Link>}
-                control={<Radio />}
-              />
-              <StyledFormControlLabel
-                value={LinkType.Fancy}
-                label={
-                  <LinkCard
-                    title={linkData?.title || ''}
-                    url={linkContent}
-                    thumbnail={
-                      updatedProperties.extra &&
-                      getLinkThumbnailUrl(updatedProperties.extra)
-                    }
-                    description={description || ''}
-                  />
-                }
-                control={<Radio />}
-                slotProps={{ typography: { width: '100%', minWidth: '0px' } }}
-                sx={{ minWidth: '0px', width: '100%' }}
-              />
-              {linkData?.html && linkData.html !== '' && (
-                <StyledFormControlLabel
-                  value={LinkType.Embedded}
-                  label={
-                    // eslint-disable-next-line react/no-danger
-                    <StyledDiv
-                      sx={{}}
-                      dangerouslySetInnerHTML={{ __html: linkData.html }}
-                    />
-                  }
-                  control={<Radio />}
-                  slotProps={{
-                    typography: {
-                      width: '100%',
-                      minWidth: '0px',
-                    },
-                  }}
-                />
-              )}
-              {
-                // only show this options when embedding is allowed and there is no html code
-                // as the html will take precedence over showing the site as an iframe
-                // and some sites like daily motion actually allow both, we want to allow show the html setting
-                linkData?.isEmbeddingAllowed && !linkData?.html && (
+          {url ? (
+            <Controller
+              control={control}
+              defaultValue={LinkType.Default}
+              name="linkType"
+              render={({ field }) => (
+                <RadioGroup sx={{ display: 'flex', gap: 2 }} {...field}>
                   <StyledFormControlLabel
-                    value={LinkType.Embedded}
-                    label={embeddedLinkPreview}
+                    value={LinkType.Default}
+                    label={<Link href={url}>{url}</Link>}
+                    control={<Radio />}
+                  />
+                  <StyledFormControlLabel
+                    value={LinkType.Fancy}
+                    label={
+                      <LinkCard
+                        title={linkData?.title || ''}
+                        url={url}
+                        thumbnail={thumbnail}
+                        description={description || ''}
+                      />
+                    }
                     control={<Radio />}
                     slotProps={{
-                      typography: {
-                        width: '100%',
-                        minWidth: '0px',
-                      },
+                      typography: { width: '100%', minWidth: '0px' },
                     }}
-                    sx={{
-                      // this ensure the iframe takes up all horizontal space
-                      '& iframe': {
-                        width: '100%',
-                      },
-                    }}
+                    sx={{ minWidth: '0px', width: '100%' }}
                   />
-                )
-              }
-            </RadioGroup>
+                  {linkData?.html && linkData.html !== '' && (
+                    <StyledFormControlLabel
+                      value={LinkType.Embedded}
+                      label={
+                        // eslint-disable-next-line react/no-danger
+                        <StyledDiv
+                          sx={{}}
+                          dangerouslySetInnerHTML={{ __html: linkData.html }}
+                        />
+                      }
+                      control={<Radio />}
+                      slotProps={{
+                        typography: {
+                          width: '100%',
+                          minWidth: '0px',
+                        },
+                      }}
+                    />
+                  )}
+                  {
+                    // only show this options when embedding is allowed and there is no html code
+                    // as the html will take precedence over showing the site as an iframe
+                    // and some sites like daily motion actually allow both, we want to allow show the html setting
+                    linkData?.isEmbeddingAllowed && !linkData?.html && (
+                      <StyledFormControlLabel
+                        value={LinkType.Embedded}
+                        label={embeddedLinkPreview}
+                        control={<Radio />}
+                        slotProps={{
+                          typography: {
+                            width: '100%',
+                            minWidth: '0px',
+                          },
+                        }}
+                        sx={{
+                          // this ensure the iframe takes up all horizontal space
+                          '& iframe': {
+                            width: '100%',
+                          },
+                        }}
+                      />
+                    )
+                  }
+                </RadioGroup>
+              )}
+            />
           ) : (
             <Typography fontStyle="italic">
               {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_HELPER_TEXT)}
