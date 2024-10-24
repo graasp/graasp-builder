@@ -1,131 +1,57 @@
-import { Category, CategoryType } from '@graasp/sdk';
+import { PackedFolderItemFactory } from '@graasp/sdk';
 
 import { buildItemPath } from '../../../../src/config/paths';
 import {
-  LANGUAGES_ADD_BUTTON_HEADER,
+  LANGUAGE_SELECTOR_ID,
   LIBRARY_SETTINGS_LANGUAGES_ID,
-  MUI_CHIP_REMOVE_BTN,
-  buildCategoryDropdownParentSelector,
-  buildCategorySelectionId,
-  buildCategorySelectionOptionId,
   buildDataCyWrapper,
-  buildDataTestIdWrapper,
+  buildPublishAttrContainer,
   buildPublishButtonId,
-  buildPublishChip,
-  buildPublishChipContainer,
 } from '../../../../src/config/selectors';
-import {
-  ITEM_WITH_LANGUAGE,
-  SAMPLE_CATEGORIES,
-} from '../../../fixtures/categories';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
 
-const LANGUAGES_DATA_CY = buildDataCyWrapper(
-  buildPublishChipContainer(LIBRARY_SETTINGS_LANGUAGES_ID),
-);
+const LANGUAGE_CHIP_SELECTOR = `${buildDataCyWrapper(
+  buildPublishAttrContainer(LIBRARY_SETTINGS_LANGUAGES_ID),
+)} [role="button"]`;
 
 const openPublishItemTab = (id: string) =>
   cy.get(`#${buildPublishButtonId(id)}`).click();
 
-const toggleOption = (
-  id: string,
-  categoryType: CategoryType | `${CategoryType}`,
-) => {
-  cy.get(`#${buildCategorySelectionId(categoryType)}`).click();
-  cy.get(`#${buildCategorySelectionOptionId(categoryType, id)}`).click();
+const toggleOption = (lang: string) => {
+  cy.get(`#${LANGUAGE_SELECTOR_ID}`).click();
+  cy.get(`[role="option"][data-value="${lang}"]`).click();
 };
 
-const openLanguagesModal = () => {
-  cy.get(buildDataCyWrapper(LANGUAGES_ADD_BUTTON_HEADER)).click();
+const openLanguageModal = () => {
+  cy.get(LANGUAGE_CHIP_SELECTOR).click();
 };
-
-describe('Item without language', () => {
-  it('Display item without language', () => {
-    const item = { ...ITEM_WITH_LANGUAGE, categories: [] as Category[] };
-    cy.setUpApi({ items: [item] });
-    cy.visit(buildItemPath(item.id));
-    openPublishItemTab(item.id);
-
-    // check for not displaying if no categories
-    cy.get(LANGUAGES_DATA_CY).should('not.exist');
-  });
-});
 
 describe('Item with language', () => {
-  const item = ITEM_WITH_LANGUAGE;
+  const item = PackedFolderItemFactory({ lang: 'fr' });
 
   beforeEach(() => {
-    cy.setUpApi({ items: [ITEM_WITH_LANGUAGE] });
+    cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
   });
 
   it('Display item language', () => {
     // check for displaying value
-    const {
-      categories: [{ category }],
-    } = item;
-    const { name } = SAMPLE_CATEGORIES.find(({ id }) => id === category.id);
-    cy.get(LANGUAGES_DATA_CY).contains(name);
+
+    cy.get(LANGUAGE_CHIP_SELECTOR).contains('Français');
   });
 
-  describe('Delete a language', () => {
-    let id: string;
-    let category: Category;
-    let categoryType: Category['type'];
+  it('Change language', () => {
+    openLanguageModal();
+    toggleOption('es');
 
-    beforeEach(() => {
+    cy.wait('@editItem').then((data) => {
       const {
-        categories: [itemCategory],
-      } = item;
-      ({ category, id } = itemCategory);
-      categoryType = SAMPLE_CATEGORIES.find(
-        ({ id: cId }) => cId === category.id,
-      )?.type;
-    });
-
-    afterEach(() => {
-      cy.wait('@deleteItemCategory').then((data) => {
-        const {
-          request: { url },
-        } = data;
-        expect(url.split('/')).contains(id);
-      });
-    });
-
-    it('Using Dropdown in modal', () => {
-      openLanguagesModal();
-      toggleOption(category.id, categoryType);
-    });
-
-    it('Using cross on language tag in modal', () => {
-      openLanguagesModal();
-
-      cy.get(
-        buildDataCyWrapper(buildCategoryDropdownParentSelector(categoryType)),
-      )
-        .find(`[data-tag-index=0] > svg`)
-        .click();
-    });
-
-    it('Using cross on language container', () => {
-      cy.get(buildDataCyWrapper(buildPublishChip(category.name)))
-        .find(buildDataTestIdWrapper(MUI_CHIP_REMOVE_BTN))
-        .click();
-    });
-  });
-
-  it('Add a language', () => {
-    openLanguagesModal();
-    const { type, id } = SAMPLE_CATEGORIES[3];
-    toggleOption(id, type);
-
-    cy.wait('@postItemCategory').then((data) => {
-      const {
-        request: { url },
+        request: { url, body },
       } = data;
       expect(url.split('/')).contains(item.id);
+      expect(body.lang).to.eq('es');
     });
   });
 });

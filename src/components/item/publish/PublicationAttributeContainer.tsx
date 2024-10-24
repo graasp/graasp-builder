@@ -36,12 +36,12 @@ type Props = {
   dataTestId: string;
   title: string;
   titleIcon?: JSX.Element;
-  titleActionBtn: JSX.Element;
+  titleActionBtn?: JSX.Element;
   content?: JSX.Element | JSX.Element[];
   isLoading?: boolean;
-  emptyDataMessage: string;
-  attributeDescription: string;
-  onEmptyClick: () => void;
+  emptyDataMessage?: string;
+  attributeDescription?: string;
+  onEmptyClick?: () => void;
 };
 
 export const PublicationAttributeContainer = ({
@@ -83,7 +83,7 @@ export const PublicationAttributeContainer = ({
 
   const handleOnContainerClick = () => {
     if (hasNoData) {
-      onEmptyClick();
+      onEmptyClick?.();
     }
   };
 
