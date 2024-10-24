@@ -180,10 +180,10 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
 
       {item.type !== ItemType.FOLDER && (
         <DescriptionPlacementForm
-          updatedProperties={item}
-          onPlacementChanged={(newPlacement) =>
+          onPlacementChange={(newPlacement) =>
             handleSettingChanged('descriptionPlacement', newPlacement)
           }
+          descriptionPlacement={item.settings.descriptionPlacement}
         />
       )}
     </Stack>
