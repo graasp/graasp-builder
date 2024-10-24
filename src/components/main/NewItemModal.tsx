@@ -234,10 +234,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
             </Typography>
-            <LinkForm
-              onChange={updateItem}
-              updatedProperties={updatedPropertiesPerType[ItemType.LINK]}
-            />
+            <LinkForm onChange={updateItem} />
           </>
         );
       case ItemType.DOCUMENT:
