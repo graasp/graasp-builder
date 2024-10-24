@@ -69,7 +69,10 @@ Cypress.Commands.add('clickTreeMenuItem', (value: string) => {
 Cypress.Commands.add(
   'handleTreeMenu',
   (toItemPath, treeRootId = HOME_MODAL_ITEM_ID) => {
-    const ids = getParentsIdsFromPath(toItemPath);
+    const ids =
+      toItemPath === MY_GRAASP_ITEM_PATH
+        ? []
+        : getParentsIdsFromPath(toItemPath);
 
     [MY_GRAASP_ITEM_PATH, ...ids].forEach((value, idx, array) => {
       cy.get(`#${treeRootId}`).then(($tree) => {

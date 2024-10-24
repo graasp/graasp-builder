@@ -210,7 +210,7 @@ const ImportUsersDialogContent = ({
             userCsvDataWithTemplate={userCsvDataWithTemplate}
             error={userCSVErrorWithTemplate}
           />
-          {isSuccessPostingCSV && (
+          {(isSuccessPostingCSV || isSuccessPostingCSVWithTemplate) && (
             <Alert severity="success">
               <AlertTitle>{t(BUILDER.IMPORT_CSV_SUCCESS_TITLE)}</AlertTitle>
               <Typography>{t(BUILDER.IMPORT_CSV_SUCCESS_TEXT)}</Typography>
