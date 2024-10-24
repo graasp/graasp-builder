@@ -2,12 +2,14 @@ import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
 import {
   Alert,
+  AlertTitle,
   Button,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Stack,
+  Typography,
 } from '@mui/material';
 
 import { DiscriminatedItem } from '@graasp/sdk';
@@ -97,12 +99,16 @@ const ImportUsersDialogContent = ({
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false);
   const { t } = useBuilderTranslation();
+  const { mutate: postUserCsv, isSuccess: isSuccessPostingCSV } =
+    mutations.useCSVUserImport();
   const {
-    mutate: postUserCsv,
-    data: userCsvData,
-    error: userCSVError,
-    isSuccess: isSuccessPostingCSV,
-  } = mutations.useCSVUserImport();
+    mutate: postUserCsvWithTemplate,
+    data: userCsvDataWithTemplate,
+    error: userCSVErrorWithTemplate,
+    isSuccess: isSuccessPostingCSVWithTemplate,
+  } = mutations.useCSVUserImportWithTemplate();
+
+  const isSuccess = isSuccessPostingCSV || isSuccessPostingCSVWithTemplate;
 
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     if (target.files?.length) {
@@ -154,11 +160,18 @@ const ImportUsersDialogContent = ({
 
   const handlePostUserCSV = () => {
     if (csvFile) {
-      postUserCsv({
-        file: csvFile,
-        itemId: item.id,
-        templateItemId: selectedTemplateId,
-      });
+      if (selectedTemplateId) {
+        postUserCsvWithTemplate({
+          file: csvFile,
+          itemId: item.id,
+          templateItemId: selectedTemplateId,
+        });
+      } else {
+        postUserCsv({
+          file: csvFile,
+          itemId: item.id,
+        });
+      }
     } else {
       console.error('no file set');
     }
@@ -196,9 +209,15 @@ const ImportUsersDialogContent = ({
             />
           )}
           <DisplayInvitationSummary
-            userCsvData={userCsvData}
-            error={userCSVError}
+            userCsvDataWithTemplate={userCsvDataWithTemplate}
+            error={userCSVErrorWithTemplate}
           />
+          {isSuccess && (
+            <Alert severity="success">
+              <AlertTitle>{t(BUILDER.IMPORT_CSV_SUCCESS_TITLE)}</AlertTitle>
+              <Typography>{t(BUILDER.IMPORT_CSV_SUCCESS_TEXT)}</Typography>
+            </Alert>
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>
@@ -206,7 +225,7 @@ const ImportUsersDialogContent = ({
           id={SHARE_ITEM_FROM_CSV_CANCEL_BUTTON_ID}
           variant="text"
           onClick={handleClose}
-          disabled={isSuccessPostingCSV}
+          disabled={isSuccess}
         >
           {translateCommon(COMMON.CANCEL_BUTTON)}
         </Button>
@@ -214,11 +233,11 @@ const ImportUsersDialogContent = ({
         <Button
           id={SHARE_ITEM_FROM_CSV_CONFIRM_BUTTON_ID}
           variant="contained"
-          onClick={isSuccessPostingCSV ? handleClose : handlePostUserCSV}
+          onClick={isSuccess ? handleClose : handlePostUserCSV}
           color="primary"
           disabled={!isConfirmButtonEnabled}
         >
-          {isSuccessPostingCSV
+          {isSuccess
             ? translateCommon(COMMON.CLOSE_BUTTON)
             : translateCommon(COMMON.CONFIRM_BUTTON)}
         </Button>

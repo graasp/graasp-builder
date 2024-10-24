@@ -48,11 +48,9 @@ import {
   mockGetItemLoginSchema,
   mockGetItemLoginSchemaType,
   mockGetItemMembershipsForItem,
-  mockGetItemTags,
   mockGetItemThumbnailUrl,
   mockGetItemValidationGroups,
   mockGetItems,
-  mockGetItemsTags,
   mockGetLatestValidationGroup,
   mockGetLinkMetadata,
   mockGetManyPublishItemInformations,
@@ -99,6 +97,7 @@ import {
   mockUnpublishItem,
   mockUpdatePassword,
   mockUploadInvitationCSV,
+  mockUploadInvitationCSVWithTemplate,
   mockUploadItem,
 } from './server';
 
@@ -237,10 +236,6 @@ Cypress.Commands.add(
 
     mockGetItemMembershipsForItem(items, currentMember);
 
-    mockGetItemTags(items);
-
-    mockGetItemsTags(items);
-
     mockPostItemTag(cachedItems, currentMember, postItemTagError);
 
     mockDeleteItemTag(deleteItemTagError);
@@ -317,6 +312,8 @@ Cypress.Commands.add(
     mockDeleteInvitation(items, deleteInvitationError);
 
     mockUploadInvitationCSV(items, false);
+
+    mockUploadInvitationCSVWithTemplate(items, false);
 
     mockGetPublicationStatus(itemPublicationStatus);
     mockPublishItem(items);

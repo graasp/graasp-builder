@@ -67,7 +67,6 @@ const {
   buildPostItemLoginSignInRoute,
   buildGetItemLoginSchemaRoute,
   buildGetItemMembershipsForItemsRoute,
-  buildGetItemTagsRoute,
   buildPostItemTagRoute,
   buildPatchCurrentMemberRoute,
   buildEditItemMembershipRoute,
@@ -90,6 +89,7 @@ const {
   buildGetItemInvitationsForItemRoute,
   buildDeleteInvitationRoute,
   buildPatchInvitationRoute,
+  buildPostUserCSVUploadWithTemplateRoute,
   buildResendInvitationRoute,
   buildPostUserCSVUploadRoute,
   buildGetPublishedItemsForMemberRoute,
@@ -1100,39 +1100,6 @@ export const mockDeleteItemMembershipForItem = (): void => {
   ).as('deleteItemMembership');
 };
 
-export const mockGetItemTags = (items: ItemForTest[]): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: new RegExp(`${API_HOST}/${buildGetItemTagsRoute(ID_FORMAT)}$`),
-    },
-    ({ reply, url }) => {
-      const itemId = url.slice(API_HOST.length).split('/')[2];
-      const result = items.find(({ id }) => id === itemId)?.tags || [];
-      reply(result);
-    },
-  ).as('getItemTags');
-};
-
-export const mockGetItemsTags = (items: ItemForTest[]): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: `${API_HOST}/items/tags?id=*`,
-    },
-    ({ reply, url }) => {
-      const ids = new URL(url).searchParams.getAll('id');
-      const result = ids.map(
-        (itemId) =>
-          items.find(({ id }) => id === itemId)?.tags || [
-            { statusCode: StatusCodes.NOT_FOUND },
-          ],
-      );
-      reply(result);
-    },
-  ).as('getItemsTags');
-};
-
 export const mockPostItemTag = (
   items: ItemForTest[],
   currentMember: Member,
@@ -1834,15 +1801,30 @@ export const mockUploadInvitationCSV = (
       if (shouldThrowError) {
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
-      const query = new URL(url).searchParams;
-      if (query.get('templateId')) {
-        return reply([{ groupName: 'A', memberships: [], invitations: [] }]);
-      }
       const itemId = url.split('/').at(-3);
       const item = items.find(({ id }) => id === itemId);
       return reply({ memberships: item.memberships });
     },
   ).as('uploadCSV');
+};
+export const mockUploadInvitationCSVWithTemplate = (
+  items: ItemForTest[],
+  shouldThrowError: boolean,
+): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Post,
+      url: new RegExp(
+        `${API_HOST}/${buildPostUserCSVUploadWithTemplateRoute(ID_FORMAT)}`,
+      ),
+    },
+    ({ reply }) => {
+      if (shouldThrowError) {
+        return reply({ statusCode: StatusCodes.BAD_REQUEST });
+      }
+      return reply([{ groupName: 'A', memberships: [], invitations: [] }]);
+    },
+  ).as('uploadCSVWithTemplate');
 };
 
 export const mockGetPublicationStatus = (status: PublicationStatus): void => {
