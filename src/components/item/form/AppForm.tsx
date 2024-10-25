@@ -2,8 +2,14 @@ import { ChangeEventHandler, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { ArrowBack } from '@mui/icons-material';
-import { Alert, Box, Stack, TextField, Typography } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import {
+  Alert,
+  Box,
+  Grid2 as Grid,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 import { DiscriminatedItem, buildAppExtra } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
@@ -173,7 +179,7 @@ const AppForm = ({ onChange }: Props): JSX.Element => {
         onChange={searchAnApp}
       />
       <Box display="flex" flexGrow={1} minHeight="0px" overflow="scroll" p={1}>
-        <Grid2
+        <Grid
           container
           spacing={2}
           height="max-content"
@@ -194,7 +200,7 @@ const AppForm = ({ onChange }: Props): JSX.Element => {
             image={addNewImage}
             onClick={addCustomApp}
           />
-        </Grid2>
+        </Grid>
       </Box>
       <NameForm nameForm={register('name')} autoFocus={false} />
     </Stack>

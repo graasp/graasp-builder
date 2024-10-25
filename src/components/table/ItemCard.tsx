@@ -1,5 +1,4 @@
-import { Box, Typography } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { Box, Grid2 as Grid, Typography } from '@mui/material';
 
 import {
   DiscriminatedItem,
@@ -55,7 +54,7 @@ const ItemCard = ({
       : buildItemPath(item.id);
 
   const content = (
-    <Grid2
+    <Grid
       container
       height="100%"
       justifyContent="flex-start"
@@ -64,23 +63,35 @@ const ItemCard = ({
     >
       {dense ? (
         <>
-          <Grid2 xs={12} sm={12} md={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 12,
+              md: 6,
+            }}
+          >
             <Typography variant="caption">{item.type}</Typography>
-          </Grid2>
-          <Grid2 xs={12} sm={12} md={6}>
+          </Grid>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 12,
+              md: 6,
+            }}
+          >
             <Typography variant="caption">
               {dateColumnFormatter(item.updatedAt)}
             </Typography>
-          </Grid2>
+          </Grid>
         </>
       ) : (
-        <Grid2 xs={12}>
+        <Grid size={12}>
           <Typography variant="caption">
             <TextDisplay content={item.description ?? ''} />
           </Typography>
-        </Grid2>
+        </Grid>
       )}
-    </Grid2>
+    </Grid>
   );
 
   // show link thumbnail

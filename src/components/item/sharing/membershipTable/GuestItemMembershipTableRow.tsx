@@ -38,7 +38,7 @@ const GuestItemMembershipTableRow = ({
       <StyledTableRow data-cy={buildItemMembershipRowId(data.id)} key={data.id}>
         <TableCell>
           <Typography
-            color={{ color: isDisabled ? 'text.disabled' : undefined }}
+            sx={{ color: isDisabled ? 'text.disabled' : undefined }}
             noWrap
             fontWeight="bold"
           >
