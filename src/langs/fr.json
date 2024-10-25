@@ -303,6 +303,7 @@
   "SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE": "Cet utilisateur a déjà accès à cet élément",
   "SHARE_ITEM_FORM_INVITATION_EMPTY_EMAIL_MESSAGE": "L'email ne peut pas être vide",
   "SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE": "Cet email n'est pas valide",
+  "SHARE_ITEM_FORM_TITLE": "Partager \"{{name}}\"",
   "SHARE_ITEM_FORM_INVITATION_TOOLTIP": "Les utilisateurs non-enregistrés vont recevoir un lien personnel pour s'enregistrer sur la plateforme.",
   "SHARE_ITEM_LINK_COPY_TOOLTIP": "Copier dans le presse-papier",
   "SHARE_ITEM_LINK_QR_CODE": "Générer le code QR",
