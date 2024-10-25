@@ -17,6 +17,7 @@ import {
   DiscriminatedItem,
   ItemType,
   LinkItemType,
+  UnionOfConst,
   buildLinkExtra,
   getLinkThumbnailUrl,
 } from '@graasp/sdk';
@@ -58,7 +59,7 @@ const StyledDiv = styled('div')(() => ({
 
 type Inputs = {
   name: string;
-  linkType: (typeof LinkType)[keyof typeof LinkType];
+  linkType: UnionOfConst<typeof LinkType>;
   description: string;
   url: string;
 };
@@ -137,8 +138,7 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
         isValid={isUrlValid(normalizeURL(url))}
       />
       <NameForm
-        required
-        nameForm={register('name', { value: item?.name })}
+        nameForm={register('name', { value: item?.name, required: true })}
         reset={() => reset({ name: '' })}
       />
       <LinkDescriptionField
