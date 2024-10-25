@@ -30,15 +30,14 @@ import { BUILDER } from '../../../langs/constants';
 import BaseItemForm from '../form/BaseItemForm';
 import FileForm from '../form/FileForm';
 import FolderForm from '../form/FolderForm';
-import NameForm from '../form/NameForm';
 import DocumentForm from '../form/document/DocumentForm';
+import EditShortcutForm from '../shortcut/EditShortcutForm';
 
 const { editItemRoutine } = routines;
 
 export interface EditModalContentPropType {
   item?: DiscriminatedItem;
   setChanges: (payload: Partial<DiscriminatedItem>) => void;
-  updatedProperties: Partial<DiscriminatedItem>;
 }
 export type EditModalContentType = CT<EditModalContentPropType>;
 
@@ -68,20 +67,13 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     setUpdatedItem({ ...updatedItem, ...payload } as DiscriminatedItem);
   };
 
-  const renderComponent = (): JSX.Element => {
+  // files are handled beforehand
+  const renderDialogContent = (): JSX.Element => {
     switch (item.type) {
       case ItemType.DOCUMENT:
         return <DocumentForm setChanges={setChanges} item={item} />;
-      case ItemType.LOCAL_FILE:
-      case ItemType.S3_FILE:
-        return <FileForm setChanges={setChanges} item={item} />;
       case ItemType.SHORTCUT:
-        return (
-          <NameForm
-            name={updatedItem?.name ?? item?.name}
-            setChanges={setChanges}
-          />
-        );
+        return <EditShortcutForm item={item} setChanges={setChanges} />;
       case ItemType.FOLDER:
         return <FolderForm setChanges={setChanges} item={item} />;
       case ItemType.LINK:
@@ -131,6 +123,48 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     onClose();
   };
 
+  // temporary solution for displaying separate dialog content
+  const renderContent = () => {
+    if (item.type === ItemType.LOCAL_FILE || item.type === ItemType.S3_FILE) {
+      return <FileForm onClose={onClose} item={item} />;
+    }
+
+    return (
+      <>
+        <DialogContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {renderDialogContent()}
+        </DialogContent>
+        <DialogActions>
+          <CancelButton
+            id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}
+            onClick={onClose}
+          />
+          <Button
+            // should not allow users to save if the item is not valid
+            disabled={
+              // // maybe we do not need the state variable and can just check the item
+              // isConfirmButtonDisabled ||
+              // isItem Valid checks a full item, so we add the updated properties to the item to check
+              !isItemValid({
+                ...item,
+                ...updatedItem,
+              })
+            }
+            onClick={submit}
+            id={ITEM_FORM_CONFIRM_BUTTON_ID}
+          >
+            {translateCommon(COMMON.SAVE_BUTTON)}
+          </Button>
+        </DialogActions>
+      </>
+    );
+  };
+
   return (
     <Dialog
       onClose={onClose}
@@ -142,33 +176,7 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
       <DialogTitle id={item?.id}>
         {translateBuilder(BUILDER.EDIT_ITEM_MODAL_TITLE)}
       </DialogTitle>
-      <DialogContent
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {renderComponent()}
-      </DialogContent>
-      <DialogActions>
-        <CancelButton id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID} onClick={onClose} />
-        <Button
-          // should not allow users to save if the item is not valid
-          disabled={
-            // // maybe we do not need the state variable and can just check the item
-            // isConfirmButtonDisabled ||
-            // isItem Valid checks a full item, so we add the updated properties to the item to check
-            !isItemValid({
-              ...item,
-              ...updatedItem,
-            })
-          }
-          onClick={submit}
-          id={ITEM_FORM_CONFIRM_BUTTON_ID}
-        >
-          {translateCommon(COMMON.SAVE_BUTTON)}
-        </Button>
-      </DialogActions>
+      {renderContent()}
     </Dialog>
   );
 };
