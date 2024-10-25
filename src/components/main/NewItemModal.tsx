@@ -222,10 +222,7 @@ const NewItemModal = ({
             <Typography variant="h6" color="primary">
               {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
             </Typography>
-            <AppForm
-              onChange={updateItem}
-              updatedProperties={updatedPropertiesPerType[ItemType.APP]}
-            />
+            <AppForm onChange={updateItem} />
           </>
         );
       case ItemType.LINK:

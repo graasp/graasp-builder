@@ -1,15 +1,16 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { ArrowBack } from '@mui/icons-material';
 import { Alert, Box, Stack, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
-import { DiscriminatedItem, ItemType, buildAppExtra } from '@graasp/sdk';
+import { DiscriminatedItem, buildAppExtra } from '@graasp/sdk';
 import { Button } from '@graasp/ui';
 
 import AppCard from '@/components/main/AppCard';
 import { CUSTOM_APP_CYPRESS_ID, CUSTOM_APP_URL_ID } from '@/config/selectors';
-import { sortByName } from '@/utils/item';
+import { isUrlValid, sortByName } from '@/utils/item';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
@@ -81,14 +82,22 @@ const AppGrid = ({
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
-  updatedProperties: Partial<DiscriminatedItem>;
 };
 
-const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
+type Inputs = {
+  name: string;
+  url: string;
+};
+
+const AppForm = ({ onChange }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const [isCustomApp, setIsCustomApp] = useState<boolean>(false);
 
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const { register, setValue, watch, reset } = useForm<Inputs>();
+  const url = watch('url');
+  const name = watch('name');
 
   const searchAnApp: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -96,34 +105,29 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
     setSearchQuery(e.target.value);
   };
 
+  // synchronize upper state after async local state change
+  useEffect(() => {
+    onChange({
+      name,
+      extra: buildAppExtra({
+        url,
+      }),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url, name]);
+
   const handleAppSelection = (
     newValue: null | { url: string; name: string },
   ) => {
     // there is a new value to use
     if (newValue) {
-      onChange({
-        name: newValue.name,
-        // todo: use better type here (partial of discriminated item is not a good type)
-        extra: buildAppExtra({
-          url: newValue.url,
-        }),
-      });
-      return;
-    }
-    // there is no new value to use
-    if (!newValue) {
+      setValue('name', newValue.name);
+      setValue('url', newValue.url);
+    } else {
       // unset the name and the url in the extra
-      onChange({
-        name: undefined,
-        extra: undefined,
-      });
+      reset({ name: '', url: '' });
     }
   };
-
-  const currentUrl =
-    (updatedProperties.type === ItemType.APP &&
-      updatedProperties.extra?.app?.url) ||
-    '';
 
   const addCustomApp = () => {
     setIsCustomApp(true);
@@ -152,18 +156,9 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
           variant="standard"
           autoFocus
           label={translateBuilder(BUILDER.APP_URL)}
-          onChange={(e) =>
-            // todo: use better type here (partial of discriminated item is not a good type)
-
-            onChange({ extra: buildAppExtra({ url: e.target.value }) })
-          }
-          value={currentUrl}
+          {...register('url', { validate: isUrlValid })}
         />
-        <NameForm
-          setChanges={onChange}
-          name={updatedProperties?.name}
-          autoFocus={false}
-        />
+        <NameForm nameForm={register('name')} autoFocus={false} />
       </Stack>
     );
   }
@@ -186,7 +181,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
           alignItems="stretch"
         >
           <AppGrid
-            currentUrl={currentUrl}
+            currentUrl={url}
             handleSelection={handleAppSelection}
             searchQuery={searchQuery}
           />
@@ -201,11 +196,7 @@ const AppForm = ({ onChange, updatedProperties = {} }: Props): JSX.Element => {
           />
         </Grid2>
       </Box>
-      <NameForm
-        setChanges={onChange}
-        name={updatedProperties?.name}
-        autoFocus={false}
-      />
+      <NameForm nameForm={register('name')} autoFocus={false} />
     </Stack>
   );
 };
