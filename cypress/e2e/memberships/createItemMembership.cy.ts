@@ -69,6 +69,40 @@ describe('Create Membership', () => {
     cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).should('be.empty');
   });
 
+  it('share item with new admin by pressing enter', () => {
+    cy.setUpApi({ items: ITEMS, members: Object.values(MEMBERS) });
+
+    // go to children item
+    const { id } = FOLDER;
+    cy.visit(buildItemPath(id));
+
+    // share
+    const member = MEMBERS.FANNY;
+    const permission = PermissionLevel.Admin;
+    shareItem({
+      id,
+      email: `${member.email}{Enter}`,
+      permission,
+      submit: false,
+    });
+
+    cy.wait('@postInvitations').then(
+      ({
+        request: {
+          url,
+          body: { invitations },
+        },
+      }) => {
+        expect(url).to.contain(id);
+        expect(invitations[0].permission).to.equal(permission);
+        expect(invitations[0].email).to.equal(member.email);
+      },
+    );
+
+    // check that the email field is emptied after sharing completes
+    cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).should('be.empty');
+  });
+
   it('cannot share item twice', () => {
     const ITEM = PackedFolderItemFactory();
     const account = MEMBERS.ANNA;
