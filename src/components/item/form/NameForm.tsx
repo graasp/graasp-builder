@@ -1,5 +1,4 @@
-import { ChangeEvent } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 import ClearIcon from '@mui/icons-material/Clear';
 import { IconButton, TextField } from '@mui/material';
@@ -26,29 +25,25 @@ export type NameFormProps = {
    */
   name?: string;
   autoFocus?: boolean;
-  nameForm?: UseFormRegisterReturn;
+  nameForm: UseFormRegisterReturn;
   reset?: () => void;
+  error?: FieldError;
+  showClearButton?: boolean;
 };
 
 const NameForm = ({
   nameForm,
   required,
-  setChanges,
-  name,
   autoFocus = true,
   reset,
+  error,
+  showClearButton,
 }: NameFormProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const handleNameInput = (event: ChangeEvent<{ value: string }>) => {
-    setChanges?.({ name: event.target.value, displayName: event.target.value });
-  };
-
   const handleClearClick = () => {
     reset?.();
-    setChanges?.({ name: '' });
   };
-
   return (
     <TextField
       variant="standard"
@@ -57,27 +52,26 @@ const NameForm = ({
       label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
       required={required}
       // always shrink because setting name from defined app does not shrink automatically
-      InputLabelProps={{ shrink: true }}
-      // add a clear icon button
-      InputProps={{
-        endAdornment: (
-          <IconButton
-            onClick={handleClearClick}
-            sx={{ visibility: name ? 'visible' : 'hidden' }}
-          >
-            <ClearIcon fontSize="small" />
-          </IconButton>
-        ),
+      slotProps={{
+        inputLabel: { shrink: true },
+        input: {
+          // add a clear icon button
+          endAdornment: (
+            <IconButton
+              onClick={handleClearClick}
+              sx={{ visibility: showClearButton ? 'visible' : 'hidden' }}
+            >
+              <ClearIcon fontSize="small" />
+            </IconButton>
+          ),
+        },
       }}
       // only take full width when on small screen size
       fullWidth
       sx={{ my: 1 }}
-      // TODO: to remove when all components using NameForm move to react hook form
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      onChange={handleNameInput}
-      value={name}
-      {...(nameForm ?? {})}
+      error={Boolean(error)}
+      helperText={error?.message}
+      {...nameForm}
     />
   );
 };

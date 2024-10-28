@@ -60,6 +60,10 @@ export const isUrlValid = (str?: string | null): boolean => {
   return pattern.test(str);
 };
 
+/**
+ *
+ * @deprecated
+ */
 export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
   if (!item) {
     return false;

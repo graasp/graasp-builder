@@ -1,11 +1,16 @@
-import { useEffect } from 'react';
+import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  DialogActions,
+  DialogContent,
+  TextField,
+} from '@mui/material';
 
 import {
   DescriptionPlacementType,
-  DiscriminatedItem,
   ItemType,
   LocalFileItemExtra,
   LocalFileItemType,
@@ -13,13 +18,19 @@ import {
   S3FileItemExtra,
   S3FileItemType,
 } from '@graasp/sdk';
+import { COMMON } from '@graasp/translations';
 
-import { useBuilderTranslation } from '@/config/i18n';
-import { ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID } from '@/config/selectors';
+import CancelButton from '@/components/common/CancelButton';
+import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
+import { mutations } from '@/config/queryClient';
+import {
+  EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+  ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID,
+} from '@/config/selectors';
 import { getExtraFromPartial } from '@/utils/itemExtra';
 
 import { BUILDER } from '../../../langs/constants';
-import type { EditModalContentPropType } from '../edit/EditModal';
 import DescriptionForm from './DescriptionForm';
 import NameForm from './NameForm';
 
@@ -32,60 +43,94 @@ type Inputs = {
 
 const FileForm = ({
   item,
-  setChanges,
+  onClose,
 }: {
-  item: DiscriminatedItem;
-  setChanges: EditModalContentPropType['setChanges'];
-}): JSX.Element | null => {
+  item: LocalFileItemType | S3FileItemType;
+  onClose: () => void;
+}): ReactNode => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { register, watch, setValue } = useForm<Inputs>();
+  const { t: translateCommon } = useCommonTranslation();
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<Inputs>();
   const altText = watch('altText');
   const description = watch('description');
   const descriptionPlacement = watch('descriptionPlacement');
-  const name = watch('name');
 
-  useEffect(() => {
-    let newExtra: S3FileItemExtra | LocalFileItemExtra | undefined;
+  const { mimetype, altText: previousAltText } = getExtraFromPartial(item);
 
-    if (item.type === ItemType.S3_FILE) {
-      newExtra = {
-        [ItemType.S3_FILE]: {
-          ...item.extra[ItemType.S3_FILE],
-          altText,
-        },
-      };
-    } else if (item.type === ItemType.LOCAL_FILE) {
-      newExtra = {
-        [ItemType.LOCAL_FILE]: {
-          ...item.extra[ItemType.LOCAL_FILE],
-          altText,
-        },
-      };
+  const { mutateAsync: editItem } = mutations.useEditItem();
+
+  function buildFileExtra() {
+    if (altText) {
+      if (item.type === ItemType.S3_FILE) {
+        return {
+          [ItemType.S3_FILE]: {
+            altText,
+          },
+        } as S3FileItemExtra;
+      }
+      if (item.type === ItemType.LOCAL_FILE) {
+        return {
+          [ItemType.LOCAL_FILE]: {
+            altText,
+          },
+        } as LocalFileItemExtra;
+      }
     }
+    console.error(`item type ${item.type} is not handled`);
+    return undefined;
+  }
 
-    setChanges({
-      name,
-      description,
-      settings: { descriptionPlacement },
-      extra: newExtra,
-    } as S3FileItemType | LocalFileItemType);
+  async function onSubmit(data: Inputs) {
+    try {
+      await editItem({
+        id: item.id,
+        name: data.name,
+        description: data.description,
+        // only post extra if it has been changed
+        extra: altText !== previousAltText ? buildFileExtra() : undefined,
+        // only patch settings it it has been changed
+        settings:
+          descriptionPlacement !== item.settings.descriptionPlacement
+            ? { descriptionPlacement }
+            : undefined,
+      });
+      onClose();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [altText, description, descriptionPlacement, name, setChanges]);
-
-  if (item) {
-    const itemExtra = getExtraFromPartial(item);
-    const { mimetype, altText: previousAltText } = itemExtra;
-    return (
-      <>
-        <NameForm nameForm={register('name', { value: item.name })} />
+  return (
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <DialogContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <NameForm
+          nameForm={register('name', {
+            value: item.name,
+            required: true,
+          })}
+          error={errors.name}
+          showClearButton={Boolean(watch('name'))}
+          reset={() => reset({ name: '' })}
+        />
         {mimetype && MimeTypes.isImage(mimetype) && (
           <TextField
             variant="standard"
             id={ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID}
             label={translateBuilder(BUILDER.EDIT_ITEM_IMAGE_ALT_TEXT_LABEL)}
             // always shrink because setting name from defined app does not shrink automatically
-            InputLabelProps={{ shrink: true }}
+            slotProps={{ inputLabel: { shrink: true } }}
             sx={{ width: '50%', my: 1 }}
             multiline
             {...register('altText', { value: previousAltText })}
@@ -103,10 +148,20 @@ const FileForm = ({
             descriptionPlacement ?? item?.settings?.descriptionPlacement
           }
         />
-      </>
-    );
-  }
-  return null;
+      </DialogContent>
+      <DialogActions>
+        <CancelButton id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID} onClick={onClose} />
+        <Button
+          variant="contained"
+          type="submit"
+          id={ITEM_FORM_CONFIRM_BUTTON_ID}
+          disabled={!isValid}
+        >
+          {translateCommon(COMMON.SAVE_BUTTON)}
+        </Button>
+      </DialogActions>
+    </Box>
+  );
 };
 
 export default FileForm;
