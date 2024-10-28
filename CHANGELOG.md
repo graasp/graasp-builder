@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.44.0](https://github.com/graasp/graasp-builder/compare/v2.43.0...v2.44.0) (2024-10-28)
+
+
+### Features
+
+* change library lang to item lang ([#1543](https://github.com/graasp/graasp-builder/issues/1543)) ([fc4885f](https://github.com/graasp/graasp-builder/commit/fc4885faab004239513175354879f56dc69527f4))
+* split upload csv endpoint ([#1537](https://github.com/graasp/graasp-builder/issues/1537)) ([944102c](https://github.com/graasp/graasp-builder/commit/944102cdbe600a198e42b779dc20151e7c986982))
+* submit individually file data for edit ([#1552](https://github.com/graasp/graasp-builder/issues/1552)) ([69191f0](https://github.com/graasp/graasp-builder/commit/69191f06152a0cd5077f6df1ccb5ef3865a07b23))
+
+
+### Bug Fixes
+
+* clear selection on navigation ([#1541](https://github.com/graasp/graasp-builder/issues/1541)) ([c415d66](https://github.com/graasp/graasp-builder/commit/c415d66301b9d65bf28f7cbc3c166c8f54db2ca8))
+* fix hide setting name ([#1530](https://github.com/graasp/graasp-builder/issues/1530)) ([9476623](https://github.com/graasp/graasp-builder/commit/9476623df98ad51f6b360737c7fbc2df26854da6))
+* remove getCurrentAccountLang and use from sdk ([#1525](https://github.com/graasp/graasp-builder/issues/1525)) ([d5f3986](https://github.com/graasp/graasp-builder/commit/d5f3986e38460cceaea3cad4fc1d4fa2c86f64dc))
+* update mui version to v6 ([#1544](https://github.com/graasp/graasp-builder/issues/1544)) ([d3bd11b](https://github.com/graasp/graasp-builder/commit/d3bd11ba9f57775c7a212faa6d5b2486d679936d))
+
 ## [2.43.0](https://github.com/graasp/graasp-builder/compare/v2.42.1...v2.43.0) (2024-10-17)
 
 
