@@ -83,7 +83,7 @@ const FileForm = ({
         } as LocalFileItemExtra;
       }
     }
-    console.error('item type is not handled');
+    console.error(`item type ${item.type} is not handled`);
     return undefined;
   }
 
