@@ -49,9 +49,7 @@ Cypress.Commands.add(
     cy.get(`#${SHARE_ITEM_EMAIL_INPUT_ID}`).type(email);
 
     if (submit) {
-      // wait for email to be validated and enable the button
-      cy.wait(1000);
-      cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).click('left');
+      cy.get(`#${SHARE_ITEM_SHARE_BUTTON_ID}`).click();
     }
   },
 );
