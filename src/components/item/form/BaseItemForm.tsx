@@ -6,8 +6,8 @@ import { Box } from '@mui/material';
 import { DescriptionPlacementType, DiscriminatedItem } from '@graasp/sdk';
 
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
-import DescriptionForm from './DescriptionForm';
 import { ItemNameField } from './ItemNameField';
+import { DescriptionAndPlacementForm } from './description/DescriptionAndPlacementForm';
 
 type Inputs = {
   name: string;
@@ -44,7 +44,7 @@ const BaseItemForm = ({
         <ItemNameField required />
 
         <Box sx={{ mt: 2 }}>
-          <DescriptionForm
+          <DescriptionAndPlacementForm
             id={FOLDER_FORM_DESCRIPTION_ID}
             description={description ?? item?.description}
             descriptionPlacement={

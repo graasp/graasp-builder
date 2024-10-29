@@ -29,8 +29,8 @@ import { isItemValid } from '@/utils/item';
 import { BUILDER } from '../../../langs/constants';
 import BaseItemForm from '../form/BaseItemForm';
 import FileForm from '../form/FileForm';
-import FolderForm from '../form/FolderForm';
 import DocumentForm from '../form/document/DocumentForm';
+import { FolderEditForm } from '../form/folder/FolderEditForm';
 import EditShortcutForm from '../shortcut/EditShortcutForm';
 
 const { editItemRoutine } = routines;
@@ -67,15 +67,13 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     setUpdatedItem({ ...updatedItem, ...payload } as DiscriminatedItem);
   };
 
-  // files are handled beforehand
+  // files and folders are handled beforehand
   const renderDialogContent = (): JSX.Element => {
     switch (item.type) {
       case ItemType.DOCUMENT:
         return <DocumentForm setChanges={setChanges} item={item} />;
       case ItemType.SHORTCUT:
         return <EditShortcutForm item={item} setChanges={setChanges} />;
-      case ItemType.FOLDER:
-        return <FolderForm setChanges={setChanges} item={item} />;
       case ItemType.LINK:
       case ItemType.APP:
       case ItemType.ETHERPAD:
@@ -125,6 +123,9 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
 
   // temporary solution for displaying separate dialog content
   const renderContent = () => {
+    if (item.type === ItemType.FOLDER) {
+      return <FolderEditForm onClose={onClose} item={item} />;
+    }
     if (item.type === ItemType.LOCAL_FILE || item.type === ItemType.S3_FILE) {
       return <FileForm onClose={onClose} item={item} />;
     }

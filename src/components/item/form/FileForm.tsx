@@ -31,8 +31,8 @@ import {
 import { getExtraFromPartial } from '@/utils/itemExtra';
 
 import { BUILDER } from '../../../langs/constants';
-import DescriptionForm from './DescriptionForm';
 import { ItemNameField } from './ItemNameField';
+import { DescriptionAndPlacementForm } from './description/DescriptionAndPlacementForm';
 
 type Inputs = {
   name: string;
@@ -129,7 +129,7 @@ const FileForm = ({
               {...register('altText', { value: previousAltText })}
             />
           )}
-          <DescriptionForm
+          <DescriptionAndPlacementForm
             onPlacementChange={(newValue) =>
               setValue('descriptionPlacement', newValue)
             }

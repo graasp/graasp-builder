@@ -36,8 +36,8 @@ import CancelButton from '../common/CancelButton';
 import FileUploader from '../file/FileUploader';
 import AppForm from '../item/form/AppForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
-import FolderForm from '../item/form/FolderForm';
 import DocumentForm from '../item/form/document/DocumentForm';
+import { FolderCreateForm } from '../item/form/folder/FolderCreateForm';
 import LinkForm from '../item/form/link/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
@@ -61,7 +61,7 @@ type PropertiesPerType = {
 type Props = {
   open: boolean;
   handleClose: () => void;
-  geolocation?: Partial<ItemGeolocation>;
+  geolocation?: Pick<ItemGeolocation, 'lat' | 'lng'>;
   previousItemId?: DiscriminatedItem['id'];
 };
 
@@ -162,17 +162,9 @@ const NewItemModal = ({
     });
   };
 
+  // folders are handled beforehand
   const renderContent = () => {
     switch (selectedItemType) {
-      case ItemType.FOLDER:
-        return (
-          <>
-            <Typography variant="h6" color="primary">
-              {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
-            </Typography>
-            <FolderForm setChanges={updateItem} showThumbnail />
-          </>
-        );
       case ItemType.S3_FILE:
       case ItemType.LOCAL_FILE:
         return (
@@ -248,6 +240,7 @@ const NewItemModal = ({
     }
   };
 
+  // folder is handled before
   const renderActions = () => {
     switch (selectedItemType) {
       case ItemType.ETHERPAD:
@@ -264,7 +257,6 @@ const NewItemModal = ({
             </Button>
           </>
         );
-      case ItemType.FOLDER:
       case ItemType.APP:
       case ItemType.LINK:
       case ItemType.DOCUMENT:
@@ -298,18 +290,44 @@ const NewItemModal = ({
     }
   };
 
+  // temporary solution to wrap content and actions
+  const renderContentWithWrapper = () => {
+    let content = null;
+    if (selectedItemType === ItemType.FOLDER) {
+      content = (
+        <FolderCreateForm
+          onClose={handleClose}
+          geolocation={geolocation}
+          parentId={parentId}
+          previousItemId={previousItemId}
+        />
+      );
+    } else {
+      content = renderContent();
+    }
+    return (
+      <>
+        <StyledDialogContent>
+          <Stack direction="column" px={2} width="100%" overflow="hidden">
+            {content}
+          </Stack>
+        </StyledDialogContent>
+        <DialogActions>{renderActions()}</DialogActions>
+      </>
+    );
+  };
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <StyledDialogContent>
-        <ItemTypeTabs
-          onTypeChange={setSelectedItemType}
-          initialValue={selectedItemType}
-        />
-        <Stack direction="column" px={2} width="100%" overflow="hidden">
-          {renderContent()}
+      <Stack direction="row">
+        <Stack>
+          <ItemTypeTabs
+            onTypeChange={setSelectedItemType}
+            initialValue={selectedItemType}
+          />
         </Stack>
-      </StyledDialogContent>
-      <DialogActions>{renderActions()}</DialogActions>
+        <Stack width="100%">{renderContentWithWrapper()}</Stack>
+      </Stack>
     </Dialog>
   );
 };
