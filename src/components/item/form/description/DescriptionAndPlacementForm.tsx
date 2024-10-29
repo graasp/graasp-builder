@@ -9,7 +9,6 @@ type DescriptionAndPlacementFormProps = {
   id?: string;
   description?: string;
   descriptionPlacement?: DescriptionPlacementType;
-  showPlacement?: boolean;
   onPlacementChange: (v: DescriptionPlacementType) => void;
   onDescriptionChange: DescriptionFormProps['onChange'];
 };
@@ -18,7 +17,6 @@ export const DescriptionAndPlacementForm = ({
   id,
   description = '',
   descriptionPlacement,
-  showPlacement = true,
   onPlacementChange,
   onDescriptionChange,
 }: DescriptionAndPlacementFormProps): JSX.Element => (
@@ -28,12 +26,9 @@ export const DescriptionAndPlacementForm = ({
       value={description}
       onChange={onDescriptionChange}
     />
-
-    {showPlacement && (
-      <DescriptionPlacementForm
-        descriptionPlacement={descriptionPlacement}
-        onPlacementChange={onPlacementChange}
-      />
-    )}
+    <DescriptionPlacementForm
+      descriptionPlacement={descriptionPlacement}
+      onPlacementChange={onPlacementChange}
+    />
   </Stack>
 );

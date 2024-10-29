@@ -33,11 +33,10 @@ export function FolderEditForm({
 }: FolderEditFormProps): JSX.Element {
   const { t: translateCommon } = useCommonTranslation();
   const {
-    register,
     setValue,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm<Inputs>();
   const description = watch('description');
 
