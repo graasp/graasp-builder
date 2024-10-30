@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Stack } from '@mui/material';
 
@@ -8,7 +8,7 @@ import { DescriptionPlacementType, DiscriminatedItem } from '@graasp/sdk';
 import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
 import ThumbnailCrop from '../../thumbnails/ThumbnailCrop';
 import DescriptionForm from './DescriptionForm';
-import NameForm from './NameForm';
+import { ItemNameField } from './ItemNameField';
 
 export type FolderFormProps = {
   item?: DiscriminatedItem;
@@ -29,7 +29,8 @@ const FolderForm = ({
   setChanges,
   showThumbnail = false,
 }: FolderFormProps): JSX.Element => {
-  const { register, setValue, watch } = useForm<Inputs>();
+  const methods = useForm<Inputs>({ defaultValues: { name: item?.name } });
+  const { setValue, watch } = methods;
   const description = watch('description');
   const descriptionPlacement = watch('descriptionPlacement');
   const name = watch('name');
@@ -46,29 +47,31 @@ const FolderForm = ({
 
   return (
     <Stack direction="column" gap={2}>
-      <Stack
-        direction="row"
-        justifyContent="flex-start"
-        alignItems="flex-end"
-        gap={3}
-      >
-        {showThumbnail && <ThumbnailCrop setChanges={setChanges} />}
-        <NameForm required nameForm={register('name', { value: item?.name })} />
-      </Stack>
-      <DescriptionForm
-        id={FOLDER_FORM_DESCRIPTION_ID}
-        description={description ?? item?.description}
-        onPlacementChange={(newValue) =>
-          setValue('descriptionPlacement', newValue)
-        }
-        onDescriptionChange={(newValue) => {
-          setValue('description', newValue);
-        }}
-        showPlacement={false}
-        descriptionPlacement={
-          descriptionPlacement ?? item?.settings?.descriptionPlacement
-        }
-      />
+      <FormProvider {...methods}>
+        <Stack
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-end"
+          gap={3}
+        >
+          {showThumbnail && <ThumbnailCrop setChanges={setChanges} />}
+          <ItemNameField required />
+        </Stack>
+        <DescriptionForm
+          id={FOLDER_FORM_DESCRIPTION_ID}
+          description={description ?? item?.description}
+          onPlacementChange={(newValue) =>
+            setValue('descriptionPlacement', newValue)
+          }
+          onDescriptionChange={(newValue) => {
+            setValue('description', newValue);
+          }}
+          showPlacement={false}
+          descriptionPlacement={
+            descriptionPlacement ?? item?.settings?.descriptionPlacement
+          }
+        />
+      </FormProvider>
     </Stack>
   );
 };

@@ -1,48 +1,32 @@
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import ClearIcon from '@mui/icons-material/Clear';
 import { IconButton, TextField } from '@mui/material';
-
-import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 
-export type NameFormProps = {
-  /**
-   * @deprecated use nameForm
-   */
-  item?: DiscriminatedItem;
-  /**
-   * @deprecated use nameForm
-   */
-  setChanges?: (payload: Partial<DiscriminatedItem>) => void;
-} & {
+export type ItemNameFieldProps = {
   required?: boolean;
-  /**
-   * @deprecated use nameForm
-   */
-  name?: string;
   autoFocus?: boolean;
-  nameForm: UseFormRegisterReturn;
-  reset?: () => void;
-  error?: FieldError;
   showClearButton?: boolean;
 };
 
-const NameForm = ({
-  nameForm,
+export const ItemNameField = ({
   required,
   autoFocus = true,
-  reset,
-  error,
   showClearButton,
-}: NameFormProps): JSX.Element => {
+}: ItemNameFieldProps): JSX.Element => {
+  const {
+    register,
+    reset,
+    formState: { errors },
+  } = useFormContext<{ name: string }>();
   const { t: translateBuilder } = useBuilderTranslation();
 
   const handleClearClick = () => {
-    reset?.();
+    reset({ name: '' });
   };
   return (
     <TextField
@@ -69,11 +53,9 @@ const NameForm = ({
       // only take full width when on small screen size
       fullWidth
       sx={{ my: 1 }}
-      error={Boolean(error)}
-      helperText={error?.message}
-      {...nameForm}
+      error={Boolean(errors.name)}
+      helperText={errors.name?.message}
+      {...register('name', { required })}
     />
   );
 };
-
-export default NameForm;

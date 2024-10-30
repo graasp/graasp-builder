@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   Box,
@@ -32,7 +32,7 @@ import { getExtraFromPartial } from '@/utils/itemExtra';
 
 import { BUILDER } from '../../../langs/constants';
 import DescriptionForm from './DescriptionForm';
-import NameForm from './NameForm';
+import { ItemNameField } from './ItemNameField';
 
 type Inputs = {
   name: string;
@@ -50,14 +50,14 @@ const FileForm = ({
 }): ReactNode => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
+  const methods = useForm<Inputs>({ defaultValues: { name: item.name } });
   const {
     register,
     watch,
     setValue,
     handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm<Inputs>();
+    formState: { isValid },
+  } = methods;
   const altText = watch('altText');
   const description = watch('description');
   const descriptionPlacement = watch('descriptionPlacement');
@@ -108,59 +108,56 @@ const FileForm = ({
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <DialogContent
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <NameForm
-          nameForm={register('name', {
-            value: item.name,
-            required: true,
-          })}
-          error={errors.name}
-          showClearButton={Boolean(watch('name'))}
-          reset={() => reset({ name: '' })}
-        />
-        {mimetype && MimeTypes.isImage(mimetype) && (
-          <TextField
-            variant="standard"
-            id={ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID}
-            label={translateBuilder(BUILDER.EDIT_ITEM_IMAGE_ALT_TEXT_LABEL)}
-            // always shrink because setting name from defined app does not shrink automatically
-            slotProps={{ inputLabel: { shrink: true } }}
-            sx={{ width: '50%', my: 1 }}
-            multiline
-            {...register('altText', { value: previousAltText })}
-          />
-        )}
-        <DescriptionForm
-          onPlacementChange={(newValue) =>
-            setValue('descriptionPlacement', newValue)
-          }
-          onDescriptionChange={(newValue) => {
-            setValue('description', newValue);
+    <FormProvider {...methods}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
           }}
-          description={description ?? item?.description ?? ''}
-          descriptionPlacement={
-            descriptionPlacement ?? item?.settings?.descriptionPlacement
-          }
-        />
-      </DialogContent>
-      <DialogActions>
-        <CancelButton id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID} onClick={onClose} />
-        <Button
-          variant="contained"
-          type="submit"
-          id={ITEM_FORM_CONFIRM_BUTTON_ID}
-          disabled={!isValid}
         >
-          {translateCommon(COMMON.SAVE_BUTTON)}
-        </Button>
-      </DialogActions>
-    </Box>
+          <ItemNameField required showClearButton={Boolean(watch('name'))} />
+          {mimetype && MimeTypes.isImage(mimetype) && (
+            <TextField
+              variant="standard"
+              id={ITEM_FORM_IMAGE_ALT_TEXT_EDIT_FIELD_ID}
+              label={translateBuilder(BUILDER.EDIT_ITEM_IMAGE_ALT_TEXT_LABEL)}
+              // always shrink because setting name from defined app does not shrink automatically
+              slotProps={{ inputLabel: { shrink: true } }}
+              sx={{ width: '50%', my: 1 }}
+              multiline
+              {...register('altText', { value: previousAltText })}
+            />
+          )}
+          <DescriptionForm
+            onPlacementChange={(newValue) =>
+              setValue('descriptionPlacement', newValue)
+            }
+            onDescriptionChange={(newValue) => {
+              setValue('description', newValue);
+            }}
+            description={description ?? item?.description ?? ''}
+            descriptionPlacement={
+              descriptionPlacement ?? item?.settings?.descriptionPlacement
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <CancelButton
+            id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}
+            onClick={onClose}
+          />
+          <Button
+            variant="contained"
+            type="submit"
+            id={ITEM_FORM_CONFIRM_BUTTON_ID}
+            disabled={!isValid}
+          >
+            {translateCommon(COMMON.SAVE_BUTTON)}
+          </Button>
+        </DialogActions>
+      </Box>
+    </FormProvider>
   );
 };
 
