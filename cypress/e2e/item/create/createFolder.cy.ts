@@ -43,11 +43,7 @@ describe('Create Folder', () => {
     cy.visit(HOME_PATH);
     createFolder({ name: ' ' }, { confirm: false });
 
-    cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
-      'have.prop',
-      'disabled',
-      true,
-    );
+    cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should('be.disabled');
   });
 
   it('description placement should not exist for folder', () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   Box,
@@ -18,7 +18,10 @@ import { useBuilderTranslation, useCommonTranslation } from '@/config/i18n';
 import { mutations } from '@/config/queryClient';
 import { BUILDER } from '@/langs/constants';
 
-import { FOLDER_FORM_DESCRIPTION_ID } from '../../../../config/selectors';
+import {
+  FOLDER_FORM_DESCRIPTION_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+} from '../../../../config/selectors';
 import ThumbnailCrop from '../../../thumbnails/ThumbnailCrop';
 import { ItemNameField } from '../ItemNameField';
 import DescriptionForm from '../description/DescriptionForm';
@@ -43,12 +46,14 @@ export function FolderCreateForm({
 }: FolderCreateFormProps): JSX.Element {
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
+  const methods = useForm<Inputs>();
   const {
     setValue,
     watch,
     handleSubmit,
-    formState: { isValid },
-  } = useForm<Inputs>();
+    formState: { isValid, isSubmitted },
+  } = methods;
+
   const description = watch('description');
   const [thumbnail, setThumbnail] = useState<Blob>();
 
@@ -72,22 +77,17 @@ export function FolderCreateForm({
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <DialogTitle>
-        {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
-      </DialogTitle>
-      <DialogContent
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <Stack direction="column" gap={2}>
+    <FormProvider {...methods}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <DialogTitle>
+          {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
+        </DialogTitle>
+        <DialogContent>
           <Stack
             direction="row"
             justifyContent="flex-start"
-            alignItems="flex-end"
-            gap={3}
+            alignItems="flex-start"
+            gap={2}
           >
             <ThumbnailCrop
               setChanges={({ thumbnail: image }) => {
@@ -103,14 +103,18 @@ export function FolderCreateForm({
               setValue('description', newValue);
             }}
           />
-        </Stack>
-      </DialogContent>
-      <DialogActions>
-        <CancelButton onClick={onClose} />
-        <Button type="submit" disabled={!isValid}>
-          {translateCommon(COMMON.SAVE_BUTTON)}
-        </Button>
-      </DialogActions>
-    </Box>
+        </DialogContent>
+        <DialogActions>
+          <CancelButton onClick={onClose} />
+          <Button
+            id={ITEM_FORM_CONFIRM_BUTTON_ID}
+            type="submit"
+            disabled={isSubmitted && !isValid}
+          >
+            {translateCommon(COMMON.SAVE_BUTTON)}
+          </Button>
+        </DialogActions>
+      </Box>
+    </FormProvider>
   );
 }

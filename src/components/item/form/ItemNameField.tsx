@@ -3,6 +3,11 @@ import { useFormContext } from 'react-hook-form';
 import ClearIcon from '@mui/icons-material/Clear';
 import { IconButton, TextField } from '@mui/material';
 
+import { ItemConstants } from '@graasp/sdk';
+import { FAILURE_MESSAGES } from '@graasp/translations';
+
+import { ITEM_NAME_MAX_LENGTH } from '@/config/constants';
+
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
@@ -55,7 +60,17 @@ export const ItemNameField = ({
       sx={{ my: 1 }}
       error={Boolean(errors.name)}
       helperText={errors.name?.message}
-      {...register('name', { required })}
+      {...register('name', {
+        required,
+        pattern: {
+          message: FAILURE_MESSAGES.INVALID_ITEM_NAME_PATTERN_ERROR,
+          value: ItemConstants.ITEM_NAME_REGEX,
+        },
+        maxLength: {
+          message: FAILURE_MESSAGES.INVALID_ITEM_NAME_MAX_LENGTH_ERROR,
+          value: ITEM_NAME_MAX_LENGTH,
+        },
+      })}
     />
   );
 };
