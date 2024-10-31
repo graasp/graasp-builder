@@ -1,26 +1,24 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Stack,
   TextField,
-  TextFieldProps,
   Typography,
 } from '@mui/material';
 
-import {
-  AccountType,
-  DiscriminatedItem,
-  Invitation,
-  PermissionLevel,
-} from '@graasp/sdk';
+import { AccountType, DiscriminatedItem, PermissionLevel } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
+import truncate from 'lodash.truncate';
 import validator from 'validator';
+
+import { ITEM_NAME_MAX_LENGTH } from '@/config/constants';
 
 import {
   useBuilderTranslation,
@@ -29,102 +27,53 @@ import {
 import { hooks, mutations } from '../../../../config/queryClient';
 import {
   CREATE_MEMBERSHIP_FORM_ID,
+  SHARE_ITEM_CANCEL_BUTTON_CY,
   SHARE_ITEM_EMAIL_INPUT_ID,
   SHARE_ITEM_SHARE_BUTTON_ID,
 } from '../../../../config/selectors';
 import { BUILDER } from '../../../../langs/constants';
-import ItemMembershipSelect, {
-  ItemMembershipSelectProps,
-} from '../ItemMembershipSelect';
+import ItemMembershipSelect from '../ItemMembershipSelect';
 
-type InvitationFieldInfoType = Pick<Invitation, 'email' | 'permission'>;
-type Props = {
+type ContentProps = {
   item: DiscriminatedItem;
-  open: boolean;
   handleClose: () => void;
 };
 
-const CreateItemMembershipForm = ({
-  item,
-  open,
-  handleClose,
-}: Props): JSX.Element => {
+type Inputs = {
+  email: string;
+  permission: PermissionLevel;
+};
+
+const Content = ({ handleClose, item }: ContentProps) => {
   const itemId = item.id;
-  const [error, setError] = useState<string | null>();
 
   const { mutateAsync: shareItem } = mutations.useShareItem();
   const { data: memberships } = hooks.useItemMemberships(item.id);
+  const { data: invitations } = hooks.useItemInvitations(item.id);
 
   const { t: translateCommon } = useCommonTranslation();
   const { t: translateBuilder } = useBuilderTranslation();
 
-  // use an array to later allow sending multiple invitations
-  const [invitation, setInvitation] = useState<InvitationFieldInfoType>({
-    email: '',
-    permission: PermissionLevel.Read,
-  });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<Inputs>({ defaultValues: { permission: PermissionLevel.Read } });
+  const permission = watch('permission');
 
-  const checkForInvitationError = ({
-    email,
-  }: {
-    email: string;
-  }): string | null => {
-    // check mail validity
-    if (!email) {
-      return translateBuilder(
-        BUILDER.SHARE_ITEM_FORM_INVITATION_EMPTY_EMAIL_MESSAGE,
-      );
-    }
-    if (!validator.isEmail(email)) {
-      return translateBuilder(
-        BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE,
-      );
-    }
-    // check mail does not already exist
-    if (
-      memberships?.find(
-        ({ account }) =>
-          account.type === AccountType.Individual && account.email === email,
-      )
-    ) {
-      return translateBuilder(
-        BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
-      );
-    }
-    return null;
-  };
-
-  const onChangePermission: ItemMembershipSelectProps['onChange'] = (e) => {
-    setInvitation({
-      ...invitation,
-      permission: e.target.value as PermissionLevel,
-    });
-  };
-
-  const handleShare = async () => {
-    // not good to check email for multiple invitations at once
-    const invitationError = checkForInvitationError(invitation);
-
-    if (invitationError) {
-      return setError(invitationError);
-    }
-
+  const handleShare = async (data: Inputs) => {
     let returnedValue;
     try {
       await shareItem({
         itemId,
         invitations: [
           {
-            email: invitation.email,
-            permission: invitation.permission,
+            email: data.email,
+            permission: data.permission,
           },
         ],
-      });
-
-      // reset email input
-      setInvitation({
-        ...invitation,
-        email: '',
       });
 
       handleClose();
@@ -134,21 +83,8 @@ const CreateItemMembershipForm = ({
     return returnedValue;
   };
 
-  const onChangeEmail: TextFieldProps['onChange'] = (event) => {
-    const newInvitation = {
-      ...invitation,
-      email: event.target.value,
-    };
-    setInvitation(newInvitation);
-    if (error) {
-      const isInvalid = checkForInvitationError(newInvitation);
-      setError(isInvalid);
-    }
-  };
-
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Share item</DialogTitle>
+    <Box component="form" onSubmit={handleSubmit(handleShare)}>
       <DialogContent>
         <Typography variant="body1">
           {translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
@@ -164,29 +100,86 @@ const CreateItemMembershipForm = ({
             id={SHARE_ITEM_EMAIL_INPUT_ID}
             variant="outlined"
             label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
-            helperText={error}
-            value={invitation.email}
-            onChange={onChangeEmail}
-            error={Boolean(error)}
+            helperText={errors.email?.message}
+            {...register('email', {
+              required: true,
+              validate: {
+                isEmail: (email) =>
+                  validator.isEmail(email) ||
+                  translateBuilder(
+                    BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE,
+                  ),
+                noMembership: (email) =>
+                  !memberships?.some(
+                    ({ account }) =>
+                      account.type === AccountType.Individual &&
+                      account.email === email,
+                  ) ||
+                  translateBuilder(
+                    BUILDER.SHARE_ITEM_FORM_ALREADY_HAVE_MEMBERSHIP_MESSAGE,
+                  ),
+                noInvitation: (email) =>
+                  !invitations?.some((inv) => inv.email === email) ||
+                  translateBuilder(
+                    BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
+                  ),
+              },
+            })}
+            error={Boolean(errors.email)}
             sx={{ flexGrow: 1 }}
           />
           <ItemMembershipSelect
-            value={invitation.permission}
-            onChange={onChangePermission}
+            value={permission}
+            onChange={(event) => {
+              if (event.target.value) {
+                setValue('permission', event.target.value as PermissionLevel);
+              }
+            }}
             size="medium"
           />
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button variant="text">{translateCommon(COMMON.CANCEL_BUTTON)}</Button>
         <Button
-          onClick={handleShare}
-          disabled={Boolean(error)}
+          variant="text"
+          onClick={handleClose}
+          dataCy={SHARE_ITEM_CANCEL_BUTTON_CY}
+        >
+          {translateCommon(COMMON.CANCEL_BUTTON)}
+        </Button>
+        <Button
+          disabled={Boolean(errors.email)}
           id={SHARE_ITEM_SHARE_BUTTON_ID}
+          type="submit"
         >
           {translateBuilder(BUILDER.SHARE_ITEM_FORM_CONFIRM_BUTTON)}
         </Button>
       </DialogActions>
+    </Box>
+  );
+};
+
+type CreateItemMembershipFormProps = {
+  item: ContentProps['item'];
+  open: boolean;
+  handleClose: ContentProps['handleClose'];
+};
+
+const CreateItemMembershipForm = ({
+  item,
+  open,
+  handleClose,
+}: CreateItemMembershipFormProps): JSX.Element => {
+  const { t: translateBuilder } = useBuilderTranslation();
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>
+        {translateBuilder(BUILDER.SHARE_ITEM_FORM_TITLE, {
+          name: truncate(item.name, { length: ITEM_NAME_MAX_LENGTH }),
+        })}
+      </DialogTitle>
+      <Content item={item} handleClose={handleClose} />
     </Dialog>
   );
 };

@@ -450,3 +450,4 @@ export const MEMBERSHIP_REQUEST_REJECT_BUTTON_SELECTOR =
   'membershipRequestRejectButton';
 export const ENROLL_BUTTON_SELECTOR = 'enrollButton';
 export const VISIBILITY_HIDDEN_ALERT_ID = 'visibilityHiddenAlert';
+export const SHARE_ITEM_CANCEL_BUTTON_CY = 'shareItemCancelButton';
