@@ -214,7 +214,7 @@ export const mockGetOwnRecycledItemData = (
       );
 
       reply({
-        data: result,
+        data: result.map(({ item }) => item),
         totalCount: recycledItemData.length,
         pagination: { page: 1, pageSize: ITEM_PAGE_SIZE },
       });

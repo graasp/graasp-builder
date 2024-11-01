@@ -1625,9 +1625,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:5.0.0":
-  version: 5.0.0
-  resolution: "@graasp/query-client@npm:5.0.0"
+"@graasp/query-client@github:graasp/graasp-query-client#get-recycled-items":
+  version: 5.1.0
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=7b6fd6cf8bc8b2ed5e4a40bd6816b4f50430512a"
   dependencies:
     "@tanstack/react-query": "npm:5.59.8"
     "@tanstack/react-query-devtools": "npm:5.59.8"
@@ -1637,7 +1637,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/463dd556081d76fb2cb4bcf69b595560eb40ff528de5b1c64f189af106209bf394135d400374c80c031a57b0e3a13fdedd12d4d86988a4533b49d37c405a662a
+  checksum: 10/4d9d7a13c33f11df8ae21156edd213432dd61b641a6fc373189c5ee950f9bf3eb3f67a2389304c7e75f89d44dc28d1a55fa31b90cd7f86fbc3795c4ad5d650cb
   languageName: node
   linkType: hard
 
@@ -6402,7 +6402,7 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.0"
     "@graasp/map": "npm:1.19.0"
-    "@graasp/query-client": "npm:5.0.0"
+    "@graasp/query-client": "github:graasp/graasp-query-client#get-recycled-items"
     "@graasp/sdk": "npm:4.32.1"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
     "@graasp/translations": "npm:1.40.0"
