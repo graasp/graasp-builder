@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 
 import {
   FormControl,
@@ -16,7 +16,6 @@ import {
 import {
   DiscriminatedItem,
   ItemType,
-  LinkItemType,
   UnionOfConst,
   buildLinkExtra,
   getLinkThumbnailUrl,
@@ -28,14 +27,13 @@ import { hooks } from '@/config/queryClient';
 import { useBuilderTranslation } from '../../../../config/i18n';
 import { BUILDER } from '../../../../langs/constants';
 import { isUrlValid } from '../../../../utils/item';
-import NameForm from '../NameForm';
+import { ItemNameField } from '../ItemNameField';
 import LinkDescriptionField from './LinkDescriptionField';
 import LinkUrlField from './LinkUrlField';
 import { LinkType, getSettingsFromLinkType, normalizeURL } from './linkUtils';
 
 type Props = {
   onChange: (item: Partial<DiscriminatedItem>) => void;
-  item?: LinkItemType;
 };
 
 const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
@@ -64,9 +62,10 @@ type Inputs = {
   url: string;
 };
 
-const LinkForm = ({ onChange, item }: Props): JSX.Element => {
+const LinkForm = ({ onChange }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
-  const { register, watch, control, setValue, reset } = useForm<Inputs>();
+  const methods = useForm<Inputs>();
+  const { register, watch, control, setValue, reset } = methods;
   const url = watch('url');
 
   const name = watch('name');
@@ -131,85 +130,66 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
 
   return (
     <Stack gap={1} overflow="scroll">
-      <LinkUrlField
-        form={register('url', { validate: isUrlValid })}
-        onClear={() => reset({ url: '' })}
-        showClearButton={Boolean(url)}
-        isValid={isUrlValid(normalizeURL(url))}
-      />
-      <NameForm
-        nameForm={register('name', { value: item?.name, required: true })}
-        reset={() => reset({ name: '' })}
-      />
-      <LinkDescriptionField
-        onRestore={() => setValue('description', linkData?.description ?? '')}
-        form={register('description')}
-        onClear={() => reset({ description: '' })}
-        showRestoreButton={
-          Boolean(description) && description !== linkData?.description
-        }
-        showClearButton={Boolean(description)}
-      />
-      <FormControl>
-        <FormLabel>
-          <Typography variant="caption">
-            {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_TITLE)}
-          </Typography>
-          {url ? (
-            <Controller
-              control={control}
-              defaultValue={LinkType.Default}
-              name="linkType"
-              render={({ field }) => (
-                <RadioGroup sx={{ display: 'flex', gap: 2 }} {...field}>
-                  <StyledFormControlLabel
-                    value={LinkType.Default}
-                    label={<Link href={url}>{url}</Link>}
-                    control={<Radio />}
-                  />
-                  <StyledFormControlLabel
-                    value={LinkType.Fancy}
-                    label={
-                      <LinkCard
-                        title={linkData?.title || ''}
-                        url={url}
-                        thumbnail={thumbnail}
-                        description={description || ''}
-                      />
-                    }
-                    control={<Radio />}
-                    slotProps={{
-                      typography: { width: '100%', minWidth: '0px' },
-                    }}
-                    sx={{ minWidth: '0px', width: '100%' }}
-                  />
-                  {linkData?.html && linkData.html !== '' && (
+      <FormProvider {...methods}>
+        <LinkUrlField
+          form={register('url', { validate: isUrlValid })}
+          onClear={() => reset({ url: '' })}
+          showClearButton={Boolean(url)}
+          isValid={isUrlValid(normalizeURL(url))}
+        />
+        <ItemNameField required />
+        <LinkDescriptionField
+          onRestore={() => setValue('description', linkData?.description ?? '')}
+          form={register('description')}
+          onClear={() => reset({ description: '' })}
+          showRestoreButton={
+            Boolean(description) && description !== linkData?.description
+          }
+          showClearButton={Boolean(description)}
+        />
+        <FormControl>
+          <FormLabel>
+            <Typography variant="caption">
+              {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_TITLE)}
+            </Typography>
+            {url ? (
+              <Controller
+                control={control}
+                defaultValue={LinkType.Default}
+                name="linkType"
+                render={({ field }) => (
+                  <RadioGroup sx={{ display: 'flex', gap: 2 }} {...field}>
                     <StyledFormControlLabel
-                      value={LinkType.Embedded}
+                      value={LinkType.Default}
+                      label={<Link href={url}>{url}</Link>}
+                      control={<Radio />}
+                    />
+                    <StyledFormControlLabel
+                      value={LinkType.Fancy}
                       label={
-                        // eslint-disable-next-line react/no-danger
-                        <StyledDiv
-                          sx={{}}
-                          dangerouslySetInnerHTML={{ __html: linkData.html }}
+                        <LinkCard
+                          title={linkData?.title || ''}
+                          url={url}
+                          thumbnail={thumbnail}
+                          description={description || ''}
                         />
                       }
                       control={<Radio />}
                       slotProps={{
-                        typography: {
-                          width: '100%',
-                          minWidth: '0px',
-                        },
+                        typography: { width: '100%', minWidth: '0px' },
                       }}
+                      sx={{ minWidth: '0px', width: '100%' }}
                     />
-                  )}
-                  {
-                    // only show this options when embedding is allowed and there is no html code
-                    // as the html will take precedence over showing the site as an iframe
-                    // and some sites like daily motion actually allow both, we want to allow show the html setting
-                    linkData?.isEmbeddingAllowed && !linkData?.html && (
+                    {linkData?.html && linkData.html !== '' && (
                       <StyledFormControlLabel
                         value={LinkType.Embedded}
-                        label={embeddedLinkPreview}
+                        label={
+                          // eslint-disable-next-line react/no-danger
+                          <StyledDiv
+                            sx={{}}
+                            dangerouslySetInnerHTML={{ __html: linkData.html }}
+                          />
+                        }
                         control={<Radio />}
                         slotProps={{
                           typography: {
@@ -217,25 +197,43 @@ const LinkForm = ({ onChange, item }: Props): JSX.Element => {
                             minWidth: '0px',
                           },
                         }}
-                        sx={{
-                          // this ensure the iframe takes up all horizontal space
-                          '& iframe': {
-                            width: '100%',
-                          },
-                        }}
                       />
-                    )
-                  }
-                </RadioGroup>
-              )}
-            />
-          ) : (
-            <Typography fontStyle="italic">
-              {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_HELPER_TEXT)}
-            </Typography>
-          )}
-        </FormLabel>
-      </FormControl>
+                    )}
+                    {
+                      // only show this options when embedding is allowed and there is no html code
+                      // as the html will take precedence over showing the site as an iframe
+                      // and some sites like daily motion actually allow both, we want to allow show the html setting
+                      linkData?.isEmbeddingAllowed && !linkData?.html && (
+                        <StyledFormControlLabel
+                          value={LinkType.Embedded}
+                          label={embeddedLinkPreview}
+                          control={<Radio />}
+                          slotProps={{
+                            typography: {
+                              width: '100%',
+                              minWidth: '0px',
+                            },
+                          }}
+                          sx={{
+                            // this ensure the iframe takes up all horizontal space
+                            '& iframe': {
+                              width: '100%',
+                            },
+                          }}
+                        />
+                      )
+                    }
+                  </RadioGroup>
+                )}
+              />
+            ) : (
+              <Typography fontStyle="italic">
+                {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_HELPER_TEXT)}
+              </Typography>
+            )}
+          </FormLabel>
+        </FormControl>
+      </FormProvider>
     </Stack>
   );
 };

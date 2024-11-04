@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { ArrowBack } from '@mui/icons-material';
 import {
@@ -22,7 +22,7 @@ import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
 import addNewImage from '../../../resources/addNew.png';
-import NameForm from './NameForm';
+import { ItemNameField } from './ItemNameField';
 
 type AppGridProps = {
   currentUrl: string;
@@ -101,7 +101,8 @@ const AppForm = ({ onChange }: Props): JSX.Element => {
 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const { register, setValue, watch, reset } = useForm<Inputs>();
+  const methods = useForm<Inputs>();
+  const { register, setValue, watch, reset } = methods;
   const url = watch('url');
   const name = watch('name');
 
@@ -143,66 +144,76 @@ const AppForm = ({ onChange }: Props): JSX.Element => {
   if (isCustomApp) {
     return (
       <Stack direction="column" alignItems="start" mt={1} spacing={2}>
-        <Button
-          startIcon={<ArrowBack fontSize="small" />}
-          variant="text"
-          onClick={() => {
-            setIsCustomApp(false);
-            handleAppSelection(null);
-          }}
-        >
-          {translateBuilder(BUILDER.CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON)}
-        </Button>
-        <Typography>
-          {translateBuilder(BUILDER.CREATE_CUSTOM_APP_HELPER_TEXT)}
-        </Typography>
-        <TextField
-          id={CUSTOM_APP_URL_ID}
-          fullWidth
-          variant="standard"
-          autoFocus
-          label={translateBuilder(BUILDER.APP_URL)}
-          {...register('url', { validate: isUrlValid })}
-        />
-        <NameForm nameForm={register('name')} autoFocus={false} />
+        <FormProvider {...methods}>
+          <Button
+            startIcon={<ArrowBack fontSize="small" />}
+            variant="text"
+            onClick={() => {
+              setIsCustomApp(false);
+              handleAppSelection(null);
+            }}
+          >
+            {translateBuilder(BUILDER.CREATE_NEW_APP_BACK_TO_APP_LIST_BUTTON)}
+          </Button>
+          <Typography>
+            {translateBuilder(BUILDER.CREATE_CUSTOM_APP_HELPER_TEXT)}
+          </Typography>
+          <TextField
+            id={CUSTOM_APP_URL_ID}
+            fullWidth
+            variant="standard"
+            autoFocus
+            label={translateBuilder(BUILDER.APP_URL)}
+            {...register('url', { validate: isUrlValid })}
+          />
+          <ItemNameField required autoFocus={false} />
+        </FormProvider>
       </Stack>
     );
   }
   return (
     <Stack direction="column" height="100%" spacing={2} minHeight="0px">
-      <TextField
-        fullWidth
-        placeholder={translateBuilder(BUILDER.CREATE_APP_SEARCH_FIELD_HELPER)}
-        variant="outlined"
-        autoFocus
-        size="small"
-        onChange={searchAnApp}
-      />
-      <Box display="flex" flexGrow={1} minHeight="0px" overflow="scroll" p={1}>
-        <Grid
-          container
-          spacing={2}
-          height="max-content"
-          maxHeight={400}
-          alignItems="stretch"
+      <FormProvider {...methods}>
+        <TextField
+          fullWidth
+          placeholder={translateBuilder(BUILDER.CREATE_APP_SEARCH_FIELD_HELPER)}
+          variant="outlined"
+          autoFocus
+          size="small"
+          onChange={searchAnApp}
+        />
+        <Box
+          display="flex"
+          flexGrow={1}
+          minHeight="0px"
+          overflow="scroll"
+          p={1}
         >
-          <AppGrid
-            currentUrl={url}
-            handleSelection={handleAppSelection}
-            searchQuery={searchQuery}
-          />
-          <AppCard
-            id={CUSTOM_APP_CYPRESS_ID}
-            name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
-            description={translateBuilder(
-              BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
-            )}
-            image={addNewImage}
-            onClick={addCustomApp}
-          />
-        </Grid>
-      </Box>
-      <NameForm nameForm={register('name')} autoFocus={false} />
+          <Grid
+            container
+            spacing={2}
+            height="max-content"
+            maxHeight={400}
+            alignItems="stretch"
+          >
+            <AppGrid
+              currentUrl={url}
+              handleSelection={handleAppSelection}
+              searchQuery={searchQuery}
+            />
+            <AppCard
+              id={CUSTOM_APP_CYPRESS_ID}
+              name={translateBuilder(BUILDER.CREATE_CUSTOM_APP)}
+              description={translateBuilder(
+                BUILDER.CREATE_CUSTOM_APP_DESCRIPTION,
+              )}
+              image={addNewImage}
+              onClick={addCustomApp}
+            />
+          </Grid>
+        </Box>
+        <ItemNameField required autoFocus={false} />
+      </FormProvider>
     </Stack>
   );
 };
