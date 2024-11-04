@@ -33,7 +33,7 @@ const RecycledItemsScreenContent = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
   const { data, fetchNextPage, isLoading, isFetching } =
-    hooks.useInfiniteOwnRecycledItemData(
+    hooks.useInfiniteOwnRecycledItems(
       // todo: adapt page size given the user window height
       { pageSize: ITEM_PAGE_SIZE },
     );
@@ -45,9 +45,7 @@ const RecycledItemsScreenContent = (): JSX.Element => {
   // render this when there is data from the query
   if (data?.pages?.length) {
     if (data.pages[0].data.length) {
-      const fetchedItems = data.pages
-        .flatMap((p) => p.data)
-        ?.map((p) => p.item);
+      const fetchedItems = data.pages.flatMap((p) => p.data);
 
       const totalFetchedItems = fetchedItems.length;
 
