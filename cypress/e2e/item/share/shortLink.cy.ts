@@ -24,6 +24,10 @@ import {
 } from '@/config/selectors';
 
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
+import {
+  expectNumberOfShortLinks,
+  expectShortLinksEquals,
+} from '../../../fixtures/shortLinks';
 
 const items = [PackedFolderItemFactory(), PackedFolderItemFactory()];
 
@@ -49,9 +53,7 @@ describe('Short links', () => {
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
         // there is no shortlinks for the moment
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 0);
+        expectNumberOfShortLinks(0);
 
         // but because the shortlinks "replace" the link,
         // there is one link per platform
@@ -77,9 +79,7 @@ describe('Short links', () => {
           },
         );
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 1);
+        expectNumberOfShortLinks(1);
       });
 
       it('Add a custom short link', () => {
@@ -90,9 +90,7 @@ describe('Short links', () => {
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
         // there is no shortlinks for the moment
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 0);
+        expectNumberOfShortLinks(0);
 
         // but because the shortlinks "replace" the link,
         // there is one link per platform
@@ -120,9 +118,7 @@ describe('Short links', () => {
             expect(postBody.alias).equals(SHORT_LINK_ALIAS);
           },
         );
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 1);
+        expectNumberOfShortLinks(1);
       });
     });
 
@@ -136,14 +132,12 @@ describe('Short links', () => {
           {
             alias: 'test-1',
             platform: Context.Player,
-            item: { id: itemId },
-            createdAt: new Date().toISOString(),
+            itemId,
           },
           {
             alias: 'test-2',
             platform: Context.Builder,
-            item: { id: itemId },
-            createdAt: new Date().toISOString(),
+            itemId,
           },
         ];
 
@@ -162,9 +156,7 @@ describe('Short links', () => {
         cy.visit(buildItemPath(itemId));
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 2);
+        expectNumberOfShortLinks(2);
         cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
         cy.get(`#${buildShortLinkMenuBtnId(PATCH_ALIAS)}`).click();
         cy.get(`#${buildShortLinkEditBtnId(PATCH_ALIAS)}`).click();
@@ -185,16 +177,11 @@ describe('Short links', () => {
         cy.wait('@patchShortLink').then(
           ({ response: { statusCode: postCode, body: postBody } }) => {
             expect(postCode).equals(StatusCodes.OK);
-            expect(postBody.platform).equals(shortLinks[0].platform);
             expect(postBody.alias).equals(NEW_SHORT_LINK);
           },
         );
 
-        cy.wait('@getShortLinksItem').then(({ response: { body } }) => {
-          expect(body.length).equals(2);
-          expect(body[0].alias).equals(NEW_SHORT_LINK);
-          expect(body[1].alias).equals(shortLinks[1].alias);
-        });
+        expectShortLinksEquals([NEW_SHORT_LINK, shortLinks[1].alias]);
       });
 
       it('Patch short link with random alias', () => {
@@ -203,9 +190,7 @@ describe('Short links', () => {
         cy.visit(buildItemPath(itemId));
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 2);
+        expectNumberOfShortLinks(2);
         cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
         cy.get(`#${buildShortLinkMenuBtnId(PATCH_ALIAS)}`).click();
         cy.get(`#${buildShortLinkEditBtnId(PATCH_ALIAS)}`).click();
@@ -226,29 +211,24 @@ describe('Short links', () => {
         cy.wait('@patchShortLink').then(
           ({ response: { statusCode: postCode, body: postBody } }) => {
             expect(postCode).equals(StatusCodes.OK);
-            expect(postBody.platform).equals(shortLinks[0].platform);
             expect(postBody.alias).not.equals(PATCH_ALIAS);
+
+            const randomAlias = postBody.alias;
+
+            // We are checking the shortlinks here to have access to the random alias.
+            expectShortLinksEquals([randomAlias, shortLinks[1].alias]);
           },
         );
-
-        cy.wait('@getShortLinksItem').then(({ response: { body } }) => {
-          expect(body.length).equals(2);
-          expect(body[0].alias).not.equals(PATCH_ALIAS);
-          expect(body[1].alias).equals(shortLinks[1].alias);
-        });
       });
 
       it('Delete short link', () => {
         const DELETE_ALIAS = shortLinks[0].alias;
-        const DELETE_PLATFORM = shortLinks[0].platform;
         const KEEP_SHORT_LINK = shortLinks[1];
 
         cy.visit(buildItemPath(itemId));
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 2);
+        expectNumberOfShortLinks(2);
         cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
         cy.get(`#${buildShortLinkMenuBtnId(DELETE_ALIAS)}`).click();
         cy.get(`#${buildShortLinkDeleteBtnId(DELETE_ALIAS)}`).click();
@@ -258,15 +238,11 @@ describe('Short links', () => {
         cy.wait('@deleteShortLink').then(
           ({ response: { statusCode: postCode, body: postBody } }) => {
             expect(postCode).equals(StatusCodes.OK);
-            expect(postBody.platform).equals(DELETE_PLATFORM);
             expect(postBody.alias).equals(DELETE_ALIAS);
           },
         );
 
-        cy.wait('@getShortLinksItem').then(({ response: { body } }) => {
-          expect(body.length).equals(1);
-          expect(body[0].alias).equals(KEEP_SHORT_LINK.alias);
-        });
+        expectShortLinksEquals([KEEP_SHORT_LINK.alias]);
       });
     });
 
@@ -282,14 +258,12 @@ describe('Short links', () => {
           {
             alias: 'test-1',
             platform: Context.Player,
-            item: { id: itemId },
-            createdAt: new Date().toISOString(),
+            itemId,
           },
           {
             alias: 'test-2',
             platform: Context.Builder,
-            item: { id: itemId },
-            createdAt: new Date().toISOString(),
+            itemId,
           },
         ];
 
@@ -307,9 +281,7 @@ describe('Short links', () => {
         cy.visit(buildItemPath(itemId));
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 2);
+        expectNumberOfShortLinks(2);
         cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
         cy.get(`#${buildShortLinkMenuBtnId(patchAlias)}`).click();
         cy.get(`#${buildShortLinkEditBtnId(patchAlias)}`).click();
@@ -325,9 +297,7 @@ describe('Short links', () => {
         cy.visit(buildItemPath(itemId));
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 2);
+        expectNumberOfShortLinks(2);
         cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
         cy.get(`#${buildShortLinkMenuBtnId(patchAlias)}`).click();
         cy.get(`#${buildShortLinkEditBtnId(patchAlias)}`).click();
@@ -343,9 +313,7 @@ describe('Short links', () => {
         cy.visit(buildItemPath(itemId));
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 2);
+        expectNumberOfShortLinks(2);
         cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
         cy.get(`#${buildShortLinkMenuBtnId(patchAlias)}`).click();
         cy.get(`#${buildShortLinkEditBtnId(patchAlias)}`).click();
@@ -361,9 +329,7 @@ describe('Short links', () => {
         cy.visit(buildItemPath(itemId));
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 2);
+        expectNumberOfShortLinks(2);
         cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
         cy.get(`#${buildShortLinkMenuBtnId(patchAlias)}`).click();
         cy.get(`#${buildShortLinkEditBtnId(patchAlias)}`).click();
@@ -394,9 +360,7 @@ describe('Short links', () => {
         cy.get(`#${buildShareButtonId(itemId)}`).click();
 
         // there is no shortlinks for the moment
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 0);
+        expectNumberOfShortLinks(0);
 
         // but because the shortlinks "replace" the link,
         // there is one link per platform
@@ -422,9 +386,7 @@ describe('Short links', () => {
           },
         );
 
-        cy.wait('@getShortLinksItem')
-          .its('response.body.length')
-          .should('eq', 1);
+        expectNumberOfShortLinks(1);
       });
     });
   });
@@ -445,8 +407,7 @@ describe('Short links', () => {
         {
           alias: 'test-1',
           platform: Context.Player,
-          item: { id: itemId },
-          createdAt: new Date().toISOString(),
+          itemId,
         },
       ];
 
@@ -461,7 +422,7 @@ describe('Short links', () => {
     it('Short links are read only', () => {
       cy.visit(buildItemPath(itemId));
       cy.get(`#${buildShareButtonId(itemId)}`).click();
-      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 1);
+      expectNumberOfShortLinks(1);
       cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 2);
       // This wait is necessary to be sure that the UI render the short links with add and/or menu buttons
       cy.wait(1000);

@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from '@mui/material';
 
-import { ShortLink, ShortLinkPayload } from '@graasp/sdk';
+import { ShortLink } from '@graasp/sdk';
 import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from '@graasp/translations';
 
 import { CopyIcon, MoreVerticalIcon, PenIcon, TrashIcon } from 'lucide-react';
@@ -29,7 +29,7 @@ import { COPY_ITEM_LINK_TO_CLIPBOARD } from '@/types/clipboard';
 import { copyToClipboard } from '@/utils/clipboard';
 
 type Props = {
-  shortLink: ShortLinkPayload;
+  shortLink: ShortLink;
   url: string;
   isShorten: boolean;
   canAdminShortLink: boolean;

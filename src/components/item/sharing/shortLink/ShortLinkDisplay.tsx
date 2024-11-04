@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Link, Stack, styled } from '@mui/material';
 
-import { ShortLink, ShortLinkPayload } from '@graasp/sdk';
+import { ShortLink } from '@graasp/sdk';
 import { AccentColors } from '@graasp/ui';
 
 import {
@@ -25,7 +25,7 @@ const { useDeleteShortLink } = mutations;
 
 type Props = {
   url: string;
-  shortLink: ShortLinkPayload;
+  shortLink: ShortLink;
   isShorten: boolean;
   canAdminShortLink: boolean;
   onUpdate: () => void;
