@@ -2,7 +2,7 @@ import { Stack } from '@mui/material';
 
 import { DescriptionPlacementType } from '@graasp/sdk';
 
-import DescriptionForm, { DescriptionFormProps } from './DescriptionForm';
+import { DescriptionForm, type DescriptionFormProps } from './DescriptionForm';
 import DescriptionPlacementForm from './DescriptionPlacementForm';
 
 type DescriptionAndPlacementFormProps = {

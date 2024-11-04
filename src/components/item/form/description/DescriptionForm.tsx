@@ -11,11 +11,11 @@ export type DescriptionFormProps = {
   onChange: (v: string) => void;
 };
 
-const DescriptionForm = ({
+export function DescriptionForm({
   id,
   value = '',
   onChange,
-}: DescriptionFormProps): JSX.Element => {
+}: DescriptionFormProps): JSX.Element {
   const { t: translateBuilder } = useBuilderTranslation();
 
   return (
@@ -33,6 +33,4 @@ const DescriptionForm = ({
       />
     </Box>
   );
-};
-
-export default DescriptionForm;
+}

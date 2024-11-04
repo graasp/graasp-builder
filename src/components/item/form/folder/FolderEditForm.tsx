@@ -16,7 +16,7 @@ import {
   ITEM_FORM_CONFIRM_BUTTON_ID,
 } from '../../../../config/selectors';
 import { ItemNameField } from '../ItemNameField';
-import DescriptionForm from '../description/DescriptionForm';
+import { DescriptionForm } from '../description/DescriptionForm';
 
 type FolderEditFormProps = {
   item: DiscriminatedItem;

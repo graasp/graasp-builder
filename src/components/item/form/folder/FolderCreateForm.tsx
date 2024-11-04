@@ -24,7 +24,7 @@ import {
 } from '../../../../config/selectors';
 import ThumbnailCrop from '../../../thumbnails/ThumbnailCrop';
 import { ItemNameField } from '../ItemNameField';
-import DescriptionForm from '../description/DescriptionForm';
+import { DescriptionForm } from '../description/DescriptionForm';
 
 type Inputs = {
   name: string;
