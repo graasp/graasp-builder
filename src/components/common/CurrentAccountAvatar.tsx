@@ -13,13 +13,13 @@ type Props = {
   maxHeight?: number;
 };
 
-const MemberAvatar = ({
+export function CurrentMemberAvatar({
   id,
   maxWidth = AVATAR_ICON_HEIGHT,
   maxHeight = AVATAR_ICON_HEIGHT,
-}: Props): JSX.Element => {
+}: Props): JSX.Element {
   const { t } = useCommonTranslation();
-  const { data: member, isLoading } = hooks.useMember(id);
+  const { data: member, isLoading } = hooks.useCurrentMember();
   const { data: avatarUrl, isLoading: isLoadingAvatar } = hooks.useAvatarUrl({
     id,
     size: ThumbnailSize.Small,
@@ -36,6 +36,4 @@ const MemberAvatar = ({
       sx={{ mx: 1 }}
     />
   );
-};
-
-export default MemberAvatar;
+}

@@ -58,8 +58,8 @@ const {
   postItemMembershipRoutine,
   uploadFilesRoutine,
   signOutRoutine,
-  postItemTagRoutine,
-  deleteItemTagRoutine,
+  postItemVisibilityRoutine,
+  deleteItemVisibilityRoutine,
   postItemLoginRoutine,
   editMemberRoutine,
   editItemMembershipRoutine,
@@ -168,8 +168,8 @@ const notifier: Notifier = (
     case postItemMembershipRoutine.FAILURE:
     case uploadFilesRoutine.FAILURE:
     case signOutRoutine.FAILURE:
-    case postItemTagRoutine.FAILURE:
-    case deleteItemTagRoutine.FAILURE:
+    case postItemVisibilityRoutine.FAILURE:
+    case deleteItemVisibilityRoutine.FAILURE:
     case postItemLoginRoutine.FAILURE:
     case postItemFlagRoutine.FAILURE:
     case COPY_ITEM_LINK_TO_CLIPBOARD.FAILURE:

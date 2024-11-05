@@ -1,4 +1,4 @@
-import { ItemTagType, PackedFolderItemFactory } from '@graasp/sdk';
+import { ItemVisibilityType, PackedFolderItemFactory } from '@graasp/sdk';
 
 import { DISPLAY_CO_EDITORS_OPTIONS } from '../../../../src/config/constants';
 import { buildItemPath } from '../../../../src/config/paths';
@@ -53,7 +53,7 @@ it('Change choice', () => {
 
 const item = PackedFolderItemFactory(
   {},
-  { permission: null, publicTag: { type: ItemTagType.Public } },
+  { permission: null, publicVisibility: { type: ItemVisibilityType.Public } },
 );
 
 describe('Co-editor setting permissions', () => {

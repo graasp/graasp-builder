@@ -5,8 +5,8 @@ import {
   ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   ItemPublished,
-  ItemTag,
-  ItemTagType,
+  ItemVisibility,
+  ItemVisibilityType,
   PackedItem,
 } from '@graasp/sdk';
 
@@ -15,8 +15,8 @@ import { hooks, mutations } from '@/config/queryClient';
 
 const { useItemLoginSchema, useItemPublishedInformation } = hooks;
 const {
-  useDeleteItemTag,
-  usePostItemTag,
+  useDeleteItemVisibility,
+  usePostItemVisibility,
   useUnpublishItem,
   usePutItemLoginSchema,
 } = mutations;
@@ -26,14 +26,14 @@ type UseVisibility = {
   isDisabled: boolean;
   itemPublishEntry: ItemPublished | null | undefined;
   itemLoginSchema: ItemLoginSchema | undefined;
-  publicTag: ItemTag | undefined;
+  publicVisibility: ItemVisibility | undefined;
   visibility: string | undefined;
-  updateVisibility: (newTag: string) => Promise<void>;
+  updateVisibility: (newVisibility: string) => Promise<void>;
 };
 
 export const useVisibility = (item: PackedItem): UseVisibility => {
-  const { mutateAsync: postItemTag } = usePostItemTag();
-  const { mutate: deleteItemTag } = useDeleteItemTag();
+  const { mutateAsync: postItemVisibility } = usePostItemVisibility();
+  const { mutate: deleteItemVisibility } = useDeleteItemVisibility();
 
   // get item published
   const { data: itemPublishEntry, isLoading: isItemPublishEntryLoading } =
@@ -90,15 +90,18 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
   }, [itemPublishEntry, item, itemLoginSchema]);
 
   const updateVisibility = useMemo(
-    () => async (newTag: string) => {
-      // deletes both public and published tags if they exists
+    () => async (newVisibility: string) => {
+      // deletes both public and published visibilities if they exists
       const deletePublishedAndPublic = () => {
         if (itemPublishEntry) {
           unpublish({ id: item.id });
         }
 
         if (item.public) {
-          deleteItemTag({ itemId: item.id, type: ItemTagType.Public });
+          deleteItemVisibility({
+            itemId: item.id,
+            type: ItemVisibilityType.Public,
+          });
         }
       };
 
@@ -111,7 +114,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
         }
       };
 
-      switch (newTag) {
+      switch (newVisibility) {
         case SETTINGS.ITEM_PRIVATE.name: {
           deletePublishedAndPublic();
           disableLoginSchema();
@@ -127,9 +130,9 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
           break;
         }
         case SETTINGS.ITEM_PUBLIC.name: {
-          await postItemTag({
+          await postItemVisibility({
             itemId: item.id,
-            type: ItemTagType.Public,
+            type: ItemVisibilityType.Public,
           });
           disableLoginSchema();
           break;
@@ -143,10 +146,10 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       item.public,
       item.id,
       unpublish,
-      deleteItemTag,
+      deleteItemVisibility,
       itemLoginSchema,
       putItemLoginSchema,
-      postItemTag,
+      postItemVisibility,
     ],
   );
 
@@ -156,7 +159,7 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       isDisabled,
       itemPublishEntry,
       itemLoginSchema,
-      publicTag: item.public,
+      publicVisibility: item.public,
       visibility,
       updateVisibility,
     }),

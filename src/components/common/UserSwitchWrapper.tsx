@@ -13,7 +13,7 @@ import {
 } from '@/config/selectors';
 
 import { BUILDER } from '../../langs/constants';
-import MemberAvatar from './MemberAvatar';
+import { CurrentMemberAvatar } from './CurrentAccountAvatar';
 
 type Props = {
   ButtonContent?: JSX.Element;
@@ -48,7 +48,7 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
       signOutMenuItemId={HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID}
       seeProfileButtonId={HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID}
       buildMemberMenuItemId={buildMemberMenuItemId}
-      avatar={<MemberAvatar id={member?.id} />}
+      avatar={<CurrentMemberAvatar />}
       dataUmamiEvent="header-avatar"
     />
   );

@@ -1,5 +1,5 @@
 import {
-  ItemTagType,
+  ItemVisibilityType,
   PackedFolderItemFactory,
   PermissionLevel,
 } from '@graasp/sdk';
@@ -101,14 +101,14 @@ describe('Tags permissions', () => {
   it('User signed out cannot edit tags', () => {
     const item = PackedFolderItemFactory(
       {},
-      { permission: null, publicTag: {} },
+      { permission: null, publicVisibility: {} },
     );
     const publishedItem = {
       ...item,
-      tags: [
+      visibilities: [
         {
           id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-          type: ItemTagType.Public,
+          type: ItemVisibilityType.Public,
           item,
           createdAt: '2021-08-11T12:56:36.834Z',
           creator: MEMBERS.ANNA,
@@ -136,14 +136,14 @@ describe('Tags permissions', () => {
   it('Read-only user cannot edit tags', () => {
     const item = PackedFolderItemFactory(
       {},
-      { permission: PermissionLevel.Read, publicTag: {} },
+      { permission: PermissionLevel.Read, publicVisibility: {} },
     );
     const publishedItem = {
       ...item,
-      tags: [
+      visibilities: [
         {
           id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-          type: ItemTagType.Public,
+          type: ItemVisibilityType.Public,
           item,
           createdAt: '2021-08-11T12:56:36.834Z',
           creator: MEMBERS.ANNA,

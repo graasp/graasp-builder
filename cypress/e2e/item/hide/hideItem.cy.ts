@@ -1,5 +1,5 @@
 import {
-  ItemTagType,
+  ItemVisibilityType,
   PackedFolderItemFactory,
   PermissionLevel,
 } from '@graasp/sdk';
@@ -21,7 +21,7 @@ import { ItemForTest } from '../../../support/types';
 
 const hiddenItem = PackedFolderItemFactory(
   {},
-  { hiddenTag: { type: ItemTagType.Hidden } },
+  { hiddenVisibility: { type: ItemVisibilityType.Hidden } },
 );
 const HIDDEN_ITEM: ItemForTest = {
   ...hiddenItem,
@@ -74,9 +74,9 @@ describe('Hide Item', () => {
 
     toggleHideButton(ITEM.id, false);
 
-    cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
+    cy.wait(`@postItemVisibility-${ItemVisibilityType.Hidden}`).then(
       ({ request: { url } }) => {
-        expect(url).to.contain(ItemTagType.Hidden);
+        expect(url).to.contain(ItemVisibilityType.Hidden);
         expect(url).to.contain(ITEM.id);
       },
     );
@@ -89,9 +89,9 @@ describe('Hide Item', () => {
     // make sure to wait for the tags to be fetched
     toggleHideButton(item.id, true);
 
-    cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
+    cy.wait(`@deleteItemVisibility-${ItemVisibilityType.Hidden}`).then(
       ({ request: { url } }) => {
-        expect(url).to.contain(ItemTagType.Hidden);
+        expect(url).to.contain(ItemVisibilityType.Hidden);
         expect(url).to.contain(item.id);
       },
     );
@@ -113,9 +113,9 @@ describe('Hide Item', () => {
 
       cy.get(`#${SETTINGS_HIDE_ITEM_ID}`).click();
 
-      cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
+      cy.wait(`@postItemVisibility-${ItemVisibilityType.Hidden}`).then(
         ({ request: { url } }) => {
-          expect(url).to.contain(ItemTagType.Hidden);
+          expect(url).to.contain(ItemVisibilityType.Hidden);
           expect(url).to.contain(ITEM.id);
         },
       );
@@ -125,9 +125,9 @@ describe('Hide Item', () => {
 
       cy.get(`#${SETTINGS_HIDE_ITEM_ID}`).click();
 
-      cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
+      cy.wait(`@deleteItemVisibility-${ItemVisibilityType.Hidden}`).then(
         ({ request: { url } }) => {
-          expect(url).to.contain(ItemTagType.Hidden);
+          expect(url).to.contain(ItemVisibilityType.Hidden);
           expect(url).to.contain(HIDDEN_ITEM.id);
         },
       );
@@ -146,9 +146,9 @@ describe('Hide Item', () => {
 
       cy.get(`#${SETTINGS_HIDE_ITEM_ID}`).click();
 
-      cy.wait(`@postItemTag-${ItemTagType.Hidden}`).then(
+      cy.wait(`@postItemVisibility-${ItemVisibilityType.Hidden}`).then(
         ({ request: { url } }) => {
-          expect(url).to.contain(ItemTagType.Hidden);
+          expect(url).to.contain(ItemVisibilityType.Hidden);
           expect(url).to.contain(ITEM.id);
         },
       );
@@ -158,9 +158,9 @@ describe('Hide Item', () => {
 
       cy.get(`#${SETTINGS_HIDE_ITEM_ID}`).click();
 
-      cy.wait(`@deleteItemTag-${ItemTagType.Hidden}`).then(
+      cy.wait(`@deleteItemVisibility-${ItemVisibilityType.Hidden}`).then(
         ({ request: { url } }) => {
-          expect(url).to.contain(ItemTagType.Hidden);
+          expect(url).to.contain(ItemVisibilityType.Hidden);
           expect(url).to.contain(HIDDEN_ITEM.id);
         },
       );

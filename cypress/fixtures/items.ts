@@ -1,11 +1,11 @@
 import {
   DiscriminatedItem,
-  ItemTagType,
   ItemType,
   ItemValidation,
   ItemValidationGroup,
   ItemValidationProcess,
   ItemValidationStatus,
+  ItemVisibilityType,
   PackedFolderItemFactory,
   PackedItem,
   PermissionLevel,
@@ -105,10 +105,10 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
   items: [
     {
       ...samplePublicItems[0],
-      tags: [
+      visibilities: [
         {
           id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-          type: ItemTagType.Public,
+          type: ItemVisibilityType.Public,
           item: samplePublicItems[0],
           creator: MEMBERS.ANNA,
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -151,10 +151,10 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
     },
     {
       ...samplePublicItems[2],
-      tags: [
+      visibilities: [
         {
           id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-          type: ItemTagType.Public,
+          type: ItemVisibilityType.Public,
           item: samplePublicItems[0],
           creator: MEMBERS.ANNA,
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -174,9 +174,9 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
     },
     {
       ...samplePublicItems[3],
-      tags: [
+      visibilities: [
         {
-          type: ItemTagType.Public,
+          type: ItemVisibilityType.Public,
           item: samplePublicItems[3],
           creator: MEMBERS.ANNA,
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -206,9 +206,9 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
     },
     {
       ...samplePublicItems[4],
-      tags: [
+      visibilities: [
         {
-          type: ItemTagType.Public,
+          type: ItemVisibilityType.Public,
           item: samplePublicItems[4],
           creator: MEMBERS.ANNA,
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -218,9 +218,9 @@ export const SAMPLE_PUBLIC_ITEMS: ApiConfig = {
     },
     {
       ...samplePublicItems[5],
-      tags: [
+      visibilities: [
         {
-          type: ItemTagType.Public,
+          type: ItemVisibilityType.Public,
           item: samplePublicItems[5],
           creator: MEMBERS.ANNA,
           createdAt: '2021-08-11T12:56:36.834Z',
@@ -244,7 +244,7 @@ const item = PackedFolderItemFactory(
   },
   {
     permission: PermissionLevel.Admin,
-    publicTag: { type: ItemTagType.Public },
+    publicVisibility: { type: ItemVisibilityType.Public },
   },
 );
 
@@ -263,10 +263,10 @@ export const PublishedItemFactory = (
 
 export const PUBLISHED_ITEM: ItemForTest = {
   ...item,
-  tags: [
+  visibilities: [
     {
       id: 'ecbfbd2a-5688-11eb-ae93-0242ac130002',
-      type: ItemTagType.Public,
+      type: ItemVisibilityType.Public,
       item,
       createdAt: '2021-08-11T12:56:36.834Z',
       creator: MEMBERS.ANNA,
