@@ -8,20 +8,18 @@ import { hooks } from '../../config/queryClient';
 import { buildMemberAvatarId } from '../../config/selectors';
 
 type Props = {
-  id?: string;
   maxWidth?: number;
   maxHeight?: number;
 };
 
 export function CurrentMemberAvatar({
-  id,
   maxWidth = AVATAR_ICON_HEIGHT,
   maxHeight = AVATAR_ICON_HEIGHT,
 }: Props): JSX.Element {
   const { t } = useCommonTranslation();
   const { data: member, isLoading } = hooks.useCurrentMember();
   const { data: avatarUrl, isLoading: isLoadingAvatar } = hooks.useAvatarUrl({
-    id,
+    id: member?.id,
     size: ThumbnailSize.Small,
   });
   return (
