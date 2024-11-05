@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.45.0](https://github.com/graasp/graasp-builder/compare/v2.44.0...v2.45.0) (2024-11-04)
+
+
+### Features
+
+* allow press enter to share item ([#1550](https://github.com/graasp/graasp-builder/issues/1550)) ([bbe3270](https://github.com/graasp/graasp-builder/commit/bbe327004768150c94b20d4c4176e97a429069b7))
+* get recycled items ([#1561](https://github.com/graasp/graasp-builder/issues/1561)) ([114b7e3](https://github.com/graasp/graasp-builder/commit/114b7e30e51648dd08de2c1004545f5e05353699))
+
 ## [2.44.0](https://github.com/graasp/graasp-builder/compare/v2.43.0...v2.44.0) (2024-10-28)
 
 
