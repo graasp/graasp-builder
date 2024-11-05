@@ -3,10 +3,8 @@ import { useFormContext } from 'react-hook-form';
 import ClearIcon from '@mui/icons-material/Clear';
 import { IconButton, TextField } from '@mui/material';
 
-import { ItemConstants } from '@graasp/sdk';
+import { ItemConstants, MAX_ITEM_NAME_LENGTH } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
-
-import { ITEM_NAME_MAX_LENGTH } from '@/config/constants';
 
 import { useBuilderTranslation } from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
@@ -68,7 +66,7 @@ export const ItemNameField = ({
         },
         maxLength: {
           message: FAILURE_MESSAGES.INVALID_ITEM_NAME_MAX_LENGTH_ERROR,
-          value: ITEM_NAME_MAX_LENGTH,
+          value: MAX_ITEM_NAME_LENGTH,
         },
       })}
     />

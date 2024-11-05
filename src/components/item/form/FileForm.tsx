@@ -56,8 +56,9 @@ const FileForm = ({
     watch,
     setValue,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, isSubmitted },
   } = methods;
+
   const altText = watch('altText');
   const description = watch('description');
   const descriptionPlacement = watch('descriptionPlacement');
@@ -151,7 +152,7 @@ const FileForm = ({
             variant="contained"
             type="submit"
             id={ITEM_FORM_CONFIRM_BUTTON_ID}
-            disabled={!isValid}
+            disabled={isSubmitted && !isValid}
           >
             {translateCommon(COMMON.SAVE_BUTTON)}
           </Button>
