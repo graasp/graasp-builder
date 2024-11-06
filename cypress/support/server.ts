@@ -19,7 +19,7 @@ import {
   PublicationStatus,
   RecycledItemData,
   ShortLink,
-  ShortLinkPayload,
+  ShortLinksOfItem,
   buildPathFromIds,
   getIdsFromPath,
   isRootItem,
@@ -2069,7 +2069,19 @@ export const mockGetShortLinksItem = (
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
-      return reply(shortLinks.filter(({ item }) => item?.id === itemId));
+      return reply(
+        shortLinks
+          .filter(({ itemId: id }) => id === itemId)
+          .reduce<ShortLinksOfItem>((acc, s) => {
+            if (acc[s.platform]) {
+              throw new Error(
+                `Duplication of platform ${s} in shortlinks for item ${itemId}!`,
+              );
+            }
+
+            return { ...acc, [s.platform]: s.alias };
+          }, {}),
+      );
     },
   ).as('getShortLinksItem');
 };
@@ -2092,21 +2104,6 @@ export const mockCheckShortLink = (shouldAliasBeAvailable: boolean): void => {
   ).as('checkShortLink');
 };
 
-/**
- * Convert short link payload to short link object to mock server response.
- * @param payload The payload of the short link when posting new short link for example.
- * @returns The short link object converted from the payload.
- */
-function payloadToShortLink(payload: ShortLinkPayload): ShortLink {
-  const { itemId, ...restOfPayload } = payload;
-
-  return {
-    ...restOfPayload,
-    item: { id: itemId },
-    createdAt: new Date().toISOString(),
-  };
-}
-
 export const mockPostShortLink = (
   shortLinks: ShortLink[],
   shouldThrowError: boolean,
@@ -2121,12 +2118,9 @@ export const mockPostShortLink = (
         return reply({ statusCode: StatusCodes.BAD_REQUEST });
       }
 
-      // Because the payload contains itemId and short link object contains item: { id }
-      // it is necessary to transform the post request to short link to mock server response.
-      const shortLink = payloadToShortLink(body);
-      shortLinks.push(shortLink);
+      shortLinks.push(body);
 
-      return reply(shortLink);
+      return reply(body);
     },
   ).as('postShortLink');
 };
@@ -2156,7 +2150,6 @@ export const mockPatchShortLink = (
 
       // This works only because of JS referenced object. It is for a mocked db only.
       shortLink.alias = body.alias;
-      shortLink.platform = body.platform;
 
       return reply(shortLink);
     },

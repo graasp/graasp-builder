@@ -41,10 +41,10 @@ const ShortLinksRenderer = ({
   const { mode } = useLayoutContext();
   const { data: apiLinks, isLoading } = useShortLinksItem(itemId);
   const { data: publishedEntry } = useItemPublishedInformation({ itemId });
-  const [modalOpen, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [isNew, setIsNew] = useState(false);
-  const [initialAlias, setInitAlias] = useState<string>('');
-  const [initialPlatform, setInitPlatform] = useState<ShortLinkPlatform>(
+  const [initialAlias, setInitialAlias] = useState<string>('');
+  const [shortLinkPlatform, setShortLinkPlatform] = useState<ShortLinkPlatform>(
     Context.Player,
   );
 
@@ -75,15 +75,13 @@ const ShortLinksRenderer = ({
         isShorten: false,
       };
 
-      const apiShortLink = apiLinks?.find(
-        (short) => short.platform === platform,
-      );
-      if (apiShortLink) {
-        shortLink.alias = apiShortLink.alias;
+      const apiShortLinkAlias = apiLinks?.[platform];
+      if (apiShortLinkAlias) {
+        shortLink.alias = apiShortLinkAlias;
         shortLink.isShorten = true;
         shortLink.url = appendPathToUrl({
           baseURL: GRAASP_REDIRECTION_HOST,
-          pathname: apiShortLink.alias,
+          pathname: apiShortLinkAlias,
         });
       }
 
@@ -92,13 +90,13 @@ const ShortLinksRenderer = ({
     .filter((short): short is ShortLinkType => Boolean(short));
 
   const handleNewAlias = (platform: ShortLinkPlatform) => {
-    setInitAlias(randomAlias());
-    setInitPlatform(platform);
+    setInitialAlias(randomAlias());
+    setShortLinkPlatform(platform);
     setIsNew(true);
-    setOpen(true);
+    setModalOpen(true);
   };
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setModalOpen(false);
   const onClose = (_event: Event, reason: string) => {
     // handle on backdrop click to close only with buttons
     if (reason === 'backdropClick') {
@@ -109,10 +107,10 @@ const ShortLinksRenderer = ({
   };
 
   const handleUpdate = (shortLink: ShortLinkType) => {
-    setInitAlias(shortLink.alias);
-    setInitPlatform(shortLink.platform);
+    setInitialAlias(shortLink.alias);
+    setShortLinkPlatform(shortLink.platform);
     setIsNew(false);
-    setOpen(true);
+    setModalOpen(true);
   };
 
   return (
@@ -123,7 +121,7 @@ const ShortLinksRenderer = ({
             itemId={itemId}
             handleClose={handleClose}
             initialAlias={initialAlias}
-            initialPlatform={initialPlatform}
+            platform={shortLinkPlatform}
             isNew={isNew}
           />
         </Dialog>
@@ -151,7 +149,7 @@ const ShortLinksRenderer = ({
         </Stack>
       )}
 
-      {isLoading && shortLinks.map((_) => <ShortLinkSkeleton />)}
+      {isLoading && shortLinks.map((s) => <ShortLinkSkeleton key={s.alias} />)}
     </>
   );
 };

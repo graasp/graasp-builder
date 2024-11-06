@@ -11,6 +11,7 @@ import {
   buildShortLinkUrlTextId,
 } from '../../../../src/config/selectors';
 import { PUBLISHED_ITEM } from '../../../fixtures/items';
+import { expectNumberOfShortLinks } from '../../../fixtures/shortLinks';
 import {
   GRAASP_REDIRECTION_HOST,
   buildGraaspBuilderView,
@@ -129,20 +130,17 @@ describe('Share Item Link', () => {
       {
         alias: 'test-1',
         platform: Context.Builder,
-        item: { id: item.id },
-        createdAt: new Date().toISOString(),
+        itemId: item.id,
       },
       {
         alias: 'test-2',
         platform: Context.Player,
-        item: { id: item.id },
-        createdAt: new Date().toISOString(),
+        itemId: item.id,
       },
       {
         alias: 'test-3',
         platform: Context.Library,
-        item: { id: item.id },
-        createdAt: new Date().toISOString(),
+        itemId: item.id,
       },
     ];
 
@@ -154,7 +152,7 @@ describe('Share Item Link', () => {
       cy.visit(buildItemPath(item.id));
       cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      expectNumberOfShortLinks(3);
       cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
 
       const context = Context.Builder;
@@ -166,7 +164,7 @@ describe('Share Item Link', () => {
       cy.visit(buildItemPath(item.id));
       cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      expectNumberOfShortLinks(3);
       cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
 
       const context = Context.Player;
@@ -178,7 +176,7 @@ describe('Share Item Link', () => {
       cy.visit(buildItemPath(item.id));
       cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      expectNumberOfShortLinks(3);
       cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
 
       const context = Context.Library;
@@ -190,7 +188,7 @@ describe('Share Item Link', () => {
       cy.visit(buildItemPath(item.id));
       cy.get(`#${buildShareButtonId(item.id)}`).click();
 
-      cy.wait('@getShortLinksItem').its('response.body.length').should('eq', 3);
+      expectNumberOfShortLinks(3);
       cy.get(`.${SHORT_LINK_COMPONENT}`).should('have.length', 3);
 
       cy.get(`#${SHARE_ITEM_QR_BTN_ID}`).click();

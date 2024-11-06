@@ -30,7 +30,7 @@ const { useShortLinkAvailable } = hooks;
 type Props = {
   itemId: string;
   initialAlias: string;
-  initialPlatform: ShortLink['platform'];
+  platform: ShortLink['platform'];
   isNew: boolean;
   handleClose: () => void;
 };
@@ -38,7 +38,7 @@ type Props = {
 const ShortLinkDialogContent = ({
   itemId,
   initialAlias,
-  initialPlatform,
+  platform,
   handleClose,
   isNew,
 }: Props): JSX.Element => {
@@ -55,7 +55,7 @@ const ShortLinkDialogContent = ({
 
   const [alias, setAlias] = useState<string>(initialAlias);
   const [search, setSearch] = useState<string | undefined>();
-  const [sendApi, setSendAPI] = useState<string | undefined>();
+  const [sendAPI, setSendAPI] = useState<string | undefined>();
   const [saved, setSaved] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isValidAlias, setIsValidAlias] = useState<boolean>(false);
@@ -72,7 +72,7 @@ const ShortLinkDialogContent = ({
     SHORT_LINK_API_CALL_DEBOUNCE_MS,
   );
   const { data: shortLinkAvailable, isFetching: isAvailableLoading } =
-    useShortLinkAvailable(sendApi);
+    useShortLinkAvailable(sendAPI);
 
   const isLoading = isDebounced || isAvailableLoading;
   const mutateIsLoading = loadingDelete || loadingPost;
@@ -85,15 +85,14 @@ const ShortLinkDialogContent = ({
     if (isNew) {
       await postShortLink({
         alias,
-        platform: initialPlatform,
+        platform,
         itemId,
       });
     } else {
       await patchShortLink({
-        alias: initialAlias, // old alias name use to find the shortLink to patch
+        alias: initialAlias, // old alias name used to find the shortLink to patch
         shortLink: {
           alias,
-          platform: initialPlatform,
         },
       });
     }
