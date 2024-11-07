@@ -1,7 +1,11 @@
 import { PackedFolderItemFactory } from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
-import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../../../src/config/selectors';
+import {
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+  ITEM_FORM_LINK_INPUT_ID,
+  ITEM_FORM_NAME_INPUT_ID,
+} from '../../../../src/config/selectors';
 import {
   GRAASP_LINK_ITEM,
   GRAASP_LINK_ITEM_NO_PROTOCOL,
@@ -42,6 +46,22 @@ describe('Create Link', () => {
       // expect update
       cy.wait('@getAccessibleItems');
     });
+  });
+
+  it('enter valid link, then reset link', () => {
+    cy.setUpApi();
+    cy.visit(HOME_PATH);
+
+    // enter valid data and wait iframely to fill fields
+    createLink(GRAASP_LINK_ITEM_NO_PROTOCOL, { confirm: false });
+    cy.wait(1000);
+    cy.get(`#${ITEM_FORM_NAME_INPUT_ID} input`).should('not.be.empty');
+
+    // type a wrong link and cannot save
+    cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`).clear().type('something');
+    cy.get(`#${ITEM_FORM_NAME_INPUT_ID} input`).should('not.be.empty');
+    cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
+    cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should('be.disabled');
   });
 
   it('create link in item', () => {
