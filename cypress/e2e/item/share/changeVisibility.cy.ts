@@ -1,7 +1,7 @@
 import {
   ItemLoginSchemaStatus,
   ItemLoginSchemaType,
-  ItemTagType,
+  ItemVisibilityType,
   PackedFolderItemFactory,
   PublicationStatus,
 } from '@graasp/sdk';
@@ -40,7 +40,7 @@ describe('Visibility of an Item', () => {
 
     // change private -> public
     changeVisibility(SETTINGS.ITEM_PUBLIC.name);
-    cy.wait(`@postItemTag-${ItemTagType.Public}`).then(
+    cy.wait(`@postItemVisibility-${ItemVisibilityType.Public}`).then(
       ({ request: { url } }) => {
         expect(url).to.contain(item.id);
       },
@@ -48,7 +48,7 @@ describe('Visibility of an Item', () => {
   });
 
   it('Change Public Item to Private', () => {
-    const item = PackedFolderItemFactory({}, { publicTag: {} });
+    const item = PackedFolderItemFactory({}, { publicVisibility: {} });
     cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
@@ -62,7 +62,7 @@ describe('Visibility of an Item', () => {
 
     // change public -> private
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait(`@deleteItemTag-${ItemTagType.Public}`).then(
+    cy.wait(`@deleteItemVisibility-${ItemVisibilityType.Public}`).then(
       ({ request: { url } }) => {
         expect(url).to.contain(item.id);
       },
@@ -70,7 +70,7 @@ describe('Visibility of an Item', () => {
   });
 
   it('Change Public Item to Item Login', () => {
-    const item = PackedFolderItemFactory({}, { publicTag: {} });
+    const item = PackedFolderItemFactory({}, { publicVisibility: {} });
     cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
@@ -85,14 +85,14 @@ describe('Visibility of an Item', () => {
     // change public -> item login
     changeVisibility(SETTINGS.ITEM_LOGIN.name);
     cy.wait([
-      `@deleteItemTag-${ItemTagType.Public}`,
+      `@deleteItemVisibility-${ItemVisibilityType.Public}`,
       '@putItemLoginSchema',
     ]).then((data) => {
       const {
         request: { url },
       } = data[0];
       expect(url).to.contain(item.id);
-      expect(url).to.contain(ItemTagType.Public); // originally item login
+      expect(url).to.contain(ItemVisibilityType.Public); // originally item login
 
       const {
         request: { body, url: itemLoginUrl },
@@ -140,7 +140,7 @@ describe('Visibility of an Item', () => {
   });
 
   it('Show hidden alert', () => {
-    const item = PackedFolderItemFactory({}, { hiddenTag: {} });
+    const item = PackedFolderItemFactory({}, { hiddenVisibility: {} });
     const ITEM_LOGIN_ITEM = {
       ...item,
       itemLoginSchema: {
@@ -160,7 +160,7 @@ describe('Visibility of an Item', () => {
   describe('Change visibility of published item', () => {
     it('User should validate the change to private', () => {
       const item = PublishedItemFactory(
-        PackedFolderItemFactory({}, { publicTag: {} }),
+        PackedFolderItemFactory({}, { publicVisibility: {} }),
       );
       cy.setUpApi({
         items: [item],
@@ -181,7 +181,7 @@ describe('Visibility of an Item', () => {
       cy.get(
         `${buildDataCyWrapper(UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON)}`,
       ).click();
-      cy.wait(`@deleteItemTag-${ItemTagType.Public}`).then(
+      cy.wait(`@deleteItemVisibility-${ItemVisibilityType.Public}`).then(
         ({ request: { url } }) => {
           expect(url).to.contain(item.id);
         },
@@ -190,7 +190,7 @@ describe('Visibility of an Item', () => {
 
     it('User should validate the change to item login', () => {
       const item = PublishedItemFactory(
-        PackedFolderItemFactory({}, { publicTag: {} }),
+        PackedFolderItemFactory({}, { publicVisibility: {} }),
       );
       cy.setUpApi({
         items: [item],
@@ -212,14 +212,14 @@ describe('Visibility of an Item', () => {
         `${buildDataCyWrapper(UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON)}`,
       ).click();
       cy.wait([
-        `@deleteItemTag-${ItemTagType.Public}`,
+        `@deleteItemVisibility-${ItemVisibilityType.Public}`,
         '@putItemLoginSchema',
       ]).then((data) => {
         const {
           request: { url },
         } = data[0];
         expect(url).to.contain(item.id);
-        expect(url).to.contain(ItemTagType.Public); // originally item login
+        expect(url).to.contain(ItemVisibilityType.Public); // originally item login
 
         const {
           request: { url: itemLoginUrl, body },

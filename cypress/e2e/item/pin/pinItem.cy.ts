@@ -19,7 +19,7 @@ const ITEM = PackedFolderItemFactory({ settings: { isPinned: false } });
 describe('Anonymous', () => {
   const PUBLIC_TTEM = PackedFolderItemFactory(
     { settings: { isPinned: false } },
-    { permission: null, publicTag: {} },
+    { permission: null, publicVisibility: {} },
   );
   const itemId = PUBLIC_TTEM.id;
   beforeEach(() => {

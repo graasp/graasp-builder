@@ -23,8 +23,8 @@ import {
   mockDeleteInvitation,
   mockDeleteItemCategory,
   mockDeleteItemMembershipForItem,
-  mockDeleteItemTag,
   mockDeleteItemThumbnail,
+  mockDeleteItemVisibility,
   mockDeleteItems,
   mockDeleteShortLink,
   mockDownloadItemChat,
@@ -81,9 +81,9 @@ import {
   mockPostItemFlag,
   mockPostItemLogin,
   mockPostItemMembership,
-  mockPostItemTag,
   mockPostItemThumbnail,
   mockPostItemValidation,
+  mockPostItemVisibility,
   mockPostManyItemMemberships,
   mockPostShortLink,
   mockPublishItem,
@@ -126,14 +126,14 @@ Cypress.Commands.add(
     defaultUploadError = false,
     defaultDownloadFileError = false,
     getCurrentMemberError = false,
-    postItemTagError = false,
+    postItemVisibilityError = false,
     postItemLoginError = false,
     putItemLoginError = false,
     editMemberError = false,
     postItemFlagError = false,
     getItemChatError = false,
     recycleItemsError = false,
-    deleteItemTagError = false,
+    deleteItemVisibilityError = false,
     restoreItemsError = false,
     getItemThumbnailError = false,
     getAvatarUrlError = false,
@@ -236,9 +236,9 @@ Cypress.Commands.add(
 
     mockGetItemMembershipsForItem(items, currentMember);
 
-    mockPostItemTag(cachedItems, currentMember, postItemTagError);
+    mockPostItemVisibility(cachedItems, currentMember, postItemVisibilityError);
 
-    mockDeleteItemTag(deleteItemTagError);
+    mockDeleteItemVisibility(deleteItemVisibilityError);
 
     mockEditMember(members, editMemberError);
 

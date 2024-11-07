@@ -1,6 +1,6 @@
 import { IconButton, ListItemIcon, MenuItem, Tooltip } from '@mui/material';
 
-import { ItemTagType, PackedItem } from '@graasp/sdk';
+import { ItemVisibilityType, PackedItem } from '@graasp/sdk';
 import { ActionButton, ActionButtonVariant } from '@graasp/ui';
 
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
@@ -26,39 +26,39 @@ const HideButton = ({
 }: HideButtonProps): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
 
-  const postTag = mutations.usePostItemTag();
-  const deleteTag = mutations.useDeleteItemTag();
+  const postVisibility = mutations.usePostItemVisibility();
+  const deleteVisibility = mutations.useDeleteItemVisibility();
 
-  const hiddenTag = item.hidden;
+  const hiddenVisibility = item.hidden;
   // since children items are hidden because parent is hidden, the hidden tag should be removed from the root item
-  // if hiddenTag is undefined -> the item is not hidden
+  // if hiddenVisibility is undefined -> the item is not hidden
   const isOriginalHiddenItem =
-    !hiddenTag || hiddenTag?.item?.path === item.path;
+    !hiddenVisibility || hiddenVisibility?.item?.path === item.path;
 
   const handleToggleHide = () => {
-    if (hiddenTag) {
-      deleteTag.mutate({
+    if (hiddenVisibility) {
+      deleteVisibility.mutate({
         itemId: item.id,
-        type: ItemTagType.Hidden,
+        type: ItemVisibilityType.Hidden,
       });
     } else {
-      postTag.mutate({
+      postVisibility.mutate({
         itemId: item.id,
-        type: ItemTagType.Hidden,
+        type: ItemVisibilityType.Hidden,
       });
     }
     onClick?.();
   };
 
-  const text = hiddenTag
+  const text = hiddenVisibility
     ? translateBuilder(BUILDER.HIDE_ITEM_SHOW_TEXT)
     : translateBuilder(BUILDER.HIDE_ITEM_HIDE_TEXT);
   let tooltip = text;
-  if (hiddenTag && !isOriginalHiddenItem) {
+  if (hiddenVisibility && !isOriginalHiddenItem) {
     tooltip = translateBuilder(BUILDER.HIDE_ITEM_HIDDEN_PARENT_INFORMATION);
   }
 
-  const icon = hiddenTag ? <EyeIcon /> : <EyeOffIcon />;
+  const icon = hiddenVisibility ? <EyeIcon /> : <EyeOffIcon />;
 
   switch (type) {
     case ActionButton.MENU_ITEM: {
@@ -68,7 +68,7 @@ const HideButton = ({
           onClick={handleToggleHide}
           className={HIDDEN_ITEM_BUTTON_CLASS}
           disabled={!isOriginalHiddenItem}
-          data-cy={buildHideButtonId(Boolean(hiddenTag))}
+          data-cy={buildHideButtonId(Boolean(hiddenVisibility))}
         >
           <ListItemIcon>{icon}</ListItemIcon>
           {text}

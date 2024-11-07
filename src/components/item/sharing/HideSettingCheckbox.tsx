@@ -1,4 +1,4 @@
-import { ItemTagType, PackedItem } from '@graasp/sdk';
+import { ItemVisibilityType, PackedItem } from '@graasp/sdk';
 
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
@@ -10,19 +10,19 @@ import { BUILDER } from '@/langs/constants';
 import ItemSettingCheckBoxProperty from '../settings/ItemSettingCheckBoxProperty';
 
 const HideSettingCheckbox = ({ item }: { item: PackedItem }): JSX.Element => {
-  const { mutate: postItemTag } = mutations.usePostItemTag();
-  const { mutate: deleteItemTag } = mutations.useDeleteItemTag();
+  const { mutate: postItemVisibility } = mutations.usePostItemVisibility();
+  const { mutate: deleteItemVisibility } = mutations.useDeleteItemVisibility();
   const { t: translateBuilder } = useBuilderTranslation();
 
   const isDisabled = item.hidden && item.hidden.item.id !== item.id;
 
   const onClick = (checked: boolean): void => {
     if (!checked) {
-      postItemTag({ itemId: item.id, type: ItemTagType.Hidden });
+      postItemVisibility({ itemId: item.id, type: ItemVisibilityType.Hidden });
     } else {
-      deleteItemTag({
+      deleteItemVisibility({
         itemId: item.id,
-        type: ItemTagType.Hidden,
+        type: ItemVisibilityType.Hidden,
       });
     }
   };

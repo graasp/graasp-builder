@@ -16,27 +16,27 @@ import { ItemForTest } from '../../support/types';
 export const createPublicItemByType = (
   itemType: ItemTypeUnion,
 ): ItemForTest => {
-  const publicTag = { publicTag: {} };
+  const publicVisibility = { publicVisibility: {} };
 
   switch (itemType) {
     case 'app':
-      return PackedAppItemFactory({}, publicTag);
+      return PackedAppItemFactory({}, publicVisibility);
     case 'document':
-      return PackedDocumentItemFactory({}, publicTag);
+      return PackedDocumentItemFactory({}, publicVisibility);
     case 'folder':
-      return PackedFolderItemFactory({}, publicTag);
+      return PackedFolderItemFactory({}, publicVisibility);
     case 'embeddedLink':
-      return PackedLinkItemFactory({}, publicTag);
+      return PackedLinkItemFactory({}, publicVisibility);
     case 'file':
-      return PackedLocalFileItemFactory({}, publicTag);
+      return PackedLocalFileItemFactory({}, publicVisibility);
     case 's3File':
-      return PackedS3FileItemFactory({}, publicTag);
+      return PackedS3FileItemFactory({}, publicVisibility);
     case 'shortcut':
-      return PackedShortcutItemFactory({}, publicTag);
+      return PackedShortcutItemFactory({}, publicVisibility);
     case 'h5p':
-      return PackedH5PItemFactory({}, publicTag);
+      return PackedH5PItemFactory({}, publicVisibility);
     case 'etherpad':
-      return PackedEtherpadItemFactory({}, publicTag);
+      return PackedEtherpadItemFactory({}, publicVisibility);
     default:
       throw new Error(
         `Item Type "${itemType}" is unknown in "createPublicItemWithType"`,

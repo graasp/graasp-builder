@@ -11,8 +11,8 @@ import {
   ItemBookmark,
   ItemMembership,
   ItemPublished,
-  ItemTagType,
   ItemValidationGroup,
+  ItemVisibilityType,
   Member,
   PermissionLevel,
   PermissionLevelCompare,
@@ -67,7 +67,7 @@ const {
   buildPostItemLoginSignInRoute,
   buildGetItemLoginSchemaRoute,
   buildGetItemMembershipsForItemsRoute,
-  buildPostItemTagRoute,
+  buildPostItemVisibilityRoute,
   buildPatchCurrentMemberRoute,
   buildEditItemMembershipRoute,
   buildDeleteItemMembershipRoute,
@@ -76,7 +76,7 @@ const {
   buildExportItemChatRoute,
   buildPostItemChatMessageRoute,
   buildClearItemChatRoute,
-  buildDeleteItemTagRoute,
+  buildDeleteItemVisibilityRoute,
   buildDeleteItemsRoute,
   buildGetMembersByIdRoute,
   buildUploadItemThumbnailRoute,
@@ -1100,18 +1100,18 @@ export const mockDeleteItemMembershipForItem = (): void => {
   ).as('deleteItemMembership');
 };
 
-export const mockPostItemTag = (
+export const mockPostItemVisibility = (
   items: ItemForTest[],
   currentMember: Member,
   shouldThrowError: boolean,
 ): void => {
   // mock all tag type
-  Object.values(ItemTagType).forEach((type) => {
+  Object.values(ItemVisibilityType).forEach((type) => {
     cy.intercept(
       {
         method: HttpMethod.Post,
         url: new RegExp(
-          `${API_HOST}/${buildPostItemTagRoute({ itemId: ID_FORMAT, type })}$`,
+          `${API_HOST}/${buildPostItemVisibilityRoute({ itemId: ID_FORMAT, type })}$`,
         ),
       },
       ({ reply, url, body }) => {
@@ -1120,13 +1120,15 @@ export const mockPostItemTag = (
           return;
         }
         const itemId = url.slice(API_HOST.length).split('/')[2];
-        const tagType = url.slice(API_HOST.length).split('/')[4] as ItemTagType;
+        const tagType = url
+          .slice(API_HOST.length)
+          .split('/')[4] as ItemVisibilityType;
         const item = items.find(({ id }) => itemId === id);
 
-        if (!item?.tags) {
-          item.tags = [];
+        if (!item?.visibilities) {
+          item.visibilities = [];
         }
-        item.tags.push({
+        item.visibilities.push({
           id: v4(),
           type: tagType,
           // avoid circular dependency
@@ -1136,18 +1138,18 @@ export const mockPostItemTag = (
         });
         reply(body);
       },
-    ).as(`postItemTag-${type}`);
+    ).as(`postItemVisibility-${type}`);
   });
 };
 
-export const mockDeleteItemTag = (shouldThrowError: boolean): void => {
+export const mockDeleteItemVisibility = (shouldThrowError: boolean): void => {
   // mock all tag type
-  Object.values(ItemTagType).forEach((type) => {
+  Object.values(ItemVisibilityType).forEach((type) => {
     cy.intercept(
       {
         method: HttpMethod.Delete,
         url: new RegExp(
-          `${API_HOST}/${buildDeleteItemTagRoute({
+          `${API_HOST}/${buildDeleteItemVisibilityRoute({
             itemId: ID_FORMAT,
             type,
           })}$`,
@@ -1161,7 +1163,7 @@ export const mockDeleteItemTag = (shouldThrowError: boolean): void => {
 
         reply(body);
       },
-    ).as(`deleteItemTag-${type}`);
+    ).as(`deleteItemVisibility-${type}`);
   });
 };
 

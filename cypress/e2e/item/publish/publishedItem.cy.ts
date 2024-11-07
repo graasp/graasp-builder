@@ -1,9 +1,9 @@
 import {
-  ItemTagType,
   ItemType,
   ItemTypeUnion,
   ItemValidationGroup,
   ItemValidationStatus,
+  ItemVisibilityType,
   Member,
   PackedFolderItemFactory,
   PackedItem,
@@ -95,7 +95,7 @@ const waitOnPublishItem = (
 };
 
 const waitOnSetItemPublic = (item: PackedItem) => {
-  waitOnRequest(`@postItemTag-${ItemTagType.Public}`, item);
+  waitOnRequest(`@postItemVisibility-${ItemVisibilityType.Public}`, item);
 };
 
 const waitOnUnpublishItem = (item: PackedItem) => {
@@ -110,7 +110,10 @@ describe('Unauthorized members should not have access to publish tab', () => {
   });
 
   it('Unlogged members should not view publish tab', () => {
-    item = PackedFolderItemFactory({}, { permission: null, publicTag: {} });
+    item = PackedFolderItemFactory(
+      {},
+      { permission: null, publicVisibility: {} },
+    );
     setUpAndVisitItemPage(item, { currentMember: null });
   });
 
@@ -126,7 +129,7 @@ describe('Unauthorized members should not have access to publish tab', () => {
 });
 
 describe('Private Item', () => {
-  const privateItem = PackedFolderItemFactory({}, { publicTag: null });
+  const privateItem = PackedFolderItemFactory({}, { publicVisibility: null });
 
   describe('Unpublished Item', () => {
     const status = PublicationStatus.Unpublished;
@@ -206,7 +209,7 @@ describe('Private Item', () => {
 });
 
 describe('Public Item', () => {
-  const publicItem = PackedFolderItemFactory({}, { publicTag: {} });
+  const publicItem = PackedFolderItemFactory({}, { publicVisibility: {} });
 
   describe('Unpublished Item', () => {
     const status = PublicationStatus.Unpublished;

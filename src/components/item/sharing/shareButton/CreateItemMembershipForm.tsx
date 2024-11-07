@@ -86,57 +86,59 @@ const Content = ({ handleClose, item }: ContentProps) => {
   return (
     <Box component="form" onSubmit={handleSubmit(handleShare)}>
       <DialogContent>
-        <Typography variant="body1">
-          {translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
-        </Typography>
-        <Stack
-          id={CREATE_MEMBERSHIP_FORM_ID}
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={1}
-        >
-          <TextField
-            id={SHARE_ITEM_EMAIL_INPUT_ID}
-            variant="outlined"
-            label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
-            helperText={errors.email?.message}
-            {...register('email', {
-              required: true,
-              validate: {
-                isEmail: (email) =>
-                  validator.isEmail(email) ||
-                  translateBuilder(
-                    BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE,
-                  ),
-                noMembership: (email) =>
-                  !memberships?.some(
-                    ({ account }) =>
-                      account.type === AccountType.Individual &&
-                      account.email === email,
-                  ) ||
-                  translateBuilder(
-                    BUILDER.SHARE_ITEM_FORM_ALREADY_HAVE_MEMBERSHIP_MESSAGE,
-                  ),
-                noInvitation: (email) =>
-                  !invitations?.some((inv) => inv.email === email) ||
-                  translateBuilder(
-                    BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
-                  ),
-              },
-            })}
-            error={Boolean(errors.email)}
-            sx={{ flexGrow: 1 }}
-          />
-          <ItemMembershipSelect
-            value={permission}
-            onChange={(event) => {
-              if (event.target.value) {
-                setValue('permission', event.target.value as PermissionLevel);
-              }
-            }}
-            size="medium"
-          />
+        <Stack gap={3}>
+          <Typography variant="body1">
+            {translateBuilder(BUILDER.SHARE_ITEM_FORM_INVITATION_TOOLTIP)}
+          </Typography>
+          <Stack
+            id={CREATE_MEMBERSHIP_FORM_ID}
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+          >
+            <TextField
+              id={SHARE_ITEM_EMAIL_INPUT_ID}
+              variant="outlined"
+              label={translateBuilder(BUILDER.SHARE_ITEM_FORM_EMAIL_LABEL)}
+              helperText={errors.email?.message}
+              {...register('email', {
+                required: true,
+                validate: {
+                  isEmail: (email) =>
+                    validator.isEmail(email) ||
+                    translateBuilder(
+                      BUILDER.SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE,
+                    ),
+                  noMembership: (email) =>
+                    !memberships?.some(
+                      ({ account }) =>
+                        account.type === AccountType.Individual &&
+                        account.email === email,
+                    ) ||
+                    translateBuilder(
+                      BUILDER.SHARE_ITEM_FORM_ALREADY_HAVE_MEMBERSHIP_MESSAGE,
+                    ),
+                  noInvitation: (email) =>
+                    !invitations?.some((inv) => inv.email === email) ||
+                    translateBuilder(
+                      BUILDER.SHARE_ITEM_FORM_INVITATION_EMAIL_EXISTS_MESSAGE,
+                    ),
+                },
+              })}
+              error={Boolean(errors.email)}
+              sx={{ flexGrow: 1 }}
+            />
+            <ItemMembershipSelect
+              value={permission}
+              onChange={(event) => {
+                if (event.target.value) {
+                  setValue('permission', event.target.value as PermissionLevel);
+                }
+              }}
+              size="medium"
+            />
+          </Stack>
         </Stack>
       </DialogContent>
       <DialogActions>

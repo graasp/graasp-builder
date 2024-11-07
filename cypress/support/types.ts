@@ -11,8 +11,8 @@ import {
   ItemLoginSchema,
   ItemMembership,
   ItemPublished,
-  ItemTag,
   ItemValidationGroup,
+  ItemVisibility,
   LocalFileItemType,
   PermissionLevel,
   PublicationStatus,
@@ -25,7 +25,7 @@ import {
 export type ItemForTest = DiscriminatedItem & {
   categories?: ItemCategory[];
   thumbnails?: ThumbnailsBySize;
-  tags?: ItemTag[];
+  visibilities?: ItemVisibility[];
   itemLoginSchema?: ItemLoginSchema;
   readFilepath?: string;
   chat?: ChatMessage[];
@@ -33,7 +33,7 @@ export type ItemForTest = DiscriminatedItem & {
   invitations?: Invitation[];
   published?: ItemPublished;
   permission?: PermissionLevel;
-  public?: ItemTag;
+  public?: ItemVisibility;
 };
 
 export type MemberForTest = CompleteMember & { thumbnails?: string };
@@ -75,7 +75,7 @@ export type ApiConfig = {
   defaultUploadError?: boolean;
   defaultDownloadFileError?: boolean;
   getCurrentMemberError?: boolean;
-  postItemTagError?: boolean;
+  postItemVisibilityError?: boolean;
   postItemLoginError?: boolean;
   putItemLoginError?: boolean;
   editMemberError?: boolean;
@@ -83,7 +83,7 @@ export type ApiConfig = {
   getItemChatError?: boolean;
   recycleItemsError?: boolean;
   getRecycledItemsError?: boolean;
-  deleteItemTagError?: boolean;
+  deleteItemVisibilityError?: boolean;
   restoreItemsError?: boolean;
   getItemThumbnailError?: boolean;
   getAvatarUrlError?: boolean;
