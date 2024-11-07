@@ -35,13 +35,13 @@ export const ItemNameField = ({
   const handleClearClick = () => {
     reset({ name: '' });
   };
+
   return (
     <TextField
       variant="standard"
       autoFocus={autoFocus}
       id={ITEM_FORM_NAME_INPUT_ID}
       label={translateBuilder(BUILDER.CREATE_NEW_ITEM_NAME_LABEL)}
-      required={required}
       // always shrink because setting name from defined app does not shrink automatically
       slotProps={{
         inputLabel: { shrink: true },

@@ -3,7 +3,6 @@ import {
   DiscriminatedItem,
   DocumentItemType,
   ItemType,
-  LinkItemType,
 } from '@graasp/sdk';
 
 import {
@@ -13,7 +12,6 @@ import {
   CREATE_ITEM_DOCUMENT_ID,
   CREATE_ITEM_FILE_ID,
   CREATE_ITEM_H5P_ID,
-  CREATE_ITEM_LINK_ID,
   CREATE_ITEM_ZIP_ID,
   DASHBOARD_UPLOADER_ID,
   H5P_DASHBOARD_UPLOADER_ID,
@@ -49,15 +47,6 @@ export const createFolder = (
   cy.fillFolderModal(payload, options);
 };
 
-export const createLink = (
-  payload: LinkItemType,
-  options?: { confirm?: boolean },
-): void => {
-  cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
-  cy.get(`#${CREATE_ITEM_LINK_ID}`).click();
-  cy.fillLinkModal(payload, options);
-};
-
 export const createFile = (
   payload: FileItemForTest,
   options?: { confirm?: boolean },
@@ -91,10 +80,6 @@ export const createItem = (
   cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click();
 
   switch (payload.type) {
-    case ItemType.LINK:
-      cy.get(`#${CREATE_ITEM_LINK_ID}`).click();
-      cy.fillLinkModal(payload, options);
-      break;
     case ItemType.S3_FILE:
     case ItemType.LOCAL_FILE: {
       const { confirm = true } = options;
