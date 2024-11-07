@@ -31,8 +31,8 @@ import {
 import { getExtraFromPartial } from '@/utils/itemExtra';
 
 import { BUILDER } from '../../../langs/constants';
-import DescriptionForm from './DescriptionForm';
 import { ItemNameField } from './ItemNameField';
+import { DescriptionAndPlacementForm } from './description/DescriptionAndPlacementForm';
 
 type Inputs = {
   name: string;
@@ -56,8 +56,9 @@ const FileForm = ({
     watch,
     setValue,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, isSubmitted },
   } = methods;
+
   const altText = watch('altText');
   const description = watch('description');
   const descriptionPlacement = watch('descriptionPlacement');
@@ -129,7 +130,7 @@ const FileForm = ({
               {...register('altText', { value: previousAltText })}
             />
           )}
-          <DescriptionForm
+          <DescriptionAndPlacementForm
             onPlacementChange={(newValue) =>
               setValue('descriptionPlacement', newValue)
             }
@@ -151,7 +152,7 @@ const FileForm = ({
             variant="contained"
             type="submit"
             id={ITEM_FORM_CONFIRM_BUTTON_ID}
-            disabled={!isValid}
+            disabled={isSubmitted && !isValid}
           >
             {translateCommon(COMMON.SAVE_BUTTON)}
           </Button>

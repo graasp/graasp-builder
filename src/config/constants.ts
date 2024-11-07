@@ -35,6 +35,9 @@ export const HEADER_HEIGHT = 64;
 export const FILE_UPLOAD_MAX_FILES = 15;
 export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
 
+/**
+ * Max length to display for an item name
+ */
 export const ITEM_NAME_MAX_LENGTH = 20;
 
 export const LOADING_CONTENT = '…';

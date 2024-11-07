@@ -11,7 +11,7 @@ import {
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
-import ItemSettingProperty from '../settings/ItemSettingProperty';
+import ItemSettingProperty from '../../settings/ItemSettingProperty';
 
 const DEFAULT_PLACEMENT = DescriptionPlacement.BELOW;
 

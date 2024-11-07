@@ -20,7 +20,7 @@ import {
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
-import DescriptionPlacementForm from '../form/DescriptionPlacementForm';
+import DescriptionPlacementForm from '../form/description/DescriptionPlacementForm';
 import HideSettingCheckbox from '../sharing/HideSettingCheckbox';
 import ItemSettingCheckBoxProperty from './ItemSettingCheckBoxProperty';
 import LinkSettings from './LinkSettings';

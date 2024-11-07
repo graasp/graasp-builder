@@ -31,13 +31,16 @@ const MapView = ({
 }: Props): JSX.Element => {
   const { data: currentMember } = hooks.useCurrentMember();
   const { isMobile } = useMobileView();
-  const [geolocation, setGeolocation] = useState<Partial<ItemGeolocation>>();
+  const [geolocation, setGeolocation] =
+    useState<Pick<ItemGeolocation, 'lat' | 'lng'>>();
   const [open, setOpen] = useState(false);
   const { data: parent, isLoading: isLoadingParent } = hooks.useItem(parentId);
   const { hasFetchedCurrentLocation, currentPosition } =
     useCurrentLocation(enableGeolocation);
 
-  const handleAddOnClick = (args: { location: Partial<ItemGeolocation> }) => {
+  const handleAddOnClick = (args: {
+    location: Pick<ItemGeolocation, 'lat' | 'lng'>;
+  }) => {
     setGeolocation(args.location);
     setOpen(true);
   };
