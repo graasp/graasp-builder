@@ -77,9 +77,7 @@ describe('Create Link', () => {
       cy.visit(buildItemPath(id));
 
       // create
-      createLink(INVALID_LINK_ITEM, {
-        confirm: false,
-      });
+      createLink(INVALID_LINK_ITEM);
 
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
         'have.prop',
@@ -97,9 +95,7 @@ describe('Create Link', () => {
       cy.visit(buildItemPath(id));
 
       // create
-      createLink(LINK_ITEM_WITH_BLANK_NAME, {
-        confirm: false,
-      });
+      createLink(LINK_ITEM_WITH_BLANK_NAME);
 
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
         'have.prop',

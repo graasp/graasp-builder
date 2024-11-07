@@ -2,6 +2,10 @@ import { useEffect, useMemo } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
 import {
+  Box,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -15,26 +19,29 @@ import {
 
 import {
   DiscriminatedItem,
+  ItemGeolocation,
   ItemType,
   UnionOfConst,
   buildLinkExtra,
   getLinkThumbnailUrl,
 } from '@graasp/sdk';
-import { LinkCard, LinkItem } from '@graasp/ui';
+import { COMMON } from '@graasp/translations';
+import { Button, LinkCard, LinkItem } from '@graasp/ui';
 
-import { hooks } from '@/config/queryClient';
+import CancelButton from '@/components/common/CancelButton';
+import { hooks, mutations } from '@/config/queryClient';
+import { ITEM_FORM_CONFIRM_BUTTON_ID } from '@/config/selectors';
 
-import { useBuilderTranslation } from '../../../../config/i18n';
+import {
+  useBuilderTranslation,
+  useCommonTranslation,
+} from '../../../../config/i18n';
 import { BUILDER } from '../../../../langs/constants';
 import { isUrlValid } from '../../../../utils/item';
 import { ItemNameField } from '../ItemNameField';
 import LinkDescriptionField from './LinkDescriptionField';
 import LinkUrlField from './LinkUrlField';
 import { LinkType, getSettingsFromLinkType, normalizeURL } from './linkUtils';
-
-type Props = {
-  onChange: (item: Partial<DiscriminatedItem>) => void;
-};
 
 const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
   // remove weird default margins on label
@@ -55,6 +62,13 @@ const StyledDiv = styled('div')(() => ({
   },
 }));
 
+type Props = {
+  onClose: () => void;
+  parentId?: DiscriminatedItem['id'];
+  geolocation?: Pick<ItemGeolocation, 'lat' | 'lng'>;
+  previousItemId?: DiscriminatedItem['id'];
+};
+
 type Inputs = {
   name: string;
   linkType: UnionOfConst<typeof LinkType>;
@@ -62,23 +76,37 @@ type Inputs = {
   url: string;
 };
 
-const LinkForm = ({ onChange }: Props): JSX.Element => {
+export const LinkForm = ({
+  onClose,
+  parentId,
+  geolocation,
+  previousItemId,
+}: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateCommon } = useCommonTranslation();
+  const { mutateAsync: createItem } = mutations.usePostItem();
   const methods = useForm<Inputs>();
-  const { register, watch, control, setValue, reset } = methods;
-  const url = watch('url');
+  const {
+    setValue,
+    watch,
+    handleSubmit,
+    control,
+    getValues,
+    formState: { isValid, isSubmitted },
+  } = methods;
 
-  const name = watch('name');
-  const linkType = watch('linkType');
   const description = watch('description');
+  const url = watch('url');
+  const isValidUrl = isUrlValid(normalizeURL(url));
   const { data: linkData } = hooks.useLinkMetadata(
-    isUrlValid(normalizeURL(url)) ? normalizeURL(url) : '',
+    isValidUrl ? normalizeURL(url) : '',
   );
 
   // apply the description from the api to the field
   // this is only run once.
   useEffect(
     () => {
+      const { name } = getValues();
       if (!description && linkData?.description) {
         setValue('description', linkData.description);
       }
@@ -90,21 +118,28 @@ const LinkForm = ({ onChange }: Props): JSX.Element => {
     [linkData],
   );
 
-  // synchronize upper state after async local state change
-  useEffect(() => {
-    onChange({
-      name,
-      description,
-      extra: buildLinkExtra({
-        url,
-        description: linkData?.description,
-        thumbnails: linkData?.thumbnails,
-        icons: linkData?.icons,
-      }),
-      settings: getSettingsFromLinkType(linkType),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description, linkData, linkType, name, url]);
+  async function onSubmit(data: Inputs) {
+    try {
+      await createItem({
+        name: data.name,
+        type: ItemType.LINK,
+        description: data.description,
+        extra: buildLinkExtra({
+          url: data.url,
+          description: linkData?.description,
+          thumbnails: linkData?.thumbnails,
+          icons: linkData?.icons,
+        }),
+        settings: getSettingsFromLinkType(data.linkType),
+        parentId,
+        geolocation,
+        previousItemId,
+      });
+      onClose();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const embeddedLinkPreview = useMemo(
     () => (
@@ -129,113 +164,129 @@ const LinkForm = ({ onChange }: Props): JSX.Element => {
     : undefined;
 
   return (
-    <Stack gap={1} overflow="scroll">
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <DialogTitle>
+        {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
+      </DialogTitle>
       <FormProvider {...methods}>
-        <LinkUrlField
-          form={register('url', { validate: isUrlValid })}
-          onClear={() => reset({ url: '' })}
-          showClearButton={Boolean(url)}
-          isValid={isUrlValid(normalizeURL(url))}
-        />
-        <ItemNameField required />
-        <LinkDescriptionField
-          onRestore={() => setValue('description', linkData?.description ?? '')}
-          form={register('description')}
-          onClear={() => reset({ description: '' })}
-          showRestoreButton={
-            Boolean(description) && description !== linkData?.description
-          }
-          showClearButton={Boolean(description)}
-        />
-        <FormControl>
-          <FormLabel>
-            <Typography variant="caption">
-              {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_TITLE)}
-            </Typography>
-            {url ? (
-              <Controller
-                control={control}
-                defaultValue={LinkType.Default}
-                name="linkType"
-                render={({ field }) => (
-                  <RadioGroup sx={{ display: 'flex', gap: 2 }} {...field}>
-                    <StyledFormControlLabel
-                      value={LinkType.Default}
-                      label={<Link href={url}>{url}</Link>}
-                      control={<Radio />}
-                    />
-                    <StyledFormControlLabel
-                      value={LinkType.Fancy}
-                      label={
-                        <LinkCard
-                          title={linkData?.title || ''}
-                          url={url}
-                          thumbnail={thumbnail}
-                          description={description || ''}
-                        />
-                      }
-                      control={<Radio />}
-                      slotProps={{
-                        typography: { width: '100%', minWidth: '0px' },
-                      }}
-                      sx={{ minWidth: '0px', width: '100%' }}
-                    />
-                    {linkData?.html && linkData.html !== '' && (
-                      <StyledFormControlLabel
-                        value={LinkType.Embedded}
-                        label={
-                          // eslint-disable-next-line react/no-danger
-                          <StyledDiv
-                            sx={{}}
-                            dangerouslySetInnerHTML={{ __html: linkData.html }}
+        <DialogContent>
+          <Stack gap={1} overflow="scroll">
+            <LinkUrlField />
+            <ItemNameField required />
+            <LinkDescriptionField
+              onRestore={() =>
+                setValue('description', linkData?.description ?? '')
+              }
+              showRestoreButton={
+                Boolean(linkData?.description) &&
+                linkData?.description !== description
+              }
+            />
+            {isValidUrl && (
+              <FormControl>
+                <FormLabel>
+                  <Typography variant="caption">
+                    {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_TITLE)}
+                  </Typography>
+                  {url ? (
+                    <Controller
+                      control={control}
+                      defaultValue={LinkType.Default}
+                      name="linkType"
+                      render={({ field }) => (
+                        <RadioGroup sx={{ display: 'flex', gap: 2 }} {...field}>
+                          <StyledFormControlLabel
+                            value={LinkType.Default}
+                            label={<Link href={url}>{url}</Link>}
+                            control={<Radio />}
                           />
-                        }
-                        control={<Radio />}
-                        slotProps={{
-                          typography: {
-                            width: '100%',
-                            minWidth: '0px',
-                          },
-                        }}
-                      />
-                    )}
-                    {
-                      // only show this options when embedding is allowed and there is no html code
-                      // as the html will take precedence over showing the site as an iframe
-                      // and some sites like daily motion actually allow both, we want to allow show the html setting
-                      linkData?.isEmbeddingAllowed && !linkData?.html && (
-                        <StyledFormControlLabel
-                          value={LinkType.Embedded}
-                          label={embeddedLinkPreview}
-                          control={<Radio />}
-                          slotProps={{
-                            typography: {
-                              width: '100%',
-                              minWidth: '0px',
-                            },
-                          }}
-                          sx={{
-                            // this ensure the iframe takes up all horizontal space
-                            '& iframe': {
-                              width: '100%',
-                            },
-                          }}
-                        />
-                      )
-                    }
-                  </RadioGroup>
-                )}
-              />
-            ) : (
-              <Typography fontStyle="italic">
-                {translateBuilder(BUILDER.CREATE_ITEM_LINK_TYPE_HELPER_TEXT)}
-              </Typography>
+                          <StyledFormControlLabel
+                            value={LinkType.Fancy}
+                            label={
+                              <LinkCard
+                                title={linkData?.title || ''}
+                                url={url}
+                                thumbnail={thumbnail}
+                                description={description || ''}
+                              />
+                            }
+                            control={<Radio />}
+                            slotProps={{
+                              typography: { width: '100%', minWidth: '0px' },
+                            }}
+                            sx={{ minWidth: '0px', width: '100%' }}
+                          />
+                          {linkData?.html && linkData.html !== '' && (
+                            <StyledFormControlLabel
+                              value={LinkType.Embedded}
+                              label={
+                                // eslint-disable-next-line react/no-danger
+                                <StyledDiv
+                                  sx={{}}
+                                  dangerouslySetInnerHTML={{
+                                    __html: linkData.html,
+                                  }}
+                                />
+                              }
+                              control={<Radio />}
+                              slotProps={{
+                                typography: {
+                                  width: '100%',
+                                  minWidth: '0px',
+                                },
+                              }}
+                            />
+                          )}
+                          {
+                            // only show this options when embedding is allowed and there is no html code
+                            // as the html will take precedence over showing the site as an iframe
+                            // and some sites like daily motion actually allow both, we want to allow show the html setting
+                            linkData?.isEmbeddingAllowed && !linkData?.html && (
+                              <StyledFormControlLabel
+                                value={LinkType.Embedded}
+                                label={embeddedLinkPreview}
+                                control={<Radio />}
+                                slotProps={{
+                                  typography: {
+                                    width: '100%',
+                                    minWidth: '0px',
+                                  },
+                                }}
+                                sx={{
+                                  // this ensure the iframe takes up all horizontal space
+                                  '& iframe': {
+                                    width: '100%',
+                                  },
+                                }}
+                              />
+                            )
+                          }
+                        </RadioGroup>
+                      )}
+                    />
+                  ) : (
+                    <Typography fontStyle="italic">
+                      {translateBuilder(
+                        BUILDER.CREATE_ITEM_LINK_TYPE_HELPER_TEXT,
+                      )}
+                    </Typography>
+                  )}
+                </FormLabel>
+              </FormControl>
             )}
-          </FormLabel>
-        </FormControl>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <CancelButton onClick={onClose} />
+          <Button
+            id={ITEM_FORM_CONFIRM_BUTTON_ID}
+            type="submit"
+            disabled={isSubmitted && !isValid}
+          >
+            {translateCommon(COMMON.SAVE_BUTTON)}
+          </Button>
+        </DialogActions>
       </FormProvider>
-    </Stack>
+    </Box>
   );
 };
-
-export default LinkForm;

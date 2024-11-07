@@ -38,7 +38,7 @@ import AppForm from '../item/form/AppForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
 import DocumentForm from '../item/form/document/DocumentForm';
 import { FolderCreateForm } from '../item/form/folder/FolderCreateForm';
-import LinkForm from '../item/form/link/LinkForm';
+import { LinkForm } from '../item/form/link/LinkForm';
 import ImportH5P from './ImportH5P';
 import ImportZip from './ImportZip';
 import ItemTypeTabs from './ItemTypeTabs';
@@ -162,7 +162,7 @@ const NewItemModal = ({
     });
   };
 
-  // folders are handled beforehand
+  // folders and links are handled beforehand
   const renderContent = () => {
     switch (selectedItemType) {
       case ItemType.S3_FILE:
@@ -217,15 +217,6 @@ const NewItemModal = ({
             <AppForm onChange={updateItem} />
           </>
         );
-      case ItemType.LINK:
-        return (
-          <>
-            <Typography variant="h6" color="primary">
-              {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
-            </Typography>
-            <LinkForm onChange={updateItem} />
-          </>
-        );
       case ItemType.DOCUMENT:
         return (
           <>
@@ -240,7 +231,7 @@ const NewItemModal = ({
     }
   };
 
-  // folder is handled before
+  // folders and links are handled before
   const renderActions = () => {
     switch (selectedItemType) {
       case ItemType.ETHERPAD:
@@ -258,7 +249,6 @@ const NewItemModal = ({
           </>
         );
       case ItemType.APP:
-      case ItemType.LINK:
       case ItemType.DOCUMENT:
         return (
           <>
@@ -293,18 +283,34 @@ const NewItemModal = ({
   // temporary solution to wrap content and actions
   const renderContentWithWrapper = () => {
     let content = null;
-    if (selectedItemType === ItemType.FOLDER) {
-      content = (
-        <FolderCreateForm
-          onClose={handleClose}
-          geolocation={geolocation}
-          parentId={parentId}
-          previousItemId={previousItemId}
-        />
-      );
-    } else {
-      content = renderContent();
+    switch (selectedItemType) {
+      case ItemType.FOLDER: {
+        content = (
+          <FolderCreateForm
+            onClose={handleClose}
+            geolocation={geolocation}
+            parentId={parentId}
+            previousItemId={previousItemId}
+          />
+        );
+        break;
+      }
+      case ItemType.LINK: {
+        content = (
+          <LinkForm
+            onClose={handleClose}
+            geolocation={geolocation}
+            parentId={parentId}
+            previousItemId={previousItemId}
+          />
+        );
+        break;
+      }
+      default: {
+        content = renderContent();
+      }
     }
+
     return (
       <>
         <StyledDialogContent>
