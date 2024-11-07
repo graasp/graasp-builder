@@ -6,7 +6,10 @@ import { IconButton, TextField } from '@mui/material';
 import { ItemConstants, MAX_ITEM_NAME_LENGTH } from '@graasp/sdk';
 import { FAILURE_MESSAGES } from '@graasp/translations';
 
-import { useBuilderTranslation } from '../../../config/i18n';
+import {
+  useBuilderTranslation,
+  useMessagesTranslation,
+} from '../../../config/i18n';
 import { ITEM_FORM_NAME_INPUT_ID } from '../../../config/selectors';
 import { BUILDER } from '../../../langs/constants';
 
@@ -27,6 +30,7 @@ export const ItemNameField = ({
     formState: { errors },
   } = useFormContext<{ name: string }>();
   const { t: translateBuilder } = useBuilderTranslation();
+  const { t: translateMessages } = useMessagesTranslation();
 
   const handleClearClick = () => {
     reset({ name: '' });
@@ -61,11 +65,15 @@ export const ItemNameField = ({
       {...register('name', {
         required,
         pattern: {
-          message: FAILURE_MESSAGES.INVALID_ITEM_NAME_PATTERN_ERROR,
+          message: translateMessages(
+            FAILURE_MESSAGES.INVALID_ITEM_NAME_PATTERN_ERROR,
+          ),
           value: ItemConstants.ITEM_NAME_REGEX,
         },
         maxLength: {
-          message: FAILURE_MESSAGES.INVALID_ITEM_NAME_MAX_LENGTH_ERROR,
+          message: translateMessages(
+            FAILURE_MESSAGES.INVALID_ITEM_NAME_MAX_LENGTH_ERROR,
+          ),
           value: MAX_ITEM_NAME_LENGTH,
         },
       })}

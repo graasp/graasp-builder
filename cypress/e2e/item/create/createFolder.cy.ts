@@ -43,6 +43,8 @@ describe('Create Folder', () => {
     cy.visit(HOME_PATH);
     createFolder({ name: ' ' }, { confirm: false });
 
+    // button is not disabled at beginning
+    cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
     cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should('be.disabled');
   });
 
