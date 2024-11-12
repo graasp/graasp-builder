@@ -2,7 +2,6 @@ import {
   AppItemExtra,
   DiscriminatedItem,
   DocumentItemExtra,
-  ItemType,
   PermissionLevel,
 } from '@graasp/sdk';
 
@@ -53,10 +52,6 @@ declare global {
 
       goToHome(): void;
 
-      fillLinkModal(
-        payload?: { extra?: { [ItemType.LINK]: { url?: string } } },
-        options?: { confirm?: boolean },
-      ): void;
       fillDocumentModal(
         payload: {
           name: string;

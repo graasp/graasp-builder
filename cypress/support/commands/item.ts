@@ -1,9 +1,4 @@
-import {
-  DiscriminatedItem,
-  ItemType,
-  getAppExtra,
-  getDocumentExtra,
-} from '@graasp/sdk';
+import { DiscriminatedItem, getAppExtra, getDocumentExtra } from '@graasp/sdk';
 
 import {
   CUSTOM_APP_CYPRESS_ID,
@@ -13,7 +8,6 @@ import {
   ITEM_FORM_APP_URL_ID,
   ITEM_FORM_CONFIRM_BUTTON_ID,
   ITEM_FORM_DOCUMENT_TEXT_SELECTOR,
-  ITEM_FORM_LINK_INPUT_ID,
   ITEM_FORM_NAME_INPUT_ID,
   ITEM_MEMBERSHIP_PERMISSION_SELECT_CLASS,
   MY_GRAASP_ITEM_PATH,
@@ -114,20 +108,6 @@ Cypress.Commands.add(
     // first select all the text and then remove it to have a clear field, then type new description
     cy.get(`#${FOLDER_FORM_DESCRIPTION_ID}`).type(
       `{selectall}{backspace}${description}`,
-    );
-
-    if (confirm) {
-      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
-    }
-  },
-);
-
-Cypress.Commands.add(
-  'fillLinkModal',
-  ({ extra = {} }, { confirm = true } = {}) => {
-    cy.get(`#${ITEM_FORM_LINK_INPUT_ID}`).type(
-      // first select all the text and then remove it to have a clear field, then type new text
-      `{selectall}{backspace}${extra?.[ItemType.LINK]?.url}`,
     );
 
     if (confirm) {

@@ -19,20 +19,6 @@ export const GRAASP_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
   }),
 });
 
-export const GRAASP_LINK_ITEM_NO_PROTOCOL: LinkItemType = PackedLinkItemFactory(
-  {
-    creator: CURRENT_USER,
-    extra: buildLinkExtra({
-      url: 'graasp.eu',
-      html: '',
-      thumbnails: ['https://graasp.eu/img/epfl/logo-tile.png'],
-      icons: [
-        'https://graasp.eu/cdn/img/epfl/favicons/favicon-32x32.png?v=yyxJ380oWY',
-      ],
-    }),
-  },
-);
-
 export const GRAASP_LINK_ITEM_IFRAME_ONLY: LinkItemType = PackedLinkItemFactory(
   {
     ...GRAASP_LINK_ITEM,
@@ -58,28 +44,4 @@ export const YOUTUBE_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
     // this is necessary for Youtube to show the embed
     showLinkIframe: true,
   },
-});
-
-export const INVALID_LINK_ITEM: LinkItemType = PackedLinkItemFactory({
-  creator: CURRENT_USER,
-  name: 'graasp youtube link',
-  description: 'a description for graasp youtube link',
-  extra: buildLinkExtra({
-    url: 'wrong link',
-    html: '',
-    thumbnails: [],
-    icons: [],
-  }),
-});
-
-export const LINK_ITEM_WITH_BLANK_NAME: LinkItemType = PackedLinkItemFactory({
-  creator: CURRENT_USER,
-  name: '',
-  description: 'a description for graasp youtube link',
-  extra: buildLinkExtra({
-    url: 'https://www.youtube.com/watch?v=FmiEgBMTPLo',
-    html: '',
-    thumbnails: [],
-    icons: [],
-  }),
 });

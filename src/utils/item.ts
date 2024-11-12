@@ -6,7 +6,6 @@ import {
   ItemMembership,
   ItemType,
   getAppExtra,
-  getLinkExtra,
 } from '@graasp/sdk';
 
 export const getParentsIdsFromPath = (
@@ -42,22 +41,27 @@ export const getDirectParentId = (path: string): string | null => {
   return ids[parentIdx];
 };
 
+export const LINK_REGEX = new RegExp(
+  '^(https?:\\/\\/)?' + // protocol is optional
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3})|' + // OR ip (v4) address
+    'localhost)' + // OR localhost alias
+    '(\\:\\d+)?' + // post (optional)
+    '(\\/\\S*?)*' + // path (lazy: takes as few as possible)
+    '(\\?\\S*?)?' + // query string (lazy)
+    '(\\#\\S*)?$',
+  'i',
+); // fragment locator
+
 export const isUrlValid = (str?: string | null): boolean => {
   if (!str) {
     return false;
   }
-  const pattern = new RegExp(
-    '^(https?:\\/\\/)?' + // protocol is optional
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3})|' + // OR ip (v4) address
-      'localhost)' + // OR localhost alias
-      '(\\:\\d+)?' + // post (optional)
-      '(\\/\\S*?)*' + // path (lazy: takes as few as possible)
-      '(\\?\\S*?)?' + // query string (lazy)
-      '(\\#\\S*)?$', // fragment locator
-    'i',
-  );
-  return pattern.test(str);
+  const pattern = LINK_REGEX;
+  if (pattern.test(str)) {
+    return true;
+  }
+  return false;
 };
 
 /**
@@ -75,14 +79,6 @@ export const isItemValid = (item: Partial<DiscriminatedItem>): boolean => {
   let hasValidTypeProperties =
     item.type && Object.values<string>(ItemType).includes(item.type);
   switch (item.type) {
-    case ItemType.LINK: {
-      let url;
-      if (item.extra) {
-        ({ url } = getLinkExtra(item.extra) || {});
-      }
-      hasValidTypeProperties = isUrlValid(url);
-      break;
-    }
     case ItemType.APP: {
       let url;
       if (item.extra) {
