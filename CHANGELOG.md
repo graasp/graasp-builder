@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.46.0](https://github.com/graasp/graasp-builder/compare/v2.45.0...v2.46.0) (2024-11-12)
+
+
+### Features
+
+* factor out create link modal ([#1566](https://github.com/graasp/graasp-builder/issues/1566)) ([cf440b5](https://github.com/graasp/graasp-builder/commit/cf440b590b5ca56caf1f14d002cb4a82e98ee67d))
+* **refactor:** update ShortLink types from SDK ([#1562](https://github.com/graasp/graasp-builder/issues/1562)) ([463432b](https://github.com/graasp/graasp-builder/commit/463432b20cc71fd73fe3b7bc73e970978f3d5380))
+* update query client and sdk for item visibility ([#1563](https://github.com/graasp/graasp-builder/issues/1563)) ([737d2ab](https://github.com/graasp/graasp-builder/commit/737d2ab9a9efc3b70c2f50b095f50e02e7a38f65))
+
 ## [2.45.0](https://github.com/graasp/graasp-builder/compare/v2.44.0...v2.45.0) (2024-11-04)
 
 
