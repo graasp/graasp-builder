@@ -24,7 +24,6 @@ import {
   getIdsFromPath,
   isRootItem,
 } from '@graasp/sdk';
-import { FAILURE_MESSAGES } from '@graasp/translations';
 
 import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4, v4 } from 'uuid';
@@ -78,7 +77,6 @@ const {
   buildClearItemChatRoute,
   buildDeleteItemVisibilityRoute,
   buildDeleteItemsRoute,
-  buildGetMembersByIdRoute,
   buildUploadItemThumbnailRoute,
   buildUploadAvatarRoute,
   buildImportZipRoute,
@@ -673,80 +671,6 @@ export const mockGetMember = (members: Member[]): void => {
       });
     },
   ).as('getMember');
-};
-
-export const mockGetMembers = (members: Member[]): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: `${API_HOST}/${buildGetMembersByIdRoute([''])}*`,
-    },
-    ({ url, reply }) => {
-      const memberIds = new URL(url).searchParams.getAll('id');
-
-      const result: {
-        data: { [key: string]: Member };
-        errors: { statusCode: number; name: string }[];
-      } = {
-        data: {},
-        errors: [],
-      };
-
-      memberIds?.forEach((id) => {
-        const m = getMemberById(members, id);
-        if (!m) {
-          result.errors.push({
-            statusCode: StatusCodes.NOT_FOUND,
-            name: FAILURE_MESSAGES.MEMBER_NOT_FOUND,
-          });
-        } else {
-          result.data[m.id] = m;
-        }
-      });
-
-      return reply({
-        body: result,
-        statusCode: StatusCodes.OK,
-      });
-    },
-  ).as('getMembers');
-};
-
-export const mockGetMembersBy = (
-  members: Member[],
-  shouldThrowError: boolean,
-): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: `${API_HOST}/members/search?email=*`,
-    },
-    ({ reply, url }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST });
-      }
-
-      const emails = new URL(url).searchParams.getAll('email');
-
-      // TODO
-      const result: {
-        data: { [key: string]: Member };
-        errors: unknown[];
-      } = {
-        data: {},
-        errors: [],
-      };
-      emails.forEach((mail) => {
-        members
-          .filter(({ email }) => email === mail)
-          .forEach((m) => {
-            result.data[m.email] = m;
-          });
-      });
-
-      return reply(result);
-    },
-  ).as('getMembersBy');
 };
 
 export const mockEditMember = (

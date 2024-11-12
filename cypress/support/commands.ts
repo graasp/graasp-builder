@@ -56,8 +56,6 @@ import {
   mockGetManyPublishItemInformations,
   mockGetMember,
   mockGetMemberMentions,
-  mockGetMembers,
-  mockGetMembersBy,
   mockGetMembershipRequestsForItem,
   mockGetOwnMembershipRequests,
   mockGetOwnRecycledItemData,
@@ -122,7 +120,6 @@ Cypress.Commands.add(
     getItemError = false,
     editItemError = false,
     shareItemError = false,
-    getMemberError = false,
     defaultUploadError = false,
     defaultDownloadFileError = false,
     getCurrentMemberError = false,
@@ -209,10 +206,6 @@ Cypress.Commands.add(
     );
 
     mockGetMember(cachedMembers);
-
-    mockGetMembers(cachedMembers);
-
-    mockGetMembersBy(cachedMembers, getMemberError);
 
     mockUploadItem(cachedItems, defaultUploadError);
 
