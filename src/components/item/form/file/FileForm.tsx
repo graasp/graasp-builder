@@ -30,9 +30,9 @@ import {
 } from '@/config/selectors';
 import { getExtraFromPartial } from '@/utils/itemExtra';
 
-import { BUILDER } from '../../../langs/constants';
-import { ItemNameField } from './ItemNameField';
-import { DescriptionAndPlacementForm } from './description/DescriptionAndPlacementForm';
+import { BUILDER } from '../../../../langs/constants';
+import { ItemNameField } from '../ItemNameField';
+import { DescriptionAndPlacementForm } from '../description/DescriptionAndPlacementForm';
 
 type Inputs = {
   name: string;
