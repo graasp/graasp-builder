@@ -501,5 +501,6 @@
   "ITEM_LOGIN_SCHEMA_DISABLED_GUEST_ACCESS_MESSAGE": "This guest cannot login because pseudonymized access is disabled.",
   "TRASH_COUNT_one": "You have one item in your trash.",
   "TRASH_COUNT_other": "You have {{count}} items in your trash.",
+  "ITEM_NAME_CANNOT_BE_EMPTY": "The item needs a name.",
   "LINK_INVALID_MESSAGE": "The link is invalid."
 }

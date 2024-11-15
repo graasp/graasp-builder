@@ -34,7 +34,7 @@ import { BUILDER } from '../../langs/constants';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 import FileUploader from '../file/FileUploader';
-import useEtherpadForm from '../item/form/EtherpadForm';
+import { EtherpadForm } from '../item/form/EtherpadForm';
 import AppForm from '../item/form/app/AppForm';
 import DocumentForm from '../item/form/document/DocumentForm';
 import { FolderCreateForm } from '../item/form/folder/FolderCreateForm';
@@ -81,8 +81,6 @@ const NewItemModal = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
-  const { padName, EtherpadForm } = useEtherpadForm();
-
   const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
@@ -93,7 +91,6 @@ const NewItemModal = ({
     useState<PropertiesPerType>(DEFAULT_PROPERTIES);
 
   const { mutate: postItem } = mutations.usePostItem();
-  const { mutate: postEtherpad } = mutations.usePostEtherpad();
   const { itemId: parentId } = useParams();
 
   const submitAndDisableConfirmButtonFor = (
@@ -137,17 +134,6 @@ const NewItemModal = ({
     );
   };
 
-  const submitEtherpad = () => {
-    if (!padName) {
-      return false;
-    }
-
-    return submitAndDisableConfirmButtonFor(
-      () => postEtherpad({ parentId, name: padName }),
-      DOUBLE_CLICK_DELAY_MS,
-    );
-  };
-
   const updateItem = (
     item: Partial<DiscriminatedItem> & { thumbnail?: Blob },
   ) => {
@@ -162,7 +148,7 @@ const NewItemModal = ({
     });
   };
 
-  // folders, apps and links are handled beforehand
+  // folders, apps, etherpad and links are handled beforehand
   const renderContent = () => {
     switch (selectedItemType) {
       case ItemType.S3_FILE:
@@ -199,15 +185,6 @@ const NewItemModal = ({
             />
           </>
         );
-      case ItemType.ETHERPAD:
-        return (
-          <>
-            <Typography variant="h6" color="primary">
-              {translateBuilder(BUILDER.CREATE_NEW_ITEM_ETHERPAD_TITLE)}
-            </Typography>
-            <EtherpadForm />
-          </>
-        );
       case ItemType.DOCUMENT:
         return (
           <>
@@ -222,23 +199,9 @@ const NewItemModal = ({
     }
   };
 
-  // folders and links are handled before
+  // folders, etherpad and links are handled before
   const renderActions = () => {
     switch (selectedItemType) {
-      case ItemType.ETHERPAD:
-        return (
-          <>
-            <CancelButton onClick={handleClose} />
-            <Button
-              onClick={submitEtherpad}
-              id={ITEM_FORM_CONFIRM_BUTTON_ID}
-              disabled={!padName}
-              type="submit"
-            >
-              {translateBuilder(BUILDER.CREATE_ITEM_ADD_BUTTON)}
-            </Button>
-          </>
-        );
       case ItemType.DOCUMENT:
         return (
           <>
@@ -307,6 +270,9 @@ const NewItemModal = ({
         );
         break;
       }
+      case ItemType.ETHERPAD:
+        content = <EtherpadForm onClose={handleClose} parentId={parentId} />;
+        break;
       default: {
         content = renderContent();
       }

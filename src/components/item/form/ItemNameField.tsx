@@ -63,7 +63,9 @@ export const ItemNameField = ({
       error={Boolean(errors.name)}
       helperText={errors.name?.message}
       {...register('name', {
-        required,
+        required: required
+          ? translateBuilder(BUILDER.ITEM_NAME_CANNOT_BE_EMPTY)
+          : false,
         pattern: {
           message: translateMessages(
             FAILURE_MESSAGES.INVALID_ITEM_NAME_PATTERN_ERROR,
