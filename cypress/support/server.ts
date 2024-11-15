@@ -1823,34 +1823,6 @@ export const mockGetPublishItemInformations = (items: ItemForTest[]): void => {
   ).as('getPublishItemInformations');
 };
 
-export const mockGetManyPublishItemInformations = (
-  items: ItemForTest[],
-): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: new RegExp(`${API_HOST}/items/collections/informations`),
-    },
-    ({ reply, url }) => {
-      const itemIds = new URL(url).searchParams.getAll('itemId');
-      const completeItems = items.filter((i) => itemIds.includes(i.id));
-
-      const result = {
-        data: {} as { [key: ItemForTest['id']]: ItemPublished },
-        errors: new Array<{ statusCode: number }>(),
-      };
-      for (const i of completeItems) {
-        if (i.published) {
-          result.data[i.id] = i.published;
-        } else {
-          result.errors.push({ statusCode: StatusCodes.NOT_FOUND });
-        }
-      }
-      return reply(result);
-    },
-  ).as('getManyPublishItemInformations');
-};
-
 export const mockGetPublishItemsForMember = (
   publishedItemData: ItemPublished[],
   shoulThrow = false,

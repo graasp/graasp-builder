@@ -53,7 +53,6 @@ import {
   mockGetItems,
   mockGetLatestValidationGroup,
   mockGetLinkMetadata,
-  mockGetManyPublishItemInformations,
   mockGetMember,
   mockGetMemberMentions,
   mockGetMembershipRequestsForItem,
@@ -313,8 +312,6 @@ Cypress.Commands.add(
     mockUnpublishItem(items);
 
     mockGetPublishItemInformations(items);
-
-    mockGetManyPublishItemInformations(items);
 
     mockGetLatestValidationGroup(items, itemValidationGroups);
 
