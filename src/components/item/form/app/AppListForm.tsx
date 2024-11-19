@@ -45,7 +45,13 @@ function AppListForm({
         size="small"
         onChange={searchAnApp}
       />
-      <Box display="flex" flexGrow={1} minHeight="0px" overflow="scroll" p={1}>
+      <Box
+        display="flex"
+        flexGrow={1}
+        minHeight="0px"
+        sx={{ overflowY: 'auto' }}
+        p={1}
+      >
         <Grid
           container
           spacing={2}
