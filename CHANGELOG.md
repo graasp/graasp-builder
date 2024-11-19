@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.47.0](https://github.com/graasp/graasp-builder/compare/v2.46.0...v2.47.0) (2024-11-19)
+
+
+### Features
+
+* remove is published badge ([#1569](https://github.com/graasp/graasp-builder/issues/1569)) ([420602c](https://github.com/graasp/graasp-builder/commit/420602caae9b31b1b5d0a50c13a68090e80815f7))
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to v11 ([#1554](https://github.com/graasp/graasp-builder/issues/1554)) ([45f25e4](https://github.com/graasp/graasp-builder/commit/45f25e4a31d979ffac4656b1ac3ba1e22ddf69b2))
+
 ## [2.46.0](https://github.com/graasp/graasp-builder/compare/v2.45.0...v2.46.0) (2024-11-12)
 
 
