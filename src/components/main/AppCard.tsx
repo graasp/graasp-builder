@@ -93,7 +93,6 @@ const AppCard = ({
               sx={{
                 display: { xs: 'none', sm: 'block', md: 'block' },
               }}
-              noWrap
             >
               {description ?? <Skeleton height={20} />}
             </Typography>

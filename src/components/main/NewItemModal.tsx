@@ -34,8 +34,8 @@ import { BUILDER } from '../../langs/constants';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
 import FileUploader from '../file/FileUploader';
-import AppForm from '../item/form/AppForm';
 import useEtherpadForm from '../item/form/EtherpadForm';
+import AppForm from '../item/form/app/AppForm';
 import DocumentForm from '../item/form/document/DocumentForm';
 import { FolderCreateForm } from '../item/form/folder/FolderCreateForm';
 import { LinkForm } from '../item/form/link/LinkForm';
@@ -162,7 +162,7 @@ const NewItemModal = ({
     });
   };
 
-  // folders and links are handled beforehand
+  // folders, apps and links are handled beforehand
   const renderContent = () => {
     switch (selectedItemType) {
       case ItemType.S3_FILE:
@@ -208,15 +208,6 @@ const NewItemModal = ({
             <EtherpadForm />
           </>
         );
-      case ItemType.APP:
-        return (
-          <>
-            <Typography variant="h6" color="primary">
-              {translateBuilder(BUILDER.CREATE_NEW_ITEM_APP_TITLE)}
-            </Typography>
-            <AppForm onChange={updateItem} />
-          </>
-        );
       case ItemType.DOCUMENT:
         return (
           <>
@@ -248,7 +239,6 @@ const NewItemModal = ({
             </Button>
           </>
         );
-      case ItemType.APP:
       case ItemType.DOCUMENT:
         return (
           <>
@@ -298,6 +288,17 @@ const NewItemModal = ({
       case ItemType.LINK: {
         content = (
           <LinkForm
+            onClose={handleClose}
+            geolocation={geolocation}
+            parentId={parentId}
+            previousItemId={previousItemId}
+          />
+        );
+        break;
+      }
+      case ItemType.APP: {
+        content = (
+          <AppForm
             onClose={handleClose}
             geolocation={geolocation}
             parentId={parentId}
