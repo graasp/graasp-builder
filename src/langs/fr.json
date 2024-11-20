@@ -501,5 +501,6 @@
   "ITEM_LOGIN_SCHEMA_DISABLED_GUEST_ACCESS_MESSAGE": "Cet invité ne peut pas se connecter car l'accès pseudonymisé est désactivé.",
   "TRASH_COUNT_one": "Il y a un élément dans la poubelle.",
   "TRASH_COUNT_other": "Il y a {{count}} éléments dans la poubelle.",
+  "ITEM_NAME_CANNOT_BE_EMPTY": "L'élément a besoin d'un nom.",
   "LINK_INVALID_MESSAGE": "Le lien est invalide."
 }
