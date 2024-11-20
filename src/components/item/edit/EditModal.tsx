@@ -28,8 +28,8 @@ import { isItemValid } from '@/utils/item';
 
 import { BUILDER } from '../../../langs/constants';
 import BaseItemForm from '../form/BaseItemForm';
-import FileForm from '../form/FileForm';
 import DocumentForm from '../form/document/DocumentForm';
+import FileForm from '../form/file/FileForm';
 import { FolderEditForm } from '../form/folder/FolderEditForm';
 import EditShortcutForm from '../shortcut/EditShortcutForm';
 

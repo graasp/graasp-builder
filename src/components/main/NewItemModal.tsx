@@ -33,10 +33,10 @@ import { InternalItemType, NewItemTabType } from '../../config/types';
 import { BUILDER } from '../../langs/constants';
 import { isItemValid } from '../../utils/item';
 import CancelButton from '../common/CancelButton';
-import FileUploader from '../file/FileUploader';
 import { EtherpadForm } from '../item/form/EtherpadForm';
 import AppForm from '../item/form/app/AppForm';
 import DocumentForm from '../item/form/document/DocumentForm';
+import { UploadFileModalContent } from '../item/form/file/UploadFileModalContent';
 import { FolderCreateForm } from '../item/form/folder/FolderCreateForm';
 import { LinkForm } from '../item/form/link/LinkForm';
 import ImportH5P from './ImportH5P';
@@ -148,22 +148,9 @@ const NewItemModal = ({
     });
   };
 
-  // folders, apps, etherpad and links are handled beforehand
+  // folders, apps, files, etherpad and links are handled beforehand
   const renderContent = () => {
     switch (selectedItemType) {
-      case ItemType.S3_FILE:
-      case ItemType.LOCAL_FILE:
-        return (
-          <>
-            <Typography variant="h6" color="primary">
-              {translateBuilder(BUILDER.UPLOAD_FILE_TITLE)}
-            </Typography>
-            <FileUploader
-              previousItemId={previousItemId}
-              onComplete={handleClose}
-            />
-          </>
-        );
       case InternalItemType.ZIP:
         return (
           <>
@@ -219,8 +206,6 @@ const NewItemModal = ({
             </Button>
           </>
         );
-      case ItemType.S3_FILE:
-      case ItemType.LOCAL_FILE:
       case InternalItemType.ZIP:
       case ItemType.H5P:
         return (
@@ -270,9 +255,20 @@ const NewItemModal = ({
         );
         break;
       }
-      case ItemType.ETHERPAD:
+      case ItemType.ETHERPAD: {
         content = <EtherpadForm onClose={handleClose} parentId={parentId} />;
         break;
+      }
+      case ItemType.S3_FILE:
+      case ItemType.LOCAL_FILE: {
+        content = (
+          <UploadFileModalContent
+            previousItemId={previousItemId}
+            onClose={handleClose}
+          />
+        );
+        break;
+      }
       default: {
         content = renderContent();
       }

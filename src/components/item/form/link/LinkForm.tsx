@@ -166,7 +166,7 @@ export const LinkForm = ({
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <DialogTitle>
-        {translateBuilder(BUILDER.CREATE_ITEM_NEW_FOLDER_TITLE)}
+        {translateBuilder(BUILDER.CREATE_ITEM_LINK_TITLE)}
       </DialogTitle>
       <FormProvider {...methods}>
         <DialogContent>
