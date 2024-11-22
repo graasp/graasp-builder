@@ -131,16 +131,10 @@ const FileForm = ({
             />
           )}
           <DescriptionAndPlacementForm
-            onPlacementChange={(newValue) =>
-              setValue('descriptionPlacement', newValue)
-            }
             onDescriptionChange={(newValue) => {
               setValue('description', newValue);
             }}
             description={description ?? item?.description ?? ''}
-            descriptionPlacement={
-              descriptionPlacement ?? item?.settings?.descriptionPlacement
-            }
           />
         </DialogContent>
         <DialogActions>

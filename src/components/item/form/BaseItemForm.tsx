@@ -1,11 +1,19 @@
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Box } from '@mui/material';
+import { Box, DialogActions, DialogContent } from '@mui/material';
 
 import { DescriptionPlacementType, DiscriminatedItem } from '@graasp/sdk';
+import { COMMON } from '@graasp/translations';
+import { Button } from '@graasp/ui';
 
-import { FOLDER_FORM_DESCRIPTION_ID } from '../../../config/selectors';
+import CancelButton from '@/components/common/CancelButton';
+import { useCommonTranslation } from '@/config/i18n';
+import { mutations } from '@/config/queryClient';
+import {
+  EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+} from '@/config/selectors';
+
 import { ItemNameField } from './ItemNameField';
 import { DescriptionAndPlacementForm } from './description/DescriptionAndPlacementForm';
 
@@ -17,48 +25,56 @@ type Inputs = {
 
 const BaseItemForm = ({
   item,
-  setChanges,
+  onClose,
 }: {
   item: DiscriminatedItem;
-  setChanges: (payload: Partial<DiscriminatedItem>) => void;
+  onClose: () => void;
 }): JSX.Element => {
+  const { t: translateCommon } = useCommonTranslation();
   const methods = useForm<Inputs>({ defaultValues: { name: item.name } });
-  const { watch, setValue } = methods;
-  const name = watch('name');
-  const descriptionPlacement = watch('descriptionPlacement');
-  const description = watch('description');
+  const { mutateAsync: editItem } = mutations.useEditItem();
+  const {
+    setValue,
+    handleSubmit,
+    formState: { isValid },
+  } = methods;
 
-  // synchronize upper state after async local state change
-  useEffect(() => {
-    setChanges({
-      name,
-      description,
-      settings: { descriptionPlacement },
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description, descriptionPlacement, name]);
-
+  async function onSubmit(data: Inputs) {
+    try {
+      await editItem({
+        id: item.id,
+        name: data.name,
+        description: data.description,
+        settings: { descriptionPlacement: data.descriptionPlacement },
+      });
+      onClose();
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
-    <Box overflow="auto">
-      <FormProvider {...methods}>
-        <ItemNameField required />
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      <DialogContent>
+        <FormProvider {...methods}>
+          <ItemNameField required />
 
-        <Box sx={{ mt: 2 }}>
           <DescriptionAndPlacementForm
-            id={FOLDER_FORM_DESCRIPTION_ID}
-            description={description ?? item?.description}
-            descriptionPlacement={
-              descriptionPlacement ?? item?.settings?.descriptionPlacement
-            }
-            onPlacementChange={(newValue) =>
-              setValue('descriptionPlacement', newValue)
-            }
             onDescriptionChange={(newValue) => {
               setValue('description', newValue);
             }}
           />
-        </Box>
-      </FormProvider>
+        </FormProvider>
+      </DialogContent>
+      <DialogActions>
+        <CancelButton id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID} onClick={onClose} />
+        <Button
+          id={ITEM_FORM_CONFIRM_BUTTON_ID}
+          type="submit"
+          disabled={!isValid}
+        >
+          {translateCommon(COMMON.SAVE_BUTTON)}
+        </Button>
+      </DialogActions>
     </Box>
   );
 };

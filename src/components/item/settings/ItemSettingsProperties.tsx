@@ -20,7 +20,6 @@ import {
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
-import DescriptionPlacementForm from '../form/description/DescriptionPlacementForm';
 import HideSettingCheckbox from '../sharing/HideSettingCheckbox';
 import ItemSettingCheckBoxProperty from './ItemSettingCheckBoxProperty';
 import LinkSettings from './LinkSettings';
@@ -177,15 +176,6 @@ const ItemSettingsProperties = ({ item }: Props): JSX.Element => {
       />
 
       {renderSettingsPerType()}
-
-      {item.type !== ItemType.FOLDER && (
-        <DescriptionPlacementForm
-          onPlacementChange={(newPlacement) =>
-            handleSettingChanged('descriptionPlacement', newPlacement)
-          }
-          descriptionPlacement={item.settings.descriptionPlacement}
-        />
-      )}
     </Stack>
   );
 };
