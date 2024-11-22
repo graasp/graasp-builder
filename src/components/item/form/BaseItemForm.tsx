@@ -1,10 +1,10 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { LoadingButton } from '@mui/lab';
 import { Box, DialogActions, DialogContent } from '@mui/material';
 
 import { DescriptionPlacementType, DiscriminatedItem } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
-import { Button } from '@graasp/ui';
 
 import CancelButton from '@/components/common/CancelButton';
 import { useCommonTranslation } from '@/config/i18n';
@@ -32,7 +32,7 @@ const BaseItemForm = ({
 }): JSX.Element => {
   const { t: translateCommon } = useCommonTranslation();
   const methods = useForm<Inputs>({ defaultValues: { name: item.name } });
-  const { mutateAsync: editItem } = mutations.useEditItem();
+  const { mutateAsync: editItem, isPending } = mutations.useEditItem();
   const {
     setValue,
     handleSubmit,
@@ -54,27 +54,31 @@ const BaseItemForm = ({
   }
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <DialogContent>
-        <FormProvider {...methods}>
+      <FormProvider {...methods}>
+        <DialogContent>
           <ItemNameField required />
-
           <DescriptionAndPlacementForm
             onDescriptionChange={(newValue) => {
               setValue('description', newValue);
             }}
           />
-        </FormProvider>
-      </DialogContent>
-      <DialogActions>
-        <CancelButton id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID} onClick={onClose} />
-        <Button
-          id={ITEM_FORM_CONFIRM_BUTTON_ID}
-          type="submit"
-          disabled={!isValid}
-        >
-          {translateCommon(COMMON.SAVE_BUTTON)}
-        </Button>
-      </DialogActions>
+        </DialogContent>
+        <DialogActions>
+          <CancelButton
+            id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}
+            onClick={onClose}
+          />
+          <LoadingButton
+            loading={isPending}
+            id={ITEM_FORM_CONFIRM_BUTTON_ID}
+            type="submit"
+            disabled={!isValid}
+            variant="contained"
+          >
+            {translateCommon(COMMON.SAVE_BUTTON)}
+          </LoadingButton>
+        </DialogActions>
+      </FormProvider>
     </Box>
   );
 };

@@ -1,5 +1,4 @@
 import {
-  DescriptionPlacement,
   ItemType,
   MaxWidth,
   MimeTypes,
@@ -25,14 +24,12 @@ import {
   ITEM_MAIN_CLASS,
   ITEM_PANEL_NAME_ID,
   ITEM_PANEL_TABLE_ID,
-  ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID,
   LANGUAGE_SELECTOR_ID,
   SETTINGS_CHATBOX_TOGGLE_ID,
   SETTINGS_LINK_SHOW_BUTTON_ID,
   SETTINGS_LINK_SHOW_IFRAME_ID,
   SETTINGS_PINNED_TOGGLE_ID,
   SETTINGS_SAVE_ACTIONS_TOGGLE_ID,
-  buildDescriptionPlacementId,
   buildItemsGridMoreButtonSelector,
   buildSettingsButtonId,
 } from '../../../../src/config/selectors';
@@ -444,42 +441,6 @@ describe('Item Settings', () => {
           'have.value',
           FILE.settings.maxWidth,
         );
-      });
-    });
-
-    describe('DescriptionPlacement Settings', () => {
-      it('folder should not have description placement', () => {
-        const FOLDER = PackedFolderItemFactory();
-        cy.setUpApi({ items: [FOLDER] });
-        const { id, type } = FOLDER;
-
-        cy.visit(buildItemSettingsPath(id));
-
-        cy.get(`#${ITEM_PANEL_TABLE_ID}`).contains(type);
-
-        cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).should(
-          'not.exist',
-        );
-      });
-
-      it('update placement to above for file', () => {
-        const LINK = PackedLinkItemFactory();
-        cy.setUpApi({ items: [LINK] });
-        const { id } = LINK;
-
-        cy.visit(buildItemSettingsPath(id));
-
-        cy.get(`#${ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}`).click();
-        cy.get(
-          `#${buildDescriptionPlacementId(DescriptionPlacement.ABOVE)}`,
-        ).click();
-
-        cy.wait(`@editItem`).then(({ request: { url, body } }) => {
-          expect(url).to.contain(id);
-          expect(body?.settings).to.contain({
-            descriptionPlacement: DescriptionPlacement.ABOVE,
-          });
-        });
       });
     });
   });
