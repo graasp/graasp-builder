@@ -49,6 +49,7 @@ const ItemSharingTab = (): JSX.Element => {
               <Typography variant="h6">
                 {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
               </Typography>
+              <DeleteItemLoginSchemaButton itemId={item.id} />
               {item.hidden ? (
                 <Alert
                   id={VISIBILITY_HIDDEN_ALERT_ID}
@@ -65,7 +66,6 @@ const ItemSharingTab = (): JSX.Element => {
                 </Stack>
               )}
               <HideSettingCheckbox item={item} />
-              <DeleteItemLoginSchemaButton itemId={item.id} />
             </Stack>
             <Divider />
           </>
