@@ -172,7 +172,7 @@ export const LinkForm = ({
         <DialogContent>
           <Stack gap={1} overflow="scroll">
             <LinkUrlField />
-            <ItemNameField required />
+            <ItemNameField required autoFocus={false} />
             <LinkDescriptionField
               onRestore={() =>
                 setValue('description', linkData?.description ?? '')
