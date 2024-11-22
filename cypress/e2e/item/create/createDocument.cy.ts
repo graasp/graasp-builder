@@ -15,9 +15,36 @@ describe('Create Document', () => {
     cy.visit(HOME_PATH);
 
     // create
-    createDocument(DocumentItemFactory());
+    const document = DocumentItemFactory({
+      extra: { document: { content: 'my content' } },
+    });
+    createDocument(document);
 
-    cy.wait('@postItem').then(() => {
+    cy.wait('@postItem').then(({ request: { body } }) => {
+      expect(body.extra.document.content).to.contain(
+        document.extra.document.content,
+      );
+      // should update view
+      cy.wait('@getAccessibleItems');
+    });
+  });
+
+  it('create html document on Home', () => {
+    cy.setUpApi();
+    cy.visit(HOME_PATH);
+
+    // create
+    const document = DocumentItemFactory({
+      extra: { document: { content: 'my content', isRaw: true } },
+    });
+    createDocument(document);
+
+    cy.wait('@postItem').then(({ request: { body } }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      expect(body.extra.document.isRaw).to.be.true;
+      expect(body.extra.document.content).to.equal(
+        document.extra.document.content,
+      );
       // should update view
       cy.wait('@getAccessibleItems');
     });
@@ -60,6 +87,7 @@ describe('Create Document', () => {
       { confirm: false },
     );
 
+    cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
     cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).should(
       'have.prop',
       'disabled',
