@@ -1,8 +1,10 @@
 import {
+  GuestFactory,
   ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   ItemVisibilityType,
   PackedFolderItemFactory,
+  PermissionLevel,
   PublicationStatus,
 } from '@graasp/sdk';
 
@@ -18,6 +20,8 @@ import {
   buildShareButtonId,
 } from '../../../../src/config/selectors';
 import { PublishedItemFactory } from '../../../fixtures/items';
+import { buildItemMembership } from '../../../fixtures/memberships';
+import { addItemLoginSchema } from '../authorization/itemLogin/utils';
 
 const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
@@ -103,18 +107,25 @@ describe('Visibility of an Item', () => {
   });
 
   it('Change Pseudonymized Item to Private Item with guest', () => {
-    const item = PackedFolderItemFactory();
-    const ITEM_LOGIN_ITEM = {
-      ...item,
-      itemLoginSchema: {
-        item,
-        type: ItemLoginSchemaType.Username,
-        id: 'efaf3d5a-5688-11eb-ae93-0242ac130002',
-        createdAt: '2021-08-11T12:56:36.834Z',
-        updatedAt: '2021-08-11T12:56:36.834Z',
-      },
-    };
-    cy.setUpApi({ items: [ITEM_LOGIN_ITEM] });
+    const item = addItemLoginSchema(
+      PackedFolderItemFactory({}),
+      ItemLoginSchemaType.Username,
+    );
+    const guest = GuestFactory({ itemLoginSchema: item.itemLoginSchema });
+    cy.setUpApi({
+      items: [
+        {
+          ...item,
+          memberships: [
+            buildItemMembership({
+              item,
+              account: guest,
+              permission: PermissionLevel.Read,
+            }),
+          ],
+        },
+      ],
+    });
     cy.visit(buildItemPath(item.id));
     cy.get(`#${buildShareButtonId(item.id)}`).click();
 
