@@ -22,6 +22,7 @@ import {
   mockDeleteFavorite,
   mockDeleteInvitation,
   mockDeleteItemCategory,
+  mockDeleteItemLoginSchema,
   mockDeleteItemMembershipForItem,
   mockDeleteItemThumbnail,
   mockDeleteItemVisibility,
@@ -225,6 +226,8 @@ Cypress.Commands.add(
     mockPostItemLogin(cachedItems, postItemLoginError);
 
     mockPutItemLoginSchema(cachedItems, putItemLoginError);
+
+    mockDeleteItemLoginSchema();
 
     mockGetItemMembershipsForItem(items, currentMember);
 

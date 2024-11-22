@@ -81,7 +81,8 @@ function DeleteItemLoginSchemaButton({
           <DialogContent>
             <Typography>
               <Trans
-                key={BUILDER.DELETE_GUESTS_MODAL_CONTENT}
+                t={translateBuilder}
+                i18nKey={BUILDER.DELETE_GUESTS_MODAL_CONTENT}
                 components={{ 1: <strong /> }}
               />
             </Typography>
@@ -95,7 +96,12 @@ function DeleteItemLoginSchemaButton({
             <Button size="small" variant="text" onClick={closeModal}>
               {translateCommon(COMMON.CANCEL_BUTTON)}
             </Button>
-            <Button color="error" size="small" onClick={onSubmit}>
+            <Button
+              dataCy="delete"
+              color="error"
+              size="small"
+              onClick={onSubmit}
+            >
               {translateBuilder(BUILDER.DELETE_GUESTS_MODAL_DELETE_BUTTON)}
             </Button>
           </DialogActions>

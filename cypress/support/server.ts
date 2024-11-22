@@ -876,6 +876,21 @@ export const mockPutItemLoginSchema = (
   ).as('putItemLoginSchema');
 };
 
+export const mockDeleteItemLoginSchema = (): void => {
+  cy.intercept(
+    {
+      method: HttpMethod.Delete,
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/login-schema$`),
+    },
+    ({ reply, url }) => {
+      // check query match item login schema
+      const id = url.slice(API_HOST.length).split('/')[2];
+
+      reply(id);
+    },
+  ).as('deleteItemLoginSchema');
+};
+
 export const mockGetItemLogin = (items: ItemForTest[]): void => {
   cy.intercept(
     {
