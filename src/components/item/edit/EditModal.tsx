@@ -72,8 +72,6 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     switch (item.type) {
       case ItemType.DOCUMENT:
         return <DocumentForm setChanges={setChanges} item={item} />;
-      case ItemType.SHORTCUT:
-        return <EditShortcutForm item={item} setChanges={setChanges} />;
       case ItemType.LINK:
       case ItemType.APP:
       case ItemType.ETHERPAD:
@@ -104,7 +102,6 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
       editItem({
         id: updatedItem.id,
         name: updatedItem.name,
-        displayName: updatedItem.displayName,
         description: updatedItem.description,
         // only post extra if it has been changed
         // todo: fix type
@@ -128,6 +125,9 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     }
     if (item.type === ItemType.LOCAL_FILE || item.type === ItemType.S3_FILE) {
       return <FileForm onClose={onClose} item={item} />;
+    }
+    if (item.type === ItemType.SHORTCUT) {
+      return <EditShortcutForm onClose={onClose} item={item} />;
     }
 
     return (

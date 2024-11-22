@@ -1,7 +1,18 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { Box, Button, DialogActions, DialogContent } from '@mui/material';
+
 import { DiscriminatedItem } from '@graasp/sdk';
+import { COMMON } from '@graasp/translations';
+
+import CancelButton from '@/components/common/CancelButton';
+import { useCommonTranslation } from '@/config/i18n';
+import { mutations } from '@/config/queryClient';
+import {
+  EDIT_ITEM_MODAL_CANCEL_BUTTON_ID,
+  ITEM_FORM_CONFIRM_BUTTON_ID,
+} from '@/config/selectors';
 
 import { ItemNameField } from '../form/ItemNameField';
 
@@ -11,29 +22,53 @@ type Inputs = {
 
 function EditShortcutForm({
   item,
-  setChanges,
+  onClose,
 }: {
   item: DiscriminatedItem;
-  setChanges: (args: { name: string }) => void;
+  onClose: () => void;
 }): ReactNode {
+  const { t: translateCommon } = useCommonTranslation();
   const methods = useForm<Inputs>({
     defaultValues: { name: item.name },
   });
-  const { watch } = methods;
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = methods;
 
-  const name = watch('name');
-
-  // synchronize upper state after async local state change
-  useEffect(() => {
-    setChanges({
-      name,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name]);
+  const { mutateAsync: editItem } = mutations.useEditItem();
+  async function onSubmit(data: Inputs) {
+    try {
+      await editItem({
+        id: item.id,
+        name: data.name,
+      });
+      onClose();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <FormProvider {...methods}>
-      <ItemNameField required />
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent>
+          <ItemNameField required />
+        </DialogContent>
+        <DialogActions>
+          <CancelButton
+            id={EDIT_ITEM_MODAL_CANCEL_BUTTON_ID}
+            onClick={onClose}
+          />
+          <Button
+            id={ITEM_FORM_CONFIRM_BUTTON_ID}
+            type="submit"
+            disabled={!isValid}
+          >
+            {translateCommon(COMMON.SAVE_BUTTON)}
+          </Button>
+        </DialogActions>
+      </Box>
     </FormProvider>
   );
 }
