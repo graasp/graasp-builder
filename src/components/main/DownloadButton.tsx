@@ -46,7 +46,7 @@ export const DownloadButton = ({ item }: Props): JSX.Element => {
         isLoading={isDownloading}
         title={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
         ariaLabel={translateBuilder(BUILDER.DOWNLOAD_ITEM_BUTTON)}
-        loaderColor="primary"
+        color="primary"
         loaderSize={10}
       />
     </span>
