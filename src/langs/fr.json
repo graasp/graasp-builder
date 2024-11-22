@@ -28,7 +28,7 @@
   "CREATE_ITEM_LINK_EMBED_TITLE": "Intégrer un site web",
   "CREATE_ITEM_LINK_EMBED_HELPER_TEXT": "Certains sites web peuvent ne pas autoriser l'intégration.",
   "CREATE_NEW_ITEM_APP_URL_LABEL": "URL de l'application",
-  "CREATE_NEW_ITEM_DOCUMENT_TITLE": "Ajouter un text",
+  "CREATE_NEW_ITEM_DOCUMENT_TITLE": "Créer un texte",
   "CREATE_NEW_ITEM_ETHERPAD_INFORMATIONS": "Etherpad est un éditeur de texte collaboratif en temps réel",
   "CREATE_NEW_ITEM_ETHERPAD_LABEL": "Nom",
   "CREATE_NEW_ITEM_ETHERPAD_TITLE": "Créer un Etherpad",
@@ -502,5 +502,6 @@
   "TRASH_COUNT_one": "Il y a un élément dans la poubelle.",
   "TRASH_COUNT_other": "Il y a {{count}} éléments dans la poubelle.",
   "ITEM_NAME_CANNOT_BE_EMPTY": "L'élément a besoin d'un nom.",
-  "LINK_INVALID_MESSAGE": "Le lien est invalide."
+  "LINK_INVALID_MESSAGE": "Le lien est invalide.",
+  "DOCUMENT_EMPTY_MESSAGE": "Le contenu ne peut pas être vide."
 }

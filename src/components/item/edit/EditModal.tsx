@@ -28,7 +28,7 @@ import { isItemValid } from '@/utils/item';
 
 import { BUILDER } from '../../../langs/constants';
 import BaseItemForm from '../form/BaseItemForm';
-import DocumentForm from '../form/document/DocumentForm';
+import { DocumentEditForm } from '../form/document/DocumentEditForm';
 import FileForm from '../form/file/FileForm';
 import { FolderEditForm } from '../form/folder/FolderEditForm';
 import EditShortcutForm from '../shortcut/EditShortcutForm';
@@ -67,11 +67,9 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     setUpdatedItem({ ...updatedItem, ...payload } as DiscriminatedItem);
   };
 
-  // files and folders are handled beforehand
+  // files, folders, documents are handled beforehand
   const renderDialogContent = (): JSX.Element => {
     switch (item.type) {
-      case ItemType.DOCUMENT:
-        return <DocumentForm setChanges={setChanges} item={item} />;
       case ItemType.LINK:
       case ItemType.APP:
       case ItemType.ETHERPAD:
@@ -128,6 +126,9 @@ const EditModal = ({ item, onClose, open }: Props): JSX.Element => {
     }
     if (item.type === ItemType.SHORTCUT) {
       return <EditShortcutForm onClose={onClose} item={item} />;
+    }
+    if (item.type === ItemType.DOCUMENT) {
+      return <DocumentEditForm onClose={onClose} item={item} />;
     }
 
     return (
