@@ -14,7 +14,6 @@ export const editItem = (
     id: string;
     type: DiscriminatedItem['type'] | string;
     name: string;
-    displayName: string;
     description: string;
   },
   container: string = '',
