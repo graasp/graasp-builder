@@ -1,3 +1,4 @@
+import { ChangeEventHandler } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -40,6 +41,27 @@ const ImportH5P = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
+  const onChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
+    if (e.target.files?.length) {
+      try {
+        await importH5P({
+          onUploadProgress: update,
+          id: itemId,
+          previousItemId,
+          file: e.target.files[0],
+        });
+
+        closeNotification();
+        onClose?.();
+      } catch (error) {
+        if (error instanceof Error) {
+          closeNotification(error);
+        }
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <>
       <DialogTitle>{translateBuilder(BUILDER.IMPORT_H5P_TITLE)}</DialogTitle>
@@ -59,23 +81,7 @@ const ImportH5P = ({
           <UploadFileButton
             isLoading={isLoading}
             loadingText={translateBuilder(BUILDER.UPLOADING)}
-            onChange={(e) => {
-              if (e.target.files?.length) {
-                importH5P({
-                  onUploadProgress: update,
-                  id: itemId,
-                  previousItemId,
-                  file: e.target.files[0],
-                })
-                  .then(() => {
-                    closeNotification();
-                    onClose?.();
-                  })
-                  .catch((error) => {
-                    closeNotification(error);
-                  });
-              }
-            }}
+            onChange={onChange}
             accept=".h5p"
             id={H5P_DASHBOARD_UPLOADER_ID}
             text={translateBuilder(BUILDER.UPLOAD_H5P_BUTTON)}
