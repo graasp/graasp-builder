@@ -21,6 +21,9 @@ import { buildItemMembership } from '../../../../fixtures/memberships';
 import { ITEM_LOGIN_PAUSE } from '../../../../support/constants';
 import { addItemLoginSchema } from './utils';
 
+const ALERT_BUTTON = `[role="alert"] button`;
+const DIALOG_SELECTOR = `[role="dialog"]`;
+
 const checkItemLoginSetting = ({
   mode,
   disabled = false,
@@ -107,7 +110,7 @@ describe('Item Login', () => {
 });
 
 describe('Item Login Delete Button', () => {
-  describe.only('without guests', () => {
+  describe('without guests', () => {
     it('Delete item login for private item ', () => {
       const item = addItemLoginSchema(
         PackedFolderItemFactory({}),
@@ -120,7 +123,7 @@ describe('Item Login Delete Button', () => {
       cy.visit(buildItemSharePath(item.id));
 
       // delete
-      cy.get(`[role="alert"] button`).click();
+      cy.get(ALERT_BUTTON).click();
       cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
         expect(url).to.include(item.id);
       });
@@ -138,7 +141,7 @@ describe('Item Login Delete Button', () => {
       cy.visit(buildItemSharePath(item.id));
 
       // delete
-      cy.get(`[role="alert"] button`).click();
+      cy.get(ALERT_BUTTON).click();
       cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
         expect(url).to.include(item.id);
       });
@@ -169,11 +172,11 @@ describe('Item Login Delete Button', () => {
       cy.visit(buildItemSharePath(item.id));
 
       // display delete alert
-      cy.get(`[role="alert"] button`).click();
-      cy.get(`[role="dialog"]`).should('contain', guest.name);
+      cy.get(ALERT_BUTTON).click();
+      cy.get(DIALOG_SELECTOR).should('contain', guest.name);
 
       // click delete
-      cy.get(`[role="dialog"] ${buildDataCyWrapper('delete')}`).click();
+      cy.get(`${DIALOG_SELECTOR} ${buildDataCyWrapper('delete')}`).click();
       cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
         expect(url).to.include(item.id);
       });
@@ -203,11 +206,11 @@ describe('Item Login Delete Button', () => {
       cy.visit(buildItemSharePath(item.id));
 
       // display delete alert
-      cy.get(`[role="alert"] button`).click();
-      cy.get(`[role="dialog"]`).should('contain', guest.name);
+      cy.get(ALERT_BUTTON).click();
+      cy.get(DIALOG_SELECTOR).should('contain', guest.name);
 
       // click delete
-      cy.get(`[role="dialog"] ${buildDataCyWrapper('delete')}`).click();
+      cy.get(`${DIALOG_SELECTOR} ${buildDataCyWrapper('delete')}`).click();
       cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
         expect(url).to.include(item.id);
       });
