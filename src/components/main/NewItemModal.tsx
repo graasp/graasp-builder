@@ -160,18 +160,6 @@ const NewItemModal = ({
             <ImportZip />
           </>
         );
-      case ItemType.H5P:
-        return (
-          <>
-            <Typography variant="h6" color="primary">
-              {translateBuilder(BUILDER.IMPORT_H5P_TITLE)}
-            </Typography>
-            <ImportH5P
-              onComplete={handleClose}
-              previousItemId={previousItemId}
-            />
-          </>
-        );
       case ItemType.DOCUMENT:
         return (
           <>
@@ -207,7 +195,6 @@ const NewItemModal = ({
           </>
         );
       case InternalItemType.ZIP:
-      case ItemType.H5P:
         return (
           <Button id={CREATE_ITEM_CLOSE_BUTTON_ID} onClick={handleClose}>
             {translateCommon(COMMON.CLOSE_BUTTON)}
@@ -257,6 +244,12 @@ const NewItemModal = ({
       }
       case ItemType.ETHERPAD: {
         content = <EtherpadForm onClose={handleClose} parentId={parentId} />;
+        break;
+      }
+      case ItemType.H5P: {
+        content = (
+          <ImportH5P onClose={handleClose} previousItemId={previousItemId} />
+        );
         break;
       }
       case ItemType.S3_FILE:
