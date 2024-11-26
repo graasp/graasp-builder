@@ -1625,9 +1625,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:5.5.0":
-  version: 5.5.0
-  resolution: "@graasp/query-client@npm:5.5.0"
+"@graasp/query-client@npm:5.6.0":
+  version: 5.6.0
+  resolution: "@graasp/query-client@npm:5.6.0"
   dependencies:
     "@tanstack/react-query": "npm:5.61.0"
     "@tanstack/react-query-devtools": "npm:5.61.0"
@@ -1637,7 +1637,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0 || ^5.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/05562b2f81c6da283ff7857fd5ec3203f0b2e3a59513a7c6e2daa12cfdac7a7ea9f25d3664ea992c5bd8340f1e440d0b82ae714e0de60d04626f87fdda8c58a5
+  checksum: 10/0948a04579d39ecb4e48f5d7eaeacf308c588c786e3165999fdee6bb0444ed51f56ef6dddb62e1bf2f5b250abeb529870d94e58de84e567b489f1115e5bb16a1
   languageName: node
   linkType: hard
 
@@ -1666,12 +1666,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.41.0":
-  version: 1.41.0
-  resolution: "@graasp/translations@npm:1.41.0"
+"@graasp/translations@npm:1.42.0":
+  version: 1.42.0
+  resolution: "@graasp/translations@npm:1.42.0"
   peerDependencies:
     i18next: ^23.8.1
-  checksum: 10/623246f557a56abfe40eb1b8ec3d1254755db1c0ad6fca26019ce74e3b786763dff1f5aa5163e61bf50d7655fd4d680b34a556e52cc6589f62ac1f47f25b709e
+  checksum: 10/5f09f7facfdd6c6fa434285493a2a3736e305064223df45f9c3203533b429b1c65e167cf2fac054e4fb53ed3aabcd70e31309addd58952edaeae61cbc29e8020
   languageName: node
   linkType: hard
 
@@ -6401,10 +6401,10 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.0"
     "@graasp/map": "npm:1.19.0"
-    "@graasp/query-client": "npm:5.5.0"
+    "@graasp/query-client": "npm:5.6.0"
     "@graasp/sdk": "npm:5.3.1"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
-    "@graasp/translations": "npm:1.41.0"
+    "@graasp/translations": "npm:1.42.0"
     "@graasp/ui": "npm:5.4.2"
     "@mui/icons-material": "npm:6.1.7"
     "@mui/lab": "npm:6.0.0-beta.15"

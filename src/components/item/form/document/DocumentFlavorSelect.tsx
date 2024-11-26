@@ -1,9 +1,4 @@
-import {
-  Control,
-  Controller,
-  FieldPath,
-  UseFormRegisterReturn,
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
@@ -60,15 +55,10 @@ const DocumentFlavorListElement = ({
   </Stack>
 );
 
-export const DocumentFlavorSelect = <
-  T extends { flavor: `${DocumentItemExtraFlavor}` },
->({
-  flavorForm,
-  control,
-}: {
-  flavorForm: UseFormRegisterReturn;
-  control: Control<T>;
-}): JSX.Element => {
+export const DocumentFlavorSelect = (): JSX.Element => {
+  const { control, register } = useFormContext<{
+    flavor: `${DocumentItemExtraFlavor}`;
+  }>();
   const { t } = useBuilderTranslation();
   const theme = useTheme();
   const flavorsTranslations = Object.values(DocumentItemExtraFlavor).map(
@@ -105,8 +95,8 @@ export const DocumentFlavorSelect = <
         <InputLabel shrink id={FLAVOR_SELECT_ID}>
           {t(BUILDER.DOCUMENT_FLAVOR_SELECT_LABEL)}
         </InputLabel>
-        <Controller<T>
-          name={'flavor' as FieldPath<T>}
+        <Controller
+          name="flavor"
           control={control}
           render={({ field }) => (
             <Select
@@ -114,7 +104,7 @@ export const DocumentFlavorSelect = <
               variant="standard"
               label="flavor"
               value={field.value}
-              {...flavorForm}
+              {...register('flavor')}
               renderValue={() => (
                 <DocumentFlavorListElement
                   sx={{

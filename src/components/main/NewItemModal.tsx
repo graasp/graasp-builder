@@ -10,32 +10,17 @@ import {
   styled,
 } from '@mui/material';
 
-import {
-  AppItemType,
-  DiscriminatedItem,
-  DocumentItemType,
-  FolderItemType,
-  ItemGeolocation,
-  ItemType,
-  LinkItemType,
-} from '@graasp/sdk';
+import { DiscriminatedItem, ItemGeolocation, ItemType } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Button } from '@graasp/ui';
 
-import { DOUBLE_CLICK_DELAY_MS } from '../../config/constants';
 import { useBuilderTranslation, useCommonTranslation } from '../../config/i18n';
-import { mutations } from '../../config/queryClient';
-import {
-  CREATE_ITEM_CLOSE_BUTTON_ID,
-  ITEM_FORM_CONFIRM_BUTTON_ID,
-} from '../../config/selectors';
+import { CREATE_ITEM_CLOSE_BUTTON_ID } from '../../config/selectors';
 import { InternalItemType, NewItemTabType } from '../../config/types';
 import { BUILDER } from '../../langs/constants';
-import { isItemValid } from '../../utils/item';
-import CancelButton from '../common/CancelButton';
 import { EtherpadForm } from '../item/form/EtherpadForm';
 import AppForm from '../item/form/app/AppForm';
-import DocumentForm from '../item/form/document/DocumentForm';
+import { DocumentCreateForm } from '../item/form/document/DocumentCreateForm';
 import { UploadFileModalContent } from '../item/form/file/UploadFileModalContent';
 import { FolderCreateForm } from '../item/form/folder/FolderCreateForm';
 import { LinkForm } from '../item/form/link/LinkForm';
@@ -51,25 +36,11 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   paddingRight: 0,
 }));
 
-type PropertiesPerType = {
-  [ItemType.FOLDER]: Partial<FolderItemType> & { thumbnail?: Blob };
-  [ItemType.LINK]: Partial<LinkItemType>;
-  [ItemType.APP]: Partial<AppItemType>;
-  [ItemType.DOCUMENT]: Partial<DocumentItemType>;
-};
-
 type Props = {
   open: boolean;
   handleClose: () => void;
   geolocation?: Pick<ItemGeolocation, 'lat' | 'lng'>;
   previousItemId?: DiscriminatedItem['id'];
-};
-
-const DEFAULT_PROPERTIES: PropertiesPerType = {
-  [ItemType.FOLDER]: { type: ItemType.FOLDER },
-  [ItemType.LINK]: { type: ItemType.LINK, settings: { showLinkButton: false } },
-  [ItemType.APP]: { type: ItemType.APP },
-  [ItemType.DOCUMENT]: { type: ItemType.DOCUMENT },
 };
 
 const NewItemModal = ({
@@ -81,74 +52,13 @@ const NewItemModal = ({
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
 
-  const [isConfirmButtonDisabled, setConfirmButtonDisabled] = useState(false);
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
     ItemType.FOLDER,
   );
 
-  // todo: find a way to create this type of literal from the enum values instead of like this...
-  const [updatedPropertiesPerType, setUpdatedPropertiesPerType] =
-    useState<PropertiesPerType>(DEFAULT_PROPERTIES);
-
-  const { mutate: postItem } = mutations.usePostItem();
   const { itemId: parentId } = useParams();
 
-  const submitAndDisableConfirmButtonFor = (
-    submitFn: () => void | boolean,
-    durationMs: number,
-  ) => {
-    setConfirmButtonDisabled(true);
-    submitFn();
-
-    // schedule button disable state reset AFTER end of click event handling
-    setTimeout(() => setConfirmButtonDisabled(false), durationMs);
-    handleClose();
-
-    setUpdatedPropertiesPerType(DEFAULT_PROPERTIES);
-  };
-
-  const submit = () => {
-    if (isConfirmButtonDisabled) {
-      console.error('confirm button is disabled');
-      return false;
-    }
-    const type = selectedItemType as keyof PropertiesPerType;
-    if (!isItemValid(updatedPropertiesPerType[type])) {
-      console.error(
-        'your item has invalid properties',
-        updatedPropertiesPerType[type],
-      );
-      // todo: notify user
-      return false;
-    }
-    // todo: fix types
-    return submitAndDisableConfirmButtonFor(
-      () =>
-        postItem({
-          geolocation,
-          parentId,
-          previousItemId,
-          ...(updatedPropertiesPerType[type] as any),
-        }),
-      DOUBLE_CLICK_DELAY_MS,
-    );
-  };
-
-  const updateItem = (
-    item: Partial<DiscriminatedItem> & { thumbnail?: Blob },
-  ) => {
-    // update content given current type
-    const type = selectedItemType as keyof PropertiesPerType;
-    setUpdatedPropertiesPerType({
-      ...updatedPropertiesPerType,
-      [type]: {
-        ...updatedPropertiesPerType[type],
-        ...item,
-      },
-    });
-  };
-
-  // folders, apps, files, etherpad and links are handled beforehand
+  // folders, apps, files, documents, etherpad and links are handled beforehand
   const renderContent = () => {
     switch (selectedItemType) {
       case InternalItemType.ZIP:
@@ -160,40 +70,14 @@ const NewItemModal = ({
             <ImportZip />
           </>
         );
-      case ItemType.DOCUMENT:
-        return (
-          <>
-            <Typography variant="h6" color="primary">
-              {translateBuilder(BUILDER.CREATE_NEW_ITEM_DOCUMENT_TITLE)}
-            </Typography>
-            <DocumentForm setChanges={updateItem} />
-          </>
-        );
       default:
         return null;
     }
   };
 
-  // folders, etherpad and links are handled before
+  // folders, etherpad and links, deocuments are handled before
   const renderActions = () => {
     switch (selectedItemType) {
-      case ItemType.DOCUMENT:
-        return (
-          <>
-            <CancelButton onClick={handleClose} />
-            <Button
-              onClick={submit}
-              id={ITEM_FORM_CONFIRM_BUTTON_ID}
-              disabled={
-                isConfirmButtonDisabled ||
-                !isItemValid(updatedPropertiesPerType[selectedItemType])
-              }
-              type="submit"
-            >
-              {translateBuilder(BUILDER.CREATE_ITEM_ADD_BUTTON)}
-            </Button>
-          </>
-        );
       case InternalItemType.ZIP:
         return (
           <Button id={CREATE_ITEM_CLOSE_BUTTON_ID} onClick={handleClose}>
@@ -234,6 +118,17 @@ const NewItemModal = ({
       case ItemType.APP: {
         content = (
           <AppForm
+            onClose={handleClose}
+            geolocation={geolocation}
+            parentId={parentId}
+            previousItemId={previousItemId}
+          />
+        );
+        break;
+      }
+      case ItemType.DOCUMENT: {
+        content = (
+          <DocumentCreateForm
             onClose={handleClose}
             geolocation={geolocation}
             parentId={parentId}

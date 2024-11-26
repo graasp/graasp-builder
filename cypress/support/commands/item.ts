@@ -121,10 +121,16 @@ Cypress.Commands.add(
   ({ name = '', extra }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
-    cy.get(ITEM_FORM_DOCUMENT_TEXT_SELECTOR).type(
+    const content =
       // first select all the text and then remove it to have a clear field, then type new text
-      `{selectall}{backspace}${getDocumentExtra(extra)?.content}`,
-    );
+      `{selectall}{backspace}${getDocumentExtra(extra)?.content}`;
+
+    if (extra.document.isRaw) {
+      cy.get(`[role="tab"]:contains("HTML")`).click();
+      cy.get('[role="tabpanel"] textarea[name="content"]').type(content);
+    } else {
+      cy.get(ITEM_FORM_DOCUMENT_TEXT_SELECTOR).type(content);
+    }
 
     if (confirm) {
       cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
