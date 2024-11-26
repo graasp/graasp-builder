@@ -40,8 +40,7 @@ describe('Create Document', () => {
     createDocument(document);
 
     cy.wait('@postItem').then(({ request: { body } }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      expect(body.extra.document.isRaw).to.be.true;
+      expect(body.extra.document.isRaw).to.equal(true);
       expect(body.extra.document.content).to.equal(
         document.extra.document.content,
       );
