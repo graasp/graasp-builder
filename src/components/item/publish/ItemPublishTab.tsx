@@ -11,7 +11,6 @@ import {
   DataSyncContextProvider,
   useDataSyncContext,
 } from '@/components/context/DataSyncContext';
-import CategoriesContainer from '@/components/item/publish/CategoriesContainer';
 import CoEditorsContainer from '@/components/item/publish/CoEditorsContainer';
 import EditItemDescription from '@/components/item/publish/EditItemDescription';
 import { LanguageContainer } from '@/components/item/publish/LanguageContainer';
@@ -25,7 +24,7 @@ import { BUILDER } from '@/langs/constants';
 import { SomeBreakPoints } from '@/types/breakpoint';
 
 import EditItemName from './EditItemName';
-import CustomizedTags from './customizedTags/CustomizedTags';
+import { PublishCustomizedTags } from './customizedTags/PublishCustomizedTags';
 import PublicationButtonSelector from './publicationButtons/PublicationButtonSelector';
 
 type StackOrder = { order?: number | SomeBreakPoints<number> };
@@ -64,25 +63,21 @@ const ItemPublishTab = (): JSX.Element => {
     );
   }
 
-  const customizedTags = <CustomizedTags item={item} warningWhenNoTags />;
-
   const buildPreviewHeader = (): JSX.Element => (
     <Stack spacing={2}>
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <PublicationThumbnail item={item} fullWidth={isMobile} />
         <Stack justifyContent="space-between">
           <EditItemName item={item} />
-          {!isMobile && customizedTags}
         </Stack>
       </Stack>
-      {isMobile && customizedTags}
       <EditItemDescription item={item} />
     </Stack>
   );
 
   const buildPreviewContent = (): JSX.Element => (
     <Stack spacing={1}>
-      <CategoriesContainer itemId={item.id} />
+      <PublishCustomizedTags item={item} />
       <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }}>
         <LanguageContainer item={item} />
         <LicenseContainer item={item} />

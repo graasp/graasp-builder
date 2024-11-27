@@ -502,5 +502,6 @@
   "TRASH_COUNT_one": "You have one item in your trash.",
   "TRASH_COUNT_other": "You have {{count}} items in your trash.",
   "ITEM_NAME_CANNOT_BE_EMPTY": "The item needs a name.",
-  "LINK_INVALID_MESSAGE": "The link is invalid."
+  "LINK_INVALID_MESSAGE": "The link is invalid.",
+  "ADD_TAG_OPTION_BUTTON_TEXT": "Add {{value}}"
 }

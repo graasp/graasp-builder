@@ -199,8 +199,8 @@ export const MULTI_SELECT_CHIP_ADD_BUTTON_ID = 'multiSelectChipAddButton';
 export const MULTI_SELECT_CHIP_CONTAINER_ID = 'multiSelectChipContainer';
 export const buildMultiSelectChipsSelector = (index: number): string =>
   `multiSelectChips-${index}`;
-export const buildCustomizedTagsSelector = (index: number): string =>
-  `customizedTagsPreview-${index}`;
+export const buildCustomizedTagsSelector = (id: string): string =>
+  `customizedTagsPreview-${id}`;
 
 export const buildCategoriesSelectionValueSelector = (title: string): string =>
   `#${buildCategorySelectionTitleId(title)}+div span`;

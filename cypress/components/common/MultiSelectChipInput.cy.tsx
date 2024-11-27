@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import MultiSelectChipInput from '@/components/input/MultiSelectChipInput';
 import {
   MULTI_SELECT_CHIP_ADD_BUTTON_ID,
@@ -43,13 +45,7 @@ describe('<MultiSelectChipInput />', () => {
 
   describe('Data is empty', () => {
     beforeEach(() => {
-      cy.mount(
-        <MultiSelectChipInput
-          data={[]}
-          onSave={eventHandler.onSave}
-          label={LABEL}
-        />,
-      );
+      cy.mount(<MultiSelectChipInput data={[]} label={LABEL} />);
     });
 
     it('Chips container should not exist when no data', () => {
@@ -83,13 +79,7 @@ describe('<MultiSelectChipInput />', () => {
     const valueToRemove = EXISTING_VALUES[1];
 
     beforeEach(() => {
-      cy.mount(
-        <MultiSelectChipInput
-          onSave={eventHandler.onSave}
-          data={EXISTING_VALUES}
-          label={LABEL}
-        />,
-      );
+      cy.mount(<MultiSelectChipInput itemId={v4()} label={LABEL} />);
     });
 
     it('Chips container should contains existing chips', () => {
