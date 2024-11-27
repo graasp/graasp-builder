@@ -1625,9 +1625,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:5.6.0":
-  version: 5.6.0
-  resolution: "@graasp/query-client@npm:5.6.0"
+"@graasp/query-client@github:graasp/graasp-query-client#tags":
+  version: 5.6.1
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=8d5211e2f7abec569a4c26112ad471cd8cd3facc"
   dependencies:
     "@tanstack/react-query": "npm:5.61.0"
     "@tanstack/react-query-devtools": "npm:5.61.0"
@@ -1637,13 +1637,13 @@ __metadata:
     "@graasp/sdk": ^4.0.0 || ^5.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/0948a04579d39ecb4e48f5d7eaeacf308c588c786e3165999fdee6bb0444ed51f56ef6dddb62e1bf2f5b250abeb529870d94e58de84e567b489f1115e5bb16a1
+  checksum: 10/7f3ad13a1cc4494e708aa81d4ac79b3b2ef0bed3b04f376f779fccfafe235b2af05a6e3cd38b801184f7f677540bcc3490b6c9785fd65c236d73a1f09d53c6ef
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:5.3.1":
+"@graasp/sdk@github:graasp/graasp-sdk#tag-type-search":
   version: 5.3.1
-  resolution: "@graasp/sdk@npm:5.3.1"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=57ec5c2d502c021a9d1584659fe8cdae24343e6b"
   dependencies:
     "@faker-js/faker": "npm:9.2.0"
     filesize: "npm:10.1.6"
@@ -1651,7 +1651,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3 || ^4.0.0
     uuid: ^9 || ^10 || ^11.0.0
-  checksum: 10/9c414a3763c049e0360d78ce2c9f584621fdd829826e08c1c6416cdc02e1bbeefc7e55fedba6a09a86f5515a13c726d7c1b8558842e137fe04abc4ca8f172564
+  checksum: 10/0acfc52304d99d8a92f186d4f3750d2f63b9df831174c406f9c6e9779a39d3698cd89bac8722d36d2b65f07a3c08db3eb16ad4d90c5cf8bc071625e29eefc687
   languageName: node
   linkType: hard
 
@@ -1666,12 +1666,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@npm:1.42.0":
+"@graasp/translations@github:graasp/graasp-translations#tag-categories":
   version: 1.42.0
-  resolution: "@graasp/translations@npm:1.42.0"
+  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=67c73dd349415be370b5b4eadf2c5ec84c729d0e"
   peerDependencies:
     i18next: ^23.8.1
-  checksum: 10/5f09f7facfdd6c6fa434285493a2a3736e305064223df45f9c3203533b429b1c65e167cf2fac054e4fb53ed3aabcd70e31309addd58952edaeae61cbc29e8020
+  checksum: 10/4315cd4baa462c66a7ce69633224c0a4f97f9ac2f2a7f24d5f31e90dbe1a080365dafdb7c9524380b4597244f578760d8cb7d7a429422edf2a4f1e1995d11ba6
   languageName: node
   linkType: hard
 
@@ -6401,10 +6401,10 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.1"
     "@graasp/map": "npm:1.19.0"
-    "@graasp/query-client": "npm:5.6.0"
-    "@graasp/sdk": "npm:5.3.1"
+    "@graasp/query-client": "github:graasp/graasp-query-client#tags"
+    "@graasp/sdk": "github:graasp/graasp-sdk#tag-type-search"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
-    "@graasp/translations": "npm:1.42.0"
+    "@graasp/translations": "github:graasp/graasp-translations#tag-categories"
     "@graasp/ui": "npm:5.4.4"
     "@mui/icons-material": "npm:6.1.7"
     "@mui/lab": "npm:6.0.0-beta.15"
