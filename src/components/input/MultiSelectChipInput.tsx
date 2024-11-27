@@ -1,51 +1,56 @@
-import AddIcon from '@mui/icons-material/Add';
 import {
   Autocomplete,
   AutocompleteRenderGetTagProps,
   AutocompleteRenderInputParams,
   Box,
+  Button,
   Chip,
-  Fab,
+  Skeleton,
   Stack,
   TextField,
-  Typography,
 } from '@mui/material';
 
-import { useBuilderTranslation } from '@/config/i18n';
+import { DiscriminatedItem, TagCategory } from '@graasp/sdk';
+
+import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
+import { hooks } from '@/config/queryClient';
 import {
-  MULTI_SELECT_CHIP_ADD_BUTTON_ID,
   MULTI_SELECT_CHIP_CONTAINER_ID,
   MULTI_SELECT_CHIP_INPUT_ID,
   buildMultiSelectChipsSelector,
 } from '@/config/selectors';
-import { BUILDER } from '@/langs/constants';
 
-import { useMultiSelectChipInput } from './MultiSelectChipInput.hook';
+import useTagsManager from '../item/publish/customizedTags/useTagsManager';
 
 type Props = {
-  data?: string[];
+  itemId: DiscriminatedItem['id'];
   label: string;
-  onSave: (newValues: string[]) => void;
+  tagCategory: TagCategory;
 };
 
 export const MultiSelectChipInput = ({
-  data,
-  label,
-  onSave,
+  itemId,
+  tagCategory,
 }: Props): JSX.Element | null => {
   const { t } = useBuilderTranslation();
+  const { t: translateEnums } = useEnumsTranslation();
   const {
-    values,
     currentValue,
     error,
-    hasError,
-    updateValues,
     handleCurrentValueChanged,
     addValue,
-  } = useMultiSelectChipInput({
-    data,
-    onChange: onSave,
+    deleteValue,
+    resetCurrentValue,
+    debouncedCurrentValue,
+    tagsPerCategory,
+  } = useTagsManager({
+    itemId,
   });
+  const {
+    data: tags,
+    isFetching,
+    isLoading,
+  } = hooks.useTags({ search: debouncedCurrentValue, category: tagCategory });
 
   const renderTags = (
     value: readonly string[],
@@ -59,6 +64,14 @@ export const MultiSelectChipInput = ({
           label={option}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...getTagProps({ index })}
+          onDelete={() => {
+            const tagId = tagsPerCategory?.[tagCategory].find(
+              ({ name }) => name === option,
+            );
+            if (tagId) {
+              deleteValue(tagId.id);
+            }
+          }}
           key={option}
         />
       ))}
@@ -70,21 +83,32 @@ export const MultiSelectChipInput = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...params}
       variant="outlined"
-      label={label}
-      helperText={t(BUILDER.ITEM_TAGS_HELPER_TEXT)}
-      inputProps={{
-        ...params.inputProps,
-        value: currentValue,
+      // show plural version
+      label={translateEnums(tagCategory, { count: 2 })}
+      slotProps={{
+        htmlInput: {
+          ...params.inputProps,
+          value: currentValue,
+        },
       }}
-      error={hasError}
       sx={{
         // Avoid to resize the textfield on hover when next tag will be on new line.
         '& .MuiAutocomplete-input': {
           minWidth: '30px !important',
         },
       }}
+      onChange={(e) => handleCurrentValueChanged(e.target.value, tagCategory)}
     />
   );
+
+  const options =
+    tags
+      // remove tags already existing for item
+      ?.filter(
+        ({ id: thisId }) =>
+          !tagsPerCategory?.[tagCategory]?.find(({ id }) => id === thisId),
+      )
+      ?.map(({ name }) => name) ?? [];
 
   return (
     <Stack mt={1} spacing={1}>
@@ -93,34 +117,48 @@ export const MultiSelectChipInput = ({
           data-cy={MULTI_SELECT_CHIP_INPUT_ID}
           fullWidth
           multiple
-          freeSolo
-          options={[]}
-          value={values}
-          onChange={(_e, v) => updateValues(v)}
-          inputValue={currentValue}
-          onInputChange={(_e, v) => handleCurrentValueChanged(v)}
-          renderTags={renderTags}
-          renderInput={renderInput}
-        />
-        <Fab
-          data-cy={MULTI_SELECT_CHIP_ADD_BUTTON_ID}
-          variant="circular"
-          color="primary"
-          size="small"
-          onClick={addValue}
-          disabled={hasError || !currentValue}
-          sx={{
-            flexShrink: 0,
+          // allows to hide add option on adding a new tag
+          freeSolo={!currentValue}
+          onBlur={resetCurrentValue}
+          noOptionsText={
+            error || (
+              <Button
+                fullWidth
+                onClick={() =>
+                  addValue({
+                    name: currentValue,
+                    category: tagCategory,
+                  })
+                }
+              >
+                {t('ADD_TAG_OPTION_BUTTON_TEXT', { value: currentValue })}
+              </Button>
+            )
+          }
+          options={options}
+          value={tagsPerCategory?.[tagCategory]?.map(({ name }) => name) ?? []}
+          onChange={(_e, v) => {
+            if (v.length) {
+              addValue({
+                name: v[v.length - 1],
+                category: tagCategory,
+              });
+            }
           }}
-        >
-          <AddIcon />
-        </Fab>
+          renderTags={renderTags}
+          renderOption={(optionProps, name) => (
+            <Box component="li" {...optionProps}>
+              {name}
+            </Box>
+          )}
+          renderInput={renderInput}
+          disableClearable
+          loading={
+            isFetching || isLoading || debouncedCurrentValue !== currentValue
+          }
+          loadingText={<Skeleton />}
+        />
       </Stack>
-      {error && (
-        <Typography pl={1} color="error" fontSize="small" fontStyle="italic">
-          {error}
-        </Typography>
-      )}
     </Stack>
   );
 };
