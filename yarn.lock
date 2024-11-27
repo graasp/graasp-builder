@@ -1641,9 +1641,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:5.3.1":
+"@graasp/sdk@github:graasp/graasp-sdk#update-signIn-url":
   version: 5.3.1
-  resolution: "@graasp/sdk@npm:5.3.1"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=a5774e4ae5e3188173c36311408a9428f2b7cf94"
   dependencies:
     "@faker-js/faker": "npm:9.2.0"
     filesize: "npm:10.1.6"
@@ -1651,7 +1651,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3 || ^4.0.0
     uuid: ^9 || ^10 || ^11.0.0
-  checksum: 10/9c414a3763c049e0360d78ce2c9f584621fdd829826e08c1c6416cdc02e1bbeefc7e55fedba6a09a86f5515a13c726d7c1b8558842e137fe04abc4ca8f172564
+  checksum: 10/dc12497cfe786735d4799403f3c6c938efe7d12352a0a363bf5f273752612195360d62a8f52c16cae7b4bbd6d886cdb2da5b043227c49e9adbced5e9e82435cb
   languageName: node
   linkType: hard
 
@@ -1675,9 +1675,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:5.4.2":
+"@graasp/ui@github:graasp/graasp-ui#cookie-buttons":
   version: 5.4.2
-  resolution: "@graasp/ui@npm:5.4.2"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=23013d06c35a70a0883bbdf0d26b796d3dd7efbb"
   dependencies:
     http-status-codes: "npm:2.3.0"
     interweave: "npm:13.1.0"
@@ -1706,7 +1706,7 @@ __metadata:
     react-i18next: ^15.0.0
     react-router-dom: ^6.11.0
     stylis: ^4.1.3
-  checksum: 10/17a166897c951de64b4961ea8a8ee8c2541a7d714ba1d9339a4a9f145ca76eabe53524a53693772e68ac8bf8979622509424685fbce022f697f741499dcd6161
+  checksum: 10/d8ac8eb33f5e6da48943c1e2fcbfb9051ddaf4986748595afdb29d5e0e2b26925795687b2df151f25bfc95a366c7a0aa315d8056c65664d8088f8f7bc31e89fd
   languageName: node
   linkType: hard
 
@@ -6402,10 +6402,10 @@ __metadata:
     "@graasp/chatbox": "npm:3.3.0"
     "@graasp/map": "npm:1.19.0"
     "@graasp/query-client": "npm:5.6.0"
-    "@graasp/sdk": "npm:5.3.1"
+    "@graasp/sdk": "github:graasp/graasp-sdk#update-signIn-url"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
     "@graasp/translations": "npm:1.42.0"
-    "@graasp/ui": "npm:5.4.2"
+    "@graasp/ui": "github:graasp/graasp-ui#cookie-buttons"
     "@mui/icons-material": "npm:6.1.7"
     "@mui/lab": "npm:6.0.0-beta.15"
     "@mui/material": "npm:6.1.7"

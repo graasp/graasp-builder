@@ -21,11 +21,11 @@
 VITE_PORT=3111
 VITE_GRAASP_API_HOST=http://localhost:3000
 VITE_SHOW_NOTIFICATIONS=true
-VITE_GRAASP_AUTH_HOST=http://localhost:3001
-VITE_GRAASP_PLAYER_HOST=http://localhost:3112
+VITE_GRAASP_HOST=http://localhost:3114
+VITE_GRAASP_PLAYER_HOST=http://localhost:3114/player
 VITE_GRAASP_ANALYZER_HOST=http://localhost:3113
-VITE_GRAASP_LIBRARY_HOST=http://localhost:3115
-VITE_GRAASP_ACCOUNT_HOST=http://localhost:3114
+VITE_GRAASP_LIBRARY_HOST=http://localhost:3005
+VITE_GRAASP_ACCOUNT_HOST=http://localhost:3114/account
 
 # in prod, it is https://go.graasp.org
 VITE_GRAASP_REDIRECTION_HOST=http://localhost:3000/items/short-links
@@ -58,7 +58,7 @@ Set the following environnement variables in `.env.test`
 ```sh
 VITE_PORT=3333
 VITE_GRAASP_API_HOST=http://localhost:3000
-VITE_GRAASP_AUTH_HOST=http://localhost:3001
+VITE_GRAASP_HOST=http://localhost:3114
 VITE_GRAASP_PLAYER_HOST=http://localhost:3112
 VITE_GRAASP_LIBRARY_HOST=http://localhost:3005
 VITE_GRAASP_ANALYZER_HOST=http://localhost:3113
