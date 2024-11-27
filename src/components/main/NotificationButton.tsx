@@ -29,7 +29,7 @@ export const NotificationButton = (): JSX.Element | null => {
 
   return (
     <MentionButton
-      color="secondary"
+      color="white"
       badgeColor="primary"
       useMentions={hooks.useMentions}
       patchMentionFunction={patchMentionFunction}
