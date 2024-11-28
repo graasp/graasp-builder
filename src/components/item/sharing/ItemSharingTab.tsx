@@ -17,6 +17,7 @@ import { VISIBILITY_HIDDEN_ALERT_ID } from '@/config/selectors';
 import { useBuilderTranslation } from '../../../config/i18n';
 import { hooks } from '../../../config/queryClient';
 import { BUILDER } from '../../../langs/constants';
+import DeleteItemLoginSchemaButton from './DeleteItemLoginSchemaButton';
 import HideSettingCheckbox from './HideSettingCheckbox';
 import VisibilitySelect from './VisibilitySelect';
 import MembershipTabs from './membershipTable/MembershipTabs';
@@ -44,10 +45,11 @@ const ItemSharingTab = (): JSX.Element => {
         <Divider />
         {currentAccount?.type === AccountType.Individual ? (
           <>
-            <Box>
+            <Stack gap={2}>
               <Typography variant="h6">
                 {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_TITLE)}
               </Typography>
+              <DeleteItemLoginSchemaButton itemId={item.id} />
               {item.hidden ? (
                 <Alert
                   id={VISIBILITY_HIDDEN_ALERT_ID}
@@ -59,12 +61,12 @@ const ItemSharingTab = (): JSX.Element => {
                   )}
                 </Alert>
               ) : (
-                <Box mb={2}>
+                <Stack direction="row" alignItems="center">
                   <VisibilitySelect item={item} edit={canAdmin} />
-                </Box>
+                </Stack>
               )}
               <HideSettingCheckbox item={item} />
-            </Box>
+            </Stack>
             <Divider />
           </>
         ) : null}

@@ -503,5 +503,11 @@
   "TRASH_COUNT_other": "You have {{count}} items in your trash.",
   "ITEM_NAME_CANNOT_BE_EMPTY": "The item needs a name.",
   "LINK_INVALID_MESSAGE": "The link is invalid.",
-  "DOCUMENT_EMPTY_MESSAGE": "The content cannot be empty."
+  "DOCUMENT_EMPTY_MESSAGE": "The content cannot be empty.",
+  "DELETE_GUESTS_ALERT_TEXT": "Some readers are disabled because the pseudonymized mode has been disabled. Click on \"Delete\" to permanently delete disabled reader(s) and their data.",
+  "DELETE_ITEM_LOGIN_SCHEMA_ALERT_TEXT": "Pseudonymized mode has been disabled. Click on \"Delete\" to completely delete it.",
+  "DELETE_GUESTS_MODAL_TITLE_one": "Confirm deletion of one disabled reader",
+  "DELETE_GUESTS_MODAL_TITLE_other": "Confirm deletion of {{count}} disabled reader(s)",
+  "DELETE_GUESTS_MODAL_CONTENT": "I confirm deleting <1>permanently</1> the following readers and their data:",
+  "DELETE_GUESTS_MODAL_DELETE_BUTTON": "Delete permanently"
 }

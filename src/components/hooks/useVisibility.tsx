@@ -13,6 +13,8 @@ import {
 import { SETTINGS } from '@/config/constants';
 import { hooks, mutations } from '@/config/queryClient';
 
+import { useGuestMemberships } from './useGuestMemberships';
+
 const { useItemLoginSchema, useItemPublishedInformation } = hooks;
 const {
   useDeleteItemVisibility,
@@ -34,6 +36,11 @@ type UseVisibility = {
 export const useVisibility = (item: PackedItem): UseVisibility => {
   const { mutateAsync: postItemVisibility } = usePostItemVisibility();
   const { mutate: deleteItemVisibility } = useDeleteItemVisibility();
+  const { mutate: deleteItemLoginSchema } =
+    mutations.useDeleteItemLoginSchema();
+
+  const { data: guestMemberships, isLoading: isGuestNbLoading } =
+    useGuestMemberships(item.id);
 
   // get item published
   const { data: itemPublishEntry, isLoading: isItemPublishEntryLoading } =
@@ -65,7 +72,8 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
   }, [itemLoginSchema, item]);
 
   // is loading
-  const isLoading = isItemPublishEntryLoading || isItemLoginLoading;
+  const isLoading =
+    isItemPublishEntryLoading || isItemLoginLoading || isGuestNbLoading;
 
   // visibility
   const [visibility, setVisibility] = useState<string>(
@@ -106,11 +114,16 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       };
 
       const disableLoginSchema = () => {
-        if (itemLoginSchema) {
-          putItemLoginSchema({
-            itemId: item.id,
-            status: ItemLoginSchemaStatus.Disabled,
-          });
+        if (itemLoginSchema && guestMemberships) {
+          // disable if contains data, delete otherwise
+          if (guestMemberships.length) {
+            putItemLoginSchema({
+              itemId: item.id,
+              status: ItemLoginSchemaStatus.Disabled,
+            });
+          } else {
+            deleteItemLoginSchema({ itemId: item.id });
+          }
         }
       };
 
@@ -148,7 +161,9 @@ export const useVisibility = (item: PackedItem): UseVisibility => {
       unpublish,
       deleteItemVisibility,
       itemLoginSchema,
+      guestMemberships,
       putItemLoginSchema,
+      deleteItemLoginSchema,
       postItemVisibility,
     ],
   );

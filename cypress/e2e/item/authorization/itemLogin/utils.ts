@@ -9,11 +9,12 @@ import {
 export const addItemLoginSchema = (
   item: PackedItem,
   itemLoginSchemaType: ItemLoginSchemaType,
+  status = ItemLoginSchemaStatus.Active,
 ): PackedItem & { itemLoginSchema: ItemLoginSchema } => ({
   ...item,
   itemLoginSchema: ItemLoginSchemaFactory({
     item,
     type: itemLoginSchemaType,
-    status: ItemLoginSchemaStatus.Active,
+    status,
   }),
 });

@@ -1,18 +1,28 @@
 import {
+  GuestFactory,
+  ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   PackedFolderItemFactory,
   PermissionLevel,
 } from '@graasp/sdk';
 
-import { buildItemPath } from '../../../../../src/config/paths';
+import {
+  buildItemPath,
+  buildItemSharePath,
+} from '../../../../../src/config/paths';
 import {
   REQUEST_MEMBERSHIP_BUTTON_ID,
   SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID,
+  buildDataCyWrapper,
   buildShareButtonId,
 } from '../../../../../src/config/selectors';
 import { MEMBERS } from '../../../../fixtures/members';
+import { buildItemMembership } from '../../../../fixtures/memberships';
 import { ITEM_LOGIN_PAUSE } from '../../../../support/constants';
 import { addItemLoginSchema } from './utils';
+
+const ALERT_BUTTON = `[role="alert"] button`;
+const DIALOG_SELECTOR = `[role="dialog"]`;
 
 const checkItemLoginSetting = ({
   mode,
@@ -95,6 +105,115 @@ describe('Item Login', () => {
       });
       cy.visit(buildItemPath(item.id));
       cy.wait(ITEM_LOGIN_PAUSE);
+    });
+  });
+});
+
+describe('Item Login Delete Button', () => {
+  describe('without guests', () => {
+    it('Delete item login for private item ', () => {
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory({}),
+        ItemLoginSchemaType.UsernameAndPassword,
+        ItemLoginSchemaStatus.Disabled,
+      );
+      cy.setUpApi({
+        items: [item],
+      });
+      cy.visit(buildItemSharePath(item.id));
+
+      // delete
+      cy.get(ALERT_BUTTON).click();
+      cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
+        expect(url).to.include(item.id);
+      });
+    });
+
+    it('Delete item login for public item', () => {
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory({}, { publicVisibility: {} }),
+        ItemLoginSchemaType.UsernameAndPassword,
+        ItemLoginSchemaStatus.Disabled,
+      );
+      cy.setUpApi({
+        items: [item],
+      });
+      cy.visit(buildItemSharePath(item.id));
+
+      // delete
+      cy.get(ALERT_BUTTON).click();
+      cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
+        expect(url).to.include(item.id);
+      });
+    });
+  });
+  describe('with guests', () => {
+    it('Delete item login for private item ', () => {
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory({}),
+        ItemLoginSchemaType.UsernameAndPassword,
+        ItemLoginSchemaStatus.Disabled,
+      );
+      const guest = GuestFactory({ itemLoginSchema: item.itemLoginSchema });
+      cy.setUpApi({
+        items: [
+          {
+            ...item,
+            memberships: [
+              buildItemMembership({
+                item,
+                account: guest,
+                permission: PermissionLevel.Read,
+              }),
+            ],
+          },
+        ],
+      });
+      cy.visit(buildItemSharePath(item.id));
+
+      // display delete alert
+      cy.get(ALERT_BUTTON).click();
+      cy.get(DIALOG_SELECTOR).should('contain', guest.name);
+
+      // click delete
+      cy.get(`${DIALOG_SELECTOR} ${buildDataCyWrapper('delete')}`).click();
+      cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
+        expect(url).to.include(item.id);
+      });
+    });
+
+    it('Delete item login for public item', () => {
+      const item = addItemLoginSchema(
+        PackedFolderItemFactory({}, { publicVisibility: {} }),
+        ItemLoginSchemaType.UsernameAndPassword,
+        ItemLoginSchemaStatus.Disabled,
+      );
+      const guest = GuestFactory({ itemLoginSchema: item.itemLoginSchema });
+      cy.setUpApi({
+        items: [
+          {
+            ...item,
+            memberships: [
+              buildItemMembership({
+                item,
+                account: guest,
+                permission: PermissionLevel.Read,
+              }),
+            ],
+          },
+        ],
+      });
+      cy.visit(buildItemSharePath(item.id));
+
+      // display delete alert
+      cy.get(ALERT_BUTTON).click();
+      cy.get(DIALOG_SELECTOR).should('contain', guest.name);
+
+      // click delete
+      cy.get(`${DIALOG_SELECTOR} ${buildDataCyWrapper('delete')}`).click();
+      cy.wait('@deleteItemLoginSchema').then(({ request: { url } }) => {
+        expect(url).to.include(item.id);
+      });
     });
   });
 });

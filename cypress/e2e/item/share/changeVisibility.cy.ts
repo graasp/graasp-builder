@@ -1,8 +1,10 @@
 import {
+  GuestFactory,
   ItemLoginSchemaStatus,
   ItemLoginSchemaType,
   ItemVisibilityType,
   PackedFolderItemFactory,
+  PermissionLevel,
   PublicationStatus,
 } from '@graasp/sdk';
 
@@ -18,6 +20,8 @@ import {
   buildShareButtonId,
 } from '../../../../src/config/selectors';
 import { PublishedItemFactory } from '../../../fixtures/items';
+import { buildItemMembership } from '../../../fixtures/memberships';
+import { addItemLoginSchema } from '../authorization/itemLogin/utils';
 
 const changeVisibility = (value: string): void => {
   cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID}`).click();
@@ -102,7 +106,51 @@ describe('Visibility of an Item', () => {
     });
   });
 
-  it('Change Pseudonymized Item to Private Item', () => {
+  it('Change Pseudonymized Item to Private Item with guest', () => {
+    const item = addItemLoginSchema(
+      PackedFolderItemFactory({}),
+      ItemLoginSchemaType.Username,
+    );
+    const guest = GuestFactory({ itemLoginSchema: item.itemLoginSchema });
+    cy.setUpApi({
+      items: [
+        {
+          ...item,
+          memberships: [
+            buildItemMembership({
+              item,
+              account: guest,
+              permission: PermissionLevel.Read,
+            }),
+          ],
+        },
+      ],
+    });
+    cy.visit(buildItemPath(item.id));
+    cy.get(`#${buildShareButtonId(item.id)}`).click();
+
+    // visibility select default value
+    cy.get(`#${SHARE_ITEM_VISIBILITY_SELECT_ID} + input`).should(
+      'have.value',
+      SETTINGS.ITEM_LOGIN.name,
+    );
+
+    // change item login schema
+    cy.get(`#${SHARE_ITEM_PSEUDONYMIZED_SCHEMA_ID} + input`).should(
+      'have.value',
+      ItemLoginSchemaType.Username,
+    );
+    // item login edition is done in itemLogin.cy.js
+
+    // change pseudonymized -> private
+    changeVisibility(SETTINGS.ITEM_PRIVATE.name);
+    cy.wait(`@putItemLoginSchema`).then(({ request: { url, body } }) => {
+      expect(url).to.include(item.id);
+      expect(body.status).to.eq(ItemLoginSchemaStatus.Disabled);
+    });
+  });
+
+  it('Change Pseudonymized Item to Private Item without guest', () => {
     const item = PackedFolderItemFactory();
     const ITEM_LOGIN_ITEM = {
       ...item,
@@ -132,10 +180,10 @@ describe('Visibility of an Item', () => {
     // item login edition is done in itemLogin.cy.js
 
     // change pseudonymized -> private
+    // delete item login
     changeVisibility(SETTINGS.ITEM_PRIVATE.name);
-    cy.wait(`@putItemLoginSchema`).then(({ request: { url, body } }) => {
+    cy.wait(`@deleteItemLoginSchema`).then(({ request: { url } }) => {
       expect(url).to.include(item.id);
-      expect(body.status).to.eq(ItemLoginSchemaStatus.Disabled);
     });
   });
 
