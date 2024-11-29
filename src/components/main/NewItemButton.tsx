@@ -40,14 +40,14 @@ const NewItemButton = ({
       {type === 'icon' ? (
         <IconButton
           onClick={handleClickOpen}
-          color="secondary"
+          color="primary"
           sx={{
             background: theme.palette.primary.main,
             '&:hover': { background: 'grey' },
           }}
           data-umami-event="new-item-icon-button"
         >
-          <PlusIcon />
+          <PlusIcon color="white" />
         </IconButton>
       ) : (
         <Button

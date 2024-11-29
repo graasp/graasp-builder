@@ -50,7 +50,7 @@ jobs:
         uses: graasp/graasp-deploy/.github/actions/deploy-s3@v1
         # Replace input build-folder or version if needed
         with:
-          build-folder: 'build'
+          build-folder: "build"
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           aws-region: ${{ secrets.AWS_REGION_PROD }}
           aws-s3-bucket-name: ${{ vars.AWS_S3_BUCKET_NAME }}

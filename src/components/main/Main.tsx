@@ -110,12 +110,8 @@ export const Main = ({ children }: Props): JSX.Element => {
           id={APP_NAVIGATION_PLATFORM_SWITCH_ID}
           selected={Platform.Builder}
           platformsProps={platformProps}
-          color={
-            isMobile ? theme.palette.primary.main : theme.palette.secondary.main
-          }
-          accentColor={
-            isMobile ? theme.palette.secondary.main : theme.palette.primary.main
-          }
+          color={isMobile ? theme.palette.primary.main : 'white'}
+          accentColor={isMobile ? 'white' : theme.palette.primary.main}
         />
       }
     >
