@@ -1,7 +1,7 @@
-import { buildLoginPath } from '@graasp/sdk';
+import { buildSignInPath } from '@graasp/sdk';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
-import { GRAASP_HOST } from '@/config/env';
+import { GRAASP_AUTH_HOST, GRAASP_HOST } from '@/config/env';
 import { useBuilderTranslation } from '@/config/i18n';
 import { hooks, mutations } from '@/config/queryClient';
 import {
@@ -24,8 +24,8 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { mutateAsync: signOut } = mutations.useSignOut();
 
-  const redirectPath = buildLoginPath({
-    host: GRAASP_HOST,
+  const redirectPath = buildSignInPath({
+    host: GRAASP_AUTH_HOST,
     redirectionUrl: window.location.toString(),
   });
 

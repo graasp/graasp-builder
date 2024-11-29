@@ -1,6 +1,6 @@
 # Graasp Builder
 
-[![GitHub Release](https://img.shields.io/github/release/graasp/graasp-builder)]()
+![GitHub Release](https://img.shields.io/github/release/graasp/graasp-builder)
 ![Cypress CI](https://github.com/graasp/graasp-builder/actions/workflows/ci.yml/badge.svg?branch=main)
 ![typescript version](https://img.shields.io/github/package-json/dependency-version/graasp/graasp-builder/dev/typescript)
 [![gitlocalized](https://gitlocalize.com/repo/8885/whole_project/badge.svg)](https://gitlocalize.com/repo/8885/whole_project?utm_source=badge)
@@ -17,21 +17,21 @@
 2. Run the API at `localhost:3000`
 3. Set the following environnement variables in `.env.development`
 
-```sh
-VITE_PORT=3111
-VITE_GRAASP_API_HOST=http://localhost:3000
-VITE_SHOW_NOTIFICATIONS=true
-VITE_GRAASP_HOST=http://localhost:3114
-VITE_GRAASP_PLAYER_HOST=http://localhost:3114/player
-VITE_GRAASP_ANALYZER_HOST=http://localhost:3113
-VITE_GRAASP_LIBRARY_HOST=http://localhost:3005
-VITE_GRAASP_ACCOUNT_HOST=http://localhost:3114/account
+    ```sh
+    VITE_PORT=3111
+    VITE_GRAASP_API_HOST=http://localhost:3000
+    VITE_SHOW_NOTIFICATIONS=true
+    VITE_GRAASP_AUTH_HOST=http://localhost:3001
+    VITE_GRAASP_PLAYER_HOST=http://localhost:3112
+    VITE_GRAASP_ANALYZER_HOST=http://localhost:3113
+    VITE_GRAASP_LIBRARY_HOST=http://localhost:3115
+    VITE_GRAASP_ACCOUNT_HOST=http://localhost:3114/account
 
-# in prod, it is https://go.graasp.org
-VITE_GRAASP_REDIRECTION_HOST=http://localhost:3000/items/short-links
-VITE_H5P_INTEGRATION_URL=
-VITE_VERSION=latest-dev
-```
+    # in prod, it is https://go.graasp.org
+    VITE_GRAASP_REDIRECTION_HOST=http://localhost:3000/items/short-links
+    VITE_H5P_INTEGRATION_URL=
+    VITE_VERSION=latest-dev
+    ```
 
 4. Run `yarn start`. The client should be accessible at `localhost:3111`
 
@@ -58,7 +58,7 @@ Set the following environnement variables in `.env.test`
 ```sh
 VITE_PORT=3333
 VITE_GRAASP_API_HOST=http://localhost:3000
-VITE_GRAASP_HOST=http://localhost:3114
+VITE_GRAASP_AUTH_HOST=http://localhost:3001
 VITE_GRAASP_PLAYER_HOST=http://localhost:3112
 VITE_GRAASP_LIBRARY_HOST=http://localhost:3005
 VITE_GRAASP_ANALYZER_HOST=http://localhost:3113

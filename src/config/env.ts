@@ -1,8 +1,11 @@
 const {
   VITE_VERSION,
-  VITE_GRAASP_API_HOST,
   VITE_GRAASP_DOMAIN,
+  VITE_GRAASP_API_HOST,
+  VITE_GRAASP_AUTH_HOST,
+  VITE_GRAASP_PLAYER_HOST,
   VITE_GRAASP_ANALYZER_HOST,
+  VITE_GRAASP_ACCOUNT_HOST,
   VITE_GRAASP_LIBRARY_HOST,
   VITE_GRAASP_HOST,
   VITE_SHOW_NOTIFICATIONS,
@@ -18,11 +21,17 @@ export const APP_VERSION = VITE_VERSION;
 export const DOMAIN = VITE_GRAASP_DOMAIN;
 
 export const API_HOST = VITE_GRAASP_API_HOST || 'http://localhost:3000';
+export const GRAASP_AUTH_HOST =
+  VITE_GRAASP_AUTH_HOST || 'http://localhost:3001';
+export const GRAASP_PLAYER_HOST =
+  VITE_GRAASP_PLAYER_HOST || 'http://localhost:3112';
 export const GRAASP_HOST = VITE_GRAASP_HOST || 'http://localhost:3114';
 export const GRAASP_LIBRARY_HOST =
   VITE_GRAASP_LIBRARY_HOST || 'http://localhost:3115';
 export const GRAASP_ANALYZER_HOST =
   VITE_GRAASP_ANALYZER_HOST || 'http://localhost:3113';
+export const GRAASP_ACCOUNT_HOST =
+  VITE_GRAASP_ACCOUNT_HOST || 'http://localhost:3114';
 
 export const GRAASP_REDIRECTION_HOST =
   VITE_GRAASP_REDIRECTION_HOST || 'http://localhost:3000/items/short-links';

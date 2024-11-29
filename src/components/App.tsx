@@ -1,14 +1,14 @@
 import { Trans } from 'react-i18next';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
-import { buildLoginPath, saveUrlForRedirection } from '@graasp/sdk';
+import { buildSignInPath, saveUrlForRedirection } from '@graasp/sdk';
 import {
   CustomInitialLoader,
   PreventGuestWrapper,
   SignedInWrapper,
 } from '@graasp/ui';
 
-import { DOMAIN, GRAASP_HOST } from '@/config/env';
+import { DOMAIN, GRAASP_AUTH_HOST } from '@/config/env';
 import { useBuilderTranslation } from '@/config/i18n';
 import { PREVENT_GUEST_MESSAGE_ID } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
@@ -72,8 +72,8 @@ const App = (): JSX.Element => {
             // redirect to sign in if not signed in
             <SignedInWrapper
               currentAccount={currentAccount}
-              redirectionLink={buildLoginPath({
-                host: GRAASP_HOST,
+              redirectionLink={buildSignInPath({
+                host: GRAASP_AUTH_HOST,
                 redirectionUrl: window.location.toString(),
               })}
               onRedirect={() => {
