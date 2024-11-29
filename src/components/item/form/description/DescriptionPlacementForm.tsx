@@ -1,3 +1,5 @@
+import { Controller, useFormContext } from 'react-hook-form';
+
 import { MenuItem, Select } from '@mui/material';
 
 import { DescriptionPlacement, DescriptionPlacementType } from '@graasp/sdk';
@@ -13,22 +15,14 @@ import { BUILDER } from '@/langs/constants';
 
 import ItemSettingProperty from '../../settings/ItemSettingProperty';
 
-const DEFAULT_PLACEMENT = DescriptionPlacement.BELOW;
-
-type DescriptionPlacementFormProps = {
-  onPlacementChange: (payload: DescriptionPlacementType) => void;
-  descriptionPlacement?: DescriptionPlacementType;
-};
-
-const DescriptionPlacementForm = ({
-  onPlacementChange,
-  descriptionPlacement = DEFAULT_PLACEMENT,
-}: DescriptionPlacementFormProps): JSX.Element | null => {
+const DescriptionPlacementForm = (): JSX.Element | null => {
   const { t } = useBuilderTranslation();
+  const { watch, control } = useFormContext<{
+    descriptionPlacement: DescriptionPlacementType;
+  }>();
 
-  const handlePlacementChanged = (placement: string): void => {
-    onPlacementChange(placement as DescriptionPlacementType);
-  };
+  const descriptionPlacement = watch('descriptionPlacement');
+
   return (
     <ItemSettingProperty
       title={t(BUILDER.ITEM_SETTINGS_DESCRIPTION_PLACEMENT_TITLE)}
@@ -43,21 +37,29 @@ const DescriptionPlacementForm = ({
         placement: t(descriptionPlacement).toLowerCase(),
       })}
       inputSetting={
-        <Select
-          id={ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}
-          value={descriptionPlacement}
-          onChange={(e) => handlePlacementChanged(e.target.value)}
-          size="small"
-        >
-          {Object.values(DescriptionPlacement).map((placement) => (
-            <MenuItem
-              id={buildDescriptionPlacementId(placement)}
-              value={placement}
+        <Controller
+          name="descriptionPlacement"
+          control={control}
+          render={({ field }) => (
+            <Select
+              id={ITEM_SETTING_DESCRIPTION_PLACEMENT_SELECT_ID}
+              value={field.value ?? DescriptionPlacement.BELOW}
+              onChange={(v) => {
+                field.onChange(v);
+              }}
+              size="small"
             >
-              {t(placement)}
-            </MenuItem>
-          ))}
-        </Select>
+              {Object.values(DescriptionPlacement).map((placement) => (
+                <MenuItem
+                  id={buildDescriptionPlacementId(placement)}
+                  value={placement}
+                >
+                  {t(placement)}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
       }
     />
   );
