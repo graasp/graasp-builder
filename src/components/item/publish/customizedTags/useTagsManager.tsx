@@ -36,7 +36,6 @@ export const useTagsManager = ({ itemId }: Props): UseMultiSelectChipInput => {
   const [currentValue, setCurrentValue] = useState<string>(EMPTY_STRING);
   const [error, setError] = useState<string | undefined>();
   const debouncedCurrentValue = hooks.useDebounce(currentValue, 500);
-
   const { data: tags } = hooks.useTagsByItem({ itemId });
   const {
     mutate: addTag,
