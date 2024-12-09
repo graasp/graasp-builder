@@ -28,7 +28,7 @@ export const PublicationModal = ({
   const { t } = useBuilderTranslation();
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onClose={handleOnClose}>
       {title && <DialogTitle>{title}</DialogTitle>}
       <DialogContent sx={{ width: DIALOG_CONTENT_WIDTH }}>
         {modalContent}

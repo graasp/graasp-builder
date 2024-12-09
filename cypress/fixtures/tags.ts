@@ -1,82 +1,62 @@
 import {
-  Category,
-  CategoryType,
-  ItemCategory,
   ItemValidation,
   ItemValidationProcess,
   ItemValidationStatus,
+  Tag,
+  TagCategory,
 } from '@graasp/sdk';
 
 import { ItemForTest } from '../support/types';
 import { PUBLISHED_ITEM } from './items';
-import { MEMBERS } from './members';
 
-export const SAMPLE_CATEGORIES: Category[] = [
+export const SAMPLE_TAGS: Tag[] = [
   {
     id: 'e873d800-5647-442c-930d-2d677532846a',
-    name: 'test_category',
-    type: CategoryType.Discipline,
+    name: 'discipline 1',
+    category: TagCategory.Discipline,
+  },
+  {
+    id: '152ef74e-8893-4736-926e-214c17396ed3',
+    name: 'level 1',
+    category: TagCategory.Level,
   },
   {
     id: '352ef74e-8893-4736-926e-214c17396ed3',
-    name: 'test_category_2',
-    type: CategoryType.Level,
+    name: 'level 2',
+    category: TagCategory.Level,
   },
   {
     id: 'ba7f7e3d-dc75-4070-b892-381fbf4759d9',
-    name: 'language-1',
-    type: CategoryType.Language,
+    name: 'resource-type-1',
+    category: TagCategory.ResourceType,
   },
   {
     id: 'af7f7e3d-dc75-4070-b892-381fbf4759d5',
-    name: 'language-2',
-    type: CategoryType.Language,
+    name: 'resource-type-2',
+    category: TagCategory.ResourceType,
   },
 ];
 
-export const SAMPLE_ITEM_CATEGORIES: ItemCategory[] = [
-  {
-    id: 'e75e1950-c5b4-4e21-95a2-c7c3bfa4072b',
-    item: PUBLISHED_ITEM,
-    category: SAMPLE_CATEGORIES[0],
-    createdAt: '2021-08-11T12:56:36.834Z',
-    creator: MEMBERS.ANNA,
-  },
-];
-
-export const SAMPLE_ITEM_LANGUAGE: ItemCategory[] = [
-  {
-    id: 'e75e1950-c5b4-4e21-95a2-c7c3bfa4072b',
-    item: PUBLISHED_ITEM,
-    category: SAMPLE_CATEGORIES[2],
-    createdAt: '2021-08-11T12:56:36.834Z',
-    creator: MEMBERS.ANNA,
-  },
-];
-
-export const CUSTOMIZED_TAGS = ['water', 'ice', 'temperature'];
-
-export const ITEM_WITH_CATEGORIES: ItemForTest = {
+export const ITEM_WITH_TAGS: ItemForTest = {
   ...PUBLISHED_ITEM,
   settings: {
-    tags: CUSTOMIZED_TAGS,
     displayCoEditors: true,
   },
   // for tests
-  categories: SAMPLE_ITEM_CATEGORIES,
+  tags: SAMPLE_TAGS,
 };
 
-export const ITEM_WITH_CATEGORIES_CONTEXT = {
-  items: [ITEM_WITH_CATEGORIES],
+export const ITEM_WITH_TAGS_CONTEXT = {
+  items: [ITEM_WITH_TAGS],
   itemValidationGroups: [
     {
       id: '65c57d69-0e59-4569-a422-f330c31c995c',
-      item: ITEM_WITH_CATEGORIES,
+      item: ITEM_WITH_TAGS,
       createdAt: '2021-08-11T12:56:36.834Z',
       itemValidations: [
         {
           id: 'id1',
-          item: ITEM_WITH_CATEGORIES,
+          item: ITEM_WITH_TAGS,
           // itemValidationGroup: iVG,
           process: ItemValidationProcess.BadWordsDetection,
           status: ItemValidationStatus.Success,
@@ -86,7 +66,7 @@ export const ITEM_WITH_CATEGORIES_CONTEXT = {
         },
         {
           id: 'id2',
-          item: ITEM_WITH_CATEGORIES,
+          item: ITEM_WITH_TAGS,
           // itemValidationGroup: iVG,
           process: ItemValidationProcess.ImageChecking,
           status: ItemValidationStatus.Success,

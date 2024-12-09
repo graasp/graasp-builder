@@ -22,8 +22,6 @@ export const useBuilderTranslation = () => useTranslation(BUILDER_NAMESPACE);
 export const useCommonTranslation = () => useTranslation(namespaces.common);
 export const useMessagesTranslation = () => useTranslation(namespaces.messages);
 export const useEnumsTranslation = () => useTranslation(namespaces.enums);
-export const useCategoriesTranslation = () =>
-  useTranslation(namespaces.categories);
 export const useChatboxTranslation = () => useTranslation(namespaces.chatbox);
 
 export default i18n;

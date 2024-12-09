@@ -9,16 +9,16 @@ import {
   buildDataCyWrapper,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
-import { ITEM_WITH_CATEGORIES_CONTEXT } from '../../../fixtures/categories';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
+import { ITEM_WITH_TAGS_CONTEXT } from '../../../fixtures/tags';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 
 const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 const visitItemPage = () => {
-  cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
-  const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
+  cy.setUpApi(ITEM_WITH_TAGS_CONTEXT);
+  const item = ITEM_WITH_TAGS_CONTEXT.items[0];
   cy.visit(buildItemPath(item.id));
   openPublishItemTab(item.id);
 };
@@ -35,7 +35,7 @@ describe('Co-editor Setting', () => {
 
 it('Change choice', () => {
   visitItemPage();
-  const item = ITEM_WITH_CATEGORIES_CONTEXT.items[0];
+  const item = ITEM_WITH_TAGS_CONTEXT.items[0];
   const newOptionValue = DISPLAY_CO_EDITORS_OPTIONS.NO.value;
 
   cy.wait('@getPublicationStatus').then(() => {
