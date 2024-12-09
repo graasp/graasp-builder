@@ -2,7 +2,6 @@ import { API_ROUTES } from '@graasp/query-client';
 import {
   AccountType,
   App,
-  Category,
   ChatMention,
   CompleteMembershipRequest,
   DiscriminatedItem,
@@ -76,13 +75,9 @@ const {
   buildPostItemChatMessageRoute,
   buildClearItemChatRoute,
   buildDeleteItemVisibilityRoute,
-  buildDeleteItemsRoute,
   buildUploadItemThumbnailRoute,
   buildUploadAvatarRoute,
   buildImportZipRoute,
-  buildGetCategoriesRoute,
-  buildPostItemCategoryRoute,
-  buildDeleteItemCategoryRoute,
   buildPostInvitationsRoute,
   buildGetItemInvitationsForItemRoute,
   buildDeleteInvitationRoute,
@@ -253,7 +248,7 @@ export const mockDeleteItems = (
   cy.intercept(
     {
       method: HttpMethod.Delete,
-      url: new RegExp(`${API_HOST}/${buildDeleteItemsRoute([])}`),
+      url: new RegExp(`${API_HOST}/items\\?id\\=`),
     },
     ({ reply }) => {
       if (shouldThrowError) {
@@ -1475,82 +1470,38 @@ export const mockPostAvatar = (shouldThrowError: boolean): void => {
   ).as('uploadAvatar');
 };
 
-export const mockGetCategories = (
-  categories: Category[],
-  shouldThrowError: boolean,
-): void => {
+export const mockGetTagsByItem = (items: ItemForTest[]): void => {
   cy.intercept(
     {
       method: HttpMethod.Get,
-      url: new RegExp(
-        `${API_HOST}/${parseStringToRegExp(buildGetCategoriesRoute())}`,
-      ),
-    },
-    ({ reply }) => {
-      if (shouldThrowError) {
-        reply({ statusCode: StatusCodes.BAD_REQUEST });
-        return;
-      }
-      reply(categories);
-    },
-  ).as('getCategories');
-};
-
-export const mockGetItemCategories = (
-  items: ItemForTest[],
-  shouldThrowError: boolean,
-): void => {
-  cy.intercept(
-    {
-      method: HttpMethod.Get,
-      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/categories`),
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/tags`),
     },
     ({ reply, url }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST });
-      }
       const itemId = url.slice(API_HOST.length).split('/')[2];
-      const result = items.find(({ id }) => id === itemId)?.categories || [];
+      const result = items.find(({ id }) => id === itemId)?.tags || [];
       return reply(result);
     },
-  ).as('getItemCategories');
+  ).as('getTagsByItem');
 };
 
-export const mockPostItemCategory = (shouldThrowError: boolean): void => {
+export const mockAddTag = (): void => {
   cy.intercept(
     {
       method: HttpMethod.Post,
-      url: new RegExp(`${API_HOST}/${buildPostItemCategoryRoute(ID_FORMAT)}$`),
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/tags`),
     },
-    ({ reply, body }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST });
-      }
-
-      return reply(body);
-    },
-  ).as('postItemCategory');
+    ({ reply }) => reply({ status: StatusCodes.NO_CONTENT }),
+  ).as('addTag');
 };
 
-export const mockDeleteItemCategory = (shouldThrowError: boolean): void => {
+export const mockRemoveTag = (): void => {
   cy.intercept(
     {
       method: HttpMethod.Delete,
-      url: new RegExp(
-        `${API_HOST}/${buildDeleteItemCategoryRoute({
-          itemId: ID_FORMAT,
-          itemCategoryId: ID_FORMAT,
-        })}$`,
-      ),
+      url: new RegExp(`${API_HOST}/items/${ID_FORMAT}/tags/${ID_FORMAT}`),
     },
-    ({ reply, body }) => {
-      if (shouldThrowError) {
-        return reply({ statusCode: StatusCodes.BAD_REQUEST });
-      }
-
-      return reply(body);
-    },
-  ).as('deleteItemCategory');
+    ({ reply }) => reply({ status: StatusCodes.NO_CONTENT }),
+  ).as('removeTag');
 };
 
 export const mockGetItemValidationGroups = (

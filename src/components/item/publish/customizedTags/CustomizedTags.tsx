@@ -3,10 +3,10 @@ import { Chip, Stack } from '@mui/material';
 
 import { DiscriminatedItem, TagCategory } from '@graasp/sdk';
 
-import MultiSelectChipInput from '@/components/input/MultiSelectChipInput';
+import { MultiSelectTagChipInput } from '@/components/input/MultiSelectTagChipInput';
 import { useBuilderTranslation } from '@/config/i18n';
 import {
-  ITEM_TAGS_OPEN_MODAL_BUTTON_ID,
+  ITEM_TAGS_OPEN_MODAL_BUTTON_CY,
   buildCustomizedTagsSelector,
 } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
@@ -44,19 +44,16 @@ export const CustomizedTags = ({ item }: Props): JSX.Element => {
         isOpen={isOpen}
         modalContent={
           <Stack gap={2}>
-            <MultiSelectChipInput
+            <MultiSelectTagChipInput
               itemId={item.id}
-              label={t(BUILDER.ITEM_TAGS_LABEL)}
               tagCategory={TagCategory.Discipline}
             />
-            <MultiSelectChipInput
+            <MultiSelectTagChipInput
               itemId={item.id}
-              label={t(BUILDER.ITEM_TAGS_LABEL)}
               tagCategory={TagCategory.Level}
             />
-            <MultiSelectChipInput
+            <MultiSelectTagChipInput
               itemId={item.id}
-              label={t(BUILDER.ITEM_TAGS_LABEL)}
               tagCategory={TagCategory.ResourceType}
             />
           </Stack>
@@ -68,7 +65,7 @@ export const CustomizedTags = ({ item }: Props): JSX.Element => {
           label={t(BUILDER.ITEM_TAGS_CHIP_BUTTON_EDIT)}
           variant="outlined"
           onClick={openModal}
-          data-cy={ITEM_TAGS_OPEN_MODAL_BUTTON_ID}
+          data-cy={ITEM_TAGS_OPEN_MODAL_BUTTON_CY}
         />
         {chipTags}
       </Stack>

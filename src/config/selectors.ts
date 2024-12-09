@@ -193,8 +193,9 @@ export const CROP_MODAL_CONFIRM_BUTTON_ID = 'cropModalConfirmButton';
 export const ZIP_DASHBOARD_UPLOADER_ID = 'zipDashboardUploader';
 export const H5P_DASHBOARD_UPLOADER_ID = 'h5pDashboardUploader';
 
-export const ITEM_TAGS_OPEN_MODAL_BUTTON_ID = 'itemTagsOpenModalButton';
-export const MULTI_SELECT_CHIP_INPUT_ID = 'multiSelectChipInput';
+export const ITEM_TAGS_OPEN_MODAL_BUTTON_CY = 'itemTagsOpenModalButton';
+export const buildMultiSelectChipInputId = (id: string): string =>
+  `multiSelectChipInput-${id}`;
 export const MULTI_SELECT_CHIP_ADD_BUTTON_ID = 'multiSelectChipAddButton';
 export const MULTI_SELECT_CHIP_CONTAINER_ID = 'multiSelectChipContainer';
 export const buildMultiSelectChipsSelector = (index: number): string =>

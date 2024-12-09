@@ -1,5 +1,4 @@
 import {
-  Category,
   ChatMention,
   ChatMessage,
   CompleteMember,
@@ -7,7 +6,6 @@ import {
   DiscriminatedItem,
   Invitation,
   ItemBookmark,
-  ItemCategory,
   ItemLoginSchema,
   ItemMembership,
   ItemPublished,
@@ -19,11 +17,12 @@ import {
   RecycledItemData,
   S3FileItemType,
   ShortLink,
+  Tag,
   ThumbnailsBySize,
 } from '@graasp/sdk';
 
 export type ItemForTest = DiscriminatedItem & {
-  categories?: ItemCategory[];
+  tags?: Tag[];
   thumbnails?: ThumbnailsBySize;
   visibilities?: ItemVisibility[];
   itemLoginSchema?: ItemLoginSchema;
@@ -54,7 +53,6 @@ export type ApiConfig = {
   members?: MemberForTest[];
   currentMember?: MemberForTest;
   mentions?: ChatMention[];
-  categories?: Category[];
   shortLinks?: ShortLink[];
   itemId?: DiscriminatedItem['id'];
   bookmarkedItems?: ItemBookmark[];
@@ -62,7 +60,6 @@ export type ApiConfig = {
   itemPublicationStatus?: PublicationStatus;
   publishedItemData?: ItemPublished[];
   membershipRequests?: CompleteMembershipRequest[];
-  // statuses = SAMPLE_STATUSES,
   itemValidationGroups?: ItemValidationGroup[];
   deleteItemsError?: boolean;
   postItemError?: boolean;

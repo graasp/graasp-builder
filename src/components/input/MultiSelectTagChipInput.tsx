@@ -16,7 +16,7 @@ import { useBuilderTranslation, useEnumsTranslation } from '@/config/i18n';
 import { hooks } from '@/config/queryClient';
 import {
   MULTI_SELECT_CHIP_CONTAINER_ID,
-  MULTI_SELECT_CHIP_INPUT_ID,
+  buildMultiSelectChipInputId,
   buildMultiSelectChipsSelector,
 } from '@/config/selectors';
 
@@ -24,11 +24,10 @@ import useTagsManager from '../item/publish/customizedTags/useTagsManager';
 
 type Props = {
   itemId: DiscriminatedItem['id'];
-  label: string;
   tagCategory: TagCategory;
 };
 
-export const MultiSelectChipInput = ({
+export const MultiSelectTagChipInput = ({
   itemId,
   tagCategory,
 }: Props): JSX.Element | null => {
@@ -51,7 +50,6 @@ export const MultiSelectChipInput = ({
     isFetching,
     isLoading,
   } = hooks.useTags({ search: debouncedCurrentValue, category: tagCategory });
-
   const renderTags = (
     value: readonly string[],
     getTagProps: AutocompleteRenderGetTagProps,
@@ -98,30 +96,32 @@ export const MultiSelectChipInput = ({
         },
       }}
       onChange={(e) => handleCurrentValueChanged(e.target.value, tagCategory)}
+      onKeyDown={(e) => {
+        if (e.code === 'Enter' && 'value' in e.target) {
+          addValue({ name: e.target.value as string, category: tagCategory });
+        }
+      }}
     />
   );
 
   const options =
     tags
-      // remove tags already existing for item
-      ?.filter(
-        ({ id: thisId }) =>
-          !tagsPerCategory?.[tagCategory]?.find(({ id }) => id === thisId),
-      )
+      ?.filter(({ category }) => category === tagCategory)
       ?.map(({ name }) => name) ?? [];
 
   return (
     <Stack mt={1} spacing={1}>
       <Stack direction="row" spacing={2} alignItems="center">
         <Autocomplete
-          data-cy={MULTI_SELECT_CHIP_INPUT_ID}
+          data-cy={buildMultiSelectChipInputId(tagCategory)}
           fullWidth
           multiple
-          // allows to hide add option on adding a new tag
+          filterSelectedOptions
+          // allows to hide empty "add option" text on adding a new tag
           freeSolo={!currentValue}
           onBlur={resetCurrentValue}
           noOptionsText={
-            error || (
+            error ?? (
               <Button
                 fullWidth
                 onClick={() =>
@@ -162,5 +162,3 @@ export const MultiSelectChipInput = ({
     </Stack>
   );
 };
-
-export default MultiSelectChipInput;

@@ -2,97 +2,134 @@ import {
   ItemVisibilityType,
   PackedFolderItemFactory,
   PermissionLevel,
+  TagCategory,
 } from '@graasp/sdk';
 
 import { buildItemPath } from '../../../../src/config/paths';
 import {
   ITEM_HEADER_ID,
-  ITEM_TAGS_OPEN_MODAL_BUTTON_ID,
+  ITEM_TAGS_OPEN_MODAL_BUTTON_CY,
   MUI_CHIP_REMOVE_BTN,
-  MULTI_SELECT_CHIP_ADD_BUTTON_ID,
-  MULTI_SELECT_CHIP_INPUT_ID,
   buildCustomizedTagsSelector,
   buildDataCyWrapper,
   buildDataTestIdWrapper,
+  buildMultiSelectChipInputId,
   buildPublishButtonId,
 } from '../../../../src/config/selectors';
-import {
-  ITEM_WITH_CATEGORIES,
-  ITEM_WITH_CATEGORIES_CONTEXT,
-} from '../../../fixtures/categories';
 import { PUBLISHED_ITEM_NO_TAGS } from '../../../fixtures/items';
 import { MEMBERS, SIGNED_OUT_MEMBER } from '../../../fixtures/members';
+import { SAMPLE_TAGS } from '../../../fixtures/tags';
 import { EDIT_TAG_REQUEST_TIMEOUT } from '../../../support/constants';
 import { ItemForTest } from '../../../support/types';
+
+const ITEM_WITH_TAGS = {
+  ...PackedFolderItemFactory(
+    {
+      settings: {
+        displayCoEditors: true,
+      },
+    },
+    { permission: PermissionLevel.Admin },
+  ),
+  tags: SAMPLE_TAGS.slice(0, 2),
+};
 
 const openPublishItemTab = (id: string) => {
   cy.get(`#${buildPublishButtonId(id)}`).click();
 };
 
 const visitItemPage = (item: ItemForTest) => {
-  cy.setUpApi(ITEM_WITH_CATEGORIES_CONTEXT);
+  cy.setUpApi({ items: [item] });
   cy.visit(buildItemPath(item.id));
   openPublishItemTab(item.id);
 };
 
 describe('Customized Tags', () => {
   it('Display item without tags', () => {
-    // check for not displaying if no tags
     const item = PUBLISHED_ITEM_NO_TAGS;
     cy.setUpApi({ items: [item] });
     cy.visit(buildItemPath(item.id));
     openPublishItemTab(item.id);
-    cy.get(buildDataCyWrapper(buildCustomizedTagsSelector(0))).should(
-      'not.exist',
-    );
+    // check display edit button
+    cy.get(buildDataCyWrapper(ITEM_TAGS_OPEN_MODAL_BUTTON_CY))
+      // scroll because description can be long
+      .scrollIntoView()
+      .should('be.visible');
   });
 
   it('Display tags', () => {
-    const item = ITEM_WITH_CATEGORIES;
+    const item = ITEM_WITH_TAGS;
     visitItemPage(item);
-    expect(item.settings.tags).to.have.lengthOf.above(0);
-    item.settings.tags!.forEach((tag, index) => {
+    expect(item.tags).to.have.lengthOf.above(0);
+    item.tags.forEach((tag) => {
       const displayTags = cy.get(
-        buildDataCyWrapper(buildCustomizedTagsSelector(index)),
+        buildDataCyWrapper(buildCustomizedTagsSelector(tag.id)),
       );
-      displayTags.contains(tag);
+      displayTags.contains(tag.name);
     });
   });
 
   it('Remove tag', () => {
-    const item = ITEM_WITH_CATEGORIES;
-    const removeIdx = 0;
-    const removedTag = item.settings.tags[removeIdx];
+    const item = ITEM_WITH_TAGS;
+    const tagToRemove = ITEM_WITH_TAGS.tags[1];
 
     visitItemPage(item);
-    cy.get(buildDataCyWrapper(buildCustomizedTagsSelector(removeIdx)))
+    cy.get(buildDataCyWrapper(buildCustomizedTagsSelector(tagToRemove.id)))
       .find(buildDataTestIdWrapper(MUI_CHIP_REMOVE_BTN))
       .click();
 
-    cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
-      const {
-        request: { url, body },
-      } = data;
-      expect(url.split('/')).contains(item.id);
-      expect(body.settings.tags).not.contains(removedTag);
-    });
+    cy.wait('@removeTag', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then(
+      (data) => {
+        const {
+          request: { url },
+        } = data;
+        expect(url.split('/')).contains(item.id).contains(tagToRemove.id);
+      },
+    );
   });
 
   it('Add tag', () => {
-    const item = ITEM_WITH_CATEGORIES;
-    const newTag = 'My new tag';
+    cy.intercept(
+      {
+        method: 'Get',
+        url: /\/tags\?search=/,
+      },
+      ({ reply }) =>
+        reply([
+          { name: 'secondary school', category: TagCategory.Level },
+          ...SAMPLE_TAGS,
+        ]),
+    ).as('getTags');
+
+    const item = ITEM_WITH_TAGS;
+    const newTag = { name: 'My new tag', category: TagCategory.Level };
 
     visitItemPage(item);
-    cy.get(buildDataCyWrapper(ITEM_TAGS_OPEN_MODAL_BUTTON_ID)).click();
-    cy.get(buildDataCyWrapper(MULTI_SELECT_CHIP_INPUT_ID)).type(newTag);
-    cy.get(buildDataCyWrapper(MULTI_SELECT_CHIP_ADD_BUTTON_ID)).click();
+    cy.get(buildDataCyWrapper(ITEM_TAGS_OPEN_MODAL_BUTTON_CY)).click();
+    cy.get(buildDataCyWrapper(buildMultiSelectChipInputId(TagCategory.Level)))
+      // debounce of 500
+      .type(`${newTag.name}`);
 
-    cy.wait('@editItem', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
+    // should call get tags when typing
+    cy.wait('@getTags').then(({ request: { query } }) => {
+      expect(query.search).to.contain(newTag.name);
+      expect(query.category).to.contain(newTag.category);
+    });
+
+    // display options for opened category
+    cy.get(`li:contains("secondary school")`).should('be.visible');
+
+    cy.get(
+      buildDataCyWrapper(buildMultiSelectChipInputId(TagCategory.Level)),
+    ).type('{Enter}');
+
+    cy.wait('@addTag', { timeout: EDIT_TAG_REQUEST_TIMEOUT }).then((data) => {
       const {
         request: { url, body },
       } = data;
       expect(url.split('/')).contains(item.id);
-      expect(body.settings.tags).contains(newTag);
+      expect(body.name).contains(newTag.name);
+      expect(body.category).contains(newTag.category);
     });
   });
 });

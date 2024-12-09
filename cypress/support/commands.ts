@@ -6,13 +6,13 @@ import { ItemLayoutMode } from '@/enums';
 
 import { LAYOUT_MODE_BUTTON_ID } from '../../src/config/selectors';
 import { APPS_LIST } from '../fixtures/apps/apps';
-import { SAMPLE_CATEGORIES } from '../fixtures/categories';
 import { SAMPLE_MENTIONS } from '../fixtures/chatbox';
 import { CURRENT_USER, MEMBERS } from '../fixtures/members';
 import './commands/item';
 import './commands/navigation';
 import {
   mockAddFavorite,
+  mockAddTag,
   mockAppApiAccessToken,
   mockCheckShortLink,
   mockClearItemChat,
@@ -21,7 +21,6 @@ import {
   mockDeleteAppData,
   mockDeleteFavorite,
   mockDeleteInvitation,
-  mockDeleteItemCategory,
   mockDeleteItemLoginSchema,
   mockDeleteItemMembershipForItem,
   mockDeleteItemThumbnail,
@@ -38,11 +37,9 @@ import {
   mockGetAppLink,
   mockGetAppListRoute,
   mockGetAvatarUrl,
-  mockGetCategories,
   mockGetChildren,
   mockGetCurrentMember,
   mockGetItem,
-  mockGetItemCategories,
   mockGetItemChat,
   mockGetItemFavorites,
   mockGetItemInvitations,
@@ -64,6 +61,7 @@ import {
   mockGetPublishItemInformations,
   mockGetPublishItemsForMember,
   mockGetShortLinksItem,
+  mockGetTagsByItem,
   mockImportH5p,
   mockImportZip,
   mockMoveItems,
@@ -74,7 +72,6 @@ import {
   mockPostAvatar,
   mockPostInvitations,
   mockPostItem,
-  mockPostItemCategory,
   mockPostItemChatMessage,
   mockPostItemFlag,
   mockPostItemLogin,
@@ -88,6 +85,7 @@ import {
   mockPutItemLoginSchema,
   mockRecycleItems,
   mockRejectMembershipRequest,
+  mockRemoveTag,
   mockRequestMembership,
   mockRestoreItems,
   mockSignInRedirection,
@@ -109,7 +107,6 @@ Cypress.Commands.add(
     members = Object.values(MEMBERS),
     currentMember = CURRENT_USER,
     mentions = SAMPLE_MENTIONS,
-    categories = SAMPLE_CATEGORIES,
     itemValidationGroups = [],
     itemPublicationStatus = PublicationStatus.Unpublished,
     membershipRequests = [],
@@ -137,10 +134,6 @@ Cypress.Commands.add(
     postItemThumbnailError = false,
     postAvatarError = false,
     importZipError = false,
-    getCategoriesError = false,
-    getItemCategoriesError = false,
-    postItemCategoryError = false,
-    deleteItemCategoryError = false,
     postInvitationsError = false,
     getItemInvitationsError = false,
     patchInvitationError = false,
@@ -217,8 +210,6 @@ Cypress.Commands.add(
 
     mockSignOut();
 
-    // mockGetItemLogin(items);
-
     mockGetItemLoginSchema(items);
 
     mockGetItemLoginSchemaType(items);
@@ -273,7 +264,6 @@ Cypress.Commands.add(
 
     mockRestoreItems(items, restoreItemsError);
 
-    // mockGetItemThumbnail(items, getItemThumbnailError);
     mockGetItemThumbnailUrl(items, getItemThumbnailError);
 
     mockDeleteItemThumbnail(items, getItemThumbnailError);
@@ -286,13 +276,10 @@ Cypress.Commands.add(
 
     mockImportZip(importZipError);
 
-    mockGetCategories(categories, getCategoriesError);
+    mockGetTagsByItem(items);
 
-    mockGetItemCategories(items, getItemCategoriesError);
-
-    mockPostItemCategory(postItemCategoryError);
-
-    mockDeleteItemCategory(deleteItemCategoryError);
+    mockRemoveTag();
+    mockAddTag();
 
     mockGetItemValidationGroups(itemValidationGroups);
 
