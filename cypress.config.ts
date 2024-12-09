@@ -1,4 +1,4 @@
-import setupCoverage from '@cypress/code-coverage/task';
+import setupCoverage from '@cypress/code-coverage/task.js';
 import { defineConfig } from 'cypress';
 
 const ENV = {
