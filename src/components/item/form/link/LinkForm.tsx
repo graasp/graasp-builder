@@ -149,7 +149,7 @@ export const LinkForm = ({
         item={{
           type: ItemType.LINK,
           settings: {},
-          extra: { [ItemType.LINK]: { url } },
+          extra: { [ItemType.LINK]: { url: normalizeURL(url) } },
         }}
         showIframe
         showButton={false}
