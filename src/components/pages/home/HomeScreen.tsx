@@ -8,10 +8,13 @@ import {
   Button as MuiButton,
   Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 
 import { Button } from '@graasp/ui';
 
+import { NewFolderButton } from '@/components/item/form/folder/NewFolderButton';
 import LoadingScreen from '@/components/layout/LoadingScreen';
 import {
   SelectionContextProvider,
@@ -211,6 +214,8 @@ const HomeScreenContent = ({ searchText }: { searchText: string }) => {
 const HomeScreen = (): JSX.Element => {
   const { t: translateBuilder } = useBuilderTranslation();
   const { data: currentMember } = hooks.useCurrentMember();
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   const itemSearch = useItemSearch();
 
@@ -226,7 +231,12 @@ const HomeScreen = (): JSX.Element => {
             spacing={1}
           >
             {itemSearch.input}
-            <NewItemButton key="newButton" size="medium" />
+            <NewFolderButton type={isMd ? 'button' : 'icon'} />
+            <NewItemButton
+              key="newButton"
+              size="medium"
+              type={isMd ? 'button' : 'icon'}
+            />
           </Stack>
         }
       >

@@ -510,5 +510,6 @@
   "DELETE_GUESTS_MODAL_TITLE_other": "Confirm deletion of {{count}} disabled reader(s)",
   "DELETE_GUESTS_MODAL_CONTENT": "I confirm deleting <1>permanently</1> the following readers and their data:",
   "DELETE_GUESTS_MODAL_DELETE_BUTTON": "Delete permanently",
-  "ADD_TAG_OPTION_BUTTON_TEXT": "Add {{value}}"
+  "ADD_TAG_OPTION_BUTTON_TEXT": "Add {{value}}",
+  "CREATE_FOLDER_BUTTON_TEXT": "Create Folder"
 }
