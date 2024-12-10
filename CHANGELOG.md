@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.48.0](https://github.com/graasp/graasp-builder/compare/v2.47.1...v2.48.0) (2024-12-10)
+
+
+### Features
+
+* show delete item login schema alert to permanently remove data ([#1577](https://github.com/graasp/graasp-builder/issues/1577)) ([71e776b](https://github.com/graasp/graasp-builder/commit/71e776b0a9413a31ca2dd0be6d9985bbdd8c2f05))
+
+
+### Bug Fixes
+
+* color issues and prefix for new player ([#1586](https://github.com/graasp/graasp-builder/issues/1586)) ([d93fa3d](https://github.com/graasp/graasp-builder/commit/d93fa3ded5ee64d24612f309c3923340acdce8bf))
+* link crashes iframe ([#1591](https://github.com/graasp/graasp-builder/issues/1591)) ([bdfa13c](https://github.com/graasp/graasp-builder/commit/bdfa13c9c2e47a02c4a5f18f1717d7b6efb9ded0))
+* remove display name ([#1578](https://github.com/graasp/graasp-builder/issues/1578)) ([f9f701a](https://github.com/graasp/graasp-builder/commit/f9f701aa067a0bd90c3ad4b3abc3ec904d82c8c4))
+
 ## [2.47.1](https://github.com/graasp/graasp-builder/compare/v2.47.0...v2.47.1) (2024-11-20)
 
 
