@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import { Alert, Box, Stack, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import {
   PackedItem,
@@ -43,6 +50,7 @@ import { useSorting } from '../table/useSorting';
 import FolderDescription from './FolderDescription';
 import FolderToolbar from './FolderSelectionToolbar';
 import { useItemSearch } from './ItemSearch';
+import { NewFolderButton } from './form/folder/NewFolderButton';
 import ModeButton from './header/ModeButton';
 
 type Props = {
@@ -132,6 +140,8 @@ const Content = ({
  * Helper component to render typed folder items
  */
 const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
   const { t: translateEnums } = useEnumsTranslation();
   const { itemTypes } = useFilterItemsContext();
   const { t: translateBuilder } = useBuilderTranslation();
@@ -185,12 +195,20 @@ const FolderContent = ({ item }: { item: PackedItem }): JSX.Element => {
           >
             {itemSearch.input}
             {canWrite && (
-              <NewItemButton
-                key="newButton"
-                size="medium"
-                // add new items at the end of the list
-                previousItemId={children[children.length - 1]?.id}
-              />
+              <>
+                <NewFolderButton
+                  type={isMd ? 'button' : 'icon'}
+                  // add new items at the end of the list
+                  previousItemId={children[children.length - 1]?.id}
+                />
+                <NewItemButton
+                  type={isMd ? 'button' : 'icon'}
+                  key="newButton"
+                  size="medium"
+                  // add new items at the end of the list
+                  previousItemId={children[children.length - 1]?.id}
+                />
+              </>
             )}
           </Stack>
         </Stack>
