@@ -7,6 +7,7 @@ import { FolderPlus } from 'lucide-react';
 
 import useModalStatus from '@/components/hooks/useModalStatus';
 import { useBuilderTranslation } from '@/config/i18n';
+import { ADD_FOLDER_BUTTON_CY } from '@/config/selectors';
 import { BUILDER } from '@/langs/constants';
 
 import { FolderCreateForm } from './FolderCreateForm';
@@ -50,9 +51,10 @@ export const NewFolderButton = ({
         </IconButton>
       ) : (
         <Button
+          dataCy={ADD_FOLDER_BUTTON_CY}
           onClick={handleClickOpen}
           color="primary"
-          aria-label="add"
+          aria-label="add-folder"
           startIcon={<FolderPlus />}
           size={size}
           data-umami-event="new-folder-button"

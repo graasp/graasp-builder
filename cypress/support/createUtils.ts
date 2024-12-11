@@ -6,6 +6,7 @@ import {
 } from '@graasp/sdk';
 
 import {
+  ADD_FOLDER_BUTTON_CY,
   CREATE_ITEM_APP_ID,
   CREATE_ITEM_BUTTON_ID,
   CREATE_ITEM_CLOSE_BUTTON_ID,
@@ -16,6 +17,7 @@ import {
   DASHBOARD_UPLOADER_ID,
   H5P_DASHBOARD_UPLOADER_ID,
   ZIP_DASHBOARD_UPLOADER_ID,
+  buildDataCyWrapper,
 } from '../../src/config/selectors';
 import { InternalItemType } from '../../src/config/types';
 import { ZIPInternalItem } from '../fixtures/files';
@@ -43,7 +45,7 @@ export const createFolder = (
   payload: { name?: string; description?: string },
   options?: { confirm?: boolean },
 ): void => {
-  cy.get(`#${CREATE_ITEM_BUTTON_ID}`).click({ force: true });
+  cy.get(buildDataCyWrapper(ADD_FOLDER_BUTTON_CY)).click({ force: true });
   cy.fillFolderModal(payload, options);
 };
 
