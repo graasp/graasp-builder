@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router';
 
 import {
   Box,
@@ -40,10 +41,10 @@ type FolderCreateFormProps = {
 
 export function FolderCreateForm({
   onClose,
-  parentId,
   geolocation,
   previousItemId,
 }: FolderCreateFormProps): JSX.Element {
+  const { itemId: parentId } = useParams();
   const { t: translateBuilder } = useBuilderTranslation();
   const { t: translateCommon } = useCommonTranslation();
   const methods = useForm<Inputs>();
