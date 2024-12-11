@@ -1625,25 +1625,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#tags":
-  version: 5.6.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=735400fdc6ade17e783d24fdd8454567fc745524"
+"@graasp/query-client@npm:5.7.0":
+  version: 5.7.0
+  resolution: "@graasp/query-client@npm:5.7.0"
   dependencies:
-    "@tanstack/react-query": "npm:5.61.0"
-    "@tanstack/react-query-devtools": "npm:5.61.0"
-    axios: "npm:1.7.7"
+    "@tanstack/react-query": "npm:5.61.5"
+    "@tanstack/react-query-devtools": "npm:5.61.5"
+    axios: "npm:1.7.8"
     http-status-codes: "npm:2.3.0"
   peerDependencies:
     "@graasp/sdk": ^4.0.0 || ^5.0.0
     "@graasp/translations": "*"
     react: ^18.0.0
-  checksum: 10/11ab9ee158f6a9e3bf5c4979ee4f3d4c1e3bec65003c1ee971344bb7bb66ecbe63e8c6702c1d479c97c7e8ebc1cba61964aea5d108260a35edf05f6c8c435068
+  checksum: 10/c31a6395da6023332e03b8ee6d950fe7e106ca4e0ca9ce60cd4ecfd737ad12bcebe7ada735ed449120ede430f666f20cc6a026f6174399b0ad736273c8ba0cd0
   languageName: node
   linkType: hard
 
-"@graasp/sdk@github:graasp/graasp-sdk#tag-type-search":
-  version: 5.3.1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=57ec5c2d502c021a9d1584659fe8cdae24343e6b"
+"@graasp/sdk@npm:5.4.0":
+  version: 5.4.0
+  resolution: "@graasp/sdk@npm:5.4.0"
   dependencies:
     "@faker-js/faker": "npm:9.2.0"
     filesize: "npm:10.1.6"
@@ -1651,7 +1651,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3 || ^4.0.0
     uuid: ^9 || ^10 || ^11.0.0
-  checksum: 10/0acfc52304d99d8a92f186d4f3750d2f63b9df831174c406f9c6e9779a39d3698cd89bac8722d36d2b65f07a3c08db3eb16ad4d90c5cf8bc071625e29eefc687
+  checksum: 10/787def776e690aa3a07438c907e6d5adb6c016db243e52fdc1511e35d057380d2d51d98d28bfef5f9f6101987f85c4cf43ba89a0d4d56f970b3801b4b8f2acd7
   languageName: node
   linkType: hard
 
@@ -1666,12 +1666,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations#tag-categories":
-  version: 1.42.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=c27f452ab5396cb1eebbe052c7ac56d4e55d6a9b"
+"@graasp/translations@npm:1.43.0":
+  version: 1.43.0
+  resolution: "@graasp/translations@npm:1.43.0"
   peerDependencies:
     i18next: ^23.8.1
-  checksum: 10/27ef0c8209fe27b67665c7c2b43ad09adb723b44d70dca89bca2fef6986367f20943c5236dcd3b02f11c89508dd382cf202ee695fab87fa34ee7ba11f5dfbdb2
+  checksum: 10/5672a9a9aec4cc6fe794a93c22eaaac8af5a7ca96227afe32e8a4cdce7741e0f05c456c0b52f3288ef71040285fa39f938905e12e69fed800e62e98353743854
   languageName: node
   linkType: hard
 
@@ -2525,40 +2525,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.60.6":
-  version: 5.60.6
-  resolution: "@tanstack/query-core@npm:5.60.6"
-  checksum: 10/a87613d85b3a280f2fef69037dd0ad512052d49b8dc979ed289ee538452d331926a720678bbd3b4485a8b38d5baf65c42869179f2fdeefa3f7b6dda04e878e56
+"@tanstack/query-core@npm:5.61.5":
+  version: 5.61.5
+  resolution: "@tanstack/query-core@npm:5.61.5"
+  checksum: 10/e84a9dbd93cf5fa7abe7d4ba607e054cf15621194e1ec0145e05b826c0a27123947f0cc937cafe6254fb2289c0013b2283796f8c3844c0a19ed6082fb70a6632
   languageName: node
   linkType: hard
 
-"@tanstack/query-devtools@npm:5.59.20":
-  version: 5.59.20
-  resolution: "@tanstack/query-devtools@npm:5.59.20"
-  checksum: 10/0bb2995337d78910c7677f780af42cd4285b39d618cd7876e24ec16243783d4cfe9e4d067d210d5337aefaad0a21928c5e4cb30fb4c08a09521625fcfe9c14d4
+"@tanstack/query-devtools@npm:5.61.4":
+  version: 5.61.4
+  resolution: "@tanstack/query-devtools@npm:5.61.4"
+  checksum: 10/5267732b37781865c24241b9ffdd4d84d04d4e193f29fa9f0220967dcc738a3be25edcd45784fbeed340012200742a18bae25ce34f13190cc8dcb65bbee076ea
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-devtools@npm:5.61.0":
-  version: 5.61.0
-  resolution: "@tanstack/react-query-devtools@npm:5.61.0"
+"@tanstack/react-query-devtools@npm:5.61.5":
+  version: 5.61.5
+  resolution: "@tanstack/react-query-devtools@npm:5.61.5"
   dependencies:
-    "@tanstack/query-devtools": "npm:5.59.20"
+    "@tanstack/query-devtools": "npm:5.61.4"
   peerDependencies:
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.5
     react: ^18 || ^19
-  checksum: 10/ac4019ad58a04e21ef8fd2f5ab1e33791e3961979c25538b51a8597e9b2e448326f2d15e407bb89cb53a7f566f9bd15036dcd4573777c4bec428b79e8acdeb96
+  checksum: 10/1a6d34bd02a882aa98c6839e8d8b5859c498a82087f38b826956822c01054e76d690b89d5c36df102c1e62bc12f77c276856ed2dfc526f68f5684ad6d5d82a4e
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:5.61.0":
-  version: 5.61.0
-  resolution: "@tanstack/react-query@npm:5.61.0"
+"@tanstack/react-query@npm:5.61.5":
+  version: 5.61.5
+  resolution: "@tanstack/react-query@npm:5.61.5"
   dependencies:
-    "@tanstack/query-core": "npm:5.60.6"
+    "@tanstack/query-core": "npm:5.61.5"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/e98d1396cd157626f29fb0d0d10c75dbdde6e2efa55463540c9d8e33b58ec4b72eeb58b7d2eea6e625a8316235777f128222adeb10533ddfade77b23ec209872
+  checksum: 10/ae2108b03cc4b02c0dd08ddab44a157cdfa9949ccf5d4f4f7aa2d11ff345b3bc7a405138322ad99a538f476a77b2a188eb199119806df507cc988f09e8b34535
   languageName: node
   linkType: hard
 
@@ -3676,6 +3676,17 @@ __metadata:
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
   checksum: 10/7f875ea13b9298cd7b40fd09985209f7a38d38321f1118c701520939de2f113c4ba137832fe8e3f811f99a38e12c8225481011023209a77b0c0641270e20cde1
+  languageName: node
+  linkType: hard
+
+"axios@npm:1.7.8":
+  version: 1.7.8
+  resolution: "axios@npm:1.7.8"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/7ddcde188041ac55090186254b4025eb2af842be3cf615ce45393fd7f543c1eab0ad2fdd2017a5f6190695e3ecea73ee5e9c37f204854aec2698f9579046efdf
   languageName: node
   linkType: hard
 
@@ -6401,10 +6412,10 @@ __metadata:
     "@emotion/styled": "npm:11.13.0"
     "@graasp/chatbox": "npm:3.3.1"
     "@graasp/map": "npm:1.19.0"
-    "@graasp/query-client": "github:graasp/graasp-query-client#tags"
-    "@graasp/sdk": "github:graasp/graasp-sdk#tag-type-search"
+    "@graasp/query-client": "npm:5.7.0"
+    "@graasp/sdk": "npm:5.4.0"
     "@graasp/stylis-plugin-rtl": "npm:2.2.0"
-    "@graasp/translations": "github:graasp/graasp-translations#tag-categories"
+    "@graasp/translations": "npm:1.43.0"
     "@graasp/ui": "npm:5.4.4"
     "@mui/icons-material": "npm:6.1.7"
     "@mui/lab": "npm:6.0.0-beta.15"
