@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.49.0](https://github.com/graasp/graasp-builder/compare/v2.48.0...v2.49.0) (2024-12-11)
+
+
+### Features
+
+* change categories with tags ([#1587](https://github.com/graasp/graasp-builder/issues/1587)) ([4bbdda8](https://github.com/graasp/graasp-builder/commit/4bbdda842fde7ac90173891cadb0c3e3c8014bb2))
+
 ## [2.48.0](https://github.com/graasp/graasp-builder/compare/v2.47.1...v2.48.0) (2024-12-10)
 
 
