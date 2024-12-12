@@ -230,7 +230,7 @@
   "LINK_DEFAULT_NAME": "Mi enlace",
   "MOVE_BUTTON": "Mover",
   "MOVE_BUTTON_zero": "Mover",
-  "MOVE_BUTTON_one": "Mover a {{nombre}}",
+  "MOVE_BUTTON_one": "Mover a {{name}}",
   "MOVE_ITEM_MODAL_TITLE": "¿A dónde quieres mover este artículo?",
   "MOVE_ITEM_MODAL_TITLE_zero": "¿A dónde quieres mudar a {{name}}?",
   "MOVE_ITEM_MODAL_TITLE_one": "¿A dónde quieres mudar a {{name}} y a otro más?",

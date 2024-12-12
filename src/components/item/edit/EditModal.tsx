@@ -1,4 +1,4 @@
-import { ComponentType as CT, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Dialog, DialogTitle } from '@mui/material';
@@ -15,12 +15,6 @@ import { DocumentEditForm } from '../form/document/DocumentEditForm';
 import FileForm from '../form/file/FileForm';
 import { FolderEditForm } from '../form/folder/FolderEditForm';
 import EditShortcutForm from '../shortcut/EditShortcutForm';
-
-export interface EditModalContentPropType {
-  item?: DiscriminatedItem;
-  setChanges: (payload: Partial<DiscriminatedItem>) => void;
-}
-export type EditModalContentType = CT<EditModalContentPropType>;
 
 type Props = {
   item: DiscriminatedItem;

@@ -6,7 +6,6 @@ import {
   ShortLink,
 } from '@graasp/sdk';
 
-export const SHARED_ITEMS_ROOT_CONTAINER = 'sharedItemsPageRootContainer';
 export const RECYCLED_ITEMS_ROOT_CONTAINER = 'recycledItemsPageRootContainer';
 export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const ITEM_DELETE_BUTTON_CLASS = 'itemDeleteButton';
@@ -66,17 +65,13 @@ export const CREATE_ITEM_FILE_ID = 'createItemFile';
 export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';
 export const DASHBOARD_UPLOADER_ID = 'dashboardUploader';
 export const CREATE_ITEM_CLOSE_BUTTON_ID = 'createItemCloseButton';
-export const USER_MENU_SIGN_OUT_OPTION_ID = 'userMenuSignOutOption';
-export const ITEM_LOGIN_SCREEN_ID = 'itemLoginScreen';
 export const ITEM_LOGIN_SIGN_IN_USERNAME_ID = 'itemLoginSignInUsername';
 export const ITEM_LOGIN_SIGN_IN_PASSWORD_ID = 'itemLoginSignInPassword';
 export const ITEM_LOGIN_SIGN_IN_BUTTON_ID = 'itemLoginSignInButton';
-export const ITEM_SCREEN_MAIN_ID = 'itemScreenMain';
 export const ITEM_LOGIN_SCREEN_FORBIDDEN_ID = 'itemLoginScreenForbidden';
 export const ITEM_LOGIN_SIGN_IN_MODE_ID = 'itemLoginSignInMode';
 export const ITEM_MAIN_CLASS = 'itemMain';
 export const HOME_ERROR_ALERT_ID = 'homeErrorAlert';
-export const SHARED_ITEMS_ERROR_ALERT_ID = 'sharedItemsErrorAlert';
 export const BOOKMARKED_ITEMS_ERROR_ALERT_ID = 'bookmarkedItemsErrorAlert';
 export const PUBLISHED_ITEMS_ERROR_ALERT_ID = 'publishedItemsErrorAlert';
 export const RECYCLED_ITEMS_ERROR_ALERT_ID = 'recycledItemsErrorAlert';
@@ -141,11 +136,6 @@ export const buildPlayerButtonId = (id: string): string => `playerButton-${id}`;
 export const buildEditButtonId = (id: string): string => `editButton-${id}`;
 export const buildSettingsButtonId = (id: string): string =>
   `settingsButton-${id}`;
-export const PUBLIC_SETTING_SWITCH_ID = 'publicSettingSwitch';
-export const INVITE_ITEM_EMAIL_INPUT_ID = 'inviteItemEmailInput';
-export const INVITE_ITEM_BUTTON_ID = 'inviteItemButton';
-export const SHARE_ITEM_DIALOG_ID = 'shareItemDialog';
-export const SHARE_ITEM_DIALOG_LINK_SELECT_ID = 'shareItemDialogLinkSelect';
 export const SHARE_ITEM_QR_BTN_ID = 'shareItemQRBtn';
 export const SHARE_ITEM_QR_DIALOG_ID = 'shareItemQRDialog';
 export const ACCESS_INDICATION_ID = 'accessIndication';
@@ -180,8 +170,6 @@ export const ITEMS_TABLE_RESTORE_SELECTED_ITEMS_ID =
 export const FOLDER_FORM_DESCRIPTION_ID = 'folderFormDescription';
 export const buildNameCellRendererId = (id: string): string =>
   `nameCellRenderer-${id}`;
-export const ITEM_CARD_MEDIA_CLASSNAME = 'itemCardMedia';
-export const ITEM_CARD_HEADER_CLASSNAME = 'itemCardHeader';
 export const THUMBNAIL_SETTING_UPLOAD_BUTTON_ID =
   'thumbnailSettingUploadButton';
 export const CLEAR_CHAT_SETTING_ID = 'clearChatSettingButton';
