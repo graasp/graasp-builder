@@ -505,5 +505,11 @@
   "LINK_INVALID_MESSAGE": "Le lien est invalide.",
   "DOCUMENT_EMPTY_MESSAGE": "Le contenu ne peut pas être vide.",
   "DELETE_GUESTS_ALERT_TEXT": "L'accès de certains lecteurs est désactivé car le mode pseudonymisé a été désactivé. Cliquez sur « Supprimer » pour supprimer définitivement le(s) lecteur(s) désactivé(s) et leurs données.",
+  "DELETE_ITEM_LOGIN_SCHEMA_ALERT_TEXT": "Le mode pseudonymisé a été désactivé. Cliquez sur « Supprimer » pour le supprimer complètement.",
+  "DELETE_GUESTS_MODAL_TITLE_one": "Confirmer la suppression d'un lecteur désactivé",
+  "DELETE_GUESTS_MODAL_TITLE_other": "Confirmer la suppression de {{count}} lecteur(s) désactivé(s)",
+  "DELETE_GUESTS_MODAL_CONTENT": "Je confirme la suppression <1>définitive</1> des lecteurs suivants et de leurs données :",
+  "DELETE_GUESTS_MODAL_DELETE_BUTTON": "Supprimer définitivement",
+  "ADD_TAG_OPTION_BUTTON_TEXT": "Ajouter {{value}}",
   "CREATE_FOLDER_BUTTON_TEXT": "Nouveau Dossier"
 }
