@@ -95,7 +95,7 @@ describe('Create Document', () => {
     );
   });
 
-  it.only('create document with flavor', () => {
+  it('create document with flavor', () => {
     cy.setUpApi();
     cy.visit(HOME_PATH);
 
