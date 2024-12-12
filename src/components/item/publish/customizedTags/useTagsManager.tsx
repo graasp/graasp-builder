@@ -77,7 +77,7 @@ export const useTagsManager = ({ itemId }: Props): UseMultiSelectChipInput => {
   };
 
   const addValue = (tag: Pick<Tag, 'category' | 'name'>) => {
-    if (valueIsValid(currentValue) && !valueExist(tag)) {
+    if (valueIsValid(tag.name) && !valueExist(tag)) {
       addTag({ itemId, tag });
 
       resetCurrentValue();

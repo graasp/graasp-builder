@@ -25,11 +25,13 @@ import useTagsManager from '../item/publish/customizedTags/useTagsManager';
 type Props = {
   itemId: DiscriminatedItem['id'];
   tagCategory: TagCategory;
+  helpertext?: string;
 };
 
 export const MultiSelectTagChipInput = ({
   itemId,
   tagCategory,
+  helpertext,
 }: Props): JSX.Element | null => {
   const { t } = useBuilderTranslation();
   const { t: translateEnums } = useEnumsTranslation();
@@ -89,6 +91,7 @@ export const MultiSelectTagChipInput = ({
           value: currentValue,
         },
       }}
+      helperText={helpertext}
       sx={{
         // Avoid to resize the textfield on hover when next tag will be on new line.
         '& .MuiAutocomplete-input': {

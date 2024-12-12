@@ -511,5 +511,9 @@
   "DELETE_GUESTS_MODAL_CONTENT": "I confirm deleting <1>permanently</1> the following readers and their data:",
   "DELETE_GUESTS_MODAL_DELETE_BUTTON": "Delete permanently",
   "ADD_TAG_OPTION_BUTTON_TEXT": "Add {{value}}",
-  "CREATE_FOLDER_BUTTON_TEXT": "Create Folder"
+  "CREATE_FOLDER_BUTTON_TEXT": "Create Folder",
+  "TAGS_DESCRITPION": "Tags are pieces of data that you can attach to your items. They describe the subject, context, project, or intended audience of your items. They help other users to find your content when they search in the library. You can find out more about tags in <1>the documentation</1>.",
+  "TAGS_DISCIPLINE_PLACEHOLDER": "Example: mathematics, history, biology",
+  "TAGS_LEVEL_PLACEHOLDER": "Example: elementary, high school, undergraduate",
+  "TAGS_RESOURCE_TYPE_PLACEHOLDER": "Example: article, video, quiz"
 }

@@ -1,5 +1,7 @@
+import { Trans } from 'react-i18next';
+
 import EditIcon from '@mui/icons-material/Edit';
-import { Chip, Stack } from '@mui/material';
+import { Chip, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem, TagCategory } from '@graasp/sdk';
 
@@ -44,16 +46,26 @@ export const CustomizedTags = ({ item }: Props): JSX.Element => {
         isOpen={isOpen}
         modalContent={
           <Stack gap={2}>
+            <Typography variant="body1">
+              <Trans
+                i18nKey={BUILDER.TAGS_DESCRITPION}
+                t={t}
+                components={{ 1: <a href="graasp.org" aria-label="wef" /> }}
+              />
+            </Typography>
             <MultiSelectTagChipInput
               itemId={item.id}
               tagCategory={TagCategory.Discipline}
+              helpertext={BUILDER.TAGS_DISCIPLINE_PLACEHOLDER}
             />
             <MultiSelectTagChipInput
               itemId={item.id}
+              helpertext={BUILDER.TAGS_LEVEL_PLACEHOLDER}
               tagCategory={TagCategory.Level}
             />
             <MultiSelectTagChipInput
               itemId={item.id}
+              helpertext={t(BUILDER.TAGS_RESOURCE_TYPE_PLACEHOLDER)}
               tagCategory={TagCategory.ResourceType}
             />
           </Stack>
