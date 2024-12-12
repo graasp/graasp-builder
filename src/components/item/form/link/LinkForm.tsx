@@ -125,7 +125,7 @@ export const LinkForm = ({
         type: ItemType.LINK,
         description: data.description,
         extra: buildLinkExtra({
-          url: data.url,
+          url: normalizeURL(data.url),
           description: linkData?.description,
           thumbnails: linkData?.thumbnails,
           icons: linkData?.icons,

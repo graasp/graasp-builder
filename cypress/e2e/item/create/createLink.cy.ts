@@ -1,4 +1,4 @@
-import { PackedFolderItemFactory } from '@graasp/sdk';
+import { ItemType, PackedFolderItemFactory } from '@graasp/sdk';
 
 import { HOME_PATH, buildItemPath } from '../../../../src/config/paths';
 import {
@@ -49,10 +49,10 @@ describe('Create Link', () => {
     createLink({ url: 'graasp.org' });
     cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
 
-    cy.wait('@postItem').then(() => {
+    cy.wait('@postItem').then(({ request: { body } }) => {
       // check item is created and displayed
       cy.wait(CREATE_ITEM_PAUSE);
-
+      expect(body.extra[ItemType.LINK].url).to.contain('http');
       // expect update
       cy.wait('@getAccessibleItems');
     });

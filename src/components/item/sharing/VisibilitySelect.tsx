@@ -1,4 +1,4 @@
-import { MenuItem, Select, Typography } from '@mui/material';
+import { Alert, MenuItem, Select, Stack } from '@mui/material';
 
 import { PackedItem } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
@@ -75,42 +75,44 @@ const VisibilitySelect = ({ item, edit }: Props): JSX.Element | null => {
 
   return (
     <>
-      {isModalOpen && (
-        <UpdateVisibilityModal
-          isOpen={isModalOpen}
-          newVisibility={pendingVisibility}
-          onClose={onCloseModal}
-          onValidate={onValidateModal}
-        />
-      )}
-      {edit && (
-        <Select
-          value={visibility}
-          onChange={(e) => onVisibilityChange(e.target.value)}
-          disabled={isDisabled}
-          id={SHARE_ITEM_VISIBILITY_SELECT_ID}
-          sx={{ mr: 1 }}
-        >
-          <MenuItem value={SETTINGS.ITEM_PRIVATE.name}>
-            {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_LABEL)}
-          </MenuItem>
-          <MenuItem value={SETTINGS.ITEM_LOGIN.name}>
-            {translateBuilder(
-              BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL,
-            )}
-          </MenuItem>
-          <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>
-            {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL)}
-          </MenuItem>
-        </Select>
-      )}
-      {renderVisiblityIndication()}
+      <Stack direction="row" alignItems="center">
+        {isModalOpen && (
+          <UpdateVisibilityModal
+            isOpen={isModalOpen}
+            newVisibility={pendingVisibility}
+            onClose={onCloseModal}
+            onValidate={onValidateModal}
+          />
+        )}
+        {edit && (
+          <Select
+            value={visibility}
+            onChange={(e) => onVisibilityChange(e.target.value)}
+            disabled={isDisabled}
+            id={SHARE_ITEM_VISIBILITY_SELECT_ID}
+            sx={{ mr: 1 }}
+          >
+            <MenuItem value={SETTINGS.ITEM_PRIVATE.name}>
+              {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_PRIVATE_LABEL)}
+            </MenuItem>
+            <MenuItem value={SETTINGS.ITEM_LOGIN.name}>
+              {translateBuilder(
+                BUILDER.ITEM_SETTINGS_VISIBILITY_PSEUDONYMIZED_LABEL,
+              )}
+            </MenuItem>
+            <MenuItem value={SETTINGS.ITEM_PUBLIC.name}>
+              {translateBuilder(BUILDER.ITEM_SETTINGS_VISIBILITY_PUBLIC_LABEL)}
+            </MenuItem>
+          </Select>
+        )}
+        {renderVisiblityIndication()}
+      </Stack>
       {isDisabled && (
-        <Typography variant="body2">
+        <Alert severity="info">
           {translateBuilder(
             BUILDER.ITEM_SETTINGS_VISIBILITY_CANNOT_EDIT_PARENT_MESSAGE,
           )}
-        </Typography>
+        </Alert>
       )}
     </>
   );

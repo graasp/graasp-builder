@@ -3,6 +3,7 @@ import { DiscriminatedItem, getAppExtra, getDocumentExtra } from '@graasp/sdk';
 import {
   CUSTOM_APP_CYPRESS_ID,
   CUSTOM_APP_URL_ID,
+  FLAVOR_SELECT_ID,
   FOLDER_FORM_DESCRIPTION_ID,
   HOME_MODAL_ITEM_ID,
   ITEM_FORM_APP_URL_ID,
@@ -121,6 +122,11 @@ Cypress.Commands.add(
   ({ name = '', extra }, { confirm = true } = {}) => {
     cy.fillBaseItemModal({ name }, { confirm: false });
 
+    if (extra.document.flavor) {
+      cy.get(`#${FLAVOR_SELECT_ID} div`).click();
+      cy.get(`li[data-value="${extra.document.flavor}"]`).click();
+    }
+
     const content =
       // first select all the text and then remove it to have a clear field, then type new text
       `{selectall}{backspace}${getDocumentExtra(extra)?.content}`;
@@ -133,7 +139,7 @@ Cypress.Commands.add(
     }
 
     if (confirm) {
-      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).click();
+      cy.get(`#${ITEM_FORM_CONFIRM_BUTTON_ID}`).scrollIntoView().click();
     }
   },
 );

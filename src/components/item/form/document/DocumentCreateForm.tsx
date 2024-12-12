@@ -55,8 +55,8 @@ export function DocumentCreateForm({
     defaultValues: { flavor: DocumentItemExtraFlavor.None },
   });
   const {
-    reset,
     handleSubmit,
+    setValue,
     formState: { isValid, isSubmitted },
   } = methods;
 
@@ -91,7 +91,9 @@ export function DocumentCreateForm({
           <DocumentFlavorSelect />
           <DocumentContentForm
             documentItemId={ITEM_FORM_DOCUMENT_TEXT_ID}
-            onChange={(v) => reset({ content: v })}
+            onChange={(v) => {
+              setValue('content', v);
+            }}
             placeholder={translateBuilder(BUILDER.TEXT_EDITOR_PLACEHOLDER)}
           />
         </DialogContent>

@@ -20,7 +20,7 @@ type MoveButtonProps = {
 };
 
 const MoveButton = ({
-  color = 'primary',
+  color,
   id,
   type = ActionButton.ICON_BUTTON,
   onClick,

@@ -61,9 +61,7 @@ const ItemSharingTab = (): JSX.Element => {
                   )}
                 </Alert>
               ) : (
-                <Stack direction="row" alignItems="center">
-                  <VisibilitySelect item={item} edit={canAdmin} />
-                </Stack>
+                <VisibilitySelect item={item} edit={canAdmin} />
               )}
               <HideSettingCheckbox item={item} />
             </Stack>
