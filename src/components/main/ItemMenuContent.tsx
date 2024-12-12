@@ -114,6 +114,7 @@ const ItemMenuContent = ({ item }: Props): JSX.Element | null => {
     canAdmin ? (
       <MoveButton
         key="move"
+        color="inherit"
         type={ActionButton.MENU_ITEM}
         onClick={() => {
           openMoveModal();

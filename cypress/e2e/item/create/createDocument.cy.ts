@@ -1,4 +1,5 @@
 import {
+  DocumentItemExtraFlavor,
   DocumentItemFactory,
   ItemType,
   PackedFolderItemFactory,
@@ -92,5 +93,28 @@ describe('Create Document', () => {
       'disabled',
       true,
     );
+  });
+
+  it.only('create document with flavor', () => {
+    cy.setUpApi();
+    cy.visit(HOME_PATH);
+
+    const documentToCreate = DocumentItemFactory({
+      name: 'document',
+      extra: {
+        [ItemType.DOCUMENT]: {
+          content: '<h1>Some Title</h1>',
+          flavor: DocumentItemExtraFlavor.Error,
+        },
+      },
+    });
+    createDocument(documentToCreate);
+
+    cy.wait('@postItem').then(({ request: { body } }) => {
+      expect(body.extra.document.flavor).to.eq(
+        documentToCreate.extra.document.flavor,
+      );
+      expect(body.extra.document.content).to.contain('Some Title');
+    });
   });
 });
