@@ -53,7 +53,7 @@ const NewItemModal = ({
   const { t: translateCommon } = useCommonTranslation();
 
   const [selectedItemType, setSelectedItemType] = useState<NewItemTabType>(
-    ItemType.FOLDER,
+    ItemType.LOCAL_FILE,
   );
 
   const { itemId: parentId } = useParams();

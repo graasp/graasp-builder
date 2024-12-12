@@ -60,7 +60,7 @@ export const buildFileItemId = (id: string): string => `file-${id}`;
 export const ITEM_PANEL_ID = 'itemPanelMetadata';
 export const ITEM_PANEL_NAME_ID = 'itemPanelName';
 export const ITEM_PANEL_TABLE_ID = 'itemPanelTable';
-export const CREATE_ITEM_FOLDER_ID = 'createItemSpace';
+export const CREATE_ITEM_FOLDER_ID = 'createItemFolder';
 export const CREATE_ITEM_LINK_ID = 'createItemLink';
 export const CREATE_ITEM_FILE_ID = 'createItemFile';
 export const ITEM_FORM_LINK_INPUT_ID = 'itemFormLinkInput';
@@ -452,3 +452,4 @@ export const MEMBERSHIP_REQUEST_REJECT_BUTTON_SELECTOR =
 export const ENROLL_BUTTON_SELECTOR = 'enrollButton';
 export const VISIBILITY_HIDDEN_ALERT_ID = 'visibilityHiddenAlert';
 export const SHARE_ITEM_CANCEL_BUTTON_CY = 'shareItemCancelButton';
+export const ADD_FOLDER_BUTTON_CY = 'addFolder';
