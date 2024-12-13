@@ -226,6 +226,7 @@
   "PUBLIC_VISIBILITY_MODAL_VALIDATE_BUTTON": "Hazlo público",
   "UPDATE_VISIBILITY_MODAL_TITLE": "Cambiar la visibilidad del elemento publicado",
   "UPDATE_VISIBILITY_MODAL_DESCRIPTION": "Este elemento está actualmente publicado en la biblioteca Graasp. Si cambia su visibilidad, el artículo dejará de publicarse y ya no estará disponible en la biblioteca. ¿Te gustaria continuar?",
+  "UPDATE_VISIBILITY_MODAL_VALIDATE_BUTTON": "Hazlo {{visibility}}",
   "LINK_DEFAULT_NAME": "Mi enlace",
   "MOVE_BUTTON": "Mover",
   "MOVE_BUTTON_zero": "Mover",
@@ -388,6 +389,7 @@
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "También puede encontrar los elementos de esta página en ''My Graasp''. Esta página ''Elementos compartidos'' dejará de estar disponible pronto.",
   "ITEM_MENU_DUPLICATE_MENU_ITEM": "Duplicar",
   "EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM": "Este elemento no contiene ninguna carpeta.",
+  "TO_FOLDER": "a {{name}}",
   "ROOT": "Raíz",
   "ARIA_OPEN_DRAWER": "cajón abierto",
   "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Artículos recientes",
@@ -508,5 +510,6 @@
   "DELETE_GUESTS_MODAL_TITLE_other": "Confirmar la eliminación de {{count}} lectores deshabilitados",
   "DELETE_GUESTS_MODAL_CONTENT": "Confirmo la eliminación <1>permanente</1> de los siguientes lectores y sus datos:",
   "DELETE_GUESTS_MODAL_DELETE_BUTTON": "Eliminar permanentemente",
+  "ADD_TAG_OPTION_BUTTON_TEXT": "Añadir {{value}}",
   "CREATE_FOLDER_BUTTON_TEXT": "Crear carpeta"
 }
