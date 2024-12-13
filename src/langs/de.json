@@ -389,6 +389,7 @@
   "You can also find the items of this page in ''My Graasp''. This page will be unavailable soon.": "Die Artikel dieser Seite finden Sie auch in „Mein Graasp“. Diese Seite „Geteilte Elemente“ wird bald nicht mehr verfügbar sein.",
   "ITEM_MENU_DUPLICATE_MENU_ITEM": "Duplizieren",
   "EMPTY_FOLDER_CHILDREN_FOR_THIS_ITEM": "Dieses Element enthält keinen Ordner.",
+  "TO_FOLDER": "zu {{name}}",
   "ROOT": "Wurzel",
   "ARIA_OPEN_DRAWER": "offene Schublade",
   "ITEM_SELECTION_NAVIGATION_RECENT_ITEMS": "Letzte Artikel",
