@@ -304,7 +304,7 @@
   "SHARE_ITEM_FORM_ALREADY_HAVE_MEMBERSHIP_MESSAGE": "Dieser Benutzer hat bereits Zugriff auf dieses Element.",
   "SHARE_ITEM_FORM_INVITATION_EMPTY_EMAIL_MESSAGE": "Die Mail darf nicht leer sein",
   "SHARE_ITEM_FORM_INVITATION_INVALID_EMAIL_MESSAGE": "Diese E-Mail ist ungültig",
-  "SHARE_ITEM_FORM_TITLE": "Teilen \"{{name}}\"",
+  "SHARE_ITEM_FORM_TITLE": "\"{{name}}\" teilen",
   "SHARE_ITEM_FORM_INVITATION_TOOLTIP": "Nicht registrierte Nutzer erhalten einen persönlichen Link zur Registrierung auf der Plattform.",
   "SHARE_ITEM_LINK_COPY_TOOLTIP": "In die Zwischenablage kopieren",
   "SHARE_ITEM_LINK_QR_CODE": "QR-Code generieren",
