@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.48.1](https://github.com/graasp/graasp-builder/compare/v2.48.0...v2.48.1) (2024-12-13)
+
+
+### Features
+
+* add arabic translations ([#1605](https://github.com/graasp/graasp-builder/issues/1605)) ([1f4e473](https://github.com/graasp/graasp-builder/commit/1f4e4738d2123787085a7fd04bd104cd97120d33))
+* add italian translations ([#1602](https://github.com/graasp/graasp-builder/issues/1602)) ([5ea0af9](https://github.com/graasp/graasp-builder/commit/5ea0af963100bc4b9a682663506a586fabe6a962))
+* add new folder button ([#1593](https://github.com/graasp/graasp-builder/issues/1593)) ([f267fef](https://github.com/graasp/graasp-builder/commit/f267fef8489efe0a2a3f83dc0746c8184e511eee))
+* add spanish translations ([#1604](https://github.com/graasp/graasp-builder/issues/1604)) ([3c5bc1f](https://github.com/graasp/graasp-builder/commit/3c5bc1fdab2e389f05790ec5cd10ad33b7f65eb6))
+* change categories with tags ([#1587](https://github.com/graasp/graasp-builder/issues/1587)) ([4bbdda8](https://github.com/graasp/graasp-builder/commit/4bbdda842fde7ac90173891cadb0c3e3c8014bb2))
+* update french translations ([#1601](https://github.com/graasp/graasp-builder/issues/1601)) ([7b25a4e](https://github.com/graasp/graasp-builder/commit/7b25a4e5047dbfd4d750ff740dac697e0f401af1))
+
+
+### Bug Fixes
+
+* normalize url on create, fix document flavor ([#1597](https://github.com/graasp/graasp-builder/issues/1597)) ([d65b49c](https://github.com/graasp/graasp-builder/commit/d65b49c178251ccc416025e0da77cc54ef023820))
+
 ## [2.48.0](https://github.com/graasp/graasp-builder/compare/v2.47.1...v2.48.0) (2024-12-10)
 
 
