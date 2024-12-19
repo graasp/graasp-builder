@@ -6,6 +6,7 @@ import { Chip, Stack, Typography } from '@mui/material';
 import { DiscriminatedItem, TagCategory } from '@graasp/sdk';
 
 import { MultiSelectTagChipInput } from '@/components/input/MultiSelectTagChipInput';
+import { TAGS_DOCUMENTATION } from '@/config/constants';
 import { useBuilderTranslation } from '@/config/i18n';
 import {
   ITEM_TAGS_OPEN_MODAL_BUTTON_CY,
@@ -46,11 +47,18 @@ export const CustomizedTags = ({ item }: Props): JSX.Element => {
         isOpen={isOpen}
         modalContent={
           <Stack gap={2}>
-            <Typography variant="body1">
+            <Typography>
               <Trans
                 i18nKey={BUILDER.TAGS_DESCRITPION}
                 t={t}
-                components={{ 1: <a href="graasp.org" aria-label="wef" /> }}
+                components={{
+                  1: (
+                    <a
+                      href={TAGS_DOCUMENTATION}
+                      aria-label="tags documentation"
+                    />
+                  ),
+                }}
               />
             </Typography>
             <MultiSelectTagChipInput

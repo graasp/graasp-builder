@@ -512,8 +512,8 @@
   "DELETE_GUESTS_MODAL_DELETE_BUTTON": "Supprimer définitivement",
   "ADD_TAG_OPTION_BUTTON_TEXT": "Ajouter {{value}}",
   "CREATE_FOLDER_BUTTON_TEXT": "Nouveau Dossier",
-  "TAGS_DESCRITPION": "Les tags sont des bouts d'informations qui peuvent être attachés aux éléments. Ils permettent de décrire le sujet, contexte, projet, ou l'audience attendue pour leurs éléments. Ils aident les autres utilisateurs à trouver votre contenu quand ils cherchent dans la librarie. Vous pouvez en apprendre plus sur les tags dans <1>la documentation</1>.",
-  "TAGS_DISCIPLINE_PLACEHOLDER": "Exemple: mathematics, history, biology",
-  "TAGS_LEVEL_PLACEHOLDER": "Exemple: elementary, high school, undergraduate",
-  "TAGS_RESOURCE_TYPE_PLACEHOLDER": "Exemple: article, video, quiz"
+  "TAGS_DESCRITPION": "Les tags sont des mots-clés ou des termes qui peuvent être attachés aux éléments. Ils permettent de décrire le sujet, contexte, projet, ou l'audience de votre collection. Ils aident les autres utilisateurs à trouver votre contenu quand ils cherchent dans la librairie, si votre collection est publiée. Vous pouvez en apprendre plus sur les tags dans <1>la documentation</1>.",
+  "TAGS_DISCIPLINE_PLACEHOLDER": "Exemple: mathématiques, histoire, biologie",
+  "TAGS_LEVEL_PLACEHOLDER": "Exemple: école primaire, université, école préparatoire",
+  "TAGS_RESOURCE_TYPE_PLACEHOLDER": "Exemple: article, vidéo, quiz"
 }
