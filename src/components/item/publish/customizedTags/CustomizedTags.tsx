@@ -1,9 +1,12 @@
+import { Trans } from 'react-i18next';
+
 import EditIcon from '@mui/icons-material/Edit';
-import { Chip, Stack } from '@mui/material';
+import { Chip, Stack, Typography } from '@mui/material';
 
 import { DiscriminatedItem, TagCategory } from '@graasp/sdk';
 
 import { MultiSelectTagChipInput } from '@/components/input/MultiSelectTagChipInput';
+import { TAGS_DOCUMENTATION } from '@/config/constants';
 import { useBuilderTranslation } from '@/config/i18n';
 import {
   ITEM_TAGS_OPEN_MODAL_BUTTON_CY,
@@ -44,16 +47,33 @@ export const CustomizedTags = ({ item }: Props): JSX.Element => {
         isOpen={isOpen}
         modalContent={
           <Stack gap={2}>
+            <Typography>
+              <Trans
+                i18nKey={BUILDER.TAGS_DESCRITPION}
+                t={t}
+                components={{
+                  1: (
+                    <a
+                      href={TAGS_DOCUMENTATION}
+                      aria-label="tags documentation"
+                    />
+                  ),
+                }}
+              />
+            </Typography>
             <MultiSelectTagChipInput
               itemId={item.id}
               tagCategory={TagCategory.Discipline}
+              helpertext={BUILDER.TAGS_DISCIPLINE_PLACEHOLDER}
             />
             <MultiSelectTagChipInput
               itemId={item.id}
+              helpertext={BUILDER.TAGS_LEVEL_PLACEHOLDER}
               tagCategory={TagCategory.Level}
             />
             <MultiSelectTagChipInput
               itemId={item.id}
+              helpertext={t(BUILDER.TAGS_RESOURCE_TYPE_PLACEHOLDER)}
               tagCategory={TagCategory.ResourceType}
             />
           </Stack>

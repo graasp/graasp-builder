@@ -148,6 +148,8 @@ export const EXPORT_CSV_HEADERS = [
 // TODO: refer from specific endpoint /tutorials?
 export const TUTORIALS_LINK =
   'https://player.graasp.org/9d80d81f-ec9d-4bfb-836a-1c6b125aef2f';
+export const TAGS_DOCUMENTATION =
+  'https://graasp.github.io/docs/user/library/tags/';
 
 export const SHORT_LINK_ID_MAX_LENGTH = 10;
 export const SHORT_LINK_API_CALL_DEBOUNCE_MS = 500;
