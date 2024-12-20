@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+## [2.50.0](https://github.com/graasp/graasp-builder/compare/v2.49.0...v2.50.0) (2024-12-20)
+
+
+### Features
+
+* add description to tag modal ([#1599](https://github.com/graasp/graasp-builder/issues/1599)) ([1d396c0](https://github.com/graasp/graasp-builder/commit/1d396c0659f9ecf2e8436da9b13ca68394506ab0))
+
+
+### Bug Fixes
+
+* apply small fixes ([#1600](https://github.com/graasp/graasp-builder/issues/1600)) ([d9aa2b2](https://github.com/graasp/graasp-builder/commit/d9aa2b26d09bad384da6fc009e2b451c67cb2dad))
+* **tags:** translate helper text ([#1609](https://github.com/graasp/graasp-builder/issues/1609)) ([eded347](https://github.com/graasp/graasp-builder/commit/eded34757ef48edbfa8ac26264d7dc964898bd50))
+
 ## [2.49.0](https://github.com/graasp/graasp-builder/compare/v2.48.0...v2.49.0) (2024-12-16)
 
 
