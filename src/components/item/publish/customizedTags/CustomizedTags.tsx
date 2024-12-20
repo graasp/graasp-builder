@@ -64,16 +64,16 @@ export const CustomizedTags = ({ item }: Props): JSX.Element => {
             <MultiSelectTagChipInput
               itemId={item.id}
               tagCategory={TagCategory.Discipline}
-              helpertext={BUILDER.TAGS_DISCIPLINE_PLACEHOLDER}
+              helpertext={t(BUILDER.TAGS_DISCIPLINE_HELPERTEXT)}
             />
             <MultiSelectTagChipInput
               itemId={item.id}
-              helpertext={BUILDER.TAGS_LEVEL_PLACEHOLDER}
+              helpertext={t(BUILDER.TAGS_LEVEL_HELPERTEXT)}
               tagCategory={TagCategory.Level}
             />
             <MultiSelectTagChipInput
               itemId={item.id}
-              helpertext={t(BUILDER.TAGS_RESOURCE_TYPE_PLACEHOLDER)}
+              helpertext={t(BUILDER.TAGS_RESOURCE_TYPE_HELPERTEXT)}
               tagCategory={TagCategory.ResourceType}
             />
           </Stack>
