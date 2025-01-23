@@ -112,7 +112,7 @@
     "@types/lodash.isequal": "4.5.8",
     "@types/lodash.partition": "4.6.9",
     "@types/lodash.truncate": "4.4.9",
-    "@types/node": "20.17.0",
+    "@types/node": "22.10.8",
     "@types/papaparse": "5.3.15",
     "@types/react": "18.3.12",
     "@types/react-csv": "1.1.10",
