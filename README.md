@@ -1,5 +1,9 @@
 # Graasp Builder
 
+> [!WARNING]
+> This repo has been archived on 2025-01-23.
+> The functionality has been migrated to graasp/client.
+
 ![GitHub Release](https://img.shields.io/github/release/graasp/graasp-builder)
 ![Cypress CI](https://github.com/graasp/graasp-builder/actions/workflows/ci.yml/badge.svg?branch=main)
 ![typescript version](https://img.shields.io/github/package-json/dependency-version/graasp/graasp-builder/dev/typescript)
